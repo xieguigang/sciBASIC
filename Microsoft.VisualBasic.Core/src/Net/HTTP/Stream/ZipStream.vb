@@ -65,10 +65,22 @@ Namespace Net.Http
         ''' <param name="stream"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Zip(stream As Stream) As MemoryStream
+        Public Function Zip(stream As Stream, Optional magicHeader As Boolean = True) As MemoryStream
             Dim deflatMs As New MemoryStream()
 
             Using deflatestream As New DeflateStream(deflatMs, CompressionMode.Compress, True)
+                ' zlib stream missing the magic header bytes
+                ' add byte to the stream
+                ' based on the options
+                If magicHeader Then
+                    ' pako.js inflate stream data required of the
+                    ' zlib magic bytes, or error will happends
+                    '
+                    ' ERROR_-3: incorrect header check
+                    '
+                    Call deflatMs.Write(New Byte() {120, 218}, Scan0, 2)
+                End If
+
                 Call stream.CopyTo(deflatestream, 8192)
             End Using
 
@@ -89,7 +101,9 @@ Namespace Net.Http
         Public Function UnZipStream(stream As IEnumerable(Of Byte), Optional noMagic As Boolean = False) As MemoryStream
             Dim pBytes = stream.SafeQuery.ToArray
 
-            ' Deflate 算法压缩之后的数据，第一个字节是 78h（120b），第二个字节是 DAh(218b)
+            ' Deflate 算法压缩之后的数据
+            ' 第一个字节是 78h(120b)
+            ' 第二个字节是 DAh(218b)
             If pBytes.Length < 2 Then
                 Return New MemoryStream(pBytes)
             ElseIf (Not pBytes(0) = 120 AndAlso Not pBytes(1) = 218) Then
