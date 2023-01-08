@@ -179,11 +179,12 @@ Namespace Scripting
         ''' </remarks>
         <Extension>
         Public Function CTypeDynamic(expression$, target As Type) As Object
-            If expression.StringEmpty Then
-                Return Nothing
-            ElseIf target Is GetType(String) Then
+            If target Is GetType(String) Then
                 Return expression
+            ElseIf expression.StringEmpty Then
+                Return Nothing
             End If
+
             If _CasterString.ContainsKey(target) Then
                 Dim caster As LoadObject = _CasterString(target)
                 Return caster(expression$)
