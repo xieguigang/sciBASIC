@@ -76,6 +76,15 @@ Namespace CommandLine.InteropService.Pipeline
         Public ReadOnly Property Arguments As String
         Public Property Shell As Boolean = False
 
+        ''' <summary>
+        ''' create a new commandline pipeline task
+        ''' </summary>
+        ''' <param name="app">the commandline application</param>
+        ''' <param name="arguments">
+        ''' the commandline argument string, value of this string
+        ''' parameter could be in multiple line
+        ''' </param>
+        ''' <param name="workdir"></param>
         Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
             Me.Arguments = arguments
