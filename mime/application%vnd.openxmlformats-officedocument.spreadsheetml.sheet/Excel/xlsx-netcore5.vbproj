@@ -113,6 +113,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="BIFF\ExcelFile.vb" />
+    <Compile Remove="BIFF\Form1.vb" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
