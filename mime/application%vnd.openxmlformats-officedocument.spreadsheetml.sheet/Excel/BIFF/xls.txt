@@ -1,0 +1,957 @@
+MICROSOFT EXCEL FILE FORMAT
+Microsoft Excel is a popular spreadsheet.  It uses a file format called BIFF (Binary
+File Format).  There are many types of BIFF records.  Each has a 4 byte header.  The
+first two bytes are an opcode that specifies the record type.  The second two bytes
+specify record length.  Header values are stored in byte-reversed form (less significant
+byte first).  The rest of the record is the data itself (Figure 2-1).
+Figure 2-1.  BIFF record header.
+                 |  Record Header    |  Record Body
+Byte Number    	 |  0    1    2    3 |  0    1   ...
+                -----------------------------------
+Record Contents	 | XX | XX | XX | XX | XX | XX | ...
+                -----------------------------------
+                | opcode   | length  | data
+				
+Each X represents a hexadecimal digit
+Two X's form a byte.  The least significant (low) byte of the opcode is byte 0 and the
+most significant (high) byte is byte 1.  Similarly, the low byte of the record length
+field is byte 2 and the high byte is byte 3.
+
+BOF (Beginning of File)
+The first record in every spreadsheet is always of the BOF type (Figure 2-2).  
+Figure 2-2.  BOF record.
+           |  Record Header    |    Record Body    |
+Byte       |  0    1    2    3 |  0    1    2    3 |
+           -----------------------------------------
+Contents   | 09 | 00 | 04 | 00 | 02 | 00 | 10 | 00 |
+           -----------------------------------------
+           | opcode  | length  | version |  file   |
+           |         |         |  number |  type   |
+The first two bytes, arranged with the low byte first, show that the opcode for BOF is
+09h.  The second two bytes indicate that the record body is 4 bytes long.  The first two
+bytes of the body are the version number (2 for the initial version of Excel).  The last
+two bytes are the file type.  Type 10h is a worksheet file.
+
+Relating Spreadsheet Cells to Record Data Bytes
+A spreadsheet appears on a screen or printout as a matrix of rectangular cells.  Each
+column is identified by a letter at its top, and each row is identified by a number.
+Thus cell A1 is in the first column and the first row.  Cell C240 is in the third column
+and the 240th row.  This scheme identifies cells in a way easily understood by people.
+However, it is not particularly convenient for computers, as they do not handle letters
+efficiently.  They are best at dealing with binary numbers.  Thus, Excel stores cell
+identifiers as binary numbers, that people can read as hexadecimal.  The first number in
+the system is 0 rather than 1.
+Figure 2-3, which shows the form of an INTEGER record, illustrates the storage of column
+and row information.
+Figure 2-3.  INTEGER record.
+      |  Record Header    |  Record Body
+Byte  |  0    1    2    3 |  0    1    2    3    4    5    6    7    8 |
+      ------------------------------------------------------------------
+Value | 02 | 00 | 09 | 00 | 00 | 00 | 02 | 00 | 00 | 00 | 00 | 39 | 00 |
+      ------------------------------------------------------------------
+      | opcode  | length  |   row   | column  |   rgbAttr    |    w    |
+Opcode 2 indicates an integer record.  The length bytes show that the record body is 9
+bytes long.  Row 0 in the body corresponds to spreadsheet row 1.  Row 1 corresponds to
+spreadsheet row 2, and so on.  Column 2 corresponds to spreadsheet column C.  Thus,
+Figure 2-3 deals with cell C1.  The next three bytes, labeled "rgbAttr," specify cell
+attributes (Table 2-3).  The final pair of bytes, (labeled "w") holds the integer's
+value.  Here it is 39H or 57 decimal.  Thus the record specifies that cell C1 of the
+spreadsheet contains an integer with the value 57.
+Standard File Record Order
+Excel worksheet files have each record type in a predetermined position.  A file need
+not have all types, but the ones that are present are always be in the same order.
+Table 2-1 lists the record types for Excel document (spreadsheet) files, in the order
+they would appear in a BIFF file.  Table 2-2 lists the types in opcode order.
+Several record types in a BIFF file, namely, ROW, BLANK, INTEGER, NUMBER, LABEL,
+BOOLERR, FORMULA, and COLUMN DEFAULT, describe the contents of a cell.  These records
+contain a 3 byte attribute field labeled "rgbAttr".  The following table describes how
+the  bits in the field correspond to cell attributes.
+Table 2-1.  Cell Attributes
+Byte Offset     Bit   Description                     Contents
+     0          7     Cell is not hidden              0b
+                      Cell is hidden                  1b
+                6     Cell is not locked              0b
+                      Cell is locked                  1b
+                5-0   Reserved, must be 0             000000b
+                7-6   Font number (4 possible)
+                5-0   Cell format code
+     2          7     Cell is not shaded              0b
+                      Cell is shaded                  1b
+                6     Cell has no bottom border       0b
+                      Cell has a bottom border        1b
+                5     Cell has no top border          0b
+                      Cell has a top border           1b
+                4     Cell has no right border        0b
+                      Cell has a right border         1b
+                3     Cell has no left border         0b
+                      Cell has a left border          1b
+                2-0   Cell alignment code 
+                           general                    000b
+                           left                       001b
+                           center                     010b
+                           right                      011b
+                           fill                       100b
+                           Multiplan default align.   111b
+The font number field is a zero-based index into the document's table of fonts.  the
+cell format code is a zero-based index into the document's table of picture formats.
+There are 21 different standard formats.  Additional custom formats may be defined by
+the user.  See the FONT and FORMAT record descriptions form additonal details.
+Table 2-2.  Excel Record Type in Order of Appearance
+Record Type                Opcode (Hexadecimal)
+BOF                           09
+FILEPASS                      2F
+INDEX                         0B
+CALCCOUNT                     0C
+CALCMODE                      0D
+PRECISION                     0E
+REFMODE                       0F
+DELTA                         10
+ITERATION                     11
+1904                          22
+BACKUP                        40
+PRINT ROW HEADERS             2A
+PRINT GRIDLINES               2B
+HORIZONTAL PAGE BREAKS        1B
+VERTICAL PAGE BREAKS          1A
+DEFAULT ROW HEIGHT            25
+FONT                          31
+FONT2                         32
+HEADER                        14
+FOOTER                        15
+LEFT MARGIN                   26
+RIGHT MARGIN                  27
+TOP MARGIN                    28
+BOTTOM MARGIN                 29
+COLWIDTH                      24
+EXTERNCOUNT                   16
+EXTERNSHEET                   17
+EXTERNNAME                    23
+FORMATCOUNT                   1F
+FORMAT                        1E
+NAME                          18
+DIMENSIONS                    00
+COLUMN DEFAULT                20
+ROW                           08
+BLANK                         01
+INTEGER                       02
+NUMBER                        03
+LABEL                         04
+BOOLERR                       05
+FORMULA                       06
+ARRAY                         21
+CONTINUE                      3C
+STRING                        07
+TABLE                         36
+TABLE2                        37
+PROTECT                       12
+WINDOW PROTECT                19
+PASSWORD                      13
+NOTE                          1C
+WINDOW1                       3D
+WINDOW2                       3E
+PANE                          41
+SELECTION                     1D
+EOF                           0A
+Table 2-3.  Excel Record Types in Opcode Order 
+Record Type             Opcode (hexadecimal)
+DIMENSIONS                 00
+BLANK                      01
+INTEGER                    02
+NUMBER                     03
+LABEL                      04
+BOOLERR                    05
+FORMULA                    06
+STRING                     07
+ROW                        08
+BOF                        09
+EOF                        0A
+INDEX                      0B
+CALCCOUNT                  0C
+CALCMODE                   0D
+PRECISION                  0E
+REFMODE                    0F
+DELTA                      10
+ITERATION                  11
+PROTECT                    12
+PASSWORD                   13
+HEADER                     14
+FOOTER                     15
+EXTERNCOUNT                16
+EXTERNSHEET                17
+NAME                       18
+WINDOW PROTECT             19
+VERTICAL PAGE BREAKS       1A
+HORIZONTAL PAGE BREAKS     1B
+NOTE                       1C
+SELECTION                  1D
+FORMAT                     1E
+FORMATCOUNT                1F
+COLUMN DEFAULT             20
+ARRAY                      21
+1904                       22
+EXTERNNAME                 23
+COLWIDTH                   24
+DEFAULT ROW HEIGHT         25
+LEFT MARGIN                26
+RIGHT MARGIN               27
+TOP MARGIN                 28
+BOTTOM MARGIN              29
+PRINT ROW HEADERS          2A
+PRINT GRIDLINES            2B
+FILEPASS                   2F
+FONT                       31
+FONT2                      32
+TABLE                      36
+TABLE2                     37
+CONTINUE                   3C
+WINDOW1                    3D
+WINDOW2                    3E
+BACKUP                     40
+PANE                       41
+
+Worksheet Record Types in Opcode Order
+The following section lists all record types in opcode order.  It gives a specification
+and byte-by-byte breakdown of each type.  Note that Excel terminology refers to
+spreadsheets or worksheets as "documents."
+DIMENSIONS                  00h                         0d
+
+Record Type: DIMENSIONS
+Description: Entire dimensions or range of a spreadsheet
+Record Body Length: 8 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        First row
+           2-3        Last row plus 1
+           4-5        First column
+           6-7        Last column plus 1
+Note: The last row and column in the record are both one greater than the highest
+numbered occupied ones.
+
+BLANK                       01h                         1d
+
+Record Type: BLANK
+Description: Cell with no formula or value
+Record Body Length: 7 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (Table 2-3)
+
+INTEGER                     02h                         2d
+
+Record Type: INTEGER
+Description: Constant unsigned integer
+Record Body Length: 9 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (Table 2-3)
+           7-8        Unsigned integer value (w)
+
+NUMBER                      03h                         3d
+
+Record Type: NUMBER
+Description: Constant floating point number
+Record Body Length: 15 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (Table 2-3)
+           7-14       Floating point number value (IEEE format, see Appendix A)
+
+LABEL                       04h                         4d
+
+Record Type: LABEL
+Description: Constant string
+Record Body Length: 8 to 263 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (Table 2-3)
+           7          Length of string
+           8-263      ASCII string, 0 to 255 bytes long
+
+BOOLERR                     05h                         5d
+
+Record Type: BOOLERR
+Description: Boolean constant or error value
+Record Body Length: 9 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (Table 2-3)
+           7          Boolean or error value
+                                Boolean
+                                      true                 1
+                                      false                0
+                                Error
+                                      #NULL!               0
+                                      #DIV/0!              7
+                                      #VALUE!              0Fh
+                                      #REF!                17h
+                                      #NAME?               1Dh
+                                      #NUM!                24h
+                                      #N/A                 2Ah
+           8          Specifies Boolean or error
+                                Boolean                    0
+                                Error                      1
+
+FORMULA                     06h                         6d
+
+Record Type: FORMULA
+Description: Name, size, and contents of a formula cell
+Record Body Length: 17-272 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row
+           2-3        Column
+           4-6        Cell attributes (rgbAttr) (see Table 2-3)
+           7          Current value of formula (IEEE format, see Appendix A)
+           15         Recalc flag
+           16         Length of parsed expression
+           17         Parsed expression
+If a formula must be recalculated whenever it is loaded, the recalc flag (byte 15) must
+be set.  Any nonzero value is a set recalc flag.  However, a flag value of 3 indicates
+that the cell is a part of a matrix, and the entire matrix must be recalculated. Bytes 7
+through 14 may contain a number, a Boolean value, an error code, or a string.  The
+following tables apply.
+Case 1: Bytes 7 - 14 contain a Boolean value.
+     Byte Number     Byte Description          Contents (hex)
+           7         otBool                          1
+           8         Reserved                        0
+           9         Boolean value
+           10-12     Reserved                        0
+           13-14     fExprO                          FFFFh
+Case 2: Bytes 7 - 14 contain an error code.
+     Byte Number     Byte Description          Contents (hex)
+           7         otErr                           2
+           8         Reserved                        0
+           9         error code
+           10-12     Reserved                        0
+           13-14     fExprO                          FFFFh
+Case 3: Bytes 7 - 14 contain a string.
+     Byte Number     Byte Description          Contents (hex)
+           7         otString                        0
+           8-12      Reserved                        0
+           13-14     fExprO                          FFFFh
+The string value itself is not stored in the field, but rather in a separate record of
+the STRING type.
+STRING                      07h                         7d
+
+Record Type: STRING
+Description: Value of a string in a formula
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number     Byte Description           Contents (hex)
+           0          Length of the string
+           1-256 (max) The string itself
+The STRING record appears immediately after the FORMULA record that evaluates to the
+string, unless the formula is in an array.  In that case, the string record immediately
+follows the ARRAY record.
+ROW                         08h                         8d
+
+Record Type: ROW
+Description: Specifies a spreadsheet row 
+Record Body Length: 16 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Row number
+           2-3        First defined column in the row
+           4-5        Last defined column in the row plus 1
+           6-7        Row height
+           8-9        RESERVED                                0
+           10         Default cell attributes byte
+                      Default attributes                      1
+                      Not default attributes                  0
+           11-12      Offset to cell records for this row
+           13-15      Cell attributes (rgbAttr) (see Table 2-3)
+
+BOF                         09h                         9d
+
+Record Type: BOF
+Description: Beginning of file
+Record Body Length: 4 bytes
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Version number
+                           Excel                           2
+                           Multiplan                       3
+           2-3        Document type
+                           worksheet                       10h
+                           chart                           20h
+                           macro sheet                     40h
+If bit 8 of the version number byte pair is high (mask with 0100h to find out), the BIFF
+file is a Multiplan document.
+EOF                         0Ah                         10d
+
+Record Type: EOF
+Description: End of file
+Record Body Length: 0 bytes
+The EOF record is the last one in a BIFF file.  It always takes the form 0A000000h.
+INDEX                       0Bh                         11d
+
+Record Type: INDEX
+Description: Contains pointers to other records in the BIFF file, and defines the range
+of rows used by the document.  It is used to simplify searching a file for a particular
+cell or name.
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-3        Absolute file position of first NAME record
+           4-5        First row that exists
+           6-7        Last row that exists plus 1
+           8-on       Array of absolute file positions of the 
+                      blocks of ROW records.
+The INDEX record is optional.  If present, it must immediately follow the FILEPASS
+record.  IF there is no FILEPASS record, it must follow the BOF record.
+CALCCOUNT                   0Ch                         12d
+
+Record Type: CALCCOUNT
+Description: Specifies the iteration count
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Iteration Count
+CALCMODE                    0Dh                         13d
+
+Record Type: CALCMODE
+Description: Specifies the calculation mode
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Calculation mode
+                        Manual                           0
+                        Automatic                        1
+                        Automatic, no tables            -1
+PRECISION                   0Eh                         14d
+
+Record Type: PRECISION
+Description: Specifies precision of calculations for document
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number     Byte Description               Contents (hex)
+           0-1        Document precision
+                        precision as displayed           0
+                        full precision                   1
+REFMODE                     0Fh                         15d
+
+Record Type: REFMODE
+Description: Specifies location reference mode
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number     Byte Description            Contents (hex)
+          0-1         Reference mode
+                        R1C1 mode                      0
+                        A1 mode                        1
+DELTA                       10h                         16d
+
+Record Type: DELTA
+Description: Maximum change for an iterative model
+Record Body Length: 8
+Record Body Byte Structure:
+      Byte Number           Byte Description      Contents (hex)
+          0-7               Maximum change (IEEE format, see Appendix A)
+ITERATION                   11h                         17d
+
+Record Type: ITERATION
+Description: Specifies whether iteration is on
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Iteration flag
+                              Iteration off               0
+                              Iteration on                1
+PROTECT                     12h                         18d
+
+Record Type: PROTECT
+Description: Specifies whether the document is protected with a document password
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Document protection
+                              Not protected               0
+                              Protected                   1
+PASSWORD                    13h                         19d
+
+Record Type: PASSWORD
+Description: Contains encrypted document password
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Encrypted password
+HEADER                      14h                         20d
+
+Record Type: HEADER
+Description: Specifies header string that appears at the top of every page when the
+document is printed
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                Length of string (bytes)
+         1-on               Header string (ASCII)
+FOOTER                      15h                         21d
+
+Record Type: FOOTER
+Description: Specifies footer string that appears at the bottom of every page when the
+document is printed
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0                 Length of string (bytes)
+        1-on                Footer string (ASCII)
+EXTERNCOUNT                 16h                         22d
+
+Record Type: EXTERNCOUNT
+Description: Specifies the number of documents referenced externally by an Excel
+document
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Number of externally referenced documents
+EXTERNSHEET                 17h                         23d
+
+Record Type: EXTERNSHEET
+Description: Specifies a document that is referenced externally by the Excel file.
+There must be an EXTERNSHEET record for every external file counted by the EXTERNCOUNT
+record.
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                Length of document name
+          1-on              Document name
+The document name may be encoded.  If so, its first character will be 0, 1 or 2.
+0 indicates the document name is an external reference to an empty sheet.
+1 indicates the document name has been translated to a less sys-tem-dependent name.
+This feature is valuable for documents intended for a non-DOS environment.
+2 indicates that the externally referenced document is, in fact, the current document.
+NAME                        18h                         24d
+
+Record Type: NAME
+Description: User-defined name on the document
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+           0                Name attribute
+                              Only bits 1 and 2 are ever nonzero.
+
+                              Bit 1 is 1 if the name is a function or 
+                              command name on a macro sheet.
+
+                              Bit 2 is 1 if the name definition 
+                              includes:
+                              * A function that returns an array, such 
+                                 as TREND or MINVERSE
+                              * A ROW or COLUMN function
+                              * A user-defined function
+
+                            Name attribute
+                              Meaningful only if bit 1 of 
+                              byte 0 is 1 (the name is a function or 
+                              command name).  Only bits 0 and 1 are  
+                              ever nonzero.
+
+                              Bit 0 is 1 if the name is a function.
+
+                              Bit 1 is 1 if the name is a command.
+
+           2                Keyboard shortcut.  Meaningful only if the  
+                            name is a command.
+                              If no keyboard shortcut     0
+                              If shortcut exists          ASCII value
+
+           3                Length of the name text
+           4                Length of the name's definition
+           5-?              Text of the name
+           ?-?              Name's definition (parsed) in internal
+                            compressed format
+           ?                Length of the name's definition (duplicate)
+All NAME records should appear together in a BIFF file.
+WINDOW PROTECT              19h                         25d
+
+Record Type: WINDOW PROTECT
+Description: Specifies whether a document's windows are protected
+Record Body Length: 2 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Window protect flag
+                            Not protected                 0
+                            Protected                     1
+VERTICAL PAGE BREAKS        1Ah                          26d
+
+Record Type: VERTICAL PAGE BREAKS
+Description: Lists all column page breaks
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Number of page breaks
+          2-on              Array containing a 2-byte integer for each
+                            column that immediately follows a column page
+                            break.  Columns must be sorted in ascending
+                            order.
+HORIZONTAL PAGE BREAKS      1Bh                         27d
+
+Record Type: HORIZONTAL PAGE BREAKS
+Description: Lists all row page breaks
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Number of page breaks
+          2-on              Array containing a 2-byte integer for each
+                            row that immediately follows a row page
+                            break.  Rows must be sorted in ascending
+                            order.
+NOTE                        1Ch                         28d
+
+Record Type: NOTE
+Description: Note associated with a cell
+Record Body Length: Variable, maximum of 254
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Row of the note
+          2-3               Column of the note
+          4-5               Length of the note part of the record
+          6-on               Text of the note
+Notes longer than 2048 characters must be split among multiple records.  All except the
+last one will contain 2048 text characters.  The last one will contain the overflow.
+SELECTION                   1Dh                         29d
+
+Record Type: SELECTION
+Description: Specifies which cells are selected in a pane of a split window.  It can
+also specify selected cells in a window that is not split.
+Record Body Length: Variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                Number of pane
+                              bottom right                0
+                              top right                   1
+                              bottom left                 2
+                              top left                    3
+                              no splits                   3
+          1-2               Row number of the active cell
+          3-4               Column number of the active cell
+          5-6               Reference number of the active cell
+          7-8               Number of references in the selection
+          9-on              Array of references
+Each reference in the array consists of 6 bytes arranged as follows:
+      Byte Number           Byte Description
+          0-1               First row in the reference
+          2-3               Last row in the reference
+           4                First column in the reference
+           5                Last column in the reference 
+FORMAT                      1Eh                         30d
+
+Record Type: FORMAT
+Description: Describes a picture format in a document.  All FORMAT records must appear
+together in a BIFF file.
+Record Body Length: Variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                Length of format string
+          1-on              Picture format string
+FORMATCOUNT                 1Fh                         31d
+
+Record Type: FORMATCOUNT
+Description: The number of standard FORMAT records in the file.  There are 21 different
+format records.
+Record Body Length: 2 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Number of built in format records.
+COLUMN DEFAULT              20h                         32d
+
+Record Type: COLUMN DEFAULT
+Description: Specifies default cell attributes for cells in a particular column.  The
+default value is overriden for individual cells by a subsequent explicit definition.
+Record Body Length: Variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Column number of first column for which a 
+                              default cell is being defined
+          2-3               Column number of last column for which a 
+                              default cell is being defined, plus 1.
+          4-on              Array of cell attributes
+ARRAY                       21h                         33d
+
+Record Type: ARRAY
+Description: Describes a formula entered into a range of cells as an array.  Occurs
+immediately after the FORMULA record for the upper left corner of the array.
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               First row of the array
+          2-3               Last row of the array
+           4                First column of the array
+           5                Last column of the array
+           6                Recalculation flag
+                              Array is calculated             0
+                              Needs to be calculated         nonzero
+           7                Length of parsed expression
+          8-on              Parsed expression (array formula)
+1904                        22h                         34d
+
+Record Type: 1904
+Description: Specifies date system used on this spreadsheet
+Record Body Length: 2 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               Specifies date system used
+                              1904 date system                 1
+                              anything else                    0
+EXTERNNAME                  23h                         35d
+
+Record Type: EXTERNNAME
+Description: An externally referenced name, referring to a work-sheet or macro sheet or
+to a DDE topic.  All EXTERNNAME records associated with a supporting document must
+directly follow its EXTERNSHEET record.
+Record Body Length: Variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                Length of the name
+          1-on              The name
+When EXTERNNAME references a DDE topic, Excel may append its most recent values to the
+EXTERNNAME record.  If the record becomes too long to be contained in a single record,
+it is split into multiple records, with CONTINUE records holding the excess.
+COLWIDTH                    24h                         36d
+
+Record Type: COLWIDTH
+Description: Sets column width for a range of columns
+Record Body Length: 3 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+           0                First column in the range
+           1                Last column in the range
+          2-3               Column width in units of 1/256th of a 
+                            character
+DEFAULT ROW HEIGHT          25h                         37d
+
+Record Type: DEFAULT ROW HEIGHT
+Description: Specifies the height of all rows that are not defined explicitly
+Record Body Length: 2 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents  (hex)
+          0-1               Default row height in units of 1/20th of a 
+                            point
+LEFT MARGIN                 26h                          38d
+
+Record Type: LEFT MARGIN
+Description: Specifies the left margin in inches when the document is printed
+Record Body Length: 8 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-7               Left margin (IEEE format, see Appendix A)
+RIGHT MARGIN                27h                         39d
+
+Record Type: RIGHT MARGIN
+Description: Specifies the right margin in inches when the document is printed
+Record Body Length: 8 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-7               Right margin (IEEE format, see Appendix A)
+TOP MARGIN                  28h                         40d
+
+Record Type: TOP MARGIN
+Description: Specifies the top margin in inches when the document is printed
+Record Body Length: 8 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-7               Top margin (IEEE format, see Appendix A)
+BOTTOM MARGIN               29h                         41d
+
+Record Type: BOTTOM MARGIN
+Description: Specifies the bottom margin in inches when the document is printed
+Record Body Length: 8 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-7               Bottom margin (IEEE format, see Appendix A)
+PRINT ROW HEADERS           2Ah                          42d
+
+Record Type: PRINT ROW HEADERS
+Description: Flag determines whether to include row and column headers on printout of
+document
+Record Body Length: 
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               Row and Column Header Print Flag
+                              Do not print headers             0
+                              Print headers                    1
+PRINT GRIDLINES             2Bh                         43d
+
+Record Type: PRINT GRIDLINES
+Description: Flag determines whether to print gridlines on print-out of document
+Record Body Length: 2
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               Gridline Print Flag
+                              Do not print gridlines           0
+                              Print gridlines                  1
+FILEPASS                    2Fh                         47d
+
+Record Type: FILEPASS
+Description: Specifies a file password.  If this record is present, the rest of the file
+is encrypted.  The file password specified here is distinct from the document password
+specified by the PASSWORD record.  If present, the FILEPASS record must immediately
+follow the BOF record.
+Record Body Length: ?
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-on              ?
+FONT                        31h                         49d
+
+Record Type: FONT
+Description: Describes an entry in the document's font table.  A document may have up to
+4 different fonts, numbered 0 to 3.  Font records are written in the font table in the
+order in which they are encountered in the file.
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (binary)
+          0-1               Height of the font (in 1/20ths of a point)
+          2-3               Font Attributes
+                              First byte (reserved)             00000000b
+                              Second byte
+                                Bit 0 - bold                        1b
+                                Bit 1 - italic                      1b
+                                Bit 2 - underline                   1b
+                                Bit 2 - strikeout                   1b
+                                Bits 4-7 (reserved)               0000b
+           4                Length of font name
+          5-?               Font name
+FONT2                    32h                         50d
+
+Record Type: FONT2
+Description:  System specific information about the font defined in the previous FONT
+record.  The FONT2 record is option-al.
+Record Body Length: Variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-on              ?
+TABLE                    36h                         54d
+
+Record Type: TABLE
+Description: Describes a one-input row or column table created through the Data Table
+command
+Record Body Length: 12 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               First row of the table
+          2-3               Last row of the table
+           4                First column of the table
+           5                Last column of the table
+           6                Recalculation flag
+                              Table is recalculated           0
+                              Not recalculated              nonzero
+           7                Row or column input table flag
+                              Column input table              0
+                              Row input table                 1
+          8-9               Row of the input cell
+          10-11             Column of the input cell
+The area given by the first and last rows and columns does not include the outer row or
+column, which contains table formulas or input values.  If the input cell is a deleted
+reference, the row of the input cell, given by the bytes at offset 8 and 9, is -1.
+TABLE2                    37h                         55d
+
+Record Type: TABLE2
+Description: Describes a two-input table created by the Data Table command.  It is the
+same as the TABLE record, except there is no distinction between a row input table and a
+column input table, there are two input cells rather than one, and either may have a
+value of -1, indicating a deleted reference.
+Record Body Length: 16 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               First row of the table
+          2-3               Last row of the table
+           4                First column of the table
+           5                Last column of the table
+           6                Recalculation flag
+                              Table is calculated              0
+                              Needs recalculation           nonzero
+           7                RESERVED - must be zero            0
+          8-9               Row of the row input cell
+          10-11             Column of the row input cell
+          12-13             Row of the column input cell
+          14-15             Column of the column input cell
+CONTINUE                    3Ch                         60d
+
+Record Type: CONTINUE
+Description: Continuation of FORMULA, ARRAY, or EXTERNNAME records that are too long to
+fit in a single record.
+Record Body Length: variable
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-on              Parsed expression
+WINDOW1                    3Dh                          61d
+
+Record Type: WINDOW1
+Description: Basic window information.  Locations are relative to the upper left corner
+of the Microsoft Windows desktop, and are measured in units of 1/20th of a point.
+Record Body Length: 9 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+          0-1               Horizontal position of the window
+          2-3               Vertical position of the window
+          4-5               Width of the window
+          6-7               Height of the window
+           8               Hidden attribute
+                             Window is not hidden             0
+                             Window is hidden                 1
+If you do not include a WINDOW1 record in your BIFF file, Excel will create a default
+window in your document.
+WINDOW2                    3Eh                         62d
+
+Record Type: WINDOW2
+Description: Advanced window information.  The WINDOW2 record is optional.  If present,
+it must immediately follow the WINDOW1 record.
+Record Body Length: 14 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description              Contents (hex)
+           0                Display Formulas
+                              Display values                   0
+                              Display formulas                 1
+           1                Display Grid
+                              Do not display gridlines         0
+                              Display gridlines                1
+           2                Display Row and Column Headers
+                              Do not display headers           0
+                              Display headers
+           3                Freeze window panes
+                              Do not freeze panes              0
+                              Freeze panes                     1
+           4                Display zero values
+                              Suppress display                 0
+                              Display zero values              1
+          5-6               Top row visible in the window
+          7-8               Leftmost column visible in the window
+           9                Row/column header and gridline color
+                              Specified in next four bytes 0 
+                              Use window's default             1
+                              foreground color.
+          10-13             Row/column headers and gridline color (RGB)
+BACKUP                    40h                         64d
+
+Record Type: BACKUP
+Description: Specifies whether a BIFF file should be backed up
+Record Body Length: 2 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Backup flag
+                              Do not back up              0
+                              Back up                     1
+PANE                        41h                         65d
+
+Record Type: PANE
+Description:  Describes the number and position of unfrozen panes in a window. Panes are
+created by horizontal and vertical splits, which are measured in units of 1/20th of a
+point.
+Record Body Length: 9 bytes
+Record Body Byte Structure:
+      Byte Number           Byte Description         Contents (hex)
+          0-1               Horizontal position of the split, zero if none
+          2-3               Vertical position of the split, zero if none
+          4-5               Top row visible in the bottom pane
+          6-7               Leftmost column visible in the right pane
+           8                Pane number of the active pane
+
