@@ -89,6 +89,9 @@ Namespace Text.Patterns
 
         Private Sub walkLabels(maxDepth As Boolean)
             Dim col As Char()
+            Dim nameMatrix = Me.nameMatrix _
+                .Where(Function(chrs) chrs.Length > 0) _
+                .ToArray
 
             For i As Integer = 0 To maxLen - 1
                 _MaxColumnIndex = i
