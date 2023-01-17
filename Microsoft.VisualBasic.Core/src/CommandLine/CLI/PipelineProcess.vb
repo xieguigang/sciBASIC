@@ -152,7 +152,18 @@ Namespace CommandLine
             Return p.ExitCode
         End Function
 
-        Private Function handleRunStream(p As Process, in$, onReadLine As Action(Of String)) As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="in">
+        ''' the standard input
+        ''' </param>
+        ''' <param name="onReadLine">
+        ''' populate the standard output lines
+        ''' </param>
+        ''' <returns></returns>
+        Friend Function handleRunStream(p As Process, in$, onReadLine As Action(Of String)) As String
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
@@ -171,7 +182,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Create a new process
         ''' </summary>
         ''' <param name="appPath"></param>
         ''' <param name="args"></param>

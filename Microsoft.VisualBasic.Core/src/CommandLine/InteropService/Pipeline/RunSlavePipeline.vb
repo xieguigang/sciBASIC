@@ -108,6 +108,21 @@ Namespace CommandLine.InteropService.Pipeline
             Return code
         End Function
 
+        Public Function Start() As Process
+            _Process = CreatePipeline(
+                appPath:=app,
+                args:=Arguments,
+                it:=(Not app.ExtensionSuffix("sh")) OrElse (Not Shell) OrElse app.FileExists,
+                workdir:=workdir
+            )
+
+            If Process.StartInfo.RedirectStandardOutput Then
+                Call handleRunStream(Process, "", onReadLine:=AddressOf ProcessMessage)
+            End If
+
+            Return Process
+        End Function
+
         Public Overrides Function ToString() As String
             Return CommandLine
         End Function
