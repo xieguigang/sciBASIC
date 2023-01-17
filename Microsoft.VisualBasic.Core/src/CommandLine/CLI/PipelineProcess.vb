@@ -143,7 +143,7 @@ Namespace CommandLine
             )
 
             If p.StartInfo.RedirectStandardOutput Then
-                stdErr = handleRunStream(p, [in], onReadLine)
+                stdErr = handleRunStream(p, [in], onReadLine, async:=False)
             End If
 
             Call setProcess(p)
@@ -163,7 +163,7 @@ Namespace CommandLine
         ''' populate the standard output lines
         ''' </param>
         ''' <returns></returns>
-        Friend Function handleRunStream(p As Process, in$, onReadLine As Action(Of String)) As String
+        Friend Function handleRunStream(p As Process, in$, onReadLine As Action(Of String), async As Boolean) As String
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
@@ -174,11 +174,22 @@ Namespace CommandLine
                 Call writer.Flush()
             End If
 
-            While Not reader.EndOfStream
-                Call onReadLine(reader.ReadLine)
-            End While
+            If Not async Then
+                While Not reader.EndOfStream
+                    Call onReadLine(reader.ReadLine)
+                End While
 
-            Return reader.ReadToEnd
+                Return errReader.ReadToEnd
+            Else
+                Call Task.Run(
+                    Sub()
+                        While Not reader.EndOfStream
+                            Call onReadLine(reader.ReadLine)
+                        End While
+                    End Sub)
+
+                Return Nothing
+            End If
         End Function
 
         ''' <summary>

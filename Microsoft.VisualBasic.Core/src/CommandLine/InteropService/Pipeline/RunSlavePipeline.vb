@@ -117,7 +117,7 @@ Namespace CommandLine.InteropService.Pipeline
             )
 
             If Process.StartInfo.RedirectStandardOutput Then
-                Call handleRunStream(Process, "", onReadLine:=AddressOf ProcessMessage)
+                Call handleRunStream(Process, "", onReadLine:=AddressOf ProcessMessage, async:=True)
             End If
 
             Return Process
