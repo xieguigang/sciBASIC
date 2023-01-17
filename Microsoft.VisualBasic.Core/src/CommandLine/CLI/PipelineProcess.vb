@@ -132,7 +132,8 @@ Namespace CommandLine
                                 Optional in$ = "",
                                 Optional ByRef stdErr As String = Nothing,
                                 Optional workdir As String = Nothing,
-                                Optional shell As Boolean = False) As Integer
+                                Optional shell As Boolean = False,
+                                Optional setProcess As Action(Of Process) = Nothing) As Integer
 
             Dim p As Process = CreatePipeline(
                 appPath:=app,
@@ -145,6 +146,7 @@ Namespace CommandLine
                 stdErr = handleRunStream(p, [in], onReadLine)
             End If
 
+            Call setProcess(p)
             Call p.WaitForExit()
 
             Return p.ExitCode

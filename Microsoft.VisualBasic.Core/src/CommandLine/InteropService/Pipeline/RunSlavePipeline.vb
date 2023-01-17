@@ -67,6 +67,8 @@ Namespace CommandLine.InteropService.Pipeline
         ReadOnly app As String
         ReadOnly workdir As String
 
+        Public ReadOnly Property Process As Process
+
         Public ReadOnly Property CommandLine As String
             Get
                 Return $"{app} {Arguments}"
@@ -97,7 +99,8 @@ Namespace CommandLine.InteropService.Pipeline
                 args:=Arguments,
                 onReadLine:=AddressOf ProcessMessage,
                 workdir:=workdir,
-                shell:=Shell
+                shell:=Shell,
+                setProcess:=Sub(p) _Process = p
             )
 
             RaiseEvent Finish(code)
