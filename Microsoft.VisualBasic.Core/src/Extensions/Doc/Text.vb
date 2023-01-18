@@ -381,7 +381,9 @@ Public Module TextDoc
     ''' <param name="text"></param>
     ''' <param name="encoding">这个函数会自动处理文本的编码的</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' default text encoding: utf-8
+    ''' </remarks>
     '''
     <ExportAPI("Write.Text")>
     <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
