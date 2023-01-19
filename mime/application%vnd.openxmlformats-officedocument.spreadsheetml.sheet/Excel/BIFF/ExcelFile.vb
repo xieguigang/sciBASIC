@@ -108,7 +108,9 @@ Write_Error:
 
     End Function
 
-
+    ''' <summary>
+    ''' create a new excel xls file biff writer
+    ''' </summary>
     Sub New()
 
         'Set up default values for records
@@ -157,12 +159,21 @@ Page_Break_Error:
 
 
 
-    Public Function WriteValue(ValueType As ValueTypes, CellFontUsed As CellFont, Alignment As CellAlignment, HiddenLocked As CellHiddenLocked, lrow As Long, lcol As Long, value As Variant, Optional CellFormat As Long = 0) As Integer
+    Public Function WriteValue(ValueType As ValueTypes,
+                               CellFontUsed As CellFont,
+                               Alignment As CellAlignment,
+                               HiddenLocked As CellHiddenLocked,
+                               lrow As Long,
+                               lcol As Long,
+                               value As Object,
+                               Optional CellFormat As Long = 0) As Integer
 
         On Error GoTo Write_Error
 
         'the row and column values are written to the excel file as
         'unsigned integers. Therefore, must convert the longs to integer.
+        Dim Row As Integer
+        Dim col As Integer
 
         If lrow > 32767 Then
             Row% = CInt(lrow - 65536)
@@ -210,8 +221,8 @@ Page_Break_Error:
 
       Case ValueTypes.xlsText
                 Dim b As Byte
-                st$ = CStr(value)
-                l% = Len(st$)
+                Dim st$ = CStr(value)
+                Dim l% = Len(st$)
 
                 Dim TEXT_RECORD As tText
                 With TEXT_RECORD
@@ -312,8 +323,7 @@ Write_Error:
         'as a Text or Number you can specify one of the 4 fonts (numbered 0 to 3)
 
         Dim FONTNAME_RECORD As FONT_RECORD
-
-        l% = Len(FontName)
+        Dim l% = Len(FontName)
 
         With FONTNAME_RECORD
             .opcode = 49
@@ -349,8 +359,7 @@ Write_Error:
         On Error GoTo Write_Error
 
         Dim HEADER_RECORD As HEADER_FOOTER_RECORD
-
-        l% = Len(HeaderText)
+        Dim l% = Len(HeaderText)
 
         With HEADER_RECORD
             .opcode = 20
@@ -383,8 +392,7 @@ Write_Error:
         On Error GoTo Write_Error
 
         Dim FOOTER_RECORD As HEADER_FOOTER_RECORD
-
-        l% = Len(FooterText)
+        Dim l% = Len(FooterText)
 
         With FOOTER_RECORD
             .opcode = 21
@@ -417,8 +425,7 @@ Write_Error:
         On Error GoTo Write_Error
 
         Dim FILE_PASSWORD_RECORD As PASSWORD_RECORD
-
-        l% = Len(PasswordText)
+        Dim l% = Len(PasswordText)
 
         With FILE_PASSWORD_RECORD
             .opcode = 47
@@ -443,62 +450,63 @@ Write_Error:
 
     End Function
 
+    Public Property PrintGridLines As Boolean
+        Get
 
+        End Get
+        Set(newvalue As Boolean)
+            On Error GoTo Write_Error
 
+            Dim GRIDLINES_RECORD As PRINT_GRIDLINES_RECORD
 
-    Public Property Let PrintGridLines(ByVal newvalue As Boolean)
+            With GRIDLINES_RECORD
+                .opcode = 43
+                .length = 2
+                If newvalue = True Then
+                    .PrintFlag = 1
+                Else
+                    .PrintFlag = 0
+                End If
 
-    On Error GoTo Write_Error
-
-    Dim GRIDLINES_RECORD As PRINT_GRIDLINES_RECORD
-
-    With GRIDLINES_RECORD
-    .opcode = 43
-    .length = 2
-    If newvalue = True Then
-    .PrintFlag = 1
-    Else
-    .PrintFlag = 0
-    End If
-
-    End With
-    Put #FileNumber, , GRIDLINES_RECORD
+            End With
+            Put #FileNumber, , GRIDLINES_RECORD
 
 Exit Property
 
 Write_Error:
-    Exit Property
-
-
+            Exit Property
+        End Set
     End Property
 
 
 
 
-    Public Property Let ProtectSpreadsheet(ByVal newvalue As Boolean)
+    Public Property ProtectSpreadsheet As Boolean
+        Get
 
-    On Error GoTo Write_Error
+        End Get
+        Set(newvalue As Boolean)
+            On Error GoTo Write_Error
 
-    Dim PROTECT_RECORD As PROTECT_SPREADSHEET_RECORD
+            Dim PROTECT_RECORD As PROTECT_SPREADSHEET_RECORD
 
-    With PROTECT_RECORD
-    .opcode = 18
-    .length = 2
-    If newvalue = True Then
-    .Protect = 1
-    Else
-    .Protect = 0
-    End If
+            With PROTECT_RECORD
+                .opcode = 18
+                .length = 2
+                If newvalue = True Then
+                    .Protect = 1
+                Else
+                    .Protect = 0
+                End If
 
-    End With
-    Put #FileNumber, , PROTECT_RECORD
+            End With
+            Put #FileNumber, , PROTECT_RECORD
 
 Exit Property
 
 Write_Error:
-    Exit Property
-
-
+            Exit Property
+        End Set
     End Property
 
 
@@ -510,7 +518,7 @@ Write_Error:
         Dim aFormat(0 To 23) As String
         Dim l As Long
         Dim q As String
-        q = Chr$(34)
+        q = Chr(34)
 
         aFormat(0) = "General"
         aFormat(1) = "0"
@@ -568,9 +576,9 @@ Write_Error:
 
     Function MKI$(x As Integer)
         'used for writing integer array values to the disk file
-        temp$ = Space$(2)
-        CopyMemory ByVal temp$, x%, 2
-   MKI$ = temp$
+        Dim temp$ = Space$(2)
+        CopyMemory(temp$, x%, 2)
+        MKI$ = temp$
     End Function
 
 
@@ -608,6 +616,7 @@ Write_Error:
 
         'the row and column values are written to the excel file as
         'unsigned integers. Therefore, must convert the longs to integer.
+        Dim Row As Integer
 
         If lrow > 32767 Then
             Row% = CInt(lrow - 65536)
