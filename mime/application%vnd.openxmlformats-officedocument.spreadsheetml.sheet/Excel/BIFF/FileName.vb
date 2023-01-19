@@ -60,7 +60,7 @@ Public Enum FontFormatting
     xlsStrikeout = 8
 End Enum
 
-Private Structure FONT_RECORD
+Public Structure FONT_RECORD
     Dim opcode As Integer  '49
     Dim length As Integer  '5+len(fontname)
     Dim FontHeight As Integer
@@ -74,32 +74,32 @@ Private Structure FONT_RECORD
 End Structure
 
 
-Private Structure PASSWORD_RECORD
+Public Structure PASSWORD_RECORD
     Dim opcode As Integer  '47
     Dim length As Integer  'len(password)
 End Structure
 
 
-Private Structure HEADER_FOOTER_RECORD
+Public Structure HEADER_FOOTER_RECORD
     Dim opcode As Integer  '20 Header, 21 Footer
     Dim length As Integer  '1+len(text)
     Dim TextLength As Byte
 End Structure
 
 
-Private Structure PROTECT_SPREADSHEET_RECORD
+Public Structure PROTECT_SPREADSHEET_RECORD
     Dim opcode As Integer  '18
     Dim length As Integer  '2
     Dim Protect As Integer
 End Structure
 
-Private Structure FORMAT_COUNT_RECORD
+Public Structure FORMAT_COUNT_RECORD
     Dim opcode As Integer  '1f
     Dim length As Integer '2
     Dim Count As Integer
 End Structure
 
-Private Structure FORMAT_RECORD
+Public Structure FORMAT_RECORD
     Dim opcode As Integer  '1e
     Dim length As Integer  '1+len(format)
     Dim FormatLenght As Byte 'len(format)
@@ -107,7 +107,7 @@ End Structure '+ followed by the Format-Picture
 
 
 
-Private Structure COLWIDTH_RECORD
+Public Structure COLWIDTH_RECORD
     Dim opcode As Integer  '36
     Dim length As Integer  '4
     Dim col1 As Byte       'first column
@@ -116,7 +116,7 @@ Private Structure COLWIDTH_RECORD
 End Structure
 
 'Beginning Of File record
-Private Structure BEG_FILE_RECORD
+Public Structure BEG_FILE_RECORD
     Dim opcode As Integer
     Dim length As Integer
     Dim version As Integer
@@ -124,20 +124,20 @@ Private Structure BEG_FILE_RECORD
 End Structure
 
 'End Of File record
-Private Structure END_FILE_RECORD
+Public Structure END_FILE_RECORD
     Dim opcode As Integer
     Dim length As Integer
 End Structure
 
 'true/false to print gridlines
-Private Structure PRINT_GRIDLINES_RECORD
+Public Structure PRINT_GRIDLINES_RECORD
     Dim opcode As Integer
     Dim length As Integer
     Dim PrintFlag As Integer
 End Structure
 
 'Integer record
-Private Structure tInteger
+Public Structure tInteger
     Dim opcode As Integer
     Dim length As Integer
     Dim Row As Integer     'unsigned integer
@@ -156,7 +156,7 @@ Private Structure tInteger
 End Structure
 
 'Number record
-Private Structure tNumber
+Public Structure tNumber
     Dim opcode As Integer
     Dim length As Integer
     Dim Row As Integer
@@ -168,7 +168,7 @@ Private Structure tNumber
 End Structure
 
 'Label (Text) record
-Private Structure tText
+Public Structure tText
     Dim opcode As Integer
     Dim length As Integer
     Dim Row As Integer
@@ -179,25 +179,25 @@ Private Structure tText
     Dim TextLength As Byte
 End Structure
 
-Private Structure MARGIN_RECORD_LAYOUT
+Public Structure MARGIN_RECORD_LAYOUT
     Dim opcode As Integer
     Dim length As Integer
     Dim MarginValue As Double  '8 bytes
 End Structure
 
-Private Structure HPAGE_BREAK_RECORD
+Public Structure HPAGE_BREAK_RECORD
     Dim opcode As Integer
     Dim length As Integer
     Dim NumPageBreaks As Integer
 End Structure
 
-Private Structure DEF_ROWHEIGHT_RECORD
+Public Structure DEF_ROWHEIGHT_RECORD
     Dim opcode As Integer
     Dim length As Integer
     Dim RowHeight As Integer
 End Structure
 
-Private Structure ROW_HEIGHT_RECORD
+Public Structure ROW_HEIGHT_RECORD
     Dim opcode As Integer  '08
     Dim length As Integer  'should always be 16 bytes
     Dim RowNumber As Integer
