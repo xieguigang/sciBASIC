@@ -664,6 +664,4 @@ Write_Error:
         Exit Function
 
     End Function
-
-
 End Class
