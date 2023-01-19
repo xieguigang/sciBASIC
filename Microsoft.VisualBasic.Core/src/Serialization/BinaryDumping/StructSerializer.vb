@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::29053b400a3a14f972760567b564efce, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 94
-    '    Code Lines: 32
-    ' Comment Lines: 56
-    '   Blank Lines: 6
-    '     File Size: 5.05 KB
+' Summaries:
 
 
-    '     Module StructSerializer
-    ' 
-    '         Function: ByteToStructure, StructureToByte
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 94
+'    Code Lines: 32
+' Comment Lines: 56
+'   Blank Lines: 6
+'     File Size: 5.05 KB
+
+
+'     Module StructSerializer
+' 
+'         Function: ByteToStructure, StructureToByte
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
@@ -106,6 +107,20 @@ Namespace Serialization.BinaryDumping
         '  at EasyDocument.Program.Main() 
 
         ' These two function will not works, prefer to the extensions in StructFormatter Module
+
+        ''' <summary>
+        ''' write any structure into file/stream
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="buffer"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Write(Of T As Structure)(buffer As BinaryWriter, obj As T) As Integer
+            Dim bytes As Byte() = StructureToByte(obj)
+            Call buffer.Write(bytes, Scan0, bytes.Length)
+            Return bytes.Length
+        End Function
 
         ''' <summary>
         ''' 由结构体转换为byte数组(字符串类型以及Class类型都将会被序列化为内存指针，所以这个函数只适合于值类型的)

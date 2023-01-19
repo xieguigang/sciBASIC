@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 ''' <summary>
 ''' Class file for writing Microsoft Excel BIFF 2.1 files.
@@ -83,22 +84,23 @@ Public Class BiffWriter
                 .length = 2 + (NumHorizPageBreaks * 2)
                 .NumPageBreaks = NumHorizPageBreaks
             End With
-            Put #FileNumber, , HORIZ_PAGE_BREAK
+            Put(FileNumber, HORIZ_PAGE_BREAK)
 
-        'now write the actual page break values
+            'now write the actual page break values
             'the MKI$ function is standard in other versions of BASIC but
             'VisualBasic does not have it. A KnowledgeBase article explains
             'how to recreate it (albeit using 16-bit API, I switched it
             'to 32-bit).
             For x% = 1 To UBound(HorizPageBreakRows)
-                Put #FileNumber, , MKI$(HorizPageBreakRows(x%))
-        Next
+                Put(FileNumber, MKI$(HorizPageBreakRows(x%)))
+            Next
         End If
 
-        Put #FileNumber, , END_FILE_MARKER
-    Close #FileNumber
+        Put(FileNumber, END_FILE_MARKER)
+        FileNumber.Flush()
+        FileNumber.Dispose()
 
-    CloseFile = 0  'return with no error code
+        CloseFile = 0  'return with no error code
 
         Exit Function
 
@@ -157,7 +159,13 @@ Page_Break_Error:
 
     End Function
 
+    Private Shared Sub Put(Of T As Structure)(file As BinaryWriter, struct As T)
+        Call file.Write(struct)
+    End Sub
 
+    Private Shared Sub Put(file As BinaryWriter, b As Byte)
+        Call file.Write(b)
+    End Sub
 
     Public Function WriteValue(ValueType As ValueTypes,
                                CellFontUsed As CellFont,
@@ -201,10 +209,10 @@ Page_Break_Error:
                     .rgbAttr3 = CByte(Alignment)
                     .intValue = CInt(value)
                 End With
-                Put #FileNumber, , INTEGER_RECORD
+                Put(FileNumber, INTEGER_RECORD)
 
 
-      Case ValueTypes.xlsnumber
+            Case ValueTypes.xlsnumber
                 Dim NUMBER_RECORD As tNumber
                 With NUMBER_RECORD
                     .opcode = 3
@@ -216,10 +224,10 @@ Page_Break_Error:
                     .rgbAttr3 = CByte(Alignment)
                     .NumberValue = CDbl(value)
                 End With
-                Put #FileNumber, , NUMBER_RECORD
+                Put(FileNumber, NUMBER_RECORD)
 
 
-      Case ValueTypes.xlsText
+            Case ValueTypes.xlsText
                 Dim b As Byte
                 Dim st$ = CStr(value)
                 Dim l% = Len(st$)
@@ -242,13 +250,13 @@ Page_Break_Error:
                     .rgbAttr3 = CByte(Alignment)
 
                     'Put record header
-                    Put #FileNumber, , TEXT_RECORD
+                    Put(FileNumber, TEXT_RECORD)
 
-          'Then the actual string data
+                    'Then the actual string data
                     For a = 1 To l%
                         b = Asc(Mid$(st$, a, 1))
-                        Put #FileNumber, , b
-          Next
+                        Put(FileNumber, b)
+                    Next
                 End With
 
         End Select
@@ -276,9 +284,9 @@ Write_Error:
             .length = 8
             .MarginValue = MarginValue 'in inches
         End With
-        Put #FileNumber, , MarginRecord
+        Put(FileNumber, MarginRecord)
 
-    SetMargin = 0
+        SetMargin = 0
 
         Exit Function
 
@@ -302,9 +310,9 @@ Write_Error:
             .col2 = LastColumn - 1
             .ColumnWidth = WidthValue * 256  'values are specified as 1/256 of a character
         End With
-        Put #FileNumber, , COLWIDTH
+        Put(FileNumber, COLWIDTH)
 
-    SetColumnWidth = 0
+        SetColumnWidth = 0
 
         Exit Function
 
@@ -333,14 +341,14 @@ Write_Error:
             .FontAttributes2 = CByte(0) 'reserved-always zero!!
             .FontNameLength = CByte(Len(FontName))
         End With
-        Put #FileNumber, , FONTNAME_RECORD
+        Put(FileNumber, FONTNAME_RECORD)
 
-    'Then the actual font name data
+        'Then the actual font name data
         Dim b As Byte
         For a = 1 To l%
             b = Asc(Mid$(FontName, a, 1))
-            Put #FileNumber, , b
-    Next
+            Put(FileNumber, b)
+        Next
 
         SetFont = 0
 
@@ -366,14 +374,14 @@ Write_Error:
             .length = 1 + l%
             .TextLength = CByte(Len(HeaderText))
         End With
-        Put #FileNumber, , HEADER_RECORD
+        Put(FileNumber, HEADER_RECORD)
 
-    'Then the actual Header text
+        'Then the actual Header text
         Dim b As Byte
         For a = 1 To l%
             b = Asc(Mid$(HeaderText, a, 1))
-            Put #FileNumber, , b
-    Next
+            Put(FileNumber, b)
+        Next
 
         SetHeader = 0
 
@@ -399,14 +407,14 @@ Write_Error:
             .length = 1 + l%
             .TextLength = CByte(Len(FooterText))
         End With
-        Put #FileNumber, , FOOTER_RECORD
+        Put(FileNumber, FOOTER_RECORD)
 
-    'Then the actual Header text
+        'Then the actual Header text
         Dim b As Byte
         For a = 1 To l%
             b = Asc(Mid$(FooterText, a, 1))
-            Put #FileNumber, , b
-    Next
+            Put(FileNumber, b)
+        Next
 
         SetFooter = 0
 
@@ -431,14 +439,14 @@ Write_Error:
             .opcode = 47
             .length = l%
         End With
-        Put #FileNumber, , FILE_PASSWORD_RECORD
+        Put(FileNumber, FILE_PASSWORD_RECORD)
 
-    'Then the actual Password text
+        'Then the actual Password text
         Dim b As Byte
         For a = 1 To l%
             b = Asc(Mid$(PasswordText, a, 1))
-            Put #FileNumber, , b
-    Next
+            Put(FileNumber, b)
+        Next
 
         SetFilePassword = 0
 
@@ -469,9 +477,9 @@ Write_Error:
                 End If
 
             End With
-            Put #FileNumber, , GRIDLINES_RECORD
+            Put(FileNumber, GRIDLINES_RECORD)
 
-Exit Property
+            Exit Property
 
 Write_Error:
             Exit Property
@@ -500,9 +508,9 @@ Write_Error:
                 End If
 
             End With
-            Put #FileNumber, , PROTECT_RECORD
+            Put(FileNumber, PROTECT_RECORD)
 
-Exit Property
+            Exit Property
 
 Write_Error:
             Exit Property
@@ -550,23 +558,23 @@ Write_Error:
             .length = &H2
             .Count = CInt(UBound(aFormat))
         End With
-        Put #FileNumber, , cFORMAT_COUNT_RECORD
+        Put(FileNumber, cFORMAT_COUNT_RECORD)
 
-    For lIndex = LBound(aFormat) To UBound(aFormat)
+        For lIndex = LBound(aFormat) To UBound(aFormat)
             l = Len(aFormat(lIndex))
             With cFORMAT_RECORD
                 .opcode = &H1E
                 .length = CInt(l + 1)
                 .FormatLenght = CInt(l)
             End With
-            Put #FileNumber, , cFORMAT_RECORD
+            Put(FileNumber, cFORMAT_RECORD)
 
-        'Then the actual format
+            'Then the actual format
             Dim b As Byte, a As Long
             For a = 1 To l
                 b = Asc(Mid$(aFormat(lIndex), a, 1))
-                Put #FileNumber, , b
-        Next
+                Put(FileNumber, b)
+            Next
         Next lIndex
 
         Exit Function
@@ -597,9 +605,9 @@ Write_Error:
             .length = 2
             .RowHeight = HeightValue * 20  'convert points to 1/20ths of point
         End With
-        Put #FileNumber, , DEFHEIGHT
+        Put(FileNumber, DEFHEIGHT)
 
-    SetDefaultRowHeight = 0
+        SetDefaultRowHeight = 0
 
         Exit Function
 
@@ -645,9 +653,9 @@ Write_Error:
             .rgbAttr2 = 0
             .rgbAttr3 = 0
         End With
-        Put #FileNumber, , ROWHEIGHTREC
+        Put(FileNumber, ROWHEIGHTREC)
 
-    SetRowHeight = 0
+        SetRowHeight = 0
 
         Exit Function
 
