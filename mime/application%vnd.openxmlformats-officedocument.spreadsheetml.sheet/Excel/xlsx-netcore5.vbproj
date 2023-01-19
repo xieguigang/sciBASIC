@@ -107,8 +107,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="BIFF\obj\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="BIFF\obj\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="BIFF\obj\**" />
     <None Remove="test\**" />
   </ItemGroup>
 
