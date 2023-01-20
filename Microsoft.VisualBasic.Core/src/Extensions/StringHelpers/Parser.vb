@@ -123,13 +123,18 @@ Public Module PrimitiveParser
     ''' 这个函数会判断科学计数法等格式
     ''' </remarks>
     <Extension>
-    Public Function IsNumeric(num As String, Optional includesNaNFactor As Boolean = False) As Boolean
+    Public Function IsNumeric(num As String,
+                              Optional includesNaNFactor As Boolean = False,
+                              Optional includesInteger As Boolean = False) As Boolean
+
         Dim dotCheck As Boolean = False
         Dim c As Char
         Dim offset As Integer = 0
 
         If String.IsNullOrEmpty(num) Then
             Return False
+        ElseIf includesInteger AndAlso num.IsInteger Then
+            Return True
         Else
             c = num(Scan0)
         End If
