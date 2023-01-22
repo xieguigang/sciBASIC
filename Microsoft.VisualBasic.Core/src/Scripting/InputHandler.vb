@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
@@ -88,7 +89,7 @@ Namespace Scripting
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property CasterString As New Dictionary(Of Type, LoadObject) From {
- _
+                                                                                           _
             {GetType(String), Function(s$) s},
             {GetType(Char), AddressOf Casting.CastChar},
             {GetType(Integer), AddressOf Casting.CastInteger},
@@ -138,6 +139,34 @@ Namespace Scripting
             End If
         End Function
 
+        <Extension>
+        Public Function CTypeDynamic(expression As IEnumerable(Of String), target As Type) As Array
+            If expression Is Nothing Then
+                Return Nothing
+            ElseIf target Is GetType(String) OrElse target Is GetType(String()) Then
+                ' target is a string array
+                Return expression.ToArray
+            ElseIf target.IsArray Then
+                target = target.GetElementType
+
+                If target Is Nothing Then
+                    ' object()
+                    Return expression _
+                        .Select(Function(str) CObj(str)) _
+                        .ToArray
+                End If
+            End If
+
+            Dim allStrs As String() = expression.ToArray
+            Dim vec As Array = Array.CreateInstance(target, allStrs.Length)
+
+            For i As Integer = 0 To vec.Length - 1
+                vec(i) = CTypeDynamic(allStrs(i), target)
+            Next
+
+            Return vec
+        End Function
+
         ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
         ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
@@ -150,11 +179,12 @@ Namespace Scripting
         ''' </remarks>
         <Extension>
         Public Function CTypeDynamic(expression$, target As Type) As Object
-            If expression.StringEmpty Then
-                Return Nothing
-            ElseIf target Is GetType(String) Then
+            If target Is GetType(String) Then
                 Return expression
+            ElseIf expression.StringEmpty Then
+                Return Nothing
             End If
+
             If _CasterString.ContainsKey(target) Then
                 Dim caster As LoadObject = _CasterString(target)
                 Return caster(expression$)

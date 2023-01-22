@@ -67,6 +67,8 @@ Namespace CommandLine.InteropService.Pipeline
         ReadOnly app As String
         ReadOnly workdir As String
 
+        Public ReadOnly Property Process As Process
+
         Public ReadOnly Property CommandLine As String
             Get
                 Return $"{app} {Arguments}"
@@ -76,6 +78,15 @@ Namespace CommandLine.InteropService.Pipeline
         Public ReadOnly Property Arguments As String
         Public Property Shell As Boolean = False
 
+        ''' <summary>
+        ''' create a new commandline pipeline task
+        ''' </summary>
+        ''' <param name="app">the commandline application</param>
+        ''' <param name="arguments">
+        ''' the commandline argument string, value of this string
+        ''' parameter could be in multiple line
+        ''' </param>
+        ''' <param name="workdir"></param>
         Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
             Me.Arguments = arguments
@@ -88,12 +99,28 @@ Namespace CommandLine.InteropService.Pipeline
                 args:=Arguments,
                 onReadLine:=AddressOf ProcessMessage,
                 workdir:=workdir,
-                shell:=Shell
+                shell:=Shell,
+                setProcess:=Sub(p) _Process = p
             )
 
             RaiseEvent Finish(code)
 
             Return code
+        End Function
+
+        Public Function Start() As Process
+            _Process = CreatePipeline(
+                appPath:=app,
+                args:=Arguments,
+                it:=(Not app.ExtensionSuffix("sh")) OrElse (Not Shell) OrElse app.FileExists,
+                workdir:=workdir
+            )
+
+            If Process.StartInfo.RedirectStandardOutput Then
+                Call handleRunStream(Process, "", onReadLine:=AddressOf ProcessMessage, async:=True)
+            End If
+
+            Return Process
         End Function
 
         Public Overrides Function ToString() As String

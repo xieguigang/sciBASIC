@@ -120,8 +120,20 @@ Public Class JsonParser
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function OpenJSON(jsonStr As String) As JsonElement
-        _JSONvalue = parse(jsonStr)
+        _JSONvalue = _parse(jsonStr)
         Return JSONvalue
+    End Function
+
+    ''' <summary>
+    ''' parse the text in json format
+    ''' </summary>
+    ''' <param name="json">
+    ''' text data in json string format
+    ''' </param>
+    ''' <returns></returns>
+    Public Shared Function Parse(json As String) As JsonElement
+        Dim parser As New JsonParser
+        Return parser.OpenJSON(json)
     End Function
 
     ''' <summary>
@@ -129,7 +141,7 @@ Public Class JsonParser
     ''' </summary>
     ''' <param name="str"></param>
     ''' <returns></returns>
-    Private Function parse(ByRef str As String) As JsonElement
+    Private Function _parse(ByRef str As String) As JsonElement
         Dim index As Long = 1
 
         psErrors = "*"

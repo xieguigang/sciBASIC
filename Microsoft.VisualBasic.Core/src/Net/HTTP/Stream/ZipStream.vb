@@ -60,6 +60,40 @@ Namespace Net.Http
     Public Module ZipStreamExtensions
 
         ''' <summary>
+        ''' zip stream compression
+        ''' </summary>
+        ''' <param name="stream"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Zip(stream As Stream, Optional magicHeader As Boolean = True) As MemoryStream
+            Dim deflatMs As New MemoryStream()
+
+            Using deflatestream As New DeflateStream(deflatMs, CompressionMode.Compress, True)
+                Call stream.CopyTo(deflatestream, 8192)
+            End Using
+
+            If magicHeader Then
+                Dim newBuf As New MemoryStream
+
+                '
+                ' zlib stream missing the magic header bytes
+                ' add byte to the stream based on the options
+                '
+                ' pako.js inflate stream data required of the
+                ' zlib magic bytes, or error will happends
+                '
+                ' ERROR_-3: incorrect header check
+                '
+                Call newBuf.Write(New Byte() {120, 218}, Scan0, 2)
+                Call newBuf.Write(deflatMs.ToArray, Scan0, deflatMs.Length)
+
+                Return newBuf
+            Else
+                Return deflatMs
+            End If
+        End Function
+
+        ''' <summary>
         ''' 进行zlib数据流的zip解压缩
         ''' 
         ''' > https://bbs.csdn.net/topics/392275364
@@ -73,7 +107,9 @@ Namespace Net.Http
         Public Function UnZipStream(stream As IEnumerable(Of Byte), Optional noMagic As Boolean = False) As MemoryStream
             Dim pBytes = stream.SafeQuery.ToArray
 
-            ' Deflate 算法压缩之后的数据，第一个字节是 78h（120b），第二个字节是 DAh(218b)
+            ' Deflate 算法压缩之后的数据
+            ' 第一个字节是 78h(120b)
+            ' 第二个字节是 DAh(218b)
             If pBytes.Length < 2 Then
                 Return New MemoryStream(pBytes)
             ElseIf (Not pBytes(0) = 120 AndAlso Not pBytes(1) = 218) Then
@@ -101,6 +137,7 @@ Namespace Net.Http
         End Function
 
         ''' <summary>
+        ''' Decompress.
         ''' 在这里应该是正确的跳过了deflate压缩算法标识字节的数据流
         ''' </summary>
         ''' <returns></returns>

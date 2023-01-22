@@ -53,6 +53,7 @@
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Net.Tcp
 
@@ -106,7 +107,7 @@ Namespace Net.Tcp
         Public Function GetFirstAvailablePort(Optional BEGIN_PORT As Integer = 100) As Integer
             If BEGIN_PORT <= 0 Then
                 ' 为了避免高并发的时候出现端口占用的情况，在这里使用随机数来解决一些问题
-                BEGIN_PORT = Rnd() * (MAX_PORT - 1)
+                BEGIN_PORT = randf.NextInteger(MAX_PORT - 1)
             End If
 
             For i As Integer = BEGIN_PORT To MAX_PORT - 1

@@ -132,7 +132,8 @@ Namespace CommandLine
                                 Optional in$ = "",
                                 Optional ByRef stdErr As String = Nothing,
                                 Optional workdir As String = Nothing,
-                                Optional shell As Boolean = False) As Integer
+                                Optional shell As Boolean = False,
+                                Optional setProcess As Action(Of Process) = Nothing) As Integer
 
             Dim p As Process = CreatePipeline(
                 appPath:=app,
@@ -142,7 +143,10 @@ Namespace CommandLine
             )
 
             If p.StartInfo.RedirectStandardOutput Then
-                stdErr = handleRunStream(p, [in], onReadLine)
+                stdErr = handleRunStream(p, [in], onReadLine, async:=False)
+            End If
+            If Not setProcess Is Nothing Then
+                setProcess(p)
             End If
 
             Call p.WaitForExit()
@@ -150,7 +154,18 @@ Namespace CommandLine
             Return p.ExitCode
         End Function
 
-        Private Function handleRunStream(p As Process, in$, onReadLine As Action(Of String)) As String
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="in">
+        ''' the standard input
+        ''' </param>
+        ''' <param name="onReadLine">
+        ''' populate the standard output lines
+        ''' </param>
+        ''' <returns></returns>
+        Friend Function handleRunStream(p As Process, in$, onReadLine As Action(Of String), async As Boolean) As String
             Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
@@ -161,15 +176,26 @@ Namespace CommandLine
                 Call writer.Flush()
             End If
 
-            While Not reader.EndOfStream
-                Call onReadLine(reader.ReadLine)
-            End While
+            If Not async Then
+                While Not reader.EndOfStream
+                    Call onReadLine(reader.ReadLine)
+                End While
 
-            Return reader.ReadToEnd
+                Return errReader.ReadToEnd
+            Else
+                Call Task.Run(
+                    Sub()
+                        While Not reader.EndOfStream
+                            Call onReadLine(reader.ReadLine)
+                        End While
+                    End Sub)
+
+                Return Nothing
+            End If
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Create a new process
         ''' </summary>
         ''' <param name="appPath"></param>
         ''' <param name="args"></param>

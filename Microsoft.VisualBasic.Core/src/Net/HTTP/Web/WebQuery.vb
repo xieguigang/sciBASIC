@@ -231,8 +231,19 @@ Namespace Net.Http
         ''' <param name="hitCache"></param>
         Private Sub runHttpGet(cache_path As String, url$, ByRef hitCache As Boolean)
             Dim is404 As Boolean = False
+            Dim is_missing As Boolean = cache.FileSize(cache_path) <= 0
+            Dim is_empty As Boolean = True
 
-            If cache.FileSize(cache_path) <= 0 AndAlso Not offlineMode Then
+            If Not is_missing Then
+                Dim debug_text As String = cache.ReadAllText(cache_path) _
+                    .TrimNewLine _
+                    .Trim _
+                    .DoCall(AddressOf Strings.Trim)
+
+                is_empty = debug_text.StringEmpty
+            End If
+
+            If (is_missing OrElse is_empty) AndAlso Not offlineMode Then
                 Call cache.WriteText(url.GET(is404:=is404), cache_path)
                 Call cache.Flush()
                 Call Thread.Sleep(sleepInterval)

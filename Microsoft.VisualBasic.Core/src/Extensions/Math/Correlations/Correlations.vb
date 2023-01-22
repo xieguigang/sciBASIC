@@ -374,12 +374,18 @@ Namespace Math.Correlations
         ''' </summary>
         ''' <param name="cor"></param>
         ''' <param name="n">should be the length of x or y vector</param>
-        ''' <param name="z#"></param>
-        ''' <param name="pvalue#"></param>
-        ''' <param name="prob2#"></param>
-        ''' <param name="t#"></param>
-        ''' <param name="df#"></param>
+        ''' <param name="z"></param>
+        ''' <param name="pvalue"></param>
+        ''' <param name="prob2"></param>
+        ''' <param name="t"></param>
+        ''' <param name="df"></param>
         ''' <param name="throwMaxIterError"></param>
+        ''' <remarks>
+        ''' Fisher's z 变换，主要用于皮尔逊相关系数的非线性修正上面。因为普通皮尔逊相关系数
+        ''' 在0-1上并不服从正态分布，相关系数的绝对值越趋近1时，概率变得非常非常小。相关系数
+        ''' 的分布非常像断了两头的正态分布。所以需要通过Fisherz-transformation对皮尔逊相
+        ''' 关系数进行修正，使得满足正态分布。
+        ''' </remarks>
         Public Sub TestStats(cor As Double, n As Integer,
                              ByRef z#,
                              ByRef pvalue#,
@@ -389,6 +395,7 @@ Namespace Math.Correlations
                              Optional throwMaxIterError As Boolean = True)
 
             ' fisher's z trasnformation
+            ' 1/2 * ln((1+r)/(1-r))
             z = 0.5 * stdNum.Log((1.0 + cor + TINY) / (1.0 - cor + TINY))
 
             ' student's t probability
@@ -401,6 +408,7 @@ Namespace Math.Correlations
         End Sub
 
         Public Structure Pearson
+
             Dim pearson#
             Dim pvalue#
             Dim pvalue2#
@@ -517,7 +525,7 @@ Namespace Math.Correlations
 
         <Extension>
         Private Function sortRanking(x As Double()) As Double()
-            Dim sorted As New Dictionary(Of Double?, HashSet(Of Integer?))()
+            Dim sorted As New Dictionary(Of Double, List(Of Integer))()
             Dim size As Integer = x.Length
             Dim ranks As Double() = New Double(size - 1) {}
             Dim v As Double
@@ -527,7 +535,7 @@ Namespace Math.Correlations
                 v = x(i)
 
                 If sorted.ContainsKey(v) = False Then
-                    sorted(v) = New HashSet(Of Integer?)()
+                    sorted(v) = New List(Of Integer)
                 End If
 
                 Call sorted(v).Add(i)
@@ -535,15 +543,16 @@ Namespace Math.Correlations
 
             For Each vi As Double In sorted.Keys.OrderByDescending(Function(xi) xi)
                 Dim r As Double = 0
+                Dim sortSet = sorted(vi)
 
-                For Each i As Integer In sorted(vi)
+                For Each i As Integer In sortSet
                     r += c
                     c += 1
                 Next
 
-                r /= sorted(vi).Count
+                r /= sortSet.Count
 
-                For Each i As Integer In sorted(vi)
+                For Each i As Integer In sortSet
                     ranks(i) = r
                 Next
             Next

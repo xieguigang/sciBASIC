@@ -123,13 +123,18 @@ Public Module PrimitiveParser
     ''' 这个函数会判断科学计数法等格式
     ''' </remarks>
     <Extension>
-    Public Function IsNumeric(num As String, Optional includesNaNFactor As Boolean = False) As Boolean
+    Public Function IsNumeric(num As String,
+                              Optional includesNaNFactor As Boolean = False,
+                              Optional includesInteger As Boolean = False) As Boolean
+
         Dim dotCheck As Boolean = False
         Dim c As Char
         Dim offset As Integer = 0
 
         If String.IsNullOrEmpty(num) Then
             Return False
+        ElseIf includesInteger AndAlso num.IsInteger Then
+            Return True
         Else
             c = num(Scan0)
         End If
@@ -202,7 +207,7 @@ Public Module PrimitiveParser
         Next
 
         ' 20220922 handling of 2147483647
-        If num.Length = 10 Then
+        If num.Length = 10 AndAlso Not num.Any(Function(cc) cc = "E"c OrElse cc = "e"c) Then
             If Integer.Parse(num.First) > 2 Then
                 ' is long
                 Return False

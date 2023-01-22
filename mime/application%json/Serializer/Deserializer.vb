@@ -179,6 +179,10 @@ Public Module Deserializer
         Dim innerVal As Object
 
         For Each [property] As NamedValue(Of JsonElement) In json
+            If [property].Name Is Nothing Then
+                Continue For
+            End If
+
             If writers.ContainsKey([property].Name) Then
                 writer = writers([property].Name)
 

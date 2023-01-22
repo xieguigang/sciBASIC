@@ -38,12 +38,12 @@
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
     <DocumentationFile>Rstudio.xml</DocumentationFile>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+   
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-    <OutputPath>D:\GCModeller\src\R-sharp\App\</OutputPath>
+   
     <DocumentationFile>Rstudio.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -94,7 +94,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
     <DocumentationFile>Rstudio.xml</DocumentationFile>
-    <OutputPath>D:\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
+  
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
