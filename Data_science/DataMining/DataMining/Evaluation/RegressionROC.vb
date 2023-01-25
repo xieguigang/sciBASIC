@@ -5,6 +5,13 @@ Namespace Evaluation
 
     Public Module RegressionROC
 
+        ''' <summary>
+        ''' Evaluate the regression model ROC
+        ''' </summary>
+        ''' <param name="test"></param>
+        ''' <param name="range"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function ROC(test As IEnumerable(Of RegressionClassify),
                                      Optional range As DoubleRange = Nothing,

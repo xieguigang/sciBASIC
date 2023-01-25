@@ -74,6 +74,7 @@
 ' * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Evaluation
 
@@ -82,8 +83,8 @@ Namespace Evaluation
     ''' </summary>
     Public Class PerformanceEvaluator
 
-        Private _data As List(Of RankPair)
-        Private _changes As List(Of ChangePoint)
+        Dim _data As List(Of RankPair)
+        Dim _changes As List(Of ChangePoint)
 
         ''' <summary>
         ''' Receiver Operating Characteristic curve
@@ -115,7 +116,8 @@ Namespace Evaluation
         End Sub
 
         Private Sub computeStatistics()
-            _data.Sort()
+            Call _data.Sort()
+
             findChanges()
             computePR()
             computeRoC()
@@ -123,6 +125,7 @@ Namespace Evaluation
 
         Private Sub findChanges()
             Dim tp, fp, tn, fn As Integer
+
             fn = 0
             tn = 0
             fp = 0
@@ -170,11 +173,12 @@ Namespace Evaluation
         End Function
 
         Private Sub computePR()
-            _PRCurve = New List(Of PointF)()
-            _PRCurve.Add(New PointF(0, 1))
             Dim precision = computePrecision(_changes(0))
             Dim recall = computeRecall(_changes(0))
             Dim precisionSum As Single = 0
+
+            _PRCurve = New List(Of PointF)()
+            _PRCurve.Add(New PointF(0, 1))
 
             If _changes(0).TP > 0 Then
                 precisionSum += precision
@@ -200,6 +204,7 @@ Namespace Evaluation
             _AP = precisionSum / (_changes(0).FN + _changes(0).TP)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function computeTPR(cp As ChangePoint) As Single
             Return computeRecall(cp)
         End Function
@@ -213,10 +218,11 @@ Namespace Evaluation
         End Function
 
         Private Sub computeRoC()
-            _ROCCurve = New List(Of PointF)()
-            _ROCCurve.Add(New PointF(0, 0))
             Dim tpr = computeTPR(_changes(0))
             Dim fpr = computeFPR(_changes(0))
+
+            _ROCCurve = New List(Of PointF)()
+            _ROCCurve.Add(New PointF(0, 0))
             _ROCCurve.Add(New PointF(fpr, tpr))
             _AuC = 0
 
