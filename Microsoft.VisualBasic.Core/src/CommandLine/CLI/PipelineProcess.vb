@@ -145,8 +145,10 @@ Namespace CommandLine
             If p.StartInfo.RedirectStandardOutput Then
                 stdErr = handleRunStream(p, [in], onReadLine, async:=False)
             End If
+            If Not setProcess Is Nothing Then
+                setProcess(p)
+            End If
 
-            Call setProcess(p)
             Call p.WaitForExit()
 
             Return p.ExitCode
