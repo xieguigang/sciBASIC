@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::9ec095615af5f3cffcafd746f3a97767, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 116
-    '    Code Lines: 89
-    ' Comment Lines: 9
-    '   Blank Lines: 18
-    '     File Size: 5.03 KB
+' Summaries:
 
 
-    '     Class ExpressionEngine
-    ' 
-    '         Function: AddFunction, (+2 Overloads) Evaluate, GetFunction, GetSymbolValue, (+2 Overloads) SetSymbol
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 116
+'    Code Lines: 89
+' Comment Lines: 9
+'   Blank Lines: 18
+'     File Size: 5.03 KB
+
+
+'     Class ExpressionEngine
+' 
+'         Function: AddFunction, (+2 Overloads) Evaluate, GetFunction, GetSymbolValue, (+2 Overloads) SetSymbol
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports stdNum = System.Math
@@ -69,7 +70,7 @@ Namespace Scripting.MathExpression
         ''' </summary>
         ''' <remarks></remarks>
         ReadOnly functions As New Dictionary(Of String, Func(Of Double(), Double)) From {
- _
+                                                                                         _
             {"abs", Function(args) stdNum.Abs(args(Scan0))},
             {"acos", Function(args) stdNum.Acos(args(Scan0))},
             {"asin", Function(args) stdNum.Asin(args(Scan0))},
@@ -135,10 +136,12 @@ Namespace Scripting.MathExpression
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSymbolValue(name As String) As Double
             Return symbols(name)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFunction(name As String) As Func(Of Double(), Double)
             Return functions(name)
         End Function
@@ -153,6 +156,7 @@ Namespace Scripting.MathExpression
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Evaluate(expression As Expression) As Double
             Return expression.Evaluate(env:=Me)
         End Function
@@ -163,6 +167,14 @@ Namespace Scripting.MathExpression
             Dim result As Double = exp.Evaluate(Me)
 
             Return result
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Parse(expression As String) As Expression
+            Return New ExpressionTokenIcer(expression) _
+                .GetTokens _
+                .ToArray _
+                .DoCall(AddressOf BuildExpression)
         End Function
     End Class
 End Namespace
