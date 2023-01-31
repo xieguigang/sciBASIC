@@ -80,6 +80,9 @@ Public MustInherit Class IterationReporter(Of T As Model)
 
 End Class
 
+''' <summary>
+''' the base type of the machine learning model
+''' </summary>
 Public MustInherit Class Model
 
 End Class

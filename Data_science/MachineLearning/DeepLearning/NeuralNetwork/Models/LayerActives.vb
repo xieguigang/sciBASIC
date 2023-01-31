@@ -71,7 +71,6 @@ Namespace NeuralNetwork.Activations
     ''' </remarks>
     Public Class LayerActives
 
-        Public Property input As IActivationFunction
         ''' <summary>
         ''' 隐藏层都公用同一种激活函数?
         ''' </summary>
@@ -85,7 +84,6 @@ Namespace NeuralNetwork.Activations
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetXmlModels() As Dictionary(Of String, ActiveFunction)
             Return New Dictionary(Of String, ActiveFunction) From {
-                {NameOf(input), input.Store},
                 {NameOf(hiddens), hiddens.Store},
                 {NameOf(output), output.Store}
             }
@@ -95,7 +93,6 @@ Namespace NeuralNetwork.Activations
         Public Shared Function FromXmlModel(functions As Dictionary(Of String, ActiveFunction)) As LayerActives
             Return New LayerActives With {
                 .hiddens = functions!hiddens.Function,
-                .input = functions!input.Function,
                 .output = functions!output.Function
             }
         End Function
@@ -108,7 +105,6 @@ Namespace NeuralNetwork.Activations
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetDefaultConfig() As [Default](Of LayerActives)
             Return New LayerActives With {
-                .input = New Sigmoid,
                 .hiddens = New SigmoidFunction,
                 .output = New Sigmoid
             }

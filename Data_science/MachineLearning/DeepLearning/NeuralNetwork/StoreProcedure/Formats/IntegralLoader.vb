@@ -116,7 +116,7 @@ Namespace NeuralNetwork.StoreProcedure
             Call "Start to create neuron nodes...".__DEBUG_ECHO(mute:=mute)
 
             Dim inputLayer As Dictionary(Of String, Neuron) = model.inputlayer _
-                .createNeurons(activations.input, neuronDataTable) _
+                .createNeurons(Nothing, neuronDataTable) _
                 .ToDictionary(Function(n) n.Name,
                               Function(n) n.Value)
             Dim outputLayer As Dictionary(Of String, Neuron) = model.outputlayer _

@@ -97,6 +97,16 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="active">
+        ''' the activate function for the input layer could be nothing
+        ''' </param>
+        ''' <param name="weight"></param>
+        ''' <param name="input"></param>
+        ''' <param name="guid"></param>
         Sub New(size%, active As IActivationFunction, weight As Func(Of Double),
                 Optional input As Layer = Nothing,
                 Optional guid As i32 = Nothing)
