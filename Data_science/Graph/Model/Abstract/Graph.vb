@@ -78,7 +78,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Dim edges As New List(Of Edge)
 
     ''' <summary>
-    ''' 
+    ''' directed edge index
     ''' </summary>
     Protected ReadOnly linkIndex As New Dictionary(Of String, Dictionary(Of String, Edge))
 
