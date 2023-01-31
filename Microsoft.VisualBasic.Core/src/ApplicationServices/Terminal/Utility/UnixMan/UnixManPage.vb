@@ -67,6 +67,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Terminal.Utility
 
+    ''' <summary>
+    ''' the document index
+    ''' </summary>
     Public Class Index
 
         Public Property index As String
@@ -76,7 +79,7 @@ Namespace ApplicationServices.Terminal.Utility
         Public Property title As String
 
         Public Overrides Function ToString() As String
-            Return $".TH {Strings.UCase(index)} {category} {[date].Year}-{[date].Month.ToString.PadLeft(2, "0"c)}-{[date].Day.ToString.PadLeft(2, "0")} ""{keyword}"" ""{title}"""
+            Return $".TH {Strings.UCase(index)} {category} {[date].ToString("yyyy-MMM")} ""{keyword}"" ""{title}"""
         End Function
 
     End Class

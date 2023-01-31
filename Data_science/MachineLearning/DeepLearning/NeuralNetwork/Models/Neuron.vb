@@ -58,7 +58,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
 

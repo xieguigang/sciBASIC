@@ -162,7 +162,7 @@ Namespace NeuralNetwork
             Me.Activations = activations.GetXmlModels
             Me.LearnRateDecay = 0.00000001
 
-            InputLayer = New Layer(inputSize, activations.input, weightInit, guid:=guid)
+            InputLayer = New Layer(inputSize, Nothing, weightInit, guid:=guid)
             HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, weightInit, activations.hiddens, guid)
             OutputLayer = New Layer(outputSize, activations.output, weightInit, input:=HiddenLayer.Output, guid:=guid)
         End Sub

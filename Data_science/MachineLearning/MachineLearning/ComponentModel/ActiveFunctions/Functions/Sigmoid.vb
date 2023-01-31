@@ -121,6 +121,9 @@ Namespace ComponentModel.Activations
         ''' <summary>
         ''' Initializes a new instance of the <see cref="Sigmoid"/> class.
         ''' </summary>
+        ''' <remarks>
+        ''' subclass of <see cref="IActivationFunction"/>
+        ''' </remarks>
         Public Sub New()
         End Sub
 
@@ -129,7 +132,9 @@ Namespace ComponentModel.Activations
         ''' </summary>
         ''' 
         ''' <param name="alpha">Sigmoid's alpha value.</param>
-        ''' 
+        ''' <remarks>
+        ''' subclass of <see cref="IActivationFunction"/>
+        ''' </remarks>
         Public Sub New(alpha As Double)
             Me._Alpha = alpha
         End Sub
