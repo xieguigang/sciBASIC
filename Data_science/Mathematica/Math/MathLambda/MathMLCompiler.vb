@@ -50,7 +50,6 @@
 #End Region
 
 Imports System.Linq.Expressions
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.xml
 Imports ML = Microsoft.VisualBasic.MIME.application.xml.MathML.BinaryExpression
 Imports MLLambda = Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression
@@ -59,47 +58,58 @@ Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpre
 ''' <summary>
 ''' mathML -> lambda -> linq expression -> compile VB lambda
 ''' </summary>
-Public Module MathMLCompiler
+Public Class MathMLCompiler
 
-    Public Function CreateLambda(lambda As MLLambda) As LambdaExpression
-        Dim parameters = lambda.parameters.Select(Function(name) Expression.Parameter(GetType(Double), name)).ToDictionary(Function(par) par.Name)
-        Dim body As Expression = CreateBinary(lambda.lambda, parameters)
-        Dim expr As LambdaExpression = Expression.Lambda(body, lambda.parameters.Select(Function(par) parameters(par)).ToArray)
+    Dim symbols As SymbolIndex
+
+    Public Shared Function CreateLambda(lambda As MLLambda) As LambdaExpression
+        Dim parameters = SymbolIndex.FromLambda(lambda)
+        Dim compiler As New MathMLCompiler With {.symbols = parameters}
+        Dim body As Expression = compiler.CastExpression(lambda.lambda)
+        Dim expr As LambdaExpression = Expression.Lambda(body, parameters.Alignments)
 
         Return expr
     End Function
 
-    Private Function CreateBinary(member As [Variant](Of ML, MLSymbol), parameters As Dictionary(Of String, ParameterExpression)) As Expression
-        If member Like GetType(MLSymbol) Then
-            With member.TryCast(Of MLSymbol)
-                If .isNumericLiteral Then
-                    Return Expression.Constant(ParseDouble(.text), GetType(Double))
-                Else
-                    Return parameters(.text)
-                End If
-            End With
+    Private Function CastExpression(lambda As MathML.MathExpression) As Expression
+        Select Case lambda.GetType
+            Case GetType(MLSymbol) : Return CreateLiteral(lambda)
+            Case GetType(MathML.MathFunctionExpression) : Return CreateMathCalls(lambda)
+            Case GetType(ML) : Return CreateBinary(TryCast(lambda, ML))
+            Case Else
+                Throw New NotImplementedException(lambda.GetType.FullName)
+        End Select
+    End Function
+
+    Private Function CreateMathCalls(func As MathML.MathFunctionExpression) As Expression
+
+    End Function
+
+    Private Function CreateLiteral(symbol As MLSymbol) As Expression
+        If symbol.isNumericLiteral Then
+            Return Expression.Constant(ParseDouble(symbol.text), GetType(Double))
         Else
-            Return CreateBinary(member.TryCast(Of ML), parameters)
+            Return symbols(symbol.text)
         End If
     End Function
 
-    Private Function CreateBinary(member As ML, parameters As Dictionary(Of String, ParameterExpression)) As Expression
+    Private Function CreateBinary(member As ML) As Expression
         Select Case MathML.ContentBuilder.SimplyOperator(member.operator)
-            Case "+" : Return Expression.Add(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
+            Case "+" : Return Expression.Add(CastExpression(member.applyleft), CastExpression(member.applyright))
             Case "-"
                 If member.applyright Is Nothing Then
-                    Return Expression.Negate(CreateBinary(member.applyleft, parameters))
+                    Return Expression.Negate(CastExpression(member.applyleft))
                 Else
                     Return Expression.Subtract(
-                        CreateBinary(member.applyleft, parameters),
-                        CreateBinary(member.applyright, parameters)
+                        CastExpression(member.applyleft),
+                        CastExpression(member.applyright)
                     )
                 End If
-            Case "*" : Return Expression.Multiply(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
-            Case "/" : Return Expression.Divide(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
-            Case "^" : Return Expression.Power(CreateBinary(member.applyleft, parameters), CreateBinary(member.applyright, parameters))
+            Case "*" : Return Expression.Multiply(CastExpression(member.applyleft), CastExpression(member.applyright))
+            Case "/" : Return Expression.Divide(CastExpression(member.applyleft), CastExpression(member.applyright))
+            Case "^" : Return Expression.Power(CastExpression(member.applyleft), CastExpression(member.applyright))
             Case Else
-                Throw New InvalidCastException
+                Throw New InvalidCastException(member.operator)
         End Select
     End Function
-End Module
+End Class
