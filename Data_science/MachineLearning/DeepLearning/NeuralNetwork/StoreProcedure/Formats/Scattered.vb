@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::60a7ef4960ac3d2e5c85d1c51ab7bc13, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 151
-    '    Code Lines: 95
-    ' Comment Lines: 28
-    '   Blank Lines: 28
-    '     File Size: 6.04 KB
+' Summaries:
 
 
-    '     Module Scattered
-    ' 
-    '         Function: parseEdges, parseNode, ScatteredLoader, ScatteredStore
-    ' 
-    '         Sub: writeCsv
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 151
+'    Code Lines: 95
+' Comment Lines: 28
+'   Blank Lines: 28
+'     File Size: 6.04 KB
+
+
+'     Module Scattered
+' 
+'         Function: parseEdges, parseNode, ScatteredLoader, ScatteredStore
+' 
+'         Sub: writeCsv
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -153,31 +154,41 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="store">A directory path for save the network snapshot.</param>
         ''' <returns></returns>
         <Extension>
-        Public Function ScatteredStore(snapshot As NeuralNetwork, store$) As Boolean
+        Public Function ScatteredStore(snapshot As NeuralNetwork, store As IFileSystemEnvironment) As Boolean
             Dim main As New NeuralNetwork With {
                 .errors = snapshot.errors,
                 .learnRate = snapshot.learnRate,
                 .momentum = snapshot.momentum
             }
 
-            Call snapshot.inputlayer.GetXml.SaveTo($"{store}/{inputLayer}")
-            Call snapshot.hiddenlayers.GetXml.SaveTo($"{store}/{hiddenLayer}")
-            Call snapshot.outputlayer.GetXml.SaveTo($"{store}/{outputLayer}")
+            Call store.WriteText(snapshot.inputlayer.GetXml, $"/{inputLayer}")
+            Call store.WriteText(snapshot.hiddenlayers.GetXml, $"/{hiddenLayer}")
+            Call store.WriteText(snapshot.outputlayer.GetXml, $"/{outputLayer}")
 
             ' csv file format
-            Using csv As StreamWriter = $"{store}/{nodes}".OpenWriter
+            Using csv As New StreamWriter(store.OpenFile($"/{nodes}", FileMode.OpenOrCreate, FileAccess.Write))
                 With csv
-                    Call .writeCsv(NameOf(NeuronNode.id), NameOf(NeuronNode.bias), NameOf(NeuronNode.delta), NameOf(NeuronNode.gradient))
+                    Call .writeCsv(
+                        NameOf(NeuronNode.id),
+                        NameOf(NeuronNode.bias),
+                        NameOf(NeuronNode.delta),
+                        NameOf(NeuronNode.gradient)
+                    )
 
                     For Each node As NeuronNode In snapshot.neurons
-                        Call .writeCsv(node.id, node.bias.ToString("G17"), node.delta.ToString("G17"), node.gradient.ToString("G17"))
+                        Call .writeCsv(
+                            node.id,
+                            node.bias.ToString("G17"),
+                            node.delta.ToString("G17"),
+                            node.gradient.ToString("G17")
+                        )
                     Next
 
                     Call .Flush()
                 End With
             End Using
 
-            Using csv As StreamWriter = $"{store}/{edges}".OpenWriter
+            Using csv As New StreamWriter(store.OpenFile($"/{edges}", FileMode.OpenOrCreate, FileAccess.Write))
                 With csv
                     Call .writeCsv(NameOf(Synapse.in), NameOf(Synapse.out), NameOf(Synapse.w), NameOf(Synapse.delta))
 
@@ -189,7 +200,7 @@ Namespace NeuralNetwork.StoreProcedure
                 End With
             End Using
 
-            Return main.GetXml.SaveTo($"{store}/{mainPart}")
+            Return store.WriteText(main.GetXml, $"/{mainPart}")
         End Function
 
         ''' <summary>

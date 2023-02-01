@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
@@ -84,7 +85,7 @@ Namespace NeuralNetwork
             Call "save trained ANN model!".__DEBUG_ECHO
 
             If Not snapshotSaveLocation.StringEmpty Then
-                Call TakeSnapshot.ScatteredStore(snapshotSaveLocation)
+                Call TakeSnapshot.ScatteredStore(Directory.FromLocalFileSystem(snapshotSaveLocation))
             Else
                 Call "Snapshot location is empty, trained model will not saved...".__DEBUG_ECHO
             End If

@@ -185,6 +185,13 @@ Namespace NeuralNetwork
             Return Me
         End Function
 
+        ''' <summary>
+        ''' set a directory path for save the model xml files
+        ''' </summary>
+        ''' <param name="save">
+        ''' a directory path for save model file
+        ''' </param>
+        ''' <returns></returns>
         Public Function SetSnapshotLocation(save As String) As ANNTrainer
             snapshotSaveLocation = save
             Return Me
