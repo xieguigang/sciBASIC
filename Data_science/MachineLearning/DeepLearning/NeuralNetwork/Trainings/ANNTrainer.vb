@@ -97,6 +97,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <returns></returns>
         Public Property Selective As Boolean = True
+        Public Property ErrorThreshold As Double = 0.01
         ''' <summary>
         ''' [0,1]之间,建议设置一个[0.3,0.6]之间的值, 这个参数表示被随机删除的节点的数量百分比,值越高,则剩下的神经元节点越少
         ''' </summary>
@@ -309,11 +310,13 @@ Namespace NeuralNetwork
         Private Sub TrainInternal(numEpochs As Integer, parallel As Boolean, tick As ProgressProvider, break As Value(Of Boolean))
             Dim msg$
             Dim ETA$
+            Dim muErr As Double
 
             For i As Integer = 0 To numEpochs - 1
                 errors = runTraining(parallel)
                 ETA = $"ETA: {tick.ETA.FormatTime}"
-                msg = $"Iterations: [{i}/{numEpochs}], errors={errors.Average}{vbTab}learn_rate={network.LearnRate} {ETA}"
+                muErr = errors.Average
+                msg = $"Iterations: [{i}/{numEpochs}], errors={muErr}{vbTab}learn_rate={network.LearnRate} {ETA}"
 #If UNIX Then
                 Call msg.__INFO_ECHO
 #Else
@@ -332,12 +335,16 @@ Namespace NeuralNetwork
                     End If
                 End If
 #End If
-                If errors.Average < 0.0001 Then
+                If muErr < ErrorThreshold Then
+                    Exit For
+                ElseIf muErr < ErrorThreshold * 2 Then
                     Selective = False
+                Else
+
                 End If
 
                 If Not reporter Is Nothing Then
-                    Call reporter(i, errors.Average, network)
+                    Call reporter(i, muErr, network)
                 End If
                 If break.Value Then
                     Exit For
