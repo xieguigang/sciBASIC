@@ -170,8 +170,6 @@ Namespace ApplicationServices.Terminal.Utility
                     Call userAction()
                 End If
             Loop
-
-            Call workerThread.Abort()
         End Sub
 
         Protected Overrides Sub Dispose(disposing As Boolean)
