@@ -81,24 +81,25 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 返回来的完整的结果可以通过<see cref="IntegralLoader.LoadModel(NeuralNetwork,Boolean)"/>
         ''' 函数将数据模型来加载为计算模型
         ''' </returns>
-        Public Function ScatteredLoader(store As String, Optional mute As Boolean = False) As StoreProcedure.NeuralNetwork
-            Dim main = $"{store}/{mainPart}".LoadXml(Of StoreProcedure.NeuralNetwork)
+        Public Function ScatteredLoader(store As IFileSystemEnvironment, Optional mute As Boolean = False) As StoreProcedure.NeuralNetwork
+            Dim main = store.ReadAllText($"/{mainPart}").LoadFromXml(Of StoreProcedure.NeuralNetwork)
             Dim previousMuteConfig As Boolean = VBDebugger.Mute
 
             VBDebugger.Mute = mute
 
             Call "Load network parts...".__DEBUG_ECHO
 
-            main.inputlayer = $"{store}/{inputLayer}".LoadXml(Of NeuronLayer)
-            main.hiddenlayers = $"{store}/{hiddenLayer}".LoadXml(Of StoreProcedure.HiddenLayer)
-            main.outputlayer = $"{store}/{outputLayer}".LoadXml(Of NeuronLayer)
+            main.inputlayer = store.ReadAllText($"/{inputLayer}").LoadFromXml(Of NeuronLayer)
+            main.hiddenlayers = store.ReadAllText($"/{hiddenLayer}").LoadFromXml(Of StoreProcedure.HiddenLayer)
+            main.outputlayer = store.ReadAllText($"/{outputLayer}").LoadFromXml(Of NeuronLayer)
 
             Call "Load neuron nodes...".__DEBUG_ECHO
 
             ' 因为下面的数据较大，所以需要使用流的方式进行读取
             ' 节点数据比较小
             ' 可以一次性完全加载
-            main.neurons = $"{store}/{nodes}".ReadAllLines _
+            main.neurons = store.ReadAllText($"/{nodes}") _
+                .LineTokens _
                 .Skip(1) _
                 .AsParallel _
                 .Select(Function(line) line.Split(","c).parseNode) _
@@ -106,7 +107,10 @@ Namespace NeuralNetwork.StoreProcedure
 
             Call "Load neuron synapse edges...".__DEBUG_ECHO
 
-            main.connections = $"{store}/{edges}".parseEdges.ToArray
+            main.connections = store _
+                .OpenFile($"/{edges}", FileMode.Open, FileAccess.Read) _
+                .parseEdges _
+                .ToArray
 
             Call "Load neuron network model success!".__INFO_ECHO
 
@@ -116,8 +120,8 @@ Namespace NeuralNetwork.StoreProcedure
         End Function
 
         <Extension>
-        Private Function parseEdges(dataframe As String) As IEnumerable(Of Synapse)
-            Using csv As StreamReader = dataframe.OpenReader
+        Private Function parseEdges(dataframe As Stream) As IEnumerable(Of Synapse)
+            Using csv As New StreamReader(dataframe)
                 Return csv.IteratesStream _
                     .Skip(1) _
                     .AsParallel _

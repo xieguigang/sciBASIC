@@ -84,6 +84,7 @@ Namespace NeuralNetwork
             Dim parallels As New List(Of Func(Of Double(), Double()))
             Dim annLambda As Func(Of Double(), Double())
             Dim i As Integer
+            Dim fs As Directory
 
             For Each individual As String In dir _
                 .ListDirectory(SearchOption.SearchTopLevelOnly) _
@@ -91,7 +92,8 @@ Namespace NeuralNetwork
                              Return i32.GetHexInteger(name.BaseName)
                          End Function)
 
-                annLambda = ScatteredLoader(store:=individual, mute:=True).GetPredictLambda2(normalize, method, mute:=True)
+                fs = Directory.FromLocalFileSystem(individual)
+                annLambda = ScatteredLoader(store:=fs, mute:=True).GetPredictLambda2(normalize, method, mute:=True)
                 parallels += annLambda
 
                 i = i32.GetHexInteger(individual.BaseName)
