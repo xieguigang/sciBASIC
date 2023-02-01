@@ -129,6 +129,10 @@ Namespace ComponentModel.Activations
                         Return New Sinc
                     Case NameOf(Activations.Softplus)
                         Return New Softplus
+                    Case NameOf(Identical)
+                        Return New Identical
+                    Case NameOf(QLinear)
+                        Return New QLinear
                     Case Else
 #If DEBUG Then
                         Call $"Missing model: {name}".Warning
