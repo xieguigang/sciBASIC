@@ -81,7 +81,7 @@ Namespace ComponentModel.Activations
         ''' 所以可以利用这个值来限制求导之后的结果最大值
         ''' </summary>
         ''' <returns></returns>
-        Public Property Truncate As Double = 100
+        Public Property Truncate As Double = 10000
 
         Default Public ReadOnly Property Evaluate(x As Double) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
