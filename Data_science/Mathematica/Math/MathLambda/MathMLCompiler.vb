@@ -50,7 +50,9 @@
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Reflection
 Imports Microsoft.VisualBasic.MIME.application.xml
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports ML = Microsoft.VisualBasic.MIME.application.xml.MathML.BinaryExpression
 Imports MLLambda = Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression
 Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpression
@@ -61,6 +63,24 @@ Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpre
 Public Class MathMLCompiler
 
     Dim symbols As SymbolIndex
+
+    Shared ReadOnly clr_mathFuncs As New Dictionary(Of String, MethodInfo)
+
+    Shared Sub New()
+        Dim math As Type = GetType(System.Math)
+        Dim funcs = From f As MethodInfo
+                    In math.GetMethods
+                    Let rtvl = f.ReturnType
+                    Where f.IsStatic AndAlso f.IsPublic
+                    Where rtvl IsNot Nothing AndAlso rtvl IsNot GetType(Void)
+                    Where f.GetParameters.All(Function(a) a.ParameterType Is GetType(Double))
+                    Select f
+                    Group By f.Name Into Group
+
+        For Each func In funcs
+            Call clr_mathFuncs.Add(func.Name.ToLower, func.Group.FirstOrDefault)
+        Next
+    End Sub
 
     Public Shared Function CreateLambda(lambda As MLLambda) As LambdaExpression
         Dim parameters = SymbolIndex.FromLambda(lambda)
@@ -82,7 +102,14 @@ Public Class MathMLCompiler
     End Function
 
     Private Function CreateMathCalls(func As MathML.MathFunctionExpression) As Expression
+        Dim args As New List(Of Expression)
+        Dim f As MethodInfo = clr_mathFuncs(func.name)
 
+        For Each arg In func.parameters
+            Call args.Add(CastExpression(arg))
+        Next
+
+        Return Expression.Call(f, args.ToArray)
     End Function
 
     Private Function CreateLiteral(symbol As MLSymbol) As Expression
