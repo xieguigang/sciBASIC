@@ -781,10 +781,14 @@ B21,B22,B23,...
             Return result
         End Function
 
-        Protected Shared Function loads(file As Stream, encoding As Encoding, trimBlanks As Boolean, skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+        Protected Shared Function loads(file As Stream, encoding As Encoding,
+                                        trimBlanks As Boolean,
+                                        skipWhile As NamedValue(Of Func(Of String, Boolean)),
+                                        isTsv As Boolean) As List(Of RowObject)
+
             Using reader As New StreamReader(file, encoding)
                 Dim allLines As String() = reader.IteratesStream.ToArray
-                Dim data = FileLoader.Load(allLines, trimBlanks, skipWhile)
+                Dim data = FileLoader.Load(allLines, trimBlanks, skipWhile, isTsv)
 
                 Return data
             End Using

@@ -296,7 +296,7 @@ Namespace NeuralNetwork
                     saveSignal = New UserTaskSaveAction(AddressOf SaveSnapshot)
                 End If
 
-                Call TrainInternal(numEpochs, parallel, tick, break)
+                Call TrainInternal(numEpochs, parallel, tick, break, progress)
 
                 If Not cancelSignal Is Nothing Then
                     Call cancelSignal.Dispose()
@@ -307,7 +307,7 @@ Namespace NeuralNetwork
             End Using
         End Sub
 
-        Private Sub TrainInternal(numEpochs As Integer, parallel As Boolean, tick As ProgressProvider, break As Value(Of Boolean))
+        Private Sub TrainInternal(numEpochs As Integer, parallel As Boolean, tick As ProgressProvider, break As Value(Of Boolean), progress As ProgressBar)
             Dim msg$
             Dim ETA$
             Dim muErr As Double

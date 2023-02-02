@@ -26,7 +26,11 @@ Namespace ComponentModel.Activations
         End Function
 
         Protected Overrides Function Derivative(x As Double) As Double
-            Return 1 / (2 * x)
+            If x = 0.0 Then
+                Return 10000
+            Else
+                Return 1 / (2 * x)
+            End If
         End Function
     End Class
 End Namespace

@@ -106,7 +106,7 @@ Public Module PrimitiveParser
     End Function
 
     ''' <summary>
-    ''' 这个函数相较于<see cref="IsNumeric(String, Boolean)"/>，仅仅做简单的数值格式判断
+    ''' 这个函数相较于<see cref="PrimitiveParser.IsNumeric"/>，仅仅做简单的数值格式判断
     ''' </summary>
     ''' <returns></returns>
     ''' 

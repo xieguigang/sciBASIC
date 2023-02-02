@@ -84,7 +84,6 @@ Namespace Heatmap
             Dim columnNames$() = dataMatrix.PropertyNames
             Dim nrows = dataMatrix.Length
             Dim ncols = dataMatrix(Scan0).Properties.Count
-            Dim valueRanges As DoubleRange()
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)

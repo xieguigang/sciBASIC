@@ -106,8 +106,16 @@ Namespace NeuralNetwork
 
         Public Shared Function Softmax(V As Double()) As Double()
             Dim EVj As Double = Aggregate Vj As Double In V Into Sum(stdNum.Exp(Vj))
+
+            If EVj.IsNaNImaginary Then
+                ' x / inf = 0
+                Return New Double(V.Length - 1) {}
+            End If
+
             Dim smax As Double() = V _
-                .Select(Function(Vi) stdNum.Exp(Vi) / EVj) _
+                .Select(Function(Vi)
+                            Return If(Vi.IsNaNImaginary, 0, stdNum.Exp(Vi) / EVj)
+                        End Function) _
                 .ToArray
 
             Return smax

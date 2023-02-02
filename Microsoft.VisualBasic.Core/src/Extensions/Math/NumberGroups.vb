@@ -227,7 +227,7 @@ Namespace Math
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
-        ''' <param name="numbers"></param>
+        ''' <param name="source"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
         <Extension>
