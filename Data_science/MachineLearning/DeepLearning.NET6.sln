@@ -21,10 +21,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "math", "math", "{EFCAEE23-D
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "stats-netcore5", "..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{26B58824-43DE-4B09-98C9-0292DB7359EF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "learn", "learn", "{8BBFB2D3-12D0-45FA-A328-28CA9DAAC3B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
+		gcmodeller_desktop|Any CPU = gcmodeller_desktop|Any CPU
+		gcmodeller_desktop|x64 = gcmodeller_desktop|x64
 		LipidSearch|Any CPU = LipidSearch|Any CPU
 		LipidSearch|x64 = LipidSearch|x64
 		mzkit_win32|Any CPU = mzkit_win32|Any CPU
@@ -45,6 +49,10 @@ Global
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.Debug|x64.ActiveCfg = Debug|x64
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.Debug|x64.Build.0 = Debug|x64
+		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{8AB125A6-1135-46F3-8E72-F8DA463929B9}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -77,6 +85,10 @@ Global
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.Debug|x64.ActiveCfg = Debug|x64
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.Debug|x64.Build.0 = Debug|x64
+		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -109,6 +121,10 @@ Global
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.Debug|x64.ActiveCfg = Debug|x64
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.Debug|x64.Build.0 = Debug|x64
+		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -141,6 +157,10 @@ Global
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.Debug|x64.ActiveCfg = Debug|x64
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.Debug|x64.Build.0 = Debug|x64
+		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -173,6 +193,10 @@ Global
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.Debug|x64.ActiveCfg = Debug|x64
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.Debug|x64.Build.0 = Debug|x64
+		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{AF8B4013-1872-4A4C-A2D6-659EBC66192B}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -205,6 +229,10 @@ Global
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.Debug|x64.ActiveCfg = Debug|x64
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.Debug|x64.Build.0 = Debug|x64
+		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -237,6 +265,10 @@ Global
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.Debug|x64.ActiveCfg = Debug|x64
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.Debug|x64.Build.0 = Debug|x64
+		{26B58824-43DE-4B09-98C9-0292DB7359EF}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{26B58824-43DE-4B09-98C9-0292DB7359EF}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{26B58824-43DE-4B09-98C9-0292DB7359EF}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{26B58824-43DE-4B09-98C9-0292DB7359EF}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
 		{26B58824-43DE-4B09-98C9-0292DB7359EF}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
@@ -270,13 +302,14 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6} = {E9FF4A28-785C-4C22-B3A4-8B0300669433}
+		{2BBD5821-C65B-4604-A310-7CBD2FE6EDC6} = {8BBFB2D3-12D0-45FA-A328-28CA9DAAC3B2}
 		{06089399-F5BA-4BAB-B919-7EB7B32F2351} = {EFCAEE23-D8EB-4728-9501-B93C2E93B157}
 		{D2F35E32-8AEC-4F41-A3E5-248B2F24A8B9} = {E9FF4A28-785C-4C22-B3A4-8B0300669433}
-		{AF8B4013-1872-4A4C-A2D6-659EBC66192B} = {E9FF4A28-785C-4C22-B3A4-8B0300669433}
+		{AF8B4013-1872-4A4C-A2D6-659EBC66192B} = {8BBFB2D3-12D0-45FA-A328-28CA9DAAC3B2}
 		{F77C1B0E-0181-4B11-AE6F-AA33337DEF64} = {EFCAEE23-D8EB-4728-9501-B93C2E93B157}
 		{EFCAEE23-D8EB-4728-9501-B93C2E93B157} = {E9FF4A28-785C-4C22-B3A4-8B0300669433}
 		{26B58824-43DE-4B09-98C9-0292DB7359EF} = {EFCAEE23-D8EB-4728-9501-B93C2E93B157}
+		{8BBFB2D3-12D0-45FA-A328-28CA9DAAC3B2} = {E9FF4A28-785C-4C22-B3A4-8B0300669433}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D2E3FF3-5D54-49AC-A7E3-F2DE0DC45E12}
