@@ -57,7 +57,9 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.StorageProvider
 
 ''' <summary>
-''' 在写csv的时候生成列域名的映射的一些快捷函数
+''' Handling the data fields mapping for make processing of
+''' the csv headers.
+''' (在写csv的时候生成列域名的映射的一些快捷函数)
 ''' </summary>
 Public Class MappingsHelper
 
@@ -66,7 +68,8 @@ Public Class MappingsHelper
     ''' </summary>
     ''' <param name="file"></param>
     ''' <param name="types"></param>
-    ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会返回<see cref="System.Void"/>类型</returns>
+    ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会
+    ''' 返回<see cref="System.Void"/>类型</returns>
     Public Shared Function [Typeof](file$, ParamArray types As Type()) As Type
         Dim headers As New RowObject(Tokenizer.CharsParser(file.ReadFirstLine))
         Dim match As Type = StreamIO.TypeOf(headers, types)
@@ -79,7 +82,8 @@ Public Class MappingsHelper
     End Function
 
     ''' <summary>
-    ''' 这个函数只适用于只需要解析一个或者少数属性的列名称，假若需要解析的列数量很多，则出于性能方面的考虑不推荐使用这个函数来进行
+    ''' 这个函数只适用于只需要解析一个或者少数属性的列名称，假若需要解析的列数量很多，
+    ''' 则出于性能方面的考虑不推荐使用这个函数来进行
     ''' </summary>
     ''' <param name="schema"></param>
     ''' <param name="propertyName$">

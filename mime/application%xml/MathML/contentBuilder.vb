@@ -61,8 +61,20 @@ Namespace MathML
 
     Public Module ContentBuilder
 
-        ReadOnly operators As Dictionary(Of String, mathOperators) = Enums(Of mathOperators).ToDictionary(Function(t) t.ToString)
+        ReadOnly operators As Dictionary(Of String, mathOperators)
 
+        Sub New()
+            operators = Enums(Of mathOperators).ToDictionary(Function(t) t.ToString)
+
+            ' add simples
+            Call operators.Add("^", mathOperators.power)
+            Call operators.Add("+", mathOperators.plus)
+            Call operators.Add("-", mathOperators.minus)
+            Call operators.Add("*", mathOperators.times)
+            Call operators.Add("/", mathOperators.divide)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SimplyOperator(text As String) As String
             Return operators(text).Description
         End Function
@@ -146,7 +158,7 @@ Namespace MathML
         ''' <summary>
         ''' a list of standard math function
         ''' </summary>
-        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min", "exp"}
+        ReadOnly stdMathFunc As Index(Of String) = {"abs", "cos", "sin", "tan", "max", "min", "exp", "log", "ln"}
 
         <Extension>
         Private Function parseInternal(apply As XmlElement) As MathExpression

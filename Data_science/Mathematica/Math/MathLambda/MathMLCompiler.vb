@@ -1,56 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::f59476bc1647bd45bb9921eab52a197f, sciBASIC#\Data_science\Mathematica\Math\MathLambda\MathMLCompiler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 54
-    '    Code Lines: 46
-    ' Comment Lines: 3
-    '   Blank Lines: 5
-    '     File Size: 2.86 KB
+' Summaries:
 
 
-    ' Module MathMLCompiler
-    ' 
-    '     Function: (+2 Overloads) CreateBinary, CreateLambda
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 54
+'    Code Lines: 46
+' Comment Lines: 3
+'   Blank Lines: 5
+'     File Size: 2.86 KB
+
+
+' Module MathMLCompiler
+' 
+'     Function: (+2 Overloads) CreateBinary, CreateLambda
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Reflection
 Imports Microsoft.VisualBasic.MIME.application.xml
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports ML = Microsoft.VisualBasic.MIME.application.xml.MathML.BinaryExpression
 Imports MLLambda = Microsoft.VisualBasic.MIME.application.xml.MathML.LambdaExpression
 Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpression
@@ -61,6 +63,24 @@ Imports MLSymbol = Microsoft.VisualBasic.MIME.application.xml.MathML.SymbolExpre
 Public Class MathMLCompiler
 
     Dim symbols As SymbolIndex
+
+    Shared ReadOnly clr_mathFuncs As New Dictionary(Of String, MethodInfo)
+
+    Shared Sub New()
+        Dim math As Type = GetType(System.Math)
+        Dim funcs = From f As MethodInfo
+                    In math.GetMethods
+                    Let rtvl = f.ReturnType
+                    Where f.IsStatic AndAlso f.IsPublic
+                    Where rtvl IsNot Nothing AndAlso rtvl IsNot GetType(Void)
+                    Where f.GetParameters.All(Function(a) a.ParameterType Is GetType(Double))
+                    Select f
+                    Group By f.Name Into Group
+
+        For Each func In funcs
+            Call clr_mathFuncs.Add(func.Name.ToLower, func.Group.FirstOrDefault)
+        Next
+    End Sub
 
     Public Shared Function CreateLambda(lambda As MLLambda) As LambdaExpression
         Dim parameters = SymbolIndex.FromLambda(lambda)
@@ -82,7 +102,14 @@ Public Class MathMLCompiler
     End Function
 
     Private Function CreateMathCalls(func As MathML.MathFunctionExpression) As Expression
+        Dim args As New List(Of Expression)
+        Dim f As MethodInfo = clr_mathFuncs(func.name)
 
+        For Each arg In func.parameters
+            Call args.Add(CastExpression(arg))
+        Next
+
+        Return Expression.Call(f, args.ToArray)
     End Function
 
     Private Function CreateLiteral(symbol As MLSymbol) As Expression

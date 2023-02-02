@@ -148,7 +148,7 @@ Namespace NeuralNetwork
                 Call layer.CalculateGradient(parallel, truncate)
             Next
             For Each layer As Layer In reverseLayers
-                Call layer.UpdateWeights(learnRate, momentum, parallel)
+                Call layer.UpdateWeights(learnRate, momentum, truncate, parallel)
             Next
         End Sub
 

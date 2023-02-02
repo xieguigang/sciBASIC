@@ -1,0 +1,36 @@
+﻿Namespace ComponentModel.Collection
+
+    Public NotInheritable Class RectangularArray
+
+        Private Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' Create an empty matrix with m row and n cols.
+        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="m">m Rows</param>
+        ''' <param name="n">n Cols</param>
+        ''' <returns></returns>
+        Public Shared Function Matrix(Of T)(m%, n%) As T()()
+            Dim x As T()() = New T(m - 1)() {}
+
+            For i As Integer = 0 To m - 1
+                x(i) = New T(n - 1) {}
+            Next
+
+            Return x
+        End Function
+
+        Public Shared Function Matrix(type As Type, m%, n%) As Array
+            Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
+
+            For i As Integer = 0 To m - 1
+                Call newMatrix.SetValue(Array.CreateInstance(type, n), i)
+            Next
+
+            Return newMatrix
+        End Function
+    End Class
+End Namespace

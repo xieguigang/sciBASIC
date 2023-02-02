@@ -81,7 +81,7 @@ Namespace ComponentModel.Activations
         ''' 所以可以利用这个值来限制求导之后的结果最大值
         ''' </summary>
         ''' <returns></returns>
-        Public Property Truncate As Double = 100
+        Public Property Truncate As Double = 10000
 
         Default Public ReadOnly Property Evaluate(x As Double) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -98,10 +98,22 @@ Namespace ComponentModel.Activations
         End Property
 
         Public Overridable Function CalculateDerivative(x As Double) As Double
+            Dim val As Double
+
             If Truncate > 0 Then
-                Return ValueTruncate(Derivative(x), Truncate)
+                val = ValueTruncate(Derivative(x), Truncate)
             Else
-                Return Derivative(x)
+                val = Derivative(x)
+            End If
+
+            If Double.IsPositiveInfinity(val) Then
+                Return 100000
+            ElseIf Double.IsNegativeInfinity(val) Then
+                Return -100000
+            ElseIf val.IsNaNImaginary Then
+                Return 1
+            Else
+                Return val
             End If
         End Function
 

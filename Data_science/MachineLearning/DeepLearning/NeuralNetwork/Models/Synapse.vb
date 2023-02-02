@@ -82,7 +82,7 @@ Namespace NeuralNetwork
         Public ReadOnly Property Value As Double
             Get
                 ' 在这里为了防止出现 0 * Inf = NaN 的情况出现
-                If Weight = 0R OrElse InputNeuron.Value = 0 Then
+                If Weight = 0R OrElse InputNeuron.Value = 0R Then
                     Return 0
                 Else
                     Return Weight * InputNeuron.Value

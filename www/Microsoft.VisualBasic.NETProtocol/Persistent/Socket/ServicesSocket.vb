@@ -216,8 +216,8 @@ Namespace Tcp.Persistent.Socket
             )
 
             Call _socketListener.Bind(localEndPoint)
-            Call _socketListener.ReceiveBufferSize.SetValue(4096)
-            Call _socketListener.SendBufferSize.SetValue(4096)
+            Call _socketListener.ReceiveBufferSize.InlineCopy(4096)
+            Call _socketListener.SendBufferSize.InlineCopy(4096)
             Call _socketListener.Listen(backlog:=100)
         End Sub
 

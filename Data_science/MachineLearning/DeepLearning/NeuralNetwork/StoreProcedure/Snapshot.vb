@@ -55,6 +55,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Linq
 Imports Connector = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Synapse
 
@@ -197,8 +198,8 @@ Namespace NeuralNetwork.StoreProcedure
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function WriteScatteredParts(directory As String) As Boolean
-            Return snapshot.ScatteredStore(store:=directory)
+        Public Function WriteScatteredParts(dir As String) As Boolean
+            Return snapshot.ScatteredStore(store:=Directory.FromLocalFileSystem(dir))
         End Function
 
         Public Overrides Function ToString() As String

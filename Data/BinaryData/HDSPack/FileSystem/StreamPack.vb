@@ -461,6 +461,9 @@ Namespace FileSystem
         '     MyBase.Finalize()
         ' End Sub
 
+        ''' <summary>
+        ''' 已经在dispose函数之中处理好所有文件数据保存，以及文件释放的工作，直接dispose即可
+        ''' </summary>
         Public Sub Dispose() Implements IDisposable.Dispose
             ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
             Dispose(disposing:=True)
@@ -500,7 +503,7 @@ Namespace FileSystem
             Return Extensions.ReadText(Me, path)
         End Function
 
-        Public Sub Flush() Implements IFileSystemEnvironment.Flush
+        Private Sub Flush() Implements IFileSystemEnvironment.Flush
             Call flushStreamPack()
         End Sub
     End Class

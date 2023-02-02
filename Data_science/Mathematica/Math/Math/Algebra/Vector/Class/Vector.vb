@@ -989,7 +989,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
+            Return "[" & Me.ToString("G6").JoinBy(", ") & "]"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

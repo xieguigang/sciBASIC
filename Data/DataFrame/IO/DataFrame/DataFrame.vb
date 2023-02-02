@@ -342,11 +342,19 @@ Namespace IO
             Return CreateObject(file)
         End Function
 
-        Public Overloads Shared Function Load(stream As Stream, Optional encoding As Encoding = Nothing) As DataFrame
+        Public Overloads Shared Function Load(stream As Stream,
+                                              Optional encoding As Encoding = Nothing,
+                                              Optional isTsv As Boolean = False) As DataFrame
             Dim file As New File With {
-                ._innerTable = File.loads(stream, If(encoding, Encoding.Default), trimBlanks:=False, skipWhile:=Nothing)
+                ._innerTable = File.loads(
+                    file:=stream,
+                    encoding:=If(encoding, Encoding.Default),
+                    trimBlanks:=False,
+                    skipWhile:=Nothing,
+                    isTsv:=isTsv
+                )
             }
-            Dim table = CreateObject(file)
+            Dim table As DataFrame = CreateObject(file)
 
             Return table
         End Function

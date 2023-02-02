@@ -221,13 +221,11 @@ End Class
 ''' Table's borders control
 ''' </summary>
 Public Class PdfTableBorder
-    ''' <summary>
-    ''' Top border line
-    ''' </summary>
 
     ''' <summary>
-    ''' Bottom border line
+    ''' At least one cell vertical border is active
     ''' </summary>
+    Private _TopBorder As PdfTableBorderStyle, _BottomBorder As PdfTableBorderStyle
 
     ''' <summary>
     ''' Header horizontal border
@@ -235,43 +233,11 @@ Public Class PdfTableBorder
     ''' <remarks>
     ''' Border between headers and first row of cells.
     ''' </remarks>
+    Dim _HeaderHorBorder As PdfTableBorderStyle, _CellHorBorder As PdfTableBorderStyle, _HeaderVertBorder As PdfTableBorderStyle(), _HeaderVertBorderActive As Boolean, _CellVertBorder As PdfTableBorderStyle(), _CellVertBorderActive As Boolean
 
     ''' <summary>
-    ''' Cell horizontal border line
+    ''' Top border line
     ''' </summary>
-    ''' <remarks>
-    ''' One border style for all horizontal borders between rows of cells.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Array of vertical borders between headers
-    ''' </summary>
-    ''' <remarks>
-    ''' Array of vertical borders between all headers.
-    ''' Array's size is Columns + 1.
-    ''' Array's item [0] is left border.
-    ''' Array's item [Coloumns] is right border.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' At least one header vertical border is active
-    ''' </summary>
-
-    ''' <summary>
-    ''' Array of vertical borders between cells
-    ''' </summary>
-    ''' <remarks>
-    ''' Array of vertical borders between all cells.
-    ''' Array's size is Columns + 1.
-    ''' Array's item [0] is left border.
-    ''' Array's item [Coloumns] is right border.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' At least one cell vertical border is active
-    ''' </summary>
-    Private _TopBorder As PdfTableBorderStyle, _BottomBorder As PdfTableBorderStyle, _HeaderHorBorder As PdfTableBorderStyle, _CellHorBorder As PdfTableBorderStyle, _HeaderVertBorder As PdfTableBorderStyle(), _HeaderVertBorderActive As Boolean, _CellVertBorder As PdfTableBorderStyle(), _CellVertBorderActive As Boolean
-
     Public Property TopBorder As PdfTableBorderStyle
         Get
             Return _TopBorder
@@ -311,6 +277,9 @@ Public Class PdfTableBorder
         Return
     End Sub
 
+    ''' <summary>
+    ''' Bottom border line
+    ''' </summary>
     Public Property BottomBorder As PdfTableBorderStyle
         Get
             Return _BottomBorder
@@ -350,6 +319,12 @@ Public Class PdfTableBorder
         Return
     End Sub
 
+    ''' <summary>
+    ''' Header horizontal border
+    ''' </summary>
+    ''' <remarks>
+    ''' Border between headers and first row of cells.
+    ''' </remarks>
     Public Property HeaderHorBorder As PdfTableBorderStyle
         Get
             Return _HeaderHorBorder
@@ -389,6 +364,12 @@ Public Class PdfTableBorder
         Return
     End Sub
 
+    ''' <summary>
+    ''' Cell horizontal border line
+    ''' </summary>
+    ''' <remarks>
+    ''' One border style for all horizontal borders between rows of cells.
+    ''' </remarks>
     Public Property CellHorBorder As PdfTableBorderStyle
         Get
             Return _CellHorBorder
@@ -428,6 +409,15 @@ Public Class PdfTableBorder
         Return
     End Sub
 
+    ''' <summary>
+    ''' Array of vertical borders between headers
+    ''' </summary>
+    ''' <remarks>
+    ''' Array of vertical borders between all headers.
+    ''' Array's size is Columns + 1.
+    ''' Array's item [0] is left border.
+    ''' Array's item [Coloumns] is right border.
+    ''' </remarks>
     Public Property HeaderVertBorder As PdfTableBorderStyle()
         Get
             Return _HeaderVertBorder
@@ -470,6 +460,9 @@ Public Class PdfTableBorder
         Return
     End Sub
 
+    ''' <summary>
+    ''' At least one header vertical border is active
+    ''' </summary>
     Public Property HeaderVertBorderActive As Boolean
         Get
             Return _HeaderVertBorderActive
@@ -479,6 +472,15 @@ Public Class PdfTableBorder
         End Set
     End Property
 
+    ''' <summary>
+    ''' Array of vertical borders between cells
+    ''' </summary>
+    ''' <remarks>
+    ''' Array of vertical borders between all cells.
+    ''' Array's size is Columns + 1.
+    ''' Array's item [0] is left border.
+    ''' Array's item [Coloumns] is right border.
+    ''' </remarks>
     Public Property CellVertBorder As PdfTableBorderStyle()
         Get
             Return _CellVertBorder

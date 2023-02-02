@@ -170,8 +170,23 @@ Namespace ApplicationServices.Terminal.Utility
                     Call userAction()
                 End If
             Loop
+        End Sub
 
-            Call workerThread.Abort()
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                    Try
+                        Call workerThread.Abort()
+                    Catch ex As Exception
+
+                    End Try
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并替代终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
         End Sub
     End Class
 End Namespace

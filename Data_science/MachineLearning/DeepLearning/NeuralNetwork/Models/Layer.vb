@@ -143,15 +143,15 @@ Namespace NeuralNetwork
         ''' <param name="learnRate#"></param>
         ''' <param name="momentum#"></param>
         ''' <param name="parallel"></param>
-        Public Sub UpdateWeights(learnRate#, momentum#, Optional parallel As Boolean = False)
+        Public Sub UpdateWeights(learnRate#, momentum#, truncate As Double, Optional parallel As Boolean = False)
             If Not parallel Then
                 For Each neuron As Neuron In allActiveNodes()
-                    Call neuron.UpdateWeights(learnRate, momentum, doDropOutMode)
+                    Call neuron.UpdateWeights(learnRate, momentum, truncate, doDropOutMode)
                 Next
             Else
                 With Aggregate neuron As Neuron
                      In allActiveNodes.AsParallel
-                     Let run = neuron.UpdateWeights(learnRate, momentum, doDropOutMode)
+                     Let run = neuron.UpdateWeights(learnRate, momentum, truncate, doDropOutMode)
                      Into Sum(run)
                 End With
             End If
@@ -219,7 +219,7 @@ Namespace NeuralNetwork
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim n = Output
+            Dim n As Double() = Output
             Dim summary$
 
             If n.Length > 20 Then

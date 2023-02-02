@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace NeuralNetwork.StoreProcedure
@@ -128,7 +129,7 @@ Namespace NeuralNetwork.StoreProcedure
             If handle.FileLength > 0 Then
                 Return handle.LoadXml(Of NeuralNetwork)
             Else
-                Return ScatteredLoader(store:=handle)
+                Return ScatteredLoader(store:=Directory.FromLocalFileSystem(handle))
             End If
         End Function
     End Class

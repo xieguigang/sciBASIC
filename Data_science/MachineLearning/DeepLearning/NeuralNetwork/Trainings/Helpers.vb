@@ -65,7 +65,6 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
