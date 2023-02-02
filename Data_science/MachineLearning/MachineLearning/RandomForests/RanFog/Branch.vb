@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports stdNum = System.Math
 
 Public Class Branch
 
@@ -9,13 +8,13 @@ Public Class Branch
     Friend Feature, Child1, Child2, Parent As Integer
     Friend list As List(Of Integer) = New List(Of Integer)()
 
-
+    ''' <summary>
+    ''' This method returns the SNP for a given position.
+    '''  It needs as arguments:
+    '''  @arg position, the position of the SNP in the genomic combination
+    ''' </summary>
     Public Overridable Function getMean(ByVal phen As Double()) As Double
-        ''' <summary>
-        ''' This method returns the SNP for a given position.
-        '''  It needs as arguments:
-        '''  @arg position, the position of the SNP in the genomic combination
-        ''' </summary>
+
         Dim i = 0
         mean = 0.0R
         For i = 0 To list.Count - 1
@@ -24,12 +23,13 @@ Public Class Branch
         mean = mean / list.Count
         Return mean
     End Function
+
+    ''' <summary>
+    ''' This method returns the SNP for a given position.
+    '''  It needs as arguments:
+    '''  @arg position, the position of the SNP in the genomic combination
+    ''' </summary>
     Public Overridable Function getClass(ByVal phen As Double()) As Integer
-        ''' <summary>
-        ''' This method returns the SNP for a given position.
-        '''  It needs as arguments:
-        '''  @arg position, the position of the SNP in the genomic combination
-        ''' </summary>
         Dim i = 0
         Dim temp = New Integer(2) {}
         For i = 0 To list.Count - 1
@@ -44,12 +44,13 @@ Public Class Branch
         End If
         Return class_val
     End Function
+
+    ''' <summary>
+    ''' This method returns the SNP for a given position.
+    '''  It needs as arguments:
+    '''  @arg position, the position of the SNP in the genomic combination
+    ''' </summary>
     Public Overridable Function getMSE(ByVal phen As Double()) As Double
-        ''' <summary>
-        ''' This method returns the SNP for a given position.
-        '''  It needs as arguments:
-        '''  @arg position, the position of the SNP in the genomic combination
-        ''' </summary>
         Dim i = 0
         getMean(phen)
         Dim MSE = 0.0R
@@ -59,17 +60,18 @@ Public Class Branch
         'MSE=MSE/list.size();
         Return MSE
     End Function
+
+    ''' <summary>
+    ''' This method returns the SNP for a given position.
+    '''  It needs as arguments:
+    '''  @arg position, the position of the SNP in the genomic combination
+    ''' </summary>
     Public Overridable Function getMissClass(ByVal phen As Double()) As Double
-        ''' <summary>
-        ''' This method returns the SNP for a given position.
-        '''  It needs as arguments:
-        '''  @arg position, the position of the SNP in the genomic combination
-        ''' </summary>
         Dim i = 0
         getClass(phen)
         Dim MSE = 0.0R
         For i = 0 To list.Count - 1
-            MSE = MSE + Math.Abs(CInt(phen(list(i))) - class_val)
+            MSE = MSE + stdNum.Abs(CInt(phen(list(i))) - class_val)
         Next
         'MSE=MSE/list.size();
         Return MSE
