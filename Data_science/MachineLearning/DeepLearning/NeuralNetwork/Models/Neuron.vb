@@ -149,7 +149,10 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputNeurons"></param>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(inputNeurons As IEnumerable(Of Neuron), weight As Func(Of Double), Optional active As IActivationFunction = Nothing, Optional guid As i32 = Nothing)
+        Public Sub New(inputNeurons As IEnumerable(Of Neuron), weight As Func(Of Double),
+                       Optional active As IActivationFunction = Nothing,
+                       Optional guid As i32 = Nothing)
+
             Call Me.New(weight, active, guid)
 
             Dim synapse As Synapse
