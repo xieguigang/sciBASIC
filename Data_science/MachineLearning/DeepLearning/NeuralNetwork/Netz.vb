@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports stdNum = System.Math
 
 Namespace NeuralNetwork
 
@@ -32,7 +33,7 @@ Namespace NeuralNetwork
 
         Private outputError As Double()
 
-        Public Sub New(ByVal inputNeurons As Integer, ByVal hiddenNeurons As Integer, ByVal hiddenLayers As Integer, ByVal outputNeurons As Integer)
+        Public Sub New(inputNeurons As Integer, hiddenNeurons As Integer, hiddenLayers As Integer, outputNeurons As Integer)
             HIDDENLAYERCOUNTField = hiddenLayers
             INPUTNEURONCOUNTField = inputNeurons
             HIDDENNEURONCOUNTField = hiddenNeurons
@@ -41,31 +42,31 @@ Namespace NeuralNetwork
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neurons = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            neuronsField = mat(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            neuronsField = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neuronsIsAlive = new bool[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            neuronsIsAlive = RectangularArrays.ReturnRectangularBoolArray(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            neuronsIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neuronsCost = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT];
-            neuronsCost = RectangularArrays.ReturnRectangularDoubleArray(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
+            neuronsCost = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: deltas = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT];
-            deltas = RectangularArrays.ReturnRectangularDoubleArray(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
+            deltas = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
 
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: weights = new double[HIDDENLAYERCOUNT+1][MAXNEURONCOUNT][MAXNEURONCOUNT]; //[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
-            weightsField = RectangularArrays.ReturnRectangularDoubleArray(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
+            weightsField = MAT(Of Double)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: weightsIsAlive = new bool[HIDDENLAYERCOUNT+1][MAXNEURONCOUNT][MAXNEURONCOUNT]; //[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
-            weightsIsAlive = RectangularArrays.ReturnRectangularBoolArray(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
+            weightsIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: bias = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            biasField = RectangularArrays.ReturnRectangularDoubleArray(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            biasField = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: biasIsAlive = new bool[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Neuron]
-            biasIsAlive = RectangularArrays.ReturnRectangularBoolArray(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Neuron]
+            biasIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Neuron]
 
             For i = 0 To INPUTNEURONCOUNTField - 1
                 For j = 0 To HIDDENNEURONCOUNTField - 1
@@ -117,12 +118,12 @@ Namespace NeuralNetwork
         End Sub
 
 
-        Private Sub addInput(ByVal input As Double())
+        Private Sub addInput(input As Double())
             neuronsField(0) = input
         End Sub
 
 
-        Public Overridable Sub run(ByVal input As Double())
+        Public Overridable Sub run(input As Double())
             addInput(input)
             For i = 1 To HIDDENLAYERCOUNTField + 2 - 1
                 For j = 0 To HIDDENNEURONCOUNTField - 1
@@ -151,14 +152,14 @@ Namespace NeuralNetwork
             End Get
         End Property
 
-        Public Overridable Function getOutput(ByVal input As Double()) As Double()
+        Public Overridable Function getOutput(input As Double()) As Double()
             run(input)
             Return Output
         End Function
 
 
 
-        Private Sub calculateError(ByVal goodOutput As Double())
+        Private Sub calculateError(goodOutput As Double())
 
             For i = 0 To goodOutput.Length - 1
                 neuronsCost(HIDDENLAYERCOUNTField + 1)(i) = goodOutput(i) - neuronsField(HIDDENLAYERCOUNTField + 1)(i)
@@ -170,7 +171,7 @@ Namespace NeuralNetwork
                         For k = 0 To MAXNEURONCOUNT - 1
                             neuronsCost(i)(j) += neuronsCost(i + 1)(k) * weightsField(i)(j)(k)
                         Next
-                        neuronsCost(i)(j) = Math.Pow(neuronsCost(i)(j), 2)
+                        neuronsCost(i)(j) = neuronsCost(i)(j) ^ 2
                     End If
                 Next
             Next
@@ -199,7 +200,7 @@ Namespace NeuralNetwork
             Next
         End Sub
 
-        Private Sub calculateError2(ByVal goodOutput As Double())
+        Private Sub calculateError2(goodOutput As Double())
 
             For i = 0 To goodOutput.Length - 1
                 deltas(HIDDENLAYERCOUNTField + 1)(i) = neuronsField(HIDDENLAYERCOUNTField + 1)(i) * (1 - neuronsField(HIDDENLAYERCOUNTField + 1)(i))
@@ -236,7 +237,7 @@ Namespace NeuralNetwork
             Next
         End Sub
 
-        Public Overridable Sub train(ByVal input As Double(), ByVal goodOutput As Double())
+        Public Overridable Sub train(input As Double(), goodOutput As Double())
             run(input)
             calculateError2(goodOutput)
             adjustWeightsAndBias2()
@@ -252,13 +253,13 @@ Namespace NeuralNetwork
             End Get
         End Property
 
-        Private Function sigmoidValue(ByVal d As Double?) As Double
-            Return 1 / (1 + Math.Exp(-d))
+        Private Function sigmoidValue(d As Double) As Double
+            Return 1 / (1 + stdNum.Exp(-d))
         End Function
 
-        Public Overridable ReadOnly Property Weights As List(Of Double?)
+        Public Overridable ReadOnly Property Weights As List(Of Double)
             Get
-                Dim allWeights As List(Of Double?) = New List(Of Double?)()
+                Dim allWeights As List(Of Double) = New List(Of Double)()
 
                 For i = 0 To weightsField.Length - 1
                     For j = 0 To weightsField(i).Length - 1
@@ -273,9 +274,9 @@ Namespace NeuralNetwork
                 Return allWeights
             End Get
         End Property
-        Public Overridable ReadOnly Property Neurons As List(Of Double?)
+        Public Overridable ReadOnly Property Neurons As List(Of Double)
             Get
-                Dim allNeurons As List(Of Double?) = New List(Of Double?)()
+                Dim allNeurons As List(Of Double) = New List(Of Double)()
 
                 For i = 0 To neuronsField.Length - 1
                     For j = 0 To neuronsField(i).Length - 1
@@ -289,9 +290,9 @@ Namespace NeuralNetwork
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Bias As List(Of Double?)
+        Public Overridable ReadOnly Property Bias As List(Of Double)
             Get
-                Dim allBias As List(Of Double?) = New List(Of Double?)()
+                Dim allBias As List(Of Double) = New List(Of Double)()
 
                 For i = 0 To biasField.Length - 1
                     For j = 0 To biasField(i).Length - 1
