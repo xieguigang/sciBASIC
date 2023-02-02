@@ -67,6 +67,12 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 
 Namespace ApplicationServices.Terminal.TablePrinter
 
+    ''' <summary>
+    ''' A fluent library to print out a nicely formatted table in a console application
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/minhhungit/ConsoleTableExt
+    ''' </remarks>
     Public Class ConsoleTableBuilder
         Friend Property Column As List(Of Object)
         Friend Property FormattedColumns As List(Of String)
@@ -98,7 +104,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         End Sub
 
         ''' <summary>
-        ''' This function allow developer implement themeself data-source
+        ''' This function allow developer implement theme self data-source
         ''' </summary>
         ''' <param name="func"></param>
         ''' <returns></returns>
@@ -474,7 +480,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 Dim reallength = newBeginTableFormat.RealLength(True)
                 newBeginTableFormat += line.Substring(reallength, line.Length - reallength)
                 line = newBeginTableFormat
-                line = line.Replace(Microsoft.VisualBasic.Constants.vbNullChar, " ")
+                line = line.Replace(vbNullChar, " ")
             End If
 
             Return line
@@ -675,7 +681,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                     CharMapPositionStore(CType(CharMapPositions.MiddleLeft, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.BottomLeft, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.BorderLeft, CharMapPositions))
-                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             Else
                 Dim data = New List(Of Char) From {
                 }
@@ -685,7 +691,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 data.Add(CharMapPositionStore(CharMapPositions.MiddleLeft))
                 data.Add(CharMapPositionStore(CharMapPositions.BorderLeft))
                 data.Add(CharMapPositionStore(CharMapPositions.BottomLeft))
-                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             End If
         End Function
 
@@ -696,7 +702,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                     CharMapPositionStore(CType(CharMapPositions.MiddleRight, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.BottomRight, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.BorderRight, CharMapPositions))
-                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             Else
                 Dim data = New List(Of Char) From {
                 }
@@ -706,7 +712,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 data.Add(CharMapPositionStore(CharMapPositions.MiddleRight))
                 data.Add(CharMapPositionStore(CharMapPositions.BorderRight))
                 data.Add(CharMapPositionStore(CharMapPositions.BottomRight))
-                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             End If
         End Function
 
@@ -717,7 +723,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                     CharMapPositionStore(CType(CharMapPositions.MiddleCenter, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.BottomCenter, CharMapPositions)),
                     CharMapPositionStore(CType(CharMapPositions.DividerY, CharMapPositions))
-                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                }, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             Else
                 Dim data = New List(Of Char) From {
                 }
@@ -727,7 +733,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 data.Add(CharMapPositionStore(CharMapPositions.MiddleCenter))
                 data.Add(CharMapPositionStore(CharMapPositions.DividerY))
                 data.Add(CharMapPositionStore(CharMapPositions.BottomCenter))
-                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(Microsoft.VisualBasic.Constants.vbNullChar), CStr(String.Empty)).Trim().Length = 0
+                Return Enumerable.Aggregate(Of String)(Enumerable.Select(Of Char, Global.System.[String])(data, CType(Function(x) CStr(x.ToString()), Func(Of Char, String))), CType(Function(s, a) CStr(s & a), Func(Of String, String, String))).Replace(CStr(vbNullChar), CStr(String.Empty)).Trim().Length = 0
             End If
         End Function
     End Class
