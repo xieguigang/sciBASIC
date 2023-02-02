@@ -1,4 +1,4 @@
-﻿Imports System.Collections.Generic
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ''' <summary>
 ''' This class provides a method to randomize the contents of an array
@@ -31,7 +31,7 @@ Public Class Permutator
         'now that all the prework is done, here is the beautiful part
         Dim i = 0 'index we are writting to
         While i < ret.Length
-            Dim v As Integer = NextDouble * temp.Count 'generate a random number from 0- (size-1)
+            Dim v As Integer = randf.NextDouble * temp.Count 'generate a random number from 0- (size-1)
             If v = temp.Count Then
                 Continue While 'just in case, paranoid
             End If

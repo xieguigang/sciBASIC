@@ -1,5 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
+Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 ' Title:            Random Forest for classified and regression problems 
@@ -14,9 +16,11 @@ Imports System.Collections.Generic
 
 Public Class RanFog
 
-    'JAVA TO C# CONVERTER CRACKED BY X-CRACKER WARNING: Method 'throws' clauses are not available in .NET:
-    'ORIGINAL LINE: public static void main(String[] args) throws java.io.IOException
-    Public Shared Sub Main(ByVal args As String())
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="demoProperties">"params.txt"</param>
+    Public Sub Run(demoProperties As Dictionary(Of String, String))
         ''' <summary>
         ''' Program execution starts here. 
         ''' This method construct a random forest (Breiman, 2001. Machine Learning, 45)
@@ -35,42 +39,36 @@ Public Class RanFog
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         '''   Load parameter file                                                           
         ''' </summary>
+        ' 
 
-        Dim demoProperties As Properties = New Properties()
-        Try
-            Dim stream As FileStream = New FileStream("params.txt", FileMode.Open, FileAccess.Read)
-            demoProperties.load(stream)
-        Catch __unusedFileNotFoundException1__ As FileNotFoundException
-            Console.WriteLine("Parameter file 'params.txt' not found. ")
-        End Try
 
         'Max number of trees to be constructed
-        Dim max_tree = Integer.Parse(demoProperties.getProperty("ForestSize"))
+        Dim max_tree = Integer.Parse(demoProperties("ForestSize"))
         'Number of classified Features
-        Dim N_SNP = Integer.Parse(demoProperties.getProperty("N_features"))
+        Dim N_SNP = Integer.Parse(demoProperties("N_features"))
         'Name of training file; Load training file
-        Dim trnFile As File = New File(demoProperties.getProperty("training"))
+        Dim trnFile As FileStream '(demoProperties("training"))
         'Name of testing file; Load testing file
-        Dim tstFile As File = New File(demoProperties.getProperty("testing"))
+        Dim tstFile As FileStream '(demoProperties("testing"))
         'Number of Features randomly selected at each node
-        Dim m = Double.Parse(demoProperties.getProperty("mtry")) 'Percentage of Features randomly selected at each node
+        Dim m = Double.Parse(demoProperties("mtry")) 'Percentage of Features randomly selected at each node
         'Max number of branches allowed
-        Dim max_branch = Integer.Parse(demoProperties.getProperty("max_branch"))
+        Dim max_branch = Integer.Parse(demoProperties("max_branch"))
         'Loss function used for discrete features
-        '		String LF_d=demoProperties.getProperty("LossFunction_discrete");
+        '		String LF_d=demoProperties("LossFunction_discrete");
         'Loss function used for continuous features
-        Dim LF_c As String = demoProperties.getProperty("LossFunction")
+        Dim LF_c As String = demoProperties("LossFunction")
         Dim false_positive_cost As Double
         Dim false_negative_cost As Double
-        If demoProperties.getProperty("false_positive_cost") Is Nothing Then
+        If demoProperties("false_positive_cost") Is Nothing Then
             false_positive_cost = 0
         Else
-            false_positive_cost = Double.Parse(demoProperties.getProperty("false_positive_cost"))
+            false_positive_cost = Double.Parse(demoProperties("false_positive_cost"))
         End If
-        If demoProperties.getProperty("false_negative_cost") Is Nothing Then
+        If demoProperties("false_negative_cost") Is Nothing Then
             false_negative_cost = 0
         Else
-            false_negative_cost = Double.Parse(demoProperties.getProperty("false_negative_cost"))
+            false_negative_cost = Double.Parse(demoProperties("false_negative_cost"))
         End If
 
         ''' <summary>
@@ -156,12 +154,8 @@ Public Class RanFog
         Dim ID = New String(N_tot - 1) {}
         Dim phenotype_tst = New Double(N_tst - 1) {}
         Dim ID_tst = New String(N_tst - 1) {}
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-        'ORIGINAL LINE: double[][] Genotype = new double [N_tot][N_attributes];
-        Dim Genotype = ReturnRectangularDoubleArray(N_tot, N_attributes)
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-        'ORIGINAL LINE: double[][] Genotype_tst = new double [N_tst][N_attributes];
-        Dim Genotype_tst = ReturnRectangularDoubleArray(N_tst, N_attributes)
+        Dim Genotype = RectangularArray.Matrix(Of Double)(N_tot, N_attributes)
+        Dim Genotype_tst = RectangularArray.Matrix(Of Double)(N_tst, N_attributes)
 
         'Variables involved in the trees
         Dim mean_j, minLoss, MSE_tree, MSEval_tree, node_mse, temp As Double
@@ -171,9 +165,7 @@ Public Class RanFog
         Dim oob = New Integer(N_tot - 1) {}
         Dim MSE_oob, MSE_vi As Double, MSE_oob_ave As Double = 0
         'Predictive and estimated variables
-        'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-        'ORIGINAL LINE: double[][] GEBV = new double [N_tot][2]; //Predicted phenotype in training set
-        Dim GEBV = ReturnRectangularDoubleArray(N_tot, 2) 'Predicted phenotype in training set
+        Dim GEBV = RectangularArray.Matrix(Of Double)(N_tot, 2) 'Predicted phenotype in training set
         Dim y_hat = New Double(N_tst - 1) {} 'Predicted phenotype in testing set
         Dim Selected = New Integer(N_attributes - 1) {} 'number of times SNPs are selected
         Dim VI = New Double(N_attributes - 1) {}
@@ -185,12 +177,12 @@ Public Class RanFog
         Dim Loss As Double = 0
 
         'Output files
-        Dim outTree As PrintWriter = New PrintWriter("Trees.txt")
-        Dim outTreeTest As PrintWriter = New PrintWriter("Trees.test")
-        Dim outSel As PrintWriter = New PrintWriter("TimesSelected.txt")
-        Dim outVI As PrintWriter = New PrintWriter("Variable_Importance.txt")
-        Dim outEGBV As PrintWriter = New PrintWriter("EGBV.txt")
-        Dim outPred As PrintWriter = New PrintWriter("Predictions.txt")
+        Dim outTree As StreamWriter '("Trees.txt")
+        Dim outTreeTest As StreamWriter '("Trees.test")
+        Dim outSel As StreamWriter '("TimesSelected.txt")
+        Dim outVI As StreamWriter '("Variable_Importance.txt")
+        Dim outEGBV As StreamWriter '("EGBV.txt")
+        Dim outPred As StreamWriter '("Predictions.txt")
         ''' <summary>
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </summary>
 
@@ -483,8 +475,8 @@ Public Class RanFog
             Next
             Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
             Console.WriteLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
-            outTree.println(MSE_oob_ave / CSng(n_tree + 1) & " " & MSE_oob)
-            outTreeTest.println(MSEval_tree / N_tst)
+            outTree.WriteLine(MSE_oob_ave / CSng(n_tree + 1) & " " & MSE_oob)
+            outTreeTest.WriteLine(MSEval_tree / N_tst)
             n_tree += 1 'go to next tree
         End While 'over n_tree
         ''' <summary>
@@ -497,17 +489,17 @@ Public Class RanFog
         outTreeTest.close()
 
         'Prepare the output files and its format
-        Dim formatter As DecimalFormat = New DecimalFormat("##.########")
+
         'Write file with number of times each Feature was selected and its relative importance 
         For j = 0 To N_attributes - 1 'for each Feature
-            outSel.println(j + 1 & " " & Selected(j))
-            outVI.println(j + 1 & " " & formatter.format(VI(j)))
+            outSel.WriteLine(j + 1 & " " & Selected(j))
+            outVI.WriteLine(j + 1 & " " & (VI(j)))
         Next
         For i = 0 To N_tot - 1 'Predicted GBV in training set
-            outEGBV.println(ID(i) & " " & formatter.format(GEBV(i)(0) / CSng(GEBV(i)(1))))
+            outEGBV.WriteLine(ID(i) & " " & (GEBV(i)(0) / CSng(GEBV(i)(1))))
         Next
         For i = 0 To N_tst - 1 'Predicted GBV in testing set
-            outPred.println(ID_tst(i) & " " & formatter.format(y_hat(i) / (n_tree + 1)))
+            outPred.WriteLine(ID_tst(i) & " " & (y_hat(i) / (n_tree + 1)))
         Next
         outSel.close()
         outVI.close()

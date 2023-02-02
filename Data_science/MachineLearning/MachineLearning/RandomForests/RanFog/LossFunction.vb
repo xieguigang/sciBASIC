@@ -1,4 +1,5 @@
-﻿Imports stdNum = System.Math
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports stdNum = System.Math
 
 ''' <summary>
 ''' This class provides a method to calculate the Loss function of a given attribute.
@@ -115,9 +116,7 @@ Public Class LossFunction
             Case 1 'Information gain
                 LF_val = 0
                 Dim IO As Double = 0, Ij As Double = 0
-                'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-                'ORIGINAL LINE: int[][] nIG = new int [3][3]; //nIG[genotype_group][phenotype_group]
-                Dim nIG = ReturnRectangularIntArray(3, 3) 'nIG[genotype_group][phenotype_group]
+                Dim nIG = RectangularArray.Matrix(Of Integer)(3, 3) 'nIG[genotype_group][phenotype_group]
                 IO = 0
                 Dim nIO = New Integer(1) {}
                 For i = 0 To a.list.Count - 1
@@ -275,9 +274,7 @@ Public Class LossFunction
                 'read the IG for each SNPs in the sequences
                 LF_val = 0
                 Dim GI As Double = 0, i_left As Double = 0, i_right As Double = 0
-                'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-                'ORIGINAL LINE: int[][] nGI = new int [3][2]; //nIG[phenotype_group][child_node]
-                Dim nGI = ReturnRectangularIntArray(3, 2) 'nIG[phenotype_group][child_node]
+                Dim nGI = RectangularArray.Matrix(Of Integer)(3, 2) 'nIG[phenotype_group][child_node]
                 n_right = 0
                 n_left = 0
                 'Calculate mean for SNP j
