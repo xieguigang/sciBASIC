@@ -347,7 +347,7 @@ Namespace Tcp.Persistent.Socket
                 bytesRead = client.EndReceive(ar)
             Catch ex As Exception
                 Call _ExceptionHandler(ex)
-                Call _EndReceive.SetValue(True)
+                Call _EndReceive.InlineCopy(True)
                 Return Nothing
             Finally
                 _EndReceive = True

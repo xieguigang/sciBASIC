@@ -98,10 +98,22 @@ Namespace ComponentModel.Activations
         End Property
 
         Public Overridable Function CalculateDerivative(x As Double) As Double
+            Dim val As Double
+
             If Truncate > 0 Then
-                Return ValueTruncate(Derivative(x), Truncate)
+                val = ValueTruncate(Derivative(x), Truncate)
             Else
-                Return Derivative(x)
+                val = Derivative(x)
+            End If
+
+            If Double.IsPositiveInfinity(val) Then
+                Return 100000
+            ElseIf Double.IsNegativeInfinity(val) Then
+                Return -100000
+            ElseIf val.IsNaNImaginary Then
+                Return 1
+            Else
+                Return val
             End If
         End Function
 

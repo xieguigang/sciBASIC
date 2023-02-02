@@ -227,7 +227,7 @@ Namespace NeuralNetwork
 
             Call OutputLayer.CalculateGradient(targets, Truncate)
             Call HiddenLayer.BackPropagate(LearnRate, Momentum, Truncate, parallel)
-            Call OutputLayer.UpdateWeights(LearnRate, Momentum, parallel)
+            Call OutputLayer.UpdateWeights(LearnRate, Momentum, Truncate, parallel)
         End Sub
 
         ''' <summary>

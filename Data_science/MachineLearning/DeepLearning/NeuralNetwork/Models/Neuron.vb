@@ -262,17 +262,32 @@ Namespace NeuralNetwork
         ''' <param name="truncate">小于零表示不进行梯度剪裁</param>
         ''' <returns></returns>
         Public Function CalculateGradient(truncate As Double, doDropOut As Boolean) As Double
+            Dim v_gradient As Double()
+
             If doDropOut Then
-                Gradient = OutputSynapses _
+                v_gradient = OutputSynapses _
                     .Where(Function(edge)
                                Return Not edge.OutputNeuron.isDroppedOut
                            End Function) _
-                    .Sum(Function(a) a.Gradient)
+                    .Select(Function(a) a.Gradient) _
+                    .ToArray
             Else
-                Gradient = OutputSynapses.Sum(Function(a) a.Gradient)
+                v_gradient = OutputSynapses _
+                    .Select(Function(a) a.Gradient) _
+                    .ToArray
             End If
 
             Dim dfdt = activation.CalculateDerivative(Value)
+
+            Gradient = v_gradient.Sum
+
+            If Double.IsNegativeInfinity(Gradient) Then
+                Gradient = -100000
+            ElseIf Double.IsPositiveInfinity(Gradient) Then
+                Gradient = 100000
+            ElseIf Gradient.IsNaNImaginary Then
+                Gradient = 1
+            End If
 
             If Gradient = 0R OrElse dfdt = 0R Then
                 Gradient = 0
@@ -293,7 +308,7 @@ Namespace NeuralNetwork
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
         ''' <returns></returns>
-        Public Function UpdateWeights(learnRate#, momentum#, doDropOut As Boolean) As Integer
+        Public Function UpdateWeights(learnRate#, momentum#, truncate As Double, doDropOut As Boolean) As Integer
             Dim oldDelta As Double = BiasDelta
             Dim edges As IEnumerable(Of Synapse)
 
@@ -304,10 +319,18 @@ Namespace NeuralNetwork
                 BiasDelta = learnRate * Gradient
             End If
 
+            If truncate > 0 Then
+                BiasDelta = ValueTruncate(BiasDelta, truncate)
+            End If
+
             If oldDelta = 0R Then
                 Bias += BiasDelta
             Else
                 Bias += BiasDelta + momentum * oldDelta
+            End If
+
+            If truncate > 0 Then
+                Bias = ValueTruncate(Bias, truncate)
             End If
 
             If doDropOut Then
