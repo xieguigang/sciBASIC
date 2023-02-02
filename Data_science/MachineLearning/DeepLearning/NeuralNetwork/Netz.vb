@@ -42,31 +42,31 @@ Namespace NeuralNetwork
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neurons = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            neuronsField = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            neuronsField = RectangularArray.Matrix(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neuronsIsAlive = new bool[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            neuronsIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            neuronsIsAlive = RectangularArray.Matrix(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: neuronsCost = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT];
-            neuronsCost = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
+            neuronsCost = RectangularArray.Matrix(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: deltas = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT];
-            deltas = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
+            deltas = RectangularArray.Matrix(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT)
 
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: weights = new double[HIDDENLAYERCOUNT+1][MAXNEURONCOUNT][MAXNEURONCOUNT]; //[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
-            weightsField = MAT(Of Double)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
+            weightsField = RectangularArray.Matrix(Of Double)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: weightsIsAlive = new bool[HIDDENLAYERCOUNT+1][MAXNEURONCOUNT][MAXNEURONCOUNT]; //[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
-            weightsIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
+            weightsIsAlive = RectangularArray.Matrix(Of Boolean)(HIDDENLAYERCOUNTField + 1, MAXNEURONCOUNT, MAXNEURONCOUNT) '[FromHiddenLayer][FromHiddenNeuron][ToHiddenNeuron]
 
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: bias = new double[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Layer][Neuron]
-            biasField = MAT(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
+            biasField = RectangularArray.Matrix(Of Double)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Layer][Neuron]
             'JAVA TO C# CONVERTER CRACKED BY X-CRACKER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
             'ORIGINAL LINE: biasIsAlive = new bool[HIDDENLAYERCOUNT+2][MAXNEURONCOUNT]; //[Neuron]
-            biasIsAlive = MAT(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Neuron]
+            biasIsAlive = RectangularArray.Matrix(Of Boolean)(HIDDENLAYERCOUNTField + 2, MAXNEURONCOUNT) '[Neuron]
 
             For i = 0 To INPUTNEURONCOUNTField - 1
                 For j = 0 To HIDDENNEURONCOUNTField - 1

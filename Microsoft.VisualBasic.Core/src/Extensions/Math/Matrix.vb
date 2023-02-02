@@ -84,7 +84,7 @@ Namespace Math
             Dim row As Integer = a.Length
             Dim col As Integer = b(0).Length
             Dim inner As Integer = b.Length
-            Dim out As Double()() = MAT(Of Double)(row, col)
+            Dim out As Double()() = RectangularArray.Matrix(Of Double)(row, col)
             For i As Integer = 0 To row - 1
                 For j As Integer = 0 To col - 1
                     For k As Integer = 0 To inner - 1
@@ -105,7 +105,7 @@ Namespace Math
             If a Is Nothing Then
                 Throw New ArgumentException("Input matrix is null")
             End If
-            Dim out As Double()() = MAT(Of Double)(a.Length, a(0).Length)
+            Dim out As Double()() = RectangularArray.Matrix(Of Double)(a.Length, a(0).Length)
             For i As Integer = 0 To out.Length - 1
                 For j As Integer = 0 To out(0).Length - 1
                     out(i)(j) = a(i)(j) * b

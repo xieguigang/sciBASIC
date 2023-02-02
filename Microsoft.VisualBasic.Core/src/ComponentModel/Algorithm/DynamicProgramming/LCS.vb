@@ -81,8 +81,8 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         Public Function MaxSet(Of T)(a As T(), b As T(), equals As IEquals(Of T)) As T()
             Dim m As Integer = a.Length
             Dim n As Integer = b.Length
-            Dim len()() As Integer = MAT(Of Integer)(m + 1, n + 1)
-            Dim p()() As Char = MAT(Of Char)(m + 1, n + 1)
+            Dim len()() As Integer = RectangularArray.Matrix(Of Integer)(m + 1, n + 1)
+            Dim p()() As Char = RectangularArray.Matrix(Of Char)(m + 1, n + 1)
 
             For i As Integer = 1 To m
                 For j As Integer = 1 To n
