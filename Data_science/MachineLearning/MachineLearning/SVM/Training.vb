@@ -141,9 +141,9 @@ Namespace SVM
         ''' <param name="parameters">The parameters to use</param>
         ''' <returns>A trained SVM Model</returns>
         Public Function Train(problem As Problem, parameters As Parameter) As Model
-            Dim [error] = svm_check_parameter(problem, parameters)
+            Dim [error] As String = svm_check_parameter(problem, parameters)
 
-            If Equals([error], Nothing) Then
+            If [error].StringEmpty Then
                 Return svm_train(problem, parameters)
             Else
                 Throw New Exception([error])

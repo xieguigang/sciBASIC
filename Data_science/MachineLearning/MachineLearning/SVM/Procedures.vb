@@ -824,8 +824,7 @@ Namespace SVM
         ''' <param name="param"></param>
         <Extension>
         Private Sub multipleClassification(ByRef model As Model, prob As Problem, param As Parameter)
-            ' classification
-            Dim l = prob.count
+            Dim l As Integer = prob.count
             Dim nr_class As Integer
             Dim label As Integer() = Nothing
             Dim start As Integer() = Nothing

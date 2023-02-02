@@ -317,24 +317,7 @@ Namespace NeuralNetwork
                 ETA = $"ETA: {tick.ETA.FormatTime}"
                 muErr = errors.Average
                 msg = $"Iterations: [{i}/{numEpochs}], errors={muErr}{vbTab}learn_rate={network.LearnRate} {ETA}"
-#If UNIX Then
-                Call msg.__INFO_ECHO
-#Else
-                If App.IsMicrosoftPlatform Then
-                    Call progress.SetProgress(tick.StepProgress, msg)
-                Else
-                    Call tick.StepProgress()
-                    Call msg.__INFO_ECHO
 
-                    If outputNames.IsNullOrEmpty Then
-                        Call $"[{errors.Select(Function(e) e.ToString("F3")).JoinBy(", ")}]".__DEBUG_ECHO
-                    Else
-                        For index As Integer = 0 To outputNames.Length - 1
-                            Call $"    {outputNames(index)} = {errors(index).ToString("F4")}".__INFO_ECHO
-                        Next
-                    End If
-                End If
-#End If
                 If muErr < ErrorThreshold Then
                     Exit For
                 ElseIf muErr < ErrorThreshold * 2 Then
