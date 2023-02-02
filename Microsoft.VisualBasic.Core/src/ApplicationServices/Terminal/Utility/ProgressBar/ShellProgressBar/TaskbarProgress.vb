@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace ShellProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Module TaskbarProgress
         Public Enum TaskbarStates
             NoProgress = 0

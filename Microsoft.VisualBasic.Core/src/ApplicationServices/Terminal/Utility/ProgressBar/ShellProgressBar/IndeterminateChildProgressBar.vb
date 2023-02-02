@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Threading
 
-Namespace ShellProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Class IndeterminateChildProgressBar
         Inherits ChildProgressBar
         Private Const MaxTicksForIndeterminate As Integer = 20
@@ -35,12 +35,12 @@ Namespace ShellProgressBar
             Tick(MaxTicksForIndeterminate)
         End Sub
 
-		Public Overloads Sub Dispose()
-			If _timer IsNot Nothing Then _timer.Dispose()
-			For Each c In Children
-				c.Dispose()
-			Next
-			OnDone()
-		End Sub
-	End Class
+        Public Overloads Sub Dispose()
+            If _timer IsNot Nothing Then _timer.Dispose()
+            For Each c In Children
+                c.Dispose()
+            Next
+            OnDone()
+        End Sub
+    End Class
 End Namespace

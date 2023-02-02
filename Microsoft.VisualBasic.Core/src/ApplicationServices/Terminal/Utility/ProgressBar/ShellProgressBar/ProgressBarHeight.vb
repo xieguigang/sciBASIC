@@ -1,4 +1,4 @@
-﻿Namespace ShellProgressBar
+﻿Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Enum ProgressBarHeight
         Increment
         Decrement

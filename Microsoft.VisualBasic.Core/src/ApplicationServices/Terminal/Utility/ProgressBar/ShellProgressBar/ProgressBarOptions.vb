@@ -1,20 +1,20 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace ShellProgressBar
-    ''' <summary>
-    ''' Control the behaviour of your progressbar
-    ''' </summary>
-    Public Class ProgressBarOptions
-        Private _enableTaskBarProgress As Boolean
-        Public Shared ReadOnly [Default] As ProgressBarOptions = New ProgressBarOptions()
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
+	''' <summary>
+	''' Control the behaviour of your progressbar
+	''' </summary>
+	Public Class ProgressBarOptions
+		Private _enableTaskBarProgress As Boolean
+		Public Shared ReadOnly [Default] As ProgressBarOptions = New ProgressBarOptions()
 
-        Public Shared Property ProgressMessageEncodingName As String
+		Public Shared Property ProgressMessageEncodingName As String
 
-        Public Property MessageEncodingName As String
-            Get
-                Return ProgressMessageEncodingName
-            End Get
+		Public Property MessageEncodingName As String
+			Get
+				Return ProgressMessageEncodingName
+			End Get
 			Set(value As String)
 				ProgressMessageEncodingName = value
 			End Set
@@ -101,12 +101,12 @@ Namespace ShellProgressBar
 			End Set
 		End Property
 
-        ''' <summary>
-        ''' Take ownership of writing a message that is intended to be displayed above the progressbar.
-        ''' The delegate is expected to return the number of messages written to the console as a result of the string argument.
-        ''' <para>Use case: pretty print or change the console colors, the progressbar will reset back</para>
-        ''' </summary>
-        Public Property WriteQueuedMessage As Func(Of ConsoleOutLine, Integer)
+		''' <summary>
+		''' Take ownership of writing a message that is intended to be displayed above the progressbar.
+		''' The delegate is expected to return the number of messages written to the console as a result of the string argument.
+		''' <para>Use case: pretty print or change the console colors, the progressbar will reset back</para>
+		''' </summary>
+		Public Property WriteQueuedMessage As Func(Of ConsoleOutLine, Integer)
 
-    End Class
+	End Class
 End Namespace

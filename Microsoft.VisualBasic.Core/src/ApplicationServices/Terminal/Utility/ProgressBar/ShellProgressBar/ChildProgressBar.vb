@@ -1,21 +1,21 @@
 ﻿Imports System
 
-Namespace ShellProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Class ChildProgressBar
         Inherits ProgressBarBase
-		Implements IDisposable
-		Private ReadOnly _scheduleDraw As Action
+        Implements IDisposable
+        Private ReadOnly _scheduleDraw As Action
         Private ReadOnly _writeLine As Action(Of String)
         Private ReadOnly _writeError As Action(Of String)
         Private ReadOnly _growth As Action(Of ProgressBarHeight)
 
-		Public ReadOnly Property StartDate As Date
-			Get
-				Return MyBase._startDate
-			End Get
-		End Property
+        Public ReadOnly Property StartDate As Date
+            Get
+                Return MyBase._startDate
+            End Get
+        End Property
 
-		Protected Overrides Sub DisplayProgress()
+        Protected Overrides Sub DisplayProgress()
             _scheduleDraw?.Invoke()
         End Sub
 
@@ -47,22 +47,22 @@ Namespace ShellProgressBar
             End SyncLock
         End Sub
 
-		Public Overrides Sub WriteLine(message As String) 'Implements IProgressBar.WriteLine
-			_writeLine(message)
-		End Sub
-		Public Overrides Sub WriteErrorLine(message As String) 'Implements IProgressBar.WriteErrorLine
-			_writeError(message)
-		End Sub
+        Public Overrides Sub WriteLine(message As String) 'Implements IProgressBar.WriteLine
+            _writeLine(message)
+        End Sub
+        Public Overrides Sub WriteErrorLine(message As String) 'Implements IProgressBar.WriteErrorLine
+            _writeError(message)
+        End Sub
 
-		Public Sub Dispose() Implements IDisposable.Dispose
-			For Each c In Children
-				c.Dispose()
-			Next
-			OnDone()
-		End Sub
+        Public Sub Dispose() Implements IDisposable.Dispose
+            For Each c In Children
+                c.Dispose()
+            Next
+            OnDone()
+        End Sub
 
-		Public Function AsProgress(Of T)(Optional message As Func(Of T, String) = Nothing, Optional percentage As Func(Of T, Double?) = Nothing) As IProgress(Of T) 'Implements IProgressBar.AsProgress
-			Return New Progress(Of T)(Me, message, percentage)
-		End Function
-	End Class
+        Public Function AsProgress(Of T)(Optional message As Func(Of T, String) = Nothing, Optional percentage As Func(Of T, Double?) = Nothing) As IProgress(Of T) 'Implements IProgressBar.AsProgress
+            Return New Progress(Of T)(Me, message, percentage)
+        End Function
+    End Class
 End Namespace

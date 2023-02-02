@@ -203,7 +203,7 @@ Namespace ApplicationServices
             End If
         End Function
 
-        Public Delegate Function WaitHandle() As Boolean
+        Public Delegate Function TaskWaitHandle() As Boolean
 
         ''' <summary>
         ''' 假若条件判断<paramref name="handle"/>不为真的话，函数会一直阻塞线程，直到条件判断<paramref name="handle"/>为真
@@ -225,7 +225,7 @@ Namespace ApplicationServices
         ''' 假若条件判断<paramref name="handle"/>不为真的话，函数会一直阻塞线程，直到条件判断<paramref name="handle"/>为真
         ''' </summary>
         ''' <param name="handle"></param>
-        <Extension> Public Sub Wait(handle As WaitHandle)
+        <Extension> Public Sub Wait(handle As TaskWaitHandle)
             If handle Is Nothing Then
                 Return
             End If

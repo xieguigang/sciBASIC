@@ -544,14 +544,14 @@ Public Module Extensions
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SetValue(Of T)(ByRef var As T, value As T) As T
+    <Extension> Public Function InlineCopy(Of T)(ByRef var As T, value As T) As T
         var = value
         Return value
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SetValue(Of T)(ByRef var As T, value As Func(Of T, T)) As T
+    Public Function InlineCopy(Of T)(ByRef var As T, value As Func(Of T, T)) As T
         var = value(arg:=var)
         Return var
     End Function

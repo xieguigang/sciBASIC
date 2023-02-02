@@ -1,11 +1,11 @@
 ﻿Imports System
 
-Namespace ShellProgressBar
-    Friend Class Progress(Of T)
-        Implements IProgress(Of T), IDisposable
-        Private ReadOnly _progressBar As WeakReference(Of IProgressBar)
-        Private ReadOnly _message As Func(Of T, String)
-        Private ReadOnly _percentage As Func(Of T, Double?)
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
+	Friend Class Progress(Of T)
+		Implements IProgress(Of T), IDisposable
+		Private ReadOnly _progressBar As WeakReference(Of IProgressBar)
+		Private ReadOnly _message As Func(Of T, String)
+		Private ReadOnly _percentage As Func(Of T, Double?)
 
 		Public Sub New(progressBar As IProgressBar, message As Func(Of T, String), percentage As Func(Of T, Double?))
 			_progressBar = New WeakReference(Of IProgressBar)(progressBar)
@@ -27,11 +27,11 @@ Namespace ShellProgressBar
 		End Sub
 
 		Public Sub Dispose() Implements IDisposable.Dispose
-            Dim progressBar As IProgressBar = Nothing
+			Dim progressBar As IProgressBar = Nothing
 
-            If _progressBar.TryGetTarget(progressBar) Then
-                progressBar.Dispose()
-            End If
-        End Sub
-    End Class
+			If _progressBar.TryGetTarget(progressBar) Then
+				progressBar.Dispose()
+			End If
+		End Sub
+	End Class
 End Namespace

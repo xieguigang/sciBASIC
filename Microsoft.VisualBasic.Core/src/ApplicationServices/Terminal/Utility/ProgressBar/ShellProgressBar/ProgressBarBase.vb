@@ -3,7 +3,7 @@ Imports System.Collections.Concurrent
 Imports System.Text
 Imports System.Threading
 
-Namespace ShellProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 	Public MustInherit Class ProgressBarBase ' Implements IProgressBar, IDisposable
 
 		Private _EndTime As System.DateTime?

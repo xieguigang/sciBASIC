@@ -1,4 +1,4 @@
-﻿Namespace ShellProgressBar
+﻿Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Structure ConsoleOutLine
         Public ReadOnly Property [Error] As Boolean
         Public ReadOnly Property Line As String

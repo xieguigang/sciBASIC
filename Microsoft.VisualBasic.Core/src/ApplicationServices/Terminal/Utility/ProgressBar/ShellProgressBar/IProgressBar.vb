@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace ShellProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Public Interface IProgressBar
         Inherits IDisposable
         Function Spawn(maxTicks As Integer, message As String, Optional options As ProgressBarOptions = Nothing) As ChildProgressBar
