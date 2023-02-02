@@ -143,9 +143,16 @@ Namespace ComponentModel.Collection
             Return dataframe.Select(Function(d) d([property])).ToArray
         End Function
 
+        ''' <summary>
+        ''' An extension method shortcut to the function <see cref="RectangularArray.Matrix"/>.
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="m%"></param>
+        ''' <param name="n%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Rectangle(type As Type, m%, n%) As Array
-            Return RectangularArray.Rectangle(type, m, n)
+            Return RectangularArray.Matrix(type, m, n)
         End Function
 
         ''' <summary>

@@ -13,17 +13,17 @@
         ''' <param name="m">m Rows</param>
         ''' <param name="n">n Cols</param>
         ''' <returns></returns>
-        Public Shared Function MAT(Of T)(m%, n%) As T()()
-            Dim newMAT As T()() = New T(m - 1)() {}
+        Public Shared Function Matrix(Of T)(m%, n%) As T()()
+            Dim x As T()() = New T(m - 1)() {}
 
             For i As Integer = 0 To m - 1
-                newMAT(i) = New T(n - 1) {}
+                x(i) = New T(n - 1) {}
             Next
 
-            Return newMAT
+            Return x
         End Function
 
-        Public Shared Function Rectangle(type As Type, m%, n%) As Array
+        Public Shared Function Matrix(type As Type, m%, n%) As Array
             Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
 
             For i As Integer = 0 To m - 1
