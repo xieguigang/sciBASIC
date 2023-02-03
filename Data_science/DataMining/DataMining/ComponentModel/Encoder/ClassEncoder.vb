@@ -87,6 +87,18 @@ Namespace ComponentModel.Encoder
         ''' <summary>
         ''' 
         ''' </summary>
+        ''' <param name="labels">
+        ''' should not be distinct, duplicated is allowed
+        ''' </param>
+        Sub New(labels As IEnumerable(Of String))
+            For Each tag As String In labels
+                Call AddClass(tag)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
         ''' <param name="color"></param>
         ''' <returns></returns>
         ''' <remarks>
