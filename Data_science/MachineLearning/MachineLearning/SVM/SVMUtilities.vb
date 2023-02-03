@@ -53,6 +53,10 @@
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 
 Namespace SVM
+
+    ''' <summary>
+    ''' svm demo test
+    ''' </summary>
     Public Module SVMUtilities
 
         Const SCALE As Double = 100
@@ -61,9 +65,10 @@ Namespace SVM
         Public Const TESTING_SEED As Integer = 20140407
 
         Public Function CreateTwoClassProblem(count As Integer, Optional isTraining As Boolean = True) As Problem
-            Dim prob As Problem = New Problem()
-            prob.maxIndex = 2
-            Dim rand As Random = New Random(If(isTraining, TRAINING_SEED, TESTING_SEED))
+            Dim prob As New Problem() With {
+                .maxIndex = 2
+            }
+            Dim rand As New Random(If(isTraining, TRAINING_SEED, TESTING_SEED))
             ' create points on either side of the vertical axis
             Dim positive As Integer = CInt(count / 2)
             Dim labels As New List(Of String)()
