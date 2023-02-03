@@ -98,7 +98,7 @@ Namespace train
     ''' <remarks>
     ''' https://github.com/wepe/tgboost
     ''' </remarks>
-    Public Class GBM
+    Public Class GBM : Inherits Model
 
         Private num_boost_round As Integer
         Private max_depth As Integer
