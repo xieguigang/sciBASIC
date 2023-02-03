@@ -121,7 +121,9 @@ Namespace train
 
         Shared Sub New()
             logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.cat($"{header}({level}): {msg}", vbCrLf))
-            App.AddExitCleanHook(AddressOf logger.Save)
+
+            ' save log file on application exit
+            Call App.AddExitCleanHook(AddressOf logger.Save)
         End Sub
 
         Public Sub New()
