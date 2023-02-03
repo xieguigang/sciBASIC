@@ -74,6 +74,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 <Assembly: InternalsVisibleTo("Microsoft.VisualBasic.MachineLearning.XGBoost.DataSet")>
 <Assembly: InternalsVisibleTo("MLkit")>
+<Assembly: InternalsVisibleTo("enigma")>
 
 Namespace train
 

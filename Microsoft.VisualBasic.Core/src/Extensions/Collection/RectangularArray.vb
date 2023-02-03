@@ -23,6 +23,21 @@
             Return x
         End Function
 
+        Public Shared Function Cubic(Of T)(size1 As Integer, size2 As Integer, size3 As Integer) As T()()()
+            Dim x = New T(size1 - 1)()() {}
+
+            For array1 As Integer = 0 To size1 - 1
+                x(array1) = New T(size2 - 1)() {}
+                If size3 > -1 Then
+                    For array2 As Integer = 0 To size2 - 1
+                        x(array1)(array2) = New T(size3 - 1) {}
+                    Next
+                End If
+            Next
+
+            Return x
+        End Function
+
         Public Shared Function Matrix(type As Type, m%, n%) As Array
             Dim newMatrix As Array = Array.CreateInstance(type.MakeArrayType, m)
 

@@ -209,7 +209,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim rows = bits.Length
             Dim cols = bits(Scan0).Length
             ' Add a border of 1 bit to prevent out-of-bounds error
-            Dim contours = MAT(Of Integer)(rows + 2, cols + 2)
+            Dim contours = RectangularArray.Matrix(Of Integer)(rows + 2, cols + 2)
 
             For r As Integer = 0 To rows - 1
                 For c As Integer = 0 To cols - 1

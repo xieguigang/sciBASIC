@@ -91,7 +91,7 @@ Namespace device
                 If dimensions.Length = 1 Then
                     data = Array.CreateInstance(GetType(String), dimensions)
                 Else
-                    data = MAT(Of String)(dimensions(Scan0), dimensions(1))
+                    data = RectangularArray.Matrix(Of String)(dimensions(Scan0), dimensions(1))
                 End If
             End If
 

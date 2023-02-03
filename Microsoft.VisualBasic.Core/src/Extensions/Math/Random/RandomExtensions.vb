@@ -158,10 +158,25 @@ Namespace Math
         Public ReadOnly Property seeds As New Random(Now.Millisecond * Now.Second + 1)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function RandomSingle() As Double
             Return seeds.NextDouble()
         End Function
 
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to 0.0,
+        ''' and less than 1.0.
+        ''' </summary>
+        ''' <returns>
+        ''' A double-precision floating point number that is greater than or equal to 0.0,
+        ''' and less than 1.0.
+        ''' </returns>
+        ''' <remarks>
+        ''' <see cref="System.Random.NextDouble()"/>
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function NextDouble() As Double
             Return seeds.NextDouble
         End Function

@@ -175,7 +175,10 @@ Namespace train
         Public Overridable Sub set_categorical_feature_best_split(col As Integer, left_child_catvalue As List(Of Integer), gain As Double, nan_go_to As Double)
             best_gains(col) = gain
             best_nan_go_to(col) = nan_go_to
-            cat_feature_col_leftcatvalue(col.ToString) = left_child_catvalue
+
+            SyncLock cat_feature_col_leftcatvalue
+                cat_feature_col_leftcatvalue(col.ToString) = left_child_catvalue
+            End SyncLock
         End Sub
 
         Public Overridable Function get_best_feature_threshold_gain() As List(Of Double)

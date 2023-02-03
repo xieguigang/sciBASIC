@@ -60,6 +60,14 @@ Namespace Language.Java
 
     Public Module Arrays
 
+        ''' <summary>
+        ''' fill and set all elements in target array 
+        ''' <paramref name="a"/> with a specific value
+        ''' <paramref name="val"/>.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="val"></param>
         <Extension>
         Public Sub fill(Of T)(ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1

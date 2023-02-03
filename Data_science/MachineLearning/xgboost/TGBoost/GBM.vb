@@ -98,7 +98,7 @@ Namespace train
     ''' <remarks>
     ''' https://github.com/wepe/tgboost
     ''' </remarks>
-    Public Class GBM
+    Public Class GBM : Inherits Model
 
         Private num_boost_round As Integer
         Private max_depth As Integer
@@ -121,12 +121,21 @@ Namespace train
 
         Shared Sub New()
             logger = FrameworkInternal.getLogger("XGBoostInfoLogging", split:=Sub(header, msg, level) VBDebugger.cat($"{header}({level}): {msg}", vbCrLf))
-            App.AddExitCleanHook(AddressOf logger.Save)
+
+            ' save log file on application exit
+            Call App.AddExitCleanHook(AddressOf logger.Save)
         End Sub
 
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' load model from file
+        ''' </summary>
+        ''' <param name="trees"></param>
+        ''' <param name="loss"></param>
+        ''' <param name="first_round_pred"></param>
+        ''' <param name="eta"></param>
         Public Sub New(trees As List(Of Tree), loss As Loss, first_round_pred As Double, eta As Double)
             _trees = trees
             _loss = loss
@@ -134,6 +143,31 @@ Namespace train
             _eta = eta
         End Sub
 
+        ''' <summary>
+        ''' do model training
+        ''' </summary>
+        ''' <param name="trainset"></param>
+        ''' <param name="valset"></param>
+        ''' <param name="early_stopping_rounds"></param>
+        ''' <param name="maximize"></param>
+        ''' <param name="eval_metric">
+        ''' <see cref="Metrics.mse"/> for regression problem
+        ''' </param>
+        ''' <param name="loss">
+        ''' + logloss: <see cref="LogisticLoss"/> for classify problem
+        ''' + squareloss: <see cref="SquareLoss"/> for regression problem
+        ''' </param>
+        ''' <param name="eta"></param>
+        ''' <param name="num_boost_round"></param>
+        ''' <param name="max_depth"></param>
+        ''' <param name="scale_pos_weight"></param>
+        ''' <param name="rowsample"></param>
+        ''' <param name="colsample"></param>
+        ''' <param name="min_child_weight"></param>
+        ''' <param name="min_sample_split"></param>
+        ''' <param name="lambda"></param>
+        ''' <param name="gamma"></param>
+        ''' <param name="num_thread"></param>
         Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
                                    Optional early_stopping_rounds As Integer = 10,
                                    Optional maximize As Boolean = True,
@@ -177,6 +211,10 @@ Namespace train
             ElseIf loss.Equals("squareloss") Then
                 _loss = New SquareLoss()
                 _first_round_pred = class_list.label.Average
+
+                If eval_metric = Metrics.mse Then
+                    GBM.logger.info("Going to solve a regression model!")
+                End If
             End If
 
             class_list.initialize_pred(_first_round_pred)

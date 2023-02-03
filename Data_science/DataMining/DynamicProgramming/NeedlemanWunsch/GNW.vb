@@ -176,8 +176,8 @@ Namespace NeedlemanWunsch
             Dim seq2 As T() = Me.Sequence2
 
             ' Set up the score- and the traceback-matrix
-            matrix = MAT(Of Integer)(rows, columns)
-            tracebackMatrix = MAT(Of Integer)(rows, columns)
+            matrix = RectangularArray.Matrix(Of Integer)(rows, columns)
+            tracebackMatrix = RectangularArray.Matrix(Of Integer)(rows, columns)
 
             ' fill the first row and first column of matrix and tracebackMatrix
             For i As Integer = 0 To rows - 1
