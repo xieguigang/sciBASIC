@@ -134,6 +134,26 @@ Namespace train
             _eta = eta
         End Sub
 
+        ''' <summary>
+        ''' do model training
+        ''' </summary>
+        ''' <param name="trainset"></param>
+        ''' <param name="valset"></param>
+        ''' <param name="early_stopping_rounds"></param>
+        ''' <param name="maximize"></param>
+        ''' <param name="eval_metric"></param>
+        ''' <param name="loss"></param>
+        ''' <param name="eta"></param>
+        ''' <param name="num_boost_round"></param>
+        ''' <param name="max_depth"></param>
+        ''' <param name="scale_pos_weight"></param>
+        ''' <param name="rowsample"></param>
+        ''' <param name="colsample"></param>
+        ''' <param name="min_child_weight"></param>
+        ''' <param name="min_sample_split"></param>
+        ''' <param name="lambda"></param>
+        ''' <param name="gamma"></param>
+        ''' <param name="num_thread"></param>
         Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
                                    Optional early_stopping_rounds As Integer = 10,
                                    Optional maximize As Boolean = True,
