@@ -127,7 +127,7 @@ Namespace SVM
         Public Function PerformCrossValidation(problem As Problem, parameters As Parameter, nrfold As Integer) As Double
             Dim [error] = svm_check_parameter(problem, parameters)
 
-            If Equals([error], Nothing) Then
+            If [error].StringEmpty Then
                 Return doCrossValidation(problem, parameters, nrfold)
             Else
                 Throw New Exception([error])

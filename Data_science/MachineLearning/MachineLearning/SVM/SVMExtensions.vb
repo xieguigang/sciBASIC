@@ -68,13 +68,6 @@ Namespace SVM
         End Function
 
         <Extension()>
-        Public Sub SwapIndex(Of T)(list As T(), i As Integer, j As Integer)
-            Dim tmp = list(i)
-            list(i) = list(j)
-            list(j) = tmp
-        End Sub
-
-        <Extension()>
         Public Function IsEqual(Of T)(lhs As T()(), rhs As T()()) As Boolean
             If lhs.Length <> rhs.Length Then Return False
 
