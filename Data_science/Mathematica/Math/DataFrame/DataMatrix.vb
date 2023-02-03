@@ -102,7 +102,7 @@ Public Class DataMatrix : Implements IBucketVector
 
     Sub New(names As IEnumerable(Of String))
         Me.names = names.Indexing
-        Me.matrix = MAT(Of Double)(Me.names.Count, Me.names.Count)
+        Me.matrix = RectangularArray.Matrix(Of Double)(Me.names.Count, Me.names.Count)
     End Sub
 
     Sub New(names As Index(Of String), matrix As Double()())
@@ -115,7 +115,7 @@ Public Class DataMatrix : Implements IBucketVector
     End Sub
 
     Sub New(M%, N%)
-        Me.matrix = MAT(Of Double)(M, N)
+        Me.matrix = RectangularArray.Matrix(Of Double)(M, N)
         Me.names = New Index(Of String)
     End Sub
 

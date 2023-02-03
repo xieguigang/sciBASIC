@@ -1,0 +1,14 @@
+#Input files
+training=data/training_regression.data
+testing=data/testing_regression.data
+
+#Forest parameters 
+ForestSize=500
+mtry=100
+N_features=500
+max_branch=2000
+
+LossFunction=2
+#Personalized cost function
+false_positive_cost=1
+false_negative_cost=1  

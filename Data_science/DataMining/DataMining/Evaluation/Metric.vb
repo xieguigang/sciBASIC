@@ -176,7 +176,7 @@ Namespace Evaluation
             Next
 
             Dim n_neg = pred.Length - n_pos
-            Dim label_pred As Double()() = MAT(Of Double)(pred.Length, 2)
+            Dim label_pred As Double()() = RectangularArray.Matrix(Of Double)(pred.Length, 2)
 
             For i = 0 To pred.Length - 1
                 label_pred(i)(0) = label(i)
