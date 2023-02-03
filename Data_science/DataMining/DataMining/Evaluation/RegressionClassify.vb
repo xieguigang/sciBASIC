@@ -63,11 +63,19 @@ Namespace Evaluation
         Public Property actual As Double
         Public Property predicts As Double
 
+        ''' <summary>
+        ''' the absolute value of the error value
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property errors As Double
             Get
                 Return stdNum.Abs(predicts - actual)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"[{sampleID}] {errors} = |{actual} - {predicts}|"
+        End Function
 
     End Class
 End Namespace

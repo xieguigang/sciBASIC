@@ -83,7 +83,7 @@ Namespace Evaluation
 #Region "IComparable<RankPair> Members"
 
         ''' <summary>
-        ''' Compares this pair to another.  It will end up in a sorted list in decending score order.
+        ''' Compares this pair to another.  It will end up in a sorted list in descending score order.
         ''' </summary>
         ''' <param name="other">The pair to compare to</param>
         ''' <returns>Whether this should come before or after the argument</returns>
