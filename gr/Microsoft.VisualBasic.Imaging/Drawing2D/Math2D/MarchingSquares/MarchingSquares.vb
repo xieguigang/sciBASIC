@@ -220,7 +220,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim numCols = data(0).Length
 
             ' Create array indicating iso cell neighbor info.
-            Dim contours As IsoCell()() = MAT(Of IsoCell)(numRows - 1, numCols - 1)
+            Dim contours As IsoCell()() = RectangularArray.Matrix(Of IsoCell)(numRows - 1, numCols - 1)
 
             For r = 0 To numRows - 1 - 1
 
@@ -392,7 +392,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
 
             superMin -= 1
 
-            Dim padded = MAT(Of Double)(rows + 2, cols + 2)
+            Dim padded = RectangularArray.Matrix(Of Double)(rows + 2, cols + 2)
 
             For i = 0 To cols + 2 - 1
                 padded(0)(i) = superMin

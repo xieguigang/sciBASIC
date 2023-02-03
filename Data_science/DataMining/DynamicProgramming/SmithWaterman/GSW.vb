@@ -189,8 +189,8 @@ Namespace SmithWaterman
             Me.subject = subject.ToArray
             Me.queryLength = Me.query.Length
             Me.subjectLength = Me.subject.Length
-            Me.score = MAT(Of Double)(queryLength + 1, subjectLength + 1)
-            Me.prevCells = MAT(Of Integer)(queryLength + 1, subjectLength + 1)
+            Me.score = RectangularArray.Matrix(Of Double)(queryLength + 1, subjectLength + 1)
+            Me.prevCells = RectangularArray.Matrix(Of Integer)(queryLength + 1, subjectLength + 1)
             Me.symbol = symbol
         End Sub
 

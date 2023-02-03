@@ -127,6 +127,13 @@ Namespace train
         Public Sub New()
         End Sub
 
+        ''' <summary>
+        ''' load model from file
+        ''' </summary>
+        ''' <param name="trees"></param>
+        ''' <param name="loss"></param>
+        ''' <param name="first_round_pred"></param>
+        ''' <param name="eta"></param>
         Public Sub New(trees As List(Of Tree), loss As Loss, first_round_pred As Double, eta As Double)
             _trees = trees
             _loss = loss
@@ -141,8 +148,13 @@ Namespace train
         ''' <param name="valset"></param>
         ''' <param name="early_stopping_rounds"></param>
         ''' <param name="maximize"></param>
-        ''' <param name="eval_metric"></param>
-        ''' <param name="loss"></param>
+        ''' <param name="eval_metric">
+        ''' <see cref="Metrics.mse"/> for regression problem
+        ''' </param>
+        ''' <param name="loss">
+        ''' + logloss: <see cref="LogisticLoss"/> for classify problem
+        ''' + squareloss: <see cref="SquareLoss"/> for regression problem
+        ''' </param>
         ''' <param name="eta"></param>
         ''' <param name="num_boost_round"></param>
         ''' <param name="max_depth"></param>
@@ -197,6 +209,10 @@ Namespace train
             ElseIf loss.Equals("squareloss") Then
                 _loss = New SquareLoss()
                 _first_round_pred = class_list.label.Average
+
+                If eval_metric = Metrics.mse Then
+                    GBM.logger.info("Going to solve a regression model!")
+                End If
             End If
 
             class_list.initialize_pred(_first_round_pred)

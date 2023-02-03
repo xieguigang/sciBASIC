@@ -221,7 +221,7 @@ Namespace struct
                 Next
             Else
                 ' just track the offsets and node addresses
-                Me.offsets = MAT(Of Integer)(Me.numberOfEntries + 1, layout.numberOfDimensions)
+                Me.offsets = RectangularArray.Matrix(Of Integer)(Me.numberOfEntries + 1, layout.numberOfDimensions)
                 Me.childPointer = New Long(Me.numberOfEntries) {}
 
                 For i As Integer = 0 To Me.numberOfEntries

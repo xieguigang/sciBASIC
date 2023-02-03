@@ -81,8 +81,8 @@ Public Class KBandSearch
         End If
 
         Dim i, j, k As Integer
-        Dim score()() = MAT(Of Integer)(l1 + 1, l2 + 1)
-        Dim trace()() = MAT(Of Integer)(l1 + 1, l2 + 1)
+        Dim score()() = RectangularArray.Matrix(Of Integer)(l1 + 1, l2 + 1)
+        Dim trace()() = RectangularArray.Matrix(Of Integer)(l1 + 1, l2 + 1)
         Dim match = 0
 
         score(0)(0) = 0
@@ -115,7 +115,7 @@ Public Class KBandSearch
         j = l2
         k = 0
 
-        Dim pairAlignment As Char()() = MAT(Of Char)(2, l1 + l2)
+        Dim pairAlignment As Char()() = RectangularArray.Matrix(Of Char)(2, l1 + l2)
 
         Do While i <> 0 OrElse j <> 0
             If (trace(i)(j) = 0) Then
@@ -140,7 +140,7 @@ Public Class KBandSearch
         Loop
 
         Dim input$
-        Dim stringReverse = MAT(Of Char)(2, k)
+        Dim stringReverse = RectangularArray.Matrix(Of Char)(2, k)
 
         i = 0
 

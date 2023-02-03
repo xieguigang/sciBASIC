@@ -155,7 +155,7 @@ Namespace ComponentModel.Activations
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function doCall(x#, alpha#) As Double
+        Public Shared Function doCall(x#, Optional alpha# = 1.0) As Double
             Return (1 / (1 + stdNum.Exp(-alpha * x)))
         End Function
 

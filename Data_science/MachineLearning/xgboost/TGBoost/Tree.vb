@@ -309,15 +309,21 @@ Namespace train
                 Next
 
                 For Each node As TreeNode In nodes
-                    Dim catvalue_GdivH As Double()() = MAT(Of Double)(node.cat_feature_col_value_GH.GetValueOrNull(colkey).Count, 4)
+                    Dim node_GH = node.cat_feature_col_value_GH.GetValueOrNull(colkey)
+
+                    If node_GH Is Nothing Then
+                        node_GH = New Dictionary(Of String, Double())
+                    End If
+
+                    Dim catvalue_GdivH As Double()() = RectangularArray.Matrix(Of Double)(node_GH.Count, 4)
                     Dim i = 0
                     Dim catkey As String
 
-                    For Each catvalue As Integer In node.cat_feature_col_value_GH.GetValueOrNull(colkey).Keys
+                    For Each catvalue As String In node_GH.Keys
                         catkey = catvalue.ToString
                         catvalue_GdivH(i)(0) = catvalue
-                        catvalue_GdivH(i)(1) = node.cat_feature_col_value_GH.GetValueOrNull(colkey)(catkey)(0)
-                        catvalue_GdivH(i)(2) = node.cat_feature_col_value_GH.GetValueOrNull(colkey)(catkey)(1)
+                        catvalue_GdivH(i)(1) = node_GH(catkey)(0)
+                        catvalue_GdivH(i)(2) = node_GH(catkey)(1)
                         catvalue_GdivH(i)(3) = catvalue_GdivH(i)(1) / catvalue_GdivH(i)(2)
                         i += 1
                     Next
@@ -330,7 +336,7 @@ Namespace train
                     Dim H_nan As Double = node.Hess_missing(col)
                     Dim G_left As Double = 0
                     Dim H_left As Double = 0
-                    Dim best_split = -1
+                    Dim best_split As Integer = -1
                     Dim best_gain = -Double.MaxValue
                     Dim best_nan_go_to As Double = -1
 

@@ -74,7 +74,7 @@ Namespace Layouts.Cola
         Public idealLinkLength As Double = 1
 
         Public Sub New(nodes As Node3D(), links As Link(Of Integer)(), Optional idealLinkLength As Double = 1)
-            Me.result = MAT(Of Double)(Layout3D.k, nodes.Length)
+            Me.result = RectangularArray.Matrix(Of Double)(Layout3D.k, nodes.Length)
             Me.nodes = nodes
             Me.links = links
             Me.idealLinkLength = idealLinkLength
