@@ -77,7 +77,7 @@ Namespace SVM
     ''' <summary>
     ''' Encapsulates an SVM Model.
     ''' </summary>
-    Public Class Model : Inherits MachineLearning.Model
+    Public Class Model
 
         ''' <summary>
         ''' Parameter object.

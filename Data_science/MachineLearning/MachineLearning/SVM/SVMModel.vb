@@ -69,7 +69,7 @@ Namespace SVM
     ''' </summary>
     <KnownType(GetType(RangeTransform))>
     <KnownType(GetType(GaussianTransform))>
-    Public Class SVMModel
+    Public Class SVMModel : Inherits MachineLearning.Model
 
         Public Property model As Model
         Public Property transform As IRangeTransform
