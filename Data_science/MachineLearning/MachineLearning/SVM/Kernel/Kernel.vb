@@ -68,6 +68,7 @@ Namespace SVM
         Private _degree As Integer
         Private _gamma As Double
         Private _coef0 As Double
+
         Public MustOverride Function GetQ(column As Integer, len As Integer) As Single() Implements IQMatrix.GetQ
         Public MustOverride Function GetQD() As Double() Implements IQMatrix.GetQD
 
