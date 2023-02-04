@@ -85,11 +85,19 @@ Namespace Distributions.BinBox
         ''' <remarks>
         ''' 宽度是自动计算的
         ''' </remarks>
-        Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T), Optional eps As Double = 0.001) As IEnumerable(Of DataBinBox(Of T))
+        Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T),
+                                             Optional eps As Double = 0.001,
+                                             Optional range As DoubleRange = Nothing) As IEnumerable(Of DataBinBox(Of T))
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) eval(d)).ToArray
             Dim min# = eval(v.First)
             Dim max# = eval(v.Last)
+
+            If range IsNot Nothing AndAlso range.Length > 0 Then
+                min = range.Min
+                max = range.Max
+            End If
+
             Dim width# = (max - min) / k
 
             If width = 0.0 Then
