@@ -1233,93 +1233,116 @@ Namespace SVM
             End If
         End Function
 
-        Public Function svm_predict_values(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
-            Dim i As Integer
+        Private Function svr_predict(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
+            Dim sv_coef = model.supportVectorCoefficients(0)
+            Dim sum As Double = 0
 
-            If model.parameter.svmType = SvmType.ONE_CLASS OrElse model.parameter.svmType = SvmType.EPSILON_SVR OrElse model.parameter.svmType = SvmType.NU_SVR Then
-                Dim sv_coef = model.supportVectorCoefficients(0)
-                Dim sum As Double = 0
+            For i As Integer = 0 To model.supportVectorCount - 1
+                sum += sv_coef(i) * Kernel.KernelFunction(x, model.supportVectors(i), model.parameter)
+            Next
 
-                For i = 0 To model.supportVectorCount - 1
-                    sum += sv_coef(i) * Kernel.KernelFunction(x, model.supportVectors(i), model.parameter)
-                Next
+            sum -= model.rho(0)
+            dec_values(0) = sum
 
-                sum -= model.rho(0)
-                dec_values(0) = sum
-
-                If model.parameter.svmType = SvmType.ONE_CLASS Then
-                    Return New SVMPrediction With {.[class] = If(sum > 0, 1, -1), .score = sum, .unifyValue = .class}
-                Else
-                    Return New SVMPrediction With {.[class] = Integer.MinValue, .score = sum, .unifyValue = sum}
-                End If
-            Else
-                Dim nr_class = model.numberOfClasses
-                Dim l = model.supportVectorCount
-                Dim kvalue = New Double(l - 1) {}
-
-                For i = 0 To l - 1
-                    kvalue(i) = Kernel.KernelFunction(x, model.supportVectors(i), model.parameter)
-                Next
-
-                Dim start = New Integer(nr_class - 1) {}
-                start(0) = 0
-
-                For i = 1 To nr_class - 1
-                    start(i) = start(i - 1) + model.numberOfSVPerClass(i - 1)
-                Next
-
-                Dim vote = New Integer(nr_class - 1) {}
-
-                For i = 0 To nr_class - 1
-                    vote(i) = 0
-                Next
-
-                Dim p = 0
-
-                For i = 0 To nr_class - 1
-
-                    For j = i + 1 To nr_class - 1
-                        Dim sum As Double = 0
-                        Dim si = start(i)
-                        Dim sj = start(j)
-                        Dim ci = model.numberOfSVPerClass(i)
-                        Dim cj = model.numberOfSVPerClass(j)
-                        Dim k As Integer
-                        Dim coef1 = model.supportVectorCoefficients(j - 1)
-                        Dim coef2 = model.supportVectorCoefficients(i)
-
-                        For k = 0 To ci - 1
-                            sum += coef1(si + k) * kvalue(si + k)
-                        Next
-
-                        For k = 0 To cj - 1
-                            sum += coef2(sj + k) * kvalue(sj + k)
-                        Next
-
-                        sum -= model.rho(p)
-                        dec_values(p) = sum
-
-                        If dec_values(p) > 0 Then
-                            vote(i) += 1
-                        Else
-                            vote(j) += 1
-                        End If
-
-                        p += 1
-                    Next
-                Next
-
-                Dim vote_max_idx = 0
-
-                For i = 1 To nr_class - 1
-                    If vote(i) > vote(vote_max_idx) Then vote_max_idx = i
-                Next
-
+            If model.parameter.svmType = SvmType.ONE_CLASS Then
                 Return New SVMPrediction With {
-                    .[class] = model.classLabels(vote_max_idx),
-                    .score = vote(vote_max_idx),
+                    .[class] = If(sum > 0, 1, -1),
+                    .score = sum,
                     .unifyValue = .class
                 }
+            Else
+                ' sum is the regression value
+                Return New SVMPrediction With {
+                    .[class] = Integer.MinValue,
+                    .score = sum,
+                    .unifyValue = sum
+                }
+            End If
+        End Function
+
+        Private Function svc_predict(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
+            Dim nr_class = model.numberOfClasses
+            Dim l = model.supportVectorCount
+            Dim kvalue = New Double(l - 1) {}
+
+            For i As Integer = 0 To l - 1
+                kvalue(i) = Kernel.KernelFunction(x, model.supportVectors(i), model.parameter)
+            Next
+
+            Dim start = New Integer(nr_class - 1) {}
+            start(0) = 0
+
+            For i As Integer = 1 To nr_class - 1
+                start(i) = start(i - 1) + model.numberOfSVPerClass(i - 1)
+            Next
+
+            Dim vote = New Integer(nr_class - 1) {}
+            Dim voteSum = New Double(nr_class - 1) {}
+
+            For i As Integer = 0 To nr_class - 1
+                vote(i) = 0
+            Next
+
+            Dim p = 0
+
+            For i As Integer = 0 To nr_class - 1
+                For j As Integer = i + 1 To nr_class - 1
+                    Dim sum As Double = 0
+                    Dim si = start(i)
+                    Dim sj = start(j)
+                    Dim ci = model.numberOfSVPerClass(i)
+                    Dim cj = model.numberOfSVPerClass(j)
+                    Dim k As Integer
+                    Dim coef1 = model.supportVectorCoefficients(j - 1)
+                    Dim coef2 = model.supportVectorCoefficients(i)
+
+                    For k = 0 To ci - 1
+                        sum += coef1(si + k) * kvalue(si + k)
+                    Next
+
+                    For k = 0 To cj - 1
+                        sum += coef2(sj + k) * kvalue(sj + k)
+                    Next
+
+                    sum -= model.rho(p)
+                    dec_values(p) = sum
+
+                    If dec_values(p) > 0 Then
+                        vote(i) += 1
+                        voteSum(i) += sum
+                    Else
+                        vote(j) += 1
+                        voteSum(j) -= sum
+                    End If
+
+                    p += 1
+                Next
+            Next
+
+            Dim vote_max_idx = 0
+
+            For i As Integer = 1 To nr_class - 1
+                If vote(i) > vote(vote_max_idx) Then
+                    vote_max_idx = i
+                End If
+            Next
+
+            Return New SVMPrediction With {
+                .[class] = model.classLabels(vote_max_idx),
+                .score = vote(vote_max_idx),
+                .unifyValue = .class,
+                .vote = voteSum
+            }
+        End Function
+
+        Public Function svm_predict_values(model As Model, x As Node(), dec_values As Double()) As SVMPrediction
+            If model.parameter.svmType = SvmType.ONE_CLASS OrElse
+                model.parameter.svmType = SvmType.EPSILON_SVR OrElse
+                model.parameter.svmType = SvmType.NU_SVR Then
+
+                Return svr_predict(model, x, dec_values)
+            Else
+                Return svc_predict(model, x, dec_values)
             End If
         End Function
 

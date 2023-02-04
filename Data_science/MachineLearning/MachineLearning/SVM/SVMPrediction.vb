@@ -61,6 +61,7 @@ Namespace SVM
         Public Property [class] As Integer
         Public Property score As Double
         Public Property unifyValue As Double
+        Public Property vote As Double()
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
