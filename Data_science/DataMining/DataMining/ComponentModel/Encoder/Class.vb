@@ -121,6 +121,11 @@ Namespace ComponentModel.Encoder
             Return out
         End Function
 
+        ''' <summary>
+        ''' get <see cref="factor"/> value
+        ''' </summary>
+        ''' <param name="factor"></param>
+        ''' <returns></returns>
         Public Shared Narrowing Operator CType(factor As ColorClass) As Integer
             Return factor.factor
         End Operator
@@ -149,30 +154,71 @@ Namespace ComponentModel.Encoder
             Return Not a = b
         End Operator
 
+        ''' <summary>
+        ''' <see cref="factor"/> > b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator >(a As ColorClass, b As Integer) As Boolean
             Return a.factor > b
         End Operator
 
+        ''' <summary>
+        ''' <see cref="factor"/> &lt; b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator <(a As ColorClass, b As Integer) As Boolean
             Return a.factor < b
         End Operator
 
+        ''' <summary>
+        ''' <see cref="factor"/> - x
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Public Shared Operator -(a As ColorClass, x As Double) As Double
             Return a.factor - x
         End Operator
 
+        ''' <summary>
+        ''' x - <see cref="factor"/>
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
         Public Shared Operator -(x As Double, a As ColorClass) As Double
             Return x - a.factor
         End Operator
 
+        ''' <summary>
+        ''' x + <see cref="factor"/>
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
         Public Shared Operator +(x As Double, a As ColorClass) As Double
             Return x + a.factor
         End Operator
 
+        ''' <summary>
+        ''' x * <see cref="factor"/>
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
         Public Shared Operator *(x As Double, a As ColorClass) As Double
             Return x * a.factor
         End Operator
 
+        ''' <summary>
+        ''' 0 - <see cref="factor"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
         Public Shared Operator -(a As ColorClass) As Integer
             Return -a.factor
         End Operator
