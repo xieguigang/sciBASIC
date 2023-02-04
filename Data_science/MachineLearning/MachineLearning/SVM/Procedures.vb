@@ -660,7 +660,8 @@ Namespace SVM
             Next
 
             mae /= prob.count - count
-            Logging.info("Prob. model for test data: target value = predicted value + z," & ASCII.LF & "z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=" & mae & ASCII.LF)
+            Logging.info("Prob. model for test data: target value = predicted value + z," & ASCII.LF &
+                         "z: Laplace distribution e^(-|z|/sigma)/(2sigma),sigma=" & mae & ASCII.LF)
 
             Return mae
         End Function
@@ -891,12 +892,12 @@ Namespace SVM
 
                     For k = 0 To ci - 1
                         sub_prob.X(k) = x(si + k)
-                        sub_prob.Y(k) = New ColorClass With {.enumInt = +1, .name = "temp", .color = "n/a"}
+                        sub_prob.Y(k) = New ColorClass With {.factor = +1, .name = "temp", .color = "n/a"}
                     Next
 
                     For k = 0 To cj - 1
                         sub_prob.X(ci + k) = x(sj + k)
-                        sub_prob.Y(ci + k) = New ColorClass With {.enumInt = -1, .name = "temp", .color = "n/a"}
+                        sub_prob.Y(ci + k) = New ColorClass With {.factor = -1, .name = "temp", .color = "n/a"}
                     Next
 
                     If param.probability Then

@@ -70,10 +70,17 @@ Namespace ComponentModel.Encoder
         ''' <returns></returns>
         Public Property color As String
         ''' <summary>
-        ''' <see cref="Integer"/> encoding for this class.(即枚举类型)
+        ''' the factor value, or label data, usually the <see cref="Integer"/> 
+        ''' encoding for this class.
+        ''' (即枚举类型)
         ''' </summary>
         ''' <returns></returns>
-        Public Property enumInt As Integer
+        ''' <remarks>
+        ''' usually be an integer value, but set this property in 
+        ''' double float data type for make compatibality to the 
+        ''' regression problem
+        ''' </remarks>
+        Public Property factor As Double
         ''' <summary>
         ''' Class Name
         ''' </summary>
@@ -81,7 +88,7 @@ Namespace ComponentModel.Encoder
         Public Property name As String
 
         Public Overrides Function ToString() As String
-            Return $"{{{enumInt}}} {name} = {color}"
+            Return $"{{{factor}}} {name} = {color}"
         End Function
 
         ''' <summary>
@@ -104,7 +111,7 @@ Namespace ComponentModel.Encoder
                 .SeqIterator _
                 .Select(Function(v)
                             Return New ColorClass With {
-                                .enumInt = CInt(DirectCast(+v, Object)),
+                                .factor = CInt(DirectCast(+v, Object)),
                                 .color = colors(v),
                                 .name = DirectCast(CObj((+v)), [Enum]).Description
                             }
@@ -115,11 +122,11 @@ Namespace ComponentModel.Encoder
         End Function
 
         Public Shared Narrowing Operator CType(factor As ColorClass) As Integer
-            Return factor.enumInt
+            Return factor.factor
         End Operator
 
         Public Shared Operator =(a As Double, b As ColorClass) As Boolean
-            Return stdNum.Abs(a - b.enumInt) <= 0.000001
+            Return stdNum.Abs(a - b.factor) <= 0.000001
         End Operator
 
         Public Shared Operator <>(a As Double, b As ColorClass) As Boolean
@@ -127,7 +134,7 @@ Namespace ComponentModel.Encoder
         End Operator
 
         Public Shared Operator =(a As Integer, b As ColorClass) As Boolean
-            Return a = b.enumInt
+            Return a = b.factor
         End Operator
 
         Public Shared Operator <>(a As Integer, b As ColorClass) As Boolean
@@ -135,7 +142,7 @@ Namespace ComponentModel.Encoder
         End Operator
 
         Public Shared Operator =(a As ColorClass, b As ColorClass) As Boolean
-            Return a.color = b.color AndAlso a.enumInt = b.enumInt AndAlso a.name = b.name
+            Return a.color = b.color AndAlso a.factor = b.factor AndAlso a.name = b.name
         End Operator
 
         Public Shared Operator <>(a As ColorClass, b As ColorClass) As Boolean
@@ -143,31 +150,31 @@ Namespace ComponentModel.Encoder
         End Operator
 
         Public Shared Operator >(a As ColorClass, b As Integer) As Boolean
-            Return a.enumInt > b
+            Return a.factor > b
         End Operator
 
         Public Shared Operator <(a As ColorClass, b As Integer) As Boolean
-            Return a.enumInt < b
+            Return a.factor < b
         End Operator
 
         Public Shared Operator -(a As ColorClass, x As Double) As Double
-            Return a.enumInt - x
+            Return a.factor - x
         End Operator
 
         Public Shared Operator -(x As Double, a As ColorClass) As Double
-            Return x - a.enumInt
+            Return x - a.factor
         End Operator
 
         Public Shared Operator +(x As Double, a As ColorClass) As Double
-            Return x + a.enumInt
+            Return x + a.factor
         End Operator
 
         Public Shared Operator *(x As Double, a As ColorClass) As Double
-            Return x * a.enumInt
+            Return x * a.factor
         End Operator
 
         Public Shared Operator -(a As ColorClass) As Integer
-            Return -a.enumInt
+            Return -a.factor
         End Operator
     End Class
 End Namespace

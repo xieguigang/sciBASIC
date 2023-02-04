@@ -127,14 +127,14 @@ Namespace ComponentModel.Encoder
                 Else
                     enumInt = m_colors _
                         .Values _
-                        .Select(Function(a) a.enumInt) _
+                        .Select(Function(a) a.factor) _
                         .Max
                 End If
 
                 color = Imaging.ChartColors(enumInt)
                 tag = New ColorClass With {
                     .color = color.ToHtmlColor,
-                    .enumInt = enumInt + 1,
+                    .factor = enumInt + 1,
                     .name = label
                 }
 
@@ -149,7 +149,7 @@ Namespace ComponentModel.Encoder
         Public Function GetColor(value As Double) As ColorClass
             Dim min = m_colors.Values _
                 .Select(Function(cls)
-                            Return (ds:=stdNum.Abs(cls.enumInt - value), cls)
+                            Return (ds:=stdNum.Abs(cls.factor - value), cls)
                         End Function) _
                 .OrderBy(Function(a) a.ds) _
                 .First
@@ -162,7 +162,7 @@ Namespace ComponentModel.Encoder
                 Dim template As ColorClass = m_colors(label)
                 Dim factor As New ColorClass With {
                     .color = template.color,
-                    .enumInt = template.enumInt,
+                    .factor = template.factor,
                     .name = template.name
                 }
 
