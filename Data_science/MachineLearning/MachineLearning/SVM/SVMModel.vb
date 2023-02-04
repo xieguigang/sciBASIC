@@ -81,6 +81,15 @@ Namespace SVM
         ''' <returns></returns>
         Public Property factors As ClassEncoder
 
+        Public ReadOnly Property SVR As Boolean
+            Get
+                Dim type = model.parameter.svmType
+                Dim is_svr = type = SvmType.EPSILON_SVR OrElse type = SvmType.NU_SVR
+
+                Return is_svr
+            End Get
+        End Property
+
         Public ReadOnly Property dimensionNames As String()
             Get
                 Return model.dimensionNames
