@@ -94,7 +94,7 @@ Public Module Dendrogram
                 .Select(Function(name, i)
                             Return New ColorClass With {
                                 .color = colorList.Next.ToHtmlColor,
-                                .enumInt = i,
+                                .factor = i,
                                 .name = name
                             }
                         End Function) _
