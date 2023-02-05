@@ -1,9 +1,8 @@
-﻿Imports System
+﻿Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 
-Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
-    Public Class ChildProgressBar
-        Inherits ProgressBarBase
+    Public Class ChildProgressBar : Inherits ProgressBarBase
         Implements IDisposable
+
         Private ReadOnly _scheduleDraw As Action
         Private ReadOnly _writeLine As Action(Of String)
         Private ReadOnly _writeError As Action(Of String)
@@ -19,8 +18,15 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
             _scheduleDraw?.Invoke()
         End Sub
 
-        Friend Sub New(maxTicks As Integer, message As String, scheduleDraw As Action, writeLine As Action(Of String), writeError As Action(Of String), Optional options As ProgressBarOptions = Nothing, Optional growth As Action(Of ProgressBarHeight) = Nothing)
+        Friend Sub New(maxTicks As Integer, message As String,
+                       scheduleDraw As Action,
+                       writeLine As Action(Of String),
+                       writeError As Action(Of String),
+                       Optional options As ProgressBarOptions = Nothing,
+                       Optional growth As Action(Of ProgressBarHeight) = Nothing)
+
             MyBase.New(maxTicks, message, options)
+
             _scheduleDraw = scheduleDraw
             _writeLine = writeLine
             _writeError = writeError
