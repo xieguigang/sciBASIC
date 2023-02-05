@@ -95,7 +95,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 				Return _enableTaskBarProgress
 			End Get
 			Set(value As Boolean)
-				If value AndAlso Not RuntimeInformation.IsOSPlatform(OSPlatform.Windows) Then Throw New NotSupportedException("Task bar progress only works on Windows")
+				If value AndAlso Not RuntimeInformation.IsOSPlatform(OSPlatform.Windows) Then
+					Throw New NotSupportedException("Task bar progress only works on Windows")
+				End If
 
 				_enableTaskBarProgress = value
 			End Set
