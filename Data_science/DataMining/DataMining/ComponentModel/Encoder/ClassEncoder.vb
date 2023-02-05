@@ -1,58 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::1278cb38aaddd6612ebec571926ae901, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Encoder\ClassEncoder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 114
-    '    Code Lines: 72
-    ' Comment Lines: 21
-    '   Blank Lines: 21
-    '     File Size: 3.53 KB
+' Summaries:
 
 
-    '     Class ClassEncoder
-    ' 
-    '         Properties: Colors
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) AddClass, GetColor, PopulateFactors, Union
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 114
+'    Code Lines: 72
+' Comment Lines: 21
+'   Blank Lines: 21
+'     File Size: 3.53 KB
+
+
+'     Class ClassEncoder
+' 
+'         Properties: Colors
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: (+2 Overloads) AddClass, GetColor, PopulateFactors, Union
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 Imports stdNum = System.Math
 
 Namespace ComponentModel.Encoder
@@ -87,6 +89,18 @@ Namespace ComponentModel.Encoder
         ''' <summary>
         ''' 
         ''' </summary>
+        ''' <param name="labels">
+        ''' should not be distinct, duplicated is allowed
+        ''' </param>
+        Sub New(labels As IEnumerable(Of String))
+            For Each tag As String In labels
+                Call AddClass(tag)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
         ''' <param name="color"></param>
         ''' <returns></returns>
         ''' <remarks>
@@ -105,17 +119,26 @@ Namespace ComponentModel.Encoder
         Public Function AddClass(label As String) As ClassEncoder
             If Not m_colors.ContainsKey(label) Then
                 Dim enumInt As Integer
+                Dim color As Color
+                Dim tag As ColorClass
 
                 If m_colors.Count = 0 Then
                     enumInt = 0
                 Else
                     enumInt = m_colors _
                         .Values _
-                        .Select(Function(a) a.enumInt) _
+                        .Select(Function(a) a.factor) _
                         .Max
                 End If
 
-                m_colors.Add(label, New ColorClass With {.color = "#000000", .enumInt = enumInt + 1, .name = label})
+                color = Imaging.ChartColors(enumInt)
+                tag = New ColorClass With {
+                    .color = color.ToHtmlColor,
+                    .factor = enumInt + 1,
+                    .name = label
+                }
+
+                Call m_colors.Add(label, tag)
             End If
 
             labels.Add(label)
@@ -126,7 +149,7 @@ Namespace ComponentModel.Encoder
         Public Function GetColor(value As Double) As ColorClass
             Dim min = m_colors.Values _
                 .Select(Function(cls)
-                            Return (ds:=stdNum.Abs(cls.enumInt - value), cls)
+                            Return (ds:=stdNum.Abs(cls.factor - value), cls)
                         End Function) _
                 .OrderBy(Function(a) a.ds) _
                 .First
@@ -139,7 +162,7 @@ Namespace ComponentModel.Encoder
                 Dim template As ColorClass = m_colors(label)
                 Dim factor As New ColorClass With {
                     .color = template.color,
-                    .enumInt = template.enumInt,
+                    .factor = template.factor,
                     .name = template.name
                 }
 

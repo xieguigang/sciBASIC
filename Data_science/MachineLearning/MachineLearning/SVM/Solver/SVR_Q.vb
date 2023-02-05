@@ -67,7 +67,8 @@ Namespace SVM
         Private ReadOnly QD As Double()
 
         Public Sub New(prob As Problem, param As Parameter)
-            MyBase.New(prob.count, prob.X, param)
+            Call MyBase.New(prob.count, prob.X, param)
+
             l = prob.count
             cache = New Cache(l, CLng(param.cacheSize) * (1 << 20))
             QD = New Double(2 * l - 1) {}

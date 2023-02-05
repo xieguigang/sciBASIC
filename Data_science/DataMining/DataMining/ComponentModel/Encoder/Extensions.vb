@@ -61,7 +61,7 @@ Namespace ComponentModel.Encoder
 
         <Extension>
         Public Function ToEnumsTable(Of T)(classes As IEnumerable(Of ColorClass)) As Dictionary(Of T, ColorClass)
-            Return classes.ToDictionary(Function(c) DirectCast(CObj(c.enumInt), T))
+            Return classes.ToDictionary(Function(c) DirectCast(CObj(c.factor), T))
         End Function
 
         <Extension>
@@ -78,9 +78,9 @@ Namespace ComponentModel.Encoder
 
                 For Each label As String In raw
                     Yield New ColorClass With {
-                        .enumInt = unique.IndexOf(label) * distance,
+                        .factor = unique.IndexOf(label) * distance,
                         .name = label,
-                        .color = colors(.enumInt)
+                        .color = colors(.factor)
                     }
                 Next
             End With

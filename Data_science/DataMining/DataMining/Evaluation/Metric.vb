@@ -79,23 +79,23 @@ Namespace Evaluation
     Public Enum Metrics
         none
         ''' <summary>
-        ''' Metric.accuracy(pred, label)
+        ''' <see cref="Metric.accuracy"/> 
         ''' </summary>
         acc
         ''' <summary>
-        ''' Metric.error(pred, label)
+        ''' <see cref="Metric.error"/> 
         ''' </summary>
         [error]
         ''' <summary>
-        ''' Metric.mean_square_error(pred, label)
+        ''' <see cref="Metric.mean_square_error"/> 
         ''' </summary>
         mse
         ''' <summary>
-        ''' Metric.mean_absolute_error(pred, label)
+        ''' <see cref="Metric.mean_absolute_error"/> 
         ''' </summary>
         mae
         ''' <summary>
-        ''' Metric.auc(pred, label)
+        ''' <see cref="Metric.auc"/> 
         ''' </summary>
         auc
     End Enum
@@ -183,7 +183,7 @@ Namespace Evaluation
                 label_pred(i)(1) = pred(i)
             Next
 
-            Array.Sort(label_pred, New Metric.ComparatorAnonymousInnerClass())
+            Array.Sort(label_pred, New Metric.labelComparer())
             Dim accumulated_neg As Double = 0
             Dim satisfied_pair As Double = 0
 
@@ -199,7 +199,7 @@ Namespace Evaluation
             Return satisfied_pair / n_neg / n_pos
         End Function
 
-        Private Class ComparatorAnonymousInnerClass : Implements IComparer(Of Double())
+        Private Class labelComparer : Implements IComparer(Of Double())
 
             Public Sub New()
             End Sub

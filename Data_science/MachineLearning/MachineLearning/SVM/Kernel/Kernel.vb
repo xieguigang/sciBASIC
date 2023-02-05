@@ -68,14 +68,15 @@ Namespace SVM
         Private _degree As Integer
         Private _gamma As Double
         Private _coef0 As Double
+
         Public MustOverride Function GetQ(column As Integer, len As Integer) As Single() Implements IQMatrix.GetQ
         Public MustOverride Function GetQD() As Double() Implements IQMatrix.GetQD
 
         Public Overridable Sub SwapIndex(i As Integer, j As Integer) Implements IQMatrix.SwapIndex
-            _x.SwapIndex(i, j)
+            _x.Swap(i, j)
 
             If _xSquare IsNot Nothing Then
-                _xSquare.SwapIndex(i, j)
+                _xSquare.Swap(i, j)
             End If
         End Sub
 

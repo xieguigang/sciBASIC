@@ -69,7 +69,7 @@ Namespace SVM
     ''' </summary>
     <KnownType(GetType(RangeTransform))>
     <KnownType(GetType(GaussianTransform))>
-    Public Class SVMModel
+    Public Class SVMModel : Inherits MachineLearning.Model
 
         Public Property model As Model
         Public Property transform As IRangeTransform
@@ -80,6 +80,15 @@ Namespace SVM
         ''' </summary>
         ''' <returns></returns>
         Public Property factors As ClassEncoder
+
+        Public ReadOnly Property SVR As Boolean
+            Get
+                Dim type = model.parameter.svmType
+                Dim is_svr = type = SvmType.EPSILON_SVR OrElse type = SvmType.NU_SVR
+
+                Return is_svr
+            End Get
+        End Property
 
         Public ReadOnly Property dimensionNames As String()
             Get

@@ -97,6 +97,15 @@ Namespace Evaluation
             Return $"|{actuals.JoinBy(", ")} - {predicts.JoinBy(", ")}| = {err}"
         End Function
 
+        ''' <summary>
+        ''' populate ROC validation for each output labels
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="threshold"></param>
+        ''' <param name="outputLabels">
+        ''' tag the output names
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Iterator Function ROC(data As IEnumerable(Of Validate),
                                             Optional threshold As Sequence = Nothing,
                                             Optional outputLabels$() = Nothing) As IEnumerable(Of NamedCollection(Of Validation))
