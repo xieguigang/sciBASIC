@@ -1,13 +1,16 @@
-﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace RandomForests
+Namespace Math
 
     ''' <summary>
     ''' This class provides a method to randomize the contents of an array
     ''' @author Salindor. Modified by O.Gonzalez-Recio in January 2010, to make 'temp' to be a list, instead a vector
     ''' 
     ''' </summary>
-    Public Class Permutator
+    Public NotInheritable Class Permutator
+
+        Private Sub New()
+        End Sub
 
         ''' <summary>
         ''' This function does all the work.  It randomizes the array into the new
@@ -16,7 +19,7 @@ Namespace RandomForests
         ''' or you would at least want to seed it properly </summary>
         ''' <param name="a"> the original array </param>
         ''' <returns> the new shuffled array </returns>
-        Public Shared Function permute(a As Integer()) As Integer()
+        Public Shared Function Permute(a As Integer()) As Integer()
             'temp object we are going to use to return
             Dim ret = New Integer(a.Length - 1) {}
 
@@ -33,7 +36,7 @@ Namespace RandomForests
             'now that all the prework is done, here is the beautiful part
             Dim i = 0 'index we are writting to
             While i < ret.Length
-                Dim v As Integer = randf.NextDouble * temp.Count 'generate a random number from 0- (size-1)
+                Dim v As Integer = rand.NextDouble * temp.Count 'generate a random number from 0- (size-1)
                 If v = temp.Count Then
                     Continue While 'just in case, paranoid
                 End If
@@ -46,6 +49,5 @@ Namespace RandomForests
 
             Return ret
         End Function
-
     End Class
 End Namespace

@@ -95,8 +95,15 @@ Namespace Math
     Public Module RandomExtensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function [Next](Of T)(array As T()) As T
             Return array(seeds.Next(0, array.Length))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function [Next](upbound As Integer) As Integer
+            Return seeds.Next(upbound)
         End Function
 
         ''' <summary>
@@ -120,6 +127,7 @@ Namespace Math
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function Seed() As Integer
             Return stdNum.Abs(CInt(stdNum.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
@@ -128,6 +136,9 @@ Namespace Math
         ''' re-initialize of the random <see cref="seeds"/> object
         ''' </summary>
         ''' <param name="seed"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Sub SetSeed(seed As Integer)
             _seeds = New Random(seed)
         End Sub
@@ -140,6 +151,7 @@ Namespace Math
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function randf(min As Double, max As Double) As Double
             Return seeds.NextDouble(min, max)
         End Function
@@ -192,6 +204,9 @@ Namespace Math
         ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
         ''' if maxValue equals 0, maxValue is returned.
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function NextInteger(upper As Integer) As Integer
             SyncLock seeds
                 Return seeds.Next(upper)
@@ -312,6 +327,8 @@ Namespace Math
             Return r.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function NextBoolean() As Boolean
             Return seeds.[Next](2) > 0 ' 1 > 0 OR 0 > 0
         End Function
