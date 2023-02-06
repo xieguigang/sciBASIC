@@ -6,16 +6,19 @@ Namespace RandomForests
 
         Friend mean, mean_snp As Double
         Friend class_val As Integer
-        Friend status As String = " " ''F' for final branch
+        ''' <summary>
+        ''' 'F' for final branch
+        ''' </summary>
+        Friend status As String = " "
         Friend Feature, Child1, Child2, Parent As Integer
-        Friend list As List(Of Integer) = New List(Of Integer)()
+        Friend list As New List(Of Integer)()
 
         ''' <summary>
         ''' This method returns the SNP for a given position.
         '''  It needs as arguments:
         '''  @arg position, the position of the SNP in the genomic combination
         ''' </summary>
-        Public Overridable Function getMean(ByVal phen As Double()) As Double
+        Public Overridable Function getMean(phen As Double()) As Double
 
             Dim i = 0
             mean = 0.0R
@@ -31,7 +34,7 @@ Namespace RandomForests
         '''  It needs as arguments:
         '''  @arg position, the position of the SNP in the genomic combination
         ''' </summary>
-        Public Overridable Function getClass(ByVal phen As Double()) As Integer
+        Public Overridable Function getClass(phen As Double()) As Integer
             Dim i = 0
             Dim temp = New Integer(2) {}
             For i = 0 To list.Count - 1
@@ -52,7 +55,7 @@ Namespace RandomForests
         '''  It needs as arguments:
         '''  @arg position, the position of the SNP in the genomic combination
         ''' </summary>
-        Public Overridable Function getMSE(ByVal phen As Double()) As Double
+        Public Overridable Function getMSE(phen As Double()) As Double
             Dim i = 0
             getMean(phen)
             Dim MSE = 0.0R
@@ -68,7 +71,7 @@ Namespace RandomForests
         '''  It needs as arguments:
         '''  @arg position, the position of the SNP in the genomic combination
         ''' </summary>
-        Public Overridable Function getMissClass(ByVal phen As Double()) As Double
+        Public Overridable Function getMissClass(phen As Double()) As Double
             Dim i = 0
             getClass(phen)
             Dim MSE = 0.0R

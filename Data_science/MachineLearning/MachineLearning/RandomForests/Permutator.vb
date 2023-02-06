@@ -14,9 +14,9 @@ Namespace RandomForests
         ''' array it returns.  Granted if you were using this for real, you would
         ''' most likely want to use something other than the default java randomizer.
         ''' or you would at least want to seed it properly </summary>
-        ''' <paramname="a"> the original array </param>
+        ''' <param name="a"> the original array </param>
         ''' <returns> the new shuffled array </returns>
-        Public Shared Function permute(ByVal a As Integer()) As Integer()
+        Public Shared Function permute(a As Integer()) As Integer()
             'temp object we are going to use to return
             Dim ret = New Integer(a.Length - 1) {}
 
@@ -51,7 +51,7 @@ Namespace RandomForests
         ''' Test driver -- generate an array of counting integers, then shuffle.
         ''' If the class works correctly, then the array should have all unique
         ''' randomly shuffled integers between 0 and v </summary>
-        ''' <paramname="args"> ignored </param>
+        ''' <param name="args"> ignored </param>
 
     End Class
 End Namespace

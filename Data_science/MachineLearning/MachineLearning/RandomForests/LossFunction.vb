@@ -21,13 +21,13 @@ Namespace RandomForests
 
         ''' <summary>
         ''' This class calculates the loss function </summary>
-        ''' <paramname="an"> integer number with the type of loss function </param>
+        ''' <param name="an"> integer number with the type of loss function </param>
         ''' <returns> the value of the chosen loss function in a given node  </returns>
 
         Friend type As String
 
 
-        Public Shared Function getLossFunctionNode(ByVal type As String, ByVal a As Branch, ByVal phenotype As Double(), ByVal Genotype As Double()(), ByVal false_positive_cost As Double, ByVal false_negative_cost As Double) As Double
+        Public Shared Function getLossFunctionNode(type As String, a As Branch, phenotype As Double(), Genotype As Double()(), false_positive_cost As Double, false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0, mean As Double = 0
             Dim nn = 0
@@ -109,7 +109,7 @@ Namespace RandomForests
             End Select 'end of switch statement
             Return LF_val
         End Function
-        Public Shared Function getLossFunctionSplit(ByVal type As String, ByVal snp As Integer, ByVal a As Branch, ByVal phenotype As Double(), ByVal Genotype As Double()(), ByVal false_positive_cost As Double, ByVal false_negative_cost As Double) As Double
+        Public Shared Function getLossFunctionSplit(type As String, snp As Integer, a As Branch, phenotype As Double(), Genotype As Double()(), false_positive_cost As Double, false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0, mean As Double = 0
             Dim mean_right = 0.0R, mean_left = 0.0R
@@ -304,7 +304,7 @@ Namespace RandomForests
             End Select 'end of switch statement
             Return LF_val
         End Function
-        Public Shared Function getLossFunctionOOB(ByVal type As String, ByVal a As Branch, ByVal phenotype As Double(), ByVal yhat As Double, ByVal false_positive_cost As Double, ByVal false_negative_cost As Double) As Double
+        Public Shared Function getLossFunctionOOB(type As String, a As Branch, phenotype As Double(), yhat As Double, false_positive_cost As Double, false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0
             Dim nn = 0
