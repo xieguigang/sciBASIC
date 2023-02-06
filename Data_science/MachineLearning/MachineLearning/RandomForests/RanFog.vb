@@ -46,6 +46,23 @@ Namespace RandomForests
         Public Property false_negative_cost As Double = 1
 
         ''' <summary>
+        ''' variable importance
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Write file with number of times each Feature was selected and its relative importance 
+        ''' </remarks>
+        Public Property VI As Double()
+        ''' <summary>
+        ''' number of times SNPs are selected
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Write file with number of times each Feature was selected and its relative importance 
+        ''' </remarks>
+        Public Property Selected As Integer()
+
+        ''' <summary>
         ''' Program execution starts here. 
         ''' This method construct a random forest (Breiman, 2001. Machine Learning, 45)
         ''' for classification data (should be score as 0 or 1).
@@ -61,7 +78,7 @@ Namespace RandomForests
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         '''   Load parameter file                                                           
         ''' </summary>
-        Public Sub Run(train As Data)
+        Public Function Run(train As Data) As Result
             ' Optional tst As Data = Nothing
             Dim n_tree As Integer = 0
             Dim j, k, i, n_branch, N_oob As Integer
@@ -84,8 +101,6 @@ Namespace RandomForests
             'Predictive and estimated variables
             Dim GEBV = RectangularArray.Matrix(Of Double)(train.N_tot, 2) 'Predicted phenotype in training set
             ' Dim y_hat = New Double(tst.N_tot - 1) {} 'Predicted phenotype in testing set
-            Dim Selected = New Integer(train.N_attributes - 1) {} 'number of times SNPs are selected
-            Dim VI = New Double(train.N_attributes - 1) {}
             Dim N_tot = train.N_tot
             ' Dim N_tst = tst.N_tot
             Dim N_attributes = train.N_attributes
@@ -94,12 +109,16 @@ Namespace RandomForests
             Dim Loss As Double = 0
 
             'Output files
-            Dim outTree As New StreamWriter("Trees.txt")
-            Dim outTreeTest As New StreamWriter("Trees.test")
-            Dim outSel As New StreamWriter("TimesSelected.txt")
-            Dim outVI As New StreamWriter("Variable_Importance.txt")
-            Dim outEGBV As New StreamWriter("EGBV.txt")
-            Dim outPred As New StreamWriter("Predictions.txt")
+            Dim outTree As New List(Of (Double, Double))
+            ' Dim outTreeTest As New StreamWriter("Trees.test")
+
+
+            Dim outEGBV As New List(Of Double)
+            ' Dim outPred As New StreamWriter("Predictions.txt")
+
+            VI = New Double(train.N_attributes - 1) {}
+            ' number of times SNPs are selected
+            Selected = New Integer(train.N_attributes - 1) {}
 
             ' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -337,42 +356,48 @@ Namespace RandomForests
                 'Next
                 'Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
                 Console.WriteLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
-                outTree.WriteLine(MSE_oob_ave / CSng(n_tree + 1) & " " & MSE_oob)
+                outTree.Add((MSE_oob_ave / CSng(n_tree + 1), MSE_oob))
                 ' outTreeTest.WriteLine(MSEval_tree / N_tst)
                 n_tree += 1 'go to next tree
             End While 'over n_tree
-            ''' <summary>
-            '''   2. Ends the forest 
-            '''   
-            ''' </summary>
 
-            Console.WriteLine("Writing output files")
-            outTree.Close()
-            outTreeTest.Close()
+            ' 2. Ends the forest 
+
+            ' Console.WriteLine("Writing output files")
+            'outTree.Close()
+            'outTreeTest.Close()
 
             'Prepare the output files and its format
-
-            'Write file with number of times each Feature was selected and its relative importance 
-            For j = 0 To N_attributes - 1 'for each Feature
-                outSel.WriteLine(j + 1 & " " & Selected(j))
-                outVI.WriteLine(j + 1 & " " & (VI(j)))
-            Next
-            For i = 0 To N_tot - 1 'Predicted GBV in training set
-                outEGBV.WriteLine(train.ID(i) & " " & (GEBV(i)(0) / CSng(GEBV(i)(1))))
+            ' Predicted GBV in training set
+            For i = 0 To N_tot - 1
+                outEGBV.Add((GEBV(i)(0) / CSng(GEBV(i)(1))))
             Next
             'For i = 0 To N_tst - 1 'Predicted GBV in testing set
             '    outPred.WriteLine(tst.ID(i) & " " & (y_hat(i) / (n_tree + 1)))
             'Next
-            outSel.Close()
-            outVI.Close()
-            outPred.Close()
-            outEGBV.Close()
+
+            ' outPred.Close()
+            ' outEGBV.Close()
             Console.WriteLine("TERMINATED WITHOUT ERRORS")
             Console.WriteLine("Random Forest algorithm for regression and classification problems (Ver.Beta)")
             Console.WriteLine("by Oscar Gonzalez-Recio (2019) ")
-            GC.WaitForPendingFinalizers()
-        End Sub ' end main method
-    End Class 'end program
+
+            Return New Result With {.Model = Me, .outGEBV = outEGBV.ToArray, .data = train}
+        End Function
+    End Class
+
+    Public Class Result
+
+        ''' <summary>
+        ''' Predicted GBV in training set
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property outGEBV As Double()
+        Public Property Model As RanFog
+        Public Property data As Data
+        Public Property MSE_oob As (ave As Double, MSE_oob As Double)()
+
+    End Class
 End Namespace
 
 
