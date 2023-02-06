@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace RandomForests
@@ -21,6 +22,14 @@ Namespace RandomForests
         Public Property max_tree As Integer
         Public Property N_tot As Integer
         Public Property max_branch As Integer
+        Public Property N_tst As Integer
+        Public Property N_attributes As Integer
+        Public Property mtry As Integer
+        ''' <summary>
+        ''' Loss function used for continuous features
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property LF_c As String
 
         ''' <summary>
         ''' Program execution starts here. 
@@ -41,7 +50,53 @@ Namespace RandomForests
         ''' <param name="demoProperties">"params.txt"</param>
         Public Sub Run(demoProperties As Dictionary(Of String, String))
             Dim n_tree As Integer = 0
-            Dim j, k, i, n_branch, N_oob, MSE_tree, MSEval_tree, MSE_oob As Integer
+            Dim j, k, i, n_branch, N_oob As Integer
+            'Variables read from files
+            Dim phenotype = New Double(N_tot - 1) {}
+            Dim ID = New String(N_tot - 1) {}
+            Dim phenotype_tst = New Double(N_tst - 1) {}
+            Dim ID_tst = New String(N_tst - 1) {}
+            Dim Genotype = RectangularArray.Matrix(Of Double)(N_tot, N_attributes)
+            Dim Genotype_tst = RectangularArray.Matrix(Of Double)(N_tst, N_attributes)
+
+            'Variables involved in the trees
+            Dim mean_j, minLoss, MSE_tree, MSEval_tree, node_mse, temp As Double
+            Dim node As Integer
+            Dim FeatureSel = New Integer(1) {} 'Feature selected at each node [regression feature,classified features]
+            'out of bag variables
+            Dim MSE_oob, MSE_vi As Double, MSE_oob_ave As Double = 0
+            'Predictive and estimated variables
+            Dim GEBV = RectangularArray.Matrix(Of Double)(N_tot, 2) 'Predicted phenotype in training set
+            Dim y_hat = New Double(N_tst - 1) {} 'Predicted phenotype in testing set
+            Dim Selected = New Integer(N_attributes - 1) {} 'number of times SNPs are selected
+            Dim VI = New Double(N_attributes - 1) {}
+
+            'Information gain variables
+            Dim Loss As Double = 0
+
+            'Output files
+            Dim outTree As StreamWriter '("Trees.txt")
+            Dim outTreeTest As StreamWriter '("Trees.test")
+            Dim outSel As StreamWriter '("TimesSelected.txt")
+            Dim outVI As StreamWriter '("Variable_Importance.txt")
+            Dim outEGBV As StreamWriter '("EGBV.txt")
+            Dim outPred As StreamWriter '("Predictions.txt")
+            ''' <summary>
+            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </summary>
+
+            Dim false_positive_cost As Double
+            Dim false_negative_cost As Double
+
+            If demoProperties("false_positive_cost") Is Nothing Then
+                false_positive_cost = 0
+            Else
+                false_positive_cost = Double.Parse(demoProperties("false_positive_cost"))
+            End If
+            If demoProperties("false_negative_cost") Is Nothing Then
+                false_negative_cost = 0
+            Else
+                false_negative_cost = Double.Parse(demoProperties("false_negative_cost"))
+            End If
 
             While n_tree < max_tree
                 j = 0
@@ -98,8 +153,8 @@ Namespace RandomForests
                         node_mse = 0
                         node_mse = LossFunction.getLossFunctionNode(LF_c, branch(k), phenotype, Genotype, false_positive_cost, false_negative_cost)
 
-                        For jj = 0 To m - 1 'calculate MSE, and select that SNP minimizing MSE
-                            j = rand.Next(N_attributes)
+                        For jj = 0 To mtry - 1 'calculate MSE, and select that SNP minimizing MSE
+                            j = randf.Next(N_attributes)
                             'if (x1.nextDouble()< m/(1.d*N_attributes) ){ //Select only sqrt(N_attributes) variables
                             Loss = LossFunction.getLossFunctionSplit(LF_c, j, branch(k), phenotype, Genotype, false_positive_cost, false_negative_cost)
                             If Loss < minLoss Then 'For non-classified attributes
@@ -227,7 +282,7 @@ Namespace RandomForests
                 MSE_oob_ave = MSE_oob_ave + MSE_oob
 
                 'Calculate VARIABLE IMPORTANCE using the oob set, and permutating corresponding feature observations
-                Dim pointer_oob_perm = Permutator.permute(pointer_oob)
+                Dim pointer_oob_perm = Permutator.Permute(pointer_oob)
                 Dim pointer_perm = New Integer(N_tot - 1) {}
                 For i = 0 To N_tot - 1 'Get out-of-bag data
                     If oob(i) = 0 Then

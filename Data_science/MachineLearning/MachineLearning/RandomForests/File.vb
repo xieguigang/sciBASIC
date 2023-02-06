@@ -24,18 +24,6 @@ Namespace RandomForests
             '		String LF_d=demoProperties("LossFunction_discrete");
             'Loss function used for continuous features
             Dim LF_c As String = demoProperties("LossFunction")
-            Dim false_positive_cost As Double
-            Dim false_negative_cost As Double
-            If demoProperties("false_positive_cost") Is Nothing Then
-                false_positive_cost = 0
-            Else
-                false_positive_cost = Double.Parse(demoProperties("false_positive_cost"))
-            End If
-            If demoProperties("false_negative_cost") Is Nothing Then
-                false_negative_cost = 0
-            Else
-                false_negative_cost = Double.Parse(demoProperties("false_negative_cost"))
-            End If
 
             ''' <summary>
             ''' End loading parameter file
@@ -136,19 +124,6 @@ Namespace RandomForests
             Dim Selected = New Integer(N_attributes - 1) {} 'number of times SNPs are selected
             Dim VI = New Double(N_attributes - 1) {}
 
-
-            'Information gain variables
-            Dim Loss As Double = 0
-
-            'Output files
-            Dim outTree As StreamWriter '("Trees.txt")
-            Dim outTreeTest As StreamWriter '("Trees.test")
-            Dim outSel As StreamWriter '("TimesSelected.txt")
-            Dim outVI As StreamWriter '("Variable_Importance.txt")
-            Dim outEGBV As StreamWriter '("EGBV.txt")
-            Dim outPred As StreamWriter '("Predictions.txt")
-            ''' <summary>
-            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </summary>
 
             ''' <summary>
             ''' 1. Start reading files
