@@ -1,74 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::01c41184a26978c0f79a08df004be29e, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 419
-    '    Code Lines: 266
-    ' Comment Lines: 98
-    '   Blank Lines: 55
-    '     File Size: 18.34 KB
+' Summaries:
 
 
-    '     Module DataFramework
-    ' 
-    '         Properties: Flags, StringBuilders, StringParsers
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CreateObject, DictionaryTable, getOrCache, GetValue, IsComplexType
-    '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
-    '         Delegate Function
-    ' 
-    '             Function: IsIntegerType, IsNullable, IsNumericType, IsPrimitive, valueToString
-    '         Enum EnumCastTo
-    ' 
-    '             [integer], [string], none
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 419
+'    Code Lines: 266
+' Comment Lines: 98
+'   Blank Lines: 55
+'     File Size: 18.34 KB
+
+
+'     Module DataFramework
+' 
+'         Properties: Flags, StringBuilders, StringParsers
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CreateObject, DictionaryTable, getOrCache, GetValue, IsComplexType
+'                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
+'         Delegate Function
+' 
+'             Function: IsIntegerType, IsNullable, IsNumericType, IsPrimitive, valueToString
+'         Enum EnumCastTo
+' 
+'             [integer], [string], none
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If netcore5 = 1 Then
-Imports System.Data
 Imports System.Numerics
-#End If
-
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -326,7 +322,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="type"></param>
         ''' <param name="includeComplex">
-        ''' and also should treat the complex number as the primitve numeric type?
+        ''' and also should treat the complex number as the primitive numeric type?
         ''' </param>
         ''' <returns></returns>
         ''' <remarks>
@@ -371,7 +367,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="enumCast">by default we treat the enum type as non-primtive type.</param>
+        ''' <param name="enumCast">by default we treat the enum type as non-primitive type.</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
