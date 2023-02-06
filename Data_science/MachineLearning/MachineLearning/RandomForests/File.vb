@@ -5,6 +5,28 @@ Imports Microsoft.VisualBasic.Language.Java
 
 Namespace RandomForests
 
+    ''' <summary>
+    ''' Loss function used for continuous features
+    ''' </summary>
+    Public Enum LF_c
+        Information_Gain = 1
+        Mean_Squared_Error = 2
+        Pseudo_Huber = 3
+        Personalized_Cost_Function_for_categories = 4
+        Gini_Index = 5
+    End Enum
+
+    Public Class Data
+
+        Public Property ID As String()
+        ''' <summary>
+        ''' the actual label
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property phenotype As Double()
+        Public Property Genotype As Double()()
+    End Class
+
     Public Class File
 
         Public Shared Function Read(demoProperties As Dictionary(Of String, String))

@@ -19,11 +19,24 @@ Namespace RandomForests
 
     Public Class RanFog
 
+        ''' <summary>
+        ''' Max number of trees to be constructed
+        ''' </summary>
+        ''' <returns></returns>
         Public Property max_tree As Integer
         Public Property N_tot As Integer
+        ''' <summary>
+        ''' Max number of branches allowed
+        ''' </summary>
+        ''' <returns></returns>
         Public Property max_branch As Integer
         Public Property N_tst As Integer
         Public Property N_attributes As Integer
+        ''' <summary>
+        ''' Number of Features randomly selected at each node,
+        ''' Percentage of Features randomly selected at each node
+        ''' </summary>
+        ''' <returns></returns>
         Public Property mtry As Integer
         ''' <summary>
         ''' Loss function used for continuous features
@@ -48,16 +61,11 @@ Namespace RandomForests
         '''   Load parameter file                                                           
         ''' </summary>
         ''' <param name="demoProperties">"params.txt"</param>
-        Public Sub Run(demoProperties As Dictionary(Of String, String))
+        Public Sub Run(train As Data, tst As Data,
+                       demoProperties As Dictionary(Of String, String))
+
             Dim n_tree As Integer = 0
             Dim j, k, i, n_branch, N_oob As Integer
-            'Variables read from files
-            Dim phenotype = New Double(N_tot - 1) {}
-            Dim ID = New String(N_tot - 1) {}
-            Dim phenotype_tst = New Double(N_tst - 1) {}
-            Dim ID_tst = New String(N_tst - 1) {}
-            Dim Genotype = RectangularArray.Matrix(Of Double)(N_tot, N_attributes)
-            Dim Genotype_tst = RectangularArray.Matrix(Of Double)(N_tst, N_attributes)
 
             'Variables involved in the trees
             Dim mean_j, minLoss, MSE_tree, MSEval_tree, node_mse, temp As Double
@@ -151,17 +159,17 @@ Namespace RandomForests
                         minLoss = 99999999
                         'Calculate Entropy in branch[k]
                         node_mse = 0
-                        node_mse = LossFunction.getLossFunctionNode(LF_c, branch(k), phenotype, Genotype, false_positive_cost, false_negative_cost)
+                        node_mse = LossFunction.getLossFunctionNode(LF_c, branch(k), train.phenotype, train.Genotype, false_positive_cost, false_negative_cost)
 
                         For jj = 0 To mtry - 1 'calculate MSE, and select that SNP minimizing MSE
                             j = randf.Next(N_attributes)
                             'if (x1.nextDouble()< m/(1.d*N_attributes) ){ //Select only sqrt(N_attributes) variables
-                            Loss = LossFunction.getLossFunctionSplit(LF_c, j, branch(k), phenotype, Genotype, false_positive_cost, false_negative_cost)
+                            Loss = LossFunction.getLossFunctionSplit(LF_c, j, branch(k), train.phenotype, train.Genotype, false_positive_cost, false_negative_cost)
                             If Loss < minLoss Then 'For non-classified attributes
                                 'Calculate mean for SNP j
                                 mean_j = 0
                                 For i = 0 To branch(k).list.Count - 1
-                                    mean_j = mean_j + Genotype(branch(k).list(i))(j) / branch(k).list.Count
+                                    mean_j = mean_j + train.Genotype(branch(k).list(i))(j) / branch(k).list.Count
                                 Next
                                 FeatureSel(0) = j
                                 minLoss = Loss
@@ -174,7 +182,7 @@ Namespace RandomForests
                                 'Select non-classified Feature, and calculate its mean
                                 mean_j = 0
                                 For i = 0 To branch(k).list.Count - 1
-                                    mean_j = mean_j + Genotype(branch(k).list(i))(FeatureSel(0)) / branch(k).list.Count
+                                    mean_j = mean_j + train.Genotype(branch(k).list(i))(FeatureSel(0)) / branch(k).list.Count
                                 Next
                                 node = FeatureSel(0)
                                 branch(k).Feature = FeatureSel(0)
@@ -192,12 +200,12 @@ Namespace RandomForests
                             branch(n_branch) = New Branch()
                             branch_tst(n_branch) = New Branch()
                             For i = 0 To branch(k).list.Count - 1
-                                If Genotype(branch(k).list(i))(node) <= branch(k).mean_snp Then
+                                If train.Genotype(branch(k).list(i))(node) <= branch(k).mean_snp Then
                                     branch(n_branch).list.Add(branch(k).list(i))
                                 End If
                             Next
                             For i = 0 To branch_tst(k).list.Count - 1
-                                If Genotype_tst(branch_tst(k).list(i))(node) <= branch(k).mean_snp Then
+                                If tst.Genotype(branch_tst(k).list(i))(node) <= branch(k).mean_snp Then
                                     branch_tst(n_branch).list.Add(branch_tst(k).list(i))
                                 End If
                             Next
@@ -208,12 +216,12 @@ Namespace RandomForests
                             branch(n_branch) = New Branch()
                             branch_tst(n_branch) = New Branch()
                             For i = 0 To branch(k).list.Count - 1
-                                If Genotype(branch(k).list(i))(node) > branch(k).mean_snp Then
+                                If train.Genotype(branch(k).list(i))(node) > branch(k).mean_snp Then
                                     branch(n_branch).list.Add(branch(k).list(i))
                                 End If
                             Next
                             For i = 0 To branch_tst(k).list.Count - 1
-                                If Genotype_tst(branch_tst(k).list(i))(node) > branch(k).mean_snp Then
+                                If tst.Genotype(branch_tst(k).list(i))(node) > branch(k).mean_snp Then
                                     branch_tst(n_branch).list.Add(branch_tst(k).list(i))
                                 End If
                                 'outBranch.print( branch[k].snp+" "+branch[k].child1+" "+branch[k].child2+" "+branch[k].getMean(phenotype)+" " );
@@ -221,13 +229,13 @@ Namespace RandomForests
                         Else
                             branch(k).status = "F" 'the branch is set as dead-end branch
                             'outBranchMSE.print( branch[k].list.size()+" "+branch[k].getMSE(phenotype)+" " );
-                            MSE_tree = MSE_tree + branch(k).getMSE(phenotype)
+                            MSE_tree = MSE_tree + branch(k).getMSE(train.phenotype)
                             For i = 0 To branch(k).list.Count - 1 'Accumulate classification to estimate genomic value
-                                GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(phenotype)
+                                GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(train.phenotype)
                                 GEBV(branch(k).list(i))(1) += 1
                             Next
                             For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
-                                y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + branch(k).getMean(phenotype)
+                                y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + branch(k).getMean(train.phenotype)
                             Next
                         End If 'decision on creating a new branch
                         'If branch size is <=5 stop growing the tree
@@ -235,19 +243,19 @@ Namespace RandomForests
                         'outBranchMSE.print( branch[k].list.size()+" "+branch[k].getMSE(phenotype)+" " );
                         branch(k).status = "F" 'the branch is set as dead-end branch
                         If branch(k).list.Count <> 0 Then
-                            MSE_tree = MSE_tree + branch(k).getMSE(phenotype)
+                            MSE_tree = MSE_tree + branch(k).getMSE(train.phenotype)
                         End If
                         For i = 0 To branch(k).list.Count - 1 'Accumulate classification to estimate genomic value
-                            GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(phenotype)
+                            GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(train.phenotype)
                             GEBV(branch(k).list(i))(1) += 1
                         Next
                         If branch_tst(k).list.Count <> 0 AndAlso branch(k).list.Count <> 0 Then
-                            temp = branch(k).getMean(phenotype)
+                            temp = branch(k).getMean(train.phenotype)
                             For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
                                 y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
                             Next 'if training branch has size=0
                         Else
-                            temp = branch(0).getMean(phenotype)
+                            temp = branch(0).getMean(train.phenotype)
                             For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean branch 0
                                 y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
                             Next
@@ -262,7 +270,7 @@ Namespace RandomForests
                         branch_oob(branch(k).Child1) = New Branch()
                         branch_oob(branch(k).Child2) = New Branch()
                         For i = 0 To branch_oob(k).list.Count - 1
-                            If Genotype(branch_oob(k).list(i))(branch(k).Feature) <= branch(k).mean_snp Then
+                            If train.Genotype(branch_oob(k).list(i))(branch(k).Feature) <= branch(k).mean_snp Then
                                 branch_oob(branch(k).Child1).list.Add(branch_oob(k).list(i))
                             Else
                                 branch_oob(branch(k).Child2).list.Add(branch_oob(k).list(i))
@@ -270,11 +278,11 @@ Namespace RandomForests
                         Next
                     Else
                         If branch(k).list.Count = 0 Then
-                            temp = branch(0).getMean(phenotype)
+                            temp = branch(0).getMean(train.phenotype)
                         Else
-                            temp = branch(k).getMean(phenotype)
+                            temp = branch(k).getMean(train.phenotype)
                         End If
-                        MSE_oob = MSE_oob + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
+                        MSE_oob = MSE_oob + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
                     End If
                 Next
                 k = 0
@@ -299,13 +307,13 @@ Namespace RandomForests
                             branch_oob(branch(k).Child2) = New Branch()
                             For i = 0 To branch_oob(k).list.Count - 1
                                 If branch(k).Feature = j Then
-                                    If Genotype(pointer_perm(branch_oob(k).list(i)))(branch(k).Feature) <= branch(k).mean_snp Then
+                                    If train.Genotype(pointer_perm(branch_oob(k).list(i)))(branch(k).Feature) <= branch(k).mean_snp Then
                                         branch_oob(branch(k).Child1).list.Add(branch_oob(k).list(i))
                                     Else
                                         branch_oob(branch(k).Child2).list.Add(branch_oob(k).list(i))
                                     End If
                                 Else
-                                    If Genotype(branch_oob(k).list(i))(branch(k).Feature) <= branch(k).mean_snp Then
+                                    If train.Genotype(branch_oob(k).list(i))(branch(k).Feature) <= branch(k).mean_snp Then
                                         branch_oob(branch(k).Child1).list.Add(branch_oob(k).list(i))
                                     Else
                                         branch_oob(branch(k).Child2).list.Add(branch_oob(k).list(i))
@@ -314,11 +322,11 @@ Namespace RandomForests
                             Next
                         Else
                             If branch(k).list.Count = 0 Then
-                                temp = branch(0).getMean(phenotype)
+                                temp = branch(0).getMean(train.phenotype)
                             Else
-                                temp = branch(k).getMean(phenotype)
+                                temp = branch(k).getMean(train.phenotype)
                             End If
-                            MSE_vi = MSE_vi + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
+                            MSE_vi = MSE_vi + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
                         End If
                     Next
                     MSE_vi = MSE_vi / N_oob 'compare miss-classification rate permuting Feature j on MSE_oob
@@ -328,7 +336,7 @@ Namespace RandomForests
                 'Calculate miss-classification rate at this tree for the testing set
                 MSEval_tree = 0
                 For i = 0 To N_tst - 1
-                    MSEval_tree = MSEval_tree + (phenotype_tst(i) - y_hat(i) / (n_tree + 1)) * (phenotype_tst(i) - y_hat(i) / (n_tree + 1))
+                    MSEval_tree = MSEval_tree + (tst.phenotype(i) - y_hat(i) / (n_tree + 1)) * (tst.phenotype(i) - y_hat(i) / (n_tree + 1))
                 Next
                 Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
                 Console.WriteLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
@@ -353,10 +361,10 @@ Namespace RandomForests
                 outVI.WriteLine(j + 1 & " " & (VI(j)))
             Next
             For i = 0 To N_tot - 1 'Predicted GBV in training set
-                outEGBV.WriteLine(ID(i) & " " & (GEBV(i)(0) / CSng(GEBV(i)(1))))
+                outEGBV.WriteLine(train.ID(i) & " " & (GEBV(i)(0) / CSng(GEBV(i)(1))))
             Next
             For i = 0 To N_tst - 1 'Predicted GBV in testing set
-                outPred.WriteLine(ID_tst(i) & " " & (y_hat(i) / (n_tree + 1)))
+                outPred.WriteLine(tst.ID(i) & " " & (y_hat(i) / (n_tree + 1)))
             Next
             outSel.Close()
             outVI.Close()
