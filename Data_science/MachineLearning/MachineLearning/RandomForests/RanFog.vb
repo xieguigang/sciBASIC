@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 
 Namespace RandomForests
@@ -96,8 +97,8 @@ Namespace RandomForests
             ' read the number of lines in the training file
             Try
                 Dim inFile As StreamReader = New StreamReader(trnFile)
-                Dim line As String
-                While Not String.ReferenceEquals((CSharpImpl.__Assign(line, inFile.ReadLine())), Nothing)
+                Dim line As Value(Of String) = ""
+                While Not (line = inFile.ReadLine()) Is Nothing
                     N_tot = N_tot + 1
                     Dim st As StringTokenizer = New StringTokenizer(line, " ")
                     ' b/w "" put the delimiter(,). 
@@ -122,8 +123,8 @@ Namespace RandomForests
             ' read the number of lines in the testing file
             Try
                 Dim testing As StreamReader = New StreamReader(tstFile)
-                Dim line As String
-                While Not String.ReferenceEquals((CSharpImpl.__Assign(line, testing.ReadLine())), Nothing)
+                Dim line As Value(Of String) = ""
+                While Not (line = testing.ReadLine()) Is Nothing
                     N_tst = N_tst + 1
                     Dim st As StringTokenizer = New StringTokenizer(line, " ")
                     If st.countTokens() <> N_attributes + 2 Then
@@ -186,9 +187,9 @@ Namespace RandomForests
             i = 0
             Try
                 Dim inFile As StreamReader = New StreamReader(trnFile)
-                Dim line As String
+                Dim line As Value(Of String) = ""
                 'inFile.readLine(); //Read header
-                While Not String.ReferenceEquals((CSharpImpl.__Assign(line, inFile.ReadLine())), Nothing)
+                While Not (line = inFile.ReadLine()) Is Nothing
                     i += 1
                     Dim st As StringTokenizer = New StringTokenizer(line, " ")
                     ' b/w "" put the delimiter(,). In case there are arbitrary spaces
@@ -210,9 +211,9 @@ Namespace RandomForests
             i = 0
             Try
                 Dim testing As StreamReader = New StreamReader(tstFile)
-                Dim line As String
+                Dim line As Value(Of String) = ""
                 'inFile.readLine(); //Read header
-                While Not String.ReferenceEquals((CSharpImpl.__Assign(line, testing.ReadLine())), Nothing)
+                While Not (line = testing.ReadLine()) Is Nothing
                     i += 1
                     Dim st As StringTokenizer = New StringTokenizer(line, " ")
                     phenotype_tst(i - 1) = Double.Parse(st.nextToken())
@@ -503,16 +504,7 @@ Namespace RandomForests
             Console.WriteLine("by Oscar Gonzalez-Recio (2019) ")
             GC.WaitForPendingFinalizers()
         End Sub ' end main method
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class 'end program
-
 End Namespace
 
 

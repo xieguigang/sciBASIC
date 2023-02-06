@@ -47,11 +47,5 @@ Namespace RandomForests
             Return ret
         End Function
 
-        ''' <summary>
-        ''' Test driver -- generate an array of counting integers, then shuffle.
-        ''' If the class works correctly, then the array should have all unique
-        ''' randomly shuffled integers between 0 and v </summary>
-        ''' <param name="args"> ignored </param>
-
     End Class
 End Namespace

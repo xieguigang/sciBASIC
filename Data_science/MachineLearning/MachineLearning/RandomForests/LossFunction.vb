@@ -104,8 +104,8 @@ Namespace RandomForests
                     GI = nGI(0) * nGI(1) + nGI(0) * nGI(2) + nGI(1) * nGI(2)
                     LF_val = GI / CSng(nn * nn) 'Wrong entered number
                 Case Else
-                    Console.WriteLine("Error!  Illegal option number of Loss Function type!  I quit!")
-                    Environment.Exit(1)
+                    Throw New InvalidProgramException("Error!  Illegal option number of Loss Function type!  I quit!")
+
             End Select 'end of switch statement
             Return LF_val
         End Function
@@ -299,12 +299,16 @@ Namespace RandomForests
                     GI = 0.5R * i_left / CSng(n_left * n_left) + 0.5R * i_right / CSng(n_right * n_right)
                     LF_val = GI 'Wrong entered number
                 Case Else
-                    Console.WriteLine("Error!  Illegal option number of Loss Function type!  I quit!")
-                    Environment.Exit(1)
+                    Throw New InvalidProgramException("Error!  Illegal option number of Loss Function type!  I quit!")
             End Select 'end of switch statement
             Return LF_val
         End Function
-        Public Shared Function getLossFunctionOOB(type As String, a As Branch, phenotype As Double(), yhat As Double, false_positive_cost As Double, false_negative_cost As Double) As Double
+        Public Shared Function getLossFunctionOOB(type As String,
+                                                  a As Branch,
+                                                  phenotype As Double(),
+                                                  yhat As Double,
+                                                  false_positive_cost As Double,
+                                                  false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0
             Dim nn = 0
@@ -369,8 +373,7 @@ Namespace RandomForests
                     End If 'Wrong entered number
 
                 Case Else
-                    Console.WriteLine("Error!  Illegal option number of Loss Function type!  I quit!")
-                    Environment.Exit(1)
+                    Throw New InvalidProgramException("Error!  Illegal option number of Loss Function type!  I quit!")
             End Select 'end of switch statement
             Return LF_val
         End Function
