@@ -66,6 +66,7 @@
 
 #If netcore5 = 1 Then
 Imports System.Data
+Imports System.Numerics
 #End If
 
 Imports System.Reflection
@@ -92,7 +93,7 @@ Namespace ComponentModel.DataSourceModel
 
         Sub New()
             Flags = New Dictionary(Of PropertyAccess, Predicate(Of PropertyInfo)) From {
- _
+                                                                                        _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccess.Writeable, Function(p) p.CanWrite},
@@ -252,7 +253,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property StringParsers As New Dictionary(Of Type, IStringParser) From {
- _
+                                                                                               _
             {GetType(String), Function(strValue As String) strValue},
             {GetType(Boolean), AddressOf ParseBoolean},
             {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
@@ -273,7 +274,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 在Scripting命名空间下的基础类型,是规定为所有包含有类型和字符串值之间的隐式转换的类型
         ''' </remarks>
         Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
- _
+                                                                                                 _
             {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
             {GetType(Boolean), AddressOf DataFramework.valueToString},
             {GetType(DateTime), AddressOf DataFramework.valueToString},
@@ -317,17 +318,38 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Function IsNullable(type As Type) As Boolean
-
+            Return False
         End Function
 
+        ''' <summary>
+        ''' the given <paramref name="type"/> is any of the CLR numeric primitive type?
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="includeComplex">
+        ''' and also should treat the complex number as the primitve numeric type?
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' This function testing all of the possible numeric type at here
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function IsNumericType(type As Type) As Boolean
+        Public Function IsNumericType(type As Type, Optional includeComplex As Boolean = False) As Boolean
             Static numerics As Type() = {
                 GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
                 GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
             }
-            Return numerics.Any(Function(num) num Is type)
+            Static test As New Dictionary(Of String, Boolean)
+
+            Dim key As String = includeComplex.ToString & type.FullName
+
+            SyncLock test
+                If Not test.ContainsKey(key) Then
+                    test(key) = numerics.Any(Function(num) num Is type) OrElse (includeComplex AndAlso type Is GetType(Complex))
+                End If
+
+                Return test(key)
+            End SyncLock
         End Function
 
         Public Function IsIntegerType(type As Type) As Boolean
