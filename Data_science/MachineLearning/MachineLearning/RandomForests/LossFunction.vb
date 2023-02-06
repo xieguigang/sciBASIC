@@ -18,21 +18,17 @@ Namespace RandomForests
 
     Public Class LossFunction
 
-
-        ''' <summary>
-        ''' This class calculates the loss function </summary>
-        ''' <param name="an"> integer number with the type of loss function </param>
-        ''' <returns> the value of the chosen loss function in a given node  </returns>
-
-        Friend type As String
-
-
-        Public Shared Function getLossFunctionNode(type As String, a As Branch, phenotype As Double(), Genotype As Double()(), false_positive_cost As Double, false_negative_cost As Double) As Double
+        Public Shared Function getLossFunctionNode(type As LF_c,
+                                                   a As Branch,
+                                                   phenotype As Double(),
+                                                   Genotype As Double()(),
+                                                   false_positive_cost As Double,
+                                                   false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0, mean As Double = 0
             Dim nn = 0
-            Select Case Integer.Parse(type)
-                Case 1 'Information gain
+            Select Case type
+                Case 1, LF_c.Information_Gain  'Information gain
                     LF_val = 0
                     Dim IO As Double = 0
                     IO = 0
@@ -46,7 +42,7 @@ Namespace RandomForests
                         End If
                     Next
                     LF_val = IO
-                Case 2 'L2
+                Case 2, LF_c.Mean_Squared_Error  'L2
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate mean for SNP j
@@ -57,7 +53,7 @@ Namespace RandomForests
                         nn += 1
                     Next
                     LF_val = LF_val / CSng(nn)
-                Case 3 'pseudo-Huber loss function
+                Case 3, LF_c.Pseudo_Huber  'pseudo-Huber loss function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate mean for SNP j
@@ -68,7 +64,7 @@ Namespace RandomForests
                         nn += 1
                     Next
                     LF_val = LF_val / CSng(nn)
-                Case 4 'False Positive and False Negative cost function
+                Case 4, LF_c.Personalized_Cost_Function_for_categories  'False Positive and False Negative cost function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
 
@@ -90,7 +86,7 @@ Namespace RandomForests
                         End If
                         'LF_val=LF_val/(float)nn;
                     Next
-                Case 5 'Gini index
+                Case 5, LF_c.Gini_Index 'Gini index
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     Dim GI As Double = 0
@@ -109,13 +105,20 @@ Namespace RandomForests
             End Select 'end of switch statement
             Return LF_val
         End Function
-        Public Shared Function getLossFunctionSplit(type As String, snp As Integer, a As Branch, phenotype As Double(), Genotype As Double()(), false_positive_cost As Double, false_negative_cost As Double) As Double
+
+        Public Shared Function getLossFunctionSplit(type As LF_c,
+                                                    snp As Integer,
+                                                    a As Branch,
+                                                    phenotype As Double(),
+                                                    Genotype As Double()(),
+                                                    false_positive_cost As Double,
+                                                    false_negative_cost As Double) As Double
             Dim i = 0
             Dim LF_val As Double = 0, mean As Double = 0
             Dim mean_right = 0.0R, mean_left = 0.0R
             Dim n_right = 0, n_left = 0
-            Select Case Integer.Parse(type)
-                Case 1 'Information gain
+            Select Case type
+                Case 1, LF_c.Information_Gain   'Information gain
                     LF_val = 0
                     Dim IO As Double = 0, Ij As Double = 0
                     Dim nIG = RectangularArray.Matrix(Of Integer)(3, 3) 'nIG[genotype_group][phenotype_group]
@@ -149,7 +152,7 @@ Namespace RandomForests
                         LF_val = LF_val - Ij
                     Next
                     LF_val = LF_val * -1
-                Case 2 'L2
+                Case 2, LF_c.Mean_Squared_Error  'L2
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate mean for SNP j
@@ -188,7 +191,7 @@ Namespace RandomForests
                         End If
                     Next
                     LF_val = LF_val / CSng(nn)
-                Case 3 'pseudo-Huber loss function
+                Case 3, LF_c.Pseudo_Huber  'pseudo-Huber loss function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate mean for SNP j
@@ -227,7 +230,7 @@ Namespace RandomForests
                         End If
                     Next
                     LF_val = LF_val / CSng(nn)
-                Case 4 'False Positive and False Negative cost function
+                Case 4, LF_c.Personalized_Cost_Function_for_categories  'False Positive and False Negative cost function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
 
@@ -272,7 +275,7 @@ Namespace RandomForests
                         End If
                         'LF_val=0.5d*LF_val;
                     Next
-                Case 5 'Gini index
+                Case 5, LF_c.Gini_Index    'Gini index
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     Dim GI As Double = 0, i_left As Double = 0, i_right As Double = 0
@@ -303,7 +306,8 @@ Namespace RandomForests
             End Select 'end of switch statement
             Return LF_val
         End Function
-        Public Shared Function getLossFunctionOOB(type As String,
+
+        Public Shared Function getLossFunctionOOB(type As LF_c,
                                                   a As Branch,
                                                   phenotype As Double(),
                                                   yhat As Double,
@@ -312,8 +316,8 @@ Namespace RandomForests
             Dim i = 0
             Dim LF_val As Double = 0
             Dim nn = 0
-            Select Case Integer.Parse(type)
-                Case 1 'Information gain
+            Select Case type
+                Case 1, LF_c.Information_Gain 'Information gain
                     LF_val = 0
                     Dim IO As Double = 0
                     IO = 0
@@ -327,21 +331,21 @@ Namespace RandomForests
                         End If
                     Next
                     LF_val = IO
-                Case 2 'L2
+                Case 2, LF_c.Mean_Squared_Error 'L2
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate mean squared error
                     For i = 0 To a.list.Count - 1
                         LF_val = LF_val + (phenotype(a.list(i)) - yhat) * (phenotype(a.list(i)) - yhat)
                     Next
-                Case 3 'pseudo-Huber loss function
+                Case 3, LF_c.Pseudo_Huber 'pseudo-Huber loss function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     'Calculate huber loss function
                     For i = 0 To a.list.Count - 1
                         LF_val = LF_val + stdNum.Log(stdNum.Cosh(phenotype(a.list(i)) - yhat))
                     Next
-                Case 4 'False Positive and False Negative cost function
+                Case 4, LF_c.Personalized_Cost_Function_for_categories 'False Positive and False Negative cost function
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
 
@@ -355,7 +359,7 @@ Namespace RandomForests
                             LF_val = LF_val + cost(phenotype(a.list(i)))
                         End If
                     Next
-                Case 5 'Gini index
+                Case 5, LF_c.Gini_Index 'Gini index
                     'read the IG for each SNPs in the sequences
                     LF_val = 0
                     Dim GI As Double = 0
