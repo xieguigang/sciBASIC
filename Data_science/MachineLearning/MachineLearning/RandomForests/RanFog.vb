@@ -61,18 +61,19 @@ Namespace RandomForests
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         '''   Load parameter file                                                           
         ''' </summary>
-        Public Sub Run(train As Data, Optional tst As Data = Nothing)
+        Public Sub Run(train As Data)
+            ' Optional tst As Data = Nothing
             Dim n_tree As Integer = 0
             Dim j, k, i, n_branch, N_oob As Integer
 
-            If tst Is Nothing Then
-                tst = New Data With {
-                    .attributeNames = train.attributeNames.ToArray,
-                    .Genotype = {},
-                    .ID = {},
-                    .phenotype = {}
-                }
-            End If
+            'If tst Is Nothing Then
+            '    tst = New Data With {
+            '        .attributeNames = train.attributeNames.ToArray,
+            '        .Genotype = {},
+            '        .ID = {},
+            '        .phenotype = {}
+            '    }
+            'End If
 
             'Variables involved in the trees
             Dim mean_j, minLoss, MSE_tree, MSEval_tree, node_mse, temp As Double
@@ -82,11 +83,11 @@ Namespace RandomForests
             Dim MSE_oob, MSE_vi As Double, MSE_oob_ave As Double = 0
             'Predictive and estimated variables
             Dim GEBV = RectangularArray.Matrix(Of Double)(train.N_tot, 2) 'Predicted phenotype in training set
-            Dim y_hat = New Double(tst.N_tot - 1) {} 'Predicted phenotype in testing set
+            ' Dim y_hat = New Double(tst.N_tot - 1) {} 'Predicted phenotype in testing set
             Dim Selected = New Integer(train.N_attributes - 1) {} 'number of times SNPs are selected
             Dim VI = New Double(train.N_attributes - 1) {}
             Dim N_tot = train.N_tot
-            Dim N_tst = tst.N_tot
+            ' Dim N_tst = tst.N_tot
             Dim N_attributes = train.N_attributes
 
             'Information gain variables
@@ -115,10 +116,10 @@ Namespace RandomForests
                 Dim oob = New Integer(N_tot - 1) {}
                 Dim SNP_tree As List(Of Integer?) = New List(Of Integer?)()
                 Dim branch = New Branch(max_branch - 1) {}
-                Dim branch_tst = New Branch(max_branch - 1) {}
+                ' Dim branch_tst = New Branch(max_branch - 1) {}
                 Dim branch_oob = New Branch(max_branch - 1) {}
                 branch(n_branch) = New Branch()
-                branch_tst(n_branch) = New Branch()
+                ' branch_tst(n_branch) = New Branch()
                 branch_oob(n_branch) = New Branch()
 
                 'Get bootstrapped sample from data, and store pointer-positions in the list of branch zero
@@ -145,9 +146,9 @@ Namespace RandomForests
                 Next
                 k = 0
                 'Store pointer-positions of testing set in the branch zero for testing set.
-                For i = 0 To N_tst - 1
-                    branch_tst(n_branch).list.Insert(i, i)
-                Next
+                'For i = 0 To N_tst - 1
+                '    branch_tst(n_branch).list.Insert(i, i)
+                'Next
                 'Construct the tree. Grow branches until size<5 or not better classification is achieved	
                 For k = 0 To n_branch + 1 - 1
                     If branch(k).list.Count > 5 Then 'Minimum size=5
@@ -194,34 +195,34 @@ Namespace RandomForests
                             n_branch += 1
                             branch(k).Child1 = n_branch
                             branch(n_branch) = New Branch()
-                            branch_tst(n_branch) = New Branch()
+                            ' branch_tst(n_branch) = New Branch()
                             For i = 0 To branch(k).list.Count - 1
                                 If train.Genotype(branch(k).list(i))(node) <= branch(k).mean_snp Then
                                     branch(n_branch).list.Add(branch(k).list(i))
                                 End If
                             Next
-                            For i = 0 To branch_tst(k).list.Count - 1
-                                If tst.Genotype(branch_tst(k).list(i))(node) <= branch(k).mean_snp Then
-                                    branch_tst(n_branch).list.Add(branch_tst(k).list(i))
-                                End If
-                            Next
+                            'For i = 0 To branch_tst(k).list.Count - 1
+                            '    If tst.Genotype(branch_tst(k).list(i))(node) <= branch(k).mean_snp Then
+                            '        branch_tst(n_branch).list.Add(branch_tst(k).list(i))
+                            '    End If
+                            'Next
 
                             'Create left branch for the bootstrapped sample of the training set and for the testing set 
                             n_branch += 1
                             branch(k).Child2 = n_branch
                             branch(n_branch) = New Branch()
-                            branch_tst(n_branch) = New Branch()
+                            ' branch_tst(n_branch) = New Branch()
                             For i = 0 To branch(k).list.Count - 1
                                 If train.Genotype(branch(k).list(i))(node) > branch(k).mean_snp Then
                                     branch(n_branch).list.Add(branch(k).list(i))
                                 End If
                             Next
-                            For i = 0 To branch_tst(k).list.Count - 1
-                                If tst.Genotype(branch_tst(k).list(i))(node) > branch(k).mean_snp Then
-                                    branch_tst(n_branch).list.Add(branch_tst(k).list(i))
-                                End If
-                                'outBranch.print( branch[k].snp+" "+branch[k].child1+" "+branch[k].child2+" "+branch[k].getMean(phenotype)+" " );
-                            Next 'No-SNP has reduced miss-classification of previous branch
+                            'For i = 0 To branch_tst(k).list.Count - 1
+                            '    If tst.Genotype(branch_tst(k).list(i))(node) > branch(k).mean_snp Then
+                            '        branch_tst(n_branch).list.Add(branch_tst(k).list(i))
+                            '    End If
+                            '    'outBranch.print( branch[k].snp+" "+branch[k].child1+" "+branch[k].child2+" "+branch[k].getMean(phenotype)+" " );
+                            'Next 'No-SNP has reduced miss-classification of previous branch
                         Else
                             branch(k).status = "F" 'the branch is set as dead-end branch
                             'outBranchMSE.print( branch[k].list.size()+" "+branch[k].getMSE(phenotype)+" " );
@@ -230,9 +231,9 @@ Namespace RandomForests
                                 GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(train.phenotype)
                                 GEBV(branch(k).list(i))(1) += 1
                             Next
-                            For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
-                                y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + branch(k).getMean(train.phenotype)
-                            Next
+                            'For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
+                            '    y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + branch(k).getMean(train.phenotype)
+                            'Next
                         End If 'decision on creating a new branch
                         'If branch size is <=5 stop growing the tree
                     Else
@@ -245,17 +246,17 @@ Namespace RandomForests
                             GEBV(branch(k).list(i))(0) = GEBV(branch(k).list(i))(0) + branch(k).getMean(train.phenotype)
                             GEBV(branch(k).list(i))(1) += 1
                         Next
-                        If branch_tst(k).list.Count <> 0 AndAlso branch(k).list.Count <> 0 Then
-                            temp = branch(k).getMean(train.phenotype)
-                            For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
-                                y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
-                            Next 'if training branch has size=0
-                        Else
-                            temp = branch(0).getMean(train.phenotype)
-                            For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean branch 0
-                                y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
-                            Next
-                        End If
+                        'If branch_tst(k).list.Count <> 0 AndAlso branch(k).list.Count <> 0 Then
+                        '    temp = branch(k).getMean(train.phenotype)
+                        '    For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean of the corresponding branch in the training bootstrapped sample
+                        '        y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
+                        '    Next 'if training branch has size=0
+                        'Else
+                        '    temp = branch(0).getMean(train.phenotype)
+                        '    For i = 0 To branch_tst(k).list.Count - 1 'Predict phenotypes in the testing set as mean branch 0
+                        '        y_hat(branch_tst(k).list(i)) = y_hat(branch_tst(k).list(i)) + temp
+                        '    Next
+                        'End If
                     End If 'checking branch size
                 Next 'for over n_branch
 
@@ -331,13 +332,13 @@ Namespace RandomForests
 
                 'Calculate miss-classification rate at this tree for the testing set
                 MSEval_tree = 0
-                For i = 0 To N_tst - 1
-                    MSEval_tree = MSEval_tree + (tst.phenotype(i) - y_hat(i) / (n_tree + 1)) * (tst.phenotype(i) - y_hat(i) / (n_tree + 1))
-                Next
-                Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
+                'For i = 0 To N_tst - 1
+                '    MSEval_tree = MSEval_tree + (tst.phenotype(i) - y_hat(i) / (n_tree + 1)) * (tst.phenotype(i) - y_hat(i) / (n_tree + 1))
+                'Next
+                'Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
                 Console.WriteLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
                 outTree.WriteLine(MSE_oob_ave / CSng(n_tree + 1) & " " & MSE_oob)
-                outTreeTest.WriteLine(MSEval_tree / N_tst)
+                ' outTreeTest.WriteLine(MSEval_tree / N_tst)
                 n_tree += 1 'go to next tree
             End While 'over n_tree
             ''' <summary>
@@ -359,9 +360,9 @@ Namespace RandomForests
             For i = 0 To N_tot - 1 'Predicted GBV in training set
                 outEGBV.WriteLine(train.ID(i) & " " & (GEBV(i)(0) / CSng(GEBV(i)(1))))
             Next
-            For i = 0 To N_tst - 1 'Predicted GBV in testing set
-                outPred.WriteLine(tst.ID(i) & " " & (y_hat(i) / (n_tree + 1)))
-            Next
+            'For i = 0 To N_tst - 1 'Predicted GBV in testing set
+            '    outPred.WriteLine(tst.ID(i) & " " & (y_hat(i) / (n_tree + 1)))
+            'Next
             outSel.Close()
             outVI.Close()
             outPred.Close()
