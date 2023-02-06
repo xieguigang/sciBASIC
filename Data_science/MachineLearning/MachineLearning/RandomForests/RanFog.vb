@@ -1,7 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language.Java
 
 Namespace RandomForests
 
@@ -19,31 +18,23 @@ Namespace RandomForests
     Public Class RanFog
 
         ''' <summary>
+        ''' Program execution starts here. 
+        ''' This method construct a random forest (Breiman, 2001. Machine Learning, 45)
+        ''' for classification data (should be score as 0 or 1).
+        '''  Results are written to files:
+        '''    "Trees.txt" stores the miss-classification rate in the training set and the oob set at each tree
+        '''    "Trees.test" stores the miss-classification rate in the testing set at each tree
+        '''    "Variable_Importance.txt" stores the importance variable for each feature
+        '''    "TimesSelected.txt" stores the number of times each feature was selected
         ''' 
+        ''' The methods required a parameter file called 'params.txt' that must be located in the same folder as RanFog
+        ''' The main method loads different parameters from this file 
+        ''' 
+        ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        '''   Load parameter file                                                           
         ''' </summary>
         ''' <param name="demoProperties">"params.txt"</param>
         Public Sub Run(demoProperties As Dictionary(Of String, String))
-            ''' <summary>
-            ''' Program execution starts here. 
-            ''' This method construct a random forest (Breiman, 2001. Machine Learning, 45)
-            ''' for classification data (should be score as 0 or 1).
-            '''  Results are written to files:
-            '''    "Trees.txt" stores the miss-classification rate in the training set and the oob set at each tree
-            '''    "Trees.test" stores the miss-classification rate in the testing set at each tree
-            '''    "Variable_Importance.txt" stores the importance variable for each feature
-            '''    "TimesSelected.txt" stores the number of times each feature was selected
-            ''' 
-            ''' The methods required a parameter file called 'params.txt' that must be located in the same folder as RanFog
-            ''' The main method loads different parameters from this file 
-            ''' </summary>
-
-            ''' <summary>
-            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            '''   Load parameter file                                                           
-            ''' </summary>
-            ' 
-
-
             'Max number of trees to be constructed
             Dim max_tree = Integer.Parse(demoProperties("ForestSize"))
             'Number of classified Features
@@ -487,8 +478,8 @@ Namespace RandomForests
             ''' </summary>
 
             Console.WriteLine("Writing output files")
-            outTree.close()
-            outTreeTest.close()
+            outTree.Close()
+            outTreeTest.Close()
 
             'Prepare the output files and its format
 
@@ -503,10 +494,10 @@ Namespace RandomForests
             For i = 0 To N_tst - 1 'Predicted GBV in testing set
                 outPred.WriteLine(ID_tst(i) & " " & (y_hat(i) / (n_tree + 1)))
             Next
-            outSel.close()
-            outVI.close()
-            outPred.close()
-            outEGBV.close()
+            outSel.Close()
+            outVI.Close()
+            outPred.Close()
+            outEGBV.Close()
             Console.WriteLine("TERMINATED WITHOUT ERRORS")
             Console.WriteLine("Random Forest algorithm for regression and classification problems (Ver.Beta)")
             Console.WriteLine("by Oscar Gonzalez-Recio (2019) ")
