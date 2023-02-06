@@ -17,7 +17,7 @@ Namespace RandomForests
     '
     ''''''''''''''''''''''''''' 80 columns wide //////////////////////////////////
 
-    Public Class RanFog
+    Public Class RanFog : Inherits MachineLearning.Model
 
         ''' <summary>
         ''' [ForestSize]Max number of trees to be constructed
@@ -61,9 +61,18 @@ Namespace RandomForests
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         '''   Load parameter file                                                           
         ''' </summary>
-        Public Sub Run(train As Data, tst As Data)
+        Public Sub Run(train As Data, Optional tst As Data = Nothing)
             Dim n_tree As Integer = 0
             Dim j, k, i, n_branch, N_oob As Integer
+
+            If tst Is Nothing Then
+                tst = New Data With {
+                    .attributeNames = train.attributeNames.ToArray,
+                    .Genotype = {},
+                    .ID = {},
+                    .phenotype = {}
+                }
+            End If
 
             'Variables involved in the trees
             Dim mean_j, minLoss, MSE_tree, MSEval_tree, node_mse, temp As Double
