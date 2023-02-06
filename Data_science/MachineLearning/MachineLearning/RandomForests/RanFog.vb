@@ -61,11 +61,6 @@ Namespace RandomForests
         ''' Write file with number of times each Feature was selected and its relative importance 
         ''' </remarks>
         Public Property Selected As Integer()
-        ''' <summary>
-        ''' Feature selected at each node [regression feature,classified features]
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property FeatureSel As Integer() = New Integer(1) {}
 
         Private Function Tree(n_tree As Integer, train As Data, GEBV As Double()(), ByRef MSE_oob_ave As Double) As (Double, Double)
             'Variables involved in the trees
@@ -74,6 +69,8 @@ Namespace RandomForests
             Dim j = 0
             Dim k = 0
             Dim i = 0
+            ' Feature selected at each node [regression feature,classified features]
+            Dim FeatureSel As Integer
             'Information gain variables
             Dim Loss As Double = 0
             Dim n_branch = 0
@@ -121,7 +118,7 @@ Namespace RandomForests
             For k = 0 To n_branch + 1 - 1
                 If branch(k).list.Count > 5 Then 'Minimum size=5
                     node = N_attributes
-                    minLoss = 99999999
+                    minLoss = Double.MaxValue
                     'Calculate Entropy in branch[k]
                     node_mse = 0
                     node_mse = LossFunction.getLossFunctionNode(LF_c, branch(k), train.phenotype, train.Genotype, false_positive_cost, false_negative_cost)
@@ -136,7 +133,7 @@ Namespace RandomForests
                             For i = 0 To branch(k).list.Count - 1
                                 mean_j = mean_j + train.Genotype(branch(k).list(i))(j) / branch(k).list.Count
                             Next
-                            FeatureSel(0) = j
+                            FeatureSel = j
                             minLoss = Loss
                         End If
 
@@ -147,10 +144,10 @@ Namespace RandomForests
                             'Select non-classified Feature, and calculate its mean
                             mean_j = 0
                             For i = 0 To branch(k).list.Count - 1
-                                mean_j = mean_j + train.Genotype(branch(k).list(i))(FeatureSel(0)) / branch(k).list.Count
+                                mean_j = mean_j + train.Genotype(branch(k).list(i))(FeatureSel) / branch(k).list.Count
                             Next
-                            node = FeatureSel(0)
-                            branch(k).Feature = FeatureSel(0)
+                            node = FeatureSel
+                            branch(k).Feature = FeatureSel
                             branch(k).mean_snp = mean_j
                         End If
                         '}
