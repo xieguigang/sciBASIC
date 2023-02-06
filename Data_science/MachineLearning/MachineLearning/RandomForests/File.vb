@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
@@ -9,11 +10,11 @@ Namespace RandomForests
     ''' Loss function used for continuous features
     ''' </summary>
     Public Enum LF_c
-        Information_Gain = 1
-        Mean_Squared_Error = 2
-        Pseudo_Huber = 3
-        Personalized_Cost_Function_for_categories = 4
-        Gini_Index = 5
+        <Description("Information Gain")> Information_Gain = 1
+        <Description("Mean Squared Error (L2 function)")> Mean_Squared_Error = 2
+        <Description("Pseudo Huber")> Pseudo_Huber = 3
+        <Description("Personalized Cost Function for categories")> Personalized_Cost_Function_for_categories = 4
+        <Description("Gini Index")> Gini_Index = 5
     End Enum
 
     Public Class Data
@@ -25,6 +26,25 @@ Namespace RandomForests
         ''' <returns></returns>
         Public Property phenotype As Double()
         Public Property Genotype As Double()()
+
+        ''' <summary>
+        ''' the feature names
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property attributeNames As String()
+
+        Public ReadOnly Property N_attributes As Integer
+            Get
+                Return attributeNames.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property N_tot As Integer
+            Get
+                Return phenotype.Length
+            End Get
+        End Property
+
     End Class
 
     Public Class File

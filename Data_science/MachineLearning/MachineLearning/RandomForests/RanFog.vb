@@ -20,29 +20,30 @@ Namespace RandomForests
     Public Class RanFog
 
         ''' <summary>
-        ''' Max number of trees to be constructed
+        ''' [ForestSize]Max number of trees to be constructed
         ''' </summary>
         ''' <returns></returns>
-        Public Property max_tree As Integer
-        Public Property N_tot As Integer
+        Public Property max_tree As Integer = 500
         ''' <summary>
         ''' Max number of branches allowed
         ''' </summary>
         ''' <returns></returns>
-        Public Property max_branch As Integer
-        Public Property N_tst As Integer
-        Public Property N_attributes As Integer
+        Public Property max_branch As Integer = 2000
         ''' <summary>
+        ''' [mtry]
         ''' Number of Features randomly selected at each node,
         ''' Percentage of Features randomly selected at each node
         ''' </summary>
         ''' <returns></returns>
-        Public Property mtry As Integer
+        Public Property mtry As Integer = 100
         ''' <summary>
+        ''' [LossFunction]
         ''' Loss function used for continuous features
         ''' </summary>
         ''' <returns></returns>
-        Public Property LF_c As String
+        Public Property LF_c As LF_c = LF_c.Mean_Squared_Error
+        Public Property false_positive_cost As Double = 1
+        Public Property false_negative_cost As Double = 1
 
         ''' <summary>
         ''' Program execution starts here. 
@@ -60,10 +61,7 @@ Namespace RandomForests
         ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         '''   Load parameter file                                                           
         ''' </summary>
-        ''' <param name="demoProperties">"params.txt"</param>
-        Public Sub Run(train As Data, tst As Data,
-                       demoProperties As Dictionary(Of String, String))
-
+        Public Sub Run(train As Data, tst As Data)
             Dim n_tree As Integer = 0
             Dim j, k, i, n_branch, N_oob As Integer
 
@@ -74,10 +72,13 @@ Namespace RandomForests
             'out of bag variables
             Dim MSE_oob, MSE_vi As Double, MSE_oob_ave As Double = 0
             'Predictive and estimated variables
-            Dim GEBV = RectangularArray.Matrix(Of Double)(N_tot, 2) 'Predicted phenotype in training set
-            Dim y_hat = New Double(N_tst - 1) {} 'Predicted phenotype in testing set
-            Dim Selected = New Integer(N_attributes - 1) {} 'number of times SNPs are selected
-            Dim VI = New Double(N_attributes - 1) {}
+            Dim GEBV = RectangularArray.Matrix(Of Double)(train.N_tot, 2) 'Predicted phenotype in training set
+            Dim y_hat = New Double(tst.N_tot - 1) {} 'Predicted phenotype in testing set
+            Dim Selected = New Integer(train.N_attributes - 1) {} 'number of times SNPs are selected
+            Dim VI = New Double(train.N_attributes - 1) {}
+            Dim N_tot = train.N_tot
+            Dim N_tst = tst.N_tot
+            Dim N_attributes = train.N_attributes
 
             'Information gain variables
             Dim Loss As Double = 0
@@ -91,20 +92,6 @@ Namespace RandomForests
             Dim outPred As StreamWriter '("Predictions.txt")
             ''' <summary>
             ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </summary>
-
-            Dim false_positive_cost As Double
-            Dim false_negative_cost As Double
-
-            If demoProperties("false_positive_cost") Is Nothing Then
-                false_positive_cost = 0
-            Else
-                false_positive_cost = Double.Parse(demoProperties("false_positive_cost"))
-            End If
-            If demoProperties("false_negative_cost") Is Nothing Then
-                false_negative_cost = 0
-            Else
-                false_negative_cost = Double.Parse(demoProperties("false_negative_cost"))
-            End If
 
             While n_tree < max_tree
                 j = 0
