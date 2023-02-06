@@ -84,14 +84,14 @@ Namespace RandomForests
             Dim Loss As Double = 0
 
             'Output files
-            Dim outTree As StreamWriter '("Trees.txt")
-            Dim outTreeTest As StreamWriter '("Trees.test")
-            Dim outSel As StreamWriter '("TimesSelected.txt")
-            Dim outVI As StreamWriter '("Variable_Importance.txt")
-            Dim outEGBV As StreamWriter '("EGBV.txt")
-            Dim outPred As StreamWriter '("Predictions.txt")
-            ''' <summary>
-            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% </summary>
+            Dim outTree As New StreamWriter("Trees.txt")
+            Dim outTreeTest As New StreamWriter("Trees.test")
+            Dim outSel As New StreamWriter("TimesSelected.txt")
+            Dim outVI As New StreamWriter("Variable_Importance.txt")
+            Dim outEGBV As New StreamWriter("EGBV.txt")
+            Dim outPred As New StreamWriter("Predictions.txt")
+
+            ' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             While n_tree < max_tree
                 j = 0
