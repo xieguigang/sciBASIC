@@ -224,16 +224,25 @@ Namespace Parallel
         ''' <summary>
         ''' 默认是使用UTF8编码来编码字符串的
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 这个函数总是返回一个不为空值的字符串
+        ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
-            Return UTF8WithoutBOM.GetString(ChunkBuffer)
+            Return If(UTF8WithoutBOM.GetString(ChunkBuffer), "")
         End Function
 
+        ''' <summary>
+        ''' 按照指定的编码构建出一个字符串值
+        ''' </summary>
+        ''' <param name="encoding"></param>
+        ''' <returns>
+        ''' 这个函数总是返回一个不为空值的字符串
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
-            Return encoding.GetString(ChunkBuffer)
+            Return If(encoding.GetString(ChunkBuffer), "")
         End Function
 
         Public Function GetIntegers() As Integer()
