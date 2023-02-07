@@ -775,6 +775,9 @@ Namespace SVM
         ''' <param name="param"></param>
         <Extension>
         Private Sub oneClassSvm(ByRef model As Model, prob As Problem, param As Parameter)
+            Dim nSV = 0
+            Dim i As Integer
+
             ' regression or one-class-svm
             model.numberOfClasses = 2
             model.classLabels = Nothing
@@ -789,10 +792,9 @@ Namespace SVM
             End If
 
             Dim f = svm_train_one(prob, param, 0, 0)
+
             model.rho = New Double(0) {}
             model.rho(0) = f.rho
-            Dim nSV = 0
-            Dim i As Integer
 
             For i = 0 To prob.count - 1
                 If stdNum.Abs(f.alpha(i)) > 0 Then

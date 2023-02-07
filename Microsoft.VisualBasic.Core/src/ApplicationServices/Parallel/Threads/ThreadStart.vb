@@ -51,7 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports ParallelTask = System.Threading.Tasks.Parallel
+Imports ParallelTask = System.Threading.Tasks.Task
 
 Namespace Parallel.Threads
 
@@ -62,10 +62,16 @@ Namespace Parallel.Threads
         ''' <summary>
         ''' Run parallel task
         ''' </summary>
-        ''' <param name="task"></param>
+        ''' <param name="tasks"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub execute(task As IEnumerable(Of ThreadStart))
-            Call ParallelTask.ForEach(task, Sub(thread) thread.run())
+        Public Shared Sub execute(tasks As IEnumerable(Of ThreadStart))
+            Dim pool As New List(Of Task)
+
+            For Each task As ThreadStart In tasks
+                pool.Add(ParallelTask.Run(AddressOf task.run))
+            Next
+
+            Call ParallelTask.WaitAll(pool.ToArray)
         End Sub
     End Class
 End Namespace
