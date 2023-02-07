@@ -461,6 +461,8 @@ Public Module StringHelpers
         End If
     End Function
 
+    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-"}
+
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>
     ''' (s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>).
@@ -485,8 +487,6 @@ Public Module StringHelpers
     Public Function TextEquals(s1$, s2$,
                                Optional null_equals As Boolean = False,
                                Optional empty_equals As Boolean = True) As Boolean
-
-        Static empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null"}
 
         If s1 Is Nothing OrElse s2 Is Nothing Then
             If s1 Is Nothing AndAlso s2 Is Nothing Then
@@ -523,16 +523,31 @@ Public Module StringHelpers
     ''' <paramref name="s"/> Is Nothing, <see cref="System.String.IsNullOrEmpty"/>, <see cref="System.String.IsNullOrWhiteSpace"/>
     ''' </summary>
     ''' <param name="s">The input test string</param>
-    ''' <returns></returns>
-    ''' 
+    ''' <param name="whitespaceAsEmpty">
+    ''' and also treat the whitespace as empty?
+    ''' </param>
+    ''' <param name="testEmptyFactor">
+    ''' and also treat some NULL factor in R language as empty?
+    ''' </param>
+    ''' <returns>
+    ''' this function returns TRUE if the string is empty,
+    ''' white space(if <paramref name="whitespaceAsEmpty"/>) 
+    ''' or factor of NULL literal(if
+    ''' <paramref name="testEmptyFactor"/>).
+    ''' </returns>
     <DebuggerStepThrough>
     <Extension>
-    Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+    Public Function StringEmpty(s$,
+                                Optional whitespaceAsEmpty As Boolean = True,
+                                Optional testEmptyFactor As Boolean = False) As Boolean
+
         If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
             If String.IsNullOrWhiteSpace(s) Then
                 Return whitespaceAsEmpty
+            ElseIf testEmptyFactor Then
+                Return s Like empty_factor
             Else
                 Return False
             End If
