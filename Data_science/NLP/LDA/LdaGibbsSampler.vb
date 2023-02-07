@@ -232,8 +232,8 @@ Namespace LDA
             Call println("allocating memory...")
 
             ' initialise count variables. 初始化计数器
-            nw = MAT(Of Integer)(V, K)
-            nd = MAT(Of Integer)(lM, K)
+            nw = RectangularArray.Matrix(Of Integer)(V, K)
+            nd = RectangularArray.Matrix(Of Integer)(lM, K)
             nwsum = New Integer(K - 1) {}
             ndsum = New Integer(lM - 1) {}
 
@@ -307,8 +307,8 @@ Namespace LDA
 
             ' init sampler statistics  分配内存
             If SAMPLE_LAG > 0 Then
-                thetasum = MAT(Of Double)(documents.Length, K)
-                phisum = MAT(Of Double)(K, V)
+                thetasum = RectangularArray.Matrix(Of Double)(documents.Length, K)
+                phisum = RectangularArray.Matrix(Of Double)(K, V)
                 numstats = 0
             End If
 
@@ -433,7 +433,7 @@ Namespace LDA
         ''' <returns> theta multinomial mixture of document topics (M x K) </returns>
         Public Overridable ReadOnly Property Theta As Double()()
             Get
-                Dim lTheta = MAT(Of Double)(documents.Length, K)
+                Dim lTheta = RectangularArray.Matrix(Of Double)(documents.Length, K)
 
                 If SAMPLE_LAG > 0 Then
                     For m = 0 To documents.Length - 1
@@ -461,7 +461,7 @@ Namespace LDA
         ''' <returns> phi multinomial mixture of topic words (K x V) </returns>
         Public Overridable ReadOnly Property Phi As Double()()
             Get
-                Dim lPhi = MAT(Of Double)(K, V)
+                Dim lPhi = RectangularArray.Matrix(Of Double)(K, V)
 
                 If SAMPLE_LAG > 0 Then
                     For K As Integer = 0 To Me.K - 1

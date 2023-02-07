@@ -73,7 +73,7 @@ Namespace LDA
             ' init
 
             ' initialise count variables. 初始化计数器          
-            Dim nw = MAT(Of Integer)(V, lK)
+            Dim nw = RectangularArray.Matrix(Of Integer)(V, lK)
             Dim nd = New Integer(lK - 1) {}
             Dim nwsum = New Integer(lK - 1) {}
             Dim ndsum = 0
