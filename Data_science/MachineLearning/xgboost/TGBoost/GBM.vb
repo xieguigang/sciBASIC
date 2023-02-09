@@ -157,16 +157,40 @@ Namespace train
         ''' + logloss: <see cref="LogisticLoss"/> for classify problem
         ''' + squareloss: <see cref="SquareLoss"/> for regression problem
         ''' </param>
-        ''' <param name="eta"></param>
+        ''' <param name="eta">
+        ''' [learning_rate] Step size shrinkage used in update to prevents overfitting. 
+        ''' After each boosting step, we can directly get the weights 
+        ''' of new features, and eta shrinks the feature weights to make 
+        ''' the boosting process more conservative. range: [0,1]
+        ''' </param>
         ''' <param name="num_boost_round"></param>
-        ''' <param name="max_depth"></param>
+        ''' <param name="max_depth">
+        ''' Maximum depth of a tree. Increasing this value will make the model more
+        ''' complex and more likely to overfit. 0 indicates no limit on depth. Beware
+        ''' that XGBoost aggressively consumes memory when training a deep tree.
+        ''' exact tree method requires non-zero value. range: [0,∞]
+        ''' </param>
         ''' <param name="scale_pos_weight"></param>
         ''' <param name="rowsample"></param>
         ''' <param name="colsample"></param>
-        ''' <param name="min_child_weight"></param>
+        ''' <param name="min_child_weight">
+        ''' Minimum sum of instance weight (hessian) needed in a child. If the tree 
+        ''' partition step results in a leaf node with the sum of instance weight less
+        ''' than min_child_weight, then the building process will give up further 
+        ''' partitioning. In linear regression task, this simply corresponds to 
+        ''' minimum number of instances needed to be in each node. The larger min_child_weight
+        ''' is, the more conservative the algorithm will be. range: [0,∞]
+        ''' </param>
         ''' <param name="min_sample_split"></param>
-        ''' <param name="lambda"></param>
-        ''' <param name="gamma"></param>
+        ''' <param name="lambda">
+        ''' [reg_lambda] L2 regularization term on weights. Increasing this value
+        ''' will make model more conservative.
+        ''' </param>
+        ''' <param name="gamma">
+        ''' [min_split_loss] Minimum loss reduction required to make a further partition
+        ''' on a leaf node of the tree. The larger gamma is, the more conservative the 
+        ''' algorithm will be. range: [0,∞]
+        ''' </param>
         ''' <param name="num_thread"></param>
         Public Overridable Sub fit(trainset As TrainData, valset As ValidationData,
                                    Optional early_stopping_rounds As Integer = 10,
