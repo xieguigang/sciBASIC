@@ -131,10 +131,10 @@ Namespace RandomForests
             'Loss function used for continuous features
             Dim LF_c As String = demoProperties("LossFunction")
 
-            ''' <summary>
-            ''' End loading parameter file
-            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            ''' </summary>
+            '
+            ' End loading parameter file
+            ' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            '
 
             'Set the arguments to the respective variables.
             Console.WriteLine("Number of trees to be grown: " & max_tree)
@@ -156,8 +156,8 @@ Namespace RandomForests
             Console.WriteLine()
 
 
-            ''' <summary>
-            ''' Initialize counter variables </summary>
+            '
+            ' Initialize counter variables
             Dim j = 0, jj = 0, k = 0, i = 0, N_tot = 0, N_tst = 0, N_oob = 0
 
             ' read the number of lines in the training file
@@ -204,10 +204,10 @@ Namespace RandomForests
             End Try
             Console.WriteLine("Number of genotypes (lines) in testing set: " & N_tst)
 
-            ''' <summary>
-            ''' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            ''' Declaracion de variables                                                 
-            ''' </summary>
+            '
+            ' %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            ' Declaracion de variables                                                 
+            '
 
             'Variables read from files
             Dim phenotype = New Double(N_tot - 1) {}
@@ -231,9 +231,9 @@ Namespace RandomForests
             Dim VI = New Double(N_attributes - 1) {}
 
 
-            ''' <summary>
-            ''' 1. Start reading files
-            ''' </summary>
+            '
+            ' 1. Start reading files
+            '
             'read the training set file
             i = 0
             Try

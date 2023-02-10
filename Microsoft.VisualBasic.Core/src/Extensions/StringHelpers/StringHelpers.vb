@@ -555,7 +555,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Not <see cref="StringEmpty(String, Boolean)"/>
+    ''' Not <see cref="StringEmpty"/>
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <param name="whitespaceAsEmpty"></param>
@@ -573,7 +573,8 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Sub RemoveLast(s As StringBuilder)
+    <Extension>
+    Public Sub RemoveLast(s As StringBuilder)
         Call s.Remove(s.Length - 1, 1)
     End Sub
 
@@ -582,7 +583,8 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="sb"></param>
     ''' <returns></returns>
-    <Extension> Public Function Reverse(ByRef sb As StringBuilder) As StringBuilder
+    <Extension>
+    Public Function Reverse(ByRef sb As StringBuilder) As StringBuilder
         Dim s As String = New String(sb.ToString.Reverse.ToArray)
         sb = New StringBuilder(s)
         Return sb
