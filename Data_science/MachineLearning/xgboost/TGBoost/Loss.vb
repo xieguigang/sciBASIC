@@ -71,6 +71,38 @@ Namespace train
 
     End Class
 
+    Friend Class QLinearLoss : Inherits Loss
+
+        Public Overrides Function transform(pred As Double()) As Double()
+            Return pred
+        End Function
+
+        Public Overrides Function grad(pred As Double(), label As Double()) As Double()
+            Dim ret = New Double(pred.Length - 1) {}
+            Dim x As Double
+
+            For i = 0 To ret.Length - 1
+                x = (pred(i) - label(i)) ^ 2
+
+                If x < 1 Then
+                    x = 1
+                Else
+                    x = stdNum.Log(x)
+                End If
+
+                ret(i) = 1 / x
+            Next
+
+            Return ret
+        End Function
+
+        Public Overrides Function hess(pred As Double(), label As Double()) As Double()
+            Dim ret = New Double(pred.Length - 1) {}
+            Arrays.fill(ret, 1.0)
+            Return ret
+        End Function
+    End Class
+
     Friend Class SquareLoss : Inherits Loss
 
         Public Overrides Function transform(pred As Double()) As Double()

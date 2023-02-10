@@ -232,11 +232,11 @@ Namespace train
             If loss.Equals("logloss") Then
                 _loss = New LogisticLoss()
                 _first_round_pred = 0.0
-            ElseIf loss.Equals("squareloss") Then
-                _loss = New SquareLoss()
+            ElseIf loss.Equals("squareloss") OrElse loss = "qlinearloss" Then
+                _loss = If(loss = "squareloss", New SquareLoss(), New QLinearLoss())
                 _first_round_pred = class_list.label.Average
 
-                If eval_metric = Metrics.mse Then
+                If eval_metric = Metrics.mse OrElse eval_metric = Metrics.mae Then
                     GBM.logger.info("Going to solve a regression model!")
                 End If
             End If
