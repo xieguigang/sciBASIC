@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efe742f770de660863e03d1089026357, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\corr.vb"
+﻿#Region "Microsoft.VisualBasic::f3b45212a8c2337a550473f582945d20, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\corr.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 1.58 KB
+    '     File Size: 1.61 KB
 
 
     '     Module corr

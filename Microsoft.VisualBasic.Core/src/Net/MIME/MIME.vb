@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5078113cfe8bbbd99a844529a016ebda, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::8db7bb7bf80dda2ac73b5f8a076f13a4, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 49
+    '   Total Lines: 88
+    '    Code Lines: 54
     ' Comment Lines: 25
-    '   Blank Lines: 8
-    '     File Size: 3.34 KB
+    '   Blank Lines: 9
+    '     File Size: 3.65 KB
 
 
     '     Module MIME

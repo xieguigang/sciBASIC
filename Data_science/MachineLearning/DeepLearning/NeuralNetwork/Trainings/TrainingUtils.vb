@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6d73539dc598bf3e31facd20ca695f3, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::10e81d19af626b11c5994f76066dca79, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\TrainingUtils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 34
+    '   Total Lines: 55
+    '    Code Lines: 35
     ' Comment Lines: 11
     '   Blank Lines: 9
-    '     File Size: 2.25 KB
+    '     File Size: 2.32 KB
 
 
     '     Class TrainingUtils

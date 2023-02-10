@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0fd1db003c1f10ad2a07c60612d7635, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Interpolation.vb"
+﻿#Region "Microsoft.VisualBasic::c464018a22be96d1849c69d195b603e7, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Interpolation.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Namespace Drawing2D.HeatMap.hqx
     End Class
 
 End Namespace
-

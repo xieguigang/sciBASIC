@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c316aa2bb97ca9994b952a80be8e5293, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::8caf1d295046ae2bf88c32ac737c1423, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 169
-    '    Code Lines: 115
-    ' Comment Lines: 34
-    '   Blank Lines: 20
-    '     File Size: 5.88 KB
+    '   Total Lines: 208
+    '    Code Lines: 138
+    ' Comment Lines: 44
+    '   Blank Lines: 26
+    '     File Size: 7.42 KB
 
 
     '     Class [Variant]
@@ -46,7 +46,11 @@
     '         Properties: VA, VB
     ' 
     '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: [TryCast], GetUnderlyingType
+    ' 
+    '         Sub: (+2 Overloads) Dispose, TryDispose
+    ' 
     '         Operators: (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) Like
     ' 
     ' 

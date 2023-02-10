@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33d39955c45c07b29e34b41eb842dfbc, sciBASIC#\Data_science\DataMining\DensityQuery\Density2D.vb"
+﻿#Region "Microsoft.VisualBasic::61699aa23501176d16f7497dfbbb5e9a, sciBASIC#\Data_science\DataMining\DensityQuery\Density2D.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 45
+    '   Total Lines: 73
+    '    Code Lines: 49
     ' Comment Lines: 13
-    '   Blank Lines: 10
-    '     File Size: 2.70 KB
+    '   Blank Lines: 11
+    '     File Size: 2.89 KB
 
 
     ' Module Density2D
     ' 
-    '     Function: (+2 Overloads) Density
+    '     Function: (+2 Overloads) Density, WindowSize
     ' 
     ' /********************************************************************************/
 

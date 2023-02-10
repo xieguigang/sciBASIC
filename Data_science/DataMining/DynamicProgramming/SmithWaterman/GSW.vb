@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7467afdab74d3241ea68973eb414d56b, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::20596cc853c51aae3c08a9a1e7fcf211, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 210
     ' Comment Lines: 115
     '   Blank Lines: 48
-    '     File Size: 14.77 KB
+    '     File Size: 14.43 KB
 
 
     '     Class GSW

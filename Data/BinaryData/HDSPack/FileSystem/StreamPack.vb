@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb8d6eea1f2afa78d57b46e58541e705, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
+﻿#Region "Microsoft.VisualBasic::75126c4ac890131e3a819d343f677491, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 429
-    '    Code Lines: 262
-    ' Comment Lines: 106
-    '   Blank Lines: 61
-    '     File Size: 17.13 KB
+    '   Total Lines: 449
+    '    Code Lines: 271
+    ' Comment Lines: 116
+    '   Blank Lines: 62
+    '     File Size: 17.57 KB
 
 
     '     Class StreamPack
@@ -49,7 +49,7 @@
     ' 
     '         Function: CreateNewStream, Delete, FileExists, FileSize, GetGlobalAttribute
     '                   GetObject, (+2 Overloads) OpenBlock, OpenFile, ParseTree, ReadAllText
-    '                   WriteText
+    '                   ToString, WriteText
     ' 
     '         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
     '              ParseMetadata, (+2 Overloads) SetAttribute

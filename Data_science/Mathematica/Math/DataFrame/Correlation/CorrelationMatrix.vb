@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4b23cf44c73f9331d66f9a1af5a3a4d, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::60a1fe95efa62288414d5f758b0da65d, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 77
-    ' Comment Lines: 4
-    '   Blank Lines: 11
-    '     File Size: 3.17 KB
+    '   Total Lines: 131
+    '    Code Lines: 103
+    ' Comment Lines: 12
+    '   Blank Lines: 16
+    '     File Size: 4.52 KB
 
 
     ' Class CorrelationMatrix
@@ -46,7 +46,9 @@
     '     Properties: (+2 Overloads) pvalue
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: GetCorrelationQuantile, GetPvalueMatrix, GetPvalueQuantile, GetUniqueTuples
+    '     Function: GetCorrelationQuantile, GetPvalueMatrix, GetPvalueQuantile, GetUniqueTuples, Power
+    '               Sign
+    '     Operators: *
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c26e2e13c90179c4b89a24bc0c69b84d, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
+﻿#Region "Microsoft.VisualBasic::b662da2227b8f3ca6d41875e82d0a8b4, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 68
+    '   Total Lines: 102
+    '    Code Lines: 74
     ' Comment Lines: 7
-    '   Blank Lines: 20
-    '     File Size: 3.59 KB
+    '   Blank Lines: 21
+    '     File Size: 3.75 KB
 
 
     '     Class AttributeList
@@ -86,7 +86,7 @@ Namespace train
         Private Sub sort_attribute_list()
             Dim comparer As New ComparatorAnonymousInnerClass
 
-            For i = 0 To feature_dim - 1
+            For i As Integer = 0 To feature_dim - 1
                 Array.Sort(attribute_list(i), comparer)
             Next
         End Sub
@@ -102,13 +102,12 @@ Namespace train
             cutting_inds = New Integer(feature_dim - 1)()() {}
             cutting_thresholds = New Single(feature_dim - 1)() {}
 
-            For i = 0 To feature_dim - 1
+            For i As Integer = 0 To feature_dim - 1
                 ' for this feature, get its cutting index
                 Dim list As New List(Of Integer)()
                 Dim last_index = 0
 
-                For j = 0 To attribute_list(i).Length - 1
-
+                For j As Integer = 0 To attribute_list(i).Length - 1
                     If attribute_list(i)(j)(0) = attribute_list(i)(last_index)(0) Then
                         last_index = j
                     Else
@@ -120,11 +119,19 @@ Namespace train
                 ' for this feature,store its cutting threshold
                 cutting_thresholds(i) = New Single(list.Count + 1 - 1) {}
 
-                For t = 0 To cutting_thresholds(i).Length - 1 - 1
+                For t As Integer = 0 To cutting_thresholds(i).Length - 1 - 1
                     cutting_thresholds(i)(t) = attribute_list(i)(list(t))(0)
                 Next
 
-                cutting_thresholds(i)(list.Count) = attribute_list(i)(list(list.Count - 1) + 1)(0)
+                Dim index As Integer = list.Count - 1
+
+                If index = -1 Then
+                    index = 0
+                Else
+                    index = list(index) + 1
+                End If
+
+                cutting_thresholds(i)(list.Count) = attribute_list(i)(index)(0)
 
                 ' for this feature,store inds of each interval
                 ' list.size()+1 interval
@@ -132,13 +139,13 @@ Namespace train
                 list.Insert(0, -1)
                 list.Add(attribute_list(i).Length - 1)
 
-                For k = 0 To cutting_inds(i).Length - 1
+                For k As Integer = 0 To cutting_inds(i).Length - 1
                     Dim start_ind As Integer = list(k) + 1
                     Dim end_ind = list(k + 1)
 
                     cutting_inds(i)(k) = New Integer(end_ind - start_ind + 1 - 1) {}
 
-                    For m = 0 To cutting_inds(i)(k).Length - 1
+                    For m As Integer = 0 To cutting_inds(i)(k).Length - 1
                         cutting_inds(i)(k)(m) = CInt(attribute_list(i)(start_ind + m)(1))
                     Next
                 Next

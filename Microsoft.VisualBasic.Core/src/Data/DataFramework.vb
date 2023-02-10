@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01c41184a26978c0f79a08df004be29e, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::859e1ea42ae49a54d9e74cf8ebb92a16, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 419
-    '    Code Lines: 266
-    ' Comment Lines: 98
-    '   Blank Lines: 55
-    '     File Size: 18.34 KB
+    '   Total Lines: 437
+    '    Code Lines: 272
+    ' Comment Lines: 109
+    '   Blank Lines: 56
+    '     File Size: 19.54 KB
 
 
     '     Module DataFramework
@@ -64,10 +64,7 @@
 
 #End Region
 
-#If netcore5 = 1 Then
-Imports System.Data
-#End If
-
+Imports System.Numerics
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -92,7 +89,7 @@ Namespace ComponentModel.DataSourceModel
 
         Sub New()
             Flags = New Dictionary(Of PropertyAccess, Predicate(Of PropertyInfo)) From {
- _
+                                                                                        _
                 {PropertyAccess.Readable, Function(p) p.CanRead},
                 {PropertyAccess.ReadWrite, Function(p) p.CanRead AndAlso p.CanWrite},
                 {PropertyAccess.Writeable, Function(p) p.CanWrite},
@@ -252,7 +249,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property StringParsers As New Dictionary(Of Type, IStringParser) From {
- _
+                                                                                               _
             {GetType(String), Function(strValue As String) strValue},
             {GetType(Boolean), AddressOf ParseBoolean},
             {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
@@ -273,7 +270,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 在Scripting命名空间下的基础类型,是规定为所有包含有类型和字符串值之间的隐式转换的类型
         ''' </remarks>
         Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
- _
+                                                                                                 _
             {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
             {GetType(Boolean), AddressOf DataFramework.valueToString},
             {GetType(DateTime), AddressOf DataFramework.valueToString},
@@ -317,17 +314,38 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Function IsNullable(type As Type) As Boolean
-
+            Return False
         End Function
 
+        ''' <summary>
+        ''' the given <paramref name="type"/> is any of the CLR numeric primitive type?
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="includeComplex">
+        ''' and also should treat the complex number as the primitive numeric type?
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' This function testing all of the possible numeric type at here
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function IsNumericType(type As Type) As Boolean
+        Public Function IsNumericType(type As Type, Optional includeComplex As Boolean = False) As Boolean
             Static numerics As Type() = {
                 GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
                 GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
             }
-            Return numerics.Any(Function(num) num Is type)
+            Static test As New Dictionary(Of String, Boolean)
+
+            Dim key As String = includeComplex.ToString & type.FullName
+
+            SyncLock test
+                If Not test.ContainsKey(key) Then
+                    test(key) = numerics.Any(Function(num) num Is type) OrElse (includeComplex AndAlso type Is GetType(Complex))
+                End If
+
+                Return test(key)
+            End SyncLock
         End Function
 
         Public Function IsIntegerType(type As Type) As Boolean
@@ -349,7 +367,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="enumCast">by default we treat the enum type as non-primtive type.</param>
+        ''' <param name="enumCast">by default we treat the enum type as non-primitive type.</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

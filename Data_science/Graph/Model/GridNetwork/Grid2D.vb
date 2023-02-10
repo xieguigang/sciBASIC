@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0580f650ae28c2f77f420342b54ffa98, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
+﻿#Region "Microsoft.VisualBasic::4f7e090c9514115d4a350e3bec91490c, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid2D.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 242
-    '    Code Lines: 157
-    ' Comment Lines: 55
-    '   Blank Lines: 30
-    '     File Size: 8.77 KB
+    '   Total Lines: 284
+    '    Code Lines: 185
+    ' Comment Lines: 63
+    '   Blank Lines: 36
+    '     File Size: 9.97 KB
 
 
     ' Class Grid
     ' 
-    '     Properties: height, size, width
+    '     Properties: height, rectangle, size, width
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: Cells, (+4 Overloads) Create, CreateReadOnly, EnumerateData, GetData
-    '               LineScans, (+2 Overloads) Query, ShuffleAll
+    '     Function: Blank, Cells, (+4 Overloads) Create, CreateReadOnly, EnumerateData
+    '               GetData, LineScans, (+2 Overloads) Query, ShuffleAll
     ' 
     '     Sub: Add
     ' 

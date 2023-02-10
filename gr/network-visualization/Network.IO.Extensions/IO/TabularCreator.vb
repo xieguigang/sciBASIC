@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079b3ddfa29fe165300fc5cbcdde3b21, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::08b3db98bead1fd39f912a2046b58c51, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 135
+    '   Total Lines: 195
+    '    Code Lines: 142
     ' Comment Lines: 25
-    '   Blank Lines: 27
-    '     File Size: 7.69 KB
+    '   Blank Lines: 28
+    '     File Size: 7.96 KB
 
 
     '     Module TabularCreator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87fe97a3b6e747d21623fff43dfaf09a, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
+﻿#Region "Microsoft.VisualBasic::9955a0cfd762806bc6851207ac4cf60b, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 101
+    '   Total Lines: 145
+    '    Code Lines: 105
     ' Comment Lines: 28
     '   Blank Lines: 12
-    '     File Size: 5.59 KB
+    '     File Size: 5.77 KB
 
 
     '     Class ActiveFunction

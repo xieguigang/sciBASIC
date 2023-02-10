@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7cc54aa88542517523ee832ef291937, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e9523782a65de08136746419f1bb1d3b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1375
-    '    Code Lines: 754
-    ' Comment Lines: 467
-    '   Blank Lines: 154
-    '     File Size: 49.81 KB
+    '   Total Lines: 1397
+    '    Code Lines: 758
+    ' Comment Lines: 484
+    '   Blank Lines: 155
+    '     File Size: 50.77 KB
 
 
     ' Module StringHelpers
@@ -461,6 +461,8 @@ Public Module StringHelpers
         End If
     End Function
 
+    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-"}
+
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>
     ''' (s1, s2, <see cref="StringComparison.OrdinalIgnoreCase"/>).
@@ -485,8 +487,6 @@ Public Module StringHelpers
     Public Function TextEquals(s1$, s2$,
                                Optional null_equals As Boolean = False,
                                Optional empty_equals As Boolean = True) As Boolean
-
-        Static empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null"}
 
         If s1 Is Nothing OrElse s2 Is Nothing Then
             If s1 Is Nothing AndAlso s2 Is Nothing Then
@@ -523,16 +523,31 @@ Public Module StringHelpers
     ''' <paramref name="s"/> Is Nothing, <see cref="System.String.IsNullOrEmpty"/>, <see cref="System.String.IsNullOrWhiteSpace"/>
     ''' </summary>
     ''' <param name="s">The input test string</param>
-    ''' <returns></returns>
-    ''' 
+    ''' <param name="whitespaceAsEmpty">
+    ''' and also treat the whitespace as empty?
+    ''' </param>
+    ''' <param name="testEmptyFactor">
+    ''' and also treat some NULL factor in R language as empty?
+    ''' </param>
+    ''' <returns>
+    ''' this function returns TRUE if the string is empty,
+    ''' white space(if <paramref name="whitespaceAsEmpty"/>) 
+    ''' or factor of NULL literal(if
+    ''' <paramref name="testEmptyFactor"/>).
+    ''' </returns>
     <DebuggerStepThrough>
     <Extension>
-    Public Function StringEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+    Public Function StringEmpty(s$,
+                                Optional whitespaceAsEmpty As Boolean = True,
+                                Optional testEmptyFactor As Boolean = False) As Boolean
+
         If s Is Nothing OrElse String.IsNullOrEmpty(s) Then
             Return True
         Else
             If String.IsNullOrWhiteSpace(s) Then
                 Return whitespaceAsEmpty
+            ElseIf testEmptyFactor Then
+                Return s Like empty_factor
             Else
                 Return False
             End If
@@ -540,7 +555,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' Not <see cref="StringEmpty(String, Boolean)"/>
+    ''' Not <see cref="StringEmpty"/>
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <param name="whitespaceAsEmpty"></param>
@@ -558,7 +573,8 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Sub RemoveLast(s As StringBuilder)
+    <Extension>
+    Public Sub RemoveLast(s As StringBuilder)
         Call s.Remove(s.Length - 1, 1)
     End Sub
 
@@ -567,7 +583,8 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="sb"></param>
     ''' <returns></returns>
-    <Extension> Public Function Reverse(ByRef sb As StringBuilder) As StringBuilder
+    <Extension>
+    Public Function Reverse(ByRef sb As StringBuilder) As StringBuilder
         Dim s As String = New String(sb.ToString.Reverse.ToArray)
         sb = New StringBuilder(s)
         Return sb

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22afb8241ac9d9123c05d5adf563c642, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\BubbleHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::3fa8d1c59c01ec3122b9420ff7ce4c46, sciBASIC#\Data_science\Visualization\Plots-statistics\Heatmap\BubbleHeatmap.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 40
+    '   Total Lines: 52
+    '    Code Lines: 39
     ' Comment Lines: 5
     '   Blank Lines: 8
-    '     File Size: 2.20 KB
+    '     File Size: 2.10 KB
 
 
     '     Module BubbleHeatmap

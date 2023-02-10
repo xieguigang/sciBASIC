@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac017128c00d97c54434efbc1dc1306, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\HiddenLayers.vb"
+﻿#Region "Microsoft.VisualBasic::37c80d44d11f4b52d81bab0c5acb4541, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\HiddenLayers.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 64
     ' Comment Lines: 39
     '   Blank Lines: 16
-    '     File Size: 4.79 KB
+    '     File Size: 4.80 KB
 
 
     '     Class HiddenLayers

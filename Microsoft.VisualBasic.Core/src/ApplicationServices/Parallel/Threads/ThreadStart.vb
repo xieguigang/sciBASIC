@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dcd6884dfa835c37ab7787f2a468261, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadStart.vb"
+﻿#Region "Microsoft.VisualBasic::58c257fe4e24ca357dea52ae4b5ad0a9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadStart.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 11
+    '   Total Lines: 25
+    '    Code Lines: 15
     ' Comment Lines: 4
-    '   Blank Lines: 4
-    '     File Size: 581 B
+    '   Blank Lines: 6
+    '     File Size: 717 B
 
 
     '     Class ThreadStart
@@ -51,7 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports ParallelTask = System.Threading.Tasks.Parallel
+Imports ParallelTask = System.Threading.Tasks.Task
 
 Namespace Parallel.Threads
 
@@ -62,10 +62,16 @@ Namespace Parallel.Threads
         ''' <summary>
         ''' Run parallel task
         ''' </summary>
-        ''' <param name="task"></param>
+        ''' <param name="tasks"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub execute(task As IEnumerable(Of ThreadStart))
-            Call ParallelTask.ForEach(task, Sub(thread) thread.run())
+        Public Shared Sub execute(tasks As IEnumerable(Of ThreadStart))
+            Dim pool As New List(Of Task)
+
+            For Each task As ThreadStart In tasks
+                pool.Add(ParallelTask.Run(AddressOf task.run))
+            Next
+
+            Call ParallelTask.WaitAll(pool.ToArray)
         End Sub
     End Class
 End Namespace

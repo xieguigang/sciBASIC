@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e163c2e5ad7d901123b9f102821598d, sciBASIC#\Data\BinaryData\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::a4cd95ff2f55b79a312efa2894af9edf, sciBASIC#\Data\BinaryData\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 19
+    '   Total Lines: 50
+    '    Code Lines: 30
     ' Comment Lines: 10
-    '   Blank Lines: 7
-    '     File Size: 1017 B
+    '   Blank Lines: 10
+    '     File Size: 1.50 KB
 
 
     '     Structure Dimension
@@ -46,7 +46,7 @@
     '         Properties: name
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: FromVector, ToString
     ' 
     ' 
     ' /********************************************************************************/

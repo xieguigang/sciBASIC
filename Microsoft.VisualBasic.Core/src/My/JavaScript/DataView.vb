@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e77e357a3c10333f16d08d709999e42c, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\DataView.vb"
+﻿#Region "Microsoft.VisualBasic::313e3d556a3fb5524e6c53ff0045fef3, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\DataView.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 35
-    ' Comment Lines: 18
+    '   Total Lines: 73
+    '    Code Lines: 37
+    ' Comment Lines: 22
     '   Blank Lines: 14
-    '     File Size: 2.08 KB
+    '     File Size: 2.38 KB
 
 
     '     Class DataView

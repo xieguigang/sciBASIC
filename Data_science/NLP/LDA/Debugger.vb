@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64dbd774208d0153873ba1f828c18892, sciBASIC#\Data_science\NLP\LDA\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::7b0c8c38c210e4455429c2af8c47e493, sciBASIC#\Data_science\NLP\LDA\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 105
     ' Comment Lines: 35
     '   Blank Lines: 36
-    '     File Size: 6.48 KB
+    '     File Size: 6.50 KB
 
 
     '     Module Debugger
@@ -73,7 +73,7 @@ Namespace LDA
             ' init
 
             ' initialise count variables. 初始化计数器          
-            Dim nw = MAT(Of Integer)(V, lK)
+            Dim nw = RectangularArray.Matrix(Of Integer)(V, lK)
             Dim nd = New Integer(lK - 1) {}
             Dim nwsum = New Integer(lK - 1) {}
             Dim ndsum = 0

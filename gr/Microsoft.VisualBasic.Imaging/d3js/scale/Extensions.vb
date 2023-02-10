@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::297a7b17bb958a3901d06fef61a79138, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1084db3cca299772deacba15b5ca2b70, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 61
     '   Blank Lines: 5
-    '     File Size: 4.03 KB
+    '     File Size: 4.08 KB
 
 
     '     Module Extensions

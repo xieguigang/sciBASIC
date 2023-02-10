@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bac2cf2fbfa328c903b8958450a2e06, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Imager.vb"
+﻿#Region "Microsoft.VisualBasic::33c1b5f3952ca82393e2dacea44edd94, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Imager.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 52
     ' Comment Lines: 43
     '   Blank Lines: 14
-    '     File Size: 4.51 KB
+    '     File Size: 4.50 KB
 
 
     '     Module Imager
@@ -159,4 +159,3 @@ Namespace Imaging.BitmapImage
         End Function
     End Module
 End Namespace
-

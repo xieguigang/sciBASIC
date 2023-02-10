@@ -1,69 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::b5148df1a3c3b3445636ec0d53ba3fb3, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::f3d675575414548526c95ea11808cbe1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 228
-'    Code Lines: 134
-' Comment Lines: 57
-'   Blank Lines: 37
-'     File Size: 8.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Interface ITaskHandle
-' 
-'         Function: Run
-' 
-'     Class TaskQueue
-' 
-'         Properties: MaximumQueue, RunningTask, Tasks, uid
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) Join, ToString
-' 
-'         Sub: __calls, __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
-'         Structure __task
-' 
-'             Properties: Value
-' 
-'             Sub: Run
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 257
+    '    Code Lines: 149
+    ' Comment Lines: 66
+    '   Blank Lines: 42
+    '     File Size: 9.06 KB
+
+
+    '     Interface ITaskHandle
+    ' 
+    '         Function: Run
+    ' 
+    '     Class TaskQueue
+    ' 
+    '         Properties: MaximumQueue, RunningTask, Tasks, uid
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) Join, ToString
+    ' 
+    '         Sub: __calls, __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
+    '         Class TaskWorker
+    ' 
+    '             Properties: Value
+    ' 
+    '             Function: ToString
+    ' 
+    '             Sub: Run
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

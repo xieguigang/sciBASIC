@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6396d552544239981cfe28ca5cef2207, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::9375b800d49f0691ce4f3ad52153150d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 77
-    ' Comment Lines: 30
-    '   Blank Lines: 23
-    '     File Size: 4.92 KB
+    '   Total Lines: 185
+    '    Code Lines: 95
+    ' Comment Lines: 63
+    '   Blank Lines: 27
+    '     File Size: 6.79 KB
 
 
     '     Module DistanceMethods
     ' 
-    '         Function: Distance, (+6 Overloads) EuclideanDistance, Mahalanobis, ManhattanDistance, MinkowskiDistance
+    '         Function: chebyshev_distance, Distance, (+6 Overloads) EuclideanDistance, fidelity_distance, harmonic_mean_distance
+    '                   Mahalanobis, ManhattanDistance, MinkowskiDistance
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,6 +58,61 @@ Imports stdNum = System.Math
 Namespace Math.Correlations
 
     Public Module DistanceMethods
+
+        ''' <summary>
+        ''' Chebyshev distance:
+        ''' 
+        ''' ```py
+        ''' # \underset{i}{\max}{(|P_{i}\ -\ Q_{i}|)}
+        ''' np.max(np.abs(p - q))
+        ''' ```
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="q"></param>
+        ''' <returns></returns>
+        Public Function chebyshev_distance(p As Double(), q As Double()) As Double
+            Return Aggregate xi As Double
+                   In SIMD.Subtract.f64_op_subtract_f64(p, q)
+                   Into Max(stdNum.Abs(xi))
+        End Function
+
+        ''' <summary>
+        ''' Fidelity distance:
+        ''' 
+        ''' ```py
+        ''' # 1-\sum\sqrt{P_{i}Q_{i}}
+        ''' 1 - np.sum(np.sqrt(p * q))
+        ''' ```
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="q"></param>
+        ''' <returns></returns>
+        Public Function fidelity_distance(p As Double(), q As Double()) As Double
+            Return 1 - (
+                Aggregate xi As Double
+                In SIMD.Multiply.f64_op_multiply_f64(p, q)
+                Into Sum(stdNum.Sqrt(xi))
+            )
+        End Function
+
+        ''' <summary>
+        ''' Harmonic mean distance:
+        ''' 
+        ''' ```py
+        ''' # 1-2\sum(\frac{P_{i}Q_{i}}{P_{i}+Q_{i}})
+        ''' 1 - 2 * np.sum(p * q / (p + q))
+        ''' ```
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="q"></param>
+        ''' <returns></returns>
+        Public Function harmonic_mean_distance(p As Double(), q As Double()) As Double
+            Dim pxq = SIMD.Multiply.f64_op_multiply_f64(p, q)
+            Dim paq = SIMD.Add.f64_op_add_f64(p, q)
+            Dim pdq = SIMD.Divide.f64_op_divide_f64(pxq, paq)
+
+            Return 1 - 2 * pdq.Sum
+        End Function
 
         Public Function MinkowskiDistance(X As Double(), Y As Double(), q As Double) As Double
             Dim dq As Double

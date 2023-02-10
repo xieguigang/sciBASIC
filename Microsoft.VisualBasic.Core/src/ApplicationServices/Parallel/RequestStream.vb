@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53349569ab297031fac6eddb9dfb19d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::aac9c5ba3e4dc18d267ea6828bd22b37, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 434
+    '   Total Lines: 443
     '    Code Lines: 232
-    ' Comment Lines: 146
+    ' Comment Lines: 155
     '   Blank Lines: 56
-    '     File Size: 17.50 KB
+    '     File Size: 17.87 KB
 
 
     '     Delegate Function
@@ -224,16 +224,25 @@ Namespace Parallel
         ''' <summary>
         ''' 默认是使用UTF8编码来编码字符串的
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 这个函数总是返回一个不为空值的字符串
+        ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
-            Return UTF8WithoutBOM.GetString(ChunkBuffer)
+            Return If(UTF8WithoutBOM.GetString(ChunkBuffer), "")
         End Function
 
+        ''' <summary>
+        ''' 按照指定的编码构建出一个字符串值
+        ''' </summary>
+        ''' <param name="encoding"></param>
+        ''' <returns>
+        ''' 这个函数总是返回一个不为空值的字符串
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
-            Return encoding.GetString(ChunkBuffer)
+            Return If(encoding.GetString(ChunkBuffer), "")
         End Function
 
         Public Function GetIntegers() As Integer()

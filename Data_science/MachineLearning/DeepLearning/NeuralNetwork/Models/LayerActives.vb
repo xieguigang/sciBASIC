@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fda38dda69d21f4c91eadee44b8109e, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\LayerActives.vb"
+﻿#Region "Microsoft.VisualBasic::8dec2add5428ea139aa339ba2bac9138, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\LayerActives.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 37
+    '   Total Lines: 58
+    '    Code Lines: 32
     ' Comment Lines: 19
     '   Blank Lines: 7
-    '     File Size: 2.27 KB
+    '     File Size: 2.01 KB
 
 
     '     Class LayerActives
     ' 
-    '         Properties: hiddens, input, output
+    '         Properties: hiddens, output
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: FromXmlModel, GetDefaultConfig, GetXmlModels

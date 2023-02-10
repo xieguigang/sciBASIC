@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcba3293fe8cc99b62c8e4af0f16a2d1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::6a22d7552749a986b1dbb8aab187343f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 99
-    ' Comment Lines: 60
-    '   Blank Lines: 27
-    '     File Size: 7.51 KB
+    '   Total Lines: 198
+    '    Code Lines: 107
+    ' Comment Lines: 61
+    '   Blank Lines: 30
+    '     File Size: 7.74 KB
 
 
     '     Class Directory
@@ -48,8 +48,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: CopyTo, DeleteFile, Exists, FileExists, FileSize
-    '                   GetFullPath, GetRelativePath, GetSubDirectories, IsAbsolutePath, OpenFile
-    '                   ReadAllText, ToString, WriteText
+    '                   FromLocalFileSystem, GetFullPath, GetRelativePath, GetSubDirectories, IsAbsolutePath
+    '                   OpenFile, ReadAllText, ToString, WriteText
     ' 
     '         Sub: Close, CreateDirectory, Delete, Flush
     ' 

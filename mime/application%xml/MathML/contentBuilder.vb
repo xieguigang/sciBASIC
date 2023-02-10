@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a5a9dff440155d514c4aafcb36f2518, sciBASIC#\mime\application%xml\MathML\contentBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::3066a2f79b0bf842e2ea90586865e071, sciBASIC#\mime\application%xml\MathML\contentBuilder.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 145
-    ' Comment Lines: 11
-    '   Blank Lines: 25
-    '     File Size: 7.22 KB
+    '   Total Lines: 193
+    '    Code Lines: 154
+    ' Comment Lines: 12
+    '   Blank Lines: 27
+    '     File Size: 7.67 KB
 
 
     '     Module ContentBuilder
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ExpressionComponent, getTextSymbol, parseInternal, ParseXml, safeGetOperator
     '                   SimplyOperator, ToString, TrimWhitespace
     ' 

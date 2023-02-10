@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1575c3d351271138f2e99dd70bb716e8, sciBASIC#\Data_science\Graph\Model\Tree\KdTree\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::a627e072f805717a31ab3c9b0fbf1c33, sciBASIC#\Data_science\Graph\Model\Tree\KdTree\Analysis.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 92
+    '   Total Lines: 142
+    '    Code Lines: 97
     ' Comment Lines: 21
-    '   Blank Lines: 23
-    '     File Size: 5.31 KB
+    '   Blank Lines: 24
+    '     File Size: 5.33 KB
 
 
     '     Module ApproximateNearNeighbor
     ' 
-    '         Function: (+2 Overloads) FindNeighbors, RowMetric
+    '         Function: (+2 Overloads) FindNeighbors, PopulateVectors, RowMetric
     ' 
     '         Sub: Push
     ' 

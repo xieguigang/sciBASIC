@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::2f31b6ea8f28b5caae54474a0503a066, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::5fe5cf94dad7ab2a4913d654e6e4210b, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 271
-'    Code Lines: 161
-' Comment Lines: 65
-'   Blank Lines: 45
-'     File Size: 9.67 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module MatrixExtensions
-' 
-'         Function: DATA, DimensionSizeOf, GetCol, GetRow, GetSize
-'                   MAT, (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol
-'                   SetRow, ToFloatMatrix, ToMatrix, ToVectorList
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 251
+    '    Code Lines: 147
+    ' Comment Lines: 64
+    '   Blank Lines: 40
+    '     File Size: 9.09 KB
+
+
+    '     Module MatrixExtensions
+    ' 
+    '         Function: DATA, DimensionSizeOf, GetCol, GetRow, GetSize
+    '                   (+2 Overloads) Matrix, Rectangle, RowIterator, SetCol, SetRow
+    '                   ToFloatMatrix, ToMatrix, ToVectorList
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

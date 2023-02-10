@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::683d09ba0f87044c9b5a9a2fc4668849, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
+﻿#Region "Microsoft.VisualBasic::ac24885edf64e343051027db8519ca9a, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMPrediction.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 11
+    '   Total Lines: 17
+    '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 383 B
+    '     File Size: 425 B
 
 
     '     Structure SVMPrediction
     ' 
-    '         Properties: [class], score, unifyValue
+    '         Properties: [class], score, unifyValue, vote
     ' 
     '         Function: ToString
     ' 

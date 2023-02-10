@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::184b0fb94490452b6703afd95f9f9d2c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
+﻿#Region "Microsoft.VisualBasic::b4c004b0b0e8f696931c474bd074ddf1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 26
-    ' Comment Lines: 15
-    '   Blank Lines: 10
-    '     File Size: 1.33 KB
+    '   Total Lines: 67
+    '    Code Lines: 35
+    ' Comment Lines: 20
+    '   Blank Lines: 12
+    '     File Size: 1.71 KB
 
 
     '     Interface Pixel
@@ -47,9 +47,9 @@
     ' 
     '     Structure PixelData
     ' 
-    '         Properties: Scale, X, Y
+    '         Properties: isEmpty, Scale, X, Y
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

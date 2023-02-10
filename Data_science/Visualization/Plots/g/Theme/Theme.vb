@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbba32f52c8534a7969a17299c55c712, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::232845539735eac670134837b97544fb, sciBASIC#\Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 74
+    '   Total Lines: 193
+    '    Code Lines: 75
     ' Comment Lines: 88
     '   Blank Lines: 30
-    '     File Size: 6.46 KB
+    '     File Size: 6.53 KB
 
 
     '     Class Theme
@@ -50,8 +50,8 @@
     '                     legendTickAxisStroke, legendTickCSS, legendTickFormat, legendTitleCSS, lineStroke
     '                     mainCSS, mainTextColor, mainTextWrap, padding, pointSize
     '                     subtitleCSS, tagColor, tagCSS, tagFormat, tagLinkStroke
-    '                     xAxisLayout, xAxisRotate, XaxisTickFormat, yAxislabelPosition, yAxisLayout
-    '                     YaxisTickFormat
+    '                     xAxisLayout, xAxisReverse, xAxisRotate, XaxisTickFormat, yAxislabelPosition
+    '                     yAxisLayout, YaxisTickFormat
     ' 
     '         Function: Clone, GetLegendPosition, NewColorSet, ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c0ac06323b35ec2aacc5fccb0dcb23, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::b6405285d4f8fa76564909c9678e07e5, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\FourierTransform.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 335
-    '    Code Lines: 189
-    ' Comment Lines: 97
-    '   Blank Lines: 49
-    '     File Size: 11.20 KB
+    '   Total Lines: 351
+    '    Code Lines: 191
+    ' Comment Lines: 109
+    '   Blank Lines: 51
+    '     File Size: 12.68 KB
 
 
-    ' Module FourierTransform
+    '     Module FourierTransform
     ' 
     ' 
-    '     Enum Direction
+    '         Enum Direction
     ' 
     ' 
     ' 
@@ -54,6 +54,7 @@
     '     Function: GetComplexRotation, GetReversedBits
     ' 
     '     Sub: DFT, DFT2, FFT, FFT2, ReorderData
+    ' 
     ' 
     ' /********************************************************************************/
 
