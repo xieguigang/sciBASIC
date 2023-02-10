@@ -1,4 +1,120 @@
-﻿Namespace BIFF
+﻿#Region "Microsoft.VisualBasic::4b003c3e983d1888193391182f91617e, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\BIFF\SheetObject.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 154
+    '    Code Lines: 115
+    ' Comment Lines: 10
+    '   Blank Lines: 29
+    '     File Size: 4.45 KB
+
+
+    '     Structure FONT_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure PASSWORD_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure HEADER_FOOTER_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure PROTECT_SPREADSHEET_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure FORMAT_COUNT_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure FORMAT_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure COLWIDTH_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure BEG_FILE_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure END_FILE_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure PRINT_GRIDLINES_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure tInteger
+    ' 
+    ' 
+    ' 
+    '     Structure tNumber
+    ' 
+    ' 
+    ' 
+    '     Structure tText
+    ' 
+    ' 
+    ' 
+    '     Structure MARGIN_RECORD_LAYOUT
+    ' 
+    ' 
+    ' 
+    '     Structure HPAGE_BREAK_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure DEF_ROWHEIGHT_RECORD
+    ' 
+    ' 
+    ' 
+    '     Structure ROW_HEIGHT_RECORD
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace BIFF
 
     Public Structure FONT_RECORD
         Dim opcode As Integer  '49

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a950292c6970151701a2913144199067, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a54222024ab7bcf07fd63ac8e0c5c1d7, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 29
+    '   Total Lines: 58
+    '    Code Lines: 45
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.13 KB
+    '   Blank Lines: 13
+    '     File Size: 1.78 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: ReadText, WriteText
+    '     Function: ReadText, (+2 Overloads) WriteText
     ' 
     ' /********************************************************************************/
 

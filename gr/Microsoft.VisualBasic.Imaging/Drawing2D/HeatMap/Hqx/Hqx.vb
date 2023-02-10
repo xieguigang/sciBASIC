@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ae00b21164fb82305ce58332ea0d5d5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Hqx.vb"
+﻿#Region "Microsoft.VisualBasic::dbad680bff6b52781fcf328ddb658911, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Hqx.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Namespace Drawing2D.HeatMap.hqx
     End Class
 
 End Namespace
-

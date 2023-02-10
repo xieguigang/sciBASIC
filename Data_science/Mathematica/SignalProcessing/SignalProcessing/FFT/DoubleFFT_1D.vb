@@ -1,4 +1,72 @@
-﻿' Copyright (c) 2017 - presented by Kei Nakai
+﻿#Region "Microsoft.VisualBasic::bf3100816f57b3660cc49a95d6d3a658, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\DoubleFFT_1D.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 6632
+    '    Code Lines: 5891
+    ' Comment Lines: 370
+    '   Blank Lines: 371
+    '     File Size: 273.47 KB
+
+
+    '     Class DoubleFFT_1D
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: cfttree, GetReminder
+    ' 
+    '         Sub: bitrv2, bitrv208, bitrv208neg, bitrv216, bitrv216neg
+    '              bitrv2conj, bluestein_complex, bluestein_real_forward, bluestein_real_full, bluestein_real_inverse
+    '              bluestein_real_inverse2, bluesteini, cfftf, (+2 Overloads) cffti, cftb040
+    '              cftb1st, cftbsub, cftf040, cftf081, cftf082
+    '              cftf161, cftf162, cftf1st, cftfsub, cftfx41
+    '              cftleaf, cftmdl1, cftmdl2, cftrec4, cftrec4_th
+    '              cftx020, cftxb020, cftxc020, (+2 Overloads) ComplexForward, (+2 Overloads) ComplexInverse
+    '              makect, makeipt, makewt, passf2, passf3
+    '              passf4, passf5, passfg, radb2, radb3
+    '              radb4, radb5, radbg, radf2, radf3
+    '              radf4, radf5, radfg, (+2 Overloads) RealForward, (+2 Overloads) RealForwardFull
+    '              (+2 Overloads) RealInverse, RealInverse2, (+2 Overloads) RealInverseFull, rfftb, rfftf
+    '              rffti, rftbsub, rftfsub, scale
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' Copyright (c) 2017 - presented by Kei Nakai
 '
 ' Original project is developed and published by OpenGamma Inc.
 '

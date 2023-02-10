@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d0ec3e377c55ea1b27c8f218a6d65a6, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::ae0f2733324a23d71959d9b3e7692625, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1426
-    '    Code Lines: 1045
+    '   Total Lines: 1451
+    '    Code Lines: 1067
     ' Comment Lines: 100
-    '   Blank Lines: 281
-    '     File Size: 52.23 KB
+    '   Blank Lines: 284
+    '     File Size: 51.43 KB
 
 
     '     Module Procedures
     ' 
-    '         Function: sigmoid_predict, svm_check_parameter, svm_check_probability_model, svm_get_nr_class, svm_get_nr_sv
-    '                   svm_get_svm_type, svm_get_svr_probability, svm_predict, svm_predict_probability, svm_predict_values
-    '                   svm_svr_probability, svm_train, svm_train_one
+    '         Function: sigmoid_predict, svc_predict, svm_check_parameter, svm_check_probability_model, svm_get_nr_class
+    '                   svm_get_nr_sv, svm_get_svm_type, svm_get_svr_probability, svm_predict, svm_predict_probability
+    '                   svm_predict_values, svm_svr_probability, svm_train, svm_train_one, svr_predict
     ' 
     '         Sub: multiclass_probability, multipleClassification, oneClassSvm, setRandomSeed, sigmoid_train
     '              solve_c_svc, solve_epsilon_svr, solve_nu_svc, solve_nu_svr, solve_one_class

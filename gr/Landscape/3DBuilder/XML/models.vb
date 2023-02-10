@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::b0cc1091df879e9e45e2d892c87e5eb6, sciBASIC#\gr\Landscape\3DBuilder\XML\models.vb"
+﻿#Region "Microsoft.VisualBasic::87cc5d41043bb09dacbc6b076e16d141, sciBASIC#\gr\Landscape\3DBuilder\XML\models.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 84
-'    Code Lines: 54
-' Comment Lines: 13
-'   Blank Lines: 17
-'     File Size: 2.49 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class mesh
-' 
-'         Properties: triangles, vertices
-' 
-'         Function: (+2 Overloads) GetSurfaces, ToString
-' 
-'     Class triangle
-' 
-'         Properties: p1, pid, v1, v2, v3
-' 
-'         Function: ToString
-' 
-'     Class component
-' 
-'         Properties: objectid
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 55
+    ' Comment Lines: 13
+    '   Blank Lines: 17
+    '     File Size: 2.45 KB
+
+
+    '     Class mesh
+    ' 
+    '         Properties: triangles, vertices
+    ' 
+    '         Function: (+2 Overloads) GetSurfaces, ToString
+    ' 
+    '     Class triangle
+    ' 
+    '         Properties: p1, pid, v1, v2, v3
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class component
+    ' 
+    '         Properties: objectid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

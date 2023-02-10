@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f87fe6d9f3b9b5032f3a93d1f21ea473, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::51a51c26af28336339d88bc239715a9b, sciBASIC#\Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 69
+    '   Total Lines: 105
+    '    Code Lines: 72
     ' Comment Lines: 23
     '   Blank Lines: 10
-    '     File Size: 4.25 KB
+    '     File Size: 4.33 KB
 
 
     ' Module Builder

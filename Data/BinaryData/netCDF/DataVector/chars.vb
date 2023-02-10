@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::578bf8b55884cf5d813cf444998099c1, sciBASIC#\Data\BinaryData\netCDF\DataVector\chars.vb"
+﻿#Region "Microsoft.VisualBasic::d84e44ed49d918ade553e4a03928dcfc, sciBASIC#\Data\BinaryData\netCDF\DataVector\chars.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.21 KB
+    '   Total Lines: 54
+    '    Code Lines: 35
+    ' Comment Lines: 9
+    '   Blank Lines: 10
+    '     File Size: 1.79 KB
 
 
     '     Class chars
     ' 
     '         Properties: cdfDataType
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: LoadJSON
     ' 
     ' 

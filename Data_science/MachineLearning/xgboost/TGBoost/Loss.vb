@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2627f896ba46ee2b8beb9adb95d22b6e, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
+﻿#Region "Microsoft.VisualBasic::dc80fa22394dacd3b251f04733b0cee9, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 60
+    '   Total Lines: 113
+    '    Code Lines: 84
     ' Comment Lines: 0
-    '   Blank Lines: 21
-    '     File Size: 2.48 KB
+    '   Blank Lines: 29
+    '     File Size: 3.29 KB
 
 
     '     Class Loss
     ' 
     ' 
+    ' 
+    '     Class QLinearLoss
+    ' 
+    '         Function: grad, hess, transform
     ' 
     '     Class SquareLoss
     ' 

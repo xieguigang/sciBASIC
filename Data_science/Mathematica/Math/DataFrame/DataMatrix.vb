@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a98a3186142ac3780ce39b1bdfaa079, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::6367c5bc07bb8fb1ea90ad1578b00851, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 111
     ' Comment Lines: 9
     '   Blank Lines: 23
-    '     File Size: 4.84 KB
+    '     File Size: 4.88 KB
 
 
     ' Class DataMatrix

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a80cbd3769bff816b733164aba371454, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::45680fe9e31e32490cf2457623c108a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 816
-    '    Code Lines: 490
-    ' Comment Lines: 213
-    '   Blank Lines: 113
-    '     File Size: 29.82 KB
+    '   Total Lines: 841
+    '    Code Lines: 504
+    ' Comment Lines: 221
+    '   Blank Lines: 116
+    '     File Size: 29.86 KB
 
 
     ' Module WebServiceUtils
@@ -49,9 +49,9 @@
     ' 
     '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
     '               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
-    '               GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern, ParseUrlQueryParameters
-    '               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
-    '               UrlDecode, UrlEncode, UrlPathEncode
+    '               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
+    '               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser
+    '               QueryStringParameters, UrlDecode, UrlEncode, UrlPathEncode
     ' 
     '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
     ' 

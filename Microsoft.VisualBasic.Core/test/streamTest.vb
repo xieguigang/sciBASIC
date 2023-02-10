@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0883f6b9cb747328399b25c7d62f137a, sciBASIC#\Microsoft.VisualBasic.Core\test\streamTest.vb"
+﻿#Region "Microsoft.VisualBasic::dd97186ced904da0bec33fd8bd7f7fa4, sciBASIC#\Microsoft.VisualBasic.Core\test\streamTest.vb"
 
     ' Author:
     ' 
@@ -131,4 +131,3 @@ Module streamTest
         Pause()
     End Sub
 End Module
-

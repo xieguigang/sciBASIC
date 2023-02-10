@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::d8b439993678cddd4d9cf9735d24b066, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::29bebd17eb49bdc094f135af5087a499, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 448
-'    Code Lines: 296
-' Comment Lines: 88
-'   Blank Lines: 64
-'     File Size: 17.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ANNTrainer
-' 
-'         Properties: dropOutRate, MinError, NeuronNetwork, Selective, TrainingSet
-'                     TrainingType, Truncate, XP
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetOutputNames
-'                   SetSelective, SetSnapshotLocation, trainingImpl
-' 
-'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 449
+    '    Code Lines: 288
+    ' Comment Lines: 95
+    '   Blank Lines: 66
+    '     File Size: 17.24 KB
+
+
+    '     Class ANNTrainer
+    ' 
+    '         Properties: dropOutRate, ErrorThreshold, MinError, NeuronNetwork, Selective
+    '                     TrainingSet, TrainingType, Truncate, XP
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetOutputNames
+    '                   SetSelective, SetSnapshotLocation, trainingImpl
+    ' 
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train, TrainInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

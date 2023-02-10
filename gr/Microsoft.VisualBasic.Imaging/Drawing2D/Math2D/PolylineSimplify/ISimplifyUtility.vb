@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53754d075625ced9b2e9a8888d8d463a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\ISimplifyUtility.vb"
+﻿#Region "Microsoft.VisualBasic::cd6f4d5479b73ce251008a80dd094437, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\ISimplifyUtility.vb"
 
     ' Author:
     ' 
@@ -83,4 +83,3 @@ Namespace Drawing2D.Math2D.PolylineSimplify
 
     End Interface
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc410a6928e0183b62045167a6442a9, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\IFileSystemEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::86b96a252d60dc8f0eae08c7c30c6029, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\IFileSystemEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
+    '   Total Lines: 73
     '    Code Lines: 16
     ' Comment Lines: 51
-    '   Blank Lines: 7
-    '     File Size: 2.45 KB
+    '   Blank Lines: 6
+    '     File Size: 2.44 KB
 
 
     '     Interface IFileSystemEnvironment
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 

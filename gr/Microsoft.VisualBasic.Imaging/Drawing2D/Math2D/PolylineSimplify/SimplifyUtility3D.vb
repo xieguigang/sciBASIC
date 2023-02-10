@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a4e862f43fcff4425f2e41fd44c0034, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\SimplifyUtility3D.vb"
+﻿#Region "Microsoft.VisualBasic::24cc512d6a0c89114b420e5c70fc2988, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\SimplifyUtility3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 105
     ' Comment Lines: 44
     '   Blank Lines: 33
-    '     File Size: 7.19 KB
+    '     File Size: 7.18 KB
 
 
     '     Class SimplifyUtility3D
@@ -233,4 +233,3 @@ Namespace Drawing2D.Math2D.PolylineSimplify
         End Function
     End Class
 End Namespace
-

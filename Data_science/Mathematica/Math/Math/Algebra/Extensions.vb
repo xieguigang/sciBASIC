@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56201e68505778628a0ecc55ee7a9ac7, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c271b9b4b4c7fb31780adb63794df723, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 53
-    ' Comment Lines: 23
-    '   Blank Lines: 13
-    '     File Size: 3.40 KB
+    '   Total Lines: 134
+    '    Code Lines: 76
+    ' Comment Lines: 40
+    '   Blank Lines: 18
+    '     File Size: 5.44 KB
 
 
     '     Delegate Function
@@ -46,7 +46,8 @@
     ' 
     '     Module HelperExtensions
     ' 
-    '         Function: AsMatrix, IsNaNImaginary, jaccard_coeff, PrimitiveLinearEquation, Tangent
+    '         Function: AsMatrix, IsNaNImaginary, jaccard_coeff, jaccard_coeff_parallel, jaccard_row
+    '                   PrimitiveLinearEquation, Tangent
     ' 
     ' 
     ' 

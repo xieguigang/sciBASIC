@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::36146b499919f88361538b28c0f49d68, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapRaster.vb"
+﻿#Region "Microsoft.VisualBasic::9a555d1f6ed6c9cc2a02cc736ac77aa1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapRaster.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 213
-'    Code Lines: 133
-' Comment Lines: 47
-'   Blank Lines: 33
-'     File Size: 7.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class HeatMapRaster
-' 
-'         Properties: HeatMatrix, Kernel
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) GetRasterPixels, MultiplyKernel, PopulateDenseRasterMatrix, SetDatas
-' 
-'         Sub: gaussiankernel
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 219
+    '    Code Lines: 138
+    ' Comment Lines: 47
+    '   Blank Lines: 34
+    '     File Size: 7.46 KB
+
+
+    '     Class HeatMapRaster
+    ' 
+    '         Properties: HeatMatrix, Kernel
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) GetRasterPixels, MultiplyKernel, PopulateDenseRasterMatrix, SetDataInternal, SetDatas
+    ' 
+    '         Sub: gaussiankernel
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

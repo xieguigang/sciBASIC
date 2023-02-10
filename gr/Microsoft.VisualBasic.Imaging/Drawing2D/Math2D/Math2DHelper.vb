@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ad7d851c9f59bf887d4b02e51108043, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
+﻿#Region "Microsoft.VisualBasic::dec29dfd33d76187371b6ab5238a0852, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 34
-    ' Comment Lines: 7
-    '   Blank Lines: 8
-    '     File Size: 1.76 KB
+    '   Total Lines: 38
+    '    Code Lines: 30
+    ' Comment Lines: 1
+    '   Blank Lines: 7
+    '     File Size: 1.30 KB
 
 
     '     Module Math2DHelper
     ' 
-    '         Function: FillPolygon, Rotate
+    '         Function: FillPolygon
     ' 
     ' 
     ' /********************************************************************************/

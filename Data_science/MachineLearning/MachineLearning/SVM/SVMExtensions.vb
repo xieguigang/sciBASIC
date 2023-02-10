@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b9ff4cd9f0a97f026df6c05abb888b, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a49459779ff7a28c1cc671c3719dfbf5, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 60
+    '   Total Lines: 72
+    '    Code Lines: 54
     ' Comment Lines: 0
-    '   Blank Lines: 19
-    '     File Size: 2.40 KB
+    '   Blank Lines: 18
+    '     File Size: 2.19 KB
 
 
     '     Module SVMExtensions
     ' 
     '         Function: ComputeHashcode, ComputeHashcode2, (+4 Overloads) IsEqual, Truncate
-    ' 
-    '         Sub: SwapIndex
     ' 
     ' 
     ' /********************************************************************************/

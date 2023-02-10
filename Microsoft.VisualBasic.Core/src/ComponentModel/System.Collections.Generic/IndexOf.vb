@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8c5b86bcc0c41e1baa44c8447bdd99, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::52c848d0fa99997a0de2d82c171ecb8f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 386
-    '    Code Lines: 237
-    ' Comment Lines: 99
-    '   Blank Lines: 50
-    '     File Size: 14.00 KB
+    '   Total Lines: 419
+    '    Code Lines: 243
+    ' Comment Lines: 125
+    '   Blank Lines: 51
+    '     File Size: 14.85 KB
 
 
     '     Class Index
@@ -50,7 +50,7 @@
     '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
     '                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
     ' 
-    '         Sub: Add, Clear, Delete
+    '         Sub: [Set], Add, Clear, Delete
     ' 
     '         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
     '                    (+2 Overloads) IsTrue, (+2 Overloads) Like

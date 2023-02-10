@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6396d552544239981cfe28ca5cef2207, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::9375b800d49f0691ce4f3ad52153150d, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 77
-    ' Comment Lines: 30
-    '   Blank Lines: 23
-    '     File Size: 4.92 KB
+    '   Total Lines: 185
+    '    Code Lines: 95
+    ' Comment Lines: 63
+    '   Blank Lines: 27
+    '     File Size: 6.79 KB
 
 
     '     Module DistanceMethods
     ' 
-    '         Function: Distance, (+6 Overloads) EuclideanDistance, Mahalanobis, ManhattanDistance, MinkowskiDistance
+    '         Function: chebyshev_distance, Distance, (+6 Overloads) EuclideanDistance, fidelity_distance, harmonic_mean_distance
+    '                   Mahalanobis, ManhattanDistance, MinkowskiDistance
     ' 
     ' 
     ' /********************************************************************************/

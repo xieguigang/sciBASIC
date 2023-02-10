@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b0d64c32207d44393013a6198eac0b1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
+﻿#Region "Microsoft.VisualBasic::41868e872691bace9bd3f0a6d5b45ce3, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 189
     ' Comment Lines: 191
     '   Blank Lines: 54
-    '     File Size: 18.43 KB
+    '     File Size: 18.04 KB
 
 
     '     Class MarchingSquares

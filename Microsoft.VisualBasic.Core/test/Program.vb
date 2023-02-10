@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::112466cd5aa4e663c98b119794ceacd2, sciBASIC#\Microsoft.VisualBasic.Core\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::d8d1b7cc6abe0b21de80d88318447a50, sciBASIC#\Microsoft.VisualBasic.Core\test\Program.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     ' Module Program
@@ -59,4 +59,3 @@ Module Program
         Call streamTest.Main1()
     End Sub
 End Module
-

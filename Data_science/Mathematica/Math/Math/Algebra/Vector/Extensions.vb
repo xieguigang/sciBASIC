@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a73d4c4311aa975aaeaa3de448d7a2d, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::95da25d53154a8bf8b17c622115e75cd, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 68
-    ' Comment Lines: 26
-    '   Blank Lines: 15
-    '     File Size: 4.24 KB
+    '   Total Lines: 122
+    '    Code Lines: 71
+    ' Comment Lines: 35
+    '   Blank Lines: 16
+    '     File Size: 4.76 KB
 
 
     '     Module Extensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54daeb70382bc450503286f9b08eab85, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::2a3ca3e86cad38606e0ffad4ad992449, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 671
+    '   Total Lines: 677
     '    Code Lines: 508
-    ' Comment Lines: 37
+    ' Comment Lines: 43
     '   Blank Lines: 126
     '     File Size: 38.87 KB
 

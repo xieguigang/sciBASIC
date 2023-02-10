@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5959b5cbbb1c22473a8dede9dbc0bbc9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::4d164a484f66703b6c189c7cfc18aff6, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
+    '   Total Lines: 48
     '    Code Lines: 30
-    ' Comment Lines: 0
+    ' Comment Lines: 6
     '   Blank Lines: 12
-    '     File Size: 1.20 KB
+    '     File Size: 1.42 KB
 
 
     '     Class Subtract

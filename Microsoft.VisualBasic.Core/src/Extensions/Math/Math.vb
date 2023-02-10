@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dedcec6a235f781599093b0b521552cc, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::dd94312966b591733bcb90904e663a53, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 669
-    '    Code Lines: 384
+    '   Total Lines: 678
+    '    Code Lines: 392
     ' Comment Lines: 212
-    '   Blank Lines: 73
-    '     File Size: 23.47 KB
+    '   Blank Lines: 74
+    '     File Size: 23.73 KB
 
 
     '     Module VBMath
     ' 
     '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
-    '                   Hypot, IsPowerOf2, (+2 Overloads) Log2, LogN, Max
+    '                   Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN, Max
     '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
     '                   RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq
     '                   (+5 Overloads) Sum, WeighedAverage

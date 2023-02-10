@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f8d7f43c2499bc623b7f7fc83e448a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::6e6c7eb91a11c2129af72949fd3d6907, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
+    '   Total Lines: 38
     '    Code Lines: 23
-    ' Comment Lines: 0
+    ' Comment Lines: 6
     '   Blank Lines: 9
-    '     File Size: 872 B
+    '     File Size: 1.09 KB
 
 
     '     Class Multiply

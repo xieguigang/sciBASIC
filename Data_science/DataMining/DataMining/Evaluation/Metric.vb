@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba344fe9d780ab3fd1b2383749c28d5b, sciBASIC#\Data_science\DataMining\DataMining\Evaluation\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::56caaaed13fc8170e7d29409e3c11962, sciBASIC#\Data_science\DataMining\DataMining\Evaluation\Metric.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: [error], accuracy, auc, GetMetric, mean_absolute_error
     '                   mean_square_error, Parse
-    '         Class ComparatorAnonymousInnerClass
+    '         Class labelComparer
     ' 
     '             Constructor: (+1 Overloads) Sub New
     '             Function: compare

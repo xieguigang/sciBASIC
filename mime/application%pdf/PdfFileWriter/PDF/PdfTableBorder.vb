@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3dd5589f85e804dfe5d360646fe15fd, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
+﻿#Region "Microsoft.VisualBasic::dce8d9d98bbd914ffa6165cfe4723b25, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTableBorder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 684
-    '    Code Lines: 346
-    ' Comment Lines: 253
-    '   Blank Lines: 85
-    '     File Size: 20.41 KB
+    '   Total Lines: 686
+    '    Code Lines: 347
+    ' Comment Lines: 259
+    '   Blank Lines: 80
+    '     File Size: 19.89 KB
 
 
     ' Class PdfTableBorderStyle

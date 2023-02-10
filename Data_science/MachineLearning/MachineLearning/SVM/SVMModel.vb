@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc50a5f635477e0da86ab9216e7ae374, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMModel.vb"
+﻿#Region "Microsoft.VisualBasic::7da1d0311966dcd31d1574e2b64e9f98, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\SVMModel.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 31
+    '   Total Lines: 64
+    '    Code Lines: 38
     ' Comment Lines: 12
-    '   Blank Lines: 12
-    '     File Size: 1.76 KB
+    '   Blank Lines: 14
+    '     File Size: 2.07 KB
 
 
     '     Class SVMModel
     ' 
-    '         Properties: dimensionNames, factors, model, transform
+    '         Properties: dimensionNames, factors, model, SVR, transform
     ' 
     '         Function: ToString
     ' 

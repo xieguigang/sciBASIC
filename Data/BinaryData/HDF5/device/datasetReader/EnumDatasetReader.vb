@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e5144a74bd4230e27566dd3b248ba4d, sciBASIC#\Data\BinaryData\HDF5\device\datasetReader\EnumDatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::5e174aace797214793fe0267658a6ecc, sciBASIC#\Data\BinaryData\HDF5\device\datasetReader\EnumDatasetReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 93
     ' Comment Lines: 25
     '   Blank Lines: 13
-    '     File Size: 6.16 KB
+    '     File Size: 6.04 KB
 
 
     '     Class EnumDatasetReader

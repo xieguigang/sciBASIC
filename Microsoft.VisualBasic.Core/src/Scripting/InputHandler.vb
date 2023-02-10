@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90c40334a7fa943d4489d65a24d13b6d, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::0edb47586fcd6f4a4d8ba00b56b96915, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 371
-    '    Code Lines: 224
-    ' Comment Lines: 112
-    '   Blank Lines: 35
-    '     File Size: 16.69 KB
+    '   Total Lines: 401
+    '    Code Lines: 246
+    ' Comment Lines: 114
+    '   Blank Lines: 41
+    '     File Size: 17.45 KB
 
 
     '     Module InputHandler
     ' 
     '         Properties: [String], CasterString, Types
     ' 
-    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
+    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+3 Overloads) CTypeDynamic
     '                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
     '                   (+2 Overloads) ToString
     ' 
