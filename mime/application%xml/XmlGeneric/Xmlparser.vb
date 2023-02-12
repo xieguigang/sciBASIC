@@ -57,7 +57,7 @@ Public Module XmlParser
     ''' <summary>
     ''' parse the xml document text
     ''' </summary>
-    ''' <param name="xml">the xml dcument text</param>
+    ''' <param name="xml">the xml document text</param>
     ''' <returns></returns>
     Public Function ParseXml(xml As String) As XmlElement
         Dim doc As XDocument = XDocument.Load(New StringReader(xml))
@@ -88,6 +88,8 @@ Public Module XmlParser
                     childs.Add(New XmlElement With {.text = child.ToString})
                 ElseIf child.NodeType = XmlNodeType.Element Then
                     childs.Add(ParseXml(root:=CType(child, XElement)))
+                ElseIf child.NodeType = XmlNodeType.Comment Then
+                    childs.Add(New XmlElement With {.comment = child.ToString})
                 Else
                     Throw New NotImplementedException(child.NodeType.ToString)
                 End If
