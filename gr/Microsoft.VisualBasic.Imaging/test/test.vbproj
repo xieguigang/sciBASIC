@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="hqx_test.vb" />
     <Compile Include="HtmlRenderTest.vb" />
     <Compile Include="ConvexHull_demo.vb" />
     <Compile Include="ConcaveHull_demo.vb" />

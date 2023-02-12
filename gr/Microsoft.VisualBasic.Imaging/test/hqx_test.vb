@@ -50,7 +50,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 
