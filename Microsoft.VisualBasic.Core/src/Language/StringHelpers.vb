@@ -65,8 +65,21 @@ Namespace Language
     ''' </summary>
     Public Module FormatHelpers
 
+        ''' <summary>
+        ''' Removes all leading and trailing occurrences of a set of characters specified
+        ''' in an array from the current string.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="c">An array of Unicode characters to remove, or null.</param>
+        ''' <returns>
+        ''' The string that remains after all occurrences of the characters in the trimChars
+        ''' parameter are removed from the start and end of the current string. If trimChars
+        ''' is null or an empty array, white-space characters are removed instead. If no
+        ''' characters can be trimmed from the current instance, the method returns the current
+        ''' instance unchanged.
+        ''' </returns>
         <Extension>
-        Public Function Trim(str As Value(Of String), c As Char()) As String
+        Public Function Trim(str As Value(Of String), ParamArray c As Char()) As String
             If str Is Nothing OrElse str.Value Is Nothing Then
                 Return ""
             Else

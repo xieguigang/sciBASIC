@@ -89,10 +89,22 @@ Namespace Language.Values
             Return list.Value.First
         End Function
 
+        ''' <summary>
+        ''' get the first char
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function First(str As ByRefString) As Char
-            Return str.Value.First
+            If str Is Nothing OrElse
+                str.Value Is Nothing OrElse
+                str.Value.Length = 0 Then
+
+                Return Nothing
+            Else
+                Return str.Value.First
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
