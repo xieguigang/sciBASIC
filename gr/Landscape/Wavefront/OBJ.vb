@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Language
 
 Namespace Wavefront
 
@@ -24,7 +25,25 @@ Namespace Wavefront
 
     Public Class ObjectPart
 
+        Public Property g As String
         Public Property vertex As Point3D()
+        Public Property vn As Point3D()
+        Public Property usemtl As String
+        Public Property f As Triangle()
+
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return g.StringEmpty AndAlso
+                    vertex.IsNullOrEmpty AndAlso
+                    vn.IsNullOrEmpty AndAlso
+                    usemtl.StringEmpty AndAlso
+                    f.IsNullOrEmpty
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return $"{g Or "no_label".AsDefault}: {vertex.Length} vertexs and {f.Length} triangles"
+        End Function
 
     End Class
 End Namespace
