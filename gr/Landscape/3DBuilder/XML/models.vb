@@ -119,6 +119,9 @@ Namespace Vendor_3mf.XML
         End Function
     End Class
 
+    ''' <summary>
+    ''' 3 vertex index to create a triangle of the surface model data
+    ''' </summary>
     Public Class triangle
 
         <XmlAttribute> Public Property v1 As Integer
