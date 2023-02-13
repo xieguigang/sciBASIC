@@ -232,11 +232,33 @@ Namespace Drawing3D.Math3D
         Dim triangles As Integer()()
         Dim self As Polyhedron
 
+        ' # Cube with vertices at (+-1, +-1, +-1).
+        ' cube = Polyhedron(
+        '     vertex_positions = [
+        '         (-1, -1, -1), (-1, -1, +1), (-1, +1, -1), (-1, +1, +1),
+        '         (+1, -1, -1), (+1, -1, +1), (+1, +1, -1), (+1, +1, +1)
+        '     ],
+        '     triangles = [
+        '         [1, 3, 2], [1, 0, 4], [1, 5, 7],
+        '         [2, 0, 1], [2, 6, 4], [2, 3, 7],
+        '         [4, 5, 1], [4, 0, 2], [4, 6, 7],
+        '         [7, 3, 1], [7, 6, 2], [7, 5, 4]
+        '     ]
+        ' )
+        '
+        ' inside
+        ' cube.winding_number(point) = 1
+        '
+        ' outside
+        ' cube.winding_number(point) = 0
+
         ''' <summary>
         ''' Initialize from list of triangles and vertex positions.
         ''' </summary>
         ''' <param name="triangles"></param>
-        ''' <param name="vertex_positions"></param>
+        ''' <param name="vertex_positions">
+        ''' A collection of 3d point coordinations
+        ''' </param>
         Sub New(triangles As Integer()(), vertex_positions As Double()())
             ' Validate: check the combinatorial data.
             Dim edges As New List(Of (u As Integer, v As Integer))
