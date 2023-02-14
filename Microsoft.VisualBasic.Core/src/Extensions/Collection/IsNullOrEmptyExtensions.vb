@@ -260,6 +260,8 @@ Public Module IsNullOrEmptyExtensions
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IsNullOrEmpty(array As Array) As Boolean
         Return array Is Nothing OrElse array.Length = 0
