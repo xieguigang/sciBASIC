@@ -144,7 +144,17 @@ Namespace Language
             If Value Is Nothing Then
                 Return Nothing
             Else
-                Return DirectCast(Value, T)
+                Try
+                    Return DirectCast(Value, T)
+                Catch ex As Exception
+                    ' 20230214
+                    '
+                    ' ignores of the try cast error
+                    ' when type can not be cast to 
+                    ' target type T
+                    ' just returns nothing
+                    Return Nothing
+                End Try
             End If
         End Function
 

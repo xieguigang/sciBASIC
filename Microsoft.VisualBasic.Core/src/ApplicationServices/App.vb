@@ -1403,10 +1403,15 @@ Public Module App
                           Optional ioRedirect As Boolean = False,
                           Optional debug As Boolean = False) As IIORedirectAbstract
 
+#If NETCOREAPP Then
+        Const PLATFORM As String = "dotnet"
+#Else
+        Const PLATFORM As String = "mono"
+#End If
         If Not IsMicrosoftPlatform Then
             If CLR Then
                 Dim process As New ProcessEx With {
-                    .Bin = "mono",
+                    .Bin = PLATFORM,
                     .CLIArguments = app.CLIPath & " " & CLI
                 }
                 Return process
