@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::85416f604365f35081f85959489d2a61, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 271
-    '    Code Lines: 170
-    ' Comment Lines: 75
-    '   Blank Lines: 26
-    '     File Size: 9.65 KB
+' Summaries:
 
 
-    ' Module CollectionValueGetter
-    ' 
-    '     Function: [Get], ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, (+2 Overloads) GetItem
-    '               GetValueOrNull, NotNull, (+3 Overloads) TryGetValue, TryPopOut
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 271
+'    Code Lines: 170
+' Comment Lines: 75
+'   Blank Lines: 26
+'     File Size: 9.65 KB
+
+
+' Module CollectionValueGetter
+' 
+'     Function: [Get], ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, (+2 Overloads) GetItem
+'               GetValueOrNull, NotNull, (+3 Overloads) TryGetValue, TryPopOut
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -108,7 +108,8 @@ Public Module CollectionValueGetter
     ''' <param name="index"></param>
     ''' <param name="[default]">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
-    <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
+    <Extension>
+    Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
         If array Is Nothing Then
             Return [default]
         End If
@@ -126,17 +127,62 @@ Public Module CollectionValueGetter
     ''' outside of the boundary, then the default value will be return.
     ''' (假若下标越界的话会返回默认值)
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="T">The generic type of current array object</typeparam>
     ''' <param name="array"></param>
-    ''' <param name="index"></param>
+    ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
+    ''' get.</param>
     ''' <param name="[default]">
     ''' Default value for return when the array object is nothing or index outside of the boundary.
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' The value at the specified position in the one-dimensional System.Array.
+    ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+        Return array.GetValueOrDefault(index, [default])
+    End Function
+
+    ''' <summary>
+    ''' Gets the value at the specified position in the one-dimensional System.Array.
+    ''' The index is specified as a 32-bit integer.
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
+    ''' get.</param>
+    ''' <param name="[default]">
+    ''' The default value if index is outside the range of valid indexes for the current System.Array.
+    ''' </param>
+    ''' <returns>
+    ''' The value at the specified position in the one-dimensional System.Array.
+    ''' </returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
+        Return array.GetValueOrDefault(index)
+    End Function
+
+    ''' <summary>
+    ''' Gets the value at the specified position in the one-dimensional System.Array.
+    ''' The index is specified as a 32-bit integer.
+    ''' </summary>
+    ''' <param name="array"></param>
+    ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
+    ''' get.</param>
+    ''' <param name="[default]">
+    ''' The default value if index is outside the range of valid indexes for the current System.Array.
+    ''' </param>
+    ''' <returns>
+    ''' The value at the specified position in the one-dimensional System.Array.
+    ''' </returns>
+    <Extension>
+    Public Function GetValueOrDefault(array As Array, index As Integer, Optional [default] As Object = Nothing) As Object
         If array.IsNullOrEmpty Then
             Return [default]
+        ElseIf index < 0 Then
+            index = array.Length + index
         End If
 
         ' 负数值直接返回默认值
@@ -144,23 +190,8 @@ Public Module CollectionValueGetter
             Return [default]
         End If
 
-        Dim value As T = array(index)
+        Dim value As Object = array.GetValue(index)
         Return value
-    End Function
-
-    <Extension>
-    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
-        If array Is Nothing Then
-            Return Nothing
-        ElseIf index < 0 Then
-            index = array.Length + index
-        End If
-
-        If index < 0 OrElse index >= array.Length Then
-            Return Nothing
-        Else
-            Return array(index)
-        End If
     End Function
 
     ''' <summary>
@@ -172,7 +203,8 @@ Public Module CollectionValueGetter
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
     <ExportAPI("Get.Item")>
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
+    <Extension>
+    Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #Else
     <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #End If

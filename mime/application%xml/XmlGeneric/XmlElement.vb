@@ -1,57 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::220fb2fc26c4801f852da9f89216fe3e, sciBASIC#\mime\application%xml\XmlGeneric\XmlElement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 52
-    '    Code Lines: 31
-    ' Comment Lines: 13
-    '   Blank Lines: 8
-    '     File Size: 1.56 KB
+' Summaries:
 
 
-    ' Class XmlElement
-    ' 
-    '     Properties: [namespace], attributes, elements, id, name
-    '                 text
-    ' 
-    '     Function: getElementById, getElementsByTagName, ParseXmlText, ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 52
+'    Code Lines: 31
+' Comment Lines: 13
+'   Blank Lines: 8
+'     File Size: 1.56 KB
+
+
+' Class XmlElement
+' 
+'     Properties: [namespace], attributes, elements, id, name
+'                 text
+' 
+'     Function: getElementById, getElementsByTagName, ParseXmlText, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
+''' <summary>
+''' A generic xml element node
+''' </summary>
 Public Class XmlElement
 
     ''' <summary>
@@ -68,6 +73,11 @@ Public Class XmlElement
     ''' </summary>
     ''' <returns></returns>
     Public Property text As String
+    ''' <summary>
+    ''' the content text of the comment in current node
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property comment As String
 
     Public ReadOnly Property id As String
         Get
@@ -78,13 +88,16 @@ Public Class XmlElement
         End Get
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getElementById(id As String) As XmlElement
-        Return elements.Where(Function(a) a.id = id).FirstOrDefault
+        Return elements _
+            .Where(Function(a) a.id = id) _
+            .FirstOrDefault
     End Function
 
     Public Iterator Function getElementsByTagName(name As String) As IEnumerable(Of XmlElement)
         For Each element As XmlElement In elements
-            If element.name = name Then
+            If TypeOf element Is XmlElement AndAlso DirectCast(element, XmlElement).name = name Then
                 Yield element
             End If
         Next
@@ -97,8 +110,10 @@ Public Class XmlElement
     ''' <summary>
     ''' parse the xml document text
     ''' </summary>
-    ''' <param name="xmlText">the xml dcument text</param>
+    ''' <param name="xmlText">the xml document text</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function ParseXmlText(xmlText As String) As XmlElement
         Return XmlParser.ParseXml(xmlText)
     End Function
