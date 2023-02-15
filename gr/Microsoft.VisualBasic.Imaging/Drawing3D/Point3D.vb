@@ -208,7 +208,11 @@ Namespace Drawing3D
             Dim xyz As String() = data.Matches("[-]?\d+(\.\d+)?").ToArray
             Dim p As Double() = xyz.Select(AddressOf Double.Parse).ToArray
 
-            Return New Point3D(p)
+            If p.Length = 0 Then
+                Return Nothing
+            Else
+                Return New Point3D(p)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
