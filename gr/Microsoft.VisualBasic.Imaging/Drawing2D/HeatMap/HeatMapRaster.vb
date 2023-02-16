@@ -68,7 +68,7 @@ Namespace Drawing2D.HeatMap
     ''' <remarks>
     ''' https://github.com/RainkLH/HeatMapSharp
     ''' </remarks>
-    Public Class HeatMapRaster(Of T As Pixel)
+    Public Class HeatMapRaster(Of T As Pixel) : Implements IRasterGrayscaleHeatmap
 
         ''' <summary>
         ''' gaussian kernel size
@@ -262,7 +262,7 @@ Namespace Drawing2D.HeatMap
             Next
         End Function
 
-        Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel)
+        Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel) Implements IRasterGrayscaleHeatmap.GetRasterPixels
             For i = 0 To m_heatMatrix.GetLength(0) - 1
                 For j = 0 To m_heatMatrix.GetLength(1) - 1
                     Yield New PixelData With {

@@ -61,6 +61,10 @@ Imports System.Drawing
 
 Namespace Drawing2D.HeatMap
 
+    Public Interface IRasterGrayscaleHeatmap
+        Function GetRasterPixels() As IEnumerable(Of Pixel)
+    End Interface
+
     ''' <summary>
     ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
     ''' </summary>
