@@ -68,6 +68,7 @@ Imports System.Numerics
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.Runtime.NumberConversionRoutines
@@ -317,6 +318,35 @@ Namespace ComponentModel.DataSourceModel
             Return False
         End Function
 
+        ReadOnly numerics As Type() = {
+            GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
+            GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
+        }
+
+        ''' <summary>
+        ''' Does the given type is any kind of numeric collection type?
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsNumericCollection(type As Type) As Boolean
+            If type.IsArray Then
+                Return IsNumericType(type.GetElementType)
+            Else
+                Static numerics As Type() = DataFramework.numerics _
+                    .Select(Function(t) GetType(IEnumerable(Of )).MakeGenericType(t)) _
+                    .ToArray
+
+                For Each num As Type In numerics
+                    If type.ImplementInterface(num) Then
+                        Return True
+                    End If
+                Next
+            End If
+
+            Return False
+        End Function
+
         ''' <summary>
         ''' the given <paramref name="type"/> is any of the CLR numeric primitive type?
         ''' </summary>
@@ -331,10 +361,6 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsNumericType(type As Type, Optional includeComplex As Boolean = False) As Boolean
-            Static numerics As Type() = {
-                GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
-                GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
-            }
             Static test As New Dictionary(Of String, Boolean)
 
             Dim key As String = includeComplex.ToString & type.FullName

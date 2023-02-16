@@ -130,6 +130,7 @@ Namespace Net.Http
         <Extension>
         Public Function UnGzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
             Using buffer As New MemoryStream(stream.ToArray)
+                buffer.Seek(Scan0, SeekOrigin.Begin)
                 Return buffer.UnGzipStream
             End Using
         End Function
