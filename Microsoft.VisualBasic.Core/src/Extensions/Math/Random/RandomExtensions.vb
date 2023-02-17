@@ -213,12 +213,26 @@ Namespace Math
             End SyncLock
         End Function
 
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <param name="min#"></param>
+        ''' <param name="max#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetNextBetween(r As Random, min#, max#) As Double
             Return (max - min) * r.NextDouble + min
         End Function
 
+        ''' <summary>
+        ''' Returns a random floating-point number that is greater than or equal to min of the range,
+        ''' and less than the max of the range.
+        ''' </summary>
+        ''' <param name="rng"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
             SyncLock seeds
