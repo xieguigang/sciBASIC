@@ -142,6 +142,8 @@ Namespace KNN
                     result_i = Umap.MIN_K_DIST_SCALE * meanDistances
                 End If
             End If
+
+            Return (rho_i, result_i)
         End Function
 
         Public Function SmoothKNNDistance() As (sigmas As Double(), rhos As Double())
