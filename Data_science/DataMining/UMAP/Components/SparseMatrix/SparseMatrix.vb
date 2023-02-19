@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Public NotInheritable Class SparseMatrix
 
@@ -219,17 +220,52 @@ Public NotInheritable Class SparseMatrix
         Return Map(Function(value, row, cols) value * scalar)
     End Function
 
+    Private Shared Function newTaskPool(keys As IEnumerable(Of RowCol)) As RowCol()()
+        Dim keyPools = keys.ToArray
+        Dim tasks = keyPools.Split(keyPools.Length / App.CPUCoreNumbers / 8)
+
+        Return tasks
+    End Function
+
     ''' <summary>
     ''' Helper function for element-wise operations
     ''' </summary>
     Private Function ElementWiseWith(other As SparseMatrix, op As Func(Of Double, Double, Double)) As SparseMatrix
         Dim newEntries = New Dictionary(Of RowCol, Double)(_entries.Count)
-        Dim x As Double = Nothing
-        Dim y As Double = Nothing
+        Dim parallel As Boolean = True
 
-        For Each k In _entries.Keys.Union(other._entries.Keys)
-            newEntries(k) = op(If(_entries.TryGetValue(k, x), x, 0F), If(other._entries.TryGetValue(k, y), y, 0F))
-        Next
+        If parallel Then
+            Dim keyPools = newTaskPool(_entries.Keys.Union(other._entries.Keys))
+            Dim execParallel = keyPools _
+                .AsParallel _
+                .Select(Iterator Function(task)
+                            Dim x As Double = Nothing
+                            Dim y As Double = Nothing
+
+                            For Each k As RowCol In task
+                                Yield (k, op(
+                                    If(_entries.TryGetValue(k, x), x, 0F),
+                                    If(other._entries.TryGetValue(k, y), y, 0F)
+                                ))
+                            Next
+                        End Function) _
+                .Select(Function(i) i.ToArray) _
+                .ToArray
+
+            For Each i In execParallel.IteratesALL
+                newEntries(i.k) = i.Item2
+            Next
+        Else
+            Dim x As Double = Nothing
+            Dim y As Double = Nothing
+
+            For Each k In _entries.Keys.Union(other._entries.Keys)
+                newEntries(k) = op(
+                    If(_entries.TryGetValue(k, x), x, 0F),
+                    If(other._entries.TryGetValue(k, y), y, 0F)
+                )
+            Next
+        End If
 
         Return New SparseMatrix(newEntries, Dims)
     End Function
