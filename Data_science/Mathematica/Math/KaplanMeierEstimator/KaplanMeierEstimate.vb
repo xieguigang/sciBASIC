@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Math.KaplanMeierEstimator.Models
+Imports Microsoft.VisualBasic.Math.Statistics.Distributions
 Imports stdNum = System.Math
 
 ''' <summary>
@@ -215,6 +216,7 @@ Public Class KaplanMeierEstimate
         End If
 
         ' The PValue is computed using the Chi-Square statistic, with degrees of freedom =1
-        PValue = 1 - ChiSquared.CDF(1, statistic)
+        ' original expression at here: ChiSquared.CDF(1, statistic)
+        PValue = 1 - Distribution.ChiSquare(statistic, freedom:=1)
     End Sub
 End Class
