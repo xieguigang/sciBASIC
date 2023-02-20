@@ -1,14 +1,14 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Diagnostics
-Imports System.Linq
+﻿Imports Microsoft.VisualBasic.Math.KaplanMeierEstimator.Models
+Imports stdNum = System.Math
 
 ''' <summary>
-''' Performs the Kaplan Meier algorithm over 2 groups, and computes the statistic significance for the groups behaving similarly over time.
+''' Performs the Kaplan Meier algorithm over 2 groups, 
+''' and computes the statistic significance for the 
+''' groups behaving similarly over time.
 ''' </summary>
 Public Class KaplanMeierEstimate
 
-    Private _GroupAEvents As System.Collections.Generic.IReadOnlyList(Of KaplanMeierEstimator.Common.KaplanMeierEstimate.KaplanMeierStatus), _GroupBEvents As System.Collections.Generic.IReadOnlyList(Of KaplanMeierEstimator.Common.KaplanMeierEstimate.KaplanMeierStatus), _TotalFailingA As Integer, _TotalFailingB As Integer, _PValue As Double
+    Private _GroupAEvents As IReadOnlyList(Of KaplanMeierStatus), _GroupBEvents As IReadOnlyList(Of KaplanMeierStatus), _TotalFailingA As Integer, _TotalFailingB As Integer, _PValue As Double
     ''' <summary>
     ''' Group time event
     ''' </summary>
@@ -139,7 +139,7 @@ Public Class KaplanMeierEstimate
     Private Sub MergeEvents()
         Dim iA = 0, iB = 0
         While iA < GroupAEvents.Count AndAlso iB < GroupBEvents.Count
-            Dim currentTime = Math.Min(GroupAEvents(iA).Time, GroupBEvents(iB).Time)
+            Dim currentTime = stdNum.Min(GroupAEvents(iA).Time, GroupBEvents(iB).Time)
             Dim failingA = If(GroupAEvents(iA).Time = currentTime, GroupAEvents(iA).NumberFailing, 0)
             Dim failingB = If(GroupBEvents(iB).Time = currentTime, GroupBEvents(iB).NumberFailing, 0)
 
@@ -211,7 +211,7 @@ Public Class KaplanMeierEstimate
         Dim statistic As Double = 0
         If sumEA <> 0 AndAlso sumEB <> 0 Then
             ' The test statistic is the deviation from the expected for both groups
-            statistic = Math.Pow(TotalFailingA - sumEA, 2) / sumEA + Math.Pow(TotalFailingB - sumEB, 2) / sumEB
+            statistic = stdNum.Pow(TotalFailingA - sumEA, 2) / sumEA + stdNum.Pow(TotalFailingB - sumEB, 2) / sumEB
         End If
 
         ' The PValue is computed using the Chi-Square statistic, with degrees of freedom =1
