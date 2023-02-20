@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::34249ce88a8a0c72f19575ac495f4edb, sciBASIC#\Data_science\DataMining\UMAP\Umap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 485
-    '    Code Lines: 299
-    ' Comment Lines: 109
-    '   Blank Lines: 77
-    '     File Size: 20.75 KB
+' Summaries:
 
 
-    ' Class Umap
-    ' 
-    '     Properties: dimension
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
-    '               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
-    '               MakeEpochsPerSample, RDist
-    ' 
-    '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 485
+'    Code Lines: 299
+' Comment Lines: 109
+'   Blank Lines: 77
+'     File Size: 20.75 KB
+
+
+' Class Umap
+' 
+'     Properties: dimension
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: [Step], Clip, FindABParams, FuzzySimplicialSet, GetEmbedding
+'               GetGraph, GetNEpochs, GetProgress, InitializeFit, InitializeSimplicialSetEmbedding
+'               MakeEpochsPerSample, RDist
+' 
+'     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -277,15 +277,17 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     End Function
 
     ''' <summary>
-    ''' Given a set of data X, a neighborhood size, and a measure of distance compute the fuzzy simplicial set(here represented as a fuzzy graph in the form of a sparse matrix) associated
-    ''' to the data. This is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set for each such point, and then combining all the local fuzzy
-    ''' simplicial sets into a global one via a fuzzy union.
+    ''' Given a set of data X, a neighborhood size, and a measure of distance compute the fuzzy simplicial 
+    ''' set(here represented as a fuzzy graph in the form of a sparse matrix) associated to the data. This 
+    ''' is done by locally approximating geodesic distance at each point, creating a fuzzy simplicial set 
+    ''' for each such point, and then combining all the local fuzzy simplicial sets into a global one via 
+    ''' a fuzzy union.
     ''' </summary>
     Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As RunSlavePipeline.SetProgressEventHandler) As SparseMatrix
         Dim knnIndices = If(_knn.knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knn.knnDistances, New Single(-1)() {})
         Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() SmoothKNN.SmoothKNNDistance(knnDistances, KNNArguments), 0.1, "SmoothKNNDistance")
+        Dim sigmasRhos = report.Run(Function() New SmoothKNN(knnDistances, KNNArguments).SmoothKNNDistance(), 0.1, "SmoothKNNDistance")
         Dim rowsColsVals = report.Run(Function() SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
         Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
         Dim transpose = sparseMatrix.Transpose()
