@@ -1,8 +1,7 @@
-﻿Imports System.Collections.Generic
-Imports KaplanMeierEstimator.Common
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Math.KaplanMeierEstimator.Models
 
-Namespace KaplanMeierEstimator.SplitStrategies
+Namespace SplitStrategies
     Public Interface ISplitStrategy
         ReadOnly Property Name As String
 
