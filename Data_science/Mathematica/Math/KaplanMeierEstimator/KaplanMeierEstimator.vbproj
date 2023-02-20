@@ -8,5 +8,11 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;gcmodeller_desktop</Configurations>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+  </ItemGroup>
+
 
 </Project>
