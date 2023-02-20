@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace KaplanMeierEstimator.Common
+Namespace Models
     ''' <summary>
     '''  Holds the gene expression before and after a procedure, referring to a specific patient
     ''' </summary>
