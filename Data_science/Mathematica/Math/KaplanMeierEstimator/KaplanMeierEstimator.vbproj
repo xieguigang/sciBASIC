@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Microsoft.VisualBasic.Math.KaplanMeierEstimator</RootNamespace>
+    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <AssemblyName>Microsoft.VisualBasic.Math.KaplanMeierEstimator</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit;gcmodeller_desktop</Configurations>
+  </PropertyGroup>
+
+
+</Project>
