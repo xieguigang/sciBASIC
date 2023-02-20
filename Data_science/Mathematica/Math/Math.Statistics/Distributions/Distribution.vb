@@ -220,7 +220,7 @@ Namespace Distributions
         ''' <summary>The chiSquare method is used to determine whether there is a significant difference between the expected
         '''  frequencies and the observed frequencies in one or more categories. It takes a double input x and an integer freedom
         '''  for degrees of freedom as inputs. It returns the Chi Squared result.</summary>
-        ''' <param name="x">      double input.</param>
+        ''' <param name="x">a numeric input.</param>
         ''' <param name="freedom">integer input for degrees of freedom.</param>
         '''  
         ''' <returns>the Chi Squared result.</returns>
