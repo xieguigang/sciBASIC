@@ -1,10 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports KaplanMeierEstimator.Common
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Math.KaplanMeierEstimator.Models
 
-Namespace KaplanMeierEstimator.SplitStrategies
+Namespace SplitStrategies
     Public Class T2_TopNPercentSplitStrategy
         Implements ISplitStrategy
         Private ReadOnly m_percent As Integer

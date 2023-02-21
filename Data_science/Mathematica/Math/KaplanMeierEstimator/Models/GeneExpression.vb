@@ -1,8 +1,10 @@
-﻿Imports System
+﻿Imports stdNum = System.Math
 
-Namespace KaplanMeierEstimator.Common
+Namespace Models
+
     ''' <summary>
-    '''  Holds the gene expression before and after a procedure, referring to a specific patient
+    '''  Holds the gene expression before and after a procedure, 
+    '''  referring to a specific patient
     ''' </summary>
     Public Class GeneExpression
         Public Property GeneId As String
@@ -19,7 +21,7 @@ Namespace KaplanMeierEstimator.Common
                     Return Double.NaN
                 End If
 
-                Return Math.Abs(Before - After)
+                Return stdNum.Abs(Before - After)
             End Get
         End Property
     End Class

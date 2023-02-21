@@ -1,4 +1,4 @@
-﻿Namespace KaplanMeierEstimator.Common
+﻿Namespace Models
     Public Class Patient
         Public Property Id As Integer
 

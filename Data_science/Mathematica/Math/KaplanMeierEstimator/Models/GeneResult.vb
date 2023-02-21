@@ -1,5 +1,5 @@
 ﻿
-Namespace KaplanMeierEstimator.Common
+Namespace Models
     Public Class GeneResult
         Public Property GeneId As String
 
