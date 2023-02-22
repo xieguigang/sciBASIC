@@ -202,6 +202,10 @@ Namespace Scripting.MetaData
         ''' <see cref="DllNotFoundException"/>
         ''' </param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the function of <see cref="deps.TryHandleNetCore5AssemblyBugs"/> has been called
+        ''' automatically when the assembly is built for .netcore app
+        ''' </remarks>
         Public Overloads Function [GetType](Optional knownFirst As Boolean = False,
                                             Optional throwEx As Boolean = True,
                                             Optional ByRef getException As Exception = Nothing,
@@ -231,7 +235,7 @@ Namespace Scripting.MetaData
                         Return Nothing
                     End If
                 Else
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
                     Call deps.TryHandleNetCore5AssemblyBugs(package:=assm)
 #End If
                 End If
