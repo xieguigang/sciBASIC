@@ -195,6 +195,9 @@ Namespace Scripting.MetaData
         ''' <param name="throwEx">
         ''' 如果这个参数设置为False的话，则出错的时候会返回空值
         ''' </param>
+        ''' <param name="searchPath">
+        ''' A list of the candidates directory path for search dll files
+        ''' </param>
         ''' <param name="getException">
         ''' <see cref="DllNotFoundException"/>
         ''' </param>
