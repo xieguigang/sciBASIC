@@ -121,6 +121,14 @@ Namespace ComponentModel.DataSourceModel
             Return "This property is a metadata pack"
         End Function
 
+        Public Shared Function GetMetadata(properties As IEnumerable(Of PropertyInfo)) As PropertyInfo
+            Dim find As PropertyInfo = properties _
+               .Where(Function(t) t.GetCustomAttribute(Of DynamicMetadataAttribute) IsNot Nothing) _
+               .FirstOrDefault
+
+            Return find
+        End Function
+
         ''' <summary>
         ''' get the target <see cref="DynamicPropertyBase(Of T).Properties"/> its <see cref="PropertyInfo"/>
         ''' </summary>
@@ -128,9 +136,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public Shared Function GetMetadata(type As Type) As PropertyInfo
             Dim properties = type.GetProperties
-            Dim find As PropertyInfo = properties _
-                .Where(Function(t) t.GetCustomAttribute(Of DynamicMetadataAttribute) IsNot Nothing) _
-                .FirstOrDefault
+            Dim find As PropertyInfo = GetMetadata(properties)
 
             Return find
         End Function

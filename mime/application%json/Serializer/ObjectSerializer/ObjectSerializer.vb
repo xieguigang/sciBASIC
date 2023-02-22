@@ -1,59 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::da5dcc24dc854663783f1f0ce6384aa7, sciBASIC#\mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 201
-    '    Code Lines: 156
-    ' Comment Lines: 17
-    '   Blank Lines: 28
-    '     File Size: 7.28 KB
+' Summaries:
 
 
-    ' Module ObjectSerializer
-    ' 
-    '     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 201
+'    Code Lines: 156
+' Comment Lines: 17
+'   Blank Lines: 28
+'     File Size: 7.28 KB
+
+
+' Module ObjectSerializer
+' 
+'     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-#If netcore5 = 0 Then
-Imports System.Web.Script.Serialization
-#End If
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.Language
@@ -61,6 +58,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.ValueTypes
 Imports any = Microsoft.VisualBasic.Scripting
+
+#If NET48 Then
+Imports System.Web.Script.Serialization
+#End If
 
 Public Module ObjectSerializer
 
@@ -85,6 +86,13 @@ Public Module ObjectSerializer
         Return New JsonArray(populator)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="schema"></param>
+    ''' <param name="obj"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function populateObjectJson(schema As Type, obj As Object, opt As JSONSerializerOptions) As JsonElement
         ' 会需要忽略掉有<ScriptIgnore>标记的属性
@@ -102,7 +110,6 @@ Public Module ObjectSerializer
         Dim valueType As Type
         Dim json As New JsonObject
         Dim valObj As Object
-        Dim graph As ObjectSchema = ObjectSchema.GetSchema(schema)
         Dim jsonVal As JsonElement
         Dim isNullable As Boolean = False
 
@@ -116,8 +123,7 @@ Public Module ObjectSerializer
             Dim elementType As Type = schema.GenericTypeArguments.FirstOrDefault
 
             obj = memberReaders _
-                .First(Function(a) a.Value.Name = "Value") _
-                .Value _
+                .First(Function(a) a.Value.Name = "Value").Value _
                 .GetValue(obj, Nothing)
             schema = obj.GetType
 
@@ -130,35 +136,59 @@ Public Module ObjectSerializer
             Return populateObjectJson(schema, obj, opt)
         End If
 
+        Dim metadata As PropertyInfo = DynamicMetadataAttribute.GetMetadata(memberReaders.Select(Function(p) p.Value))
+
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             [property] = reader.Value
             valueType = [property].PropertyType
             valObj = [property].GetValue(obj)
 
-            If valueType.IsInterface OrElse
-                valueType Is GetType(Object) OrElse
-                valueType.IsAbstract Then
+            If metadata IsNot Nothing AndAlso [property] Is metadata Then
+                Dim js As IDictionary = TryCast(valObj, IDictionary)
+
+                ' handling of the dynamics metadata property
+                If Not js Is Nothing Then
+                    For Each key As Object In js.Keys
+                        Dim keystr As String = key.ToString
+                        Dim value As Object = js(key)
+
+                        If json.HasObjectKey(keystr) Then
+                            keystr = "metadata:" & keystr
+                        End If
+
+                        If value Is Nothing Then
+                            Call json.Add(keystr, JsonValue.NULL)
+                        Else
+                            Call json.Add(keystr, value.GetType.GetJsonElement(value, opt))
+                        End If
+                    Next
+                End If
+            Else
+                If valueType.IsInterface OrElse
+                    valueType Is GetType(Object) OrElse
+                    valueType.IsAbstract Then
+
+                    If valObj Is Nothing Then
+                        valueType = GetType(Object)
+                    Else
+                        valueType = valObj.GetType
+                    End If
+                End If
 
                 If valObj Is Nothing Then
-                    valueType = GetType(Object)
+                    jsonVal = JsonValue.NULL
+                ElseIf Not (valueType Is GetType(Type) OrElse
+                    valueType Is GetType(TypeInfo) OrElse
+                    valueType.FullName = "System.RuntimeType") Then
+
+                    jsonVal = valueType.GetJsonElement(valObj, opt)
                 Else
-                    valueType = valObj.GetType
+                    jsonVal = Nothing
                 End If
-            End If
 
-            If valObj Is Nothing Then
-                jsonVal = JsonValue.NULL
-            ElseIf Not (valueType Is GetType(Type) OrElse
-                valueType Is GetType(TypeInfo) OrElse
-                valueType.FullName = "System.RuntimeType") Then
-
-                jsonVal = valueType.GetJsonElement(valObj, opt)
-            Else
-                jsonVal = Nothing
-            End If
-
-            If Not jsonVal Is Nothing Then
-                Call json.Add(reader.Key, jsonVal)
+                If Not jsonVal Is Nothing Then
+                    Call json.Add(reader.Key, jsonVal)
+                End If
             End If
         Next
 
@@ -178,7 +208,7 @@ Public Module ObjectSerializer
         Dim value As Object
 
         For Each memberKey As Object In obj.Keys
-            key = Scripting.ToString(memberKey)
+            key = any.ToString(memberKey)
             value = obj.Item(memberKey)
 
             If value Is Nothing Then
@@ -194,7 +224,7 @@ Public Module ObjectSerializer
     End Function
 
     ''' <summary>
-    ''' Convert any .NET object as json element model for build json string or bson data
+    ''' Convert any .NET CLR object as json element model for build json string or bson data
     ''' </summary>
     ''' <param name="schema"></param>
     ''' <param name="obj"></param>
@@ -204,7 +234,10 @@ Public Module ObjectSerializer
     Public Function GetJsonElement(schema As Type, obj As Object, opt As JSONSerializerOptions) As JsonElement
         If obj Is Nothing Then
             Return Nothing
-        ElseIf schema.IsAbstract OrElse schema Is GetType(Object) AndAlso Not obj Is Nothing Then
+        ElseIf schema.IsAbstract OrElse
+            schema Is GetType(Object) AndAlso
+            obj IsNot Nothing Then
+
             schema = obj.GetType
         End If
 
@@ -220,8 +253,6 @@ Public Module ObjectSerializer
             Else
                 Return New JsonValue(obj)
             End If
-            ' ElseIf DataFramework.IsNullable(schema) Then
-
         ElseIf schema.IsEnum Then
             If opt.enumToString Then
                 Return New JsonValue(obj.ToString)
@@ -229,8 +260,7 @@ Public Module ObjectSerializer
                 Return New JsonValue(CLng(obj))
             End If
         ElseIf schema.IsInheritsFrom(GetType(Dictionary(Of, )), strict:=False) Then
-            Dim valueType As Type = schema _
-                .GenericTypeArguments _
+            Dim valueType As Type = schema.GenericTypeArguments _
                 .ElementAtOrDefault(
                     index:=1,
                     [default]:=schema.GenericTypeArguments(Scan0)
