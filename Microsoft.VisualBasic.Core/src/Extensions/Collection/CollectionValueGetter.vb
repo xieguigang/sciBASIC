@@ -151,9 +151,6 @@ Public Module CollectionValueGetter
     ''' <param name="array"></param>
     ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
     ''' get.</param>
-    ''' <param name="[default]">
-    ''' The default value if index is outside the range of valid indexes for the current System.Array.
-    ''' </param>
     ''' <returns>
     ''' The value at the specified position in the one-dimensional System.Array.
     ''' </returns>
