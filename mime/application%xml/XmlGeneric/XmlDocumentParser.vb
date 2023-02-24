@@ -50,6 +50,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 
 Public Module XmlParser
@@ -81,25 +82,26 @@ Public Module XmlParser
         End If
 
         If root.HasElements Then
-            Dim childs As New List(Of XmlElement)
-
-            For Each child As XNode In root.Nodes
-                If child.NodeType = XmlNodeType.Text Then
-                    childs.Add(New XmlElement With {.text = child.ToString})
-                ElseIf child.NodeType = XmlNodeType.Element Then
-                    childs.Add(ParseXml(root:=CType(child, XElement)))
-                ElseIf child.NodeType = XmlNodeType.Comment Then
-                    childs.Add(New XmlElement With {.comment = child.ToString})
-                Else
-                    Throw New NotImplementedException(child.NodeType.ToString)
-                End If
-            Next
-
-            rootElement.elements = childs.ToArray
+            rootElement.elements = root.PopulateChilds.ToArray
         Else
             rootElement.text = root.Value
         End If
 
         Return rootElement
+    End Function
+
+    <Extension>
+    Private Iterator Function PopulateChilds(root As XElement) As IEnumerable(Of XmlElement)
+        For Each child As XNode In root.Nodes
+            If child.NodeType = XmlNodeType.Text Then
+                Yield New XmlElement With {.text = child.ToString}
+            ElseIf child.NodeType = XmlNodeType.Element Then
+                Yield ParseXml(root:=CType(child, XElement))
+            ElseIf child.NodeType = XmlNodeType.Comment Then
+                Yield New XmlElement With {.comment = child.ToString}
+            Else
+                Throw New NotImplementedException(child.NodeType.ToString)
+            End If
+        Next
     End Function
 End Module
