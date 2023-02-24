@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::774e2c83ad6d6af9896fcca1486c87db, sciBASIC#\mime\application%json\Serializer\Deserializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 161
-    '    Code Lines: 120
-    ' Comment Lines: 20
-    '   Blank Lines: 21
-    '     File Size: 6.44 KB
+' Summaries:
 
 
-    ' Module Deserializer
-    ' 
-    '     Function: activate, createArray, createObject, (+2 Overloads) CreateObject, createVariant
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 161
+'    Code Lines: 120
+' Comment Lines: 20
+'   Blank Lines: 21
+'     File Size: 6.44 KB
+
+
+' Module Deserializer
+' 
+'     Function: activate, createArray, createObject, (+2 Overloads) CreateObject, createVariant
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
@@ -61,8 +62,14 @@ Imports any = Microsoft.VisualBasic.Scripting
 ''' </summary>
 Public Module Deserializer
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Private Function createVariant(json As JsonObject, parent As ObjectSchema, schema As Type, decodeMetachar As Boolean) As Object
+    Public Function Score(graph As SoapGraph, obj As JsonObject) As Integer
+        Return obj.Score(graph.raw)
+    End Function
+
+    <Extension>
+    Private Function createVariant(json As JsonObject, parent As SoapGraph, schema As Type, decodeMetachar As Boolean) As Object
         Dim jsonVar As [Variant] = Activator.CreateInstance(schema)
 
         schema = jsonVar.which(json)
@@ -86,7 +93,7 @@ Public Module Deserializer
 
     <Extension>
     Private Function CreateObject(json As JsonElement,
-                                  parent As ObjectSchema,
+                                  parent As SoapGraph,
                                   schema As Type,
                                   decodeMetachar As Boolean) As Object
         If json Is Nothing Then
@@ -102,7 +109,7 @@ Public Module Deserializer
             If schema.IsInheritsFrom(GetType([Variant])) Then
                 Return DirectCast(json, JsonObject).createVariant(parent, schema, decodeMetachar)
             ElseIf Not schema.IsArray AndAlso Not schema.IsPrimitive AndAlso Not schema.IsEnum Then
-                Return DirectCast(json, JsonObject).createObject(parent, schema, decodeMetachar)
+                Return DirectCast(json, JsonObject).CreateObject(parent, schema, decodeMetachar)
             Else
                 ' the schema require an array but given an object
                 Return Nothing
@@ -116,7 +123,7 @@ Public Module Deserializer
 
     <Extension>
     Friend Function createArray(json As JsonArray,
-                                parent As ObjectSchema,
+                                parent As SoapGraph,
                                 elementType As Type,
                                 decodeMetachar As Boolean) As Object
 
@@ -141,8 +148,8 @@ Public Module Deserializer
     ''' <param name="score"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function activate(ByRef schema As ObjectSchema, parent As ObjectSchema, score As JsonObject) As Object
-        Dim knownType As ObjectSchema
+    Private Function activate(ByRef schema As SoapGraph, parent As SoapGraph, score As JsonObject) As Object
+        Dim knownType As SoapGraph
 
         If Not schema.raw.IsInterface AndAlso Not schema.raw Is GetType(Object) Then
             Return Activator.CreateInstance(schema.raw)
@@ -157,7 +164,7 @@ Public Module Deserializer
             End If
         Else ' is object
             knownType = parent.knownTypes _
-                .Select(AddressOf ObjectSchema.GetSchema) _
+                .Select(AddressOf SoapGraph.GetSchema) _
                 .OrderByDescending(Function(a) a.Score(score)) _
                 .FirstOrDefault
 
