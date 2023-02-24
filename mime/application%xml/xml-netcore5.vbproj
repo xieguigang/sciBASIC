@@ -287,7 +287,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
-
-  <Import Project="..\application%25json\SoapGraph\SoapGraph.projitems" Label="Shared" />
+ 
 
 </Project>
