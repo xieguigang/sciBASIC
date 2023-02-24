@@ -63,6 +63,10 @@ Namespace Net.Http
 
     Public Class WebResponseResult
 
+        ''' <summary>
+        ''' the text content result data of the current web http request
+        ''' </summary>
+        ''' <returns></returns>
         Public Property html As String
         Public Property headers As ResponseHeaders
         Public Property timespan As Long

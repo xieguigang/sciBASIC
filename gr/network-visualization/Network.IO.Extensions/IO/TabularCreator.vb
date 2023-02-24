@@ -234,7 +234,7 @@ Namespace FileStream
                 Call data.Add("label", n.data.label)
             End If
             If Not data.ContainsKey(NameOf(NodeData.origID)) Then
-                Call data.Add(NameOf(NodeData.origID), n.data.origID.Replace(","c, "."c).Replace(""""c, "'"c))
+                Call data.Add(NameOf(NodeData.origID), Strings.Trim(n.data.origID).Replace(","c, "."c).Replace(""""c, "'"c))
             End If
 
             Return New Node With {

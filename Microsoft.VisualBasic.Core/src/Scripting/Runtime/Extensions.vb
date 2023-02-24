@@ -111,8 +111,12 @@ Namespace Scripting.Runtime
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function PrimitiveTypeCode(type As Type) As TypeCode
-            Return Type.GetTypeCode(type)
+        Public Function PrimitiveTypeCode(type As Type, Optional meltVector As Boolean = False) As TypeCode
+            If meltVector AndAlso type.IsArray Then
+                Return PrimitiveTypeCode(type.GetElementType)
+            Else
+                Return Type.GetTypeCode(type)
+            End If
         End Function
 
         <Extension>

@@ -107,6 +107,10 @@ Namespace Text.Xml.Models
             Me.text = namedValue.Value
         End Sub
 
+        Sub New(kv As KeyValuePair)
+            Call Me.New(kv.Key, kv.Value)
+        End Sub
+
         <DebuggerStepThrough>
         Sub New()
         End Sub

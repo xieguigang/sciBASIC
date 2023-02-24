@@ -79,6 +79,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
+        <DynamicMetadata>
         <XmlIgnore>
         Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties
             Get

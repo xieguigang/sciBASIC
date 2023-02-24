@@ -56,6 +56,9 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports any = Microsoft.VisualBasic.Scripting
 
+''' <summary>
+''' create .NET clr object from json
+''' </summary>
 Public Module Deserializer
 
     <Extension>
@@ -130,6 +133,13 @@ Public Module Deserializer
         Return array
     End Function
 
+    ''' <summary>
+    ''' just create a new and blank .net clr object
+    ''' </summary>
+    ''' <param name="schema"></param>
+    ''' <param name="parent"></param>
+    ''' <param name="score"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function activate(ByRef schema As ObjectSchema, parent As ObjectSchema, score As JsonObject) As Object
         Dim knownType As ObjectSchema
@@ -146,8 +156,7 @@ Public Module Deserializer
                 Throw New InvalidProgramException($"can not create object from an interface type: {schema.raw.FullName}!")
             End If
         Else ' is object
-            knownType = parent _
-                .knownTypes _
+            knownType = parent.knownTypes _
                 .Select(AddressOf ObjectSchema.GetSchema) _
                 .OrderByDescending(Function(a) a.Score(score)) _
                 .FirstOrDefault
@@ -177,7 +186,16 @@ Public Module Deserializer
         Dim writers As IReadOnlyDictionary(Of String, PropertyInfo) = graph.writers
         Dim writer As PropertyInfo
         Dim innerVal As Object
+        Dim metaObj2 As IDictionary = Nothing
+        Dim metadata As PropertyInfo = DynamicMetadataAttribute.GetMetadata(obj.GetType)
+        Dim metaVal As Type = Nothing
 
+        If metadata IsNot Nothing Then
+            metaObj2 = Activator.CreateInstance(metadata.PropertyType)
+            metaVal = metadata.PropertyType.GetGenericArguments()(1)
+        End If
+
+        ' write property value at here
         For Each [property] As NamedValue(Of JsonElement) In json
             If [property].Name Is Nothing Then
                 Continue For
@@ -198,12 +216,18 @@ Public Module Deserializer
                 }
                 addMethod.Invoke(obj, inputs)
             Else
-                ' 2020.2.5
-                ' property出现在了json文件之中
-                ' 但是在反序列化的目标对象类型之中却不存在
-                ' 应该是有选择性的对目标做反序列化加载还是在编写class的时候漏掉了当前的property？
-                ' 则给出警告信息
-                Call $"Missing property '{[property]}' in {graph}".Warning
+                If metadata IsNot Nothing Then
+                    ' write metadata
+                    innerVal = [property].Value.CreateObject(parent:=graph, metaVal, decodeMetachar)
+                    metaObj2.Add([property].Name, innerVal)
+                Else
+                    ' 2020.2.5
+                    ' property出现在了json文件之中
+                    ' 但是在反序列化的目标对象类型之中却不存在
+                    ' 应该是有选择性的对目标做反序列化加载还是在编写class的时候漏掉了当前的property？
+                    ' 则给出警告信息
+                    Call $"Missing property '{[property]}' in {graph}".Warning
+                End If
             End If
         Next
 
