@@ -6,6 +6,9 @@
     <AssemblyName>Microsoft.VisualBasic.MIME.application.rdf_xml</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit_win32</Configurations>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>xieguigang&lt;I@xieguigang.me&gt;</Authors>
+    <Product>sciBASIC#</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
