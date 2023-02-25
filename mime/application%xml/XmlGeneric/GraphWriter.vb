@@ -10,15 +10,20 @@ Public Class GraphWriter
     End Sub
 
     Public Function Load(xml As XmlElement) As Object
+        Return loadGraphTree(xml, graph)
+    End Function
+
+    Private Shared Function loadGraphTree(xml As XmlElement, parent As SoapGraph) As Object
         Dim members = xml.elements _
-            .SafeQuery _
-            .GroupBy(Function(xi) xi.name) _
-            .ToDictionary(Function(xi) xi.Key,
-                          Function(xi)
-                              Return xi.ToArray
-                          End Function)
+           .SafeQuery _
+           .GroupBy(Function(xi) xi.name) _
+           .ToDictionary(Function(xi) xi.Key,
+                         Function(xi)
+                             Return xi.ToArray
+                         End Function)
+        Dim obj As Object = parent.Activate(parent:=parent, docs:=members.Keys.ToArray, schema:=parent)
 
-
+        Return obj
     End Function
 
     Public Shared Function LoadXml(Of T)(xml As String) As T

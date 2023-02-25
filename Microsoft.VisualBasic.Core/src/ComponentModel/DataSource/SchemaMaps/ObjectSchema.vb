@@ -51,7 +51,6 @@
 #End Region
 
 Imports System.Reflection
-Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -116,29 +115,38 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' just create a new and blank .net clr object
         ''' </summary>
-        ''' <param name="schema"></param>
         ''' <param name="parent"></param>
         ''' <param name="docs"><see cref="Score"/></param>
         ''' <returns></returns>
-        Public Function Activate(ByRef schema As SoapGraph, parent As SoapGraph, docs As String()) As Object
+        ''' <param name="schema">
+        ''' gets the actual object class type information from this parameters,
+        ''' if the input object type(myself/this/me/myclass) <see cref="raw"/> 
+        ''' type information is acutualy an interfacve type or abstract base 
+        ''' type or something could be variant
+        ''' </param>
+        ''' <remarks>
+        ''' this function is going to handling of create the clr object instance
+        ''' for the interface type, abstract base type or something
+        ''' </remarks>
+        Public Function Activate(parent As SoapGraph, docs As String(), Optional ByRef schema As SoapGraph = Nothing) As Object
             Dim knownType As SoapGraph
 
-            If Not schema.raw.IsInterface AndAlso Not schema.raw Is GetType(Object) Then
-                Return Activator.CreateInstance(schema.raw)
-            ElseIf schema.raw.IsInterface Then
+            If Not raw.IsInterface AndAlso Not raw Is GetType(Object) Then
+                Return Activator.CreateInstance(raw)
+            ElseIf raw.IsInterface Then
                 knownType = parent _
-                .FindInterfaceImplementations(schema.raw) _
-                .OrderByDescending(Function(a) a.Score(docs)) _
-                .FirstOrDefault
+                    .FindInterfaceImplementations(raw) _
+                    .OrderByDescending(Function(a) a.Score(docs)) _
+                    .FirstOrDefault
 
                 If knownType Is Nothing Then
-                    Throw New InvalidProgramException($"can not create object from an interface type: {schema.raw.FullName}!")
+                    Throw New InvalidProgramException($"can not create object from an interface type: {raw.FullName}!")
                 End If
             Else ' is object
                 knownType = parent.knownTypes _
-                .Select(Function(t) SoapGraph.GetSchema(t, documentType)) _
-                .OrderByDescending(Function(a) a.Score(docs)) _
-                .FirstOrDefault
+                    .Select(Function(t) SoapGraph.GetSchema(t, documentType)) _
+                    .OrderByDescending(Function(a) a.Score(docs)) _
+                    .FirstOrDefault
 
                 If knownType Is Nothing Then
                     Throw New InvalidProgramException($"can not create object...")
