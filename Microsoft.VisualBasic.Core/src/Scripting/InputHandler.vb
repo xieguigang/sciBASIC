@@ -139,6 +139,16 @@ Namespace Scripting
             End If
         End Function
 
+        ''' <summary>
+        ''' Parse the target string value collection as a new array in the given element <paramref name="target"/> type
+        ''' </summary>
+        ''' <param name="expression">
+        ''' A collection of object data in string value
+        ''' </param>
+        ''' <param name="target">
+        ''' The element type
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function CTypeDynamic(expression As IEnumerable(Of String), target As Type) As Array
             If expression Is Nothing Then

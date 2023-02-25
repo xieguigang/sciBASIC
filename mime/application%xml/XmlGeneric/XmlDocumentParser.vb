@@ -77,7 +77,7 @@ Public Module XmlParser
             rootElement.attributes = New Dictionary(Of String, String)
 
             For Each attr In root.Attributes
-                rootElement.attributes.Add(attr.Name.ToString, attr.Value)
+                rootElement.attributes.Add(attr.Name.Namespace.ToString & "!" & attr.Name.LocalName, attr.Value)
             Next
         End If
 

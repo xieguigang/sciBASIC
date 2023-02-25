@@ -34,6 +34,30 @@ Public Class GraphWriter
             schema:=parent
         )
 
+        If Not xml.attributes.IsNullOrEmpty Then
+            For Each attr In xml.attributes
+                Dim attrName = attr.Key.GetTagValue(":")
+                Dim key As String = attrName.Value
+                Dim value As Object = Nothing
+
+                ' just primitive type or primitive array type
+                If parent.writers.ContainsKey(key) Then
+                    Dim prop = parent.writers(key)
+                    Dim type As Type = prop.PropertyType
+
+                    If type.IsArray Then
+                        value = Scripting.CTypeDynamic(attr.Value.Split, type)
+                    Else
+                        value = Scripting.CTypeDynamic(attr.Value, type)
+                    End If
+
+                    Call prop.SetValue(obj, value)
+                Else
+                    Call $"{parent} missing attribute property '{key}'!".Warning
+                End If
+            Next
+        End If
+
         For Each objVal In members
             If parent.writers.ContainsKey(objVal.Key) Then
                 Call WriteValue(
