@@ -36,7 +36,7 @@ Public Class GraphWriter
 
         If Not xml.attributes.IsNullOrEmpty Then
             For Each attr In xml.attributes
-                Dim attrName = attr.Key.GetTagValue(":")
+                Dim attrName = attr.Key.GetTagValue("!")
                 Dim key As String = attrName.Value
                 Dim value As Object = Nothing
 

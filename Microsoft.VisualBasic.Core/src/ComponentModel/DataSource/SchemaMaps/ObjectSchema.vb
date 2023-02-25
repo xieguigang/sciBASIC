@@ -214,13 +214,17 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Dim name As String
             Dim writers As New Dictionary(Of String, PropertyInfo)
             Dim tagName As XmlElementAttribute
+            Dim attrName As XmlAttributeAttribute
 
             For Each prop As PropertyInfo In properties
                 name = Nothing
                 tagName = prop.GetCustomAttribute(Of XmlElementAttribute)
+                attrName = prop.GetCustomAttribute(Of XmlAttributeAttribute)
 
                 If Not tagName Is Nothing Then
                     name = tagName.ElementName
+                ElseIf Not attrName Is Nothing Then
+                    name = attrName.AttributeName
                 End If
                 If name.StringEmpty Then
                     name = prop.Name
