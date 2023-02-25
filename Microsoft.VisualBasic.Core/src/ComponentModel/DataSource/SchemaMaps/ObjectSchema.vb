@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -183,7 +184,18 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Shared Function GetSchema(type As Type, Optional serializer As Serializations = Serializations.JSON) As SoapGraph
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function GetSchema(Of T As Class)(Optional serializer As Serializations = Serializations.JSON) As SoapGraph
+            Return GetSchema(GetType(T), serializer)
+        End Function
+
+        ''' <summary>
+        ''' get (or cache a new schema graph object if not exists) a schema graph object
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Function GetSchema(type As Type, Optional serializer As Serializations = Serializations.JSON) As SoapGraph
             Dim key As String = $"<{serializer.ToString}>{type.FullName}"
             Static cache As New Dictionary(Of String, SoapGraph)
             Return cache.ComputeIfAbsent(key:=key, lazyValue:=Function() CreateSchema(type, serializer))
