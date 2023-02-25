@@ -1,5 +1,6 @@
 ﻿Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
 
@@ -15,6 +16,30 @@ Public Class GraphWriter
     Public Function Load(xml As XmlElement) As Object
         Return loadGraphTree(xml, graph)
     End Function
+
+    Private Shared Sub WriteAttributes(xml As XmlElement, obj As Object, parent As SoapGraph)
+        For Each attr In xml.attributes
+            Dim attrName = attr.Key.GetTagValue("!")
+            Dim key As String = attrName.Value
+            Dim value As Object = Nothing
+
+            ' just primitive type or primitive array type
+            If parent.writers.ContainsKey(key) Then
+                Dim prop = parent.writers(key)
+                Dim type As Type = prop.PropertyType
+
+                If type.IsArray Then
+                    value = Scripting.CTypeDynamic(attr.Value.Split, type)
+                Else
+                    value = Scripting.CTypeDynamic(attr.Value, type)
+                End If
+
+                Call prop.SetValue(obj, value)
+            Else
+                Call $"{parent} missing attribute property '{key}'!".Warning
+            End If
+        Next
+    End Sub
 
     Private Shared Function loadGraphTree(xml As XmlElement, parent As SoapGraph) As Object
         Dim members As New Dictionary(Of String, XmlElement())
@@ -33,29 +58,14 @@ Public Class GraphWriter
             docs:=members.Keys.ToArray,
             schema:=parent
         )
+        Dim text As PropertyInfo = parent.writers.Values _
+            .Where(Function(p)
+                       Return Not p.GetCustomAttribute(Of XmlTextAttribute) Is Nothing
+                   End Function) _
+            .FirstOrDefault
 
         If Not xml.attributes.IsNullOrEmpty Then
-            For Each attr In xml.attributes
-                Dim attrName = attr.Key.GetTagValue("!")
-                Dim key As String = attrName.Value
-                Dim value As Object = Nothing
-
-                ' just primitive type or primitive array type
-                If parent.writers.ContainsKey(key) Then
-                    Dim prop = parent.writers(key)
-                    Dim type As Type = prop.PropertyType
-
-                    If type.IsArray Then
-                        value = Scripting.CTypeDynamic(attr.Value.Split, type)
-                    Else
-                        value = Scripting.CTypeDynamic(attr.Value, type)
-                    End If
-
-                    Call prop.SetValue(obj, value)
-                Else
-                    Call $"{parent} missing attribute property '{key}'!".Warning
-                End If
-            Next
+            Call WriteAttributes(xml, obj, parent)
         End If
 
         For Each objVal In members
@@ -70,6 +80,10 @@ Public Class GraphWriter
                 Call $"missing {xml.name}::{objVal.Key} from schema {parent.ToString}".Warning
             End If
         Next
+
+        If Not text Is Nothing Then
+            Call text.SetValue(obj, Scripting.CTypeDynamic(xml.text, text.PropertyType))
+        End If
 
         Return obj
     End Function

@@ -129,17 +129,20 @@ Public MustInherit Class EntityProperty
     <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property resource As String
 
     ''' <summary>
-    ''' 
+    ''' the rdf xml text value
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
     ''' ###### 20191102
     ''' 
-    ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended by adding <see cref="XmlAttributeAttribute"/> elements. 
-    ''' Please consider changing <see cref="XmlTextAttribute"/> member of the base class to string array.
+    ''' Base type '<see cref="RDFProperty"/>' has simpleContent and can only be extended 
+    ''' by adding <see cref="XmlAttributeAttribute"/> elements. 
+    ''' 
+    ''' Please consider changing <see cref="XmlTextAttribute"/> member of the base class to 
+    ''' string array.
     ''' </remarks>
     <XmlText>
-    Public Property value As String()
+    Public Property value As String
 
     Sub New()
     End Sub
