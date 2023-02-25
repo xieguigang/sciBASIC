@@ -17,13 +17,17 @@ Public Class GraphWriter
     End Function
 
     Private Shared Function loadGraphTree(xml As XmlElement, parent As SoapGraph) As Object
-        Dim members = xml.elements _
-           .SafeQuery _
-           .GroupBy(Function(xi) xi.name) _
-           .ToDictionary(Function(xi) xi.Key,
-                         Function(xi)
-                             Return xi.ToArray
-                         End Function)
+        Dim members As New Dictionary(Of String, XmlElement())
+
+        If Not xml.elements.IsNullOrEmpty Then
+            members = xml.elements _
+               .GroupBy(Function(xi) xi.name) _
+               .ToDictionary(Function(xi) xi.Key,
+                             Function(xi)
+                                 Return xi.ToArray
+                             End Function)
+        End If
+
         Dim obj As Object = parent.Activate(
             parent:=parent,
             docs:=members.Keys.ToArray,
