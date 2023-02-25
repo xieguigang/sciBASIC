@@ -166,18 +166,6 @@ Namespace Javascript
             Return array.ContainsValue(element)
         End Function
 
-        Public Function Score(schema As Type) As Integer
-            Dim hits As Integer
-
-            For Each [property] As PropertyInfo In schema.GetProperties(PublicProperty)
-                If array.ContainsKey([property].Name) Then
-                    hits += 1
-                End If
-            Next
-
-            Return hits
-        End Function
-
         Public Function ToJsonArray() As JsonArray
             Dim list As New JsonArray
 
@@ -202,7 +190,7 @@ Namespace Javascript
         Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object
             If type.IsArray AndAlso Me.isArray Then
                 Dim itemType As Type = type.GetElementType
-                Dim graph As SoapGraph = SoapGraph.GetSchema(itemType)
+                Dim graph As SoapGraph = SoapGraph.GetSchema(itemType, Serializations.JSON)
 
                 Return ToJsonArray.createArray(graph, itemType, decodeMetachar)
             Else

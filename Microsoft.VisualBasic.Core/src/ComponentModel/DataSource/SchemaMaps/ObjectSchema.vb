@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::e60b8ad39a90c810c090f46f60e62eea, sciBASIC#\mime\application%json\Serializer\ObjectSchema.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 126
-    '    Code Lines: 92
-    ' Comment Lines: 18
-    '   Blank Lines: 16
-    '     File Size: 4.48 KB
+' Summaries:
 
 
-    ' Class ObjectSchema
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: CreateSchema, FindInterfaceImpementations, GetSchema, Score, ToString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 126
+'    Code Lines: 92
+' Comment Lines: 18
+'   Blank Lines: 16
+'     File Size: 4.48 KB
+
+
+' Class ObjectSchema
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: CreateSchema, FindInterfaceImpementations, GetSchema, Score, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -81,6 +82,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public ReadOnly raw As Type
 
         Public ReadOnly knownTypes As Type()
+        Public ReadOnly documentType As Serializations
 
         Private Sub New()
         End Sub
@@ -98,7 +100,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                         keyType As Type,
                         valueType As Type,
                         raw As Type,
-                        knownTypes As Type())
+                        knownTypes As Type(),
+                        docTyp As Serializations)
 
             Me.addMethod = addMethod
             Me.isTable = isTable
@@ -107,7 +110,65 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Me.keyType = keyType
             Me.raw = raw
             Me.knownTypes = knownTypes
+            Me.documentType = docTyp
         End Sub
+
+        ''' <summary>
+        ''' just create a new and blank .net clr object
+        ''' </summary>
+        ''' <param name="schema"></param>
+        ''' <param name="parent"></param>
+        ''' <param name="docs"><see cref="Score"/></param>
+        ''' <returns></returns>
+        Public Function Activate(ByRef schema As SoapGraph, parent As SoapGraph, docs As String()) As Object
+            Dim knownType As SoapGraph
+
+            If Not schema.raw.IsInterface AndAlso Not schema.raw Is GetType(Object) Then
+                Return Activator.CreateInstance(schema.raw)
+            ElseIf schema.raw.IsInterface Then
+                knownType = parent _
+                .FindInterfaceImplementations(schema.raw) _
+                .OrderByDescending(Function(a) a.Score(docs)) _
+                .FirstOrDefault
+
+                If knownType Is Nothing Then
+                    Throw New InvalidProgramException($"can not create object from an interface type: {schema.raw.FullName}!")
+                End If
+            Else ' is object
+                knownType = parent.knownTypes _
+                .Select(Function(t) SoapGraph.GetSchema(t, documentType)) _
+                .OrderByDescending(Function(a) a.Score(docs)) _
+                .FirstOrDefault
+
+                If knownType Is Nothing Then
+                    Throw New InvalidProgramException($"can not create object...")
+                End If
+            End If
+
+            schema = knownType
+
+            Return Activator.CreateInstance(knownType.raw)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="obj">
+        ''' the parsed object member names from the document file, example as
+        ''' json field names or xml element names
+        ''' </param>
+        ''' <returns></returns>
+        Public Function Score(obj As IEnumerable(Of String)) As Integer
+            Dim hits As Integer = 0
+
+            For Each name As String In obj
+                If writers.ContainsKey(name) Then
+                    hits += 1
+                End If
+            Next
+
+            Return hits
+        End Function
 
         ''' <summary>
         ''' get (or cache a new schema graph object if not exists) a schema graph object
@@ -205,7 +266,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 isTable:=isTable,
                 valueType:=valueType,
                 keyType:=keyType,
-                knownTypes:=knownTypes
+                knownTypes:=knownTypes,
+                docTyp:=serializer
             )
         End Function
 
@@ -217,7 +279,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Iterator Function FindInterfaceImplementations(type As Type) As IEnumerable(Of SoapGraph)
             For Each known As Type In knownTypes
                 If known.ImplementInterface(type) Then
-                    Yield SoapGraph.GetSchema(known)
+                    Yield SoapGraph.GetSchema(known, documentType)
                 End If
             Next
         End Function

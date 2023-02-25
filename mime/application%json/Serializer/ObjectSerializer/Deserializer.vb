@@ -62,12 +62,6 @@ Imports any = Microsoft.VisualBasic.Scripting
 ''' </summary>
 Public Module Deserializer
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function Score(graph As SoapGraph, obj As JsonObject) As Integer
-        Return obj.Score(graph.raw)
-    End Function
-
     <Extension>
     Private Function createVariant(json As JsonObject, parent As SoapGraph, schema As Type, decodeMetachar As Boolean) As Object
         Dim jsonVar As [Variant] = Activator.CreateInstance(schema)
@@ -141,44 +135,6 @@ Public Module Deserializer
     End Function
 
     ''' <summary>
-    ''' just create a new and blank .net clr object
-    ''' </summary>
-    ''' <param name="schema"></param>
-    ''' <param name="parent"></param>
-    ''' <param name="score"></param>
-    ''' <returns></returns>
-    <Extension>
-    Private Function activate(ByRef schema As SoapGraph, parent As SoapGraph, score As JsonObject) As Object
-        Dim knownType As SoapGraph
-
-        If Not schema.raw.IsInterface AndAlso Not schema.raw Is GetType(Object) Then
-            Return Activator.CreateInstance(schema.raw)
-        ElseIf schema.raw.IsInterface Then
-            knownType = parent _
-                .FindInterfaceImplementations(schema.raw) _
-                .OrderByDescending(Function(a) a.Score(score)) _
-                .FirstOrDefault
-
-            If knownType Is Nothing Then
-                Throw New InvalidProgramException($"can not create object from an interface type: {schema.raw.FullName}!")
-            End If
-        Else ' is object
-            knownType = parent.knownTypes _
-                .Select(AddressOf SoapGraph.GetSchema) _
-                .OrderByDescending(Function(a) a.Score(score)) _
-                .FirstOrDefault
-
-            If knownType Is Nothing Then
-                Throw New InvalidProgramException($"can not create object...")
-            End If
-        End If
-
-        schema = knownType
-
-        Return Activator.CreateInstance(knownType.raw)
-    End Function
-
-    ''' <summary>
     ''' 反序列化为目标类型的对象实例
     ''' </summary>
     ''' <param name="json"></param>
@@ -186,8 +142,8 @@ Public Module Deserializer
     ''' <returns></returns>
     <Extension>
     Friend Function createObject(json As JsonObject, parent As SoapGraph, schema As Type, decodeMetachar As Boolean) As Object
-        Dim graph As SoapGraph = SoapGraph.GetSchema(schema)
-        Dim obj As Object = graph.activate(parent:=parent, score:=json)
+        Dim graph As SoapGraph = SoapGraph.GetSchema(schema, Serializations.JSON)
+        Dim obj As Object = graph.Activate(parent:=parent, docs:=json.ObjectKeys)
         Dim inputs As Object()
         Dim addMethod As MethodInfo = graph.addMethod
         Dim writers As IReadOnlyDictionary(Of String, PropertyInfo) = graph.writers

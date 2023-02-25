@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
 
 Public Class GraphWriter
 
@@ -9,6 +10,14 @@ Public Class GraphWriter
     End Sub
 
     Public Function Load(xml As XmlElement) As Object
+        Dim members = xml.elements _
+            .SafeQuery _
+            .GroupBy(Function(xi) xi.name) _
+            .ToDictionary(Function(xi) xi.Key,
+                          Function(xi)
+                              Return xi.ToArray
+                          End Function)
+
 
     End Function
 
