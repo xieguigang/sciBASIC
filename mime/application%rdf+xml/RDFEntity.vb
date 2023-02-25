@@ -68,7 +68,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 ''' <summary>
 ''' 在rdf之中被描述的对象实体
 ''' </summary>
-''' 
+''' <remarks>
+''' ID,about
+''' </remarks>
 <XmlType("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public MustInherit Class RDFEntity : Inherits RDFProperty
     Implements INamedValue, IReadOnlyId

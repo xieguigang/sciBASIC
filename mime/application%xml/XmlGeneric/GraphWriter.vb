@@ -39,7 +39,7 @@ Public Class GraphWriter
                     define:=parent.writers(objVal.Key)
                 )
             Else
-                Call $"missing {objVal.Key} from schema {parent.ToString}".Warning
+                Call $"missing {xml.name}::{objVal.Key} from schema {parent.ToString}".Warning
             End If
         Next
 
