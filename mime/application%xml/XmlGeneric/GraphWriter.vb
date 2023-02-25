@@ -94,7 +94,7 @@ Public Class GraphWriter
         If Not define.PropertyType.IsArray Then
             If docs.Length > 1 Then
                 ' warning
-                Call $"{objKey}(array) -> {define.Name}(scalar) type mis-matched!".Warning
+                Call $"{objKey}(array) -> {obj.GetType.FullName}::{define.Name}(scalar) type mis-matched!".Warning
             End If
 
             value = loadGraphTree(

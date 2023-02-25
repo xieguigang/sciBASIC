@@ -82,7 +82,9 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     Public Const XmlnsNamespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 
     Public Property range As RDFProperty
-    Public Property comment As RDFProperty
+
+    <XmlElement>
+    Public Property comment As RDFProperty()
 
     ''' <summary>
     ''' rdf:ID
@@ -94,7 +96,9 @@ Public MustInherit Class RDFEntity : Inherits RDFProperty
     ''' [资源] 是可拥有 URI 的任何事物
     ''' </summary>
     ''' <returns></returns>
-    <XmlAttribute("about", [Namespace]:=RDFEntity.XmlnsNamespace)> Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
+    <XmlAttribute("about", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    Public Property about As String Implements INamedValue.Key, IReadOnlyId.Identity
+
     ''' <summary>
     ''' [属性]   是拥有名称的资源
     ''' [属性值] 是某个属性的值，(请注意一个属性值可以是另外一个<see cref="Resource"/>）
@@ -146,6 +150,18 @@ Public Class EntityProperty
     Public Property value As String
 
     Sub New()
+    End Sub
+
+    Sub New(value As Object, Optional res As String = Nothing)
+        If value Is Nothing Then
+            Me.value = ""
+            Me.dataType = DataTypes.dtString
+        Else
+            Me.value = Scripting.ToString(value)
+            Me.dataType = DataTypes.SchemaDataType(value.GetType)
+        End If
+
+        Me.resource = res
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
