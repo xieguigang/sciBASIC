@@ -52,12 +52,18 @@
 
 Imports System.Reflection
 Imports System.Runtime.Serialization
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
+
+    Public Enum Serializations
+        JSON
+        XML
+    End Enum
 
     ''' <summary>
     ''' object schema provider for json/xml
@@ -108,15 +114,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Shared Function GetSchema(type As Type) As SoapGraph
-            Static cache As New Dictionary(Of Type, SoapGraph)
-            Return cache.ComputeIfAbsent(key:=type, lazyValue:=AddressOf CreateSchema)
+        Public Shared Function GetSchema(type As Type, Optional serializer As Serializations = Serializations.JSON) As SoapGraph
+            Dim key As String = $"<{serializer.ToString}>{type.FullName}"
+            Static cache As New Dictionary(Of String, SoapGraph)
+            Return cache.ComputeIfAbsent(key:=key, lazyValue:=Function() CreateSchema(type, serializer))
         End Function
 
-        Private Shared Function CreateSchema(schema As Type) As SoapGraph
-            Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase)) OrElse schema.ImplementInterface(GetType(IDictionary))
-            Dim writers = schema.Schema(PropertyAccess.NotSure, PublicProperty, nonIndex:=True)
-            Dim addMethod As MethodInfo = schema.GetMethods _
+        Public Shared Function GetAddMethod(schema As Type) As MethodInfo
+            Return schema.GetMethods _
                 .Where(Function(m)
                            Dim params = m.GetParameters
 
@@ -126,6 +131,42 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                                m.Name = "Add"
                        End Function) _
                 .FirstOrDefault
+        End Function
+
+        Public Shared Function GetJSONCLRWriters(schema As Type) As Dictionary(Of String, PropertyInfo)
+            Return schema.Schema(PropertyAccess.NotSure, PublicProperty, nonIndex:=True)
+        End Function
+
+        Public Shared Function GetXmlCLRWriters(schema As Type) As Dictionary(Of String, PropertyInfo)
+            Dim properties As PropertyInfo() = schema _
+                .GetProperties() _
+                .Where(Function(p) p.CanWrite AndAlso p.GetIndexParameters.IsNullOrEmpty) _
+                .ToArray
+            Dim name As String
+            Dim writers As New Dictionary(Of String, PropertyInfo)
+            Dim tagName As XmlElementAttribute
+
+            For Each prop As PropertyInfo In properties
+                name = Nothing
+                tagName = prop.GetCustomAttribute(Of XmlElementAttribute)
+
+                If Not tagName Is Nothing Then
+                    name = tagName.ElementName
+                End If
+                If name.StringEmpty Then
+                    name = prop.Name
+                End If
+
+                writers.Add(name, prop)
+            Next
+
+            Return writers
+        End Function
+
+        Private Shared Function CreateSchema(schema As Type, serializer As Serializations) As SoapGraph
+            Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase)) OrElse schema.ImplementInterface(GetType(IDictionary))
+            Dim writers As Dictionary(Of String, PropertyInfo)
+            Dim addMethod As MethodInfo = GetAddMethod(schema)
             Dim keyType As Type = Nothing
             Dim valueType As Type = Nothing
 
@@ -141,7 +182,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 End With
             End If
 
-            ' for avoid a infinity loop that caused by the circlar reference
+            Select Case serializer
+                Case Serializations.JSON : writers = GetJSONCLRWriters(schema)
+                Case Serializations.XML : writers = GetXmlCLRWriters(schema)
+                Case Else
+                    Throw New NotImplementedException(serializer.ToString)
+            End Select
+
+            ' for avoid a infinity loop that caused by the circular reference
             ' we just get the types at here
             ' create object schema graph object at required
             Dim knownTypes As Type() = schema _
@@ -161,7 +209,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             )
         End Function
 
-        Public Iterator Function FindInterfaceImpementations(type As Type) As IEnumerable(Of SoapGraph)
+        ''' <summary>
+        ''' Find the implementations of the abstract interface define
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Iterator Function FindInterfaceImplementations(type As Type) As IEnumerable(Of SoapGraph)
             For Each known As Type In knownTypes
                 If known.ImplementInterface(type) Then
                     Yield SoapGraph.GetSchema(known)

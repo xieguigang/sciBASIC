@@ -5,7 +5,7 @@ Public Class GraphWriter
     ReadOnly graph As SoapGraph
 
     Sub New(type As Type)
-        graph = SoapGraph.GetSchema(type)
+        graph = SoapGraph.GetSchema(type, Serializations.XML)
     End Sub
 
     Public Function Load(xml As XmlElement) As Object

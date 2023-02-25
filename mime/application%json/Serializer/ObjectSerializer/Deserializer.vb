@@ -155,7 +155,7 @@ Public Module Deserializer
             Return Activator.CreateInstance(schema.raw)
         ElseIf schema.raw.IsInterface Then
             knownType = parent _
-                .FindInterfaceImpementations(schema.raw) _
+                .FindInterfaceImplementations(schema.raw) _
                 .OrderByDescending(Function(a) a.Score(score)) _
                 .FirstOrDefault
 
