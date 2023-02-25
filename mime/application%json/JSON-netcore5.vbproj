@@ -208,8 +208,5 @@
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="E:\GCModeller\src\runtime\sciBASIC#\mime\application%25json\SoapGraph\ObjectSchema.vb" />
-  </ItemGroup>
 
 </Project>
