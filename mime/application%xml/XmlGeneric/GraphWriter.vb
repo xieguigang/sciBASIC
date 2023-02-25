@@ -22,6 +22,35 @@ Public Class GraphWriter
                              Return xi.ToArray
                          End Function)
         Dim obj As Object = parent.Activate(parent:=parent, docs:=members.Keys.ToArray, schema:=parent)
+        Dim value As Object
+
+        For Each objVal In members
+            If parent.writers.ContainsKey(objVal.Key) Then
+                Dim docs = objVal.Value
+                Dim define = parent.writers(objVal.Key)
+
+                If docs.Length > 1 AndAlso Not define.PropertyType.IsArray Then
+                    ' warning
+                    Call $"{objVal.Key}(array) -> {define.Name}(scalar) type mis-matched!".Warning
+
+                    value = loadGraphTree(docs(Scan0), SoapGraph.GetSchema(define.PropertyType, Serializations.XML))
+                Else
+                    Dim array As Array = Array.CreateInstance(define.PropertyType.GetElementType, docs.Length)
+                    Dim elementGraph = SoapGraph.GetSchema(define.PropertyType.GetElementType, Serializations.XML)
+
+                    For i As Integer = 0 To array.Length - 1
+                        value = loadGraphTree(docs(i), elementGraph)
+                        array.SetValue(value, i)
+                    Next
+
+                    value = array
+                End If
+
+                Call define.SetValue(obj, value)
+            Else
+                Call $"missing {objVal.Key} from schema {parent.ToString}".Warning
+            End If
+        Next
 
         Return obj
     End Function
