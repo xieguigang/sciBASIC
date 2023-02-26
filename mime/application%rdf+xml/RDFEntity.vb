@@ -118,7 +118,7 @@ Public Class RDFProperty : Inherits EntityProperty
 End Class
 
 ''' <summary>
-''' DataValue
+''' RDF DataValue
 ''' </summary>
 Public Class EntityProperty
 
@@ -182,4 +182,38 @@ Public Class EntityProperty
     Public Overrides Function ToString() As String
         Return $"[resource: {resource}] ({Me.SchemaDataType.FullName}) '{value}'"
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(res As EntityProperty) As String
+        Return res?.value
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(res As EntityProperty) As Boolean
+        If res Is Nothing Then
+            Return False
+        Else
+            Return Boolean.Parse(res.value)
+        End If
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(res As EntityProperty) As Double
+        Return Double.Parse(res.value)
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Narrowing Operator CType(res As EntityProperty) As Integer
+        Return Integer.Parse(res.value)
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Operator =(res As EntityProperty, str As String) As Boolean
+        Return res.value = str
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Operator <>(res As EntityProperty, str As String) As Boolean
+        Return res.value <> str
+    End Operator
 End Class
