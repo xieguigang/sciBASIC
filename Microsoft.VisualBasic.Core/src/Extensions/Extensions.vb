@@ -296,6 +296,26 @@ Public Module Extensions
         End If
     End Function
 
+    <Extension>
+    Public Function AddRange(Of T)(ByRef table As Dictionary(Of String, T),
+                                   data As IEnumerable(Of T),
+                                   key As Func(Of T, String),
+                                   Optional replaceDuplicated As Boolean = False) As Dictionary(Of String, T)
+        If data Is Nothing Then
+            Return table
+        ElseIf replaceDuplicated Then
+            For Each obj In data
+                table(key(obj)) = obj
+            Next
+        Else
+            For Each obj In data
+                table.Add(key(obj), obj)
+            Next
+        End If
+
+        Return table
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
