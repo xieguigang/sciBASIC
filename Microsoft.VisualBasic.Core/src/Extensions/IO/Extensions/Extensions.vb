@@ -76,7 +76,8 @@ Namespace FileIO
         ''' <param name="saveTo"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encoding = Nothing) As Boolean
+        <Extension>
+        Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encoding = Nothing) As Boolean
             Dim strings As IEnumerable(Of String) =
                 data.Select(AddressOf Scripting.ToString)
             Dim parent$ = FileSystem.GetParentPath(saveTo)
@@ -137,7 +138,11 @@ Namespace FileIO
                 file = writeNew()
             End If
 
-            Dim writer As New StreamWriter(file, encoding Or UTF8, bufferSize:=If(bufferSize <= 0, App.BufferSize, bufferSize)) With {
+            Dim writer As New StreamWriter(
+                stream:=file,
+                encoding:=encoding Or UTF8,
+                bufferSize:=If(bufferSize <= 0, App.BufferSize, bufferSize)
+            ) With {
                 .NewLine = newLine Or vbLf.AsDefault
             }
 

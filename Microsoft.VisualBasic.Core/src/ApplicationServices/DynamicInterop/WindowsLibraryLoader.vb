@@ -71,8 +71,11 @@ Namespace ApplicationServices.DynamicInterop
             Dim handle = Win32.LoadLibrary(filename)
 
             If handle = IntPtr.Zero Then
-                Dim [error] = New Win32Exception(Marshal.GetLastWin32Error()).Message
-                Console.WriteLine([error])
+                Dim ex As New Win32Exception(Marshal.GetLastWin32Error())
+                Dim [error] = ex.Message
+
+                App.LogException(ex)
+                VBDebugger.EchoLine([error])
             End If
 
             Return handle

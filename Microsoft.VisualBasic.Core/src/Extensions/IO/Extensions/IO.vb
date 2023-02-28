@@ -177,7 +177,6 @@ Public Module IOExtensions
     ''' <remarks>
     ''' 这个函数只有在完全处于<see cref="FileMode.Open"/>模式下，并且readonly为TRUE，这个时候才会有可能将所有原始数据一次性读取进入内存中
     ''' </remarks>
-    <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path$,
                          Optional mode As FileMode = FileMode.OpenOrCreate,
@@ -213,8 +212,8 @@ Public Module IOExtensions
         If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
             ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
-                Call Console.WriteLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
-                Call Console.WriteLine($"loads all binary data into memory for max performance!")
+                Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
+                Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
 
                 ' use a single memorystream object when file size 
                 ' is smaller than 2GB

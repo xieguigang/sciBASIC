@@ -263,7 +263,7 @@ Namespace Parallel.MMFProtocol
         <ExportAPI("Print.Message")>
         Public Shared Function WriteMessage(data As Generic.IEnumerable(Of Byte)) As String
             Dim Message As String = getMessage(data)
-            Call Console.WriteLine(Message)
+            Call VBDebugger.EchoLine(Message)
             Return Message
         End Function
 #End Region
