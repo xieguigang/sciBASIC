@@ -220,7 +220,9 @@ Namespace Serialization
                     Return str.ToArray
                 Case TypeCode.DateTime
                     Dim timestamps = readInternal(bytes, AddressOf BitConverter.ToDouble)
-                    Dim time As DateTime() = timestamps.Select(AddressOf FromUnixTimeStamp).ToArray
+                    Dim time As DateTime() = timestamps _
+                        .Select(AddressOf FromUnixTimeStamp) _
+                        .ToArray
 
                     Return time
                 Case TypeCode.Int64
