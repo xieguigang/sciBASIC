@@ -375,7 +375,7 @@ Namespace BarPlot
                     y = o.value
                     y = ymid - scaleY(y)
                     left = scaleX(o.x)
-                    rect = New Rectangle(New Point(left, y), New Size(bw, scaleY(o.value)))
+                    rect = New RectangleF(New PointF(left, y), New SizeF(bw, scaleY(o.value)))
 
                     Call textCloud.add_label(New TextRectangle("", rect))
 
@@ -410,7 +410,7 @@ Namespace BarPlot
                             Dim pBar As New Point(left, y)
                             Dim pText = New Label(text).GetTextAnchor(pBar)
 
-                            Call g.DrawLine(Pens.Gray, pBar, pText)
+                            Call g.DrawLine(Pens.Black, pBar, pText)
                         End If
 
                         g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
@@ -426,6 +426,8 @@ Namespace BarPlot
                     y = ymid + scaleY(y)
                     left = scaleX(o.x)
                     rect = Rectangle(ymid, left, left + bw, y)
+
+                    Call textCloud.add_label(New TextRectangle("", rect))
 
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
@@ -452,6 +454,14 @@ Namespace BarPlot
                                 Call textCloud.add_label(text)
                             End If
                         Loop
+
+                        If move Then
+                            ' draw connection link
+                            Dim pBar As New Point(left, y)
+                            Dim pText = New Label(text).GetTextAnchor(pBar)
+
+                            Call g.DrawLine(Pens.Black, pBar, pText)
+                        End If
 
                         g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
                     End If
