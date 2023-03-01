@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::703a48350fcde2b7d933f7afca3e9499, sciBASIC#\Data_science\Visualization\Plots\BarPlot\PlotAlignmentGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 404
-    '    Code Lines: 320
-    ' Comment Lines: 16
-    '   Blank Lines: 68
-    '     File Size: 17.55 KB
+' Summaries:
 
 
-    '     Class PlotAlignmentGroup
-    ' 
-    '         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
-    '                     labelPlotStrength, queryName, subjectName, XAxisLabelCss, xError
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: HighlightGroups, Hit
-    ' 
-    '         Sub: DrawAlignmentBars, DrawLegeneds, PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 404
+'    Code Lines: 320
+' Comment Lines: 16
+'   Blank Lines: 68
+'     File Size: 17.55 KB
+
+
+'     Class PlotAlignmentGroup
+' 
+'         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
+'                     labelPlotStrength, queryName, subjectName, XAxisLabelCss, xError
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: HighlightGroups, Hit
+' 
+'         Sub: DrawAlignmentBars, DrawLegeneds, PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Imaging.SVG
@@ -329,6 +330,8 @@ Namespace BarPlot
 #End Region
                 ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
+                Dim textCloud As New CloudOfTextRectangle
+
                 For Each part As Signal In query
                     For Each o As (x#, value#) In part.signals
                         y = o.value

@@ -59,6 +59,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace d3js.Layout
 
+    ''' <summary>
+    ''' a text label object
+    ''' </summary>
     Public Class Label
 
         ''' <summary>
