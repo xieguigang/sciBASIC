@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::5f13e3f6d06e13e2a325141b412afdda, sciBASIC#\Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 228
-    '    Code Lines: 186
-    ' Comment Lines: 23
-    '   Blank Lines: 19
-    '     File Size: 11.67 KB
+' Summaries:
 
 
-    '     Module AlignmentPlot
-    ' 
-    '         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
-    '         Structure Signal
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 228
+'    Code Lines: 186
+' Comment Lines: 23
+'   Blank Lines: 19
+'     File Size: 11.67 KB
+
+
+'     Module AlignmentPlot
+' 
+'         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
+'         Structure Signal
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -132,6 +132,7 @@ Namespace BarPlot
                                       Optional drawLegend As Boolean = True,
                                       Optional drawGrid As Boolean = True,
                                       Optional tagXFormat$ = "F2",
+                                      Optional legendLayout As String = "top-right",
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim q As New Signal With {
@@ -154,13 +155,13 @@ Namespace BarPlot
                 legendFontCSS, bw, format, displayX, X_CSS,
                 yAxislabelPosition,
                 labelPlotStrength,
-                htmlLabel:=htmlLabel,
                 idTag:=idTag,
                 rectangleStyle:=rectangleStyle,
                 drawLegend:=drawLegend,
                 drawGrid:=drawGrid,
                 tagXFormat:=tagXFormat,
-                driver:=driver
+                driver:=driver,
+                legendLayout:=legendLayout
             )
         End Function
 
@@ -210,7 +211,7 @@ Namespace BarPlot
                                             Optional xError# = 0.5,
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2,
-                                            Optional htmlLabel As Boolean = False,
+                                            Optional legendLayout As String = "top-right",
                                             Optional idTag$ = Nothing,
                                             Optional rectangleStyle As RectangleStyling = Nothing,
                                             Optional drawLegend As Boolean = True,
@@ -247,7 +248,8 @@ Namespace BarPlot
                 .labelPlotStrength = labelPlotStrength,
                 .idTag = idTag,
                 .bw = bw,
-                .xError = xError
+                .xError = xError,
+                .legendLayout = legendLayout
             }
 
             Return barplot.Plot(size, ppi:=100, driver:=driver)

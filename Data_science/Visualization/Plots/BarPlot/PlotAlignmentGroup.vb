@@ -91,8 +91,13 @@ Namespace BarPlot
         Public Property hitsHightLights As Double()
         Public Property labelPlotStrength As Double
         Public Property idTag As String
+        ''' <summary>
+        ''' the width of the spectrum bar
+        ''' </summary>
+        ''' <returns></returns>
         Public Property bw As Single
         Public Property xError As Double
+        Public Property legendLayout As String = "top-right"
 
         Public Sub New(query As Signal(),
                        subject As Signal(),
@@ -362,7 +367,9 @@ Namespace BarPlot
                     Call DrawLegeneds(g, rect)
                 End If
 
-                Call DrawMainTitle(g, canvas.PlotRegion, offsetFactor:=1.5)
+                If Strings.LCase(legendLayout) <> "title" Then
+                    Call DrawMainTitle(g, canvas.PlotRegion, offsetFactor:=1.5)
+                End If
 
                 If Not idTag Is Nothing Then
                     Dim titleFont As Font = CSSFont _
@@ -381,27 +388,56 @@ Namespace BarPlot
             End With
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="rect">it is the canvas plot region</param>
         Private Sub DrawLegeneds(g As IGraphics, rect As Rectangle)
+            Select Case Strings.LCase(legendLayout)
+                Case "top-right" : Call DrawLegendTopRight(g, rect)
+                Case "title" : Call DrawLegendTitleRegion(g, rect)
+                Case Else
+                    Throw New NotImplementedException(legendLayout)
+            End Select
+        End Sub
+
+        Private Sub DrawLegendTitleRegion(g As IGraphics, rect As Rectangle)
+            Dim box As Rectangle
+            Dim legendFont As Font = CSSFont _
+                .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                .GDIObject(g.Dpi)
+            Dim Y = 3
+            Dim fHeight As Single = g.MeasureString("1", legendFont).Height
+
+            box = New Rectangle(New Point(rect.Left, rect.Top - fHeight * 3.5), New Size(20, 20))
+            Call g.FillRectangle(query.Last.Color.GetBrush, box)
+            Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -Y))
+
+            box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
+            Call g.FillRectangle(subject.Last.Color.GetBrush, box)
+            Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -Y))
+        End Sub
+
+        Private Sub DrawLegendTopRight(g As IGraphics, rect As Rectangle)
             Dim boxWidth! = 350
             Dim y As Double
 
             ' legend 的圆角矩形
-            Call Shapes.RoundRect.Draw(
-                        g,
-                        New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
-                        New Size(boxWidth, 80), 8,
-                        Brushes.White,
-                        New Stroke With {
-                            .dash = DashStyle.Solid,
-                            .fill = "black",
-                            .width = 2
-                        })
+            Call Shapes.RoundRect.Draw(g,
+                New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
+                New Size(boxWidth, 80), 8,
+                Brushes.White,
+                New Stroke With {
+                    .dash = DashStyle.Solid,
+                    .fill = "black",
+                    .width = 2
+                })
 
             Dim box As Rectangle
             Dim legendFont As Font = CSSFont _
-                        .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
-                        .GDIObject(g.Dpi)
-            Dim fHeight! = g.MeasureString("1", legendFont).Height
+                .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                .GDIObject(g.Dpi)
 
             y = 3
 
