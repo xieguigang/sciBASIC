@@ -70,6 +70,15 @@ Namespace Drawing2D.Text.Nudge
         Friend ReadOnly y1 As Double()
         Friend ReadOnly y2 As Double()
 
+        Public ReadOnly Property Rectangle As RectangleF
+            Get
+                Dim topLeft As New PointF(x1(0), x1(1) + h)
+                Dim size As New SizeF(l, h)
+
+                Return New RectangleF(topLeft, size)
+            End Get
+        End Property
+
         ''' <summary>
         ''' This is a "plate" rectangle
         ''' </summary>

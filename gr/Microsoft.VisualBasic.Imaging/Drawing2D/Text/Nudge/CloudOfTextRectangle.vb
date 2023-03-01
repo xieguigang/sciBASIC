@@ -93,9 +93,27 @@ Namespace Drawing2D.Text.Nudge
         Sub New()
         End Sub
 
+        Public Function conflicts_with(text As TextRectangle) As TextRectangle
+            For Each tuple As ConflictIndexTuple In conflicts
+                If list_tr(tuple.i) Is text Then
+                    Return list_tr(tuple.j)
+                End If
+                If list_tr(tuple.j) Is text Then
+                    Return list_tr(tuple.i)
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub add_label(label As TextRectangle)
             Call list_tr.Add(label)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub remove_label(label As TextRectangle)
+            Call list_tr.Remove(label)
         End Sub
 
         Public Overrides Function ToString() As String

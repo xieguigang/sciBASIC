@@ -331,6 +331,8 @@ Namespace BarPlot
                 ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
                 Dim textCloud As New CloudOfTextRectangle
+                Dim text As TextRectangle
+                Dim nextPos As PointF
 
                 For Each part As Signal In query
                     For Each o As (x#, value#) In part.signals
@@ -343,10 +345,32 @@ Namespace BarPlot
                             xlabel = o.x.ToString(theme.tagFormat)
                             xsz = g.MeasureString(xlabel, xCSSFont)
                             xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                            text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+
+                            Call textCloud.add_label(text)
+
+                            Do While textCloud.get_conflicts > 0
+                                Dim conflict = textCloud.conflicts_with(text)
+
+                                If conflict Is Nothing Then
+                                    Dim text_rect As RectangleF = text.rect
+                                    xpos = New PointF(text_rect.Left, text_rect.Top)
+                                    Exit Do
+                                Else
+                                    Call textCloud.remove_label(text)
+                                    nextPos = New PointF(xpos.X, xpos.Y - xsz.Height)
+                                    text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                                    xpos = nextPos
+                                    Call textCloud.add_label(text)
+                                End If
+                            Loop
+
                             g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
                         End If
                     Next
                 Next
+
+                textCloud = New CloudOfTextRectangle
 
                 For Each part As Signal In subject
                     For Each o As (x#, value#) In part.signals
@@ -359,6 +383,26 @@ Namespace BarPlot
                             xlabel = o.x.ToString(theme.tagFormat)
                             xsz = g.MeasureString(xlabel, xCSSFont)
                             xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                            text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+
+                            Call textCloud.add_label(text)
+
+                            Do While textCloud.get_conflicts > 0
+                                Dim conflict = textCloud.conflicts_with(text)
+
+                                If conflict Is Nothing Then
+                                    Dim text_rect As RectangleF = text.rect
+                                    xpos = New PointF(text_rect.Left, text_rect.Top)
+                                    Exit Do
+                                Else
+                                    Call textCloud.remove_label(text)
+                                    nextPos = New PointF(xpos.X, xpos.Y + xsz.Height)
+                                    text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                                    xpos = nextPos
+                                    Call textCloud.add_label(text)
+                                End If
+                            Loop
+
                             g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
                         End If
                     Next
