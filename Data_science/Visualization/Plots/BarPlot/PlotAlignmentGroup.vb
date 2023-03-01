@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
@@ -333,6 +334,7 @@ Namespace BarPlot
                 Dim textCloud As New CloudOfTextRectangle
                 Dim text As TextRectangle
                 Dim nextPos As PointF
+                Dim move As Boolean = False
 
                 For Each part As Signal In query
                     For Each o As (x#, value#) In part.signals
@@ -346,6 +348,7 @@ Namespace BarPlot
                             xsz = g.MeasureString(xlabel, xCSSFont)
                             xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
                             text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+                            move = False
 
                             Call textCloud.add_label(text)
 
@@ -355,6 +358,7 @@ Namespace BarPlot
                                 If conflict Is Nothing Then
                                     Dim text_rect As RectangleF = text.rect
                                     xpos = New PointF(text_rect.Left, text_rect.Top)
+                                    move = True
                                     Exit Do
                                 Else
                                     Call textCloud.remove_label(text)
@@ -364,6 +368,14 @@ Namespace BarPlot
                                     Call textCloud.add_label(text)
                                 End If
                             Loop
+
+                            If move Then
+                                ' draw connection link
+                                Dim pBar As New Point(left, y)
+                                Dim pText = New Label(text).GetTextAnchor(pBar)
+
+                                Call g.DrawLine(Pens.Gray, pBar, pText)
+                            End If
 
                             g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
                         End If
@@ -384,6 +396,7 @@ Namespace BarPlot
                             xsz = g.MeasureString(xlabel, xCSSFont)
                             xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                             text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+                            move = False
 
                             Call textCloud.add_label(text)
 
@@ -393,6 +406,7 @@ Namespace BarPlot
                                 If conflict Is Nothing Then
                                     Dim text_rect As RectangleF = text.rect
                                     xpos = New PointF(text_rect.Left, text_rect.Top)
+                                    move = True
                                     Exit Do
                                 Else
                                     Call textCloud.remove_label(text)
