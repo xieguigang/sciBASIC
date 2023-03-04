@@ -26,3 +26,5 @@ Apps
 *.v1
 *.v2
 *.v5
+.vs/ProjectEvaluation/.net-core.metadata.v6.1
+.vs/ProjectEvaluation/.net-core.projects.v6.1
