@@ -182,7 +182,6 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' get (or cache a new schema graph object if not exists) a schema graph object
         ''' </summary>
-        ''' <param name="type"></param>
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

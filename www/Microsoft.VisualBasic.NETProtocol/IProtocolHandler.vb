@@ -119,7 +119,9 @@ Public Module Extensions
     Public Function Ping(invoke As TcpRequest, Optional timeout As Integer = 3 * 1000) As Double
         Dim sw As Stopwatch = Stopwatch.StartNew
         Dim request As RequestStream = RequestStream.SystemProtocol(RequestStream.Protocols.Ping, PING_REQUEST)
-        Dim response As RequestStream = invoke.SendMessage(request, timeout:=timeout)
+        Dim response As RequestStream = invoke _
+            .SetTimeOut(TimeSpan.FromMilliseconds(timeout)) _
+            .SendMessage(request)
 
         If HTTP_RFC.RFC_REQUEST_TIMEOUT = response.Protocol Then
             Return -1

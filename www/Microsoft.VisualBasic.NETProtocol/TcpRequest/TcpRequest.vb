@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::ca4ea1e197caa2191613b66334d469a0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 402
-    '    Code Lines: 205
-    ' Comment Lines: 140
-    '   Blank Lines: 57
-    '     File Size: 17.37 KB
+' Summaries:
 
 
-    '     Class TcpRequest
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
-    ' 
-    '         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
-    '              RequestToStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 402
+'    Code Lines: 205
+' Comment Lines: 140
+'   Blank Lines: 57
+'     File Size: 17.37 KB
+
+
+'     Class TcpRequest
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
+' 
+'         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
+'              RequestToStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,11 +59,11 @@ Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -98,11 +98,22 @@ Namespace Tcp
         Dim remoteHost As String
 
         ''' <summary>
+        ''' A System.TimeSpan that represents the number of milliseconds to wait, or a System.TimeSpan
+        ''' that represents -1 milliseconds to wait indefinitely.
+        ''' </summary>
+        Dim timeout As TimeSpan = TimeSpan.FromSeconds(60)
+
+        ''' <summary>
         ''' Remote End Point
         ''' </summary>
         ''' <remarks></remarks>
         Protected ReadOnly remoteEP As TcpEndPoint
 #End Region
+
+        Public Function SetTimeOut(timespan As TimeSpan) As TcpRequest
+            Me.timeout = timespan
+            Return Me
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"Remote_connection={remoteHost}:{port},  local_host={LocalIPAddress}"
@@ -155,7 +166,7 @@ Namespace Tcp
 
             Me.port = remotePort
             Me.exceptionHandler = exceptionHandler Or defaultHandler
-            Me.remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            Me.remoteEP = New TcpEndPoint(IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>
@@ -171,69 +182,6 @@ Namespace Tcp
             Return New TcpRequest(LocalIPAddress, localPort, exceptionHandler)
         End Function
 
-        ''' <summary>
-        ''' 判断服务器所返回来的数据是否为操作超时
-        ''' </summary>
-        ''' <param name="str"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Shared Function OperationTimeOut(str As String) As Boolean
-            Return String.Equals(str, HTTP.NetResponse.RFC_REQUEST_TIMEOUT.GetUTF8String)
-        End Function
-
-        ''' <summary>
-        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="HTTP.NetResponse.RFC_REQUEST_TIMEOUT"></see>)
-        ''' </summary>
-        ''' <param name="Message"></param>
-        ''' <param name="OperationTimeOut">操作超时的时间长度，默认为30秒</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function SendMessage(Message As String,
-                                    Optional OperationTimeOut As Integer = 30 * 1000,
-                                    Optional OperationTimeoutHandler As Action = Nothing) As String
-            Dim request As New RequestStream(0, 0, Message)
-            Dim response = SendMessage(request, OperationTimeOut, OperationTimeoutHandler).GetUTF8String
-            Return response
-        End Function
-
-        ''' <summary>
-        ''' Returns the server reply.(假若操作超时的话，则会返回<see cref="HTTP.NetResponse.RFC_REQUEST_TIMEOUT"></see>，
-        ''' 请注意，假若目标服务器启用了ssl加密服务的话，假若这个请求是明文数据，则服务器会直接拒绝请求返回<see cref="HTTP_RFC.RFC_NO_CERT"/> 496错误代码，
-        ''' 所以调用前请确保参数<paramref name="Message"/>已经使用证书加密)
-        ''' </summary>
-        ''' <param name="Message"></param>
-        ''' <param name="timeOut">操作超时的时间长度，默认为30秒</param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function SendMessage(Message As RequestStream,
-                                    Optional timeout% = 30 * 1000,
-                                    Optional timeoutHandler As Action = Nothing) As RequestStream
-
-            Dim response As RequestStream = Nothing
-            Dim sendHandler As New Func(Of RequestStream, RequestStream)(AddressOf SendMessage)
-            Dim bResult As Boolean = sendHandler.OperationTimeOut(
-                [in]:=Message,
-                out:=response,
-                timeOut:=timeout / 1000
-            )
-
-            If bResult Then
-                If Not timeoutHandler Is Nothing Then Call timeoutHandler() '操作超时了
-                If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.
-                If Not sendDone Is Nothing Then Call sendDone.Set()
-                If Not receiveDone Is Nothing Then Call receiveDone.Set() '中断服务器的连接
-
-                Dim ex As Exception = New Exception("[OPERATION_TIME_OUT] " & Message.GetUTF8String)
-                Dim ret As New RequestStream(0, HTTP_RFC.RFC_REQUEST_TIMEOUT, "HTTP/408  " & Me.ToString)
-
-                Call exceptionHandler(New Exception(ret.GetUTF8String, ex))
-
-                Return ret
-            Else
-                Return response
-            End If
-        End Function
-
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
             Dim SendMessageClient As New TcpRequest(Me, exceptionHandler:=Me.exceptionHandler)
             Return (Sub() Call Callback(SendMessageClient.SendMessage(Message))).BeginInvoke(Nothing, Nothing)
@@ -246,7 +194,7 @@ Namespace Tcp
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function SendMessage(Message As String) As String
-            Dim byteData As Byte() = System.Text.Encoding.UTF8.GetBytes(Message)
+            Dim byteData As Byte() = Encoding.UTF8.GetBytes(Message)
             byteData = SendMessage(byteData)
             Dim response As String = New RequestStream(byteData).GetUTF8String
             Return response
@@ -281,6 +229,27 @@ Namespace Tcp
             Call client.Close()
         End Sub
 
+        ''' <summary>
+        ''' Blocks the current thread until the current instance receives a signal, using
+        ''' a System.TimeSpan to specify the time interval.
+        ''' </summary>
+        ''' <param name="handler"></param>
+        ''' <returns>true if the current instance receives a signal; otherwise, false.</returns>
+        Private Function doWait(handler As ManualResetEvent) As Boolean
+            If timeout.TotalMilliseconds > 0 Then
+                Return handler.WaitOne(timeout)
+            Else
+                Return handler.WaitOne
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="message"></param>
+        ''' <returns>
+        ''' returns nothing means timeout
+        ''' </returns>
         Private Function getSocket(message As Byte()) As Socket
             ' ManualResetEvent instances signal completion.
             connectDone = New ManualResetEvent(False)
@@ -295,13 +264,20 @@ Namespace Tcp
             Call client.Bind(New TcpEndPoint(IPAddress.Any, 0))
             ' Connect to the remote endpoint.
             Call client.BeginConnect(remoteEP, New AsyncCallback(AddressOf ConnectCallback), client)
+
             ' Wait for connect.
-            Call connectDone.WaitOne()
+            If Not doWait(connectDone) Then
+                Return Nothing
+            End If
+
             ' Send test data to the remote device.
             Call doSend(client, message)
-            Call sendDone.WaitOne()
 
-            Return client
+            If Not doWait(sendDone) Then
+                Return Nothing
+            Else
+                Return client
+            End If
         End Function
 
         ''' <summary>
@@ -317,9 +293,17 @@ Namespace Tcp
             Dim client As Socket = getSocket(message)
             Dim buffer As New MemoryStream
 
+            If client Is Nothing Then
+                ' operation timeout
+                Return New RequestStream(-1, 500, "send message timeout").Serialize
+            End If
+
             ' Receive the response from the remote device.
             Call Receive(client, buffer)
-            Call receiveDone.WaitOne()
+
+            If Not doWait(receiveDone) Then
+                Return New RequestStream(-1, 500, "receive message timeout").Serialize
+            End If
 
             On Error Resume Next
 

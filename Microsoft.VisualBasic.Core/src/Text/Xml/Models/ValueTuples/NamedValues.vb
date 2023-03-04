@@ -157,6 +157,10 @@ Namespace Text.Xml.Models
             Me.comment = comment
         End Sub
 
+        Sub New(term As NamedValue)
+            Call Me.New(term.name, term.text, "")
+        End Sub
+
         Sub New()
         End Sub
 

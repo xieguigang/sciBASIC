@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::e326442cce39f5961b9f0e94f02cf0b5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\PlateRectangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 100
-    '    Code Lines: 54
-    ' Comment Lines: 35
-    '   Blank Lines: 11
-    '     File Size: 3.64 KB
+' Summaries:
 
 
-    '     Class PlateRectangle
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: contains_point, contains_rectangle_top, covers_rectangle, isEqual, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 100
+'    Code Lines: 54
+' Comment Lines: 35
+'   Blank Lines: 11
+'     File Size: 3.64 KB
+
+
+'     Class PlateRectangle
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: contains_point, contains_rectangle_top, covers_rectangle, isEqual, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
 
 Namespace Drawing2D.Text.Nudge
 
     ''' <summary>
     ''' class of the geometrical figure of the plate rectangle, i.e
-	''' the sides Of the rectange are collinear With the canonical 
+	''' the sides Of the rectangle are collinear With the canonical 
     ''' basis vectors (1,0) And (0,1).
     ''' </summary>
     Public Class PlateRectangle
@@ -68,6 +69,15 @@ Namespace Drawing2D.Text.Nudge
         Friend ReadOnly x2 As Double()
         Friend ReadOnly y1 As Double()
         Friend ReadOnly y2 As Double()
+
+        Public ReadOnly Property Rectangle As RectangleF
+            Get
+                Dim topLeft As New PointF(x1(0), x1(1) + h)
+                Dim size As New SizeF(l, h)
+
+                Return New RectangleF(topLeft, size)
+            End Get
+        End Property
 
         ''' <summary>
         ''' This is a "plate" rectangle
@@ -84,6 +94,15 @@ Namespace Drawing2D.Text.Nudge
             Me.x2 = x1 + {l, 0}
             Me.y1 = x1 + {0, h}
             Me.y2 = x1 + {l, h}
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(rect As RectangleF)
+            Call Me.New(
+                bottomLeft:=New Double() {rect.Left, rect.Top + rect.Height},
+                l:=rect.Width,
+                h:=rect.Height
+            )
         End Sub
 
         Public Overrides Function ToString() As String
@@ -104,7 +123,7 @@ Namespace Drawing2D.Text.Nudge
         End Function
 
         ''' <summary>
-        ''' method that evaluates if self rectangle containsa point
+        ''' method that evaluates if self rectangle contains a point
 		''' Or Not. 
         ''' </summary>
         ''' <param name="p"></param>

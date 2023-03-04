@@ -184,7 +184,7 @@ Namespace Drawing2D.Text.Nudge
             Dim cloud As New CloudOfTextRectangle(list_tr)
             Dim [loop] As Integer = 1
 
-            Do While cloud.conflicts.Length > 0
+            Do While cloud.conflicts.Count > 0
                 Call cloud.arrange_text(arrows, moveAll:=True)
 
                 If debug Then

@@ -696,10 +696,7 @@ Public Module App
             s = CLangStringFormatProvider.ReplaceMetaChars(s)
         End If
 
-        Call My.InnerQueue.AddToQueue(
-            Sub()
-                Call Console.WriteLine(s)
-            End Sub)
+        Call VBDebugger.EchoLine(s)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

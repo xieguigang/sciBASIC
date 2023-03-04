@@ -1,64 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::3b81d4414d3a93508ae53bf218c590a7, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 132
-    '    Code Lines: 78
-    ' Comment Lines: 36
-    '   Blank Lines: 18
-    '     File Size: 4.29 KB
+' Summaries:
 
 
-    '     Class Label
-    ' 
-    '         Properties: height, location, pinned, rectangle, text
-    '                     width, X, Y
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: distanceTo, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 132
+'    Code Lines: 78
+' Comment Lines: 36
+'   Blank Lines: 18
+'     File Size: 4.29 KB
+
+
+'     Class Label
+' 
+'         Properties: height, location, pinned, rectangle, text
+'                     width, X, Y
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: distanceTo, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
 
 Namespace d3js.Layout
 
+    ''' <summary>
+    ''' a text label object
+    ''' </summary>
     Public Class Label
 
         ''' <summary>
@@ -151,6 +155,15 @@ Namespace d3js.Layout
 
         Sub New(size As SizeF)
             Me.rectangle = New RectangleF(Nothing, size)
+        End Sub
+
+        Sub New(text As TextRectangle)
+            Me.text = text.text
+            Me.rectangle = text.rect
+        End Sub
+
+        Sub New(rect As RectangleF)
+            Me.rectangle = rect
         End Sub
 
         Sub New(label$, pos As PointF, size As SizeF)

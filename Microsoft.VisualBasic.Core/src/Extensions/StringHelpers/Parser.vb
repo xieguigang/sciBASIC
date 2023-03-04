@@ -327,10 +327,13 @@ Public Module PrimitiveParser
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' (请注意，空值字符串为False，如果字符串不存在与单词表之中，则也是False)
     ''' </summary>
-    ''' <param name="str"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("ParseBoolean")>
+    ''' <param name="str">
+    ''' the string literal of the target boolean value to convert.
+    ''' </param>
+    ''' <returns>
+    ''' The boolean value which is parsed from the string literal
+    ''' </returns>
+    ''' <remarks>the empty string input will be treated as FALSE.</remarks>
     <Extension>
     Public Function ParseBoolean(str As String) As Boolean
         If String.IsNullOrEmpty(str) Then
@@ -349,6 +352,11 @@ Public Module PrimitiveParser
         End If
     End Function
 
+    ''' <summary>
+    ''' Convert the logical char literal to boolean value
+    ''' </summary>
+    ''' <param name="ch"></param>
+    ''' <returns></returns>
     <ExportAPI("ParseBoolean")>
     <Extension>
     Public Function ParseBoolean(ch As Char) As Boolean

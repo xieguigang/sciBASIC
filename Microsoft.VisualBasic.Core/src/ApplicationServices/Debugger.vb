@@ -329,7 +329,9 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
     ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
-    ''' 
+    ''' <remarks>
+    ''' works based on <see cref="My.Log4VB.redirectInfo"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub WriteLine(msg$, color As ConsoleColor)
@@ -459,21 +461,26 @@ Public Module VBDebugger
         Call String.Join(", ", array.Select(Function(obj) Scripting.ToString(obj)).ToArray).__DEBUG_ECHO
     End Sub
 
-    <Extension> Public Sub Echo(lines As IEnumerable(Of String))
+    <Extension>
+    Public Sub Echo(lines As IEnumerable(Of String))
         For Each line$ In lines
-            Call Console.WriteLine(line)
+            Call EchoLine(line)
         Next
     End Sub
 
     ''' <summary>
     ''' Alias for <see cref="Console.WriteLine"/>
     ''' </summary>
-    ''' <param name="s$"></param>
-    <Extension> Public Sub EchoLine(s$)
+    ''' <param name="s">the text content for write line</param>
+    ''' <remarks>
+    ''' works based on <see cref="My.Log4VB.redirectInfo"/>
+    ''' </remarks>
+    <Extension>
+    Public Sub EchoLine(s As String)
         If Not Mute Then
             Call My.InnerQueue.AddToQueue(
                 Sub()
-                    Call Console.WriteLine(s)
+                    Call WriteLine(s, ConsoleColor.White)
                 End Sub)
         End If
     End Sub

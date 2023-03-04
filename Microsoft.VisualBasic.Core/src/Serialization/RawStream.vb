@@ -220,7 +220,9 @@ Namespace Serialization
                     Return str.ToArray
                 Case TypeCode.DateTime
                     Dim timestamps = readInternal(bytes, AddressOf BitConverter.ToDouble)
-                    Dim time As DateTime() = timestamps.Select(AddressOf FromUnixTimeStamp).ToArray
+                    Dim time As DateTime() = timestamps _
+                        .Select(AddressOf FromUnixTimeStamp) _
+                        .ToArray
 
                     Return time
                 Case TypeCode.Int64
@@ -250,7 +252,9 @@ Namespace Serialization
         ''' </summary>
         ''' <param name="vector"></param>
         ''' <param name="encoding"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' the empty byte collection will be return if the input vector is nothing
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetBytes(vector As Array, Optional encoding As Encodings = Encodings.UTF8) As Byte()
             If vector Is Nothing OrElse vector.Length = 0 Then

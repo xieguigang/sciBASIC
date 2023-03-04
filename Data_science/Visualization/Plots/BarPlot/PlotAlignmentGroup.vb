@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::703a48350fcde2b7d933f7afca3e9499, sciBASIC#\Data_science\Visualization\Plots\BarPlot\PlotAlignmentGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 404
-    '    Code Lines: 320
-    ' Comment Lines: 16
-    '   Blank Lines: 68
-    '     File Size: 17.55 KB
+' Summaries:
 
 
-    '     Class PlotAlignmentGroup
-    ' 
-    '         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
-    '                     labelPlotStrength, queryName, subjectName, XAxisLabelCss, xError
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: HighlightGroups, Hit
-    ' 
-    '         Sub: DrawAlignmentBars, DrawLegeneds, PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 404
+'    Code Lines: 320
+' Comment Lines: 16
+'   Blank Lines: 68
+'     File Size: 17.55 KB
+
+
+'     Class PlotAlignmentGroup
+' 
+'         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
+'                     labelPlotStrength, queryName, subjectName, XAxisLabelCss, xError
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: HighlightGroups, Hit
+' 
+'         Sub: DrawAlignmentBars, DrawLegeneds, PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,8 +64,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Imaging.SVG
@@ -91,8 +93,13 @@ Namespace BarPlot
         Public Property hitsHightLights As Double()
         Public Property labelPlotStrength As Double
         Public Property idTag As String
+        ''' <summary>
+        ''' the width of the spectrum bar
+        ''' </summary>
+        ''' <returns></returns>
         Public Property bw As Single
         Public Property xError As Double
+        Public Property legendLayout As String = "top-right"
 
         Public Sub New(query As Signal(),
                        subject As Signal(),
@@ -171,9 +178,9 @@ Namespace BarPlot
                 Dim bb As New SolidBrush(part.Color.TranslateColor)
 
                 For Each o As (x#, value#) In part.signals _
-                            .Where(Function(f)
-                                       Return f.Item2 <> 0R
-                                   End Function)
+                    .Where(Function(f)
+                               Return f.Item2 <> 0R
+                           End Function)
 
                     Dim scaleY = yscale(o.value)
 
@@ -208,12 +215,12 @@ Namespace BarPlot
                 blockHeight = yscale(block.query) + yscale(block.subject)
 
                 rect = New Rectangle With {
-                            .Location = New Point(left - highlightMargin, y - highlightMargin),
-                            .Size = New Size With {
-                                .Width = right - left + 2 * highlightMargin,
-                                .Height = blockHeight + 2 * highlightMargin
-                            }
-                        }
+                    .Location = New Point(left - highlightMargin, y - highlightMargin),
+                    .Size = New Size With {
+                        .Width = right - left + 2 * highlightMargin,
+                        .Height = blockHeight + 2 * highlightMargin
+                    }
+                }
 
                 g.DrawRectangle(highlightPen, rect)
             Next
@@ -313,48 +320,12 @@ Namespace BarPlot
                 Call g.DrawLine(axisPen, New Point(.Left, ymid), New Point(.Right, ymid))
                 Call g.DrawString(Me.xlabel, labelFont, Brushes.Black, New Point(.Right - fWidth, ymid + 2))
 
-                Dim left!
-                Dim xCSSFont As Font = CSSFont.TryParse(XAxisLabelCss).GDIObject(g.Dpi)
-                Dim xsz As SizeF
-                Dim xpos As PointF
-                Dim xlabel$
-
 #Region "绘制柱状图"
                 Call DrawAlignmentBars(g, canvas, ymid, scaleX, scaleY)
 #End Region
                 ' 考虑到x轴标签可能会被柱子挡住，所以在这里将柱子和x标签的绘制分开在两个循环之中来完成
 #Region "绘制横坐标轴"
-                For Each part As Signal In query
-                    For Each o As (x#, value#) In part.signals
-                        y = o.value
-                        y = ymid - scaleY(y)
-                        left = scaleX(o.x)
-                        rect = New Rectangle(New Point(left, y), New Size(bw, scaleY(o.value)))
-
-                        If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
-                            xlabel = o.x.ToString(theme.tagFormat)
-                            xsz = g.MeasureString(xlabel, xCSSFont)
-                            xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
-                            g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                        End If
-                    Next
-                Next
-
-                For Each part As Signal In subject
-                    For Each o As (x#, value#) In part.signals
-                        y = o.value
-                        y = ymid + scaleY(y)
-                        left = scaleX(o.x)
-                        rect = Rectangle(ymid, left, left + bw, y)
-
-                        If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
-                            xlabel = o.x.ToString(theme.tagFormat)
-                            xsz = g.MeasureString(xlabel, xCSSFont)
-                            xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
-                            g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
-                        End If
-                    Next
-                Next
+                Call DrawTextLabels(g, ymid, scaleX, scaleY)
 #End Region
                 rect = canvas.PlotRegion
 
@@ -362,7 +333,9 @@ Namespace BarPlot
                     Call DrawLegeneds(g, rect)
                 End If
 
-                Call DrawMainTitle(g, canvas.PlotRegion, offsetFactor:=1.5)
+                If Strings.LCase(legendLayout) <> "title" Then
+                    Call DrawMainTitle(g, canvas.PlotRegion, offsetFactor:=1.5)
+                End If
 
                 If Not idTag Is Nothing Then
                     Dim titleFont As Font = CSSFont _
@@ -381,27 +354,171 @@ Namespace BarPlot
             End With
         End Sub
 
+        Private Sub DrawTextLabels(g As IGraphics, ymid As Double,
+                                   scaleX As d3js.scale.LinearScale,
+                                   scaleY As d3js.scale.LinearScale)
+
+            Dim textCloud As New CloudOfTextRectangle
+            Dim text As TextRectangle
+            Dim nextPos As PointF
+            Dim move As Boolean = False
+            Dim rect As RectangleF
+            Dim y As Double
+            Dim left!
+            Dim xCSSFont As Font = CSSFont.TryParse(XAxisLabelCss).GDIObject(g.Dpi)
+            Dim xsz As SizeF
+            Dim xpos As PointF
+            Dim xlabel$
+
+            For Each part As Signal In query
+                For Each o As (x#, value#) In part.signals
+                    y = o.value
+                    y = ymid - scaleY(y)
+                    left = scaleX(o.x)
+                    rect = New RectangleF(New PointF(left, y), New SizeF(bw, scaleY(o.value)))
+
+                    ' Call textCloud.add_label(New TextRectangle("", rect))
+
+                    If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
+                        xlabel = o.x.ToString(theme.tagFormat)
+                        xsz = g.MeasureString(xlabel, xCSSFont)
+                        xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
+                        text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+                        move = False
+
+                        Call textCloud.add_label(text)
+
+                        Do While textCloud.get_conflicts > 0
+                            Dim conflict = textCloud.conflicts_with(text)
+
+                            If conflict Is Nothing Then
+                                Dim text_rect As RectangleF = text.rect
+                                xpos = New PointF(text_rect.Left, text_rect.Top)
+                                move = True
+                                Exit Do
+                            Else
+                                Call textCloud.remove_label(text)
+                                nextPos = New PointF(xpos.X, xpos.Y - xsz.Height)
+                                text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                                xpos = nextPos
+                                Call textCloud.add_label(text)
+                            End If
+                        Loop
+
+                        If move Then
+                            ' draw connection link
+                            'Dim pBar As New Point(left, y)
+                            'Dim pText = New Label(text).GetTextAnchor(pBar)
+
+                            'Call g.DrawLine(Pens.Black, pBar, pText)
+                        End If
+
+                        g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                    End If
+                Next
+            Next
+
+            textCloud = New CloudOfTextRectangle
+
+            For Each part As Signal In subject
+                For Each o As (x#, value#) In part.signals
+                    y = o.value
+                    y = ymid + scaleY(y)
+                    left = scaleX(o.x)
+                    rect = Rectangle(ymid, left, left + bw, y)
+
+                    ' Call textCloud.add_label(New TextRectangle("", rect))
+
+                    If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
+                        xlabel = o.x.ToString(theme.tagFormat)
+                        xsz = g.MeasureString(xlabel, xCSSFont)
+                        xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
+                        text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
+                        move = False
+
+                        Call textCloud.add_label(text)
+
+                        Do While textCloud.get_conflicts > 0
+                            Dim conflict = textCloud.conflicts_with(text)
+
+                            If conflict Is Nothing Then
+                                Dim text_rect As RectangleF = text.rect
+                                xpos = New PointF(text_rect.Left, text_rect.Top)
+                                move = True
+                                Exit Do
+                            Else
+                                Call textCloud.remove_label(text)
+                                nextPos = New PointF(xpos.X, xpos.Y + xsz.Height)
+                                text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                                xpos = nextPos
+                                Call textCloud.add_label(text)
+                            End If
+                        Loop
+
+                        If move Then
+                            ' draw connection link
+                            'Dim pBar As New Point(left, y)
+                            'Dim pText = New Label(text).GetTextAnchor(pBar)
+
+                            'Call g.DrawLine(Pens.Black, pBar, pText)
+                        End If
+
+                        g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                    End If
+                Next
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="rect">it is the canvas plot region</param>
         Private Sub DrawLegeneds(g As IGraphics, rect As Rectangle)
+            Select Case Strings.LCase(legendLayout)
+                Case "top-right" : Call DrawLegendTopRight(g, rect)
+                Case "title" : Call DrawLegendTitleRegion(g, rect)
+                Case Else
+                    Throw New NotImplementedException(legendLayout)
+            End Select
+        End Sub
+
+        Private Sub DrawLegendTitleRegion(g As IGraphics, rect As Rectangle)
+            Dim box As Rectangle
+            Dim legendFont As Font = CSSFont _
+                .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                .GDIObject(g.Dpi)
+            Dim Y = 3
+            Dim fHeight As Single = g.MeasureString("1", legendFont).Height
+
+            box = New Rectangle(New Point(rect.Left, rect.Top - fHeight * 3.5), New Size(20, 20))
+            Call g.FillRectangle(query.Last.Color.GetBrush, box)
+            Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -Y))
+
+            box = New Rectangle(New Point(box.Left, box.Top + 30), box.Size)
+            Call g.FillRectangle(subject.Last.Color.GetBrush, box)
+            Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -Y))
+        End Sub
+
+        Private Sub DrawLegendTopRight(g As IGraphics, rect As Rectangle)
             Dim boxWidth! = 350
             Dim y As Double
 
             ' legend 的圆角矩形
-            Call Shapes.RoundRect.Draw(
-                        g,
-                        New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
-                        New Size(boxWidth, 80), 8,
-                        Brushes.White,
-                        New Stroke With {
-                            .dash = DashStyle.Solid,
-                            .fill = "black",
-                            .width = 2
-                        })
+            Call Shapes.RoundRect.Draw(g,
+                New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
+                New Size(boxWidth, 80), 8,
+                Brushes.White,
+                New Stroke With {
+                    .dash = DashStyle.Solid,
+                    .fill = "black",
+                    .width = 2
+                })
 
             Dim box As Rectangle
             Dim legendFont As Font = CSSFont _
-                        .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
-                        .GDIObject(g.Dpi)
-            Dim fHeight! = g.MeasureString("1", legendFont).Height
+                .TryParse(theme.legendLabelCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 16.0!)) _
+                .GDIObject(g.Dpi)
 
             y = 3
 
