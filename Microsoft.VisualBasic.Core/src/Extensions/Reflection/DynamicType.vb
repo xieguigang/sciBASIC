@@ -72,7 +72,7 @@ Public Class DynamicType
           MethodAttributes.Public Or
           MethodAttributes.SpecialName Or
           MethodAttributes.HideBySig,
-          null, New Object() {propertyType})
+          null, New Type() {propertyType})
         Dim setMethodIL = setMethod.GetILGenerator()
         Dim modifyProperty = setMethodIL.DefineLabel()
         Dim exitSet = setMethodIL.DefineLabel()
