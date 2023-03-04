@@ -53,6 +53,8 @@ Public Class DynamicType
         Next
 
         _GeneratedType = dynamicType.CreateType()
+
+        Return Me
     End Function
 
     Private Shared Sub AddProperty(typeBuilder As TypeBuilder, propertyName As String, propertyType As Type, desc As String, display As String)
