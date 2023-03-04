@@ -114,7 +114,7 @@ Public Class DynamicType
         Dim properties As New List(Of PropertyInfo)
 
         For Each meta In metadata
-            Dim symbol As String = meta.Key.NormalizePathString()
+            Dim symbol As String = meta.Key.NormalizePathString().StringReplace("\s+", "_")
             Dim type As Type
             Dim value As Object = meta.Value
 
