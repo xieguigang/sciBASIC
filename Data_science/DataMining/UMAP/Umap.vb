@@ -516,6 +516,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _optimizationState.EpochOfNextNegativeSample(i) += nNegSamples * _optimizationState.EpochsPerNegativeSample(i)
     End Sub
 
+#Disable Warning
     ''' <summary>
     ''' Reduced Euclidean distance
     ''' </summary>
@@ -530,6 +531,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
         Return distSquared
     End Function
+#Enable Warning
 
     ''' <summary>
     ''' Standard clamping of a value into a fixed range
