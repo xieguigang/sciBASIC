@@ -116,4 +116,9 @@ Public Module Extensions
             Return New StreamReader(pack.OpenBlock(filename), encoding.CodePage).ReadToEnd
         End If
     End Function
+
+    <Extension>
+    Public Function ReadText(pack As StreamPack, file As StreamBlock, Optional encoding As Encodings = Encodings.UTF8) As String
+        Return New StreamReader(pack.OpenBlock(file), encoding.CodePage).ReadToEnd
+    End Function
 End Module
