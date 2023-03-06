@@ -64,7 +64,9 @@ Namespace FileSystem
     ''' an in-memory stream buffer for write new file data
     ''' </summary>
     ''' <remarks>
-    ''' size is limited to 2GB
+    ''' size is limited to 2GB, use the <see cref="IDisposable.Dispose()"/> method
+    ''' for save the memory data to the underlying stream, and this dispose method
+    ''' will not close the target base stream
     ''' </remarks>
     Public Class StreamBuffer : Inherits Stream
 

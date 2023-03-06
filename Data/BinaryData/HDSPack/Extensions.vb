@@ -79,6 +79,16 @@ Public Module Extensions
         Return True
     End Function
 
+    ''' <summary>
+    ''' unsafe write text data, you should check the 
+    ''' <paramref name="fileName"/> is exists or not 
+    ''' before call this write data function.
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <param name="text"></param>
+    ''' <param name="fileName"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function WriteText(pack As StreamPack,
                               text As String,
