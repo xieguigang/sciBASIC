@@ -75,6 +75,10 @@ Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+<Assembly: InternalsVisibleTo("REnv")>
+<Assembly: InternalsVisibleTo("R#")>
+<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.Data.visualize.Network.Visualizer")>
+
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>

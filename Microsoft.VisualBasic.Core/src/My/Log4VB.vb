@@ -164,7 +164,10 @@ Namespace My
         ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
         ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
         <Extension>
-        Public Sub Print(msg$, Optional color As ConsoleColor = ConsoleColor.White, Optional background As ConsoleColor = -1)
+        Public Sub Print(msg$,
+                         Optional color As ConsoleColor = ConsoleColor.White,
+                         Optional background As ConsoleColor = -1)
+
             If Mute Then
                 Return
             End If
