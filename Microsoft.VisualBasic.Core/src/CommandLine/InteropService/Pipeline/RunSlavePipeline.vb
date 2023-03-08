@@ -146,7 +146,7 @@ Namespace CommandLine.InteropService.Pipeline
         End Sub
 
         Public Shared Sub SendMessage(message As String)
-            Call VBDebugger.WaitOutput()
+            ' Call VBDebugger.WaitOutput()
             Call VBDebugger.EchoLine($"[SET_MESSAGE] {message}")
         End Sub
 
@@ -157,7 +157,7 @@ Namespace CommandLine.InteropService.Pipeline
         End Sub
 
         Public Shared Sub SendProgress(percentage As Double, message As String)
-            Call VBDebugger.WaitOutput()
+            ' Call VBDebugger.WaitOutput()
             Call VBDebugger.EchoLine($"[SET_PROGRESS] {percentage} {message}")
 
             If Not m_hookProgress Is Nothing Then
