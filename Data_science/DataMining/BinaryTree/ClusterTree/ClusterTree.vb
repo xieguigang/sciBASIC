@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 ''' <summary>
 ''' just provides the reference id of the peaks ms2 object
 ''' </summary>
+''' <remarks>
+''' implements the Molecule Networking via the tree clustering operation in mzkit
+''' </remarks>
 Public Class ClusterTree : Inherits Tree(Of String)
 
     Public Property Members As New List(Of String)

@@ -55,6 +55,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
@@ -130,7 +131,8 @@ Public Module IOExtensions
     ''' <param name="path$"></param>
     ''' <returns></returns>
     ''' 
-    <Extension> Public Function FixPath(ByRef path$) As String
+    <Extension>
+    Public Function FixPath(ByRef path$) As String
         If InStr(path, "file://", CompareMethod.Text) = 1 Then
             If App.IsMicrosoftPlatform AndAlso InStr(path, "file:///", CompareMethod.Text) = 1 Then
                 path = Mid(path, 9)
@@ -158,6 +160,28 @@ Public Module IOExtensions
         Return IO.File.ReadAllLines(path) _
             .Select(Function(x) CDbl(x)) _
             .ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function OpenReadonly(path As String, Optional retryOpen As Integer = -1) As Stream
+        If retryOpen > 0 Then
+            Dim err As Exception = Nothing
+
+            For i As Integer = 0 To retryOpen
+                Try
+                    Return path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Catch ex As Exception
+                    err = ex
+                End Try
+
+                Call Thread.Sleep(100)
+            Next
+
+            Throw err
+        Else
+            Return path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+        End If
     End Function
 
     ''' <summary>

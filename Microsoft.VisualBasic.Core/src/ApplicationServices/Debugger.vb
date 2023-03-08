@@ -334,7 +334,7 @@ Public Module VBDebugger
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub WriteLine(msg$, color As ConsoleColor)
+    Public Sub WriteLine(msg$, Optional color As ConsoleColor = ConsoleColor.White)
         If Not My.redirectInfo Is Nothing Then
             My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
         Else
