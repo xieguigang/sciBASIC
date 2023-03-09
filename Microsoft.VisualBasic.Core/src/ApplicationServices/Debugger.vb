@@ -75,6 +75,10 @@ Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
+<Assembly: InternalsVisibleTo("REnv")>
+<Assembly: InternalsVisibleTo("R#")>
+<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.Data.visualize.Network.Visualizer")>
+
 ''' <summary>
 ''' Debugger helper module for VisualBasic Enterprises System.
 ''' </summary>
@@ -206,10 +210,11 @@ Public Module VBDebugger
     ''' 等待调试器输出工作线程将内部的消息队列输出完毕
     ''' </param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$,
-                                             Optional indent% = 0,
-                                             Optional mute As Boolean = False,
-                                             Optional waitOutput As Boolean = False) As String
+    <Extension>
+    Public Function __DEBUG_ECHO(msg$,
+                                 Optional indent% = 0,
+                                 Optional mute As Boolean = False,
+                                 Optional waitOutput As Boolean = False) As String
         Static indents$() = {
             "",
             New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
@@ -312,7 +317,17 @@ Public Module VBDebugger
     ''' <summary>
     ''' 等待调试器输出工作线程将内部的消息队列输出完毕
     ''' </summary>
-    Public Sub WaitOutput()
+    ''' <remarks>
+    ''' ### 20230308
+    ''' 
+    ''' Do not combine of this method with the echo method
+    ''' in this <see cref="VBDebugger"/> module! Or a thread
+    ''' lock will be created and block the program running!
+    ''' 
+    ''' So i make this function access level from public to 
+    ''' friend.
+    ''' </remarks>
+    Friend Sub WaitOutput()
         Call My.InnerQueue.WaitQueue()
     End Sub
 
@@ -334,7 +349,7 @@ Public Module VBDebugger
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub WriteLine(msg$, color As ConsoleColor)
+    Public Sub WriteLine(msg$, Optional color As ConsoleColor = ConsoleColor.White)
         If Not My.redirectInfo Is Nothing Then
             My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
         Else

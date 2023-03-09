@@ -60,8 +60,7 @@ Namespace Serialization.Bencoding
     ''' <summary>
     ''' A bencode string.
     ''' </summary>
-    Public Class BString
-        Implements BElement, IComparable(Of BString)
+    Public Class BString : Implements BElement, IComparable(Of BString)
 
         ''' <summary>
         ''' The value of the bencoded integer.
@@ -117,7 +116,7 @@ Namespace Serialization.Bencoding
 
         ''' <see cref="Object.ToString()"/>
         Public Overrides Function ToString() As String
-            Return Value.ToString()
+            Return Value
         End Function
 
         ''' <see cref="IComparable.CompareTo(Object)"/>

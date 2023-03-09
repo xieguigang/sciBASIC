@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::553b66cf925ef44b2d0a8c1c6b36478f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 280
-    '    Code Lines: 141
-    ' Comment Lines: 113
-    '   Blank Lines: 26
-    '     File Size: 11.40 KB
+' Summaries:
 
 
-    ' Module IOExtensions
-    ' 
-    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-    '               OpenTextWriter, ReadBinary, ReadVector
-    ' 
-    '     Sub: ClearFileBytes, FlushTo
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 280
+'    Code Lines: 141
+' Comment Lines: 113
+'   Blank Lines: 26
+'     File Size: 11.40 KB
+
+
+' Module IOExtensions
+' 
+'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+'               OpenTextWriter, ReadBinary, ReadVector
+' 
+'     Sub: ClearFileBytes, FlushTo
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
@@ -130,7 +131,8 @@ Public Module IOExtensions
     ''' <param name="path$"></param>
     ''' <returns></returns>
     ''' 
-    <Extension> Public Function FixPath(ByRef path$) As String
+    <Extension>
+    Public Function FixPath(ByRef path$) As String
         If InStr(path, "file://", CompareMethod.Text) = 1 Then
             If App.IsMicrosoftPlatform AndAlso InStr(path, "file:///", CompareMethod.Text) = 1 Then
                 path = Mid(path, 9)
@@ -160,6 +162,40 @@ Public Module IOExtensions
             .ToArray
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function OpenReadonly(path As String,
+                                 Optional retryOpen As Integer = -1,
+                                 Optional verbose As Boolean = False) As Stream
+        If retryOpen > 0 Then
+            Dim err As Exception = Nothing
+
+            For i As Integer = 0 To retryOpen
+                Try
+                    Return path.Open(
+                        mode:=FileMode.Open,
+                        doClear:=False,
+                        [readOnly]:=True,
+                        verbose:=verbose
+                    )
+                Catch ex As Exception
+                    err = ex
+                End Try
+
+                Call Thread.Sleep(100)
+            Next
+
+            Throw err
+        Else
+            Return path.Open(
+                mode:=FileMode.Open,
+                doClear:=False,
+                [readOnly]:=True,
+                verbose:=verbose
+            )
+        End If
+    End Function
+
     ''' <summary>
     ''' Safe open a local file handle. Warning: this function is set to write mode by default, 
     ''' if want using for read file, set <paramref name="doClear"/> to false!
@@ -181,9 +217,11 @@ Public Module IOExtensions
     Public Function Open(path$,
                          Optional mode As FileMode = FileMode.OpenOrCreate,
                          Optional doClear As Boolean = False,
-                         Optional [readOnly] As Boolean = False) As Stream
+                         Optional [readOnly] As Boolean = False,
+                         Optional verbose As Boolean = True) As Stream
 
-        Dim access As FileShare
+        Dim shares As FileShare
+        Dim access As FileAccess = If([readOnly], FileAccess.Read, FileAccess.ReadWrite)
 
         If path.StringEmpty Then
             Throw New InvalidProgramException("No file path data provided!")
@@ -203,17 +241,22 @@ Public Module IOExtensions
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
             ClearFileBytes(path)
             ' 为了保证数据不被破坏，写操作会锁文件
-            access = FileShare.None
+            shares = FileShare.None
         Else
             ' 读操作，则只允许共享读文件
-            access = FileShare.Read
+            shares = FileShare.Read
         End If
 
-        If mode = FileMode.Open AndAlso [readOnly] = True AndAlso App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
+        If mode = FileMode.Open AndAlso
+            [readOnly] = True AndAlso
+            App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
+
             ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
-                Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
-                Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                If verbose Then
+                    Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
+                    Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                End If
 
                 ' use a single memorystream object when file size 
                 ' is smaller than 2GB
@@ -228,13 +271,15 @@ Public Module IOExtensions
             End If
         End If
 
-        Return New FileStream(path, mode, If([readOnly], FileAccess.Read, FileAccess.ReadWrite), access, App.BufferSize)
+        Return New FileStream(path, mode, access, shares, App.BufferSize)
     End Function
 
     ''' <summary>
     ''' 将文件之中的所有数据都清空
     ''' </summary>
     ''' <param name="path"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub ClearFileBytes(path As String)
         Call IO.File.WriteAllBytes(path, New Byte() {})
     End Sub

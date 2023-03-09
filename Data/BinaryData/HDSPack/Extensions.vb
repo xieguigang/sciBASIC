@@ -79,6 +79,16 @@ Public Module Extensions
         Return True
     End Function
 
+    ''' <summary>
+    ''' unsafe write text data, you should check the 
+    ''' <paramref name="fileName"/> is exists or not 
+    ''' before call this write data function.
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <param name="text"></param>
+    ''' <param name="fileName"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function WriteText(pack As StreamPack,
                               text As String,
@@ -105,5 +115,10 @@ Public Module Extensions
         Else
             Return New StreamReader(pack.OpenBlock(filename), encoding.CodePage).ReadToEnd
         End If
+    End Function
+
+    <Extension>
+    Public Function ReadText(pack As StreamPack, file As StreamBlock, Optional encoding As Encodings = Encodings.UTF8) As String
+        Return New StreamReader(pack.OpenBlock(file), encoding.CodePage).ReadToEnd
     End Function
 End Module

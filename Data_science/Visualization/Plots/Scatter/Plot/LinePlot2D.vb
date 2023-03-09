@@ -193,8 +193,6 @@ Namespace Plots
                 'If b.errMinus > 0 Then
                 '    Call g.drawErrorLine(scaler, pt2, b.pt.Y - b.errMinus, width, br)
                 'End If
-
-                Call Parallel.DoEvents()
             Next
         End Sub
 

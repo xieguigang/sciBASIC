@@ -60,6 +60,9 @@ Imports AssemblyMeta = Microsoft.VisualBasic.ApplicationServices.Development.Ass
 
 Namespace ApplicationServices
 
+    ''' <summary>
+    ''' Application information
+    ''' </summary>
     Public Class Application
 
         Shared ReadOnly main As Assembly
@@ -107,20 +110,5 @@ Namespace ApplicationServices
                 Return meta.AssemblyVersion
             End Get
         End Property
-
-        ''' <summary>
-        ''' Processes all Windows messages currently in the message queue.
-        ''' </summary>
-        Public Shared Sub DoEvents()
-#If netcore5 = 0 Then
-#If UNIX = False Then
-            Try
-                Call Parallel.DoEvents()
-            Catch ex As Exception
-                Call ex.PrintException
-            End Try
-#End If
-#End If
-        End Sub
     End Class
 End Namespace

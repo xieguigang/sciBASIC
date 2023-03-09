@@ -126,6 +126,12 @@ Namespace Distributions
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sample(Of T)(source As IEnumerable(Of T), N As Integer, Optional replace As Boolean = True) As T()
+            Return source.Samples(N, bags:=1, replace:=replace).First.value
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>

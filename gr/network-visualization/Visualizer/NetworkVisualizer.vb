@@ -211,10 +211,9 @@ Public Module NetworkVisualizer
                             driverPrompt = ""
                         End If
 
-                        VBDebugger.WaitOutput()
-                        CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", driverPrompt, App.StdOut)
-
-                        Call Console.WriteLine()
+                        Call VBDebugger.WaitOutput()
+                        Call CLITools.AppSummary(assm, "Welcome to use network graph visualizer api from sciBASIC.NET framework.", driverPrompt, App.StdOut)
+                        Call VBDebugger.WriteLine("")
                     End Sub)
 
         ' 所绘制的图像输出的尺寸大小

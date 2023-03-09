@@ -66,10 +66,14 @@ Namespace ApplicationServices
         ReadOnly s As Stream
 
         ''' <summary>
-        ''' the position offset in the base stream
+        ''' [scan0] the position offset in the base stream, base address of this substream 
+        ''' object in base stream object <see cref="s"/>
         ''' </summary>
         Dim offset As Long
         Dim [end] As Long
+        ''' <summary>
+        ''' the position offset in the base stream
+        ''' </summary>
         Dim m_position As Long
 
         Public ReadOnly Property BaseStream As Stream
@@ -104,6 +108,7 @@ Namespace ApplicationServices
 
         Public Overrides Property Position() As Long
             Get
+                ' get relative position
                 Return m_position - offset
             End Get
             Set
@@ -126,6 +131,9 @@ Namespace ApplicationServices
             Me.offset = offset
             Me.[end] = offset + length
 
+            ' SubStream.Position = (Return m_position - offset)
+            ' the relative position is ZERO by default
+            ' m_position = offset means relative ZERO
             m_position = offset
         End Sub
 

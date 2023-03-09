@@ -63,6 +63,12 @@ Public Class BufferRegion
         End Get
     End Property
 
+    Public Shared ReadOnly Property Zero As BufferRegion
+        Get
+            Return New BufferRegion(0, -1)
+        End Get
+    End Property
+
     Sub New()
     End Sub
 

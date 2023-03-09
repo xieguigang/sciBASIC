@@ -259,14 +259,18 @@ Namespace FileSystem
             End If
         End Function
 
+        Public Shared Function TestMagic(buffer As Stream) As Boolean
+            Dim magic As Byte() = New Byte(StreamPack.Magic.Length - 1) {}
+            Call buffer.Read(magic, Scan0, magic.Length)
+            Return Encoding.ASCII.GetString(magic) = StreamPack.Magic
+        End Function
+
         Private Function ParseTree() As StreamGroup
             ' verify data at first
-            Dim magic As Byte() = New Byte(StreamPack.Magic.Length - 1) {}
+            Dim is_magic As Boolean = TestMagic(buffer)
             Dim registry As New Dictionary(Of String, String)
 
-            Call buffer.Read(magic, Scan0, magic.Length)
-
-            If Encoding.ASCII.GetString(magic) <> StreamPack.Magic Then
+            If Not is_magic Then
                 Throw New FormatException("invalid magic header!")
             Else
                 Call ParseMetadata(buffer, registry)
