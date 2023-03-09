@@ -164,13 +164,20 @@ Public Module IOExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function OpenReadonly(path As String, Optional retryOpen As Integer = -1) As Stream
+    Public Function OpenReadonly(path As String,
+                                 Optional retryOpen As Integer = -1,
+                                 Optional verbose As Boolean = False) As Stream
         If retryOpen > 0 Then
             Dim err As Exception = Nothing
 
             For i As Integer = 0 To retryOpen
                 Try
-                    Return path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    Return path.Open(
+                        mode:=FileMode.Open,
+                        doClear:=False,
+                        [readOnly]:=True,
+                        verbose:=verbose
+                    )
                 Catch ex As Exception
                     err = ex
                 End Try
@@ -180,7 +187,12 @@ Public Module IOExtensions
 
             Throw err
         Else
-            Return path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return path.Open(
+                mode:=FileMode.Open,
+                doClear:=False,
+                [readOnly]:=True,
+                verbose:=verbose
+            )
         End If
     End Function
 
@@ -205,7 +217,8 @@ Public Module IOExtensions
     Public Function Open(path$,
                          Optional mode As FileMode = FileMode.OpenOrCreate,
                          Optional doClear As Boolean = False,
-                         Optional [readOnly] As Boolean = False) As Stream
+                         Optional [readOnly] As Boolean = False,
+                         Optional verbose As Boolean = True) As Stream
 
         Dim shares As FileShare
         Dim access As FileAccess = If([readOnly], FileAccess.Read, FileAccess.ReadWrite)
@@ -240,8 +253,10 @@ Public Module IOExtensions
 
             ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
-                Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
-                Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                If verbose Then
+                    Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
+                    Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                End If
 
                 ' use a single memorystream object when file size 
                 ' is smaller than 2GB
