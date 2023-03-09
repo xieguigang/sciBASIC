@@ -228,8 +228,6 @@ Namespace Plots
 
                     g.DrawLegendShape(pt1, shapeSize, shape, getPointBrush(pt), border:=strokeCss)
                 End If
-
-                Call Parallel.DoEvents()
             Next
         End Function
 

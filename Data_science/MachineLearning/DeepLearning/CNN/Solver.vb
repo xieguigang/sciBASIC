@@ -81,8 +81,6 @@ Namespace Convolutional
                     dev.WriteLine("Layer " & i & " (" & currentLayer.type.Description & ") ...")
                 End If
 
-                Call Application.DoEvents()
-
                 currentLayer = currentLayer.feedNext().nextLayer
                 i += 1
 
