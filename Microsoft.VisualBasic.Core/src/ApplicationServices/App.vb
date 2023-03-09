@@ -687,7 +687,7 @@ Public Module App
     ''' <summary>
     ''' java <see cref="printf"/> + <see cref="Console.WriteLine(String)"/>
     ''' </summary>
-    ''' <param name="s$"></param>
+    ''' <param name="s"></param>
     ''' <param name="args"></param>
     Public Sub println(s$, ParamArray args As Object())
         If Not args.IsNullOrEmpty Then
