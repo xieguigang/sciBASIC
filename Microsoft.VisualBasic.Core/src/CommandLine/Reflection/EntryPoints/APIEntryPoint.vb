@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::11c9f35abdc04da13695ed40a5eb5e6d, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 304
-    '    Code Lines: 162
-    ' Comment Lines: 101
-    '   Blank Lines: 41
-    '     File Size: 13.08 KB
+' Summaries:
 
 
-    '     Class APIEntryPoint
-    ' 
-    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI, tryInvoke
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 304
+'    Code Lines: 162
+' Comment Lines: 101
+'   Blank Lines: 41
+'     File Size: 13.08 KB
+
+
+'     Class APIEntryPoint
+' 
+'         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
+'                   InvokeCLI, tryInvoke
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace CommandLine.Reflection.EntryPoints
 
@@ -169,33 +170,7 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim sb As New StringBuilder(MyBase.HelpInformation(md))
 
             If Not Arguments.IsNullOrEmpty Then
-                Call sb.AppendLine(vbCrLf)
-                Call sb.AppendLine("  #### Arguments")
-
-                If Not md Then
-                    Call sb.AppendLine("  ---------------------------------------")
-                    Call sb.AppendLine()
-                    Call sb.AppendLine("    " & Arguments.ToString)
-                Else
-                    For Each param In Arguments
-                        Call sb.AppendLine("##### " & If(param.Value.Optional, $"[{param.Name}]", param.Name))
-                        Call sb.AppendLine(param.Value.Description)
-                        Call sb.AppendLine("###### Example")
-                        Call sb.AppendLine("```bash")
-
-                        If param.Value.TokenType = CLITypes.Boolean Then
-                            Call sb.AppendLine(param.Name)
-                            Call sb.AppendLine("#" & ManualBuilder.boolFlag)
-                        Else
-                            Call sb.AppendLine(param.Name & " " & param.Value.ExampleValue)
-                            If param.Value.Pipeline <> PipelineTypes.undefined Then
-                                Call sb.AppendLine("# " & param.Value.Pipeline.Description)
-                            End If
-                        End If
-
-                        Call sb.AppendLine("```")
-                    Next
-                End If
+                Call argumentNote(sb, md)
             End If
 
             Dim note As NoteAttribute = EntryPoint.GetCustomAttribute(Of NoteAttribute)
@@ -208,6 +183,36 @@ Namespace CommandLine.Reflection.EntryPoints
 
             Return sb.ToString
         End Function
+
+        Private Sub argumentNote(sb As StringBuilder, md As Boolean)
+            Call sb.AppendLine(vbCrLf)
+            Call sb.AppendLine("  #### Arguments")
+
+            If Not md Then
+                Call sb.AppendLine("  ---------------------------------------")
+                Call sb.AppendLine()
+                Call sb.AppendLine("    " & Arguments.ToString)
+            Else
+                For Each param In Arguments
+                    Call sb.AppendLine("##### " & If(param.Value.Optional, $"[{param.Name}]", param.Name))
+                    Call sb.AppendLine(param.Value.Description)
+                    Call sb.AppendLine("###### Example")
+                    Call sb.AppendLine("```bash")
+
+                    If param.Value.TokenType = CLITypes.Boolean Then
+                        Call sb.AppendLine(param.Name)
+                        Call sb.AppendLine("#" & ManualBuilder.boolFlag)
+                    Else
+                        Call sb.AppendLine(param.Name & " " & param.Value.ExampleValue)
+                        If param.Value.Pipeline <> PipelineTypes.undefined Then
+                            Call sb.AppendLine("# " & param.Value.Pipeline.Description)
+                        End If
+                    End If
+
+                    Call sb.AppendLine("```")
+                Next
+            End If
+        End Sub
 
         ''' <summary>
         ''' Invoke this command line and returns the function value.(函数会补齐可选参数)
@@ -259,37 +264,41 @@ Namespace CommandLine.Reflection.EntryPoints
             Try
                 rtvl = EntryPoint.Invoke(target, callParameters)
             Catch ex As Exception
-                Dim args$() = callParameters _
-                    .Select(AddressOf Scripting.ToString) _
-                    .ToArray
-                Dim paramTrace As String = String.Join(vbCrLf, args)
-                Dim source As Exception = ex
-                Dim trace$ = MethodBase.GetCurrentMethod.GetFullName
-
-                ex = New Exception(paramTrace, ex)
-                ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
-
-                ' Enable output the exception details on the console.
-                VBDebugger.Mute = False
-
-                Call App.LogException(ex, trace)
-                Call DebuggerArgs.SaveErrorLog(ErrorLog.BugsFormatter(ex))
-                Call VBDebugger.WaitOutput()
-
-                If [throw] Then
-                    Throw ex
-                Else
-                    Call "".EchoLine
-                    Call ManView.ExceptionHandler.Print(source, EntryPoint)
-                    Call "".EchoLine
-                    Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
-                    Call VBDebugger.WaitOutput()
-
-                    rtvl = -100
-                End If
+                rtvl = logError(ex, callParameters, [throw])
             End Try
 
             Return rtvl
+        End Function
+
+        Private Function logError(ex As Exception, callParameters As Object(), [throw] As Boolean) As Integer
+            Dim args$() = callParameters _
+                .Select(AddressOf any.ToString) _
+                .ToArray
+            Dim paramTrace As String = String.Join(vbCrLf, args)
+            Dim source As Exception = ex
+            Dim trace$ = MethodBase.GetCurrentMethod.GetFullName
+
+            ex = New Exception(paramTrace, ex)
+            ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
+
+            ' Enable output the exception details on the console.
+            VBDebugger.Mute = False
+
+            Call App.LogException(ex, trace)
+            Call DebuggerArgs.SaveErrorLog(ErrorLog.BugsFormatter(ex))
+            Call VBDebugger.WaitOutput()
+
+            If [throw] Then
+                Throw ex
+            Else
+                Call "".EchoLine
+                Call ManView.ExceptionHandler.Print(source, EntryPoint)
+                Call "".EchoLine
+                Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
+                Call VBDebugger.WaitOutput()
+
+                Return -100
+            End If
         End Function
 
         ''' <summary>
@@ -297,8 +306,8 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' (函数会补齐可选参数)
         ''' </summary>
         ''' <param name="parameters">The function parameter for the target invoked method, the optional value will be filled 
-        ''' using the paramter default value if you are not specific the optional paramter value is the element position of 
-        ''' this paramter value.</param>
+        ''' using the parameter default value if you are not specific the optional parameter value is the element position of 
+        ''' this parameter value.</param>
         ''' <param name="target">Target entry pointer of this function method delegate.</param>
         ''' <param name="Throw">If throw then if the exception happened from delegate invocation then the program will throw an 
         ''' exception and terminated, if not then the program will save the exception information into a log file and then 
