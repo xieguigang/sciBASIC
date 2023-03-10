@@ -1,72 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::f1f3b86d8d8d1bd40259b846d1da569c, sciBASIC#\mime\application%pdf\PdfFileWriter\TextBox.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 835
-    '    Code Lines: 439
-    ' Comment Lines: 287
-    '   Blank Lines: 109
-    '     File Size: 27.44 KB
+' Summaries:
 
 
-    ' Class TextBoxLine
-    ' 
-    '     Properties: Ascent, Descent, EndOfParagraph, LineHeight, SegArray
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class TextBoxSeg
-    ' 
-    '     Properties: AnnotAction, DrawStyle, Font, FontColor, FontSize
-    '                 SegWidth, SpaceCount, Text
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: IsEqual
-    ' 
-    ' Class TextBox
-    ' 
-    '     Properties: BoxHeight, BoxWidth, FirstLineIndent, LineCount, LongestLineWidth
-    '                 ParagraphCount
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+3 Overloads) BoxHeightExtra
-    ' 
-    '     Sub: AddLine, (+8 Overloads) AddText, BreakLine, Clear, Terminate
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 835
+'    Code Lines: 439
+' Comment Lines: 287
+'   Blank Lines: 109
+'     File Size: 27.44 KB
+
+
+' Class TextBoxLine
+' 
+'     Properties: Ascent, Descent, EndOfParagraph, LineHeight, SegArray
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+' Class TextBoxSeg
+' 
+'     Properties: AnnotAction, DrawStyle, Font, FontColor, FontSize
+'                 SegWidth, SpaceCount, Text
+' 
+'     Constructor: (+2 Overloads) Sub New
+'     Function: IsEqual
+' 
+' Class TextBox
+' 
+'     Properties: BoxHeight, BoxWidth, FirstLineIndent, LineCount, LongestLineWidth
+'                 ParagraphCount
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+3 Overloads) BoxHeightExtra
+' 
+'     Sub: AddLine, (+8 Overloads) AddText, BreakLine, Clear, Terminate
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -95,237 +95,8 @@
 '
 '
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Runtime.InteropServices
-
-''' <summary>
-''' TextBoxLine class
-''' </summary>
-Public Class TextBoxLine
-
-
-    ''' <summary>
-    ''' Gets array of line segments.
-    ''' </summary>
-    Private _Ascent As Double, _Descent As Double, _EndOfParagraph As Boolean, _SegArray As TextBoxSeg()
-
-    ''' <summary>
-    ''' Gets line ascent.
-    ''' </summary>
-    Public Property Ascent As Double
-        Get
-            Return _Ascent
-        End Get
-        Friend Set(value As Double)
-            _Ascent = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets line descent.
-    ''' </summary>
-    Public Property Descent As Double
-        Get
-            Return _Descent
-        End Get
-        Friend Set(value As Double)
-            _Descent = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Line is end of paragraph.
-    ''' </summary>
-    Public Property EndOfParagraph As Boolean
-        Get
-            Return _EndOfParagraph
-        End Get
-        Friend Set(value As Boolean)
-            _EndOfParagraph = value
-        End Set
-    End Property
-
-    Public Property SegArray As TextBoxSeg()
-        Get
-            Return _SegArray
-        End Get
-        Friend Set(value As TextBoxSeg())
-            _SegArray = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets line height.
-    ''' </summary>
-    Public ReadOnly Property LineHeight As Double
-        Get
-            Return Ascent + Descent
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' TextBoxLine constructor.
-    ''' </summary>
-    ''' <param name="Ascent">Line ascent.</param>
-    ''' <param name="Descent">Line descent.</param>
-    ''' <param name="EndOfParagraph">Line is end of paragraph.</param>
-    ''' <param name="SegArray">Segments' array.</param>
-    Public Sub New(Ascent As Double, Descent As Double, EndOfParagraph As Boolean, SegArray As TextBoxSeg())
-        Me.Ascent = Ascent
-        Me.Descent = Descent
-        Me.EndOfParagraph = EndOfParagraph
-        Me.SegArray = SegArray
-    End Sub
-End Class
-
-''' <summary>
-''' TextBox line segment class
-''' </summary>
-Public Class TextBoxSeg
-
-    Private _Font As PdfFont, _FontSize As Double, _DrawStyle As DrawStyle, _FontColor As System.Drawing.Color, _SegWidth As Double, _SpaceCount As Integer, _Text As String, _AnnotAction As AnnotAction
-
-    ''' <summary>
-    ''' Gets segment font.
-    ''' </summary>
-    Public Property Font As PdfFont
-        Get
-            Return _Font
-        End Get
-        Friend Set(value As PdfFont)
-            _Font = value
-        End Set
-    End Property
-    ''' <summary>
-    ''' Gets segment font size.
-    ''' </summary>
-    Public Property FontSize As Double
-        Get
-            Return _FontSize
-        End Get
-        Friend Set(value As Double)
-            _FontSize = value
-        End Set
-    End Property
-    ''' <summary>
-    ''' Gets segment drawing style.
-    ''' </summary>
-    Public Property DrawStyle As DrawStyle
-        Get
-            Return _DrawStyle
-        End Get
-        Friend Set(value As DrawStyle)
-            _DrawStyle = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets segment color.
-    ''' </summary>
-    Public Property FontColor As Color
-        Get
-            Return _FontColor
-        End Get
-        Friend Set(value As Color)
-            _FontColor = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets segment width.
-    ''' </summary>
-    Public Property SegWidth As Double
-        Get
-            Return _SegWidth
-        End Get
-        Friend Set(value As Double)
-            _SegWidth = value
-        End Set
-    End Property
-    ''' <summary>
-    ''' Gets segment space character count.
-    ''' </summary>
-    Public Property SpaceCount As Integer
-        Get
-            Return _SpaceCount
-        End Get
-        Friend Set(value As Integer)
-            _SpaceCount = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets segment text.
-    ''' </summary>
-    Public Property Text As String
-        Get
-            Return _Text
-        End Get
-        Friend Set(value As String)
-            _Text = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' Gets annotation action
-    ''' </summary>
-    Public Property AnnotAction As AnnotAction
-        Get
-            Return _AnnotAction
-        End Get
-        Friend Set(value As AnnotAction)
-            _AnnotAction = value
-        End Set
-    End Property
-
-    ''' <summary>
-    ''' TextBox segment constructor.
-    ''' </summary>
-    ''' <param name="Font">Segment font.</param>
-    ''' <param name="FontSize">Segment font size.</param>
-    ''' <param name="DrawStyle">Segment drawing style.</param>
-    ''' <param name="FontColor">Segment color.</param>
-    ''' <param name="AnnotAction">Segment annotation action.</param>
-    Public Sub New(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, AnnotAction As AnnotAction)
-        Me.Font = Font
-        Me.FontSize = FontSize
-        Me.DrawStyle = DrawStyle
-        Me.FontColor = FontColor
-        Text = String.Empty
-        Me.AnnotAction = AnnotAction
-        Return
-    End Sub
-
-    ''' <summary>
-    ''' TextBox segment copy constructor.
-    ''' </summary>
-    ''' <param name="CopySeg">Source TextBox segment.</param>
-    Friend Sub New(CopySeg As TextBoxSeg)
-        Font = CopySeg.Font
-        FontSize = CopySeg.FontSize
-        DrawStyle = CopySeg.DrawStyle
-        FontColor = CopySeg.FontColor
-        Text = String.Empty
-        AnnotAction = CopySeg.AnnotAction
-        Return
-    End Sub
-
-    ''' <summary>
-    ''' Compare two TextBox segments.
-    ''' </summary>
-    ''' <param name="Font">Segment font.</param>
-    ''' <param name="FontSize">Segment font size.</param>
-    ''' <param name="DrawStyle">Segment drawing style.</param>
-    ''' <param name="FontColor">Segment color.</param>
-    ''' <param name="AnnotAction">Segment annotation action.</param>
-    ''' <returns>Result</returns>
-    Friend Function IsEqual(Font As PdfFont, FontSize As Double, DrawStyle As DrawStyle, FontColor As Color, AnnotAction As AnnotAction) As Boolean
-        ' test all but annotation action
-        Return Me.Font Is Font AndAlso Me.FontSize = FontSize AndAlso Me.DrawStyle = DrawStyle AndAlso Me.FontColor = FontColor AndAlso AnnotAction.IsEqual(Me.AnnotAction, AnnotAction)
-    End Function
-End Class
 
 ''' <summary>
 ''' TextBox class
@@ -901,7 +672,5 @@ Public Class TextBox
         For Each Seg In SegArray
             LineWidth += Seg.SegWidth
         Next
-
-        Return
     End Sub
 End Class
