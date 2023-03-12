@@ -95,7 +95,8 @@ Namespace Math.Information
         ''' </summary>
         ''' <param name="probs">Sum of this probability vector must equals to 1, Histogram array.</param>
         ''' <returns></returns>
-        ''' <remarks><para>The input array is treated as histogram, i.e. its
+        ''' <remarks><para>
+        ''' The input array is treated as histogram, i.e. its
         ''' indexes are treated as values of stochastic function, but
         ''' array values are treated as "probabilities" (total amount of
         ''' hits).</para>
