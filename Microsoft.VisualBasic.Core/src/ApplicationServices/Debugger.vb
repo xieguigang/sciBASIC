@@ -327,7 +327,7 @@ Public Module VBDebugger
     ''' So i make this function access level from public to 
     ''' friend.
     ''' </remarks>
-    Friend Sub WaitOutput()
+    Public Sub WaitOutput()
         Call My.InnerQueue.WaitQueue()
     End Sub
 
