@@ -155,105 +155,6 @@ Public Delegate Function PdfTableCustomDrawCell(Table As PdfTable, Cell As PdfTa
 ''' </remarks>
 Public Class PdfTable
 
-    ''' <remarks>
-    ''' The active flag is set by the PdfTableInitialization method.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the number of columns in the table.
-    ''' </summary>
-    ''' <value>The number of columns in the table.</value>
-    ''' <remarks>SetColumnWidth method sets this value.</remarks>
-
-    ''' <summary>
-    ''' Gets the current PDF contents object.
-    ''' </summary>
-    ''' <value>The current PDF contents object.</value>
-    ''' <remarks>
-    ''' The initial value is set by the constructor. 
-    ''' The value is updated as each new page is added.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the default cell style.
-    ''' </summary>
-    ''' <value>Default cell style.</value>
-    ''' <remarks>
-    ''' <para>
-    ''' The default cell style is used by cells without private style.
-    ''' </para>
-    ''' <para>
-    ''' The returned value is the default cell style object.
-    ''' A change to any of the syle properties will affect all cells
-    ''' without private style.
-    ''' </para>
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the default header style.
-    ''' </summary>
-    ''' <value>Default header style.</value>
-    ''' <remarks>
-    ''' <para>
-    ''' The default header style is used by headers without private style.
-    ''' </para>
-    ''' <para>
-    ''' The returned value is the default header style object.
-    ''' A change to any of the syle properties will affect all headers
-    ''' without private style.
-    ''' </para>
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the PDF document that owns this table.
-    ''' </summary>
-    ''' <valuw>PDF document the parent of this table.</valuw>
-
-    ''' <summary>
-    ''' Gets the current header height.
-    ''' </summary>
-    ''' <value>Current header height.</value>
-    ''' <remarks>
-    ''' Header height is calculated once for each page.
-    ''' It is the height of the tallest header.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the current PDF page object.
-    ''' </summary>
-    ''' <value>The current PDF page object.</value>
-    ''' <remarks>
-    ''' The initial value is set by the constructor. 
-    ''' The value is updated as each new page is added.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Table's page number starting with zero
-    ''' </summary>
-
-    ''' <summary>
-    ''' Gets the current row bottom position.
-    ''' </summary>
-    ''' <value>Row bottom position.</value>
-    ''' <remarks>
-    ''' Row bottom position is calculated for each row. It is RowTopPosition plus RowHeight. 
-    ''' The calculation is done within DrawRow method before any of the cells is drawn.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the current row height.
-    ''' </summary>
-    ''' <value>Current row height.</value>
-    ''' <remarks>
-    ''' Row height is calculated for each row. It is the height of the tallest cell. 
-    ''' The calculation is done within DrawRow method before any of the cells is drawn.
-    ''' </remarks>
-
-    ''' <summary>
-    ''' Gets the current row number.
-    ''' </summary>
-    ''' <value>Row number starting with zero.</value>
-
     ''' <summary>
     ''' Borders control
     ''' </summary>
@@ -262,6 +163,9 @@ Public Class PdfTable
     ''' <summary>
     ''' Gets the table is active flag.
     ''' </summary>
+    ''' <remarks>
+    ''' The active flag is set by the PdfTableInitialization method.
+    ''' </remarks>
     Public Property Active As Boolean
 
     ''' <summary>
@@ -304,6 +208,11 @@ Public Class PdfTable
 
     Friend _ColumnPosition As Double()
 
+    ''' <summary>
+    ''' Gets the number of columns in the table.
+    ''' </summary>
+    ''' <value>The number of columns in the table.</value>
+    ''' <remarks>SetColumnWidth method sets this value.</remarks>
     Public Property Columns As Integer
 
     ''' <summary>
@@ -337,8 +246,30 @@ Public Class PdfTable
     ''' <remarks>If zero or negative GC will not be called.</remarks>
     Public Property CommitGCCollectFreq As Integer
 
+    ''' <summary>
+    ''' Gets the current PDF contents object.
+    ''' </summary>
+    ''' <value>The current PDF contents object.</value>
+    ''' <remarks>
+    ''' The initial value is set by the constructor. 
+    ''' The value is updated as each new page is added.
+    ''' </remarks>
     Public Property Contents As PdfContents
 
+    ''' <summary>
+    ''' Gets the default cell style.
+    ''' </summary>
+    ''' <value>Default cell style.</value>
+    ''' <remarks>
+    ''' <para>
+    ''' The default cell style is used by cells without private style.
+    ''' </para>
+    ''' <para>
+    ''' The returned value is the default cell style object.
+    ''' A change to any of the syle properties will affect all cells
+    ''' without private style.
+    ''' </para>
+    ''' </remarks>
     Public Property DefaultCellStyle As PdfTableStyle
         Get
             Return _DefaultCellStyle
@@ -348,6 +279,20 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the default header style.
+    ''' </summary>
+    ''' <value>Default header style.</value>
+    ''' <remarks>
+    ''' <para>
+    ''' The default header style is used by headers without private style.
+    ''' </para>
+    ''' <para>
+    ''' The returned value is the default header style object.
+    ''' A change to any of the syle properties will affect all headers
+    ''' without private style.
+    ''' </para>
+    ''' </remarks>
     Public Property DefaultHeaderStyle As PdfTableStyle
         Get
             Return _DefaultHeaderStyle
@@ -357,6 +302,10 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the PDF document that owns this table.
+    ''' </summary>
+    ''' <valuw>PDF document the parent of this table.</valuw>
     Public Property Document As PdfDocument
         Get
             Return _Document
@@ -381,6 +330,14 @@ Public Class PdfTable
 
     Friend _Header As PdfTableCell()
 
+    ''' <summary>
+    ''' Gets the current header height.
+    ''' </summary>
+    ''' <value>Current header height.</value>
+    ''' <remarks>
+    ''' Header height is calculated once for each page.
+    ''' It is the height of the tallest header.
+    ''' </remarks>
     Public Property HeaderHeight As Double
         Get
             Return _HeaderHeight
@@ -420,6 +377,14 @@ Public Class PdfTable
     ''' <value>Minimum header height.</value>
     Public Property MinHeaderHeight As Double
 
+    ''' <summary>
+    ''' Gets the current PDF page object.
+    ''' </summary>
+    ''' <value>The current PDF page object.</value>
+    ''' <remarks>
+    ''' The initial value is set by the constructor. 
+    ''' The value is updated as each new page is added.
+    ''' </remarks>
     Public Property Page As PdfPage
         Get
             Return _Page
@@ -429,6 +394,9 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Table's page number starting with zero
+    ''' </summary>
     Public Property TablePageNumber As Integer
         Get
             Return _TablePageNumber
@@ -438,6 +406,14 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the current row bottom position.
+    ''' </summary>
+    ''' <value>Row bottom position.</value>
+    ''' <remarks>
+    ''' Row bottom position is calculated for each row. It is RowTopPosition plus RowHeight. 
+    ''' The calculation is done within DrawRow method before any of the cells is drawn.
+    ''' </remarks>
     Public Property RowBottomPosition As Double
         Get
             Return _RowBottomPosition
@@ -447,6 +423,14 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the current row height.
+    ''' </summary>
+    ''' <value>Current row height.</value>
+    ''' <remarks>
+    ''' Row height is calculated for each row. It is the height of the tallest cell. 
+    ''' The calculation is done within DrawRow method before any of the cells is drawn.
+    ''' </remarks>
     Public Property RowHeight As Double
         Get
             Return _RowHeight
@@ -456,6 +440,10 @@ Public Class PdfTable
         End Set
     End Property
 
+    ''' <summary>
+    ''' Gets the current row number.
+    ''' </summary>
+    ''' <value>Row number starting with zero.</value>
     Public Property RowNumber As Integer
         Get
             Return _RowNumber
@@ -653,7 +641,6 @@ Public Class PdfTable
         ' very small amount 1/300 of an inch
         ' used to guard against rounding errors
         Epsilon = Document.Epsilon
-        Return
     End Sub
 
     ''' <summary>
@@ -697,7 +684,6 @@ Public Class PdfTable
 
         ' vertical border control
         Borders.BordersInitialization()
-        Return
     End Sub
 
     ''' <summary>
@@ -807,7 +793,6 @@ Public Class PdfTable
 
         ' initialization is done, PdfTable is ready to draw
         Active = True
-        Return
     End Sub
 
     ''' <summary>
@@ -878,7 +863,6 @@ Public Class PdfTable
 
         ' update row number
         RowNumber += 1
-        Return
     End Sub
 
     Private Sub DrawOneRow()
@@ -888,7 +872,9 @@ Public Class PdfTable
         ' row bottom position is below table bottom
         If RowBottomPosition < TableBottomLimit - Epsilon Then
             ' test the smaller row height (TextBox minimum lines)
-            If _RowTopPosition - TextBoxRowHeight < TableBottomLimit - Epsilon Then Throw New ApplicationException("Table row height is too big")
+            If _RowTopPosition - TextBoxRowHeight < TableBottomLimit - Epsilon Then
+                Throw New ApplicationException("Table row height is too big")
+            End If
 
             ' adjust bottom position
             RowBottomPosition = TableBottomLimit
@@ -925,14 +911,14 @@ Public Class PdfTable
         For Each Cell As PdfTableCell In _Cell
             Cell.Reset()
         Next
-
-        Return
     End Sub
 
     Private Sub DrawHeader()
         ' row bottom position
         RowBottomPosition = _RowTopPosition - HeaderHeight
-        If RowBottomPosition <= _TableArea.Bottom + 2.0 * Borders.HeaderHorBorder.HalfWidth + Borders.BottomBorder.HalfWidth Then Throw New ApplicationException("Table header height is too big")
+        If RowBottomPosition <= _TableArea.Bottom + 2.0 * Borders.HeaderHorBorder.HalfWidth + Borders.BottomBorder.HalfWidth Then
+            Throw New ApplicationException("Table header height is too big")
+        End If
 
         ' draw each column header
         For Each Cell As PdfTableCell In _Header
@@ -963,7 +949,6 @@ Public Class PdfTable
 
         ' reset header height
         HeaderHeight = 0.0
-        Return
     End Sub
 
     ''' <summary>
@@ -981,11 +966,11 @@ Public Class PdfTable
             ' call user event handler for end of table
             RaiseEvent TableEndEvent(Me, _RowTopPosition)
         End If
-
-        Return
     End Sub
 
-    ' calculate row height
+    ''' <summary>
+    ''' calculate row height
+    ''' </summary>
     Private Sub CalculateRowHeight()
         ' initial row height
         RowHeight = MinRowHeight
@@ -1000,11 +985,11 @@ Public Class PdfTable
             If Cell.CellHeight > RowHeight Then RowHeight = Cell.CellHeight
             If Cell.TextBoxCellHeight > TextBoxRowHeight Then TextBoxRowHeight = Cell.TextBoxCellHeight
         Next
-
-        Return
     End Sub
 
-    ' calculate header height
+    ''' <summary>
+    ''' calculate header height
+    ''' </summary>
     Private Sub CalculateHeaderHeight()
         ' initial row height
         HeaderHeight = MinHeaderHeight
@@ -1017,11 +1002,11 @@ Public Class PdfTable
             ' adjust row height if required
             If Cell.CellHeight > HeaderHeight Then HeaderHeight = Cell.CellHeight
         Next
-
-        Return
     End Sub
 
-    ' start a new page
+    ''' <summary>
+    ''' start a new page
+    ''' </summary>
     Private Sub CreateNewPage()
         ' terminate activity on current page
         If DrawingActive Then
@@ -1057,11 +1042,12 @@ Public Class PdfTable
 
         ' call user event handler for start of table on each page
         RaiseEvent TableStartEvent(Me, BorderRowTopPos)
-        Return
     End Sub
 
-    ' Draw borders and grid lines after the last row on a page is drawn
-    ' or the last row of the table is drawn.
+    ''' <summary>
+    ''' Draw borders and grid lines after the last row on a page is drawn
+    ''' or the last row of the table is drawn.
+    ''' </summary>
     Private Sub DrawBorders()
         ' draw top border line
         Contents.DrawLine(BorderLeftPos, BorderYPos(0), BorderRightPos, BorderYPos(0), Borders.TopBorder)
@@ -1099,7 +1085,5 @@ Public Class PdfTable
                 Contents.DrawLine(ColumnPosition(Col), Top, ColumnPosition(Col), BorderRowTopPos, Borders.CellVertBorder(Col))
             Next
         End If
-
-        Return
     End Sub
 End Class

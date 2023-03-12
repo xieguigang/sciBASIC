@@ -99,45 +99,21 @@ Imports stdNum = System.Math
 ''' Border line style class
 ''' </summary>
 Public Class PdfTableBorderStyle
+
     ''' <summary>
     ''' Gets display border line flag
     ''' </summary>
+    Public Property Display As Boolean
 
     ''' <summary>
     ''' Gets border line width
     ''' </summary>
+    Public Property Width As Double
 
     ''' <summary>
     ''' Gets border line color
     ''' </summary>
-    Private _Display As Boolean, _Width As Double, _Color As System.Drawing.Color
-
-    Public Property Display As Boolean
-        Get
-            Return _Display
-        End Get
-        Friend Set(value As Boolean)
-            _Display = value
-        End Set
-    End Property
-
-    Public Property Width As Double
-        Get
-            Return _Width
-        End Get
-        Friend Set(value As Double)
-            _Width = value
-        End Set
-    End Property
-
     Public Property Color As Color
-        Get
-            Return _Color
-        End Get
-        Friend Set(value As Color)
-            _Color = value
-        End Set
-    End Property
 
     ''' <summary>
     ''' Gets border line half width
@@ -150,6 +126,7 @@ Public Class PdfTableBorderStyle
             Return If(Display, 0.5 * Width, 0.0)
         End Get
     End Property
+
     ''' <summary>
     ''' PdfTableBorderStyle default constructor
     ''' </summary>
@@ -164,7 +141,6 @@ Public Class PdfTableBorderStyle
         Display = True
         Me.Width = Width
         Color = Color.Black
-        Return
     End Sub
 
     ''' <summary>
@@ -176,7 +152,6 @@ Public Class PdfTableBorderStyle
         Display = True
         Me.Width = Width
         Me.Color = Color
-        Return
     End Sub
 
     Sub New(pen As Pen)
@@ -190,7 +165,6 @@ Public Class PdfTableBorderStyle
         Display = False
         Width = 0
         Color = Color.Empty
-        Return
     End Sub
 
     ''' <summary>
@@ -202,7 +176,6 @@ Public Class PdfTableBorderStyle
         Display = True
         Me.Width = Width
         Me.Color = Color
-        Return
     End Sub
 
     ''' <summary>
@@ -213,7 +186,6 @@ Public Class PdfTableBorderStyle
         Display = Other.Display
         Width = Other.Width
         Color = Other.Color
-        Return
     End Sub
 End Class
 
@@ -305,7 +277,6 @@ Public Class PdfTableBorder
     Public Sub SetBottomBorder(Width As Double)
         TestInit()
         BottomBorder.Set(Width, Color.Black)
-        Return
     End Sub
 
     ''' <summary>
@@ -316,7 +287,6 @@ Public Class PdfTableBorder
     Public Sub SetBottomBorder(Width As Double, Color As Color)
         TestInit()
         BottomBorder.Set(Width, Color)
-        Return
     End Sub
 
     ''' <summary>
@@ -340,7 +310,6 @@ Public Class PdfTableBorder
     Public Sub ClearHeaderHorBorder()
         TestInit()
         HeaderHorBorder.Clear()
-        Return
     End Sub
 
     ''' <summary>
@@ -350,7 +319,6 @@ Public Class PdfTableBorder
     Public Sub SetHeaderHorBorder(Width As Double)
         TestInit()
         HeaderHorBorder.Set(Width, Color.Black)
-        Return
     End Sub
 
     ''' <summary>
@@ -361,7 +329,6 @@ Public Class PdfTableBorder
     Public Sub SetHeaderHorBorder(Width As Double, Color As Color)
         TestInit()
         HeaderHorBorder.Set(Width, Color)
-        Return
     End Sub
 
     ''' <summary>
@@ -385,7 +352,6 @@ Public Class PdfTableBorder
     Public Sub ClearCellHorBorder()
         TestInit()
         CellHorBorder.Clear()
-        Return
     End Sub
 
     ''' <summary>
@@ -395,7 +361,6 @@ Public Class PdfTableBorder
     Public Sub SetCellHorBorder(Width As Double)
         TestInit()
         CellHorBorder.Set(Width, Color.Black)
-        Return
     End Sub
 
     ''' <summary>
@@ -406,7 +371,6 @@ Public Class PdfTableBorder
     Public Sub SetCellHorBorder(Width As Double, Color As Color)
         TestInit()
         CellHorBorder.Set(Width, Color)
-        Return
     End Sub
 
     ''' <summary>
@@ -416,7 +380,7 @@ Public Class PdfTableBorder
     ''' Array of vertical borders between all headers.
     ''' Array's size is Columns + 1.
     ''' Array's item [0] is left border.
-    ''' Array's item [Coloumns] is right border.
+    ''' Array's item [Columns] is right border.
     ''' </remarks>
     Public Property HeaderVertBorder As PdfTableBorderStyle()
         Get
@@ -434,7 +398,6 @@ Public Class PdfTableBorder
     Public Sub ClearHeaderVertBorder(Index As Integer)
         TestInit()
         HeaderVertBorder(Index).Clear()
-        Return
     End Sub
 
     ''' <summary>
@@ -445,7 +408,6 @@ Public Class PdfTableBorder
     Public Sub SetHeaderVertBorder(Index As Integer, Width As Double)
         TestInit()
         HeaderVertBorder(Index).Set(Width, Color.Black)
-        Return
     End Sub
 
     ''' <summary>
@@ -457,7 +419,6 @@ Public Class PdfTableBorder
     Public Sub SetHeaderVertBorder(Index As Integer, Width As Double, Color As Color)
         TestInit()
         HeaderVertBorder(Index).Set(Width, Color)
-        Return
     End Sub
 
     ''' <summary>
