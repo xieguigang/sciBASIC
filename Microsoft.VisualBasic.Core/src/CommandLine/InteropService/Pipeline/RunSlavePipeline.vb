@@ -87,6 +87,9 @@ Namespace CommandLine.InteropService.Pipeline
         ''' parameter could be in multiple line
         ''' </param>
         ''' <param name="workdir"></param>
+        ''' <remarks>
+        ''' the commandline <paramref name="arguments"/> could be in multiple lines
+        ''' </remarks>
         Sub New(app$, arguments$, Optional workdir As String = Nothing)
             Me.app = app
             Me.Arguments = arguments
