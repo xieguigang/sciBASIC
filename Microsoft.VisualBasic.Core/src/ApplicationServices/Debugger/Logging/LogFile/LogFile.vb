@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::8f54efee5d53e50df4269b8e3e76c2fb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 253
-    '    Code Lines: 153
-    ' Comment Lines: 59
-    '   Blank Lines: 41
-    '     File Size: 10.69 KB
+' Summaries:
 
 
-    '     Class LogFile
-    ' 
-    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: openFile, SaveLog, SystemInfo, ToString
-    ' 
-    '         Sub: Debug, (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException
-    '              Save, (+2 Overloads) Trace, (+4 Overloads) WriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 253
+'    Code Lines: 153
+' Comment Lines: 59
+'   Blank Lines: 41
+'     File Size: 10.69 KB
+
+
+'     Class LogFile
+' 
+'         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: openFile, SaveLog, SystemInfo, ToString
+' 
+'         Sub: Debug, (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException
+'              Save, (+2 Overloads) Trace, (+4 Overloads) WriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,6 +87,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property fileName As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return filePath.BaseName
             End Get
@@ -148,14 +149,17 @@ Namespace ApplicationServices.Debugging.Logging
             Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate), access:=FileAccess.Write, share:=FileShare.ReadWrite)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trace(toString As Func(Of String, Byte(), String), format As String, ParamArray bytes As Byte())
             Call Trace(toString(format, bytes))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Trace(format As String, ParamArray args As Object())
             Call Me.log(MSG_TYPES.INF, String.Format(format, args))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Debug(format As String, ParamArray args As Object())
             Call Me.log(MSG_TYPES.DEBUG, String.Format(format, args))
         End Sub
@@ -167,6 +171,11 @@ Namespace ApplicationServices.Debugging.Logging
             If Not split Is Nothing Then
                 Call split(obj, msg, MSG_TYPES.INF)
             End If
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub log(level As MSG_TYPES, msg As StringBuilder, <CallerMemberName> Optional obj$ = Nothing)
+            Call log(level, msg.ToString, obj)
         End Sub
 
         Public Sub log(level As MSG_TYPES, msg As String, <CallerMemberName> Optional obj$ = Nothing)
@@ -201,7 +210,11 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="msg"></param>
         ''' <param name="obj"></param>
         ''' <param name="type"></param>
-        Public Sub WriteLine(msg As String, <CallerMemberName> Optional obj As String = Nothing, Optional type As MSG_TYPES = MSG_TYPES.INF)
+        Public Sub WriteLine(msg As String,
+                             <CallerMemberName>
+                             Optional obj As String = Nothing,
+                             Optional type As MSG_TYPES = MSG_TYPES.INF)
+
             Dim log As New LogEntry With {
                 .message = msg,
                 .[object] = obj,
@@ -224,8 +237,7 @@ Namespace ApplicationServices.Debugging.Logging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(s As String())
-            Dim str As String = String.Join(vbCrLf, s)
-            Call WriteLine(str, type:=MSG_TYPES.INF, obj:="")
+            Call WriteLine(String.Join(vbCrLf, s), type:=MSG_TYPES.INF, obj:="")
         End Sub
 
         ''' <summary>
@@ -234,6 +246,8 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <param name="s"></param>
         ''' <param name="args">{[Object] As String, Optional Type As MsgType = MsgType.INF, Optional WriteToScreen As Boolean = True}</param>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(s As String, ParamArray args() As String)
             Call WriteLine(s, type:=MSG_TYPES.INF, obj:=If(String.IsNullOrEmpty(args(0)), "", args(0)))
         End Sub
@@ -243,23 +257,24 @@ Namespace ApplicationServices.Debugging.Logging
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function SystemInfo() As String
-            Dim sBuilder As New StringBuilder(1024)
+            Dim sb As New StringBuilder(1024)
 
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.BuildVersion)}:={OSVersionInfo.BuildVersion}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.Edition)}:={OSVersionInfo.Edition}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.MajorVersion)}:={OSVersionInfo.MajorVersion}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.MinorVersion)}:={OSVersionInfo.MinorVersion}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.WindowsName)}:={OSVersionInfo.WindowsName}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.OSBits)}:={OSVersionInfo.OSBits}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.ProcessorBits)}:={OSVersionInfo.ProcessorBits}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.ProgramBits)}:={OSVersionInfo.ProgramBits}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.RevisionVersion)}:={OSVersionInfo.RevisionVersion}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.ServicePack)}:={OSVersionInfo.ServicePack}")
-            Call sBuilder.AppendLine($"{NameOf(OSVersionInfo.Version)}:={OSVersionInfo.Version.ToString}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.BuildVersion)}:={OSVersionInfo.BuildVersion}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.Edition)}:={OSVersionInfo.Edition}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.MajorVersion)}:={OSVersionInfo.MajorVersion}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.MinorVersion)}:={OSVersionInfo.MinorVersion}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.WindowsName)}:={OSVersionInfo.WindowsName}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.OSBits)}:={OSVersionInfo.OSBits}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.ProcessorBits)}:={OSVersionInfo.ProcessorBits}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.ProgramBits)}:={OSVersionInfo.ProgramBits}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.RevisionVersion)}:={OSVersionInfo.RevisionVersion}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.ServicePack)}:={OSVersionInfo.ServicePack}")
+            Call sb.AppendLine($"{NameOf(OSVersionInfo.Version)}:={OSVersionInfo.Version.ToString}")
 
-            Return sBuilder.ToString
+            Return sb.ToString
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Save()
             Call SaveLog()
         End Sub
