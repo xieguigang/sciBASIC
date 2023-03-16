@@ -127,7 +127,7 @@ Namespace FileIO.Path
         End Function
 
         ''' <summary>
-        ''' get full path string
+        ''' get the canonical full path string
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
@@ -153,6 +153,10 @@ Namespace FileIO.Path
 
         Public Shared Operator <>(file1 As FilePath, file2 As FilePath) As Boolean
             Return Not file1 = file2
+        End Operator
+
+        Public Shared Narrowing Operator CType(path As FilePath) As String
+            Return path.ToString
         End Operator
     End Class
 End Namespace

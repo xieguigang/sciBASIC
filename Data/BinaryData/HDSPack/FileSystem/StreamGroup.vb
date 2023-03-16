@@ -91,13 +91,23 @@ Namespace FileSystem
         End Property
 
         ''' <summary>
-        ''' get file list in current dir root
+        ''' get all file + dirs list in current dir root
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property files As StreamObject()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return tree.Values.ToArray
+            End Get
+        End Property
+
+        Public ReadOnly Property dirs As StreamGroup()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return tree.Values _
+                    .Where(Function(f) TypeOf f Is StreamGroup) _
+                    .Select(Function(f) DirectCast(f, StreamGroup)) _
+                    .ToArray
             End Get
         End Property
 

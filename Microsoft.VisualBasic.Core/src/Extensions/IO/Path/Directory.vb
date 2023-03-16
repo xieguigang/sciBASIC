@@ -77,6 +77,7 @@ Namespace FileIO
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property folder As String
+        Public ReadOnly Property strict As Boolean = False
 
         Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -91,7 +92,8 @@ Namespace FileIO
         ''' <param name="directory">Target directory path</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(directory As String)
+        Sub New(directory As String, Optional strict As Boolean = False)
+            Me.strict = strict
             Me.folder = FileSystem.GetDirectoryInfo(directory).FullName
         End Sub
 
@@ -248,7 +250,7 @@ Namespace FileIO
 
         Public Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText
             Dim fullPath As String = $"{folder}/{path}"
-            Return fullPath.ReadAllText
+            Return fullPath.ReadAllText(throwEx:=strict)
         End Function
 
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
