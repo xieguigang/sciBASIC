@@ -63,6 +63,10 @@ Public Class BufferRegion
         End Get
     End Property
 
+    ''' <summary>
+    ''' start position is zero and there is no buffer size
+    ''' </summary>
+    ''' <returns></returns>
     Public Shared ReadOnly Property Zero As BufferRegion
         Get
             Return New BufferRegion(0, -1)

@@ -57,6 +57,11 @@ Public MustInherit Class ComparisonProvider
     Protected ReadOnly equalsDbl As Double
     Protected ReadOnly gt As Double
 
+    ''' <summary>
+    ''' create a new score generator
+    ''' </summary>
+    ''' <param name="equals">score level for construct a binary tree cluster</param>
+    ''' <param name="gt">score level for create a binary tree branch</param>
     Sub New(equals#, gt#)
         Me.equalsDbl = equals
         Me.gt = gt
@@ -64,6 +69,12 @@ Public MustInherit Class ComparisonProvider
 
     Public MustOverride Function GetSimilarity(x As String, y As String) As Double
 
+    ''' <summary>
+    ''' binary tree generator
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
     Public Function Compares(x As String, y As String) As Integer
         Dim similarity As Double = GetSimilarity(x, y)
 
