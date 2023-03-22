@@ -87,6 +87,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Public ReadOnly Property Type As Type
 
+        ''' <summary>
+        ''' get member name directly
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property memberName As String
             Get
                 Return member.Name
