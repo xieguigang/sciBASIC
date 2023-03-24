@@ -1,74 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::ed5be1f4a2b240d9ab197b8e3036e71d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 325
-    '    Code Lines: 281
-    ' Comment Lines: 9
-    '   Blank Lines: 35
-    '     File Size: 13.24 KB
+' Summaries:
 
 
-    '     Class DelaunayTriangulation
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
-    ' 
-    '     Structure TriangleIndex
-    ' 
-    '         Function: ToString
-    ' 
-    '     Structure TriangleVertex
-    ' 
-    ' 
-    ' 
-    '     Structure Triangle
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Structure EdgeInfo
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetEdgeType, IsValid
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 325
+'    Code Lines: 281
+' Comment Lines: 9
+'   Blank Lines: 35
+'     File Size: 13.24 KB
+
+
+'     Class DelaunayTriangulation
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
+' 
+'     Structure TriangleIndex
+' 
+'         Function: ToString
+' 
+'     Structure TriangleVertex
+' 
+' 
+' 
+'     Structure Triangle
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Structure EdgeInfo
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetEdgeType, IsValid
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Math
 Imports Vertex = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
@@ -330,66 +329,4 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
     End Class
 
-    Public Structure TriangleIndex
-        Public vv0 As Long
-        Public vv1 As Long
-        Public vv2 As Long
-
-        Public Overrides Function ToString() As String
-            Return {vv0, vv1, vv2}.JoinBy(" - ")
-        End Function
-    End Structure
-
-    Public Structure TriangleVertex
-        Public p0 As Point
-        Public p1 As Point
-        Public p2 As Point
-    End Structure
-
-    Public Structure Triangle
-
-        Public P0Index As Integer
-        Public P1Index As Integer
-        Public P2Index As Integer
-        Public Index As Integer
-
-        Public Sub New(p0index As Integer, p1index As Integer, p2index As Integer)
-            Me.P0Index = p0index
-            Me.P1Index = p1index
-            Me.P2Index = p2index
-            Me.Index = -1
-        End Sub
-
-        Public Sub New(p0index As Integer, p1index As Integer, p2index As Integer, index As Integer)
-            Me.P0Index = p0index
-            Me.P1Index = p1index
-            Me.P2Index = p2index
-            Me.Index = index
-        End Sub
-    End Structure
-
-    Public Structure EdgeInfo
-
-        Public P0Index As Integer
-        Public P1Index As Integer
-        Public AdjTriangle As List(Of Integer)
-        Public Flag As Boolean
-        Public Length As Double
-
-        Public Function GetEdgeType() As Integer
-            Return AdjTriangle.Count
-        End Function
-
-        Public Function IsValid() As Boolean
-            Return P0Index <> -1
-        End Function
-
-        Public Sub New(d As Integer)
-            P0Index = -1
-            P1Index = -1
-            Flag = False
-            AdjTriangle = New List(Of Integer)()
-            Length = -1
-        End Sub
-    End Structure
 End Namespace
