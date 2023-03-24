@@ -35,11 +35,18 @@ Public Class DynamicType
                                    TypeAttributes.BeforeFieldInit Or
                                    TypeAttributes.AutoLayout
 
-    Public Shared Function GetTypeBuilder(Optional name As String = Nothing, Optional inheritsFrom As Type = Nothing) As TypeBuilder
+    Public Shared Function GetTypeBuilder(Optional name As String = Nothing,
+                                          Optional inheritsFrom As Type = Nothing,
+                                          Optional isAbstract As Boolean = False) As TypeBuilder
         Dim newTypeName As String = Guid.NewGuid.ToString
         Dim assemblyName = New AssemblyName(newTypeName)
         Dim dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run)
         Dim dynamicModule = dynamicAssembly.DefineDynamicModule("Main")
+        Dim flag As TypeAttributes = DynamicType.flag
+
+        If isAbstract Then
+            flag = flag Or TypeAttributes.Abstract
+        End If
 
         Return dynamicModule.DefineType(If(name, newTypeName), flag, inheritsFrom)
     End Function
