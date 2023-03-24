@@ -37,7 +37,9 @@ Public Class DynamicType
 
     Public Shared Function GetTypeBuilder(Optional name As String = Nothing,
                                           Optional inheritsFrom As Type = Nothing,
-                                          Optional isAbstract As Boolean = False) As TypeBuilder
+                                          Optional isAbstract As Boolean = False,
+                                          Optional sealed As Boolean = False) As TypeBuilder
+
         Dim newTypeName As String = Guid.NewGuid.ToString
         Dim assemblyName = New AssemblyName(newTypeName)
         Dim dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run)
@@ -46,6 +48,9 @@ Public Class DynamicType
 
         If isAbstract Then
             flag = flag Or TypeAttributes.Abstract
+        End If
+        If sealed Then
+            flag = flag Or TypeAttributes.Sealed
         End If
 
         Return dynamicModule.DefineType(If(name, newTypeName), flag, inheritsFrom)

@@ -220,7 +220,7 @@ Namespace ApplicationServices.DynamicInterop
         ''' should be a delegate type
         ''' </param>
         ''' <returns></returns>
-        Private Function GetFunction(entryPoint As String, type As Type) As Object
+        Public Function GetFunction(entryPoint As String, type As Type) As Object
             Dim [function] = GetFunctionAddress(entryPoint)
 
             If [function] = IntPtr.Zero Then
