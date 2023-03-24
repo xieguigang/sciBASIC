@@ -208,6 +208,14 @@ Namespace ApplicationServices.DynamicInterop
             End SyncLock
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="entryPoint"></param>
+        ''' <param name="type">
+        ''' should be a delegate type
+        ''' </param>
+        ''' <returns></returns>
         Private Function GetFunction(entryPoint As String, type As Type) As Object
             Dim [function] = GetFunctionAddress(entryPoint)
 
