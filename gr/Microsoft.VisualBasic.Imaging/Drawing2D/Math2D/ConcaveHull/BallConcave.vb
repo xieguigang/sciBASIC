@@ -98,6 +98,18 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End Function
         End Structure
 
+        Public ReadOnly Property RecomandedRadius() As Double
+            Get
+                Dim r As Double = Double.MinValue
+                For i As Integer = 0 To points.Count - 1
+                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
+                        r = distanceMap(i, rNeigbourList(i)(1))
+                    End If
+                Next
+                Return r
+            End Get
+        End Property
+
         Public Sub New(list As IEnumerable(Of Point))
             Me.points = list _
                 .OrderBy(Function(p) p.X * CDbl(p.Y)) _
@@ -131,18 +143,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Next
             Next
         End Sub
-
-        Public ReadOnly Property RecomandedRadius() As Double
-            Get
-                Dim r As Double = Double.MinValue
-                For i As Integer = 0 To points.Count - 1
-                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
-                        r = distanceMap(i, rNeigbourList(i)(1))
-                    End If
-                Next
-                Return r
-            End Get
-        End Property
 
         Public Function GetMinEdgeLength() As Double
             Dim min As Double = Double.MaxValue
