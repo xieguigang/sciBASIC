@@ -1,69 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::2bd52c0a813f1414e69524e348c82497, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\BallConcave.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 301
-    '    Code Lines: 253
-    ' Comment Lines: 11
-    '   Blank Lines: 37
-    '     File Size: 11.82 KB
+' Summaries:
 
 
-    '     Class BallConcave
-    ' 
-    '         Properties: RecomandedRadius
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CheckValid, CompareAngel, GetCircleCenter, GetConcave_Ball, GetConcave_Edge
-    '                   GetCross, GetInRNeighbourList, GetMinEdgeLength, GetNextPoint_BallPivoting, GetNextPoint_EdgePivoting
-    '                   GetSortedNeighbours, HasPointsInCircle, IsInCircle
-    ' 
-    '         Sub: InitDistanceMap, InitNearestList, SortAdjListByAngel
-    '         Structure Point2dInfo
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: CompareTo, ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 301
+'    Code Lines: 253
+' Comment Lines: 11
+'   Blank Lines: 37
+'     File Size: 11.82 KB
+
+
+'     Class BallConcave
+' 
+'         Properties: RecomandedRadius
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CheckValid, CompareAngel, GetCircleCenter, GetConcave_Ball, GetConcave_Edge
+'                   GetCross, GetInRNeighbourList, GetMinEdgeLength, GetNextPoint_BallPivoting, GetNextPoint_EdgePivoting
+'                   GetSortedNeighbours, HasPointsInCircle, IsInCircle
+' 
+'         Sub: InitDistanceMap, InitNearestList, SortAdjListByAngel
+'         Structure Point2dInfo
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: CompareTo, ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Point = System.Drawing.PointF
 Imports stdNum = System.Math
@@ -96,6 +97,18 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Return Convert.ToString(Point) & "," & Index & "," & DistanceTo
             End Function
         End Structure
+
+        Public ReadOnly Property RecomandedRadius() As Double
+            Get
+                Dim r As Double = Double.MinValue
+                For i As Integer = 0 To points.Count - 1
+                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
+                        r = distanceMap(i, rNeigbourList(i)(1))
+                    End If
+                Next
+                Return r
+            End Get
+        End Property
 
         Public Sub New(list As IEnumerable(Of Point))
             Me.points = list _
@@ -130,18 +143,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Next
             Next
         End Sub
-
-        Public ReadOnly Property RecomandedRadius() As Double
-            Get
-                Dim r As Double = Double.MinValue
-                For i As Integer = 0 To points.Count - 1
-                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
-                        r = distanceMap(i, rNeigbourList(i)(1))
-                    End If
-                Next
-                Return r
-            End Get
-        End Property
 
         Public Function GetMinEdgeLength() As Double
             Dim min As Double = Double.MaxValue
@@ -360,6 +361,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Return adj
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetCross(a As Point, b As Point) As Double
             Return a.X * b.Y - a.Y * b.X
         End Function

@@ -179,6 +179,14 @@ Namespace Drawing2D
             Me.Padding = padding
         End Sub
 
+        Public Function GetXLinearScaleRange() As Double()
+            Return New Double() {Padding.Left, Size.Width - Padding.Right}
+        End Function
+
+        Public Function GetYLinearScaleRange() As Double()
+            Return New Double() {Padding.Top, Size.Height - Padding.Bottom}
+        End Function
+
         Public Function TopCentra(size As Size) As Point
             Dim left = (Me.Size.Width - size.Width) / 2
             Dim top = (Padding.Top - size.Height) / 2

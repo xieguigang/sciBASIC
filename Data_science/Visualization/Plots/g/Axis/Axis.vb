@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
@@ -98,6 +99,19 @@ Namespace Graphic.Axis
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion, scaler As DataScaler, xlab$, ylab$, theme As Theme)
+            Call g.DrawAxis(region:=region, scaler:=scaler,
+                            showGrid:=theme.drawGrid, xlabel:=xlab, ylabel:=ylab,
+                            labelFontStyle:=theme.axisLabelCSS, xlayout:=theme.xAxisLayout,
+                            ylayout:=theme.yAxisLayout, gridFill:=theme.gridFill,
+                            gridX:=theme.gridStrokeX, gridY:=theme.gridStrokeY, axisStroke:=theme.axisStroke,
+                            tickFontStyle:=theme.axisTickCSS,
+                            htmlLabel:=theme.htmlLabel, XtickFormat:=theme.XaxisTickFormat, YtickFormat:=theme.YaxisTickFormat,
+                            xlabelRotate:=theme.xAxisRotate)
+        End Sub
+
         ''' <summary>
         ''' 一般而言，``X``坐标轴是绘制在<paramref name="region"/>的底部的
         ''' </summary>
@@ -106,17 +120,17 @@ Namespace Graphic.Axis
         ''' <param name="scaler"></param>
         ''' <param name="showGrid"></param>
         ''' <param name="offset"></param>
-        ''' <param name="xlabel$"></param>
-        ''' <param name="ylabel$"></param>
+        ''' <param name="xlabel"></param>
+        ''' <param name="ylabel"></param>
         ''' <param name="xlayout"></param>
         ''' <param name="ylayout"></param>
-        ''' <param name="labelFont$"></param>
-        ''' <param name="axisStroke$"></param>
-        ''' <param name="gridFill$"></param>
+        ''' <param name="labelFont"></param>
+        ''' <param name="axisStroke"></param>
+        ''' <param name="gridFill"></param>
         ''' <param name="htmlLabel"></param>
-        ''' <param name="XtickFormat$"></param>
-        ''' <param name="YtickFormat$"></param>
-        ''' <param name="tickFontStyle$"></param>
+        ''' <param name="XtickFormat"></param>
+        ''' <param name="YtickFormat"></param>
+        ''' <param name="tickFontStyle"></param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As DataScaler,

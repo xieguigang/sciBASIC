@@ -58,11 +58,42 @@ Namespace Drawing2D.Math2D.ConcaveHull
     <HideModuleName>
     Public Module Extensions
 
-        <Extension> Public Function ConcaveHull(points As IEnumerable(Of PointF), Optional r# = -1) As PointF()
+        ''' <summary>
+        ''' The Concave Hull of a Set of Points
+        ''' 
+        ''' In geometry, the convex hull or convex envelope or convex closure of a shape is the 
+        ''' smallest convex set that contains it. The convex hull may be defined either as the 
+        ''' intersection of all convex sets containing a given subset of a Euclidean space, or 
+        ''' equivalently as the set of all convex combinations of points in the subset. For a 
+        ''' bounded subset of the plane, the convex hull may be visualized as the shape enclosed 
+        ''' by a rubber band stretched around the subset.
+        '''
+        ''' Convex hulls of open sets are open, and convex hulls of compact sets are compact. Every 
+        ''' compact convex set is the convex hull of its extreme points. The convex hull operator 
+        ''' is an example of a closure operator, and every antimatroid can be represented by applying
+        ''' this closure operator to finite sets of points. The algorithmic problems of finding the 
+        ''' convex hull of a finite set of points in the plane or other low-dimensional Euclidean 
+        ''' spaces, and its dual problem of intersecting half-spaces, are fundamental problems of 
+        ''' computational geometry. They can be solved in time (log)(n\log n) for two or three 
+        ''' dimensional point sets, and in time matching the worst-case output complexity given by 
+        ''' the upper bound theorem in higher dimensions.
+        '''
+        ''' As well as for finite point sets, convex hulls have also been studied for simple polygons, 
+        ''' Brownian motion, space curves, and epigraphs of functions. Convex hulls have wide 
+        ''' applications in mathematics, statistics, combinatorial optimization, economics, geometric 
+        ''' modeling, and ethology. Related structures include the orthogonal convex hull, convex 
+        ''' layers, Delaunay triangulation and Voronoi diagram, and convex skull.
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="r">the ball radius</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ConcaveHull(points As IEnumerable(Of PointF), Optional r# = -1) As PointF()
             With New BallConcave(points)
                 If r# <= 0 Then
                     r# = .RecomandedRadius
                 End If
+
                 Return .GetConcave_Ball(r).ToArray
             End With
         End Function

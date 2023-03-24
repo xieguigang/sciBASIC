@@ -63,7 +63,6 @@
 Imports System.Collections.Specialized
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -385,8 +384,6 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
-
         <Extension>
         Public Iterator Function EnumerateTuples(Of T)(table As Dictionary(Of String, T)) As IEnumerable(Of (name As String, obj As T))
             For Each entry In table
@@ -400,8 +397,6 @@ Namespace ComponentModel.Collection
                 Yield (entry.Key, entry.Value)
             Next
         End Function
-
-#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

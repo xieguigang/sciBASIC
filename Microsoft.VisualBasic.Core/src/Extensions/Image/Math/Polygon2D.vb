@@ -105,6 +105,7 @@ Namespace Imaging.Math2D
         End Property
 
         Default Public Property Item(index As Integer) As PointF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New PointF(xpoints(index), ypoints(index))
             End Get
@@ -117,6 +118,7 @@ Namespace Imaging.Math2D
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(x As Integer(), y As Integer())
             Call Me.New(
                 x:=x.Select(Function(i) CDbl(i)).ToArray,
@@ -148,6 +150,7 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(points As Layout2D())
             Call Me.New(
                 x:=points.Select(Function(p) p.X).ToArray,
@@ -155,6 +158,20 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        ''' <summary>
+        ''' union multiple polygon
+        ''' </summary>
+        ''' <param name="polygons"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(polygons As Polygon2D())
+            Call Me.New(
+                x:=polygons.Select(Function(p) p.xpoints).IteratesALL.ToArray,
+                y:=polygons.Select(Function(p) p.ypoints).IteratesALL.ToArray
+            )
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(points As IEnumerable(Of Point))
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
         End Sub
