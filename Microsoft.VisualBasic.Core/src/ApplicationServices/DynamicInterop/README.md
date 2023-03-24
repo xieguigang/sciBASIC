@@ -9,7 +9,10 @@ Facilities to load native DLLs from .NET, on Unix, Windows or MacOS.
 
 # Purpose
 
-This library is designed to facilitate load dynamic link libraries (called shared libraries on unix-type of platforms) from `.NET`, and the interop between the two worlds. The loading mechanism adapts to the operating system it is running on. It is an offshoot from the [R.NET](http://rdotnet.codeplex.com) project (source code now hosted [on github](https://github.com/rdotnet/rdotnet)). 
+This library is designed to facilitate load dynamic link libraries (called shared libraries on unix-type of platforms) 
+from `.NET`, and the interop between the two worlds. The loading mechanism adapts to the operating system it is running on. 
+It is an offshoot from the [R.NET](http://rdotnet.codeplex.com) project (source code now hosted 
+[on github](https://github.com/rdotnet/rdotnet)). 
 
 
 ```c

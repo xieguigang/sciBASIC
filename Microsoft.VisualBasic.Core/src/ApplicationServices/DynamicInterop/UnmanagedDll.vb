@@ -62,7 +62,6 @@ Imports System.Collections.Concurrent
 Imports System.IO
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ApplicationServices.DynamicInterop
 
@@ -263,7 +262,9 @@ Namespace ApplicationServices.DynamicInterop
 
         Private Function checkedGetSymbolHandle(symbolName As String) As IntPtr
             Dim addr = DangerousGetHandle(symbolName)
-            If IntPtr.Zero = addr Then Throw New ArgumentException(String.Format("Could not retrieve a pointer for the symbol '{0}' in file '{1}'", symbolName, FileName))
+            If IntPtr.Zero = addr Then
+                Throw New ArgumentException(String.Format("Could not retrieve a pointer for the symbol '{0}' in file '{1}'", symbolName, FileName))
+            End If
             Return addr
         End Function
 
