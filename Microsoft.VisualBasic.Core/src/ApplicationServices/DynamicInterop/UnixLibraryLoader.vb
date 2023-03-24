@@ -111,6 +111,10 @@ Namespace ApplicationServices.DynamicInterop
             Return searchPaths
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"UNIX<libdl.so>"
+        End Function
+
         <DllImport("libdl")>
         Private Shared Function dlopen(
         <MarshalAs(UnmanagedType.LPStr)> filename As String, flag As Integer) As IntPtr

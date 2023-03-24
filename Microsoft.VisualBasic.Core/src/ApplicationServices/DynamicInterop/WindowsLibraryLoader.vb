@@ -81,6 +81,10 @@ Namespace ApplicationServices.DynamicInterop
             Return handle
         End Function
 
+        Public Overrides Function ToString() As String
+            Return "WIN32<kernel32.dll>"
+        End Function
+
         Public Function GetLastError() As String Implements IDynamicLibraryLoader.GetLastError
             ' see for instance http://blogs.msdn.com/b/shawnfa/archive/2004/09/10/227995.aspx 
             ' and http://blogs.msdn.com/b/adam_nathan/archive/2003/04/25/56643.aspx
