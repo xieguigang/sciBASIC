@@ -63,23 +63,28 @@ Namespace ApplicationServices.DynamicInterop
     Friend NotInheritable Class SafeHandleUnmanagedDll
         Inherits SafeHandleZeroOrMinusOneIsInvalid
 
+        Private ReadOnly libraryLoader As IDynamicLibraryLoader
+
         Public Sub New(dllName As String)
             MyBase.New(True)
-            Dim libraryLoader As IDynamicLibraryLoader = Nothing
 
+            Me.libraryLoader = GetNativeLibraryLoader()
+            Me.handle = libraryLoader.LoadLibrary(dllName)
+        End Sub
+
+        Private Shared Function GetNativeLibraryLoader() As IDynamicLibraryLoader
             If IsUnix Then
-                libraryLoader = New UnixLibraryLoader()
+                Return New UnixLibraryLoader()
             ElseIf Environment.OSVersion.Platform = PlatformID.Win32NT Then
-                libraryLoader = New WindowsLibraryLoader()
+                Return New WindowsLibraryLoader()
             Else
                 Throw New NotSupportedException(GetPlatformNotSupportedMsg())
             End If
+        End Function
 
-            Me.libraryLoader = libraryLoader
-            handle = libraryLoader.LoadLibrary(dllName)
-        End Sub
-
-        Private ReadOnly libraryLoader As IDynamicLibraryLoader
+        Public Overrides Function ToString() As String
+            Return $"[{handle.ToString}] native_library_loader={libraryLoader}"
+        End Function
 
         ''' <summary>
         ''' Frees the native library this objects represents

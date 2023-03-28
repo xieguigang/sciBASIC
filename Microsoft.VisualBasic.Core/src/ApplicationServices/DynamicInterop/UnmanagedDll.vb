@@ -91,25 +91,29 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <param name="dllName">The DLL's name.</param>
         Public Sub New(dllName As String)
-            If Equals(dllName, Nothing) Then
+            If dllName Is Nothing Then
                 Throw New ArgumentNullException("dllName", "The name of the library to load is a null reference")
-            End If
-
-            If Equals(dllName, String.Empty) Then
+            ElseIf dllName.StringEmpty Then
                 Throw New ArgumentException("The name of the library to load is an empty string", "dllName")
+            Else
+                handle = New SafeHandleUnmanagedDll(dllName)
             End If
-
-            handle = New SafeHandleUnmanagedDll(dllName)
 
             If handle.IsInvalid Then
-                ' Retrieve the last error as soon as possible, 
-                ' to limit the risk of another call to the dynamic loader overriding the error message;
                 Dim nativeError = handle.GetLastError()
+
+                ' Retrieve the last error as soon as possible, 
+                ' to limit the risk of another call to the dynamic
+                ' loader overriding the error message;
                 ReportLoadLibError(dllName, nativeError)
             End If
 
             FileName = dllName
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{handle} {FileName}"
+        End Function
 
         Private Sub ReportLoadLibError(dllName As String, nativeError As String)
             ' ThrowFailedLibraryLoad(dllName, nativeError)
@@ -208,7 +212,15 @@ Namespace ApplicationServices.DynamicInterop
             End SyncLock
         End Function
 
-        Private Function GetFunction(entryPoint As String, type As Type) As Object
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="entryPoint"></param>
+        ''' <param name="type">
+        ''' should be a delegate type
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetFunction(entryPoint As String, type As Type) As Object
             Dim [function] = GetFunctionAddress(entryPoint)
 
             If [function] = IntPtr.Zero Then
