@@ -204,11 +204,14 @@ Namespace Net.Http
         ''' <summary>
         ''' Convert the Image from Input to Base64 Encoded String
         ''' </summary>
-        ''' <param name="ImageInput"></param>
-        ''' <returns></returns>
-        <Extension> Public Function ToBase64String(ImageInput As Image, Optional format As ImageFormats = ImageFormats.Png) As String
+        ''' <param name="img"></param>
+        ''' <returns>
+        ''' this function will returns empty string if the error happends
+        ''' </returns>
+        <Extension>
+        Public Function ToBase64String(img As Image, Optional format As ImageFormats = ImageFormats.Png) As String
             Try
-                Return __toBase64String(ImageInput, GetFormat(format))
+                Return __toBase64String(img, GetFormat(format))
             Catch ex As Exception
                 Call ex.PrintException
                 Return ""
@@ -222,7 +225,7 @@ Namespace Net.Http
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToBase64String(bmp As Bitmap, Optional format As ImageFormats = ImageFormats.Png) As String
-            Return ToBase64String(ImageInput:=bmp, format:=format)
+            Return ToBase64String(img:=bmp, format:=format)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

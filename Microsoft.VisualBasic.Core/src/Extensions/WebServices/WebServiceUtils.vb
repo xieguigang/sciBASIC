@@ -67,7 +67,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -75,14 +74,15 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
-#If NET_48 = 1 Or netcore5 = 1 Then
-Imports Microsoft.VisualBasic.Net
-#End If
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
+
+#If NET_48 Or NETCOREAPP Then
+Imports Microsoft.VisualBasic.Net
+#End If
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -848,14 +848,12 @@ RE0:
     Public Function GetMyIPAddress() As String
         Dim hasInternet As Boolean = False
 
-#If NET_48 = 1 Or netcore5 = 1 Then
-
+#If NET_48 Or NETCOREAPP Then
         Try
             hasInternet = Not PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
         Catch ex As Exception
             hasInternet = False
         End Try
-
 #End If
 
         If hasInternet Then

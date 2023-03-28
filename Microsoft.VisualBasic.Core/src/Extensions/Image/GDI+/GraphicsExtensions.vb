@@ -427,8 +427,7 @@ Namespace Imaging
                     If throwEx Then
                         Throw New Exception(path, ex)
                     Else
-                        Call App.LogException(New Exception(path, ex))
-                        Return Nothing
+                        Return App.LogException(New Exception(path, ex))
                     End If
                 End Try
             End If
@@ -436,14 +435,31 @@ Namespace Imaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("LoadImage")>
-        <Extension> Public Function LoadImage(rawStream As Byte()) As Image
-            Return Image.FromStream(stream:=New MemoryStream(rawStream))
+        <Extension>
+        Public Function LoadImage(rawStream As Byte(), Optional throwEx As Boolean = True) As Image
+            Try
+                Return Image.FromStream(stream:=New MemoryStream(rawStream))
+            Catch ex As Exception
+                If throwEx Then
+                    Throw
+                Else
+                    Return App.LogException(ex)
+                End If
+            End Try
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function LoadImage(stream As Stream) As Image
-            Return Image.FromStream(stream)
+        Public Function LoadImage(stream As Stream, Optional throwEx As Boolean = True) As Image
+            Try
+                Return Image.FromStream(stream)
+            Catch ex As Exception
+                If throwEx Then
+                    Throw
+                Else
+                    Return App.LogException(ex)
+                End If
+            End Try
         End Function
 
         ''' <summary>
@@ -453,7 +469,8 @@ Namespace Imaging
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Get.RawStream")>
-        <Extension> Public Function GetStreamBuffer(image As Image) As Byte()
+        <Extension>
+        Public Function GetStreamBuffer(image As Image) As Byte()
             Return image.ToStream.ToArray
         End Function
 
