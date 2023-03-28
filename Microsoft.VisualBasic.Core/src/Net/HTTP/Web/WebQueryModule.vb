@@ -69,6 +69,12 @@ Namespace Net.Http
 
     Public MustInherit Class WebQueryModule(Of Context) : Inherits WebQuery(Of Context)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="cache">the cache directory path</param>
+        ''' <param name="interval"></param>
+        ''' <param name="offline"></param>
         Sub New(<CallerMemberName>
                 Optional cache$ = Nothing,
                 Optional interval% = -1,

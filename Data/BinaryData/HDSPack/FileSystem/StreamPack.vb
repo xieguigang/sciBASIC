@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::75126c4ac890131e3a819d343f677491, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 449
-    '    Code Lines: 271
-    ' Comment Lines: 116
-    '   Blank Lines: 62
-    '     File Size: 17.57 KB
+' Summaries:
 
 
-    '     Class StreamPack
-    ' 
-    '         Properties: files, globalAttributes, is_readonly, superBlock
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CreateNewStream, Delete, FileExists, FileSize, GetGlobalAttribute
-    '                   GetObject, (+2 Overloads) OpenBlock, OpenFile, ParseTree, ReadAllText
-    '                   ToString, WriteText
-    ' 
-    '         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
-    '              ParseMetadata, (+2 Overloads) SetAttribute
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 449
+'    Code Lines: 271
+' Comment Lines: 116
+'   Blank Lines: 62
+'     File Size: 17.57 KB
+
+
+'     Class StreamPack
+' 
+'         Properties: files, globalAttributes, is_readonly, superBlock
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CreateNewStream, Delete, FileExists, FileSize, GetGlobalAttribute
+'                   GetObject, (+2 Overloads) OpenBlock, OpenFile, ParseTree, ReadAllText
+'                   ToString, WriteText
+' 
+'         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
+'              ParseMetadata, (+2 Overloads) SetAttribute
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -111,10 +111,13 @@ Namespace FileSystem
         End Property
 
         ''' <summary>
-        ''' 
+        ''' open or create new stream pack data object
         ''' </summary>
         ''' <param name="filepath"></param>
         ''' <param name="init_size"></param>
+        ''' <param name="meta_size">
+        ''' default 1MB for save the header data
+        ''' </param>
         Sub New(filepath As String,
                 Optional init_size As Integer = 1024,
                 Optional meta_size As Long = 1024 * 1024,
@@ -257,6 +260,10 @@ Namespace FileSystem
             Else
                 Return buffer.ToString
             End If
+        End Function
+
+        Public Shared Function TestMagic(magic As Byte()) As Boolean
+            Return Encoding.ASCII.GetString(magic) = StreamPack.Magic
         End Function
 
         Public Shared Function TestMagic(buffer As Stream) As Boolean
