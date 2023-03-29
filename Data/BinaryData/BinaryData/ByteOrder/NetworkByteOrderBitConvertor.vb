@@ -264,6 +264,18 @@ Public Module NetworkByteOrderBitConvertor
     ''' a specified position in a byte array.
     ''' </summary>
     ''' <param name="value">An array of bytes that includes the eight bytes to convert.</param>
+    ''' <returns>A double-precision floating point number formed by eight bytes beginning at startIndex.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ToDouble(value() As Byte) As Double
+        Return f64(value, Scan0)
+    End Function
+
+    ''' <summary>
+    ''' Returns a double-precision floating point number converted from eight bytes at
+    ''' a specified position in a byte array.
+    ''' </summary>
+    ''' <param name="value">An array of bytes that includes the eight bytes to convert.</param>
     ''' <param name="startIndex">The starting position within value.</param>
     ''' <returns>A double-precision floating point number formed by eight bytes beginning at startIndex.</returns>
     ''' 

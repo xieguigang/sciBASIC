@@ -71,6 +71,10 @@ Namespace My.JavaScript
 
         Public ReadOnly Property IsConstant As Boolean
             Get
+                If Accessor Is Nothing Then
+                    Return True
+                End If
+
                 Return Accessor.member Is Nothing
             End Get
         End Property

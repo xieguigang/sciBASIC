@@ -804,7 +804,7 @@ Public Module PathExtensions
 
         ' Console.WriteLine(UNCprefix)
 
-        file = file.Replace("\", "/")
+        file = file.Replace("\", "/").TrimEnd("/"c)
 
         Dim parent As String = ""
         Dim t As String() = file.Split("/"c)
