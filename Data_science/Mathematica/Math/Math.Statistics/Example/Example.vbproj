@@ -132,17 +132,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{2cfa5a47-055c-4503-8193-3b8897f3abe7}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Math\Math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Microsoft.VisualBasic.Mathematical</Name>
+    <ProjectReference Include="..\..\Math\Math.NET5.vbproj">
+      <Project>{6ada3093-d6fd-486a-89ed-117f191b94a7}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Math.Statistics.vbproj">
-      <Project>{fe321be1-a0e5-4bab-8b37-4f54a8e2187e}</Project>
-      <Name>Math.Statistics</Name>
+    <ProjectReference Include="..\stats-netcore5.vbproj">
+      <Project>{f1570c67-192f-4f54-b77b-9f2e8d4018ec}</Project>
+      <Name>stats-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
