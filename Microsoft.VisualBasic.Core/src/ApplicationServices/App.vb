@@ -881,6 +881,9 @@ Public Module App
     ''' <param name="ex"></param>
     ''' <param name="trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
     ''' <returns>这个函数总是返回空值的</returns>
+    ''' <remarks>
+    ''' this debug logging function will returns nothing always!
+    ''' </remarks>
     <ExportAPI("LogException")>
     Public Function LogException(ex As Exception, <CallerMemberName> Optional ByRef trace$ = "") As Object
         Try

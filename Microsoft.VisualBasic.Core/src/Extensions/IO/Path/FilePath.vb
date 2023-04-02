@@ -118,6 +118,13 @@ Namespace FileIO.Path
                 .ToArray
         End Sub
 
+        Public Function ExtensionSuffix(ParamArray suffix As String()) As Boolean
+            Dim ext As String = FileName.ExtensionSuffix
+            Dim test = suffix.Any(Function(si) si = ext)
+
+            Return test
+        End Function
+
         Private Function combineDirectory() As String
             If IsDirectory Then
                 Return Components.JoinBy("/")

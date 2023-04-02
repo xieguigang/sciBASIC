@@ -71,6 +71,9 @@ Public Module Debugger
     ''' <returns>
     ''' contains data file and file group object
     ''' </returns>
+    ''' <remarks>
+    ''' get all the files/dirs inside current dir object and its child dirs
+    ''' </remarks>
     <Extension>
     Public Iterator Function ListFiles(dir As StreamGroup) As IEnumerable(Of StreamObject)
         For Each file As StreamObject In dir.files

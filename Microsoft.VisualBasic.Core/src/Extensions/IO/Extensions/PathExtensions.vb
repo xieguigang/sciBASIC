@@ -165,6 +165,10 @@ Public Module PathExtensions
     ''' no extension name or path string is empty, then empty string 
     ''' value will be returned.
     ''' </returns>
+    ''' <remarks>
+    ''' this is a safe function, which mean the value Nothing will never 
+    ''' be returns from this function.
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path As String) As String
@@ -800,7 +804,7 @@ Public Module PathExtensions
 
         ' Console.WriteLine(UNCprefix)
 
-        file = file.Replace("\", "/")
+        file = file.Replace("\", "/").TrimEnd("/"c)
 
         Dim parent As String = ""
         Dim t As String() = file.Split("/"c)
