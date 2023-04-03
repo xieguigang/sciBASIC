@@ -157,6 +157,14 @@ Namespace Net.Http
             Return ms
         End Function
 
+        <Extension>
+        Public Function GZipAsBase64(bytes As IEnumerable(Of Byte), Optional noMagic As Boolean = False) As String
+            Using ms As New MemoryStream(bytes.ToArray)
+                Call ms.Seek(0, SeekOrigin.Begin)
+                Return ms.GZipAsBase64(noMagic)
+            End Using
+        End Function
+
         ''' <summary>
         ''' 将目标流对象之中的数据进行zip压缩，然后转换为base64字符串
         ''' </summary>
