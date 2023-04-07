@@ -241,6 +241,13 @@ Namespace Imaging.BitmapImage
             Next
         End Function
 
+        Public Shared Function GetColor(uint As UInteger) As Color
+            Dim bytes As Byte() = BitConverter.GetBytes(uint)
+            Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
+
+            Return color
+        End Function
+
         ''' <summary>
         ''' helper function for hqx algorithm module
         ''' </summary>
