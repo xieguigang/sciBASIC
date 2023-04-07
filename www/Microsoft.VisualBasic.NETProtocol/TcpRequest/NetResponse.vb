@@ -72,6 +72,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Parallel
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace HTTP
 
@@ -739,10 +740,16 @@ Namespace HTTP
         ''' <returns></returns>
         <Extension>
         Public Function IsHTTP_RFC(response As RequestStream) As Boolean
-            Dim data As String = response.GetUTF8String
-            Dim isHTTP As Boolean = String.Equals(Regex.Match(data, "HTTP[/]\d{3}").Value, data) OrElse data.StartsWith("HTTP/")
+            If response.Protocol <> HTTP_RFC.RFC_OK AndAlso response.Protocol <> 0 Then
+                Return True
+            Else
+                Dim data As String = response.GetUTF8String
+                Dim isHTTPErrText As Boolean = r.Match(data, "HTTP[/]\d{3}").Value.TextEquals(data)
 
-            Return isHTTP AndAlso response.Protocol <> HTTP_RFC.RFC_OK
+                isHTTPErrText = isHTTPErrText OrElse data.StartsWith("HTTP/")
+
+                Return isHTTPErrText AndAlso response.Protocol <> HTTP_RFC.RFC_OK
+            End If
         End Function
     End Module
 End Namespace

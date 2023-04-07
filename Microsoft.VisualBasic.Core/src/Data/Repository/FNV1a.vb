@@ -91,7 +91,7 @@ Namespace Data.Repository
             Return hash1 + hash2 * 1566083941
         End Function
 
-        <Extension()>
+        <Extension>
         Public Function GetHashCode(Of T)(x As T, getFields As Func(Of T, IEnumerable(Of Object))) As Integer
             Return GetHashCode(getFields(x))
         End Function
@@ -114,17 +114,17 @@ Namespace Data.Repository
             End If
         End Function
 
-        Public Function GetHashCode(targets As IEnumerable(Of String)) As Integer
-            Const offset As Integer = 2166136261
-            Const prime As Integer = 16777619
+        Public Function GetHashCode(targets As IEnumerable(Of String)) As UInteger
+            Const offset As UInteger = 2166136261
+            Const prime As Long = 16777619
 
             Return targets.Aggregate(
                 seed:=offset,
-                func:=Function(hashCode As Integer, value As String)
+                func:=Function(hashCode As UInteger, value As String) As UInteger
                           If value Is Nothing OrElse value = "" Then
                               Return (hashCode Xor 0) * prime
                           Else
-                              Return (hashCode Xor GetDeterministicHashCode(value)) * prime
+                              Return (hashCode Xor CLng(GetDeterministicHashCode(value))) * prime
                           End If
                       End Function)
         End Function

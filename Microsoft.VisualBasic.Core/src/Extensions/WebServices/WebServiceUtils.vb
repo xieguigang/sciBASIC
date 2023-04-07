@@ -79,6 +79,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
+Imports System.Threading
 
 #If NET_48 Or NETCOREAPP Then
 Imports Microsoft.VisualBasic.Net
@@ -537,6 +538,26 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
+    ''' A wrapper web client for set a longer operation timeout
+    ''' </summary>
+    Private Class WebClient : Inherits System.Net.WebClient
+
+        Public ReadOnly Property timeout As Integer
+
+        Sub New(timeout As Integer)
+            Me.timeout = timeout
+        End Sub
+
+        Protected Overrides Function GetWebRequest(address As Uri) As WebRequest
+            Dim request As HttpWebRequest = MyBase.GetWebRequest(address)
+            request.Timeout = timeout
+            request.ReadWriteTimeout = timeout
+            Return request
+        End Function
+
+    End Class
+
+    ''' <summary>
     ''' POST http request for get html.
     ''' (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
     ''' <see cref="Post(String, Dictionary(Of String, String()), String, String, String)"/>方法)
@@ -554,7 +575,8 @@ Public Module WebServiceUtils
                          Optional Referer$ = "",
                          Optional proxy$ = Nothing,
                          Optional contentEncoding As Encodings = Encodings.UTF8,
-                         Optional retry As Integer = 5) As WebResponseResult
+                         Optional retry As Integer = 5,
+                         Optional timeout As Integer = 1000 * 60 * 30) As WebResponseResult
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -563,8 +585,7 @@ Public Module WebServiceUtils
                       End Function
         }
 
-        Using request As New WebClient
-
+        Using request As New WebClient(timeout)
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
@@ -733,7 +754,7 @@ Public Module WebServiceUtils
     End Sub
 
     <Extension>
-    Public Sub SetProxy(ByRef request As WebClient, proxy As String)
+    Public Sub SetProxy(ByRef request As System.Net.WebClient, proxy As String)
         request.Proxy = proxy.GetProxy
     End Sub
 
@@ -767,11 +788,12 @@ Public Module WebServiceUtils
                                  Optional retry% = 0,
                                  Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
                                  Optional refer$ = Nothing,
+                                 Optional timeout As Integer = 1000 * 60 * 30,
                                  <CallerMemberName>
                                  Optional trace$ = Nothing) As Boolean
 RE0:
         Try
-            Using browser As New WebClient()
+            Using browser As New WebClient(timeout)
                 If Not String.IsNullOrEmpty(proxy) Then
                     Call browser.SetProxy(proxy)
                 End If
