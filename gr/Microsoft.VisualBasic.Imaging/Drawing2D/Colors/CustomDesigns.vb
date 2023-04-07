@@ -164,7 +164,9 @@ Namespace Drawing2D.Colors
         ''' <param name="src"></param>
         ''' <param name="topN"></param>
         ''' <returns></returns>
-        Public Shared Iterator Function ExtractThemeColors(src As Bitmap, Optional topN As Integer = 6) As IEnumerable(Of Color)
+        Public Shared Iterator Function ExtractThemeColors(src As Bitmap,
+                                                           Optional topN As Integer = 6,
+                                                           Optional tolerance As Double = 6) As IEnumerable(Of Color)
             ' get all colors at first
             Dim size As Size = src.Size
             Dim copy As New Bitmap(size.Width, size.Height, format:=PixelFormat.Format32bppArgb)
@@ -175,7 +177,7 @@ Namespace Drawing2D.Colors
             Dim allColors = buffer.GetPixelsAll.ToArray
             ' group all colors
             Dim colorGroups = allColors _
-                .GroupBy(Function(c) c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2, offsets:=3) _
+                .GroupBy(Function(c) c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2, offsets:=tolerance) _
                 .OrderByDescending(Function(c) c.Length) _
                 .ToArray
 
