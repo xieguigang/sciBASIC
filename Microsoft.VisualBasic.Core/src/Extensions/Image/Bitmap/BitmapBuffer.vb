@@ -232,6 +232,15 @@ Namespace Imaging.BitmapImage
             Return ints
         End Function
 
+        Public Iterator Function GetPixelsAll() As IEnumerable(Of Color)
+            For Each uint As UInteger In GetARGBStream()
+                Dim bytes As Byte() = BitConverter.GetBytes(uint)
+                Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
+
+                Yield color
+            Next
+        End Function
+
         ''' <summary>
         ''' helper function for hqx algorithm module
         ''' </summary>

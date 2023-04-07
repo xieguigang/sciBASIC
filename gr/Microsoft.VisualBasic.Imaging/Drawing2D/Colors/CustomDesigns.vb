@@ -1,59 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::4048fa476e0ce34a06dd4c5f23427ec3, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 86
-    ' Comment Lines: 8
-    '   Blank Lines: 10
-    '     File Size: 3.92 KB
+' Summaries:
 
 
-    '     Class CustomDesigns
-    ' 
-    '         Function: ClusterColour, FlexImaging, Halloween, Paper, Rainbow
-    '                   TSF, Unicorn, Vibrant
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 86
+' Comment Lines: 8
+'   Blank Lines: 10
+'     File Size: 3.92 KB
+
+
+'     Class CustomDesigns
+' 
+'         Function: ClusterColour, FlexImaging, Halloween, Paper, Rainbow
+'                   TSF, Unicorn, Vibrant
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 
 Namespace Drawing2D.Colors
 
@@ -152,6 +156,34 @@ Namespace Drawing2D.Colors
                 Color.FromArgb(78, 45, 69),
                 Color.FromArgb(202, 161, 169)
             }
+        End Function
+
+        ''' <summary>
+        ''' extract the theme colors from the given bitmap image
+        ''' </summary>
+        ''' <param name="src"></param>
+        ''' <param name="topN"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ExtractThemeColors(src As Bitmap, Optional topN As Integer = 6) As IEnumerable(Of Color)
+            ' get all colors at first
+            Dim size As Size = src.Size
+            Dim copy As New Bitmap(size.Width, size.Height, format:=PixelFormat.Format32bppArgb)
+            Dim g As Graphics = Graphics.FromImage(copy)
+            Call g.DrawImageUnscaled(src, New Point)
+            Call g.Flush()
+            Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(copy, ImageLockMode.ReadOnly)
+            Dim allColors = buffer.GetPixelsAll.ToArray
+            ' group all colors
+            Dim colorGroups = allColors _
+                .GroupBy(Function(c) c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2, offsets:=3) _
+                .OrderByDescending(Function(c) c.Length) _
+                .ToArray
+
+            For i As Integer = 0 To topN - 1
+                If i < colorGroups.Length Then
+                    Yield colorGroups(i).Average
+                End If
+            Next
         End Function
     End Class
 End Namespace

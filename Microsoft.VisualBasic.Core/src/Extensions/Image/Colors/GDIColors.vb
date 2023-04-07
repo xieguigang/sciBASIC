@@ -129,6 +129,11 @@ Namespace Imaging
             Return Color.FromArgb(alphaValue, c.R, c.G, c.B)
         End Function
 
+        ''' <summary>
+        ''' Create an average color via the average value of the A,R,G,B channels
+        ''' </summary>
+        ''' <param name="colors"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Average(colors As IEnumerable(Of Color)) As Color
             Dim data As Color() = colors.ToArray
