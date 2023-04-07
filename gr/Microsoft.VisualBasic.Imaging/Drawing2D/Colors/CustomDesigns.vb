@@ -56,6 +56,8 @@ Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -156,6 +158,14 @@ Namespace Drawing2D.Colors
             }
         End Function
 
+        Public Shared Function Order(colors As IEnumerable(Of Color)) As Color()
+            Return (From c As Color
+                    In colors
+                    Order By stdNum.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2)
+                   ) _
+                    .ToArray
+        End Function
+
         ''' <summary>
         ''' extract the theme colors from the given bitmap image
         ''' </summary>
@@ -170,19 +180,16 @@ Namespace Drawing2D.Colors
             Call g.DrawImageUnscaled(src, New Point)
             Call g.Flush()
             Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(copy, ImageLockMode.ReadOnly)
-            Dim allColors = buffer.GetARGBStream
+            Dim allColors = buffer.GetPixelsAll.ToArray
             ' group all colors
             Dim colorGroups = allColors _
-                .GroupBy(Function(c) c) _
-                .OrderByDescending(Function(c) c.Count) _
+                .GroupBy(Function(c) stdNum.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2), offsets:=3) _
+                .OrderByDescending(Function(c) c.Length) _
                 .ToArray
 
             For i As Integer = 0 To topN - 1
                 If i < colorGroups.Length Then
-                    Dim ci As UInteger = colorGroups(i).Key
-                    Dim color As Color = BitmapBuffer.GetColor(ci)
-
-                    Yield color
+                    Yield colorGroups(i).Average
                 End If
             Next
         End Function
