@@ -114,7 +114,10 @@ Namespace Imaging.BitmapImage
         ''' <param name="maxHeight">max height</param>
         ''' <param name="onlyResizeIfWider">if image width is smaller than newWidth use image width</param>
         ''' <returns>resized image</returns>
-        ''' 
+        ''' <remarks>
+        ''' the aspect ratio and size scale factor will be evaluated from the <paramref name="newWidth"/> 
+        ''' and the original <see cref="Image.Size"/> 
+        ''' </remarks>
         <Extension>
         Public Function Resize(image As Image, newWidth As Integer,
                                Optional maxHeight As Integer = Integer.MaxValue,
