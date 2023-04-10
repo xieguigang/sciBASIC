@@ -63,6 +63,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports stdNum = System.Math
 
 Namespace Imaging.BitmapImage
@@ -230,6 +231,17 @@ Namespace Imaging.BitmapImage
             End If
 
             Return ints
+        End Function
+
+        Public Function GetPixelsAll() As IEnumerable(Of Color)
+            Return GetPixel(New Rectangle(New Point, Size)).IteratesALL
+        End Function
+
+        Public Shared Function GetColor(uint As UInteger) As Color
+            Dim bytes As Byte() = BitConverter.GetBytes(uint)
+            Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
+
+            Return color
         End Function
 
         ''' <summary>
