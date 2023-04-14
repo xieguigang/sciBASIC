@@ -174,7 +174,7 @@ Namespace Net.Http
 
         ''' <summary>
         ''' 执行有详细进度信息显示的文件下载操作, 如果只需要调用一个单纯的文件下载函数, 
-        ''' 请使用<see cref="DownloadFile(String, String, String, String, Integer, DownloadProgressChangedEventHandler, String, String)"/>拓展函数
+        ''' 请使用<see cref="DownloadFile(String, String, String, String, Integer, DownloadProgressChangedEventHandler, String, Integer, String)"/>拓展函数
         ''' </summary>
         ''' <param name="url$"></param>
         ''' <param name="save$"></param>
