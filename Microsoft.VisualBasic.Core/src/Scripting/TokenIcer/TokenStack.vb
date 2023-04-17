@@ -72,7 +72,7 @@ Namespace Scripting.TokenIcer
         Public Property Range As IntRange
 
         Public Function GetRange(Of T)(data As IEnumerable(Of T)) As IEnumerable(Of T)
-            Return data.Skip(Range.Min).Take(Range.Length)
+            Return data.Skip(Range.Min).Take(Range.Length + 1)
         End Function
     End Class
 End Namespace
