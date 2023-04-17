@@ -18,6 +18,10 @@ Namespace Scripting.TokenIcer
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return stack.Select(Function(t) t.text).JoinBy(" -> ")
+        End Function
+
         Public Sub Push(c As CodeToken(Of Tokens))
             stack.Push(c)
         End Sub
