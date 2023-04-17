@@ -675,7 +675,10 @@ Public Module VectorExtensions
 
                 ' 是否将这个分隔符也包含在分组内
                 ' 如果是，则包含在下一个分组内
-                If deliPosition <> DelimiterLocation.NotIncludes Then
+                If deliPosition = DelimiterLocation.Individual Then
+                    Yield tmp.PopAll
+                    Yield New T() {x}
+                ElseIf deliPosition <> DelimiterLocation.NotIncludes Then
                     If deliPosition = DelimiterLocation.NextFirst Then
                         Yield tmp.ToArray
 

@@ -545,6 +545,7 @@ Public Module WebServiceUtils
         Public ReadOnly Property timeout As Integer
 
         Sub New(timeout As Integer)
+            Call MyBase.New
             Me.timeout = timeout
         End Sub
 

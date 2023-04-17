@@ -197,16 +197,19 @@ Namespace Hypothesis
         ''' <remarks>
         ''' 请注意，双样本检测与单样本检测的pvalue在less和greater是反过来的
         ''' </remarks>
-        Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double
+        Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Decimal
             Select Case hyp
                 Case Hypothesis.Less
-                    Return 1 - Tcdf(t, v)
+                    Return d128_one - Tcdf(t, v)
                 Case Hypothesis.Greater
                     Return Tcdf(t, v)
                 Case Else
-                    Return 2 * (1 - Tcdf(stdNum.Abs(t), v))
+                    Return d128_two * (d128_one - Tcdf(stdNum.Abs(t), v))
             End Select
         End Function
+
+        Const d128_one As Decimal = 1.0
+        Const d128_two As Decimal = 2.0
 
         ''' <summary>
         ''' ###### Student's t-distribution CDF
@@ -224,13 +227,12 @@ Namespace Hypothesis
         ''' tcdf(0,5) = 0.5
         ''' ```
         ''' </remarks>
-        Public Function Tcdf(t#, v#) As Double
+        Public Function Tcdf(t#, v#) As Decimal
             Dim x# = v / (v + t ^ 2)
-            Dim inc = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2, 0.5, x)
-            Dim halfInc As Double = inc / 2.0
+            Dim inc As Decimal = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2.0, 0.5, x)
             ' there is a bug about the precision in small number
-            ' this probelm case the pvalue zero
-            Dim cdf# = 1.0 - halfInc
+            ' this problem case the pvalue zero
+            Dim cdf As Decimal = d128_one - inc / d128_two
 
             Return cdf
         End Function
@@ -247,7 +249,7 @@ Namespace Hypothesis
         ''' ```
         ''' </remarks>
         Public Function Tcdf(t As Vector, v#) As Vector
-            Return New Vector(t.Select(Function(x) Tcdf(x, v)))
+            Return New Vector(t.Select(Function(x) CDbl(Tcdf(x, v))))
         End Function
     End Module
 End Namespace

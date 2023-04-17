@@ -69,4 +69,8 @@ Public Enum DelimiterLocation As Integer
     ''' 包含在下一个分块之中的最开始的位置
     ''' </summary>
     NextFirst
+    ''' <summary>
+    ''' 分隔符在单独的一个切割分块之中
+    ''' </summary>
+    Individual
 End Enum

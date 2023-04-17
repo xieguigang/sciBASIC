@@ -144,15 +144,15 @@
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=0</DefineConstants>
-		<RemoveIntegerChecks>true</RemoveIntegerChecks>
-		<Optimize>false</Optimize>
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<DefineDebug>false</DefineDebug>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>netcore5=1,UNIX=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <OutputPath>bin/</OutputPath>
+  </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>

@@ -93,7 +93,7 @@ Namespace Language
                         Return t
                     Case " "c, ASCII.TAB
                         Return popOutToken()
-                    Case ASCII.CR, ASCII.LF
+                    Case ASCII.CR, ASCII.LF, ";"c
                         Dim t = popOutToken()
                         buffer += ASCII.LF
                         Return t
