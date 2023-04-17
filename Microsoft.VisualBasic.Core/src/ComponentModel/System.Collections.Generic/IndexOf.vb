@@ -295,6 +295,12 @@ Namespace ComponentModel.Collection
             })
         End Sub
 
+        Public Sub AddList(ParamArray x As T())
+            For Each xi As T In x
+                Call Add(xi)
+            Next
+        End Sub
+
         ''' <summary>
         ''' add a collection of the unique items into current index object
         ''' </summary>
