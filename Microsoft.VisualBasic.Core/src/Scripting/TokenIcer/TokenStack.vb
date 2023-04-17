@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+
 Namespace Scripting.TokenIcer
 
     ''' <summary>
@@ -6,7 +8,7 @@ Namespace Scripting.TokenIcer
     ''' </summary>
     Public Class TokenStack(Of Tokens As IComparable)
 
-        ReadOnly stack As New Stack(Of CodeToken(Of Tokens))
+        ReadOnly stack As New Stack(Of (index As Integer, token As CodeToken(Of Tokens)))
 
         ''' <summary>
         ''' current stack is empty?
@@ -19,11 +21,11 @@ Namespace Scripting.TokenIcer
         End Property
 
         Public Overrides Function ToString() As String
-            Return stack.Select(Function(t) t.text).JoinBy(" -> ")
+            Return stack.Select(Function(t) t.token.text).JoinBy(" -> ")
         End Function
 
-        Public Sub Push(c As CodeToken(Of Tokens))
-            stack.Push(c)
+        Public Sub Push(c As CodeToken(Of Tokens), Optional index As Integer = -1)
+            stack.Push((index, c))
         End Sub
 
         ''' <summary>
@@ -33,36 +35,44 @@ Namespace Scripting.TokenIcer
         ''' should be a stack ``close`` token
         ''' </param>
         ''' <returns></returns>
-        Public Function Pop(c As CodeToken(Of Tokens)) As StackStates
+        Public Function Pop(c As CodeToken(Of Tokens), Optional index As Integer = -1) As StackStates
             If stack.Count = 0 Then
-                Return StackStates.MisMatched
+                Return New StackStates With {.MisMatched = True}
             End If
 
             Dim peek = stack.Peek
             Dim matched As Boolean = False
 
             Select Case c.text
-                Case "}" : matched = peek.text = "{"
-                Case ")" : matched = peek.text = "("
-                Case "]" : matched = peek.text = "["
+                Case "}" : matched = peek.token.text = "{"
+                Case ")" : matched = peek.token.text = "("
+                Case "]" : matched = peek.token.text = "["
                 Case Else
-                    Throw New NotImplementedException($"{peek.text} -- {c.text}")
+                    Throw New NotImplementedException($"({peek.index}){peek.token.text} -- ({index}){c.text}")
             End Select
 
             If matched Then
                 Call stack.Pop()
-                Return StackStates.Closed
+                Return New StackStates With {
+                    .MisMatched = False,
+                    .Range = New IntRange({peek.index, index})
+                }
             Else
-                Return StackStates.MisMatched
+                Return New StackStates With {.MisMatched = True}
             End If
         End Function
     End Class
 
-    Public Enum StackStates
-        Closed
+    Public Class StackStates
+
         ''' <summary>
         ''' syntax error?
         ''' </summary>
-        MisMatched
-    End Enum
+        Public Property MisMatched As Boolean
+        Public Property Range As IntRange
+
+        Public Function GetRange(Of T)(data As IEnumerable(Of T)) As IEnumerable(Of T)
+            Return data.Skip(Range.Min).Take(Range.Length)
+        End Function
+    End Class
 End Namespace
