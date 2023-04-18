@@ -143,6 +143,13 @@ Namespace Serialization.BinaryDumping
             Dim isVisited As Boolean = False
             Dim isValueType As Boolean = False
 
+            Static special_clr_type As Index(Of Type) = {
+                GetType(Type),
+                GetType(TypeInfo),
+                GetType(System.Reflection.Pointer),
+                GetType(System.IntPtr)
+            }
+
             ' handling some special type in clr runtime
             If obj Is Nothing Then
                 Return
@@ -153,7 +160,7 @@ Namespace Serialization.BinaryDumping
             ElseIf obj.GetType.IsEnum Then
                 Call visit(obj, obj.GetType, Nothing, isVisited:=False, isValueType:=True)
                 Return
-            ElseIf obj Is GetType(Type) OrElse obj Is GetType(TypeInfo) Then
+            ElseIf obj Like special_clr_type Then
                 ' the clr type object is a kind of memory location,
                 ' created in the compiler time,
                 ' an integer constant value
