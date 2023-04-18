@@ -157,7 +157,11 @@ Namespace Serialization.BinaryDumping
                 ' the clr type object is a kind of memory location,
                 ' created in the compiler time,
                 ' an integer constant value
+#If X86 Then
                 Call visit(0, GetType(Integer), Nothing, isVisited:=False, isValueType:=True)
+#Else
+                Call visit(0, GetType(Long), Nothing, isVisited:=False, isValueType:=True)
+#End If
                 Return
             End If
 
