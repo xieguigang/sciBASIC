@@ -160,7 +160,10 @@ Namespace Serialization.BinaryDumping
             ElseIf obj.GetType.IsEnum Then
                 Call visit(obj, obj.GetType, Nothing, isVisited:=False, isValueType:=True)
                 Return
-            ElseIf obj Like special_clr_type Then
+            ElseIf obj Is GetType(type) OrElse
+                obj Is GetType(TypeInfo) OrElse
+                obj.GetType Like special_clr_type Then
+
                 ' the clr type object is a kind of memory location,
                 ' created in the compiler time,
                 ' an integer constant value
