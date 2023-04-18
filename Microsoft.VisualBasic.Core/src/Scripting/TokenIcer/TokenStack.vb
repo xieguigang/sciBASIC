@@ -63,9 +63,11 @@ Namespace Scripting.TokenIcer
 
             If matched Then
                 Call stack.Pop()
+
                 Return New StackStates With {
                     .MisMatched = False,
-                    .Range = New IntRange({peek.index, index})
+                    .Range = New IntRange({peek.index, index}),
+                    .Stack = $"{peek.token.text}{c.text}"
                 }
             Else
                 Return New StackStates With {.MisMatched = True}
@@ -80,6 +82,7 @@ Namespace Scripting.TokenIcer
         ''' </summary>
         Public Property MisMatched As Boolean
         Public Property Range As IntRange
+        Public Property Stack As String
 
         Public Function GetRange(Of T)(data As IEnumerable(Of T)) As IEnumerable(Of T)
             Return data.Skip(Range.Min).Take(Range.Length + 1)
@@ -87,6 +90,14 @@ Namespace Scripting.TokenIcer
 
         Public Function Left(Of T)(data As IEnumerable(Of T)) As T
             Return data.ElementAtOrDefault(Range.Min - 1)
+        End Function
+
+        Public Overrides Function ToString() As String
+            If MisMatched Then
+                Return "n/a"
+            Else
+                Return $"{Stack.First} {Range.Min}...{Range.Max} {Stack.Last}"
+            End If
         End Function
     End Class
 End Namespace
