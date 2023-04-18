@@ -96,6 +96,8 @@ Namespace ApplicationServices.Debugging
             ElseIf DataFramework.IsPrimitive(type) Then
                 ' add byte size and then exit recursive visit
                 byteSize += SizeOfPrimitive(type)
+            ElseIf type.IsEnum Then
+                Call VisitObject(value, [Enum].GetUnderlyingType(type), Nothing, isVisited:=False, isValueType:=True)
             ElseIf isValueType Then
                 ' is structure
                 ' do recursive visit of this object
