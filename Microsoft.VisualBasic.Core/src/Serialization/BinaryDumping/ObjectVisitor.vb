@@ -160,7 +160,13 @@ Namespace Serialization.BinaryDumping
             ElseIf obj.GetType.IsEnum Then
                 Call visit(obj, obj.GetType, Nothing, isVisited:=False, isValueType:=True)
                 Return
-            ElseIf obj Is GetType(type) OrElse
+
+                ' 20230418 the obj is a clr object value, due to the reason of type/typeinfo is
+                ' also could be a clr object value, so we should test for the class object instance
+                ' at first, and then test for the clr type which is extract via gettype from the
+                ' object instance
+                '
+            ElseIf obj Is GetType(Type) OrElse
                 obj Is GetType(TypeInfo) OrElse
                 obj.GetType Like special_clr_type Then
 
