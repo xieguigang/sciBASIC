@@ -80,7 +80,8 @@ Public Class ClusterTree : Inherits Tree(Of String)
     Public Overloads Shared Sub Add(tree As ClusterTree,
                                     target As String,
                                     alignment As ComparisonProvider,
-                                    threshold As Double)
+                                    threshold As Double,
+                                    Optional ds As Double = 0.05)
 
         If tree.Data.StringEmpty Then
             tree.Data = target
@@ -88,17 +89,19 @@ Public Class ClusterTree : Inherits Tree(Of String)
             tree.Members = New List(Of String)
         Else
             Dim score As Double = alignment.GetSimilarity(tree.Data, target)
-            Dim key As String = ""
+            Dim key As String = "zero"
 
-            For v As Double = 0.1 To 1 Step 0.1
-                If score < v Then
-                    key = $"<{v.ToString("F1")}"
-                    Exit For
-                ElseIf v >= threshold Then
-                    key = ""
-                    Exit For
-                End If
-            Next
+            If score > 0.0 Then
+                For v As Double = ds To 1 Step ds
+                    If score < v Then
+                        key = $"<{v.ToString("F1")}"
+                        Exit For
+                    ElseIf v >= threshold Then
+                        key = ""
+                        Exit For
+                    End If
+                Next
+            End If
 
             If key = "" Then
                 ' is cluster member
