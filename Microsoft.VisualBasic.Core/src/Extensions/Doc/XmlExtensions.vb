@@ -315,7 +315,10 @@ Public Module XmlExtensions
     ''' if False then this function will returns a null value instead of throw exception.
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' this function returns nothing if the error happended and 
+    ''' also set <paramref name="throwEx"/> to false.
+    ''' </remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <DebuggerStepThrough>
