@@ -173,6 +173,7 @@ Namespace XML.xl.worksheets
             xmlns.Add("xr", OpenXML.xr)
             xmlns.Add("xr2", OpenXML.xr2)
             xmlns.Add("xr3", OpenXML.xr3)
+            xmlns.Add("x", "http://schemas.openxmlformats.org/spreadsheetml/2006/main")
         End Sub
 
         Public Overrides Function ToString() As String
@@ -285,11 +286,24 @@ Namespace XML.xl.worksheets
         <XmlAttribute> Public Property customFormat As String
         <XmlElement("c")> Public Property columns As c()
 
+        <XmlAttribute> Public Property hidden As String
+        <XmlAttribute> Public Property outlineLevel As Integer
+        <XmlAttribute> Public Property collapsed As String
+
         Public Overrides Function ToString() As String
             Return columns _
                 .Select(Function(c) c.r) _
                 .ToArray _
                 .GetJson
+        End Function
+    End Structure
+
+    Public Structure [is]
+
+        Public Property t As String
+
+        Public Overrides Function ToString() As String
+            Return t
         End Function
     End Structure
 
@@ -312,6 +326,7 @@ Namespace XML.xl.worksheets
         ''' </summary>
         ''' <returns></returns>
         Public Property v As String
+        Public Property [is] As [is]
 
         ''' <summary>
         ''' 返回-1表示非引用类型，即<see cref="v"/>直接可以用作为值
@@ -327,8 +342,20 @@ Namespace XML.xl.worksheets
             End Get
         End Property
 
+        ''' <summary>
+        ''' 当前单元格内的数据可能会存储在<see cref="v"/>属性或者<see cref="[is]"/>属性之中
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetValueString() As String
+            If [is].t Is Nothing Then
+                Return v
+            Else
+                Return [is].t
+            End If
+        End Function
+
         Public Overrides Function ToString() As String
-            Dim value$ = v
+            Dim value$ = GetValueString()
 
             If t.TextEquals("s") Then
                 value = $"sharedStrings({value})"
