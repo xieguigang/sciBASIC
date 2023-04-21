@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::dd6b039e1da562af3b4386d5564ef07b, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\StoreProcedure.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 131
-    '    Code Lines: 101
-    ' Comment Lines: 11
-    '   Blank Lines: 19
-    '     File Size: 4.52 KB
+' Summaries:
 
 
-    '     Module StoreProcedure
-    ' 
-    '         Function: CreateColumn, CreateRow, CreateWorksheet, ToRowData, ToTableFrame
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 131
+'    Code Lines: 101
+' Comment Lines: 11
+'   Blank Lines: 19
+'     File Size: 4.52 KB
+
+
+'     Module StoreProcedure
+' 
+'         Function: CreateColumn, CreateRow, CreateWorksheet, ToRowData, ToTableFrame
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,16 +85,19 @@ Namespace Model
             Dim cellIndex As Point
 
             For Each col As XML.xl.worksheets.c In row.columns.SafeQuery
-                cellIndex = Coordinates.Index(col.r)
-                colIndex = cellIndex.Y ' 因为这里都是同一行的数据，所以只取列下标即可
+                If col.r.StringEmpty Then
+                    Continue For
+                End If
 
-                With col.sharedStringsRef
-                    If .ByRef = -1 Then
-                        [string] = col.v
-                    Else
-                        [string] = strings.strings(.ByRef).ToString
-                    End If
-                End With
+                ' 因为这里都是同一行的数据，所以只取列下标即可
+                cellIndex = Coordinates.Index(col.r)
+                colIndex = cellIndex.Y
+
+                If col.sharedStringsRef = -1 Then
+                    [string] = col.v
+                Else
+                    [string] = strings.strings(col.sharedStringsRef).ToString
+                End If
 
                 csv(colIndex - 1) = [string]
             Next
