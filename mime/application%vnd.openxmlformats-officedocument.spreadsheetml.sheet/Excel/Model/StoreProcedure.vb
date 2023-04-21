@@ -83,23 +83,35 @@ Namespace Model
             Dim colIndex%
             Dim cellIndex As Point
 
-            For Each col As XML.xl.worksheets.c In row.columns.SafeQuery
-                If col.r.StringEmpty Then
-                    Continue For
-                End If
+            If row.columns.IsNullOrEmpty Then
+                Return csv
+            ElseIf row.columns.All(Function(c) c.r.StringEmpty) Then
+                ' 顺序填充
+                For i As Integer = 0 To row.columns.Length - 1
+                    Dim col = row.columns(i)
 
-                ' 因为这里都是同一行的数据，所以只取列下标即可
-                cellIndex = Coordinates.Index(col.r)
-                colIndex = cellIndex.Y
+                    [string] = col.GetValueString
+                    csv(i) = [string]
+                Next
+            Else
+                For Each col As XML.xl.worksheets.c In row.columns
+                    If col.r.StringEmpty Then
+                        Continue For
+                    End If
 
-                If col.sharedStringsRef = -1 Then
-                    [string] = col.v
-                Else
-                    [string] = strings.strings(col.sharedStringsRef).ToString
-                End If
+                    ' 因为这里都是同一行的数据，所以只取列下标即可
+                    cellIndex = Coordinates.Index(col.r)
+                    colIndex = cellIndex.Y
 
-                csv(colIndex - 1) = [string]
-            Next
+                    If col.sharedStringsRef = -1 Then
+                        [string] = col.GetValueString
+                    Else
+                        [string] = strings.strings(col.sharedStringsRef).ToString
+                    End If
+
+                    csv(colIndex - 1) = [string]
+                Next
+            End If
 
             Return csv
         End Function
