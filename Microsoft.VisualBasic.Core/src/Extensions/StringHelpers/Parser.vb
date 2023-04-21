@@ -189,6 +189,10 @@ Public Module PrimitiveParser
 
         If num Is Nothing OrElse num = "" Then
             Return False
+        ElseIf num.Last = "E" OrElse num.Last = "e" OrElse offset >= num.Length Then
+            ' 4E -> offset = 2
+            ' 3545e -> offset = 5
+            Return False
         Else
             c = num(offset)
         End If

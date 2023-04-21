@@ -283,6 +283,12 @@ eh:
         End Select
     End Function
 
+    ''' <summary>
+    ''' do string unescape
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="decodeMetaChar"></param>
+    ''' <returns></returns>
     Public Shared Function StripString(str$, decodeMetaChar As Boolean) As String
         Dim index% = 1
         Dim chr$, code$
