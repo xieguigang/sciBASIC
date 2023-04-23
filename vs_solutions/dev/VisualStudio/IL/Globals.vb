@@ -56,6 +56,7 @@
 
 Imports System.Reflection
 Imports System.Reflection.Emit
+Imports System.Runtime.CompilerServices
 
 Namespace IL
     'public enum AssemblyType
@@ -159,7 +160,16 @@ Namespace IL
     '    PostDecrement
     '}
 
-    Module Globals
+    Public Module Globals
+
+        ReadOnly OpcodeLookupTable As Dictionary(Of Short, OpCode) = GetType(OpCodes) _
+            .GetFields() _
+            .[Select](Function(f)
+                          Return CType(f.GetValue(Nothing), OpCode)
+                      End Function) _
+            .ToDictionary(Function(op)
+                              Return op.Value
+                          End Function)
 
         Public Cache As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)()
         Public multiByteOpCodes As OpCode()
@@ -172,6 +182,11 @@ Namespace IL
 
             Call LoadOpCodes()
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetOpCode(i As Short) As OpCode
+            Return OpcodeLookupTable(key:=i)
+        End Function
 
         Private Sub LoadOpCodes()
             For Each info1 As FieldInfo In GetType(OpCodes).GetFields()
