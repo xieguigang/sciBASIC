@@ -183,6 +183,15 @@ Public Module PrimitiveParser
 
     ReadOnly numbers As Index(Of Char) = {"0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c}
 
+    ''' <summary>
+    ''' test the given string is in integer pattern?
+    ''' </summary>
+    ''' <param name="num"></param>
+    ''' <param name="offset"></param>
+    ''' <returns>
+    ''' this function will returns true if all of the char in 
+    ''' the <paramref name="num"/> string is number.
+    ''' </returns>
     <Extension>
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
         Dim c As Char
