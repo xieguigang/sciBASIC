@@ -157,6 +157,7 @@ Namespace ComponentModel.DataSourceModel
             Me.Description = describ
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(item As KeyValuePair(Of String, T))
             Call Me.New(item.Key, item.Value)
         End Sub
