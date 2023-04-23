@@ -183,6 +183,11 @@ Namespace IL
             Call LoadOpCodes()
         End Sub
 
+        ''' <summary>
+        ''' get msil opcode from <see cref="OpcodeLookupTable"/>
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOpCode(i As Short) As OpCode
             Return OpcodeLookupTable(key:=i)
