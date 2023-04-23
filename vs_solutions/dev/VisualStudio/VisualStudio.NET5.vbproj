@@ -80,7 +80,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\..\mime\application%xml\xml-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>
