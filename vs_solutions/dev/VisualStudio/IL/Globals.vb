@@ -159,7 +159,7 @@ Namespace IL
     '    PostDecrement
     '}
 
-    Module Globals
+    Public Module Globals
 
         Public Cache As Dictionary(Of Integer, Object) = New Dictionary(Of Integer, Object)()
         Public multiByteOpCodes As OpCode()
