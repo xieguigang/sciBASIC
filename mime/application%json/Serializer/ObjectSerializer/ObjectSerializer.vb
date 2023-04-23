@@ -59,10 +59,6 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.ValueTypes
 Imports any = Microsoft.VisualBasic.Scripting
 
-#If NET48 Then
-Imports System.Web.Script.Serialization
-#End If
-
 Public Module ObjectSerializer
 
     <Extension>
