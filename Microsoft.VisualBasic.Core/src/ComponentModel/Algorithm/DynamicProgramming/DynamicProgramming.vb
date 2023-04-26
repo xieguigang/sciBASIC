@@ -85,4 +85,10 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
     Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Double
     Public Delegate Function IEquals(Of T)(x As T, y As T) As Boolean
 
+    Public Interface IScore(Of T)
+
+        Function GetSimilarityScore(a As T, b As T) As Double
+
+    End Interface
+
 End Namespace

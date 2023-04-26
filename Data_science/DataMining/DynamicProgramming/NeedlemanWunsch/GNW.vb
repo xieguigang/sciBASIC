@@ -66,7 +66,7 @@ Namespace NeedlemanWunsch
     ''' </summary>
     Public Class NeedlemanWunsch(Of T) : Inherits Workspace(Of T)
 
-        Dim matrix%()() = Nothing
+        Dim matrix!()() = Nothing
         Dim tracebackMatrix%()() = Nothing
 
         ReadOnly symbol As GenericSymbol(Of T)
@@ -176,7 +176,7 @@ Namespace NeedlemanWunsch
             Dim seq2 As T() = Me.Sequence2
 
             ' Set up the score- and the traceback-matrix
-            matrix = RectangularArray.Matrix(Of Integer)(rows, columns)
+            matrix = RectangularArray.Matrix(Of Single)(rows, columns)
             tracebackMatrix = RectangularArray.Matrix(Of Integer)(rows, columns)
 
             ' fill the first row and first column of matrix and tracebackMatrix
