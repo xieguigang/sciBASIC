@@ -175,7 +175,8 @@ Public Module ObjectSerializer
                     jsonVal = JsonValue.NULL
                 ElseIf Not (valueType Is GetType(Type) OrElse
                     valueType Is GetType(TypeInfo) OrElse
-                    valueType.FullName = "System.RuntimeType") Then
+                    valueType.FullName = "System.RuntimeType" OrElse
+                    valueType.FullName = "System.Reflection.RuntimeAssembly") Then
 
                     jsonVal = valueType.GetJsonElement(valObj, opt)
                 Else

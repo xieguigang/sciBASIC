@@ -214,7 +214,7 @@ Namespace Tcp
 
             _Running = True
 
-            While Not Me.disposedValue AndAlso App.Running
+            While Not Me.disposedValue AndAlso Running
                 If Not _threadPool.FullCapacity Then
                     Call _threadPool.RunTask(AddressOf accept)
                 Else
@@ -241,39 +241,43 @@ Namespace Tcp
         ''' </summary>
         Private Sub accept()
             Try
-                Dim s As TcpClient = _socket.AcceptTcpClient
-                Dim request As New BufferedStream(s.GetStream)
-                Dim response As Stream = s.GetStream()
-                Dim received As New MemoryStream
-                Dim chunk As Byte() = New Byte(4096 - 1) {}
-
-                Do While App.Running
-                    Dim nreads As Integer = request.Read(chunk, Scan0, chunk.Length)
-
-                    If nreads > 0 Then
-                        received.Write(chunk, Scan0, nreads)
-                    Else
-                        ' has no data reads
-                        ' start to processing the request 
-                        Dim requestData As New RequestStream(received.ToArray)
-
-                        If requestData.FullRead Then
-                            Call HandleRequest(s.Client.RemoteEndPoint, response, requestData)
-                            Exit Do
-                        Else
-
-                        End If
-                    End If
-
-                    Call Thread.Sleep(1)
-                Loop
-
-                Call response.Flush()
-                Call response.Dispose()
-                Call s.Close()
+                Call acceptWorker()
             Catch ex As Exception
 
             End Try
+        End Sub
+
+        Private Sub acceptWorker()
+            Dim s As TcpClient = _socket.AcceptTcpClient
+            Dim request As New BufferedStream(s.GetStream)
+            Dim response As Stream = s.GetStream()
+            Dim received As New MemoryStream
+            Dim chunk As Byte() = New Byte(4096 - 1) {}
+
+            Do While Running
+                Dim nreads As Integer = request.Read(chunk, Scan0, chunk.Length)
+
+                If nreads > 0 Then
+                    received.Write(chunk, Scan0, nreads)
+                End If
+
+                ' has no data reads
+                ' start to processing the request 
+                Dim requestData As New RequestStream(received.ToArray)
+
+                If requestData.FullRead Then
+                    Call HandleRequest(s.Client.RemoteEndPoint, response, requestData)
+                    Exit Do
+                Else
+
+                End If
+
+                Call Thread.Sleep(1)
+            Loop
+
+            Call response.Flush()
+            Call response.Dispose()
+            Call s.Close()
         End Sub
 
         Public Sub WaitForStart()
@@ -364,7 +368,14 @@ Namespace Tcp
             If Not Me.disposedValue Then
                 If disposing Then
                     _Running = False
+
                     ' TODO: dispose managed state (managed objects).
+                    Try
+                        Call _threadPool.Dispose()
+                        Call _socket.Stop()
+                    Catch ex As Exception
+
+                    End Try
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

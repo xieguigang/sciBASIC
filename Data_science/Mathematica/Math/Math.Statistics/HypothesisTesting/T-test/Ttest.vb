@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::07fdec37e50efa3d11af362041bab24f, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 201
-    '    Code Lines: 117
-    ' Comment Lines: 64
-    '   Blank Lines: 20
-    '     File Size: 7.84 KB
+' Summaries:
 
 
-    '     Module t
-    ' 
-    '         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 201
+'    Code Lines: 117
+' Comment Lines: 64
+'   Blank Lines: 20
+'     File Size: 7.84 KB
+
+
+'     Module t
+' 
+'         Function: Pvalue, (+2 Overloads) Tcdf, (+2 Overloads) Test, welch2df, welch2t
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdNum = System.Math
 
 Namespace Hypothesis
@@ -122,7 +123,8 @@ Namespace Hypothesis
                              Optional alternative As Hypothesis = Hypothesis.TwoSided,
                              Optional mu# = 0,
                              Optional alpha# = 0.05,
-                             Optional varEqual As Boolean = True) As TwoSampleResult
+                             Optional varEqual As Boolean = True,
+                             Optional [strict] As Boolean = True) As TwoSampleResult
 
             Dim va#() = a.ToArray, vb = b.ToArray
             Dim left As New BasicProductMoments(a)
@@ -146,12 +148,77 @@ Namespace Hypothesis
                 testVal = welch2t(left.Mean, right.Mean, va.Variance, vb.Variance, left.SampleSize, right.SampleSize)
             End If
 
-            Dim pvalue# = t.Pvalue(testVal, df, alternative)
+            Dim pvalue#
             Dim opt As New Topt With {
                 .alpha = alpha,
                 .alternative = alternative,
                 .mu = mu
             }
+
+            Try
+                pvalue = t.Pvalue(testVal, df, alternative)
+            Catch ex As Exception
+                Dim debug As String = $"x = {va.GetJson}; y = {vb.GetJson}"
+
+                ' 20230425
+                '
+                '  Error in <globalEnvironment> -> InitializeEnvironment -> using(pool) -> for_loop_[[1]: "./FD20221200635-negative"] -> for_loop_[[137]: "E:\spectrum-taxonomy\test\blood_pool_20230426\FD20221200635-nega..."] -> "addPool"(&data, "biosample" <- "blood", "...) -> addPool
+                '   1. OverflowException: Value was either too large or too small for a Decimal.
+                '   2. stackFrames:
+                '    at System.Number.ThrowOverflowException(TypeCode type)
+                '    at System.Decimal.DecCalc.VarDecFromR8(Double input, DecCalc& result)
+                '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.t.Tcdf(Double t, Double v) 
+                '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.t.Pvalue(Double t, Double v, Hypothesis hyp) 
+                '    at Microsoft.VisualBasic.Math.Statistics.Hypothesis.t.Test(IEnumerable`1 a, IEnumerable`1 b, Hypothesis alternative, Double mu, Double alpha, Boolean varEqual) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at BioNovoGene.Analytical.MassSpectrometry.Math.MoleculeNetworking.PoolData.SpectrumPool.Add(PeakMs2 spectrum) 
+                '    at mzkit.MolecularSpectrumPool.add(SpectrumPool pool, Object x, String biosample, String organism, String project, String instrument, String file, Environment env) 
+
+                '    Call "addPool"(&pool, &data, "biosample" <- "blood", "organism" <- "Homo sapiens", "project" <- &proj_id, "file" <- Call "basename"(&file), "instrument" <- "Thermo Scientific Q Exactive")
+                '    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+                ' spectrumPool.R#_interop::.addPool at mzDIA.dll:line <unknown>
+                ' SMRUCC/R#.call_function."addPool"(&data, "biosample" <- "blood", "...) at http_human_blood-neg.R:line 32
+                ' SMRUCC/R#.forloop.for_loop_[[137]: "E:\spectrum-taxonomy\test\blood_pool_20230426\FD20221200635-nega..."] at http_human_blood-neg.R:line 28
+                ' SMRUCC/R#.forloop.for_loop_[[1]: "./FD20221200635-negative"] at http_human_blood-neg.R:line 19
+                ' SMRUCC/R#.using_closure.using(pool) at http_human_blood-neg.R:line 16
+                ' SMRUCC/R#.n/a.InitializeEnvironment at http_human_blood-neg.R:line 0
+                ' SMRUCC/R#.global.<globalEnvironment> at <globalEnvironment>:line n/a
+
+                If strict Then
+                    Throw New InvalidProgramException(debug, ex)
+                Else
+                    ' evaluate the pvalue failure
+                    pvalue = Double.NaN
+                End If
+            End Try
 
             If pvalue = 0.0 Then
                 pvalue = 1.0E-100
