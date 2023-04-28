@@ -909,6 +909,9 @@ Namespace CommandLine
         ''' 请注意，逻辑值开关的名称会被去掉前缀)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the description value in the populated vector is indicates the argument value type.
+        ''' </remarks>
         Public Function ToArgumentVector() As NamedValue(Of String)()
             Dim list As New List(Of NamedValue(Of String))
 
@@ -916,13 +919,15 @@ Namespace CommandLine
                     In arguments.SafeQuery
                     Select New NamedValue(Of String) With {
                         .Name = arg.Name,
-                        .Value = arg.Value
+                        .Value = arg.Value,
+                        .Description = "string"
                     }
             list += From bs As String
                     In BoolFlags.SafeQuery
                     Select New NamedValue(Of String) With {
                         .Name = bs,
-                        .Value = "True"
+                        .Value = "True",
+                        .Description = "boolean"
                     }
 
             Return list
