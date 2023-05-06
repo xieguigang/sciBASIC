@@ -705,7 +705,7 @@ Public Module StringHelpers
     ''' Count the phrase in <paramref name="text"/>
     ''' </summary>
     ''' <param name="text$"></param>
-    ''' <param name="phrase$"></param>
+    ''' <param name="phrase">the sub-string for count</param>
     ''' <param name="method"></param>
     ''' <returns></returns>
     <Extension>
@@ -722,15 +722,16 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，字符串将不会进行任何处理
+    ''' 获取""或者其他字符所包围的字符串的值，请注意，假若只有一个<paramref name="wrapper"/>的话，
+    ''' 字符串将不会进行任何处理
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="wrapper"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <ExportAPI("Wrapper.Trim")>
-    <Extension> Public Function GetString(s$, Optional wrapper As Char = ASCII.Quot) As String
+    <Extension>
+    Public Function GetString(s$, Optional wrapper As Char = ASCII.Quot) As String
         If String.IsNullOrEmpty(s) OrElse Len(s) = 1 Then
             Return s
         End If
