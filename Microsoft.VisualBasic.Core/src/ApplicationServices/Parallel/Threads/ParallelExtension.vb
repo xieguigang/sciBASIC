@@ -91,9 +91,15 @@ Namespace Parallel
         ''' </returns>
         <Extension>
         <DebuggerStepThrough>
-        Public Function RunTask(start As Threading.ThreadStart) As Thread
+        Public Function RunTask(start As ThreadStart,
+                                <CallerMemberName>
+                                Optional taskName As String = Nothing) As Thread
+
             Dim thread As New Thread(start)
-            thread.Start()
+            Call thread.Start()
+            If Not taskName.StringEmpty Then
+                thread.Name = taskName
+            End If
             Return thread
         End Function
 

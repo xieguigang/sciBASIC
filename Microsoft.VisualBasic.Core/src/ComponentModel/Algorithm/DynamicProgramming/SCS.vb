@@ -112,7 +112,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         End Function
 
         ''' <summary>
-        ''' Solve using Greedy. Forf all string find the max common prefix/suffix. Merge those two strings
+        ''' Solve using Greedy. For all string find the max common prefix/suffix. Merge those two strings
         ''' and continue it.
         ''' </summary>
         ''' <remarks>

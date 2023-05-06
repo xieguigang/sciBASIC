@@ -108,27 +108,32 @@ Namespace Parallel
         <XmlAttribute("Entry")>
         Public Property ProtocolCategory As Int64
         ''' <summary>
-        ''' This property indicates which the specifics protocol processor will be used for the incoming client request.
+        ''' This property indicates which the specifics protocol processor will be 
+        ''' used for the incoming client request.
         ''' (协议的头部)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("Protocol")>
         Public Property Protocol As Int64
         ''' <summary>
-        ''' Buffer length of the protocol request raw stream data <see cref="ChunkBuffer"/>.(协议数据的长度)
+        ''' Buffer length of the protocol request raw stream data <see cref="ChunkBuffer"/>.
+        ''' (协议数据的长度)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("bufLen")>
         Public Property BufferLength As Int64
+
         ''' <summary>
-        ''' The raw stream data of the details data request or the server response data.(协议的具体数据请求)
+        ''' The raw stream data of the details data request or the server response data.
+        ''' (协议的具体数据请求)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("rawBuf")>
         Public Property ChunkBuffer As Byte()
 
         ''' <summary>
-        ''' <see cref="ChunkBuffer"/>部分的数据是否完整？
+        ''' verify that the stream data in <see cref="ChunkBuffer"/> is recieve complete?
+        ''' (<see cref="ChunkBuffer"/>部分的数据是否完整？)
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property FullRead As Boolean

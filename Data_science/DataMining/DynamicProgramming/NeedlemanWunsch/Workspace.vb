@@ -113,7 +113,7 @@ Namespace NeedlemanWunsch
         ''' <summary>
         ''' get computed score </summary>
         ''' <returns> score </returns>
-        Public Property Score As Integer
+        Public Property Score As Single
 
         Sub New(score As ScoreMatrix(Of T), toChar As Func(Of T, Char))
             m_toChar = toChar
