@@ -69,13 +69,21 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
+    Public MustInherit Class XmlDocs
+
+        Public Property Name As String
+        Public Property Summary As String
+        Public Property Remarks As String
+
+    End Class
+
     ''' <summary>
     ''' A type within a project namespace.
     ''' </summary>
     ''' <remarks>
     ''' Fields和Events都不允许重载，但是属性和函数都可以重载
     ''' </remarks>
-    Public Class ProjectType
+    Public Class ProjectType : Inherits XmlDocs
 
         Protected projectNamespace As ProjectNamespace
 
@@ -101,10 +109,6 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 Return Me.projectNamespace
             End Get
         End Property
-
-        Public Property Name As String
-        Public Property Summary As String
-        Public Property Remarks As String
 
         Friend Sub New()
             properties = New Dictionary(Of String, List(Of ProjectMember))
