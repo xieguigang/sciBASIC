@@ -73,15 +73,6 @@ Namespace ComponentModel.DataStructures.Tree
         Implements ITreeNode(Of T), IEnumerable(Of T)
 
         ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="name"></param>
-        Protected Sub New(name As String)
-            Me.Name = name
-            ChildNodes = New List(Of T)()
-        End Sub
-
-        ''' <summary>
         ''' Name
         ''' </summary>
         Public Property Name() As String
@@ -102,12 +93,24 @@ Namespace ComponentModel.DataStructures.Tree
         Public MustOverride ReadOnly Property MySelf() As T
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name"></param>
+        Protected Sub New(name As String)
+            Me.Name = name
+            ChildNodes = New List(Of T)()
+        End Sub
+
+        ''' <summary>
         ''' True if a Leaf Node
         ''' </summary>
+        ''' <value>
+        ''' True for <see cref="ChildNodes"/> contains no data.
+        ''' </value>
         Public ReadOnly Property IsLeaf() As Boolean Implements ITreeNode(Of T).IsLeaf
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ChildNodes.Count = 0
+                Return ChildNodes.IsNullOrEmpty
             End Get
         End Property
 
@@ -183,6 +186,10 @@ Namespace ComponentModel.DataStructures.Tree
         ''' Add a Child Tree Node
         ''' </summary>
         ''' <param name="child"></param>
+        ''' <remarks>
+        ''' 1. hook <see cref="MySelf"/> to <see cref="Parent"/>
+        ''' 2. add <paramref name="child"/> to <see cref="ChildNodes"/>
+        ''' </remarks>
         Public Sub AddChild(child As T)
             child.Parent = MySelf
             ChildNodes.Add(child)
