@@ -106,7 +106,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 .FirstOrDefault
 
             If Not docs Is Nothing Then
-                Return docs.text
+                Return Strings.Trim(docs.text).Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
             Else
                 Return ""
             End If
