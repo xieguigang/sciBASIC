@@ -63,8 +63,17 @@ Imports Microsoft.VisualBasic.MIME.Html.Document
 
 Public Class CSSSelector : Inherits Parser
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="func">always css</param>
+    ''' <param name="parameters"></param>
     Sub New(func As String, parameters As String())
         Call MyBase.New(func, parameters)
+    End Sub
+
+    Sub New(selector As String)
+        Call MyBase.New("css", {selector, "*"})
     End Sub
 
     Protected Overrides Function ParseImpl(document As InnerPlantText, isArray As Boolean, env As Engine) As InnerPlantText
