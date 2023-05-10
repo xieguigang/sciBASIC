@@ -802,8 +802,12 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True, Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
-            Return New File(FileLoader.Load(content.LineTokens, trimBlanks, skipWhile))
+        Public Shared Function Parse(content$,
+                                     Optional trimBlanks As Boolean = True,
+                                     Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                     Optional tsv As Boolean = False) As File
+
+            Return New File(FileLoader.Load(content.LineTokens, trimBlanks, skipWhile, isTsv:=tsv))
         End Function
 #End Region
 
