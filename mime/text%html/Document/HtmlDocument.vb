@@ -62,6 +62,10 @@ Namespace Document
         ''' 假设所加载的html文档是完好的格式的，即没有不匹配的标签的
         ''' </summary>
         ''' <param name="handle">document text or url or file path</param>
+        ''' <param name="strip">
+        ''' do html document text cleanup at first? includes removes javascript block, 
+        ''' css block and html comments. 
+        ''' </param>
         ''' <returns></returns>
         Public Shared Function LoadDocument(handle As String, Optional strip As Boolean = False) As HtmlDocument
             Dim text As String = handle.SolveStream
