@@ -59,7 +59,6 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
 Namespace SVG.PathHelper
