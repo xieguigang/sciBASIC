@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
 
 Namespace SVG.XML
 
