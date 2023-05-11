@@ -20,7 +20,7 @@ Namespace SVG.XML
         Sub New()
         End Sub
 
-        Public Sub New(ByVal data As IEnumerable(Of Double), ByVal Optional numDecimalPlaces As Integer? = Nothing)
+        Public Sub New(data As IEnumerable(Of Double), Optional numDecimalPlaces As Integer? = Nothing)
             If numDecimalPlaces Is Nothing Then
                 points = data.Select(Function(d) d.ToString).ToArray
             Else
@@ -33,7 +33,7 @@ Namespace SVG.XML
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(ByVal x As IEnumerable(Of Double), ByVal y As IEnumerable(Of Double), ByVal Optional numDecimalPlaces As Integer? = Nothing)
+        Public Sub New(x As IEnumerable(Of Double), y As IEnumerable(Of Double), Optional numDecimalPlaces As Integer? = Nothing)
             Call Me.New(x.Zip(y, Function(a, b) New Double() {a, b}).SelectMany(Function(d) d), numDecimalPlaces)
         End Sub
 

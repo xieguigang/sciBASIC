@@ -2,15 +2,15 @@
 
     Public Class Z : Inherits Command
 
-        Public Sub New(ByVal Optional isRelative As Boolean = False)
+        Public Sub New(Optional isRelative As Boolean = False)
             MyBase.isRelative = isRelative
         End Sub
 
-        Public Overrides Sub Scale(ByVal factor As Double)
+        Public Overrides Sub Scale(factor As Double)
 
         End Sub
 
-        Public Overrides Sub Translate(ByVal deltaX As Double, ByVal deltaY As Double)
+        Public Overrides Sub Translate(deltaX As Double, deltaY As Double)
 
         End Sub
 

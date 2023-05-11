@@ -7,7 +7,7 @@
 
         Public Property isRelative As Boolean
 
-        Public Shared Function Parse(ByVal text As String) As List(Of String)
+        Public Shared Function Parse(text As String) As List(Of String)
             Dim s As String = text.Trim()
             Dim tokens = New List(Of String)()
             Dim startIdx = 0
@@ -26,7 +26,7 @@
             Return tokens
         End Function
 
-        Public MustOverride Sub Scale(ByVal factor As Double)
-        Public MustOverride Sub Translate(ByVal deltaX As Double, ByVal deltaY As Double)
+        Public MustOverride Sub Scale(factor As Double)
+        Public MustOverride Sub Translate(deltaX As Double, deltaY As Double)
     End Class
 End Namespace
