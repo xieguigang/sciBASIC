@@ -62,6 +62,14 @@ Namespace XmlMeta
     ''' <summary>
     ''' The base of the html node
     ''' </summary>
+    ''' <remarks>
+    ''' this object class model has these basically html element attributes:
+    ''' 
+    ''' 1. id
+    ''' 2. class
+    ''' 3. style
+    ''' 
+    ''' </remarks>
     Public MustInherit Class Node
 
         <XmlAttribute> Public Property id As String

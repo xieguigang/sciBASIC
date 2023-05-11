@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::ad101507b791ca46e01b024eb2346a8f, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\Abstract.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 40
-    ' Comment Lines: 25
-    '   Blank Lines: 9
-    '     File Size: 2.68 KB
+' Summaries:
 
 
-    '     Class node
-    ' 
-    '         Properties: attributes, fill, filter, stroke, XmlComment
-    '                     zIndex
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: Assign
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 40
+' Comment Lines: 25
+'   Blank Lines: 9
+'     File Size: 2.68 KB
+
+
+'     Class node
+' 
+'         Properties: attributes, fill, filter, stroke, XmlComment
+'                     zIndex
+' 
+'         Function: ToString
+' 
+'         Sub: Assign
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
@@ -71,9 +72,29 @@ Namespace SVG.XML
         Implements CSSLayer, IAddressOf
 
         <XmlAttribute> Public Property fill As String
-        <XmlAttribute> Public Property stroke As String
-        <XmlAttribute> Public Property filter As String
+        <XmlAttribute("fill-opacity"), DefaultValue(1)>
+        Public Property fillOpacity As Double = 1
 
+        ''' <summary>
+        ''' the stroke color, value of this property should be html color code
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute> Public Property stroke As String = "#000000"
+        <XmlAttribute("stroke-opacity"), DefaultValue(1)>
+        Public Property strokeOpacity As Double = 1
+        <XmlAttribute("stroke-width"), DefaultValue(1)>
+        Public Property strokeWidth As Double = 1
+        <XmlAttribute("stroke-linecap")>
+        Public Property strokeLinecap As String
+        <XmlAttribute("stroke-linejoin")>
+        Public Property strokeLinejoin As String
+        <XmlAttribute("stroke-dasharray")>
+        Public Property strokeDashArray As String
+        <XmlAttribute> Public Property filter As String
+        <XmlAttribute("transform")>
+        Public Property transform As String
+        <XmlAttribute("transform-origin")>
+        Public Property transformOrigin As String ' don't include BOM
         ''' <summary>
         ''' Css layer index, this will controls the rendering order of the graphics layer.
         ''' </summary>
