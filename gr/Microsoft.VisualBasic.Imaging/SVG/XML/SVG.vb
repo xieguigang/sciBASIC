@@ -95,6 +95,10 @@ Namespace SVG.XML
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
+
+        <XmlAttribute("baseProfile")>
+        Public Property baseProfile As String
+
         ''' <summary>
         ''' [offsetX offset Y width height]
         ''' </summary>
@@ -188,7 +192,7 @@ Namespace SVG.XML
         End Sub
 
         Sub New(width%, height%)
-            Call Me.New
+            Call Me.New()
             Call Me.Size(New Size(width, height))
         End Sub
 

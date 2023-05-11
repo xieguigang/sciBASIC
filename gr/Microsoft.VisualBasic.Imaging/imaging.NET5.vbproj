@@ -507,4 +507,8 @@
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
 	</ItemGroup>
+  
+	<ItemGroup>
+	  <Folder Include="SVG\XML\SvgPath\Commands\" />
+	</ItemGroup>
 </Project>
