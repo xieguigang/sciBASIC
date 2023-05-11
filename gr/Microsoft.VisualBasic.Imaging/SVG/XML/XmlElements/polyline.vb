@@ -1,4 +1,7 @@
 ﻿
+Imports System.Drawing
+Imports System.Xml.Serialization
+
 Namespace SVG.XML
 
     Public Class polyline : Inherits node
