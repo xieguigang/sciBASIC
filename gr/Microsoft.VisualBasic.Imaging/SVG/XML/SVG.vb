@@ -92,15 +92,6 @@ Namespace SVG.XML
         <XmlIgnore>
         Public XmlComment$
 
-        Public Sub New()
-            xmlns.Add("xlink", SVGWriter.Xlink)
-        End Sub
-
-        Sub New(width%, height%)
-            Call Me.New
-            Call Me.Size(New Size(width, height))
-        End Sub
-
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property version As String
@@ -191,6 +182,15 @@ Namespace SVG.XML
         <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
         <XmlElement> Public Property title As String Implements ICanvas.title
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
+
+        Public Sub New()
+            xmlns.Add("xlink", SVGWriter.Xlink)
+        End Sub
+
+        Sub New(width%, height%)
+            Call Me.New
+            Call Me.Size(New Size(width, height))
+        End Sub
 
         Public Function Size(sz As Size) As SVGXml
             width = sz.Width & "px"

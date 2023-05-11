@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 
 Namespace Driver
 
+    ''' <summary>
+    ''' A fake gdi+ graphics object that used for vector image rendering
+    ''' </summary>
     Public MustInherit Class MockGDIPlusGraphics : Inherits IGraphics
 
         ''' <summary>

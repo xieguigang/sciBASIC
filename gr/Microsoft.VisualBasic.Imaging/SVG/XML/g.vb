@@ -85,7 +85,7 @@ Namespace SVG.XML
     End Interface
 
     ''' <summary>
-    ''' SVG graphics unit
+    ''' SVG graphics unit, a image drawing layer in svg
     ''' </summary>
     Public Class g : Inherits node
         Implements ICanvas
