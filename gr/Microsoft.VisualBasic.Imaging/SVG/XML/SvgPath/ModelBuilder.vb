@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 Imports stdNum = System.Math
 
-Namespace SVG
+Namespace SVG.PathHelper
 
     ''' <summary>
     ''' gdi+ object to svg model convertor
@@ -244,7 +244,7 @@ Namespace SVG
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
- _
+                                        _
                         relative:=True
                     )
 
@@ -281,7 +281,7 @@ Namespace SVG
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
- _
+                                        _
                         relative:=True
                     )
 
