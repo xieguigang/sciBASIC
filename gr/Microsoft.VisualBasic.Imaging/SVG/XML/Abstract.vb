@@ -89,7 +89,7 @@ Namespace SVG.XML
         <XmlAttribute("stroke-linejoin")>
         Public Property strokeLinejoin As String
         <XmlAttribute("stroke-dasharray")>
-        Public Property strokeDashArray As String
+        Public Property strokeDashArray As Integer()
         <XmlAttribute> Public Property filter As String
         <XmlAttribute("transform")>
         Public Property transform As String

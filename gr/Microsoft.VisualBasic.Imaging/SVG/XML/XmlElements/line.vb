@@ -14,9 +14,6 @@ Namespace SVG.XML
         <XmlAttribute> Public Property y1 As Single
         <XmlAttribute> Public Property x1 As Single
 
-        <XmlAttribute("stroke-dasharray")>
-        Public Property DashArray As Integer()
-
         Public Shared Operator +(line As line, offset As PointF) As line
             line = DirectCast(line.MemberwiseClone, line)
 
