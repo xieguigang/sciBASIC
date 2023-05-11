@@ -30,7 +30,7 @@
             Me.MapTokens(tokens)
         End Sub
 
-        Private Sub MapTokens(tokens As System.Collections.Generic.List(Of String))
+        Private Sub MapTokens(tokens As List(Of String))
             If (tokens.Count = 7) Then
                 Me.Rx = Double.Parse(tokens(0))
                 Me.Ry = Double.Parse(tokens(1))

@@ -20,7 +20,7 @@
             Me.MapTokens(tokens)
         End Sub
 
-        Private Sub MapTokens(tokens As System.Collections.Generic.List(Of String))
+        Private Sub MapTokens(tokens As List(Of String))
             X = Double.Parse(tokens(0))
             Y = Double.Parse(tokens(1))
         End Sub
