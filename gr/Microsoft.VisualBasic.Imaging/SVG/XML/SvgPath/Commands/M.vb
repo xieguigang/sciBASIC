@@ -1,4 +1,4 @@
-﻿Namespace SVG.Path
+﻿Namespace SVG.PathHelper
 
     Public Class M : Inherits Command
 

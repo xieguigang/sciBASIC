@@ -1,4 +1,4 @@
-﻿Namespace SVG.Path
+﻿Namespace SVG.PathHelper
 
     Public Class T : Inherits Command
         Public Property X As Double

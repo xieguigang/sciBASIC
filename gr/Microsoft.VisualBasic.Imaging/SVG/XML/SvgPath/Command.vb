@@ -1,4 +1,4 @@
-﻿Namespace SVG.Path
+﻿Namespace SVG.PathHelper
 
     ''' <summary>
     ''' the base command for build a svg path

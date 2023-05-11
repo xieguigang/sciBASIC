@@ -1,6 +1,6 @@
-﻿Namespace SVG.Path
-    Public Class Q
-        Inherits Command
+﻿Namespace SVG.PathHelper
+
+    Public Class Q : Inherits Command
         Public Property X1 As Double
         Public Property Y1 As Double
         Public Property X As Double
