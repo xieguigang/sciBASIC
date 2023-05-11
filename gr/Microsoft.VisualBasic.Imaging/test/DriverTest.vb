@@ -102,7 +102,6 @@ Module DriverTest
     ''' <param name="A!"></param>
     ''' <param name="b!"></param>
     ''' <returns></returns>
-   ' <Driver("test.plot")>
     Public Function testPlot(A!, b!, Optional bg$ = "1234", Optional testFont$ = CSSFont.Win7LargerBold) As GraphicsData
         Call Console.WriteLine(A)
         Call Console.WriteLine(b)
