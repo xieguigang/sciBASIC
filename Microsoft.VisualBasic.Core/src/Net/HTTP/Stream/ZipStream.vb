@@ -64,6 +64,12 @@ Namespace Net.Http
         ''' </summary>
         ''' <param name="stream"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will add the zlib magic header when 
+        ''' <paramref name="magicHeader"/> is set to true. [NOTE:
+        ''' the zlib compression result via the .NET library did
+        ''' not contains the zlib magic header.]
+        ''' </remarks>
         <Extension>
         Public Function Zip(stream As Stream, Optional magicHeader As Boolean = True) As MemoryStream
             Dim deflatMs As New MemoryStream()
