@@ -40,6 +40,30 @@ Namespace SVG.XML
             End With
         End Sub
 
+        ''' <summary>
+        ''' Contructs a rectangle with the specified width and height.
+        ''' </summary>
+        ''' <param name="width">rectangle width</param>
+        ''' <param name="height">rectangle height</param>
+        Public Sub New(width As Double, height As Double)
+            Me.width = width
+            Me.height = height
+        End Sub
+
+        ''' <summary>
+        ''' Contructs a rectangle with the specified width and height at the given position.
+        ''' </summary>
+        ''' <param name="x">left top corner X-coordinate</param>
+        ''' <param name="y">left top corner Y-coordinate</param>
+        ''' <param name="width">rectangle width</param>
+        ''' <param name="height">rectangle height</param>
+        Public Sub New(x As Double, y As Double, width As Double, height As Double)
+            Me.x = x
+            Me.y = y
+            Me.width = width
+            Me.height = height
+        End Sub
+
         Public Shared Operator +(rect As rect, offset As PointF) As rect
             rect = DirectCast(rect.MemberwiseClone(), rect)
             rect.x += offset.X

@@ -9,43 +9,30 @@ Namespace SVG.XML
     ''' <summary>
     ''' 不规则的多边形对象
     ''' </summary>
-    Public Class polygon : Inherits node
-
-        ''' <summary>
-        ''' 定点坐标列表
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property points As String()
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return cache
-            End Get
-            Set(value As String())
-                cache = value _
-                    .Where(Function(s) Not s.StringEmpty) _
-                    .ToArray
-                data = cache _
-                    .Select(AddressOf FloatPointParser) _
-                    .ToArray
-            End Set
-        End Property
-
-        Dim data As PointF()
-        Dim cache$()
+    ''' 
+    <XmlRoot("polygon")>
+    Public Class polygon : Inherits polyline
 
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(pts As IEnumerable(Of PointF))
-            data = pts.ToArray
-            cache = data _
+            points = pts _
                 .Select(Function(pt) $"{pt.X},{pt.Y}") _
                 .ToArray
         End Sub
 
-        Public Shared Operator +(polygon As polygon, offset As PointF) As polygon
-            Dim points As PointF() = polygon _
-                .data _
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParsePoints() As PointF()
+            Return points _
+                .Select(AddressOf FloatPointParser) _
+                .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Offset2D(offset As PointF) As PointF()
+            Return ParsePoints _
                 .Select(Function(pt)
                             Return New PointF With {
                                 .X = pt.X + offset.X,
@@ -53,7 +40,11 @@ Namespace SVG.XML
                             }
                         End Function) _
                 .ToArray
-            Return New polygon(points) With {
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator +(polygon As polygon, offset As PointF) As polygon
+            Return New polygon(polygon.Offset2D(offset)) With {
                 .style = polygon.style,
                 .id = polygon.id,
                 .class = polygon.class
