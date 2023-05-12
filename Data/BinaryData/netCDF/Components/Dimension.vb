@@ -84,6 +84,10 @@ Namespace Components
             Me.size = size
         End Sub
 
+        Sub New(chrs As chars)
+            Me.size = chrs.Length
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{name}(size={size})"
         End Function

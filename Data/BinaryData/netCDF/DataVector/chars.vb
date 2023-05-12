@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace DataVector
 
+    ''' <summary>
+    ''' A single string value is a char vector
+    ''' </summary>
     Public Class chars : Inherits CDFData(Of Char)
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
