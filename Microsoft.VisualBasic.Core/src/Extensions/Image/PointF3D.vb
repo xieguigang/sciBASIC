@@ -59,16 +59,37 @@ Namespace Imaging
     ''' <summary>
     ''' 这个接口是为了实现Imaging模块的Point3D对象和数学函数模块的3D插值模块的兼容
     ''' </summary>
-    Public Interface PointF3D
-        Property X As Double
-        Property Y As Double
+    Public Interface PointF3D : Inherits Layout2D
         Property Z As Double
     End Interface
 
     Public Interface Layout2D
 
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property X As Double
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
         Property Y As Double
+
+    End Interface
+
+    Public Interface RasterPixel
+
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
+        Property X As Integer
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Y As Integer
 
     End Interface
 End Namespace

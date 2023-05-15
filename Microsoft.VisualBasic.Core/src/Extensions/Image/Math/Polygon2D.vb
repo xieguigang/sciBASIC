@@ -85,6 +85,7 @@ Namespace Imaging.Math2D
         Protected Friend bounds2 As Vector2D = Nothing
 
         Public ReadOnly Property height As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If ypoints.Length = 0 Then
                     Return 0
@@ -95,6 +96,7 @@ Namespace Imaging.Math2D
         End Property
 
         Public ReadOnly Property width As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If xpoints.Length = 0 Then
                     Return 0
@@ -155,6 +157,14 @@ Namespace Imaging.Math2D
             Call Me.New(
                 x:=points.Select(Function(p) p.X).ToArray,
                 y:=points.Select(Function(p) p.Y).ToArray
+            )
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(pixels As RasterPixel())
+            Call Me.New(
+                x:=pixels.Select(Function(p) CDbl(p.X)).ToArray,
+                y:=pixels.Select(Function(p) CDbl(p.Y)).ToArray
             )
         End Sub
 
@@ -327,6 +337,7 @@ Namespace Imaging.Math2D
             If length = 0 Then
                 Return False
             End If
+
             If Not boundingInside(x, y) Then
                 Return False
             Else
@@ -346,8 +357,19 @@ Namespace Imaging.Math2D
             Return GetShoelaceArea(xpoints, ypoints)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRectangle() As RectangleF
             Return New RectangleF(xpoints.Min, ypoints.Min, width, height)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSizeF() As SizeF
+            Return New SizeF(width, height)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSize() As Size
+            Return New Size(width, height)
         End Function
 
         ''' <summary>

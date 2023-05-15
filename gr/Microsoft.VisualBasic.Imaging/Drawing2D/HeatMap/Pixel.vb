@@ -68,18 +68,8 @@ Namespace Drawing2D.HeatMap
     ''' <summary>
     ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
     ''' </summary>
-    Public Interface Pixel
+    Public Interface Pixel : Inherits Imaging.RasterPixel
 
-        ''' <summary>
-        ''' the x axis data
-        ''' </summary>
-        ''' <returns></returns>
-        Property X As Integer
-        ''' <summary>
-        ''' the y axis data
-        ''' </summary>
-        ''' <returns></returns>
-        Property Y As Integer
         ''' <summary>
         ''' the color scale data
         ''' </summary>
