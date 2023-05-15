@@ -61,6 +61,9 @@ Imports Microsoft.VisualBasic.FileIO
 
 Namespace Net.Http
 
+    ''' <summary>
+    ''' the abstract model for the http proxy get request
+    ''' </summary>
     Public Interface IHttpGet
 
         Function GetText(url As String) As String

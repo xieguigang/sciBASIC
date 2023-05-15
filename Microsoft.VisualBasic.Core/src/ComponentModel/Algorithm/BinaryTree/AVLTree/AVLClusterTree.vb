@@ -82,6 +82,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Right
     End Enum
 
+    ''' <summary>
+    ''' wrapper for the cluster data
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
     Public Class ClusterKey(Of K)
 
         ReadOnly members As New List(Of K)
@@ -159,6 +163,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
     End Class
 
+    ''' <summary>
+    ''' A binary tree model for do data clustering
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
     Public Class AVLClusterTree(Of K) : Implements IEnumerable(Of ClusterKey(Of K))
 
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)
