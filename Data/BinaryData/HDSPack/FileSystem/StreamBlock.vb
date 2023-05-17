@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Namespace FileSystem
 
     ''' <summary>
-    ''' 
+    ''' A data file
     ''' </summary>
     Public Class StreamBlock : Inherits StreamObject
 

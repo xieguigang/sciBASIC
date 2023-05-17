@@ -326,16 +326,16 @@ Namespace BSON
             End If
 
             Select Case obj.GetType
-                Case GetType(Int32)
-                    Return New BSONValue(CType(obj, Int32))
+                Case GetType(Int32), GetType(Byte)
+                    Return New BSONValue(CInt(obj))
                 Case GetType(Int64)
                     Return New BSONValue(CType(obj, Int64))
                 Case GetType(Byte())
                     Return New BSONValue(DirectCast(obj, Byte()))
                 Case GetType(DateTime)
                     Return New BSONValue(CType(obj, DateTime))
-                Case GetType(String)
-                    Return New BSONValue(CType(obj, String))
+                Case GetType(String), GetType(Char)
+                    Return New BSONValue(CStr(obj))
                 Case GetType(Boolean)
                     Return New BSONValue(CType(obj, Boolean))
                 Case GetType(Double)

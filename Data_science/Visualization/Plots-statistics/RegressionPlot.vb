@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::372d65f26c1ed53f166642752b436902, sciBASIC#\Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 390
-    '    Code Lines: 298
-    ' Comment Lines: 40
-    '   Blank Lines: 52
-    '     File Size: 17.32 KB
+' Summaries:
 
 
-    ' Module RegressionPlot
-    ' 
-    '     Function: Plot
-    ' 
-    '     Sub: printEquation, printLegend, printXPredicted
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 390
+'    Code Lines: 298
+' Comment Lines: 40
+'   Blank Lines: 52
+'     File Size: 17.32 KB
+
+
+' Module RegressionPlot
+' 
+'     Function: Plot
+' 
+'     Sub: printEquation, printLegend, printXPredicted
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -130,6 +130,7 @@ Public Module RegressionPlot
                          Optional labelerIterations% = 1000,
                          Optional gridFill$ = NameOf(Color.LightGray),
                          Optional showYFitPoints As Boolean = True,
+                         Optional reverse As Boolean = False,
                          Optional ppi As Integer = 100) As GraphicsData
 
         Dim xTicks#() = fit.X.AsEnumerable _
@@ -138,6 +139,13 @@ Public Module RegressionPlot
         Dim yTicks#() = (fit.Y.AsList + fit.Yfit.AsEnumerable) _
             .Range(scale:=1.125) _
             .CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
+
+        If reverse Then
+            Dim temp As Double() = xTicks
+
+            xTicks = yTicks
+            yTicks = temp
+        End If
 
         If TypeOf fit Is MLRFit Then
             Throw New InvalidProgramException($"MLR model is not compatible with this plot function!")
@@ -218,6 +226,15 @@ Public Module RegressionPlot
                     ' regression line 
                     Dim xMin As Double = fit.X.Min
                     Dim xMax As Double = fit.X.Max
+
+                    'If reverse Then
+                    '    xMin = fit.Y.Min
+                    '    xMax = fit.Y.Max
+                    'Else
+                    '    xMin = fit.X.Min
+                    '    xMax = fit.X.Max
+                    'End If
+
                     Dim yMin As Double = polynomial(xMin)
                     Dim yMax As Double = polynomial(xMax)
                     Dim A As New PointF With {.X = xMin, .Y = yMin}

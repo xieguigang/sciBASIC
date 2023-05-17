@@ -101,8 +101,6 @@ Namespace ComponentModel.Collection
             End If
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
-
         <Extension>
         Public Function TupleTable(tuple As (String(), String())) As Dictionary(Of String, String)
             Dim table As New Dictionary(Of String, String)
@@ -113,7 +111,6 @@ Namespace ComponentModel.Collection
 
             Return table
         End Function
-#End If
 
         ''' <summary>
         ''' transform the hash key string to lower case characters

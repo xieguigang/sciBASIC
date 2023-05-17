@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::276543f25bf457a438df802cb3d06404, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Repository\FNV1a.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 109
-    '    Code Lines: 68
-    ' Comment Lines: 25
-    '   Blank Lines: 16
-    '     File Size: 3.91 KB
+' Summaries:
 
 
-    '     Module FNV1a
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetDeterministicHashCode, (+4 Overloads) GetHashCode, getHashValue
-    ' 
-    '         Sub: RegisterHashFunction
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 109
+'    Code Lines: 68
+' Comment Lines: 25
+'   Blank Lines: 16
+'     File Size: 3.91 KB
+
+
+'     Module FNV1a
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetDeterministicHashCode, (+4 Overloads) GetHashCode, getHashValue
+' 
+'         Sub: RegisterHashFunction
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,9 +74,9 @@ Namespace Data.Repository
         ''' <param name="str"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetDeterministicHashCode(str As String) As Integer
-            Dim hash1 As Integer = (5381 << 16) + 5381
-            Dim hash2 As Integer = hash1
+        Public Function GetDeterministicHashCode(str As String) As UInteger
+            Dim hash1 As UInteger = (5381 << 16) + 5381
+            Dim hash2 As UInteger = hash1
 
             For i As Integer = 0 To str.Length - 1 Step 2
                 hash1 = (hash1 << 5) + hash1 Xor AscW(str(i))

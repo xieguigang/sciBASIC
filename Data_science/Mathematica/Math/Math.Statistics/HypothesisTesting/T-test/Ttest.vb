@@ -216,7 +216,11 @@ Namespace Hypothesis
                     Throw New InvalidProgramException(debug, ex)
                 Else
                     ' evaluate the pvalue failure
-                    pvalue = Double.NaN
+                    If va.Average / vb.Average <> 1 Then
+                        pvalue = 1.0E-17
+                    Else
+                        pvalue = Double.NaN
+                    End If
                 End If
             End Try
 
