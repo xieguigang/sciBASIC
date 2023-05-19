@@ -90,6 +90,8 @@ Namespace Emit.Delegates
         ''' <param name="source"></param>
         ''' <typeparam name="interfaceType">接口类型信息</typeparam>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ImplementInterface(Of interfaceType)(source As Type) As Boolean
             Return source.ImplementInterface(GetType(interfaceType))
@@ -103,8 +105,23 @@ Namespace Emit.Delegates
         ''' <returns></returns>
         <Extension>
         Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
+            Static cache As New Dictionary(Of Type, Dictionary(Of Type, Boolean))
+
+            If Not cache.ContainsKey(source) Then
+                Call cache.Add(source, New Dictionary(Of Type, Boolean))
+            End If
+
+            If Not cache(source).ContainsKey(interfaceType) Then
+                Call cache(source).Add(interfaceType, ImplementInterfaceAssertInternal(source, interfaceType))
+            End If
+
+            Return cache(source)(interfaceType)
+        End Function
+
+        Private Function ImplementInterfaceAssertInternal(source As Type, interfaceType As Type) As Boolean
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()
+
                 If interfaces.Any(Function(i) i Is interfaceType OrElse i.ImplementInterface(interfaceType)) Then
                     Return True
                 End If

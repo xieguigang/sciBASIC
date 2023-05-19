@@ -91,6 +91,12 @@ Namespace Math.SIMD
             Return result
         End Function
 
+        ''' <summary>
+        ''' v1 / v2
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_divide_f64(v1 As Double(), v2 As Double()) As Double()
             Dim result As Double() = New Double(v1.Length - 1) {}
 

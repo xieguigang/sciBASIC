@@ -1,14 +1,13 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Score
 
     Public Property p As Double()
     Public Property q As Double()
 
-    Public ReadOnly Property score As Vector
+    Public ReadOnly Property score As Double()
         Get
-            Return New Vector(q) / New Vector(p)
+            Return SIMD.Divide.f64_op_divide_f64(q, p)
         End Get
     End Property
 
@@ -53,25 +52,27 @@ Public Class Gibbs
     Public Function sample(Optional MAXIT As Integer = 1999) As Score()
         Dim rand As Random = randf2.seeds
         Dim start = generateRandomValue()
+        Dim scores As Double()
 
         For j As Integer = 0 To MAXIT
             Dim chosenSeqIndex = rand.Next(sequences.Length)
             Dim chosenSequence As String = sequences(chosenSeqIndex)
-            Dim scores As New List(Of Double)()
+            Dim w = chosenSequence.Length - motifLength
+            Dim qv As Double() = New Double(w) {}
+            Dim pv As Double() = New Double(w) {}
+
             ' i = possibleStart
-            For i As Integer = 0 To chosenSequence.Length - motifLength
+            For i As Integer = 0 To w
                 Dim tempMotif = chosenSequence.Substring(i, motifLength)
                 Dim p = calculateP(tempMotif, chosenSeqIndex)
                 Dim q = calculateQ(tempMotif, chosenSeqIndex, i)
 
-                Call scores.Add(q / p)
+                qv(i) = q
+                pv(i) = p
             Next
 
-            Dim sum As Double = scores.Sum
-
-            For i As Integer = 0 To scores.Count - 1
-                scores(i) = scores(i) / sum
-            Next
+            scores = SIMD.Divide.f64_op_divide_f64(qv, pv)
+            scores = SIMD.Divide.f64_op_divide_f64_scalar(scores, scores.Sum)
 
             Dim random As Double = rand.NextDouble()
             Dim dubsum As Double = 0
@@ -80,6 +81,8 @@ Public Class Gibbs
                 dubsum += d
                 If random = dubsum Then
                     start(chosenSequence).start = scores.IndexOf(d)
+                    start(chosenSequence).p = pv
+                    start(chosenSequence).q = qv
                 End If
             Next
         Next

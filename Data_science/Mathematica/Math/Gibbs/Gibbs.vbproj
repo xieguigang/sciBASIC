@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <AssemblyName>Microsoft.VisualBasic.Math.GibbsSampling</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.Math.GibbsSampling</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Platforms>AnyCPU;x64</Platforms>
+   
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>False</Optimize>
@@ -37,6 +39,7 @@
     <None Remove="test\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="data.txt" />
     <None Remove="README.md" />
   </ItemGroup>
   <ItemGroup>
