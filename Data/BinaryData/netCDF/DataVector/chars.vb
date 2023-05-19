@@ -90,8 +90,8 @@ Namespace DataVector
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Public Function LoadJSON(Of T)() As T
-            Return New String(buffer).LoadJSON(Of T)
+        Public Function LoadJSON(Of T)(Optional strict As Boolean = True) As T
+            Return New String(buffer).LoadJSON(Of T)(throwEx:=strict)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

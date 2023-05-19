@@ -278,13 +278,25 @@ Namespace Serialization.JSON
         ''' 从文本文件或者文本内容之中进行JSON反序列化
         ''' </summary>
         ''' <param name="json">This string value can be json text or json file path.</param>
-        <Extension> Public Function LoadJSON(Of T)(json$,
-                                                   Optional simpleDict As Boolean = True,
-                                                   Optional throwEx As Boolean = True,
-                                                   Optional ByRef exception As Exception = Nothing,
-                                                   Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
+        <Extension>
+        Public Function LoadJSON(Of T)(json$,
+                                       Optional simpleDict As Boolean = True,
+                                       Optional throwEx As Boolean = True,
+                                       Optional ByRef exception As Exception = Nothing,
+                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
 
             Dim text$ = json.SolveStream(Encodings.UTF8)
+
+            If text.StringEmpty Then
+                If throwEx Then
+                    Throw New NullReferenceException("empty json text!")
+                Else
+                    Return Nothing
+                End If
+            ElseIf text.TextEquals("null") Then
+                Return Nothing
+            End If
+
             Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception, knownTypes)
             Dim obj As T = DirectCast(value, T)
             Return obj
