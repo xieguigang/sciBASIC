@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::3f0b263a722e820cb244b5f83fcf977a, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 191
-    '    Code Lines: 139
-    ' Comment Lines: 21
-    '   Blank Lines: 31
-    '     File Size: 7.35 KB
+' Summaries:
 
 
-    '     Class JavaScriptObject
-    ' 
-    '         Properties: length, this
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
-    '                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
-    ' 
-    '         Sub: Delete
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 191
+'    Code Lines: 139
+' Comment Lines: 21
+'   Blank Lines: 31
+'     File Size: 7.35 KB
+
+
+'     Class JavaScriptObject
+' 
+'         Properties: length, this
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
+'                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
+' 
+'         Sub: Delete
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace My.JavaScript
@@ -68,7 +70,9 @@ Namespace My.JavaScript
     ''' <summary>
     ''' javascript object
     ''' </summary>
-    Public Class JavaScriptObject : Implements IEnumerable(Of String), IEnumerable(Of NamedValue(Of Object)), IJavaScriptObjectAccessor
+    Public Class JavaScriptObject : Implements IEnumerable(Of String),
+            IEnumerable(Of NamedValue(Of Object)),
+            IJavaScriptObjectAccessor
 
         Dim members As New Dictionary(Of String, JavaScriptValue)
 
@@ -115,22 +119,33 @@ Namespace My.JavaScript
         ''' 如果存在无参数的函数，则也会被归类为只读属性？
         ''' </summary>
         Sub New()
-            Dim type As Type = MyClass.GetType
-            Dim properties As PropertyInfo() = type.GetProperties(PublicProperty).ToArray
-            Dim fields As FieldInfo() = type.GetFields(PublicProperty).ToArray
+            Call loadObject(this:=Me)
+        End Sub
+
+        Private Shared Sub loadObject(ByRef this As JavaScriptObject)
+            Dim type As Type = this.GetType
             Dim value As JavaScriptValue
 
-            For Each prop As PropertyInfo In properties
-                If prop.Name = NameOf(Me.length) OrElse Not prop.GetIndexParameters.IsNullOrEmpty Then
-                    Continue For
-                End If
+            Static properties As New Dictionary(Of Type, PropertyInfo())
+            Static fields As New Dictionary(Of Type, FieldInfo())
 
-                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(prop), Me)
-                members(prop.Name) = value
+            If Not properties.ContainsKey(type) Then
+                properties.Add(type, type _
+                               .GetProperties(PublicProperty) _
+                               .Where(Function(t) t.Name <> NameOf(JavaScriptObject.length) AndAlso t.GetIndexParameters.IsNullOrEmpty) _
+                               .ToArray)
+            End If
+            If Not fields.ContainsKey(type) Then
+                fields.Add(type, type.GetFields(PublicProperty).ToArray)
+            End If
+
+            For Each prop As PropertyInfo In properties(type)
+                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(prop), this)
+                this.members(prop.Name) = value
             Next
-            For Each field As FieldInfo In fields
-                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(field), Me)
-                members(field.Name) = value
+            For Each field As FieldInfo In fields(type)
+                value = New JavaScriptValue(New BindProperty(Of DataFrameColumnAttribute)(field), this)
+                this.members(field.Name) = value
             Next
         End Sub
 
@@ -245,6 +260,57 @@ Namespace My.JavaScript
                 GetType(Double),
                 GetType(Boolean)
             })
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateObject(Of T As Class)() As T
+            Return CreateObject(GetType(T))
+        End Function
+
+        Public Function CreateObject(type As Type) As Object
+            Dim propWriter As Dictionary(Of String, PropertyInfo) = type _
+                .GetProperties(PublicProperty) _
+                .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
+                .ToDictionary(Function(p)
+                                  Return p.Name
+                              End Function)
+            Dim obj As Object = Activator.CreateInstance(type)
+
+            For Each name As String In Me
+                Dim value As Object = Me(name)
+
+                If Not propWriter.ContainsKey(name) Then
+                    Continue For
+                End If
+
+                Dim target As PropertyInfo = propWriter(name)
+
+                If DataFramework.IsPrimitive(target.PropertyType) Then
+                    value = Conversion.CTypeDynamic(value, target.PropertyType)
+                ElseIf target.PropertyType.IsArray Then
+                    If DataFramework.IsPrimitive(target.PropertyType.GetElementType) Then
+                        value = DirectCast(value, Array).CTypeDynamic(target.PropertyType)
+                    Else
+                        Dim template As Type = target.PropertyType.GetElementType
+                        Dim src As JavaScriptObject() = DirectCast(value, Array).DirectCast(GetType(JavaScriptObject))
+                        Dim vec As Array = Array.CreateInstance(template, src.Length)
+
+                        For i As Integer = 0 To src.Length - 1
+                            vec.SetValue(src(i).CreateObject(template), i)
+                        Next
+
+                        value = vec
+                    End If
+                ElseIf TypeOf value Is JavaScriptObject Then
+                    value = DirectCast(value, JavaScriptObject).CreateObject(target.GetType)
+                Else
+                    value = Nothing
+                End If
+
+                Call target.SetValue(obj, value)
+            Next
+
+            Return obj
         End Function
     End Class
 End Namespace

@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::0edb47586fcd6f4a4d8ba00b56b96915, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 401
-    '    Code Lines: 246
-    ' Comment Lines: 114
-    '   Blank Lines: 41
-    '     File Size: 17.45 KB
+' Summaries:
 
 
-    '     Module InputHandler
-    ' 
-    '         Properties: [String], CasterString, Types
-    ' 
-    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+3 Overloads) CTypeDynamic
-    '                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
-    '                   (+2 Overloads) ToString
-    ' 
-    '         Sub: CapabilityPromise
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 401
+'    Code Lines: 246
+' Comment Lines: 114
+'   Blank Lines: 41
+'     File Size: 17.45 KB
+
+
+'     Module InputHandler
+' 
+'         Properties: [String], CasterString, Types
+' 
+'         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+3 Overloads) CTypeDynamic
+'                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
+'                   (+2 Overloads) ToString
+' 
+'         Sub: CapabilityPromise
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -292,7 +292,7 @@ Namespace Scripting
         ''' Enumerate all of the types that can be handled in this module. All of the key string is in lower case.(键值都是小写的)
         ''' </summary>
         Public ReadOnly Property Types As New SortedDictionary(Of String, Type) From {
- _
+                                                                                      _
                 {"string", GetType(String)},
                 {"char", GetType(Char)},
                 {"integer", GetType(Integer)},
@@ -442,7 +442,7 @@ Namespace Scripting
 
             Dim source As IEnumerable = DirectCast(obj, IEnumerable)
             Dim data = LinqAPI.Exec(Of Object) _
- _
+                                               _
                 () <= From val As Object
                       In source
                       Let value = Conversion.CTypeDynamic(val, type)
@@ -457,13 +457,35 @@ Namespace Scripting
         ''' <param name="array"></param>
         ''' <param name="type">数组里面的元素的类型</param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [DirectCast](array As IEnumerable, type As Type) As Object
-            Dim objs As Object() = (From item As Object In array.AsQueryable Select item).ToArray
-            Dim out = CreateInstance(type, objs.Length)
-            Call Copy(objs, out, objs.Length) ' 直接复制不能够正常工作
-            Return out
+        Public Function [DirectCast](array As IEnumerable, type As Type) As Array
+            Return Runtime.Extensions.CreateArray(data:=array, type)
+        End Function
+
+        <Extension>
+        Public Function CTypeDynamic(array As IEnumerable, type As Type) As Array
+            Dim pullAll As Array
+
+            If array.GetType.IsArray Then
+                pullAll = array
+
+                If pullAll.GetType.GetElementType Is type Then
+                    Return pullAll
+                End If
+            Else
+                pullAll = (From x As Object
+                           In array.AsQueryable
+                           Select x).ToArray
+            End If
+
+            Dim vec As Array = System.Array.CreateInstance(type, pullAll.Length)
+
+            For i As Integer = 0 To vec.Length - 1
+                Call vec.SetValue(Conversion.CTypeDynamic(pullAll(i), type), i)
+            Next
+
+            Return vec
         End Function
     End Module
 End Namespace

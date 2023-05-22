@@ -206,7 +206,8 @@ Namespace Scripting.Runtime
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        <Extension> Public Function SizeParser(pt$) As Size
+        <Extension>
+        Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function
 
@@ -278,7 +279,8 @@ Namespace Scripting.Runtime
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Double.Match")>
-        <Extension> Public Function RegexParseDouble(s As String) As Double
+        <Extension>
+        Public Function RegexParseDouble(s As String) As Double
             Return Val(s.Match(RegexpFloat))
         End Function
 

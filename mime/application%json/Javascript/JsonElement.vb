@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Javascript
 
@@ -77,5 +78,13 @@ Namespace Javascript
         Public Shared Function ParseJSON(jsonStr As String) As JsonElement
             Return New JsonParser().OpenJSON(jsonStr)
         End Function
+
+        Public Shared Narrowing Operator CType(js As JsonElement) As JavaScriptObject
+            If TypeOf js Is JsonObject Then
+                Return DirectCast(js, JsonObject).CreateJsObject
+            Else
+                Return Nothing
+            End If
+        End Operator
     End Class
 End Namespace

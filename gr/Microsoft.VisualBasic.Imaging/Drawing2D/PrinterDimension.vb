@@ -65,6 +65,9 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Drawing2D
 
+    ''' <summary>
+    ''' the size definition of the printer, usually apply for the PDF output
+    ''' </summary>
     Public Class PrinterDimension
 
         Public Const A0 As String = "1189,841"

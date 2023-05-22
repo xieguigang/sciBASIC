@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace FuzzyCMeans
 
+    ''' <summary>
+    ''' A numeric vector object that tagged with the fuzzy cmeans cluster membership values
+    ''' </summary>
     Public Class FuzzyCMeansEntity : Inherits ClusterEntity
 
         ''' <summary>

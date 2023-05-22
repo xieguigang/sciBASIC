@@ -102,7 +102,7 @@ Namespace Javascript
         End Sub
 
         Sub New(values As IEnumerable(Of String))
-            Call Me.New(values.Select(Function(str) New JsonValue(str)))
+            Call Me.New(values.SafeQuery.Select(Function(str) New JsonValue(str)))
         End Sub
 
         Sub New(values As IEnumerable(Of Double))
