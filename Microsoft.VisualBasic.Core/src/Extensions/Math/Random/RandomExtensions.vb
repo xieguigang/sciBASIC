@@ -227,6 +227,12 @@ Namespace Math
             Return (max - min) * r.NextDouble + min
         End Function
 
+        Public Function GetNextBetween(range As IntRange) As Integer
+            SyncLock seeds
+                Return GetNextBetween(seeds, range.Min, range.Max)
+            End SyncLock
+        End Function
+
         ''' <summary>
         ''' Returns a random floating-point number that is greater than or equal to min of the range,
         ''' and less than the max of the range.

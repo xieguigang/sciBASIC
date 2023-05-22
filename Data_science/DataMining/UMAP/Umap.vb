@@ -189,36 +189,24 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Return _graph
     End Function
 
-    ''' <summary>
-    ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing 
-    ''' the projected embeddings. Sets the optimization state ahead of optimization steps.
-    ''' 
-    ''' Returns the number of epochs to be used for the SGD optimization.
-    ''' </summary>
-    Public Function InitializeFit(x As Double()()) As Integer
-        ' We don't need to reinitialize if we've already initialized for this data
-        If _x Is x AndAlso _isInitialized Then
-            Return GetNEpochs()
-        End If
-
+    Private Function InitializeFitImpl() As Integer
         ' For large quantities of data (which is where the progress estimating is more useful), 
         ' InitializeFit Takes at least 80% of the total time (the calls to Step are
         ' completed much more quickly AND they naturally lend themselves to granular progress updates; 
         ' one per loop compared to the recommended number of epochs)
         Dim initializeFitProgressReporter As RunSlavePipeline.SetProgressEventHandler = GetProgress()
 
-        _x = x
-
         If _kdTreeKNNEngine Then
-            _knn = KDTreeMetric.GetKNN(x, k:=KNNArguments.k)
+            _knn = KDTreeMetric.GetKNN(_x, k:=KNNArguments.k)
         Else
             ' This part of the process very roughly accounts for 1/3 of the work
-            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random) _
+                .NearestNeighbors(_x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
         End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
         _graph = Me.FuzzySimplicialSet(
-            x:=x,
+            x:=_x,
             setOpMixRatio:=_setOpMixRatio,
             progressReporter:=ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1)
         )
@@ -237,6 +225,22 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _isInitialized = True
 
         Return GetNEpochs()
+    End Function
+
+    ''' <summary>
+    ''' Initializes fit by computing KNN and a fuzzy simplicial set, as well as initializing 
+    ''' the projected embeddings. Sets the optimization state ahead of optimization steps.
+    ''' 
+    ''' Returns the number of epochs to be used for the SGD optimization.
+    ''' </summary>
+    Public Function InitializeFit(x As Double()()) As Integer
+        ' We don't need to reinitialize if we've already initialized for this data
+        If _x Is x AndAlso _isInitialized Then
+            Return GetNEpochs()
+        Else
+            _x = x
+            Return InitializeFitImpl()
+        End If
     End Function
 
     ''' <summary>
@@ -403,6 +407,18 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _optimizationState.Gamma = repulsionStrength
         _optimizationState.Dim = [dim]
     End Sub
+
+    Public Function [Step](nEpochs As Integer) As Umap
+        For i As Integer = 0 To nEpochs - 1
+            Call [Step]()
+
+            If (100 * i / nEpochs) Mod 5 = 0 Then
+                Call VBDebugger.EchoLine($"- Completed {i + 1} of {nEpochs} [{CInt(100 * i / nEpochs)}%]")
+            End If
+        Next
+
+        Return Me
+    End Function
 
     ''' <summary>
     ''' Manually step through the optimization process one epoch at a time

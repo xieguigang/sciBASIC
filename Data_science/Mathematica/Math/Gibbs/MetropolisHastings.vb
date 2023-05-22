@@ -130,7 +130,7 @@ Public Class MetropolisHastings
         Console.WriteLine("p-value: " & sig / NUM_ITERATIONS.ToString())
     End Sub
 
-    Public Shared Function calcTransProb(ByVal x As Integer(), ByVal markov As Integer()) As Double
+    Public Shared Function calcTransProb(x As Integer(), markov As Integer()) As Double
         Dim prob As Double = 1
 
         For i = 0 To x.Length - 1
@@ -150,7 +150,7 @@ Public Class MetropolisHastings
         Return prob
     End Function
 
-    Public Shared Function calcChiSquare(ByVal observed As Integer(), ByVal expected As Double()) As Double
+    Public Shared Function calcChiSquare(observed As Integer(), expected As Double()) As Double
         Dim total As Double = 0
 
         For i = 0 To observed.Length - 1

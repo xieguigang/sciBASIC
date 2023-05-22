@@ -54,11 +54,24 @@ Imports stdNum = System.Math
 
 Public NotInheritable Class DistanceFunctions
 
+    ''' <summary>
+    ''' this function will do data normalization and then evaluated the cosine similarity
+    ''' </summary>
+    ''' <param name="lhs"></param>
+    ''' <param name="rhs"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Cosine(lhs As Double(), rhs As Double()) As Double
         Return 1 - SIMD.DotProduct(lhs, rhs) / (SIMD.Magnitude(lhs) * SIMD.Magnitude(rhs))
     End Function
 
+    ''' <summary>
+    ''' use this function if the input vector <paramref name="lhs"/> and <paramref name="rhs"/> 
+    ''' has been normalized to range [0,1]
+    ''' </summary>
+    ''' <param name="lhs"></param>
+    ''' <param name="rhs"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CosineForNormalizedVectors(lhs As Double(), rhs As Double()) As Double
         Return 1 - SIMD.DotProduct(lhs, rhs)

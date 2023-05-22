@@ -56,6 +56,20 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Module Enumerable
 
+        <Extension>
+        Public Function GetNodeCounts(Of K, V)(tree As BinaryTree(Of K, V)) As Integer
+            Dim n As Integer = 1
+
+            If tree.Left IsNot Nothing Then
+                n += tree.Left.GetNodeCounts
+            End If
+            If tree.Right IsNot Nothing Then
+                n += tree.Right.GetNodeCounts
+            End If
+
+            Return n
+        End Function
+
         ''' <summary>
         ''' Populate an ASC sortted sequence from this binary tree 
         ''' 
