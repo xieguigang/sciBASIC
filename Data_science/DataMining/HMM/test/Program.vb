@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.DataMining.HiddenMarkovChain.Models
 Module Program
 
     Sub Main()
+        ' Call MarkovChainTest()
         Call HMMTest()
     End Sub
 
@@ -113,6 +114,10 @@ Module Program
         Dim seqProbability = markovChain.SequenceProb(stateSeq)
 
         ' Call Console.WriteLine(markovChain.GetTransMatrix)
+
+        Dim test2 As New Chain(Function(a, b) a = b) With {.obSequence = {"sunny", "sunny", "cloudy", "rainy"}}
+
+        Dim prob2 = markovChain.SequenceProb(test2)
 
         Pause()
     End Sub
