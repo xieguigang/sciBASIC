@@ -107,17 +107,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{71d0bfb7-9a21-4b0e-8a75-bcc0e8145655}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{ecafd4b6-81b5-4931-993c-42bdca4adb1f}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HMM.vbproj">
-      <Project>{6f50fb96-d5f3-4b67-bd6b-4e5bc0ae1a15}</Project>
-      <Name>HMM</Name>
+    <ProjectReference Include="..\HMM.NET5.vbproj">
+      <Project>{10c6a735-3cc4-4c86-9752-6d9e27b13d13}</Project>
+      <Name>HMM.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
