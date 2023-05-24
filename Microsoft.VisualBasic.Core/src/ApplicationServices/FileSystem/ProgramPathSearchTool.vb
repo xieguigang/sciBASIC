@@ -70,7 +70,7 @@ Imports SearchOption = Microsoft.VisualBasic.FileIO.SearchOption
 Namespace ApplicationServices
 
     ''' <summary>
-    ''' 
+    ''' Program helper for search dir like ``C:\Program Files`` or ``C:\Program Files(x86)``
     ''' </summary>
     ''' <remarks>
     ''' Works on windows, have not test on Linux/Mac yet.
