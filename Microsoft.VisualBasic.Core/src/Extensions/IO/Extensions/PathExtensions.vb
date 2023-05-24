@@ -652,7 +652,13 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="ZERO_Nonexists">将0长度的文件也作为不存在</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' returns the file path check result:
+    ''' 
+    ''' 1. <paramref name="path"/> string is null or empty string: false
+    ''' 2. file not exists: false
+    ''' 3. file is zero length andalso <paramref name="ZERO_Nonexists"/> is config as true: false
+    ''' </returns>
     ''' <remarks></remarks>
     <Extension>
     Public Function FileExists(path$, Optional ZERO_Nonexists As Boolean = False) As Boolean
