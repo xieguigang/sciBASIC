@@ -327,6 +327,8 @@ Public Module VBDebugger
     ''' So i make this function access level from public to 
     ''' friend.
     ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub WaitOutput()
         Call My.InnerQueue.WaitQueue()
     End Sub

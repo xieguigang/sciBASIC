@@ -78,6 +78,9 @@ Namespace Imaging
 
     End Interface
 
+    ''' <summary>
+    ''' [x,y] tuple
+    ''' </summary>
     Public Interface RasterPixel
 
         ''' <summary>
