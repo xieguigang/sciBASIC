@@ -27,6 +27,39 @@ Namespace BarPlot
         Public Property boxSeperator As Single
 
         <Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification:="<挂起>")>
+        Public Shared Sub DrawStackBars(data As BarDataGroup,
+                                        ByRef g As IGraphics,
+                                        canvas As GraphicsRegion,
+                                        interval As Single)
+
+            Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
+            ' 条形图区域的总高度
+            Dim barRegionHeight = canvas.PlotRegion.Height
+            Dim x0! = canvas.Padding.Left
+            Dim barRegionWidth = canvas.PlotRegion.Width
+            Dim n = data.Samples.Length
+            Dim wb = BarWidth(barRegionWidth, n, interval)
+
+            ' 遍历X轴上面的每一个分组
+            For Each group As BarDataSample In data.Samples
+                Dim y0! = canvas.Padding.Top
+                Dim sum# = group.StackedSum
+
+                ' 慢慢的从上面累加y到下面底部
+                For Each serial As SeqValue(Of NamedValue(Of SolidBrush)) In serialBrushes.SeqIterator
+                    Dim value As Double = group.data(serial) / sum  ' 百分比
+                    Dim h = value * barRegionHeight
+                    Dim bar As New RectangleF(New PointF(x0, y0), New SizeF(wb, h))
+
+                    g.FillRectangle(serial.value.Value, rect:=bar)
+                    y0 += h
+                Next
+
+                x0 += wb + interval
+            Next
+        End Sub
+
+        <Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification:="<挂起>")>
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim rect As Rectangle = canvas.PlotRegion
             Dim width = rect.Width
@@ -36,9 +69,6 @@ Namespace BarPlot
             Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
             Dim tickSize = g.MeasureString("0.00", tickFont)
             Dim leftPart = axisFont.Height + tickSize.Width + 10
-            Dim barRegionWidth = width - leftPart
-            Dim n = data.Samples.Length
-            Dim wb = BarWidth(barRegionWidth, n, interval)
             Dim groupLabelFont As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
             Dim boxWidth% = legendFont.Height * 1.1
             Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
@@ -46,6 +76,7 @@ Namespace BarPlot
             Dim barRegionHeight = height - bottomPart
             Dim x0! = canvas.Padding.Left + leftPart
             Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
+            Dim wb = BarWidth(width, data.Samples.Length, interval)
 
             Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(
                 ylabel, axisFont,
@@ -62,30 +93,18 @@ Namespace BarPlot
                 g.DrawString(tick.ToString("F2"), tickFont, Brushes.Black, location)
             Next
 
+            Call DrawStackBars(data, g, canvas, interval)
+
             ' 遍历X轴上面的每一个分组
             For Each group As BarDataSample In data.Samples
-
-                Dim y0! = canvas.Padding.Top
-                Dim sum# = group.StackedSum
-
-                ' 慢慢的从上面累加y到下面底部
-                For Each serial As SeqValue(Of NamedValue(Of SolidBrush)) In serialBrushes.SeqIterator
-                    Dim value As Double = group.data(serial) / sum  ' 百分比
-                    Dim h = value * barRegionHeight
-                    Dim bar As New RectangleF(New PointF(x0, y0), New SizeF(wb, h))
-
-                    g.FillRectangle(serial.value.Value, rect:=bar)
-                    y0 += h
-                Next
-
                 Dim x!, y!
                 Dim labelSize = g.MeasureString(group.tag, groupLabelFont)
+                Dim y0! = canvas.Padding.Top
 
                 x = x0 + (wb - labelSize.Width) / 2
                 y = y0 + (30)
-                Call g.DrawString(group.tag, groupLabelFont, Brushes.Black, New PointF(x, y))
 
-                x0 += wb + interval
+                Call g.DrawString(group.tag, groupLabelFont, Brushes.Black, New PointF(x, y))
             Next
 
             ' 绘制图例
