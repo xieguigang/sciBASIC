@@ -92,7 +92,7 @@ Namespace SVG.XML
         Public Property strokeDashArray As Integer()
         <XmlAttribute> Public Property filter As String
         <XmlAttribute("transform")>
-        Public Property transform As String
+        Public Overridable Property transform As String
         <XmlAttribute("transform-origin")>
         Public Property transformOrigin As String ' don't include BOM
         ''' <summary>

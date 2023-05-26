@@ -90,7 +90,7 @@ Namespace SVG.XML
     Public Class g : Inherits node
         Implements ICanvas
 
-        <XmlAttribute> Public Property transform As String Implements ICanvas.transform
+        <XmlAttribute("transform")> Public Overrides Property transform As String Implements ICanvas.transform
         <XmlElement("g")> Public Property Layers As g() Implements ICanvas.Layers
         <XmlElement> Public Property path As path() Implements ICanvas.path
         <XmlElement> Public Property rect As rect() Implements ICanvas.rect
