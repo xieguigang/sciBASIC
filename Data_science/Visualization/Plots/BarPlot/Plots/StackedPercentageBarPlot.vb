@@ -27,6 +27,39 @@ Namespace BarPlot
         Public Property boxSeperator As Single
 
         <Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification:="<挂起>")>
+        Public Shared Sub DrawStackBarsFlip(data As BarDataGroup,
+                                            ByRef g As IGraphics,
+                                            canvas As GraphicsRegion,
+                                            interval As Single)
+
+            Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
+            ' 条形图区域的总高度
+            Dim barRegionHeight = canvas.PlotRegion.Height
+            Dim barRegionWidth = canvas.PlotRegion.Width
+            Dim n = data.Samples.Length
+            Dim wb = BarWidth(barRegionHeight, n, interval)
+            Dim y0! = canvas.Padding.Top
+
+            ' 遍历X轴上面的每一个分组
+            For Each group As BarDataSample In data.Samples
+                Dim sum# = group.StackedSum
+                Dim x0! = canvas.Padding.Left
+
+                ' 慢慢的从上面累加y到下面底部
+                For Each serial As SeqValue(Of NamedValue(Of SolidBrush)) In serialBrushes.SeqIterator
+                    Dim value As Double = group.data(serial) / sum  ' 百分比
+                    Dim w = value * barRegionWidth
+                    Dim bar As New RectangleF(New PointF(x0, y0), New SizeF(w, wb))
+
+                    g.FillRectangle(serial.value.Value, rect:=bar)
+                    x0 += w
+                Next
+
+                y0 += wb + interval
+            Next
+        End Sub
+
+        <Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification:="<挂起>")>
         Public Shared Sub DrawStackBars(data As BarDataGroup,
                                         ByRef g As IGraphics,
                                         canvas As GraphicsRegion,
