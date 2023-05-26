@@ -170,6 +170,12 @@ Namespace Graphic.Canvas
         Public Property xAxisReverse As Boolean = False
 
         ''' <summary>
+        ''' Swapping X- and Y-Axes?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property flipAxis As Boolean = False
+
+        ''' <summary>
         ''' Y坐标轴的布局
         ''' </summary>
         ''' <returns></returns>
