@@ -62,6 +62,9 @@ Imports System.Drawing
 
 Namespace Drawing2D.Colors
 
+    ''' <summary>
+    ''' a continues numeric scaler legend bar
+    ''' </summary>
     Public Class ColorMapLegend
 
         Public ReadOnly Property designer As SolidBrush()
