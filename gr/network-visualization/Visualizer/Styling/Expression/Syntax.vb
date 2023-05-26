@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::1a3cda5b05fbef224e26ef4c8550dc97, sciBASIC#\gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 87
-    '    Code Lines: 56
-    ' Comment Lines: 24
-    '   Blank Lines: 7
-    '     File Size: 3.63 KB
+' Summaries:
 
 
-    '     Module SyntaxExtensions
-    ' 
-    '         Function: IsMapExpression, MapExpressionParser, RangeTransform
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 87
+'    Code Lines: 56
+' Comment Lines: 24
+'   Blank Lines: 7
+'     File Size: 3.63 KB
+
+
+'     Module SyntaxExtensions
+' 
+'         Function: IsMapExpression, MapExpressionParser, RangeTransform
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Styling
@@ -122,8 +123,7 @@ Namespace Styling
             Dim array As T() = nodes.ToArray
             Dim degrees#() = array.Select(eval).ToArray
             Dim size#() = degrees.RangeTransform([to]:=range)
-            Dim out As Map(Of T, Double)() =
-                array _
+            Dim out As Map(Of T, Double)() = array _
                 .SeqIterator _
                 .Select(Function(x)
                             Return New Map(Of T, Double) With {
