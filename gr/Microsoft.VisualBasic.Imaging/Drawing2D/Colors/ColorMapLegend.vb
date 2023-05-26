@@ -83,6 +83,12 @@ Namespace Drawing2D.Colors
                 .ToArray
         End Sub
 
+        Sub New(palette As String(), Optional mapLevels As Integer = 30)
+            designer = CubicSpline(palette.Select(Function(c) c.TranslateColor), mapLevels) _
+                .Select(Function(c) New SolidBrush(c)) _
+                .ToArray
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
