@@ -887,13 +887,30 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension>
-    Public Iterator Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T())) As IEnumerable(Of T())
-        Dim data = MAT.ToArray
-        Dim index = data(Scan0).Sequence.ToArray
+    Public Iterator Function MatrixTranspose(Of T)(MAT As IEnumerable(Of T()), Optional safecheck_dimension As Boolean = False) As IEnumerable(Of T())
+        Dim data As T()() = MAT.ToArray
 
-        For Each i As Integer In index
-            Yield (From line As T() In data Select line(i)).ToArray
-        Next
+        If safecheck_dimension Then
+            Dim index As Integer() = data _
+                .OrderByDescending(Function(a) a.Length) _
+                .First _
+                .Sequence _
+                .ToArray
+
+            ' maybe slower
+            For Each i As Integer In index
+                Yield (From line As T() In data Select line.ElementAtOrDefault(i)).ToArray
+            Next
+        Else
+            Dim index = data(Scan0).Sequence.ToArray
+
+            ' it is faster when no check of the matrix dimension
+            ' and also it could be index out of range error
+            ' when the first row is longer than any other rows
+            For Each i As Integer In index
+                Yield (From line As T() In data Select line(i)).ToArray
+            Next
+        End If
     End Function
 
     ''' <summary>

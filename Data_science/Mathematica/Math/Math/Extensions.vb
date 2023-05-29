@@ -128,6 +128,22 @@ Imports stdNum = System.Math
         End If
     End Function
 
+    Public Function SSM_SIMD(q As Double(), s As Double()) As Double
+        If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
+            Return 0.0
+        End If
+
+        Dim qs_sum As Double = SIMD.Multiply.f64_op_multiply_f64(q, s).Sum
+        Dim qqss_sum As Double = SIMD.Multiply.f64_op_multiply_f64(q, q).Sum * SIMD.Multiply.f64_op_multiply_f64(s, s).Sum
+        Dim score As Double = qs_sum / stdNum.Sqrt(qqss_sum)
+
+        If score.IsNaNImaginary Then
+            Return 0
+        Else
+            Return score
+        End If
+    End Function
+
     ''' <summary>
     ''' Construct the <see cref="Vector"/> class from a numeric collecton.
     ''' </summary>

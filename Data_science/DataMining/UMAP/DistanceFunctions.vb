@@ -51,6 +51,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math
 
 Public NotInheritable Class DistanceFunctions
 
@@ -75,6 +76,17 @@ Public NotInheritable Class DistanceFunctions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CosineForNormalizedVectors(lhs As Double(), rhs As Double()) As Double
         Return 1 - SIMD.DotProduct(lhs, rhs)
+    End Function
+
+    ''' <summary>
+    ''' this function could be give the un-normalized vector data
+    ''' </summary>
+    ''' <param name="lhs"></param>
+    ''' <param name="rhs"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function SpectralSimilarity(lhs As Double(), rhs As Double()) As Double
+        Return 1 - SSM_SIMD(lhs, rhs)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

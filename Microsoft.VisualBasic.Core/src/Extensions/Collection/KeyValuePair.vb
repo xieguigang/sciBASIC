@@ -475,7 +475,11 @@ Namespace ComponentModel.Collection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="distinct">是否还进行去重操作？默认不做去重</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A collection list of the index key name values which is extract from the <paramref name="source"/>,
+        ''' the label key orders keeps the same with the elements inside the input <paramref name="source"/>
+        ''' sequence.
+        ''' </returns>
         <Extension>
         Public Function Keys(Of T As INamedValue)(source As IEnumerable(Of T), Optional distinct As Boolean = False) As List(Of String)
             Dim list As IEnumerable(Of String) = source.Select(Function(o) o.Key)

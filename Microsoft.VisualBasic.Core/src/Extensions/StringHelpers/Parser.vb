@@ -85,6 +85,10 @@ Public Module PrimitiveParser
     ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
     ''' </remarks>
     Public Const NumericPattern$ = SimpleNumberPattern & "([eE][+-]?\d*)?"
+
+    ''' <summary>
+    ''' just a pattern for the simple number, without the scientific notation pattern
+    ''' </summary>
     Public Const SimpleNumberPattern$ = "[-]?\d*(\.\d+)?"
 
 #Region "text token pattern assert"

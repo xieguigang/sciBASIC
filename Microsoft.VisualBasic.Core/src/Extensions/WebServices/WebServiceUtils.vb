@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::45680fe9e31e32490cf2457623c108a9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 841
-    '    Code Lines: 504
-    ' Comment Lines: 221
-    '   Blank Lines: 116
-    '     File Size: 29.86 KB
+' Summaries:
 
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, LocalIPAddress, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
-    '               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
-    '               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
-    '               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser
-    '               QueryStringParameters, UrlDecode, UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 841
+'    Code Lines: 504
+' Comment Lines: 221
+'   Blank Lines: 116
+'     File Size: 29.86 KB
+
+
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, LocalIPAddress, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
+'               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
+'               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
+'               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser
+'               QueryStringParameters, UrlDecode, UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
 Imports System.Threading
+Imports Microsoft.VisualBasic.Linq
 
 #If NET_48 Or NETCOREAPP Then
 Imports Microsoft.VisualBasic.Net
@@ -511,8 +512,13 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <param name="params"></param>
     ''' <returns></returns>
-    Public Function PostRequest(url As String, Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing) As WebResponseResult
-        Return url.POST(params.BuildReqparm)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function PostRequest(url As String,
+                                Optional params As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing,
+                                Optional throw_httpErr As Boolean = False) As WebResponseResult
+
+        Return url.POST(params.BuildReqparm, strict:=throw_httpErr)
     End Function
 
     ''' <summary>
@@ -577,7 +583,8 @@ Public Module WebServiceUtils
                          Optional proxy$ = Nothing,
                          Optional contentEncoding As Encodings = Encodings.UTF8,
                          Optional retry As Integer = 5,
-                         Optional timeout As Integer = 1000 * 60 * 30) As WebResponseResult
+                         Optional timeout As Integer = 1000 * 60 * 30,
+                         Optional strict As Boolean = False) As WebResponseResult
 
         Static emptyBody As New [Default](Of NameValueCollection) With {
             .value = New NameValueCollection,
@@ -603,29 +610,44 @@ Public Module WebServiceUtils
                 Call request.SetProxy(proxy)
             End If
 
-            Call $"[POST] {url}....".__DEBUG_ECHO
+            Call VBDebugger.EchoLine($"[POST] {url}....")
 
             Dim timer As Stopwatch = Stopwatch.StartNew
             Dim response As Byte() = Nothing
             Dim str$
+            Dim err As Exception = Nothing
 
-            For i As Integer = 0 To retry
-                Try
-                    response = request.UploadValues(url, "POST", params Or emptyBody)
-                    Exit For
-                Catch ex As Exception
-                    Call App.LogException(ex)
-                End Try
-            Next
+            If strict Then
+                response = request.UploadValues(url, "POST", params Or emptyBody)
+            Else
+                For i As Integer = 0 To retry
+                    Try
+                        response = request.UploadValues(url, "POST", params Or emptyBody)
+                        Exit For
+                    Catch ex As Exception
+                        err = ex
+                        Call App.LogException(ex)
+                    End Try
+                Next
+            End If
 
             If response Is Nothing Then
-                Return Nothing
+                If Not TypeOf err Is WebException Then
+                    Return New WebResponseResult With {
+                        .headers = ResponseHeaders.HttpRequestError(err.Message.Match("\d+").DoCall(AddressOf Integer.Parse)),
+                        .html = err.Message,
+                        .timespan = 0,
+                        .url = url
+                    }
+                Else
+                    Return Nothing
+                End If
             Else
                 str = contentEncoding _
                     .CodePage _
                     .GetString(response)
 
-                Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
+                Call VBDebugger.EchoLine($"[GET] {response.Length} bytes...")
             End If
 
             Dim rtvlHeaders As New ResponseHeaders(request.ResponseHeaders)

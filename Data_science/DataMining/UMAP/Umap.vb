@@ -150,6 +150,11 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                    Optional customNumberOfEpochs As Integer? = Nothing,
                    Optional customMapCutoff As Double? = Nothing,
                    Optional kdTreeKNNEngine As Boolean = False,
+                   Optional setOpMixRatio As Double = 1,
+                   Optional minDist As Double = 0.1F,
+                   Optional spread As Double = 1,
+                   Optional learningRate As Double = 1.0F,
+                   Optional repulsionStrength As Double = 1,
                    Optional progressReporter As RunSlavePipeline.SetProgressEventHandler = Nothing)
 
         If customNumberOfEpochs IsNot Nothing AndAlso customNumberOfEpochs <= 0 Then
@@ -158,6 +163,11 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             KNNArguments = New KNNArguments(numberOfNeighbors, localConnectivity, KnnIter, bandwidth)
         End If
 
+        _setOpMixRatio = setOpMixRatio
+        _minDist = minDist
+        _spread = spread
+        _repulsionStrength = repulsionStrength
+        _learningRate = learningRate
         _kdTreeKNNEngine = kdTreeKNNEngine
         _customMapCutoff = customMapCutoff
         _distanceFn = If(distance, AddressOf DistanceFunctions.Cosine)
@@ -380,7 +390,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         ' 2019-06-21 DWR: If we need to support other spread, minDist values then we might 
         ' be able to use the LM implementation in Accord.NET but I'll hard code values that 
         ' relate to the default configuration for now
-        If spread <> 1 OrElse minDist <> 0.1F Then
+        If spread <> 1.0 OrElse minDist <> 0.1F Then
             Throw New ArgumentException($"Currently, the {NameOf(FindABParams)} method only supports spread, minDist values of 1, 0.1 (the Levenberg-Marquardt algorithm is required to process other values")
         End If
 
