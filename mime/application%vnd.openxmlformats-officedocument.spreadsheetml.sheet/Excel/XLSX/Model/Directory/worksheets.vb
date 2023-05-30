@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace XLSX.Model.Directory
 
-    Public Class worksheets : Inherits Directory
+    Public Class worksheets : Inherits XlsxDirectoryPart
 
         ''' <summary>
         ''' Key都是格式``sheet%d``的字符串
@@ -116,11 +116,11 @@ Namespace XLSX.Model.Directory
             ' 2017-12-18 发现有时候会出现sheetID不一致的情况，这种情况可能会出现于用户手动的从Excel电子表格文件之中删除了前面的几个表
             ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
             ' r:id是一致的
-            worksheets = (ls - l - "*.xml" <= Folder) _
+            worksheets = (ls - l - "*.xml" <= folder) _
                 .Select(Function(path) (path:=path, path.LoadXml(Of worksheet))) _
                 .ToDictionary(Function(page) page.path.BaseName,
                               Function(page) page.Item2)
-            _rels = (ls - l - "*.rels" <= (Folder & "/_rels")) _
+            _rels = (ls - l - "*.rels" <= (folder & "/_rels")) _
                 .ToDictionary(Function(path) path.BaseName,
                               Function(path)
                                   Return rels.Load(path)
@@ -131,7 +131,7 @@ Namespace XLSX.Model.Directory
             Dim path$
 
             For Each sheet In worksheets
-                path = $"{Folder}/{sheet.Key}.xml"
+                path = $"{folder}/{sheet.Key}.xml"
                 sheet.Value.ToXML _
                     .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Next

@@ -64,7 +64,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 Namespace XLSX.Model.Directory
 
-    Public Class xl : Inherits Directory
+    Public Class xl : Inherits XlsxDirectoryPart
 
         Public Property workbook As workbook
         Public Property styles As styles
@@ -125,10 +125,10 @@ Namespace XLSX.Model.Directory
         End Function
 
         Protected Overrides Sub _loadContents()
-            sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
-            workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
-            worksheets = New worksheets(Folder)
-            _rels = New _rels(Folder)
+            sharedStrings = (folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
+            workbook = (folder & "/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
+            worksheets = New worksheets(folder)
+            _rels = New _rels(folder)
         End Sub
 
         Protected Overrides Function _name() As String

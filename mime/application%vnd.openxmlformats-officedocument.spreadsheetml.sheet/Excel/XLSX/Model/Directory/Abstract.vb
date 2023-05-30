@@ -53,6 +53,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace XLSX.Model.Directory
 
 #If False Then
@@ -77,20 +79,25 @@ Namespace XLSX.Model.Directory
       Internet Media Types as defined in RFC 6838) for parts within the package.
 #End If
 
-    Public MustInherit Class Directory
+    Public MustInherit Class XlsxDirectoryPart
 
-        Public ReadOnly Property Folder As String
+        Public ReadOnly Property folder As String
 
-        Sub New(ROOT$)
-            Folder = $"{ROOT}/{_name()}"
+        Sub New(workdir$)
+            folder = $"{workdir}/{_name()}"
             Call _loadContents()
         End Sub
 
         Protected MustOverride Function _name() As String
         Protected MustOverride Sub _loadContents()
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Function InternalFileName(name As String) As String
+            Return $"{folder}/{name}".GetFullPath
+        End Function
+
         Public Overrides Function ToString() As String
-            Return Folder
+            Return folder
         End Function
     End Class
 End Namespace

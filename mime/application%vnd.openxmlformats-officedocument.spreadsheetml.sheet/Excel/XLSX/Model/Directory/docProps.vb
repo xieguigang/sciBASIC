@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace XLSX.Model.Directory
 
-    Public Class docProps : Inherits Directory
+    Public Class docProps : Inherits XlsxDirectoryPart
 
         Public Property core As core
         Public Property app As XML.docProps.app
@@ -77,9 +77,9 @@ Namespace XLSX.Model.Directory
         ''' 有些文件可能是会不存在的，所以在这里就不抛出错误了，直接返回Nothing
         ''' </summary>
         Protected Overrides Sub _loadContents()
-            core = (Folder & "/core.xml").LoadXml(Of core)(throwEx:=False)
-            custom = (Folder & "/custom.xml").LoadXml(Of custom)(throwEx:=False)
-            app = (Folder & "/app.xml").LoadXml(Of XML.docProps.app)(throwEx:=False)
+            core = (folder & "/core.xml").LoadXml(Of core)(throwEx:=False)
+            custom = (folder & "/custom.xml").LoadXml(Of custom)(throwEx:=False)
+            app = (folder & "/app.xml").LoadXml(Of XML.docProps.app)(throwEx:=False)
         End Sub
 
         Public Sub addSheetName(sheetName As String)
@@ -90,9 +90,9 @@ Namespace XLSX.Model.Directory
         End Sub
 
         Public Sub save()
-            Call core.GetXml.SaveTo($"{Folder}/core.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
-            Call app.GetXml.SaveTo($"{Folder}/app.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
-            Call custom.GetXml.SaveTo($"{Folder}/custom.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
+            Call core.GetXml.SaveTo($"{folder}/core.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
+            Call app.GetXml.SaveTo($"{folder}/app.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
+            Call custom.GetXml.SaveTo($"{folder}/custom.xml", encoding:=Encodings.UTF8WithoutBOM.CodePage)
         End Sub
 
         Protected Overrides Function _name() As String

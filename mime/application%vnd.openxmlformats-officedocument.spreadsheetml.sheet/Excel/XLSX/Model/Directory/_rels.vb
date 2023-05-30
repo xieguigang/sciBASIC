@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace XLSX.Model.Directory
 
-    Public Class _rels : Inherits Directory
+    Public Class _rels : Inherits XlsxDirectoryPart
 
         ''' <summary>
         ''' ``.rels``
@@ -82,10 +82,10 @@ Namespace XLSX.Model.Directory
         Protected Overrides Sub _loadContents()
             Dim path As Value(Of String) = ""
 
-            If (path = Folder & "/.rels").FileExists Then
+            If (path = folder & "/.rels").FileExists Then
                 rels = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
             End If
-            If (path = Folder & "/workbook.xml.rels").FileExists Then
+            If (path = folder & "/workbook.xml.rels").FileExists Then
                 workbook = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
             End If
         End Sub
