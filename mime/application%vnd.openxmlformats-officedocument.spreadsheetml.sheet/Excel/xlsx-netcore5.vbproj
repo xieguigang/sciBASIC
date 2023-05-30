@@ -114,10 +114,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="XLS\BIFF\bin\**" />
     <Compile Remove="XLS\BIFF\obj\**" />
     <Compile Remove="test\**" />
+    <EmbeddedResource Remove="XLS\BIFF\bin\**" />
     <EmbeddedResource Remove="XLS\BIFF\obj\**" />
     <EmbeddedResource Remove="test\**" />
+    <None Remove="XLS\BIFF\bin\**" />
     <None Remove="XLS\BIFF\obj\**" />
     <None Remove="test\**" />
   </ItemGroup>

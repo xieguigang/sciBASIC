@@ -90,7 +90,7 @@ Namespace XLS.BIFF
         ''' create an array that will hold the rows where a horizontal page
         ''' break will be inserted just before.
         ''' </summary>
-        Private HorizPageBreakRows() As Integer
+        Private HorizPageBreakRows() As Short
         Private NumHorizPageBreaks As Integer
 
         ''' <summary>
@@ -163,9 +163,7 @@ Namespace XLS.BIFF
                 'VisualBasic does not have it. A KnowledgeBase article explains
                 'how to recreate it (albeit using 16-bit API, I switched it
                 'to 32-bit).
-                For x% = 1 To UBound(HorizPageBreakRows)
-                    Put(FileNumber, MKI$(HorizPageBreakRows(x%)))
-                Next
+                Put(FileNumber, HorizPageBreakRows)
             End If
 
             Put(FileNumber, END_FILE_MARKER)
@@ -241,6 +239,7 @@ Namespace XLS.BIFF
 
                 Case ValueTypes.xlsnumber
                     Dim NUMBER_RECORD As tNumber
+
                     With NUMBER_RECORD
                         .opcode = 3
                         .length = 15
@@ -249,11 +248,15 @@ Namespace XLS.BIFF
                         .rgbAttr1 = CByte(HiddenLocked)
                         .rgbAttr2 = CByte(CellFontUsed + CellFormat)
                         .rgbAttr3 = CByte(Alignment)
-                        .NumberValue = CDbl(value)
+
+                        If TypeOf value Is Date Then
+                            .NumberValue = DirectCast(value, Date).ToOADate
+                        Else
+                            .NumberValue = CDbl(value)
+                        End If
                     End With
-                    Put(FileNumber, NUMBER_RECORD)
 
-
+                    Call Put(FileNumber, NUMBER_RECORD)
                 Case ValueTypes.xlsText
                     Dim b As Byte
                     Dim st$ = CStr(value)
