@@ -53,6 +53,9 @@ Imports Microsoft.VisualBasic.MIME.Office.Excel.XLS.BIFF
 
 Public Module test
 
+    Sub Main()
+        Call cmdCreate_Click()
+    End Sub
 
     Private Sub cmdCreate_Click()
 
@@ -60,7 +63,7 @@ Public Module test
 
         With myExcelFile
             'Create the new spreadsheet
-            Dim FileName$ = ".\vbtest.xls"  'create spreadsheet in the current directory
+            Dim FileName$ = $"{App.HOME}\vbtest.xls"  'create spreadsheet in the current directory
             .CreateFile(FileName)
 
             'set a Password for the file. If set, the rest of the spreadsheet will
@@ -85,10 +88,10 @@ Public Module test
             'prior to writing any text/numerics to the spreadsheet. These
             'should come before setting the fonts.
 
-            .SetMargin(xlsTopMargin, 1.5)  'set to 1.5 inches
-            .SetMargin(xlsLeftMargin, 1.5)
-            .SetMargin(xlsRightMargin, 1.5)
-            .SetMargin(xlsBottomMargin, 1.5)
+            .SetMargin(MarginTypes.xlsTopMargin, 1.5)  'set to 1.5 inches
+            .SetMargin(MarginTypes.xlsLeftMargin, 1.5)
+            .SetMargin(MarginTypes.xlsRightMargin, 1.5)
+            .SetMargin(MarginTypes.xlsBottomMargin, 1.5)
 
 
             'to insert a Horizontal Page Break you need to specify the row just
@@ -105,10 +108,10 @@ Public Module test
             'limitation of the Excel 2.1 format. For each value written to the
             'spreadsheet you can specify which font to use.
 
-            .SetFont("Arial", 10, xlsNoFormat)              'font0
-            .SetFont("Arial", 10, xlsBold)           'font1
-            .SetFont("Arial", 10, xlsBold + xlsUnderline)   'font2
-            .SetFont("Courier", 16, xlsBold + xlsItalic)          'font3
+            .SetFont("Arial", 10, FontFormatting.xlsNoFormat)              'font0
+            .SetFont("Arial", 10, FontFormatting.xlsBold)           'font1
+            .SetFont("Arial", 10, FontFormatting.xlsBold + FontFormatting.xlsUnderline)   'font2
+            .SetFont("Courier", 16, FontFormatting.xlsBold + FontFormatting.xlsItalic)          'font3
 
 
             'Column widths are specified in Excel as 1/256th of a character.
@@ -128,47 +131,49 @@ Public Module test
             .SetFooter("Paul Squires - Excel BIFF Class")
 
             'write a normal left aligned string using font3 (Courier Italic)
-            .WriteValue(xlsText, xlsFont3, xlsLeftAlign, xlsNormal, 1, 1, "Quarterly Report")
-            .WriteValue(xlsText, xlsFont1, xlsLeftAlign, xlsNormal, 2, 1, "Cool Guy Corporation")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont3, CellAlignment.xlsLeftAlign, CellHiddenLocked.xlsNormal, 1, 1, "Quarterly Report")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont1, CellAlignment.xlsLeftAlign, CellHiddenLocked.xlsNormal, 2, 1, "Cool Guy Corporation")
 
             'write some data to the spreadsheet
             'Use the default format #3 "#,##0" (refer to the WriteDefaultFormats function)
             'The WriteDefaultFormats function is compliments of Dieter Hauk in Germany.
-            .WriteValue(xlsinteger, xlsFont0, xlsLeftAlign, xlsNormal, 6, 1, 2000, 3)
+            .WriteValue(ValueTypes.xlsinteger, CellFont.xlsFont0, CellAlignment.xlsLeftAlign, CellHiddenLocked.xlsNormal, 6, 1, 2000, 3)
 
 
             'write a cell with a shaded number with a bottom border
-            .WriteValue(xlsnumber, xlsFont1, xlsrightAlign + xlsBottomBorder + xlsShaded, xlsNormal, 7, 1, 12123.456, 4)
+            .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont1,
+                        CellAlignment.xlsrightAlign + CellAlignment.xlsBottomBorder + CellAlignment.xlsShaded,
+                        CellHiddenLocked.xlsNormal, 7, 1, 12123.456, 4)
 
             'write a normal left aligned string using font2 (bold & underline)
-            .WriteValue(xlsText, xlsFont2, xlsLeftAlign, xlsNormal, 8, 1, "This is a test string")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont2, CellAlignment.xlsLeftAlign, CellHiddenLocked.xlsNormal, 8, 1, "This is a test string")
 
             'write a locked cell. The cell will not be able to be overwritten, BUT you
             'must set the sheet PROTECTION to on before it will take effect!!!
-            .WriteValue(xlsText, xlsFont3, xlsLeftAlign, xlsLocked, 9, 1, "This cell is locked")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont3, CellAlignment.xlsLeftAlign, CellHiddenLocked.xlsLocked, 9, 1, "This cell is locked")
 
             'fill the cell with "F"'s
-            .WriteValue(xlsText, xlsFont0, xlsFillCell, xlsNormal, 10, 1, "F")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont0, CellAlignment.xlsFillCell, CellHiddenLocked.xlsNormal, 10, 1, "F")
 
             'write a hidden cell to the spreadsheet. This only works for cells
             'that contain formulae. Text, Number, Integer value text can not be hidden
             'using this feature. It is included here for the sake of completeness.
-            .WriteValue(xlsText, xlsFont0, xlsCentreAlign, xlsHidden, 11, 1, "If this were a formula it would be hidden!")
+            .WriteValue(ValueTypes.xlsText, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsHidden, 11, 1, "If this were a formula it would be hidden!")
 
 
             'write some dates to the file. NOTE: you need to write dates as xlsNumber
             Dim d As Date
             d = "15/01/2001"
-            .WriteValue(xlsnumber, xlsFont0, xlsCentreAlign, xlsNormal, 15, 1, d, 12)
+            .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 15, 1, d, 12)
 
             d = "31/12/1999"
-            .WriteValue(xlsnumber, xlsFont0, xlsCentreAlign, xlsNormal, 16, 1, d, 12)
+            .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 16, 1, d, 12)
 
             d = "01/04/2002"
-            .WriteValue(xlsnumber, xlsFont0, xlsCentreAlign, xlsNormal, 17, 1, d, 12)
+            .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 17, 1, d, 12)
 
             d = "21/10/1998"
-            .WriteValue(xlsnumber, xlsFont0, xlsCentreAlign, xlsNormal, 18, 1, d, 12)
+            .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 18, 1, d, 12)
 
             'PROTECT the spreadsheet so any cells specified as LOCKED will not be
             'overwritten. Also, all cells with HIDDEN set will hide their formulae.
