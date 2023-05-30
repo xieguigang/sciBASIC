@@ -129,8 +129,6 @@ Namespace XLS.BIFF
         End Function
 
         Public Function CloseFile() As Integer
-            On Error GoTo Write_Error
-
             If FileNumber Is Nothing Then Return 0
 
             'write the horizontal page breaks if necessary
@@ -177,8 +175,6 @@ Namespace XLS.BIFF
 
             ' return with no error code
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function InsertHorizPageBreak(lrow As Long) As Integer
@@ -198,8 +194,6 @@ Write_Error:
             HorizPageBreakRows(NumHorizPageBreaks) = Row%
 
             Return 0
-Page_Break_Error:
-            Return Err.Number
         End Function
 
         Public Function WriteValue(ValueType As ValueTypes,
@@ -210,8 +204,6 @@ Page_Break_Error:
                                lcol As Long,
                                value As Object,
                                Optional CellFormat As Long = 0) As Integer
-
-            On Error GoTo Write_Error
 
             'the row and column values are written to the excel file as
             'unsigned integers. Therefore, must convert the longs to integer.
@@ -297,13 +289,9 @@ Page_Break_Error:
 
             ' return with no error
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function SetMargin(Margin As MarginTypes, MarginValue As Double) As Integer
-            On Error GoTo Write_Error
-
             ' write the spreadsheet's layout information (in inches)
             Dim MarginRecord As MARGIN_RECORD_LAYOUT
 
@@ -315,14 +303,9 @@ Write_Error:
             Put(FileNumber, MarginRecord)
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
-
         Public Function SetColumnWidth(FirstColumn As Byte, LastColumn As Byte, WidthValue As Integer)
-            On Error GoTo Write_Error
-
             Dim COLWIDTH As COLWIDTH_RECORD
 
             With COLWIDTH
@@ -335,14 +318,10 @@ Write_Error:
             Put(FileNumber, COLWIDTH)
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
 
         Public Function SetFont(FontName As String, FontHeight As Integer, FontFormat As FontFormatting) As Integer
-            On Error GoTo Write_Error
-
             'you can set up to 4 fonts in the spreadsheet file. When writing a value such
             'as a Text or Number you can specify one of the 4 fonts (numbered 0 to 3)
 
@@ -367,13 +346,9 @@ Write_Error:
             Next
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function SetHeader(HeaderText As String) As Integer
-            On Error GoTo Write_Error
-
             Dim HEADER_RECORD As HEADER_FOOTER_RECORD
             Dim l% = Len(HeaderText)
 
@@ -392,13 +367,9 @@ Write_Error:
             Next
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function SetFooter(FooterText As String) As Integer
-            On Error GoTo Write_Error
-
             Dim FOOTER_RECORD As HEADER_FOOTER_RECORD
             Dim l% = Len(FooterText)
 
@@ -417,13 +388,9 @@ Write_Error:
             Next
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function SetFilePassword(PasswordText As String) As Integer
-            On Error GoTo Write_Error
-
             Dim FILE_PASSWORD_RECORD As PASSWORD_RECORD
             Dim l% = Len(PasswordText)
 
@@ -441,13 +408,9 @@ Write_Error:
             Next
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Sub SetPrintGridLines(newvalue As Boolean)
-            On Error GoTo Write_Error
-
             Dim GRIDLINES_RECORD As PRINT_GRIDLINES_RECORD
 
             With GRIDLINES_RECORD
@@ -461,13 +424,9 @@ Write_Error:
 
             End With
             Put(FileNumber, GRIDLINES_RECORD)
-Write_Error:
-            Return
         End Sub
 
         Public Sub SetProtectSpreadsheet(newvalue As Boolean)
-            On Error GoTo Write_Error
-
             Dim PROTECT_RECORD As PROTECT_SPREADSHEET_RECORD
 
             With PROTECT_RECORD
@@ -481,8 +440,6 @@ Write_Error:
 
             End With
             Put(FileNumber, PROTECT_RECORD)
-Write_Error:
-            Return
         End Sub
 
         Public Function WriteDefaultFormats() As Integer
@@ -547,8 +504,6 @@ Write_Error:
         End Function
 
         Public Function SetDefaultRowHeight(HeightValue As Integer)
-            On Error GoTo Write_Error
-
             'Height is defined in units of 1/20th of a point. Therefore, a 10-point font
             'would be 200 (i.e. 200/20 = 10). This function takes a HeightValue such as
             '14 point and converts it the correct size before writing it to the file.
@@ -563,13 +518,9 @@ Write_Error:
             Put(FileNumber, DEFHEIGHT)
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
 
         Public Function SetRowHeight(lrow As Long, HeightValue As Integer)
-            On Error GoTo Write_Error
-
             'the row and column values are written to the excel file as
             'unsigned integers. Therefore, must convert the longs to integer.
             Dim Row As Integer
@@ -604,8 +555,6 @@ Write_Error:
             Put(FileNumber, ROWHEIGHTREC)
 
             Return 0
-Write_Error:
-            Return Err.Number
         End Function
     End Class
 End Namespace
