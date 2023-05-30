@@ -65,6 +65,9 @@ Public Class Resampler
     ''' populate the <see cref="GeneralSignal.Measures"/> of the raw signal
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' example as get the raw time vector from this property
+    ''' </remarks>
     Public ReadOnly Property enumerateMeasures As Double()
         Get
             Return x.ToArray
