@@ -163,16 +163,16 @@ Public Module test
 
             'write some dates to the file. NOTE: you need to write dates as xlsNumber
             Dim d As Date
-            d = "15/01/2001"
+            d = #1/15/2001 00:00:00#
             .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 15, 1, d, 12)
 
-            d = "31/12/1999"
+            d = #12/31/1999#
             .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 16, 1, d, 12)
 
-            d = "01/04/2002"
+            d = #01/04/2002#
             .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 17, 1, d, 12)
 
-            d = "21/10/1998"
+            d = #2/11/1998#
             .WriteValue(ValueTypes.xlsnumber, CellFont.xlsFont0, CellAlignment.xlsCentreAlign, CellHiddenLocked.xlsNormal, 18, 1, d, 12)
 
             'PROTECT the spreadsheet so any cells specified as LOCKED will not be
