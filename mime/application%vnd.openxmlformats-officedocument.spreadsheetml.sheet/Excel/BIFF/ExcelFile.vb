@@ -86,16 +86,18 @@ Namespace BIFF
         Private END_FILE_MARKER As END_FILE_RECORD
         Private HORIZ_PAGE_BREAK As HPAGE_BREAK_RECORD
 
-        'create an array that will hold the rows where a horizontal page
-        'break will be inserted just before.
+        ''' <summary>
+        ''' create an array that will hold the rows where a horizontal page
+        ''' break will be inserted just before.
+        ''' </summary>
         Private HorizPageBreakRows() As Integer
         Private NumHorizPageBreaks As Integer
 
-        Public Function CreateFile(ByVal FileName As String) As Integer
+        Public Function CreateFile(FileName As String) As Integer
             FileNumber = New BinaryWriter(FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
             FileNumber.Write(BEG_FILE_MARKER)  'must always be written first
 
-            Call WriteDefaultFormats
+            Call WriteDefaultFormats()
 
             'create the Horizontal Page Break array
             ReDim HorizPageBreakRows(0)
@@ -104,14 +106,14 @@ Namespace BIFF
             FileNumber.Flush()
             FileNumber.Close()
             FileNumber.Dispose()
+
+            Return 0
         End Function
 
         Public Function CloseFile() As Integer
-
             On Error GoTo Write_Error
 
             If FileNumber Is Nothing Then Return 0
-
 
             'write the horizontal page breaks if necessary
             If NumHorizPageBreaks > 0 Then
@@ -154,38 +156,32 @@ Namespace BIFF
             FileNumber.Flush()
             FileNumber.Dispose()
 
-            CloseFile = 0  'return with no error code
-
-            Exit Function
-
+            ' return with no error code
+            Return 0
 Write_Error:
-            CloseFile = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
         ''' <summary>
         ''' create a new excel xls file biff writer
         ''' </summary>
         Sub New()
+            ' Set up default values for records
+            ' These should be the values that are the same for every record of these types
 
-            'Set up default values for records
-            'These should be the values that are the same for every record of these types
-
-            With BEG_FILE_MARKER  'beginning of file
+            ' beginning of file
+            With BEG_FILE_MARKER
                 .opcode = 9
                 .length = 4
                 .version = 2
                 .ftype = 10
             End With
 
-            With END_FILE_MARKER  'end of file marker
+            ' end of file marker
+            With END_FILE_MARKER
                 .opcode = 10
             End With
-
-
         End Sub
-
 
         Public Function InsertHorizPageBreak(lrow As Long) As Integer
             Dim Row As Integer
@@ -203,14 +199,9 @@ Write_Error:
 
             HorizPageBreakRows(NumHorizPageBreaks) = Row%
 
-            Exit Function
-
-
+            Return 0
 Page_Break_Error:
-            InsertHorizPageBreak = Err.Number
-            Exit Function
-
-
+            Return Err.Number
         End Function
 
         Public Function WriteValue(ValueType As ValueTypes,
@@ -304,25 +295,18 @@ Page_Break_Error:
                             Put(FileNumber, b)
                         Next
                     End With
-
             End Select
 
-            WriteValue = 0   'return with no error
-
-            Exit Function
-
+            ' return with no error
+            Return 0
 Write_Error:
-            WriteValue = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
-
         Public Function SetMargin(Margin As MarginTypes, MarginValue As Double) As Integer
-
             On Error GoTo Write_Error
 
-            'write the spreadsheet's layout information (in inches)
+            ' write the spreadsheet's layout information (in inches)
             Dim MarginRecord As MARGIN_RECORD_LAYOUT
 
             With MarginRecord
@@ -332,19 +316,13 @@ Write_Error:
             End With
             Put(FileNumber, MarginRecord)
 
-            SetMargin = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetMargin = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
 
         Public Function SetColumnWidth(FirstColumn As Byte, LastColumn As Byte, WidthValue As Integer)
-
             On Error GoTo Write_Error
 
             Dim COLWIDTH As COLWIDTH_RECORD
@@ -358,19 +336,13 @@ Write_Error:
             End With
             Put(FileNumber, COLWIDTH)
 
-            SetColumnWidth = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetColumnWidth = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
 
         Public Function SetFont(FontName As String, FontHeight As Integer, FontFormat As FontFormatting) As Integer
-
             On Error GoTo Write_Error
 
             'you can set up to 4 fonts in the spreadsheet file. When writing a value such
@@ -396,20 +368,12 @@ Write_Error:
                 Put(FileNumber, b)
             Next
 
-            SetFont = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetFont = Err.Number
-            Exit Function
-
-
+            Return Err.Number
         End Function
 
-
         Public Function SetHeader(HeaderText As String) As Integer
-
             On Error GoTo Write_Error
 
             Dim HEADER_RECORD As HEADER_FOOTER_RECORD
@@ -429,20 +393,12 @@ Write_Error:
                 Put(FileNumber, b)
             Next
 
-            SetHeader = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetHeader = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
-
-
         Public Function SetFooter(FooterText As String) As Integer
-
             On Error GoTo Write_Error
 
             Dim FOOTER_RECORD As HEADER_FOOTER_RECORD
@@ -462,20 +418,12 @@ Write_Error:
                 Put(FileNumber, b)
             Next
 
-            SetFooter = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetFooter = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
-
-
         Public Function SetFilePassword(PasswordText As String) As Integer
-
             On Error GoTo Write_Error
 
             Dim FILE_PASSWORD_RECORD As PASSWORD_RECORD
@@ -494,78 +442,52 @@ Write_Error:
                 Put(FileNumber, b)
             Next
 
-            SetFilePassword = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetFilePassword = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
-        Public Property PrintGridLines As Boolean
-            Get
+        Public Sub SetPrintGridLines(newvalue As Boolean)
+            On Error GoTo Write_Error
 
-            End Get
-            Set(newvalue As Boolean)
-                On Error GoTo Write_Error
+            Dim GRIDLINES_RECORD As PRINT_GRIDLINES_RECORD
 
-                Dim GRIDLINES_RECORD As PRINT_GRIDLINES_RECORD
+            With GRIDLINES_RECORD
+                .opcode = 43
+                .length = 2
+                If newvalue = True Then
+                    .PrintFlag = 1
+                Else
+                    .PrintFlag = 0
+                End If
 
-                With GRIDLINES_RECORD
-                    .opcode = 43
-                    .length = 2
-                    If newvalue = True Then
-                        .PrintFlag = 1
-                    Else
-                        .PrintFlag = 0
-                    End If
-
-                End With
-                Put(FileNumber, GRIDLINES_RECORD)
-
-                Exit Property
-
+            End With
+            Put(FileNumber, GRIDLINES_RECORD)
 Write_Error:
-                Exit Property
-            End Set
-        End Property
+            Return
+        End Sub
 
+        Public Sub SetProtectSpreadsheet(newvalue As Boolean)
+            On Error GoTo Write_Error
 
+            Dim PROTECT_RECORD As PROTECT_SPREADSHEET_RECORD
 
+            With PROTECT_RECORD
+                .opcode = 18
+                .length = 2
+                If newvalue = True Then
+                    .Protect = 1
+                Else
+                    .Protect = 0
+                End If
 
-        Public Property ProtectSpreadsheet As Boolean
-            Get
-
-            End Get
-            Set(newvalue As Boolean)
-                On Error GoTo Write_Error
-
-                Dim PROTECT_RECORD As PROTECT_SPREADSHEET_RECORD
-
-                With PROTECT_RECORD
-                    .opcode = 18
-                    .length = 2
-                    If newvalue = True Then
-                        .Protect = 1
-                    Else
-                        .Protect = 0
-                    End If
-
-                End With
-                Put(FileNumber, PROTECT_RECORD)
-
-                Exit Property
-
+            End With
+            Put(FileNumber, PROTECT_RECORD)
 Write_Error:
-                Exit Property
-            End Set
-        End Property
-
+            Return
+        End Sub
 
         Public Function WriteDefaultFormats() As Integer
-
             Dim cFORMAT_COUNT_RECORD As FORMAT_COUNT_RECORD
             Dim cFORMAT_RECORD As FORMAT_RECORD
             Dim lIndex As Long
@@ -623,12 +545,10 @@ Write_Error:
                 Next
             Next lIndex
 
-            Exit Function
-
+            Return 0
         End Function
 
         Public Function SetDefaultRowHeight(HeightValue As Integer)
-
             On Error GoTo Write_Error
 
             'Height is defined in units of 1/20th of a point. Therefore, a 10-point font
@@ -644,19 +564,12 @@ Write_Error:
             End With
             Put(FileNumber, DEFHEIGHT)
 
-            SetDefaultRowHeight = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetDefaultRowHeight = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
 
-
         Public Function SetRowHeight(lrow As Long, HeightValue As Integer)
-
             On Error GoTo Write_Error
 
             'the row and column values are written to the excel file as
@@ -692,14 +605,9 @@ Write_Error:
             End With
             Put(FileNumber, ROWHEIGHTREC)
 
-            SetRowHeight = 0
-
-            Exit Function
-
+            Return 0
 Write_Error:
-            SetRowHeight = Err.Number
-            Exit Function
-
+            Return Err.Number
         End Function
     End Class
 End Namespace

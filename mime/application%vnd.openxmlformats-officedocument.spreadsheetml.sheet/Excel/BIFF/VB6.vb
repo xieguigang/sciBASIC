@@ -63,7 +63,7 @@ Namespace BIFF
         'the memory copy API is used in the MKI$ function which converts an integer
         'value to a 2-byte string value to write to the file. (used by the Horizontal
         'Page Break function).
-        Private Declare Sub CopyMemory Lib "KERNEL32" Alias "RtlMoveMemory" (lpvDest As Object, lpvSource As Object, ByVal cbCopy As Long)
+        Private Declare Sub CopyMemory Lib "KERNEL32" Alias "RtlMoveMemory" (lpvDest As Object, lpvSource As Object, cbCopy As Long)
 
         Friend Function MKI$(x As Integer)
             'used for writing integer array values to the disk file
