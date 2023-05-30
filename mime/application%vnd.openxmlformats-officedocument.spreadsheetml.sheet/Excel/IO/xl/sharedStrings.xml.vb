@@ -71,8 +71,31 @@ Namespace XML.xl
     <XmlRoot("sst", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class sharedStrings
 
-        <XmlAttribute> Public Property count As Integer
-        <XmlAttribute> Public Property uniqueCount As Integer
+        ''' <summary>
+        ''' get count of the <see cref="strings"/>
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public ReadOnly Property count As Integer
+            Get
+                If strings.IsNullOrEmpty Then
+                    Return 0
+                Else
+                    Return strings.Length
+                End If
+            End Get
+        End Property
+
+        <XmlAttribute>
+        Public ReadOnly Property uniqueCount As Integer
+            Get
+                If strings.IsNullOrEmpty Then
+                    Return 0
+                End If
+
+                Return strings.GroupBy(Function(si) si.t).Count
+            End Get
+        End Property
 
         <XmlElement("si")>
         Public Property strings As si()
@@ -81,7 +104,9 @@ Namespace XML.xl
             Return strings _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value.t,
-                              Function(x) x.i)
+                              Function(x)
+                                  Return x.i
+                              End Function)
         End Function
 
         ''' <summary>
@@ -93,7 +118,7 @@ Namespace XML.xl
         Public Shared Operator +(strings As sharedStrings, table As Dictionary(Of String, Integer)) As sharedStrings
             Dim newValues = table _
                 .OrderBy(Function(x) x.Value) _
-                .Skip(strings.strings.Length) _
+                .Skip(strings.count) _
                 .Select(Function(x)
                             Return New si With {
                                 .t = x.Key
@@ -102,9 +127,9 @@ Namespace XML.xl
                 .ToArray
 
             If newValues.Length > 0 Then
-                strings.strings.Add(newValues)
-                strings.count = strings.strings.Length
-                strings.uniqueCount = strings.count
+                strings.strings = strings.strings _
+                    .JoinIterates(newValues) _
+                    .ToArray
             End If
 
             Return strings
@@ -117,7 +142,7 @@ Namespace XML.xl
         Public Property phoneticPr As phoneticPr
 
         ''' <summary>
-        ''' styled list
+        ''' a string with component part styled list
         ''' </summary>
         ''' <returns></returns>
         <XmlElement("r")>

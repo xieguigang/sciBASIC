@@ -109,7 +109,8 @@ Namespace XML.docProps
 
     Public Class vector
 
-        <XmlAttribute> Public Property size As String
+        <XmlAttribute>
+        Public Property size As Integer
 
         ''' <summary>
         ''' 这个属性指示了当前的这个向量数组对象哪个属性有值：

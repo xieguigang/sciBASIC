@@ -324,7 +324,7 @@ Namespace Scripting
         }
 
         ''' <summary>
-        ''' Get .NET <see cref="Type"/> definition info from its name.
+        ''' Get .NET clr <see cref="Type"/> definition info from its name.
         ''' (类型获取失败会返回空值，大小写不敏感)
         ''' </summary>
         ''' <param name="name">Case insensitive.(类型的名称简写)</param>

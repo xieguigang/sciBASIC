@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.Text
 
 Namespace Model.Directory
 
@@ -132,7 +133,7 @@ Namespace Model.Directory
                 path = $"{Folder}/{sheet.Key}.xml"
                 sheet.Value _
                     .ToXML _
-                    .SaveTo(path, Encoding.UTF8)
+                    .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Next
         End Sub
 

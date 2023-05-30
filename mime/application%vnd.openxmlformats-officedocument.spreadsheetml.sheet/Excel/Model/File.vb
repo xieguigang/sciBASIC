@@ -163,6 +163,8 @@ Public Class File : Implements IFileReference
             End With
         Else
             Call addInternal(sheetName, worksheet)
+            Call docProps.addSheetName(sheetName)
+            Call docProps.save()
         End If
 
         Return True

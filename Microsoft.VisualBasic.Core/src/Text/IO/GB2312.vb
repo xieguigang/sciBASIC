@@ -1235,12 +1235,7 @@ Namespace Text
         ''' ``啊``
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property a As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return AscW("啊")
-            End Get
-        End Property
+        Public ReadOnly Property a As Integer = AscW("啊")
 
         ' 配置中文字符
         'static Regex regex = new Regex("[\u4e00-\u9fa5]$");
@@ -1251,8 +1246,8 @@ Namespace Text
         ''' </summary>        
         ''' <param name="ch"></param>        
         ''' <returns></returns>        
-        Public Function GetFirst(ch As [Char]) As String
-            Dim rs = [Get](ch)
+        Public Function GetFirst(ch As Char) As String
+            Dim rs = PinYin(ch)
             If Not String.IsNullOrEmpty(rs) Then
                 rs = rs.Substring(0, 1)
             End If
@@ -1281,7 +1276,7 @@ Namespace Text
         ''' </summary>
         ''' <param name="ch"></param>
         ''' <returns></returns>
-        Public Function [Get](ch As [Char]) As String
+        Public Function PinYin(ch As Char) As String
             ' 拉丁字符            
             If ch <= "ÿ"c Then
                 Return ch.ToString()
@@ -1302,7 +1297,7 @@ Namespace Text
             If chr > 0 AndAlso chr < 160 Then
                 Return ch.ToString()
             End If
-            '#Region "中文字符处理"
+#Region "中文字符处理"
             ' 判断是否超过GB2312-80标准中的汉字范围
             If chr > lastChCode OrElse chr < firstChCode Then
                 Return ch.ToString()
@@ -1334,7 +1329,7 @@ Namespace Text
                     Return otherPinYin(pos)
                 End If
             End If
-            '#End Region
+#End Region
             'if (chr < -20319 || chr > -10247) { // 不知道的字符  
             '    return null;  
             'for (var i = pyValue.Length - 1; i >= 0; i--)
@@ -1349,16 +1344,19 @@ Namespace Text
         ''' </summary>
         ''' <param name="str">汉字字符串</param>
         ''' <returns>转换后的拼音(全拼)字符串</returns>
-        Public Function [Get](str As String) As String
+        Public Function TranscriptPinYin(str As String, Optional sep As String = " ") As String
             If String.IsNullOrEmpty(str) Then
                 Return String.Empty
+            Else
+                Dim sb As New List(Of String)
+                Dim chs As Char() = str.ToCharArray()
+
+                For Each c As Char In chs
+                    Call sb.Add(PinYin(c))
+                Next
+
+                Return sb.JoinBy(sep)
             End If
-            Dim sb = New StringBuilder(str.Length * 10)
-            Dim chs = str.ToCharArray()
-            For j As Integer = 0 To chs.Length - 1
-                sb.Append([Get](chs(j)))
-            Next
-            Return sb.ToString()
         End Function
     End Module
 End Namespace
