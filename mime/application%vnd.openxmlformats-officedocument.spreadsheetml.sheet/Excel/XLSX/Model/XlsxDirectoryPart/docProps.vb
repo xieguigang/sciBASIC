@@ -69,8 +69,8 @@ Namespace XLSX.Model.Directory
         Public Property app As XML.docProps.app
         Public Property custom As custom
 
-        Sub New(ROOT$)
-            Call MyBase.New(ROOT)
+        Sub New(workdir$)
+            Call MyBase.New(workdir)
         End Sub
 
         ''' <summary>

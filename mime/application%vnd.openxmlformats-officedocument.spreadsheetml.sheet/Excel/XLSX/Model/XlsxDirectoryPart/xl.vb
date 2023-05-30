@@ -72,8 +72,8 @@ Namespace XLSX.Model.Directory
         Public Property worksheets As worksheets
         Public Property _rels As _rels
 
-        Sub New(ROOT$)
-            Call MyBase.New(ROOT)
+        Sub New(workdir$)
+            Call MyBase.New(workdir)
         End Sub
 
         ''' <summary>
@@ -125,8 +125,8 @@ Namespace XLSX.Model.Directory
         End Function
 
         Protected Overrides Sub _loadContents()
-            sharedStrings = (folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
-            workbook = (folder & "/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
+            sharedStrings = InternalFileName("/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
+            workbook = InternalFileName("/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
             worksheets = New worksheets(folder)
             _rels = New _rels(folder)
         End Sub

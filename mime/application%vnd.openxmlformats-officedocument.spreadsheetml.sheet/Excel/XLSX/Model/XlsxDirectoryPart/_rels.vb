@@ -75,17 +75,17 @@ Namespace XLSX.Model.Directory
         ''' <returns></returns>
         Public Property workbook As rels
 
-        Sub New(ROOT$)
-            Call MyBase.New(ROOT)
+        Sub New(workdir$)
+            Call MyBase.New(workdir)
         End Sub
 
         Protected Overrides Sub _loadContents()
             Dim path As Value(Of String) = ""
 
-            If (path = folder & "/.rels").FileExists Then
+            If (path = InternalFileName("/.rels")).FileExists Then
                 rels = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
             End If
-            If (path = folder & "/workbook.xml.rels").FileExists Then
+            If (path = InternalFileName("/workbook.xml.rels")).FileExists Then
                 workbook = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
             End If
         End Sub

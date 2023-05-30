@@ -77,8 +77,8 @@ Namespace XLSX.Model.Directory
         Public Property worksheets As Dictionary(Of String, XML.xl.worksheets.worksheet)
         Public Property _rels As Dictionary(Of String, rels)
 
-        Sub New(ROOT$)
-            Call MyBase.New(ROOT)
+        Sub New(workdir$)
+            Call MyBase.New(workdir)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
