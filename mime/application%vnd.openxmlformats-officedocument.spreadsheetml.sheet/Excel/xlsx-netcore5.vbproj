@@ -10,6 +10,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>GPL3</PackageLicenseExpression>
+    <Title>XLSX Transitional (Office Open XML), ISO 29500:2008-2016, ECMA-376, Editions 1-5</Title>
+    <Authors>i@xieguigang.me</Authors>
+    <Company>sciBASIC</Company>
+    <Description>XLSX Transitional (Office Open XML), ISO 29500:2008-2016, ECMA-376, Editions 1-5</Description>
+    <Copyright>xieguigang</Copyright>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
