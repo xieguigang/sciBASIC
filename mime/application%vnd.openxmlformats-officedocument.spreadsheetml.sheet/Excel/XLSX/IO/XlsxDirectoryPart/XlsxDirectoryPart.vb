@@ -85,7 +85,10 @@ Namespace XLSX.Model.Directory
 
         Sub New(workdir$)
             folder = $"{workdir}/{_name()}"
-            Call _loadContents()
+
+            If Not workdir.StringEmpty Then
+                Call _loadContents()
+            End If
         End Sub
 
         Protected MustOverride Function _name() As String

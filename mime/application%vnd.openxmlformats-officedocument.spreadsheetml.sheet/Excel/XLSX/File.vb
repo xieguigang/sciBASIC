@@ -126,7 +126,8 @@ Namespace XLSX
     ''' specification must support both basic And more advanced functionalities in a structure
     ''' that supports the robust performance expected by users.
     ''' </remarks>
-    Public Class File : Implements IFileReference
+    Public Class File : Inherits XlsxDirectoryPart
+        Implements IFileReference
 
         Public Property ContentTypes As ContentTypes
         Public Property _rels As _rels
@@ -134,8 +135,6 @@ Namespace XLSX
         Public Property xl As xl
 
         Friend ReadOnly modify As New Index(Of String)
-
-        ReadOnly ROOT$
 
         Dim _filePath As [Default](Of String)
 
@@ -185,11 +184,22 @@ Namespace XLSX
         End Property
 
         Sub New()
+            Call MyBase.New(Nothing)
         End Sub
 
         Friend Sub New(workdir As String)
-            ROOT = workdir
+            Call MyBase.New(workdir)
         End Sub
+
+#Region "XlsxDirectoryPart"
+        Protected Overrides Function _name() As String
+            Return ""
+        End Function
+
+        Protected Overrides Sub _loadContents()
+            ' do nothing
+        End Sub
+#End Region
 
         ''' <summary>
         ''' get all sheet names from current xlsx document
@@ -207,7 +217,7 @@ Namespace XLSX
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FullName(name As String) As String
-            Return $"{ROOT}/{name}".GetFullPath
+            Return InternalFileName(name)
         End Function
 
         Public Overrides Function ToString() As String
@@ -287,7 +297,7 @@ Namespace XLSX
         ''' </summary>
         ''' <returns></returns>
         Public Function GetWorkdir() As String
-            Return ROOT
+            Return folder
         End Function
 
         ''' <summary>
