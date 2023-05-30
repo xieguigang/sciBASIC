@@ -93,13 +93,12 @@ Namespace XLSX.FileIO
             Dim rels As New _rels(ROOT)
             Dim docProps As New docProps(ROOT)
             Dim xl As New xl(ROOT)
-            Dim file As New File With {
+            Dim file As New File(ROOT) With {
                 .ContentTypes = contentType,
                 ._rels = rels,
                 .docProps = docProps,
                 .xl = xl,
-                .FilePath = If(DataURI.IsWellFormedUriString(xlsx), "datauri://", xlsx),
-                .ROOT = ROOT
+                .FilePath = If(DataURI.IsWellFormedUriString(xlsx), "datauri://", xlsx)
             }
 
             Return file
@@ -113,33 +112,28 @@ Namespace XLSX.FileIO
         ''' <returns></returns>
         <Extension>
         Public Function SaveTo(xlsx As File, path$) As Boolean
-            Dim workbook$ = xlsx.ROOT & "/xl/workbook.xml"
-            Dim sharedStrings = xlsx.ROOT & "/xl/sharedStrings.xml"
-            Dim ContentTypes$ = xlsx.ROOT & "/[Content_Types].xml"
+            Dim workbook$ = xlsx.FullName("/xl/workbook.xml")
+            Dim sharedStrings = xlsx.FullName("/xl/sharedStrings.xml")
+            Dim contentTypes$ = xlsx.FullName("/[Content_Types].xml")
 
             If xlsx.modify("worksheet.add") > -1 Then
                 With xlsx.xl
                     Call .worksheets.Save()
-                    Call .workbook _
-                    .ToXML _
-                    .SaveTo(workbook, UTF8WithoutBOM)
-                    Call .sharedStrings _
-                    .ToXML _
-                    .SaveTo(sharedStrings, UTF8WithoutBOM)
-
-                    Call xlsx.ContentTypes _
-                    .ToXML _
-                    .SaveTo(ContentTypes, UTF8WithoutBOM)
+                    Call .workbook.ToXML _
+                        .SaveTo(workbook, UTF8WithoutBOM)
+                    Call .sharedStrings.ToXML _
+                        .SaveTo(sharedStrings, UTF8WithoutBOM)
+                    Call xlsx.ContentTypes.ToXML _
+                        .SaveTo(contentTypes, UTF8WithoutBOM)
                 End With
             ElseIf xlsx.modify("worksheet.update") > -1 Then
                 Call xlsx.xl.worksheets.Save()
-                Call xlsx.xl.sharedStrings _
-                .ToXML _
-                .SaveTo(sharedStrings, UTF8WithoutBOM)
+                Call xlsx.xl.sharedStrings.ToXML _
+                    .SaveTo(sharedStrings, UTF8WithoutBOM)
             End If
 
             ' 重新进行zip打包
-            Call ZipLib.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+            Call ZipLib.DirectoryArchive(xlsx.GetWorkdir, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
 
             Return True
         End Function

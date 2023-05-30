@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.Model
 Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -133,10 +134,15 @@ Namespace XLSX
         Public Property xl As xl
 
         Friend ReadOnly modify As New Index(Of String)
-        Friend ROOT$
+
+        ReadOnly ROOT$
 
         Dim _filePath As [Default](Of String)
 
+        ''' <summary>
+        ''' the original file path the reference to this xlsx file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property FilePath As String Implements IFileReference.FilePath
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -148,6 +154,11 @@ Namespace XLSX
             End Set
         End Property
 
+        ''' <summary>
+        ''' get table by sheet name
+        ''' </summary>
+        ''' <param name="sheetName"></param>
+        ''' <returns></returns>
         Default Public Property TableItem(sheetName As String) As csv
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -161,9 +172,24 @@ Namespace XLSX
 
         Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
             Get
-                Return {New ContentType("")}
+                ' Microsoft Office - OOXML - Spreadsheet
+                ' application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                ' .xlsx
+                ' IANA: OOXML - Spreadsheet
+                Return {
+                    New ContentType("Microsoft Office - OOXML - Spreadsheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx") With {
+                        .Details = "IANA: OOXML - Spreadsheet"
+                    }
+                }
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Friend Sub New(workdir As String)
+            ROOT = workdir
+        End Sub
 
         ''' <summary>
         ''' get all sheet names from current xlsx document
@@ -174,6 +200,16 @@ Namespace XLSX
             Return xl.workbook.sheets.Select(Function(s) s.name)
         End Function
 
+        ''' <summary>
+        ''' the zip package internal file reference name
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FullName(name As String) As String
+            Return $"{ROOT}/{name}".GetFullPath
+        End Function
+
         Public Overrides Function ToString() As String
             Return FilePath
         End Function
@@ -182,8 +218,8 @@ Namespace XLSX
         ''' 使用序列化写入数据到xlsx文件之中
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="data"></param>
-        ''' <param name="sheetName$"></param>
+        ''' <param name="data">A .net clr object collection</param>
+        ''' <param name="sheetName">the name of the sheet table to write data</param>
         ''' <returns></returns>
         Public Function WriteSheetTable(Of T)(data As IEnumerable(Of T), sheetName$) As Boolean
             Dim table As csv = data.ToCsvDoc
@@ -194,7 +230,7 @@ Namespace XLSX
         ''' 如果表名不存在，会追加，否则会直接替换现有的表数据
         ''' </summary>
         ''' <param name="table"></param>
-        ''' <param name="sheetName$"></param>
+        ''' <param name="sheetName">the name of the sheet table to write data</param>
         ''' <returns></returns>
         Public Function WriteSheetTable(table As csv, sheetName$) As Boolean
             Dim worksheet As worksheet = table.CreateWorksheet(xl.sharedStrings)
@@ -244,6 +280,14 @@ Namespace XLSX
                 Call addInternal(sheetName, .ByRef)
                 Return .ByRef
             End With
+        End Function
+
+        ''' <summary>
+        ''' get the zip file workdir
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetWorkdir() As String
+            Return ROOT
         End Function
 
         ''' <summary>
@@ -306,9 +350,10 @@ Namespace XLSX
                 Return True
             Catch ex As Exception
                 Dim debug$ = New Dictionary(Of String, String) From {
-                {NameOf(tmp), tmp},
-                {NameOf(xlsx), xlsx}
-            }.GetJson
+                    {NameOf(tmp), tmp},
+                    {NameOf(xlsx), xlsx}
+                }.GetJson
+
                 ex = New Exception(debug, ex)
 
                 If throwEx Then

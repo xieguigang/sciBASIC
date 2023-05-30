@@ -67,5 +67,9 @@ Namespace XLSX.FileIO
                 UnZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
             End If
         End Sub
+
+        Public Shared Sub WriteZip()
+
+        End Sub
     End Class
 End Namespace
