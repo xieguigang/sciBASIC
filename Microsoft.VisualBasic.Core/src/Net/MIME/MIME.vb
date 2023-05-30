@@ -133,7 +133,7 @@ Namespace Net.Protocols.ContentTypes
                 Try
                     ' 2016-11-28
                     ' Not sure why a bugs happed here, there is no bugs here before!
-                    Yield ContentType.__createObject(line)
+                    Yield ContentType.parseLine(line)
                 Catch ex As Exception
 #If DEBUG Then
                     Call line.Warning

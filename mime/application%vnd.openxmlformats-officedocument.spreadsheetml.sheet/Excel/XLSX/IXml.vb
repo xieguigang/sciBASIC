@@ -56,20 +56,23 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
 
-Public Interface IXml
+Namespace XLSX
 
-    Function filePath() As String
-    Function toXml() As String
+    Public Interface IXml
 
-End Interface
+        Function filePath() As String
+        Function toXml() As String
 
-Module XMLExtensions
+    End Interface
 
-    <Extension>
-    Public Function WriteXml(xmlObj As IXml, dir$) As Boolean
-        Dim path$ = dir & "/" & xmlObj.filePath()
-        Dim xml$ = xmlObj.ToXML()
+    <HideModuleName> Module XMLExtensions
 
-        Return xml.SaveTo(path, TextEncodings.UTF8WithoutBOM)
-    End Function
-End Module
+        <Extension>
+        Public Function WriteXml(xmlObj As IXml, dir$) As Boolean
+            Dim path$ = dir & "/" & xmlObj.filePath()
+            Dim xml$ = xmlObj.ToXML()
+
+            Return xml.SaveTo(path, TextEncodings.UTF8WithoutBOM)
+        End Function
+    End Module
+End Namespace

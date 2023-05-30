@@ -109,11 +109,20 @@ Namespace Net.Protocols.ContentTypes
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(name$, mime$, ext_suffix$)
+            Me.Name = name
+            Me.MIMEType = mime
+            Me.FileExt = ext_suffix
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{MIMEType} (*{FileExt})"
         End Function
 
-        Friend Shared Function __createObject(line As String) As ContentType
+        Friend Shared Function parseLine(line As String) As ContentType
             Dim tokens As String() = line.Split(ASCII.TAB)
 
             If tokens.IsNullOrEmpty OrElse tokens.Length < 3 Then
