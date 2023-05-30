@@ -72,8 +72,56 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 ''' <summary>
-''' ``*.xlsx`` document file
+''' XLSX Transitional (Office Open XML), ISO 29500:2008-2016, ECMA-376, Editions 1-5
+''' 
+''' > ``*.xlsx`` document file
+''' 
+''' Format Description Properties Explanation of format description terms
+'''
+''' + ID: fdd000398
+''' + Short name: XLSX/ OOXML_2012
+''' + Content categories: spreadsheet, office / business
+''' + Format Category: file-format
+''' + Other facets: text, structured, symbolic
+''' + Last significant FDD update: 2022-05-02
+''' + Draft status: Full
+''' 
 ''' </summary>
+''' <remarks>
+''' The Open Office XML-based spreadsheet format using .xlsx as a file extension 
+''' has been the default format produced for new documents by versions of Microsoft 
+''' Excel since Excel 2007. The format was designed to be equivalent to the binary 
+''' .xls format produced by earlier versions of Microsoft Excel (see MS-XLS). For
+''' convenience, this format description uses XLSX to identify the corresponding 
+''' format. The primary content of a XLSX file is marked up in SpreadsheetML, which 
+''' is specified in parts 1 and 4 of ISO/IEC 29500, Information technology -- Document
+''' description and processing languages -- Office Open XML File Formats (OOXML). 
+''' This description focuses on the specification in ISO/IEC 29500:2012 and represents
+''' the format variant known as "Transitional." Although editions of ISO 29500 were 
+''' published in 2008, 2011, 2012, and 2016, the specification has had very few 
+''' changes other than clarifications and corrections to match actual usage in 
+''' documents since SpreadsheetML was first standardized in ECMA-376, Part 1 in 2006.
+''' This description can be read as applying to all SpreadsheetML versions published 
+''' by ECMA International and by ISO/IEC through 2016. See Notes below for more 
+''' detail on the chronological versions and differences.
+'''
+''' The XLSX format uses the SpreadsheetML markup language And schema To represent a 
+''' spreadsheet "document." Conceptually, Using the terminology Of the Spreadsheet 
+''' ML specification In ISO/IEC 29500-1, the document comprises one Or more worksheets
+''' In a workbook. A worksheet typically consists Of a rectangular grid Of cells. 
+''' Each cell can contain a value Or a formula, which will be used To calculate a value,
+''' With a cached value usually stored pending the Next recalculation. A Single 
+''' spreadsheet document may serve several purposes: as a container for data values; 
+''' as program code (based on the formulas in cells) to perform analyses on those 
+''' values; And as one Or more formatted reports (including charts) of the analyses. 
+''' Beyond basics, spreadsheet applications have introduced support for more advanced
+''' features over time. These include mechanisms to extract data dynamically from external
+''' sources, to support collaborative work, And to perform an increasing number of 
+''' functions that would have required a database application in the past, such as sorting
+''' And filtering of entries in a table to display a temporary subset. The markup 
+''' specification must support both basic And more advanced functionalities in a structure
+''' that supports the robust performance expected by users.
+''' </remarks>
 Public Class File : Implements IFileReference
 
     Public Property ContentTypes As ContentTypes
