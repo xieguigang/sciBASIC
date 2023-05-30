@@ -161,8 +161,6 @@ Namespace BIFF
         Dim FormatLenght As Byte 'len(format)
     End Structure '+ followed by the Format-Picture
 
-
-
     Public Structure COLWIDTH_RECORD
         Dim opcode As Integer  '36
         Dim length As Integer  '4
@@ -171,7 +169,9 @@ Namespace BIFF
         Dim ColumnWidth As Integer   'at 1/256th of a character
     End Structure
 
-    'Beginning Of File record
+    ''' <summary>
+    ''' Beginning Of File record
+    ''' </summary>
     Public Structure BEG_FILE_RECORD
         Dim opcode As Integer
         Dim length As Integer
@@ -179,39 +179,54 @@ Namespace BIFF
         Dim ftype As Integer
     End Structure
 
-    'End Of File record
+    ''' <summary>
+    ''' End Of File record
+    ''' </summary>
     Public Structure END_FILE_RECORD
         Dim opcode As Integer
         Dim length As Integer
     End Structure
 
-    'true/false to print gridlines
+    ''' <summary>
+    ''' true/false to print gridlines
+    ''' </summary>
     Public Structure PRINT_GRIDLINES_RECORD
         Dim opcode As Integer
         Dim length As Integer
         Dim PrintFlag As Integer
     End Structure
 
-    'Integer record
+    ''' <summary>
+    ''' Integer record
+    ''' </summary>
     Public Structure tInteger
+
         Dim opcode As Integer
         Dim length As Integer
         Dim Row As Integer     'unsigned integer
         Dim col As Integer
 
-        'rgbAttr1 handles whether cell is hidden and/or locked
+        ''' <summary>
+        ''' rgbAttr1 handles whether cell is hidden and/or locked
+        ''' </summary>
         Dim rgbAttr1 As Byte
-
-        'rgbAttr2 handles the Font# and Formatting assigned to this cell
+        ''' <summary>
+        ''' rgbAttr2 handles the Font# and Formatting assigned to this cell
+        ''' </summary>
         Dim rgbAttr2 As Byte
-
-        'rgbAttr3 handles the Cell Alignment/borders/shading
+        ''' <summary>
+        ''' rgbAttr3 handles the Cell Alignment/borders/shading
+        ''' </summary>
         Dim rgbAttr3 As Byte
-
-        Dim intValue As Integer  'the actual integer value
+        ''' <summary>
+        ''' the actual integer value
+        ''' </summary>
+        Dim intValue As Integer
     End Structure
 
-    'Number record
+    ''' <summary>
+    ''' Number record
+    ''' </summary>
     Public Structure tNumber
         Dim opcode As Integer
         Dim length As Integer
@@ -223,7 +238,9 @@ Namespace BIFF
         Dim NumberValue As Double  '8 Bytes
     End Structure
 
-    'Label (Text) record
+    ''' <summary>
+    ''' Label (Text) record
+    ''' </summary>
     Public Structure tText
         Dim opcode As Integer
         Dim length As Integer
