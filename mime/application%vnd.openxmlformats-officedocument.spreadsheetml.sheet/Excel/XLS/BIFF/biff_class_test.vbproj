@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <Compile Remove="EnumConstants.vb" />
+    <Compile Remove="ExcelFile.vb" />
+    <Compile Remove="SheetObject.vb" />
+    <Compile Remove="VB6.vb" />
   </ItemGroup>
 
 </Project>
