@@ -93,6 +93,27 @@ Namespace XLS.BIFF
         Private HorizPageBreakRows() As Integer
         Private NumHorizPageBreaks As Integer
 
+        ''' <summary>
+        ''' create a new excel xls file biff writer
+        ''' </summary>
+        Sub New()
+            ' Set up default values for records
+            ' These should be the values that are the same for every record of these types
+
+            ' beginning of file
+            With BEG_FILE_MARKER
+                .opcode = 9
+                .length = 4
+                .version = 2
+                .ftype = 10
+            End With
+
+            ' end of file marker
+            With END_FILE_MARKER
+                .opcode = 10
+            End With
+        End Sub
+
         Public Function CreateFile(FileName As String) As Integer
             FileNumber = New BinaryWriter(FileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
             FileNumber.Write(BEG_FILE_MARKER)  'must always be written first
@@ -102,10 +123,7 @@ Namespace XLS.BIFF
             'create the Horizontal Page Break array
             ReDim HorizPageBreakRows(0)
             NumHorizPageBreaks = 0
-
             FileNumber.Flush()
-            FileNumber.Close()
-            FileNumber.Dispose()
 
             Return 0
         End Function
@@ -154,6 +172,7 @@ Namespace XLS.BIFF
 
             Put(FileNumber, END_FILE_MARKER)
             FileNumber.Flush()
+            FileNumber.Close()
             FileNumber.Dispose()
 
             ' return with no error code
@@ -161,27 +180,6 @@ Namespace XLS.BIFF
 Write_Error:
             Return Err.Number
         End Function
-
-        ''' <summary>
-        ''' create a new excel xls file biff writer
-        ''' </summary>
-        Sub New()
-            ' Set up default values for records
-            ' These should be the values that are the same for every record of these types
-
-            ' beginning of file
-            With BEG_FILE_MARKER
-                .opcode = 9
-                .length = 4
-                .version = 2
-                .ftype = 10
-            End With
-
-            ' end of file marker
-            With END_FILE_MARKER
-                .opcode = 10
-            End With
-        End Sub
 
         Public Function InsertHorizPageBreak(lrow As Long) As Integer
             Dim Row As Integer

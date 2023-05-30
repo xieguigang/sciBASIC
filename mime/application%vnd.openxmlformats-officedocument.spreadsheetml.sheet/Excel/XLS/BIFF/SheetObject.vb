@@ -117,9 +117,9 @@
 Namespace XLS.BIFF
 
     Public Structure FONT_RECORD
-        Dim opcode As Integer  '49
-        Dim length As Integer  '5+len(fontname)
-        Dim FontHeight As Integer
+        Dim opcode As Short   '49
+        Dim length As Short   '5+len(fontname)
+        Dim FontHeight As Short
 
         'bit0 bold, bit1 italic, bit2 underline, bit3 strikeout, bit4-7 reserved
         Dim FontAttributes1 As Byte
@@ -131,69 +131,69 @@ Namespace XLS.BIFF
 
 
     Public Structure PASSWORD_RECORD
-        Dim opcode As Integer  '47
-        Dim length As Integer  'len(password)
+        Dim opcode As Short   '47
+        Dim length As Short   'len(password)
     End Structure
 
 
     Public Structure HEADER_FOOTER_RECORD
-        Dim opcode As Integer  '20 Header, 21 Footer
-        Dim length As Integer  '1+len(text)
+        Dim opcode As Short   '20 Header, 21 Footer
+        Dim length As Short   '1+len(text)
         Dim TextLength As Byte
     End Structure
 
 
     Public Structure PROTECT_SPREADSHEET_RECORD
-        Dim opcode As Integer  '18
-        Dim length As Integer  '2
-        Dim Protect As Integer
+        Dim opcode As Short   '18
+        Dim length As Short   '2
+        Dim Protect As Short
     End Structure
 
     Public Structure FORMAT_COUNT_RECORD
-        Dim opcode As Integer  '1f
-        Dim length As Integer '2
-        Dim Count As Integer
+        Dim opcode As Short   '1f
+        Dim length As Short  '2
+        Dim Count As Short
     End Structure
 
     Public Structure FORMAT_RECORD
-        Dim opcode As Integer  '1e
-        Dim length As Integer  '1+len(format)
+        Dim opcode As Short  '1e
+        Dim length As Short   '1+len(format)
         Dim FormatLenght As Byte 'len(format)
     End Structure '+ followed by the Format-Picture
 
     Public Structure COLWIDTH_RECORD
-        Dim opcode As Integer  '36
-        Dim length As Integer  '4
+        Dim opcode As Short   '36
+        Dim length As Short   '4
         Dim col1 As Byte       'first column
         Dim col2 As Byte       'last column
-        Dim ColumnWidth As Integer   'at 1/256th of a character
+        Dim ColumnWidth As Short    'at 1/256th of a character
     End Structure
 
     ''' <summary>
     ''' Beginning Of File record
     ''' </summary>
     Public Structure BEG_FILE_RECORD
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim version As Integer
-        Dim ftype As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim version As Short
+        Dim ftype As Short
     End Structure
 
     ''' <summary>
     ''' End Of File record
     ''' </summary>
     Public Structure END_FILE_RECORD
-        Dim opcode As Integer
-        Dim length As Integer
+        Dim opcode As Short
+        Dim length As Short
     End Structure
 
     ''' <summary>
     ''' true/false to print gridlines
     ''' </summary>
     Public Structure PRINT_GRIDLINES_RECORD
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim PrintFlag As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim PrintFlag As Short
     End Structure
 
     ''' <summary>
@@ -201,10 +201,10 @@ Namespace XLS.BIFF
     ''' </summary>
     Public Structure tInteger
 
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim Row As Integer     'unsigned integer
-        Dim col As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim Row As Short      'unsigned integer
+        Dim col As Short
 
         ''' <summary>
         ''' rgbAttr1 handles whether cell is hidden and/or locked
@@ -221,17 +221,17 @@ Namespace XLS.BIFF
         ''' <summary>
         ''' the actual integer value
         ''' </summary>
-        Dim intValue As Integer
+        Dim intValue As Short
     End Structure
 
     ''' <summary>
     ''' Number record
     ''' </summary>
     Public Structure tNumber
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim Row As Integer
-        Dim col As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim Row As Short
+        Dim col As Short
         Dim rgbAttr1 As Byte
         Dim rgbAttr2 As Byte
         Dim rgbAttr3 As Byte
@@ -242,10 +242,10 @@ Namespace XLS.BIFF
     ''' Label (Text) record
     ''' </summary>
     Public Structure tText
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim Row As Integer
-        Dim col As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim Row As Short
+        Dim col As Short
         Dim rgbAttr1 As Byte
         Dim rgbAttr2 As Byte
         Dim rgbAttr3 As Byte
@@ -253,33 +253,33 @@ Namespace XLS.BIFF
     End Structure
 
     Public Structure MARGIN_RECORD_LAYOUT
-        Dim opcode As Integer
-        Dim length As Integer
+        Dim opcode As Short
+        Dim length As Short
         Dim MarginValue As Double  '8 bytes
     End Structure
 
     Public Structure HPAGE_BREAK_RECORD
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim NumPageBreaks As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim NumPageBreaks As Short
     End Structure
 
     Public Structure DEF_ROWHEIGHT_RECORD
-        Dim opcode As Integer
-        Dim length As Integer
-        Dim RowHeight As Integer
+        Dim opcode As Short
+        Dim length As Short
+        Dim RowHeight As Short
     End Structure
 
     Public Structure ROW_HEIGHT_RECORD
-        Dim opcode As Integer  '08
-        Dim length As Integer  'should always be 16 bytes
-        Dim RowNumber As Integer
-        Dim FirstColumn As Integer
-        Dim LastColumn As Integer
-        Dim RowHeight As Integer  'written to file as 1/20ths of a point
-        Dim internal As Integer
+        Dim opcode As Short  '08
+        Dim length As Short   'should always be 16 bytes
+        Dim RowNumber As Short
+        Dim FirstColumn As Short
+        Dim LastColumn As Short
+        Dim RowHeight As Short 'written to file as 1/20ths of a point
+        Dim internal As Short
         Dim DefaultAttributes As Byte  'set to zero for no default attributes
-        Dim FileOffset As Integer
+        Dim FileOffset As Short
         Dim rgbAttr1 As Byte
         Dim rgbAttr2 As Byte
         Dim rgbAttr3 As Byte
