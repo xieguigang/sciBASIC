@@ -58,7 +58,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
-Namespace BIFF
+Namespace XLS.BIFF
 
     ''' <summary>
     ''' Class file for writing Microsoft Excel BIFF 2.1 files.

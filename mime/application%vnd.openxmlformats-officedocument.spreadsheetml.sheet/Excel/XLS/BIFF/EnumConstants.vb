@@ -88,7 +88,7 @@
 
 #End Region
 
-Namespace BIFF
+Namespace XLS.BIFF
 
     ''' <summary>
     ''' enum to handle the various types of values that can be written

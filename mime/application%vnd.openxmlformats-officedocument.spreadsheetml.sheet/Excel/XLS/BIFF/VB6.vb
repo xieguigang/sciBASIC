@@ -56,7 +56,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
-Namespace BIFF
+Namespace XLS.BIFF
 
     Module VB6
 
