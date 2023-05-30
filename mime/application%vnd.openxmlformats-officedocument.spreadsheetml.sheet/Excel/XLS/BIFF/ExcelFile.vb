@@ -496,7 +496,7 @@ Namespace XLS.BIFF
                 Put(FileNumber, cFORMAT_RECORD)
 
                 'Then the actual format
-                Dim b As Byte, a As Long
+                Dim b As Byte, a As Integer
                 For a = 1 To l
                     b = Asc(Mid$(aFormat(lIndex), a, 1))
                     Put(FileNumber, b)
