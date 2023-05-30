@@ -13,4 +13,10 @@
     <Compile Remove="VB6.vb" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\xlsx-netcore5.vbproj" />
+  </ItemGroup>
+
 </Project>
