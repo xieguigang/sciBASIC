@@ -56,7 +56,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace XML.xl
+Namespace XLSX.XML.xl
 
     <XmlType("calcChain", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class calcChain

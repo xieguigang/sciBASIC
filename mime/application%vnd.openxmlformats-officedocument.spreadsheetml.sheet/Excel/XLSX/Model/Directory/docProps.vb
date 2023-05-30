@@ -58,10 +58,10 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.docProps
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.docProps
 Imports Microsoft.VisualBasic.Text
 
-Namespace Model.Directory
+Namespace XLSX.Model.Directory
 
     Public Class docProps : Inherits Directory
 

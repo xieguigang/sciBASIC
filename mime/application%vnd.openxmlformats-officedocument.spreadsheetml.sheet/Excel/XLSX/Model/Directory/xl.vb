@@ -58,11 +58,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
-Namespace Model.Directory
+Namespace XLSX.Model.Directory
 
     Public Class xl : Inherits Directory
 

@@ -149,9 +149,9 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
-Namespace XML.xl
+Namespace XLSX.XML.xl
 
     <XmlRoot("styleSheet", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class styles

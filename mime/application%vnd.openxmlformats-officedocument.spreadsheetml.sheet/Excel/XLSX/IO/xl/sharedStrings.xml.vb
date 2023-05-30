@@ -66,7 +66,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 
-Namespace XML.xl
+Namespace XLSX.XML.xl
 
     <XmlRoot("sst", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class sharedStrings

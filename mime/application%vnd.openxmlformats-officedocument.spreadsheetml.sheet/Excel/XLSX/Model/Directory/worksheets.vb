@@ -60,12 +60,13 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Text
 
-Namespace Model.Directory
+Namespace XLSX.Model.Directory
 
     Public Class worksheets : Inherits Directory
 
@@ -131,8 +132,7 @@ Namespace Model.Directory
 
             For Each sheet In worksheets
                 path = $"{Folder}/{sheet.Key}.xml"
-                sheet.Value _
-                    .ToXML _
+                sheet.Value.ToXML _
                     .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
             Next
         End Sub

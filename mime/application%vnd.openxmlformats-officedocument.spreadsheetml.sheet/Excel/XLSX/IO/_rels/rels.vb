@@ -56,7 +56,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 
-Namespace XML._rels
+Namespace XLSX.XML._rels
 
     Public Class rels : Implements IXml
 

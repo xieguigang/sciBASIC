@@ -132,9 +132,9 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
-Namespace XML.xl.worksheets
+Namespace XLSX.XML.xl.worksheets
 
     ''' <summary>
     ''' 保存数据所使用到的工作表的对象模型

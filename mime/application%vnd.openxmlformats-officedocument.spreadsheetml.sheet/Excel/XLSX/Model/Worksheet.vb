@@ -55,10 +55,10 @@
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 
-Namespace Model
+Namespace XLSX.Model
 
     Public Class SheetTable
 

@@ -60,9 +60,9 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
-Namespace XML.docProps
+Namespace XLSX.XML.docProps
 
     <XmlRoot("Properties", [Namespace]:="http://schemas.openxmlformats.org/officeDocument/2006/custom-properties")>
     Public Class custom : Implements IXml

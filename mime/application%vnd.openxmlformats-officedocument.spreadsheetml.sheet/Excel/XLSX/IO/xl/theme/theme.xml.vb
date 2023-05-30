@@ -79,9 +79,9 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
-Namespace XML.xl.theme
+Namespace XLSX.XML.xl.theme
 
     <XmlRoot("theme", Namespace:=OpenXML.a)>
     Public Class theme

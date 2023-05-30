@@ -55,7 +55,7 @@ Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
-Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml

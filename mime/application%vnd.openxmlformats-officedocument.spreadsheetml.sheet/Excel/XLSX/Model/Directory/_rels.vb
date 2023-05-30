@@ -57,10 +57,10 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML._rels
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
 Imports Microsoft.VisualBasic.Text.Xml
 
-Namespace Model.Directory
+Namespace XLSX.Model.Directory
 
     Public Class _rels : Inherits Directory
 

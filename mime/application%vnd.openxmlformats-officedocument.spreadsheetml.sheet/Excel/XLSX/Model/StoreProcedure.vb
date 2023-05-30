@@ -55,11 +55,11 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.Excel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
-Namespace Model
+Namespace XLSX.Model
 
     ''' <summary>
     ''' 读取工作表的数据或者生成工作表数据的过程
@@ -68,10 +68,10 @@ Namespace Model
 
         <Extension>
         Public Function ToTableFrame(worksheet As worksheets.worksheet, strings As sharedStrings) As csv
-            Dim getValues As IEnumerable(Of RowObject) = worksheet _
-                .sheetData _
-                .rows _
-                .Select(Function(r) r.ToRowData(strings))
+            Dim getValues As IEnumerable(Of RowObject) = worksheet.sheetData.rows _
+                .Select(Function(r)
+                            Return r.ToRowData(strings)
+                        End Function)
             Dim csv As New csv(getValues)
             Return csv
         End Function
@@ -133,7 +133,7 @@ Namespace Model
                 .sheetData = New sheetData With {
                     .rows = rows
                 },
-                .dimension = New dimension With {
+                .Dimension = New dimension With {
                     .ref = table.Dimension
                 }
             }

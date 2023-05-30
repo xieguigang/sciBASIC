@@ -59,9 +59,9 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
-Namespace XML.docProps
+Namespace XLSX.XML.docProps
 
     <XmlRoot("coreProperties", [Namespace]:=OpenXML.cp)>
     Public Class core : Implements IXml
@@ -93,7 +93,7 @@ Namespace XML.docProps
 
         Public Property title As String
         Public Property subject As String
-        
+
         <XmlElement([Namespace]:=OpenXML.cp)>
         Public Property keywords As String
 

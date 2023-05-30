@@ -119,10 +119,10 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
-Imports worksheet = Microsoft.VisualBasic.Language.List(Of Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.sheet)
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
+Imports worksheet = Microsoft.VisualBasic.Language.List(Of Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.sheet)
 
-Namespace XML.xl
+Namespace XLSX.XML.xl
 
     ''' <summary>
     ''' workbook.xml
