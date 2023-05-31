@@ -204,7 +204,7 @@ Namespace Text
         ''' </remarks>
         Private Function __gbk2312_encoding() As Encoding
             Try
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
                 ' 注册Nuget包System.Text.Encoding.CodePages中的编码到.NET Core
                 ' https://www.cnblogs.com/OpenCoder/p/10386540.html
                 Call Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
