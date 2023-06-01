@@ -79,7 +79,7 @@ Namespace SVG.XML
         ''' the stroke color, value of this property should be html color code
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property stroke As String = "#000000"
+        <XmlAttribute> Public Property stroke As String = Nothing
         <XmlAttribute("stroke-opacity"), DefaultValue(1)>
         Public Property strokeOpacity As Double = 1
         <XmlAttribute("stroke-width"), DefaultValue(1)>
