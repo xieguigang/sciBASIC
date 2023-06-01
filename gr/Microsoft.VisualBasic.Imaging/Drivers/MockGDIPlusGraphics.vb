@@ -190,8 +190,9 @@ Namespace Driver
             Me.Size = size
         End Sub
 
-        Private Shared Function FontScale(font As Font) As Font
-            Return New Font(font, font.Size * 2)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Overridable Function FontScale(font As Font) As Font
+            Return New Font(font, FontFace.SVGPointSize(font.Size, Dpi))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

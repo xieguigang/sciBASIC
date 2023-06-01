@@ -774,10 +774,11 @@ Namespace SVG
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
             Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
+            Dim size As SizeF = gdi.MeasureString(s, font)
             Dim text As New XML.text With {
                 .value = s,
-                .x = x, '+ fontSize,
-                .y = y,'+ fontSize,
+                .x = x, '- FontFace.SVGPointSize(size.Width, Dpi) / 8,
+                .y = y, '+ FontFace.SVGPointSize(size.Height, Dpi) / 8,
                 .style = css.CSSValue
             }
 
