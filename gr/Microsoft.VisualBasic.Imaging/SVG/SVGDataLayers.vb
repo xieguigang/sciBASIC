@@ -59,14 +59,12 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html
-Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace SVG
 
@@ -75,7 +73,7 @@ Namespace SVG
     ''' </summary>
     Public Class SVGDataLayers : Implements Enumeration(Of g)
 
-        Protected layers As New HashList(Of g)
+        Protected layers As New List(Of g)
 
         Protected Friend bg$
         Protected Friend Size As Size
@@ -86,11 +84,6 @@ Namespace SVG
         Protected Friend filters As Dictionary(Of String, Filter)
 
         Public ReadOnly Property styles As New List(Of String)
-
-        ''' <summary>
-        ''' Generates the <see cref="CSSLayer"/> index order value.
-        ''' </summary>
-        Friend zlayer As i32 = 0
 
         Default Public ReadOnly Property GetLayer(zindex As Integer) As g
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -110,7 +103,6 @@ Namespace SVG
         ''' </summary>
         Public Sub Clear()
             layers *= 0
-            zlayer = 0
             _styles *= 0
             _GetLastLayer = Nothing
         End Sub
@@ -133,98 +125,83 @@ Namespace SVG
 
         End Function
 
-        Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
-            For Each node As T In nodes
-                node.zIndex = ++zlayer
-                Yield node
-            Next
-        End Function
-
 #Region "Add svg shape element"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(text As XML.text) As Integer
             _GetLastLayer = New g With {
-                .texts = {text},
-                .zIndex = ++zlayer
+                .texts = {text}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(rect As rect) As Integer
             _GetLastLayer = New g With {
-                .rect = {rect},
-                .zIndex = ++zlayer
+                .rect = {rect}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(line As line) As Integer
             _GetLastLayer = New g With {
-                .lines = {line},
-                .zIndex = ++zlayer
+                .lines = {line}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(circle As circle) As Integer
             _GetLastLayer = New g With {
-                .circles = {circle},
-                .zIndex = ++zlayer
+                .circles = {circle}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(path As path) As Integer
             _GetLastLayer = New g With {
-                .path = {path},
-                .zIndex = ++zlayer
+                .path = {path}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(polygon As polygon, layerComment$) As Integer
             _GetLastLayer = New g With {
                 .polygon = {polygon},
-                .zIndex = ++zlayer,
                 .XmlCommentValue = layerComment
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(image As XML.Image) As Integer
             _GetLastLayer = New g With {
-                .images = {image},
-                .zIndex = ++zlayer
+                .images = {image}
             }
             layers += _GetLastLayer
 
-            Return zlayer
+            Return layers.Count
         End Function
 
         Public Sub Add(data As SVGDataLayers)
             Dim lastLayer As g = Nothing
 
-            For Each layer In data.layers
-                layer.zIndex = ++zlayer
+            For Each layer As g In data.layers
                 layers += layer
                 lastLayer = layer
             Next
@@ -296,7 +273,7 @@ Namespace SVG
                 .bg = data.bg,
                 .layers = data.layers _
                               .Select(Function(l) l + offset) _
-                              .AsHashList,
+                              .AsList,
                 ._GetLastLayer = data.GetLastLayer
             }
         End Operator

@@ -146,8 +146,7 @@ Namespace SVG.XML
                 .stroke = layer.stroke,
                 .style = layer.style,
                 .title = layer.title,
-                .transform = layer.transform,
-                .zIndex = layer.zIndex
+                .transform = layer.transform
             }
         End Operator
     End Class

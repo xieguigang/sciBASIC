@@ -100,7 +100,7 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute("z-index")>
-        Public Property zIndex As Integer Implements CSSLayer.zIndex, IAddressOf.Address
+        Private Property zIndex As Integer Implements CSSLayer.zIndex, IAddressOf.Address
 
         ''' <summary>
         ''' 
@@ -146,7 +146,7 @@ Namespace SVG.XML
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"id={id}; # {XmlCommentValue}"
+            Return $"[{MyClass.GetType.Name}] id={id}; <!-- {XmlCommentValue} -->"
         End Function
     End Class
 End Namespace

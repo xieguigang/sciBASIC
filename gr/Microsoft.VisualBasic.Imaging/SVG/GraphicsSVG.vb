@@ -880,8 +880,8 @@ Namespace SVG
             Dim css As New CSSFont(font, fontSize)
             Dim text As New XML.text With {
                 .value = s,
-                .x = x + fontSize,
-                .y = y + fontSize,
+                .x = x, '+ fontSize,
+                .y = y,'+ fontSize,
                 .style = css.CSSValue
             }
 
