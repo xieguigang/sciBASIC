@@ -134,6 +134,11 @@ Namespace Imaging
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function SVGPointSize(pointSize As Single, dpiResolution As Single) As Single
+            Return pointSize * dpiResolution / 96
+        End Function
+
         ''' <summary>
         ''' 检查当前的操作系统之中是否安装有指定名称的字体
         ''' </summary>

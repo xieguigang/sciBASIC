@@ -70,7 +70,6 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
@@ -121,108 +120,6 @@ Namespace SVG
         Public Sub New(width%, height%, dpiX As Integer, dpiY As Integer)
             Me.New(New Size(width, height), dpiX, dpiY)
         End Sub
-
-        Public Overrides Property InterpolationMode As InterpolationMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As InterpolationMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingQuality)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides ReadOnly Property IsClipEmpty As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
-            Get
-                Throw New NotImplementedException()
-            End Get
-        End Property
-
-        Public Overrides Property PageScale As Single
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Single)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property PageUnit As GraphicsUnit
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As GraphicsUnit)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property PixelOffsetMode As PixelOffsetMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As PixelOffsetMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property RenderingOrigin As Point
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Point)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property SmoothingMode As SmoothingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As SmoothingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property TextContrast As Integer
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As Integer)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property TextRenderingHint As TextRenderingHint
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As TextRenderingHint)
-                Throw New NotImplementedException()
-            End Set
-        End Property
 
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -876,8 +773,7 @@ Namespace SVG
             ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
-            Dim fontSize As Single = font.SizeInPoints * Dpi / 96
-            Dim css As New CSSFont(font, fontSize)
+            Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
             Dim text As New XML.text With {
                 .value = s,
                 .x = x, '+ fontSize,
