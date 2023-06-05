@@ -1,10 +1,6 @@
-﻿Imports HdbscanSharp.Hdbscanstar
-Imports System
-Imports System.Collections.Generic
-Imports Parallel0 = System.Threading.Tasks.Parallel
-Imports HdbscanSharp.Distance
+﻿Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
-Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
+Imports Parallel0 = System.Threading.Tasks.Parallel
 Imports stdNum = System.Math
 
 Namespace HDBSCAN.Runner

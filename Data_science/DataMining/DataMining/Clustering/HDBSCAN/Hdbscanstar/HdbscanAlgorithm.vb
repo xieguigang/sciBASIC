@@ -1,8 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports HdbscanSharp.Utils
-Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Utils
+﻿Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Utils
 
 Namespace HDBSCAN.Hdbscanstar
     Public Class HdbscanAlgorithm
