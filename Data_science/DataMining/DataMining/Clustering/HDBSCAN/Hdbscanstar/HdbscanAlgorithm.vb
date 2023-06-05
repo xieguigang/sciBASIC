@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Utils
+﻿Imports Microsoft.VisualBasic.ComponentModel
 
 Namespace HDBSCAN.Hdbscanstar
     Public Class HdbscanAlgorithm
@@ -64,7 +64,7 @@ Namespace HDBSCAN.Hdbscanstar
             If selfEdges Then selfEdgeCapacity = numPoints
 
             'One bit is set (true) for each attached point, or unset (false) for unattached points:
-            Dim attachedPoints = New BitSet()
+            Dim attachedPoints = New BitSet(capacity:=numPoints * 2)
 
             'Each point has a current neighbor point in the tree, and a current nearest distance:
             Dim nearestMRDNeighbors = New Integer(numPoints - 1 + selfEdgeCapacity - 1) {}
@@ -356,7 +356,7 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <returns>true if there are any clusters with infinite stability, false otherwise</returns>
         Public Shared Function PropagateTree(clusters As List(Of Cluster)) As Boolean
             Dim clustersToExamine = New SortedDictionary(Of Integer, Cluster)()
-            Dim addedToExaminationList = New BitSet()
+            Dim addedToExaminationList = New BitSet(capacity:=0, defaultValue:=False)
             Dim infiniteStability = False
 
             'Find all leaf clusters in the cluster tree:
