@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports HdbscanSharp.Utils
 
-Namespace HdbscanSharp.Hdbscanstar
+Namespace HDBSCAN.Hdbscanstar
     Public Class HdbscanAlgorithm
         ''' <summary>
         ''' Calculates the core distances for each point in the data set, given some value for k.
@@ -224,10 +224,10 @@ Namespace HdbscanSharp.Hdbscanstar
                     Dim numChildClusters = 0
 
                     ' 
-					 * Check if the cluster has split or shrunk by exploring the graph from each affected
-					 * vertex.  If there are two or more valid child clusters (each has >= minClusterSize
+					 * Check if the cluster has split Or shrunk by exploring the graph from each affected
+					 * vertex.  If there are two Or more valid child clusters (each has >= minClusterSize
 					 * points), the cluster has split.
-					 * Note that firstChildCluster will only be fully explored if there is a cluster
+					 * Note that firstChildCluster will only be fully explored if there Is a cluster
 					 * split, otherwise, only spurious components are fully explored, in order to label 
 					 * them noise.
 					 

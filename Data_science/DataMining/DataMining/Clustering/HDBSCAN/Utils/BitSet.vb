@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace HdbscanSharp.Utils
+Namespace HDBSCAN.Utils
     Public Class BitSet
         Private _bits As Boolean() = New Boolean(-1) {}
 

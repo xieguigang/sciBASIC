@@ -1,4 +1,4 @@
-﻿Namespace HdbscanSharp.Hdbscanstar
+﻿Namespace HDBSCAN.Hdbscanstar
     ''' <summary>
     ''' A clustering constraint (either a must-link or cannot-link constraint between two points).
     ''' </summary>

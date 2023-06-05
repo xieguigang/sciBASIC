@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Threading.Tasks
 Imports HdbscanSharp.Distance
 
-Namespace HdbscanSharp.Runner
+Namespace HDBSCAN.Runner
     Public Class HdbscanRunner
         Public Shared Function Run(Of T)(ByVal parameters As HdbscanParameters(Of T)) As HdbscanResult
             Dim numPoints = If(parameters.DataSet?.Length, parameters.Distances.Length)

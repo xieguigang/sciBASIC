@@ -3,7 +3,7 @@ Imports System.Collections.Concurrent
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace HdbscanSharp.Distance
+Namespace HDBSCAN.Distance
     ''' <summary>
     ''' Computes cosine similarity between two points, d = 1 - ((X*Y) / (||X||*||Y||))
     ''' </summary>

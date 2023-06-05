@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace HdbscanSharp.Distance
+Namespace HDBSCAN.Distance
     ''' <summary>
     ''' Computes the supremum distance between two points, d = max[(x1-y1), (x2-y2), ... ,(xn-yn)].
     ''' </summary>

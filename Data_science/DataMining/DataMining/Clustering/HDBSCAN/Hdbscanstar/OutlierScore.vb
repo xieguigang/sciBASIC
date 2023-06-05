@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace HdbscanSharp.Hdbscanstar
+Namespace HDBSCAN.Hdbscanstar
     ''' <summary>
     ''' Simple storage class that keeps the outlier score, core distance, and id (index) for a single point.
     ''' OutlierScores are sorted in ascending order by outlier score, with core distances used to break

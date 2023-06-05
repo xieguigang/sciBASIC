@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace HdbscanSharp.Hdbscanstar
+Namespace HDBSCAN.Hdbscanstar
     ''' <summary>
     ''' An HDBSCAN* cluster, which will have a birth level, death level, stability, and constraint 
     ''' satisfaction once fully constructed.

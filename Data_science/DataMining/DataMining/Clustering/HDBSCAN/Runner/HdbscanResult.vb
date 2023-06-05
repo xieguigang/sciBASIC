@@ -1,7 +1,7 @@
 ﻿Imports HdbscanSharp.Hdbscanstar
 Imports System.Collections.Generic
 
-Namespace HdbscanSharp.Runner
+Namespace HDBSCAN.Runner
     Public Class HdbscanResult
         Public Property Labels As Integer()
         Public Property OutliersScore As List(Of OutlierScore)

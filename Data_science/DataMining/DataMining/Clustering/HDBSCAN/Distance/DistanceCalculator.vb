@@ -1,4 +1,4 @@
-﻿Namespace HdbscanSharp.Distance
+﻿Namespace HDBSCAN.Distance
     ''' <summary>
     ''' An interface for classes which compute the distance between two points (where points are
     ''' represented as arrays of doubles).

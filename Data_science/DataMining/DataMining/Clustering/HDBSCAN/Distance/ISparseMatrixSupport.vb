@@ -1,4 +1,4 @@
-﻿Namespace HdbscanSharp.Distance
+﻿Namespace HDBSCAN.Distance
     Public Interface ISparseMatrixSupport
         ''' <summary>
         ''' Indicate the most common distance value for sparse matrix.

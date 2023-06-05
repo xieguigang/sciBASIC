@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace HdbscanSharp.Hdbscanstar
+Namespace HDBSCAN.Hdbscanstar
     ''' <summary>
     ''' An undirected graph, with weights assigned to each edge.
     ''' Vertices in the graph are 0 indexed.

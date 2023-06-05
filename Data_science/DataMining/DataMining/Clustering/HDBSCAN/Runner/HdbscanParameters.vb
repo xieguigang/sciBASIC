@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports HdbscanSharp.Hdbscanstar
 
-Namespace HdbscanSharp.Runner
+Namespace HDBSCAN.Runner
     Public Class HdbscanParameters(Of T)
         Public Property CacheDistance As Boolean = True
         Public Property MaxDegreeOfParallelism As Integer = 1

@@ -1,4 +1,4 @@
-﻿Namespace HdbscanSharp.Hdbscanstar
+﻿Namespace HDBSCAN.Hdbscanstar
     Public Enum HdbscanConstraintType
         MustLink
         CannotLink
