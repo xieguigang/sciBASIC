@@ -2,17 +2,18 @@
 Imports System.Collections.Generic
 Imports System.Linq
 Imports HdbscanSharp.Utils
+Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Utils
 
 Namespace HDBSCAN.Hdbscanstar
     Public Class HdbscanAlgorithm
         ''' <summary>
         ''' Calculates the core distances for each point in the data set, given some value for k.
         ''' </summary>
-        ''' <paramname="distances">The function to get the distance</param>
-        ''' <paramname="numPoints">The number of elements in dataset</param>
-        ''' <paramname="k">Each point's core distance will be it's distance to the kth nearest neighbor</param>
+        ''' <param name="distances">The function to get the distance</param>
+        ''' <param name="numPoints">The number of elements in dataset</param>
+        ''' <param name="k">Each point's core distance will be it's distance to the kth nearest neighbor</param>
         ''' <returns> An array of core distances</returns>
-        Public Shared Function CalculateCoreDistances(ByVal distances As Func(Of Integer, Integer, Double), ByVal numPoints As Integer, ByVal k As Integer) As Double()
+        Public Shared Function CalculateCoreDistances(distances As Func(Of Integer, Integer, Double), numPoints As Integer, k As Integer) As Double()
             Dim numNeighbors = k - 1
             Dim coreDistances = New Double(numPoints - 1) {}
 
@@ -57,12 +58,12 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Constructs the minimum spanning tree of mutual reachability distances for the data set, given
         ''' the core distances for each point.
         ''' </summary>
-        ''' <paramname="distances">The function to get the distance</param>
-        ''' <paramname="numPoints">The number of elements in dataset</param>
-        ''' <paramname="coreDistances">An array of core distances for each data point</param>
-        ''' <paramname="selfEdges">If each point should have an edge to itself with weight equal to core distance</param>
+        ''' <param name="distances">The function to get the distance</param>
+        ''' <param name="numPoints">The number of elements in dataset</param>
+        ''' <param name="coreDistances">An array of core distances for each data point</param>
+        ''' <param name="selfEdges">If each point should have an edge to itself with weight equal to core distance</param>
         ''' <returns> An MST for the data set using the mutual reachability distances</returns>
-        Public Shared Function ConstructMst(ByVal distances As Func(Of Integer, Integer, Double), ByVal numPoints As Integer, ByVal coreDistances As Double(), ByVal selfEdges As Boolean) As UndirectedGraph
+        Public Shared Function ConstructMst(distances As Func(Of Integer, Integer, Double), numPoints As Integer, coreDistances As Double(), selfEdges As Boolean) As UndirectedGraph
             Dim selfEdgeCapacity = 0
             If selfEdges Then selfEdgeCapacity = numPoints
 
@@ -143,14 +144,14 @@ Namespace HDBSCAN.Hdbscanstar
         ''' computed.  Note that the minimum spanning tree may also have self edges (meaning it is not
         ''' a true MST).
         ''' </summary>
-        ''' <paramname="mst">A minimum spanning tree which has been sorted by edge weight in descending order</param>
-        ''' <paramname="minClusterSize">The minimum number of points which a cluster needs to be a valid cluster</param>
-        ''' <paramname="constraints">An optional List of Constraints to calculate cluster constraint satisfaction</param>
-        ''' <paramname="hierarchy">The hierarchy output</param>
-        ''' <paramname="pointNoiseLevels">A double[] to be filled with the levels at which each point becomes noise</param>
-        ''' <paramname="pointLastClusters">An int[] to be filled with the last label each point had before becoming noise</param>
+        ''' <param name="mst">A minimum spanning tree which has been sorted by edge weight in descending order</param>
+        ''' <param name="minClusterSize">The minimum number of points which a cluster needs to be a valid cluster</param>
+        ''' <param name="constraints">An optional List of Constraints to calculate cluster constraint satisfaction</param>
+        ''' <param name="hierarchy">The hierarchy output</param>
+        ''' <param name="pointNoiseLevels">A double[] to be filled with the levels at which each point becomes noise</param>
+        ''' <param name="pointLastClusters">An int[] to be filled with the last label each point had before becoming noise</param>
         ''' <returns>The cluster tree</returns>
-        Public Shared Function ComputeHierarchyAndClusterTree(ByVal mst As UndirectedGraph, ByVal minClusterSize As Integer, ByVal constraints As List(Of HdbscanConstraint), ByVal hierarchy As List(Of Integer()), ByVal pointNoiseLevels As Double(), ByVal pointLastClusters As Integer()) As List(Of Cluster)
+        Public Shared Function ComputeHierarchyAndClusterTree(mst As UndirectedGraph, minClusterSize As Integer, constraints As List(Of HdbscanConstraint), hierarchy As List(Of Integer()), pointNoiseLevels As Double(), pointLastClusters As Integer()) As List(Of Cluster)
             Dim hierarchyPosition = 0
 
             'The current edge being removed from the MST:
@@ -224,13 +225,13 @@ Namespace HDBSCAN.Hdbscanstar
                     Dim numChildClusters = 0
 
                     ' 
-					 * Check if the cluster has split Or shrunk by exploring the graph from each affected
-					 * vertex.  If there are two Or more valid child clusters (each has >= minClusterSize
-					 * points), the cluster has split.
-					 * Note that firstChildCluster will only be fully explored if there Is a cluster
-					 * split, otherwise, only spurious components are fully explored, in order to label 
-					 * them noise.
-					 
+                    ' * Check if the cluster has split Or shrunk by exploring the graph from each affected
+                    ' * vertex.  If there are two Or more valid child clusters (each has >= minClusterSize
+                    ' * points), the cluster has split.
+                    ' * Note that firstChildCluster will only be fully explored if there Is a cluster
+                    ' * split, otherwise, only spurious components are fully explored, in order to label 
+                    ' * them noise.
+
                     While examinedVertices.Any()
                         Dim constructingSubCluster = New SortedSet(Of Integer)()
                         Dim unexploredSubClusterPoints = New LinkedList(Of Integer)()
@@ -243,10 +244,10 @@ Namespace HDBSCAN.Hdbscanstar
 
                         'Explore this potential child cluster as long as there are unexplored points:
                         While unexploredSubClusterPoints.Any()
-                            Dim vertexToExplore = unexploredSubClusterPoints.First()
+                            Dim vertexToExplore As LinkedListNode(Of Integer) = unexploredSubClusterPoints.First()
                             unexploredSubClusterPoints.RemoveFirst()
 
-                            For Each neighbor In mst.GetEdgeListForVertex(vertexToExplore)
+                            For Each neighbor In mst.GetEdgeListForVertex(vertexToExplore.Value)
                                 anyEdges = True
                                 If constructingSubCluster.Add(neighbor) Then
                                     unexploredSubClusterPoints.AddLast(neighbor)
@@ -295,9 +296,9 @@ Namespace HDBSCAN.Hdbscanstar
                     'Finish exploring and cluster the first child cluster if there was a split and it was not already clustered:
                     If numChildClusters >= 2 AndAlso currentClusterLabels(firstChildCluster.First()) = examinedClusterLabel Then
                         While unexploredFirstChildClusterPoints.Any()
-                            Dim vertexToExplore = unexploredFirstChildClusterPoints.First()
+                            Dim vertexToExplore As LinkedListNode(Of Integer) = unexploredFirstChildClusterPoints.First()
                             unexploredFirstChildClusterPoints.RemoveFirst()
-                            For Each neighbor In mst.GetEdgeListForVertex(vertexToExplore)
+                            For Each neighbor As Integer In mst.GetEdgeListForVertex(vertexToExplore.Value)
                                 If firstChildCluster.Add(neighbor) Then unexploredFirstChildClusterPoints.AddLast(neighbor)
                             Next
                         End While
@@ -355,9 +356,9 @@ Namespace HDBSCAN.Hdbscanstar
         ''' cluster to each parent cluster in the tree.  This method must be called before calling
         ''' findProminentClusters() or calculateOutlierScores().
         ''' </summary>
-        ''' <paramname="clusters">A list of Clusters forming a cluster tree</param>
+        ''' <param name="clusters">A list of Clusters forming a cluster tree</param>
         ''' <returns>true if there are any clusters with infinite stability, false otherwise</returns>
-        Public Shared Function PropagateTree(ByVal clusters As List(Of Cluster)) As Boolean
+        Public Shared Function PropagateTree(clusters As List(Of Cluster)) As Boolean
             Dim clustersToExamine = New SortedDictionary(Of Integer, Cluster)()
             Dim addedToExaminationList = New BitSet()
             Dim infiniteStability = False
@@ -401,11 +402,11 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Produces a flat clustering result using constraint satisfaction and cluster stability, and 
         ''' returns an array of labels.  propagateTree() must be called before calling this method.
         ''' </summary>
-        ''' <paramname="clusters">A list of Clusters forming a cluster tree which has already been propagated</param>
-        ''' <paramname="hierarchy">The hierarchy content</param>
-        ''' <paramname="numPoints">The number of points in the original data set</param>
+        ''' <param name="clusters">A list of Clusters forming a cluster tree which has already been propagated</param>
+        ''' <param name="hierarchy">The hierarchy content</param>
+        ''' <param name="numPoints">The number of points in the original data set</param>
         ''' <returns>An array of labels for the flat clustering result</returns>
-        Public Shared Function FindProminentClusters(ByVal clusters As List(Of Cluster), ByVal hierarchy As List(Of Integer()), ByVal numPoints As Integer) As Integer()
+        Public Shared Function FindProminentClusters(clusters As List(Of Cluster), hierarchy As List(Of Integer()), numPoints As Integer) As Integer()
             'Take the list of propagated clusters from the root cluster:
             Dim solution = clusters(1).PropagatedDescendants
 
@@ -446,12 +447,12 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Produces the outlier score for each point in the data set, and returns a sorted list of outlier
         ''' scores.  propagateTree() must be called before calling this method.
         ''' </summary>
-        ''' <paramname="clusters">A list of Clusters forming a cluster tree which has already been propagated</param>
-        ''' <paramname="pointNoiseLevels">A double[] with the levels at which each point became noise</param>
-        ''' <paramname="pointLastClusters">An int[] with the last label each point had before becoming noise</param>
-        ''' <paramname="coreDistances">An array of core distances for each data point</param>
+        ''' <param name="clusters">A list of Clusters forming a cluster tree which has already been propagated</param>
+        ''' <param name="pointNoiseLevels">A double[] with the levels at which each point became noise</param>
+        ''' <param name="pointLastClusters">An int[] with the last label each point had before becoming noise</param>
+        ''' <param name="coreDistances">An array of core distances for each data point</param>
         ''' <returns>An List of OutlierScores, sorted in descending order</returns>
-        Public Shared Function CalculateOutlierScores(ByVal clusters As List(Of Cluster), ByVal pointNoiseLevels As Double(), ByVal pointLastClusters As Integer(), ByVal coreDistances As Double()) As List(Of OutlierScore)
+        Public Shared Function CalculateOutlierScores(clusters As List(Of Cluster), pointNoiseLevels As Double(), pointLastClusters As Integer(), coreDistances As Double()) As List(Of OutlierScore)
             Dim numPoints = pointNoiseLevels.Length
             Dim outlierScores = New List(Of OutlierScore)(numPoints)
 
@@ -476,13 +477,13 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Removes the set of points from their parent Cluster, and creates a new Cluster, provided the
         ''' clusterId is not 0 (noise).
         ''' </summary>
-        ''' <paramname="points">The set of points to be in the new Cluster</param>
-        ''' <paramname="clusterLabels">An array of cluster labels, which will be modified</param>
-        ''' <paramname="parentCluster">The parent Cluster of the new Cluster being created</param>
-        ''' <paramname="clusterLabel">The label of the new Cluster </param>
-        ''' <paramname="edgeWeight">The edge weight at which to remove the points from their previous Cluster</param>
+        ''' <param name="points">The set of points to be in the new Cluster</param>
+        ''' <param name="clusterLabels">An array of cluster labels, which will be modified</param>
+        ''' <param name="parentCluster">The parent Cluster of the new Cluster being created</param>
+        ''' <param name="clusterLabel">The label of the new Cluster </param>
+        ''' <param name="edgeWeight">The edge weight at which to remove the points from their previous Cluster</param>
         ''' <returns>The new Cluster, or null if the clusterId was 0</returns>
-        Private Shared Function CreateNewCluster(ByVal points As SortedSet(Of Integer), ByVal clusterLabels As Integer(), ByVal parentCluster As Cluster, ByVal clusterLabel As Integer, ByVal edgeWeight As Double) As Cluster
+        Private Shared Function CreateNewCluster(points As SortedSet(Of Integer), clusterLabels As Integer(), parentCluster As Cluster, clusterLabel As Integer, edgeWeight As Double) As Cluster
             For Each point In points
                 clusterLabels(point) = clusterLabel
             Next
@@ -499,11 +500,11 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Calculates the number of constraints satisfied by the new clusters and virtual children of the
         ''' parents of the new clusters.
         ''' </summary>
-        ''' <paramname="newClusterLabels">Labels of new clusters</param>
-        ''' <paramname="clusters">An List of clusters</param>
-        ''' <paramname="constraints">An List of constraints</param>
-        ''' <paramname="clusterLabels">An array of current cluster labels for points</param>
-        Private Shared Sub CalculateNumConstraintsSatisfied(ByVal newClusterLabels As SortedSet(Of Integer), ByVal clusters As List(Of Cluster), ByVal constraints As List(Of HdbscanConstraint), ByVal clusterLabels As Integer())
+        ''' <param name="newClusterLabels">Labels of new clusters</param>
+        ''' <param name="clusters">An List of clusters</param>
+        ''' <param name="constraints">An List of constraints</param>
+        ''' <param name="clusterLabels">An array of current cluster labels for points</param>
+        Private Shared Sub CalculateNumConstraintsSatisfied(newClusterLabels As SortedSet(Of Integer), clusters As List(Of Cluster), constraints As List(Of HdbscanConstraint), clusterLabels As Integer())
             If constraints Is Nothing Then Return
 
             Dim parents = New List(Of Cluster)()

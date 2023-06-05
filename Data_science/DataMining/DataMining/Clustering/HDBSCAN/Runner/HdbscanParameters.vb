@@ -1,6 +1,5 @@
-﻿Imports HdbscanSharp.Distance
-Imports System.Collections.Generic
-Imports HdbscanSharp.Hdbscanstar
+﻿Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
+Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
 
 Namespace HDBSCAN.Runner
     Public Class HdbscanParameters(Of T)

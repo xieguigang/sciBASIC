@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports stdNum = System.Math
 
 Namespace HDBSCAN.Distance
     ''' <summary>
@@ -6,7 +6,7 @@ Namespace HDBSCAN.Distance
     ''' </summary>
     Public Class PearsonCorrelation
         Implements IDistanceCalculator(Of Double())
-        Public Function ComputeDistance(ByVal indexOne As Integer, ByVal indexTwo As Integer, ByVal attributesOne As Double(), ByVal attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
+        Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Double(), attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
             Dim meanOne As Double = 0
             Dim meanTwo As Double = 0
             Dim i = 0
@@ -21,7 +21,8 @@ Namespace HDBSCAN.Distance
             Dim covariance As Double = 0
             Dim standardDeviationOne As Double = 0
             Dim standardDeviationTwo As Double = 0
-            Dim i = 0
+
+            i = 0
 
             While i < attributesOne.Length AndAlso i < attributesTwo.Length
                 covariance += (attributesOne(i) - meanOne) * (attributesTwo(i) - meanTwo)
@@ -29,7 +30,7 @@ Namespace HDBSCAN.Distance
                 standardDeviationTwo += (attributesTwo(i) - meanTwo) * (attributesTwo(i) - meanTwo)
                 i += 1
             End While
-            Return Math.Max(0, 1 - covariance / Math.Sqrt(standardDeviationOne * standardDeviationTwo))
+            Return stdNum.Max(0, 1 - covariance / stdNum.Sqrt(standardDeviationOne * standardDeviationTwo))
         End Function
     End Class
 End Namespace

@@ -17,11 +17,11 @@ Namespace HDBSCAN.Hdbscanstar
         ''' vertex arrays.  For an index i, verticesA[i] and verticesB[i] share an edge with weight
         ''' edgeWeights[i].
         ''' </summary>
-        ''' <paramname="numVertices">The number of vertices in the graph (indexed 0 to numVertices-1)</param>
-        ''' <paramname="verticesA">An array of vertices corresponding to the array of edges</param>
-        ''' <paramname="verticesB">An array of vertices corresponding to the array of edges</param>
-        ''' <paramname="edgeWeights">An array of edges corresponding to the arrays of vertices</param>
-        Public Sub New(ByVal numVertices As Integer, ByVal verticesA As Integer(), ByVal verticesB As Integer(), ByVal edgeWeights As Double())
+        ''' <param name="numVertices">The number of vertices in the graph (indexed 0 to numVertices-1)</param>
+        ''' <param name="verticesA">An array of vertices corresponding to the array of edges</param>
+        ''' <param name="verticesB">An array of vertices corresponding to the array of edges</param>
+        ''' <param name="edgeWeights">An array of edges corresponding to the arrays of vertices</param>
+        Public Sub New(numVertices As Integer, verticesA As Integer(), verticesB As Integer(), edgeWeights As Double())
             _numVertices = numVertices
             _verticesA = verticesA
             _verticesB = verticesB
@@ -83,10 +83,10 @@ Namespace HDBSCAN.Hdbscanstar
         ''' Returns a pivot index by finding the median of edge weights between the startIndex, endIndex,
         ''' and middle.
         ''' </summary>
-        ''' <paramname="startIndex">The lowest index from which the pivot index should come</param>
-        ''' <paramname="endIndex">The highest index from which the pivot index should come</param>
+        ''' <param name="startIndex">The lowest index from which the pivot index should come</param>
+        ''' <param name="endIndex">The highest index from which the pivot index should come</param>
         ''' <returns>A pivot index</returns>
-        Private Function SelectPivotIndex(ByVal startIndex As Integer, ByVal endIndex As Integer) As Integer
+        Private Function SelectPivotIndex(startIndex As Integer, endIndex As Integer) As Integer
             If startIndex - endIndex <= 1 Then Return startIndex
 
             Dim first = _edgeWeights(startIndex)
@@ -111,11 +111,11 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <summary>
         ''' Partitions the array in the interval [startIndex, endIndex] around the value at pivotIndex.
         ''' </summary>
-        ''' <paramname="startIndex">The lowest index to  partition</param>
-        ''' <paramname="endIndex">The highest index to partition</param>
-        ''' <paramname="pivotIndex">The index of the edge weight to partition around</param>
+        ''' <param name="startIndex">The lowest index to  partition</param>
+        ''' <param name="endIndex">The highest index to partition</param>
+        ''' <param name="pivotIndex">The index of the edge weight to partition around</param>
         ''' <returns>The index position of the pivot edge weight after the partition</returns>
-        Private Function Partition(ByVal startIndex As Integer, ByVal endIndex As Integer, ByVal pivotIndex As Integer) As Integer
+        Private Function Partition(startIndex As Integer, endIndex As Integer, pivotIndex As Integer) As Integer
             Dim pivotValue = _edgeWeights(pivotIndex)
             SwapEdges(pivotIndex, endIndex)
             Dim lowIndex = startIndex
@@ -132,9 +132,9 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <summary>
         ''' Swaps the vertices and edge weights between two index locations in the graph.
         ''' </summary>
-        ''' <paramname="indexOne">The first index location</param>
-        ''' <paramname="indexTwo">The second index location</param>
-        Private Sub SwapEdges(ByVal indexOne As Integer, ByVal indexTwo As Integer)
+        ''' <param name="indexOne">The first index location</param>
+        ''' <param name="indexTwo">The second index location</param>
+        Private Sub SwapEdges(indexOne As Integer, indexTwo As Integer)
             If indexOne = indexTwo Then Return
 
             Dim tempVertexA = _verticesA(indexOne)
@@ -156,19 +156,19 @@ Namespace HDBSCAN.Hdbscanstar
             Return _edgeWeights.Length
         End Function
 
-        Public Function GetFirstVertexAtIndex(ByVal index As Integer) As Integer
+        Public Function GetFirstVertexAtIndex(index As Integer) As Integer
             Return _verticesA(index)
         End Function
 
-        Public Function GetSecondVertexAtIndex(ByVal index As Integer) As Integer
+        Public Function GetSecondVertexAtIndex(index As Integer) As Integer
             Return _verticesB(index)
         End Function
 
-        Public Function GetEdgeWeightAtIndex(ByVal index As Integer) As Double
+        Public Function GetEdgeWeightAtIndex(index As Integer) As Double
             Return _edgeWeights(index)
         End Function
 
-        Public Function GetEdgeListForVertex(ByVal vertex As Integer) As List(Of Integer)
+        Public Function GetEdgeListForVertex(vertex As Integer) As List(Of Integer)
             Return _edges(vertex)
         End Function
     End Class

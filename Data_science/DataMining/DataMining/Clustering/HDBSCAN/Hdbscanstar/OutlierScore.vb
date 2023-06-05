@@ -17,16 +17,16 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <summary>
         ''' Creates a new OutlierScore for a given point.
         ''' </summary>
-        ''' <paramname="score">The outlier score of the point</param>
-        ''' <paramname="coreDistance">The point's core distance</param>
-        ''' <paramname="id">The id (index) of the point</param>
-        Public Sub New(ByVal score As Double, ByVal coreDistance As Double, ByVal id As Integer)
+        ''' <param name="score">The outlier score of the point</param>
+        ''' <param name="coreDistance">The point's core distance</param>
+        ''' <param name="id">The id (index) of the point</param>
+        Public Sub New(score As Double, coreDistance As Double, id As Integer)
             Me.Score = score
             _coreDistance = coreDistance
             Me.Id = id
         End Sub
 
-        Public Function CompareTo(ByVal other As OutlierScore) As Integer Implements IComparable(Of OutlierScore).CompareTo
+        Public Function CompareTo(other As OutlierScore) As Integer Implements IComparable(Of OutlierScore).CompareTo
             If Score > other.Score Then Return 1
 
             If Score < other.Score Then Return -1

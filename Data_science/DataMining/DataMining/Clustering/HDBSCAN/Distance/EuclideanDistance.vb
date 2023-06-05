@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports stdNum = System.Math
 
 Namespace HDBSCAN.Distance
     ''' <summary>
@@ -6,7 +6,7 @@ Namespace HDBSCAN.Distance
     ''' </summary>
     Public Class EuclideanDistance
         Implements IDistanceCalculator(Of Double())
-        Public Function ComputeDistance(ByVal indexOne As Integer, ByVal indexTwo As Integer, ByVal attributesOne As Double(), ByVal attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
+        Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Double(), attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
             Dim distance As Double = 0
             Dim i = 0
 
@@ -14,7 +14,7 @@ Namespace HDBSCAN.Distance
                 distance += (attributesOne(i) - attributesTwo(i)) * (attributesOne(i) - attributesTwo(i))
                 i += 1
             End While
-            Return Math.Sqrt(distance)
+            Return stdNum.Sqrt(distance)
         End Function
     End Class
 End Namespace

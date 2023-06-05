@@ -10,10 +10,10 @@
         ''' <summary>
         ''' Creates a new constraint.
         ''' </summary>
-        ''' <paramname="pointA">The first point involved in the constraint</param>
-        ''' <paramname="pointB">The second point involved in the constraint</param>
-        ''' <paramname="type">The constraint type</param>
-        Public Sub New(ByVal pointA As Integer, ByVal pointB As Integer, ByVal type As HdbscanConstraintType)
+        ''' <param name="pointA">The first point involved in the constraint</param>
+        ''' <param name="pointB">The second point involved in the constraint</param>
+        ''' <param name="type">The constraint type</param>
+        Public Sub New(pointA As Integer, pointB As Integer, type As HdbscanConstraintType)
             _pointA = pointA
             _pointB = pointB
             _constraintType = type

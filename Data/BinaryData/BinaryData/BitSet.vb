@@ -482,7 +482,13 @@ Public Class BitSet
         Return Me
     End Function
 
-    Public Function [Set](index As Integer, v As Boolean) As BitSet
+    ''' <summary>
+    ''' Set specific index bit to TRUE
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    Public Function [Set](index As Integer, Optional v As Boolean = True) As BitSet
         Me(index) = v
         Return Me
     End Function

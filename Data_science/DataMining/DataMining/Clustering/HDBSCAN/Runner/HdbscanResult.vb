@@ -1,5 +1,4 @@
-﻿Imports HdbscanSharp.Hdbscanstar
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
 
 Namespace HDBSCAN.Runner
     Public Class HdbscanResult

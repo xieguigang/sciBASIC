@@ -22,7 +22,7 @@ Namespace HDBSCAN.Hdbscanstar
             Get
                 Return _PropagatedLowestChildDeathLevel
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _PropagatedLowestChildDeathLevel = value
             End Set
         End Property
@@ -32,7 +32,7 @@ Namespace HDBSCAN.Hdbscanstar
             Get
                 Return _Stability
             End Get
-            Friend Set(ByVal value As Double)
+            Friend Set(value As Double)
                 _Stability = value
             End Set
         End Property
@@ -41,7 +41,7 @@ Namespace HDBSCAN.Hdbscanstar
             Get
                 Return _HasChildren
             End Get
-            Friend Set(ByVal value As Boolean)
+            Friend Set(value As Boolean)
                 _HasChildren = value
             End Set
         End Property
@@ -51,11 +51,11 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <summary>
         ''' Creates a new Cluster.
         ''' </summary>
-        ''' <paramname="label">The cluster label, which should be globally unique</param>
-        ''' <paramname="parent">The cluster which split to create this cluster</param>
-        ''' <paramname="birthLevel">The MST edge level at which this cluster first appeared</param>
-        ''' <paramname="numPoints">The initial number of points in this cluster</param>
-        Public Sub New(ByVal label As Integer, ByVal parent As Cluster, ByVal birthLevel As Double, ByVal numPoints As Integer)
+        ''' <param name="label">The cluster label, which should be globally unique</param>
+        ''' <param name="parent">The cluster which split to create this cluster</param>
+        ''' <param name="birthLevel">The MST edge level at which this cluster first appeared</param>
+        ''' <param name="numPoints">The initial number of points in this cluster</param>
+        Public Sub New(label As Integer, parent As Cluster, birthLevel As Double, numPoints As Integer)
             _birthLevel = birthLevel
             _deathLevel = 0
             _numPoints = numPoints
@@ -79,9 +79,9 @@ Namespace HDBSCAN.Hdbscanstar
         ''' update the stability of this cluster and potentially cause cluster death.  If cluster death
         ''' occurs, the number of constraints satisfied by the virtual child cluster will also be calculated.
         ''' </summary>
-        ''' <paramname="numPoints">The number of points to remove from the cluster</param>
-        ''' <paramname="level">The MST edge level at which to remove these points</param>
-        Public Sub DetachPoints(ByVal numPoints As Integer, ByVal level As Double)
+        ''' <param name="numPoints">The number of points to remove from the cluster</param>
+        ''' <param name="level">The MST edge level at which to remove these points</param>
+        Public Sub DetachPoints(numPoints As Integer, level As Double)
             _numPoints -= numPoints
             Stability += numPoints * (1 / level - 1 / _birthLevel)
 
@@ -133,21 +133,21 @@ Namespace HDBSCAN.Hdbscanstar
             End If
         End Sub
 
-        Public Sub AddPointsToVirtualChildCluster(ByVal points As SortedSet(Of Integer))
+        Public Sub AddPointsToVirtualChildCluster(points As SortedSet(Of Integer))
             For Each point In points
                 _virtualChildCluster.Add(point)
             Next
         End Sub
 
-        Public Function VirtualChildClusterConstraintsPoint(ByVal point As Integer) As Boolean
+        Public Function VirtualChildClusterConstraintsPoint(point As Integer) As Boolean
             Return _virtualChildCluster.Contains(point)
         End Function
 
-        Public Sub AddVirtualChildConstraintsSatisfied(ByVal numConstraints As Integer)
+        Public Sub AddVirtualChildConstraintsSatisfied(numConstraints As Integer)
             _propagatedNumConstraintsSatisfied += numConstraints
         End Sub
 
-        Public Sub AddConstraintsSatisfied(ByVal numConstraints As Integer)
+        Public Sub AddConstraintsSatisfied(numConstraints As Integer)
             _numConstraintsSatisfied += numConstraints
         End Sub
 

@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Concurrent
 Imports System.Collections.Generic
-Imports System.Linq
+Imports stdNum = System.Math
 
 Namespace HDBSCAN.Distance
     ''' <summary>
@@ -12,12 +12,11 @@ Namespace HDBSCAN.Distance
         Private ReadOnly _tryGet As Func(Of Integer, (Boolean, Double))
         Private ReadOnly _tryAdd As Action(Of Integer, Double)
 
-        Public Sub New(ByVal Optional useCaching As Boolean = False, ByVal Optional usedWithMultipleThreads As Boolean = False)
-            Dim value As Double = Nothing, value As Double = Nothing
+        Public Sub New(Optional useCaching As Boolean = False, Optional usedWithMultipleThreads As Boolean = False)
             If Not useCaching Then
                 ' No caching. Do nothing.
                 _tryGet = Function(__) (False, 0)
-                _tryAdd = Sub(__, __)
+                _tryAdd = Sub(__, ___)
                           End Sub
             Else
                 If usedWithMultipleThreads Then
@@ -48,7 +47,7 @@ Namespace HDBSCAN.Distance
             Return 1
         End Function
 
-        Public Function ComputeDistance(ByVal indexOne As Integer, ByVal indexTwo As Integer, ByVal attributesOne As Double(), ByVal attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
+        Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Double(), attributesTwo As Double()) As Double Implements IDistanceCalculator(Of Double()).ComputeDistance
             Dim magnitudeOne = CalculateAndCacheMagnitude(indexOne, attributesOne)
             Dim magnitudeTwo = CalculateAndCacheMagnitude(indexTwo, attributesTwo)
 
@@ -62,11 +61,11 @@ Namespace HDBSCAN.Distance
                 i += 1
             End While
 
-            Dim lComputeDistance = Math.Max(0, 1 - dotProduct / Math.Sqrt(magnitudeOne * magnitudeTwo))
+            Dim lComputeDistance = stdNum.Max(0, 1 - dotProduct / stdNum.Sqrt(magnitudeOne * magnitudeTwo))
             Return lComputeDistance
         End Function
 
-        Public Function ComputeDistance(ByVal indexOne As Integer, ByVal indexTwo As Integer, ByVal attributesOne As Dictionary(Of Integer, Integer), ByVal attributesTwo As Dictionary(Of Integer, Integer)) As Double Implements IDistanceCalculator(Of Dictionary(Of Integer, Integer)).ComputeDistance
+        Public Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As Dictionary(Of Integer, Integer), attributesTwo As Dictionary(Of Integer, Integer)) As Double Implements IDistanceCalculator(Of Dictionary(Of Integer, Integer)).ComputeDistance
             Dim magnitudeOne = CalculateAndCacheMagnitude(indexOne, attributesOne)
             Dim magnitudeTwo = CalculateAndCacheMagnitude(indexTwo, attributesTwo)
 
@@ -83,25 +82,25 @@ Namespace HDBSCAN.Distance
                 Next
             End If
 
-            Return Math.Max(0, 1 - dotProduct / Math.Sqrt(magnitudeOne * magnitudeTwo))
+            Return stdNum.Max(0, 1 - dotProduct / stdNum.Sqrt(magnitudeOne * magnitudeTwo))
         End Function
 
-        Private Function CalculateAndCacheMagnitude(ByVal index As Integer, ByVal attributes As Dictionary(Of Integer, Integer)) As Double
+        Private Function CalculateAndCacheMagnitude(index As Integer, attributes As Dictionary(Of Integer, Integer)) As Double
             Dim hasValueValue As (hasValue As Boolean, value As Double) = Nothing
             hasValueValue = _tryGet(index)
-            If hasValue Then Return value
+            If hasValueValue.hasValue Then Return hasValueValue.value
 
-            Dim magnitude = attributes.Keys.Sum(Function(i) Math.Pow(attributes(i), 2))
+            Dim magnitude = attributes.Keys.Sum(Function(i) stdNum.Pow(attributes(i), 2))
             _tryAdd(index, magnitude)
             Return magnitude
         End Function
 
-        Private Function CalculateAndCacheMagnitude(ByVal index As Integer, ByVal attributes As Double()) As Double
+        Private Function CalculateAndCacheMagnitude(index As Integer, attributes As Double()) As Double
             Dim hasValueValue As (hasValue As Boolean, value As Double) = Nothing
             hasValueValue = _tryGet(index)
-            If hasValue Then Return value
+            If hasValueValue.hasValue Then Return hasValueValue.value
 
-            Dim magnitude = attributes.Sum(Function(val) Math.Pow(val, 2))
+            Dim magnitude = attributes.Sum(Function(val) stdNum.Pow(val, 2))
             _tryAdd(index, magnitude)
             Return magnitude
         End Function

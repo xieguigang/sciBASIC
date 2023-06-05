@@ -1,12 +1,15 @@
 ﻿Imports HdbscanSharp.Hdbscanstar
 Imports System
 Imports System.Collections.Generic
-Imports System.Threading.Tasks
+Imports Parallel0 = System.Threading.Tasks.Parallel
 Imports HdbscanSharp.Distance
+Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
+Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
+Imports stdNum = System.Math
 
 Namespace HDBSCAN.Runner
     Public Class HdbscanRunner
-        Public Shared Function Run(Of T)(ByVal parameters As HdbscanParameters(Of T)) As HdbscanResult
+        Public Shared Function Run(Of T)(parameters As HdbscanParameters(Of T)) As HdbscanResult
             Dim numPoints = If(parameters.DataSet?.Length, parameters.Distances.Length)
 
             PrecomputeNormalMatrixDistancesIfApplicable(parameters, numPoints)
@@ -43,7 +46,7 @@ Namespace HDBSCAN.Runner
 }
         End Function
 
-        Private Shared Function DetermineInternalDistanceFunc(Of T)(ByVal parameters As HdbscanParameters(Of T), ByVal sparseDistance As IReadOnlyDictionary(Of Integer, Double), ByVal numPoints As Integer) As Func(Of Integer, Integer, Double)
+        Private Shared Function DetermineInternalDistanceFunc(Of T)(parameters As HdbscanParameters(Of T), sparseDistance As IReadOnlyDictionary(Of Integer, Double), numPoints As Integer) As Func(Of Integer, Integer, Double)
             ' Sparse matrix with caching.
             If sparseDistance IsNot Nothing Then Return Function(a, b)
                                                             If a < b Then Return If(sparseDistance.ContainsKey(a * numPoints + b), sparseDistance(a * numPoints + b), 1)
@@ -58,11 +61,13 @@ Namespace HDBSCAN.Runner
             Return Function(a, b) parameters.DistanceFunction.ComputeDistance(a, b, parameters.DataSet(a), parameters.DataSet(b))
         End Function
 
-        Private Shared Function PrecomputeSparseMatrixDistancesIfApplicable(Of T)(ByVal parameters As HdbscanParameters(Of T), ByVal numPoints As Integer) As Dictionary(Of Integer, Double)
+        Private Shared Function PrecomputeSparseMatrixDistancesIfApplicable(Of T)(parameters As HdbscanParameters(Of T), numPoints As Integer) As Dictionary(Of Integer, Double)
             Dim sparseDistance As Dictionary(Of Integer, Double) = Nothing
             If parameters.Distances Is Nothing AndAlso parameters.CacheDistance AndAlso TypeOf parameters.DataSet Is Dictionary(Of Integer, Integer)() Then
                 sparseDistance = New Dictionary(Of Integer, Double)()
-                If parameters.DistanceFunction.GetType() IsNot GetType(ISparseMatrixSupport) Then Throw New NotSupportedException("The distance function used does not support sparse matrix.")
+                If parameters.DistanceFunction.GetType() IsNot GetType(ISparseMatrixSupport) Then
+                    Throw New NotSupportedException("The distance function used does not support sparse matrix.")
+                End If
 
                 Dim sparseMatrixSupport = CType(parameters.DistanceFunction, ISparseMatrixSupport)
                 Dim mostCommonDistanceValueForSparseMatrix = sparseMatrixSupport.GetMostCommonDistanceValueForSparseMatrix()
@@ -76,32 +81,30 @@ Namespace HDBSCAN.Runner
                         maxDegreeOfParallelism = Environment.ProcessorCount
                     End If
 
-                    Dim [option] = New ParallelOptions With {
-    .MaxDegreeOfParallelism = Math.Max(1, maxDegreeOfParallelism)
-}
+                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = stdNum.Max(1, maxDegreeOfParallelism)}
 
-                    Call Parallel.For(0, [option].MaxDegreeOfParallelism, [option], Sub(indexThread)
-                                                                                        Dim distanceThread = New Dictionary(Of Integer, Double)()
+                    Call Parallel0.For(0, [option].MaxDegreeOfParallelism, [option], Sub(indexThread)
+                                                                                         Dim distanceThread = New Dictionary(Of Integer, Double)()
 
-                                                                                        For index = 0 To size - 1
-                                                                                            If index Mod [option].MaxDegreeOfParallelism <> indexThread Then Continue For
+                                                                                         For index = 0 To size - 1
+                                                                                             If index Mod [option].MaxDegreeOfParallelism <> indexThread Then Continue For
 
-                                                                                            Dim i = index Mod numPoints
-                                                                                            Dim j = index / numPoints
-                                                                                            If i >= j Then Continue For
+                                                                                             Dim i = index Mod numPoints
+                                                                                             Dim j = index / numPoints
+                                                                                             If i >= j Then Continue For
 
-                                                                                            Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
+                                                                                             Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
 
-                                                                                            ' ReSharper disable once CompareOfFloatsByEqualityOperator
-                                                                                            If distance <> mostCommonDistanceValueForSparseMatrix Then distanceThread.Add(i * numPoints + j, distance)
-                                                                                        Next
+                                                                                             ' ReSharper disable once CompareOfFloatsByEqualityOperator
+                                                                                             If distance <> mostCommonDistanceValueForSparseMatrix Then distanceThread.Add(i * numPoints + j, distance)
+                                                                                         Next
 
-                                                                                        SyncLock sparseDistance
-                                                                                            For Each d In distanceThread
-                                                                                                sparseDistance.Add(d.Key, d.Value)
-                                                                                            Next
-                                                                                        End SyncLock
-                                                                                    End Sub)
+                                                                                         SyncLock sparseDistance
+                                                                                             For Each d In distanceThread
+                                                                                                 sparseDistance.Add(d.Key, d.Value)
+                                                                                             Next
+                                                                                         End SyncLock
+                                                                                     End Sub)
                 Else
                     For i = 0 To numPoints - 1
                         For j = 0 To i - 1
@@ -117,7 +120,7 @@ Namespace HDBSCAN.Runner
             Return sparseDistance
         End Function
 
-        Private Shared Sub PrecomputeNormalMatrixDistancesIfApplicable(Of T)(ByVal parameters As HdbscanParameters(Of T), ByVal numPoints As Integer)
+        Private Shared Sub PrecomputeNormalMatrixDistancesIfApplicable(Of T)(parameters As HdbscanParameters(Of T), numPoints As Integer)
             If parameters.Distances Is Nothing AndAlso parameters.CacheDistance AndAlso TypeOf parameters.DataSet Is Double()() Then
                 Dim distances = New Double(numPoints - 1)() {}
                 For i = 0 To distances.Length - 1
@@ -133,19 +136,17 @@ Namespace HDBSCAN.Runner
                         maxDegreeOfParallelism = Environment.ProcessorCount
                     End If
 
-                    Dim [option] = New ParallelOptions With {
-    .MaxDegreeOfParallelism = Math.Max(1, maxDegreeOfParallelism)
-}
+                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = stdNum.Max(1, maxDegreeOfParallelism)}
 
-                    Parallel.For(0, size, [option], Sub(index)
-                                                        Dim i = index Mod numPoints
-                                                        Dim j = index / numPoints
-                                                        If i < j Then
-                                                            Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
-                                                            distances(i)(j) = distance
-                                                            distances(j)(i) = distance
-                                                        End If
-                                                    End Sub)
+                    Parallel0.For(0, size, [option], Sub(index)
+                                                         Dim i = index Mod numPoints
+                                                         Dim j = index / numPoints
+                                                         If i < j Then
+                                                             Dim distance = parameters.DistanceFunction.ComputeDistance(i, j, parameters.DataSet(i), parameters.DataSet(j))
+                                                             distances(i)(j) = distance
+                                                             distances(j)(i) = distance
+                                                         End If
+                                                     End Sub)
                 Else
                     For i = 0 To numPoints - 1
                         For j = 0 To i - 1
