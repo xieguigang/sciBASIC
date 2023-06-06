@@ -129,6 +129,10 @@ Public Class SequenceGraphTransform
             _feature_names = __set_feature_name(alphabets)
         End If
 
+        Return fitInternal(sequence)
+    End Function
+
+    Private Function fitInternal(sequence As String) As Dictionary(Of String, Double)
         Dim size = alphabets.Length
         Dim l = 0
         Dim W0 As NumericMatrix = NumericMatrix.Zero(size, size)
@@ -145,7 +149,10 @@ Public Class SequenceGraphTransform
                 Dim j As Integer = char_j.i
                 Dim v As Char = char_j.value
                 Dim V2 As Integer() = positions(v)
-                Dim C = (From ai In Upos From bj In V2 Where bj > ai Select (i:=ai, j:=bj)).ToArray
+                Dim C = (From ai In Upos
+                         From bj In V2
+                         Where bj > ai
+                         Select (i:=ai, j:=bj)).ToArray
                 Dim cu As Vector = C.Select(Function(ic) ic.i).ToArray
                 Dim cv As Vector = C.Select(Function(ic) ic.j).ToArray
                 Dim pos_i = _alphabets.IndexOf(u)
