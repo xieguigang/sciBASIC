@@ -91,7 +91,7 @@ Public Class SequenceGraphTransform
     End Function
 
     Private Function estimate_alphabets(ParamArray corpus As String()) As Char()
-        If Len(corpus) > 100000 Then
+        If corpus.Length > 100000 Then
             Throw New Exception("Error: Too many sequences. Pass the alphabet list as an input. Exiting.")
         End If
 
@@ -124,12 +124,12 @@ Public Class SequenceGraphTransform
     ''' sgt matrix or vector (depending on Flatten==False or True)
     ''' </returns>
     Public Function fit(sequence As String) As Dictionary(Of String, Double)
-        If Len(alphabets) = 0 Then
+        If alphabets.IsNullOrEmpty Then
             _alphabets = estimate_alphabets(sequence)
             _feature_names = __set_feature_name(alphabets)
         End If
 
-        Dim size = Len(alphabets)
+        Dim size = alphabets.Length
         Dim l = 0
         Dim W0 As NumericMatrix = NumericMatrix.Zero(size, size)
         Dim Wk As NumericMatrix = NumericMatrix.Zero(size, size)
@@ -145,13 +145,13 @@ Public Class SequenceGraphTransform
                 Dim j As Integer = char_j.i
                 Dim v As Char = char_j.value
                 Dim V2 As Integer() = positions(v)
-                Dim C = Upos.Zip(V2, Function(a, b) (i:=a, j:=b)).Where(Function(t) t.j > t.i).ToArray
+                Dim C = (From ai In Upos From bj In V2 Where bj > ai Select (i:=ai, j:=bj)).ToArray
                 Dim cu As Vector = C.Select(Function(ic) ic.i).ToArray
                 Dim cv As Vector = C.Select(Function(ic) ic.j).ToArray
                 Dim pos_i = _alphabets.IndexOf(u)
                 Dim pos_j = _alphabets.IndexOf(v)
 
-                W0(pos_i, pos_j) = Len(C)
+                W0(pos_i, pos_j) = C.Length
                 Wk(pos_i, pos_j) = (-kappa * (cu - cv).Abs).Exp().Sum
             Next
 
