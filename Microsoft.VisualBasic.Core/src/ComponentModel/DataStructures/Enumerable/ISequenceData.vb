@@ -5,6 +5,9 @@
     ''' time signal, time sequence anaysis
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' A general abstract model apply for the SGT algorithm analysis
+    ''' </remarks>
     Public Interface ISequenceData(Of T, List As IEnumerable(Of T))
 
         ''' <summary>
