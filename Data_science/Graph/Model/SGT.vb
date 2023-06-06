@@ -11,6 +11,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 ''' the short- and long-term sequence features and embeds them in a finite-dimensional 
 ''' feature space. The long and short term patterns embedded in SGT can be tuned 
 ''' without any increase in the computation.
+''' 
+''' > https://github.com/cran2367/sgt/blob/25bf28097788fbbf9727abad91ec6e59873947cc/python/sgt-package/sgt/sgt.py
 ''' </summary>
 ''' <remarks>
 ''' Compute embedding of a single or a collection of discrete item
