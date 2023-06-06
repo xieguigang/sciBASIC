@@ -107,13 +107,17 @@ Namespace Emit.Delegates
         Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
             Static cache As New Dictionary(Of Type, Dictionary(Of Type, Boolean))
 
-            If Not cache.ContainsKey(source) Then
-                Call cache.Add(source, New Dictionary(Of Type, Boolean))
-            End If
+            SyncLock cache
+                If Not cache.ContainsKey(source) Then
+                    Call cache.Add(source, New Dictionary(Of Type, Boolean))
+                End If
+            End SyncLock
 
-            If Not cache(source).ContainsKey(interfaceType) Then
-                Call cache(source).Add(interfaceType, ImplementInterfaceAssertInternal(source, interfaceType))
-            End If
+            SyncLock cache(source)
+                If Not cache(source).ContainsKey(interfaceType) Then
+                    Call cache(source).Add(interfaceType, ImplementInterfaceAssertInternal(source, interfaceType))
+                End If
+            End SyncLock
 
             Return cache(source)(interfaceType)
         End Function

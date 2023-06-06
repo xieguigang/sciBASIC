@@ -295,6 +295,12 @@ Public Module PathExtensions
             Call $"Directory {dir} is not valid on your file system!".Warning
             Return New String() {}
         Else
+            For i As Integer = 0 To keyword.Length - 1
+                If keyword(i) = "*" Then
+                    keyword(i) = "*.*"
+                End If
+            Next
+
             Return FileIO.FileSystem.GetFiles(dir, top, keyword Or allKinds)
         End If
     End Function
