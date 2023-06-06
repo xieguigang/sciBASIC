@@ -276,6 +276,37 @@ Namespace LinearAlgebra.Matrix
 
 #Region "Public Properties"
 
+        Default Public Overloads Property Item(flags As Boolean()()) As GeneralMatrix
+            Get
+                Dim val As Double()() = New Double(buffer.Length - 1)() {}
+
+                For i As Integer = 0 To val.Length - 1
+                    Dim copy As Double() = val(i)
+                    Dim bits As Boolean() = flags(i)
+
+                    For idx As Integer = 0 To copy.Length - 1
+                        If bits(idx) Then
+                            copy(idx) = buffer(i)(idx)
+                        End If
+                    Next
+                Next
+
+                Return New NumericMatrix(val)
+            End Get
+            Set(value As GeneralMatrix)
+                For i As Integer = 0 To flags.Length - 1
+                    Dim bits As Boolean() = flags(i)
+                    Dim ref As Double() = buffer(i)
+
+                    For idx As Integer = 0 To bits.Length - 1
+                        If bits(idx) Then
+                            ref(idx) = value(i, idx)
+                        End If
+                    Next
+                Next
+            End Set
+        End Property
+
         ''' <summary>Make a one-dimensional column packed copy of the internal array.</summary>
         ''' <returns>     Matrix elements packed in a one-dimensional array by columns.
         ''' </returns>
@@ -336,6 +367,7 @@ Namespace LinearAlgebra.Matrix
                 Return New Vector(v)
             End Get
         End Property
+
 #End Region
 
 #Region "Public Methods"
@@ -410,7 +442,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Shadows Property Value(i%, j%) As Double Implements GeneralMatrix.X
+        Default Public Overloads Property Item(i%, j%) As Double Implements GeneralMatrix.X
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(i)(j)
@@ -429,7 +461,7 @@ Namespace LinearAlgebra.Matrix
         ''' </remarks>
         ''' <param name="indices"></param>
         ''' <returns></returns>
-        Default Public Shadows ReadOnly Property Value(indices As IEnumerable(Of Integer)) As GeneralMatrix Implements GeneralMatrix.X
+        Default Public Overloads ReadOnly Property Item(indices As IEnumerable(Of Integer)) As GeneralMatrix Implements GeneralMatrix.X
             Get
                 Dim index%() = indices.ToArray
                 Dim subMAT = buffer _
@@ -440,7 +472,7 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Public Shadows Property Value(i As Integer, Optional byRow As Boolean = True) As Vector Implements GeneralMatrix.X
+        Default Public Overloads Property Item(i As Integer, Optional byRow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
                 If byRow Then
                     Return buffer(i).AsVector
@@ -459,7 +491,7 @@ Namespace LinearAlgebra.Matrix
             End Set
         End Property
 
-        Default Public Shadows ReadOnly Property Value(rowIdx As BooleanVector) As GeneralMatrix Implements GeneralMatrix.X
+        Default Public Overloads ReadOnly Property Item(rowIdx As BooleanVector) As GeneralMatrix Implements GeneralMatrix.X
             Get
                 Dim subMat As New List(Of Double())
 
@@ -1290,6 +1322,27 @@ Namespace LinearAlgebra.Matrix
             Return m2.Multiply(v)
         End Operator
 
+        Public Shared Operator =(w As NumericMatrix, xi As Double) As Boolean()()
+            Dim flags As New List(Of Boolean())
+
+            For Each row As Double() In w.buffer
+                flags.Add(row.Select(Function(ci) ci = xi).ToArray)
+            Next
+
+            Return flags.ToArray
+        End Operator
+
+        Public Shared Operator <>(w As NumericMatrix, xi As Double) As Boolean()()
+            Dim eq = w = xi
+
+            For Each row As Boolean() In eq
+                For i As Integer = 0 To row.Length - 1
+                    row(i) = Not row(i)
+                Next
+            Next
+
+            Return eq
+        End Operator
 #End Region
 
         ''' <summary>LU Decomposition</summary>

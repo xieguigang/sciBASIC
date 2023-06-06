@@ -95,6 +95,21 @@ Namespace LinearAlgebra
             Return New Vector(From n As Double In x Select sys.Exp(n))
         End Function
 
+        ''' <summary>
+        ''' log computes logarithms, by default natural logarithms, log10 computes common (i.e., base 10) logarithms, 
+        ''' and log2 computes binary (i.e., base 2) logarithms. 
+        ''' The general form log(x, base) computes logarithms with base base.
+        ''' log1p(x) computes log(1+x) accurately also for |x| &lt;&lt; 1.
+        ''' exp computes the exponential function.
+        ''' expm1(x) computes exp(x) - 1 accurately also for |x| &lt;&lt; 1.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Exp() As Vector
+            Return New Vector(From n As Double In Array Select sys.Exp(n))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(Optional base# = sys.E) As Vector
             Return Vector.Log(Me, base)
