@@ -61,11 +61,7 @@ Public Class SequenceGraphTransform
     ''' lengthsensitive = false is similar to length-normalization.</param>
     Sub New(Optional alphabets As Char() = Nothing,
             Optional kappa As Double = 1,
-            Optional lengthsensitive As Boolean = False,
-            Optional flatten As Boolean = True,
-            Optional mode As String = "default",
-            Optional processors As Integer? = Nothing,
-            Optional lazy As Boolean = False)
+            Optional lengthsensitive As Boolean = False)
 
         Me.alphabets = alphabets
 
