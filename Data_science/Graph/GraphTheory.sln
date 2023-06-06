@@ -11,6 +11,8 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "..\..\Microsoft.Vis
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Math.NET5", "..\Mathematica\Math\Math\Math.NET5.vbproj", "{EFD070B3-C2FD-4501-9A04-45D67AF28DD2}"
 EndProject
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframeUtils-netcore5", "..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj", "{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,42 @@ Global
 		{EFD070B3-C2FD-4501-9A04-45D67AF28DD2}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{EFD070B3-C2FD-4501-9A04-45D67AF28DD2}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{EFD070B3-C2FD-4501-9A04-45D67AF28DD2}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Debug|x64.ActiveCfg = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Debug|x64.Build.0 = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit|x64.ActiveCfg = mzkit|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.mzkit|x64.Build.0 = mzkit|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.NPSearch|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.NPSearch|Any CPU.Build.0 = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.NPSearch|x64.ActiveCfg = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.NPSearch|x64.Build.0 = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.PlantMAT|Any CPU.Build.0 = Debug|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.PlantMAT|x64.ActiveCfg = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.PlantMAT|x64.Build.0 = Debug|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Release|x64.ActiveCfg = Release|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Release|x64.Build.0 = Release|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +186,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C425465A-C39A-4846-BCFC-2E128D18BB46} = {D7C18300-8951-4165-AF81-89902FD16EE9}
 		{EFD070B3-C2FD-4501-9A04-45D67AF28DD2} = {D7C18300-8951-4165-AF81-89902FD16EE9}
+		{4DED57D7-2D56-459A-9EEF-60A5C7F57E70} = {D7C18300-8951-4165-AF81-89902FD16EE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2700C5CE-33F3-412F-A75C-1A3AA272DC4C}

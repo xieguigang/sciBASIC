@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::69064966b617b465e361a175d9b41715, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1518
-    '    Code Lines: 810
-    ' Comment Lines: 515
-    '   Blank Lines: 193
-    '     File Size: 53.15 KB
+' Summaries:
 
 
-    '     Class NumericMatrix
-    ' 
-    '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
-    ' 
-    '         Constructor: (+8 Overloads) Sub New
-    ' 
-    '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
-    '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
-    '                   chol, Clone, Condition, Copy, Create
-    '                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
-    '                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
-    '                   Norm2, NormF, NormInf, Number, One
-    '                   Power, QRD, Rank, Resize, RowApply
-    '                   RowVectors, Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals
-    '                   SVD, ToString, Trace, Transpose, Zero
-    ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
-    ' 
-    '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+2 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1518
+'    Code Lines: 810
+' Comment Lines: 515
+'   Blank Lines: 193
+'     File Size: 53.15 KB
+
+
+'     Class NumericMatrix
+' 
+'         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension, RowPackedCopy
+' 
+'         Constructor: (+8 Overloads) Sub New
+' 
+'         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
+'                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
+'                   chol, Clone, Condition, Copy, Create
+'                   Determinant, Eigen, (+4 Overloads) GetMatrix, Identity, Inverse
+'                   Log, LUD, (+3 Overloads) Multiply, MultiplyEquals, Norm1
+'                   Norm2, NormF, NormInf, Number, One
+'                   Power, QRD, Rank, Resize, RowApply
+'                   RowVectors, Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals
+'                   SVD, ToString, Trace, Transpose, Zero
+' 
+'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+' 
+'         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+2 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -276,7 +276,7 @@ Namespace LinearAlgebra.Matrix
 
 #Region "Public Properties"
 
-        Default Public Overloads Property Item(flags As Boolean()()) As GeneralMatrix
+        Default Public Overloads Property Item(flags As Boolean()()) As [Variant](Of GeneralMatrix, Double)
             Get
                 Dim val As Double()() = New Double(buffer.Length - 1)() {}
 
@@ -291,19 +291,36 @@ Namespace LinearAlgebra.Matrix
                     Next
                 Next
 
-                Return New NumericMatrix(val)
+                Return New [Variant](Of GeneralMatrix, Double)(New NumericMatrix(val))
             End Get
-            Set(value As GeneralMatrix)
-                For i As Integer = 0 To flags.Length - 1
-                    Dim bits As Boolean() = flags(i)
-                    Dim ref As Double() = buffer(i)
+            Set
+                If Value Like GetType(Double) Then
+                    Dim dbl As Double = Value
 
-                    For idx As Integer = 0 To bits.Length - 1
-                        If bits(idx) Then
-                            ref(idx) = value(i, idx)
-                        End If
+                    For i As Integer = 0 To flags.Length - 1
+                        Dim bits As Boolean() = flags(i)
+                        Dim ref As Double() = buffer(i)
+
+                        For idx As Integer = 0 To bits.Length - 1
+                            If bits(idx) Then
+                                ref(idx) = dbl
+                            End If
+                        Next
                     Next
-                Next
+                Else
+                    Dim x As GeneralMatrix = Value
+
+                    For i As Integer = 0 To flags.Length - 1
+                        Dim bits As Boolean() = flags(i)
+                        Dim ref As Double() = buffer(i)
+
+                        For idx As Integer = 0 To bits.Length - 1
+                            If bits(idx) Then
+                                ref(idx) = x(i, idx)
+                            End If
+                        Next
+                    Next
+                End If
             End Set
         End Property
 

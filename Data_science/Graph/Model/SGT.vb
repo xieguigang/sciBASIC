@@ -34,11 +34,29 @@ Public Class SequenceGraphTransform
 
     Dim kappa As Double
     Dim lengthsensitive As Boolean
-    Dim flatten As Boolean
-    Dim mode As String = "default"
-    Dim processors As Integer
-    Dim lazy As Boolean
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="alphabets">Optional, except if mode is Spark.
+    ''' The set of alphabets that make up all
+    ''' the sequences in the dataset. If not passed, the
+    ''' alphabet set is automatically computed as the
+    ''' unique set of elements that make all the sequences.
+    ''' A list or 1d-array of the set of elements that make up the
+    ''' sequences. For example, np.array(["A", "B", "C"].
+    ''' If mode is 'spark', the alphabets are necessary.
+    ''' </param>
+    ''' <param name="kappa">
+    ''' Tuning parameter, kappa > 0, to change the extraction of
+    ''' long-term dependency. Higher the value the lesser
+    ''' the long-term dependency captured in the embedding.
+    ''' Typical values for kappa are 1, 5, 10.</param>
+    ''' <param name="lengthsensitive">Default False. This is set to true if the embedding of
+    ''' should have the information of the length of the sequence.
+    ''' If set to false then the embedding of two sequences with
+    ''' similar pattern but different lengths will be the same.
+    ''' lengthsensitive = false is similar to length-normalization.</param>
     Sub New(Optional alphabets As Char() = Nothing,
             Optional kappa As Double = 1,
             Optional lengthsensitive As Boolean = False,
@@ -55,14 +73,6 @@ Public Class SequenceGraphTransform
 
         Me.kappa = kappa
         Me.lengthsensitive = lengthsensitive
-        Me.flatten = flatten
-        Me.mode = mode
-        Me.processors = processors
-        Me.lazy = lazy
-
-        If processors Is Nothing Then
-            Me.processors = App.CPUCoreNumbers - 1
-        End If
     End Sub
 
     ''' <summary>
@@ -74,22 +84,12 @@ Public Class SequenceGraphTransform
     ''' <returns>
     ''' Return list Of tuples [(value, position)]
     ''' </returns>
-    Private Function getpositions(sequence As String, alphabets As Char()) As Dictionary(Of Char, Integer())
+    Private Shared Function get_positions(sequence As String, alphabets As Char()) As Dictionary(Of Char, Integer())
         Return alphabets _
             .ToDictionary(Function(c) c,
                           Function(c)
                               Return New Vector(Of Char)(sequence).Which(Function(ci) ci = c)
                           End Function)
-    End Function
-
-    ''' <summary>
-    ''' Flatten one level of nesting
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="listOfLists"></param>
-    ''' <returns></returns>
-    Private Function __flatten(Of T)(listOfLists As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
-        Return listOfLists.IteratesALL
     End Function
 
     Private Function estimate_alphabets(ParamArray corpus As String()) As Char()
@@ -125,7 +125,7 @@ Public Class SequenceGraphTransform
     ''' <returns>
     ''' sgt matrix or vector (depending on Flatten==False or True)
     ''' </returns>
-    Public Function fit(sequence As String)
+    Public Function fit(sequence As String) As Dictionary(Of String, Double)
         If Len(alphabets) = 0 Then
             _alphabets = estimate_alphabets(sequence)
             _feature_names = __set_feature_name(alphabets)
@@ -135,7 +135,7 @@ Public Class SequenceGraphTransform
         Dim l = 0
         Dim W0 As NumericMatrix = NumericMatrix.Zero(size, size)
         Dim Wk As NumericMatrix = NumericMatrix.Zero(size, size)
-        Dim positions = getpositions(sequence, alphabets)
+        Dim positions = get_positions(sequence, alphabets)
         Dim alphabets_in_sequence = sequence.Distinct.ToArray
 
         For Each char_i In alphabets_in_sequence.SeqIterator
@@ -164,6 +164,17 @@ Public Class SequenceGraphTransform
             W0 /= l
         End If
 
+        ' avoid divide by 0
         W0(W0 = 0.0) = 10000000.0
+
+        Dim sgt = (Wk / W0) ^ (1 / kappa)
+        Dim sgtv As Double() = sgt.ArrayPack.IteratesALL.ToArray
+        Dim map As New Dictionary(Of String, Double)
+
+        For i As Integer = 0 To feature_names.Length - 1
+            Call map.Add(feature_names(i), sgtv(i))
+        Next
+
+        Return map
     End Function
 End Class
