@@ -77,7 +77,9 @@ Public Class GraphWriter
                     define:=parent.writers(objVal.Key)
                 )
             Else
+#If DEBUG Then
                 Call $"missing {xml.name}::{objVal.Key} from schema {parent.ToString}".Warning
+#End If
             End If
         Next
 

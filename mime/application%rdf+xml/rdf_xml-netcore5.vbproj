@@ -9,6 +9,9 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>xieguigang&lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <Title>Resource Description Framework</Title>
+    <Description>Supports for application/rdf+xml MIME type</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
