@@ -1231,7 +1231,7 @@ Namespace XLSX.Writer
             Public Property Italic As Boolean
 
             ''' <summary>
-            ''' Gets or sets the underline style of the font. If set to <acref="UnderlineValue.none">none</a> no underline will be applied (default)
+            ''' Gets or sets the underline style of the font. If set to <a cref="UnderlineValue.none">none</a> no underline will be applied (default)
             ''' </summary>
             <Append>
             Public Property Underline As UnderlineValue = UnderlineValue.none
@@ -2097,7 +2097,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="other">Other object to compare with this object.</param>
         ''' <returns>True if both objects are equal, otherwise false.</returns>
-        Public Function Equals(other As AbstractStyle) As Boolean
+        Public Overloads Function Equals(other As AbstractStyle) As Boolean
             Return GetHashCode() = other.GetHashCode()
         End Function
 

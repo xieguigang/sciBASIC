@@ -17,7 +17,7 @@ Namespace XLSX.Writer
         Public StartAddress As Address
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref=""/> class
+        ''' Initializes a new instance of the <see cref="Range"/> class
         ''' </summary>
         ''' <param name="start">Start address of the range.</param>
         ''' <param name="end">End address of the range.</param>
@@ -32,7 +32,7 @@ Namespace XLSX.Writer
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref=""/> class
+        ''' Initializes a new instance of the <see cref="Range"/> class
         ''' </summary>
         ''' <param name="range">Address range (e.g. 'A1:B12').</param>
         Public Sub New(range As String)

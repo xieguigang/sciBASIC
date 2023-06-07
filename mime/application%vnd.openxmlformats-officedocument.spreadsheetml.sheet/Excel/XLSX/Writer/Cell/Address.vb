@@ -21,7 +21,7 @@
         Public Type As AddressType
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref=""/> class
+        ''' Initializes a new instance of the <see cref="Address"/> class
         ''' </summary>
         ''' <param name="column">Column number (zero based).</param>
         ''' <param name="row">Row number (zero based).</param>
@@ -33,7 +33,7 @@
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref=""/> class
+        ''' Initializes a new instance of the <see cref="Address"/> class
         ''' </summary>
         ''' <param name="address">Address string (e.g. 'A1:B12').</param>
         ''' <param name="type">Optional referencing type of the address.</param>
