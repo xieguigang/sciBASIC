@@ -249,7 +249,7 @@ Namespace XLSX.Writer
             If Not Equals(color, Nothing) AndAlso color.Length = 6 Then
                 color = "FF" & color
             End If
-            Fill.ValidateColor(color, True)
+            Style.Fill.ValidateColor(color, True)
             mruColors.Add(color.ToUpper())
         End Sub
 
