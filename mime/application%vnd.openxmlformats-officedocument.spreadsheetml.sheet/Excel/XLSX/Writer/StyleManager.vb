@@ -5,11 +5,9 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
-Imports PicoXLSX.Style
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Style
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class representing a style manager to maintain all styles and its components of a workbook
@@ -46,7 +44,7 @@ Namespace PicoXLSX
         Private styles As List(Of AbstractStyle)
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="StyleManager"/> class
+        ''' Initializes a new instance of the <see cref="StyleManager"/> class
         ''' </summary>
         Public Sub New()
             borders = New List(Of AbstractStyle)()
@@ -60,8 +58,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a component by its hash
         ''' </summary>
-        ''' <paramname="list">List to check.</param>
-        ''' <paramname="hash">Hash of the component.</param>
+        ''' <param name="list">List to check.</param>
+        ''' <param name="hash">Hash of the component.</param>
         ''' <returns>Determined component. If not found, null will be returned.</returns>
         Private Function GetComponentByHash(ByRef list As List(Of AbstractStyle), ByVal hash As Integer) As AbstractStyle
             Dim len = list.Count
@@ -76,7 +74,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a border by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the border.</param>
+        ''' <param name="hash">Hash of the border.</param>
         ''' <returns>Determined border.</returns>
         Public Function GetBorderByHash(ByVal hash As Integer) As Border
             Dim component = GetComponentByHash(borders, hash)
@@ -105,7 +103,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a cellXf by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the cellXf.</param>
+        ''' <param name="hash">Hash of the cellXf.</param>
         ''' <returns>Determined cellXf.</returns>
         Public Function GetCellXfByHash(ByVal hash As Integer) As CellXf
             Dim component = GetComponentByHash(cellXfs, hash)
@@ -134,7 +132,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a fill by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the fill.</param>
+        ''' <param name="hash">Hash of the fill.</param>
         ''' <returns>Determined fill.</returns>
         Public Function GetFillByHash(ByVal hash As Integer) As Fill
             Dim component = GetComponentByHash(fills, hash)
@@ -163,7 +161,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a font by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the font.</param>
+        ''' <param name="hash">Hash of the font.</param>
         ''' <returns>Determined font.</returns>
         Public Function GetFontByHash(ByVal hash As Integer) As Font
             Dim component = GetComponentByHash(fonts, hash)
@@ -192,7 +190,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a numberFormat by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the numberFormat.</param>
+        ''' <param name="hash">Hash of the numberFormat.</param>
         ''' <returns>Determined numberFormat.</returns>
         Public Function GetNumberFormatByHash(ByVal hash As Integer) As NumberFormat
             Dim component = GetComponentByHash(numberFormats, hash)
@@ -221,7 +219,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a style by its name
         ''' </summary>
-        ''' <paramname="name">Name of the style.</param>
+        ''' <param name="name">Name of the style.</param>
         ''' <returns>Determined style.</returns>
         Public Function GetStyleByName(ByVal name As String) As Style
             Dim len = styles.Count
@@ -236,7 +234,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a style by its hash
         ''' </summary>
-        ''' <paramname="hash">Hash of the style.</param>
+        ''' <param name="hash">Hash of the style.</param>
         ''' <returns>Determined style.</returns>
         Public Function GetStyleByHash(ByVal hash As Integer) As Style
             Dim component = GetComponentByHash(styles, hash)
@@ -265,7 +263,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style component to the manager
         ''' </summary>
-        ''' <paramname="style">Style to add.</param>
+        ''' <param name="style">Style to add.</param>
         ''' <returns>Added or determined style in the manager.</returns>
         Public Function AddStyle(ByVal style As Style) As Style
             Dim hash = AddStyleComponent(style)
@@ -275,8 +273,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style component to the manager with an ID
         ''' </summary>
-        ''' <paramname="style">Component to add.</param>
-        ''' <paramname="id">Id of the component.</param>
+        ''' <param name="style">Component to add.</param>
+        ''' <param name="id">Id of the component.</param>
         ''' <returns>Hash of the added or determined component.</returns>
         Private Function AddStyleComponent(ByVal style As AbstractStyle, ByVal id As Integer?) As Integer
             style.InternalID = id
@@ -286,7 +284,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style component to the manager
         ''' </summary>
-        ''' <paramname="style">Component to add.</param>
+        ''' <param name="style">Component to add.</param>
         ''' <returns>Hash of the added or determined component.</returns>
         Private Function AddStyleComponent(ByVal style As AbstractStyle) As Integer
             Dim hash As Integer = style.GetHashCode()
@@ -346,7 +344,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes a style and all its components from the style manager
         ''' </summary>
-        ''' <paramname="styleName">Name of the style to remove.</param>
+        ''' <param name="styleName">Name of the style to remove.</param>
         Public Sub RemoveStyle(ByVal styleName As String)
             Dim match = False
             Dim len = styles.Count
@@ -368,7 +366,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to gather all styles of the cells in all worksheets
         ''' </summary>
-        ''' <paramname="workbook">Workbook to get all cells with possible style definitions.</param>
+        ''' <param name="workbook">Workbook to get all cells with possible style definitions.</param>
         ''' <returns>StyleManager object, to be processed by the save methods.</returns>
         Friend Shared Function GetManagedStyles(ByVal workbook As Workbook) As StyleManager
             Dim styleManager As StyleManager = New StyleManager()
@@ -392,7 +390,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to reorganize / reorder a list of style components
         ''' </summary>
-        ''' <paramname="list">List to reorganize as reference.</param>
+        ''' <param name="list">List to reorganize as reference.</param>
         Private Sub Reorganize(ByRef list As List(Of AbstractStyle))
             Dim len = list.Count
             list.Sort()
@@ -453,7 +451,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Checks whether a style component in the style manager is used by a style
         ''' </summary>
-        ''' <paramname="component">Component to check.</param>
+        ''' <param name="component">Component to check.</param>
         ''' <returns>If true, the component is in use.</returns>
         Private Function IsUsedByStyle(ByVal component As AbstractStyle) As Boolean
             Dim s As Style

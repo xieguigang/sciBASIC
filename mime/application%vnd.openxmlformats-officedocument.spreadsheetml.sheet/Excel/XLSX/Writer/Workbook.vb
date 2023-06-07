@@ -5,14 +5,10 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
 Imports System.IO
-Imports System.Linq
-Imports System.Threading.Tasks
-Imports PicoXLSX.Style
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Style
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' PicoXLSX is a library to generate XLSX files in an easy and native way
@@ -27,7 +23,7 @@ Namespace PicoXLSX
 
         ''' <summary>
         ''' Gets or sets the WorkbookProtectionPasswordHash
-        ''' Hash of the protected workbook, originated from <seecref="WorkbookProtectionPassword"/>
+        ''' Hash of the protected workbook, originated from <see cref="WorkbookProtectionPassword"/>
         ''' </summary>
         Private _WorkbookProtectionPasswordHash As String
         ''' <summary>
@@ -112,7 +108,7 @@ Namespace PicoXLSX
 
         ''' <summary>
         ''' Gets a value indicating whether LockStructureIfProtected
-        ''' Gets whether the structure are locked if workbook is protected. See also <seecref="SetWorkbookProtection"/>
+        ''' Gets whether the structure are locked if workbook is protected. See also <see cref="SetWorkbookProtection"/>
         ''' </summary>
         Public ReadOnly Property LockStructureIfProtected As Boolean
             Get
@@ -122,7 +118,7 @@ Namespace PicoXLSX
 
         ''' <summary>
         ''' Gets a value indicating whether LockWindowsIfProtected
-        ''' Gets whether the windows are locked if workbook is protected. See also <seecref="SetWorkbookProtection"/>
+        ''' Gets whether the windows are locked if workbook is protected. See also <see cref="SetWorkbookProtection"/>
         ''' </summary>
         Public ReadOnly Property LockWindowsIfProtected As Boolean
             Get
@@ -159,7 +155,7 @@ Namespace PicoXLSX
         Public Property UseWorkbookProtection As Boolean
 
         ''' <summary>
-        ''' Gets the password used for workbook protection. See also <seecref="SetWorkbookProtection"/>
+        ''' Gets the password used for workbook protection. See also <see cref="SetWorkbookProtection"/>
         ''' </summary>
         Public ReadOnly Property WorkbookProtectionPassword As String
             Get
@@ -192,16 +188,16 @@ Namespace PicoXLSX
         Public Property Hidden As Boolean
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Workbook"/> class
+        ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
         Public Sub New()
             Init()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Workbook"/> class
+        ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
-        ''' <paramname="createWorkSheet">If true, a default worksheet with the name 'Sheet1' will be crated and set as current worksheet.</param>
+        ''' <param name="createWorkSheet">If true, a default worksheet with the name 'Sheet1' will be crated and set as current worksheet.</param>
         Public Sub New(ByVal createWorkSheet As Boolean)
             Init()
             If createWorkSheet Then
@@ -210,19 +206,19 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Workbook"/> class
+        ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
-        ''' <paramname="sheetName">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="sheetName">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(ByVal sheetName As String)
             Init()
             AddWorksheet(sheetName, True)
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Workbook"/> class
+        ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
-        ''' <paramname="filename">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
-        ''' <paramname="sheetName">Name of the first worksheet. The name will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="filename">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="sheetName">Name of the first worksheet. The name will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(ByVal filename As String, ByVal sheetName As String)
             Init()
             filenameField = filename
@@ -230,11 +226,11 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Workbook"/> class
+        ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
-        ''' <paramname="filename">Filename of the workbook.</param>
-        ''' <paramname="sheetName">Name of the first worksheet.</param>
-        ''' <paramname="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="filename">Filename of the workbook.</param>
+        ''' <param name="sheetName">Name of the first worksheet.</param>
+        ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(ByVal filename As String, ByVal sheetName As String, ByVal sanitizeSheetName As Boolean)
             Init()
             filenameField = filename
@@ -248,7 +244,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a color value (HEX; 6-digit RGB or 8-digit ARGB) to the MRU list
         ''' </summary>
-        ''' <paramname="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
+        ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
         Public Sub AddMruColor(ByVal color As String)
             If Not Equals(color, Nothing) AndAlso color.Length = 6 Then
                 color = "FF" & color
@@ -275,7 +271,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style to the style repository. This method is deprecated since it has no direct impact on the generated file
         ''' </summary>
-        ''' <paramname="style">Style to add.</param>
+        ''' <param name="style">Style to add.</param>
         ''' <returns>Returns the managed style of the style repository.</returns>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Function AddStyle(ByVal style As Style) As Style
@@ -285,8 +281,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style component to a style. This method is deprecated since it has no direct impact on the generated file
         ''' </summary>
-        ''' <paramname="baseStyle">Style to append a component.</param>
-        ''' <paramname="newComponent">Component to add to the baseStyle.</param>
+        ''' <param name="baseStyle">Style to append a component.</param>
+        ''' <param name="newComponent">Component to add to the baseStyle.</param>
         ''' <returns>Returns the modified style of the style repository.</returns>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Function AddStyleComponent(ByVal baseStyle As Style, ByVal newComponent As AbstractStyle) As Style
@@ -308,7 +304,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
-        ''' <paramname="name">Name of the new worksheet.</param>
+        ''' <param name="name">Name of the new worksheet.</param>
         Public Sub AddWorksheet(ByVal name As String)
             For Each item In worksheetsField
                 If Equals(item.SheetName, name) Then
@@ -325,8 +321,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adding a new Worksheet with a sanitizing option. The new worksheet will be defined as current worksheet
         ''' </summary>
-        ''' <paramname="name">Name of the new worksheet.</param>
-        ''' <paramname="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="name">Name of the new worksheet.</param>
+        ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub AddWorksheet(ByVal name As String, ByVal sanitizeSheetName As Boolean)
             If sanitizeSheetName Then
                 Dim sanitized = Worksheet.SanitizeWorksheetName(name, Me)
@@ -339,7 +335,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
-        ''' <paramname="worksheet">Prepared worksheet object.</param>
+        ''' <param name="worksheet">Prepared worksheet object.</param>
         Public Sub AddWorksheet(ByVal worksheet As Worksheet)
             AddWorksheet(worksheet, False)
         End Sub
@@ -347,8 +343,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
-        ''' <paramname="worksheet">Prepared worksheet object.</param>
-        ''' <paramname="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="worksheet">Prepared worksheet object.</param>
+        ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub AddWorksheet(ByVal worksheet As Worksheet, ByVal sanitizeSheetName As Boolean)
             If sanitizeSheetName Then
                 Dim name = Worksheet.SanitizeWorksheetName(worksheet.SheetName, Me)
@@ -372,7 +368,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the passed style from the style sheet. This method is deprecated since it has no direct impact on the generated file
         ''' </summary>
-        ''' <paramname="style">Style to remove.</param>
+        ''' <param name="style">Style to remove.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Sub RemoveStyle(ByVal style As Style)
             RemoveStyle(style, False)
@@ -381,7 +377,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the defined style from the style sheet of the workbook. This method is deprecated since it has no direct impact on the generated file
         ''' </summary>
-        ''' <paramname="styleName">Name of the style to be removed.</param>
+        ''' <param name="styleName">Name of the style to be removed.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Sub RemoveStyle(ByVal styleName As String)
             RemoveStyle(styleName, False)
@@ -390,8 +386,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the defined style from the style sheet of the workbook
         ''' </summary>
-        ''' <paramname="style">Style to remove.</param>
-        ''' <paramname="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
+        ''' <param name="style">Style to remove.</param>
+        ''' <param name="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Sub RemoveStyle(ByVal style As Style, ByVal onlyIfUnused As Boolean)
             If style Is Nothing Then
@@ -403,8 +399,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the defined style from the style sheet of the workbook. This method is deprecated since it has no direct impact on the generated file
         ''' </summary>
-        ''' <paramname="styleName">Name of the style to be removed.</param>
-        ''' <paramname="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
+        ''' <param name="styleName">Name of the style to be removed.</param>
+        ''' <param name="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
         Public Sub RemoveStyle(ByVal styleName As String, ByVal onlyIfUnused As Boolean)
             If String.IsNullOrEmpty(styleName) Then
@@ -416,7 +412,7 @@ Namespace PicoXLSX
         ''' Removes the defined worksheet based on its name. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' Removes the defined worksheet based on its name. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
+        ''' <param name="name">Name of the worksheet.</param>
         Public Sub RemoveWorksheet(ByVal name As String)
             Dim worksheetToRemove = worksheetsField.FindLast(Function(w) Equals(w.SheetName, name))
             If worksheetToRemove Is Nothing Then
@@ -431,7 +427,7 @@ Namespace PicoXLSX
         ''' Removes the defined worksheet based on its index. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' Removes the defined worksheet based on its index. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' </summary>
-        ''' <paramname="index">Index within the worksheets list.</param>
+        ''' <param name="index">Index within the worksheets list.</param>
         Public Sub RemoveWorksheet(ByVal index As Integer)
             If index < 0 OrElse index >= worksheetsField.Count Then
                 Throw New WorksheetException("The worksheet index " & index.ToString() & " is out of range")
@@ -470,7 +466,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Saves the workbook with the defined name
         ''' </summary>
-        ''' <paramname="fileName">filename of the saved workbook.</param>
+        ''' <param name="fileName">filename of the saved workbook.</param>
         Public Sub SaveAs(ByVal fileName As String)
             Dim backup = fileName
             filenameField = fileName
@@ -482,7 +478,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Saves the workbook with the defined name asynchronous
         ''' </summary>
-        ''' <paramname="fileName">filename of the saved workbook.</param>
+        ''' <param name="fileName">filename of the saved workbook.</param>
         ''' <returns>Task object (void).</returns>
         Public Async Function SaveAsAsync(ByVal fileName As String) As Task
             Dim backup = fileName
@@ -495,8 +491,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Save the workbook to a writable stream
         ''' </summary>
-        ''' <paramname="stream">Writable stream.</param>
-        ''' <paramname="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
+        ''' <param name="stream">Writable stream.</param>
+        ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         Public Sub SaveAsStream(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False)
             Dim l As LowLevel = New LowLevel(Me)
             l.SaveAsStream(stream, leaveOpen)
@@ -505,8 +501,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Save the workbook to a writable stream asynchronous
         ''' </summary>
-        ''' <paramname="stream">>Writable stream.</param>
-        ''' <paramname="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
+        ''' <param name="stream">>Writable stream.</param>
+        ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         ''' <returns>Task object (void).</returns>
         Public Async Function SaveAsStreamAsync(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False) As Task
             Dim l As LowLevel = New LowLevel(Me)
@@ -516,7 +512,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the current worksheet
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
+        ''' <param name="name">Name of the worksheet.</param>
         ''' <returns>Returns the current worksheet.</returns>
         Public Function SetCurrentWorksheet(ByVal name As String) As Worksheet
             currentWorksheetField = worksheetsField.FirstOrDefault(Function(w) Equals(w.SheetName, name))
@@ -530,7 +526,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the current worksheet
         ''' </summary>
-        ''' <paramname="worksheetIndex">Zero-based worksheet index.</param>
+        ''' <param name="worksheetIndex">Zero-based worksheet index.</param>
         ''' <returns>Returns the current worksheet.</returns>
         Public Function SetCurrentWorksheet(ByVal worksheetIndex As Integer) As Worksheet
             If worksheetIndex < 0 OrElse worksheetIndex > worksheetsField.Count - 1 Then
@@ -544,7 +540,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the current worksheet
         ''' </summary>
-        ''' <paramname="worksheet">Worksheet object (must be in the collection of worksheets).</param>
+        ''' <param name="worksheet">Worksheet object (must be in the collection of worksheets).</param>
         Public Sub SetCurrentWorksheet(ByVal worksheet As Worksheet)
             Dim index = worksheetsField.IndexOf(worksheet)
             If index < 0 Then
@@ -557,7 +553,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
+        ''' <param name="name">Name of the worksheet.</param>
         Public Sub SetSelectedWorksheet(ByVal name As String)
             selectedWorksheetField = worksheetsField.FindIndex(Function(w) Equals(w.SheetName, name))
             If selectedWorksheetField < 0 Then
@@ -569,7 +565,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
-        ''' <paramname="worksheetIndex">Zero-based worksheet index.</param>
+        ''' <param name="worksheetIndex">Zero-based worksheet index.</param>
         Public Sub SetSelectedWorksheet(ByVal worksheetIndex As Integer)
             If worksheetIndex < 0 OrElse worksheetIndex > worksheetsField.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
@@ -581,7 +577,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
-        ''' <paramname="worksheet">Worksheet object (must be in the collection of worksheets).</param>
+        ''' <param name="worksheet">Worksheet object (must be in the collection of worksheets).</param>
         Public Sub SetSelectedWorksheet(ByVal worksheet As Worksheet)
             selectedWorksheetField = worksheetsField.IndexOf(worksheet)
             If selectedWorksheetField < 0 Then
@@ -593,7 +589,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a worksheet from this workbook by name
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
+        ''' <param name="name">Name of the worksheet.</param>
         ''' <returns>Worksheet with the passed name.</returns>
         Public Function GetWorksheet(ByVal name As String) As Worksheet
             Dim index = worksheetsField.FindIndex(Function(w) Equals(w.SheetName, name))
@@ -606,7 +602,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a worksheet from this workbook by index
         ''' </summary>
-        ''' <paramname="index">Index of the worksheet.</param>
+        ''' <param name="index">Index of the worksheet.</param>
         ''' <returns>Worksheet with the passed index.</returns>
         Public Function GetWorksheet(ByVal index As Integer) As Worksheet
             If index < 0 OrElse index > worksheetsField.Count - 1 Then
@@ -618,10 +614,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets or removes the workbook protection. If protectWindows and protectStructure are both false, the workbook will not be protected
         ''' </summary>
-        ''' <paramname="state">If true, the workbook will be protected, otherwise not.</param>
-        ''' <paramname="protectWindows">If true, the windows will be locked if the workbook is protected.</param>
-        ''' <paramname="protectStructure">If true, the structure will be locked if the workbook is protected.</param>
-        ''' <paramname="password">Optional password. If null or empty, no password will be set in case of protection.</param>
+        ''' <param name="state">If true, the workbook will be protected, otherwise not.</param>
+        ''' <param name="protectWindows">If true, the windows will be locked if the workbook is protected.</param>
+        ''' <param name="protectStructure">If true, the structure will be locked if the workbook is protected.</param>
+        ''' <param name="password">Optional password. If null or empty, no password will be set in case of protection.</param>
         Public Sub SetWorkbookProtection(ByVal state As Boolean, ByVal protectWindows As Boolean, ByVal protectStructure As Boolean, ByVal password As String)
             lockWindowsIfProtectedField = protectWindows
             lockStructureIfProtectedField = protectStructure
@@ -637,9 +633,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of the current workbook by its name
         ''' </summary>
-        ''' <paramname="sourceWorksheetName">Name of the worksheet to copy, originated in this workbook.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheetName">Name of the worksheet to copy, originated in this workbook.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Function CopyWorksheetIntoThis(ByVal sourceWorksheetName As String, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetName)
@@ -649,9 +645,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of the current workbook by its index
         ''' </summary>
-        ''' <paramname="sourceWorksheetIndex">Index of the worksheet to copy, originated in this workbook.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheetIndex">Index of the worksheet to copy, originated in this workbook.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Function CopyWorksheetIntoThis(ByVal sourceWorksheetIndex As Integer, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetIndex)
@@ -661,9 +657,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of any workbook into the current workbook
         ''' </summary>
-        ''' <paramname="sourceWorksheet">Worksheet to copy.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheet">Worksheet to copy.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Function CopyWorksheetIntoThis(ByVal sourceWorksheet As Worksheet, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, Me, sanitizeSheetName)
@@ -672,10 +668,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of the current workbook by its name into another workbook
         ''' </summary>
-        ''' <paramname="sourceWorksheetName">Name of the worksheet to copy, originated in this workbook.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="targetWorkbook">Workbook to copy the worksheet into.</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheetName">Name of the worksheet to copy, originated in this workbook.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Function CopyWorksheetTo(ByVal sourceWorksheetName As String, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetName)
@@ -685,10 +681,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of the current workbook by its index into another workbook
         ''' </summary>
-        ''' <paramname="sourceWorksheetIndex">Index of the worksheet to copy, originated in this workbook.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="targetWorkbook">Workbook to copy the worksheet into.</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheetIndex">Index of the worksheet to copy, originated in this workbook.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Function CopyWorksheetTo(ByVal sourceWorksheetIndex As Integer, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetIndex)
@@ -698,10 +694,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Copies a worksheet of any workbook into the another workbook
         ''' </summary>
-        ''' <paramname="sourceWorksheet">Worksheet to copy.</param>
-        ''' <paramname="newWorksheetName">Name of the new worksheet (copy).</param>
-        ''' <paramname="targetWorkbook">Workbook to copy the worksheet into.</param>
-        ''' <paramname="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
+        ''' <param name="sourceWorksheet">Worksheet to copy.</param>
+        ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
+        ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
+        ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
         Public Shared Function CopyWorksheetTo(ByVal sourceWorksheet As Worksheet, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
             If targetWorkbook Is Nothing Then
@@ -742,8 +738,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the worksheet at the defined index and relocates current and selected worksheet references
         ''' </summary>
-        ''' <paramname="index">Index within the worksheets list.</param>
-        ''' <paramname="resetCurrentWorksheet">If true, the current worksheet will be relocated to the last worksheet in the list.</param>
+        ''' <param name="index">Index within the worksheets list.</param>
+        ''' <param name="resetCurrentWorksheet">If true, the current worksheet will be relocated to the last worksheet in the list.</param>
         Private Sub RemoveWorksheet(ByVal index As Integer, ByVal resetCurrentWorksheet As Boolean)
             worksheetsField.RemoveAt(index)
             If worksheetsField.Count > 0 Then
@@ -798,9 +794,9 @@ Namespace PicoXLSX
             Private ReadOnly workbookReference As Workbook
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Shortener"/> class
+            ''' Initializes a new instance of the <see cref="Shortener"/> class
             ''' </summary>
-            ''' <paramname="reference">Workbook reference.</param>
+            ''' <param name="reference">Workbook reference.</param>
             Public Sub New(ByVal reference As Workbook)
                 workbookReference = reference
                 currentWorksheet = reference.CurrentWorksheet
@@ -809,7 +805,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets the worksheet accessed by the shortener
             ''' </summary>
-            ''' <paramname="worksheet">Current worksheet.</param>
+            ''' <param name="worksheet">Current worksheet.</param>
             Public Sub SetCurrentWorksheet(ByVal worksheet As Worksheet)
                 workbookReference.SetCurrentWorksheet(worksheet)
                 currentWorksheet = worksheet
@@ -818,7 +814,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets the worksheet accessed by the shortener, invoked by the workbook
             ''' </summary>
-            ''' <paramname="worksheet">Current worksheet.</param>
+            ''' <param name="worksheet">Current worksheet.</param>
             Friend Sub SetCurrentWorksheetInternal(ByVal worksheet As Worksheet)
                 currentWorksheet = worksheet
             End Sub
@@ -826,7 +822,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets a value into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
-            ''' <paramname="pValue">Value to set.</param>
+            ''' <param name="pValue">Value to set.</param>
             Public Sub Value(ByVal pValue As Object)
                 NullCheck()
                 currentWorksheet.AddNextCell(pValue)
@@ -835,8 +831,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets a value with style into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
-            ''' <paramname="pValue">Value to set.</param>
-            ''' <paramname="style">Style to apply.</param>
+            ''' <param name="pValue">Value to set.</param>
+            ''' <param name="style">Style to apply.</param>
             Public Sub Value(ByVal pValue As Object, ByVal style As Style)
                 NullCheck()
                 currentWorksheet.AddNextCell(pValue, style)
@@ -845,7 +841,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets a formula into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
-            ''' <paramname="pFormula">Formula to set.</param>
+            ''' <param name="pFormula">Formula to set.</param>
             Public Sub Formula(ByVal pFormula As String)
                 NullCheck()
                 currentWorksheet.AddNextCellFormula(pFormula)
@@ -854,8 +850,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets a formula with style into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
-            ''' <paramname="pFormula">Formula to set.</param>
-            ''' <paramname="style">Style to apply.</param>
+            ''' <param name="pFormula">Formula to set.</param>
+            ''' <param name="style">Style to apply.</param>
             Public Sub Formula(ByVal pFormula As String, ByVal style As Style)
                 NullCheck()
                 currentWorksheet.AddNextCellFormula(pFormula, style)
@@ -872,8 +868,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Moves the cursor the number of defined rows down
             ''' </summary>
-            ''' <paramname="numberOfRows">Number of rows to move.</param>
-            ''' <paramname="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
+            ''' <param name="numberOfRows">Number of rows to move.</param>
+            ''' <param name="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
             Public Sub Down(ByVal numberOfRows As Integer, ByVal Optional keepColumnPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextRow(numberOfRows, keepColumnPosition)
@@ -890,8 +886,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Moves the cursor the number of defined rows up
             ''' </summary>
-            ''' <paramname="numberOfRows">Number of rows to move.</param>
-            ''' <paramname="keepColumnosition">If true, the column position is preserved, otherwise set to 0.</param>
+            ''' <param name="numberOfRows">Number of rows to move.</param>
+            ''' <param name="keepColumnosition">If true, the column position is preserved, otherwise set to 0.</param>
             Public Sub Up(ByVal numberOfRows As Integer, ByVal Optional keepColumnosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextRow(-1 * numberOfRows, keepColumnosition)
@@ -908,8 +904,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Moves the cursor the number of defined columns to the right
             ''' </summary>
-            ''' <paramname="numberOfColumns">Number of columns to move.</param>
-            ''' <paramname="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
+            ''' <param name="numberOfColumns">Number of columns to move.</param>
+            ''' <param name="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
             Public Sub Right(ByVal numberOfColumns As Integer, ByVal Optional keepRowPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextColumn(numberOfColumns, keepRowPosition)
@@ -926,8 +922,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Moves the cursor the number of defined columns to the left
             ''' </summary>
-            ''' <paramname="numberOfColumns">Number of columns to move.</param>
-            ''' <paramname="keepRowRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
+            ''' <param name="numberOfColumns">Number of columns to move.</param>
+            ''' <param name="keepRowRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
             Public Sub Left(ByVal numberOfColumns As Integer, ByVal Optional keepRowRowPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextColumn(-1 * numberOfColumns, keepRowRowPosition)

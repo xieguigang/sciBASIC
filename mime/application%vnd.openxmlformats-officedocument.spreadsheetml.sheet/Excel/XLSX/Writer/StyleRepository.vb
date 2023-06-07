@@ -7,7 +7,7 @@
 
 Imports System.Collections.Generic
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class to manage all styles at runtime, before writing XLSX files. The main purpose is deduplication and decoupling of styles from workbooks at runtime
@@ -48,7 +48,7 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' Prevents a default instance of the <seecref="StyleRepository"/> class from being created
+        ''' Prevents a default instance of the <see cref="StyleRepository"/> class from being created
         ''' </summary>
         Private Sub New()
             stylesField = New Dictionary(Of Integer, Style)()
@@ -57,7 +57,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a style to the repository and returns the actual reference
         ''' </summary>
-        ''' <paramname="style">Style to add.</param>
+        ''' <param name="style">Style to add.</param>
         ''' <returns>Reference from the repository. If the style to add already existed, the existing object is returned, otherwise the newly added one.</returns>
         Public Function AddStyle(ByVal style As Style) As Style
             SyncLock lockObject

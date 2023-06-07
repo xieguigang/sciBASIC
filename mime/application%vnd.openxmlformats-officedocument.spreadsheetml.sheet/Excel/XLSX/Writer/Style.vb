@@ -13,7 +13,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Runtime.InteropServices
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class representing a Style with sub classes within a style sheet. An instance of this class is only a container for the different sub-classes. These sub-classes contain the actual styling information
@@ -73,7 +73,7 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Style"/> class
+        ''' Initializes a new instance of the <see cref="Style"/> class
         ''' </summary>
         Public Sub New()
             CurrentBorder = New Border()
@@ -85,9 +85,9 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Style"/> class
+        ''' Initializes a new instance of the <see cref="Style"/> class
         ''' </summary>
-        ''' <paramname="name">Name of the style.</param>
+        ''' <param name="name">Name of the style.</param>
         Public Sub New(ByVal name As String)
             CurrentBorder = New Border()
             CurrentCellXf = New CellXf()
@@ -98,11 +98,11 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Style"/> class
+        ''' Initializes a new instance of the <see cref="Style"/> class
         ''' </summary>
-        ''' <paramname="name">Name of the style.</param>
-        ''' <paramname="forcedOrder">Number of the style for sorting purpose. The style will be placed at this position (internal use only).</param>
-        ''' <paramname="internalStyle">If true, the style is marked as internal.</param>
+        ''' <param name="name">Name of the style.</param>
+        ''' <param name="forcedOrder">Number of the style for sorting purpose. The style will be placed at this position (internal use only).</param>
+        ''' <param name="internalStyle">If true, the style is marked as internal.</param>
         Public Sub New(ByVal name As String, ByVal forcedOrder As Integer, ByVal internalStyle As Boolean)
             CurrentBorder = New Border()
             CurrentCellXf = New CellXf()
@@ -117,7 +117,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Appends the specified style parts to the current one. The parts can be instances of sub-classes like Border or CellXf or a Style instance. Only the altered properties of the specified style or style part that differs from a new / untouched style instance will be appended. This enables method chaining
         ''' </summary>
-        ''' <paramname="styleToAppend">The style to append or a sub-class of Style.</param>
+        ''' <param name="styleToAppend">The style to append or a sub-class of Style.</param>
         ''' <returns>Current style with appended style parts.</returns>
         Public Function Append(ByVal styleToAppend As AbstractStyle) As Style
             If styleToAppend Is Nothing Then
@@ -163,7 +163,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Returns a hash code for this instance
         ''' </summary>
-        ''' <returns>The <seecref="Integer"/>.</returns>
+        ''' <returns>The <see cref="Integer"/>.</returns>
         Public Overrides Function GetHashCode() As Integer
             If CurrentBorder Is Nothing OrElse CurrentCellXf Is Nothing OrElse CurrentFill Is Nothing OrElse CurrentFont Is Nothing OrElse CurrentNumberFormat Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The hash of the style could not be created because one or more components are missing as references")
@@ -393,7 +393,7 @@ Namespace PicoXLSX
             Public Property TopStyle As StyleValue
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Border"/> class
+            ''' Initializes a new instance of the <see cref="Border"/> class
             ''' </summary>
             Public Sub New()
                 BottomColor = DEFAULT_COLOR
@@ -413,7 +413,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a hash code for this instance
             ''' </summary>
-            ''' <returns>The <seecref="Integer"/>.</returns>
+            ''' <returns>The <see cref="Integer"/>.</returns>
             Public Overrides Function GetHashCode() As Integer
                 Dim hashCode As Integer = -153001865
                 hashCode = hashCode * -1521134295 + EqualityComparer(Of String).Default.GetHashCode(BottomColor)
@@ -531,7 +531,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Gets the border style name from the enum
             ''' </summary>
-            ''' <paramname="style">Enum to process.</param>
+            ''' <param name="style">Enum to process.</param>
             ''' <returns>The valid value of the border style as String.</returns>
             Public Shared Function GetStyleName(ByVal style As StyleValue) As String
                 Dim output = ""
@@ -758,7 +758,7 @@ Namespace PicoXLSX
             End Property
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="CellXf"/> class
+            ''' Initializes a new instance of the <see cref="CellXf"/> class
             ''' </summary>
             Public Sub New()
                 HorizontalAlign = DEFAULT_HORIZONTAL_ALIGNMENT
@@ -813,7 +813,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a hash code for this instance
             ''' </summary>
-            ''' <returns>The <seecref="Integer"/>.</returns>
+            ''' <returns>The <see cref="Integer"/>.</returns>
             Public Overrides Function GetHashCode() As Integer
                 Dim hashCode = 626307906
                 hashCode = hashCode * -1521134295 + ForceApplyAlignment.GetHashCode()
@@ -962,7 +962,7 @@ Namespace PicoXLSX
             Public Property PatternFill As PatternValue
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Fill"/> class
+            ''' Initializes a new instance of the <see cref="Fill"/> class
             ''' </summary>
             Public Sub New()
                 IndexedColor = DEFAULT_INDEXED_COLOR
@@ -972,10 +972,10 @@ Namespace PicoXLSX
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Fill"/> class
+            ''' Initializes a new instance of the <see cref="Fill"/> class
             ''' </summary>
-            ''' <paramname="foreground">Foreground color of the fill.</param>
-            ''' <paramname="background">Background color of the fill.</param>
+            ''' <param name="foreground">Foreground color of the fill.</param>
+            ''' <param name="background">Background color of the fill.</param>
             Public Sub New(ByVal foreground As String, ByVal background As String)
                 BackgroundColor = background
                 ForegroundColor = foreground
@@ -984,10 +984,10 @@ Namespace PicoXLSX
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Fill"/> class
+            ''' Initializes a new instance of the <see cref="Fill"/> class
             ''' </summary>
-            ''' <paramname="value">Color value.</param>
-            ''' <paramname="filltype">Fill type (fill or pattern).</param>
+            ''' <param name="value">Color value.</param>
+            ''' <param name="filltype">Fill type (fill or pattern).</param>
             Public Sub New(ByVal value As String, ByVal filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
@@ -1032,7 +1032,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a hash code for this instance
             ''' </summary>
-            ''' <returns>The <seecref="Integer"/>.</returns>
+            ''' <returns>The <see cref="Integer"/>.</returns>
             Public Overrides Function GetHashCode() As Integer
                 Dim hashCode = -1564173520
                 hashCode = hashCode * -1521134295 + EqualityComparer(Of String).Default.GetHashCode(BackgroundColor)
@@ -1053,8 +1053,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Sets the color and the depending fill type
             ''' </summary>
-            ''' <paramname="value">color value.</param>
-            ''' <paramname="filltype">fill type (fill or pattern).</param>
+            ''' <param name="value">color value.</param>
+            ''' <param name="filltype">fill type (fill or pattern).</param>
             Public Sub SetColor(ByVal value As String, ByVal filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
@@ -1069,7 +1069,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Gets the pattern name from the enum
             ''' </summary>
-            ''' <paramname="pattern">Enum to process.</param>
+            ''' <param name="pattern">Enum to process.</param>
             ''' <returns>The valid value of the pattern as String.</returns>
             Public Shared Function GetPatternName(ByVal pattern As PatternValue) As String
                 Dim output As String
@@ -1097,9 +1097,9 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Validates the passed string, whether it is a valid RGB value that can be used for Fills or Fonts
             ''' </summary>
-            ''' <paramname="hexCode">Hex string to check.</param>
-            ''' <paramname="useAlpha">If true, two additional characters (total 8) are expected as alpha value.</param>
-            ''' <paramname="allowEmpty">Optional parameter that allows null or empty as valid values.</param>
+            ''' <param name="hexCode">Hex string to check.</param>
+            ''' <param name="useAlpha">If true, two additional characters (total 8) are expected as alpha value.</param>
+            ''' <param name="allowEmpty">Optional parameter that allows null or empty as valid values.</param>
             Public Shared Sub ValidateColor(ByVal hexCode As String, ByVal useAlpha As Boolean, ByVal Optional allowEmpty As Boolean = False)
                 If String.IsNullOrEmpty(hexCode) Then
                     If allowEmpty Then
@@ -1131,17 +1131,17 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Maximum possible font size
             ''' </summary>
-            Public Shared ReadOnly MIN_FONT_SIZE As Single = 1F
+            Public Shared ReadOnly MIN_FONT_SIZE As Single = 1.0F
 
             ''' <summary>
             ''' Minimum possible font size
             ''' </summary>
-            Public Shared ReadOnly MAX_FONT_SIZE As Single = 409F
+            Public Shared ReadOnly MAX_FONT_SIZE As Single = 409.0F
 
             ''' <summary>
             ''' Default font size
             ''' </summary>
-            Public Shared ReadOnly DEFAULT_FONT_SIZE As Single = 11F
+            Public Shared ReadOnly DEFAULT_FONT_SIZE As Single = 11.0F
 
             ''' <summary>
             ''' Default font family
@@ -1350,7 +1350,7 @@ Namespace PicoXLSX
             Public Property VerticalAlign As VerticalAlignValue
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Font"/> class
+            ''' Initializes a new instance of the <see cref="Font"/> class
             ''' </summary>
             Public Sub New()
                 sizeField = DEFAULT_FONT_SIZE
@@ -1411,7 +1411,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a hash code for this instance
             ''' </summary>
-            ''' <returns>The <seecref="Integer"/>.</returns>
+            ''' <returns>The <see cref="Integer"/>.</returns>
             Public Overrides Function GetHashCode() As Integer
                 Dim hashCode = -924704582
                 hashCode = hashCode * -1521134295 + sizeField.GetHashCode()
@@ -1614,7 +1614,7 @@ Namespace PicoXLSX
             Public Property Number As FormatNumber
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="NumberFormat"/> class
+            ''' Initializes a new instance of the <see cref="NumberFormat"/> class
             ''' </summary>
             Public Sub New()
                 Number = DEFAULT_NUMBER
@@ -1625,7 +1625,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Determines whether a defined style format number represents a date (or date and time)
             ''' </summary>
-            ''' <paramname="number">Format number to check.</param>
+            ''' <param name="number">Format number to check.</param>
             ''' <returns>True if the format represents a date, otherwise false.</returns>
             Public Shared Function IsDateFormat(ByVal number As FormatNumber) As Boolean
                 Select Case number
@@ -1639,7 +1639,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Determines whether a defined style format number represents a time)
             ''' </summary>
-            ''' <paramname="number">Format number to check.</param>
+            ''' <param name="number">Format number to check.</param>
             ''' <returns>True if the format represents a time, otherwise false.</returns>
             Public Shared Function IsTimeFormat(ByVal number As FormatNumber) As Boolean
                 Select Case number
@@ -1653,8 +1653,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Tries to parse registered format numbers. If the parsing fails, it is assumed that the number is a custom format number (164 or higher) and 'custom' is returned
             ''' </summary>
-            ''' <paramname="number">Raw number to parse.</param>
-            ''' <paramname="formatNumber">Out parameter with the parsed format enum value. If parsing failed, 'custom' will be returned.</param>
+            ''' <param name="number">Raw number to parse.</param>
+            ''' <param name="formatNumber">Out parameter with the parsed format enum value. If parsing failed, 'custom' will be returned.</param>
             ''' <returns>Format range. Will return 'invalid' if out of any range (e.g. negative value).</returns>
             Public Shared Function TryParseFormatNumber(ByVal number As Integer, <Out> ByRef formatNumber As FormatNumber) As FormatRange
 
@@ -1713,7 +1713,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a hash code for this instance
             ''' </summary>
-            ''' <returns>The <seecref="Integer"/>.</returns>
+            ''' <returns>The <see cref="Integer"/>.</returns>
             Public Overrides Function GetHashCode() As Integer
                 Dim hashCode = 495605284
                 hashCode = hashCode * -1521134295 + EqualityComparer(Of String).Default.GetHashCode(CustomFormatCode)
@@ -1884,7 +1884,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Method to maintain the styles and to create singleton instances
             ''' </summary>
-            ''' <paramname="value">Enum value to maintain.</param>
+            ''' <param name="value">Enum value to maintain.</param>
             ''' <returns>The style according to the passed enum value.</returns>
             Private Shared Function GetStyle(ByVal value As StyleEnum) As Style
                 Dim s As Style = Nothing
@@ -1982,7 +1982,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Gets a style to colorize the text of a cell
             ''' </summary>
-            ''' <paramname="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
+            ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
             ''' <returns>Style with font color definition.</returns>
             Public Shared Function ColorizedText(ByVal rgb As String) As Style
                 Fill.ValidateColor(rgb, False)
@@ -1994,7 +1994,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Gets a style to colorize the background of a cell
             ''' </summary>
-            ''' <paramname="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
+            ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
             ''' <returns>Style with background color definition.</returns>
             Public Shared Function ColorizedBackground(ByVal rgb As String) As Style
                 Fill.ValidateColor(rgb, False)
@@ -2006,10 +2006,10 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Gets a style with a user defined font
             ''' </summary>
-            ''' <paramname="fontName">Name of the font.</param>
-            ''' <paramname="fontSize">Size of the font in points (optional; default 11).</param>
-            ''' <paramname="isBold">If true, the font will be bold (optional; default false).</param>
-            ''' <paramname="isItalic">If true, the font will be italic (optional; default false).</param>
+            ''' <param name="fontName">Name of the font.</param>
+            ''' <param name="fontSize">Size of the font in points (optional; default 11).</param>
+            ''' <param name="isBold">If true, the font will be bold (optional; default false).</param>
+            ''' <param name="isItalic">If true, the font will be italic (optional; default false).</param>
             ''' <returns>Style with font definition.</returns>
             Public Shared Function Font(ByVal fontName As String, ByVal Optional fontSize As Integer = 11, ByVal Optional isBold As Boolean = False, ByVal Optional isItalic As Boolean = False) As Style
                 Dim s As Style = New Style()
@@ -2043,8 +2043,8 @@ Namespace PicoXLSX
         ''' Internal method to copy altered properties from a source object. The decision whether a property is copied is dependent on a untouched reference object
         ''' </summary>
         ''' <typeparamname="T">Style or sub-class of Style that extends AbstractStyle.</typeparam>
-        ''' <paramname="source">Source object with properties to copy.</param>
-        ''' <paramname="reference">Reference object to decide whether the properties from the source objects are altered or not.</param>
+        ''' <param name="source">Source object with properties to copy.</param>
+        ''' <param name="reference">Reference object to decide whether the properties from the source objects are altered or not.</param>
         Friend Sub CopyProperties(Of T As AbstractStyle)(ByVal source As T, ByVal reference As T)
             If source Is Nothing OrElse [GetType]() IsNot source.GetType() AndAlso [GetType]() IsNot reference.GetType() Then
                 Throw New StyleException("CopyPropertyException", "The objects of the source, target and reference for style appending are not of the same type")
@@ -2053,15 +2053,15 @@ Namespace PicoXLSX
             Dim sourceInfo As PropertyInfo
             Dim referenceInfo As PropertyInfo
             Dim attributes As IEnumerable(Of AppendAttribute)
-            For Each info In infos
-                attributes = CType(info.GetCustomAttributes(GetType(AppendAttribute)), IEnumerable(Of AppendAttribute))
+            For Each Info In infos
+                attributes = CType(Info.GetCustomAttributes(GetType(AppendAttribute)), IEnumerable(Of AppendAttribute))
                 If attributes.Any() AndAlso Not HandleProperties(attributes) Then
                     Continue For
                 End If
-                sourceInfo = source.GetType().GetProperty(info.Name)
-                referenceInfo = reference.GetType().GetProperty(info.Name)
+                sourceInfo = source.GetType().GetProperty(Info.Name)
+                referenceInfo = reference.GetType().GetProperty(Info.Name)
                 If Not sourceInfo.GetValue(source).Equals(referenceInfo.GetValue(reference)) Then
-                    info.SetValue(Me, sourceInfo.GetValue(source))
+                    Info.SetValue(Me, sourceInfo.GetValue(source))
                 End If
             Next
         End Sub
@@ -2069,7 +2069,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to check whether a property is considered or skipped
         ''' </summary>
-        ''' <paramname="attributes">Collection of attributes to check.</param>
+        ''' <param name="attributes">Collection of attributes to check.</param>
         ''' <returns>Returns false as soon a property of the collection is marked as ignored or nested.</returns>
         Private Shared Function HandleProperties(ByVal attributes As IEnumerable(Of AppendAttribute)) As Boolean
             For Each attribute In attributes
@@ -2083,7 +2083,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to compare two objects for sorting purpose
         ''' </summary>
-        ''' <paramname="other">Other object to compare with this object.</param>
+        ''' <param name="other">Other object to compare with this object.</param>
         ''' <returns>-1 if the other object is bigger. 0 if both objects are equal. 1 if the other object is smaller.</returns>
         Public Function CompareTo(ByVal other As AbstractStyle) As Integer Implements IComparable(Of AbstractStyle).CompareTo
             If Not InternalID.HasValue Then
@@ -2098,7 +2098,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to compare two objects for sorting purpose
         ''' </summary>
-        ''' <paramname="other">Other object to compare with this object.</param>
+        ''' <param name="other">Other object to compare with this object.</param>
         ''' <returns>True if both objects are equal, otherwise false.</returns>
         Public Function Equals(ByVal other As AbstractStyle) As Boolean
             Return GetHashCode() = other.GetHashCode()
@@ -2107,10 +2107,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Append a JSON property for debug purpose (used in the ToString methods) to the passed string builder
         ''' </summary>
-        ''' <paramname="sb">String builder.</param>
-        ''' <paramname="name">Property name.</param>
-        ''' <paramname="value">Property value.</param>
-        ''' <paramname="terminate">If true, no comma and newline will be appended.</param>
+        ''' <param name="sb">String builder.</param>
+        ''' <param name="name">Property name.</param>
+        ''' <param name="value">Property value.</param>
+        ''' <param name="terminate">If true, no comma and newline will be appended.</param>
         Friend Shared Sub AddPropertyAsJson(ByVal sb As StringBuilder, ByVal name As String, ByVal value As Object, ByVal Optional terminate As Boolean = False)
             sb.Append("""").Append(name).Append(""": ")
             If value Is Nothing Then
@@ -2141,7 +2141,7 @@ Namespace PicoXLSX
             Public Property NestedProperty As Boolean
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="AppendAttribute"/> class
+            ''' Initializes a new instance of the <see cref="AppendAttribute"/> class
             ''' </summary>
             Public Sub New()
                 Ignore = False

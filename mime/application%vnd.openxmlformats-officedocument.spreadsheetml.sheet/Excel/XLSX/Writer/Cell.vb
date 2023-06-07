@@ -5,14 +5,12 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Globalization
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Runtime.InteropServices
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class representing a cell of a worksheet
@@ -29,7 +27,7 @@ Namespace PicoXLSX
             NUMBER
             ''' <summary>Type for dates (Note: Dates before 1900-01-01 and after 9999-12-31 are not allowed)</summary>
             [DATE]
-            ''' <summary>Type for times (Note: Internally handled as OAdate, represented by <seecref="TimeSpan"/>)</summary>
+            ''' <summary>Type for times (Note: Internally handled as OAdate, represented by <see cref="TimeSpan"/>)</summary>
             TIME
             ''' <summary>Type for boolean</summary>
             BOOL
@@ -178,17 +176,17 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Cell"/> class
+        ''' Initializes a new instance of the <see cref="Cell"/> class
         ''' </summary>
         Public Sub New()
             DataType = CellType.DEFAULT
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Cell"/> class
+        ''' Initializes a new instance of the <see cref="Cell"/> class
         ''' </summary>
-        ''' <paramname="value">Value of the cell.</param>
-        ''' <paramname="type">Type of the cell.</param>
+        ''' <param name="value">Value of the cell.</param>
+        ''' <param name="type">Type of the cell.</param>
         Public Sub New(ByVal value As Object, ByVal type As CellType)
             If type = CellType.EMPTY Then
                 valueField = Nothing
@@ -202,11 +200,11 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Cell"/> class
+        ''' Initializes a new instance of the <see cref="Cell"/> class
         ''' </summary>
-        ''' <paramname="value">Value of the cell.</param>
-        ''' <paramname="type">Type of the cell.</param>
-        ''' <paramname="address">Address of the cell.</param>
+        ''' <param name="value">Value of the cell.</param>
+        ''' <param name="type">Type of the cell.</param>
+        ''' <param name="address">Address of the cell.</param>
         Public Sub New(ByVal value As Object, ByVal type As CellType, ByVal address As String)
             If type = CellType.EMPTY Then
                 valueField = Nothing
@@ -221,12 +219,12 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Cell"/> class
+        ''' Initializes a new instance of the <see cref="Cell"/> class
         ''' </summary>
-        ''' <paramname="value">Value of the cell.</param>
-        ''' <paramname="type">Type of the cell.</param>
-        ''' <paramname="column">Column number of the cell (zero-based).</param>
-        ''' <paramname="row">Row number of the cell (zero-based).</param>
+        ''' <param name="value">Value of the cell.</param>
+        ''' <param name="type">Type of the cell.</param>
+        ''' <param name="column">Column number of the cell (zero-based).</param>
+        ''' <param name="row">Row number of the cell (zero-based).</param>
         Public Sub New(ByVal value As Object, ByVal type As CellType, ByVal column As Integer, ByVal row As Integer)
             Me.New(value, type)
             ColumnNumber = column
@@ -239,7 +237,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Implemented CompareTo method
         ''' </summary>
-        ''' <paramname="other">Object to compare.</param>
+        ''' <param name="other">Object to compare.</param>
         ''' <returns>0 if values are the same, -1 if this object is smaller, 1 if it is bigger.</returns>
         Public Function CompareTo(ByVal other As Cell) As Integer Implements IComparable(Of Cell).CompareTo
             If RowNumber = other.RowNumber Then
@@ -256,7 +254,7 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Method resets the Cell type and tries to find the actual type. This is used if a Cell was created with the CellType DEFAULT or automatically if a value was set by <seecref="Value"/>. 
+        ''' Method resets the Cell type and tries to find the actual type. This is used if a Cell was created with the CellType DEFAULT or automatically if a value was set by <see cref="Value"/>. 
         ''' CellType FORMULA will skip this method and EMPTY will discard the value of the cell
         ''' </summary>
         Public Sub ResolveCellType()
@@ -297,8 +295,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the lock state of the cell
         ''' </summary>
-        ''' <paramname="isLocked">If true, the cell will be locked if the worksheet is protected.</param>
-        ''' <paramname="isHidden">If true, the value of the cell will be invisible if the worksheet is protected.</param>
+        ''' <param name="isLocked">If true, the cell will be locked if the worksheet is protected.</param>
+        ''' <param name="isHidden">If true, the value of the cell will be invisible if the worksheet is protected.</param>
         Public Sub SetCellLockedState(ByVal isLocked As Boolean, ByVal isHidden As Boolean)
             Dim lockStyle As Style
             If cellStyleField Is Nothing Then
@@ -314,8 +312,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the style of the cell
         ''' </summary>
-        ''' <paramname="style">Style to assign.</param>
-        ''' <paramname="unmanaged">Internally used: If true, the style repository is not invoked and only the style object of the cell is updated. Do not use!.</param>
+        ''' <param name="style">Style to assign.</param>
+        ''' <param name="unmanaged">Internally used: If true, the style repository is not invoked and only the style object of the cell is updated. Do not use!.</param>
         ''' <returns>If the passed style already exists in the repository, the existing one will be returned, otherwise the passed one.</returns>
         Public Function SetStyle(ByVal style As Style, ByVal Optional unmanaged As Boolean = False) As Style
             If style Is Nothing Then
@@ -345,7 +343,7 @@ Namespace PicoXLSX
         ''' Converts a List of supported objects into a list of cells
         ''' </summary>
         ''' <typeparamname="tT">Generic data type.</typeparam>
-        ''' <paramname="list">List of generic objects.</param>
+        ''' <param name="list">List of generic objects.</param>
         ''' <returns>List of cells.</returns>
         Public Shared Function ConvertArray(Of tT)(ByVal list As IEnumerable(Of tT)) As IEnumerable(Of Cell)
             Dim output As List(Of Cell) = New List(Of Cell)()
@@ -405,7 +403,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets a list of cell addresses from a cell range (format A1:B3 or AAD556:AAD1000)
         ''' </summary>
-        ''' <paramname="range">Range to process.</param>
+        ''' <param name="range">Range to process.</param>
         ''' <returns>List of cell addresses.</returns>
         Public Shared Function GetCellRange(ByVal range As String) As IEnumerable(Of Address)
             Dim range2 = ResolveCellRange(range)
@@ -415,8 +413,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Get a list of cell addresses from a cell range
         ''' </summary>
-        ''' <paramname="startAddress">Start address as string in the format A1 - XFD1048576.</param>
-        ''' <paramname="endAddress">End address as string in the format A1 - XFD1048576.</param>
+        ''' <param name="startAddress">Start address as string in the format A1 - XFD1048576.</param>
+        ''' <param name="endAddress">End address as string in the format A1 - XFD1048576.</param>
         ''' <returns>List of cell addresses.</returns>
         Public Shared Function GetCellRange(ByVal startAddress As String, ByVal endAddress As String) As IEnumerable(Of Address)
             Dim start = ResolveCellCoordinate(startAddress)
@@ -427,10 +425,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Get a list of cell addresses from a cell range
         ''' </summary>
-        ''' <paramname="startColumn">Start column (zero based).</param>
-        ''' <paramname="startRow">Start row (zero based).</param>
-        ''' <paramname="endColumn">End column (zero based).</param>
-        ''' <paramname="endRow">End row (zero based).</param>
+        ''' <param name="startColumn">Start column (zero based).</param>
+        ''' <param name="startRow">Start row (zero based).</param>
+        ''' <param name="endColumn">End column (zero based).</param>
+        ''' <param name="endRow">End row (zero based).</param>
         ''' <returns>List of cell addresses.</returns>
         Public Shared Function GetCellRange(ByVal startColumn As Integer, ByVal startRow As Integer, ByVal endColumn As Integer, ByVal endRow As Integer) As IEnumerable(Of Address)
             Dim start As Address = New Address(startColumn, startRow)
@@ -441,8 +439,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Get a list of cell addresses from a cell range
         ''' </summary>
-        ''' <paramname="startAddress">Start address.</param>
-        ''' <paramname="endAddress">End address.</param>
+        ''' <param name="startAddress">Start address.</param>
+        ''' <param name="endAddress">End address.</param>
         ''' <returns>List of cell addresses.</returns>
         Public Shared Function GetCellRange(ByVal startAddress As Address, ByVal endAddress As Address) As IEnumerable(Of Address)
             Dim startColumn, endColumn, startRow, endRow As Integer
@@ -472,9 +470,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the address of a cell by the column and row number (zero based)
         ''' </summary>
-        ''' <paramname="column">Column number of the cell (zero-based).</param>
-        ''' <paramname="row">Row number of the cell (zero-based).</param>
-        ''' <paramname="type">Optional referencing type of the address.</param>
+        ''' <param name="column">Column number of the cell (zero-based).</param>
+        ''' <param name="row">Row number of the cell (zero-based).</param>
+        ''' <param name="type">Optional referencing type of the address.</param>
         ''' <returns>Cell Address as string in the format A1 - XFD1048576. Depending on the type, Addresses like '$A55', 'B$2' or '$A$5' are possible outputs.</returns>
         Public Shared Function ResolveCellAddress(ByVal column As Integer, ByVal row As Integer, ByVal Optional type As AddressType = AddressType.Default) As String
             If column > Worksheet.MAX_COLUMN_NUMBER OrElse column < Worksheet.MIN_COLUMN_NUMBER Then
@@ -495,7 +493,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the column and row number (zero based) of a cell by the address
         ''' </summary>
-        ''' <paramname="address">Address as string in the format A1 - XFD1048576.</param>
+        ''' <param name="address">Address as string in the format A1 - XFD1048576.</param>
         ''' <returns>Struct with row and column.</returns>
         Public Shared Function ResolveCellCoordinate(ByVal address As String) As Address
             Dim row, column As Integer
@@ -507,9 +505,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the column and row number (zero based) of a cell by the address
         ''' </summary>
-        ''' <paramname="address">Address as string in the format A1 - XFD1048576.</param>
-        ''' <paramname="column">Column number of the cell (zero-based) as out parameter.</param>
-        ''' <paramname="row">Row number of the cell (zero-based) as out parameter.</param>
+        ''' <param name="address">Address as string in the format A1 - XFD1048576.</param>
+        ''' <param name="column">Column number of the cell (zero-based) as out parameter.</param>
+        ''' <param name="row">Row number of the cell (zero-based) as out parameter.</param>
         Public Shared Sub ResolveCellCoordinate(ByVal address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer)
             Dim dummy As AddressType
             ResolveCellCoordinate(address, column, row, dummy)
@@ -518,10 +516,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the column and row number (zero based) of a cell by the address
         ''' </summary>
-        ''' <paramname="address">Address as string in the format A1 - XFD1048576.</param>
-        ''' <paramname="column">Column number of the cell (zero-based) as out parameter.</param>
-        ''' <paramname="row">Row number of the cell (zero-based) as out parameter.</param>
-        ''' <paramname="addressType">Address type of the cell (if defined as modifiers in the address string).</param>
+        ''' <param name="address">Address as string in the format A1 - XFD1048576.</param>
+        ''' <param name="column">Column number of the cell (zero-based) as out parameter.</param>
+        ''' <param name="row">Row number of the cell (zero-based) as out parameter.</param>
+        ''' <param name="addressType">Address type of the cell (if defined as modifiers in the address string).</param>
         Public Shared Sub ResolveCellCoordinate(ByVal address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer, <Out> ByRef addressType As AddressType)
             If String.IsNullOrEmpty(address) Then
                 Throw New FormatException("The cell address is null or empty and could not be resolved")
@@ -550,7 +548,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Resolves a cell range from the format like A1:B3 or AAD556:AAD1000
         ''' </summary>
-        ''' <paramname="range">Range to process.</param>
+        ''' <param name="range">Range to process.</param>
         ''' <returns>Range object.</returns>
         Public Shared Function ResolveCellRange(ByVal range As String) As Range
             If String.IsNullOrEmpty(range) Then
@@ -566,7 +564,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the column number from the column address (A - XFD)
         ''' </summary>
-        ''' <paramname="columnAddress">Column address (A - XFD).</param>
+        ''' <param name="columnAddress">Column address (A - XFD).</param>
         ''' <returns>Column number (zero-based).</returns>
         Public Shared Function ResolveColumn(ByVal columnAddress As String) As Integer
             If String.IsNullOrEmpty(columnAddress) Then
@@ -589,7 +587,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the column address (A - XFD)
         ''' </summary>
-        ''' <paramname="columnNumber">Column number (zero-based).</param>
+        ''' <param name="columnNumber">Column number (zero-based).</param>
         ''' <returns>Column address (A - XFD).</returns>
         Public Shared Function ResolveColumnAddress(ByVal columnNumber As Integer) As String
             If columnNumber > Worksheet.MAX_COLUMN_NUMBER OrElse columnNumber < Worksheet.MIN_COLUMN_NUMBER Then
@@ -624,7 +622,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the scope of the passed address (string expression). Scope means either single cell address or range
         ''' </summary>
-        ''' <paramname="addressExpression">Address expression.</param>
+        ''' <param name="addressExpression">Address expression.</param>
         ''' <returns>Scope of the address expression.</returns>
         Public Shared Function GetAddressScope(ByVal addressExpression As String) As AddressScope
             Try
@@ -643,7 +641,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Validates the passed (zero-based) column number. an exception will be thrown if the column is invalid
         ''' </summary>
-        ''' <paramname="column">Number to check.</param>
+        ''' <param name="column">Number to check.</param>
         Public Shared Sub ValidateColumnNumber(ByVal column As Integer)
             If column > Worksheet.MAX_COLUMN_NUMBER OrElse column < Worksheet.MIN_COLUMN_NUMBER Then
                 Throw New RangeException("A general range exception occurred", "The column number (" & column.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " columns).")
@@ -653,7 +651,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Validates the passed (zero-based) row number. an exception will be thrown if the row is invalid
         ''' </summary>
-        ''' <paramname="row">Number to check.</param>
+        ''' <param name="row">Number to check.</param>
         Public Shared Sub ValidateRowNumber(ByVal row As Integer)
             If row > Worksheet.MAX_ROW_NUMBER OrElse row < Worksheet.MIN_ROW_NUMBER Then
                 Throw New RangeException("A general range exception occurred", "The row number (" & row.ToString() & ") is out of range. Range is from " & Worksheet.MIN_ROW_NUMBER.ToString() & " to " & Worksheet.MAX_ROW_NUMBER.ToString() & " (" & (Worksheet.MAX_ROW_NUMBER + 1).ToString() & " rows).")
@@ -681,11 +679,11 @@ Namespace PicoXLSX
             Public Type As AddressType
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref=""/> class
+            ''' Initializes a new instance of the <see cref=""/> class
             ''' </summary>
-            ''' <paramname="column">Column number (zero based).</param>
-            ''' <paramname="row">Row number (zero based).</param>
-            ''' <paramname="type">Optional referencing type of the address.</param>
+            ''' <param name="column">Column number (zero based).</param>
+            ''' <param name="row">Row number (zero based).</param>
+            ''' <param name="type">Optional referencing type of the address.</param>
             Public Sub New(ByVal column As Integer, ByVal row As Integer, ByVal Optional type As AddressType = AddressType.Default)
                 Me.Column = column
                 Me.Row = row
@@ -693,10 +691,10 @@ Namespace PicoXLSX
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref=""/> class
+            ''' Initializes a new instance of the <see cref=""/> class
             ''' </summary>
-            ''' <paramname="address">Address string (e.g. 'A1:B12').</param>
-            ''' <paramname="type">Optional referencing type of the address.</param>
+            ''' <param name="address">Address string (e.g. 'A1:B12').</param>
+            ''' <param name="type">Optional referencing type of the address.</param>
             Public Sub New(ByVal address As String, ByVal Optional type As AddressType = AddressType.Default)
                 Me.Type = type
                 ResolveCellCoordinate(address, Column, Row, type)
@@ -729,7 +727,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Compares two addresses whether they are equal
             ''' </summary>
-            ''' <paramname="o"> Other address.</param>
+            ''' <param name="o"> Other address.</param>
             ''' <returns>True if equal.</returns>
             Public Overloads Function Equals(ByVal o As Address) As Boolean Implements IEquatable(Of Address).Equals
                 If Row = o.Row AndAlso Column = o.Column Then
@@ -742,7 +740,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Compares two objects whether they are addresses and equal
             ''' </summary>
-            ''' <paramname="obj"> Other address.</param>
+            ''' <param name="obj"> Other address.</param>
             ''' <returns>True if not null, of the same type and equal.</returns>
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
                 If Not (TypeOf obj Is Address) Then
@@ -771,7 +769,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Compares two addresses using the column and row numbers
             ''' </summary>
-            ''' <paramname="other"> Other address.</param>
+            ''' <param name="other"> Other address.</param>
             ''' <returns>-1 if the other address is greater, 0 if equal and 1 if smaller.</returns>
             Public Function CompareTo(ByVal other As Address) As Integer Implements IComparable(Of Address).CompareTo
                 Dim thisCoordinate = Column * CLng(Worksheet.MAX_ROW_NUMBER) + Row
@@ -803,10 +801,10 @@ Namespace PicoXLSX
             Public StartAddress As Address
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref=""/> class
+            ''' Initializes a new instance of the <see cref=""/> class
             ''' </summary>
-            ''' <paramname="start">Start address of the range.</param>
-            ''' <paramname="end">End address of the range.</param>
+            ''' <param name="start">Start address of the range.</param>
+            ''' <param name="end">End address of the range.</param>
             Public Sub New(ByVal start As Address, ByVal [end] As Address)
                 If start.CompareTo([end]) < 0 Then
                     StartAddress = start
@@ -818,9 +816,9 @@ Namespace PicoXLSX
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref=""/> class
+            ''' Initializes a new instance of the <see cref=""/> class
             ''' </summary>
-            ''' <paramname="range">Address range (e.g. 'A1:B12').</param>
+            ''' <param name="range">Address range (e.g. 'A1:B12').</param>
             Public Sub New(ByVal range As String)
                 Dim r = ResolveCellRange(range)
                 If r.StartAddress.CompareTo(r.EndAddress) < 0 Then
@@ -880,7 +878,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Compares two objects whether they are ranges and equal. The cell types (possible $ prefix) are considered
             ''' </summary>
-            ''' <paramname="obj">Other object to compare.</param>
+            ''' <param name="obj">Other object to compare.</param>
             ''' <returns>True if the two objects are the same range.</returns>
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
                 If Not (TypeOf obj Is Range) Then
@@ -916,7 +914,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a average formula
             ''' </summary>
-            ''' <paramname="range">Cell range to apply the average operation to.</param>
+            ''' <param name="range">Cell range to apply the average operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Average(ByVal range As Range) As Cell
                 Return Average(Nothing, range)
@@ -925,8 +923,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a average formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the average operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Cell range to apply the average operation to.</param>
+            ''' <param name="target">Target worksheet of the average operation. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Cell range to apply the average operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Average(ByVal target As Worksheet, ByVal range As Range) As Cell
                 Return GetBasicFormula(target, range, "AVERAGE", Nothing)
@@ -935,8 +933,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a ceil formula
             ''' </summary>
-            ''' <paramname="address">Address to apply the ceil operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="address">Address to apply the ceil operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Ceil(ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return Ceil(Nothing, address, decimals)
@@ -945,9 +943,9 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a ceil formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the ceil operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="address">Address to apply the ceil operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="target">Target worksheet of the ceil operation. Can be null if on the same worksheet.</param>
+            ''' <param name="address">Address to apply the ceil operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Ceil(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUNDUP", decimals.ToString(CultureInfo.InvariantCulture))
@@ -956,8 +954,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a floor formula
             ''' </summary>
-            ''' <paramname="address">Address to apply the floor operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="address">Address to apply the floor operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Floor(ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return Floor(Nothing, address, decimals)
@@ -966,9 +964,9 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a floor formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the floor operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="address">Address to apply the floor operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="target">Target worksheet of the floor operation. Can be null if on the same worksheet.</param>
+            ''' <param name="address">Address to apply the floor operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Floor(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUNDDOWN", decimals.ToString(CultureInfo.InvariantCulture))
@@ -977,7 +975,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a max formula
             ''' </summary>
-            ''' <paramname="range">Cell range to apply the max operation to.</param>
+            ''' <param name="range">Cell range to apply the max operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Max(ByVal range As Range) As Cell
                 Return Max(Nothing, range)
@@ -986,8 +984,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a max formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the max operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Cell range to apply the max operation to.</param>
+            ''' <param name="target">Target worksheet of the max operation. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Cell range to apply the max operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Max(ByVal target As Worksheet, ByVal range As Range) As Cell
                 Return GetBasicFormula(target, range, "MAX", Nothing)
@@ -996,7 +994,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a median formula
             ''' </summary>
-            ''' <paramname="range">Cell range to apply the median operation to.</param>
+            ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Median(ByVal range As Range) As Cell
                 Return Median(Nothing, range)
@@ -1005,8 +1003,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a median formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the median operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Cell range to apply the median operation to.</param>
+            ''' <param name="target">Target worksheet of the median operation. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Median(ByVal target As Worksheet, ByVal range As Range) As Cell
                 Return GetBasicFormula(target, range, "MEDIAN", Nothing)
@@ -1015,7 +1013,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a min formula
             ''' </summary>
-            ''' <paramname="range">Cell range to apply the min operation to.</param>
+            ''' <param name="range">Cell range to apply the min operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Min(ByVal range As Range) As Cell
                 Return Min(Nothing, range)
@@ -1024,8 +1022,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a min formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the min operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Cell range to apply the median operation to.</param>
+            ''' <param name="target">Target worksheet of the min operation. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Min(ByVal target As Worksheet, ByVal range As Range) As Cell
                 Return GetBasicFormula(target, range, "MIN", Nothing)
@@ -1034,8 +1032,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a round formula
             ''' </summary>
-            ''' <paramname="address">Address to apply the round operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="address">Address to apply the round operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Round(ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return Round(Nothing, address, decimals)
@@ -1044,9 +1042,9 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a round formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the round operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="address">Address to apply the round operation to.</param>
-            ''' <paramname="decimals">Number of decimals (digits).</param>
+            ''' <param name="target">Target worksheet of the round operation. Can be null if on the same worksheet.</param>
+            ''' <param name="address">Address to apply the round operation to.</param>
+            ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Round(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUND", decimals.ToString(CultureInfo.InvariantCulture))
@@ -1055,7 +1053,7 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a sum formula
             ''' </summary>
-            ''' <paramname="range">Cell range to get a sum of.</param>
+            ''' <param name="range">Cell range to get a sum of.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Sum(ByVal range As Range) As Cell
                 Return Sum(Nothing, range)
@@ -1064,8 +1062,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Returns a cell with a sum formula
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the sum operation. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Cell range to get a sum of.</param>
+            ''' <param name="target">Target worksheet of the sum operation. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Cell range to get a sum of.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function Sum(ByVal target As Worksheet, ByVal range As Range) As Cell
                 Return GetBasicFormula(target, range, "SUM", Nothing)
@@ -1074,10 +1072,10 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a Vlookup as Excel function
             ''' </summary>
-            ''' <paramname="number">Numeric value for the lookup. Valid types are int, uint, long, ulong, float, double, byte, sbyte, decimal, short and ushort.</param>
-            ''' <paramname="range">Matrix of the lookup.</param>
-            ''' <paramname="columnIndex">Column index of the target column within the range (1 based).</param>
-            ''' <paramname="exactMatch">If true, an exact match is applied to the lookup.</param>
+            ''' <param name="number">Numeric value for the lookup. Valid types are int, uint, long, ulong, float, double, byte, sbyte, decimal, short and ushort.</param>
+            ''' <param name="range">Matrix of the lookup.</param>
+            ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
+            ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function VLookup(ByVal number As Object, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
                 Return VLookup(number, Nothing, range, columnIndex, exactMatch)
@@ -1086,11 +1084,11 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a Vlookup as Excel function
             ''' </summary>
-            ''' <paramname="number">Numeric value for the lookup.Valid types are int, uint, long, ulong, float, double, byte, sbyte, decimal, short and ushort.</param>
-            ''' <paramname="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Matrix of the lookup.</param>
-            ''' <paramname="columnIndex">Column index of the target column within the range (1 based).</param>
-            ''' <paramname="exactMatch">If true, an exact match is applied to the lookup.</param>
+            ''' <param name="number">Numeric value for the lookup.Valid types are int, uint, long, ulong, float, double, byte, sbyte, decimal, short and ushort.</param>
+            ''' <param name="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Matrix of the lookup.</param>
+            ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
+            ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function VLookup(ByVal number As Object, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
                 Return GetVLookup(Nothing, New Address(), number, rangeTarget, range, columnIndex, exactMatch, True)
@@ -1099,10 +1097,10 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a Vlookup as Excel function
             ''' </summary>
-            ''' <paramname="address">Query address of a cell as string as source of the lookup.</param>
-            ''' <paramname="range">Matrix of the lookup.</param>
-            ''' <paramname="columnIndex">Column index of the target column within the range (1 based).</param>
-            ''' <paramname="exactMatch">If true, an exact match is applied to the lookup.</param>
+            ''' <param name="address">Query address of a cell as string as source of the lookup.</param>
+            ''' <param name="range">Matrix of the lookup.</param>
+            ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
+            ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function VLookup(ByVal address As Address, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
                 Return VLookup(Nothing, address, Nothing, range, columnIndex, exactMatch)
@@ -1111,12 +1109,12 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a Vlookup as Excel function
             ''' </summary>
-            ''' <paramname="queryTarget">Target worksheet of the query argument. Can be null if on the same worksheet.</param>
-            ''' <paramname="address">Query address of a cell as string as source of the lookup.</param>
-            ''' <paramname="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Matrix of the lookup.</param>
-            ''' <paramname="columnIndex">Column index of the target column within the range (1 based).</param>
-            ''' <paramname="exactMatch">If true, an exact match is applied to the lookup.</param>
+            ''' <param name="queryTarget">Target worksheet of the query argument. Can be null if on the same worksheet.</param>
+            ''' <param name="address">Query address of a cell as string as source of the lookup.</param>
+            ''' <param name="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Matrix of the lookup.</param>
+            ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
+            ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Public Shared Function VLookup(ByVal queryTarget As Worksheet, ByVal address As Address, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
                 Return GetVLookup(queryTarget, address, 0, rangeTarget, range, columnIndex, exactMatch, False)
@@ -1125,14 +1123,14 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a Vlookup as Excel function
             ''' </summary>
-            ''' <paramname="queryTarget">Target worksheet of the query argument. Can be null if on the same worksheet.</param>
-            ''' <paramname="address">In case of a reference lookup, query address of a cell as string.</param>
-            ''' <paramname="number">In case of a numeric lookup, number for the lookup.</param>
-            ''' <paramname="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Matrix of the lookup.</param>
-            ''' <paramname="columnIndex">Column index of the target column within the range (1 based).</param>
-            ''' <paramname="exactMatch">If true, an exact match is applied to the lookup.</param>
-            ''' <paramname="numericLookup">If true, the lookup is a numeric lookup, otherwise a reference lookup.</param>
+            ''' <param name="queryTarget">Target worksheet of the query argument. Can be null if on the same worksheet.</param>
+            ''' <param name="address">In case of a reference lookup, query address of a cell as string.</param>
+            ''' <param name="number">In case of a numeric lookup, number for the lookup.</param>
+            ''' <param name="rangeTarget">Target worksheet of the matrix. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Matrix of the lookup.</param>
+            ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
+            ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
+            ''' <param name="numericLookup">If true, the lookup is a numeric lookup, otherwise a reference lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Private Shared Function GetVLookup(ByVal queryTarget As Worksheet, ByVal address As Address, ByVal number As Object, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean, ByVal numericLookup As Boolean) As Cell
                 Dim rangeWidth = range.EndAddress.Column - range.StartAddress.Column + 1
@@ -1195,10 +1193,10 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Function to generate a basic Excel function with one cell range as parameter and an optional post argument
             ''' </summary>
-            ''' <paramname="target">Target worksheet of the cell reference. Can be null if on the same worksheet.</param>
-            ''' <paramname="range">Main argument as cell range. If applied on one cell, the start and end address are identical.</param>
-            ''' <paramname="functionName">Internal Excel function name.</param>
-            ''' <paramname="postArg">Optional argument.</param>
+            ''' <param name="target">Target worksheet of the cell reference. Can be null if on the same worksheet.</param>
+            ''' <param name="range">Main argument as cell range. If applied on one cell, the start and end address are identical.</param>
+            ''' <param name="functionName">Internal Excel function name.</param>
+            ''' <param name="postArg">Optional argument.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
             Private Shared Function GetBasicFormula(ByVal target As Worksheet, ByVal range As Range, ByVal functionName As String, ByVal postArg As String) As Cell
                 Dim arg1, arg2, prefix As String

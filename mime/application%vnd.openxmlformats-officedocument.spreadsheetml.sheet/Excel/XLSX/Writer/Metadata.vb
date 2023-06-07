@@ -9,7 +9,7 @@ Imports System
 Imports System.Globalization
 Imports System.Reflection
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class representing the meta data of a workbook
@@ -89,7 +89,7 @@ Namespace PicoXLSX
         Public Property Title As String
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Metadata"/> class
+        ''' Initializes a new instance of the <see cref="Metadata"/> class
         ''' </summary>
         Public Sub New()
             Application = "PicoXLSX"
@@ -125,10 +125,10 @@ Namespace PicoXLSX
         ''' Method to parse a common version (major.minor.revision.build) into the compatible format (major.minor). The minimum value is 0.0 and the maximum value is 99999.99999<br></br>
         ''' The minor, revision and build number are joined if possible. If the number is too long, the additional characters will be removed from the right side down to five characters (e.g. 785563 will be 78556)
         ''' </summary>
-        ''' <paramname="major">Major number from 0 to 99999.</param>
-        ''' <paramname="minor">Minor number.</param>
-        ''' <paramname="build">Build number.</param>
-        ''' <paramname="revision">Revision number.</param>
+        ''' <param name="major">Major number from 0 to 99999.</param>
+        ''' <param name="minor">Minor number.</param>
+        ''' <param name="build">Build number.</param>
+        ''' <param name="revision">Revision number.</param>
         ''' <returns>Formatted version number (e.g. 1.0 or 55.987).</returns>
         Public Shared Function ParseVersion(ByVal major As Integer, ByVal minor As Integer, ByVal build As Integer, ByVal revision As Integer) As String
             If major < 0 OrElse minor < 0 OrElse build < 0 OrElse revision < 0 Then

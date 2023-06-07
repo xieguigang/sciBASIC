@@ -5,9 +5,7 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class for exceptions regarding range incidents (e.g. out-of-range)
@@ -16,17 +14,17 @@ Namespace PicoXLSX
     Public Class RangeException
         Inherits Exception
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="RangeException"/> class
+        ''' Initializes a new instance of the <see cref="RangeException"/> class
         ''' </summary>
         Public Sub New()
             MyBase.New()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="RangeException"/> class
+        ''' Initializes a new instance of the <see cref="RangeException"/> class
         ''' </summary>
-        ''' <paramname="title">The title<seecref="String"/>.</param>
-        ''' <paramname="message">Message of the exception.</param>
+        ''' <param name="title">The title<see cref="String"/>.</param>
+        ''' <param name="message">Message of the exception.</param>
         Public Sub New(ByVal title As String, ByVal message As String)
             MyBase.New(message)
         End Sub
@@ -39,26 +37,26 @@ Namespace PicoXLSX
     Public Class FormatException
         Inherits Exception
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="FormatException"/> class
+        ''' Initializes a new instance of the <see cref="FormatException"/> class
         ''' </summary>
         Public Sub New()
             MyBase.New()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="FormatException"/> class
+        ''' Initializes a new instance of the <see cref="FormatException"/> class
         ''' </summary>
-        ''' <paramname="message">Message of the exception.</param>
+        ''' <param name="message">Message of the exception.</param>
         Public Sub New(ByVal message As String)
             MyBase.New(message)
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="FormatException"/> class
+        ''' Initializes a new instance of the <see cref="FormatException"/> class
         ''' </summary>
-        ''' <paramname="title">Title of the exception.</param>
-        ''' <paramname="message">Message of the exception.</param>
-        ''' <paramname="inner">Inner exception.</param>
+        ''' <param name="title">Title of the exception.</param>
+        ''' <param name="message">Message of the exception.</param>
+        ''' <param name="inner">Inner exception.</param>
         Public Sub New(ByVal title As String, ByVal message As String, ByVal inner As Exception)
             MyBase.New(message, inner)
         End Sub
@@ -71,25 +69,25 @@ Namespace PicoXLSX
     Public Class IOException
         Inherits Exception
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="IOException"/> class
+        ''' Initializes a new instance of the <see cref="IOException"/> class
         ''' </summary>
         Public Sub New()
             MyBase.New()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="IOException"/> class
+        ''' Initializes a new instance of the <see cref="IOException"/> class
         ''' </summary>
-        ''' <paramname="message">Message of the exception.</param>
+        ''' <param name="message">Message of the exception.</param>
         Public Sub New(ByVal message As String)
             MyBase.New(message)
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="IOException"/> class
+        ''' Initializes a new instance of the <see cref="IOException"/> class
         ''' </summary>
-        ''' <paramname="message">Message of the exception.</param>
-        ''' <paramname="inner">Inner exception.</param>
+        ''' <param name="message">Message of the exception.</param>
+        ''' <param name="inner">Inner exception.</param>
         Public Sub New(ByVal message As String, ByVal inner As Exception)
             MyBase.New(message, inner)
         End Sub
@@ -102,16 +100,16 @@ Namespace PicoXLSX
     Public Class WorksheetException
         Inherits Exception
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="WorksheetException"/> class
+        ''' Initializes a new instance of the <see cref="WorksheetException"/> class
         ''' </summary>
         Public Sub New()
             MyBase.New()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="WorksheetException"/> class
+        ''' Initializes a new instance of the <see cref="WorksheetException"/> class
         ''' </summary>
-        ''' <paramname="message">Message of the exception.</param>
+        ''' <param name="message">Message of the exception.</param>
         Public Sub New(ByVal message As String)
             MyBase.New(message)
         End Sub
@@ -124,17 +122,17 @@ Namespace PicoXLSX
     Public Class StyleException
         Inherits Exception
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="StyleException"/> class
+        ''' Initializes a new instance of the <see cref="StyleException"/> class
         ''' </summary>
         Public Sub New()
             MyBase.New()
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="StyleException"/> class
+        ''' Initializes a new instance of the <see cref="StyleException"/> class
         ''' </summary>
-        ''' <paramname="title">The title<seecref="String"/>.</param>
-        ''' <paramname="message">Message of the exception.</param>
+        ''' <param name="title">The title<see cref="String"/>.</param>
+        ''' <param name="message">Message of the exception.</param>
         Public Sub New(ByVal title As String, ByVal message As String)
             MyBase.New(message)
         End Sub

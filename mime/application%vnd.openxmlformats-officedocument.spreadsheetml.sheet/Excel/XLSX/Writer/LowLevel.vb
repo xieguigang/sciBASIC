@@ -5,17 +5,13 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.IO
 Imports System.IO.Packaging
-Imports System.Linq
 Imports System.Text
-Imports System.Threading.Tasks
 Imports System.Xml
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class for low level handling (XML, formatting, packing)
@@ -152,9 +148,9 @@ Namespace PicoXLSX
         Private sharedStringsTotalCount As Integer
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="LowLevel"/> class
+        ''' Initializes a new instance of the <see cref="LowLevel"/> class
         ''' </summary>
-        ''' <paramname="workbook">Workbook to process.</param>
+        ''' <param name="workbook">Workbook to process.</param>
         Public Sub New(ByVal workbook As Workbook)
             culture = INVARIANT_CULTURE
             workbookField = workbook
@@ -207,8 +203,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to append shared string values and to handle leading or trailing white spaces
         ''' </summary>
-        ''' <paramname="sb">StringBuilder instance.</param>
-        ''' <paramname="value">Escaped string value (not null).</param>
+        ''' <param name="sb">StringBuilder instance.</param>
+        ''' <param name="value">Escaped string value (not null).</param>
         Private Sub AppendSharedString(ByVal sb As StringBuilder, ByVal value As String)
             Dim len = value.Length
             sb.Append("<si>")
@@ -228,7 +224,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to normalize all newlines to CR+LF
         ''' </summary>
-        ''' <paramname="value">Input value.</param>
+        ''' <param name="value">Input value.</param>
         ''' <returns>Normalized value.</returns>
         Private Function NormalizeNewLines(ByVal value As String) As String
             If Equals(value, Nothing) OrElse Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(10)) AndAlso Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(13)) Then
@@ -318,7 +314,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the (sub) part of the workbook protection within the workbook XML document
         ''' </summary>
-        ''' <paramname="sb">reference to the stringbuilder.</param>
+        ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreateWorkbookProtectionString(ByVal sb As StringBuilder)
             If workbookField.UseWorkbookProtection Then
                 sb.Append("<workbookProtection")
@@ -340,7 +336,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create a worksheet part as a raw XML string
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to process.</param>
+        ''' <param name="worksheet">worksheet object to process.</param>
         ''' <returns>Raw XML string.</returns>
         Private Function CreateWorksheetPart(ByVal worksheet As Worksheet) As String
             worksheet.RecalculateAutoFilter()
@@ -382,7 +378,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Checks whether pane splitting is applied in the given worksheet
         ''' </summary>
-        ''' <paramname="worksheet">.</param>
+        ''' <param name="worksheet">.</param>
         ''' <returns>True if applied, otherwise false.</returns>
         Private Function HasPaneSplitting(ByVal worksheet As Worksheet) As Boolean
             If worksheet.PaneSplitLeftWidth Is Nothing AndAlso worksheet.PaneSplitTopHeight Is Nothing AndAlso worksheet.PaneSplitAddress Is Nothing Then
@@ -394,8 +390,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the enclosing part of the rows
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to process.</param>
-        ''' <paramname="sb">reference to the stringbuilder.</param>
+        ''' <param name="worksheet">worksheet object to process.</param>
+        ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreateRowsString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
             Dim cellData = GetSortedSheetData(worksheet)
             Dim line As String
@@ -408,8 +404,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the (sub) part of the worksheet view (selected cells and panes) within the worksheet XML document
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to process.</param>
-        ''' <paramname="sb">reference to the stringbuilder.</param>
+        ''' <param name="worksheet">worksheet object to process.</param>
+        ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreateSheetViewString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
             sb.Append("<sheetViews><sheetView workbookViewId=""0""")
             If workbookField.SelectedWorksheet = worksheet.SheetID - 1 AndAlso Not worksheet.Hidden Then
@@ -435,8 +431,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the (sub) part of the pane (splitting and freezing) within the worksheet XML document
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to process.</param>
-        ''' <paramname="sb">reference to the stringbuilder.</param>
+        ''' <param name="worksheet">worksheet object to process.</param>
+        ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreatePaneString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
             If Not HasPaneSplitting(worksheet) Then
                 Return
@@ -506,8 +502,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to calculate the pane height, based on the number of rows
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to get the row definitions from.</param>
-        ''' <paramname="numberOfRows">Number of rows from the top to the split position.</param>
+        ''' <param name="worksheet">worksheet object to get the row definitions from.</param>
+        ''' <param name="numberOfRows">Number of rows from the top to the split position.</param>
         ''' <returns>Internal height from the top of the worksheet to the pane split position.</returns>
         Private Function CalculatePaneHeight(ByVal worksheet As Worksheet, ByVal numberOfRows As Integer) As Single
             Dim height As Single = 0
@@ -524,8 +520,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to calculate the pane width, based on the number of columns
         ''' </summary>
-        ''' <paramname="worksheet">worksheet object to get the column definitions from.</param>
-        ''' <paramname="numberOfColumns">Number of columns from the left to the split position.</param>
+        ''' <param name="worksheet">worksheet object to get the column definitions from.</param>
+        ''' <param name="numberOfColumns">Number of columns from the left to the split position.</param>
         ''' <returns>Internal width from the left of the worksheet to the pane split position.</returns>
         Private Function CalculatePaneWidth(ByVal worksheet As Worksheet, ByVal numberOfColumns As Integer) As Single
             Dim width As Single = 0
@@ -560,8 +556,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to save the workbook as stream
         ''' </summary>
-        ''' <paramname="stream">Writable stream as target.</param>
-        ''' <paramname="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
+        ''' <param name="stream">Writable stream as target.</param>
+        ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         Public Sub SaveAsStream(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False)
             workbookField.ResolveMergedCells()
             stylesField = StyleManager.GetManagedStyles(workbookField) ' After this point, styles must not be changed anymore
@@ -642,8 +638,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to save the workbook as stream asynchronous
         ''' </summary>
-        ''' <paramname="stream">Writable stream as target.</param>
-        ''' <paramname="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
+        ''' <param name="stream">Writable stream as target.</param>
+        ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         ''' <returns>Async Task.</returns>
         Public Async Function SaveAsStreamAsync(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False) As Task
             Await Task.Run(Sub() SaveAsStream(stream, leaveOpen))
@@ -652,10 +648,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to append a simple XML tag with an enclosed value to the passed StringBuilder
         ''' </summary>
-        ''' <paramname="sb">StringBuilder to append.</param>
-        ''' <paramname="value">Value of the XML element.</param>
-        ''' <paramname="tagName">Tag name of the XML element.</param>
-        ''' <paramname="nameSpace">Optional XML name space. Can be empty or null.</param>
+        ''' <param name="sb">StringBuilder to append.</param>
+        ''' <param name="value">Value of the XML element.</param>
+        ''' <param name="tagName">Tag name of the XML element.</param>
+        ''' <param name="nameSpace">Optional XML name space. Can be empty or null.</param>
         Private Sub AppendXmlTag(ByVal sb As StringBuilder, ByVal value As String, ByVal tagName As String, ByVal [nameSpace] As String)
             If String.IsNullOrEmpty(value) Then
                 Return
@@ -683,8 +679,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Writes raw XML strings into the passed Package Part
         ''' </summary>
-        ''' <paramname="doc">document as raw XML string.</param>
-        ''' <paramname="pp">Package part to append the XML data.</param>
+        ''' <param name="doc">document as raw XML string.</param>
+        ''' <param name="pp">Package part to append the XML data.</param>
         Private Sub AppendXmlToPackagePart(ByVal doc As String, ByVal pp As PackagePart)
             Try
                 Using ms As MemoryStream = New MemoryStream() ' Write workbook.xml
@@ -732,7 +728,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the columns as XML string. This is used to define the width of columns
         ''' </summary>
-        ''' <paramname="worksheet">Worksheet to process.</param>
+        ''' <param name="worksheet">Worksheet to process.</param>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateColsString(ByVal worksheet As Worksheet) As String
             If worksheet.Columns.Count > 0 Then
@@ -788,7 +784,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the merged cells string of the passed worksheet
         ''' </summary>
-        ''' <paramname="sheet">Worksheet to process.</param>
+        ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Formatted string with merged cell ranges.</returns>
         Private Function CreateMergedCellsString(ByVal sheet As Worksheet) As String
             If sheet.MergedCells.Count < 1 Then
@@ -806,8 +802,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create a row string
         ''' </summary>
-        ''' <paramname="dynamicRow">Dynamic row with List of cells, heights and hidden states.</param>
-        ''' <paramname="worksheet">Worksheet to process.</param>
+        ''' <param name="dynamicRow">Dynamic row with List of cells, heights and hidden states.</param>
+        ''' <param name="worksheet">Worksheet to process.</param>
         ''' <returns>Formatted row string.</returns>
         Private Function CreateRowString(ByVal dynamicRow As DynamicRow, ByVal worksheet As Worksheet) As String
             Dim rowNumber = dynamicRow.RowNumber
@@ -928,7 +924,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to create the protection string of the passed worksheet
         ''' </summary>
-        ''' <paramname="sheet">Worksheet to process.</param>
+        ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Formatted string with protection statement of the worksheet.</returns>
         Private Function CreateSheetProtectionString(ByVal sheet As Worksheet) As String
             If Not sheet.UseSheetProtection Then
@@ -1359,7 +1355,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to sort the cells of a worksheet as preparation for the XML document
         ''' </summary>
-        ''' <paramname="sheet">Worksheet to process.</param>
+        ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Sorted list of dynamic rows that are either defined by cells or row widths / hidden states. The list is sorted by row numbers (zero-based).</returns>
         Private Function GetSortedSheetData(ByVal sheet As Worksheet) As List(Of DynamicRow)
             Dim temp As List(Of Cell) = New List(Of Cell)()
@@ -1408,7 +1404,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to escape XML characters between two XML tags
         ''' </summary>
-        ''' <paramname="input">Input string to process.</param>
+        ''' <param name="input">Input string to process.</param>
         ''' <returns>Escaped string.</returns>
         Public Shared Function EscapeXmlChars(ByVal input As String) As String
             If Equals(input, Nothing) Then
@@ -1464,7 +1460,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to escape XML characters in an XML attribute
         ''' </summary>
-        ''' <paramname="input">Input string to process.</param>
+        ''' <param name="input">Input string to process.</param>
         ''' <returns>Escaped string.</returns>
         Public Shared Function EscapeXmlAttributeChars(ByVal input As String) As String
             input = EscapeXmlChars(input) ' Sanitize string from illegal characters beside quotes
@@ -1475,7 +1471,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to generate an Excel internal password hash to protect workbooks or worksheets<br></br>This method is derived from the c++ implementation by Kohei Yoshida (<ahref="http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/">http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/</a>)
         ''' </summary>
-        ''' <paramname="password">Password string in UTF-8 to encrypt.</param>
+        ''' <param name="password">Password string in UTF-8 to encrypt.</param>
         ''' <returns>16 bit hash as hex string.</returns>
         Public Shared Function GeneratePasswordHash(ByVal password As String) As String
             If String.IsNullOrEmpty(password) Then
@@ -1502,7 +1498,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to convert a date or date and time into the internal Excel time format (OAdate)
         ''' </summary>
-        ''' <paramname="date">Date to process.</param>
+        ''' <param name="date">Date to process.</param>
         ''' <returns>Date or date and time as number.</returns>
         Public Shared Function GetOADateTimeString(ByVal [date] As Date) As String
             If [date] < FIRST_ALLOWED_EXCEL_DATE OrElse [date] > LAST_ALLOWED_EXCEL_DATE Then
@@ -1520,7 +1516,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to convert a time into the internal Excel time format (OAdate without days)
         ''' </summary>
-        ''' <paramname="time">Time to process. The date component of the timespan is neglected.</param>
+        ''' <param name="time">Time to process. The date component of the timespan is neglected.</param>
         ''' <returns>Time as number.</returns>
         Public Shared Function GetOATimeString(ByVal time As TimeSpan) As String
             Dim seconds = time.Seconds + time.Minutes * 60 + time.Hours * 3600
@@ -1531,9 +1527,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Calculates the internal width of a column in characters. This width is used only in the XML documents of worksheets and is usually not exposed to the (Excel) end user
         ''' </summary>
-        ''' <paramname="columnWidth">Target column width (displayed in Excel).</param>
-        ''' <paramname="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
-        ''' <paramname="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
+        ''' <param name="columnWidth">Target column width (displayed in Excel).</param>
+        ''' <param name="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
+        ''' <param name="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
         ''' <returns>The internal column width in characters, used in worksheet XML documents.</returns>
         Public Shared Function GetInternalColumnWidth(ByVal columnWidth As Single, ByVal Optional maxDigitWidth As Single = 7.0F, ByVal Optional textPadding As Single = 5.0F) As Single
             If columnWidth < Worksheet.MIN_COLUMN_WIDTH OrElse columnWidth > Worksheet.MAX_COLUMN_WIDTH Then
@@ -1551,7 +1547,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Calculates the internal height of a row. This height is used only in the XML documents of worksheets and is usually not exposed to the (Excel) end user
         ''' </summary>
-        ''' <paramname="rowHeight">Target row height (displayed in Excel).</param>
+        ''' <param name="rowHeight">Target row height (displayed in Excel).</param>
         ''' <returns>The internal row height which snaps to the nearest pixel.</returns>
         Public Shared Function GetInternalRowHeight(ByVal rowHeight As Single) As Single
             If rowHeight < Worksheet.MIN_ROW_HEIGHT OrElse rowHeight > Worksheet.MAX_ROW_HEIGHT Then
@@ -1567,9 +1563,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Calculates the internal width of a split pane in a worksheet. This width is used only in the XML documents of worksheets and is not exposed to the (Excel) end user
         ''' </summary>
-        ''' <paramname="width">Target column(s) width (one or more columns, displayed in Excel).</param>
-        ''' <paramname="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
-        ''' <paramname="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
+        ''' <param name="width">Target column(s) width (one or more columns, displayed in Excel).</param>
+        ''' <param name="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
+        ''' <param name="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
         ''' <returns>The internal pane width, used in worksheet XML documents in case of worksheet splitting.</returns>
         Public Shared Function GetInternalPaneSplitWidth(ByVal width As Single, ByVal Optional maxDigitWidth As Single = 7.0F, ByVal Optional textPadding As Single = 5.0F) As Single
             Dim pixels As Single
@@ -1588,7 +1584,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Calculates the internal height of a split pane in a worksheet. This height is used only in the XML documents of worksheets and is not exposed to the (Excel) user
         ''' </summary>
-        ''' <paramname="height">Target row(s) height (one or more rows, displayed in Excel).</param>
+        ''' <param name="height">Target row(s) height (one or more rows, displayed in Excel).</param>
         ''' <returns>The internal pane height, used in worksheet XML documents in case of worksheet splitting.</returns>
         Public Shared Function GetInternalPaneSplitHeight(ByVal height As Single) As Single
             If height < 0 Then
@@ -1621,7 +1617,7 @@ Namespace PicoXLSX
             End Property
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="DynamicRow"/> class
+            ''' Initializes a new instance of the <see cref="DynamicRow"/> class
             ''' </summary>
             Public Sub New()
                 cellDefinitionsField = New List(Of Cell)()
@@ -1672,7 +1668,7 @@ Namespace PicoXLSX
             End Property
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="SortedMap"/> class
+            ''' Initializes a new instance of the <see cref="SortedMap"/> class
             ''' </summary>
             Public Sub New()
                 keyEntries = New List(Of String)()
@@ -1684,8 +1680,8 @@ Namespace PicoXLSX
             ''' <summary>
             ''' Method to add a key value pair
             ''' </summary>
-            ''' <paramname="key">Key as string.</param>
-            ''' <paramname="value">Value as string.</param>
+            ''' <param name="key">Key as string.</param>
+            ''' <param name="value">Value as string.</param>
             ''' <returns>Returns the resolved string (either added or returned from an existing entry).</returns>
             Public Function Add(ByVal key As String, ByVal value As String) As String
                 If index.ContainsKey(key) Then
@@ -1716,16 +1712,16 @@ Namespace PicoXLSX
             Public Property Path As String
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="DocumentPath"/> class
+            ''' Initializes a new instance of the <see cref="DocumentPath"/> class
             ''' </summary>
             Public Sub New()
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="DocumentPath"/> class
+            ''' Initializes a new instance of the <see cref="DocumentPath"/> class
             ''' </summary>
-            ''' <paramname="filename">File name of the document.</param>
-            ''' <paramname="path">Path of the document.</param>
+            ''' <param name="filename">File name of the document.</param>
+            ''' <param name="path">Path of the document.</param>
             Public Sub New(ByVal filename As String, ByVal path As String)
                 Me.Filename = filename
                 Me.Path = path

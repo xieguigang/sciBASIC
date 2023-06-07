@@ -11,9 +11,10 @@ Imports System.Globalization
 Imports System.Linq
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Cell
 Imports PicoXLSX.Cell
 
-Namespace PicoXLSX
+Namespace XLSX
 
     ''' <summary>
     ''' Class representing a worksheet of a workbook
@@ -32,12 +33,12 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Default column width as constant
         ''' </summary>
-        Public Const DEFAULT_COLUMN_WIDTH As Single = 10F
+        Public Const DEFAULT_COLUMN_WIDTH As Single = 10.0F
 
         ''' <summary>
         ''' Default row height as constant
         ''' </summary>
-        Public Const DEFAULT_ROW_HEIGHT As Single = 15F
+        Public Const DEFAULT_ROW_HEIGHT As Single = 15.0F
 
         ''' <summary>
         ''' Maximum column number (zero-based) as constant
@@ -62,7 +63,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Maximum column width as constant
         ''' </summary>
-        Public Const MAX_COLUMN_WIDTH As Single = 255F
+        Public Const MAX_COLUMN_WIDTH As Single = 255.0F
 
         ''' <summary>
         ''' Maximum row number (zero-based) as constant
@@ -364,7 +365,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Returns either null (if no cells are selected), or the first defined range of selected cells
         ''' </summary>
-        ''' <remarks>Use <seecref="SelectedCellRanges"/> to get all defined ranges</remarks>
+        ''' <remarks>Use <see cref="SelectedCellRanges"/> to get all defined ranges</remarks>
         <Obsolete("This method is a deprecated subset of the function SelectedCellRanges. SelectedCellRanges will get this function name in a future version. Therefore, the type will change")>
         Public ReadOnly Property SelectedCells As Range?
             Get
@@ -413,7 +414,7 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' Gets the password used for sheet protection. See <seecref="SetSheetProtectionPassword"/> to set the password
+        ''' Gets the password used for sheet protection. See <see cref="SetSheetProtectionPassword"/> to set the password
         ''' </summary>
         Public ReadOnly Property SheetProtectionPassword As String
             Get
@@ -422,7 +423,7 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' gets the encrypted hash of the password, defined with <seecref="SheetProtectionPassword"/>. The value will be null, if no password is defined
+        ''' gets the encrypted hash of the password, defined with <see cref="SheetProtectionPassword"/>. The value will be null, if no password is defined
         ''' </summary>
         Public ReadOnly Property SheetProtectionPasswordHash As String
             Get
@@ -480,7 +481,7 @@ Namespace PicoXLSX
         ''' Gets the height of the upper, horizontal split pane, measured from the top of the window.<br/>
         ''' The value is nullable. If null, no horizontal split of the worksheet is applied.<br/>
         ''' The value is only applicable to split the worksheet into panes, but not to freeze them.<br/>
-        ''' See also: <seecref="PaneSplitAddress"/>
+        ''' See also: <see cref="PaneSplitAddress"/>
         ''' </summary>
         Public ReadOnly Property PaneSplitTopHeight As Single?
             Get
@@ -492,7 +493,7 @@ Namespace PicoXLSX
         ''' Gets the width of the left, vertical split pane, measured from the left of the window.<br/>
         ''' The value is nullable. If null, no vertical split of the worksheet is applied<br/>
         ''' The value is only applicable to split the worksheet into panes, but not to freeze them.<br/>
-        ''' See also: <seecref="PaneSplitAddress"/>
+        ''' See also: <see cref="PaneSplitAddress"/>
         ''' </summary>
         Public ReadOnly Property PaneSplitLeftWidth As Single?
             Get
@@ -503,7 +504,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the FreezeSplitPanes
         ''' Gets whether split panes are frozen.<br/>
-        ''' The value is nullable. If null, no freezing is applied. This property also does not apply if <seecref="PaneSplitAddress"/> is null
+        ''' The value is nullable. If null, no freezing is applied. This property also does not apply if <see cref="PaneSplitAddress"/> is null
         ''' </summary>
         Public ReadOnly Property FreezeSplitPanes As Boolean?
             Get
@@ -527,7 +528,7 @@ Namespace PicoXLSX
         ''' For vertical splits, only the column component is considered. For horizontal splits, only the row component is considered.<br/>
         ''' The value is nullable. If null, no frozen panes or split by columns / rows are applied to the worksheet. 
         ''' However, splitting can still be applied, if the value is defined in characters.<br/>
-        ''' See also: <seecref="PaneSplitLeftWidth"/> and <seecref="PaneSplitTopHeight"/> for splitting in characters (without freezing)
+        ''' See also: <see cref="PaneSplitLeftWidth"/> and <see cref="PaneSplitTopHeight"/> for splitting in characters (without freezing)
         ''' </summary>
         Public ReadOnly Property PaneSplitAddress As Address?
             Get
@@ -555,7 +556,7 @@ Namespace PicoXLSX
         End Property
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Worksheet"/> class
+        ''' Initializes a new instance of the <see cref="Worksheet"/> class
         ''' </summary>
         Public Sub New()
             CurrentCellDirection = CellDirection.ColumnToColumn
@@ -575,20 +576,20 @@ Namespace PicoXLSX
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Worksheet"/> class
+        ''' Initializes a new instance of the <see cref="Worksheet"/> class
         ''' </summary>
-        ''' <paramname="name">The name<seecref="String"/>.</param>
+        ''' <param name="name">The name<see cref="String"/>.</param>
         Public Sub New(ByVal name As String)
             Me.New()
             SetSheetName(name)
         End Sub
 
         ''' <summary>
-        ''' Initializes a new instance of the <seecref="Worksheet"/> class
+        ''' Initializes a new instance of the <see cref="Worksheet"/> class
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
-        ''' <paramname="id">ID of the worksheet (for internal use).</param>
-        ''' <paramname="reference">Reference to the parent Workbook.</param>
+        ''' <param name="name">Name of the worksheet.</param>
+        ''' <param name="id">ID of the worksheet (for internal use).</param>
+        ''' <param name="reference">Reference to the parent Workbook.</param>
         Public Sub New(ByVal name As String, ByVal id As Integer, ByVal reference As Workbook)
             Me.New()
             SetSheetName(name)
@@ -599,7 +600,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
+        ''' <param name="value">Unspecified value to insert.</param>
         Public Sub AddNextCell(ByVal value As Object)
             AddNextCell(CastValue(value, currentColumnNumber, currentRowNumber), True, Nothing)
         End Sub
@@ -607,8 +608,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
-        ''' <paramname="style">Style object to apply on this cell.</param>
+        ''' <param name="value">Unspecified value to insert.</param>
+        ''' <param name="style">Style object to apply on this cell.</param>
         Public Sub AddNextCell(ByVal value As Object, ByVal style As Style)
             AddNextCell(CastValue(value, currentColumnNumber, currentRowNumber), True, style)
         End Sub
@@ -616,9 +617,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to insert a generic cell to the next cell position
         ''' </summary>
-        ''' <paramname="cell">Cell object to insert.</param>
-        ''' <paramname="incremental">If true, the address value (row or column) will be incremented, otherwise not.</param>
-        ''' <paramname="style">If not null, the defined style will be applied to the cell, otherwise no style or the default style will be applied.</param>
+        ''' <param name="cell">Cell object to insert.</param>
+        ''' <param name="incremental">If true, the address value (row or column) will be incremented, otherwise not.</param>
+        ''' <param name="style">If not null, the defined style will be applied to the cell, otherwise no style or the default style will be applied.</param>
         Private Sub AddNextCell(ByVal cell As Cell, ByVal incremental As Boolean, ByVal style As Style)
             ' date and time styles are already defined by the passed cell object
             If style IsNot Nothing OrElse activeStyleField IsNot Nothing AndAlso useActiveStyle Then
@@ -665,9 +666,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to cast a value or align an object of the type Cell to the context of the worksheet
         ''' </summary>
-        ''' <paramname="value">Unspecified value or object of the type Cell.</param>
-        ''' <paramname="column">Column index.</param>
-        ''' <paramname="row">Row index.</param>
+        ''' <param name="value">Unspecified value or object of the type Cell.</param>
+        ''' <param name="column">Column index.</param>
+        ''' <param name="row">Row index.</param>
         ''' <returns>Cell object.</returns>
         Private Function CastValue(ByVal value As Object, ByVal column As Integer, ByVal row As Integer) As Cell
             Dim c As Cell
@@ -683,9 +684,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the defined cell address. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
+        ''' <param name="value">Unspecified value to insert.</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
         Public Sub AddCell(ByVal value As Object, ByVal columnNumber As Integer, ByVal rowNumber As Integer)
             AddNextCell(CastValue(value, columnNumber, rowNumber), False, Nothing)
         End Sub
@@ -693,10 +694,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the defined cell address. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
-        ''' <paramname="style">Style to apply on the cell.</param>
+        ''' <param name="value">Unspecified value to insert.</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
+        ''' <param name="style">Style to apply on the cell.</param>
         Public Sub AddCell(ByVal value As Object, ByVal columnNumber As Integer, ByVal rowNumber As Integer, ByVal style As Style)
             AddNextCell(CastValue(value, columnNumber, rowNumber), False, style)
         End Sub
@@ -704,8 +705,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the defined cell address. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="value">Unspecified value to insert.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         Public Sub AddCell(ByVal value As Object, ByVal address As String)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
@@ -715,9 +716,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds an object to the defined cell address. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="value">Unspecified value to insert.</param>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
-        ''' <paramname="style">Style to apply on the cell.</param>
+        ''' <param name="value">Unspecified value to insert.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="style">Style to apply on the cell.</param>
         Public Sub AddCell(ByVal value As Object, ByVal address As String, ByVal style As Style)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
@@ -727,8 +728,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a cell formula as string to the defined cell address
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="formula">Formula to insert.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         Public Sub AddCellFormula(ByVal formula As String, ByVal address As String)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
@@ -739,9 +740,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a cell formula as string to the defined cell address
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
-        ''' <paramname="style">Style to apply on the cell.</param>
+        ''' <param name="formula">Formula to insert.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="style">Style to apply on the cell.</param>
         Public Sub AddCellFormula(ByVal formula As String, ByVal address As String, ByVal style As Style)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
@@ -752,9 +753,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a cell formula as string to the defined cell address
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
+        ''' <param name="formula">Formula to insert.</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
         Public Sub AddCellFormula(ByVal formula As String, ByVal columnNumber As Integer, ByVal rowNumber As Integer)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, columnNumber, rowNumber)
             AddNextCell(c, False, Nothing)
@@ -763,10 +764,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a cell formula as string to the defined cell address
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
-        ''' <paramname="style">Style to apply on the cell.</param>
+        ''' <param name="formula">Formula to insert.</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
+        ''' <param name="style">Style to apply on the cell.</param>
         Public Sub AddCellFormula(ByVal formula As String, ByVal columnNumber As Integer, ByVal rowNumber As Integer, ByVal style As Style)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, columnNumber, rowNumber)
             AddNextCell(c, False, style)
@@ -775,7 +776,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a formula as string to the next cell position
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
+        ''' <param name="formula">Formula to insert.</param>
         Public Sub AddNextCellFormula(ByVal formula As String)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, currentColumnNumber, currentRowNumber)
             AddNextCell(c, True, Nothing)
@@ -784,8 +785,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a formula as string to the next cell position
         ''' </summary>
-        ''' <paramname="formula">Formula to insert.</param>
-        ''' <paramname="style">Style to apply on the cell.</param>
+        ''' <param name="formula">Formula to insert.</param>
+        ''' <param name="style">Style to apply on the cell.</param>
         Public Sub AddNextCellFormula(ByVal formula As String, ByVal style As Style)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, currentColumnNumber, currentRowNumber)
             AddNextCell(c, True, style)
@@ -794,9 +795,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a list of object values to a defined cell range. If the type of the a particular value does not match with one of the supported data types, it will be casted to a String. Prepared objects of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="values">List of unspecified objects to insert.</param>
-        ''' <paramname="startAddress">Start address.</param>
-        ''' <paramname="endAddress">End address.</param>
+        ''' <param name="values">List of unspecified objects to insert.</param>
+        ''' <param name="startAddress">Start address.</param>
+        ''' <param name="endAddress">End address.</param>
         Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal startAddress As Address, ByVal endAddress As Address)
             AddCellRangeInternal(values, startAddress, endAddress, Nothing)
         End Sub
@@ -804,10 +805,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a list of object values to a defined cell range. If the type of the a particular value does not match with one of the supported data types, it will be casted to a String. Prepared objects of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="values">List of unspecified objects to insert.</param>
-        ''' <paramname="startAddress">Start address.</param>
-        ''' <paramname="endAddress">End address.</param>
-        ''' <paramname="style">Style to apply on the all cells of the range.</param>
+        ''' <param name="values">List of unspecified objects to insert.</param>
+        ''' <param name="startAddress">Start address.</param>
+        ''' <param name="endAddress">End address.</param>
+        ''' <param name="style">Style to apply on the all cells of the range.</param>
         Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
             AddCellRangeInternal(values, startAddress, endAddress, style)
         End Sub
@@ -815,8 +816,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a list of object values to a defined cell range. If the type of the a particular value does not match with one of the supported data types, it will be casted to a String. Prepared objects of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="values">List of unspecified objects to insert.</param>
-        ''' <paramname="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
+        ''' <param name="values">List of unspecified objects to insert.</param>
+        ''' <param name="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
         Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal cellRange As String)
             Dim range = ResolveCellRange(cellRange)
             AddCellRangeInternal(values, range.StartAddress, range.EndAddress, Nothing)
@@ -825,9 +826,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a list of object values to a defined cell range. If the type of the a particular value does not match with one of the supported data types, it will be casted to a String. Prepared objects of the type Cell will not be casted but adjusted
         ''' </summary>
-        ''' <paramname="values">List of unspecified objects to insert.</param>
-        ''' <paramname="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
-        ''' <paramname="style">Style to apply on the all cells of the range.</param>
+        ''' <param name="values">List of unspecified objects to insert.</param>
+        ''' <param name="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
+        ''' <param name="style">Style to apply on the all cells of the range.</param>
         Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal cellRange As String, ByVal style As Style)
             Dim range = ResolveCellRange(cellRange)
             AddCellRangeInternal(values, range.StartAddress, range.EndAddress, style)
@@ -837,10 +838,10 @@ Namespace PicoXLSX
         ''' Internal function to add a generic list of value to the defined cell range
         ''' </summary>
         ''' <typeparamname="T">Data type of the generic value list.</typeparam>
-        ''' <paramname="values">List of values.</param>
-        ''' <paramname="startAddress">Start address.</param>
-        ''' <paramname="endAddress">End address.</param>
-        ''' <paramname="style">Style to apply on the all cells of the range.</param>
+        ''' <param name="values">List of values.</param>
+        ''' <param name="startAddress">Start address.</param>
+        ''' <param name="endAddress">End address.</param>
+        ''' <param name="style">Style to apply on the all cells of the range.</param>
         Private Sub AddCellRangeInternal(Of T)(ByVal values As IReadOnlyList(Of T), ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
             Dim addresses As List(Of Address) = TryCast(GetCellRange(startAddress, endAddress), List(Of Address))
             If values.Count <> addresses.Count Then
@@ -858,8 +859,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes a previous inserted cell at the defined address
         ''' </summary>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
         ''' <returns>Returns true if the cell could be removed (existed), otherwise false (did not exist).</returns>
         Public Function RemoveCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Boolean
             Dim address = ResolveCellAddress(columnNumber, rowNumber)
@@ -869,7 +870,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes a previous inserted cell at the defined address
         ''' </summary>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         ''' <returns>Returns true if the cell could be removed (existed), otherwise false (did not exist).</returns>
         Public Function RemoveCell(ByVal address As String) As Boolean
             Dim row, column As Integer
@@ -880,8 +881,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the passed style on the passed cell range. If cells are already existing, the style will be added or replaced
         ''' </summary>
-        ''' <paramname="cellRange">Cell range to apply the style.</param>
-        ''' <paramname="style">Style to apply.</param>
+        ''' <param name="cellRange">Cell range to apply the style.</param>
+        ''' <param name="style">Style to apply.</param>
         Public Sub SetStyle(ByVal cellRange As Range, ByVal style As Style)
             Dim addresses As IReadOnlyList(Of Address) = cellRange.ResolveEnclosedAddresses()
             For Each address In addresses
@@ -904,9 +905,9 @@ Namespace PicoXLSX
         ''' Sets the passed style on the passed cell range, derived from a start and end address. If cells are already existing, the style will be added or replaced
         ''' Sets the passed style on the passed cell range, derived from a start and end address. If cells are already existing, the style will be added or replaced
         ''' </summary>
-        ''' <paramname="startAddress">Start address of the cell range.</param>
-        ''' <paramname="endAddress">End address of the cell range.</param>
-        ''' <paramname="style">Style to apply or null to clear the range.</param>
+        ''' <param name="startAddress">Start address of the cell range.</param>
+        ''' <param name="endAddress">End address of the cell range.</param>
+        ''' <param name="style">Style to apply or null to clear the range.</param>
         Public Sub SetStyle(ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
             SetStyle(New Range(startAddress, endAddress), style)
         End Sub
@@ -915,8 +916,8 @@ Namespace PicoXLSX
         ''' Sets the passed style on the passed (singular) cell address. If the cell is already existing, the style will be added or replaced
         ''' Sets the passed style on the passed (singular) cell address. If the cell is already existing, the style will be added or replaced
         ''' </summary>
-        ''' <paramname="address">Cell address to apply the style.</param>
-        ''' <paramname="style">Style to apply or null to clear the range.</param>
+        ''' <param name="address">Cell address to apply the style.</param>
+        ''' <param name="style">Style to apply or null to clear the range.</param>
         Public Sub SetStyle(ByVal address As Address, ByVal style As Style)
             SetStyle(address, address, style)
         End Sub
@@ -926,8 +927,8 @@ Namespace PicoXLSX
         ''' Sets the passed style on the passed address expression. Such an expression may be a single cell or a cell range
         ''' Sets the passed style on the passed address expression. Such an expression may be a single cell or a cell range
         ''' </summary>
-        ''' <paramname="addressExpression">Expression of a cell address or range of addresses.</param>
-        ''' <paramname="style">Style to apply or null to clear the range.</param>
+        ''' <param name="addressExpression">Expression of a cell address or range of addresses.</param>
+        ''' <param name="style">Style to apply or null to clear the range.</param>
         Public Sub SetStyle(ByVal addressExpression As String, ByVal style As Style)
             Dim scope = GetAddressScope(addressExpression)
             If scope = AddressScope.SingleAddress Then
@@ -944,7 +945,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Method to add allowed actions if the worksheet is protected. If one or more values are added, UseSheetProtection will be set to true
         ''' </summary>
-        ''' <paramname="typeOfProtection">Allowed action on the worksheet or cells.</param>
+        ''' <param name="typeOfProtection">Allowed action on the worksheet or cells.</param>
         Public Sub AddAllowedActionOnSheetProtection(ByVal typeOfProtection As SheetProtectionValue)
             If Not sheetProtectionValuesField.Contains(typeOfProtection) Then
                 If typeOfProtection = SheetProtectionValue.selectLockedCells AndAlso Not sheetProtectionValuesField.Contains(SheetProtectionValue.selectUnlockedCells) Then
@@ -958,7 +959,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the defined column as hidden
         ''' </summary>
-        ''' <paramname="columnNumber">Column number to hide on the worksheet.</param>
+        ''' <param name="columnNumber">Column number to hide on the worksheet.</param>
         Public Sub AddHiddenColumn(ByVal columnNumber As Integer)
             SetColumnHiddenState(columnNumber, True)
         End Sub
@@ -966,7 +967,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the defined column as hidden
         ''' </summary>
-        ''' <paramname="columnAddress">Column address to hide on the worksheet.</param>
+        ''' <param name="columnAddress">Column address to hide on the worksheet.</param>
         Public Sub AddHiddenColumn(ByVal columnAddress As String)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnHiddenState(columnNumber, True)
@@ -975,7 +976,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the defined row as hidden
         ''' </summary>
-        ''' <paramname="rowNumber">Row number to hide on the worksheet.</param>
+        ''' <param name="rowNumber">Row number to hide on the worksheet.</param>
         Public Sub AddHiddenRow(ByVal rowNumber As Integer)
             SetRowHiddenState(rowNumber, True)
         End Sub
@@ -991,7 +992,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the cell of the specified address
         ''' </summary>
-        ''' <paramname="address">Address of the cell.</param>
+        ''' <param name="address">Address of the cell.</param>
         ''' <returns>Cell object.</returns>
         Public Function GetCell(ByVal address As Address) As Cell
             If Not cellsField.ContainsKey(address.GetAddress()) Then
@@ -1003,8 +1004,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the cell of the specified column and row number (zero-based)
         ''' </summary>
-        ''' <paramname="columnNumber">Column number of the cell.</param>
-        ''' <paramname="rowNumber">Row number of the cell.</param>
+        ''' <param name="columnNumber">Column number of the cell.</param>
+        ''' <param name="rowNumber">Row number of the cell.</param>
         ''' <returns>Cell object.</returns>
         Public Function GetCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Cell
             Return GetCell(New Address(columnNumber, rowNumber))
@@ -1013,8 +1014,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets whether the specified address exists in the worksheet. Existing means that a value was stored at the address
         ''' </summary>
-        ''' <paramname="address">Address to check.</param>
-        ''' <returns>The <seecref="Boolean"/>.</returns>
+        ''' <param name="address">Address to check.</param>
+        ''' <returns>The <see cref="Boolean"/>.</returns>
         Public Function HasCell(ByVal address As Address) As Boolean
             Return cellsField.ContainsKey(address.GetAddress())
         End Function
@@ -1022,17 +1023,17 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets whether the specified address exists in the worksheet. Existing means that a value was stored at the address
         ''' </summary>
-        ''' <paramname="columnNumber">Column number of the cell to check (zero-based).</param>
-        ''' <paramname="rowNumber">Row number of the cell to check (zero-based).</param>
-        ''' <returns>The <seecref="Boolean"/>.</returns>
+        ''' <param name="columnNumber">Column number of the cell to check (zero-based).</param>
+        ''' <param name="rowNumber">Row number of the cell to check (zero-based).</param>
+        ''' <returns>The <see cref="Boolean"/>.</returns>
         Public Function HasCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Boolean
             Return HasCell(New Address(columnNumber, rowNumber))
         End Function
 
         ''' <summary>
-        ''' Resets the defined column, if existing. The corresponding instance will be removed from <seecref="Columns"/>
+        ''' Resets the defined column, if existing. The corresponding instance will be removed from <see cref="Columns"/>
         ''' </summary>
-        ''' <paramname="columnNumber">Column number to reset (zero-based).</param>
+        ''' <param name="columnNumber">Column number to reset (zero-based).</param>
         Public Sub ResetColumn(ByVal columnNumber As Integer)
             If columnsField.ContainsKey(columnNumber) AndAlso Not columnsField(columnNumber).HasAutoFilter Then ' AutoFilters cannot have gaps 
                 columnsField.Remove(columnNumber)
@@ -1161,9 +1162,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets either the minimum or maximum row or column number, considering only calls with data
         ''' </summary>
-        ''' <paramname="row">If true, the min or max row is returned, otherwise the column.</param>
-        ''' <paramname="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
-        ''' <paramname="ignoreEmpty">If true, empty cell values are ignored, otherwise considered without checking the content.</param>
+        ''' <param name="row">If true, the min or max row is returned, otherwise the column.</param>
+        ''' <param name="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
+        ''' <param name="ignoreEmpty">If true, empty cell values are ignored, otherwise considered without checking the content.</param>
         ''' <returns>Min or max number, or -1 if not defined.</returns>
         Private Function GetBoundaryDataNumber(ByVal row As Boolean, ByVal min As Boolean, ByVal ignoreEmpty As Boolean) As Integer
             If cellsField.Count = 0 Then
@@ -1198,8 +1199,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets either the minimum or maximum row or column number, considering all available data
         ''' </summary>
-        ''' <paramname="row">If true, the min or max row is returned, otherwise the column.</param>
-        ''' <paramname="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
+        ''' <param name="row">If true, the min or max row is returned, otherwise the column.</param>
+        ''' <param name="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
         ''' <returns>Min or max number, or -1 if not defined.</returns>
         Private Function GetBoundaryNumber(ByVal row As Boolean, ByVal min As Boolean) As Integer
             Dim cellBoundary = GetBoundaryDataNumber(row, min, False)
@@ -1229,9 +1230,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the maximum row coordinate either from cell data, height definitions or hidden rows
         ''' </summary>
-        ''' <paramname="cellBoundary">Row number of max cell data.</param>
-        ''' <paramname="heightBoundary">Row number of max defined row height.</param>
-        ''' <paramname="hiddenBoundary">Row number of max defined hidden row.</param>
+        ''' <param name="cellBoundary">Row number of max cell data.</param>
+        ''' <param name="heightBoundary">Row number of max defined row height.</param>
+        ''' <param name="hiddenBoundary">Row number of max defined hidden row.</param>
         ''' <returns>Max row number or -1 if nothing valid defined.</returns>
         Private Function GetMaxRow(ByVal cellBoundary As Integer, ByVal heightBoundary As Integer, ByVal hiddenBoundary As Integer) As Integer
             Dim highest = -1
@@ -1250,9 +1251,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Gets the minimum row coordinate either from cell data, height definitions or hidden rows
         ''' </summary>
-        ''' <paramname="cellBoundary">Row number of min cell data.</param>
-        ''' <paramname="heightBoundary">Row number of min defined row height.</param>
-        ''' <paramname="hiddenBoundary">Row number of min defined hidden row.</param>
+        ''' <param name="cellBoundary">Row number of min cell data.</param>
+        ''' <param name="heightBoundary">Row number of min defined row height.</param>
+        ''' <param name="hiddenBoundary">Row number of min defined hidden row.</param>
         ''' <returns>Min row number or -1 if nothing valid defined.</returns>
         Private Function GetMinRow(ByVal cellBoundary As Integer, ByVal heightBoundary As Integer, ByVal hiddenBoundary As Integer) As Integer
             Dim lowest = Integer.MaxValue
@@ -1296,8 +1297,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Moves the current position to the next column with the number of cells to move
         ''' </summary>
-        ''' <paramname="numberOfColumns">Number of columns to move.</param>
-        ''' <paramname="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
+        ''' <param name="numberOfColumns">Number of columns to move.</param>
+        ''' <param name="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
         Public Sub GoToNextColumn(ByVal numberOfColumns As Integer, ByVal Optional keepRowPosition As Boolean = False)
             currentColumnNumber += numberOfColumns
             If Not keepRowPosition Then
@@ -1318,8 +1319,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Moves the current position to the next row with the number of cells to move (use for a new line)
         ''' </summary>
-        ''' <paramname="numberOfRows">Number of rows to move.</param>
-        ''' <paramname="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
+        ''' <param name="numberOfRows">Number of rows to move.</param>
+        ''' <param name="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
         Public Sub GoToNextRow(ByVal numberOfRows As Integer, ByVal Optional keepColumnPosition As Boolean = False)
             currentRowNumber += numberOfRows
             If Not keepColumnPosition Then
@@ -1331,7 +1332,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Merges the defined cell range
         ''' </summary>
-        ''' <paramname="cellRange">Range to merge.</param>
+        ''' <param name="cellRange">Range to merge.</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
         Public Function MergeCells(ByVal cellRange As Range) As String
             Return MergeCells(cellRange.StartAddress, cellRange.EndAddress)
@@ -1340,7 +1341,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Merges the defined cell range
         ''' </summary>
-        ''' <paramname="cellRange">Range to merge (e.g. 'A1:B12').</param>
+        ''' <param name="cellRange">Range to merge (e.g. 'A1:B12').</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
         Public Function MergeCells(ByVal cellRange As String) As String
             Dim range = ResolveCellRange(cellRange)
@@ -1350,8 +1351,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Merges the defined cell range
         ''' </summary>
-        ''' <paramname="startAddress">Start address of the merged cell range.</param>
-        ''' <paramname="endAddress">End address of the merged cell range.</param>
+        ''' <param name="startAddress">Start address of the merged cell range.</param>
+        ''' <param name="endAddress">End address of the merged cell range.</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
         Public Function MergeCells(ByVal startAddress As Address, ByVal endAddress As Address) As String
             Dim key As String = startAddress.ToString() & ":" & endAddress.ToString()
@@ -1385,7 +1386,7 @@ Namespace PicoXLSX
                 End If
             Next
             Dim c As Column
-            For i = start To [end]
+            For i As Integer = start To [end]
                 If Not columnsField.ContainsKey(i) Then
                     c = New Column(i)
                     c.HasAutoFilter = True
@@ -1425,9 +1426,9 @@ Namespace PicoXLSX
         Friend Sub ResolveMergedCells()
             Dim mergeStyle = Style.BasicStyles.MergeCellStyle
             Dim cell As Cell
-            For Each range In MergedCells
+            For Each Range In MergedCells
                 Dim pos = 0
-                Dim addresses As List(Of Address) = TryCast(GetCellRange(range.Value.StartAddress, range.Value.EndAddress), List(Of Address))
+                Dim addresses As List(Of Address) = TryCast(GetCellRange(Range.Value.StartAddress, Range.Value.EndAddress), List(Of Address))
                 For Each address In addresses
                     If Not Cells.ContainsKey(address.GetAddress()) Then
                         cell = New Cell()
@@ -1463,7 +1464,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets a previously defined, hidden column as visible again
         ''' </summary>
-        ''' <paramname="columnNumber">Column number to make visible again.</param>
+        ''' <param name="columnNumber">Column number to make visible again.</param>
         Public Sub RemoveHiddenColumn(ByVal columnNumber As Integer)
             SetColumnHiddenState(columnNumber, False)
         End Sub
@@ -1471,7 +1472,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets a previously defined, hidden column as visible again
         ''' </summary>
-        ''' <paramname="columnAddress">Column address to make visible again.</param>
+        ''' <param name="columnAddress">Column address to make visible again.</param>
         Public Sub RemoveHiddenColumn(ByVal columnAddress As String)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnHiddenState(columnNumber, False)
@@ -1480,7 +1481,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets a previously defined, hidden row as visible again
         ''' </summary>
-        ''' <paramname="rowNumber">Row number to hide on the worksheet.</param>
+        ''' <param name="rowNumber">Row number to hide on the worksheet.</param>
         Public Sub RemoveHiddenRow(ByVal rowNumber As Integer)
             SetRowHiddenState(rowNumber, False)
         End Sub
@@ -1488,7 +1489,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the defined merged cell range
         ''' </summary>
-        ''' <paramname="range">Cell range to remove the merging.</param>
+        ''' <param name="range">Cell range to remove the merging.</param>
         Public Sub RemoveMergedCells(ByVal range As String)
             If Not Equals(range, Nothing) Then
                 range = range.ToUpper()
@@ -1520,7 +1521,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes the defined, non-standard row height
         ''' </summary>
-        ''' <paramname="rowNumber">Row number (zero-based).</param>
+        ''' <param name="rowNumber">Row number (zero-based).</param>
         Public Sub RemoveRowHeight(ByVal rowNumber As Integer)
             If rowHeightsField.ContainsKey(rowNumber) Then
                 rowHeightsField.Remove(rowNumber)
@@ -1530,7 +1531,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Removes an allowed action on the current worksheet or its cells
         ''' </summary>
-        ''' <paramname="value">Allowed action on the worksheet or cells.</param>
+        ''' <param name="value">Allowed action on the worksheet or cells.</param>
         Public Sub RemoveAllowedActionOnSheetProtection(ByVal value As SheetProtectionValue)
             If sheetProtectionValuesField.Contains(value) Then
                 sheetProtectionValuesField.Remove(value)
@@ -1540,7 +1541,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the active style of the worksheet. This style will be assigned to all later added cells
         ''' </summary>
-        ''' <paramname="style">Style to set as active style.</param>
+        ''' <param name="style">Style to set as active style.</param>
         Public Sub SetActiveStyle(ByVal style As Style)
             If style Is Nothing Then
                 useActiveStyle = False
@@ -1553,8 +1554,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the column auto filter within the defined column range
         ''' </summary>
-        ''' <paramname="startColumn">Column number with the first appearance of an auto filter drop down.</param>
-        ''' <paramname="endColumn">Column number with the last appearance of an auto filter drop down.</param>
+        ''' <param name="startColumn">Column number with the first appearance of an auto filter drop down.</param>
+        ''' <param name="endColumn">Column number with the last appearance of an auto filter drop down.</param>
         Public Sub SetAutoFilter(ByVal startColumn As Integer, ByVal endColumn As Integer)
             Dim start = ResolveCellAddress(startColumn, 0)
             Dim [end] = ResolveCellAddress(endColumn, 0)
@@ -1568,7 +1569,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the column auto filter within the defined column range
         ''' </summary>
-        ''' <paramname="range">Range to apply auto filter on. The range could be 'A1:C10' for instance. The end row will be recalculated automatically when saving the file.</param>
+        ''' <param name="range">Range to apply auto filter on. The range could be 'A1:C10' for instance. The end row will be recalculated automatically when saving the file.</param>
         Public Sub SetAutoFilter(ByVal range As String)
             autoFilterRangeField = ResolveCellRange(range)
             RecalculateAutoFilter()
@@ -1578,8 +1579,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the defined column as hidden or visible
         ''' </summary>
-        ''' <paramname="columnNumber">Column number to hide on the worksheet.</param>
-        ''' <paramname="state">If true, the column will be hidden, otherwise be visible.</param>
+        ''' <param name="columnNumber">Column number to hide on the worksheet.</param>
+        ''' <param name="state">If true, the column will be hidden, otherwise be visible.</param>
         Private Sub SetColumnHiddenState(ByVal columnNumber As Integer, ByVal state As Boolean)
             ValidateColumnNumber(columnNumber)
             If columnsField.ContainsKey(columnNumber) Then
@@ -1597,8 +1598,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the width of the passed column address
         ''' </summary>
-        ''' <paramname="columnAddress">Column address (A - XFD).</param>
-        ''' <paramname="width">Width from 0 to 255.0.</param>
+        ''' <param name="columnAddress">Column address (A - XFD).</param>
+        ''' <param name="width">Width from 0 to 255.0.</param>
         Public Sub SetColumnWidth(ByVal columnAddress As String, ByVal width As Single)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnWidth(columnNumber, width)
@@ -1607,8 +1608,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the width of the passed column number (zero-based)
         ''' </summary>
-        ''' <paramname="columnNumber">Column number (zero-based, from 0 to 16383).</param>
-        ''' <paramname="width">Width from 0 to 255.0.</param>
+        ''' <param name="columnNumber">Column number (zero-based, from 0 to 16383).</param>
+        ''' <param name="width">Width from 0 to 255.0.</param>
         Public Sub SetColumnWidth(ByVal columnNumber As Integer, ByVal width As Single)
             ValidateColumnNumber(columnNumber)
             If width < MIN_COLUMN_WIDTH OrElse width > MAX_COLUMN_WIDTH Then
@@ -1626,8 +1627,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Set the current cell address
         ''' </summary>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
         Public Sub SetCurrentCellAddress(ByVal columnNumber As Integer, ByVal rowNumber As Integer)
             SetCurrentColumnNumber(columnNumber)
             SetCurrentRowNumber(rowNumber)
@@ -1636,7 +1637,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Set the current cell address
         ''' </summary>
-        ''' <paramname="address">Cell address in the format A1 - XFD1048576.</param>
+        ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         Public Sub SetCurrentCellAddress(ByVal address As String)
             Dim row, column As Integer
             ResolveCellCoordinate(address, column, row)
@@ -1646,7 +1647,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the current column number (zero based)
         ''' </summary>
-        ''' <paramname="columnNumber">Column number (zero based).</param>
+        ''' <param name="columnNumber">Column number (zero based).</param>
         Public Sub SetCurrentColumnNumber(ByVal columnNumber As Integer)
             ValidateColumnNumber(columnNumber)
             currentColumnNumber = columnNumber
@@ -1655,7 +1656,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the current row number (zero based)
         ''' </summary>
-        ''' <paramname="rowNumber">Row number (zero based).</param>
+        ''' <param name="rowNumber">Row number (zero based).</param>
         Public Sub SetCurrentRowNumber(ByVal rowNumber As Integer)
             ValidateRowNumber(rowNumber)
             currentRowNumber = rowNumber
@@ -1664,7 +1665,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets a single range of selected cells on this worksheet. All existing ranges will be removed
         ''' </summary>
-        ''' <paramname="range">Range to set as single cell range for selected cells</param>
+        ''' <param name="range">Range to set as single cell range for selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
         Public Sub SetSelectedCells(ByVal range As Range)
             RemoveSelectedCells()
@@ -1674,8 +1675,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the selected cells on this worksheet
         ''' </summary>
-        ''' <paramname="startAddress">Start address of the range to set as single cell range for selected cells</param>
-        ''' <paramname="endAddress">End address of the range to set as single cell range for selected cells</param>
+        ''' <param name="startAddress">Start address of the range to set as single cell range for selected cells</param>
+        ''' <param name="endAddress">End address of the range to set as single cell range for selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
         Public Sub SetSelectedCells(ByVal startAddress As Address, ByVal endAddress As Address)
             SetSelectedCells(New Range(startAddress, endAddress))
@@ -1684,7 +1685,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets a single range of selected cells on this worksheet. All existing ranges will be removed. Null will remove all selected cells
         ''' </summary>
-        ''' <paramname="range">Range as string to set as single cell range for selected cells, or null to remove the selected cells</param>
+        ''' <param name="range">Range as string to set as single cell range for selected cells, or null to remove the selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
         Public Sub SetSelectedCells(ByVal range As String)
             If Equals(range, Nothing) Then
@@ -1698,7 +1699,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a range to the selected cells on this worksheet
         ''' </summary>
-        ''' <paramname="range">Cell range to be added as selected cells</param>
+        ''' <param name="range">Cell range to be added as selected cells</param>
         Public Sub AddSelectedCells(ByVal range As Range)
             selectedCellsField.Add(range)
         End Sub
@@ -1706,8 +1707,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a range to the selected cells on this worksheet
         ''' </summary>
-        ''' <paramname="startAddress">Start address of the range to add</param>
-        ''' <paramname="endAddress">End address of the range to add</param>
+        ''' <param name="startAddress">Start address of the range to add</param>
+        ''' <param name="endAddress">End address of the range to add</param>
         Public Sub AddSelectedCells(ByVal startAddress As Address, ByVal endAddress As Address)
             selectedCellsField.Add(New Range(startAddress, endAddress))
         End Sub
@@ -1715,7 +1716,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Adds a range to the selected cells on this worksheet. Null or empty as value will be ignored
         ''' </summary>
-        ''' <paramname="range">Cell range to add as selected cells</param>
+        ''' <param name="range">Cell range to add as selected cells</param>
         Public Sub AddSelectedCells(ByVal range As String)
             If Not Equals(range, Nothing) Then
                 selectedCellsField.Add(ResolveCellRange(range))
@@ -1725,7 +1726,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets or removes the password for worksheet protection. If set, UseSheetProtection will be also set to true
         ''' </summary>
-        ''' <paramname="password">Password (UTF-8) to protect the worksheet. If the password is null or empty, no password will be used.</param>
+        ''' <param name="password">Password (UTF-8) to protect the worksheet. If the password is null or empty, no password will be used.</param>
         Public Sub SetSheetProtectionPassword(ByVal password As String)
             If String.IsNullOrEmpty(password) Then
                 sheetProtectionPasswordField = Nothing
@@ -1741,8 +1742,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the height of the passed row number (zero-based)
         ''' </summary>
-        ''' <paramname="rowNumber">Row number (zero-based, 0 to 1048575).</param>
-        ''' <paramname="height">Height from 0 to 409.5.</param>
+        ''' <param name="rowNumber">Row number (zero-based, 0 to 1048575).</param>
+        ''' <param name="height">Height from 0 to 409.5.</param>
         Public Sub SetRowHeight(ByVal rowNumber As Integer, ByVal height As Single)
             ValidateRowNumber(rowNumber)
             If height < MIN_ROW_HEIGHT OrElse height > MAX_ROW_HEIGHT Then
@@ -1758,8 +1759,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the defined row as hidden or visible
         ''' </summary>
-        ''' <paramname="rowNumber">Row number to make visible again.</param>
-        ''' <paramname="state">If true, the row will be hidden, otherwise visible.</param>
+        ''' <param name="rowNumber">Row number to make visible again.</param>
+        ''' <param name="state">If true, the row will be hidden, otherwise visible.</param>
         Private Sub SetRowHiddenState(ByVal rowNumber As Integer, ByVal state As Boolean)
             ValidateRowNumber(rowNumber)
             If hiddenRowsField.ContainsKey(rowNumber) Then
@@ -1776,7 +1777,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Validates and sets the worksheet name
         ''' </summary>
-        ''' <paramname="name">Name to set.</param>
+        ''' <param name="name">Name to set.</param>
         Public Sub SetSheetName(ByVal name As String)
             If String.IsNullOrEmpty(name) Then
                 Throw New FormatException("the worksheet name must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
@@ -1795,8 +1796,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the name of the worksheet
         ''' </summary>
-        ''' <paramname="name">Name of the worksheet.</param>
-        ''' <paramname="sanitize">If true, the filename will be sanitized automatically according to the specifications of Excel.</param>
+        ''' <param name="name">Name of the worksheet.</param>
+        ''' <param name="sanitize">If true, the filename will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub SetSheetName(ByVal name As String, ByVal sanitize As Boolean)
             If sanitize Then
                 sheetNameField = "" ' Empty name (temporary) to prevent conflicts during sanitizing
@@ -1809,9 +1810,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the horizontal split of the worksheet into two panes. The measurement in characters cannot be used to freeze panes
         ''' </summary>
-        ''' <paramname="topPaneHeight">Height (similar to row height) from top of the worksheet to the split line in characters.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="topPaneHeight">Height (similar to row height) from top of the worksheet to the split line in characters.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetHorizontalSplit(ByVal topPaneHeight As Single, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             SetSplit(Nothing, topPaneHeight, topLeftCell, activePane)
         End Sub
@@ -1819,10 +1820,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the horizontal split of the worksheet into two panes. The measurement in rows can be used to split and freeze panes
         ''' </summary>
-        ''' <paramname="numberOfRowsFromTop">Number of rows from top of the worksheet to the split line. The particular row heights are considered.</param>
-        ''' <paramname="freeze">If true, all panes are frozen, otherwise remains movable.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="numberOfRowsFromTop">Number of rows from top of the worksheet to the split line. The particular row heights are considered.</param>
+        ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetHorizontalSplit(ByVal numberOfRowsFromTop As Integer, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             SetSplit(Nothing, numberOfRowsFromTop, freeze, topLeftCell, activePane)
         End Sub
@@ -1830,9 +1831,9 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the vertical split of the worksheet into two panes. The measurement in characters cannot be used to freeze panes
         ''' </summary>
-        ''' <paramname="leftPaneWidth">Width (similar to column width) from left of the worksheet to the split line in characters.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="leftPaneWidth">Width (similar to column width) from left of the worksheet to the split line in characters.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetVerticalSplit(ByVal leftPaneWidth As Single, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             SetSplit(leftPaneWidth, Nothing, topLeftCell, activePane)
         End Sub
@@ -1840,10 +1841,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the vertical split of the worksheet into two panes. The measurement in columns can be used to split and freeze panes
         ''' </summary>
-        ''' <paramname="numberOfColumnsFromLeft">Number of columns from left of the worksheet to the split line. The particular column widths are considered.</param>
-        ''' <paramname="freeze">If true, all panes are frozen, otherwise remains movable.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="numberOfColumnsFromLeft">Number of columns from left of the worksheet to the split line. The particular column widths are considered.</param>
+        ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetVerticalSplit(ByVal numberOfColumnsFromLeft As Integer, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             SetSplit(numberOfColumnsFromLeft, Nothing, freeze, topLeftCell, activePane)
         End Sub
@@ -1851,11 +1852,11 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the horizontal and vertical split of the worksheet into four panes. The measurement in rows and columns can be used to split and freeze panes
         ''' </summary>
-        ''' <paramname="numberOfColumnsFromLeft">The numberOfColumnsFromLeft<seecref="Integer."/>.</param>
-        ''' <paramname="numberOfRowsFromTop">The numberOfRowsFromTop<seecref="Integer."/>.</param>
-        ''' <paramname="freeze">If true, all panes are frozen, otherwise remains movable.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="numberOfColumnsFromLeft">The numberOfColumnsFromLeft<see cref="Integer."/>.</param>
+        ''' <param name="numberOfRowsFromTop">The numberOfRowsFromTop<see cref="Integer."/>.</param>
+        ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetSplit(ByVal numberOfColumnsFromLeft As Integer?, ByVal numberOfRowsFromTop As Integer?, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             If freeze Then
                 If numberOfColumnsFromLeft IsNot Nothing AndAlso topLeftCell.Column < numberOfColumnsFromLeft.Value Then
@@ -1878,10 +1879,10 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sets the horizontal and vertical split of the worksheet into four panes. The measurement in characters cannot be used to freeze panes
         ''' </summary>
-        ''' <paramname="leftPaneWidth">The leftPaneWidth<seecref="Single."/>.</param>
-        ''' <paramname="topPaneHeight">The topPaneHeight<seecref="Single."/>.</param>
-        ''' <paramname="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
-        ''' <paramname="activePane">Active pane in the split window.</param>
+        ''' <param name="leftPaneWidth">The leftPaneWidth<see cref="Single."/>.</param>
+        ''' <param name="topPaneHeight">The topPaneHeight<see cref="Single."/>.</param>
+        ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
+        ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetSplit(ByVal leftPaneWidth As Single?, ByVal topPaneHeight As Single?, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
             paneSplitLeftWidthField = leftPaneWidth
             paneSplitTopHeightField = topPaneHeight
@@ -1906,7 +1907,7 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Creates a (dereferenced) deep copy of this worksheet
         ''' </summary>
-        ''' <returns>The <seecref="Worksheet"/>.</returns>
+        ''' <returns>The <see cref="Worksheet"/>.</returns>
         Public Function Copy() As Worksheet
             Dim lCopy As Worksheet = New Worksheet()
             For Each cell In cellsField
@@ -1962,8 +1963,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Sanitizes a worksheet name
         ''' </summary>
-        ''' <paramname="input">Name to sanitize.</param>
-        ''' <paramname="workbook">Workbook reference.</param>
+        ''' <param name="input">Name to sanitize.</param>
+        ''' <param name="workbook">Workbook reference.</param>
         ''' <returns>Name of the sanitized worksheet.</returns>
         Public Shared Function SanitizeWorksheetName(ByVal input As String, ByVal workbook As Workbook) As String
             If Equals(input, Nothing) Then
@@ -1991,8 +1992,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Determines the next unused worksheet name in the passed workbook
         ''' </summary>
-        ''' <paramname="name">Original name to start the check.</param>
-        ''' <paramname="workbook">Workbook to look for existing worksheets.</param>
+        ''' <param name="name">Original name to start the check.</param>
+        ''' <param name="workbook">Workbook to look for existing worksheets.</param>
         ''' <returns>Not yet used worksheet name.</returns>
         Private Shared Function GetUnusedWorksheetName(ByVal name As String, ByVal workbook As Workbook) As String
             If workbook Is Nothing Then
@@ -2027,8 +2028,8 @@ Namespace PicoXLSX
         ''' <summary>
         ''' Checks whether a worksheet with the given name exists
         ''' </summary>
-        ''' <paramname="name">Name to check.</param>
-        ''' <paramname="workbook">Workbook reference.</param>
+        ''' <param name="name">Name to check.</param>
+        ''' <param name="workbook">Workbook reference.</param>
         ''' <returns>True if the name exits, otherwise false.</returns>
         Private Shared Function WorksheetExists(ByVal name As String, ByVal workbook As Workbook) As Boolean
             If workbook Is Nothing Then
@@ -2122,25 +2123,25 @@ Namespace PicoXLSX
             End Property
 
             ''' <summary>
-            ''' Prevents a default instance of the <seecref="Column"/> class from being created
+            ''' Prevents a default instance of the <see cref="Column"/> class from being created
             ''' </summary>
             Private Sub New()
                 Width = DEFAULT_COLUMN_WIDTH
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Column"/> class
+            ''' Initializes a new instance of the <see cref="Column"/> class
             ''' </summary>
-            ''' <paramname="columnCoordinate">Column number (zero-based, 0 to 16383).</param>
+            ''' <param name="columnCoordinate">Column number (zero-based, 0 to 16383).</param>
             Public Sub New(ByVal columnCoordinate As Integer)
                 Me.New()
                 Number = columnCoordinate
             End Sub
 
             ''' <summary>
-            ''' Initializes a new instance of the <seecref="Column"/> class
+            ''' Initializes a new instance of the <see cref="Column"/> class
             ''' </summary>
-            ''' <paramname="columnAddress">Column address (A to XFD).</param>
+            ''' <param name="columnAddress">Column address (A to XFD).</param>
             Public Sub New(ByVal columnAddress As String)
                 Me.New()
                 Me.ColumnAddress = columnAddress
