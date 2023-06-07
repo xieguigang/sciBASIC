@@ -60,6 +60,9 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Module test
 
     Sub Main()
+        testWriter()
+
+
         stylingTest()
         styleModelTest()
 
