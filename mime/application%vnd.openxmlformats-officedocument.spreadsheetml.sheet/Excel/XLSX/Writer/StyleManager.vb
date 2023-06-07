@@ -13,6 +13,7 @@ Namespace XLSX.Writer
     ''' Class representing a style manager to maintain all styles and its components of a workbook
     ''' </summary>
     Public Class StyleManager
+
         ''' <summary>
         ''' Defines the borders
         ''' </summary>
