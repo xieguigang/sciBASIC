@@ -9,7 +9,6 @@ Imports System.Globalization
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
-Imports Range = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell.Range
 Imports stdNum = System.Math
 
 Namespace XLSX.Writer
@@ -199,7 +198,7 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the mergedCells
         ''' </summary>
-        Private ReadOnly mergedCellsField As Dictionary(Of String, Cell.Range)
+        Private ReadOnly mergedCellsField As Dictionary(Of String, Range)
 
         ''' <summary>
         ''' Defines the sheetProtectionValues
@@ -345,7 +344,7 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Gets the merged cells (only references) as dictionary with the cell address as key and the range object as value
         ''' </summary>
-        Public ReadOnly Property MergedCells As Dictionary(Of String, Cell.Range)
+        Public ReadOnly Property MergedCells As Dictionary(Of String, Range)
             Get
                 Return mergedCellsField
             End Get
@@ -1424,7 +1423,7 @@ Namespace XLSX.Writer
         Friend Sub ResolveMergedCells()
             Dim mergeStyle = Style.BasicStyles.MergeCellStyle
             Dim cell As Cell
-            For Each range As KeyValuePair(Of String, Cell.Range) In MergedCells
+            For Each range As KeyValuePair(Of String, Range) In MergedCells
                 Dim pos = 0
                 Dim addresses As List(Of Address) = TryCast(GetCellRange(range.Value.StartAddress, range.Value.EndAddress), List(Of Address))
                 For Each address In addresses

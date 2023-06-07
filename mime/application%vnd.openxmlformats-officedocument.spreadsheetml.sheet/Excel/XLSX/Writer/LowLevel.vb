@@ -345,7 +345,7 @@ Namespace XLSX.Writer
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("<worksheet xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" mc:Ignorable=""x14ac"" xmlns:x14ac=""http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"">")
             If worksheet.GetLastCellAddress().HasValue AndAlso worksheet.GetFirstCellAddress().HasValue Then
-                sb.Append("<dimension ref=""").Append(New Cell.Range(worksheet.GetFirstCellAddress().Value, worksheet.GetLastCellAddress().Value)).Append("""/>")
+                sb.Append("<dimension ref=""").Append(New Range(worksheet.GetFirstCellAddress().Value, worksheet.GetLastCellAddress().Value)).Append("""/>")
             End If
             If worksheet.SelectedCellRanges.Count > 0 OrElse worksheet.PaneSplitTopHeight IsNot Nothing OrElse worksheet.PaneSplitLeftWidth IsNot Nothing OrElse worksheet.PaneSplitAddress IsNot Nothing OrElse worksheet.Hidden Then
                 CreateSheetViewString(worksheet, sb)
@@ -833,7 +833,7 @@ Namespace XLSX.Writer
                     styleDef = ""
                 End If
                 item.ResolveCellType() ' Recalculate the type (for handling DEFAULT)
-                If item.DataType = Cell.CellType.BOOL Then
+                If item.DataType = CellType.BOOL Then
                     typeAttribute = "b"
                     typeDef = " t=""" & typeAttribute & """ "
                     boolValue = CBool(item.Value)
@@ -843,7 +843,7 @@ Namespace XLSX.Writer
                         valueDef = "0"
                     End If
                     ' Number casting
-                ElseIf item.DataType = Cell.CellType.NUMBER Then
+                ElseIf item.DataType = CellType.NUMBER Then
                     typeAttribute = "n"
                     typeDef = " t=""" & typeAttribute & """ "
                     Dim t As Type = item.Value.GetType()
@@ -872,12 +872,12 @@ Namespace XLSX.Writer
                         valueDef = CUShort(item.Value).ToString("G", culture)
                     End If
                     ' Date parsing
-                ElseIf item.DataType = Cell.CellType.DATE Then
+                ElseIf item.DataType = CellType.DATE Then
                     typeAttribute = "d"
                     Dim [date] As Date = item.Value
                     valueDef = GetOADateTimeString([date])
                     ' Time parsing
-                ElseIf item.DataType = Cell.CellType.TIME Then
+                ElseIf item.DataType = CellType.TIME Then
                     typeAttribute = "d"
                     ' TODO: 'd' is probably an outdated attribute (to be checked for dates and times)
                     Dim time As TimeSpan = item.Value
@@ -887,11 +887,11 @@ Namespace XLSX.Writer
                         typeAttribute = Nothing
                         valueDef = Nothing ' Handle sharedStrings
                     Else
-                        If item.DataType = Cell.CellType.FORMULA Then
+                        If item.DataType = CellType.FORMULA Then
                             typeAttribute = "str"
                             valueDef = item.Value.ToString() ' Handle sharedStrings
                         Else
-                            If item.DataType = Cell.CellType.FORMULA Then
+                            If item.DataType = CellType.FORMULA Then
                                 typeAttribute = "str"
                                 valueDef = item.Value.ToString()
                             Else
@@ -903,15 +903,15 @@ Namespace XLSX.Writer
                     End If
                     typeDef = " t=""" & typeAttribute & """ "
                 End If
-                If item.DataType <> Cell.CellType.EMPTY Then
+                If item.DataType <> CellType.EMPTY Then
                     sb.Append("<c r=""").Append(item.CellAddress).Append("""").Append(typeDef).Append(styleDef).Append(">")
-                    If item.DataType = Cell.CellType.FORMULA Then
+                    If item.DataType = CellType.FORMULA Then
                         sb.Append("<f>").Append(EscapeXmlChars(item.Value.ToString())).Append("</f>")
                     Else
                         sb.Append("<v>").Append(EscapeXmlChars(valueDef)).Append("</v>")
                     End If
                     sb.Append("</c>")
-                ElseIf Equals(valueDef, Nothing) OrElse item.DataType = Cell.CellType.EMPTY Then ' Empty cell
+                ElseIf Equals(valueDef, Nothing) OrElse item.DataType = CellType.EMPTY Then ' Empty cell
                     sb.Append("<c r=""").Append(item.CellAddress).Append("""").Append(styleDef).Append("/>") ' All other, unexpected cases
                 Else
                     sb.Append("<c r=""").Append(item.CellAddress).Append("""").Append(typeDef).Append(styleDef).Append("/>")
