@@ -132,12 +132,12 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the workbook
         ''' </summary>
-        Private ReadOnly workbookField As Workbook
+        Private ReadOnly m_workbook As Workbook
 
         ''' <summary>
         ''' Defines the styles
         ''' </summary>
-        Private stylesField As StyleManager
+        Private m_styles As StyleManager
 
         ''' <summary>
         ''' Defines the sharedStrings
@@ -155,7 +155,7 @@ Namespace XLSX.Writer
         ''' <param name="workbook">Workbook to process.</param>
         Public Sub New(workbook As Workbook)
             culture = INVARIANT_CULTURE
-            workbookField = workbook
+            m_workbook = workbook
             sharedStrings = New SortedMap()
             sharedStringsTotalCount = 0
         End Sub
@@ -247,13 +247,13 @@ Namespace XLSX.Writer
             Dim numberFormatsString As String = CreateStyleNumberFormatString()
             Dim xfsStings As String = CreateStyleXfsString()
             Dim mruColorString As String = CreateMruColorsString()
-            Dim fontCount As Integer = stylesField.GetFontStyleNumber()
-            Dim fillCount As Integer = stylesField.GetFillStyleNumber()
-            Dim styleCount As Integer = stylesField.GetStyleNumber()
-            Dim borderCount As Integer = stylesField.GetBorderStyleNumber()
+            Dim fontCount As Integer = m_styles.GetFontStyleNumber()
+            Dim fillCount As Integer = m_styles.GetFillStyleNumber()
+            Dim styleCount As Integer = m_styles.GetStyleNumber()
+            Dim borderCount As Integer = m_styles.GetBorderStyleNumber()
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("<styleSheet xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" xmlns:mc=""http://schemas.openxmlformats.org/markup-compatibility/2006"" mc:Ignorable=""x14ac"" xmlns:x14ac=""http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"">")
-            Dim numFormatCount As Integer = stylesField.GetNumberFormatStyleNumber()
+            Dim numFormatCount As Integer = m_styles.GetNumberFormatStyleNumber()
             If numFormatCount > 0 Then
                 sb.Append("<numFmts count=""").Append(numFormatCount.ToString("G", culture)).Append(""">")
                 sb.Append(numberFormatsString & "</numFmts>")
@@ -280,24 +280,24 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>Raw XML string.</returns>
         Private Function CreateWorkbookDocument() As String
-            If workbookField.Worksheets.Count = 0 Then
+            If m_workbook.Worksheets.Count = 0 Then
                 Throw New RangeException("OutOfRangeException", "The workbook can not be created because no worksheet was defined.")
             End If
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("<workbook xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" xmlns:r=""http://schemas.openxmlformats.org/officeDocument/2006/relationships"">")
-            If workbookField.SelectedWorksheet > 0 OrElse workbookField.Hidden Then
+            If m_workbook.SelectedWorksheet > 0 OrElse m_workbook.Hidden Then
                 sb.Append("<bookViews><workbookView ")
-                If workbookField.Hidden Then
+                If m_workbook.Hidden Then
                     sb.Append("visibility=""hidden""")
                 Else
-                    sb.Append("activeTab=""").Append(workbookField.SelectedWorksheet.ToString("G", culture)).Append("""")
+                    sb.Append("activeTab=""").Append(m_workbook.SelectedWorksheet.ToString("G", culture)).Append("""")
                 End If
                 sb.Append("/></bookViews>")
             End If
             CreateWorkbookProtectionString(sb)
             sb.Append("<sheets>")
-            If workbookField.Worksheets.Count > 0 Then
-                For Each item In workbookField.Worksheets
+            If m_workbook.Worksheets.Count > 0 Then
+                For Each item In m_workbook.Worksheets
                     sb.Append("<sheet r:id=""rId").Append(item.SheetID.ToString()).Append(""" sheetId=""").Append(item.SheetID.ToString()).Append(""" name=""").Append(EscapeXmlAttributeChars(item.SheetName)).Append("""")
                     If item.Hidden Then
                         sb.Append(" state=""hidden""")
@@ -318,17 +318,17 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreateWorkbookProtectionString(sb As StringBuilder)
-            If workbookField.UseWorkbookProtection Then
+            If m_workbook.UseWorkbookProtection Then
                 sb.Append("<workbookProtection")
-                If workbookField.LockWindowsIfProtected Then
+                If m_workbook.LockWindowsIfProtected Then
                     sb.Append(" lockWindows=""1""")
                 End If
-                If workbookField.LockStructureIfProtected Then
+                If m_workbook.LockStructureIfProtected Then
                     sb.Append(" lockStructure=""1""")
                 End If
-                If Not String.IsNullOrEmpty(workbookField.WorkbookProtectionPassword) Then
+                If Not String.IsNullOrEmpty(m_workbook.WorkbookProtectionPassword) Then
                     sb.Append(" workbookPassword=""")
-                    sb.Append(workbookField.WorkbookProtectionPasswordHash)
+                    sb.Append(m_workbook.WorkbookProtectionPasswordHash)
                     sb.Append("""")
                 End If
                 sb.Append("/>")
@@ -411,7 +411,7 @@ Namespace XLSX.Writer
         ''' <param name="sb">reference to the stringbuilder.</param>
         Private Sub CreateSheetViewString(worksheet As Worksheet, sb As StringBuilder)
             sb.Append("<sheetViews><sheetView workbookViewId=""0""")
-            If workbookField.SelectedWorksheet = worksheet.SheetID - 1 AndAlso Not worksheet.Hidden Then
+            If m_workbook.SelectedWorksheet = worksheet.SheetID - 1 AndAlso Not worksheet.Hidden Then
                 sb.Append(" tabSelected=""1""")
             End If
             sb.Append(">")
@@ -543,7 +543,7 @@ Namespace XLSX.Writer
         ''' Method to save the workbook
         ''' </summary>
         Public Sub Save()
-            Using fs As FileStream = New FileStream(workbookField.Filename, FileMode.Create)
+            Using fs As FileStream = New FileStream(m_workbook.Filename, FileMode.Create)
                 Call SaveAsStream(fs)
             End Using
         End Sub
@@ -562,8 +562,8 @@ Namespace XLSX.Writer
         ''' <param name="stream">Writable stream as target.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         Public Sub SaveAsStream(stream As Stream, Optional leaveOpen As Boolean = False)
-            workbookField.ResolveMergedCells()
-            stylesField = StyleManager.GetManagedStyles(workbookField) ' After this point, styles must not be changed anymore
+            m_workbook.ResolveMergedCells()
+            m_styles = StyleManager.GetManagedStyles(m_workbook) ' After this point, styles must not be changed anymore
             Dim sheetPath As DocumentPath
             Dim sheetURIs As List(Of Uri) = New List(Of Uri)()
             Try
@@ -581,8 +581,8 @@ Namespace XLSX.Writer
 
                     AppendXmlToPackagePart(CreateWorkbookDocument(), pp)
                     Dim idCounter As Integer
-                    If workbookField.Worksheets.Count > 0 Then
-                        idCounter = workbookField.Worksheets.Count + 1
+                    If m_workbook.Worksheets.Count > 0 Then
+                        idCounter = m_workbook.Worksheets.Count + 1
                     Else
                         '  Fallback on empty workbook
                         idCounter = 2
@@ -590,8 +590,8 @@ Namespace XLSX.Writer
                     pp.CreateRelationship(stylesheetUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "rId" & idCounter.ToString())
                     pp.CreateRelationship(sharedStringsUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings", "rId" & (idCounter + 1).ToString())
 
-                    If workbookField.Worksheets.Count > 0 Then
-                        For Each item In workbookField.Worksheets
+                    If m_workbook.Worksheets.Count > 0 Then
+                        For Each item In m_workbook.Worksheets
                             sheetPath = New DocumentPath("sheet" & item.SheetID.ToString() & ".xml", "xl/worksheets")
                             sheetURIs.Add(New Uri(sheetPath.GetFullPath(), UriKind.Relative))
                             pp.CreateRelationship(sheetURIs(sheetURIs.Count - 1), TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet", "rId" & item.SheetID.ToString())
@@ -607,8 +607,8 @@ Namespace XLSX.Writer
                     AppendXmlToPackagePart(CreateStyleSheetDocument(), pp)
 
                     Dim i = 0
-                    If workbookField.Worksheets.Count > 0 Then
-                        For Each item In workbookField.Worksheets
+                    If m_workbook.Worksheets.Count > 0 Then
+                        For Each item In m_workbook.Worksheets
                             pp = p.CreatePart(sheetURIs(i), "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml", CompressionOption.Normal)
                             i += 1
                             AppendXmlToPackagePart(CreateWorksheetPart(item), pp)
@@ -621,7 +621,7 @@ Namespace XLSX.Writer
                     pp = p.CreatePart(sharedStringsUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml", CompressionOption.Normal)
                     AppendXmlToPackagePart(CreateSharedStringsDocument(), pp)
 
-                    If workbookField.WorkbookMetadata IsNot Nothing Then
+                    If m_workbook.WorkbookMetadata IsNot Nothing Then
                         pp = p.CreatePart(appPropertiesUri, "application/vnd.openxmlformats-officedocument.extended-properties+xml", CompressionOption.Normal)
                         AppendXmlToPackagePart(CreateAppPropertiesDocument(), pp)
                         pp = p.CreatePart(corePropertiesUri, "application/vnd.openxmlformats-package.core-properties+xml", CompressionOption.Normal)
@@ -709,10 +709,10 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateAppString() As String
-            If workbookField.WorkbookMetadata Is Nothing Then
+            If m_workbook.WorkbookMetadata Is Nothing Then
                 Return String.Empty
             End If
-            Dim md = workbookField.WorkbookMetadata
+            Dim md = m_workbook.WorkbookMetadata
             Dim sb As StringBuilder = New StringBuilder()
             AppendXmlTag(sb, "0", "TotalTime", Nothing)
             AppendXmlTag(sb, md.Application, "Application", Nothing)
@@ -763,10 +763,10 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateCorePropertiesString() As String
-            If workbookField.WorkbookMetadata Is Nothing Then
+            If m_workbook.WorkbookMetadata Is Nothing Then
                 Return String.Empty
             End If
-            Dim md = workbookField.WorkbookMetadata
+            Dim md = m_workbook.WorkbookMetadata
             Dim sb As StringBuilder = New StringBuilder()
             AppendXmlTag(sb, md.Title, "title", "dc")
             AppendXmlTag(sb, md.Subject, "subject", "dc")
@@ -1009,7 +1009,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleBorderString() As String
-            Dim borderStyles As Style.Border() = stylesField.GetBorders()
+            Dim borderStyles As Style.Border() = m_styles.GetBorders()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In borderStyles
                 If item.DiagonalDown AndAlso Not item.DiagonalUp Then
@@ -1088,7 +1088,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleFontString() As String
-            Dim fontStyles As Style.Font() = stylesField.GetFonts()
+            Dim fontStyles As Style.Font() = m_styles.GetFonts()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In fontStyles
                 sb.Append("<font>")
@@ -1145,7 +1145,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleFillString() As String
-            Dim fillStyles As Style.Fill() = stylesField.GetFills()
+            Dim fillStyles As Style.Fill() = m_styles.GetFills()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In fillStyles
                 sb.Append("<fill>")
@@ -1175,7 +1175,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleNumberFormatString() As String
-            Dim numberFormatStyles As Style.NumberFormat() = stylesField.GetNumberFormats()
+            Dim numberFormatStyles As Style.NumberFormat() = m_styles.GetNumberFormats()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In numberFormatStyles
                 If item.IsCustomFormat Then
@@ -1195,7 +1195,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleXfsString() As String
-            Dim styleItems As Style() = stylesField.GetStyles()
+            Dim styleItems As Style() = m_styles.GetStyles()
             Dim sb As StringBuilder = New StringBuilder()
             Dim sb2 As StringBuilder = New StringBuilder()
             Dim alignmentString, protectionString As String
@@ -1323,8 +1323,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateMruColorsString() As String
-            Dim fonts As Style.Font() = stylesField.GetFonts()
-            Dim fills As Style.Fill() = stylesField.GetFills()
+            Dim fonts As Style.Font() = m_styles.GetFonts()
+            Dim fills As Style.Fill() = m_styles.GetFills()
             Dim sb As StringBuilder = New StringBuilder()
             Dim tempColors As List(Of String) = New List(Of String)()
             For Each item In fonts
