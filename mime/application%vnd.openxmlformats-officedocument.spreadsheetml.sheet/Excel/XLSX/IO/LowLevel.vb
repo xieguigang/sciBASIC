@@ -18,6 +18,7 @@ Namespace XLSX.Writer
     ''' Class for low level handling (XML, formatting, packing)
     ''' </summary>
     Friend Class LowLevel
+
         ''' <summary>
         ''' Defines the WORKBOOK
         ''' </summary>
@@ -164,7 +165,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>Raw XML string.</returns>
         Private Function CreateAppPropertiesDocument() As String
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim sb As New StringBuilder()
             sb.Append("<Properties xmlns=""http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"" xmlns:vt=""http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"">")
             sb.Append(CreateAppString())
             sb.Append("</Properties>")
@@ -176,7 +177,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>Raw XML string.</returns>
         Private Function CreateCorePropertiesDocument() As String
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim sb As New StringBuilder()
             sb.Append("<cp:coreProperties xmlns:cp=""http://schemas.openxmlformats.org/package/2006/metadata/core-properties"" xmlns:dc=""http://purl.org/dc/elements/1.1/"" xmlns:dcterms=""http://purl.org/dc/terms/"" xmlns:dcmitype=""http://purl.org/dc/dcmitype/"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
             sb.Append(CreateCorePropertiesString())
             sb.Append("</cp:coreProperties>")
@@ -188,7 +189,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <returns>Raw XML string.</returns>
         Private Function CreateSharedStringsDocument() As String
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim sb As New StringBuilder()
             sb.Append("<sst xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" count=""")
             sb.Append(sharedStringsTotalCount.ToString("G", culture))
             sb.Append(""" uniqueCount=""")
@@ -228,11 +229,11 @@ Namespace XLSX.Writer
         ''' <param name="value">Input value.</param>
         ''' <returns>Normalized value.</returns>
         Private Function NormalizeNewLines(value As String) As String
-            If Equals(value, Nothing) OrElse Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(10)) AndAlso Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(13)) Then
+            If value Is Nothing OrElse Not value.Contains(ChrW(10)) AndAlso Not value.Contains(ChrW(13)) Then
                 Return value
             End If
-            Dim normalized = value.Replace(CStr(Microsoft.VisualBasic.Constants.vbCrLf), CStr(Microsoft.VisualBasic.Constants.vbLf)).Replace(Microsoft.VisualBasic.Constants.vbCr, Microsoft.VisualBasic.Constants.vbLf)
-            Return normalized.Replace(Microsoft.VisualBasic.Constants.vbLf, Microsoft.VisualBasic.Constants.vbCrLf)
+            Dim normalized = value.Replace(CStr(vbCrLf), CStr(vbLf)).Replace(vbCr, vbLf)
+            Return normalized.Replace(vbLf, vbCrLf)
         End Function
 
         ''' <summary>
@@ -352,7 +353,8 @@ Namespace XLSX.Writer
             End If
             sb.Append("<sheetFormatPr")
             If Not HasPaneSplitting(worksheet) Then
-                ' TODO: Find the right calculation to compensate baseColWidth when using pane splitting
+                ' TODO: Find the right calculation to compensate
+                ' baseColWidth when using pane splitting
                 sb.Append(" defaultColWidth=""").Append(worksheet.DefaultColumnWidth.ToString("G", culture)).Append("""")
             End If
             sb.Append(" defaultRowHeight=""").Append(worksheet.DefaultRowHeight.ToString("G", culture)).Append(""" baseColWidth=""").Append(worksheet.DefaultColumnWidth.ToString("G", culture)).Append(""" x14ac:dyDescent=""0.25""/>")
@@ -478,13 +480,13 @@ Namespace XLSX.Writer
             End If
             If applyXSplit AndAlso applyYSplit Then
                 Select Case worksheet.ActivePane.Value
-                    Case Worksheet.WorksheetPane.bottomLeft
+                    Case WorksheetPane.bottomLeft
                         sb.Append(" activePane=""bottomLeft""")
-                    Case Worksheet.WorksheetPane.bottomRight
+                    Case WorksheetPane.bottomRight
                         sb.Append(" activePane=""bottomRight""")
-                    Case Worksheet.WorksheetPane.topLeft
+                    Case WorksheetPane.topLeft
                         sb.Append(" activePane=""topLeft""")
-                    Case Worksheet.WorksheetPane.topRight
+                    Case WorksheetPane.topRight
                         sb.Append(" activePane=""topRight""")
                 End Select
             End If
@@ -931,62 +933,64 @@ Namespace XLSX.Writer
             If Not sheet.UseSheetProtection Then
                 Return String.Empty
             End If
-            Dim actualLockingValues As Dictionary(Of Worksheet.SheetProtectionValue, Integer) = New Dictionary(Of Worksheet.SheetProtectionValue, Integer)()
+            Dim actualLockingValues As Dictionary(Of SheetProtectionValue, Integer) = New Dictionary(Of SheetProtectionValue, Integer)()
             If sheet.SheetProtectionValues.Count = 0 Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.selectLockedCells, 1)
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.selectUnlockedCells, 1)
+                actualLockingValues.Add(SheetProtectionValue.selectLockedCells, 1)
+                actualLockingValues.Add(SheetProtectionValue.selectUnlockedCells, 1)
             End If
-            If Not sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.objects) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.objects, 1)
+            If Not sheet.SheetProtectionValues.Contains(SheetProtectionValue.objects) Then
+                actualLockingValues.Add(SheetProtectionValue.objects, 1)
             End If
-            If Not sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.scenarios) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.scenarios, 1)
+            If Not sheet.SheetProtectionValues.Contains(SheetProtectionValue.scenarios) Then
+                actualLockingValues.Add(SheetProtectionValue.scenarios, 1)
             End If
-            If Not sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.selectLockedCells) AndAlso Not actualLockingValues.ContainsKey(Worksheet.SheetProtectionValue.selectLockedCells) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.selectLockedCells, 1)
+            If Not sheet.SheetProtectionValues.Contains(SheetProtectionValue.selectLockedCells) AndAlso Not actualLockingValues.ContainsKey(SheetProtectionValue.selectLockedCells) Then
+                actualLockingValues.Add(SheetProtectionValue.selectLockedCells, 1)
             End If
-            If (Not sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.selectUnlockedCells) OrElse Not sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.selectLockedCells)) AndAlso Not actualLockingValues.ContainsKey(Worksheet.SheetProtectionValue.selectUnlockedCells) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.selectUnlockedCells, 1)
+            If (Not sheet.SheetProtectionValues.Contains(SheetProtectionValue.selectUnlockedCells) OrElse Not sheet.SheetProtectionValues.Contains(SheetProtectionValue.selectLockedCells)) AndAlso Not actualLockingValues.ContainsKey(SheetProtectionValue.selectUnlockedCells) Then
+                actualLockingValues.Add(SheetProtectionValue.selectUnlockedCells, 1)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.formatCells) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.formatCells, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.formatCells) Then
+                actualLockingValues.Add(SheetProtectionValue.formatCells, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.formatColumns) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.formatColumns, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.formatColumns) Then
+                actualLockingValues.Add(SheetProtectionValue.formatColumns, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.formatRows) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.formatRows, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.formatRows) Then
+                actualLockingValues.Add(SheetProtectionValue.formatRows, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.insertColumns) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.insertColumns, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.insertColumns) Then
+                actualLockingValues.Add(SheetProtectionValue.insertColumns, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.insertRows) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.insertRows, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.insertRows) Then
+                actualLockingValues.Add(SheetProtectionValue.insertRows, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.insertHyperlinks) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.insertHyperlinks, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.insertHyperlinks) Then
+                actualLockingValues.Add(SheetProtectionValue.insertHyperlinks, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.deleteColumns) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.deleteColumns, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.deleteColumns) Then
+                actualLockingValues.Add(SheetProtectionValue.deleteColumns, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.deleteRows) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.deleteRows, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.deleteRows) Then
+                actualLockingValues.Add(SheetProtectionValue.deleteRows, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.sort) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.sort, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.sort) Then
+                actualLockingValues.Add(SheetProtectionValue.sort, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.autoFilter) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.autoFilter, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.autoFilter) Then
+                actualLockingValues.Add(SheetProtectionValue.autoFilter, 0)
             End If
-            If sheet.SheetProtectionValues.Contains(Worksheet.SheetProtectionValue.pivotTables) Then
-                actualLockingValues.Add(Worksheet.SheetProtectionValue.pivotTables, 0)
+            If sheet.SheetProtectionValues.Contains(SheetProtectionValue.pivotTables) Then
+                actualLockingValues.Add(SheetProtectionValue.pivotTables, 0)
             End If
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("<sheetProtection")
             Dim temp As String
             For Each item In actualLockingValues
                 Try
-                    temp = [Enum].GetName(GetType(Worksheet.SheetProtectionValue), item.Key) ' Note! If the enum names differs from the OOXML definitions, this method will cause invalid OOXML entries
+                    ' Note! If the enum names differs from the OOXML definitions,
+                    ' this method will cause invalid OOXML entries
+                    temp = [Enum].GetName(GetType(SheetProtectionValue), item.Key)
                     sb.Append(" ").Append(temp).Append("=""").Append(item.Value.ToString("G", culture)).Append("""")
                 Catch
                     ' no-op

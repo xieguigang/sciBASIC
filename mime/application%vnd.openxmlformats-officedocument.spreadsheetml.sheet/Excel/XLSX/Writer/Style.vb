@@ -146,14 +146,14 @@ Namespace XLSX.Writer
         ''' <returns>String of a class instance.</returns>
         Public Overrides Function ToString() As String
             Dim sb As StringBuilder = New StringBuilder()
-            sb.Append("{" & Microsoft.VisualBasic.Constants.vbLf & """Style"": {" & Microsoft.VisualBasic.Constants.vbLf)
+            sb.Append("{" & vbLf & """Style"": {" & vbLf)
             AddPropertyAsJson(sb, "Name", Name)
             Call AddPropertyAsJson(sb, "HashCode", GetHashCode())
-            sb.Append(CStr(CurrentBorder.ToString())).Append("," & Microsoft.VisualBasic.Constants.vbLf)
-            sb.Append(CStr(CurrentCellXf.ToString())).Append("," & Microsoft.VisualBasic.Constants.vbLf)
-            sb.Append(CStr(CurrentFill.ToString())).Append("," & Microsoft.VisualBasic.Constants.vbLf)
-            sb.Append(CStr(CurrentFont.ToString())).Append("," & Microsoft.VisualBasic.Constants.vbLf)
-            sb.Append(CStr(CurrentNumberFormat.ToString())).Append(Microsoft.VisualBasic.Constants.vbLf & "}" & Microsoft.VisualBasic.Constants.vbLf & "}")
+            sb.Append(CStr(CurrentBorder.ToString())).Append("," & vbLf)
+            sb.Append(CStr(CurrentCellXf.ToString())).Append("," & vbLf)
+            sb.Append(CStr(CurrentFill.ToString())).Append("," & vbLf)
+            sb.Append(CStr(CurrentFont.ToString())).Append("," & vbLf)
+            sb.Append(CStr(CurrentNumberFormat.ToString())).Append(vbLf & "}" & vbLf & "}")
             Return sb.ToString()
         End Function
 
@@ -463,7 +463,7 @@ Namespace XLSX.Writer
             ''' <returns>String of a class.</returns>
             Public Overrides Function ToString() As String
                 Dim sb As StringBuilder = New StringBuilder()
-                sb.Append("""Border"": {" & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("""Border"": {" & vbLf)
                 AddPropertyAsJson(sb, "BottomStyle", BottomStyle)
                 AddPropertyAsJson(sb, "DiagonalColor", DiagonalColor)
                 AddPropertyAsJson(sb, "DiagonalDown", DiagonalDown)
@@ -476,7 +476,7 @@ Namespace XLSX.Writer
                 AddPropertyAsJson(sb, "TopColor", TopColor)
                 AddPropertyAsJson(sb, "TopStyle", TopStyle)
                 Call AddPropertyAsJson(sb, "HashCode", GetHashCode(), True)
-                sb.Append(Microsoft.VisualBasic.Constants.vbLf & "}")
+                sb.Append(vbLf & "}")
                 Return sb.ToString()
             End Function
 
@@ -792,7 +792,7 @@ Namespace XLSX.Writer
             ''' <returns>String of a class instance.</returns>
             Public Overrides Function ToString() As String
                 Dim sb As StringBuilder = New StringBuilder()
-                sb.Append("""StyleXF"": {" & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("""StyleXF"": {" & vbLf)
                 AddPropertyAsJson(sb, "HorizontalAlign", HorizontalAlign)
                 AddPropertyAsJson(sb, "Alignment", Alignment)
                 AddPropertyAsJson(sb, "TextDirection", TextDirection)
@@ -803,7 +803,7 @@ Namespace XLSX.Writer
                 AddPropertyAsJson(sb, "Hidden", Hidden)
                 AddPropertyAsJson(sb, "Indent", Indent)
                 Call AddPropertyAsJson(sb, "HashCode", GetHashCode(), True)
-                sb.Append(Microsoft.VisualBasic.Constants.vbLf & "}")
+                sb.Append(vbLf & "}")
                 Return sb.ToString()
             End Function
 
@@ -1003,13 +1003,13 @@ Namespace XLSX.Writer
             ''' <returns>String of a class.</returns>
             Public Overrides Function ToString() As String
                 Dim sb As StringBuilder = New StringBuilder()
-                sb.Append("""Fill"": {" & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("""Fill"": {" & vbLf)
                 AddPropertyAsJson(sb, "BackgroundColor", BackgroundColor)
                 AddPropertyAsJson(sb, "ForegroundColor", ForegroundColor)
                 AddPropertyAsJson(sb, "IndexedColor", IndexedColor)
                 AddPropertyAsJson(sb, "PatternFill", PatternFill)
                 Call AddPropertyAsJson(sb, "HashCode", GetHashCode(), True)
-                sb.Append(Microsoft.VisualBasic.Constants.vbLf & "}")
+                sb.Append(vbLf & "}")
                 Return sb.ToString()
             End Function
 
@@ -1366,7 +1366,7 @@ Namespace XLSX.Writer
             ''' <returns>String of a class.</returns>
             Public Overrides Function ToString() As String
                 Dim sb As StringBuilder = New StringBuilder()
-                sb.Append("""Font"": {" & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("""Font"": {" & vbLf)
                 AddPropertyAsJson(sb, "Bold", Bold)
                 AddPropertyAsJson(sb, "Charset", Charset)
                 AddPropertyAsJson(sb, "ColorTheme", ColorTheme)
@@ -1380,7 +1380,7 @@ Namespace XLSX.Writer
                 AddPropertyAsJson(sb, "Strike", Strike)
                 AddPropertyAsJson(sb, "Underline", Underline)
                 Call AddPropertyAsJson(sb, "HashCode", GetHashCode(), True)
-                sb.Append(Microsoft.VisualBasic.Constants.vbLf & "}")
+                sb.Append(vbLf & "}")
                 Return sb.ToString()
             End Function
 
@@ -1678,12 +1678,12 @@ Namespace XLSX.Writer
             ''' <returns>String of a class.</returns>
             Public Overrides Function ToString() As String
                 Dim sb As StringBuilder = New StringBuilder()
-                sb.Append("""NumberFormat"": {" & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("""NumberFormat"": {" & vbLf)
                 AddPropertyAsJson(sb, "CustomFormatCode", CustomFormatCode)
                 AddPropertyAsJson(sb, "CustomFormatID", CustomFormatID)
                 AddPropertyAsJson(sb, "Number", Number)
                 Call AddPropertyAsJson(sb, "HashCode", GetHashCode(), True)
-                sb.Append(Microsoft.VisualBasic.Constants.vbLf & "}")
+                sb.Append(vbLf & "}")
                 Return sb.ToString()
             End Function
 
@@ -2116,7 +2116,7 @@ Namespace XLSX.Writer
                 sb.Append("""").Append(value.ToString().Replace("""", "\""")).Append("""")
             End If
             If Not terminate Then
-                sb.Append("," & Microsoft.VisualBasic.Constants.vbLf)
+                sb.Append("," & vbLf)
             End If
         End Sub
 
