@@ -5,11 +5,10 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
 Imports System.Globalization
 Imports System.Reflection
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class representing the meta data of a workbook
@@ -32,7 +31,7 @@ Namespace XLSX
             Get
                 Return applicationVersionField
             End Get
-            Set(ByVal value As String)
+            Set(value As String)
                 applicationVersionField = value
                 CheckVersion()
             End Set
@@ -130,7 +129,7 @@ Namespace XLSX
         ''' <param name="build">Build number.</param>
         ''' <param name="revision">Revision number.</param>
         ''' <returns>Formatted version number (e.g. 1.0 or 55.987).</returns>
-        Public Shared Function ParseVersion(ByVal major As Integer, ByVal minor As Integer, ByVal build As Integer, ByVal revision As Integer) As String
+        Public Shared Function ParseVersion(major As Integer, minor As Integer, build As Integer, revision As Integer) As String
             If major < 0 OrElse minor < 0 OrElse build < 0 OrElse revision < 0 Then
                 Throw New FormatException("The format of the passed version is wrong. No negative number allowed.")
             End If

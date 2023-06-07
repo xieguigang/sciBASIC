@@ -5,16 +5,14 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Globalization
-Imports System.Linq
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Cell
-Imports PicoXLSX.Cell
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
+Imports Range = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell.Range
+Imports stdNum = System.Math
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class representing a worksheet of a workbook
@@ -201,7 +199,7 @@ Namespace XLSX
         ''' <summary>
         ''' Defines the mergedCells
         ''' </summary>
-        Private ReadOnly mergedCellsField As Dictionary(Of String, Range)
+        Private ReadOnly mergedCellsField As Dictionary(Of String, Cell.Range)
 
         ''' <summary>
         ''' Defines the sheetProtectionValues
@@ -312,7 +310,7 @@ Namespace XLSX
             Get
                 Return defaultColumnWidthField
             End Get
-            Set(ByVal value As Single)
+            Set(value As Single)
                 If value < MIN_COLUMN_WIDTH OrElse value > MAX_COLUMN_WIDTH Then
                     Throw New RangeException("OutOfRangeException", "The passed default column width is out of range (" & MIN_COLUMN_WIDTH.ToString() & " to " & MAX_COLUMN_WIDTH.ToString() & ")")
                 End If
@@ -327,7 +325,7 @@ Namespace XLSX
             Get
                 Return defaultRowHeightField
             End Get
-            Set(ByVal value As Single)
+            Set(value As Single)
                 If value < MIN_ROW_HEIGHT OrElse value > MAX_ROW_HEIGHT Then
                     Throw New RangeException("OutOfRangeException", "The passed default row height is out of range (" & MIN_ROW_HEIGHT.ToString() & " to " & MAX_ROW_HEIGHT.ToString() & ")")
                 End If
@@ -347,7 +345,7 @@ Namespace XLSX
         ''' <summary>
         ''' Gets the merged cells (only references) as dictionary with the cell address as key and the range object as value
         ''' </summary>
-        Public ReadOnly Property MergedCells As Dictionary(Of String, Range)
+        Public ReadOnly Property MergedCells As Dictionary(Of String, Cell.Range)
             Get
                 Return mergedCellsField
             End Get
@@ -393,7 +391,7 @@ Namespace XLSX
             Get
                 Return sheetIDField
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 If value < 1 Then
                     Throw New FormatException("The ID " & value.ToString() & " is invalid. Worksheet IDs must be >0")
                 End If
@@ -408,7 +406,7 @@ Namespace XLSX
             Get
                 Return sheetNameField
             End Get
-            Set(ByVal value As String)
+            Set(value As String)
                 SetSheetName(value)
             End Set
         End Property
@@ -452,7 +450,7 @@ Namespace XLSX
             Get
                 Return workbookReferenceField
             End Get
-            Set(ByVal value As Workbook)
+            Set(value As Workbook)
                 workbookReferenceField = value
                 If value IsNot Nothing Then
                     workbookReferenceField.ValidateWorksheets()
@@ -469,7 +467,7 @@ Namespace XLSX
             Get
                 Return hiddenField
             End Get
-            Set(ByVal value As Boolean)
+            Set(value As Boolean)
                 hiddenField = value
                 If value AndAlso workbookReferenceField IsNot Nothing Then
                     workbookReferenceField.ValidateWorksheets()
@@ -579,7 +577,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="Worksheet"/> class
         ''' </summary>
         ''' <param name="name">The name<see cref="String"/>.</param>
-        Public Sub New(ByVal name As String)
+        Public Sub New(name As String)
             Me.New()
             SetSheetName(name)
         End Sub
@@ -590,7 +588,7 @@ Namespace XLSX
         ''' <param name="name">Name of the worksheet.</param>
         ''' <param name="id">ID of the worksheet (for internal use).</param>
         ''' <param name="reference">Reference to the parent Workbook.</param>
-        Public Sub New(ByVal name As String, ByVal id As Integer, ByVal reference As Workbook)
+        Public Sub New(name As String, id As Integer, reference As Workbook)
             Me.New()
             SetSheetName(name)
             SheetID = id
@@ -601,7 +599,7 @@ Namespace XLSX
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
         ''' <param name="value">Unspecified value to insert.</param>
-        Public Sub AddNextCell(ByVal value As Object)
+        Public Sub AddNextCell(value As Object)
             AddNextCell(CastValue(value, currentColumnNumber, currentRowNumber), True, Nothing)
         End Sub
 
@@ -610,7 +608,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="value">Unspecified value to insert.</param>
         ''' <param name="style">Style object to apply on this cell.</param>
-        Public Sub AddNextCell(ByVal value As Object, ByVal style As Style)
+        Public Sub AddNextCell(value As Object, style As Style)
             AddNextCell(CastValue(value, currentColumnNumber, currentRowNumber), True, style)
         End Sub
 
@@ -620,7 +618,7 @@ Namespace XLSX
         ''' <param name="cell">Cell object to insert.</param>
         ''' <param name="incremental">If true, the address value (row or column) will be incremented, otherwise not.</param>
         ''' <param name="style">If not null, the defined style will be applied to the cell, otherwise no style or the default style will be applied.</param>
-        Private Sub AddNextCell(ByVal cell As Cell, ByVal incremental As Boolean, ByVal style As Style)
+        Private Sub AddNextCell(cell As Cell, incremental As Boolean, style As Style)
             ' date and time styles are already defined by the passed cell object
             If style IsNot Nothing OrElse activeStyleField IsNot Nothing AndAlso useActiveStyle Then
 
@@ -670,7 +668,7 @@ Namespace XLSX
         ''' <param name="column">Column index.</param>
         ''' <param name="row">Row index.</param>
         ''' <returns>Cell object.</returns>
-        Private Function CastValue(ByVal value As Object, ByVal column As Integer, ByVal row As Integer) As Cell
+        Private Function CastValue(value As Object, column As Integer, row As Integer) As Cell
             Dim c As Cell
             If value IsNot Nothing AndAlso value.GetType() Is GetType(Cell) Then
                 c = CType(value, Cell)
@@ -687,7 +685,7 @@ Namespace XLSX
         ''' <param name="value">Unspecified value to insert.</param>
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
-        Public Sub AddCell(ByVal value As Object, ByVal columnNumber As Integer, ByVal rowNumber As Integer)
+        Public Sub AddCell(value As Object, columnNumber As Integer, rowNumber As Integer)
             AddNextCell(CastValue(value, columnNumber, rowNumber), False, Nothing)
         End Sub
 
@@ -698,7 +696,7 @@ Namespace XLSX
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
         ''' <param name="style">Style to apply on the cell.</param>
-        Public Sub AddCell(ByVal value As Object, ByVal columnNumber As Integer, ByVal rowNumber As Integer, ByVal style As Style)
+        Public Sub AddCell(value As Object, columnNumber As Integer, rowNumber As Integer, style As Style)
             AddNextCell(CastValue(value, columnNumber, rowNumber), False, style)
         End Sub
 
@@ -707,7 +705,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="value">Unspecified value to insert.</param>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
-        Public Sub AddCell(ByVal value As Object, ByVal address As String)
+        Public Sub AddCell(value As Object, address As String)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
             AddCell(value, column, row)
@@ -719,7 +717,7 @@ Namespace XLSX
         ''' <param name="value">Unspecified value to insert.</param>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         ''' <param name="style">Style to apply on the cell.</param>
-        Public Sub AddCell(ByVal value As Object, ByVal address As String, ByVal style As Style)
+        Public Sub AddCell(value As Object, address As String, style As Style)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
             AddCell(value, column, row, style)
@@ -730,7 +728,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="formula">Formula to insert.</param>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
-        Public Sub AddCellFormula(ByVal formula As String, ByVal address As String)
+        Public Sub AddCellFormula(formula As String, address As String)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, column, row)
@@ -743,7 +741,7 @@ Namespace XLSX
         ''' <param name="formula">Formula to insert.</param>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         ''' <param name="style">Style to apply on the cell.</param>
-        Public Sub AddCellFormula(ByVal formula As String, ByVal address As String, ByVal style As Style)
+        Public Sub AddCellFormula(formula As String, address As String, style As Style)
             Dim column, row As Integer
             ResolveCellCoordinate(address, column, row)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, column, row)
@@ -756,7 +754,7 @@ Namespace XLSX
         ''' <param name="formula">Formula to insert.</param>
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
-        Public Sub AddCellFormula(ByVal formula As String, ByVal columnNumber As Integer, ByVal rowNumber As Integer)
+        Public Sub AddCellFormula(formula As String, columnNumber As Integer, rowNumber As Integer)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, columnNumber, rowNumber)
             AddNextCell(c, False, Nothing)
         End Sub
@@ -768,7 +766,7 @@ Namespace XLSX
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
         ''' <param name="style">Style to apply on the cell.</param>
-        Public Sub AddCellFormula(ByVal formula As String, ByVal columnNumber As Integer, ByVal rowNumber As Integer, ByVal style As Style)
+        Public Sub AddCellFormula(formula As String, columnNumber As Integer, rowNumber As Integer, style As Style)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, columnNumber, rowNumber)
             AddNextCell(c, False, style)
         End Sub
@@ -777,7 +775,7 @@ Namespace XLSX
         ''' Adds a formula as string to the next cell position
         ''' </summary>
         ''' <param name="formula">Formula to insert.</param>
-        Public Sub AddNextCellFormula(ByVal formula As String)
+        Public Sub AddNextCellFormula(formula As String)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, currentColumnNumber, currentRowNumber)
             AddNextCell(c, True, Nothing)
         End Sub
@@ -787,7 +785,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="formula">Formula to insert.</param>
         ''' <param name="style">Style to apply on the cell.</param>
-        Public Sub AddNextCellFormula(ByVal formula As String, ByVal style As Style)
+        Public Sub AddNextCellFormula(formula As String, style As Style)
             Dim c As Cell = New Cell(formula, CellType.FORMULA, currentColumnNumber, currentRowNumber)
             AddNextCell(c, True, style)
         End Sub
@@ -798,7 +796,7 @@ Namespace XLSX
         ''' <param name="values">List of unspecified objects to insert.</param>
         ''' <param name="startAddress">Start address.</param>
         ''' <param name="endAddress">End address.</param>
-        Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal startAddress As Address, ByVal endAddress As Address)
+        Public Sub AddCellRange(values As IReadOnlyList(Of Object), startAddress As Address, endAddress As Address)
             AddCellRangeInternal(values, startAddress, endAddress, Nothing)
         End Sub
 
@@ -809,7 +807,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address.</param>
         ''' <param name="endAddress">End address.</param>
         ''' <param name="style">Style to apply on the all cells of the range.</param>
-        Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
+        Public Sub AddCellRange(values As IReadOnlyList(Of Object), startAddress As Address, endAddress As Address, style As Style)
             AddCellRangeInternal(values, startAddress, endAddress, style)
         End Sub
 
@@ -818,7 +816,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="values">List of unspecified objects to insert.</param>
         ''' <param name="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
-        Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal cellRange As String)
+        Public Sub AddCellRange(values As IReadOnlyList(Of Object), cellRange As String)
             Dim range = ResolveCellRange(cellRange)
             AddCellRangeInternal(values, range.StartAddress, range.EndAddress, Nothing)
         End Sub
@@ -829,7 +827,7 @@ Namespace XLSX
         ''' <param name="values">List of unspecified objects to insert.</param>
         ''' <param name="cellRange">Cell range as string in the format like A1:D1 or X10:X22.</param>
         ''' <param name="style">Style to apply on the all cells of the range.</param>
-        Public Sub AddCellRange(ByVal values As IReadOnlyList(Of Object), ByVal cellRange As String, ByVal style As Style)
+        Public Sub AddCellRange(values As IReadOnlyList(Of Object), cellRange As String, style As Style)
             Dim range = ResolveCellRange(cellRange)
             AddCellRangeInternal(values, range.StartAddress, range.EndAddress, style)
         End Sub
@@ -837,12 +835,12 @@ Namespace XLSX
         ''' <summary>
         ''' Internal function to add a generic list of value to the defined cell range
         ''' </summary>
-        ''' <typeparamname="T">Data type of the generic value list.</typeparam>
+        ''' <typeparam name="T">Data type of the generic value list.</typeparam>
         ''' <param name="values">List of values.</param>
         ''' <param name="startAddress">Start address.</param>
         ''' <param name="endAddress">End address.</param>
         ''' <param name="style">Style to apply on the all cells of the range.</param>
-        Private Sub AddCellRangeInternal(Of T)(ByVal values As IReadOnlyList(Of T), ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
+        Private Sub AddCellRangeInternal(Of T)(values As IReadOnlyList(Of T), startAddress As Address, endAddress As Address, style As Style)
             Dim addresses As List(Of Address) = TryCast(GetCellRange(startAddress, endAddress), List(Of Address))
             If values.Count <> addresses.Count Then
                 Throw New RangeException("OutOfRangeException", "The number of passed values (" & values.Count.ToString() & ") differs from the number of cells within the range (" & addresses.Count.ToString() & ")")
@@ -862,7 +860,7 @@ Namespace XLSX
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
         ''' <returns>Returns true if the cell could be removed (existed), otherwise false (did not exist).</returns>
-        Public Function RemoveCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Boolean
+        Public Function RemoveCell(columnNumber As Integer, rowNumber As Integer) As Boolean
             Dim address = ResolveCellAddress(columnNumber, rowNumber)
             Return cellsField.Remove(address)
         End Function
@@ -872,7 +870,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
         ''' <returns>Returns true if the cell could be removed (existed), otherwise false (did not exist).</returns>
-        Public Function RemoveCell(ByVal address As String) As Boolean
+        Public Function RemoveCell(address As String) As Boolean
             Dim row, column As Integer
             ResolveCellCoordinate(address, column, row)
             Return RemoveCell(column, row)
@@ -883,7 +881,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="cellRange">Cell range to apply the style.</param>
         ''' <param name="style">Style to apply.</param>
-        Public Sub SetStyle(ByVal cellRange As Range, ByVal style As Style)
+        Public Sub SetStyle(cellRange As Range, style As Style)
             Dim addresses As IReadOnlyList(Of Address) = cellRange.ResolveEnclosedAddresses()
             For Each address In addresses
                 Dim key As String = address.GetAddress()
@@ -908,7 +906,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address of the cell range.</param>
         ''' <param name="endAddress">End address of the cell range.</param>
         ''' <param name="style">Style to apply or null to clear the range.</param>
-        Public Sub SetStyle(ByVal startAddress As Address, ByVal endAddress As Address, ByVal style As Style)
+        Public Sub SetStyle(startAddress As Address, endAddress As Address, style As Style)
             SetStyle(New Range(startAddress, endAddress), style)
         End Sub
 
@@ -918,7 +916,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="address">Cell address to apply the style.</param>
         ''' <param name="style">Style to apply or null to clear the range.</param>
-        Public Sub SetStyle(ByVal address As Address, ByVal style As Style)
+        Public Sub SetStyle(address As Address, style As Style)
             SetStyle(address, address, style)
         End Sub
 
@@ -929,7 +927,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="addressExpression">Expression of a cell address or range of addresses.</param>
         ''' <param name="style">Style to apply or null to clear the range.</param>
-        Public Sub SetStyle(ByVal addressExpression As String, ByVal style As Style)
+        Public Sub SetStyle(addressExpression As String, style As Style)
             Dim scope = GetAddressScope(addressExpression)
             If scope = AddressScope.SingleAddress Then
                 Dim address As Address = New Address(addressExpression)
@@ -946,7 +944,7 @@ Namespace XLSX
         ''' Method to add allowed actions if the worksheet is protected. If one or more values are added, UseSheetProtection will be set to true
         ''' </summary>
         ''' <param name="typeOfProtection">Allowed action on the worksheet or cells.</param>
-        Public Sub AddAllowedActionOnSheetProtection(ByVal typeOfProtection As SheetProtectionValue)
+        Public Sub AddAllowedActionOnSheetProtection(typeOfProtection As SheetProtectionValue)
             If Not sheetProtectionValuesField.Contains(typeOfProtection) Then
                 If typeOfProtection = SheetProtectionValue.selectLockedCells AndAlso Not sheetProtectionValuesField.Contains(SheetProtectionValue.selectUnlockedCells) Then
                     sheetProtectionValuesField.Add(SheetProtectionValue.selectUnlockedCells)
@@ -960,7 +958,7 @@ Namespace XLSX
         ''' Sets the defined column as hidden
         ''' </summary>
         ''' <param name="columnNumber">Column number to hide on the worksheet.</param>
-        Public Sub AddHiddenColumn(ByVal columnNumber As Integer)
+        Public Sub AddHiddenColumn(columnNumber As Integer)
             SetColumnHiddenState(columnNumber, True)
         End Sub
 
@@ -968,7 +966,7 @@ Namespace XLSX
         ''' Sets the defined column as hidden
         ''' </summary>
         ''' <param name="columnAddress">Column address to hide on the worksheet.</param>
-        Public Sub AddHiddenColumn(ByVal columnAddress As String)
+        Public Sub AddHiddenColumn(columnAddress As String)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnHiddenState(columnNumber, True)
         End Sub
@@ -977,7 +975,7 @@ Namespace XLSX
         ''' Sets the defined row as hidden
         ''' </summary>
         ''' <param name="rowNumber">Row number to hide on the worksheet.</param>
-        Public Sub AddHiddenRow(ByVal rowNumber As Integer)
+        Public Sub AddHiddenRow(rowNumber As Integer)
             SetRowHiddenState(rowNumber, True)
         End Sub
 
@@ -994,7 +992,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="address">Address of the cell.</param>
         ''' <returns>Cell object.</returns>
-        Public Function GetCell(ByVal address As Address) As Cell
+        Public Function GetCell(address As Address) As Cell
             If Not cellsField.ContainsKey(address.GetAddress()) Then
                 Throw New WorksheetException("The cell with the address " & address.GetAddress() & " does not exist in this worksheet")
             End If
@@ -1007,7 +1005,7 @@ Namespace XLSX
         ''' <param name="columnNumber">Column number of the cell.</param>
         ''' <param name="rowNumber">Row number of the cell.</param>
         ''' <returns>Cell object.</returns>
-        Public Function GetCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Cell
+        Public Function GetCell(columnNumber As Integer, rowNumber As Integer) As Cell
             Return GetCell(New Address(columnNumber, rowNumber))
         End Function
 
@@ -1016,7 +1014,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="address">Address to check.</param>
         ''' <returns>The <see cref="Boolean"/>.</returns>
-        Public Function HasCell(ByVal address As Address) As Boolean
+        Public Function HasCell(address As Address) As Boolean
             Return cellsField.ContainsKey(address.GetAddress())
         End Function
 
@@ -1026,7 +1024,7 @@ Namespace XLSX
         ''' <param name="columnNumber">Column number of the cell to check (zero-based).</param>
         ''' <param name="rowNumber">Row number of the cell to check (zero-based).</param>
         ''' <returns>The <see cref="Boolean"/>.</returns>
-        Public Function HasCell(ByVal columnNumber As Integer, ByVal rowNumber As Integer) As Boolean
+        Public Function HasCell(columnNumber As Integer, rowNumber As Integer) As Boolean
             Return HasCell(New Address(columnNumber, rowNumber))
         End Function
 
@@ -1034,7 +1032,7 @@ Namespace XLSX
         ''' Resets the defined column, if existing. The corresponding instance will be removed from <see cref="Columns"/>
         ''' </summary>
         ''' <param name="columnNumber">Column number to reset (zero-based).</param>
-        Public Sub ResetColumn(ByVal columnNumber As Integer)
+        Public Sub ResetColumn(columnNumber As Integer)
             If columnsField.ContainsKey(columnNumber) AndAlso Not columnsField(columnNumber).HasAutoFilter Then ' AutoFilters cannot have gaps 
                 columnsField.Remove(columnNumber)
             ElseIf columnsField.ContainsKey(columnNumber) Then
@@ -1166,7 +1164,7 @@ Namespace XLSX
         ''' <param name="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
         ''' <param name="ignoreEmpty">If true, empty cell values are ignored, otherwise considered without checking the content.</param>
         ''' <returns>Min or max number, or -1 if not defined.</returns>
-        Private Function GetBoundaryDataNumber(ByVal row As Boolean, ByVal min As Boolean, ByVal ignoreEmpty As Boolean) As Integer
+        Private Function GetBoundaryDataNumber(row As Boolean, min As Boolean, ignoreEmpty As Boolean) As Integer
             If cellsField.Count = 0 Then
                 Return -1
             End If
@@ -1202,7 +1200,7 @@ Namespace XLSX
         ''' <param name="row">If true, the min or max row is returned, otherwise the column.</param>
         ''' <param name="min">If true, the min value of the row or column is defined, otherwise the max value.</param>
         ''' <returns>Min or max number, or -1 if not defined.</returns>
-        Private Function GetBoundaryNumber(ByVal row As Boolean, ByVal min As Boolean) As Integer
+        Private Function GetBoundaryNumber(row As Boolean, min As Boolean) As Integer
             Dim cellBoundary = GetBoundaryDataNumber(row, min, False)
             If row Then
                 Dim heightBoundary = -1
@@ -1234,7 +1232,7 @@ Namespace XLSX
         ''' <param name="heightBoundary">Row number of max defined row height.</param>
         ''' <param name="hiddenBoundary">Row number of max defined hidden row.</param>
         ''' <returns>Max row number or -1 if nothing valid defined.</returns>
-        Private Function GetMaxRow(ByVal cellBoundary As Integer, ByVal heightBoundary As Integer, ByVal hiddenBoundary As Integer) As Integer
+        Private Function GetMaxRow(cellBoundary As Integer, heightBoundary As Integer, hiddenBoundary As Integer) As Integer
             Dim highest = -1
             If cellBoundary >= 0 Then
                 highest = cellBoundary
@@ -1255,7 +1253,7 @@ Namespace XLSX
         ''' <param name="heightBoundary">Row number of min defined row height.</param>
         ''' <param name="hiddenBoundary">Row number of min defined hidden row.</param>
         ''' <returns>Min row number or -1 if nothing valid defined.</returns>
-        Private Function GetMinRow(ByVal cellBoundary As Integer, ByVal heightBoundary As Integer, ByVal hiddenBoundary As Integer) As Integer
+        Private Function GetMinRow(cellBoundary As Integer, heightBoundary As Integer, hiddenBoundary As Integer) As Integer
             Dim lowest = Integer.MaxValue
             If cellBoundary >= 0 Then
                 lowest = cellBoundary
@@ -1299,7 +1297,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="numberOfColumns">Number of columns to move.</param>
         ''' <param name="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
-        Public Sub GoToNextColumn(ByVal numberOfColumns As Integer, ByVal Optional keepRowPosition As Boolean = False)
+        Public Sub GoToNextColumn(numberOfColumns As Integer, Optional keepRowPosition As Boolean = False)
             currentColumnNumber += numberOfColumns
             If Not keepRowPosition Then
                 currentRowNumber = 0
@@ -1321,7 +1319,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="numberOfRows">Number of rows to move.</param>
         ''' <param name="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
-        Public Sub GoToNextRow(ByVal numberOfRows As Integer, ByVal Optional keepColumnPosition As Boolean = False)
+        Public Sub GoToNextRow(numberOfRows As Integer, Optional keepColumnPosition As Boolean = False)
             currentRowNumber += numberOfRows
             If Not keepColumnPosition Then
                 currentColumnNumber = 0
@@ -1334,7 +1332,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="cellRange">Range to merge.</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
-        Public Function MergeCells(ByVal cellRange As Range) As String
+        Public Function MergeCells(cellRange As Range) As String
             Return MergeCells(cellRange.StartAddress, cellRange.EndAddress)
         End Function
 
@@ -1343,7 +1341,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="cellRange">Range to merge (e.g. 'A1:B12').</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
-        Public Function MergeCells(ByVal cellRange As String) As String
+        Public Function MergeCells(cellRange As String) As String
             Dim range = ResolveCellRange(cellRange)
             Return MergeCells(range.StartAddress, range.EndAddress)
         End Function
@@ -1354,7 +1352,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address of the merged cell range.</param>
         ''' <param name="endAddress">End address of the merged cell range.</param>
         ''' <returns>Returns the validated range of the merged cells (e.g. 'A1:B12').</returns>
-        Public Function MergeCells(ByVal startAddress As Address, ByVal endAddress As Address) As String
+        Public Function MergeCells(startAddress As Address, endAddress As Address) As String
             Dim key As String = startAddress.ToString() & ":" & endAddress.ToString()
             Dim value As Range = New Range(startAddress, endAddress)
             Dim enclosedAddress As IReadOnlyList(Of Address) = value.ResolveEnclosedAddresses()
@@ -1407,10 +1405,10 @@ Namespace XLSX
         Friend Sub RecalculateColumns()
             Dim columnsToDelete As List(Of Integer) = New List(Of Integer)()
             For Each col In columnsField
-                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso Math.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
+                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso stdNum.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
                     columnsToDelete.Add(col.Key)
                 End If
-                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso Math.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
+                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso stdNum.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
                     columnsToDelete.Add(col.Key)
                 End If
             Next
@@ -1426,9 +1424,9 @@ Namespace XLSX
         Friend Sub ResolveMergedCells()
             Dim mergeStyle = Style.BasicStyles.MergeCellStyle
             Dim cell As Cell
-            For Each Range In MergedCells
+            For Each range As KeyValuePair(Of String, Cell.Range) In MergedCells
                 Dim pos = 0
-                Dim addresses As List(Of Address) = TryCast(GetCellRange(Range.Value.StartAddress, Range.Value.EndAddress), List(Of Address))
+                Dim addresses As List(Of Address) = TryCast(GetCellRange(range.Value.StartAddress, range.Value.EndAddress), List(Of Address))
                 For Each address In addresses
                     If Not Cells.ContainsKey(address.GetAddress()) Then
                         cell = New Cell()
@@ -1465,7 +1463,7 @@ Namespace XLSX
         ''' Sets a previously defined, hidden column as visible again
         ''' </summary>
         ''' <param name="columnNumber">Column number to make visible again.</param>
-        Public Sub RemoveHiddenColumn(ByVal columnNumber As Integer)
+        Public Sub RemoveHiddenColumn(columnNumber As Integer)
             SetColumnHiddenState(columnNumber, False)
         End Sub
 
@@ -1473,7 +1471,7 @@ Namespace XLSX
         ''' Sets a previously defined, hidden column as visible again
         ''' </summary>
         ''' <param name="columnAddress">Column address to make visible again.</param>
-        Public Sub RemoveHiddenColumn(ByVal columnAddress As String)
+        Public Sub RemoveHiddenColumn(columnAddress As String)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnHiddenState(columnNumber, False)
         End Sub
@@ -1482,7 +1480,7 @@ Namespace XLSX
         ''' Sets a previously defined, hidden row as visible again
         ''' </summary>
         ''' <param name="rowNumber">Row number to hide on the worksheet.</param>
-        Public Sub RemoveHiddenRow(ByVal rowNumber As Integer)
+        Public Sub RemoveHiddenRow(rowNumber As Integer)
             SetRowHiddenState(rowNumber, False)
         End Sub
 
@@ -1490,7 +1488,7 @@ Namespace XLSX
         ''' Removes the defined merged cell range
         ''' </summary>
         ''' <param name="range">Cell range to remove the merging.</param>
-        Public Sub RemoveMergedCells(ByVal range As String)
+        Public Sub RemoveMergedCells(range As String)
             If Not Equals(range, Nothing) Then
                 range = range.ToUpper()
             End If
@@ -1522,7 +1520,7 @@ Namespace XLSX
         ''' Removes the defined, non-standard row height
         ''' </summary>
         ''' <param name="rowNumber">Row number (zero-based).</param>
-        Public Sub RemoveRowHeight(ByVal rowNumber As Integer)
+        Public Sub RemoveRowHeight(rowNumber As Integer)
             If rowHeightsField.ContainsKey(rowNumber) Then
                 rowHeightsField.Remove(rowNumber)
             End If
@@ -1532,7 +1530,7 @@ Namespace XLSX
         ''' Removes an allowed action on the current worksheet or its cells
         ''' </summary>
         ''' <param name="value">Allowed action on the worksheet or cells.</param>
-        Public Sub RemoveAllowedActionOnSheetProtection(ByVal value As SheetProtectionValue)
+        Public Sub RemoveAllowedActionOnSheetProtection(value As SheetProtectionValue)
             If sheetProtectionValuesField.Contains(value) Then
                 sheetProtectionValuesField.Remove(value)
             End If
@@ -1542,7 +1540,7 @@ Namespace XLSX
         ''' Sets the active style of the worksheet. This style will be assigned to all later added cells
         ''' </summary>
         ''' <param name="style">Style to set as active style.</param>
-        Public Sub SetActiveStyle(ByVal style As Style)
+        Public Sub SetActiveStyle(style As Style)
             If style Is Nothing Then
                 useActiveStyle = False
             Else
@@ -1556,7 +1554,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="startColumn">Column number with the first appearance of an auto filter drop down.</param>
         ''' <param name="endColumn">Column number with the last appearance of an auto filter drop down.</param>
-        Public Sub SetAutoFilter(ByVal startColumn As Integer, ByVal endColumn As Integer)
+        Public Sub SetAutoFilter(startColumn As Integer, endColumn As Integer)
             Dim start = ResolveCellAddress(startColumn, 0)
             Dim [end] = ResolveCellAddress(endColumn, 0)
             If endColumn < startColumn Then
@@ -1570,7 +1568,7 @@ Namespace XLSX
         ''' Sets the column auto filter within the defined column range
         ''' </summary>
         ''' <param name="range">Range to apply auto filter on. The range could be 'A1:C10' for instance. The end row will be recalculated automatically when saving the file.</param>
-        Public Sub SetAutoFilter(ByVal range As String)
+        Public Sub SetAutoFilter(range As String)
             autoFilterRangeField = ResolveCellRange(range)
             RecalculateAutoFilter()
             RecalculateColumns()
@@ -1581,7 +1579,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnNumber">Column number to hide on the worksheet.</param>
         ''' <param name="state">If true, the column will be hidden, otherwise be visible.</param>
-        Private Sub SetColumnHiddenState(ByVal columnNumber As Integer, ByVal state As Boolean)
+        Private Sub SetColumnHiddenState(columnNumber As Integer, state As Boolean)
             ValidateColumnNumber(columnNumber)
             If columnsField.ContainsKey(columnNumber) Then
                 columnsField(columnNumber).IsHidden = state
@@ -1590,7 +1588,7 @@ Namespace XLSX
                 c.IsHidden = True
                 columnsField.Add(columnNumber, c)
             End If
-            If Not columnsField(columnNumber).IsHidden AndAlso Math.Abs(columnsField(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not columnsField(columnNumber).HasAutoFilter Then
+            If Not columnsField(columnNumber).IsHidden AndAlso stdNum.Abs(columnsField(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not columnsField(columnNumber).HasAutoFilter Then
                 columnsField.Remove(columnNumber)
             End If
         End Sub
@@ -1600,7 +1598,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnAddress">Column address (A - XFD).</param>
         ''' <param name="width">Width from 0 to 255.0.</param>
-        Public Sub SetColumnWidth(ByVal columnAddress As String, ByVal width As Single)
+        Public Sub SetColumnWidth(columnAddress As String, width As Single)
             Dim columnNumber = ResolveColumn(columnAddress)
             SetColumnWidth(columnNumber, width)
         End Sub
@@ -1610,7 +1608,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnNumber">Column number (zero-based, from 0 to 16383).</param>
         ''' <param name="width">Width from 0 to 255.0.</param>
-        Public Sub SetColumnWidth(ByVal columnNumber As Integer, ByVal width As Single)
+        Public Sub SetColumnWidth(columnNumber As Integer, width As Single)
             ValidateColumnNumber(columnNumber)
             If width < MIN_COLUMN_WIDTH OrElse width > MAX_COLUMN_WIDTH Then
                 Throw New RangeException("OutOfRangeException", "The column width (" & width.ToString() & ") is out of range. Range is from " & MIN_COLUMN_WIDTH.ToString() & " to " & MAX_COLUMN_WIDTH.ToString() & " (chars).")
@@ -1629,7 +1627,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnNumber">Column number (zero based).</param>
         ''' <param name="rowNumber">Row number (zero based).</param>
-        Public Sub SetCurrentCellAddress(ByVal columnNumber As Integer, ByVal rowNumber As Integer)
+        Public Sub SetCurrentCellAddress(columnNumber As Integer, rowNumber As Integer)
             SetCurrentColumnNumber(columnNumber)
             SetCurrentRowNumber(rowNumber)
         End Sub
@@ -1638,7 +1636,7 @@ Namespace XLSX
         ''' Set the current cell address
         ''' </summary>
         ''' <param name="address">Cell address in the format A1 - XFD1048576.</param>
-        Public Sub SetCurrentCellAddress(ByVal address As String)
+        Public Sub SetCurrentCellAddress(address As String)
             Dim row, column As Integer
             ResolveCellCoordinate(address, column, row)
             SetCurrentCellAddress(column, row)
@@ -1648,7 +1646,7 @@ Namespace XLSX
         ''' Sets the current column number (zero based)
         ''' </summary>
         ''' <param name="columnNumber">Column number (zero based).</param>
-        Public Sub SetCurrentColumnNumber(ByVal columnNumber As Integer)
+        Public Sub SetCurrentColumnNumber(columnNumber As Integer)
             ValidateColumnNumber(columnNumber)
             currentColumnNumber = columnNumber
         End Sub
@@ -1657,7 +1655,7 @@ Namespace XLSX
         ''' Sets the current row number (zero based)
         ''' </summary>
         ''' <param name="rowNumber">Row number (zero based).</param>
-        Public Sub SetCurrentRowNumber(ByVal rowNumber As Integer)
+        Public Sub SetCurrentRowNumber(rowNumber As Integer)
             ValidateRowNumber(rowNumber)
             currentRowNumber = rowNumber
         End Sub
@@ -1667,7 +1665,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="range">Range to set as single cell range for selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
-        Public Sub SetSelectedCells(ByVal range As Range)
+        Public Sub SetSelectedCells(range As Range)
             RemoveSelectedCells()
             AddSelectedCells(range)
         End Sub
@@ -1678,7 +1676,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address of the range to set as single cell range for selected cells</param>
         ''' <param name="endAddress">End address of the range to set as single cell range for selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
-        Public Sub SetSelectedCells(ByVal startAddress As Address, ByVal endAddress As Address)
+        Public Sub SetSelectedCells(startAddress As Address, endAddress As Address)
             SetSelectedCells(New Range(startAddress, endAddress))
         End Sub
 
@@ -1687,7 +1685,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="range">Range as string to set as single cell range for selected cells, or null to remove the selected cells</param>
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
-        Public Sub SetSelectedCells(ByVal range As String)
+        Public Sub SetSelectedCells(range As String)
             If Equals(range, Nothing) Then
                 selectedCellsField.Clear()
                 Return
@@ -1700,7 +1698,7 @@ Namespace XLSX
         ''' Adds a range to the selected cells on this worksheet
         ''' </summary>
         ''' <param name="range">Cell range to be added as selected cells</param>
-        Public Sub AddSelectedCells(ByVal range As Range)
+        Public Sub AddSelectedCells(range As Range)
             selectedCellsField.Add(range)
         End Sub
 
@@ -1709,7 +1707,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="startAddress">Start address of the range to add</param>
         ''' <param name="endAddress">End address of the range to add</param>
-        Public Sub AddSelectedCells(ByVal startAddress As Address, ByVal endAddress As Address)
+        Public Sub AddSelectedCells(startAddress As Address, endAddress As Address)
             selectedCellsField.Add(New Range(startAddress, endAddress))
         End Sub
 
@@ -1717,7 +1715,7 @@ Namespace XLSX
         ''' Adds a range to the selected cells on this worksheet. Null or empty as value will be ignored
         ''' </summary>
         ''' <param name="range">Cell range to add as selected cells</param>
-        Public Sub AddSelectedCells(ByVal range As String)
+        Public Sub AddSelectedCells(range As String)
             If Not Equals(range, Nothing) Then
                 selectedCellsField.Add(ResolveCellRange(range))
             End If
@@ -1727,7 +1725,7 @@ Namespace XLSX
         ''' Sets or removes the password for worksheet protection. If set, UseSheetProtection will be also set to true
         ''' </summary>
         ''' <param name="password">Password (UTF-8) to protect the worksheet. If the password is null or empty, no password will be used.</param>
-        Public Sub SetSheetProtectionPassword(ByVal password As String)
+        Public Sub SetSheetProtectionPassword(password As String)
             If String.IsNullOrEmpty(password) Then
                 sheetProtectionPasswordField = Nothing
                 sheetProtectionPasswordHashField = Nothing
@@ -1744,7 +1742,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="rowNumber">Row number (zero-based, 0 to 1048575).</param>
         ''' <param name="height">Height from 0 to 409.5.</param>
-        Public Sub SetRowHeight(ByVal rowNumber As Integer, ByVal height As Single)
+        Public Sub SetRowHeight(rowNumber As Integer, height As Single)
             ValidateRowNumber(rowNumber)
             If height < MIN_ROW_HEIGHT OrElse height > MAX_ROW_HEIGHT Then
                 Throw New RangeException("OutOfRangeException", "The row height (" & height.ToString() & ") is out of range. Range is from " & MIN_ROW_HEIGHT.ToString() & " to " & MAX_ROW_HEIGHT.ToString() & " (equals 546px).")
@@ -1761,7 +1759,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="rowNumber">Row number to make visible again.</param>
         ''' <param name="state">If true, the row will be hidden, otherwise visible.</param>
-        Private Sub SetRowHiddenState(ByVal rowNumber As Integer, ByVal state As Boolean)
+        Private Sub SetRowHiddenState(rowNumber As Integer, state As Boolean)
             ValidateRowNumber(rowNumber)
             If hiddenRowsField.ContainsKey(rowNumber) Then
                 If state Then
@@ -1778,7 +1776,7 @@ Namespace XLSX
         ''' Validates and sets the worksheet name
         ''' </summary>
         ''' <param name="name">Name to set.</param>
-        Public Sub SetSheetName(ByVal name As String)
+        Public Sub SetSheetName(name As String)
             If String.IsNullOrEmpty(name) Then
                 Throw New FormatException("the worksheet name must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
             End If
@@ -1798,7 +1796,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
         ''' <param name="sanitize">If true, the filename will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub SetSheetName(ByVal name As String, ByVal sanitize As Boolean)
+        Public Sub SetSheetName(name As String, sanitize As Boolean)
             If sanitize Then
                 sheetNameField = "" ' Empty name (temporary) to prevent conflicts during sanitizing
                 sheetNameField = SanitizeWorksheetName(name, workbookReferenceField)
@@ -1813,7 +1811,7 @@ Namespace XLSX
         ''' <param name="topPaneHeight">Height (similar to row height) from top of the worksheet to the split line in characters.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetHorizontalSplit(ByVal topPaneHeight As Single, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetHorizontalSplit(topPaneHeight As Single, topLeftCell As Address, activePane As WorksheetPane)
             SetSplit(Nothing, topPaneHeight, topLeftCell, activePane)
         End Sub
 
@@ -1824,7 +1822,7 @@ Namespace XLSX
         ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the row component is important in a horizontal split.</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetHorizontalSplit(ByVal numberOfRowsFromTop As Integer, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetHorizontalSplit(numberOfRowsFromTop As Integer, freeze As Boolean, topLeftCell As Address, activePane As WorksheetPane)
             SetSplit(Nothing, numberOfRowsFromTop, freeze, topLeftCell, activePane)
         End Sub
 
@@ -1834,7 +1832,7 @@ Namespace XLSX
         ''' <param name="leftPaneWidth">Width (similar to column width) from left of the worksheet to the split line in characters.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetVerticalSplit(ByVal leftPaneWidth As Single, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetVerticalSplit(leftPaneWidth As Single, topLeftCell As Address, activePane As WorksheetPane)
             SetSplit(leftPaneWidth, Nothing, topLeftCell, activePane)
         End Sub
 
@@ -1845,7 +1843,7 @@ Namespace XLSX
         ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable). Only the column component is important in a vertical split.</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetVerticalSplit(ByVal numberOfColumnsFromLeft As Integer, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetVerticalSplit(numberOfColumnsFromLeft As Integer, freeze As Boolean, topLeftCell As Address, activePane As WorksheetPane)
             SetSplit(numberOfColumnsFromLeft, Nothing, freeze, topLeftCell, activePane)
         End Sub
 
@@ -1857,7 +1855,7 @@ Namespace XLSX
         ''' <param name="freeze">If true, all panes are frozen, otherwise remains movable.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetSplit(ByVal numberOfColumnsFromLeft As Integer?, ByVal numberOfRowsFromTop As Integer?, ByVal freeze As Boolean, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetSplit(numberOfColumnsFromLeft As Integer?, numberOfRowsFromTop As Integer?, freeze As Boolean, topLeftCell As Address, activePane As WorksheetPane)
             If freeze Then
                 If numberOfColumnsFromLeft IsNot Nothing AndAlso topLeftCell.Column < numberOfColumnsFromLeft.Value Then
                     Throw New WorksheetException("The column number " & topLeftCell.Column.ToString() & " is not valid for a frozen, vertical split with the split pane column number " & numberOfColumnsFromLeft.Value.ToString())
@@ -1883,7 +1881,7 @@ Namespace XLSX
         ''' <param name="topPaneHeight">The topPaneHeight<see cref="Single."/>.</param>
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
         ''' <param name="activePane">Active pane in the split window.</param>
-        Public Sub SetSplit(ByVal leftPaneWidth As Single?, ByVal topPaneHeight As Single?, ByVal topLeftCell As Address, ByVal activePane As WorksheetPane)
+        Public Sub SetSplit(leftPaneWidth As Single?, topPaneHeight As Single?, topLeftCell As Address, activePane As WorksheetPane)
             paneSplitLeftWidthField = leftPaneWidth
             paneSplitTopHeightField = topPaneHeight
             freezeSplitPanesField = Nothing
@@ -1966,7 +1964,7 @@ Namespace XLSX
         ''' <param name="input">Name to sanitize.</param>
         ''' <param name="workbook">Workbook reference.</param>
         ''' <returns>Name of the sanitized worksheet.</returns>
-        Public Shared Function SanitizeWorksheetName(ByVal input As String, ByVal workbook As Workbook) As String
+        Public Shared Function SanitizeWorksheetName(input As String, workbook As Workbook) As String
             If Equals(input, Nothing) Then
                 input = "Sheet1"
             End If
@@ -1995,7 +1993,7 @@ Namespace XLSX
         ''' <param name="name">Original name to start the check.</param>
         ''' <param name="workbook">Workbook to look for existing worksheets.</param>
         ''' <returns>Not yet used worksheet name.</returns>
-        Private Shared Function GetUnusedWorksheetName(ByVal name As String, ByVal workbook As Workbook) As String
+        Private Shared Function GetUnusedWorksheetName(name As String, workbook As Workbook) As String
             If workbook Is Nothing Then
                 Throw New WorksheetException("The workbook reference is null")
             End If
@@ -2031,7 +2029,7 @@ Namespace XLSX
         ''' <param name="name">Name to check.</param>
         ''' <param name="workbook">Workbook reference.</param>
         ''' <returns>True if the name exits, otherwise false.</returns>
-        Private Shared Function WorksheetExists(ByVal name As String, ByVal workbook As Workbook) As Boolean
+        Private Shared Function WorksheetExists(name As String, workbook As Workbook) As Boolean
             If workbook Is Nothing Then
                 Throw New WorksheetException("The workbook reference is null")
             End If
@@ -2071,7 +2069,7 @@ Namespace XLSX
                 Get
                     Return columnAddressField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     If String.IsNullOrEmpty(value) Then
                         Throw New RangeException("A general range exception occurred", "The passed address was null or empty")
                     End If
@@ -2100,7 +2098,7 @@ Namespace XLSX
                 Get
                     Return numberField
                 End Get
-                Set(ByVal value As Integer)
+                Set(value As Integer)
                     columnAddressField = ResolveColumnAddress(value)
                     numberField = value
                 End Set
@@ -2114,7 +2112,7 @@ Namespace XLSX
                 Get
                     Return widthField
                 End Get
-                Set(ByVal value As Single)
+                Set(value As Single)
                     If value < MIN_COLUMN_WIDTH OrElse value > MAX_COLUMN_WIDTH Then
                         Throw New RangeException("A general range exception occurred", "The passed column width is out of range (" & MIN_COLUMN_WIDTH.ToString() & " to " & MAX_COLUMN_WIDTH.ToString() & ")")
                     End If
@@ -2133,7 +2131,7 @@ Namespace XLSX
             ''' Initializes a new instance of the <see cref="Column"/> class
             ''' </summary>
             ''' <param name="columnCoordinate">Column number (zero-based, 0 to 16383).</param>
-            Public Sub New(ByVal columnCoordinate As Integer)
+            Public Sub New(columnCoordinate As Integer)
                 Me.New()
                 Number = columnCoordinate
             End Sub
@@ -2142,7 +2140,7 @@ Namespace XLSX
             ''' Initializes a new instance of the <see cref="Column"/> class
             ''' </summary>
             ''' <param name="columnAddress">Column address (A to XFD).</param>
-            Public Sub New(ByVal columnAddress As String)
+            Public Sub New(columnAddress As String)
                 Me.New()
                 Me.ColumnAddress = columnAddress
             End Sub

@@ -5,7 +5,7 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class for exceptions regarding range incidents (e.g. out-of-range)
@@ -25,7 +25,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="title">The title<see cref="String"/>.</param>
         ''' <param name="message">Message of the exception.</param>
-        Public Sub New(ByVal title As String, ByVal message As String)
+        Public Sub New(title As String, message As String)
             MyBase.New(message)
         End Sub
     End Class
@@ -47,7 +47,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="FormatException"/> class
         ''' </summary>
         ''' <param name="message">Message of the exception.</param>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
@@ -57,7 +57,7 @@ Namespace XLSX
         ''' <param name="title">Title of the exception.</param>
         ''' <param name="message">Message of the exception.</param>
         ''' <param name="inner">Inner exception.</param>
-        Public Sub New(ByVal title As String, ByVal message As String, ByVal inner As Exception)
+        Public Sub New(title As String, message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -79,7 +79,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="IOException"/> class
         ''' </summary>
         ''' <param name="message">Message of the exception.</param>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
 
@@ -88,7 +88,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="message">Message of the exception.</param>
         ''' <param name="inner">Inner exception.</param>
-        Public Sub New(ByVal message As String, ByVal inner As Exception)
+        Public Sub New(message As String, inner As Exception)
             MyBase.New(message, inner)
         End Sub
     End Class
@@ -110,7 +110,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="WorksheetException"/> class
         ''' </summary>
         ''' <param name="message">Message of the exception.</param>
-        Public Sub New(ByVal message As String)
+        Public Sub New(message As String)
             MyBase.New(message)
         End Sub
     End Class
@@ -133,7 +133,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="title">The title<see cref="String"/>.</param>
         ''' <param name="message">Message of the exception.</param>
-        Public Sub New(ByVal title As String, ByVal message As String)
+        Public Sub New(title As String, message As String)
             MyBase.New(message)
         End Sub
     End Class

@@ -6,9 +6,9 @@
 ' 
 
 Imports System.IO
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Style
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Style
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' PicoXLSX is a library to generate XLSX files in an easy and native way
@@ -101,7 +101,7 @@ Namespace XLSX
             Get
                 Return filenameField
             End Get
-            Set(ByVal value As String)
+            Set(value As String)
                 filenameField = value
             End Set
         End Property
@@ -134,7 +134,7 @@ Namespace XLSX
             Get
                 Return workbookMetadataField
             End Get
-            Set(ByVal value As Metadata)
+            Set(value As Metadata)
                 workbookMetadataField = value
             End Set
         End Property
@@ -167,7 +167,7 @@ Namespace XLSX
             Get
                 Return _WorkbookProtectionPasswordHash
             End Get
-            Friend Set(ByVal value As String)
+            Friend Set(value As String)
                 _WorkbookProtectionPasswordHash = value
             End Set
         End Property
@@ -198,7 +198,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
         ''' <param name="createWorkSheet">If true, a default worksheet with the name 'Sheet1' will be crated and set as current worksheet.</param>
-        Public Sub New(ByVal createWorkSheet As Boolean)
+        Public Sub New(createWorkSheet As Boolean)
             Init()
             If createWorkSheet Then
                 AddWorksheet("Sheet1")
@@ -209,7 +209,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="Workbook"/> class
         ''' </summary>
         ''' <param name="sheetName">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub New(ByVal sheetName As String)
+        Public Sub New(sheetName As String)
             Init()
             AddWorksheet(sheetName, True)
         End Sub
@@ -219,7 +219,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="filename">Filename of the workbook.  The name will be sanitized automatically according to the specifications of Excel.</param>
         ''' <param name="sheetName">Name of the first worksheet. The name will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub New(ByVal filename As String, ByVal sheetName As String)
+        Public Sub New(filename As String, sheetName As String)
             Init()
             filenameField = filename
             AddWorksheet(sheetName, True)
@@ -231,7 +231,7 @@ Namespace XLSX
         ''' <param name="filename">Filename of the workbook.</param>
         ''' <param name="sheetName">Name of the first worksheet.</param>
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub New(ByVal filename As String, ByVal sheetName As String, ByVal sanitizeSheetName As Boolean)
+        Public Sub New(filename As String, sheetName As String, sanitizeSheetName As Boolean)
             Init()
             filenameField = filename
             If sanitizeSheetName Then
@@ -245,7 +245,7 @@ Namespace XLSX
         ''' Adds a color value (HEX; 6-digit RGB or 8-digit ARGB) to the MRU list
         ''' </summary>
         ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
-        Public Sub AddMruColor(ByVal color As String)
+        Public Sub AddMruColor(color As String)
             If Not Equals(color, Nothing) AndAlso color.Length = 6 Then
                 color = "FF" & color
             End If
@@ -274,7 +274,7 @@ Namespace XLSX
         ''' <param name="style">Style to add.</param>
         ''' <returns>Returns the managed style of the style repository.</returns>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Function AddStyle(ByVal style As Style) As Style
+        Public Function AddStyle(style As Style) As Style
             Return StyleRepository.Instance.AddStyle(style)
         End Function
 
@@ -285,7 +285,7 @@ Namespace XLSX
         ''' <param name="newComponent">Component to add to the baseStyle.</param>
         ''' <returns>Returns the modified style of the style repository.</returns>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Function AddStyleComponent(ByVal baseStyle As Style, ByVal newComponent As AbstractStyle) As Style
+        Public Function AddStyleComponent(baseStyle As Style, newComponent As AbstractStyle) As Style
 
             If newComponent.GetType() Is GetType(Border) Then
                 baseStyle.CurrentBorder = CType(newComponent, Border)
@@ -305,7 +305,7 @@ Namespace XLSX
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
         ''' <param name="name">Name of the new worksheet.</param>
-        Public Sub AddWorksheet(ByVal name As String)
+        Public Sub AddWorksheet(name As String)
             For Each item In worksheetsField
                 If Equals(item.SheetName, name) Then
                     Throw New WorksheetException("The worksheet with the name '" & name & "' already exists.")
@@ -323,7 +323,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="name">Name of the new worksheet.</param>
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub AddWorksheet(ByVal name As String, ByVal sanitizeSheetName As Boolean)
+        Public Sub AddWorksheet(name As String, sanitizeSheetName As Boolean)
             If sanitizeSheetName Then
                 Dim sanitized = Worksheet.SanitizeWorksheetName(name, Me)
                 AddWorksheet(sanitized)
@@ -336,7 +336,7 @@ Namespace XLSX
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
         ''' <param name="worksheet">Prepared worksheet object.</param>
-        Public Sub AddWorksheet(ByVal worksheet As Worksheet)
+        Public Sub AddWorksheet(worksheet As Worksheet)
             AddWorksheet(worksheet, False)
         End Sub
 
@@ -345,7 +345,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">Prepared worksheet object.</param>
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
-        Public Sub AddWorksheet(ByVal worksheet As Worksheet, ByVal sanitizeSheetName As Boolean)
+        Public Sub AddWorksheet(worksheet As Worksheet, sanitizeSheetName As Boolean)
             If sanitizeSheetName Then
                 Dim name = Worksheet.SanitizeWorksheetName(worksheet.SheetName, Me)
                 worksheet.SheetName = name
@@ -370,7 +370,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="style">Style to remove.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Sub RemoveStyle(ByVal style As Style)
+        Public Sub RemoveStyle(style As Style)
             RemoveStyle(style, False)
         End Sub
 
@@ -379,7 +379,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="styleName">Name of the style to be removed.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Sub RemoveStyle(ByVal styleName As String)
+        Public Sub RemoveStyle(styleName As String)
             RemoveStyle(styleName, False)
         End Sub
 
@@ -389,7 +389,7 @@ Namespace XLSX
         ''' <param name="style">Style to remove.</param>
         ''' <param name="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Sub RemoveStyle(ByVal style As Style, ByVal onlyIfUnused As Boolean)
+        Public Sub RemoveStyle(style As Style, onlyIfUnused As Boolean)
             If style Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style to remove is not defined")
             End If
@@ -402,7 +402,7 @@ Namespace XLSX
         ''' <param name="styleName">Name of the style to be removed.</param>
         ''' <param name="onlyIfUnused">If true, the style will only be removed if not used in any cell.</param>
         <Obsolete("This method has no direct impact on the generated file and is deprecated.")>
-        Public Sub RemoveStyle(ByVal styleName As String, ByVal onlyIfUnused As Boolean)
+        Public Sub RemoveStyle(styleName As String, onlyIfUnused As Boolean)
             If String.IsNullOrEmpty(styleName) Then
                 Throw New StyleException("MissingReferenceException", "The style to remove is not defined (no name specified)")
             End If
@@ -413,7 +413,7 @@ Namespace XLSX
         ''' Removes the defined worksheet based on its name. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
-        Public Sub RemoveWorksheet(ByVal name As String)
+        Public Sub RemoveWorksheet(name As String)
             Dim worksheetToRemove = worksheetsField.FindLast(Function(w) Equals(w.SheetName, name))
             If worksheetToRemove Is Nothing Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
@@ -428,7 +428,7 @@ Namespace XLSX
         ''' Removes the defined worksheet based on its index. If the worksheet is the current or selected worksheet, the current and / or the selected worksheet will be set to the last worksheet of the workbook
         ''' </summary>
         ''' <param name="index">Index within the worksheets list.</param>
-        Public Sub RemoveWorksheet(ByVal index As Integer)
+        Public Sub RemoveWorksheet(index As Integer)
             If index < 0 OrElse index >= worksheetsField.Count Then
                 Throw New WorksheetException("The worksheet index " & index.ToString() & " is out of range")
             End If
@@ -467,7 +467,7 @@ Namespace XLSX
         ''' Saves the workbook with the defined name
         ''' </summary>
         ''' <param name="fileName">filename of the saved workbook.</param>
-        Public Sub SaveAs(ByVal fileName As String)
+        Public Sub SaveAs(fileName As String)
             Dim backup = fileName
             filenameField = fileName
             Dim l As LowLevel = New LowLevel(Me)
@@ -480,7 +480,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="fileName">filename of the saved workbook.</param>
         ''' <returns>Task object (void).</returns>
-        Public Async Function SaveAsAsync(ByVal fileName As String) As Task
+        Public Async Function SaveAsAsync(fileName As String) As Task
             Dim backup = fileName
             filenameField = fileName
             Dim l As LowLevel = New LowLevel(Me)
@@ -493,7 +493,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="stream">Writable stream.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
-        Public Sub SaveAsStream(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False)
+        Public Sub SaveAsStream(stream As Stream, Optional leaveOpen As Boolean = False)
             Dim l As LowLevel = New LowLevel(Me)
             l.SaveAsStream(stream, leaveOpen)
         End Sub
@@ -504,7 +504,7 @@ Namespace XLSX
         ''' <param name="stream">>Writable stream.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         ''' <returns>Task object (void).</returns>
-        Public Async Function SaveAsStreamAsync(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False) As Task
+        Public Async Function SaveAsStreamAsync(stream As Stream, Optional leaveOpen As Boolean = False) As Task
             Dim l As LowLevel = New LowLevel(Me)
             Await l.SaveAsStreamAsync(stream, leaveOpen)
         End Function
@@ -514,7 +514,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
         ''' <returns>Returns the current worksheet.</returns>
-        Public Function SetCurrentWorksheet(ByVal name As String) As Worksheet
+        Public Function SetCurrentWorksheet(name As String) As Worksheet
             currentWorksheetField = worksheetsField.FirstOrDefault(Function(w) Equals(w.SheetName, name))
             If currentWorksheetField Is Nothing Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
@@ -528,7 +528,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheetIndex">Zero-based worksheet index.</param>
         ''' <returns>Returns the current worksheet.</returns>
-        Public Function SetCurrentWorksheet(ByVal worksheetIndex As Integer) As Worksheet
+        Public Function SetCurrentWorksheet(worksheetIndex As Integer) As Worksheet
             If worksheetIndex < 0 OrElse worksheetIndex > worksheetsField.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
@@ -541,7 +541,7 @@ Namespace XLSX
         ''' Sets the current worksheet
         ''' </summary>
         ''' <param name="worksheet">Worksheet object (must be in the collection of worksheets).</param>
-        Public Sub SetCurrentWorksheet(ByVal worksheet As Worksheet)
+        Public Sub SetCurrentWorksheet(worksheet As Worksheet)
             Dim index = worksheetsField.IndexOf(worksheet)
             If index < 0 Then
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
@@ -554,7 +554,7 @@ Namespace XLSX
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
-        Public Sub SetSelectedWorksheet(ByVal name As String)
+        Public Sub SetSelectedWorksheet(name As String)
             selectedWorksheetField = worksheetsField.FindIndex(Function(w) Equals(w.SheetName, name))
             If selectedWorksheetField < 0 Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
@@ -566,7 +566,7 @@ Namespace XLSX
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
         ''' <param name="worksheetIndex">Zero-based worksheet index.</param>
-        Public Sub SetSelectedWorksheet(ByVal worksheetIndex As Integer)
+        Public Sub SetSelectedWorksheet(worksheetIndex As Integer)
             If worksheetIndex < 0 OrElse worksheetIndex > worksheetsField.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
@@ -578,7 +578,7 @@ Namespace XLSX
         ''' Sets the selected worksheet in the output workbook
         ''' </summary>
         ''' <param name="worksheet">Worksheet object (must be in the collection of worksheets).</param>
-        Public Sub SetSelectedWorksheet(ByVal worksheet As Worksheet)
+        Public Sub SetSelectedWorksheet(worksheet As Worksheet)
             selectedWorksheetField = worksheetsField.IndexOf(worksheet)
             If selectedWorksheetField < 0 Then
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
@@ -591,7 +591,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
         ''' <returns>Worksheet with the passed name.</returns>
-        Public Function GetWorksheet(ByVal name As String) As Worksheet
+        Public Function GetWorksheet(name As String) As Worksheet
             Dim index = worksheetsField.FindIndex(Function(w) Equals(w.SheetName, name))
             If index < 0 Then
                 Throw New WorksheetException("No worksheet with the name '" & name & "' was found in this workbook.")
@@ -604,7 +604,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="index">Index of the worksheet.</param>
         ''' <returns>Worksheet with the passed index.</returns>
-        Public Function GetWorksheet(ByVal index As Integer) As Worksheet
+        Public Function GetWorksheet(index As Integer) As Worksheet
             If index < 0 OrElse index > worksheetsField.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & index.ToString() & " is out of range")
             End If
@@ -618,7 +618,7 @@ Namespace XLSX
         ''' <param name="protectWindows">If true, the windows will be locked if the workbook is protected.</param>
         ''' <param name="protectStructure">If true, the structure will be locked if the workbook is protected.</param>
         ''' <param name="password">Optional password. If null or empty, no password will be set in case of protection.</param>
-        Public Sub SetWorkbookProtection(ByVal state As Boolean, ByVal protectWindows As Boolean, ByVal protectStructure As Boolean, ByVal password As String)
+        Public Sub SetWorkbookProtection(state As Boolean, protectWindows As Boolean, protectStructure As Boolean, password As String)
             lockWindowsIfProtectedField = protectWindows
             lockStructureIfProtectedField = protectStructure
             workbookProtectionPasswordField = password
@@ -637,7 +637,7 @@ Namespace XLSX
         ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetIntoThis(ByVal sourceWorksheetName As String, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetIntoThis(sourceWorksheetName As String, newWorksheetName As String, Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetName)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, Me, sanitizeSheetName)
         End Function
@@ -649,7 +649,7 @@ Namespace XLSX
         ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetIntoThis(ByVal sourceWorksheetIndex As Integer, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetIntoThis(sourceWorksheetIndex As Integer, newWorksheetName As String, Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetIndex)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, Me, sanitizeSheetName)
         End Function
@@ -661,7 +661,7 @@ Namespace XLSX
         ''' <param name="newWorksheetName">Name of the new worksheet (copy).</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetIntoThis(ByVal sourceWorksheet As Worksheet, ByVal newWorksheetName As String, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetIntoThis(sourceWorksheet As Worksheet, newWorksheetName As String, Optional sanitizeSheetName As Boolean = True) As Worksheet
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, Me, sanitizeSheetName)
         End Function
 
@@ -673,7 +673,7 @@ Namespace XLSX
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetTo(ByVal sourceWorksheetName As String, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetTo(sourceWorksheetName As String, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetName)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, targetWorkbook, sanitizeSheetName)
         End Function
@@ -686,7 +686,7 @@ Namespace XLSX
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetTo(ByVal sourceWorksheetIndex As Integer, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetTo(sourceWorksheetIndex As Integer, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetIndex)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, targetWorkbook, sanitizeSheetName)
         End Function
@@ -699,7 +699,7 @@ Namespace XLSX
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Shared Function CopyWorksheetTo(ByVal sourceWorksheet As Worksheet, ByVal newWorksheetName As String, ByVal targetWorkbook As Workbook, ByVal Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Shared Function CopyWorksheetTo(sourceWorksheet As Worksheet, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
             If targetWorkbook Is Nothing Then
                 Throw New WorksheetException("The target workbook cannot be null")
             End If
@@ -740,7 +740,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="index">Index within the worksheets list.</param>
         ''' <param name="resetCurrentWorksheet">If true, the current worksheet will be relocated to the last worksheet in the list.</param>
-        Private Sub RemoveWorksheet(ByVal index As Integer, ByVal resetCurrentWorksheet As Boolean)
+        Private Sub RemoveWorksheet(index As Integer, resetCurrentWorksheet As Boolean)
             worksheetsField.RemoveAt(index)
             If worksheetsField.Count > 0 Then
                 For i = 0 To worksheetsField.Count - 1
@@ -797,7 +797,7 @@ Namespace XLSX
             ''' Initializes a new instance of the <see cref="Shortener"/> class
             ''' </summary>
             ''' <param name="reference">Workbook reference.</param>
-            Public Sub New(ByVal reference As Workbook)
+            Public Sub New(reference As Workbook)
                 workbookReference = reference
                 currentWorksheet = reference.CurrentWorksheet
             End Sub
@@ -806,7 +806,7 @@ Namespace XLSX
             ''' Sets the worksheet accessed by the shortener
             ''' </summary>
             ''' <param name="worksheet">Current worksheet.</param>
-            Public Sub SetCurrentWorksheet(ByVal worksheet As Worksheet)
+            Public Sub SetCurrentWorksheet(worksheet As Worksheet)
                 workbookReference.SetCurrentWorksheet(worksheet)
                 currentWorksheet = worksheet
             End Sub
@@ -815,7 +815,7 @@ Namespace XLSX
             ''' Sets the worksheet accessed by the shortener, invoked by the workbook
             ''' </summary>
             ''' <param name="worksheet">Current worksheet.</param>
-            Friend Sub SetCurrentWorksheetInternal(ByVal worksheet As Worksheet)
+            Friend Sub SetCurrentWorksheetInternal(worksheet As Worksheet)
                 currentWorksheet = worksheet
             End Sub
 
@@ -823,7 +823,7 @@ Namespace XLSX
             ''' Sets a value into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
             ''' <param name="pValue">Value to set.</param>
-            Public Sub Value(ByVal pValue As Object)
+            Public Sub Value(pValue As Object)
                 NullCheck()
                 currentWorksheet.AddNextCell(pValue)
             End Sub
@@ -833,7 +833,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="pValue">Value to set.</param>
             ''' <param name="style">Style to apply.</param>
-            Public Sub Value(ByVal pValue As Object, ByVal style As Style)
+            Public Sub Value(pValue As Object, style As Style)
                 NullCheck()
                 currentWorksheet.AddNextCell(pValue, style)
             End Sub
@@ -842,7 +842,7 @@ Namespace XLSX
             ''' Sets a formula into the current cell and moves the cursor to the next cell (column or row depending on the defined cell direction)
             ''' </summary>
             ''' <param name="pFormula">Formula to set.</param>
-            Public Sub Formula(ByVal pFormula As String)
+            Public Sub Formula(pFormula As String)
                 NullCheck()
                 currentWorksheet.AddNextCellFormula(pFormula)
             End Sub
@@ -852,7 +852,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="pFormula">Formula to set.</param>
             ''' <param name="style">Style to apply.</param>
-            Public Sub Formula(ByVal pFormula As String, ByVal style As Style)
+            Public Sub Formula(pFormula As String, style As Style)
                 NullCheck()
                 currentWorksheet.AddNextCellFormula(pFormula, style)
             End Sub
@@ -870,7 +870,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="numberOfRows">Number of rows to move.</param>
             ''' <param name="keepColumnPosition">If true, the column position is preserved, otherwise set to 0.</param>
-            Public Sub Down(ByVal numberOfRows As Integer, ByVal Optional keepColumnPosition As Boolean = False)
+            Public Sub Down(numberOfRows As Integer, Optional keepColumnPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextRow(numberOfRows, keepColumnPosition)
             End Sub
@@ -888,7 +888,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="numberOfRows">Number of rows to move.</param>
             ''' <param name="keepColumnosition">If true, the column position is preserved, otherwise set to 0.</param>
-            Public Sub Up(ByVal numberOfRows As Integer, ByVal Optional keepColumnosition As Boolean = False)
+            Public Sub Up(numberOfRows As Integer, Optional keepColumnosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextRow(-1 * numberOfRows, keepColumnosition)
             End Sub
@@ -906,7 +906,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="numberOfColumns">Number of columns to move.</param>
             ''' <param name="keepRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
-            Public Sub Right(ByVal numberOfColumns As Integer, ByVal Optional keepRowPosition As Boolean = False)
+            Public Sub Right(numberOfColumns As Integer, Optional keepRowPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextColumn(numberOfColumns, keepRowPosition)
             End Sub
@@ -924,7 +924,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="numberOfColumns">Number of columns to move.</param>
             ''' <param name="keepRowRowPosition">If true, the row position is preserved, otherwise set to 0.</param>
-            Public Sub Left(ByVal numberOfColumns As Integer, ByVal Optional keepRowRowPosition As Boolean = False)
+            Public Sub Left(numberOfColumns As Integer, Optional keepRowRowPosition As Boolean = False)
                 NullCheck()
                 currentWorksheet.GoToNextColumn(-1 * numberOfColumns, keepRowRowPosition)
             End Sub

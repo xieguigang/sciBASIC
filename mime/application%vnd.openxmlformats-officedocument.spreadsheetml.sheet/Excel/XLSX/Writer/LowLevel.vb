@@ -10,8 +10,9 @@ Imports System.IO
 Imports System.IO.Packaging
 Imports System.Text
 Imports System.Xml
+Imports stdNum = System.Math
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class for low level handling (XML, formatting, packing)
@@ -59,7 +60,7 @@ Namespace XLSX
 
         ''' <summary>
         ''' All dates before this date are shifted in Excel by -1.0, since Excel assumes wrongly that the year 1900 is a leap year.<br/>
-        ''' See also: <ahref="https://docs.microsoft.com/en-us/office/troubleshoot/excel/wrongly-assumes-1900-is-leap-year">
+        ''' See also: <a href="https://docs.microsoft.com/en-us/office/troubleshoot/excel/wrongly-assumes-1900-is-leap-year">
         ''' https://docs.microsoft.com/en-us/office/troubleshoot/excel/wrongly-assumes-1900-is-leap-year</a>
         ''' </summary>
         Public Shared ReadOnly FIRST_VALID_EXCEL_DATE As Date = New DateTime(1900, 3, 1)
@@ -72,7 +73,7 @@ Namespace XLSX
         ''' <summary>
         ''' Constant for number conversion. The invariant culture (represents mostly the US numbering scheme) ensures that no culture-specific 
         ''' punctuations are used when converting numbers to strings, This is especially important for OOXML number values
-        ''' See also: <ahref="https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture?view=net-5.0">
+        ''' See also: <a href="https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture?view=net-5.0">
         ''' https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.invariantculture?view=net-5.0</a>
         ''' </summary>
         Public Shared ReadOnly INVARIANT_CULTURE As CultureInfo = CultureInfo.InvariantCulture
@@ -151,7 +152,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="LowLevel"/> class
         ''' </summary>
         ''' <param name="workbook">Workbook to process.</param>
-        Public Sub New(ByVal workbook As Workbook)
+        Public Sub New(workbook As Workbook)
             culture = INVARIANT_CULTURE
             workbookField = workbook
             sharedStrings = New SortedMap()
@@ -205,7 +206,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="sb">StringBuilder instance.</param>
         ''' <param name="value">Escaped string value (not null).</param>
-        Private Sub AppendSharedString(ByVal sb As StringBuilder, ByVal value As String)
+        Private Sub AppendSharedString(sb As StringBuilder, value As String)
             Dim len = value.Length
             sb.Append("<si>")
             If len = 0 Then
@@ -226,7 +227,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="value">Input value.</param>
         ''' <returns>Normalized value.</returns>
-        Private Function NormalizeNewLines(ByVal value As String) As String
+        Private Function NormalizeNewLines(value As String) As String
             If Equals(value, Nothing) OrElse Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(10)) AndAlso Not value.Contains(Microsoft.VisualBasic.Strings.ChrW(13)) Then
                 Return value
             End If
@@ -315,7 +316,7 @@ Namespace XLSX
         ''' Method to create the (sub) part of the workbook protection within the workbook XML document
         ''' </summary>
         ''' <param name="sb">reference to the stringbuilder.</param>
-        Private Sub CreateWorkbookProtectionString(ByVal sb As StringBuilder)
+        Private Sub CreateWorkbookProtectionString(sb As StringBuilder)
             If workbookField.UseWorkbookProtection Then
                 sb.Append("<workbookProtection")
                 If workbookField.LockWindowsIfProtected Then
@@ -338,7 +339,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">worksheet object to process.</param>
         ''' <returns>Raw XML string.</returns>
-        Private Function CreateWorksheetPart(ByVal worksheet As Worksheet) As String
+        Private Function CreateWorksheetPart(worksheet As Worksheet) As String
             worksheet.RecalculateAutoFilter()
             worksheet.RecalculateColumns()
             Dim sb As StringBuilder = New StringBuilder()
@@ -380,7 +381,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">.</param>
         ''' <returns>True if applied, otherwise false.</returns>
-        Private Function HasPaneSplitting(ByVal worksheet As Worksheet) As Boolean
+        Private Function HasPaneSplitting(worksheet As Worksheet) As Boolean
             If worksheet.PaneSplitLeftWidth Is Nothing AndAlso worksheet.PaneSplitTopHeight Is Nothing AndAlso worksheet.PaneSplitAddress Is Nothing Then
                 Return False
             End If
@@ -392,7 +393,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">worksheet object to process.</param>
         ''' <param name="sb">reference to the stringbuilder.</param>
-        Private Sub CreateRowsString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
+        Private Sub CreateRowsString(worksheet As Worksheet, sb As StringBuilder)
             Dim cellData = GetSortedSheetData(worksheet)
             Dim line As String
             For Each row In cellData
@@ -406,7 +407,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">worksheet object to process.</param>
         ''' <param name="sb">reference to the stringbuilder.</param>
-        Private Sub CreateSheetViewString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
+        Private Sub CreateSheetViewString(worksheet As Worksheet, sb As StringBuilder)
             sb.Append("<sheetViews><sheetView workbookViewId=""0""")
             If workbookField.SelectedWorksheet = worksheet.SheetID - 1 AndAlso Not worksheet.Hidden Then
                 sb.Append(" tabSelected=""1""")
@@ -433,7 +434,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">worksheet object to process.</param>
         ''' <param name="sb">reference to the stringbuilder.</param>
-        Private Sub CreatePaneString(ByVal worksheet As Worksheet, ByVal sb As StringBuilder)
+        Private Sub CreatePaneString(worksheet As Worksheet, sb As StringBuilder)
             If Not HasPaneSplitting(worksheet) Then
                 Return
             End If
@@ -505,7 +506,7 @@ Namespace XLSX
         ''' <param name="worksheet">worksheet object to get the row definitions from.</param>
         ''' <param name="numberOfRows">Number of rows from the top to the split position.</param>
         ''' <returns>Internal height from the top of the worksheet to the pane split position.</returns>
-        Private Function CalculatePaneHeight(ByVal worksheet As Worksheet, ByVal numberOfRows As Integer) As Single
+        Private Function CalculatePaneHeight(worksheet As Worksheet, numberOfRows As Integer) As Single
             Dim height As Single = 0
             For i = 0 To numberOfRows - 1
                 If worksheet.RowHeights.ContainsKey(i) Then
@@ -523,7 +524,7 @@ Namespace XLSX
         ''' <param name="worksheet">worksheet object to get the column definitions from.</param>
         ''' <param name="numberOfColumns">Number of columns from the left to the split position.</param>
         ''' <returns>Internal width from the left of the worksheet to the pane split position.</returns>
-        Private Function CalculatePaneWidth(ByVal worksheet As Worksheet, ByVal numberOfColumns As Integer) As Single
+        Private Function CalculatePaneWidth(worksheet As Worksheet, numberOfColumns As Integer) As Single
             Dim width As Single = 0
             For i = 0 To numberOfColumns - 1
                 If worksheet.Columns.ContainsKey(i) Then
@@ -558,7 +559,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="stream">Writable stream as target.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
-        Public Sub SaveAsStream(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False)
+        Public Sub SaveAsStream(stream As Stream, Optional leaveOpen As Boolean = False)
             workbookField.ResolveMergedCells()
             stylesField = StyleManager.GetManagedStyles(workbookField) ' After this point, styles must not be changed anymore
             Dim sheetPath As DocumentPath
@@ -641,7 +642,7 @@ Namespace XLSX
         ''' <param name="stream">Writable stream as target.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         ''' <returns>Async Task.</returns>
-        Public Async Function SaveAsStreamAsync(ByVal stream As Stream, ByVal Optional leaveOpen As Boolean = False) As Task
+        Public Async Function SaveAsStreamAsync(stream As Stream, Optional leaveOpen As Boolean = False) As Task
             Await Task.Run(Sub() SaveAsStream(stream, leaveOpen))
         End Function
 
@@ -652,7 +653,7 @@ Namespace XLSX
         ''' <param name="value">Value of the XML element.</param>
         ''' <param name="tagName">Tag name of the XML element.</param>
         ''' <param name="nameSpace">Optional XML name space. Can be empty or null.</param>
-        Private Sub AppendXmlTag(ByVal sb As StringBuilder, ByVal value As String, ByVal tagName As String, ByVal [nameSpace] As String)
+        Private Sub AppendXmlTag(sb As StringBuilder, value As String, tagName As String, [nameSpace] As String)
             If String.IsNullOrEmpty(value) Then
                 Return
             End If
@@ -681,7 +682,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="doc">document as raw XML string.</param>
         ''' <param name="pp">Package part to append the XML data.</param>
-        Private Sub AppendXmlToPackagePart(ByVal doc As String, ByVal pp As PackagePart)
+        Private Sub AppendXmlToPackagePart(doc As String, pp As PackagePart)
             Try
                 Using ms As MemoryStream = New MemoryStream() ' Write workbook.xml
                     If Not ms.CanWrite Then
@@ -730,7 +731,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="worksheet">Worksheet to process.</param>
         ''' <returns>String with formatted XML data.</returns>
-        Private Function CreateColsString(ByVal worksheet As Worksheet) As String
+        Private Function CreateColsString(worksheet As Worksheet) As String
             If worksheet.Columns.Count > 0 Then
                 Dim col As String
                 Dim hidden = ""
@@ -786,7 +787,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Formatted string with merged cell ranges.</returns>
-        Private Function CreateMergedCellsString(ByVal sheet As Worksheet) As String
+        Private Function CreateMergedCellsString(sheet As Worksheet) As String
             If sheet.MergedCells.Count < 1 Then
                 Return String.Empty
             End If
@@ -805,7 +806,7 @@ Namespace XLSX
         ''' <param name="dynamicRow">Dynamic row with List of cells, heights and hidden states.</param>
         ''' <param name="worksheet">Worksheet to process.</param>
         ''' <returns>Formatted row string.</returns>
-        Private Function CreateRowString(ByVal dynamicRow As DynamicRow, ByVal worksheet As Worksheet) As String
+        Private Function CreateRowString(dynamicRow As DynamicRow, worksheet As Worksheet) As String
             Dim rowNumber = dynamicRow.RowNumber
             Dim height = ""
             Dim hidden = ""
@@ -926,7 +927,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Formatted string with protection statement of the worksheet.</returns>
-        Private Function CreateSheetProtectionString(ByVal sheet As Worksheet) As String
+        Private Function CreateSheetProtectionString(sheet As Worksheet) As String
             If Not sheet.UseSheetProtection Then
                 Return String.Empty
             End If
@@ -1357,7 +1358,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="sheet">Worksheet to process.</param>
         ''' <returns>Sorted list of dynamic rows that are either defined by cells or row widths / hidden states. The list is sorted by row numbers (zero-based).</returns>
-        Private Function GetSortedSheetData(ByVal sheet As Worksheet) As List(Of DynamicRow)
+        Private Function GetSortedSheetData(sheet As Worksheet) As List(Of DynamicRow)
             Dim temp As List(Of Cell) = New List(Of Cell)()
             For Each item In sheet.Cells
                 temp.Add(item.Value)
@@ -1406,7 +1407,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="input">Input string to process.</param>
         ''' <returns>Escaped string.</returns>
-        Public Shared Function EscapeXmlChars(ByVal input As String) As String
+        Public Shared Function EscapeXmlChars(input As String) As String
             If Equals(input, Nothing) Then
                 Return ""
             End If
@@ -1462,18 +1463,18 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="input">Input string to process.</param>
         ''' <returns>Escaped string.</returns>
-        Public Shared Function EscapeXmlAttributeChars(ByVal input As String) As String
+        Public Shared Function EscapeXmlAttributeChars(input As String) As String
             input = EscapeXmlChars(input) ' Sanitize string from illegal characters beside quotes
             input = input.Replace("""", "&quot;")
             Return input
         End Function
 
         ''' <summary>
-        ''' Method to generate an Excel internal password hash to protect workbooks or worksheets<br></br>This method is derived from the c++ implementation by Kohei Yoshida (<ahref="http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/">http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/</a>)
+        ''' Method to generate an Excel internal password hash to protect workbooks or worksheets<br></br>This method is derived from the c++ implementation by Kohei Yoshida (<a href="http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/">http://kohei.us/2008/01/18/excel-sheet-protection-password-hash/</a>)
         ''' </summary>
         ''' <param name="password">Password string in UTF-8 to encrypt.</param>
         ''' <returns>16 bit hash as hex string.</returns>
-        Public Shared Function GeneratePasswordHash(ByVal password As String) As String
+        Public Shared Function GeneratePasswordHash(password As String) As String
             If String.IsNullOrEmpty(password) Then
                 Return String.Empty
             End If
@@ -1500,7 +1501,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="date">Date to process.</param>
         ''' <returns>Date or date and time as number.</returns>
-        Public Shared Function GetOADateTimeString(ByVal [date] As Date) As String
+        Public Shared Function GetOADateTimeString([date] As Date) As String
             If [date] < FIRST_ALLOWED_EXCEL_DATE OrElse [date] > LAST_ALLOWED_EXCEL_DATE Then
                 Throw New FormatException("The date is not in a valid range for Excel. Dates before 1900-01-01 or after 9999-12-31 are not allowed.")
             End If
@@ -1509,7 +1510,7 @@ Namespace XLSX
                 dateValue = [date].AddDays(-1) ' Fix of the leap-year-1900-error
             End If
             Dim currentMillis = dateValue.Ticks / TimeSpan.TicksPerMillisecond
-            Dim d = (dateValue.Second + dateValue.Minute * 60 + dateValue.Hour * 3600) / 86400.0R + Math.Floor((currentMillis - ROOT_MILLIS) / 86400000.0R)
+            Dim d = (dateValue.Second + dateValue.Minute * 60 + dateValue.Hour * 3600) / 86400.0R + stdNum.Floor((currentMillis - ROOT_MILLIS) / 86400000.0R)
             Return d.ToString("G", INVARIANT_CULTURE)
         End Function
 
@@ -1518,7 +1519,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="time">Time to process. The date component of the timespan is neglected.</param>
         ''' <returns>Time as number.</returns>
-        Public Shared Function GetOATimeString(ByVal time As TimeSpan) As String
+        Public Shared Function GetOATimeString(time As TimeSpan) As String
             Dim seconds = time.Seconds + time.Minutes * 60 + time.Hours * 3600
             Dim d = seconds / 86400.0R
             Return d.ToString("G", INVARIANT_CULTURE)
@@ -1531,16 +1532,16 @@ Namespace XLSX
         ''' <param name="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
         ''' <param name="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
         ''' <returns>The internal column width in characters, used in worksheet XML documents.</returns>
-        Public Shared Function GetInternalColumnWidth(ByVal columnWidth As Single, ByVal Optional maxDigitWidth As Single = 7.0F, ByVal Optional textPadding As Single = 5.0F) As Single
+        Public Shared Function GetInternalColumnWidth(columnWidth As Single, Optional maxDigitWidth As Single = 7.0F, Optional textPadding As Single = 5.0F) As Single
             If columnWidth < Worksheet.MIN_COLUMN_WIDTH OrElse columnWidth > Worksheet.MAX_COLUMN_WIDTH Then
                 Throw New FormatException("The column width " & columnWidth.ToString() & " is not valid. The valid range is between " & Worksheet.MIN_COLUMN_WIDTH.ToString() & " and " & Worksheet.MAX_COLUMN_WIDTH.ToString())
             End If
             If columnWidth <= 0F OrElse maxDigitWidth <= 0F Then
                 Return 0F
             ElseIf columnWidth <= 1.0F Then
-                Return CSng(Math.Floor(columnWidth * (maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
+                Return CSng(stdNum.Floor(columnWidth * (maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
             Else
-                Return CSng(Math.Floor((columnWidth * maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
+                Return CSng(stdNum.Floor((columnWidth * maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
             End If
         End Function
 
@@ -1549,14 +1550,14 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="rowHeight">Target row height (displayed in Excel).</param>
         ''' <returns>The internal row height which snaps to the nearest pixel.</returns>
-        Public Shared Function GetInternalRowHeight(ByVal rowHeight As Single) As Single
+        Public Shared Function GetInternalRowHeight(rowHeight As Single) As Single
             If rowHeight < Worksheet.MIN_ROW_HEIGHT OrElse rowHeight > Worksheet.MAX_ROW_HEIGHT Then
                 Throw New FormatException("The row height " & rowHeight.ToString() & " is not valid. The valid range is between " & Worksheet.MIN_ROW_HEIGHT.ToString() & " and " & Worksheet.MAX_ROW_HEIGHT.ToString())
             End If
             If rowHeight <= 0F Then
                 Return 0F
             End If
-            Dim heightInPixel = Math.Round(rowHeight * ROW_HEIGHT_POINT_MULTIPLIER)
+            Dim heightInPixel = stdNum.Round(rowHeight * ROW_HEIGHT_POINT_MULTIPLIER)
             Return CSng(heightInPixel) / ROW_HEIGHT_POINT_MULTIPLIER
         End Function
 
@@ -1567,15 +1568,15 @@ Namespace XLSX
         ''' <param name="maxDigitWidth">Maximum digit with of the default font (default is 7.0 for Calibri, size 11).</param>
         ''' <param name="textPadding">Text padding of the default font (default is 5.0 for Calibri, size 11).</param>
         ''' <returns>The internal pane width, used in worksheet XML documents in case of worksheet splitting.</returns>
-        Public Shared Function GetInternalPaneSplitWidth(ByVal width As Single, ByVal Optional maxDigitWidth As Single = 7.0F, ByVal Optional textPadding As Single = 5.0F) As Single
+        Public Shared Function GetInternalPaneSplitWidth(width As Single, Optional maxDigitWidth As Single = 7.0F, Optional textPadding As Single = 5.0F) As Single
             Dim pixels As Single
             If width < 0 Then
                 width = 0
             End If
             If width <= 1.0F Then
-                pixels = CSng(Math.Floor(width / SPLIT_WIDTH_MULTIPLIER + SPLIT_WIDTH_OFFSET))
+                pixels = CSng(stdNum.Floor(width / SPLIT_WIDTH_MULTIPLIER + SPLIT_WIDTH_OFFSET))
             Else
-                pixels = CSng(Math.Floor(width * maxDigitWidth + SPLIT_WIDTH_OFFSET)) + textPadding
+                pixels = CSng(stdNum.Floor(width * maxDigitWidth + SPLIT_WIDTH_OFFSET)) + textPadding
             End If
             Dim points = pixels * SPLIT_WIDTH_POINT_MULTIPLIER
             Return points * SPLIT_POINT_DIVIDER + SPLIT_WIDTH_POINT_OFFSET
@@ -1586,11 +1587,11 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="height">Target row(s) height (one or more rows, displayed in Excel).</param>
         ''' <returns>The internal pane height, used in worksheet XML documents in case of worksheet splitting.</returns>
-        Public Shared Function GetInternalPaneSplitHeight(ByVal height As Single) As Single
+        Public Shared Function GetInternalPaneSplitHeight(height As Single) As Single
             If height < 0 Then
                 height = 0F
             End If
-            Return Math.Floor(SPLIT_POINT_DIVIDER * height + SPLIT_HEIGHT_POINT_OFFSET)
+            Return stdNum.Floor(SPLIT_POINT_DIVIDER * height + SPLIT_HEIGHT_POINT_OFFSET)
         End Function
 
         ''' <summary>
@@ -1683,7 +1684,7 @@ Namespace XLSX
             ''' <param name="key">Key as string.</param>
             ''' <param name="value">Value as string.</param>
             ''' <returns>Returns the resolved string (either added or returned from an existing entry).</returns>
-            Public Function Add(ByVal key As String, ByVal value As String) As String
+            Public Function Add(key As String, value As String) As String
                 If index.ContainsKey(key) Then
                     Return valueEntries(index(key))
                 End If
@@ -1722,7 +1723,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="filename">File name of the document.</param>
             ''' <param name="path">Path of the document.</param>
-            Public Sub New(ByVal filename As String, ByVal path As String)
+            Public Sub New(filename As String, path As String)
                 Me.Filename = filename
                 Me.Path = path
             End Sub

@@ -10,7 +10,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class representing a cell of a worksheet
@@ -92,7 +92,7 @@ Namespace XLSX
             Get
                 Return ResolveCellAddress(ColumnNumber, RowNumber)
             End Get
-            Set(ByVal value As String)
+            Set(value As String)
                 Dim addressType As AddressType
                 ResolveCellCoordinate(value, columnNumberField, rowNumberField, addressType)
                 CellAddressType = addressType
@@ -106,7 +106,7 @@ Namespace XLSX
             Get
                 Return New Address(ColumnNumber, RowNumber, CellAddressType)
             End Get
-            Set(ByVal value As Address)
+            Set(value As Address)
                 ColumnNumber = value.Column
                 RowNumber = value.Row
                 CellAddressType = value.Type
@@ -129,7 +129,7 @@ Namespace XLSX
             Get
                 Return columnNumberField
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 If value < Worksheet.MIN_COLUMN_NUMBER OrElse value > Worksheet.MAX_COLUMN_NUMBER Then
                     Throw New RangeException("OutOfRangeException", "The passed column number (" & value.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " rows).")
                 End If
@@ -149,7 +149,7 @@ Namespace XLSX
             Get
                 Return rowNumberField
             End Get
-            Set(ByVal value As Integer)
+            Set(value As Integer)
                 If value < Worksheet.MIN_ROW_NUMBER OrElse value > Worksheet.MAX_ROW_NUMBER Then
                     Throw New RangeException("OutOfRangeException", "The passed row number (" & value.ToString() & ") is out of range. Range is from " & Worksheet.MIN_ROW_NUMBER.ToString() & " to " & Worksheet.MAX_ROW_NUMBER.ToString() & " (" & (Worksheet.MAX_ROW_NUMBER + 1).ToString() & " rows).")
                 End If
@@ -169,7 +169,7 @@ Namespace XLSX
             Get
                 Return valueField
             End Get
-            Set(ByVal value As Object)
+            Set(value As Object)
                 valueField = value
                 ResolveCellType()
             End Set
@@ -187,7 +187,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="value">Value of the cell.</param>
         ''' <param name="type">Type of the cell.</param>
-        Public Sub New(ByVal value As Object, ByVal type As CellType)
+        Public Sub New(value As Object, type As CellType)
             If type = CellType.EMPTY Then
                 valueField = Nothing
             Else
@@ -205,7 +205,7 @@ Namespace XLSX
         ''' <param name="value">Value of the cell.</param>
         ''' <param name="type">Type of the cell.</param>
         ''' <param name="address">Address of the cell.</param>
-        Public Sub New(ByVal value As Object, ByVal type As CellType, ByVal address As String)
+        Public Sub New(value As Object, type As CellType, address As String)
             If type = CellType.EMPTY Then
                 valueField = Nothing
             Else
@@ -225,7 +225,7 @@ Namespace XLSX
         ''' <param name="type">Type of the cell.</param>
         ''' <param name="column">Column number of the cell (zero-based).</param>
         ''' <param name="row">Row number of the cell (zero-based).</param>
-        Public Sub New(ByVal value As Object, ByVal type As CellType, ByVal column As Integer, ByVal row As Integer)
+        Public Sub New(value As Object, type As CellType, column As Integer, row As Integer)
             Me.New(value, type)
             ColumnNumber = column
             RowNumber = row
@@ -239,7 +239,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="other">Object to compare.</param>
         ''' <returns>0 if values are the same, -1 if this object is smaller, 1 if it is bigger.</returns>
-        Public Function CompareTo(ByVal other As Cell) As Integer Implements IComparable(Of Cell).CompareTo
+        Public Function CompareTo(other As Cell) As Integer Implements IComparable(Of Cell).CompareTo
             If RowNumber = other.RowNumber Then
                 Return ColumnNumber.CompareTo(other.ColumnNumber)
             End If
@@ -297,7 +297,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="isLocked">If true, the cell will be locked if the worksheet is protected.</param>
         ''' <param name="isHidden">If true, the value of the cell will be invisible if the worksheet is protected.</param>
-        Public Sub SetCellLockedState(ByVal isLocked As Boolean, ByVal isHidden As Boolean)
+        Public Sub SetCellLockedState(isLocked As Boolean, isHidden As Boolean)
             Dim lockStyle As Style
             If cellStyleField Is Nothing Then
                 lockStyle = New Style()
@@ -315,7 +315,7 @@ Namespace XLSX
         ''' <param name="style">Style to assign.</param>
         ''' <param name="unmanaged">Internally used: If true, the style repository is not invoked and only the style object of the cell is updated. Do not use!.</param>
         ''' <returns>If the passed style already exists in the repository, the existing one will be returned, otherwise the passed one.</returns>
-        Public Function SetStyle(ByVal style As Style, ByVal Optional unmanaged As Boolean = False) As Style
+        Public Function SetStyle(style As Style, Optional unmanaged As Boolean = False) As Style
             If style Is Nothing Then
                 Throw New StyleException("A reference is missing in the style definition", "No style to assign was defined")
             End If
@@ -342,10 +342,10 @@ Namespace XLSX
         ''' <summary>
         ''' Converts a List of supported objects into a list of cells
         ''' </summary>
-        ''' <typeparamname="tT">Generic data type.</typeparam>
+        ''' <typeparam name="tT">Generic data type.</typeparam>
         ''' <param name="list">List of generic objects.</param>
         ''' <returns>List of cells.</returns>
-        Public Shared Function ConvertArray(Of tT)(ByVal list As IEnumerable(Of tT)) As IEnumerable(Of Cell)
+        Public Shared Function ConvertArray(Of tT)(list As IEnumerable(Of tT)) As IEnumerable(Of Cell)
             Dim output As List(Of Cell) = New List(Of Cell)()
             Dim c As Cell
             Dim o As Object
@@ -405,7 +405,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="range">Range to process.</param>
         ''' <returns>List of cell addresses.</returns>
-        Public Shared Function GetCellRange(ByVal range As String) As IEnumerable(Of Address)
+        Public Shared Function GetCellRange(range As String) As IEnumerable(Of Address)
             Dim range2 = ResolveCellRange(range)
             Return GetCellRange(range2.StartAddress, range2.EndAddress)
         End Function
@@ -416,7 +416,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address as string in the format A1 - XFD1048576.</param>
         ''' <param name="endAddress">End address as string in the format A1 - XFD1048576.</param>
         ''' <returns>List of cell addresses.</returns>
-        Public Shared Function GetCellRange(ByVal startAddress As String, ByVal endAddress As String) As IEnumerable(Of Address)
+        Public Shared Function GetCellRange(startAddress As String, endAddress As String) As IEnumerable(Of Address)
             Dim start = ResolveCellCoordinate(startAddress)
             Dim [end] = ResolveCellCoordinate(endAddress)
             Return GetCellRange(start, [end])
@@ -430,7 +430,7 @@ Namespace XLSX
         ''' <param name="endColumn">End column (zero based).</param>
         ''' <param name="endRow">End row (zero based).</param>
         ''' <returns>List of cell addresses.</returns>
-        Public Shared Function GetCellRange(ByVal startColumn As Integer, ByVal startRow As Integer, ByVal endColumn As Integer, ByVal endRow As Integer) As IEnumerable(Of Address)
+        Public Shared Function GetCellRange(startColumn As Integer, startRow As Integer, endColumn As Integer, endRow As Integer) As IEnumerable(Of Address)
             Dim start As Address = New Address(startColumn, startRow)
             Dim [end] As Address = New Address(endColumn, endRow)
             Return GetCellRange(start, [end])
@@ -442,7 +442,7 @@ Namespace XLSX
         ''' <param name="startAddress">Start address.</param>
         ''' <param name="endAddress">End address.</param>
         ''' <returns>List of cell addresses.</returns>
-        Public Shared Function GetCellRange(ByVal startAddress As Address, ByVal endAddress As Address) As IEnumerable(Of Address)
+        Public Shared Function GetCellRange(startAddress As Address, endAddress As Address) As IEnumerable(Of Address)
             Dim startColumn, endColumn, startRow, endRow As Integer
             If startAddress.Column < endAddress.Column Then
                 startColumn = startAddress.Column
@@ -474,7 +474,7 @@ Namespace XLSX
         ''' <param name="row">Row number of the cell (zero-based).</param>
         ''' <param name="type">Optional referencing type of the address.</param>
         ''' <returns>Cell Address as string in the format A1 - XFD1048576. Depending on the type, Addresses like '$A55', 'B$2' or '$A$5' are possible outputs.</returns>
-        Public Shared Function ResolveCellAddress(ByVal column As Integer, ByVal row As Integer, ByVal Optional type As AddressType = AddressType.Default) As String
+        Public Shared Function ResolveCellAddress(column As Integer, row As Integer, Optional type As AddressType = AddressType.Default) As String
             If column > Worksheet.MAX_COLUMN_NUMBER OrElse column < Worksheet.MIN_COLUMN_NUMBER Then
                 Throw New RangeException("OutOfRangeException", "The column number (" & column.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " columns).")
             End If
@@ -495,7 +495,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="address">Address as string in the format A1 - XFD1048576.</param>
         ''' <returns>Struct with row and column.</returns>
-        Public Shared Function ResolveCellCoordinate(ByVal address As String) As Address
+        Public Shared Function ResolveCellCoordinate(address As String) As Address
             Dim row, column As Integer
             Dim type As AddressType
             ResolveCellCoordinate(address, column, row, type)
@@ -508,7 +508,7 @@ Namespace XLSX
         ''' <param name="address">Address as string in the format A1 - XFD1048576.</param>
         ''' <param name="column">Column number of the cell (zero-based) as out parameter.</param>
         ''' <param name="row">Row number of the cell (zero-based) as out parameter.</param>
-        Public Shared Sub ResolveCellCoordinate(ByVal address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer)
+        Public Shared Sub ResolveCellCoordinate(address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer)
             Dim dummy As AddressType
             ResolveCellCoordinate(address, column, row, dummy)
         End Sub
@@ -520,7 +520,7 @@ Namespace XLSX
         ''' <param name="column">Column number of the cell (zero-based) as out parameter.</param>
         ''' <param name="row">Row number of the cell (zero-based) as out parameter.</param>
         ''' <param name="addressType">Address type of the cell (if defined as modifiers in the address string).</param>
-        Public Shared Sub ResolveCellCoordinate(ByVal address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer, <Out> ByRef addressType As AddressType)
+        Public Shared Sub ResolveCellCoordinate(address As String, <Out> ByRef column As Integer, <Out> ByRef row As Integer, <Out> ByRef addressType As AddressType)
             If String.IsNullOrEmpty(address) Then
                 Throw New FormatException("The cell address is null or empty and could not be resolved")
             End If
@@ -550,7 +550,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="range">Range to process.</param>
         ''' <returns>Range object.</returns>
-        Public Shared Function ResolveCellRange(ByVal range As String) As Range
+        Public Shared Function ResolveCellRange(range As String) As Range
             If String.IsNullOrEmpty(range) Then
                 Throw New FormatException("The cell range is null or empty and could not be resolved")
             End If
@@ -566,7 +566,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnAddress">Column address (A - XFD).</param>
         ''' <returns>Column number (zero-based).</returns>
-        Public Shared Function ResolveColumn(ByVal columnAddress As String) As Integer
+        Public Shared Function ResolveColumn(columnAddress As String) As Integer
             If String.IsNullOrEmpty(columnAddress) Then
                 Throw New RangeException("A general range exception occurred", "The passed address was null or empty")
             End If
@@ -589,7 +589,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="columnNumber">Column number (zero-based).</param>
         ''' <returns>Column address (A - XFD).</returns>
-        Public Shared Function ResolveColumnAddress(ByVal columnNumber As Integer) As String
+        Public Shared Function ResolveColumnAddress(columnNumber As Integer) As String
             If columnNumber > Worksheet.MAX_COLUMN_NUMBER OrElse columnNumber < Worksheet.MIN_COLUMN_NUMBER Then
                 Throw New RangeException("OutOfRangeException", "The column number (" & columnNumber.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " columns).")
             End If
@@ -624,7 +624,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="addressExpression">Address expression.</param>
         ''' <returns>Scope of the address expression.</returns>
-        Public Shared Function GetAddressScope(ByVal addressExpression As String) As AddressScope
+        Public Shared Function GetAddressScope(addressExpression As String) As AddressScope
             Try
                 ResolveCellCoordinate(addressExpression)
                 Return AddressScope.SingleAddress
@@ -642,7 +642,7 @@ Namespace XLSX
         ''' Validates the passed (zero-based) column number. an exception will be thrown if the column is invalid
         ''' </summary>
         ''' <param name="column">Number to check.</param>
-        Public Shared Sub ValidateColumnNumber(ByVal column As Integer)
+        Public Shared Sub ValidateColumnNumber(column As Integer)
             If column > Worksheet.MAX_COLUMN_NUMBER OrElse column < Worksheet.MIN_COLUMN_NUMBER Then
                 Throw New RangeException("A general range exception occurred", "The column number (" & column.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " columns).")
             End If
@@ -652,7 +652,7 @@ Namespace XLSX
         ''' Validates the passed (zero-based) row number. an exception will be thrown if the row is invalid
         ''' </summary>
         ''' <param name="row">Number to check.</param>
-        Public Shared Sub ValidateRowNumber(ByVal row As Integer)
+        Public Shared Sub ValidateRowNumber(row As Integer)
             If row > Worksheet.MAX_ROW_NUMBER OrElse row < Worksheet.MIN_ROW_NUMBER Then
                 Throw New RangeException("A general range exception occurred", "The row number (" & row.ToString() & ") is out of range. Range is from " & Worksheet.MIN_ROW_NUMBER.ToString() & " to " & Worksheet.MAX_ROW_NUMBER.ToString() & " (" & (Worksheet.MAX_ROW_NUMBER + 1).ToString() & " rows).")
             End If
@@ -684,7 +684,7 @@ Namespace XLSX
             ''' <param name="column">Column number (zero based).</param>
             ''' <param name="row">Row number (zero based).</param>
             ''' <param name="type">Optional referencing type of the address.</param>
-            Public Sub New(ByVal column As Integer, ByVal row As Integer, ByVal Optional type As AddressType = AddressType.Default)
+            Public Sub New(column As Integer, row As Integer, Optional type As AddressType = AddressType.Default)
                 Me.Column = column
                 Me.Row = row
                 Me.Type = type
@@ -695,7 +695,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="address">Address string (e.g. 'A1:B12').</param>
             ''' <param name="type">Optional referencing type of the address.</param>
-            Public Sub New(ByVal address As String, ByVal Optional type As AddressType = AddressType.Default)
+            Public Sub New(address As String, Optional type As AddressType = AddressType.Default)
                 Me.Type = type
                 ResolveCellCoordinate(address, Column, Row, type)
             End Sub
@@ -729,7 +729,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="o"> Other address.</param>
             ''' <returns>True if equal.</returns>
-            Public Overloads Function Equals(ByVal o As Address) As Boolean Implements IEquatable(Of Address).Equals
+            Public Overloads Function Equals(o As Address) As Boolean Implements IEquatable(Of Address).Equals
                 If Row = o.Row AndAlso Column = o.Column Then
                     Return True
                 Else
@@ -742,7 +742,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="obj"> Other address.</param>
             ''' <returns>True if not null, of the same type and equal.</returns>
-            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Public Overrides Function Equals(obj As Object) As Boolean
                 If Not (TypeOf obj Is Address) Then
                     Return False
                 End If
@@ -759,11 +759,11 @@ Namespace XLSX
 
 
             ' Operator overloads
-            Public Shared Operator =(ByVal address1 As Address, ByVal address2 As Address) As Boolean
+            Public Shared Operator =(address1 As Address, address2 As Address) As Boolean
                 Return address1.Equals(address2)
             End Operator
 
-            Public Shared Operator <>(ByVal address1 As Address, ByVal address2 As Address) As Boolean
+            Public Shared Operator <>(address1 As Address, address2 As Address) As Boolean
                 Return Not address1.Equals(address2)
             End Operator
             ''' <summary>
@@ -771,7 +771,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="other"> Other address.</param>
             ''' <returns>-1 if the other address is greater, 0 if equal and 1 if smaller.</returns>
-            Public Function CompareTo(ByVal other As Address) As Integer Implements IComparable(Of Address).CompareTo
+            Public Function CompareTo(other As Address) As Integer Implements IComparable(Of Address).CompareTo
                 Dim thisCoordinate = Column * CLng(Worksheet.MAX_ROW_NUMBER) + Row
                 Dim otherCoordinate = other.Column * CLng(Worksheet.MAX_ROW_NUMBER) + other.Row
                 Return thisCoordinate.CompareTo(otherCoordinate)
@@ -805,7 +805,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="start">Start address of the range.</param>
             ''' <param name="end">End address of the range.</param>
-            Public Sub New(ByVal start As Address, ByVal [end] As Address)
+            Public Sub New(start As Address, [end] As Address)
                 If start.CompareTo([end]) < 0 Then
                     StartAddress = start
                     EndAddress = [end]
@@ -819,7 +819,7 @@ Namespace XLSX
             ''' Initializes a new instance of the <see cref=""/> class
             ''' </summary>
             ''' <param name="range">Address range (e.g. 'A1:B12').</param>
-            Public Sub New(ByVal range As String)
+            Public Sub New(range As String)
                 Dim r = ResolveCellRange(range)
                 If r.StartAddress.CompareTo(r.EndAddress) < 0 Then
                     StartAddress = r.StartAddress
@@ -880,7 +880,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="obj">Other object to compare.</param>
             ''' <returns>True if the two objects are the same range.</returns>
-            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Public Overrides Function Equals(obj As Object) As Boolean
                 If Not (TypeOf obj Is Range) Then
                     Return False
                 End If
@@ -898,11 +898,11 @@ Namespace XLSX
 
 
             ' Operator overloads
-            Public Shared Operator =(ByVal range1 As Range, ByVal range2 As Range) As Boolean
+            Public Shared Operator =(range1 As Range, range2 As Range) As Boolean
                 Return range1.Equals(range2)
             End Operator
 
-            Public Shared Operator <>(ByVal range1 As Range, ByVal range2 As Range) As Boolean
+            Public Shared Operator <>(range1 As Range, range2 As Range) As Boolean
                 Return Not range1.Equals(range2)
             End Operator
         End Structure
@@ -916,7 +916,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="range">Cell range to apply the average operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Average(ByVal range As Range) As Cell
+            Public Shared Function Average(range As Range) As Cell
                 Return Average(Nothing, range)
             End Function
 
@@ -926,7 +926,7 @@ Namespace XLSX
             ''' <param name="target">Target worksheet of the average operation. Can be null if on the same worksheet.</param>
             ''' <param name="range">Cell range to apply the average operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Average(ByVal target As Worksheet, ByVal range As Range) As Cell
+            Public Shared Function Average(target As Worksheet, range As Range) As Cell
                 Return GetBasicFormula(target, range, "AVERAGE", Nothing)
             End Function
 
@@ -936,7 +936,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the ceil operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Ceil(ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Ceil(address As Address, decimals As Integer) As Cell
                 Return Ceil(Nothing, address, decimals)
             End Function
 
@@ -947,7 +947,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the ceil operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Ceil(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Ceil(target As Worksheet, address As Address, decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUNDUP", decimals.ToString(CultureInfo.InvariantCulture))
             End Function
 
@@ -957,7 +957,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the floor operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Floor(ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Floor(address As Address, decimals As Integer) As Cell
                 Return Floor(Nothing, address, decimals)
             End Function
 
@@ -968,7 +968,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the floor operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Floor(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Floor(target As Worksheet, address As Address, decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUNDDOWN", decimals.ToString(CultureInfo.InvariantCulture))
             End Function
 
@@ -977,7 +977,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="range">Cell range to apply the max operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Max(ByVal range As Range) As Cell
+            Public Shared Function Max(range As Range) As Cell
                 Return Max(Nothing, range)
             End Function
 
@@ -987,7 +987,7 @@ Namespace XLSX
             ''' <param name="target">Target worksheet of the max operation. Can be null if on the same worksheet.</param>
             ''' <param name="range">Cell range to apply the max operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Max(ByVal target As Worksheet, ByVal range As Range) As Cell
+            Public Shared Function Max(target As Worksheet, range As Range) As Cell
                 Return GetBasicFormula(target, range, "MAX", Nothing)
             End Function
 
@@ -996,7 +996,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Median(ByVal range As Range) As Cell
+            Public Shared Function Median(range As Range) As Cell
                 Return Median(Nothing, range)
             End Function
 
@@ -1006,7 +1006,7 @@ Namespace XLSX
             ''' <param name="target">Target worksheet of the median operation. Can be null if on the same worksheet.</param>
             ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Median(ByVal target As Worksheet, ByVal range As Range) As Cell
+            Public Shared Function Median(target As Worksheet, range As Range) As Cell
                 Return GetBasicFormula(target, range, "MEDIAN", Nothing)
             End Function
 
@@ -1015,7 +1015,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="range">Cell range to apply the min operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Min(ByVal range As Range) As Cell
+            Public Shared Function Min(range As Range) As Cell
                 Return Min(Nothing, range)
             End Function
 
@@ -1025,7 +1025,7 @@ Namespace XLSX
             ''' <param name="target">Target worksheet of the min operation. Can be null if on the same worksheet.</param>
             ''' <param name="range">Cell range to apply the median operation to.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Min(ByVal target As Worksheet, ByVal range As Range) As Cell
+            Public Shared Function Min(target As Worksheet, range As Range) As Cell
                 Return GetBasicFormula(target, range, "MIN", Nothing)
             End Function
 
@@ -1035,7 +1035,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the round operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Round(ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Round(address As Address, decimals As Integer) As Cell
                 Return Round(Nothing, address, decimals)
             End Function
 
@@ -1046,7 +1046,7 @@ Namespace XLSX
             ''' <param name="address">Address to apply the round operation to.</param>
             ''' <param name="decimals">Number of decimals (digits).</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Round(ByVal target As Worksheet, ByVal address As Address, ByVal decimals As Integer) As Cell
+            Public Shared Function Round(target As Worksheet, address As Address, decimals As Integer) As Cell
                 Return GetBasicFormula(target, New Range(address, address), "ROUND", decimals.ToString(CultureInfo.InvariantCulture))
             End Function
 
@@ -1055,7 +1055,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="range">Cell range to get a sum of.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Sum(ByVal range As Range) As Cell
+            Public Shared Function Sum(range As Range) As Cell
                 Return Sum(Nothing, range)
             End Function
 
@@ -1065,7 +1065,7 @@ Namespace XLSX
             ''' <param name="target">Target worksheet of the sum operation. Can be null if on the same worksheet.</param>
             ''' <param name="range">Cell range to get a sum of.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function Sum(ByVal target As Worksheet, ByVal range As Range) As Cell
+            Public Shared Function Sum(target As Worksheet, range As Range) As Cell
                 Return GetBasicFormula(target, range, "SUM", Nothing)
             End Function
 
@@ -1077,7 +1077,7 @@ Namespace XLSX
             ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
             ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function VLookup(ByVal number As Object, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
+            Public Shared Function VLookup(number As Object, range As Range, columnIndex As Integer, exactMatch As Boolean) As Cell
                 Return VLookup(number, Nothing, range, columnIndex, exactMatch)
             End Function
 
@@ -1090,7 +1090,7 @@ Namespace XLSX
             ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
             ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function VLookup(ByVal number As Object, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
+            Public Shared Function VLookup(number As Object, rangeTarget As Worksheet, range As Range, columnIndex As Integer, exactMatch As Boolean) As Cell
                 Return GetVLookup(Nothing, New Address(), number, rangeTarget, range, columnIndex, exactMatch, True)
             End Function
 
@@ -1102,7 +1102,7 @@ Namespace XLSX
             ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
             ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function VLookup(ByVal address As Address, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
+            Public Shared Function VLookup(address As Address, range As Range, columnIndex As Integer, exactMatch As Boolean) As Cell
                 Return VLookup(Nothing, address, Nothing, range, columnIndex, exactMatch)
             End Function
 
@@ -1116,7 +1116,7 @@ Namespace XLSX
             ''' <param name="columnIndex">Column index of the target column within the range (1 based).</param>
             ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Public Shared Function VLookup(ByVal queryTarget As Worksheet, ByVal address As Address, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean) As Cell
+            Public Shared Function VLookup(queryTarget As Worksheet, address As Address, rangeTarget As Worksheet, range As Range, columnIndex As Integer, exactMatch As Boolean) As Cell
                 Return GetVLookup(queryTarget, address, 0, rangeTarget, range, columnIndex, exactMatch, False)
             End Function
 
@@ -1132,7 +1132,7 @@ Namespace XLSX
             ''' <param name="exactMatch">If true, an exact match is applied to the lookup.</param>
             ''' <param name="numericLookup">If true, the lookup is a numeric lookup, otherwise a reference lookup.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Private Shared Function GetVLookup(ByVal queryTarget As Worksheet, ByVal address As Address, ByVal number As Object, ByVal rangeTarget As Worksheet, ByVal range As Range, ByVal columnIndex As Integer, ByVal exactMatch As Boolean, ByVal numericLookup As Boolean) As Cell
+            Private Shared Function GetVLookup(queryTarget As Worksheet, address As Address, number As Object, rangeTarget As Worksheet, range As Range, columnIndex As Integer, exactMatch As Boolean, numericLookup As Boolean) As Cell
                 Dim rangeWidth = range.EndAddress.Column - range.StartAddress.Column + 1
                 If columnIndex < 1 OrElse columnIndex > rangeWidth Then
                     Throw New FormatException("The column index on range " & range.ToString() & " can only be between 1 and " & rangeWidth.ToString())
@@ -1198,7 +1198,7 @@ Namespace XLSX
             ''' <param name="functionName">Internal Excel function name.</param>
             ''' <param name="postArg">Optional argument.</param>
             ''' <returns>Prepared Cell object, ready to be added to a worksheet.</returns>
-            Private Shared Function GetBasicFormula(ByVal target As Worksheet, ByVal range As Range, ByVal functionName As String, ByVal postArg As String) As Cell
+            Private Shared Function GetBasicFormula(target As Worksheet, range As Range, functionName As String, postArg As String) As Cell
                 Dim arg1, arg2, prefix As String
                 If Equals(postArg, Nothing) Then
                     arg2 = ""

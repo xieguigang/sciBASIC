@@ -5,15 +5,12 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports System.Runtime.InteropServices
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class representing a Style with sub classes within a style sheet. An instance of this class is only a container for the different sub-classes. These sub-classes contain the actual styling information
@@ -88,7 +85,7 @@ Namespace XLSX
         ''' Initializes a new instance of the <see cref="Style"/> class
         ''' </summary>
         ''' <param name="name">Name of the style.</param>
-        Public Sub New(ByVal name As String)
+        Public Sub New(name As String)
             CurrentBorder = New Border()
             CurrentCellXf = New CellXf()
             CurrentFill = New Fill()
@@ -103,7 +100,7 @@ Namespace XLSX
         ''' <param name="name">Name of the style.</param>
         ''' <param name="forcedOrder">Number of the style for sorting purpose. The style will be placed at this position (internal use only).</param>
         ''' <param name="internalStyle">If true, the style is marked as internal.</param>
-        Public Sub New(ByVal name As String, ByVal forcedOrder As Integer, ByVal internalStyle As Boolean)
+        Public Sub New(name As String, forcedOrder As Integer, internalStyle As Boolean)
             CurrentBorder = New Border()
             CurrentCellXf = New CellXf()
             CurrentFill = New Fill()
@@ -119,7 +116,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="styleToAppend">The style to append or a sub-class of Style.</param>
         ''' <returns>Current style with appended style parts.</returns>
-        Public Function Append(ByVal styleToAppend As AbstractStyle) As Style
+        Public Function Append(styleToAppend As AbstractStyle) As Style
             If styleToAppend Is Nothing Then
                 Return Me
             End If
@@ -286,7 +283,7 @@ Namespace XLSX
                 Get
                     Return bottomColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     bottomColorField = value
                 End Set
@@ -306,7 +303,7 @@ Namespace XLSX
                 Get
                     Return diagonalColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     diagonalColorField = value
                 End Set
@@ -340,7 +337,7 @@ Namespace XLSX
                 Get
                     Return leftColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     leftColorField = value
                 End Set
@@ -360,7 +357,7 @@ Namespace XLSX
                 Get
                     Return rightColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     rightColorField = value
                 End Set
@@ -380,7 +377,7 @@ Namespace XLSX
                 Get
                     Return topColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     topColorField = value
                 End Set
@@ -533,7 +530,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="style">Enum to process.</param>
             ''' <returns>The valid value of the border style as String.</returns>
-            Public Shared Function GetStyleName(ByVal style As StyleValue) As String
+            Public Shared Function GetStyleName(style As StyleValue) As String
                 Dim output = ""
                 Select Case style
                     Case StyleValue.hair
@@ -713,7 +710,7 @@ Namespace XLSX
                 Get
                     Return textDirectionField
                 End Get
-                Set(ByVal value As TextDirectionValue)
+                Set(value As TextDirectionValue)
                     textDirectionField = value
                     CalculateInternalRotation()
                 End Set
@@ -727,7 +724,7 @@ Namespace XLSX
                 Get
                     Return textRotationField
                 End Get
-                Set(ByVal value As Integer)
+                Set(value As Integer)
                     textRotationField = value
                     TextDirection = TextDirectionValue.horizontal
                     CalculateInternalRotation()
@@ -748,7 +745,7 @@ Namespace XLSX
                 Get
                     Return indentField
                 End Get
-                Set(ByVal value As Integer)
+                Set(value As Integer)
                     If value >= 0 Then
                         indentField = value
                     Else
@@ -923,7 +920,7 @@ Namespace XLSX
                 Get
                     Return backgroundColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     ValidateColor(value, True)
                     backgroundColorField = value
                     If PatternFill = PatternValue.none Then
@@ -940,7 +937,7 @@ Namespace XLSX
                 Get
                     Return foregroundColorField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     ValidateColor(value, True)
                     foregroundColorField = value
                     If PatternFill = PatternValue.none Then
@@ -976,7 +973,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="foreground">Foreground color of the fill.</param>
             ''' <param name="background">Background color of the fill.</param>
-            Public Sub New(ByVal foreground As String, ByVal background As String)
+            Public Sub New(foreground As String, background As String)
                 BackgroundColor = background
                 ForegroundColor = foreground
                 IndexedColor = DEFAULT_INDEXED_COLOR
@@ -988,7 +985,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="value">Color value.</param>
             ''' <param name="filltype">Fill type (fill or pattern).</param>
-            Public Sub New(ByVal value As String, ByVal filltype As FillType)
+            Public Sub New(value As String, filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
                     ForegroundColor = value
@@ -1055,7 +1052,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="value">color value.</param>
             ''' <param name="filltype">fill type (fill or pattern).</param>
-            Public Sub SetColor(ByVal value As String, ByVal filltype As FillType)
+            Public Sub SetColor(value As String, filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
                     ForegroundColor = value
@@ -1071,7 +1068,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="pattern">Enum to process.</param>
             ''' <returns>The valid value of the pattern as String.</returns>
-            Public Shared Function GetPatternName(ByVal pattern As PatternValue) As String
+            Public Shared Function GetPatternName(pattern As PatternValue) As String
                 Dim output As String
                 Select Case pattern
                     Case PatternValue.none
@@ -1100,7 +1097,7 @@ Namespace XLSX
             ''' <param name="hexCode">Hex string to check.</param>
             ''' <param name="useAlpha">If true, two additional characters (total 8) are expected as alpha value.</param>
             ''' <param name="allowEmpty">Optional parameter that allows null or empty as valid values.</param>
-            Public Shared Sub ValidateColor(ByVal hexCode As String, ByVal useAlpha As Boolean, ByVal Optional allowEmpty As Boolean = False)
+            Public Shared Sub ValidateColor(hexCode As String, useAlpha As Boolean, Optional allowEmpty As Boolean = False)
                 If String.IsNullOrEmpty(hexCode) Then
                     If allowEmpty Then
                         Return
@@ -1253,7 +1250,7 @@ Namespace XLSX
                 Get
                     Return colorThemeField
                 End Get
-                Set(ByVal value As Integer)
+                Set(value As Integer)
                     If value < 0 Then
                         Throw New StyleException("A general style exception occurred", "The color theme number " & value.ToString() & " is invalid. Should be >0")
                     End If
@@ -1270,7 +1267,7 @@ Namespace XLSX
                 Get
                     Return colorValueField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     Fill.ValidateColor(value, True, True)
                     colorValueField = value
                 End Set
@@ -1303,7 +1300,7 @@ Namespace XLSX
                 Get
                     Return nameField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     If String.IsNullOrEmpty(nameField) Then
                         Throw New StyleException("A general style exception occurred", "The font name was null or empty")
                     End If
@@ -1325,7 +1322,7 @@ Namespace XLSX
                 Get
                     Return sizeField
                 End Get
-                Set(ByVal value As Single)
+                Set(value As Single)
                     If value < MIN_FONT_SIZE Then
                         sizeField = MIN_FONT_SIZE
                     ElseIf value > MAX_FONT_SIZE Then
@@ -1568,7 +1565,7 @@ Namespace XLSX
                 Get
                     Return customFormatCodeField
                 End Get
-                Set(ByVal value As String)
+                Set(value As String)
                     If String.IsNullOrEmpty(value) Then
                         Throw New FormatException("A custom format code cannot be null or empty")
                     End If
@@ -1584,7 +1581,7 @@ Namespace XLSX
                 Get
                     Return customFormatIDField
                 End Get
-                Set(ByVal value As Integer)
+                Set(value As Integer)
                     If value < CUSTOMFORMAT_START_NUMBER Then
                         Throw New StyleException("A general style exception occurred", "The number '" & value.ToString() & "' is not a valid custom format ID. Must be at least " & CUSTOMFORMAT_START_NUMBER.ToString())
                     End If
@@ -1627,7 +1624,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="number">Format number to check.</param>
             ''' <returns>True if the format represents a date, otherwise false.</returns>
-            Public Shared Function IsDateFormat(ByVal number As FormatNumber) As Boolean
+            Public Shared Function IsDateFormat(number As FormatNumber) As Boolean
                 Select Case number
                     Case FormatNumber.format_14, FormatNumber.format_15, FormatNumber.format_16, FormatNumber.format_17, FormatNumber.format_22
                         Return True
@@ -1641,7 +1638,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="number">Format number to check.</param>
             ''' <returns>True if the format represents a time, otherwise false.</returns>
-            Public Shared Function IsTimeFormat(ByVal number As FormatNumber) As Boolean
+            Public Shared Function IsTimeFormat(number As FormatNumber) As Boolean
                 Select Case number
                     Case FormatNumber.format_18, FormatNumber.format_19, FormatNumber.format_20, FormatNumber.format_21, FormatNumber.format_45, FormatNumber.format_46, FormatNumber.format_47
                         Return True
@@ -1656,7 +1653,7 @@ Namespace XLSX
             ''' <param name="number">Raw number to parse.</param>
             ''' <param name="formatNumber">Out parameter with the parsed format enum value. If parsing failed, 'custom' will be returned.</param>
             ''' <returns>Format range. Will return 'invalid' if out of any range (e.g. negative value).</returns>
-            Public Shared Function TryParseFormatNumber(ByVal number As Integer, <Out> ByRef formatNumber As FormatNumber) As FormatRange
+            Public Shared Function TryParseFormatNumber(number As Integer, <Out> ByRef formatNumber As FormatNumber) As FormatRange
 
                 Dim isDefined = [Enum].IsDefined(GetType(FormatNumber), number)
                 If isDefined Then
@@ -1886,7 +1883,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="value">Enum value to maintain.</param>
             ''' <returns>The style according to the passed enum value.</returns>
-            Private Shared Function GetStyle(ByVal value As StyleEnum) As Style
+            Private Shared Function GetStyle(value As StyleEnum) As Style
                 Dim s As Style = Nothing
                 Select Case value
                     Case StyleEnum.bold
@@ -1984,7 +1981,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
             ''' <returns>Style with font color definition.</returns>
-            Public Shared Function ColorizedText(ByVal rgb As String) As Style
+            Public Shared Function ColorizedText(rgb As String) As Style
                 Fill.ValidateColor(rgb, False)
                 Dim s As Style = New Style()
                 s.CurrentFont.ColorValue = "FF" & rgb.ToUpper()
@@ -1996,7 +1993,7 @@ Namespace XLSX
             ''' </summary>
             ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
             ''' <returns>Style with background color definition.</returns>
-            Public Shared Function ColorizedBackground(ByVal rgb As String) As Style
+            Public Shared Function ColorizedBackground(rgb As String) As Style
                 Fill.ValidateColor(rgb, False)
                 Dim s As Style = New Style()
                 s.CurrentFill.SetColor("FF" & rgb.ToUpper(), Fill.FillType.fillColor)
@@ -2011,7 +2008,7 @@ Namespace XLSX
             ''' <param name="isBold">If true, the font will be bold (optional; default false).</param>
             ''' <param name="isItalic">If true, the font will be italic (optional; default false).</param>
             ''' <returns>Style with font definition.</returns>
-            Public Shared Function Font(ByVal fontName As String, ByVal Optional fontSize As Integer = 11, ByVal Optional isBold As Boolean = False, ByVal Optional isItalic As Boolean = False) As Style
+            Public Shared Function Font(fontName As String, Optional fontSize As Integer = 11, Optional isBold As Boolean = False, Optional isItalic As Boolean = False) As Style
                 Dim s As Style = New Style()
                 s.CurrentFont.Name = fontName
                 s.CurrentFont.Size = fontSize
@@ -2042,10 +2039,10 @@ Namespace XLSX
         ''' <summary>
         ''' Internal method to copy altered properties from a source object. The decision whether a property is copied is dependent on a untouched reference object
         ''' </summary>
-        ''' <typeparamname="T">Style or sub-class of Style that extends AbstractStyle.</typeparam>
+        ''' <typeparam name="T">Style or sub-class of Style that extends AbstractStyle.</typeparam>
         ''' <param name="source">Source object with properties to copy.</param>
         ''' <param name="reference">Reference object to decide whether the properties from the source objects are altered or not.</param>
-        Friend Sub CopyProperties(Of T As AbstractStyle)(ByVal source As T, ByVal reference As T)
+        Friend Sub CopyProperties(Of T As AbstractStyle)(source As T, reference As T)
             If source Is Nothing OrElse [GetType]() IsNot source.GetType() AndAlso [GetType]() IsNot reference.GetType() Then
                 Throw New StyleException("CopyPropertyException", "The objects of the source, target and reference for style appending are not of the same type")
             End If
@@ -2053,15 +2050,15 @@ Namespace XLSX
             Dim sourceInfo As PropertyInfo
             Dim referenceInfo As PropertyInfo
             Dim attributes As IEnumerable(Of AppendAttribute)
-            For Each Info In infos
-                attributes = CType(Info.GetCustomAttributes(GetType(AppendAttribute)), IEnumerable(Of AppendAttribute))
+            For Each info As PropertyInfo In infos
+                attributes = CType(info.GetCustomAttributes(GetType(AppendAttribute)), IEnumerable(Of AppendAttribute))
                 If attributes.Any() AndAlso Not HandleProperties(attributes) Then
                     Continue For
                 End If
-                sourceInfo = source.GetType().GetProperty(Info.Name)
-                referenceInfo = reference.GetType().GetProperty(Info.Name)
+                sourceInfo = source.GetType().GetProperty(info.Name)
+                referenceInfo = reference.GetType().GetProperty(info.Name)
                 If Not sourceInfo.GetValue(source).Equals(referenceInfo.GetValue(reference)) Then
-                    Info.SetValue(Me, sourceInfo.GetValue(source))
+                    info.SetValue(Me, sourceInfo.GetValue(source))
                 End If
             Next
         End Sub
@@ -2071,7 +2068,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="attributes">Collection of attributes to check.</param>
         ''' <returns>Returns false as soon a property of the collection is marked as ignored or nested.</returns>
-        Private Shared Function HandleProperties(ByVal attributes As IEnumerable(Of AppendAttribute)) As Boolean
+        Private Shared Function HandleProperties(attributes As IEnumerable(Of AppendAttribute)) As Boolean
             For Each attribute In attributes
                 If attribute.Ignore OrElse attribute.NestedProperty Then
                     Return False ' skip property
@@ -2085,7 +2082,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="other">Other object to compare with this object.</param>
         ''' <returns>-1 if the other object is bigger. 0 if both objects are equal. 1 if the other object is smaller.</returns>
-        Public Function CompareTo(ByVal other As AbstractStyle) As Integer Implements IComparable(Of AbstractStyle).CompareTo
+        Public Function CompareTo(other As AbstractStyle) As Integer Implements IComparable(Of AbstractStyle).CompareTo
             If Not InternalID.HasValue Then
                 Return -1
             ElseIf other Is Nothing OrElse Not other.InternalID.HasValue Then
@@ -2100,7 +2097,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="other">Other object to compare with this object.</param>
         ''' <returns>True if both objects are equal, otherwise false.</returns>
-        Public Function Equals(ByVal other As AbstractStyle) As Boolean
+        Public Function Equals(other As AbstractStyle) As Boolean
             Return GetHashCode() = other.GetHashCode()
         End Function
 
@@ -2111,7 +2108,7 @@ Namespace XLSX
         ''' <param name="name">Property name.</param>
         ''' <param name="value">Property value.</param>
         ''' <param name="terminate">If true, no comma and newline will be appended.</param>
-        Friend Shared Sub AddPropertyAsJson(ByVal sb As StringBuilder, ByVal name As String, ByVal value As Object, ByVal Optional terminate As Boolean = False)
+        Friend Shared Sub AddPropertyAsJson(sb As StringBuilder, name As String, value As Object, Optional terminate As Boolean = False)
             sb.Append("""").Append(name).Append(""": ")
             If value Is Nothing Then
                 sb.Append("""""")

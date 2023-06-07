@@ -5,9 +5,9 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Style
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Style
 
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class representing a style manager to maintain all styles and its components of a workbook
@@ -61,7 +61,7 @@ Namespace XLSX
         ''' <param name="list">List to check.</param>
         ''' <param name="hash">Hash of the component.</param>
         ''' <returns>Determined component. If not found, null will be returned.</returns>
-        Private Function GetComponentByHash(ByRef list As List(Of AbstractStyle), ByVal hash As Integer) As AbstractStyle
+        Private Function GetComponentByHash(ByRef list As List(Of AbstractStyle), hash As Integer) As AbstractStyle
             Dim len = list.Count
             For i = 0 To len - 1
                 If list(i).GetHashCode() = hash Then
@@ -76,7 +76,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the border.</param>
         ''' <returns>Determined border.</returns>
-        Public Function GetBorderByHash(ByVal hash As Integer) As Border
+        Public Function GetBorderByHash(hash As Integer) As Border
             Dim component = GetComponentByHash(borders, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -105,7 +105,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the cellXf.</param>
         ''' <returns>Determined cellXf.</returns>
-        Public Function GetCellXfByHash(ByVal hash As Integer) As CellXf
+        Public Function GetCellXfByHash(hash As Integer) As CellXf
             Dim component = GetComponentByHash(cellXfs, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -134,7 +134,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the fill.</param>
         ''' <returns>Determined fill.</returns>
-        Public Function GetFillByHash(ByVal hash As Integer) As Fill
+        Public Function GetFillByHash(hash As Integer) As Fill
             Dim component = GetComponentByHash(fills, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -163,7 +163,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the font.</param>
         ''' <returns>Determined font.</returns>
-        Public Function GetFontByHash(ByVal hash As Integer) As Font
+        Public Function GetFontByHash(hash As Integer) As Font
             Dim component = GetComponentByHash(fonts, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -192,7 +192,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the numberFormat.</param>
         ''' <returns>Determined numberFormat.</returns>
-        Public Function GetNumberFormatByHash(ByVal hash As Integer) As NumberFormat
+        Public Function GetNumberFormatByHash(hash As Integer) As NumberFormat
             Dim component = GetComponentByHash(numberFormats, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -221,7 +221,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="name">Name of the style.</param>
         ''' <returns>Determined style.</returns>
-        Public Function GetStyleByName(ByVal name As String) As Style
+        Public Function GetStyleByName(name As String) As Style
             Dim len = styles.Count
             For i = 0 To len - 1
                 If Equals(CType(styles(i), Style).Name, name) Then
@@ -236,7 +236,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="hash">Hash of the style.</param>
         ''' <returns>Determined style.</returns>
-        Public Function GetStyleByHash(ByVal hash As Integer) As Style
+        Public Function GetStyleByHash(hash As Integer) As Style
             Dim component = GetComponentByHash(styles, hash)
             If component Is Nothing Then
                 Throw New StyleException("MissingReferenceException", "The style component with the hash '" & hash.ToString() & "' was not found")
@@ -265,7 +265,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="style">Style to add.</param>
         ''' <returns>Added or determined style in the manager.</returns>
-        Public Function AddStyle(ByVal style As Style) As Style
+        Public Function AddStyle(style As Style) As Style
             Dim hash = AddStyleComponent(style)
             Return CType(GetComponentByHash(styles, hash), Style)
         End Function
@@ -276,7 +276,7 @@ Namespace XLSX
         ''' <param name="style">Component to add.</param>
         ''' <param name="id">Id of the component.</param>
         ''' <returns>Hash of the added or determined component.</returns>
-        Private Function AddStyleComponent(ByVal style As AbstractStyle, ByVal id As Integer?) As Integer
+        Private Function AddStyleComponent(style As AbstractStyle, id As Integer?) As Integer
             style.InternalID = id
             Return AddStyleComponent(style)
         End Function
@@ -286,7 +286,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="style">Component to add.</param>
         ''' <returns>Hash of the added or determined component.</returns>
-        Private Function AddStyleComponent(ByVal style As AbstractStyle) As Integer
+        Private Function AddStyleComponent(style As AbstractStyle) As Integer
             Dim hash As Integer = style.GetHashCode()
             If style.GetType() Is GetType(Border) Then
                 If GetComponentByHash(borders, hash) Is Nothing Then
@@ -345,7 +345,7 @@ Namespace XLSX
         ''' Removes a style and all its components from the style manager
         ''' </summary>
         ''' <param name="styleName">Name of the style to remove.</param>
-        Public Sub RemoveStyle(ByVal styleName As String)
+        Public Sub RemoveStyle(styleName As String)
             Dim match = False
             Dim len = styles.Count
             Dim index = -1
@@ -368,7 +368,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="workbook">Workbook to get all cells with possible style definitions.</param>
         ''' <returns>StyleManager object, to be processed by the save methods.</returns>
-        Friend Shared Function GetManagedStyles(ByVal workbook As Workbook) As StyleManager
+        Friend Shared Function GetManagedStyles(workbook As Workbook) As StyleManager
             Dim styleManager As StyleManager = New StyleManager()
             styleManager.AddStyle(New Style("default", 0, True))
             Dim borderStyle As Style = New Style("default_border_style", 1, True)
@@ -453,7 +453,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="component">Component to check.</param>
         ''' <returns>If true, the component is in use.</returns>
-        Private Function IsUsedByStyle(ByVal component As AbstractStyle) As Boolean
+        Private Function IsUsedByStyle(component As AbstractStyle) As Boolean
             Dim s As Style
             Dim match = False
             Dim hash As Integer = component.GetHashCode()

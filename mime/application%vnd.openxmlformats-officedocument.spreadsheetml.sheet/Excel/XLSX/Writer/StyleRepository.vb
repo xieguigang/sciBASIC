@@ -5,9 +5,7 @@
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
 
-Imports System.Collections.Generic
-
-Namespace XLSX
+Namespace XLSX.Writer
 
     ''' <summary>
     ''' Class to manage all styles at runtime, before writing XLSX files. The main purpose is deduplication and decoupling of styles from workbooks at runtime
@@ -59,7 +57,7 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="style">Style to add.</param>
         ''' <returns>Reference from the repository. If the style to add already existed, the existing object is returned, otherwise the newly added one.</returns>
-        Public Function AddStyle(ByVal style As Style) As Style
+        Public Function AddStyle(style As Style) As Style
             SyncLock lockObject
                 If style Is Nothing Then
                     Return Nothing
