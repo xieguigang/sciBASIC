@@ -6,6 +6,7 @@
 ' 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Style
 
 Namespace XLSX.Writer
@@ -435,26 +436,28 @@ Namespace XLSX.Writer
         ''' This is an internal method. There is no need to use it
         ''' </summary>
         Friend Sub ResolveMergedCells()
-            For Each worksheet In worksheetsField
-                worksheet.ResolveMergedCells()
+            For Each worksheet As Worksheet In worksheetsField
+                Call worksheet.ResolveMergedCells()
             Next
         End Sub
 
         ''' <summary>
         ''' Saves the workbook
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Save()
-            Dim l As LowLevel = New LowLevel(Me)
-            l.Save()
+            Call New LowLevel(Me).Save()
         End Sub
 
         ''' <summary>
         ''' Saves the workbook asynchronous
         ''' </summary>
         ''' <returns>Task object (void).</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Async Function SaveAsync() As Task
-            Dim l As LowLevel = New LowLevel(Me)
-            Await l.SaveAsync()
+            Await New LowLevel(Me).SaveAsync()
         End Function
 
         ''' <summary>
@@ -488,8 +491,7 @@ Namespace XLSX.Writer
         ''' <param name="stream">Writable stream.</param>
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         Public Sub SaveAsStream(stream As Stream, Optional leaveOpen As Boolean = False)
-            Dim l As LowLevel = New LowLevel(Me)
-            l.SaveAsStream(stream, leaveOpen)
+            Call New LowLevel(Me).SaveAsStream(stream, leaveOpen)
         End Sub
 
         ''' <summary>
@@ -499,8 +501,7 @@ Namespace XLSX.Writer
         ''' <param name="leaveOpen">Optional parameter to keep the stream open after writing (used for MemoryStreams; default is false).</param>
         ''' <returns>Task object (void).</returns>
         Public Async Function SaveAsStreamAsync(stream As Stream, Optional leaveOpen As Boolean = False) As Task
-            Dim l As LowLevel = New LowLevel(Me)
-            Await l.SaveAsStreamAsync(stream, leaveOpen)
+            Await New LowLevel(Me).SaveAsStreamAsync(stream, leaveOpen)
         End Function
 
         ''' <summary>
@@ -667,7 +668,11 @@ Namespace XLSX.Writer
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetTo(sourceWorksheetName As String, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetTo(sourceWorksheetName As String,
+                                        newWorksheetName As String,
+                                        targetWorkbook As Workbook,
+                                        Optional sanitizeSheetName As Boolean = True) As Worksheet
+
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetName)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, targetWorkbook, sanitizeSheetName)
         End Function
@@ -680,7 +685,11 @@ Namespace XLSX.Writer
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Function CopyWorksheetTo(sourceWorksheetIndex As Integer, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Function CopyWorksheetTo(sourceWorksheetIndex As Integer,
+                                        newWorksheetName As String,
+                                        targetWorkbook As Workbook,
+                                        Optional sanitizeSheetName As Boolean = True) As Worksheet
+
             Dim sourceWorksheet = GetWorksheet(sourceWorksheetIndex)
             Return CopyWorksheetTo(sourceWorksheet, newWorksheetName, targetWorkbook, sanitizeSheetName)
         End Function
@@ -693,7 +702,11 @@ Namespace XLSX.Writer
         ''' <param name="targetWorkbook">Workbook to copy the worksheet into.</param>
         ''' <param name="sanitizeSheetName">If true, the new name will be automatically sanitized if a name collision occurs.</param>
         ''' <returns>Copied worksheet.</returns>
-        Public Shared Function CopyWorksheetTo(sourceWorksheet As Worksheet, newWorksheetName As String, targetWorkbook As Workbook, Optional sanitizeSheetName As Boolean = True) As Worksheet
+        Public Shared Function CopyWorksheetTo(sourceWorksheet As Worksheet,
+                                               newWorksheetName As String,
+                                               targetWorkbook As Workbook,
+                                               Optional sanitizeSheetName As Boolean = True) As Worksheet
+
             If targetWorkbook Is Nothing Then
                 Throw New WorksheetException("The target workbook cannot be null")
             End If
