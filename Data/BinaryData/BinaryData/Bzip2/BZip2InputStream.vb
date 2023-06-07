@@ -64,6 +64,7 @@
 Imports System.IO
 
 Namespace Bzip2
+
     ''' <summary>An InputStream wrapper that decompresses BZip2 data</summary>
     ''' <remarks>Instances of this class are not threadsafe</remarks>
     Public Class BZip2InputStream
