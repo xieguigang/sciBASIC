@@ -61,6 +61,13 @@ Namespace Math.SIMD
 
     Public Class Multiply
 
+        ''' <summary>
+        ''' <paramref name="v1"/> * <paramref name="v2"/> or 
+        ''' <paramref name="v2"/> * <paramref name="v1"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_scalar_op_multiply_f64(v1 As Double, v2 As Double()) As Double()
             Dim result As Double() = New Double(v2.Length - 1) {}
 
@@ -72,7 +79,8 @@ Namespace Math.SIMD
         End Function
 
         ''' <summary>
-        ''' <paramref name="v1"/> * <paramref name="v2"/>
+        ''' <paramref name="v1"/> * <paramref name="v2"/> or 
+        ''' <paramref name="v2"/> * <paramref name="v1"/>
         ''' </summary>
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>

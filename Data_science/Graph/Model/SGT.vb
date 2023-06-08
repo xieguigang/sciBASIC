@@ -38,6 +38,11 @@ Public Class SequenceGraphTransform
     Dim lengthsensitive As Boolean
 
     ''' <summary>
+    ''' algorithm applied for check position
+    ''' </summary>
+    Dim full As Boolean = True
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="alphabets">Optional, except if mode is Spark.
@@ -61,7 +66,8 @@ Public Class SequenceGraphTransform
     ''' lengthsensitive = false is similar to length-normalization.</param>
     Sub New(Optional alphabets As Char() = Nothing,
             Optional kappa As Double = 1,
-            Optional lengthsensitive As Boolean = False)
+            Optional lengthsensitive As Boolean = False,
+            Optional full As Boolean = True)
 
         Me.alphabets = alphabets
 
@@ -71,6 +77,7 @@ Public Class SequenceGraphTransform
 
         Me.kappa = kappa
         Me.lengthsensitive = lengthsensitive
+        Me.full = full
     End Sub
 
     ''' <summary>
@@ -90,7 +97,7 @@ Public Class SequenceGraphTransform
                           End Function)
     End Function
 
-    Private Function estimate_alphabets(ParamArray corpus As String()) As Char()
+    Public Shared Function estimate_alphabets(ParamArray corpus As String()) As Char()
         If corpus.Length > 100000 Then
             Throw New Exception("Error: Too many sequences. Pass the alphabet list as an input. Exiting.")
         End If
@@ -132,6 +139,40 @@ Public Class SequenceGraphTransform
         Return fitInternal(sequence)
     End Function
 
+    Private Shared Function CombineFull(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
+        Return From ai In U
+               From bj In V
+               Where bj > ai
+               Select (i:=ai, j:=bj)
+    End Function
+
+    ''' <summary>
+    ''' for save the memory and make the algorithm faster when deal with a long sequence data
+    ''' </summary>
+    ''' <param name="U"></param>
+    ''' <param name="V"></param>
+    ''' <returns></returns>
+    Private Shared Function CombinePartial(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
+        If U.Length = 0 Then
+            Return {}
+        End If
+
+        Dim minU As Integer = U.First
+
+        ' offset the V vector
+        ' for makes j always greater than i
+        For i As Integer = 0 To V.Length - 1
+            If V(i) > minU Then
+                V = V.Skip(i).ToArray
+                Exit For
+            End If
+        Next
+
+        Return U.Zip(V, Function(i, j) (i, j)).Where(Function(ij) ij.j > ij.i)
+    End Function
+
+    Private Delegate Function Combine(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
+
     Private Function fitInternal(sequence As String) As Dictionary(Of String, Double)
         Dim size = alphabets.Length
         Dim l = 0
@@ -139,6 +180,11 @@ Public Class SequenceGraphTransform
         Dim Wk As NumericMatrix = NumericMatrix.Zero(size, size)
         Dim positions = get_positions(sequence, alphabets)
         Dim alphabets_in_sequence = sequence.Distinct.ToArray
+        Dim combine As Combine = If(
+            full,
+            New Combine(AddressOf CombineFull),
+            New Combine(AddressOf CombinePartial)
+        )
 
         For Each char_i In alphabets_in_sequence.SeqIterator
             Dim i As Integer = char_i.i
@@ -149,10 +195,7 @@ Public Class SequenceGraphTransform
                 Dim j As Integer = char_j.i
                 Dim v As Char = char_j.value
                 Dim V2 As Integer() = positions(v)
-                Dim C = (From ai In Upos
-                         From bj In V2
-                         Where bj > ai
-                         Select (i:=ai, j:=bj)).ToArray
+                Dim C = combine(Upos, V2).ToArray
                 Dim cu As Vector = C.Select(Function(ic) ic.i).ToArray
                 Dim cv As Vector = C.Select(Function(ic) ic.j).ToArray
                 Dim pos_i = _alphabets.IndexOf(u)

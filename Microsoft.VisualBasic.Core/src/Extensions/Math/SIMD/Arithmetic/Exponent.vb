@@ -52,8 +52,17 @@
 
 Namespace Math.SIMD
 
+    ''' <summary>
+    ''' implements the power operator in VB
+    ''' </summary>
     Public Class Exponent
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_scalar_op_exponent_f64(v1 As Double, v2 As Double()) As Double()
             Dim result As Double() = New Double(v2.Length - 1) {}
 
@@ -64,6 +73,12 @@ Namespace Math.SIMD
             Return result
         End Function
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_exponent_f64_scalar(v1 As Double(), v2 As Double) As Double()
             Dim result As Double() = New Double(v1.Length - 1) {}
 
@@ -74,6 +89,12 @@ Namespace Math.SIMD
             Return result
         End Function
 
+        ''' <summary>
+        ''' <paramref name="v1"/> ^ <paramref name="v2"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_exponent_f64(v1 As Double(), v2 As Double()) As Double()
             Dim result As Double() = New Double(v1.Length - 1) {}
 

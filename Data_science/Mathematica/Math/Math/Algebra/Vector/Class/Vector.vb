@@ -72,7 +72,6 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Scripting.Rscript
-Imports Microsoft.VisualBasic.Math.SIMD
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
@@ -402,13 +401,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator -(v1 As Vector, v2 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]    ' 获取变量维数
-            Dim v3 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]    ' 获取变量维数
+            'Dim v3 As New Vector(N0)
 
-            For j As Integer = 0 To N0 - 1
-                v3(j) = v1(j) - v2(j)
-            Next
-            Return v3
+            'For j As Integer = 0 To N0 - 1
+            '    v3(j) = v1(j) - v2(j)
+            'Next
+            'Return v3
+
+            Return New Vector(SIMD.Subtract.f64_op_subtract_f64(v1.buffer, v2.buffer))
         End Operator
 
         Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
@@ -470,20 +471,21 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 向量除法算符重载，分量分别相除，相当于MATLAB中的   ./算符
+        ''' 向量除法算符重载，分量分别相除，相当于MATLAB中的``./``算符
         ''' </summary>
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator /(v1 As Vector, v2 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
-            Dim v3 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
+            'Dim v3 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v3(j) = v1(j) / v2(j)
-            Next
-            Return v3
+            'For j = 0 To N0 - 1
+            '    v3(j) = v1(j) / v2(j)
+            'Next
+            'Return v3
+            Return New Vector(SIMD.Divide.f64_op_divide_f64(v1.buffer, v2.buffer))
         End Operator
 
         ''' <summary>
@@ -494,14 +496,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(v1 As Vector, a#) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
-            Dim v2 As New Vector(N0)
+            ''向量数加算符重载
+            'Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = v1(j) + a
-            Next
-            Return v2
+            'For j = 0 To N0 - 1
+            '    v2(j) = v1(j) + a
+            'Next
+            'Return v2
+            Return New Vector(SIMD.Add.f64_op_add_f64_scalar(v1.buffer, a))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -517,15 +520,16 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator -(v1 As Vector, a#) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
-            Dim v2 As New Vector(N0)
+            ''向量数加算符重载
+            'Dim N0 As Integer = v1.[Dim] ' 获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = v1(j) - a
-            Next
+            'For j = 0 To N0 - 1
+            '    v2(j) = v1(j) - a
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Subtract.f64_op_subtract_f64_scalar(v1.buffer, a))
         End Operator
 
         ''' <summary>
@@ -536,14 +540,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(v1 As Vector, a#) As Vector
-            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim] ' 获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j As Integer = 0 To N0 - 1
-                v2(j) = v1(j) * a
-            Next
+            'For j As Integer = 0 To N0 - 1
+            '    v2(j) = v1(j) * a
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Multiply.f64_scalar_op_multiply_f64(a, v1.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -559,25 +564,27 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator /(v1 As Vector, a#) As Vector
-            Dim N0 As Integer = v1.[Dim]         '获取变量维数
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]         '获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = v1(j) / a
-            Next
+            'For j = 0 To N0 - 1
+            '    v2(j) = v1(j) / a
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Divide.f64_op_divide_f64_scalar(v1.buffer, a))
         End Operator
 
         Public Shared Operator /(x As Double, v As Vector) As Vector
-            Dim N0 As Integer = v.[Dim]         '获取变量维数
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v.[Dim]         '获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = x / v(j)
-            Next
+            'For j = 0 To N0 - 1
+            '    v2(j) = x / v(j)
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Divide.f64_scalar_op_divide_f64(x, v.buffer))
         End Operator
 
         ''' <summary>
@@ -590,14 +597,15 @@ Namespace LinearAlgebra
         Public Overloads Shared Operator +(a As Double, v1 As Vector) As Vector
             ' 向量数加算符重载
             ' 获取变量维数
-            Dim N0 As Integer = v1.[Dim]
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = v1(j) + a
-            Next
+            'For j = 0 To N0 - 1
+            '    v2(j) = v1(j) + a
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Add.f64_op_add_f64_scalar(v1.buffer, a))
         End Operator
 
         ''' <summary>
@@ -608,14 +616,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator -(a As Double, v1 As Vector) As Vector
-            '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]         '获取变量维数
-            Dim v2 As New Vector(N0)
+            ''向量数加算符重载
+            'Dim N0 As Integer = v1.[Dim]         '获取变量维数
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = a - v1(j)
-            Next
-            Return v2
+            'For j = 0 To N0 - 1
+            '    v2(j) = a - v1(j)
+            'Next
+            'Return v2
+            Return New Vector(SIMD.Subtract.f64_scalar_op_subtract_f64(a, v1.buffer))
         End Operator
 
         ''' <summary>
@@ -626,14 +635,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator *(a As Double, v1 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]
+            'Dim v2 As New Vector(N0)
 
-            For j = 0 To N0 - 1
-                v2(j) = v1(j) * a
-            Next
+            'For j = 0 To N0 - 1
+            '    v2(j) = v1(j) * a
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Multiply.f64_scalar_op_multiply_f64(a, v1.buffer))
         End Operator
 
         ''' <summary>
@@ -644,20 +654,24 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator Or(v1 As Vector, v2 As Vector) As Double
-            '获取变量维数
-            Dim N0 = v1.[Dim]
-            Dim M0 = v2.[Dim]
+            ''获取变量维数
+            'Dim N0 = v1.[Dim]
+            'Dim M0 = v2.[Dim]
 
-            If N0 <> M0 Then
-                ' 如果向量维数不匹配，给出告警信息
-                Throw New ArgumentException("Inner vector dimensions must agree！")
-            End If
+            'If N0 <> M0 Then
+            '    ' 如果向量维数不匹配，给出告警信息
+            '    Throw New ArgumentException("Inner vector dimensions must agree！")
+            'End If
 
-            Dim sum As Double
+            'Dim sum As Double
 
-            For j = 0 To N0 - 1
-                sum = sum + v1(j) * v2(j)
-            Next
+            'For j = 0 To N0 - 1
+            '    sum = sum + v1(j) * v2(j)
+            'Next
+            'Return sum
+            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(v1.buffer, v2.buffer)
+            Dim sum As Double = dot.Sum
+
             Return sum
         End Operator
 
@@ -697,14 +711,15 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Operator -(v1 As Vector) As Vector
-            Dim N0 As Integer = v1.[Dim]
-            Dim v2 As New Vector(N0)
+            'Dim N0 As Integer = v1.[Dim]
+            'Dim v2 As New Vector(N0)
 
-            For i As Integer = 0 To N0 - 1
-                v2(i) = -v1(i)
-            Next
+            'For i As Integer = 0 To N0 - 1
+            '    v2(i) = -v1(i)
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Subtract.f64_scalar_op_subtract_f64(0, v1.buffer))
         End Operator
 
         ''' <summary>
@@ -733,7 +748,9 @@ Namespace LinearAlgebra
         Public Overloads Shared Operator =(x As Vector, n As Double) As BooleanVector
             ' 不可以缺少这一对括号，否则会被当作为属性d，而非值比较
             Dim asserts = From d As Double In x Select (d = n)
-            Return New BooleanVector(asserts)
+            Dim b As New BooleanVector(asserts)
+
+            Return b
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -758,21 +775,22 @@ Namespace LinearAlgebra
         End Operator
 
         Public Overloads Shared Operator ^(x As Vector, p As Vector) As Vector
-            Dim N0 = x.[Dim]
-            Dim M0 = p.[Dim]
+            'Dim N0 = x.[Dim]
+            'Dim M0 = p.[Dim]
 
-            If N0 <> M0 Then
-                ' 如果向量维数不匹配，给出告警信息
-                Throw New ArgumentException("Inner vector dimensions must agree！")
-            End If
+            'If N0 <> M0 Then
+            '    ' 如果向量维数不匹配，给出告警信息
+            '    Throw New ArgumentException("Inner vector dimensions must agree！")
+            'End If
 
-            Dim v2 As New Vector(N0)
+            'Dim v2 As New Vector(N0)
 
-            For j As Integer = 0 To N0 - 1
-                v2(j) = x(j) ^ p(j)
-            Next
+            'For j As Integer = 0 To N0 - 1
+            '    v2(j) = x(j) ^ p(j)
+            'Next
 
-            Return v2
+            'Return v2
+            Return New Vector(SIMD.Exponent.f64_op_exponent_f64(x.buffer, p.buffer))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -943,11 +961,15 @@ Namespace LinearAlgebra
         ''' <param name="v2"></param>
         ''' <returns></returns>
         Public Function DotProduct(v2 As Vector) As Double
-            Dim sum#
+            'Dim sum#
 
-            For i As Integer = 0 To Me.Count - 1
-                sum += Me(i) * v2(i)
-            Next
+            'For i As Integer = 0 To Me.Count - 1
+            '    sum += Me(i) * v2(i)
+            'Next
+
+            'Return sum
+            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(buffer, v2.buffer)
+            Dim sum As Double = dot.Sum
 
             Return sum
         End Function

@@ -61,6 +61,13 @@ Namespace Math.SIMD
 
     Public Class Add
 
+        ''' <summary>
+        ''' <paramref name="v1"/> + <paramref name="v2"/> or 
+        ''' <paramref name="v2"/> + <paramref name="v1"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_op_add_f64_scalar(v1 As Double(), v2 As Double) As Double()
             Select Case SIMDEnvironment.config
                 Case SIMDConfiguration.disable

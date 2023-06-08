@@ -274,6 +274,11 @@ Namespace CSS
         Public Shared Function TryParse(css$, Optional [default] As CSSFont = Nothing, Optional ByRef hasValue As Boolean = False) As CSSFont
             hasValue = False
 
+            If css.StringEmpty Then
+                hasValue = False
+                Return [default]
+            End If
+
             Try
                 Return parseInner(css, hasValue)
             Catch ex As Exception

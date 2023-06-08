@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::218fa8e83c548dc93f16087458411895, sciBASIC#\Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 281
-    '    Code Lines: 200
-    ' Comment Lines: 35
-    '   Blank Lines: 46
-    '     File Size: 11.54 KB
+' Summaries:
 
 
-    '     Class LinePlot2D
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateScaler
-    ' 
-    '         Sub: DrawLine, PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 281
+'    Code Lines: 200
+' Comment Lines: 35
+'   Blank Lines: 46
+'     File Size: 11.54 KB
+
+
+'     Class LinePlot2D
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateScaler
+' 
+'         Sub: DrawLine, PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,6 +83,9 @@ Namespace Plots
         ReadOnly fill As Boolean
         ReadOnly fillPie As Boolean
         ReadOnly interplot As Splines
+
+        Friend xlim As Double = -1
+        Friend ylim As Double = -1
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional fill As Boolean = False,
@@ -119,8 +122,20 @@ Namespace Plots
                                     End If
                                 End Function
             Dim polygon As New List(Of PointF)
-
             Dim pt1, pt2 As PointF
+
+            If line.pts.Length = 1 Then
+                Dim a As PointData = line.pts.First
+                Dim b As New PointData(New PointF(a.pt.X, 0))
+
+                pt1 = scaler.Translate(a)
+                pt2 = scaler.Translate(b)
+
+                Call g.DrawLine(defaultPen, pt1, pt2)
+
+                Return
+            End If
+
             Dim pts As SlideWindow(Of PointData)() = line.pts _
                 .getSplinePoints(spline:=interplot) _
                 .SlideWindows(2) _
@@ -241,7 +256,7 @@ Namespace Plots
 
             If theme.drawLegend Then
                 Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) _
- _
+                                                                              _
                 () <= From s As SerialData
                       In array
                       Let sColor As String = s.color.RGBExpression
@@ -285,8 +300,8 @@ Namespace Plots
             '        YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
             '    End If
 
-            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).Range.CreateAxisTicks
-            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).Range.CreateAxisTicks
+            XTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.X)).ToArray
+            YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
 
             Dim X As Scaler
             Dim Y As LinearScale
@@ -314,12 +329,31 @@ Namespace Plots
                         .domain(allTermLabels) _
                         .range(integers:={region.Left, region.Right})
                 Else
+                    If (Not xlim.IsNaNImaginary) AndAlso xlim > 0 Then
+                        If XTicks.Length = 1 Then
+                            Dim dleft = XTicks(0) - (xlim - XTicks(0))
+
+                            If dleft < 0 Then
+                                dleft = 0
+                            End If
+
+                            XTicks = XTicks.JoinIterates({xlim, dleft}).ToArray
+                        Else
+                            XTicks = XTicks.JoinIterates({xlim}).ToArray
+                        End If
+                    End If
+                    If (Not ylim.IsNaNImaginary) AndAlso ylim > 0 Then
+                        YTicks = YTicks.JoinIterates({ylim}).ToArray
+                    End If
+
+                    XTicks = XTicks.Range.CreateAxisTicks
                     X = d3js.scale _
                         .linear(reverse:=theme.xAxisReverse) _
                         .domain(values:=XTicks) _
                         .range(integers:={region.Left, region.Right})
                 End If
 
+                YTicks = YTicks.Range.CreateAxisTicks
                 Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={region.Bottom, region.Top})
             End If
 
