@@ -564,78 +564,80 @@ Namespace XLSX.Writer
         Public Sub SaveAsStream(stream As Stream, Optional leaveOpen As Boolean = False)
             m_workbook.ResolveMergedCells()
             m_styles = StyleManager.GetManagedStyles(m_workbook) ' After this point, styles must not be changed anymore
+
+            Using p = Package.Open(stream, FileMode.Create)
+                Call SaveAsStreamInternal(p)
+
+                p.Flush()
+                p.Close()
+
+                If Not leaveOpen Then
+                    stream.Close()
+                End If
+            End Using
+        End Sub
+
+        Private Sub SaveAsStreamInternal(p As Package)
+            Dim workbookUri As Uri = New Uri(WORKBOOK.GetFullPath(), UriKind.Relative)
+            Dim stylesheetUri As Uri = New Uri(STYLES.GetFullPath(), UriKind.Relative)
+            Dim appPropertiesUri As Uri = New Uri(APP_PROPERTIES.GetFullPath(), UriKind.Relative)
+            Dim corePropertiesUri As Uri = New Uri(CORE_PROPERTIES.GetFullPath(), UriKind.Relative)
+            Dim sharedStringsUri As Uri = New Uri(SHARED_STRINGS.GetFullPath(), UriKind.Relative)
             Dim sheetPath As DocumentPath
-            Dim sheetURIs As List(Of Uri) = New List(Of Uri)()
-            Try
-                Using p = Package.Open(stream, FileMode.Create)
-                    Dim workbookUri As Uri = New Uri(WORKBOOK.GetFullPath(), UriKind.Relative)
-                    Dim stylesheetUri As Uri = New Uri(STYLES.GetFullPath(), UriKind.Relative)
-                    Dim appPropertiesUri As Uri = New Uri(APP_PROPERTIES.GetFullPath(), UriKind.Relative)
-                    Dim corePropertiesUri As Uri = New Uri(CORE_PROPERTIES.GetFullPath(), UriKind.Relative)
-                    Dim sharedStringsUri As Uri = New Uri(SHARED_STRINGS.GetFullPath(), UriKind.Relative)
+            Dim sheetURIs As New List(Of Uri)()
+            Dim pp = p.CreatePart(workbookUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml", CompressionOption.Normal)
+            p.CreateRelationship(pp.Uri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "rId1")
+            p.CreateRelationship(corePropertiesUri, TargetMode.Internal, "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties", "rId2") '!
+            p.CreateRelationship(appPropertiesUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties", "rId3") '!
 
-                    Dim pp = p.CreatePart(workbookUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml", CompressionOption.Normal)
-                    p.CreateRelationship(pp.Uri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument", "rId1")
-                    p.CreateRelationship(corePropertiesUri, TargetMode.Internal, "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties", "rId2") '!
-                    p.CreateRelationship(appPropertiesUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties", "rId3") '!
+            AppendXmlToPackagePart(CreateWorkbookDocument(), pp)
+            Dim idCounter As Integer
+            If m_workbook.Worksheets.Count > 0 Then
+                idCounter = m_workbook.Worksheets.Count + 1
+            Else
+                '  Fallback on empty workbook
+                idCounter = 2
+            End If
+            pp.CreateRelationship(stylesheetUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "rId" & idCounter.ToString())
+            pp.CreateRelationship(sharedStringsUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings", "rId" & (idCounter + 1).ToString())
 
-                    AppendXmlToPackagePart(CreateWorkbookDocument(), pp)
-                    Dim idCounter As Integer
-                    If m_workbook.Worksheets.Count > 0 Then
-                        idCounter = m_workbook.Worksheets.Count + 1
-                    Else
-                        '  Fallback on empty workbook
-                        idCounter = 2
-                    End If
-                    pp.CreateRelationship(stylesheetUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles", "rId" & idCounter.ToString())
-                    pp.CreateRelationship(sharedStringsUri, TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings", "rId" & (idCounter + 1).ToString())
+            If m_workbook.Worksheets.Count > 0 Then
+                For Each item As Worksheet In m_workbook.Worksheets
+                    sheetPath = New DocumentPath("sheet" & item.SheetID.ToString() & ".xml", "xl/worksheets")
+                    sheetURIs.Add(New Uri(sheetPath.GetFullPath(), UriKind.Relative))
+                    pp.CreateRelationship(sheetURIs(sheetURIs.Count - 1), TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet", "rId" & item.SheetID.ToString())
+                Next
+            Else
+                '  Fallback on empty workbook
+                sheetPath = New DocumentPath("sheet1.xml", "xl/worksheets")
+                sheetURIs.Add(New Uri(sheetPath.GetFullPath(), UriKind.Relative))
+                pp.CreateRelationship(sheetURIs(sheetURIs.Count - 1), TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet", "rId1")
+            End If
 
-                    If m_workbook.Worksheets.Count > 0 Then
-                        For Each item In m_workbook.Worksheets
-                            sheetPath = New DocumentPath("sheet" & item.SheetID.ToString() & ".xml", "xl/worksheets")
-                            sheetURIs.Add(New Uri(sheetPath.GetFullPath(), UriKind.Relative))
-                            pp.CreateRelationship(sheetURIs(sheetURIs.Count - 1), TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet", "rId" & item.SheetID.ToString())
-                        Next
-                    Else
-                        '  Fallback on empty workbook
-                        sheetPath = New DocumentPath("sheet1.xml", "xl/worksheets")
-                        sheetURIs.Add(New Uri(sheetPath.GetFullPath(), UriKind.Relative))
-                        pp.CreateRelationship(sheetURIs(sheetURIs.Count - 1), TargetMode.Internal, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet", "rId1")
-                    End If
+            pp = p.CreatePart(stylesheetUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml", CompressionOption.Normal)
+            AppendXmlToPackagePart(CreateStyleSheetDocument(), pp)
 
-                    pp = p.CreatePart(stylesheetUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml", CompressionOption.Normal)
-                    AppendXmlToPackagePart(CreateStyleSheetDocument(), pp)
+            Dim i = 0
+            If m_workbook.Worksheets.Count > 0 Then
+                For Each item In m_workbook.Worksheets
+                    pp = p.CreatePart(sheetURIs(i), "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml", CompressionOption.Normal)
+                    i += 1
+                    AppendXmlToPackagePart(CreateWorksheetPart(item), pp)
+                Next
+            Else
+                pp = p.CreatePart(sheetURIs(i), "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml", CompressionOption.Normal)
+                i += 1
+                AppendXmlToPackagePart(CreateWorksheetPart(New Worksheet("sheet1")), pp)
+            End If
+            pp = p.CreatePart(sharedStringsUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml", CompressionOption.Normal)
+            AppendXmlToPackagePart(CreateSharedStringsDocument(), pp)
 
-                    Dim i = 0
-                    If m_workbook.Worksheets.Count > 0 Then
-                        For Each item In m_workbook.Worksheets
-                            pp = p.CreatePart(sheetURIs(i), "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml", CompressionOption.Normal)
-                            i += 1
-                            AppendXmlToPackagePart(CreateWorksheetPart(item), pp)
-                        Next
-                    Else
-                        pp = p.CreatePart(sheetURIs(i), "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml", CompressionOption.Normal)
-                        i += 1
-                        AppendXmlToPackagePart(CreateWorksheetPart(New Worksheet("sheet1")), pp)
-                    End If
-                    pp = p.CreatePart(sharedStringsUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml", CompressionOption.Normal)
-                    AppendXmlToPackagePart(CreateSharedStringsDocument(), pp)
-
-                    If m_workbook.WorkbookMetadata IsNot Nothing Then
-                        pp = p.CreatePart(appPropertiesUri, "application/vnd.openxmlformats-officedocument.extended-properties+xml", CompressionOption.Normal)
-                        AppendXmlToPackagePart(CreateAppPropertiesDocument(), pp)
-                        pp = p.CreatePart(corePropertiesUri, "application/vnd.openxmlformats-package.core-properties+xml", CompressionOption.Normal)
-                        AppendXmlToPackagePart(CreateCorePropertiesDocument(), pp)
-                    End If
-                    p.Flush()
-                    p.Close()
-                    If Not leaveOpen Then
-                        stream.Close()
-                    End If
-                End Using
-            Catch e As Exception
-                Throw New IOException("An error occurred while saving. See inner exception for details: " & e.Message, e)
-            End Try
+            If m_workbook.WorkbookMetadata IsNot Nothing Then
+                pp = p.CreatePart(appPropertiesUri, "application/vnd.openxmlformats-officedocument.extended-properties+xml", CompressionOption.Normal)
+                AppendXmlToPackagePart(CreateAppPropertiesDocument(), pp)
+                pp = p.CreatePart(corePropertiesUri, "application/vnd.openxmlformats-package.core-properties+xml", CompressionOption.Normal)
+                AppendXmlToPackagePart(CreateCorePropertiesDocument(), pp)
+            End If
         End Sub
 
         ''' <summary>
@@ -685,23 +687,19 @@ Namespace XLSX.Writer
         ''' <param name="doc">document as raw XML string.</param>
         ''' <param name="pp">Package part to append the XML data.</param>
         Private Sub AppendXmlToPackagePart(doc As String, pp As PackagePart)
-            Try
-                Using ms As MemoryStream = New MemoryStream() ' Write workbook.xml
-                    If Not ms.CanWrite Then
-                        Return
-                    End If
-                    Using writer = XmlWriter.Create(ms)
-                        writer.WriteProcessingInstruction("xml", "version=""1.0"" encoding=""UTF-8"" standalone=""yes""")
-                        writer.WriteRaw(doc)
-                        writer.Flush()
-                        ms.Position = 0
-                        ms.CopyTo(pp.GetStream())
-                        ms.Flush()
-                    End Using
+            Using ms As MemoryStream = New MemoryStream() ' Write workbook.xml
+                If Not ms.CanWrite Then
+                    Return
+                End If
+                Using writer = XmlWriter.Create(ms)
+                    writer.WriteProcessingInstruction("xml", "version=""1.0"" encoding=""UTF-8"" standalone=""yes""")
+                    writer.WriteRaw(doc)
+                    writer.Flush()
+                    ms.Position = 0
+                    ms.CopyTo(pp.GetStream())
+                    ms.Flush()
                 End Using
-            Catch e As Exception
-                Throw New IOException("The XML document could not be saved into the memory stream", e)
-            End Try
+            End Using
         End Sub
 
         ''' <summary>
