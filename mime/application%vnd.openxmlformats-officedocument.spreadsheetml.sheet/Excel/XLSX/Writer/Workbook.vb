@@ -7,7 +7,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Style
 
 Namespace XLSX.Writer

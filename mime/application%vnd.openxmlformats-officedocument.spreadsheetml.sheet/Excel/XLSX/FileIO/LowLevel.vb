@@ -10,9 +10,10 @@ Imports System.IO
 Imports System.IO.Packaging
 Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports stdNum = System.Math
 
-Namespace XLSX.Writer
+Namespace XLSX.FileIO
 
     ''' <summary>
     ''' Class for low level handling (XML, formatting, packing)
@@ -1596,151 +1597,5 @@ Namespace XLSX.Writer
             Return stdNum.Floor(SPLIT_POINT_DIVIDER * height + SPLIT_HEIGHT_POINT_OFFSET)
         End Function
 
-        ''' <summary>
-        ''' Class representing a row that is either empty or containing cells. Empty rows can also carry information about height or visibility
-        ''' </summary>
-        Private Class DynamicRow
-            ''' <summary>
-            ''' Defines the cellDefinitions
-            ''' </summary>
-            Private cellDefinitionsField As List(Of Cell)
-
-            ''' <summary>
-            ''' Gets or sets the row number (zero-based)
-            ''' </summary>
-            Public Property RowNumber As Integer
-
-            ''' <summary>
-            ''' Gets the List of cells if not empty
-            ''' </summary>
-            Public ReadOnly Property CellDefinitions As List(Of Cell)
-                Get
-                    Return cellDefinitionsField
-                End Get
-            End Property
-
-            ''' <summary>
-            ''' Initializes a new instance of the <see cref="DynamicRow"/> class
-            ''' </summary>
-            Public Sub New()
-                cellDefinitionsField = New List(Of Cell)()
-            End Sub
-        End Class
-
-        ''' <summary>
-        ''' Class to manage key value pairs (string / string). The entries are in the order how they were added
-        ''' </summary>
-        Public Class SortedMap
-            ''' <summary>
-            ''' Defines the count
-            ''' </summary>
-            Private countField As Integer
-
-            ''' <summary>
-            ''' Defines the keyEntries
-            ''' </summary>
-            Private ReadOnly keyEntries As List(Of String)
-
-            ''' <summary>
-            ''' Defines the valueEntries
-            ''' </summary>
-            Private ReadOnly valueEntries As List(Of String)
-
-            ''' <summary>
-            ''' Defines the index
-            ''' </summary>
-            Private ReadOnly index As Dictionary(Of String, Integer)
-
-            ''' <summary>
-            ''' Gets the Count
-            ''' Number of map entries
-            ''' </summary>
-            Public ReadOnly Property Count As Integer
-                Get
-                    Return countField
-                End Get
-            End Property
-
-            ''' <summary>
-            ''' Gets the keys of the map as list
-            ''' </summary>
-            Public ReadOnly Property Keys As List(Of String)
-                Get
-                    Return keyEntries
-                End Get
-            End Property
-
-            ''' <summary>
-            ''' Initializes a new instance of the <see cref="SortedMap"/> class
-            ''' </summary>
-            Public Sub New()
-                keyEntries = New List(Of String)()
-                valueEntries = New List(Of String)()
-                index = New Dictionary(Of String, Integer)()
-                countField = 0
-            End Sub
-
-            ''' <summary>
-            ''' Method to add a key value pair
-            ''' </summary>
-            ''' <param name="key">Key as string.</param>
-            ''' <param name="value">Value as string.</param>
-            ''' <returns>Returns the resolved string (either added or returned from an existing entry).</returns>
-            Public Function Add(key As String, value As String) As String
-                If index.ContainsKey(key) Then
-                    Return valueEntries(index(key))
-                End If
-                index.Add(key, countField)
-                countField += 1
-                keyEntries.Add(key)
-                valueEntries.Add(value)
-                Return value
-            End Function
-        End Class
-
-        ''' <summary>
-        ''' Class to manage XML document paths
-        ''' </summary>
-        Friend Class DocumentPath
-            ''' <summary>
-            ''' Gets or sets the Filename
-            ''' File name of the document
-            ''' </summary>
-            Public Property Filename As String
-
-            ''' <summary>
-            ''' Gets or sets the Path
-            ''' Path of the document
-            ''' </summary>
-            Public Property Path As String
-
-            ''' <summary>
-            ''' Initializes a new instance of the <see cref="DocumentPath"/> class
-            ''' </summary>
-            Public Sub New()
-            End Sub
-
-            ''' <summary>
-            ''' Initializes a new instance of the <see cref="DocumentPath"/> class
-            ''' </summary>
-            ''' <param name="filename">File name of the document.</param>
-            ''' <param name="path">Path of the document.</param>
-            Public Sub New(filename As String, path As String)
-                Me.Filename = filename
-                Me.Path = path
-            End Sub
-
-            ''' <summary>
-            ''' Method to return the full path of the document
-            ''' </summary>
-            ''' <returns>Full path.</returns>
-            Public Function GetFullPath() As String
-                If Path(Path.Length - 1) = IO.Path.AltDirectorySeparatorChar OrElse Path(Path.Length - 1) = IO.Path.DirectorySeparatorChar Then
-                    Return IO.Path.AltDirectorySeparatorChar.ToString() & Path & Filename
-                Else
-                    Return IO.Path.AltDirectorySeparatorChar.ToString() & Path & IO.Path.AltDirectorySeparatorChar.ToString() & Filename
-                End If
-            End Function
-        End Class
     End Class
 End Namespace

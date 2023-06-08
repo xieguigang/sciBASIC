@@ -8,6 +8,7 @@
 Imports System.Globalization
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
 Imports stdNum = System.Math
 
