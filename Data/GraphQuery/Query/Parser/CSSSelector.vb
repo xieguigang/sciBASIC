@@ -87,7 +87,8 @@ Public Class CSSSelector : Inherits Parser
                 document = DirectCast(document, HtmlDocument).HtmlElements(Scan0)
             End If
         End If
-        If document.GetType Is GetType(InnerPlantText) Then
+
+        If document Is Nothing OrElse document.GetType Is GetType(InnerPlantText) Then
             Return New InnerPlantText
         End If
 
