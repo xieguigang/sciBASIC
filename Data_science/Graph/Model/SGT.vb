@@ -157,18 +157,24 @@ Public Class SequenceGraphTransform
             Return {}
         End If
 
-        Dim minU As Integer = U.First
+        'Dim minU As Integer = U.First
 
-        ' offset the V vector
-        ' for makes j always greater than i
-        For i As Integer = 0 To V.Length - 1
-            If V(i) > minU Then
-                V = V.Skip(i).ToArray
-                Exit For
-            End If
-        Next
+        '' offset the V vector
+        '' for makes j always greater than i
+        'For i As Integer = 0 To V.Length - 1
+        '    If V(i) > minU Then
+        '        V = V.Skip(i).ToArray
+        '        Exit For
+        '    End If
+        'Next
 
-        Return U.Zip(V, Function(i, j) (i, j)).Where(Function(ij) ij.j > ij.i)
+        'Return U.Zip(V, Function(i, j) (i, j)).Where(Function(ij) ij.j > ij.i)
+
+        ' just find for pattern AB in current tuple graph
+        Return From ai In U
+               From bj In V
+               Where bj = ai + 1
+               Select (i:=ai, j:=bj)
     End Function
 
     Private Delegate Function Combine(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))

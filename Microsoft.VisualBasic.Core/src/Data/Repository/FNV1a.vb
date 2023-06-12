@@ -147,13 +147,13 @@ Namespace Data.Repository
         ''' <remarks>
         ''' http://www.isthe.com/chongo/tech/comp/fnv/index.html
         ''' </remarks>
-        Public Function GetHashCode(targets As IEnumerable(Of Object)) As Integer
-            Const offset As Integer = 2166136261
-            Const prime As Integer = 16777619
+        Public Function GetHashCode(targets As IEnumerable(Of Object)) As UInteger
+            Const offset As UInteger = 2166136261
+            Const prime As Long = 16777619
 
             Return targets.Aggregate(
                 seed:=offset,
-                func:=Function(hashCode As Integer, value As Object)
+                func:=Function(hashCode As UInteger, value As Object)
                           If value Is Nothing Then
                               Return (hashCode Xor 0) * prime
                           Else
