@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -31,6 +32,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 ''' </remarks>
 Public Class SequenceGraphTransform
 
+    Public Enum Modes
+        Full
+        [Partial]
+        Fast
+    End Enum
+
     Public ReadOnly Property alphabets As Char()
     Public ReadOnly Property feature_names As String()
 
@@ -40,7 +47,7 @@ Public Class SequenceGraphTransform
     ''' <summary>
     ''' algorithm applied for check position
     ''' </summary>
-    Dim full As Boolean = True
+    Dim mode As Modes = Modes.Full
 
     ''' <summary>
     ''' 
@@ -67,7 +74,7 @@ Public Class SequenceGraphTransform
     Sub New(Optional alphabets As Char() = Nothing,
             Optional kappa As Double = 1,
             Optional lengthsensitive As Boolean = False,
-            Optional full As Boolean = True)
+            Optional mode As Modes = Modes.Full)
 
         Me.alphabets = alphabets
 
@@ -77,7 +84,7 @@ Public Class SequenceGraphTransform
 
         Me.kappa = kappa
         Me.lengthsensitive = lengthsensitive
-        Me.full = full
+        Me.mode = mode
     End Sub
 
     ''' <summary>
@@ -117,6 +124,7 @@ Public Class SequenceGraphTransform
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __set_feature_name(alphabets As Char()) As String()
         Return CombinationExtensions.FullCombination(alphabets) _
             .Select(Function(t) $"{t.a},{t.b}") _
@@ -177,6 +185,22 @@ Public Class SequenceGraphTransform
                Select (i:=ai, j:=bj)
     End Function
 
+    Private Shared Iterator Function CombineFast(seq As String, u As Char, v As Char) As IEnumerable(Of (i As Integer, j As Integer))
+        Dim t As String = New String({u, v})
+        Dim i As Integer = 1
+
+        Do While True
+            i = InStr(i, seq, t)
+
+            If i > 0 Then
+                Yield (i, i + 1)
+                i += 1
+            Else
+                Exit Do
+            End If
+        Loop
+    End Function
+
     Private Delegate Function Combine(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
 
     Private Function fitInternal(sequence As String) As Dictionary(Of String, Double)
@@ -187,27 +211,35 @@ Public Class SequenceGraphTransform
         Dim positions = get_positions(sequence, alphabets)
         Dim alphabets_in_sequence = sequence.Distinct.ToArray
         Dim combine As Combine = If(
-            full,
+            mode = Modes.Full,
             New Combine(AddressOf CombineFull),
             New Combine(AddressOf CombinePartial)
         )
+        Dim cu, cv As Vector
+        Dim c As (i As Integer, j As Integer)()
 
-        For Each char_i In alphabets_in_sequence.SeqIterator
+        For Each char_i As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
             Dim i As Integer = char_i.i
             Dim u As Char = char_i.value
             Dim Upos As Integer() = positions(u)
 
-            For Each char_j In alphabets_in_sequence.SeqIterator
+            For Each char_j As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
                 Dim j As Integer = char_j.i
                 Dim v As Char = char_j.value
                 Dim V2 As Integer() = positions(v)
-                Dim C = combine(Upos, V2).ToArray
-                Dim cu As Vector = C.Select(Function(ic) ic.i).ToArray
-                Dim cv As Vector = C.Select(Function(ic) ic.j).ToArray
                 Dim pos_i = _alphabets.IndexOf(u)
                 Dim pos_j = _alphabets.IndexOf(v)
 
-                W0(pos_i, pos_j) = C.Length
+                If mode = Modes.Fast Then
+                    c = CombineFast(sequence, u, v).ToArray
+                Else
+                    c = combine(Upos, V2).ToArray
+                End If
+
+                cu = c.Select(Function(ic) ic.i).ToArray
+                cv = c.Select(Function(ic) ic.j).ToArray
+
+                W0(pos_i, pos_j) = c.Length
                 Wk(pos_i, pos_j) = (-kappa * (cu - cv).Abs).Exp().Sum
             Next
 
