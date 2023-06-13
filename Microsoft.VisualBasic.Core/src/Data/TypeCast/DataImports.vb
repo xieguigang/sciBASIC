@@ -76,7 +76,14 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
                 If r.IsInteger Then
                     integers += 1
-                ElseIf IsBooleanFactor(r) Then
+
+                    ' 20230613 we should disable the boolean extenede literal
+                    ' at here, or some enum string factor example like yes/no/right/wrong
+                    ' will be get confused with the string or enum type
+                    '
+                    ' just check for the true/false at here
+                    '
+                ElseIf IsBooleanFactor(r, extendedLiteral:=False) Then
                     booleans += 1
                 ElseIf r.IsNumeric(includesNaNFactor:=True) Then
                     doubles += 1
@@ -117,12 +124,25 @@ Namespace ComponentModel.DataSourceModel.TypeCast
             If integers > 0 Then
                 Return GetType(Integer)
             End If
-            If booleans Then
+            If booleans > 0 Then
                 Return GetType(Boolean)
             End If
-            If dates Then
+            If dates > 0 Then
                 Return GetType(Date)
             End If
+
+            Return GetType(String)
+        End Function
+
+        ''' <summary>
+        ''' Check the given string collection is a possible enum factor type?
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsPossibleEnumFactor(v As IReadOnlyCollection(Of String)) As Boolean
+            Return v.Distinct.Count <= CInt(v.Count * 0.9)
         End Function
 
         ''' <summary>
