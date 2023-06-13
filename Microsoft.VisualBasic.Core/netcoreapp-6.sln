@@ -114,8 +114,8 @@ Global
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.LipidSearch|x86.Build.0 = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|Any CPU.ActiveCfg = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|Any CPU.Build.0 = Release|Any CPU
-		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x64.ActiveCfg = Release|Any CPU
-		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x64.Build.0 = Release|Any CPU
+		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x64.ActiveCfg = Release|x64
+		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x64.Build.0 = Release|x64
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x86.ActiveCfg = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit_win32|x86.Build.0 = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
@@ -144,8 +144,8 @@ Global
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Release|x86.Build.0 = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
-		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x64.ActiveCfg = Release|Any CPU
-		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x64.Build.0 = Release|Any CPU
+		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x64.ActiveCfg = Release|x64
+		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x64.Build.0 = Release|x64
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x86.ActiveCfg = Release|Any CPU
 		{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}.Rsharp_app_release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection

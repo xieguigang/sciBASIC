@@ -70,8 +70,17 @@ Imports System.Runtime.Intrinsics.X86
 Namespace Math.SIMD
 
     Public Enum SIMDConfiguration
+        ''' <summary>
+        ''' no SIMD
+        ''' </summary>
         disable
+        ''' <summary>
+        ''' use the new .netcore SIMD supports from ``System.Runtime.Intrinsics.X86``
+        ''' </summary>
         enable
+        ''' <summary>
+        ''' use the legacy supports of the SIMD from ``System.Numerics``
+        ''' </summary>
         legacy
 
         ''' <summary>

@@ -56,6 +56,7 @@ Module Program
 
         Console.WriteLine("Hello World!")
 
+        Call SIMDTest.Main1()
         Call streamTest.Main1()
     End Sub
 End Module
