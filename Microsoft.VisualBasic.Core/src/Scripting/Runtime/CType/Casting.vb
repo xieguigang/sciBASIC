@@ -303,11 +303,13 @@ Namespace Scripting.Runtime
 
             If String.IsNullOrEmpty(s) Then
                 Return 0R
-            ElseIf String.Equals(s, "NaN", StringComparison.Ordinal) OrElse
-                String.Equals(s, "NA", StringComparison.Ordinal) Then
+            ElseIf String.Equals(s, "NaN", StringComparison.OrdinalIgnoreCase) OrElse
+                String.Equals(s, "NA", StringComparison.OrdinalIgnoreCase) Then
 
                 ' R 语言之中是使用NA，.NET语言是使用NaN
                 Return Double.NaN
+            ElseIf String.Equals(s, "NULL", StringComparison.OrdinalIgnoreCase) Then
+                Return 0.0
             Else
                 ' ,表示1000，需要删掉这个间隔符
                 ' 才可以被正常的val出来

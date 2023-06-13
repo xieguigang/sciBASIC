@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::f3dd0616a44b1855534d15e5816cfbd9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 364
-    '    Code Lines: 225
-    ' Comment Lines: 94
-    '   Blank Lines: 45
-    '     File Size: 11.00 KB
+' Summaries:
 
 
-    ' Module PrimitiveParser
-    ' 
-    '     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
-    '               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
-    '               ParseLong, ParseSingle, ParseTimeSpan
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 364
+'    Code Lines: 225
+' Comment Lines: 94
+'   Blank Lines: 45
+'     File Size: 11.00 KB
+
+
+' Module PrimitiveParser
+' 
+'     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
+'               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
+'               ParseLong, ParseSingle, ParseTimeSpan
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -246,7 +246,11 @@ Public Module PrimitiveParser
     ''' <see cref="Integer"/> text parser
     ''' </summary>
     ''' <param name="s"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this is a safe function: this function will never throw an exception
+    ''' when the given <paramref name="s"/> is not a valid integer string 
+    ''' value, the zero value will be return in such situation.
+    ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -303,14 +307,26 @@ Public Module PrimitiveParser
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDate(s As String) As Date
-        Return Date.Parse(Trim(s))
+        Dim d As Date = Nothing
+
+        Static empty_output As Index(Of String) = {"false", "na", "null", "n/a", "nan"}
+
+        If s.ToLower Like empty_output Then
+            Return Nothing
+        End If
+
+        If Date.TryParse(Trim(s), d) Then
+            Return d
+        Else
+            Return Nothing
+        End If
     End Function
 
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' </summary>
     ReadOnly booleans As New SortedDictionary(Of String, Boolean) From {
- _
+                                                                        _
         {"t", True}, {"true", True},
         {"1", True},
         {"y", True}, {"yes", True}, {"ok", True},
