@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::c0cd387d26e0f037cd77c0295068ef69, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 258
-    '    Code Lines: 146
-    ' Comment Lines: 74
-    '   Blank Lines: 38
-    '     File Size: 10.57 KB
+' Summaries:
 
 
-    '     Class WebQuery
-    ' 
-    '         Properties: offlineMode
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
-    ' 
-    '         Sub: runHttpGet
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 258
+'    Code Lines: 146
+' Comment Lines: 74
+'   Blank Lines: 38
+'     File Size: 10.57 KB
+
+
+'     Class WebQuery
+' 
+'         Properties: offlineMode
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
+' 
+'         Sub: runHttpGet
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,7 +80,7 @@ Namespace Net.Http
     ''' </remarks>
     ''' 
     <FrameworkConfig(WebQuery(Of Boolean).WebQueryDebug)>
-    Public Class WebQuery(Of Context)
+    Public Class WebQuery(Of Context) : Implements IDisposable
 
         Friend url As Func(Of Context, String)
         Friend contextGuid As IToString(Of Context)
@@ -105,6 +105,7 @@ Namespace Net.Http
         Protected sleepInterval As Integer
 
         Protected Shared debug As Boolean = True
+        Private disposedValue As Boolean
 
         Shared ReadOnly interval As [Default](Of Integer)
 
@@ -174,6 +175,11 @@ Namespace Net.Http
             End If
         End Sub
 
+        ''' <summary>
+        ''' test if the given key is empty or nothing
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function IsNullKey(key As Object) As Boolean
             Return ExceptionHandle.Default(key)
@@ -191,36 +197,40 @@ Namespace Net.Http
             For Each context As Context In query
                 If IsNullKey(context) Then
                     Yield ("", True)
-                End If
-
-                Dim url = Me.url(context)
-                Dim id$ = Me.contextGuid(context)
-                ' the cache path
-                Dim cache_file$
-                ' 如果是进行一些分子名称的查询,可能会因为分子名称超长而导致文件系统api调用出错
-                ' 所以在这里需要截短一下文件名称
-                ' 因为路径的总长度不能超过260个字符,所以文件名这里截短到200字符以内,留给文件夹名称一些长度
-                Dim baseName$ = Mid(id, 1, 192)
-                Dim hitCache As Boolean = True
-
-                If prefix Is Nothing Then
-                    cache_file = $"/{baseName}.{type.Trim("."c, "*"c)}"
                 Else
-                    cache_file = $"/{prefix(id)}/{baseName}.{type.Trim("."c, "*"c)}"
+                    Yield queryTextImpl(context, type)
                 End If
-
-                If Not url Like url404 Then
-                    Call runHttpGet(cache_file, url, hitCache)
-                ElseIf debug Then
-                    Call $"{id} 404 Not Found!".PrintException
-                End If
-
-                'If TypeOf Me.cache Is Directory Then
-                '    cache_file = $"{DirectCast(cache, Directory).folder}/{cache_file}"
-                'End If
-
-                Yield (cache_file, hitCache)
             Next
+        End Function
+
+        Private Function queryTextImpl(context As Context, type As String) As (cache$, hitCache As Boolean)
+            Dim url = Me.url(context)
+            Dim id$ = Me.contextGuid(context)
+            ' the cache path
+            Dim cache_file$
+            ' 如果是进行一些分子名称的查询,可能会因为分子名称超长而导致文件系统api调用出错
+            ' 所以在这里需要截短一下文件名称
+            ' 因为路径的总长度不能超过260个字符,所以文件名这里截短到200字符以内,留给文件夹名称一些长度
+            Dim baseName$ = Mid(id, 1, 192)
+            Dim hitCache As Boolean = True
+
+            If prefix Is Nothing Then
+                cache_file = $"/{baseName}.{type.Trim("."c, "*"c)}"
+            Else
+                cache_file = $"/{prefix(id)}/{baseName}.{type.Trim("."c, "*"c)}"
+            End If
+
+            If Not url Like url404 Then
+                Call runHttpGet(cache_file, url, hitCache)
+            ElseIf debug Then
+                Call $"{id} 404 Not Found!".PrintException
+            End If
+
+            'If TypeOf Me.cache Is Directory Then
+            '    cache_file = $"{DirectCast(cache, Directory).folder}/{cache_file}"
+            'End If
+
+            Return (cache_file, hitCache)
         End Function
 
         ''' <summary>
@@ -312,5 +322,37 @@ Namespace Net.Http
                         End Function) _
                 .As(Of T)
         End Function
+
+        ''' <summary>
+        ''' Release and save the cache filesystem data handle
+        ''' </summary>
+        ''' <param name="disposing"></param>
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                    If Not cache Is Nothing Then
+                        Call cache.Close()
+                    End If
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并重写终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
+        ' Protected Overrides Sub Finalize()
+        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace

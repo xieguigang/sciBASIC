@@ -234,6 +234,9 @@ Namespace FileIO
             Return fullPath.FileExists(ZERO_Nonexists:=True)
         End Function
 
+        ''' <summary>
+        ''' Just do nothing for local filesystem
+        ''' </summary>
         Public Sub Close() Implements IFileSystemEnvironment.Close
             ' do nothing
         End Sub

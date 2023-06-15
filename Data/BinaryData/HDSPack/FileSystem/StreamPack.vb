@@ -489,6 +489,9 @@ Namespace FileSystem
             GC.SuppressFinalize(Me)
         End Sub
 
+        ''' <summary>
+        ''' Save the file tree and close the file stream
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Close() Implements IFileSystemEnvironment.Close
             Call Me.Dispose()
