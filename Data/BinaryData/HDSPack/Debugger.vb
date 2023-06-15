@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Text
 
 Public Module Debugger
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ListFiles(hds As StreamPack) As IEnumerable(Of StreamObject)
         Return New StreamObject() {hds.superBlock}.JoinIterates(hds.superBlock.ListFiles)

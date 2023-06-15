@@ -117,6 +117,7 @@ Public Module Extensions
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ReadText(pack As StreamPack, file As StreamBlock, Optional encoding As Encodings = Encodings.UTF8) As String
         Return New StreamReader(pack.OpenBlock(file), encoding.CodePage).ReadToEnd

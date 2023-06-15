@@ -1,62 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::5d4fb1468b35cb8c057247866f5532ef, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\FilePath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 101
-    '    Code Lines: 73
-    ' Comment Lines: 14
-    '   Blank Lines: 14
-    '     File Size: 3.53 KB
+' Summaries:
 
 
-    '     Class FilePath
-    ' 
-    '         Properties: Components, DirectoryPath, FileName, IsAbsolutePath, IsDirectory
-    '                     ParentDirectory
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: combineDirectory, Parse, ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 101
+'    Code Lines: 73
+' Comment Lines: 14
+'   Blank Lines: 14
+'     File Size: 3.53 KB
+
+
+'     Class FilePath
+' 
+'         Properties: Components, DirectoryPath, FileName, IsAbsolutePath, IsDirectory
+'                     ParentDirectory
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: combineDirectory, Parse, ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace FileIO.Path
 
+    ''' <summary>
+    ''' A file path string component object
+    ''' </summary>
     Public Class FilePath
 
         ''' <summary>
@@ -68,6 +73,7 @@ Namespace FileIO.Path
         Public ReadOnly Property IsAbsolutePath As Boolean = False
 
         Public ReadOnly Property DirectoryPath As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return If(IsAbsolutePath, "/", "") & combineDirectory()
             End Get
@@ -80,6 +86,7 @@ Namespace FileIO.Path
         ''' file name with extension suffix
         ''' </returns>
         Public ReadOnly Property FileName As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Components.Last
             End Get
@@ -145,6 +152,7 @@ Namespace FileIO.Path
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Parse(path As String) As FilePath
             Return New FilePath(path)
         End Function
@@ -158,10 +166,12 @@ Namespace FileIO.Path
                 file1.IsDirectory = file2.IsDirectory
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(file1 As FilePath, file2 As FilePath) As Boolean
             Return Not file1 = file2
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(path As FilePath) As String
             Return path.ToString
         End Operator
