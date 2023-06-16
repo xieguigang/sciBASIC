@@ -387,6 +387,12 @@ Public Module StringHelpers
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$, Optional toString As Func(Of T, String) = Nothing) As String
+        If GetType(T) Is GetType(String) Then
+            Return String.Join(delimiter, DirectCast(data, IEnumerable(Of String)).SafeQuery.ToArray)
+        ElseIf GetType(T) Is GetType(Char) Then
+            Return String.Join(delimiter, DirectCast(data, IEnumerable(Of Char)).SafeQuery.Select(Function(c) c.ToString).ToArray)
+        End If
+
         If toString Is Nothing Then
             toString = Function(o) Scripting.ToString(o)
         End If

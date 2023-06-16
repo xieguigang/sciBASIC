@@ -340,13 +340,20 @@ Public Module DocumentExtensions
     ''' get a specific column value by name
     ''' </summary>
     ''' <param name="csv"></param>
-    ''' <param name="column"></param>
-    ''' <returns></returns>
+    ''' <param name="column">the column name that will be find in the table header row</param>
+    ''' <returns>
+    ''' this function will returns nothing if the speicifc <paramref name="column"/> 
+    ''' is not exists in the table headers
+    ''' </returns>
     <Extension>
     Public Function GetColumnValues(csv As IO.File, column$) As IEnumerable(Of String)
         Dim index As Integer = csv.Headers.IndexOf(column)
         Dim out As New List(Of String)
         Dim offset As Integer = 1
+
+        If index = -1 Then
+            Return Nothing
+        End If
 
         ' 20221127 the dataframe object is already skip the title row
         If TypeOf csv Is DataFrame Then

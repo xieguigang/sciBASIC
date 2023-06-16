@@ -339,8 +339,16 @@ Namespace FileSystem
             Return New SubStream(buffer, block.offset, block.size)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="ZERO_Nonexists">
+        ''' this parameter is not working at here
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function FileExists(path As String) As Boolean Implements IFileSystemEnvironment.FileExists
+        Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
             Return superBlock.BlockExists(FilePath.Parse(path))
         End Function
 

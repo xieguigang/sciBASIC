@@ -95,7 +95,7 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Function FileExists(path As String) As Boolean
+        Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
         ''' <summary>
         ''' get file size
         ''' </summary>

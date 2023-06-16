@@ -371,6 +371,12 @@ Namespace IO
             Return New RowObject(Tokenizer.CharsParser(Line))
         End Operator
 
+        ''' <summary>
+        ''' Parse a text line as csv table row via <see cref="Tokenizer.CharsParser"/>
+        ''' </summary>
+        ''' <param name="line"></param>
+        ''' <param name="tsv"></param>
+        ''' <returns></returns>
         Public Shared Function TryParse(line As String, Optional tsv As Boolean = False) As RowObject
             Return New RowObject(line, tsv)
         End Function

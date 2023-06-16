@@ -136,7 +136,10 @@ Namespace Net.Http
         ''' 如果查询的结果文件很多, 则缓存放在同一下文件夹下, 打开的效率会非常低,
         ''' 在这里使用这个函数来得到分组前缀用作为文件夹名,分组存放缓存数据
         ''' </param>
-        ''' <param name="cache$"></param>
+        ''' <param name="cache">
+        ''' A local <see cref="Directory"/> will be open for implements the 
+        ''' <see cref="IFileSystemEnvironment"/> wrapper as cache.
+        ''' </param>
         ''' <param name="interval%"></param>
         Sub New(url As Func(Of Context, String),
                 Optional contextGuid As IToString(Of Context) = Nothing,
@@ -144,6 +147,21 @@ Namespace Net.Http
                 Optional prefix As Func(Of String, String) = Nothing,
                 <CallerMemberName>
                 Optional cache$ = Nothing,
+                Optional interval% = -1,
+                Optional offline As Boolean = False)
+
+            Call Me.New(cache, interval, offline)
+
+            Me.url = url
+            Me.contextGuid = contextGuid Or Scripting.ToString(Of Context)
+            Me.deserialization = parser Or XmlParser
+            Me.prefix = prefix
+        End Sub
+
+        Sub New(url As Func(Of Context, String), cache As IFileSystemEnvironment,
+                Optional contextGuid As IToString(Of Context) = Nothing,
+                Optional parser As IObjectBuilder = Nothing,
+                Optional prefix As Func(Of String, String) = Nothing,
                 Optional interval% = -1,
                 Optional offline As Boolean = False)
 
