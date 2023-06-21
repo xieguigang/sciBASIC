@@ -147,7 +147,13 @@ Public Module HttpGet
         Try
 Re0:
             Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo).html
-        Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso doNotRetry404
+
+            ' 20230620 the http error message at here could be various
+            ' just check for the http status code 404 at here
+            ' default message for 404: (404) Not Found
+            ' but it also could be a custom error text, example like the ncbi web server response: (404) PUGREST.NotFound 
+            ' so just check for the http error code 404 at here
+        Catch ex As Exception When InStr(ex.Message, "(404)") > 0 AndAlso doNotRetry404
             is404 = True
             Return LogException(url, New Exception(url, ex))
 
@@ -159,6 +165,7 @@ Re0:
             GoTo Re0
 
         Catch ex As Exception
+            is404 = InStr(ex.Message, "(404)") > 0
             ex = New Exception(url, ex)
             ex.PrintException
 

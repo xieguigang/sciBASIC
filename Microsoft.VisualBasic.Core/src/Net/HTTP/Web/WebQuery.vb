@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net.Http
 
@@ -191,6 +192,14 @@ Namespace Net.Http
             If offlineMode AndAlso debug Then
                 Call $"WebQuery of '{Me.GetType.Name}' running in offline mode!".__DEBUG_ECHO
             End If
+
+            Me.url404 = cache.ReadAllText("/__404.txt").LineTokens.Indexing
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub Write404CacheList()
+            Call cache.WriteText(text:=url404.Objects.JoinBy(vbCrLf), path:="/__404.txt")
+            Call cache.Flush()
         End Sub
 
         ''' <summary>
@@ -276,8 +285,12 @@ Namespace Net.Http
                 Call cache.Flush()
                 Call Thread.Sleep(sleepInterval)
 
-                If is404 Then
+                ' andalso treated the empty web response as 
+                ' the 404 error as well?
+                If is404 OrElse cache.FileSize(cache_path) <= 8 Then
                     url404 += url
+
+                    Call Write404CacheList()
                     Call $"{url} 404 Not Found!".PrintException
                 ElseIf debug Then
                     Call $"Worker thread sleep {sleepInterval}ms...".__INFO_ECHO

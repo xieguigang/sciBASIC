@@ -163,7 +163,7 @@ Namespace FileSystem
         End Sub
 
         Public Function Delete(path As String) As Boolean Implements IFileSystemEnvironment.DeleteFile
-            Dim dir As String = path.ParentPath & "/"
+            Dim dir As String = path.ParentPath(full:=False) & "/"
             Dim name As String = path.FileName
             Dim folder = GetObject(dir)
 
