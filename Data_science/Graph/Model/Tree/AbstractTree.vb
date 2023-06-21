@@ -159,9 +159,9 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
         If Not popAll Then
             Return Childs?.Values
         ElseIf Childs.IsNullOrEmpty Then
-            Return New T() {}
+            Return New T() {Me}
         Else
-            Dim all As New List(Of T)
+            Dim all As New List(Of T) From {Me}
 
             For Each child As T In Childs.Values
                 all.AddRange(child.EnumerateChilds(popAll:=True))

@@ -119,4 +119,14 @@ Public Class TermTree(Of T) : Inherits Tree(Of T, String)
             Return DirectCast(Childs([next]), TermTree(Of T)).Add(path.Skip(1).ToArray, value)
         End If
     End Function
+
+    Public Shared Function FindRoot(tree As TermTree(Of T)) As TermTree(Of T)
+        Dim parent As TermTree(Of T) = tree
+
+        Do While parent.Parent IsNot Nothing
+            parent = parent.Parent
+        Loop
+
+        Return parent
+    End Function
 End Class
