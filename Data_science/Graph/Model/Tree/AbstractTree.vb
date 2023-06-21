@@ -149,9 +149,26 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' <summary>
     ''' Returns the values of <see cref="Childs"/>
     ''' </summary>
+    ''' <param name="popAll">
+    ''' just populate the childs in current tree node by default, 
+    ''' and set this parameter to value true for populate all 
+    ''' child nodes inside current tree node
+    ''' </param>
     ''' <returns></returns>
-    Public Function EnumerateChilds() As IEnumerable(Of T)
-        Return Childs?.Values
+    Public Function EnumerateChilds(Optional popAll As Boolean = False) As IEnumerable(Of T)
+        If Not popAll Then
+            Return Childs?.Values
+        ElseIf Childs.IsNullOrEmpty Then
+            Return New T() {}
+        Else
+            Dim all As New List(Of T)
+
+            For Each child As T In Childs.Values
+                all.AddRange(child.EnumerateChilds(popAll:=True))
+            Next
+
+            Return all.Distinct
+        End If
     End Function
 
     Public Overrides Function ToString() As String
