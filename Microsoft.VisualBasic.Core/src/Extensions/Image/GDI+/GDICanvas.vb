@@ -4195,7 +4195,12 @@ Namespace Imaging
         ''' identity matrix.
         ''' </summary>
         Public Overrides Sub ResetTransform()
-            Call Graphics.ResetTransform()
+            Graphics.ResetTransform()
+            Graphics.Transform = Nothing
+        End Sub
+
+        Public Sub SetTransformMatrix(m As Matrix)
+            Graphics.Transform = m
         End Sub
 
         ''' <summary>

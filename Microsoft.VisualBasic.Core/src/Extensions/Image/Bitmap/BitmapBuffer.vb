@@ -334,6 +334,9 @@ Namespace Imaging.BitmapImage
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
+            If i < 0 Then
+                Return
+            End If
             If channels = 4 Then
                 buffer(i + 3) = color.A
             End If
