@@ -55,6 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 
@@ -65,7 +66,15 @@ Namespace FileSystem
     ''' </summary>
     Public Class StreamBlock : Inherits StreamObject
 
+        ''' <summary>
+        ''' the byte offset of current file data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property offset As Long
+        ''' <summary>
+        ''' the data size
+        ''' </summary>
+        ''' <returns></returns>
         Public Property size As Long
 
         Public ReadOnly Property mimeType As ContentType
@@ -97,6 +106,11 @@ Namespace FileSystem
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{MyBase.ToString} [offset={offset}, size={StringFormats.Lanudry(size)}] ({mimeType.ToString})"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetRegion() As BufferRegion
+            Return New BufferRegion With {.size = size, .position = offset}
         End Function
 
     End Class

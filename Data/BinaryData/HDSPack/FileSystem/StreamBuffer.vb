@@ -115,7 +115,28 @@ Namespace FileSystem
 
         ReadOnly basefile As Stream
         ReadOnly buffer As MemoryStream
+
+        ''' <summary>
+        ''' the file write behaviour is different at here based on the buffer 
+        ''' information data in this file block reference object:
+        ''' 
+        ''' 1. if the file block information is empty: no position and no size, 
+        '''    then file data will be append to the stream last
+        ''' 2. if the file block information is not empty, then file data will 
+        '''    be write to a specific location, and then length of the stream 
+        '''    data is fixed!
+        ''' </summary>
         ReadOnly block As StreamBlock
+
+        ''' <summary>
+        ''' current stream is fixed length?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsPreallocated As Boolean
+            Get
+                Return block.offset > 0 AndAlso block.size > 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' create a new temp stream for write new object data
@@ -130,6 +151,7 @@ Namespace FileSystem
             Me.block = block
             Me.basefile = buffer
             Me.buffer = New MemoryStream(capacity:=buffer_size)
+            Me.buffer.Seek(Scan0, SeekOrigin.Begin)
         End Sub
 
         ''' <inheritdoc />
@@ -143,7 +165,17 @@ Namespace FileSystem
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub SetLength(value As Long)
+            If IsPreallocated Then
+                If value > block.size Then
+                    Call InvalidBlockSize(size:=value)
+                End If
+            End If
+
             Call buffer.SetLength(value)
+        End Sub
+
+        Private Sub InvalidBlockSize(size As Long)
+            Throw New InvalidDataException($"the required length ({StringFormats.Lanudry(size)}) is greater than the pre-allocated size ({StringFormats.Lanudry(block.size)})!")
         End Sub
 
         ''' <inheritdoc />
@@ -151,6 +183,12 @@ Namespace FileSystem
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Write(buffer() As Byte, offset As Integer, count As Integer)
             Call Me.buffer.Write(buffer, offset, count)
+
+            If IsPreallocated Then
+                If Me.buffer.Length > block.size Then
+                    Call InvalidBlockSize(size:=Me.buffer.Length)
+                End If
+            End If
         End Sub
 
         ''' <inheritdoc />
@@ -164,7 +202,13 @@ Namespace FileSystem
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Seek(offset As Long, origin As SeekOrigin) As Long
-            Return buffer.Seek(offset, origin)
+            Dim intptr As Long = buffer.Seek(offset, origin)
+            If IsPreallocated Then
+                If intptr > block.size Then
+                    Call InvalidBlockSize(size:=intptr)
+                End If
+            End If
+            Return intptr
         End Function
 
         ''' <summary>
@@ -173,8 +217,14 @@ Namespace FileSystem
         ''' the stream block content data
         ''' </summary>
         Private Sub writeBuffer()
-            block.size = buffer.Length
-            block.offset = basefile.Length
+            If Not IsPreallocated Then
+                block.size = buffer.Length
+                block.offset = basefile.Length
+            End If
+
+            ' move current base file position to the file block
+            ' start location, and then start to copy file block
+            ' data to the underlying base file stream
             buffer.Flush()
             basefile.Position = block.offset
             basefile.Write(buffer.ToArray, offset:=Scan0, count:=buffer.Length)

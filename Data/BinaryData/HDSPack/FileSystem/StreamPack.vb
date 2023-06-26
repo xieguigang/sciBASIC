@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.Language.LinqAPIHelpers
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.Net.Http
 
@@ -83,6 +84,9 @@ Namespace FileSystem
         Public ReadOnly Property globalAttributes As New LazyAttribute
         Public ReadOnly Property is_readonly As Boolean Implements IFileSystemEnvironment.readonly
 
+        ''' <summary>
+        ''' usually be the underlying local file stream for read/write pack data
+        ''' </summary>
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
 
@@ -387,6 +391,7 @@ Namespace FileSystem
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
         ''' </param>
+        ''' <param name="buffer_size">options for write data only</param>
         ''' <returns>
         ''' this function returns two type of the stream:
         ''' 
@@ -395,7 +400,7 @@ Namespace FileSystem
         ''' 
         ''' based on the target file object is existsed or not
         ''' </returns>
-        Public Function OpenBlock(fileName As String) As Stream
+        Public Function OpenBlock(fileName As String, Optional buffer_size As Integer = -1) As Stream
             Dim path As New FilePath("/" & fileName)
             Dim block As StreamBlock
 
@@ -423,11 +428,75 @@ Namespace FileSystem
             ElseIf is_readonly Then
                 Throw New ReadOnlyException($"can not create data block for the missing file '{path.ToString}' due to the reason of target stream is set readonly!")
             Else
-                ' create a new data object
-                block = superBlock.AddDataBlock(path)
+                ' create file block with pre-allocated location region 
+                ' if the buffer size is already known
+                If buffer_size > 0 Then
+                    With Allocate(buffer_size)
+                        ' create a new empty data object
+                        '
+                        ' 20230625 IMPORTANT NOTE: the duplicated code show below is 
+                        ' necessary!
+                        ' do not add new data block before the allocate function
+                        ' or the invalid offset will be produce!
+                        block = superBlock.AddDataBlock(path)
+                        block.offset = .position
+                        block.size = .size
+                    End With
+                Else
+                    ' just create a new data object
+                    block = superBlock.AddDataBlock(path)
+                End If
 
                 Return New StreamBuffer(buffer, block, init_size)
             End If
+        End Function
+
+        ''' <summary>
+        ''' try allocate a free block inside the file, not append to it
+        ''' </summary>
+        ''' <param name="buffer_size"></param>
+        ''' <returns></returns>
+        Public Function Allocate(buffer_size As Integer) As BufferRegion
+            Dim files As StreamBlock() = superBlock _
+                .ListFiles _
+                .OfType(Of StreamBlock) _
+                .OrderBy(Function(f) f.offset) _
+                .ToArray
+
+            If files.Length = 0 Then
+                Return New BufferRegion(Me.buffer.Length, buffer_size)
+            ElseIf files.Length = 1 Then
+                Return AllocateNext(files(Scan0).GetRegion, buffer_size)
+            End If
+
+            For i As Integer = 0 To files.Length - 2
+                Dim p0 As BufferRegion = files(i).GetRegion
+                Dim p1 As BufferRegion = files(i + 1).GetRegion
+
+                If p1.position - p0.nextBlock > buffer_size Then
+                    Return AllocateNext(p0, buffer_size)
+                End If
+            Next
+
+            Return AllocateNext(files.Last.GetRegion, buffer_size)
+        End Function
+
+        Private Shared Function AllocateNext(scan0 As BufferRegion, buffer_size As Integer) As BufferRegion
+            Dim pNext As Long = scan0.nextBlock
+
+            ' 20230625 do not do ofset padding at here
+            ' otherwise the offset position after padding + buffer size will
+            ' exceded the start position of the next block!
+            ' pNext += 1
+            ' pNext += pNext Mod 8
+
+            ' raw
+            ' --+---------+-----
+            '             |
+            ' -----+------|---+-
+            ' result after offset padding may corrupt the data of next block
+
+            Return New BufferRegion(pNext, buffer_size)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
