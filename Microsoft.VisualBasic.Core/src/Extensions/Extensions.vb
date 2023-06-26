@@ -465,25 +465,15 @@ Public Module Extensions
     ''' Invoke a folked system process object to execute a parallel task.
     ''' (本方法会执行外部命令并等待其执行完毕，函数返回状态值)
     ''' </summary>
-    ''' <param name="Process"></param>
+    ''' <param name="process"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     '''
-    <Extension> Public Function Invoke(Process As Process) As Integer
-        Call Process.Start()
-        Call Process.WaitForExit()
-        Return Process.ExitCode
-    End Function
-
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Running the object model driver, the target object should implement the driver interface.
-    ''' (非线程的方式启动，当前线程会被阻塞在这里直到运行完毕)
-    ''' </summary>
-    ''' <param name="driver"></param>
-    ''' <returns></returns>
-    Public Function RunDriver(driver As ITaskDriver) As Integer
-        Return driver.Run
+    <Extension>
+    Public Function Invoke(process As Process) As Integer
+        Call process.Start()
+        Call process.WaitForExit()
+        Return process.ExitCode
     End Function
 
     ''' <summary>
@@ -492,11 +482,28 @@ Public Module Extensions
     ''' (使用线程的方式启动，在函数调用之后，线程是已经启动了的，所以不需要再次调用<see cref="Threading.Thread.Start()"/>方法了)
     ''' </summary>
     ''' <param name="driver">The object which is implements the interface <see cref="ITaskDriver"/></param>
+    ''' <remarks>
+    ''' if the parameter <paramref name="sync"/> value is set to TRUE, then the given 
+    ''' task function <paramref name="driver"/> will be run in the caller thread, a
+    ''' caller thread will be blocked at this function in sync mode, this function will
+    ''' returns nothing
+    ''' 
+    ''' otherwise if the parameter <paramref name="sync"/> value is set to FASLE by default,
+    ''' then the given task function <paramref name="driver"/> will be running in a new
+    ''' thread, the new allocated thread object will be returned from this function.
+    ''' </remarks>
     <Extension>
-    Public Function DriverRun(driver As ITaskDriver) As Threading.Thread
-        Return Parallel.RunTask(AddressOf driver.Run)
+    Public Function DriverRun(driver As ITaskDriver, Optional sync As Boolean = False) As Threading.Thread
+        If sync Then
+            Call driver.Run()
+            Return Nothing
+        Else
+            Return Parallel.RunTask(
+                start:=AddressOf driver.Run,
+                taskName:=$"{driver.GetType.Name}_DriverRun_{driver.GetHashCode}"
+            )
+        End If
     End Function
-#End If
 
     ''' <summary>
     ''' Gets the element counts in the target data collection, if the collection object is nothing or empty

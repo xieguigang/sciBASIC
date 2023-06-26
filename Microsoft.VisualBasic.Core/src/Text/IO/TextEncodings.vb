@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::f84888c84b9d4838ac4fe8aa2fd5dd20, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 254
-    '    Code Lines: 127
-    ' Comment Lines: 99
-    '   Blank Lines: 28
-    '     File Size: 12.52 KB
+' Summaries:
 
 
-    '     Module TextEncodings
-    ' 
-    '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
-    '                   GetString, ParseEncodingsName, TransEncoding
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 254
+'    Code Lines: 127
+' Comment Lines: 99
+'   Blank Lines: 28
+'     File Size: 12.52 KB
+
+
+'     Module TextEncodings
+' 
+'         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
+'                   GetString, ParseEncodingsName, TransEncoding
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports defaultEncoding = Microsoft.VisualBasic.Language.Default.Default(Of System.Text.Encoding)
 
@@ -99,6 +100,11 @@ Namespace Text
         Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) = codePageTable()
 
         ''' <summary>
+        ''' use for parse encoding flags from string
+        ''' </summary>
+        ReadOnly encodingFlags As Dictionary(Of String, Encodings)
+
+        ''' <summary>
         ''' 在这个函数之中会根据当前所运行的平台对utf8编码进行一下额外的处理
         ''' </summary>
         ''' <returns></returns>
@@ -115,7 +121,7 @@ Namespace Text
             End If
 
             Return New Dictionary(Of Encodings, Encoding) From {
- _
+                                                                _
                 {Encodings.ASCII, Encoding.ASCII},
                 {Encodings.GB2312, __gbk2312_encoding()},
                 {Encodings.Unicode, Encoding.Unicode},
@@ -173,6 +179,20 @@ Namespace Text
                 }.JoinBy(ASCII.LF) _
                  .Warning
             End If
+
+            encodingFlags = Enums(Of Encodings) _
+                .Select(Iterator Function(b) As IEnumerable(Of (str As String, flag As Encodings))
+                            Yield (b.ToString, b)
+                            Yield (b.Description, b)
+                        End Function) _
+                .IteratesALL _
+                .GroupBy(Function(t) t.str) _
+                .ToDictionary(Function(a) a.Key,
+                              Function(a)
+                                  Return a.First.flag
+                              End Function)
+
+            encodingFlags("utf-8") = Encodings.UTF8WithoutBOM
         End Sub
 
         Const gb2312_not_enable$ = "It seems that your Linux server didn't enable the gbk2312 text encoding, sciBASIC# will using the default utf8 encoding mapping to the gb2312 encoding."
@@ -246,13 +266,13 @@ Namespace Text
         ''' <returns></returns>
         <Extension>
         Public Function ParseEncodingsName(encoding$, Optional onFailure As Encodings = Encodings.ASCII) As Encodings
-            For Each key In TextEncodings.Keys
-                If encoding.TextEquals(key.ToString) Then
-                    Return key
-                End If
-            Next
+            encoding = LCase(encoding)
 
-            Return onFailure
+            If encodingFlags.ContainsKey(encoding) Then
+                Return encodingFlags(encoding)
+            Else
+                Return onFailure
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
