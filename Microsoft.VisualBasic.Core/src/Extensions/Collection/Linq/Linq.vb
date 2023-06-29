@@ -322,7 +322,8 @@ Namespace Linq
         ''' <remarks></remarks>
         '''
         <ExportAPI("Sequence")>
-        <Extension> Public Iterator Function Sequence(n As Integer) As IEnumerable(Of Integer)
+        <Extension>
+        Public Iterator Function Sequence(n As Integer) As IEnumerable(Of Integer)
             If n < 0 Then
                 Dim ex As String = $"n:={n} is not a valid index generator value for sequence!"
                 Throw New Exception(ex)

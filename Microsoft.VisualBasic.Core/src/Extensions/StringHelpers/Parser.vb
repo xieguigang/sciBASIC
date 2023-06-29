@@ -114,7 +114,7 @@ Public Module PrimitiveParser
     ''' 这个函数相较于<see cref="PrimitiveParser.IsNumeric"/>，仅仅做简单的数值格式判断
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>is regex pattern of <see cref="SimpleNumberPattern"/></remarks>
     <Extension>
     Public Function IsSimpleNumber(num As String) As Boolean
         Return num.IsPattern(SimpleNumberPattern)

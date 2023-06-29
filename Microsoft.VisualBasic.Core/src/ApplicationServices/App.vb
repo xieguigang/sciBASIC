@@ -1199,13 +1199,14 @@ Public Module App
     '''
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
-                                       executeEmpty As ExecuteEmptyCLI,
-                                       executeFile As ExecuteFile,
-                                       executeNotFound As ExecuteNotFound,
-                                       executeQuery As ExecuteQuery,
-                                       <CallerMemberName>
-                                       Optional caller$ = Nothing) As Integer
+    <Extension>
+    Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
+                           executeEmpty As ExecuteEmptyCLI,
+                           executeFile As ExecuteFile,
+                           executeNotFound As ExecuteNotFound,
+                           executeQuery As ExecuteQuery,
+                           <CallerMemberName>
+                           Optional caller$ = Nothing) As Integer
 
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile, executeQuery)
     End Function
