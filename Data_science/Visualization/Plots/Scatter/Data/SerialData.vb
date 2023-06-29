@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 ''' <summary>
 ''' 一条曲线的绘图数据模型
 ''' </summary>
+''' <remarks>
+''' [x, y]
+''' </remarks>
 Public Class SerialData : Implements INamedValue
     ' Implements IEnumerable(Of PointData)
 
