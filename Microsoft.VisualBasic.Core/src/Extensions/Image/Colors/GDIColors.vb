@@ -520,6 +520,12 @@ Namespace Imaging
             Return True
         End Function
 
+        ''' <summary>
+        ''' Evaluate the color distance via euclidean distance
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
             Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})

@@ -179,7 +179,13 @@ Namespace Math.Correlations
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
+                Dim sum As Double = 0
+
+                For i As Integer = 0 To a.Length - 1
+                    sum += (a(i) - b(i)) ^ 2
+                Next
+
+                Return stdNum.Sqrt(sum)
             End If
         End Function
 
