@@ -379,6 +379,11 @@ Namespace Drawing2D.Colors
 
         ReadOnly colorRegistry As New Dictionary(Of String, Color())
 
+        ''' <summary>
+        ''' register a custom color palette
+        ''' </summary>
+        ''' <param name="colorName"></param>
+        ''' <param name="colors"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Register(colorName As String, ParamArray colors As Color())
             colorRegistry(colorName) = colors
@@ -455,7 +460,10 @@ Namespace Drawing2D.Colors
         ''' 这个函数是获取得到一个连续的颜色谱
         ''' </summary>
         ''' <param name="term$"></param>
-        ''' <param name="n%"></param>
+        ''' <param name="n">negative or zero value means no interoplation, 
+        ''' just returns the raw color list which is mapping by the 
+        ''' <paramref name="term"/>
+        ''' </param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
         ''' 
@@ -573,6 +581,9 @@ Namespace Drawing2D.Colors
                     .Alpha(alpha) _
                     .Replicate(n) _
                     .ToArray
+            ElseIf n <= 0 Then
+                ' return raw color list if n is negative or zero
+                Return source
             ElseIf n <= source.Length Then
                 Return source.Take(n).ToArray
             End If
