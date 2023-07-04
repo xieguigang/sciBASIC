@@ -66,10 +66,6 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-#If DEBUG Then
-#Else
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-#End If
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
@@ -79,6 +75,10 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
+
+#If DEBUG Then
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+#End If
 
 #Const NET_45 = 0
 

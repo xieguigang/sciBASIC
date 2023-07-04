@@ -506,7 +506,8 @@ Public Module VBDebugger
     ''' Alias for <see cref="Console.Write"/>
     ''' </summary>
     ''' <param name="c"></param>
-    <Extension> Public Sub Echo(c As Char)
+    <Extension>
+    Public Sub Echo(c As Char)
         If Not Mute Then
             Call Console.Write(c)
         End If
