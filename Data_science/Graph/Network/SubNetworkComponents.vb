@@ -63,14 +63,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Network
 
-    Public Interface NodeMetaDataAccessor(Of Node As {New, Network.Node})
-
-        Function hasMetadata(v As Node, key As String) As Boolean
-        Function getMetadata(v As Node, key As String) As String
-
-    End Interface
-
-    Public Class SubNetworkComponents(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)}, Graph As {New, NetworkGraph(Of Node, U)})
+    Public Class SubNetworkComponents(Of Node As {New, Network.Node},
+                                          U As {New, Network.Edge(Of Node)},
+                                          Graph As {New, NetworkGraph(Of Node, U)})
         Implements IEnumerable(Of Graph)
 
         ''' <summary>

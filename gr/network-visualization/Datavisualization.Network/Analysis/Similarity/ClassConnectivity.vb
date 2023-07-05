@@ -54,7 +54,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
 
 Namespace Analysis.SimilarityImpl
 

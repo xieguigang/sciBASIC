@@ -112,7 +112,7 @@ Namespace ComponentModel.Algorithm.base
                    Order By array.Length Descending
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         Public Function GetObjectPair() As (T, T)
             If source.Count = 1 Then
@@ -133,7 +133,6 @@ Namespace ComponentModel.Algorithm.base
                 Return pair
             End If
         End Function
-
 #End If
 
         Friend Sub New()

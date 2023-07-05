@@ -114,7 +114,9 @@ Namespace Analysis
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        Public Function NodeSimilarity(a As Node, b As Node, classEquivalent As Func(Of String, String, Double), Optional topologyCos As Boolean = True) As Double
+        Public Function NodeSimilarity(a As Node, b As Node,
+                                       classEquivalent As Func(Of String, String, Double),
+                                       Optional topologyCos As Boolean = True) As Double
             ' consider the node itself
             ' if the two node is not in same datatype, then returns not similar
             Dim class1 As String = Scripting.ToString(a.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE))

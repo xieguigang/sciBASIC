@@ -66,7 +66,8 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function EndPoints(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
+        Public Function EndPoints(Of Node As {New, Network.Node},
+                                      Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
             Dim inputs As New List(Of Node)(network.vertex)
             Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
@@ -113,13 +114,15 @@ Namespace Network
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ComputeDegreeData(Of T As {New, Network.Node}, Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+        Public Function ComputeDegreeData(Of T As {New, Network.Node},
+                                              Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As DegreeData
+
             Return ComputeDegreeData(edges, Function(l) l.U.label, Function(l) l.V.label)
         End Function
 
         Public Function ComputeDegreeData(Of Edge)(edges As IEnumerable(Of Edge),
                                                    U As Func(Of Edge, String),
-                                                   V As Func(Of Edge, String)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+                                                   V As Func(Of Edge, String)) As DegreeData
 
             Dim [in] As New Dictionary(Of String, Integer)
             Dim out As New Dictionary(Of String, Integer)
@@ -138,7 +141,7 @@ Namespace Network
                 Call countOut(V(link))
             Next
 
-            Return ([in], out)
+            Return New DegreeData With {.[In] = [in], .Out = out}
         End Function
     End Module
 End Namespace

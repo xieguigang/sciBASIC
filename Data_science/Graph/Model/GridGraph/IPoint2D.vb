@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::547288856942518e0b7241f6eb06c51e, sciBASIC#\Data_science\Graph\Model\Abstract\General.vb"
+﻿#Region "Microsoft.VisualBasic::8752f65dddaea2de0ffac65db6a7b855, sciBASIC#\Data_science\Graph\Model\GridNetwork\IPoint2D.vb"
 
 ' Author:
 ' 
@@ -34,44 +34,27 @@
 
 ' Code Statistics:
 
-'   Total Lines: 23
-'    Code Lines: 13
-' Comment Lines: 5
-'   Blank Lines: 5
-'     File Size: 785 B
+'   Total Lines: 6
+'    Code Lines: 4
+' Comment Lines: 0
+'   Blank Lines: 2
+'     File Size: 116 B
 
 
-' Class VertexEdge
+' Interface IPoint2D
 ' 
-' 
-' 
-' Class Graph
-' 
-'     Function: FindEdge
+'     Properties: X, Y
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
+Namespace GridGraph
 
-Public Class VertexEdge : Inherits Edge(Of TV)
+    Public Interface IPoint2D
 
-End Class
+        ReadOnly Property X As Integer
+        ReadOnly Property Y As Integer
 
-''' <summary>
-''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
-''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
-''' that Is, it has no multiple edges And no self-loops.
-''' </summary>
-Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
-
-    Public Function FindEdge(u As String, v As String) As VertexEdge
-        If Not (vertices.ContainsKey(u) OrElse vertices.ContainsKey(v)) Then
-            Return Nothing
-        Else
-            Return QueryEdge(u, v)
-        End If
-    End Function
-
-End Class
+    End Interface
+End Namespace

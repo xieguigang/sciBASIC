@@ -56,67 +56,70 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 
-Public Class GridCell(Of T) : Implements IPoint2D, Layout2D
+Namespace GridGraph
 
-    ''' <summary>
-    ''' 二维数组之中的索引 
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property index As Point
+    Public Class GridCell(Of T) : Implements IPoint2D, Layout2D
 
-    Dim m_data As T
+        ''' <summary>
+        ''' 二维数组之中的索引 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property index As Point
 
-    Public Property data As T
-        Get
-            Return m_data
-        End Get
-        Protected Set(value As T)
-            m_data = value
-        End Set
-    End Property
+        Dim m_data As T
+
+        Public Property data As T
+            Get
+                Return m_data
+            End Get
+            Protected Set(value As T)
+                m_data = value
+            End Set
+        End Property
 
 #Region "Implements IPoint2D, Layout2D"
-    Private ReadOnly Property X As Integer Implements IPoint2D.X
-        Get
-            Return index.X
-        End Get
-    End Property
+        Private ReadOnly Property X As Integer Implements IPoint2D.X
+            Get
+                Return index.X
+            End Get
+        End Property
 
-    Private ReadOnly Property Y As Integer Implements IPoint2D.Y
-        Get
-            Return index.Y
-        End Get
-    End Property
+        Private ReadOnly Property Y As Integer Implements IPoint2D.Y
+            Get
+                Return index.Y
+            End Get
+        End Property
 
-    Private Property Layout2D_X As Double Implements Layout2D.X
-        Get
-            Return index.X
-        End Get
-        Set(value As Double)
-            index = New Point(value, index.Y)
-        End Set
-    End Property
+        Private Property Layout2D_X As Double Implements Layout2D.X
+            Get
+                Return index.X
+            End Get
+            Set(value As Double)
+                index = New Point(value, index.Y)
+            End Set
+        End Property
 
-    Private Property Layout2D_Y As Double Implements Layout2D.Y
-        Get
-            Return index.Y
-        End Get
-        Set(value As Double)
-            index = New Point(index.X, value)
-        End Set
-    End Property
+        Private Property Layout2D_Y As Double Implements Layout2D.Y
+            Get
+                Return index.Y
+            End Get
+            Set(value As Double)
+                index = New Point(index.X, value)
+            End Set
+        End Property
 #End Region
 
-    Sub New()
-    End Sub
+        Sub New()
+        End Sub
 
-    Sub New(x As Integer, y As Integer, data As T)
-        index = New Point(x, y)
-        m_data = data
-    End Sub
+        Sub New(x As Integer, y As Integer, data As T)
+            index = New Point(x, y)
+            m_data = data
+        End Sub
 
-    Public Overrides Function ToString() As String
-        Return $"[{index.X}, {index.Y}] {data.ToString}"
-    End Function
+        Public Overrides Function ToString() As String
+            Return $"[{index.X}, {index.Y}] {data.ToString}"
+        End Function
 
-End Class
+    End Class
+End Namespace
