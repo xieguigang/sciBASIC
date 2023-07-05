@@ -137,17 +137,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{5e97bf00-0c20-4be8-8d09-ddaf189bd47c}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions.vbproj">
-      <Project>{344BF0CF-107F-45D2-9074-9865D8F86506}</Project>
-      <Name>DataFramework.Extensions</Name>
+    <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj">
+      <Project>{b5f82b82-541a-477b-bb6e-a471a62b5e23}</Project>
+      <Name>DataFramework.Extensions-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\dataframework-netcore5.vbproj">
+      <Project>{71f2f29e-f55a-4377-acc1-abb29d610b27}</Project>
+      <Name>dataframework-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
