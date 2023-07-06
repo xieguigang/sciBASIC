@@ -159,14 +159,13 @@ Public Class Bubble : Inherits Plot
     ''' </summary>
     ''' <param name="g"></param>
     ''' <param name="s"></param>
-    ''' <param name="theme"></param>
-    Public Overloads Shared Sub Plot(g As IGraphics, s As SerialData, scaler As DataScaler, theme As Theme,
+    Public Overloads Shared Sub Plot(g As IGraphics, s As SerialData, scaler As DataScaler,
+                                     Optional tagLabelFont As Font = Nothing,
                                      Optional labels As List(Of Label) = Nothing,
                                      Optional ByRef anchors As List(Of Anchor) = Nothing,
                                      Optional bubblePen As Pen = Nothing,
                                      Optional scale As Func(Of Double, Double) = Nothing)
 
-        Dim tagLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
         Dim b As SolidBrush = Nothing
         Dim labelSize As SizeF
 
@@ -219,7 +218,7 @@ Public Class Bubble : Inherits Plot
 
             End If
 
-            If Not pt.tag.StringEmpty Then
+            If (labels IsNot Nothing AndAlso anchors IsNot Nothing) AndAlso Not pt.tag.StringEmpty Then
                 labelSize = g.MeasureString(pt.tag, tagLabelFont)
                 labels += New Label With {
                     .text = pt.tag,
@@ -301,7 +300,7 @@ Public Class Bubble : Inherits Plot
         End If
 
         For Each s As SerialData In data
-            Call Bubble.Plot(g, s, scaler, theme, labels, anchors, bubblePen, scale)
+            Call Bubble.Plot(g, s, scaler, tagLabelFont, labels, anchors, bubblePen, scale)
         Next
 
         Call d3js.labeler(30, 1) _
