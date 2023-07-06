@@ -154,6 +154,16 @@ Public Class Bubble : Inherits Plot
         }.Plot(size, driver:=driver)
     End Function
 
+    ''' <summary>
+    ''' Just plot the scatter bubble
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="data"></param>
+    ''' <param name="theme"></param>
+    Public Overloads Shared Sub Plot(g As IGraphics, data As SerialData(), scaler As DataScaler, theme As Theme)
+
+    End Sub
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim mapper As Mapper
         Dim rangeData As New Scaling(data, False)
@@ -218,7 +228,7 @@ Public Class Bubble : Inherits Plot
             bubblePen = bubbleBorder.GDIObject
         End If
 
-        For Each s As SerialData In mapper.ForEach(canvas.Size, canvas.Padding)
+        For Each s As SerialData In data
             Dim b As SolidBrush = Nothing
             Dim getRadius = Function(pt As PointData)
                                 Dim r# = scale(pt.value)
@@ -236,8 +246,8 @@ Public Class Bubble : Inherits Plot
 
             For Each pt As PointData In s.pts
                 Dim r As Double = getRadius(pt)
-                Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
-                Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
+                Dim p As PointF = scaler.Translate(pt.pt.X, pt.pt.Y)
+                Dim rect As New RectangleF(New PointF(p.X - r, p.Y - r), New Size(r * 2, r * 2))
 
                 If r.IsNaNImaginary Then
                     Call $"invalid radius value of {pt}".Warning
