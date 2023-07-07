@@ -193,7 +193,10 @@ Namespace Layouts.SpringForce
             Dim link As New Spring(U, V, length, stiffness)
 
             SyncLock edgeSprings
-                Call edgeSprings.Add(edge.ID, link)
+                If Not edgeSprings.ContainsKey(edge.ID) Then
+                    Call edgeSprings.Add(edge.ID, link)
+                End If
+
                 Return edgeSprings(edge.ID)
             End SyncLock
         End Function
