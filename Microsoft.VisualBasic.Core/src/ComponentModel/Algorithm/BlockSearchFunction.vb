@@ -221,7 +221,10 @@ Namespace ComponentModel.Algorithm
             If i = 0 Then
                 ' 0+1
                 joint.AddRange(binary(0).block)
-                joint.AddRange(binary(1).block)
+
+                If binary.size > 1 Then
+                    Call joint.AddRange(binary(1).block)
+                End If
             ElseIf i = binary.size - 1 Then
                 ' -2 | -1
                 joint.AddRange(binary(-1).block)
