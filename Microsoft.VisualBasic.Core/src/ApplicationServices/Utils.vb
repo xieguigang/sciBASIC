@@ -262,12 +262,16 @@ Namespace ApplicationServices
         ''' <returns></returns>
         <Extension>
         Public Function CLIToken(token As String) As String
-            If String.IsNullOrEmpty(token) Then
-                Return """"""
+            If token.StringEmpty Then
+                ' empty string or white space token should be wrapped via the quot symbol
+                ' or it will be ignored in the commandline string
+                Return $"""{token}"""
             ElseIf Not Len(token) > 2 Then
                 Return token
             End If
 
+            ' the current token is already been wrapped via a quote symbol
+            ' no needs for the furthur processing
             If token.First = """"c AndAlso token.Last = """"c Then
                 Return token
             End If
@@ -275,7 +279,7 @@ Namespace ApplicationServices
                 token = $"""{token}"""
             End If
 
-#If netcore5 Then
+#If NETCOREAPP Then
             ' 20210819 fix for docker command on unix platform
             If token.TextEquals("$PWD") Then
                 token = """$PWD"""

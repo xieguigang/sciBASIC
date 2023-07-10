@@ -77,7 +77,8 @@ Namespace CommandLine.Parsers
         ''' + 双引号表示一个完整的token
         ''' + 空格为分隔符
         ''' </remarks>
-        <Extension> Public Function GetTokens(cli As String) As String()
+        <Extension>
+        Public Function GetTokens(cli As String) As String()
             Dim buffer As New CharPtr(cli)
             Dim tokens As New List(Of String)
             Dim tmp As New List(Of Char)
