@@ -70,7 +70,7 @@ Namespace XLS
         ''' <param name="sheetName"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ToExcel(file As Table, sheetName As String) As String
+        Public Function ToExcel(file As Table, sheetName As String, Optional width As Dictionary(Of String, String) = Nothing) As String
             Dim html As New StringBuilder()
 
             html.AppendLine("<html xmlns:o=""urn:schemas-microsoft-com:office:office"" xmlns:x=""urn:schemas-microsoft-com:office:excel"" xmlns=""http://www.w3.org/TR/REC-html40"">")
@@ -97,7 +97,7 @@ Namespace XLS
 
             html.AppendLine("</head>")
             html.AppendLine("<body>")
-            html.AppendLine(file.html)
+            html.AppendLine(New HTMLWriter(thwidth:=width).html(file))
             html.AppendLine("</body>")
             html.AppendLine("</html>")
 
