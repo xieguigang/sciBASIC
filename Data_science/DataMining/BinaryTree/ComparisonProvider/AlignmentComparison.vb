@@ -1,55 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::44468638d24a6499a42028ee1fbd3194, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 34
-    '    Code Lines: 27
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.21 KB
+' Summaries:
 
 
-    ' Class AlignmentComparison
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetSimilarity
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 34
+'    Code Lines: 27
+' Comment Lines: 0
+'   Blank Lines: 7
+'     File Size: 1.21 KB
+
+
+' Class AlignmentComparison
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: GetSimilarity
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -77,10 +79,31 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
                           End Function)
     End Sub
 
+    Sub New(dataset As IEnumerable(Of NamedCollection(Of Double)), equals As Double, gt As Double)
+        Call MyBase.New(equals, gt)
+
+        dataIndex = dataset _
+            .ToDictionary(Function(d) d.name,
+                          Function(d)
+                              Return d.value
+                          End Function)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Sub New(m As Dictionary(Of String, Double()), eq As Double, gt As Double)
+        Call MyBase.New(eq, gt)
+        dataIndex = m
+    End Sub
+
     Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Dim xvec As New Vector(dataIndex(x))
         Dim yvec As New Vector(dataIndex(y))
 
         Return SSM(xvec, yvec)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function FromMatrix(Of T As {INamedValue, IVector})(m As IEnumerable(Of T), eq As Double, gt As Double) As AlignmentComparison
+        Return New AlignmentComparison(m.ToDictionary(Function(a) a.Key, Function(a) a.Data), eq, gt)
     End Function
 End Class

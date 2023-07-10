@@ -64,6 +64,11 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 ''' </remarks>
 Public Class ClusterTree : Inherits Tree(Of String)
 
+    ''' <summary>
+    ''' This property includes all data in current cluster tree node, 
+    ''' also includes the <see cref="Data"/> member.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Members As New List(Of String)
 
     ''' <summary>
@@ -86,7 +91,7 @@ Public Class ClusterTree : Inherits Tree(Of String)
         If tree.Data.StringEmpty Then
             tree.Data = target
             tree.Childs = New Dictionary(Of String, Tree(Of String))
-            tree.Members = New List(Of String)
+            tree.Members = New List(Of String) From {target}
         Else
             Dim score As Double = alignment.GetSimilarity(tree.Data, target)
             Dim key As String = "zero"

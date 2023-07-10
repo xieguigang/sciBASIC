@@ -53,6 +53,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.DataFrame
 
+''' <summary>
+''' Data adapter for get comparision score from a pre-computed distance matrix
+''' </summary>
 Public Class Comparison : Inherits ComparisonProvider
 
     ReadOnly d As DistanceMatrix
