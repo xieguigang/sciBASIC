@@ -107,7 +107,7 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function GetUniqueTuples() As (a$, b$)()
+    Public Function GetUniqueTuples() As IEnumerable(Of (a$, b$))
         Return keys _
             .Select(Function(a)
                         Return keys _
@@ -120,8 +120,7 @@ Public Class CorrelationMatrix : Inherits DataMatrix
                             .OrderBy(Function(str) str) _
                             .JoinBy("-")
                      End Function) _
-            .Select(Function(t) t.First) _
-            .ToArray
+            .Select(Function(t) t.First)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
