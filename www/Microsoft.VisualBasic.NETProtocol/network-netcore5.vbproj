@@ -4,7 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.Net</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Network</AssemblyName>
-    <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
@@ -95,6 +95,17 @@
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|x64'">
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
@@ -120,6 +131,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.Network.xml</DocumentationFile>
   </PropertyGroup>
 
