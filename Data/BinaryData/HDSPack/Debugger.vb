@@ -76,7 +76,12 @@ Public Module Debugger
     ''' get all the files/dirs inside current dir object and its child dirs
     ''' </remarks>
     <Extension>
-    Public Iterator Function ListFiles(dir As StreamGroup) As IEnumerable(Of StreamObject)
+    Public Iterator Function ListFiles(dir As StreamGroup, Optional safe As Boolean = True) As IEnumerable(Of StreamObject)
+        If dir Is Nothing AndAlso safe Then
+            ' empty collection will be generates if safe mode is turn on
+            Return
+        End If
+
         For Each file As StreamObject In dir.files
             If TypeOf file Is StreamBlock Then
                 Yield file
