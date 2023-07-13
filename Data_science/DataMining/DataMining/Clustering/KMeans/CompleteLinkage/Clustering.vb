@@ -83,7 +83,7 @@ Namespace KMeans.CompleteLinkage
 
         Protected Shared Sub __writeCluster(source As IEnumerable(Of Cluster(Of Point)))
             For Each c In source.SeqIterator
-                For Each x As Point In c.value._innerList
+                For Each x As Point In c.value.m_innerList
                     Call x.CompleteLinkageCluster(c.i)
                 Next
             Next

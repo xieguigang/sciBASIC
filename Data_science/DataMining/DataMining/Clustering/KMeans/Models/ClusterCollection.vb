@@ -62,10 +62,11 @@ Namespace KMeans
     ''' <summary>
     ''' A collection of Cluster objects or Clusters
     ''' </summary>
-    <Serializable> Public Class ClusterCollection(Of T As EntityBase(Of Double))
+    <Serializable>
+    Public Class ClusterCollection(Of T As EntityBase(Of Double))
         Implements IEnumerable(Of KMeansCluster(Of T))
 
-        Friend ReadOnly _innerList As New List(Of KMeansCluster(Of T))
+        Friend ReadOnly m_innerList As New List(Of KMeansCluster(Of T))
 
         ''' <summary>
         ''' the numbers of the kmeans clusters
@@ -74,7 +75,17 @@ Namespace KMeans
         Public ReadOnly Property NumOfCluster As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _innerList.Count
+                Return m_innerList.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the Cluster at this index
+        ''' </summary>
+        Default Public Overridable ReadOnly Property Item(Index As Integer) As KMeansCluster(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return m_innerList(Index)
             End Get
         End Property
 
@@ -85,18 +96,8 @@ Namespace KMeans
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub Add(cluster As KMeansCluster(Of T))
-            Call _innerList.Add(cluster)
+            Call m_innerList.Add(cluster)
         End Sub
-
-        ''' <summary>
-        ''' Returns the Cluster at this index
-        ''' </summary>
-        Default Public Overridable ReadOnly Property Item(Index As Integer) As KMeansCluster(Of T)
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _innerList(Index)
-            End Get
-        End Property
 
         Public Overrides Function ToString() As String
             Return NumOfCluster & " data clusters..."
@@ -107,8 +108,8 @@ Namespace KMeans
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KMeansCluster(Of T)) Implements IEnumerable(Of KMeansCluster(Of T)).GetEnumerator
-            For Each x As KMeansCluster(Of T) In _innerList
-                Yield x
+            For Each xi As KMeansCluster(Of T) In m_innerList
+                Yield xi
             Next
         End Function
     End Class

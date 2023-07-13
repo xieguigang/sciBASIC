@@ -57,6 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans.CompleteLinkage
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
 Namespace KMeans
@@ -64,7 +65,8 @@ Namespace KMeans
     ''' <summary>
     ''' A class containing a group of data with similar characteristics (cluster), KMeans Cluster
     ''' </summary>
-    <Serializable> Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits CompleteLinkage.Cluster(Of T)
+    <Serializable>
+    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits CompleteLinkage.Cluster(Of T)
         Implements IEnumerable(Of T)
 
         ''' <summary>
@@ -77,7 +79,7 @@ Namespace KMeans
         Public ReadOnly Property NumOfEntity As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _innerList.Count
+                Return m_innerList.Count
             End Get
         End Property
 
@@ -87,7 +89,7 @@ Namespace KMeans
         Public ReadOnly Property ClusterMean() As Double()
             Get
                 For count As Integer = 0 To _clusterMean.Length - 1
-                    _clusterMean(count) = (_ClusterSum(count) / _innerList.Count)
+                    _clusterMean(count) = (_ClusterSum(count) / m_innerList.Count)
                 Next
 
                 Return _clusterMean
@@ -102,33 +104,33 @@ Namespace KMeans
         Default Public Overridable ReadOnly Property Item(Index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _innerList(Index)
+                Return m_innerList(Index)
             End Get
         End Property
 
         Public Function CalculateKMeansCost() As Double
             Dim kMeansCost As Double = 0
             Dim distanceBetweenPoints As Double = 0
-            For pointIndex As Integer = 0 To _innerList.Count - 1
-                distanceBetweenPoints = _innerList(pointIndex).DistanceBetweenPoints(Center)
+            For pointIndex As Integer = 0 To m_innerList.Count - 1
+                distanceBetweenPoints = m_innerList(pointIndex).entityVector.EuclideanDistance(Center.entityVector)
                 kMeansCost += stdNum.Pow(distanceBetweenPoints, 2)
-            Next pointIndex
+            Next
             Return kMeansCost
         End Function
 
         Public Function CalculateCenter() As T
             ' If cluster is empty, the center will remain unchanged
-            If _innerList.Count = 0 Then
+            If m_innerList.Count = 0 Then
                 Return Center
             End If
 
-            Dim dimension As Integer = _innerList(Scan0).Length
+            Dim dimension As Integer = m_innerList(Scan0).Length
             Dim newCenterCoordinate As Double() = New Double(dimension - 1) {}
             For i As Integer = 0 To dimension - 1
-                For pointIndex As Integer = 0 To _innerList.Count - 1
-                    newCenterCoordinate(i) += _innerList(pointIndex).entityVector(i)
+                For pointIndex As Integer = 0 To m_innerList.Count - 1
+                    newCenterCoordinate(i) += m_innerList(pointIndex).entityVector(i)
                 Next pointIndex
-                newCenterCoordinate(i) /= _innerList.Count
+                newCenterCoordinate(i) /= m_innerList.Count
             Next i
             Dim ___center As T = Activator.CreateInstance(Of T)
             ___center.entityVector = newCenterCoordinate
@@ -141,9 +143,9 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="data">A 1-dimensional array containing data that will be added to the cluster</param>
         Public Overrides Sub Add(data As T)
-            Call _innerList.Add(data)
+            Call m_innerList.Add(data)
 
-            If _innerList.Count = 1 Then
+            If m_innerList.Count = 1 Then
                 _ClusterSum = New Double(data.Length - 1) {}
                 _clusterMean = New Double(data.Length - 1) {}
             End If
@@ -158,8 +160,8 @@ Namespace KMeans
         ''' within the cluster.
         ''' </summary>
         Public Sub refresh()
-            If _innerList.Count > 0 Then
-                Call _innerList.Clear()
+            If m_innerList.Count > 0 Then
+                Call m_innerList.Clear()
             End If
         End Sub
 
@@ -168,7 +170,7 @@ Namespace KMeans
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In _innerList
+            For Each x As T In m_innerList
                 Yield x
             Next
         End Function

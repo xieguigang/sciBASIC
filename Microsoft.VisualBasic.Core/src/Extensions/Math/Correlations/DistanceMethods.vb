@@ -200,18 +200,13 @@ Namespace Math.Correlations
         Public Function EuclideanDistance(X As Double(), Y As Double()) As Double
             If X.Length <> Y.Length Then
                 Throw New ArgumentException(DimNotAgree)
+            Else
+                Dim v = SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(X, Y), 2)
+                Dim sum As Double = v.Sum
+                Dim distance As Double = stdNum.Sqrt(sum)
+
+                Return distance
             End If
-
-            Dim count As Integer = X.Length
-            Dim sum As Double = 0.0
-
-            For i As Integer = 0 To count - 1
-                sum += stdNum.Pow(stdNum.Abs(X(i) - Y(i)), 2)
-            Next
-
-            Dim distance As Double = stdNum.Sqrt(sum)
-
-            Return distance
         End Function
 
         Const DimNotAgree As String = "The number of elements in X must match the number of elements in Y!"

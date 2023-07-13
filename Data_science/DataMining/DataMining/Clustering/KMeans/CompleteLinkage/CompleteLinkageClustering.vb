@@ -1,64 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::6aeb10d74871ccf8b42d2a9ebc993c12, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\CompleteLinkageClustering.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 58
-    '    Code Lines: 40
-    ' Comment Lines: 6
-    '   Blank Lines: 12
-    '     File Size: 2.66 KB
+' Summaries:
 
 
-    '     Class CompleteLinkageClustering
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Clustering
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 58
+'    Code Lines: 40
+' Comment Lines: 6
+'   Blank Lines: 12
+'     File Size: 2.66 KB
+
+
+'     Class CompleteLinkageClustering
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Clustering
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace KMeans.CompleteLinkage
     Public Class CompleteLinkageClustering : Inherits Clustering
 
-        Friend _completeLinkageClusters As List(Of Cluster(Of Point))
+        Friend _completeLinkageClusters As New List(Of Cluster(Of Point))
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
             Call MyBase.New(source, numClusters)
-            _completeLinkageClusters = New List(Of Cluster(Of Point))
         End Sub
 
         Public Overrides Function Clustering() As List(Of Point)
@@ -81,7 +83,7 @@ Namespace KMeans.CompleteLinkage
                     For j As Integer = i + 1 To _completeLinkageClusters.Count - 1
                         Dim c1 As Cluster(Of Point) = _completeLinkageClusters(i)
                         Dim c2 As Cluster(Of Point) = _completeLinkageClusters(j)
-                        currentDistance = ClusterAPI.completeLinkageDistance(c1, c2)
+                        currentDistance = c1.CompleteLinkageDistance(c2)
                         If currentDistance < minDistance Then
                             twoClosestClusters(0) = c1
                             twoClosestClusters(1) = c2
@@ -90,7 +92,7 @@ Namespace KMeans.CompleteLinkage
                     Next
                 Next
 
-                Dim mergedCluster As Cluster(Of Point) = ClusterAPI.mergeClusters(twoClosestClusters(0), twoClosestClusters(1))
+                Dim mergedCluster As Cluster(Of Point) = twoClosestClusters(0) + twoClosestClusters(1)
                 _completeLinkageClusters.Add(mergedCluster)
                 _completeLinkageClusters.Remove(twoClosestClusters(0))
                 _completeLinkageClusters.Remove(twoClosestClusters(1))
