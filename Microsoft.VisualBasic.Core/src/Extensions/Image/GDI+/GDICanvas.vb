@@ -4186,6 +4186,8 @@ Namespace Imaging
         ''' <summary>
         ''' Resets the clip region of this System.Drawing.Graphics to an infinite region.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ResetClip()
             Call Graphics.ResetClip()
         End Sub
@@ -4194,11 +4196,13 @@ Namespace Imaging
         ''' Resets the world transformation matrix of this System.Drawing.Graphics to the
         ''' identity matrix.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ResetTransform()
-            Graphics.ResetTransform()
-            Graphics.Transform = Nothing
+            Call Graphics.ResetTransform()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetTransformMatrix(m As Matrix)
             Graphics.Transform = m
         End Sub
@@ -4207,6 +4211,8 @@ Namespace Imaging
         ''' Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics.
         ''' </summary>
         ''' <param name="angle">Angle of rotation in degrees.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub RotateTransform(angle As Single)
             Call Graphics.RotateTransform(angle)
         End Sub
@@ -4218,6 +4224,8 @@ Namespace Imaging
         ''' <param name="angle">Angle of rotation in degrees.</param>
         ''' <param name="order">Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
         ''' whether the rotation is appended or prepended to the matrix transformation.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
             Call Graphics.RotateTransform(angle, order)
         End Sub
@@ -4228,6 +4236,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="sx">Scale factor in the x direction.</param>
         ''' <param name="sy">Scale factor in the y direction.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
             Call Graphics.ScaleTransform(sx, sy)
         End Sub
