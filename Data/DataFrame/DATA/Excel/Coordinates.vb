@@ -128,10 +128,15 @@ Namespace Excel
         Public Function YValue(x As IEnumerable(Of Char)) As Integer
             Dim value#
             Dim power% = 0
+            Dim offset As Integer = 0
 
-            For Each c In x.Reverse
-                value += (Asc(c) - ZERO) + (26 * power)
+            ' power = 0, offset = 0
+            ' power > 0, offset = 1
+
+            For Each c As Char In x.Reverse
+                value += (Asc(c) - ZERO) + (26 * power - offset)
                 power += 1
+                offset = 1
             Next
 
             Return CInt(value)
