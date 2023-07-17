@@ -130,7 +130,8 @@ Namespace Excel
             Dim power% = 0
 
             For Each c In x.Reverse
-                value += (Asc(c) - ZERO) * (26 ^ power)
+                value += (Asc(c) - ZERO) + (26 * power)
+                power += 1
             Next
 
             Return CInt(value)
