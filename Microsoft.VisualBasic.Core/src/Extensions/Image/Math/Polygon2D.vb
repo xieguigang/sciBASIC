@@ -189,6 +189,10 @@ Namespace Imaging.Math2D
             )
         End Sub
 
+        ''' <summary>
+        ''' Construct a polygon 2d shape object from a point collection
+        ''' </summary>
+        ''' <param name="points"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(points As IEnumerable(Of Point))
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)

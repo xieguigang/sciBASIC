@@ -135,6 +135,17 @@ Public Class BinaryDataReader : Inherits BinaryReader
     End Sub
 
     ''' <summary>
+    ''' the constructor works for the numeric stream
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="byteOrder"></param>
+    Sub New(input As Stream, byteOrder As ByteOrder)
+        Call Me.New(input, Encodings.UTF8)
+        ' works for the numeric data
+        Me.ByteOrder = byteOrder
+    End Sub
+
+    ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
     ''' character encoding, and optionally leaves the stream open.
     ''' </summary>

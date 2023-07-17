@@ -152,7 +152,8 @@ Public Class netCDFReader : Implements IDisposable
     ''' Returns the value of an global attribute
     ''' </summary>
     ''' <param name="attributeName">attributeName</param>
-    ''' <returns>Value of the attributeName Or undefined</returns>
+    ''' <returns><see cref="attribute.getObjectValue"/> result of the netcdf attribute which 
+    ''' is specific via the <paramref name="attributeName"/> Or undefined</returns>
     Default Public ReadOnly Property getAttribute(attributeName As String) As Object
         Get
             With globalAttributeTable.TryGetValue(attributeName)
