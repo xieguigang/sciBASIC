@@ -1340,24 +1340,54 @@ Namespace Text
             Return String.Empty
         End Function
 
+        Public Iterator Function SplitZhChars(str As String) As IEnumerable(Of String)
+            Dim tmp As New List(Of Char)
+            Dim zero As Char = Chr(0)
+            Dim max As Char = Chr(255)
+
+            If str Is Nothing OrElse str = "" Then
+                Return
+            End If
+
+            For Each c As Char In str
+                If c > zero AndAlso c <= max Then
+                    ' is ascii char
+                    Call tmp.Add(c)
+                ElseIf c = ASCII.TAB OrElse c = " "c Then
+                    If tmp.Count > 0 Then
+                        Yield New String(tmp.ToArray)
+                        Call tmp.Clear()
+                    End If
+                Else
+                    If tmp.Count > 0 Then
+                        Yield New String(tmp.ToArray)
+                        Call tmp.Clear()
+                    End If
+
+                    Yield c.ToString
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' 把汉字转换成拼音(全拼)
         ''' </summary>
         ''' <param name="str">汉字字符串</param>
         ''' <returns>转换后的拼音(全拼)字符串</returns>
         Public Function TranscriptPinYin(str As String, Optional sep As String = " ") As String
-            If String.IsNullOrEmpty(str) Then
-                Return String.Empty
-            Else
-                Dim sb As New List(Of String)
-                Dim chs As Char() = str.ToCharArray()
+            Dim sb As New List(Of String)
 
-                For Each c As Char In chs
-                    Call sb.Add(PinYin(c))
-                Next
+            For Each t As String In SplitZhChars(str)
+                If t.Length > 0 Then
+                    If t.Length = 1 Then
+                        Call sb.Add(PinYin(t(0)))
+                    Else
+                        Call sb.Add(t)
+                    End If
+                End If
+            Next
 
-                Return sb.JoinBy(sep)
-            End If
+            Return sb.JoinBy(sep)
         End Function
     End Module
 End Namespace
