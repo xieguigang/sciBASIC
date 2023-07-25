@@ -362,6 +362,13 @@ Namespace FileSystem
         ''' <param name="mode">this parameter is no use in streampack</param>
         ''' <param name="access"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the parameter <paramref name="access"/> only supports data mode:
+        ''' 
+        ''' 1. <see cref="FileAccess.Read"/>
+        ''' 2. <see cref="FileAccess.Write"/>
+        ''' 
+        ''' </remarks>
         Public Function OpenFile(path As String,
                                  Optional mode As FileMode = FileMode.OpenOrCreate,
                                  Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile

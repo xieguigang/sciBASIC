@@ -132,6 +132,12 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
+    Sub New(output As Stream, byteOrder As ByteOrder)
+        MyBase.New(output, Encodings.UTF8.CodePage, leaveOpen:=False)
+        Me.Encoding = Encodings.UTF8.CodePage
+        Me.ByteOrder = byteOrder
+    End Sub
+
     ''' <summary>
     ''' Gets or sets the byte order used to parse binary data with.
     ''' </summary>
