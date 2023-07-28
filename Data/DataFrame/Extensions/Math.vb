@@ -59,12 +59,15 @@ Imports stdNum = System.Math
 Public Module DataSetMath
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Log(d As DataSet, Optional base# = stdNum.E) As DataSet
+    <Extension>
+    Public Function Log(d As DataSet, Optional base# = stdNum.E) As DataSet
         Return New DataSet With {
             .ID = d.ID,
             .Properties = d.Properties _
             .ToDictionary(Function(c) c.Key,
-                          Function(c) stdNum.Log(c.Value))
+                          Function(c)
+                              Return stdNum.Log(c.Value, newBase:=base)
+                          End Function)
         }
     End Function
 

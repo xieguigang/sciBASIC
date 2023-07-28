@@ -156,7 +156,9 @@ Namespace IO
                                 .ID = x.ID,
                                 .Properties = keys.ToDictionary(
                                     Function(k) k,
-                                    Function(k) x.ItemValue(k))
+                                    Function(k)
+                                        Return x.ItemValue(k)
+                                    End Function)
                             }
                         End Function)
         End Function
