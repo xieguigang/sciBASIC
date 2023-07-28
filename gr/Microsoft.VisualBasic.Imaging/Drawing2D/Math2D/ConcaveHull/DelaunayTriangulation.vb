@@ -81,6 +81,11 @@ Namespace Drawing2D.Math2D.ConcaveHull
         Dim Vertex As Vertex(), Triangle As TriangleIndex()
         Dim maxTriangles%
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="vertex">a set of [x,y,z] 3d point</param>
+        ''' <param name="MaxTriangles">max number of the triangles</param>
         Sub New(vertex As IEnumerable(Of Vertex), Optional MaxTriangles% = 1000)
             Me.Vertex = vertex.ToArray
             Me.Triangle = New TriangleIndex(MaxTriangles - 1) {}
