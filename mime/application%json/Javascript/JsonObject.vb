@@ -127,6 +127,13 @@ Namespace Javascript
             Call array.Add(key, element)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <param name="value">
+        ''' .NET clr runtime value, this parameter value should be a literal constant
+        ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key$, value As Object)
             Call array.Add(key, New JsonValue(value))
