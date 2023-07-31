@@ -1,6 +1,10 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Public Class PackWriter : Implements IDisposable
 
@@ -11,7 +15,7 @@ Public Class PackWriter : Implements IDisposable
         Me.stream = New StreamPack(stream, meta_size:=32 * 1024 * 1024, [readonly]:=False)
     End Sub
 
-    Public Sub AddSamples(samples As IEnumerable(Of Sample))
+    Private Sub AddSamples(samples As IEnumerable(Of Sample))
         Dim allSamples As New List(Of Sample)
 
         For Each sample As Sample In samples
@@ -24,6 +28,37 @@ Public Class PackWriter : Implements IDisposable
                 Call buf.Write(sample.vector)
             End Using
         Next
+    End Sub
+
+    Private Sub WriteEncoder(norm As NormalizeMatrix)
+        For i As Integer = 0 To norm.names.Length - 1
+            Dim feature = norm.matrix.items(i)
+
+            Using file As Stream = stream.OpenBlock($"/features/{norm.names(i)}.dat")
+                Dim buf As New BinaryDataWriter(file, byteOrder:=ByteOrder.BigEndian)
+
+                Call buf.Write(feature.)
+            End Using
+        Next
+    End Sub
+
+    Public Sub WriteDataSet(ds As DataSet)
+        Dim attributes As New Dictionary(Of String, String())
+        Dim dims As New Dictionary(Of String, Integer) From {
+            {"features", ds.NormalizeMatrix.names.Length},
+            {"samples", ds.DataSamples.size},
+            {"outputs", ds.output.Length}
+        }
+
+        Call attributes.Add("feature_names", ds.NormalizeMatrix.names)
+        Call attributes.Add("id", ds.DataSamples.AsEnumerable.Select(Function(a) a.ID).ToArray)
+        Call attributes.Add("labels", ds.output)
+
+        Call stream.WriteText({attributes.GetJson}, $"/.etc/attributes.json")
+        Call stream.WriteText({dims.GetJson}, "/.etc/dimension.json")
+
+        Call AddSamples(ds.DataSamples.items)
+        Call WriteEncoder(ds.NormalizeMatrix)
     End Sub
 
     Protected Overridable Sub Dispose(disposing As Boolean)

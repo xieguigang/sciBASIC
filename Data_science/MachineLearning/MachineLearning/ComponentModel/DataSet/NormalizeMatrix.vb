@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
-    ''' 进行所输入的样本数据的归一化的矩阵
+    ''' A matrix for make the sample input normalized.(进行所输入的样本数据的归一化的矩阵)
     ''' </summary>
     Public Class NormalizeMatrix : Inherits XmlDataModel
 

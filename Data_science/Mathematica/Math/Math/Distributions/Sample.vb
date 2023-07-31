@@ -123,10 +123,20 @@ Namespace Distributions
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Construct a feature data based on a specific dataframe column data
+        ''' </summary>
+        ''' <param name="data">the raw data matrix column data</param>
+        ''' <param name="estimateQuantile"></param>
         Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
             Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
         End Sub
 
+        ''' <summary>
+        ''' Construct a feature data based on a specific dataframe column data
+        ''' </summary>
+        ''' <param name="v">the raw data matrix column data</param>
+        ''' <param name="estimateQuantile"></param>
         Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
             If v.Length = 0 Then
                 min = Double.NaN
@@ -193,6 +203,24 @@ Namespace Distributions
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRange() As DoubleRange
             Return {min, max}
+        End Function
+
+        Public Function GetVector() As Double()
+            Dim v As Double() = New Double(9) {}
+            v(0) = min
+            v(1) = max
+            v(2) = average
+            v(3) = stdErr
+            v(4) = size
+
+            ' length = 5
+            If Not quantile Is Nothing Then
+                Call Array.ConstrainedCopy(quantile, Scan0, v, 5, 5)
+            End If
+
+            v(10) = mode
+
+            Return v
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

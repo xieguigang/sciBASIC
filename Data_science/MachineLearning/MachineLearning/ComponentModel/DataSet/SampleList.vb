@@ -60,6 +60,9 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.StoreProcedure
 
+    ''' <summary>
+    ''' the <see cref="Sample"/> collection
+    ''' </summary>
     Public Class SampleList : Inherits ListOf(Of Sample)
 
         ''' <summary>
