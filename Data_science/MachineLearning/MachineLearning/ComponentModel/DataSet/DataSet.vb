@@ -72,6 +72,10 @@ Namespace ComponentModel.StoreProcedure
     ''' </remarks>
     Public Class DataSet : Inherits XmlDataModel
 
+        ''' <summary>
+        ''' the training data samples
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("sample")>
         Public Property DataSamples As SampleList
 
@@ -134,7 +138,8 @@ Namespace ComponentModel.StoreProcedure
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
         ''' </param>
         ''' <returns></returns>
-        Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler, Optional dummyExtends% = 0) As IEnumerable(Of Sample)
+        Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler,
+                                                           Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
             Dim normSample As Sample
 
