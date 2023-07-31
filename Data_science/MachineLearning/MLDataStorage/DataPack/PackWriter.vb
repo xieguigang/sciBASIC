@@ -1,8 +1,10 @@
+Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -32,12 +34,26 @@ Public Class PackWriter : Implements IDisposable
 
     Private Sub WriteEncoder(norm As NormalizeMatrix)
         For i As Integer = 0 To norm.names.Length - 1
-            Dim feature = norm.matrix.items(i)
+            Dim feature As SampleDistribution = norm.matrix.items(i)
 
             Using file As Stream = stream.OpenBlock($"/features/{norm.names(i)}.dat")
                 Dim buf As New BinaryDataWriter(file, byteOrder:=ByteOrder.BigEndian)
+                Dim v As Double() = New Double(9) {}
 
-                Call buf.Write(feature.)
+                v(0) = feature.min
+                v(1) = feature.max
+                v(2) = feature.average
+                v(3) = feature.stdErr
+                v(4) = feature.size
+
+                ' length = 5
+                If Not feature.quantile Is Nothing Then
+                    Call Array.ConstrainedCopy(feature.quantile, Scan0, v, 5, 5)
+                End If
+
+                v(10) = feature.mode
+
+                Call buf.Write(v)
             End Using
         Next
     End Sub

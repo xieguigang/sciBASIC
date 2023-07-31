@@ -132,6 +132,11 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
         ByteOrder = ByteOrderHelper.SystemByteOrder
     End Sub
 
+    ''' <summary>
+    ''' Construct a data writer for write a numeric vector
+    ''' </summary>
+    ''' <param name="output"></param>
+    ''' <param name="byteOrder"></param>
     Sub New(output As Stream, byteOrder As ByteOrder)
         MyBase.New(output, Encodings.UTF8.CodePage, leaveOpen:=False)
         Me.Encoding = Encodings.UTF8.CodePage

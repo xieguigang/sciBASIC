@@ -205,24 +205,6 @@ Namespace Distributions
             Return {min, max}
         End Function
 
-        Public Function GetVector() As Double()
-            Dim v As Double() = New Double(9) {}
-            v(0) = min
-            v(1) = max
-            v(2) = average
-            v(3) = stdErr
-            v(4) = size
-
-            ' length = 5
-            If Not quantile Is Nothing Then
-                Call Array.ConstrainedCopy(quantile, Scan0, v, 5, 5)
-            End If
-
-            v(10) = mode
-
-            Return v
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return GetJson
