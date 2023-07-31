@@ -101,6 +101,10 @@ Namespace ComponentModel.StoreProcedure
         <XmlAttribute>
         Public Property target As Double()
 
+        ''' <summary>
+        ''' sample features data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlIgnore>
         Public ReadOnly Property vector As Double()
             Get
