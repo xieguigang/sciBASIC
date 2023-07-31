@@ -55,8 +55,15 @@ Imports System.Data
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' R language liked dataframe object
+''' </summary>
 Public Class DataFrame
 
+    ''' <summary>
+    ''' the dataframe columns
+    ''' </summary>
+    ''' <returns></returns>
     Public Property features As New Dictionary(Of String, FeatureVector)
     Public Property rownames As String()
 

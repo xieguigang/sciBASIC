@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ValueTypes
 
+''' <summary>
+''' the feature column vector
+''' </summary>
 Public Class FeatureVector : Implements IReadOnlyId
 
     Public ReadOnly Property vector As Array
