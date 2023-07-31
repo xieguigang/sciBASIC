@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
-    ''' The training dataset
+    ''' The training dataset, a data point with known label
     ''' </summary>
     Public Class Sample : Implements INamedValue
 
