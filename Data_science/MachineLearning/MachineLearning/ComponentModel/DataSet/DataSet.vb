@@ -76,7 +76,7 @@ Namespace ComponentModel.StoreProcedure
         Public Property DataSamples As SampleList
 
         ''' <summary>
-        ''' 主要是对<see cref="Sample.status"/>输入向量进行``[0, 1]``区间内的归一化操作
+        ''' 主要是对<see cref="Sample.label"/>输入向量进行``[0, 1]``区间内的归一化操作
         ''' </summary>
         ''' <returns></returns>
         <XmlElement("normalization")>

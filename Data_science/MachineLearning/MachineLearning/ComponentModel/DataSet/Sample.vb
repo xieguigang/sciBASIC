@@ -92,7 +92,7 @@ Namespace ComponentModel.StoreProcedure
         ''' array.
         ''' </remarks>
         <XmlElement>
-        Public Property status As String
+        Public Property label As String
 
         ''' <summary>
         ''' The network expected output values
@@ -130,7 +130,7 @@ Namespace ComponentModel.StoreProcedure
         End Sub
 
         Private Iterator Function decodeVector() As IEnumerable(Of Double)
-            Using buffer = status.Base64RawBytes.UnGzipStream
+            Using buffer = label.Base64RawBytes.UnGzipStream
                 For Each block As Byte() In buffer.ToArray.Split(8)
                     Yield BitConverter.ToDouble(block, Scan0)
                 Next
@@ -143,7 +143,7 @@ Namespace ComponentModel.StoreProcedure
                     buffer.Write(BitConverter.GetBytes(x), Scan0, 8)
                 Next
 
-                status = buffer _
+                label = buffer _
                     .GZipStream _
                     .ToArray _
                     .ToBase64String

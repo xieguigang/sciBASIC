@@ -101,7 +101,7 @@ Namespace ComponentModel.StoreProcedure
         End Function
 
         ''' <summary>
-        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.label"/> to value range ``[0, 1]``
         ''' </summary>
         ''' <param name="sample"></param>
         ''' <returns></returns>
@@ -111,7 +111,7 @@ Namespace ComponentModel.StoreProcedure
         End Function
 
         ''' <summary>
-        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.label"/> to value range ``[0, 1]``
         ''' </summary>
         ''' <param name="sample"></param>
         ''' <returns></returns>
