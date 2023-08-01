@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.HDSPack
 Imports Microsoft.VisualBasic.DataStorage.HDSPack.FileSystem
@@ -19,8 +20,16 @@ Namespace DataPack
 
         Private Sub AddSamples(samples As IEnumerable(Of Sample))
             Dim allSamples As New List(Of Sample)
+            Dim check_duplicates As New Index(Of String)
 
             For Each sample As Sample In samples
+                If sample.ID Like check_duplicates Then
+                    Call $"there is a duplicated sample data: {sample.ID}!".Warning
+                    Call stream.Delete($"/samples/{sample.ID}.dat")
+                Else
+                    Call check_duplicates.Add(sample.ID)
+                End If
+
                 Using file As Stream = stream.OpenBlock($"/samples/{sample.ID}.dat")
                     Dim buf As New BinaryDataWriter(file, byteOrder:=ByteOrder.BigEndian)
 
