@@ -66,13 +66,12 @@ Namespace Darwinism.Models
     ''' Compute fitness and cache the result data in this pool.
     ''' </summary>
     ''' <typeparam name="Individual"></typeparam>
-    Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
+    Public Class FitnessPool(Of Individual As {Class, Chromosome(Of Individual)}) : Implements Fitness(Of Individual)
 
-        ''' <summary>
-        ''' Get unique id of each genome
-        ''' </summary>
-        Protected Friend indivToString As Func(Of Individual, String)
         Protected Friend maxCapacity%
+        ''' <summary>
+        ''' A fitness cache pool indexed via the unique id of target
+        ''' </summary>
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
 
         Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
@@ -86,14 +85,10 @@ Namespace Darwinism.Models
         Public ReadOnly Property evaluateFitness As Fitness(Of Individual)
 
         ''' <summary>
-        ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
-        ''' 目标<typeparamref name="Individual"/>的``ToString``方法
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
-        ''' <param name="toString">Obj to dictionary key</param>
-        Sub New(cacl As Fitness(Of Individual), capacity%, toString As Func(Of Individual, String))
+        Sub New(cacl As Fitness(Of Individual), capacity%)
             evaluateFitness = cacl
-            indivToString = toString
             maxCapacity = capacity Or defaultCacheSize
 
             If capacity <= 0 AndAlso cacl.Cacheable Then
@@ -125,7 +120,7 @@ Namespace Darwinism.Models
         End Function
 
         Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
-            Dim key$ = indivToString([in])
+            Dim key$ = [in].UniqueHashKey
             Dim fit As Double
 
             SyncLock cache
