@@ -87,6 +87,9 @@ Namespace Darwinism.GAF
         ''' 这个计算模块是否会缓存计算结果?
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the result is cached by the unique id of the target chr
+        ''' </remarks>
         ReadOnly Property Cacheable As Boolean
 
         ''' <summary>
