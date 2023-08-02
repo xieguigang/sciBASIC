@@ -137,7 +137,7 @@ Namespace Graphic
                                          End If
                                      End Function) _
                              .ToArray
-                indexRange = {0, .Length - 1}
+                indexRange = {0.0, .Length - 1}
                 colors = Designer.CubicSpline(colors, n:=level)
             End With
         End Sub

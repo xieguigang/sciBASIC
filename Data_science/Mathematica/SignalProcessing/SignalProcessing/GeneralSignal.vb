@@ -84,7 +84,7 @@ Public Class GeneralSignal : Implements INamedValue
     Public ReadOnly Property MeasureRange As DoubleRange
         Get
             If Measures.IsNullOrEmpty Then
-                Return {0, 0}
+                Return {0.0, 0.0}
             Else
                 Return {Measures.Min, Measures.Max}
             End If
