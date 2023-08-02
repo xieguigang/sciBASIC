@@ -80,7 +80,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Population
 
     Public Class Population(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IPopulation(Of Chr)
         Implements IEnumerable(Of Chr)

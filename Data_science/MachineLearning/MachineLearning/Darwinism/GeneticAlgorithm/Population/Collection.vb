@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Population
 
     Public MustInherit Class PopulationCollection(Of Chr As {Class, Chromosome(Of Chr)})
 

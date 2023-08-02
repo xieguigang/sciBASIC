@@ -57,7 +57,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.Population
 
     ''' <summary>
     ''' implements this interface for create custom parallel 
