@@ -81,8 +81,11 @@ Imports stdNum = System.Math
 Namespace LinearAlgebra
 
     ''' <summary>
-    ''' Vector was inherits from type <see cref="List(Of Double)"/>
+    ''' A numeric vector
     ''' </summary>
+    ''' <remarks>
+    ''' this numeric vector is based on the <see cref="Vector(Of Double)"/>
+    ''' </remarks>
     Public Class Vector : Inherits GenericVector(Of Double)
         Implements IVector
 
