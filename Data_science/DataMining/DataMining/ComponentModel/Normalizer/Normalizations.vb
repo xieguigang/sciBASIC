@@ -72,7 +72,7 @@ Namespace ComponentModel.Normalizer
             Return methodTable.TryGetValue(Strings.LCase(name), [default]:=Methods.NormalScaler)
         End Function
 
-        ReadOnly normalRange As DoubleRange = {0, 1}
+        ReadOnly normalRange As New DoubleRange(0, 1)
 
         ''' <summary>
         ''' z-score

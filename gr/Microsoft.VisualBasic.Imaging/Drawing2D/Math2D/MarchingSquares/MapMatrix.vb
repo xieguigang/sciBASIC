@@ -129,7 +129,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 .IteratesALL _
                 .ToArray
             Dim range As DoubleRange = data
-            Dim percentage As DoubleRange = {0, 1}
+            Dim percentage As New DoubleRange(0, 1)
 
             Return levels _
                 .Select(Function(p)
