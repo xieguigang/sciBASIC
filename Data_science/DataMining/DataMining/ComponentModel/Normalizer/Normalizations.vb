@@ -83,6 +83,8 @@ Namespace ComponentModel.Normalizer
         ''' </param>
         ''' <param name="x#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ZScoreNormalize(samples As SampleDistribution, x#) As Double
             Return pnorm.Z(x, samples.average, samples.stdErr)
         End Function
