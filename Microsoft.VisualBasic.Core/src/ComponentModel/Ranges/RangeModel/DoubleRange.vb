@@ -261,28 +261,38 @@ Namespace ComponentModel.Ranges.Model
 
 #If NET_48 Or NETCOREAPP Then
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min!, max!)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
 #End If
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
             Return New DoubleRange(vector.Min, vector.Max)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange
             Return data _
                 .Select(Function(s) CDbl(s)) _
                 .ToArray
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(data As Single()) As DoubleRange
+            Return New DoubleRange(data.Min, data.Max)
         End Operator
 
         ''' <summary>
