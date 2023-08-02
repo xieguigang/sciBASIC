@@ -280,7 +280,11 @@ Namespace ComponentModel.Ranges.Model
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
-            Return New DoubleRange(vector.Min, vector.Max)
+            If vector.Length = 0 Then
+                Return New DoubleRange(0, 0)
+            Else
+                Return New DoubleRange(vector.Min, vector.Max)
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
