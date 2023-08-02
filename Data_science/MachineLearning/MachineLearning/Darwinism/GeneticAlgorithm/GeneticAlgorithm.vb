@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::d0ad71bbcb34a36f5c779fdbd62e8708, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 213
-    '    Code Lines: 100
-    ' Comment Lines: 85
-    '   Blank Lines: 28
-    '     File Size: 8.97 KB
+' Summaries:
 
 
-    '     Class GeneticAlgorithm
-    ' 
-    '         Properties: Best, ParentChromosomesSurviveCount, popStrategy, population, Worst
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: evolIterate, GetFitness, GetRawFitnessModel
-    ' 
-    '         Sub: Clear, Evolve, UpdateMutationRate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 213
+'    Code Lines: 100
+' Comment Lines: 85
+'   Blank Lines: 28
+'     File Size: 8.97 KB
+
+
+'     Class GeneticAlgorithm
+' 
+'         Properties: Best, ParentChromosomesSurviveCount, popStrategy, population, Worst
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: evolIterate, GetFitness, GetRawFitnessModel
+' 
+'         Sub: Clear, Evolve, UpdateMutationRate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,7 +75,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.ReplacementStrategy
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population.SubstitutionStrategy
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
