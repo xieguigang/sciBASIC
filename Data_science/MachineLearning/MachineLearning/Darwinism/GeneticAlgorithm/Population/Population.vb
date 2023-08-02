@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::6b576ac223fb6b9114e61cd30f1472e3, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 224
-    '    Code Lines: 109
-    ' Comment Lines: 87
-    '   Blank Lines: 28
-    '     File Size: 9.42 KB
+' Summaries:
 
 
-    '     Class IPopulation
-    ' 
-    '         Properties: capacitySize
-    ' 
-    '     Class Population
-    ' 
-    '         Properties: parallel, Random, Size
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: Add, SortPopulationByFitness, Trim
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 224
+'    Code Lines: 109
+' Comment Lines: 87
+'   Blank Lines: 28
+'     File Size: 9.42 KB
+
+
+'     Class IPopulation
+' 
+'         Properties: capacitySize
+' 
+'     Class Population
+' 
+'         Properties: parallel, Random, Size
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: Add, SortPopulationByFitness, Trim
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,30 +77,10 @@
 ' *****************************************************************************
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
-
-    Public MustInherit Class IPopulation(Of Chr As {Class, Chromosome(Of Chr)})
-
-        Protected chromosomes As PopulationCollection(Of Chr)
-
-        ''' <summary>
-        ''' 种群的容量上限大小
-        ''' </summary>
-        ''' <returns></returns>
-        Public Overridable Property capacitySize As Integer
-
-        ''' <summary>
-        ''' Add chromosome
-        ''' </summary>
-        ''' <param name="chromosome"></param>
-        Public MustOverride Sub Add(chromosome As Chr)
-
-    End Class
 
     Public Class Population(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IPopulation(Of Chr)
         Implements IEnumerable(Of Chr)
@@ -162,26 +142,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="parallel"></param>
         Public Sub New(collection As PopulationCollection(Of Chr), Optional parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean) = Nothing)
-            If Not parallel Is Nothing Then
-                If parallel Like GetType(Boolean) Then
-                    Dim flag As Boolean = parallel
-
-                    Pcompute = Function(envir, source)
-                                   Return GA_PLinq(envir, source, parallelFlag:=flag)
-                               End Function
-
-                    Call "Parallel computing use internal GA_PLinq api".__INFO_ECHO
-                Else
-                    Pcompute = parallel
-                    Call $"Parallel computing use external api: {Pcompute.ToString}".__INFO_ECHO
-                End If
-            Else
-                Pcompute = Function(envir, source)
-                               Return GA_PLinq(envir, source, parallelFlag:=True)
-                           End Function
-                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
-            End If
-
+            Me.Pcompute = GetParallelCompute(parallel)
             Me.chromosomes = collection
         End Sub
 
@@ -190,12 +151,37 @@ Namespace Darwinism.GAF
             Me.chromosomes = collection
         End Sub
 
+        Private Shared Function GetParallelCompute(parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean)) As ParallelComputeFitness(Of Chr)
+            If parallel Is Nothing Then
+                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
+                Return New ParallelDataSetCompute(Of Chr)
+            End If
+
+            If parallel Like GetType(Boolean) Then
+                Dim flag As Boolean = parallel
+
+                Call "Parallel computing use internal GA_PLinq api".__INFO_ECHO
+
+                If flag Then
+                    Return New ParallelPopulationCompute(Of Chr)
+                Else
+                    Return New ParallelDataSetCompute(Of Chr)
+                End If
+            Else
+                Dim Pcompute = parallel.TryCast(Of ParallelComputeFitness(Of Chr))
+
+                Call $"Parallel computing use external api: {Pcompute.ToString}".__INFO_ECHO
+
+                Return Pcompute
+            End If
+        End Function
+
         ''' <summary>
         ''' 这里是ODEs参数估计的限速步骤
         ''' </summary>
         ''' <param name="comparator"></param>
         Friend Sub SortPopulationByFitness(comparator As FitnessPool(Of Chr))
-            Dim fitness = Pcompute(comparator, chromosomes) _
+            Dim fitness = Pcompute.ComputeFitness(comparator, chromosomes) _
                 .GroupBy(Function(fit) fit.Name) _
                 .ToDictionary(Function(fit) fit.Key,
                               Function(group)
@@ -216,49 +202,6 @@ Namespace Darwinism.GAF
         Public Overrides Sub Add(chromosome As Chr)
             Call chromosomes.Add(chromosome)
         End Sub
-
-        ''' <summary>
-        ''' 使用PLinq进行并行计算
-        ''' </summary>
-        ''' <param name="population"></param>
-        ''' <returns></returns>
-        Private Shared Function GA_PLinq(comparator As FitnessPool(Of Chr), population As PopulationCollection(Of Chr), parallelFlag As Boolean) As IEnumerable(Of NamedValue(Of Double))
-            'Dim population = Iterator Function() As IEnumerable(Of Chr)
-            '                     For i As Integer = 0 To source.Count - 1
-            '                         Yield source(i)
-            '                     Next
-            '                 End Function
-
-            ' 20200827
-            ' use populate function for run parallel is not working
-            'Return From c As Chr
-            '       In population().Populate(parallel:=parallelFlag)
-            '       Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
-            '       Let key As String = comparator.indivToString(c)
-            '       Select New NamedValue(Of Double) With {
-            '           .Name = key,
-            '           .Value = fit
-            '       }
-            If parallelFlag Then
-                Return From c As Chr
-                       In population.GetCollection.AsParallel
-                       Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
-                       Let key As String = c.Identity
-                       Select New NamedValue(Of Double) With {
-                           .Name = key,
-                           .Value = fit
-                       }
-            Else
-                Return From c As Chr
-                       In population.GetCollection()
-                       Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
-                       Let key As String = c.Identity
-                       Select New NamedValue(Of Double) With {
-                           .Name = key,
-                           .Value = fit
-                       }
-            End If
-        End Function
 
         ''' <summary>
         ''' shortening population till specific number
