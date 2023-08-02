@@ -81,7 +81,14 @@ Namespace ApplicationServices.Development.NetCore5
             Dim info As AssemblyInfo = package.FromAssembly
             Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
             Dim targets As Dictionary(Of String, target) = Me.targets(runtimeTarget.name)
-            Dim packageTarget As target = targets(assemblyKey)
+            Dim packageTarget As target = targets.TryGetValue(assemblyKey)
+
+            ' The given key 'roxygenNet/1.0.0+88489749f53dd4380c4c99434e7cee2e21e5ae29' was not present in the dictionary.
+            ' why missing key?
+            If packageTarget Is Nothing Then
+                Return
+            End If
+
             Dim dependencies = packageTarget.dependencies
             Dim dllFile As String
 
