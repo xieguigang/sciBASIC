@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Namespace NeuralNetwork.DarwinismHybrid
 
     ''' <summary>
-    ''' 
+    ''' not working as expected?
     ''' </summary>
     Public Module Accelerator
 
