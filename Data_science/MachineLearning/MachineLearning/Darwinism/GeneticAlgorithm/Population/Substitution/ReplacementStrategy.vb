@@ -78,7 +78,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports stdNum = System.Math
 
 Namespace Darwinism.GAF.Population.SubstitutionStrategy
 

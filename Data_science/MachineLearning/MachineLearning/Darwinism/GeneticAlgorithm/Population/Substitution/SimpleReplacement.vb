@@ -1,4 +1,6 @@
-﻿Namespace Darwinism.GAF.Population.SubstitutionStrategy
+﻿Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+
+Namespace Darwinism.GAF.Population.SubstitutionStrategy
 
     ''' <summary>
     ''' 最简单的种群更替策略
