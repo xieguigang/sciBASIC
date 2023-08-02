@@ -60,9 +60,13 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Namespace Darwinism.GAF
 
     ''' <summary>
-    ''' 遗传算法的主要限速步骤是在fitness的计算之上
+    ''' implements this interface for create custom parallel 
+    ''' compute api function for run the genetic algorithm
     ''' </summary>
     ''' <typeparam name="chr"></typeparam>
+    ''' <remarks>
+    ''' 遗传算法的主要限速步骤是在fitness的计算之上
+    ''' </remarks>
     Public MustInherit Class ParallelComputeFitness(Of chr As {Class, Chromosome(Of chr)})
 
         Public MustOverride Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
