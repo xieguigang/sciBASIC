@@ -116,6 +116,9 @@ Namespace Darwinism.GAF
         ''' 1. 如果外部调用这个计算函数是并行的,那么这个parallel参数应该设置为false
         ''' 2. 如果是单线程的外部代码调用这个计算函数,那么这个parallel参数可以是true,即在函数的内部实现并行化
         ''' </param>
+        ''' <remarks>
+        ''' smaller value is better
+        ''' </remarks>
         Function Calculate(chromosome As Chr, parallel As Boolean) As Double
     End Interface
 End Namespace
