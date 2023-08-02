@@ -90,6 +90,12 @@ Namespace Darwinism.GAF
         Public Property Iterations As Integer
         Public Property Threshold As Double
 
+        Public ReadOnly Property BestModel As Chr
+            Get
+                Return core.Best
+            End Get
+        End Property
+
         ''' <summary>
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
