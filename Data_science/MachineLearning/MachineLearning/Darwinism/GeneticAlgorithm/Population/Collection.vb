@@ -126,7 +126,7 @@ Namespace Darwinism.GAF
         Public Overrides Sub OrderBy(fitness As Func(Of String, Double))
             innerList = innerList _
                 .OrderBy(Function(c)
-                             Return fitness(c.UniqueHashKey)
+                             Return fitness(c.Identity)
                          End Function) _
                 .AsList
         End Sub

@@ -243,7 +243,7 @@ Namespace Darwinism.GAF
                 Return From c As Chr
                        In population.GetCollection.AsParallel
                        Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
-                       Let key As String = comparator.indivToString(c)
+                       Let key As String = c.Identity
                        Select New NamedValue(Of Double) With {
                            .Name = key,
                            .Value = fit
@@ -252,7 +252,7 @@ Namespace Darwinism.GAF
                 Return From c As Chr
                        In population.GetCollection()
                        Let fit As Double = comparator.Fitness(c, parallel:=Not parallelFlag)
-                       Let key As String = comparator.indivToString(c)
+                       Let key As String = c.Identity
                        Select New NamedValue(Of Double) With {
                            .Name = key,
                            .Value = fit

@@ -141,7 +141,7 @@ Namespace Darwinism
         ''' <param name="CR">crossover probability [0,1]</param>
         ''' <param name="PopulationSize%"></param>
         ''' <returns></returns>
-        Public Function Evolution(Of Individual As IIndividual)(
+        Public Function Evolution(Of Individual As {Class, IIndividual})(
                                          target As Func(Of Individual, Double),
                                           [new] As [New](Of Individual),
                                            N%,
@@ -156,10 +156,10 @@ Namespace Darwinism
 
             ' linked list that has our population inside
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New FitnessPool(Of Individual)(
+            Dim fitnessFunction As Func(Of Individual, Boolean, Double) = AddressOf New GeneralFitnessPool(Of Individual)(
                 cacl:=target,
                 capacity:=PopulationSize * 100,
-                toString:=Function(id) id.ToString
+                toString:=Function(a) a.ToString
             ).Fitness
 
             Dim i As i32 = Scan0
@@ -177,7 +177,7 @@ Namespace Darwinism
                 Do While (++i < maxIterations)
                     Dim subPopulates As Individual()() = population.Split(parts)
                     Dim LQuery = LinqAPI.Exec(Of DoubleTagged(Of Individual())) <=
- _
+                                                                                  _
                         From subPop As Individual()
                         In subPopulates.AsParallel
                         Select subPop.subPopulationEvolute(

@@ -151,7 +151,7 @@ Namespace Darwinism.GAF
 
             Me.population = population
             Me.seeds = seeds Or randfSeeds
-            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize, toString:=Function(c) c.UniqueHashKey)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(fitnessFunc, capacity:=cacheSize)
             Me.popStrategy = replacementStrategy.GetStrategy(Of Chr)
             Me.populationCreator = createPopulation Or createList
 

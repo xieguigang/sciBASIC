@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::8450d02c5fe4c4f80f81a9880e0f8dc0, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 109
-    '    Code Lines: 68
-    ' Comment Lines: 25
-    '   Blank Lines: 16
-    '     File Size: 4.46 KB
+' Summaries:
 
 
-    '     Class FitnessPool
-    ' 
-    '         Properties: Cacheable, evaluateFitness
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Fitness, getOrCacheOfFitness
-    ' 
-    '         Sub: Clear
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 109
+'    Code Lines: 68
+' Comment Lines: 25
+'   Blank Lines: 16
+'     File Size: 4.46 KB
+
+
+'     Class FitnessPool
+' 
+'         Properties: Cacheable, evaluateFitness
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Fitness, getOrCacheOfFitness
+' 
+'         Sub: Clear
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,13 +66,26 @@ Namespace Darwinism.Models
     ''' Compute fitness and cache the result data in this pool.
     ''' </summary>
     ''' <typeparam name="Individual"></typeparam>
-    Public Class FitnessPool(Of Individual As {Class, Chromosome(Of Individual)}) : Implements Fitness(Of Individual)
+    Public Class FitnessPool(Of Individual As {Class, Chromosome(Of Individual)}) : Inherits GeneralFitnessPool(Of Individual)
+
+        Sub New(cacl As Fitness(Of Individual), capacity%)
+            Call MyBase.New(cacl, capacity, Function(a) a.Identity)
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' Compute fitness and cache the result data in this pool.
+    ''' </summary>
+    ''' <typeparam name="Individual"></typeparam>
+    Public Class GeneralFitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend maxCapacity%
         ''' <summary>
         ''' A fitness cache pool indexed via the unique id of target
         ''' </summary>
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
+
+        Dim istr As Func(Of Individual, String)
 
         Friend Shared ReadOnly defaultCacheSize As [Default](Of Integer) = 10000
 
@@ -87,9 +100,10 @@ Namespace Darwinism.Models
         ''' <summary>
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
-        Sub New(cacl As Fitness(Of Individual), capacity%)
+        Sub New(cacl As Fitness(Of Individual), capacity%, toString As Func(Of Individual, String))
             evaluateFitness = cacl
             maxCapacity = capacity Or defaultCacheSize
+            istr = toString
 
             If capacity <= 0 AndAlso cacl.Cacheable Then
                 Call $"Target environment marked as cacheable, but cache size is invalid...".Warning
@@ -120,7 +134,7 @@ Namespace Darwinism.Models
         End Function
 
         Private Function getOrCacheOfFitness([in] As Individual, parallel As Boolean) As Double
-            Dim key$ = [in].UniqueHashKey
+            Dim key As String = istr([in])
             Dim fit As Double
 
             SyncLock cache
