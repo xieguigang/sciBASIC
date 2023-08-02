@@ -68,6 +68,23 @@ Namespace Math.SIMD
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>
         ''' <returns></returns>
+        Public Shared Function f32_scalar_op_multiply_f32(v1 As Single, v2 As Single()) As Single()
+            Dim result As Single() = New Single(v2.Length - 1) {}
+
+            For i As Integer = 0 To v2.Length - 1
+                result(i) = v1 * v2(i)
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
+        ''' <paramref name="v1"/> * <paramref name="v2"/> or 
+        ''' <paramref name="v2"/> * <paramref name="v1"/>
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
         Public Shared Function f64_scalar_op_multiply_f64(v1 As Double, v2 As Double()) As Double()
             Dim result As Double() = New Double(v2.Length - 1) {}
 
