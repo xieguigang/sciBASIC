@@ -21,7 +21,7 @@ Namespace Darwinism.GAF.Population
 
         Public Overrides Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
             Return From c As chr
-                   In source.GetCollection.AsParallel
+                   In source.GetCollection.ToArray.AsParallel
                    Let fit As Double = comparator.Fitness(c, parallel:=False)
                    Let key As String = c.Identity
                    Select New NamedValue(Of Double) With {

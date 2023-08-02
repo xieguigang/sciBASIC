@@ -356,7 +356,7 @@ Namespace FileSystem
         End Function
 
         ''' <summary>
-        ''' a more advanced wrapper for <see cref="OpenBlock(String)"/> function
+        ''' a more advanced wrapper for <see cref="OpenBlock(String, Integer)"/> function
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="mode">this parameter is no use in streampack</param>

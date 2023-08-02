@@ -182,6 +182,7 @@ Namespace Darwinism.GAF.Population
         ''' <param name="comparator"></param>
         Friend Sub SortPopulationByFitness(comparator As FitnessPool(Of Chr))
             Dim fitness = Pcompute.ComputeFitness(comparator, chromosomes) _
+                .ToArray _
                 .GroupBy(Function(fit) fit.Name) _
                 .ToDictionary(Function(fit) fit.Key,
                               Function(group)

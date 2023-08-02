@@ -131,26 +131,29 @@ Namespace Darwinism.Models
 
             SyncLock cache
                 If cache.ContainsKey(key$) Then
-                    fit = cache(key$)
-                Else
-                    fit = evaluateFitness.Calculate([in], parallel)
-                    cache.Add(key$, fit)
+                    Return cache(key$)
+                End If
+            End SyncLock
 
-                    If cache.Count >= maxCapacity Then
-                        Dim asc = From fitValue
-                                  In cache
-                                  Order By fitValue.Value Ascending
-                                  Take CInt(maxCapacity * 0.9)
-                                  Select ID = fitValue.Key
+            fit = evaluateFitness.Calculate([in], parallel)
 
-                        With asc.Indexing
-                            For Each key In cache.Keys.ToArray
-                                If .NotExists(key) Then
-                                    Call cache.Remove(key)
-                                End If
-                            Next
-                        End With
-                    End If
+            SyncLock cache
+                cache(key$) = fit
+
+                If cache.Count >= maxCapacity Then
+                    Dim asc = From fitValue
+                              In cache
+                              Order By fitValue.Value Ascending
+                              Take CInt(maxCapacity * 0.9)
+                              Select ID = fitValue.Key
+
+                    With asc.Indexing
+                        For Each key In cache.Keys.ToArray
+                            If .NotExists(key) Then
+                                Call cache.Remove(key)
+                            End If
+                        Next
+                    End With
                 End If
             End SyncLock
 
