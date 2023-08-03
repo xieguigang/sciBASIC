@@ -65,19 +65,23 @@ Namespace Model
             Return sentences.JoinBy(". ")
         End Function
 
-        Public Shared Iterator Function Segmentation(text As String) As IEnumerable(Of Paragraph)
+        Public Shared Iterator Function Segmentation(text As String, Optional delimiter As String = ".?!") As IEnumerable(Of Paragraph)
             Dim p As New Value(Of Paragraph)
+            Dim del As Char() = delimiter.ToArray
 
             For Each block As String() In text.LineTokens.Split(Function(str) str.Trim = "")
-                If block.All(Function(str) str.Trim.StringEmpty) Then
+                Dim trim As String() = block _
+                    .Select(AddressOf Strings.Trim) _
+                    .ToArray
+
+                If trim.All(Function(str) str = "") Then
                     Continue For
                 End If
 
-                If Not p = block _
-                    .Select(AddressOf Strings.Trim) _
+                If Not p = trim.Where(Function(si) si <> "") _
                     .JoinBy(" ") _
                     .Trim _
-                    .DoCall(AddressOf GetParagraph) Is Nothing Then
+                    .DoCall(Function(si) GetParagraph(si, del)) Is Nothing Then
 
                     Yield p
                 End If
@@ -100,8 +104,8 @@ Namespace Model
             }
         End Function
 
-        Private Shared Function GetParagraph(text As String) As Paragraph
-            Dim sentences As String() = text.Split("."c, "?"c, "!"c)
+        Private Shared Function GetParagraph(text As String, delimiter As Char()) As Paragraph
+            Dim sentences As String() = text.Split(delimiter)
             Dim sentenceList As Sentence() = sentences _
                 .Select(AddressOf Sentence.Parse) _
                 .ToArray
