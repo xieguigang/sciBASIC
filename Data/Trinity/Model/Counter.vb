@@ -5,6 +5,13 @@ Namespace Model
     Public Class Counter
 
         Public Property token As String
+
+        Public ReadOnly Property nchar As Integer
+            Get
+                Return token.Length
+            End Get
+        End Property
+
         Public Property total As Integer
         Public Property paragraph As Integer
         Public Property sentences As Integer
