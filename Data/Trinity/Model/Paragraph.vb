@@ -104,6 +104,14 @@ Namespace Model
             }
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <param name="delimiter">
+        ''' the delimiter of the sentences, usually be delimiter symbol ./?/! to end a sentence.
+        ''' </param>
+        ''' <returns></returns>
         Private Shared Function GetParagraph(text As String, delimiter As Char()) As Paragraph
             Dim sentences As String() = text.Split(delimiter)
             Dim sentenceList As Sentence() = sentences _

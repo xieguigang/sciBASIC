@@ -142,7 +142,7 @@ Namespace Model
                                }
                            End Function) _
                    .ToArray
-           }
+            }
         End Function
 
         Friend Function Trim() As Sentence
