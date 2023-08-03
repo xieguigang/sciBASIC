@@ -134,6 +134,7 @@ Namespace Model
                                                End If
                                            End Function) _
                                    .IteratesALL _
+                                   .Where(Function(si) Not si.StringEmpty) _
                                    .ToArray
 
                                Return New Segment With {
