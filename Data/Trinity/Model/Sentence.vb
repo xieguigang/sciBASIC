@@ -53,26 +53,27 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Model
 
     Public Class Sentence
 
-        Public Property segments As Segment()
+        ''' <summary>
+        ''' 带有前后顺序的单词列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property tokens As String()
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
-                If segments.IsNullOrEmpty Then
-                    Return True
-                End If
-
-                If segments.All(Function(s) s.IsEmpty) Then
-                    Return True
-                End If
-
-                Return False
+                Return tokens.IsNullOrEmpty OrElse tokens.All(AddressOf TextRank.IsEmpty)
             End Get
         End Property
+
+        Public Function has(token As String) As Boolean
+            Return Array.IndexOf(tokens, token) > -1
+        End Function
 
         ''' <summary>
         ''' exactly token matched
@@ -80,17 +81,7 @@ Namespace Model
         ''' <param name="token"></param>
         ''' <returns></returns>
         Public Function matchIndex(token As String) As Integer
-            Dim index As Integer = -1
-
-            For i As Integer = 0 To segments.Length - 1
-                index = segments(i).matchIndex(token)
-
-                If index > -1 Then
-                    Return i * 1000 + index
-                End If
-            Next
-
-            Return -1
+            Return Array.IndexOf(tokens, token)
         End Function
 
         ''' <summary>
@@ -99,13 +90,9 @@ Namespace Model
         ''' <param name="token"></param>
         ''' <returns></returns>
         Public Function searchIndex(token As String) As Integer
-            Dim index As Integer = -1
-
-            For i As Integer = 0 To segments.Length - 1
-                index = segments(i).searchIndex(token)
-
-                If index > -1 Then
-                    Return i * 1000 + index
+            For i As Integer = 0 To tokens.Length - 1
+                If _tokens(i).StartsWith(token) Then
+                    Return i
                 End If
             Next
 
@@ -113,58 +100,60 @@ Namespace Model
         End Function
 
         Public Overrides Function ToString() As String
-            Return segments.JoinBy("; ")
+            Return tokens.JoinBy(" ")
         End Function
 
-        Friend Shared Function Parse(line As String) As Sentence
+        Friend Shared Function Parse(line As String, chemicalNameRule As Boolean) As Sentence
+            Dim tokens As String() = New SentenceCharWalker(line) _
+                .GetTokens _
+                .ToArray
+
+            If chemicalNameRule Then
+                tokens = Sentence.ChemicalNameRule(tokens).ToArray
+            End If
+
             Return New Sentence With {
-               .segments = line _
-                   .Split(","c, ";"c, """"c, "`"c, "~"c) _
-                   .Select(Function(str)
-                               Dim t As String() = str.Trim.StringSplit("\s+")
-
-                               t = t _
-                                   .Select(Function(si)
-                                               If si.Count("("c) > 0 AndAlso si.Count(")"c) = 0 Then
-                                                   Return si.Split("("c)
-                                               ElseIf si.Count("("c) = 0 AndAlso si.Count(")"c) > 0 Then
-                                                   Return si.Split(")"c)
-                                               Else
-                                                   Return {si}
-                                               End If
-                                           End Function) _
-                                   .IteratesALL _
-                                   .Where(Function(si) Not si.StringEmpty) _
-                                   .ToArray
-
-                               Return New Segment With {
-                                   .tokens = t
-                               }
-                           End Function) _
-                   .ToArray
+               .tokens = tokens
             }
         End Function
 
-        Friend Function Trim() As Sentence
-            Dim list As New List(Of Segment)
-            Dim data As Segment
+        ''' <summary>
+        ''' try to fix of the un-expected token split for the chemical name
+        ''' </summary>
+        ''' <param name="tokens"></param>
+        ''' <returns></returns>
+        Private Shared Iterator Function ChemicalNameRule(tokens As String()) As IEnumerable(Of String)
+            Dim open As Boolean = False
+            Dim buf As New CharBuffer
 
-            For Each block As Segment In segments
-                data = New Segment With {
-                    .tokens = block.tokens _
-                        .Where(Function(str)
-                                   Return Not TextRank.IsEmpty(str)
-                               End Function) _
-                        .ToArray
-                }
+            For Each si As String In tokens
+                If open Then
+                    buf.Add(" "c)
+                    buf.Add(si)
 
-                If Not data.tokens.IsNullOrEmpty Then
-                    list.Add(data)
+                    If si.Count("("c) = 0 AndAlso si.Count(")"c) > 0 Then
+                        open = False
+                        Yield New String(buf.PopAllChars)
+                    End If
+                End If
+                If si.Count("("c) > 0 AndAlso si.Count(")"c) = 0 Then
+                    open = True
+                    buf.Add(si)
+                Else
+                    Yield si
                 End If
             Next
 
+            If buf > 0 Then
+                Yield New String(buf.PopAllChars)
+            End If
+        End Function
+
+        Friend Function Trim() As Sentence
             Return New Sentence With {
-               .segments = list.ToArray
+               .tokens = tokens _
+                   .Where(Function(si) Not TextRank.IsEmpty(si)) _
+                   .ToArray
             }
         End Function
 

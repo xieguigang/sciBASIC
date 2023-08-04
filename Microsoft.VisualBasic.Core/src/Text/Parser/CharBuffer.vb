@@ -172,6 +172,16 @@ Namespace Text.Parser
         End Function
 
         ''' <summary>
+        ''' add a collection of char into current buffer data list
+        ''' </summary>
+        ''' <param name="chars"></param>
+        ''' <returns></returns>
+        Public Function Add(chars As String) As CharBuffer
+            Call buffer.AddRange(chars)
+            Return Me
+        End Function
+
+        ''' <summary>
         ''' get the last char from current buffer list data safely, if the 
         ''' internal buffer list has no element data, then this function 
         ''' will returns nothing 

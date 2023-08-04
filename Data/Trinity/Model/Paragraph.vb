@@ -65,7 +65,9 @@ Namespace Model
             Return sentences.JoinBy(". ")
         End Function
 
-        Public Shared Iterator Function Segmentation(text As String, Optional delimiter As String = ".?!") As IEnumerable(Of Paragraph)
+        Public Shared Iterator Function Segmentation(text As String,
+                                                     Optional delimiter As String = ".?!",
+                                                     Optional chemicalNameRule As Boolean = False) As IEnumerable(Of Paragraph)
             Dim p As New Value(Of Paragraph)
             Dim del As Char() = delimiter.ToArray
 
@@ -81,7 +83,7 @@ Namespace Model
                 If Not p = trim.Where(Function(si) si <> "") _
                     .JoinBy(" ") _
                     .Trim _
-                    .DoCall(Function(si) GetParagraph(si, del)) Is Nothing Then
+                    .DoCall(Function(si) GetParagraph(si, del, chemicalNameRule)) Is Nothing Then
 
                     Yield p
                 End If
@@ -112,10 +114,10 @@ Namespace Model
         ''' the delimiter of the sentences, usually be delimiter symbol ./?/! to end a sentence.
         ''' </param>
         ''' <returns></returns>
-        Private Shared Function GetParagraph(text As String, delimiter As Char()) As Paragraph
+        Private Shared Function GetParagraph(text As String, delimiter As Char(), chemicalNameRule As Boolean) As Paragraph
             Dim sentences As String() = text.Split(delimiter)
             Dim sentenceList As Sentence() = sentences _
-                .Select(AddressOf Sentence.Parse) _
+                .Select(Function(si) Sentence.Parse(si, chemicalNameRule)) _
                 .ToArray
             Dim p As New Paragraph With {
                 .sentences = sentenceList

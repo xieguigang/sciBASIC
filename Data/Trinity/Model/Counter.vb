@@ -19,8 +19,7 @@ Namespace Model
         Public Shared Iterator Function Count(par As Paragraph) As IEnumerable(Of Counter)
             Dim tokens = par.sentences _
                 .SafeQuery _
-                .Select(Function(s) s.segments.SafeQuery.Select(Function(c) c.tokens.Select(Function(t) (t, c, s)))) _
-                .IteratesALL _
+                .Select(Function(s) s.tokens.Select(Function(c) (t:=c, s))) _
                 .IteratesALL _
                 .GroupBy(Function(a) a.t.ToLower) _
                 .ToArray

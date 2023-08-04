@@ -10,10 +10,9 @@ Namespace Model
     ''' </summary>
     Public Class SentenceCharWalker
 
-        ReadOnly buf As CharBuffer
+        ReadOnly buf As New CharBuffer
         ReadOnly str As CharPtr
         ReadOnly url_protocols As New Regex("[a-zA-Z0-9]+[:]//")
-        ReadOnly stackOpen As New Stack(Of Char)
 
         Sub New(line As String)
             str = line
@@ -24,17 +23,21 @@ Namespace Model
 
             Do While Not str
                 If Not (token = WalkChar(++str)) Is Nothing Then
-                    Yield CStr(token)
+                    Yield Trim(CStr(token))
                 End If
             Loop
 
             If buf > 0 Then
-                Yield New String(buf.PopAllChars)
+                Yield Trim(New String(buf.PopAllChars))
             End If
         End Function
 
+        Private Shared Function Trim(si As String) As String
+            Return si.Trim("."c, ","c, "-"c)
+        End Function
+
         Private Function WalkChar(c As Char) As String
-            If c = " "c OrElse c = ASCII.TAB Then
+            If c = " "c OrElse c = ASCII.TAB OrElse c = ASCII.CR OrElse c = ASCII.LF Then
                 If buf > 0 Then
                     Return New String(buf.PopAllChars)
                 End If

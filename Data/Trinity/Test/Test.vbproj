@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{2770C688-9A61-4914-B997-A5825AED7BF8}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.graphQueryTest</StartupObject>
+    <StartupObject>Test.Module2</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
-    <Compile Include="graphQueryTest.vb" />
+    <Compile Include="Module2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -132,49 +132,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data_science\Graph\GraphTheory.vbproj">
-      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
-      <Name>GraphTheory</Name>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{95c3c254-0415-4ac1-bdfc-7b66c45ad2bf}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{1e318cd3-82e2-413c-a8c2-d47396667f40}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{679f7463-b789-4511-98fb-0769514fd65e}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\application%25json\application.json.vbproj">
-      <Project>{32228818-26F1-44DF-8D40-347136C743CD}</Project>
-      <Name>application.json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\application%25xml\application_xml.vbproj">
-      <Project>{25af39f4-76af-411f-ac19-0dd1e128d801}</Project>
-      <Name>application_xml</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\text%25html\MIME-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>MIME-htmls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions.vbproj">
-      <Project>{344bf0cf-107f-45d2-9074-9865d8f86506}</Project>
-      <Name>DataFramework.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GraphQuery\GraphQuery.vbproj">
-      <Project>{f81bdcfe-0b16-4f69-a161-52d7d5575c38}</Project>
-      <Name>GraphQuery</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SearchEngine\SearchEngine\SearchEngine.vbproj">
-      <Project>{8afbc715-5eb6-4eaf-a967-d29a5667709f}</Project>
-      <Name>SearchEngine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Trinity.vbproj">
-      <Project>{62cac814-7e2e-43e0-a9a2-9e83b9a8f91b}</Project>
-      <Name>Trinity</Name>
+    <ProjectReference Include="..\Trinity.NET5.vbproj">
+      <Project>{e3f3cbd0-fd94-415c-acdd-723d37b8b8ab}</Project>
+      <Name>Trinity.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
