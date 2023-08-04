@@ -110,6 +110,9 @@ Namespace Math.SIMD
         ''' Vector(Of <see cref="Double"/>).Count
         ''' </summary>
         Public Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
+        ''' <summary>
+        ''' Vector(Of Single).Count
+        ''' </summary>
         Public Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
         ''' <summary>
         ''' Vector(Of <see cref="Integer"/>).Count
