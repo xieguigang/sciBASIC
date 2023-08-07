@@ -56,11 +56,12 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-#If netcore5 = 1 Then
-Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCore5
-#End If
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+
+#If NETCOREAPP Then
+Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
+#End If
 
 Namespace My.FrameworkInternal
 
@@ -149,12 +150,11 @@ Namespace My.FrameworkInternal
 
         Private Shared Sub fetchConfig(config As Config, file$)
             Dim assembly As Assembly = Assembly.LoadFile(file)
+            Dim configNames As FrameworkConfigAttribute()
 
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
             Call deps.TryHandleNetCore5AssemblyBugs(package:=assembly)
 #End If
-
-            Dim configNames As FrameworkConfigAttribute()
 
             Try
                 ' 20221006

@@ -97,8 +97,21 @@ Namespace FileIO
             Me.folder = FileSystem.GetDirectoryInfo(directory).FullName
         End Sub
 
+        ''' <summary>
+        ''' Create a directory object
+        ''' </summary>
+        ''' <param name="dir"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create target <paramref name="dir"/> if it is not exists 
+        ''' on your filesystem
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromLocalFileSystem(dir As String) As Directory
+            If Not dir.DirectoryExists Then
+                Call dir.MakeDir
+            End If
+
             Return New Directory(dir)
         End Function
 

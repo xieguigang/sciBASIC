@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ApplicationServices.Development.NetCore5
+Namespace ApplicationServices.Development.NetCoreApp
 
     ''' <summary>
     ''' read deps.json for .net 5 assembly
@@ -77,7 +77,7 @@ Namespace ApplicationServices.Development.NetCore5
         Public Property targets As Dictionary(Of String, Dictionary(Of String, target))
         Public Property libraries As Dictionary(Of String, library)
 
-        Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of runtime))
+        Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of Runtime))
             Dim info As AssemblyInfo = package.FromAssembly
             Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
             Dim targets As Dictionary(Of String, target) = Me.targets(runtimeTarget.name)
@@ -98,7 +98,7 @@ Namespace ApplicationServices.Development.NetCore5
                 dllFile = packageTarget.LibraryFile
 
                 If Not dllFile.StringEmpty Then
-                    Yield New NamedValue(Of runtime) With {
+                    Yield New NamedValue(Of Runtime) With {
                         .Name = assemblyKey,
                         .Value = packageTarget.runtime(dllFile),
                         .Description = dllFile
@@ -202,7 +202,7 @@ Namespace ApplicationServices.Development.NetCore5
             Dim dependencies = deps.LoadDependencies(package).ToDictionary(Function(d) d.Name)
 
             For Each project As NamedValue(Of String) In referenceList
-                Dim dllFileName As NamedValue(Of runtime) = dependencies.TryGetValue(project.Description)
+                Dim dllFileName As NamedValue(Of Runtime) = dependencies.TryGetValue(project.Description)
 
                 If dllFileName.Description.StringEmpty Then
                     Call $"no dll file module of: {project.Description}?".Warning

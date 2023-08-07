@@ -269,6 +269,9 @@ Namespace ComponentModel.Collection
         ''' <returns>
         ''' 这个函数所返回来的值是所添加的<paramref name="x"/>的index值
         ''' </returns>
+        ''' <remarks>
+        ''' this function will ignores of the existed duplicated item
+        ''' </remarks>
         Public Function Add(x As T) As Integer
             If Not maps.ContainsKey(x) Then
                 Call maps.Add(x, maps.Count + base)

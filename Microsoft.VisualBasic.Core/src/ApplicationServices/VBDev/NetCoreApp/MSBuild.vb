@@ -55,7 +55,7 @@
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Linq
 
-Namespace ApplicationServices.Development.NetCore5
+Namespace ApplicationServices.Development.NetCoreApp
 
     ''' <summary>
     ''' .NET core msbuild command wrapper
