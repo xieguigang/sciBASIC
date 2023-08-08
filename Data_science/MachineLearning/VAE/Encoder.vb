@@ -37,7 +37,7 @@ Public Class Encoder : Inherits VAEEnc
         For itr As Integer = 0 To I
             unit_gaussian = randf.NextGaussian(mu:=0, sigma:=1)
             '????
-            KL_div += unit_gaussian * std.Log2(output(itr)) - unit_gaussian * std.Log2(output(itr))
+            KL_div += unit_gaussian * std.Log(output(itr), 2) - unit_gaussian * std.Log(output(itr), 2)
             delta = (unit_gaussian / output(itr)) * input(itr)
 
             If output(itr) < 0 Then
