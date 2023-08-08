@@ -55,6 +55,8 @@ Public Class MNIST : Implements IDisposable
         Dim rows = ReadInt(imageReader)
         Dim columns = ReadInt(imageReader)
 
+        Call imageReader.Dispose()
+
         Return New Size(width:=columns, height:=rows)
     End Function
 
