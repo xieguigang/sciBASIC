@@ -37,20 +37,33 @@ Public Class MNIST : Implements IDisposable
     End Sub
 
     Public Iterator Function ExtractImages(imagesFile As String, labelsFile As String) As IEnumerable(Of NamedValue(Of Image))
+        Dim rect As Rectangle = New Rectangle(0, 0, columns, rows)
+
         For i As Integer = 0 To count - 1
             Dim image As Bitmap = New Bitmap(columns, rows)
-            Dim rect As Rectangle = New Rectangle(0, 0, image.Width, image.Height)
             Dim data = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
             Dim ptr = data.Scan0
             Dim bytes = std.Abs(data.Stride) * image.Height
+            Dim rgbValues = New Byte(bytes - 1) {}
+            Dim raw = ExtractRaw()
+            Dim bit As Byte
 
             Marshal.Copy(ptr, rgbValues, 0, bytes)
+
+            For j As Integer = 0 To rows * columns - 1
+                bit = raw(j)
+                rgbValues(j * 3) = bit
+                rgbValues(j * 3 + 1) = bit
+                rgbValues(j * 3 + 2) = bit
+            Next
+
             Marshal.Copy(rgbValues, 0, ptr, bytes)
+
             image.UnlockBits(data)
 
             Yield New NamedValue(Of Image) With {
-                .Name = $"{label}-{i}",
-                .Description = label,
+                .Name = raw.Last,
+                .Description = raw.description,
                 .Value = image
             }
         Next
