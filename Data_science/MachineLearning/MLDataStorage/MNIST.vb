@@ -16,6 +16,12 @@ Public Class MNIST : Implements IDisposable
     Dim rows, columns As Integer
     Dim rect As Rectangle
 
+    Public ReadOnly Property ImageSize As Size
+        Get
+            Return New Size(width:=columns, height:=rows)
+        End Get
+    End Property
+
     Sub New(imagesFile As String, labelsFile As String)
         imageReader = New BinaryReader(New FileStream(imagesFile, FileMode.Open))
         labelReader = New BinaryReader(New FileStream(labelsFile, FileMode.Open))
@@ -37,6 +43,20 @@ Public Class MNIST : Implements IDisposable
         columns = ReadInt(imageReader)
         rect = New Rectangle(0, 0, columns, rows)
     End Sub
+
+    Public Shared Function GetImageSize(imagesfile As String) As Size
+        Dim imageReader = New BinaryReader(New FileStream(imagesfile, FileMode.Open))
+
+        If ReadInt(imageReader) <> 2051 Then
+            Throw New InvalidDataException("Invalid magic number.")
+        End If
+
+        Dim count = ReadInt(imageReader)
+        Dim rows = ReadInt(imageReader)
+        Dim columns = ReadInt(imageReader)
+
+        Return New Size(width:=columns, height:=rows)
+    End Function
 
     Public Iterator Function ExtractImages() As IEnumerable(Of NamedValue(Of Image))
         For i As Integer = 0 To count - 1
