@@ -1,8 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>VAE</RootNamespace>
-    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder</RootNamespace>
+    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.VAE</AssemblyName>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Variational Autoencoder</Title>
+    <Description>Variational Autoencoder</Description>
   </PropertyGroup>
 
   <ItemGroup>
