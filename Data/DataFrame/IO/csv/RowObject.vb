@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::f9f4be44e11b951d0f6aa38e4acde13b, sciBASIC#\Data\DataFrame\IO\csv\RowObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 470
-    '    Code Lines: 284
-    ' Comment Lines: 129
-    '   Blank Lines: 57
-    '     File Size: 17.70 KB
+' Summaries:
 
 
-    '     Class RowObject
-    ' 
-    '         Properties: AsLine, DirectGet, IsReadOnly, NumbersOfColumn, Width
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
-    '                   GetColumn, GetEnumerator, GetEnumerator1, IndexOf, InsertAt
-    '                   LocateKeyWord, Remove, (+2 Overloads) Takes, (+2 Overloads) ToString, TryParse
-    ' 
-    '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
-    '              Trim
-    ' 
-    '         Operators: -, (+4 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 470
+'    Code Lines: 284
+' Comment Lines: 129
+'   Blank Lines: 57
+'     File Size: 17.70 KB
+
+
+'     Class RowObject
+' 
+'         Properties: AsLine, DirectGet, IsReadOnly, NumbersOfColumn, Width
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
+'                   GetColumn, GetEnumerator, GetEnumerator1, IndexOf, InsertAt
+'                   LocateKeyWord, Remove, (+2 Overloads) Takes, (+2 Overloads) ToString, TryParse
+' 
+'         Sub: Add, Clear, CopyTo, Insert, RemoveAt
+'              Trim
+' 
+'         Operators: -, (+4 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace IO
 
@@ -87,6 +88,7 @@ Namespace IO
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray columns$())
             buffer = columns.AsList
         End Sub
@@ -94,7 +96,9 @@ Namespace IO
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="objs">using <see cref="Scripting.Tostring"/> to converts the objects into a string array.</param>
+        ''' <param name="objs">using <see cref="any.ToString"/> to converts the objects into a string array.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(objs As IEnumerable(Of Object))
             Call Me.New(objs.Select(Function(x) Scripting.ToString(x)))
         End Sub
@@ -186,7 +190,7 @@ Namespace IO
         ''' <remarks></remarks>
         Public Function GetALLNonEmptys() As String()
             Dim LQuery = LinqAPI.Exec(Of String) <=
- _
+                                                   _
                 From s As String
                 In buffer
                 Where Not String.IsNullOrEmpty(s)

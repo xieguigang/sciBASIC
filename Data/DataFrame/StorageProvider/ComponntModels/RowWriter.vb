@@ -344,10 +344,10 @@ Namespace StorageProvider.ComponentModels
                 Dim tag As String = __cachedIndex(i)
 
                 If hash.Contains(tag) Then
-                    Dim value As Object = hash(key:=tag)
-                    values(i) = Scripting.ToString(value)
+                    values(i) = any.ToString(hash(key:=tag))
                 Else
-                    values(i) = _metaBlank  ' 假若不存在，则使用默认字符串进行替换，默认是空白字符串
+                    ' 假若不存在，则使用默认字符串进行替换，默认是空白字符串
+                    values(i) = _metaBlank
                 End If
             Next
 
