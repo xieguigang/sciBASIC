@@ -13,7 +13,7 @@ Public Class MNIST : Implements IDisposable
     Dim labelReader As BinaryReader
     Dim count As Integer
     Dim rows, columns As Integer
-    Dim bytes As Integer
+    Dim rect As Rectangle
 
     Sub New(imagesFile As String, labelsFile As String)
         imageReader = New BinaryReader(New FileStream(imagesFile, FileMode.Open))
@@ -34,39 +34,48 @@ Public Class MNIST : Implements IDisposable
 
         rows = ReadInt(imageReader)
         columns = ReadInt(imageReader)
+        rect = New Rectangle(0, 0, columns, rows)
     End Sub
 
-    Public Iterator Function ExtractImages(imagesFile As String, labelsFile As String) As IEnumerable(Of NamedValue(Of Image))
-        Dim rect As Rectangle = New Rectangle(0, 0, columns, rows)
-
+    Public Iterator Function ExtractImages() As IEnumerable(Of NamedValue(Of Image))
         For i As Integer = 0 To count - 1
-            Dim image As Bitmap = New Bitmap(columns, rows)
-            Dim data = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
-            Dim ptr = data.Scan0
-            Dim bytes = std.Abs(data.Stride) * image.Height
-            Dim rgbValues = New Byte(bytes - 1) {}
-            Dim raw = ExtractRaw()
-            Dim bit As Byte
-
-            Marshal.Copy(ptr, rgbValues, 0, bytes)
-
-            For j As Integer = 0 To rows * columns - 1
-                bit = raw(j)
-                rgbValues(j * 3) = bit
-                rgbValues(j * 3 + 1) = bit
-                rgbValues(j * 3 + 2) = bit
-            Next
-
-            Marshal.Copy(rgbValues, 0, ptr, bytes)
-
-            image.UnlockBits(data)
-
-            Yield New NamedValue(Of Image) With {
-                .Name = raw.Last,
-                .Description = raw.description,
-                .Value = image
-            }
+            Yield ExtractImage()
         Next
+    End Function
+
+    Public Iterator Function ExtractVectors() As IEnumerable(Of NamedCollection(Of Byte))
+        For i As Integer = 0 To count - 1
+            Yield ExtractRaw()
+        Next
+    End Function
+
+    Private Function ExtractImage() As NamedValue(Of Image)
+        Dim image As Bitmap = New Bitmap(columns, rows)
+        Dim data = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
+        Dim ptr As IntPtr = data.Scan0
+        Dim bytes = std.Abs(data.Stride) * image.Height
+        Dim rgbValues = New Byte(bytes - 1) {}
+        Dim raw = ExtractRaw()
+        Dim bit As Byte
+
+        Marshal.Copy(ptr, rgbValues, 0, bytes)
+
+        For j As Integer = 0 To rows * columns - 1
+            bit = raw(j)
+            rgbValues(j * 3) = bit
+            rgbValues(j * 3 + 1) = bit
+            rgbValues(j * 3 + 2) = bit
+        Next
+
+        Marshal.Copy(rgbValues, 0, ptr, bytes)
+
+        image.UnlockBits(data)
+
+        Return New NamedValue(Of Image) With {
+            .Name = raw.Last,
+            .Description = raw.description,
+            .Value = image
+        }
     End Function
 
     Private Function ExtractRaw() As NamedCollection(Of Byte)
