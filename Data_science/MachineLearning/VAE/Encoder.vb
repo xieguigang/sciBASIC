@@ -12,9 +12,13 @@ Public Class Encoder : Inherits VAEEnc
         End Get
     End Property
 
-    Sub New(N As Integer, kernel As Integer(), Optional learning_rate As Double = 0.00001)
+    Sub New(N As Integer,
+            kernel As Integer(),
+            strides As Integer(),
+            Optional learning_rate As Double = 0.00001)
+
         Me.weights = New Double(N - 1) {}
-        Me.strides = New Integer() {1, 1}
+        Me.strides = strides
         Me.dims = kernel.ToArray
         Me.learning_rate = learning_rate
 
