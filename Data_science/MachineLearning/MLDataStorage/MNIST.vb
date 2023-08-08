@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports std = System.Math
@@ -49,13 +50,12 @@ Public Class MNIST : Implements IDisposable
         Next
     End Function
 
-    Private Function ExtractImage() As NamedValue(Of Image)
+    Public Function ConvertImage(raw As NamedCollection(Of Byte)) As NamedValue(Of Image)
         Dim image As Bitmap = New Bitmap(columns, rows)
         Dim data = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
         Dim ptr As IntPtr = data.Scan0
         Dim bytes = std.Abs(data.Stride) * image.Height
         Dim rgbValues = New Byte(bytes - 1) {}
-        Dim raw = ExtractRaw()
         Dim bit As Byte
 
         Marshal.Copy(ptr, rgbValues, 0, bytes)
@@ -76,6 +76,11 @@ Public Class MNIST : Implements IDisposable
             .Description = raw.description,
             .Value = image
         }
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Function ExtractImage() As NamedValue(Of Image)
+        Return ConvertImage(raw:=ExtractRaw())
     End Function
 
     Private Function ExtractRaw() As NamedCollection(Of Byte)
