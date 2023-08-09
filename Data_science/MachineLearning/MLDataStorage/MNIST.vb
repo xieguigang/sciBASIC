@@ -23,8 +23,8 @@ Public Class MNIST : Implements IDisposable
     End Property
 
     Sub New(imagesFile As String, labelsFile As String)
-        imageReader = New BinaryReader(New FileStream(imagesFile, FileMode.Open))
-        labelReader = New BinaryReader(New FileStream(labelsFile, FileMode.Open))
+        imageReader = New BinaryReader(imagesFile.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
+        labelReader = New BinaryReader(labelsFile.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
 
         If ReadInt(imageReader) <> 2051 OrElse ReadInt(labelReader) <> 2049 Then
             Throw New Exception("Invalid magic number.")
@@ -45,7 +45,7 @@ Public Class MNIST : Implements IDisposable
     End Sub
 
     Public Shared Function GetImageSize(imagesfile As String) As Size
-        Dim imageReader = New BinaryReader(New FileStream(imagesfile, FileMode.Open))
+        Dim imageReader = New BinaryReader(imagesfile.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
 
         If ReadInt(imageReader) <> 2051 Then
             Throw New InvalidDataException("Invalid magic number.")
