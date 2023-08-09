@@ -26,4 +26,9 @@ Public Class VariationalEncoder
         Return z
     End Function
 
+    Public Sub backward(loss As Vector)
+        Call linear1.backward(loss)
+        Call linear2.backward(loss)
+        Call linear3.backward(loss)
+    End Sub
 End Class

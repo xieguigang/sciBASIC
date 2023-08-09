@@ -16,4 +16,8 @@ Public Class VariationalAutoencoder
         Return x
     End Function
 
+    Public Sub backward(loss As Vector)
+        Call decoder.backward(loss)
+        Call encoder.backward(loss)
+    End Sub
 End Class
