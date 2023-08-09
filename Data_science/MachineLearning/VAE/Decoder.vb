@@ -39,7 +39,7 @@ Public Class Decoder : Inherits VAEEnc
             strides As Integer(),
             Optional learning_rate As Double = 0.00001)
 
-        Me.weights = New NumericMatrix(N, kernel.First * kernel.Last)
+        Me.weights = New NumericMatrix(kernel.First * kernel.Last, N)
         Me.strides = New Integer() {1, 1}
         Me.dims = New Integer() {kernel.First, kernel.Last}
         Me.learning_rate = learning_rate
@@ -57,23 +57,19 @@ Public Class Decoder : Inherits VAEEnc
     End Sub
 
     Public Overrides Sub update(output As Vector, input As Vector)
+        Dim outX As New NumericMatrix(output.Array.Split(input.Dim))
         'Loss is the mean square between the real image and the generated image
         Dim dI As Integer = input.Dim
-        Dim loss As Double = 0
-        Dim delta As Double = 0
         Dim loss_div As Double = 2.0 / dI
         Dim m As Double = learning_rate
 
-        For i As Integer = 0 To dI - 1
-            delta = loss_div * (output(i) - input(i)) * input(i)
-            loss += loss_div * std.Pow(output(i) - input(i), 2)
+        outX = New NumericMatrix(outX.RowVectors.Select(Function(ov)
+                                                            Dim delta As Vector = loss_div * (ov - input) * input
+                                                            Return delta
+                                                        End Function))
 
-            If output(i) < 0 Then
-                delta *= 0.001
-            End If
 
-            weights(i) += m * delta
-        Next
+        ' weights += m * delta
 
         m_loss = loss
     End Sub

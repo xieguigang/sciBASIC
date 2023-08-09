@@ -17,7 +17,7 @@ Public Class Vae
 
     Sub New(N1 As Integer, N2 As Integer, Optional W2 As Integer = 10)
         _encoder = New Encoder(NUMBER_WEIGHTS, {N1, N2}, {1, 1})
-        _decoder = New Decoder(NUMBER_WEIGHTS, {W2, 1600}, {1, 1})
+        _decoder = New Decoder(NUMBER_WEIGHTS, {W2, N1 * N2}, {1, 1})
     End Sub
 
     Friend Sub update(input() As Double)
