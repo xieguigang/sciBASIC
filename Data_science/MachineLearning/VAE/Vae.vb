@@ -5,7 +5,7 @@ Public Class Vae
     Public ReadOnly Property encoder As Encoder
     Public ReadOnly Property decoder As Decoder
 
-    Dim NUMBER_WEIGHTS As Integer = 10000
+    Dim NUMBER_WEIGHTS As Integer = 1000
     Dim generated_image As Vector
     Dim latent_variables As Vector
 
@@ -15,12 +15,12 @@ Public Class Vae
         End Get
     End Property
 
-    Sub New(N1 As Integer, N2 As Integer, Optional W2 As Integer = 100)
+    Sub New(N1 As Integer, N2 As Integer, Optional W2 As Integer = 10)
         generated_image = New Vector(m:=N1 * N2)
         latent_variables = New Vector(m:=N1 * W2)
 
         _encoder = New Encoder(NUMBER_WEIGHTS, {N1, N2}, {1, 1})
-        _decoder = New Decoder(NUMBER_WEIGHTS, {W2, 2500}, {1, 1})
+        _decoder = New Decoder(NUMBER_WEIGHTS, {W2, 1600}, {1, 1})
     End Sub
 
     Friend Sub update(input() As Double)

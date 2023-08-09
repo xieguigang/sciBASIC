@@ -88,7 +88,7 @@ Public Class Decoder : Inherits VAEEnc
         Next
 
         ' matrix multiplication
-        output = weights.Multiply(input).ColumnVector(0)
+        output = weights.DotMultiply(input)
 
         ' leaky relu activation
         For i As Integer = 0 To dI * dJ - 1

@@ -1114,6 +1114,18 @@ Namespace LinearAlgebra.Matrix
             End If
         End Function
 
+        Public Function DotMultiply(v As Vector) As Vector
+            Dim out As Double() = New Double(v.Dim - 1) {}
+            Dim i As Integer = 0
+
+            For Each row As Vector In Me.RowVectors
+                out(i) = (row * v).Sum
+                i += 1
+            Next
+
+            Return New Vector(out)
+        End Function
+
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
         ''' <param name="s">   
         ''' scalar
