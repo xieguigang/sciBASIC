@@ -18,7 +18,7 @@ Public MustInherit Class VAEEnc
     Protected MustOverride Sub init_random()
 
     Public MustOverride Sub update(output As Vector, input As Vector)
-    Public MustOverride Sub get_output(output As Vector, input As Vector)
+    Public MustOverride Function get_output(input As Vector) As Vector
 
 End Class
 
@@ -78,23 +78,17 @@ Public Class Decoder : Inherits VAEEnc
         m_loss = loss
     End Sub
 
-    Public Overrides Sub get_output(output As Vector, input As Vector)
-        Dim dI As Integer = input.Dim / dims(0)
-        Dim dJ As Integer = dims(1)
-        Dim dK As Integer = dims(0)
-
-        For i As Integer = 0 To output.Dim - 1
-            output(i) = 0
-        Next
-
+    Public Overrides Function get_output(input As Vector) As Vector
         ' matrix multiplication
-        output = weights.DotMultiply(input)
+        Dim output = weights.DotMultiply(input)
 
         ' leaky relu activation
-        For i As Integer = 0 To dI * dJ - 1
+        For i As Integer = 0 To output.Dim - 1
             If output(i) < 0 Then
                 output(i) = 0.001
             End If
         Next
-    End Sub
+
+        Return output
+    End Function
 End Class

@@ -51,14 +51,10 @@ Public Class Encoder : Inherits VAEEnc
         m_loss = KL_div
     End Sub
 
-    Public Overrides Sub get_output(output As Vector, input As Vector)
+    Public Overrides Function get_output(input As Vector) As Vector
         Dim dI As Integer = input.Dim / dims(0)
         Dim dJ As Integer = dims(1)
         Dim dK As Integer = dims(0)
-
-        For i As Integer = 0 To output.Dim - 1
-            output(i) = 0.0
-        Next
 
         ' matrix multiplication
         'For i As Integer = 0 To dI - 1
@@ -69,15 +65,17 @@ Public Class Encoder : Inherits VAEEnc
         '    Next
         'Next
 
-        output = weights.DotMultiply(input)
+        Dim output = weights.DotMultiply(input)
 
         ' leaky relu activation
-        For i As Integer = 0 To dI * dJ - 1
+        For i As Integer = 0 To output.Dim - 1
             If output(i) < 0 Then
                 output(i) = 0.001
             End If
         Next
-    End Sub
+
+        Return output
+    End Function
 
     Protected Overrides Sub init_random()
         Dim dI As Integer = weights.Length

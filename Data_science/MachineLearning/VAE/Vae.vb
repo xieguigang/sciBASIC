@@ -16,9 +16,6 @@ Public Class Vae
     End Property
 
     Sub New(N1 As Integer, N2 As Integer, Optional W2 As Integer = 10)
-        generated_image = New Vector(m:=N1 * N2)
-        latent_variables = New Vector(m:=N1 * W2)
-
         _encoder = New Encoder(NUMBER_WEIGHTS, {N1, N2}, {1, 1})
         _decoder = New Decoder(NUMBER_WEIGHTS, {W2, 1600}, {1, 1})
     End Sub
@@ -29,10 +26,10 @@ Public Class Vae
     End Sub
 
     Friend Sub decode()
-        decoder.get_output(generated_image, latent_variables)
+        generated_image = decoder.get_output(latent_variables)
     End Sub
 
     Friend Sub encode(input() As Double)
-        encoder.get_output(latent_variables, input)
+        latent_variables = encoder.get_output(input)
     End Sub
 End Class
