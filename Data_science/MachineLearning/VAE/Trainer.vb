@@ -46,11 +46,15 @@ Public Class Trainer
             End If
 
             Dim mean As Double = 0
+            Dim v As Double() = dataset_input(i)
 
-            For j As Integer = 0 To dataset_input(i).Length - 1
-                mean += dataset_input(i)(j)
-                input(j) = dataset_input(i)(j)
+            For j As Integer = 0 To v.Length - 1
+                mean += v(j)
+                input(j) = v(j)
             Next
+
+            mean /= v.Length
+
             For j As Integer = 0 To input.Length - 1
                 input(j) -= mean
                 input(j) *= div

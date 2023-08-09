@@ -1,10 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Public MustInherit Class VAEEnc
 
-    Protected weights As Double()
+    Protected weights As NumericMatrix
     Protected strides As Integer()
     Protected dims As Integer()
     Protected learning_rate As Double
@@ -38,7 +39,7 @@ Public Class Decoder : Inherits VAEEnc
             strides As Integer(),
             Optional learning_rate As Double = 0.00001)
 
-        Me.weights = New Double(N - 1) {}
+        Me.weights = New NumericMatrix(N, kernel.First * kernel.Last)
         Me.strides = New Integer() {1, 1}
         Me.dims = New Integer() {kernel.First, kernel.Last}
         Me.learning_rate = learning_rate
@@ -86,13 +87,7 @@ Public Class Decoder : Inherits VAEEnc
         Next
 
         ' matrix multiplication
-        For i As Integer = 0 To dI - 1
-            For k As Integer = 0 To dK - 1
-                For j As Integer = 0 To dJ - 1
-                    output(i * dI + j) += weights(i * dK + k) * input(i * k + j)
-                Next
-            Next
-        Next
+        output = weights.Multiply(input).ColumnVector(0)
 
         ' leaky relu activation
         For i As Integer = 0 To dI * dJ - 1
