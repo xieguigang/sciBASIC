@@ -18,7 +18,13 @@ Imports std = System.Math
 Public Class Trainer
 
     Dim loss_vector As Vector = Nothing
-    Dim vae As Vae
+    Dim m_vae As Vae
+
+    Public ReadOnly Property Vae As Vae
+        Get
+            Return m_vae
+        End Get
+    End Property
 
     ''' <summary>
     ''' Create a new VAE trainer module code
@@ -26,10 +32,10 @@ Public Class Trainer
     ''' <param name="N1">image width</param>
     ''' <param name="N2">image height</param>
     Sub New(N1 As Integer, N2 As Integer)
-        vae = New Vae(N1, N2)
+        m_vae = New Vae(N1, N2)
     End Sub
 
-    Public Sub train_vae(steps As Integer, dataset_input As Byte()())
+    Public Sub train_vae(steps As Integer, dataset_input As Double()())
         Dim input As Double() = New Double(dataset_input(0).Length - 1) {}
         Dim div As Double = 1 / 256
 
@@ -51,9 +57,9 @@ Public Class Trainer
             Next
 
             ' update weights
-            vae.encode(input)
-            vae.decode
-            vae.update(input)
+            m_vae.encode(input)
+            m_vae.decode()
+            m_vae.update(input)
         Next
     End Sub
 End Class
