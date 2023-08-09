@@ -1192,6 +1192,26 @@ Namespace LinearAlgebra.Matrix
             Return m1.Add(m2)
         End Operator
 
+        Public Shared Operator +(m As NumericMatrix, v As Vector) As NumericMatrix
+            If m.ColumnDimension = v.Dim Then
+                Return New NumericMatrix(m.RowVectors.Select(Function(ri) ri + v))
+            ElseIf m.RowDimension = v.Dim Then
+                Dim cols As New List(Of Double())
+
+                For i As Integer = 0 To m.ColumnDimension - 1
+                    cols.Add(m.ColumnVector(i) + v)
+                Next
+
+                Dim rows As New List(Of Vector)
+
+                For i As Integer = 0 To m.RowDimension - 1
+                    rows.Add(cols.Select(Function(j) j(i)).AsVector)
+                Next
+
+                Return New NumericMatrix(rows)
+            End If
+        End Operator
+
         Public Shared Operator +(x As Double, m1 As NumericMatrix) As NumericMatrix
             Dim y As New NumericMatrix(m1.m, m1.n)
             Dim C As Double()() = y.Array

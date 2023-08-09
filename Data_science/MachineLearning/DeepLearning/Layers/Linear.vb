@@ -14,7 +14,7 @@ Namespace Math
 
         Sub New(in_features As Integer, out_features As Integer, Optional bias As Boolean = True)
             Me.bias = bias
-            Me.w = New NumericMatrix(in_features, out_features)
+            Me.w = New NumericMatrix(out_features, in_features)
         End Sub
 
         Public Function Fit(x As Vector) As Vector
