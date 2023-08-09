@@ -49,9 +49,10 @@ Public Class Decoder : Inherits VAEEnc
 
     Protected Overrides Sub init_random()
         Dim dI As Integer = weights.Length
+        Dim width As Integer = weights.ColumnDimension
 
         For i As Integer = 0 To dI - 1
-            weights(i) = randf.NextGaussian(mu:=0, sigma:=1)
+            weights(i) = Vector.norm(width, mu:=0, sigma:=1)
         Next
     End Sub
 

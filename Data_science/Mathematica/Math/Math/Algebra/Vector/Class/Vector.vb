@@ -1094,5 +1094,15 @@ Namespace LinearAlgebra
         Public Shared Function rand(min#, max#, size%) As Vector
             Return Extensions.rand(size, {min, max})
         End Function
+
+        Public Shared Function norm(size As Integer, Optional mu As Double = 0.0, Optional sigma As Double = 1.0) As Vector
+            Dim v As Double() = New Double(size - 1) {}
+
+            For i As Integer = 0 To v.Length - 1
+                v(i) = randf2.NextGaussian(mu, sigma)
+            Next
+
+            Return New Vector(v)
+        End Function
     End Class
 End Namespace
