@@ -1115,7 +1115,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Function DotMultiply(v As Vector) As Vector
-            Dim out As Double() = New Double(v.Dim - 1) {}
+            Dim out As Double() = New Double(Me.RowDimension - 1) {}
             Dim i As Integer = 0
 
             For Each row As Vector In Me.RowVectors
