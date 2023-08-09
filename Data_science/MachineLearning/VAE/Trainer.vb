@@ -20,6 +20,11 @@ Public Class Trainer
     Dim loss_vector As Vector = Nothing
     Dim vae As Vae
 
+    ''' <summary>
+    ''' Create a new VAE trainer module code
+    ''' </summary>
+    ''' <param name="N1">image width</param>
+    ''' <param name="N2">image height</param>
     Sub New(N1 As Integer, N2 As Integer)
         vae = New Vae(N1, N2)
     End Sub
