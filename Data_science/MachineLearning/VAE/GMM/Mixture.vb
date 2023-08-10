@@ -1,4 +1,5 @@
-﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports System.IO
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Namespace GMM
@@ -94,10 +95,14 @@ Namespace GMM
             Return lLoglike
         End Function
 
-        Public Overridable Sub printStats()
-            For Each c In components
-                Console.WriteLine("C - mean: " & c.Mean.ToString() & " stdev: " & c.Stdev.ToString() & " weight: " & c.Weight.ToString())
+        Public Overridable Sub printStats(Optional dev As TextWriter = Nothing)
+            dev = dev Or App.StdOut
+
+            For Each c As Component In components
+                Call dev.WriteLine($"C - mean: {c.Mean}{vbTab}stdev: {c.Stdev}{vbTab}weight: {c.Weight}")
             Next
+
+            dev.Flush()
         End Sub
 
 
