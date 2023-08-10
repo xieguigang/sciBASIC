@@ -95,6 +95,23 @@ Namespace GMM
             Return lLoglike
         End Function
 
+        Public Sub setVectors()
+            For i As Integer = 0 To components.Length - 1
+                Dim c As Component = _components(i)
+                Dim j As Integer = i
+                Dim max As Datum = data _
+                    .Where(Function(di) di.max - 1 = j) _
+                    .OrderByDescending(Function(a) a.probs(j)) _
+                    .FirstOrDefault
+
+                If max Is Nothing Then
+                    Throw New InvalidDataException
+                Else
+                    c.vector = max.getVector
+                End If
+            Next
+        End Sub
+
         Public Overridable Sub printStats(Optional dev As TextWriter = Nothing)
             dev = dev Or App.StdOut
 

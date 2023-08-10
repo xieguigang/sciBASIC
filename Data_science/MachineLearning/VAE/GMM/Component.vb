@@ -6,6 +6,8 @@
         Public Overridable Property Mean As Double
         Public Overridable Property Stdev As Double
 
+        Public Property vector As Double()
+
         Public Sub New(weight As Double, mean As Double, stdev As Double)
             _Weight = weight
             _Mean = mean

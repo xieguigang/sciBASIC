@@ -51,6 +51,11 @@ Namespace GMM
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function getVector() As Double()
+            Return m_val.entityVector
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function val() As Double
             Return m_val.entityVector.EuclideanDistance
         End Function

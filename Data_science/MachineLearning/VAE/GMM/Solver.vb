@@ -31,6 +31,7 @@ Namespace GMM
                 mix.Expectation()
                 mix.Maximization()
                 newLog = mix.logLike()
+                mix.setVectors()
 
                 dev.WriteLine($" [{vbTab}{++i}]{vbTab}new-loglike: {newLog}")
             Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > threshold
