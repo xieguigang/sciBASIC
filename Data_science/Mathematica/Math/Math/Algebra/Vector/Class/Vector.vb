@@ -387,13 +387,17 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
+            Dim output As Double()
+
             If v1.Length = 1 Then
-                Return v1(Scan0) + v2
+                output = SIMD.Add.f64_op_add_f64_scalar(v2.buffer, v1(Scan0))
             ElseIf v2.Length = 1 Then
-                Return v1 + v2(Scan0)
+                output = SIMD.Add.f64_op_add_f64_scalar(v1.buffer, v2(Scan0))
             Else
-                Return New Vector(SIMD.Add.f64_op_add_f64(v1.buffer, v2.buffer))
+                output = SIMD.Add.f64_op_add_f64(v1.buffer, v2.buffer)
             End If
+
+            Return New Vector(output)
         End Operator
 
         ''' <summary>
@@ -470,7 +474,7 @@ Namespace LinearAlgebra
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator *(v1 As Vector, v2 As Vector) As Vector
-            Return v1 * v2.buffer
+            Return New Vector(SIMD.Multiply.f64_op_multiply_f64(v1.buffer, v2.buffer))
         End Operator
 
         ''' <summary>
@@ -522,6 +526,8 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(v1 As Vector, a#) As Vector
             ''向量数加算符重载
             'Dim N0 As Integer = v1.[Dim] ' 获取变量维数
@@ -542,6 +548,8 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator *(v1 As Vector, a#) As Vector
             'Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             'Dim v2 As New Vector(N0)
@@ -566,6 +574,8 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator /(v1 As Vector, a#) As Vector
             'Dim N0 As Integer = v1.[Dim]         '获取变量维数
             'Dim v2 As New Vector(N0)

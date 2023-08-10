@@ -23,7 +23,7 @@ Public Class VariationalEncoder
         x = ReLU.ReLU(linear1.Fit(x))
 
         Dim mu = linear2.Fit(x)
-        Dim sigma = linear3.Fit(x) / 10000
+        Dim sigma = linear3.Fit(x) / 10000.0
 
         sigma(sigma < 0) = Vector.Scalar(0.0001)
         sigma = sigma.Exp

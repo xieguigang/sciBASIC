@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Public Class Trainer
 
@@ -7,6 +8,7 @@ Public Class Trainer
 
     Sub New(w As Integer, h As Integer, latent_dims As Integer)
         autoencoder = New VariationalAutoencoder(latent_dims)
+        ' SIMDEnvironment.config = SIMDConfiguration.legacy
     End Sub
 
     Public Function train(data As IEnumerable(Of Vector),
