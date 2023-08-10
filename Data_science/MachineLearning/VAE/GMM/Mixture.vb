@@ -1,0 +1,114 @@
+﻿Imports System
+
+''' <summary>
+''' Gaussian Mixture Model Unsupervised Clustering
+''' </summary>
+''' <remarks>
+''' https://github.com/thearrow/ai-GMM/tree/master
+''' </remarks>
+Public Class Mixture
+    Private components As Component()
+    Private data As DataSet
+
+    Public Sub New(ByVal data As DataSet)
+        Me.data = data
+        components = New Component(Me.data.components() - 1) {}
+        Dim mean = Me.data.Mean
+        Dim stdev = Me.data.Stdev
+        'random initialization of component parameters
+        For i = 0 To Me.data.components() - 1
+            Dim c As Component = New Component(1.0 / Double.Parse(Me.data.components().ToString() & ""), mean + (NextDouble - 0.5) * 4, stdev + (NextDouble - 0.5) * 4)
+            components(i) = c
+        Next
+    End Sub
+
+    Public Overridable Sub Expectation()
+        For i = 0 To data.size() - 1
+            Dim probs As Double() = New Double(data.components() - 1) {}
+            For j = 0 To components.Length - 1
+                Dim c = components(j)
+                probs(j) = gaussian(data.get(i).val(), c.Mean, c.Stdev) * c.Weight
+            Next
+
+            'alpha normalize and set probs
+            Dim sum = 0.0
+            For Each p In probs
+                sum += p
+            Next
+            For j = 0 To probs.Length - 1
+                Dim normProb = probs(j) / sum
+                data.get(i).setProb(j, normProb)
+            Next
+        Next
+    End Sub
+
+    Public Overridable Sub Maximization()
+        Dim newMean = 0.0
+        Dim newStdev = 0.0
+        For i = 0 To components.Length - 1
+            'MEAN
+            For j = 0 To data.size() - 1
+                newMean += data.get(j).getProb(i) * data.get(j).val()
+            Next
+            newMean /= data.nI(i)
+            components(i).Mean = newMean
+
+            'STDEV
+            For j = 0 To data.size() - 1
+                newStdev += data.get(j).getProb(i) * Math.Pow((data.get(j).val() - newMean), 2)
+            Next
+            newStdev /= data.nI(i)
+            newStdev = Math.Sqrt(newStdev)
+            components(i).Stdev = newStdev
+
+            'WEIGHT
+            components(i).Weight = data.nI(i) / data.size()
+        Next
+
+    End Sub
+
+    Public Overridable Function logLike() As Double
+        Dim lLoglike = 0.0
+        For i = 0 To data.size() - 1
+            Dim sum = 0.0
+            For j = 0 To components.Length - 1
+                Dim c = components(j)
+                Dim prob = data.get(i).getProb(j)
+                Dim val As Double = data.get(i).val()
+                Dim gauss = gaussian(val, c.Mean, c.Stdev)
+                If gauss = 0 Then
+                    gauss = Double.MinValue
+                End If
+                Dim inner = Math.Log(gauss) + Math.Log(c.Weight)
+                If Double.IsInfinity(inner) OrElse Double.IsNaN(inner) Then
+                    Return 0.0
+                End If
+                sum += prob * inner
+            Next
+            lLoglike += sum
+        Next
+        Return lLoglike
+    End Function
+
+    Public Overridable Sub printStats()
+        For Each c In components
+            Console.WriteLine("C - mean: " & c.Mean.ToString() & " stdev: " & c.Stdev.ToString() & " weight: " & c.Weight.ToString())
+        Next
+    End Sub
+
+
+    ' 
+    ' 	    The following two methods courtesy of Robert Sedgewick:
+    ' 	    http://introcs.cs.princeton.edu/java/22library/Gaussian.java.html
+    ' 	    Used to calculate the PDF of a gaussian distribution with mean=mu, stddev=sigma
+    ' 	 
+    Public Overridable Function standardGaussian(ByVal x As Double) As Double
+        Return Math.Exp(-x * x / 2) / Math.Sqrt(2 * Math.PI)
+    End Function
+
+    Public Overridable Function gaussian(ByVal x As Double, ByVal mu As Double, ByVal sigma As Double) As Double
+        Return standardGaussian((x - mu) / sigma) / sigma
+    End Function
+
+
+End Class
