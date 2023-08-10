@@ -88,13 +88,53 @@ Namespace Math.SIMD
         ''' <param name="v2"></param>
         ''' <returns></returns>
         Public Shared Function f64_op_subtract_f64(v1 As Double(), v2 As Double()) As Double()
-            Dim result As Double() = New Double(v1.Length - 1) {}
+            Select Case SIMDEnvironment.config
+                Case SIMDConfiguration.disable
+none:               Dim out As Double() = New Double(v1.Length - 1) {}
 
-            For i As Integer = 0 To v1.Length - 1
-                result(i) = v1(i) - v2(i)
-            Next
+                    For i As Integer = 0 To v1.Length - 1
+                        out(i) = v1(i) - v2(i)
+                    Next
 
-            Return result
+                    Return out
+                Case SIMDConfiguration.enable
+#If NET48 Then
+                    GoTo legacy
+#Else
+                    'If Avx2.IsSupported Then
+                    '    Return SIMDIntrinsics.VectorAddAvx2(v1, v2)
+                    'ElseIf Avx.IsSupported Then
+                    '    Return SIMDIntrinsics.VectorAddAvx(v1, v2)
+                    'Else
+                    GoTo legacy
+                    'End If
+#End If
+                Case SIMDConfiguration.legacy
+legacy:             Dim x1 As Vector(Of Double)
+                    Dim x2 As Vector(Of Double)
+                    Dim vec As Double() = New Double(v1.Length - 1) {}
+                    Dim remaining As Integer = v1.Length Mod SIMDEnvironment.countDouble
+                    Dim ends As Integer = v1.Length - remaining - 1
+
+                    For i As Integer = 0 To ends Step SIMDEnvironment.countDouble
+                        x1 = New Vector(Of Double)(v1, i)
+                        x2 = New Vector(Of Double)(v2, i)
+
+                        Call (x1 - x2).CopyTo(vec, i)
+                    Next
+
+                    For i As Integer = v1.Length - remaining To v1.Length - 1
+                        vec(i) = v1(i) - v2(i)
+                    Next
+
+                    Return vec
+                Case Else
+                    If v1.Length < 10000 Then
+                        GoTo none
+                    Else
+                        GoTo legacy
+                    End If
+            End Select
         End Function
     End Class
 End Namespace
