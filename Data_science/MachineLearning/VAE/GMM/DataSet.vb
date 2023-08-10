@@ -11,6 +11,12 @@ Namespace GMM
         Private m_data As Datum()
         Private m_components As Integer
 
+        Public ReadOnly Property width As Integer
+            Get
+                Return m_data(0).getVector.Length
+            End Get
+        End Property
+
         Public Sub New(data As IEnumerable(Of ClusterEntity), components As Integer)
             m_components = components
             m_data = data.Select(Function(d) New Datum(d, components)).ToArray
@@ -23,12 +29,12 @@ Namespace GMM
                 .ToArray
         End Sub
 
-        Public Overridable ReadOnly Property Stdev As Double
+        Public Overridable ReadOnly Property Stdev(m As Mixture) As Double
             Get
-                Dim mean = Me.Mean
+                Dim mean = Me.Mean(m)
                 Dim lStdev = 0.0
                 For Each d In m_data
-                    lStdev += std.Pow(d.val() - mean, 2)
+                    lStdev += std.Pow(d.val(m) - mean, 2)
                 Next
 
                 lStdev /= m_data.Count
@@ -37,11 +43,11 @@ Namespace GMM
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Mean As Double
+        Public Overridable ReadOnly Property Mean(m As Mixture) As Double
             Get
                 Dim lMean = 0.0
                 For Each d In m_data
-                    lMean += d.val()
+                    lMean += d.val(m)
                 Next
 
                 lMean /= m_data.Count
@@ -53,6 +59,11 @@ Namespace GMM
             Return m_components
         End Function
 
+        ''' <summary>
+        ''' sum of the all data probs of i-th component
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
         Public Overridable Function nI(i As Integer) As Double
             Dim sum = 0.0
             For Each d In m_data

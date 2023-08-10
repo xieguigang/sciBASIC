@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -16,14 +17,20 @@ Namespace GMM
         Public ReadOnly Property data As DatumList
 
         Public Sub New(data As DatumList)
+            Dim div As Double = 1.0 / data.components
+
             Me.data = data
-            components = New Component(Me.data.components() - 1) {}
-            Dim mean = Me.data.Mean
-            Dim stdev = Me.data.Stdev
-            'random initialization of component parameters
+            Me.components = New Component(Me.data.components() - 1) {}
+
+            Dim mean = 0
+            Dim stdev = 0
+
+            ' random initialization of component parameters
             For i = 0 To Me.data.components() - 1
-                Dim c As Component = New Component(1.0 / Double.Parse(Me.data.components().ToString() & ""), mean + (randf.NextDouble - 0.5) * 4, stdev + (randf.NextDouble - 0.5) * 4)
+                Dim c As Component = New Component(div, mean + (randf.NextDouble - 0.5) * 4, stdev + (randf.NextDouble - 0.5) * 4)
+
                 components(i) = c
+                components(i).vector = Vector.norm(data.width)
             Next
         End Sub
 
@@ -32,7 +39,13 @@ Namespace GMM
                 Dim probs As Double() = New Double(data.components() - 1) {}
                 For j = 0 To components.Length - 1
                     Dim c = components(j)
-                    probs(j) = gaussian(data.get(i).val(), c.Mean, c.Stdev) * c.Weight
+                    Dim p = gaussian(data.get(i).val(Me), c.Mean, c.Stdev) * c.Weight
+
+                    If p < 0 Then
+                        probs(j) = 0
+                    Else
+                        probs(j) = p
+                    End If
                 Next
 
                 'alpha normalize and set probs
@@ -50,24 +63,36 @@ Namespace GMM
         Public Overridable Sub Maximization()
             Dim newMean = 0.0
             Dim newStdev = 0.0
+            Dim dj As Datum
+            Dim psi As Double
+
             For i = 0 To components.Length - 1
                 'MEAN
                 For j = 0 To data.size() - 1
-                    newMean += data.get(j).getProb(i) * data.get(j).val()
+                    dj = data.get(j)
+                    newMean += dj.getProb(i) * dj.val(Me)
                 Next
-                newMean /= data.nI(i)
+
+                psi = data.nI(i)
+
+                If psi = 0.0 Then
+                    psi = 1.0E-50
+                End If
+
+                newMean /= psi
                 components(i).Mean = newMean
 
                 'STDEV
                 For j = 0 To data.size() - 1
-                    newStdev += data.get(j).getProb(i) * std.Pow((data.get(j).val() - newMean), 2)
+                    dj = data.get(j)
+                    newStdev += dj.getProb(i) * std.Pow((dj.val(Me) - newMean), 2)
                 Next
-                newStdev /= data.nI(i)
+                newStdev /= psi
                 newStdev = std.Sqrt(newStdev)
                 components(i).Stdev = newStdev
 
                 'WEIGHT
-                components(i).Weight = data.nI(i) / data.size()
+                components(i).Weight = psi / data.size()
             Next
 
         End Sub
@@ -79,14 +104,14 @@ Namespace GMM
                 For j = 0 To components.Length - 1
                     Dim c = components(j)
                     Dim prob = data.get(i).getProb(j)
-                    Dim val As Double = data.get(i).val()
+                    Dim val As Double = data.get(i).val(Me)
                     Dim gauss = gaussian(val, c.Mean, c.Stdev)
-                    If gauss = 0 Then
-                        gauss = Double.MinValue
+                    If gauss <= 0 Then
+                        gauss = 1
                     End If
                     Dim inner = std.Log(gauss) + std.Log(c.Weight)
                     If Double.IsInfinity(inner) OrElse Double.IsNaN(inner) Then
-                        Return 0.0
+                        Return 0
                     End If
                     sum += prob * inner
                 Next
@@ -105,7 +130,7 @@ Namespace GMM
                     .FirstOrDefault
 
                 If max Is Nothing Then
-                    Throw New InvalidDataException
+                    c.vector = Vector.norm(data.width)
                 Else
                     c.vector = max.getVector
                 End If

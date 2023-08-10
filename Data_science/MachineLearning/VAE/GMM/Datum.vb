@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace GMM
 
@@ -56,8 +57,12 @@ Namespace GMM
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function val() As Double
-            Return m_val.entityVector.EuclideanDistance
+        Public Overridable Function val(m As Mixture) As Double
+            Return m.components _
+                .Select(Function(ci)
+                            Return m_val.entityVector.EuclideanDistance(ci.vector)
+                        End Function) _
+                .EuclideanDistance
         End Function
 
         Public Overridable Sub setProb(i As Integer, val As Double)
@@ -66,6 +71,10 @@ Namespace GMM
 
         Public Overridable Function getProb(i As Integer) As Double
             Return m_probs(i)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"#{dataId}={max},  {m_val}; probs = {probs.GetJson}"
         End Function
     End Class
 End Namespace
