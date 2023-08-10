@@ -28,7 +28,7 @@ Namespace GMM
         ''' <returns></returns>
         Public ReadOnly Property max As Integer
             Get
-                Return which.Max(m_probs)
+                Return which.Max(m_probs) + 1
             End Get
         End Property
 
