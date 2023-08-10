@@ -8,9 +8,11 @@ Namespace GMM
     ''' </summary>
     Public Class Solver
 
-        Public Shared Function Predicts(ds As IEnumerable(Of ClusterEntity), Optional components As Integer = 3) As Integer
-            Dim mix As Mixture = New Mixture(New DataSet(ds, components))
+        Public Shared Function Predicts(ds As IEnumerable(Of ClusterEntity), Optional components As Integer = 3) As Mixture
+            Return Training(New Mixture(New DataSet(ds, components)))
+        End Function
 
+        Private Shared Function Training(mix As Mixture) As Mixture
             mix.printStats()
 
             Dim oldLog As Double = mix.logLike()
@@ -25,8 +27,11 @@ Namespace GMM
 
             mix.printStats()
 
-            Return 0
+            Return mix
         End Function
 
+        Public Shared Function Predicts(x As IEnumerable(Of Double), Optional components As Integer = 3) As Mixture
+            Return Training(New Mixture(New DataSet(x, components)))
+        End Function
     End Class
 End Namespace

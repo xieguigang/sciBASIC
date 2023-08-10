@@ -13,6 +13,11 @@ Namespace GMM
             m_data = data.Select(Function(d) New Datum(d, components)).ToArray
         End Sub
 
+        Sub New(data As IEnumerable(Of Double), components As Integer)
+            m_components = components
+            m_data = data.Select(Function(d) New Datum(d, components)).ToArray
+        End Sub
+
         Public Overridable ReadOnly Property Stdev As Double
             Get
                 Dim mean = Me.Mean
