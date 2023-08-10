@@ -1,11 +1,15 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports std = System.Math
 
 Namespace GMM
 
-    Public Class MainX
+    ''' <summary>
+    ''' GMM problem solver
+    ''' </summary>
+    Public Class Solver
 
-        Public Shared Function Main() As Integer
-            Dim mix As Mixture = New Mixture(New DataSet("", 3))
+        Public Shared Function Predicts(ds As IEnumerable(Of ClusterEntity), Optional components As Integer = 3) As Integer
+            Dim mix As Mixture = New Mixture(New DataSet(ds, components))
 
             mix.printStats()
 
