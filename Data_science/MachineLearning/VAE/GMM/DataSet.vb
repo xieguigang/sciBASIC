@@ -3,7 +3,10 @@ Imports std = System.Math
 
 Namespace GMM
 
-    Public Class DataSetList : Implements IEnumerable(Of Datum)
+    ''' <summary>
+    ''' A collection of <see cref="Datum"/>
+    ''' </summary>
+    Public Class DatumList : Implements IEnumerable(Of Datum)
 
         Private m_data As Datum()
         Private m_components As Integer

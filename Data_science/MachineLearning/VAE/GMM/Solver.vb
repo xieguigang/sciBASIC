@@ -14,7 +14,7 @@ Namespace GMM
                                         Optional components As Integer = 3,
                                         Optional threshold As Double = 0.00001) As Mixture
 
-            Return Training(New Mixture(New DataSetList(ds, components)), threshold)
+            Return Training(New Mixture(New DatumList(ds, components)), threshold)
         End Function
 
         Private Shared Function Training(mix As Mixture, threshold As Double) As Mixture
@@ -44,7 +44,7 @@ Namespace GMM
                                         Optional components As Integer = 3,
                                         Optional threshold As Double = 0.00001) As Mixture
 
-            Return Training(New Mixture(New DataSetList(x, components)), threshold)
+            Return Training(New Mixture(New DatumList(x, components)), threshold)
         End Function
     End Class
 End Namespace

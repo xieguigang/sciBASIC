@@ -13,9 +13,9 @@ Namespace GMM
     Public Class Mixture
 
         Public ReadOnly Property components As Component()
-        Public ReadOnly Property data As DataSetList
+        Public ReadOnly Property data As DatumList
 
-        Public Sub New(data As DataSetList)
+        Public Sub New(data As DatumList)
             Me.data = data
             components = New Component(Me.data.components() - 1) {}
             Dim mean = Me.data.Mean
