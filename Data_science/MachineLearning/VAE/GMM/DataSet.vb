@@ -3,7 +3,7 @@ Imports std = System.Math
 
 Namespace GMM
 
-    Public Class DataSet : Implements IEnumerable
+    Public Class DataSetList : Implements IEnumerable(Of Datum)
 
         Private m_data As Datum()
         Private m_components As Integer
@@ -15,7 +15,9 @@ Namespace GMM
 
         Sub New(data As IEnumerable(Of Double), components As Integer)
             m_components = components
-            m_data = data.Select(Function(d) New Datum(d, components)).ToArray
+            m_data = data _
+                .Select(Function(d, i) New Datum(d, components, i + 1)) _
+                .ToArray
         End Sub
 
         Public Overridable ReadOnly Property Stdev As Double
@@ -64,8 +66,14 @@ Namespace GMM
             Return m_data(i)
         End Function
 
-        Public Overridable Function GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return m_data.GetEnumerator()
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Datum) Implements IEnumerable(Of Datum).GetEnumerator
+            For Each xi As Datum In m_data
+                Yield xi
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

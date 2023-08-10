@@ -12,10 +12,10 @@ Namespace GMM
     ''' </remarks>
     Public Class Mixture
 
-        Private components As Component()
-        Private data As DataSet
+        Public ReadOnly Property components As Component()
+        Public ReadOnly Property data As DataSetList
 
-        Public Sub New(data As DataSet)
+        Public Sub New(data As DataSetList)
             Me.data = data
             components = New Component(Me.data.components() - 1) {}
             Dim mean = Me.data.Mean
