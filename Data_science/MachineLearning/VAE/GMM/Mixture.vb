@@ -8,6 +8,7 @@ Imports std = System.Math
 ''' https://github.com/thearrow/ai-GMM/tree/master
 ''' </remarks>
 Public Class Mixture
+
     Private components As Component()
     Private data As DataSet
 
