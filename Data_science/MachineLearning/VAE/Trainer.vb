@@ -12,28 +12,36 @@ Public Class Trainer
                           Optional epochs As Integer = 20,
                           Optional learning_rate As Double = 0.00001) As VariationalAutoencoder
 
+        Dim loess As New List(Of Vector)
+        Dim loss As Vector
+
         For i As Integer = 0 To epochs
             For Each x As Vector In data
-                Call backward(x, autoencoder.forward(x), learning_rate)
+                loss = backward(x, autoencoder.forward(x), learning_rate)
+                loess.Add(loss)
+
+                Call VBDebugger.EchoLine(loss.Sum)
             Next
         Next
 
         Return autoencoder
     End Function
 
-    Private Sub backward(x As Vector, xi As Vector, learning_rate As Double)
-        Dim loss = ((x - xi) ^ 2) * autoencoder.encoder.kl * learning_rate
+    Private Function backward(x As Vector, xi As Vector, learning_rate As Double) As Vector
+        Dim loss1 = ((x - xi)) * autoencoder.encoder.kl * learning_rate
 
-        loss(loss > 0.5) = Vector.Scalar(0.5)
-        loss(loss < -0.5) = Vector.Scalar(-0.5)
+        loss1(loss1 > 0.5) = Vector.Scalar(0.5)
+        loss1(loss1 < -0.5) = Vector.Scalar(-0.5)
 
-        Call autoencoder.decoder.backward(loss)
+        Call autoencoder.decoder.backward(loss1)
 
-        loss = ((autoencoder.encoder.forward(x) - autoencoder.encoder.forward(xi)) ^ 2) * autoencoder.encoder.kl * learning_rate
+        Dim loss2 = ((autoencoder.encoder.forward(x) - autoencoder.encoder.forward(xi))) * autoencoder.encoder.kl * learning_rate
 
-        loss(loss > 0.5) = Vector.Scalar(0.5)
-        loss(loss < -0.5) = Vector.Scalar(-0.5)
+        loss2(loss2 > 0.5) = Vector.Scalar(0.5)
+        loss2(loss2 < -0.5) = Vector.Scalar(-0.5)
 
-        Call autoencoder.encoder.backward(loss)
-    End Sub
+        Call autoencoder.encoder.backward(loss2)
+
+        Return loss1 + loss2
+    End Function
 End Class
