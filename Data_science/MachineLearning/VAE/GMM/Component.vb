@@ -1,7 +1,7 @@
 ﻿Public Class Component
     Private weightField, meanField, stdevField As Double
 
-    Public Sub New(ByVal weight As Double, ByVal mean As Double, ByVal stdev As Double)
+    Public Sub New(weight As Double, mean As Double, stdev As Double)
         weightField = weight
         meanField = mean
         stdevField = stdev
@@ -11,7 +11,7 @@
         Get
             Return weightField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             weightField = value
         End Set
     End Property
@@ -20,7 +20,7 @@
         Get
             Return meanField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             meanField = value
         End Set
     End Property
@@ -29,7 +29,7 @@
         Get
             Return stdevField
         End Get
-        Set(ByVal value As Double)
+        Set(value As Double)
             stdevField = value
         End Set
     End Property

@@ -10,7 +10,7 @@ Public Class Mixture
     Private components As Component()
     Private data As DataSet
 
-    Public Sub New(ByVal data As DataSet)
+    Public Sub New(data As DataSet)
         Me.data = data
         components = New Component(Me.data.components() - 1) {}
         Dim mean = Me.data.Mean
@@ -102,11 +102,11 @@ Public Class Mixture
     ' 	    http://introcs.cs.princeton.edu/java/22library/Gaussian.java.html
     ' 	    Used to calculate the PDF of a gaussian distribution with mean=mu, stddev=sigma
     ' 	 
-    Public Overridable Function standardGaussian(ByVal x As Double) As Double
+    Public Overridable Function standardGaussian(x As Double) As Double
         Return Math.Exp(-x * x / 2) / Math.Sqrt(2 * Math.PI)
     End Function
 
-    Public Overridable Function gaussian(ByVal x As Double, ByVal mu As Double, ByVal sigma As Double) As Double
+    Public Overridable Function gaussian(x As Double, mu As Double, sigma As Double) As Double
         Return standardGaussian((x - mu) / sigma) / sigma
     End Function
 

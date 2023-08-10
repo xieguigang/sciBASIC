@@ -10,7 +10,7 @@ Public Class DataSet
 
     Private components_Renamed As Integer
 
-    Public Sub New(ByVal fileName As String, ByVal components As Integer)
+    Public Sub New(fileName As String, components As Integer)
         components_Renamed = components
         data = New List(Of Datum)()
         'read in data from file
@@ -57,7 +57,7 @@ Public Class DataSet
         Return components_Renamed
     End Function
 
-    Public Overridable Function nI(ByVal i As Integer) As Double
+    Public Overridable Function nI(i As Integer) As Double
         Dim sum = 0.0
         For Each d In data
             sum += d.getProb(i)
@@ -69,7 +69,7 @@ Public Class DataSet
         Return data.Count
     End Function
 
-    Public Overridable Function [get](ByVal i As Integer) As Datum
+    Public Overridable Function [get](i As Integer) As Datum
         Return data(i)
     End Function
 
