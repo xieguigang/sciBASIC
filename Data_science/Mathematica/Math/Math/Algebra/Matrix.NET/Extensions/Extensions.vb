@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::a39c29e0a56cfeb6aa1a6c5c7b757b73, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 132
-    '    Code Lines: 86
-    ' Comment Lines: 27
-    '   Blank Lines: 19
-    '     File Size: 4.71 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: CenterNormalize, ColumnVector, Covariance, rand, size
-    ' 
-    '         Sub: Print
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 132
+'    Code Lines: 86
+' Comment Lines: 27
+'   Blank Lines: 19
+'     File Size: 4.71 KB
+
+
+'     Module Extensions
+' 
+'         Function: CenterNormalize, ColumnVector, Covariance, rand, size
+' 
+'         Sub: Print
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Text
+Imports rand2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
 
@@ -93,7 +94,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Function rand(m%, n%) As GeneralMatrix
-            With New Random()
+            With rand2.seeds
                 Dim A As New NumericMatrix(m, n)
                 Dim X As Double()() = A.Array
 

@@ -66,6 +66,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -74,6 +75,7 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
 
@@ -1192,6 +1194,10 @@ Namespace LinearAlgebra.Matrix
             Return m1.Add(m2)
         End Operator
 
+        Public Shared Operator -(m As NumericMatrix, v As Vector) As NumericMatrix
+            Return m + (-v)
+        End Operator
+
         Public Shared Operator +(m As NumericMatrix, v As Vector) As NumericMatrix
             If m.ColumnDimension = v.Dim Then
                 Return New NumericMatrix(m.RowVectors.Select(Function(ri) ri + v))
@@ -1209,6 +1215,8 @@ Namespace LinearAlgebra.Matrix
                 Next
 
                 Return New NumericMatrix(rows)
+            Else
+                Throw New InvalidDataException
             End If
         End Operator
 
@@ -1675,6 +1683,19 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To rowDimension - 1
                 For j As Integer = 0 To columnDimension - 1
                     x(i)(j) = 1
+                Next
+            Next
+
+            Return m
+        End Function
+
+        Public Shared Function Gauss(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
+            Dim m As New NumericMatrix(rowDimension, columnDimension)
+            Dim x = m.Array
+
+            For i As Integer = 0 To rowDimension - 1
+                For j As Integer = 0 To columnDimension - 1
+                    x(i)(j) = randf2.NextGaussian(mu:=0, sigma:=1)
                 Next
             Next
 

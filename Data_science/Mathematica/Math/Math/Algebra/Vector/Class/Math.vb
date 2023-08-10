@@ -107,7 +107,13 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp() As Vector
-            Return New Vector(From n As Double In Array Select sys.Exp(n))
+            Dim vexp As Double() = New Double([Dim] - 1) {}
+
+            For i As Integer = 0 To vexp.Length - 1
+                vexp(i) = sys.Exp(buffer(i))
+            Next
+
+            Return New Vector(vexp)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
