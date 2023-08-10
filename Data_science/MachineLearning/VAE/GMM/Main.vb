@@ -1,25 +1,28 @@
 ﻿Imports std = System.Math
 
-Public Class MainX
+Namespace GMM
 
-    Public Shared Function Main() As Integer
-        Dim mix As Mixture = New Mixture(New DataSet("", 3))
+    Public Class MainX
 
-        mix.printStats()
+        Public Shared Function Main() As Integer
+            Dim mix As Mixture = New Mixture(New DataSet("", 3))
 
-        Dim oldLog As Double = mix.logLike()
-        Dim newLog = oldLog - 100.0
-        Do
-            oldLog = newLog
-            mix.Expectation()
-            mix.Maximization()
-            newLog = mix.logLike()
-            Console.WriteLine(newLog)
-        Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > 0.00000000000001
+            mix.printStats()
 
-        mix.printStats()
+            Dim oldLog As Double = mix.logLike()
+            Dim newLog = oldLog - 100.0
+            Do
+                oldLog = newLog
+                mix.Expectation()
+                mix.Maximization()
+                newLog = mix.logLike()
+                Console.WriteLine(newLog)
+            Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > 0.00000000000001
 
-        Return 0
-    End Function
+            mix.printStats()
 
-End Class
+            Return 0
+        End Function
+
+    End Class
+End Namespace
