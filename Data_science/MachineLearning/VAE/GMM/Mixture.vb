@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 ''' <summary>
 ''' Gaussian Mixture Model Unsupervised Clustering
@@ -17,7 +18,7 @@ Public Class Mixture
         Dim stdev = Me.data.Stdev
         'random initialization of component parameters
         For i = 0 To Me.data.components() - 1
-            Dim c As Component = New Component(1.0 / Double.Parse(Me.data.components().ToString() & ""), mean + (NextDouble - 0.5) * 4, stdev + (NextDouble - 0.5) * 4)
+            Dim c As Component = New Component(1.0 / Double.Parse(Me.data.components().ToString() & ""), mean + (randf.NextDouble - 0.5) * 4, stdev + (randf.NextDouble - 0.5) * 4)
             components(i) = c
         Next
     End Sub
@@ -55,10 +56,10 @@ Public Class Mixture
 
             'STDEV
             For j = 0 To data.size() - 1
-                newStdev += data.get(j).getProb(i) * Math.Pow((data.get(j).val() - newMean), 2)
+                newStdev += data.get(j).getProb(i) * std.Pow((data.get(j).val() - newMean), 2)
             Next
             newStdev /= data.nI(i)
-            newStdev = Math.Sqrt(newStdev)
+            newStdev = std.Sqrt(newStdev)
             components(i).Stdev = newStdev
 
             'WEIGHT
@@ -79,7 +80,7 @@ Public Class Mixture
                 If gauss = 0 Then
                     gauss = Double.MinValue
                 End If
-                Dim inner = Math.Log(gauss) + Math.Log(c.Weight)
+                Dim inner = std.Log(gauss) + std.Log(c.Weight)
                 If Double.IsInfinity(inner) OrElse Double.IsNaN(inner) Then
                     Return 0.0
                 End If
@@ -103,7 +104,7 @@ Public Class Mixture
     ' 	    Used to calculate the PDF of a gaussian distribution with mean=mu, stddev=sigma
     ' 	 
     Public Overridable Function standardGaussian(x As Double) As Double
-        Return Math.Exp(-x * x / 2) / Math.Sqrt(2 * Math.PI)
+        Return std.Exp(-x * x / 2) / std.Sqrt(2 * std.PI)
     End Function
 
     Public Overridable Function gaussian(x As Double, mu As Double, sigma As Double) As Double

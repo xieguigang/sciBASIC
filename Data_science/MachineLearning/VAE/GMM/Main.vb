@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Public Class MainX
 
@@ -15,7 +15,7 @@ Public Class MainX
             mix.Maximization()
             newLog = mix.logLike()
             Console.WriteLine(newLog)
-        Loop While newLog <> 0 AndAlso Math.Abs(newLog - oldLog) > 0.00000000000001
+        Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > 0.00000000000001
 
         mix.printStats()
 

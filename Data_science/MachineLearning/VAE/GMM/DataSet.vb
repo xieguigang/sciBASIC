@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
 
 Public Class DataSet
     Implements IEnumerable
@@ -32,11 +30,11 @@ Public Class DataSet
             Dim mean = Me.Mean
             Dim lStdev = 0.0
             For Each d In data
-                lStdev += Math.Pow(d.val() - mean, 2)
+                lStdev += std.Pow(d.val() - mean, 2)
             Next
 
             lStdev /= data.Count
-            lStdev = Math.Sqrt(lStdev)
+            lStdev = std.Sqrt(lStdev)
             Return lStdev
         End Get
     End Property
