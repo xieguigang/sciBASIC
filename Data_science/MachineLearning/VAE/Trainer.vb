@@ -36,14 +36,14 @@ Public Class Trainer
                          <Out> ByRef loss2 As Vector)
 
         loss1 = ((x - xi)) * (autoencoder.encoder.kl * learning_rate)
-        loss1(loss1 > 0.5) = Vector.Scalar(0.5)
-        loss1(loss1 < -0.5) = Vector.Scalar(-0.5)
+        loss1(loss1 > 0.1) = Vector.Scalar(0.1)
+        loss1(loss1 < -0.1) = Vector.Scalar(-0.1)
 
         Call autoencoder.decoder.backward(loss1)
 
         loss2 = ((autoencoder.encoder.forward(x) - autoencoder.encoder.forward(xi))) * (autoencoder.encoder.kl * learning_rate)
-        loss2(loss2 > 0.5) = Vector.Scalar(0.5)
-        loss2(loss2 < -0.5) = Vector.Scalar(-0.5)
+        loss2(loss2 > 0.1) = Vector.Scalar(0.1)
+        loss2(loss2 < -0.1) = Vector.Scalar(-0.1)
 
         Call autoencoder.encoder.backward(loss2)
     End Sub
