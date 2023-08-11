@@ -86,6 +86,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' <returns></returns>
         Public Property [Declare] As String
 
+        ''' <summary>
+        ''' example code for use this method
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property example As String
+
         Public ReadOnly Property Type() As ProjectType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
