@@ -149,6 +149,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 Me.Remarks = remarksNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
+            Dim exampleNode As XmlNode = xn.SelectSingleNode("example")
+
+            If Not exampleNode Is Nothing Then
+                Me.example = exampleNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
+            End If
+
             Dim ns = xn.SelectNodes("param")
 
             If Not ns Is Nothing Then
