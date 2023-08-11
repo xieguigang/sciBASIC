@@ -164,11 +164,11 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                 Call sb.Replace(m, "'" & m.GetValue & "'")
             Next
 
-            ms = Regex.Matches(sb.ToString, example, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            'ms = Regex.Matches(sb.ToString, example, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
 
-            For Each m As String In ms
-                Call sb.Replace(m, "==" & m.GetValue & "==")
-            Next
+            'For Each m As String In ms
+            '    Call sb.Replace(m, "==" & m.GetValue & "==")
+            'Next
 
             Return sb.ToString
         End Function
