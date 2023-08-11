@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace GMM
@@ -57,12 +56,8 @@ Namespace GMM
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function val(m As Mixture) As Double
-            Return m.components _
-                .Select(Function(ci)
-                            Return m_val.entityVector.EuclideanDistance(ci.vector)
-                        End Function) _
-                .EuclideanDistance
+        Public Overridable Function val() As Double
+            Return m_val.entityVector.Average
         End Function
 
         Public Overridable Sub setProb(i As Integer, val As Double)

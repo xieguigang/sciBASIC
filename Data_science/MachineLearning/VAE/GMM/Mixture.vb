@@ -22,15 +22,14 @@ Namespace GMM
             Me.data = data
             Me.components = New Component(Me.data.components() - 1) {}
 
-            Dim mean = 0
-            Dim stdev = 0
+            Dim mean = data.Mean
+            Dim stdev = data.Stdev
 
             ' random initialization of component parameters
             For i = 0 To Me.data.components() - 1
                 Dim c As Component = New Component(div, mean + (randf.NextDouble - 0.5) * 4, stdev + (randf.NextDouble - 0.5) * 4)
 
                 components(i) = c
-                components(i).vector = Vector.norm(data.width)
             Next
         End Sub
 
@@ -39,7 +38,7 @@ Namespace GMM
                 Dim probs As Double() = New Double(data.components() - 1) {}
                 For j = 0 To components.Length - 1
                     Dim c = components(j)
-                    Dim p = gaussian(data.get(i).val(Me), c.Mean, c.Stdev) * c.Weight
+                    Dim p = gaussian(data.get(i).val, c.Mean, c.Stdev) * c.Weight
 
                     If p < 0 Then
                         probs(j) = 0
@@ -70,7 +69,7 @@ Namespace GMM
                 'MEAN
                 For j = 0 To data.size() - 1
                     dj = data.get(j)
-                    newMean += dj.getProb(i) * dj.val(Me)
+                    newMean += dj.getProb(i) * dj.val
                 Next
 
                 psi = data.nI(i)
@@ -85,7 +84,7 @@ Namespace GMM
                 'STDEV
                 For j = 0 To data.size() - 1
                     dj = data.get(j)
-                    newStdev += dj.getProb(i) * std.Pow((dj.val(Me) - newMean), 2)
+                    newStdev += dj.getProb(i) * std.Pow((dj.val - newMean), 2)
                 Next
                 newStdev /= psi
                 newStdev = std.Sqrt(newStdev)
@@ -104,7 +103,7 @@ Namespace GMM
                 For j = 0 To components.Length - 1
                     Dim c = components(j)
                     Dim prob = data.get(i).getProb(j)
-                    Dim val As Double = data.get(i).val(Me)
+                    Dim val As Double = data.get(i).val
                     Dim gauss = gaussian(val, c.Mean, c.Stdev)
                     If gauss <= 0 Then
                         gauss = 1
@@ -120,23 +119,6 @@ Namespace GMM
             Return lLoglike
         End Function
 
-        Public Sub setVectors()
-            For i As Integer = 0 To components.Length - 1
-                Dim c As Component = _components(i)
-                Dim j As Integer = i
-                Dim max As Datum = data _
-                    .Where(Function(di) di.max - 1 = j) _
-                    .OrderByDescending(Function(a) a.probs(j)) _
-                    .FirstOrDefault
-
-                If max Is Nothing Then
-                    c.vector = Vector.norm(data.width)
-                Else
-                    c.vector = max.getVector
-                End If
-            Next
-        End Sub
-
         Public Overridable Sub printStats(Optional dev As TextWriter = Nothing)
             dev = dev Or App.StdOut
 
@@ -146,7 +128,6 @@ Namespace GMM
 
             dev.Flush()
         End Sub
-
 
         ' 
         ' 	    The following two methods courtesy of Robert Sedgewick:

@@ -29,12 +29,12 @@ Namespace GMM
                 .ToArray
         End Sub
 
-        Public Overridable ReadOnly Property Stdev(m As Mixture) As Double
+        Public Overridable ReadOnly Property Stdev As Double
             Get
-                Dim mean = Me.Mean(m)
+                Dim mean = Me.Mean
                 Dim lStdev = 0.0
                 For Each d In m_data
-                    lStdev += std.Pow(d.val(m) - mean, 2)
+                    lStdev += std.Pow(d.val - mean, 2)
                 Next
 
                 lStdev /= m_data.Count
@@ -43,11 +43,11 @@ Namespace GMM
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Mean(m As Mixture) As Double
+        Public Overridable ReadOnly Property Mean As Double
             Get
                 Dim lMean = 0.0
                 For Each d In m_data
-                    lMean += d.val(m)
+                    lMean += d.val
                 Next
 
                 lMean /= m_data.Count
