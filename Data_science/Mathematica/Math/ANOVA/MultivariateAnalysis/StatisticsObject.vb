@@ -1,5 +1,17 @@
-﻿Imports CompMs.Common.Enum
-Imports System.Collections.ObjectModel
+﻿Imports System.Collections.ObjectModel
+
+Public Enum ScaleMethod
+    None
+    MeanCenter
+    ParetoScale
+    AutoScale
+End Enum
+
+Public Enum TransformMethod
+    None
+    Log10
+    QuadRoot
+End Enum
 
 Public Class BasicStats
     Public Property ID As Integer
