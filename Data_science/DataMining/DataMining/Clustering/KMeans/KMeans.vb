@@ -67,7 +67,7 @@ Namespace KMeans
     ''' <summary>
     ''' This class implement a KMeans clustering algorithm.(请注意，实体对象的属性必须要长度一致)
     ''' </summary>
-    Public Module KMeansAlgorithm
+    Public Class KMeansAlgorithm(Of T As EntityBase(Of Double))
 
         ''' <summary>
         ''' Calculates The Mean Of A Cluster OR The Cluster Center
@@ -88,7 +88,7 @@ Namespace KMeans
         ''' <returns>
         ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
         ''' </returns>
-        Public Function ClusterMean(cluster As Double(,)) As Double()
+        Public Shared Function ClusterMean(cluster As Double(,)) As Double()
             Dim rowCount = cluster.GetUpperBound(0) + 1
             Dim fieldCount = cluster.GetUpperBound(1) + 1
             Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
@@ -125,7 +125,6 @@ Namespace KMeans
         ''' element count of the <paramref name="source"/> collection, then this api 
         ''' function will throw an exception
         ''' </remarks>
-        <Extension>
         Public Function ClusterDataSet(Of T As EntityBase(Of Double))(source As IEnumerable(Of T),
                                                                       clusterCount%,
                                                                       Optional debug As Boolean = False,
@@ -226,8 +225,7 @@ Namespace KMeans
             Return clusters
         End Function
 
-        <Extension>
-        Private Function CrossOver(Of T As EntityBase(Of Double))(stableClusters As ClusterCollection(Of T)) As ClusterCollection(Of T)
+        Private Function CrossOver(stableClusters As ClusterCollection(Of T)) As ClusterCollection(Of T)
             For null As Integer = 1 To 3
                 Dim i% = randf.NextInteger(stableClusters.NumOfCluster)
                 Dim j% = randf.NextInteger(stableClusters.NumOfCluster)
@@ -266,8 +264,7 @@ Namespace KMeans
         ''' <param name="parallel">是否采用并行算法</param>
         ''' <returns>A collection of clusters of data</returns>
         ''' 
-        <Extension>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
+        Public Function ClusterDataSet(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
             Dim fieldCount As Integer = data(Scan0).Length
             Dim newClusters As New ClusterCollection(Of T)
 
@@ -309,8 +306,7 @@ Namespace KMeans
             Return newClusters
         End Function
 
-        <Extension>
-        Private Function ParallelUnix(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+        Private Function ParallelUnix(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
             Dim blockQuery = From cblock As SeqValue(Of KMeansCluster(Of T))()
                              In clusters _
                                  .SeqIterator _
@@ -329,8 +325,7 @@ Namespace KMeans
             Return blockQuery.ToArray.IteratesALL
         End Function
 
-        <Extension>
-        Private Function ParallelMicrosoft(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+        Private Function ParallelMicrosoft(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
             Return From c As SeqValue(Of KMeansCluster(Of T))
                    In clusters.SeqIterator.AsParallel
                    Let cluster As KMeansCluster(Of T) = c.value
@@ -381,5 +376,5 @@ Namespace KMeans
 
             Return position
         End Function
-    End Module
+    End Class
 End Namespace
