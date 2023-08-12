@@ -129,8 +129,8 @@ Public Class StatisticsMathematics
 
         sum = 0.0
         For i = 0 To size - 1
-            sum += Math.Pow(dataArray(i) - mean, 2)
+            sum += std.Pow(dataArray(i) - mean, 2)
         Next
-        stdev = Math.Sqrt(sum / (size - 1))
+        stdev = std.Sqrt(sum / (size - 1))
     End Sub
 End Class

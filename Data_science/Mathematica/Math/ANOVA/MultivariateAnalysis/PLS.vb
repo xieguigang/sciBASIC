@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports std = System.Math
 
 Public Class PLS
 
@@ -44,7 +45,7 @@ Public Class PLS
         ' yPred
         Dim yPred = GetPredictedYvariables(coeffVector, statObject)
         Dim ySumofSqure = BasicMathematics.ErrorOfSquareVs2(statObject.YVariables, yPred)
-        Dim rmsee = Math.Sqrt(ySumofSqure / (rowSize - optfactor - 1))
+        Dim rmsee = std.Sqrt(ySumofSqure / (rowSize - optfactor - 1))
 
         Dim maResult = New MultivariateAnalysisResult() With {
                 .StatisticsObject = statObject,
@@ -140,7 +141,7 @@ Public Class PLS
             Dim wo2 = 0.0
             For k = 0 To xnew.Length - 1
                 tneworth += xnew(k) * woPred(j, k)
-                wo2 += Math.Pow(woPred(j, k), 2)
+                wo2 += std.Pow(woPred(j, k), 2)
             Next
             tneworth /= wo2
 
@@ -160,9 +161,9 @@ Public Class PLS
         For i = 0 To columnSize - 1
             Dim s = 0.0
             For j = 0 To optfactor - 1
-                s += Math.Pow(wPred(j, i), 2) * (ssPred(j) - ssPred(j + 1)) * columnSize / (ssPred(0) - ssPred(optfactor))
+                s += std.Pow(wPred(j, i), 2) * (ssPred(j) - ssPred(j + 1)) * columnSize / (ssPred(0) - ssPred(optfactor))
             Next
-            vip(i) = Math.Sqrt(s)
+            vip(i) = std.Sqrt(s)
         Next
         Return vip
     End Function
@@ -443,7 +444,7 @@ Public Class PLS
         ' score initialize
         For i = 0 To yArray.Length - 1
             u(i) = yArray(i)
-            uScalar += Math.Pow(u(i), 2)
+            uScalar += std.Pow(u(i), 2)
         Next
 
         Dim w = New Double(columnSize - 1) {} ' weight (X) factor calculation
@@ -563,7 +564,7 @@ Public Class PLS
         If size >= 25 Then
             limit = size * 0.2 * 0.01
         Else
-            limit = Math.Sqrt(size) * 0.01
+            limit = std.Sqrt(size) * 0.01
         End If
 
         If latestQ2 < limit Then
@@ -594,7 +595,7 @@ Public Class PLS
 
         ' rule N5 defined by Hiroshi
         If q2cum.Count > 1 Then
-            Dim diff = Math.Abs(q2cum(q2cum.Count - 1) - q2cum(q2cum.Count - 2)) * 100
+            Dim diff = std.Abs(q2cum(q2cum.Count - 1) - q2cum(q2cum.Count - 2)) * 100
             If diff < 2 Then
                 optfactor = q2.Count - 1
                 Return True
@@ -735,7 +736,7 @@ Public Class PLS
         ' score initialize
         For i = 0 To yArray.Length - 1
             u(i) = yArray(i)
-            uScalar += Math.Pow(u(i), 2)
+            uScalar += std.Pow(u(i), 2)
         Next
 
         w = New Double(columnSize - 1) {} ' weight (X) factor calculation
