@@ -117,4 +117,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MultivariateAnalysis\" />
+  </ItemGroup>
+
 </Project>
