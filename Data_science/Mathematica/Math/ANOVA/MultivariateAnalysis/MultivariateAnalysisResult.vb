@@ -8,7 +8,7 @@ Public Class MultivariateAnalysisResult
 
     ' model set
     Public Property StatisticsObject As StatisticsObject = New StatisticsObject()
-    Public Property MultivariateAnalysisOption As MultivariateAnalysisOption = MultivariateAnalysisOption.Plsda
+    ' Public Property MultivariateAnalysisOption As MultivariateAnalysisOption = MultivariateAnalysisOption.Plsda
 
     ' cv result
     Public Property NFold As Integer = 7
@@ -47,24 +47,9 @@ Public Class MultivariateAnalysisResult
     ' pca
     Public Property Contributions As ObservableCollection(Of Double) = New ObservableCollection(Of Double)()
 
-    ' hca
-    Public Property XDendrogram As DirectedTree
-    Public Property YDendrogram As DirectedTree
-
-    Public Sub WriteResult(ByVal output As String)
-        Select Case MultivariateAnalysisOption
-            Case MultivariateAnalysisOption.Pca
-                WritePcaResult(output)
-            Case MultivariateAnalysisOption.Plsda, MultivariateAnalysisOption.Plsr
-                WritePlsResult(output)
-            Case MultivariateAnalysisOption.Oplsda, MultivariateAnalysisOption.Oplsr
-                WriteOplsResult(output)
-        End Select
-    End Sub
-
     Public Sub WritePlsResult(ByVal output As String)
         Using sw As StreamWriter = New StreamWriter(output, False, Encoding.ASCII)
-            sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & MultivariateAnalysisOption.ToString())
+            sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & "PLS")
             sw.WriteLine("Optimized factor" & Microsoft.VisualBasic.Constants.vbTab & OptimizedFactor.ToString())
             sw.WriteLine()
             sw.WriteLine("Cross validation N fold" & Microsoft.VisualBasic.Constants.vbTab & NFold.ToString())
@@ -128,7 +113,7 @@ Public Class MultivariateAnalysisResult
 
     Public Sub WriteOplsResult(ByVal output As String)
         Using sw As StreamWriter = New StreamWriter(output, False, Encoding.ASCII)
-            sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & MultivariateAnalysisOption.ToString())
+            sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & "OPLS")
             sw.WriteLine("Optimized biological factor" & Microsoft.VisualBasic.Constants.vbTab & OptimizedFactor.ToString())
             sw.WriteLine("Optimized orthogonal factor" & Microsoft.VisualBasic.Constants.vbTab & OptimizedOrthoFactor.ToString())
             sw.WriteLine()

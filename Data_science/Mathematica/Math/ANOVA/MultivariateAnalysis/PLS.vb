@@ -1,12 +1,11 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Collections.ObjectModel
+Imports System.Runtime.InteropServices
 Imports std = System.Math
 
 Public Class PLS
 
 #Region "pls"
-    Public Shared Function PartialLeastSquares(ByVal statObject As StatisticsObject, ByVal plsoption As MultivariateAnalysisOption, ByVal Optional component As Integer = -1) As MultivariateAnalysisResult
-        If plsoption = MultivariateAnalysisOption.Oplsda OrElse plsoption = MultivariateAnalysisOption.Oplsr Then Return OrthogonalProjectionsToLatentStructures(statObject, plsoption, component)
-
+    Public Shared Function PartialLeastSquares(ByVal statObject As StatisticsObject, ByVal Optional component As Integer = -1) As MultivariateAnalysisResult
         Dim dataArray = statObject.CopyX()
         Dim yArray = statObject.CopyY()
 
@@ -49,8 +48,7 @@ Public Class PLS
 
         Dim maResult = New MultivariateAnalysisResult() With {
                 .StatisticsObject = statObject,
-                .MultivariateAnalysisOption = plsoption,
-                .nFold = nFold,
+                .NFold = nFold,
                 .SsCVs = New ObservableCollection(Of Double)(ss),
                 .Presses = New ObservableCollection(Of Double)(press),
                 .Totals = New ObservableCollection(Of Double)(total),
@@ -62,7 +60,7 @@ Public Class PLS
                 .Coefficients = New ObservableCollection(Of Double)(coeffVector),
                 .Vips = New ObservableCollection(Of Double)(vip),
                 .PredictedYs = New ObservableCollection(Of Double)(yPred),
-                .rmsee = rmsee
+                .Rmsee = rmsee
             }
 
         For i = 0 To optfactor - 1
