@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
 Public Class PLS
@@ -183,8 +184,8 @@ Public Class PLS
             Next
         Next
 
-        Dim pwMatrixLU = MatrixCalculate.MatrixDecompose(pwMatrix)
-        Dim pwMatrixInv = MatrixCalculate.MatrixInverse(pwMatrixLU)
+        Dim pwMatrixLU = New NumericMatrix(pwMatrix).LUD
+        Dim pwMatrixInv = DirectCast(pwMatrixLU.Solve(), NumericMatrix).Inverse
 
         Dim wStar = New Double(optfactor - 1, columnSize - 1) {}
         For i = 0 To optfactor - 1
