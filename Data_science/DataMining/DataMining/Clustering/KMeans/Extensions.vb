@@ -137,15 +137,14 @@ Namespace KMeans
                 .IteratesALL _
                 .Distinct _
                 .ToArray
-            Dim clusters As ClusterCollection(Of ClusterEntity) = ClusterDataSet(
-                clusterCount:=expected,
+            Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, parallel:=parallel)
+            Dim clusters As ClusterCollection(Of ClusterEntity) = kmeansCore.ClusterDataSet(
+                k:=expected,
                 source:=rawInput _
                     .Select(Function(xi)
                                 Return xi.ToModel(projection:=maps)
                             End Function) _
-                    .ToArray,
-                debug:=debug,
-                parallel:=parallel
+                    .ToArray
             )
             Dim result As New List(Of EntityClusterModel)
 

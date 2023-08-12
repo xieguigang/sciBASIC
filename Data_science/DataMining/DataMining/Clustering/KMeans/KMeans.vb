@@ -57,10 +57,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
 
 Namespace KMeans
 
@@ -73,6 +71,9 @@ Namespace KMeans
         ReadOnly stop% = -1
         ReadOnly parallel As Boolean = True
 
+        ''' <param name="parallel">
+        ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
+        ''' </param>
         Sub New(Optional debug As Boolean = False,
                 Optional stop% = -1,
                 Optional parallel As Boolean = True)
@@ -122,7 +123,7 @@ Namespace KMeans
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
-        ''' <param name="clusterCount">
+        ''' <param name="k">
         ''' The number of clusters or groups to form.(当这个参数值为0的时候，函数也会返回一个空集合)
         ''' </param>
         ''' <param name="source">
@@ -130,20 +131,12 @@ Namespace KMeans
         ''' (里面的元素至少需要三个)
         ''' </param>
         ''' <returns>A collection of clusters of data</returns>
-        ''' <param name="parallel">
-        ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
-        ''' </param>
         ''' <remarks>
-        ''' if the <paramref name="clusterCount"/> parameter value is greater than the
+        ''' if the <paramref name="k"/> parameter value is greater than the
         ''' element count of the <paramref name="source"/> collection, then this api 
         ''' function will throw an exception
         ''' </remarks>
-        Public Function ClusterDataSet(source As IEnumerable(Of T),
-                                       clusterCount%,
-                                       Optional debug As Boolean = False,
-                                       Optional stop% = -1,
-                                       Optional parallel As Boolean = True) As ClusterCollection(Of T)
-
+        Public Function ClusterDataSet(source As IEnumerable(Of T), k%) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -153,9 +146,10 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim clusterNumbers As New List(Of Integer)
+            Dim [stop] = Me.stop
 
-            If clusterCount >= rowCount Then
-                Dim msg$ = $"[cluster.count:={clusterCount}] >= [source.length:={rowCount}], this will caused a dead loop!"
+            If k >= rowCount Then
+                Dim msg$ = $"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!"
                 Throw New Exception(msg)
             Else
                 If debug Then
@@ -163,7 +157,7 @@ Namespace KMeans
                 End If
             End If
 
-            While clusterNumbers.Count < clusterCount
+            While clusterNumbers.Count < k
                 clusterNumber = randf.seeds.[Next](0, rowCount - 1)
 
                 If Not clusterNumbers.Contains(clusterNumber) Then
@@ -175,7 +169,7 @@ Namespace KMeans
             End While
 
             If [stop] <= 0 Then
-                [stop] = clusterCount * rowCount
+                [stop] = k * rowCount
             End If
             If debug Then
                 Call "Start kmeans clustering....".__DEBUG_ECHO
