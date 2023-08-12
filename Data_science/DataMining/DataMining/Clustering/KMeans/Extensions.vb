@@ -64,21 +64,21 @@ Namespace KMeans
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ToKMeansModels(data As IEnumerable(Of NamedCollection(Of Double))) As IEnumerable(Of EntityClusterModel)
-            Return data.Select(Function(d)
-                                   Return New EntityClusterModel With {
-                                       .ID = d.name,
-                                       .Cluster = "",
-                                       .Properties = d.value _
-                                           .Select(Function(v1, i)
-                                                       Return (v1, i)
-                                                   End Function) _
-                                           .ToDictionary(Function(t) t.i.ToString,
-                                                         Function(t)
-                                                             Return t.v1
-                                                         End Function)
-                                   }
-                               End Function)
+        Iterator Public Function ToKMeansModels(data As IEnumerable(Of NamedCollection(Of Double))) As IEnumerable(Of EntityClusterModel)
+            For Each d In data
+                Yield New EntityClusterModel With {
+                    .ID = d.name,
+                    .Cluster = "",
+                    .Properties = d.value _
+                        .Select(Function(v1, i)
+                                    Return (v1, i)
+                                End Function) _
+                        .ToDictionary(Function(t) t.i.ToString,
+                                    Function(t)
+                                        Return t.v1
+                                    End Function)
+                }
+            Next
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

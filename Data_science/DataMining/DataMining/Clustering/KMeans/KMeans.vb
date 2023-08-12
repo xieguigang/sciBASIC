@@ -69,6 +69,19 @@ Namespace KMeans
     ''' </summary>
     Public Class KMeansAlgorithm(Of T As EntityBase(Of Double))
 
+        ReadOnly debug As Boolean = False
+        ReadOnly stop% = -1
+        ReadOnly parallel As Boolean = True
+
+        Sub New(Optional debug As Boolean = False,
+                Optional stop% = -1,
+                Optional parallel As Boolean = True)
+
+            Me.debug = debug
+            Me.stop = [stop]
+            Me.parallel = parallel
+        End Sub
+
         ''' <summary>
         ''' Calculates The Mean Of A Cluster OR The Cluster Center
         ''' 
@@ -125,11 +138,12 @@ Namespace KMeans
         ''' element count of the <paramref name="source"/> collection, then this api 
         ''' function will throw an exception
         ''' </remarks>
-        Public Function ClusterDataSet(Of T As EntityBase(Of Double))(source As IEnumerable(Of T),
-                                                                      clusterCount%,
-                                                                      Optional debug As Boolean = False,
-                                                                      Optional stop% = -1,
-                                                                      Optional parallel As Boolean = True) As ClusterCollection(Of T)
+        Public Function ClusterDataSet(source As IEnumerable(Of T),
+                                       clusterCount%,
+                                       Optional debug As Boolean = False,
+                                       Optional stop% = -1,
+                                       Optional parallel As Boolean = True) As ClusterCollection(Of T)
+
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
@@ -284,9 +298,9 @@ Namespace KMeans
                 ' Kmeans并行算法
                 For Each x As T In data
                     If App.IsMicrosoftPlatform Then
-                        min = clusters.ParallelMicrosoft(x).ToArray
+                        min = ParallelMicrosoft(clusters, x).ToArray
                     Else
-                        min = clusters.ParallelUnix(x).ToArray
+                        min = ParallelUnix(clusters, x).ToArray
                     End If
 
                     ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
@@ -299,7 +313,7 @@ Namespace KMeans
             Else
                 '((20+30)/2), ((170+160)/2), ((80+120)/2)
                 For Each x As T In data
-                    Call newClusters(clusters.minIndex(x)).Add(x)
+                    Call newClusters(minIndex(clusters, x)).Add(x)
                 Next
             End If
 
@@ -315,7 +329,7 @@ Namespace KMeans
                              Select From c As SeqValue(Of KMeansCluster(Of T))
                                     In cblock
                                     Let cluster As KMeansCluster(Of T) = c.value
-                                    Let clusterMean As Double() = cluster.means(x)
+                                    Let clusterMean As Double() = means(cluster, x)
                                     Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                                     Select New SeqValue(Of Double) With {
                                         .i = c.i,
@@ -329,7 +343,7 @@ Namespace KMeans
             Return From c As SeqValue(Of KMeansCluster(Of T))
                    In clusters.SeqIterator.AsParallel
                    Let cluster As KMeansCluster(Of T) = c.value
-                   Let clusterMean As Double() = cluster.means(x)
+                   Let clusterMean As Double() = means(cluster, x)
                    Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                    Select New SeqValue(Of Double) With {
                        .i = c.i,
@@ -338,13 +352,11 @@ Namespace KMeans
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Private Function means(Of T As EntityBase(Of Double))(cluster As KMeansCluster(Of T), x As T) As Double()
+        Private Shared Function means(cluster As KMeansCluster(Of T), x As T) As Double()
             Return If(cluster.NumOfEntity = 0, New Double(x.entityVector.Length - 1) {}, cluster.ClusterMean)
         End Function
 
-        <Extension>
-        Private Function minIndex(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
+        Private Shared Function minIndex(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
             Dim position As Integer = 0
             Dim clusterMean As Double()
             Dim firstClusterDistance As Double = 0.0
