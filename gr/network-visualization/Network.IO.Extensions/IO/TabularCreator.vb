@@ -128,16 +128,23 @@ Namespace FileStream
             }
         End Function
 
+        ''' <summary>
+        ''' create table of the network graph edges
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="properties$"></param>
+        ''' <param name="is2Dlayout"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function CreateGraphTable(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of NetworkEdge)
+        Public Iterator Function CreateGraphTable(g As Edge(), properties$(), is2Dlayout As Boolean) As IEnumerable(Of NetworkEdge)
             Dim edgeProperties As String() = properties
             Dim edge As NetworkEdge
 
             If (Not edgeProperties.IsNullOrEmpty) AndAlso edgeProperties.Length = 1 AndAlso edgeProperties(Scan0) = "*" Then
-                edgeProperties = (From e In g.graphEdges Select e.data).GetUnionProperties
+                edgeProperties = (From e As Graph.Edge In g Select e.data).GetUnionProperties
             End If
 
-            For Each l As Edge In g.graphEdges
+            For Each l As Edge In g
                 edge = New NetworkEdge With {
                     .fromNode = l.U.label,
                     .toNode = l.V.label,
@@ -163,6 +170,20 @@ Namespace FileStream
             Next
         End Function
 
+        ''' <summary>
+        ''' create table of the network graph edges
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="properties$"></param>
+        ''' <param name="is2Dlayout"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateGraphTable(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of NetworkEdge)
+            Return g.graphEdges.ToArray.CreateGraphTable(properties, is2Dlayout)
+        End Function
+
         <Extension>
         Private Function GetUnionProperties(Of T As GraphData)(vlist As IEnumerable(Of T)) As String()
             Return vlist.Select(Function(v) v.Properties.Keys) _
@@ -172,21 +193,27 @@ Namespace FileStream
         End Function
 
         <Extension>
-        Public Iterator Function CreateNodesMetaData(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
+        Public Iterator Function CreateNodesMetaData(g As Graph.Node(), properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
             If Not properties.IsNullOrEmpty AndAlso properties.Length = 1 AndAlso properties(Scan0) = "*" Then
-                properties = (From v In g.vertex Select v.data).GetUnionProperties
+                properties = (From v In g Select v.data).GetUnionProperties
                 properties = properties _
                     .Where(Function(name) name <> names.REFLECTION_ID_MAPPING_NODETYPE) _
                     .ToArray
             End If
 
-            For Each n As Graph.Node In g.vertex
+            For Each n As Graph.Node In g
                 If n.data Is Nothing Then
                     n.data = New NodeData
                 End If
 
                 Yield dumpNodeVertex(n, properties, is2Dlayout)
             Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CreateNodesMetaData(g As NetworkGraph, properties$(), is2Dlayout As Boolean) As IEnumerable(Of Node)
+            Return g.vertex.ToArray.CreateNodesMetaData(properties, is2Dlayout)
         End Function
 
         Private Function dumpNodeVertex(n As Graph.Node, properties As String(), is2Dlayout As Boolean) As Node
