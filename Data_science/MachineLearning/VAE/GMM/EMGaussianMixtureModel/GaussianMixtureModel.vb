@@ -142,7 +142,7 @@ Namespace GMM.EMGaussianMixtureModel
             Next
         End Function
 
-        Private Function logLikelihoodGMM(components As IList(Of GaussianMixtureComponent)) As Double
+        Private Function logLikelihoodGMM(components As GaussianMixtureComponent()) As Double
             Dim logLikelihoodSum = 0.0
 
             For Each datum As ClusterEntity In m_data

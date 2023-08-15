@@ -42,5 +42,9 @@ Namespace GMM.EMGaussianMixtureModel
         Public Overridable Function componentPDFandProb(x As Double()) As Double
             Return _Weight * multiVariateGaussianPDF(x, _Mean, _CovMatrix)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"[{Position}] weight: {Weight}"
+        End Function
     End Class
 End Namespace
