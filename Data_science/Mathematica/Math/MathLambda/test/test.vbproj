@@ -131,21 +131,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{c0a7173d-da72-4d1a-b946-fbc70062392a}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\mime\application%25xml\application_xml.vbproj">
-      <Project>{25af39f4-76af-411f-ac19-0dd1e128d801}</Project>
-      <Name>application_xml</Name>
+    <ProjectReference Include="..\..\..\..\..\mime\application%25xml\xml-netcore5.vbproj">
+      <Project>{23cf7478-50e2-472d-af5a-d57b7c67499e}</Project>
+      <Name>xml-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\Math\Math.NET5.vbproj">
+      <Project>{eb968af6-cb4c-46a3-8350-e18a51e6c32c}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MathLambda.vbproj">
-      <Project>{db845b19-91dd-48ec-91f7-7e1f0127b01d}</Project>
-      <Name>MathLambda</Name>
+    <ProjectReference Include="..\symbolic-netcore5.vbproj">
+      <Project>{21aa7d47-a8eb-448a-81ce-868a715afc7d}</Project>
+      <Name>symbolic-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
