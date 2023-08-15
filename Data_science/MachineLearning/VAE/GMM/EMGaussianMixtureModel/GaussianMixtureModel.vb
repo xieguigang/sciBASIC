@@ -20,6 +20,8 @@ Namespace GMM.EMGaussianMixtureModel
         Dim m_safe As Boolean = False
         Dim m_abs As Boolean = False
 
+        Const min As Double = 1.0 / Long.MaxValue
+
         ReadOnly m_width As Integer
 
         Public Overridable ReadOnly Property Components As GaussianMixtureComponent()
@@ -56,6 +58,10 @@ Namespace GMM.EMGaussianMixtureModel
             For Each component As GaussianMixtureComponent In components
                 denominator += component.componentPDFandProb(datum)
             Next
+
+            If denominator = 0.0 Then
+                denominator = min
+            End If
 
             For i As Integer = 0 To wkList.Count - 1
                 wkList(i) = wkList(i) / denominator
@@ -151,6 +157,10 @@ Namespace GMM.EMGaussianMixtureModel
                 For Each comp As GaussianMixtureComponent In components
                     componentPDFSum += comp.componentPDFandProb(datum.entityVector)
                 Next
+
+                If componentPDFSum = 0.0 Then
+                    componentPDFSum = min
+                End If
 
                 logLikelihoodSum += std.Log(componentPDFSum)
             Next

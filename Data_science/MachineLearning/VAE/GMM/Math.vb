@@ -23,7 +23,7 @@ Namespace GMM.EMGaussianMixtureModel
             Dim results As Vector = Vector.Zero([Dim]:=input(0).Count)
 
             For Each i As IList(Of Double) In input
-                results = New Vector(results) + New Vector(i)
+                results = results + New Vector(i)
             Next
 
             Return results.AsList
