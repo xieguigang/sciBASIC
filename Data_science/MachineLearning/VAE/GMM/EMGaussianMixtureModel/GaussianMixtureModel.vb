@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports RealMatrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
 Imports std = System.Math
 
@@ -33,6 +34,18 @@ Namespace GMM.EMGaussianMixtureModel
         Public Overridable ReadOnly Property Components As GaussianMixtureComponent()
             Get
                 Return m_components
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The probility of each datum in the input dataset clustering to the specific components
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Probs As Double()()
+            Get
+                Return eStep(m_components) _
+                    .Select(Function(c) c.ToArray) _
+                    .ToArray
             End Get
         End Property
 
@@ -76,14 +89,17 @@ Namespace GMM.EMGaussianMixtureModel
             Return wkList
         End Function
 
-        Private Function eStep(components As GaussianMixtureComponent()) As IList(Of IList(Of Double))
-            Dim results As New List(Of IList(Of Double))()
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="components"></param>
+        ''' <returns>
+        ''' the populate out sequence order is keeps the same as the source <see cref="m_data"/>
+        ''' </returns>
+        Private Iterator Function eStep(components As GaussianMixtureComponent()) As IEnumerable(Of IList(Of Double))
             For Each datum As ClusterEntity In m_data
-                Call results.Add(eStepDatum(datum.entityVector, components))
+                Yield eStepDatum(datum.entityVector, components)
             Next
-
-            Return results
         End Function
 
         Private Iterator Function meansMStep(NkList As IList(Of Double), wkList As IList(Of IList(Of Double))) As IEnumerable(Of RealMatrix)
@@ -183,7 +199,7 @@ Namespace GMM.EMGaussianMixtureModel
             Dim currentLogLikelihood, deltaLogLikelihood As Double
 
             For k As Integer = 0 To maxNumberIterations - 1 - 1
-                EStepVals = eStep(MStepVals)
+                EStepVals = eStep(MStepVals).AsList
                 MStepVals = mStep(EStepVals).ToArray
                 currentLogLikelihood = logLikelihoodGMM(MStepVals)
 
@@ -218,6 +234,10 @@ Namespace GMM.EMGaussianMixtureModel
         Public Function FitGMM(estimatedCompCenters As IList(Of Double()), maxIterations As Integer, convergenceCriteria As Double) As GaussianMixtureModel
             m_components = emStep(estimatedCompCenters, maxIterations, convergenceCriteria)
             Return Me
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{m_data.Length} dataset(width: {m_width}) clustering as {m_components.Length} components({m_components.Select(Function(c) c.Weight).ToArray.GetJson})."
         End Function
     End Class
 End Namespace
