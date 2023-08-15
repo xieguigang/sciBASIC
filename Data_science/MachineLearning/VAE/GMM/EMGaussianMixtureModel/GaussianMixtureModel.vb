@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports RealMatrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
 Imports std = System.Math
@@ -15,7 +16,7 @@ Namespace GMM.EMGaussianMixtureModel
     Public Class GaussianMixtureModel
 
         Dim m_components As GaussianMixtureComponent()
-        Dim m_data As Double()()
+        Dim m_data As ClusterEntity()
         Dim m_safe As Boolean = False
         Dim m_abs As Boolean = False
 
@@ -25,9 +26,9 @@ Namespace GMM.EMGaussianMixtureModel
             End Get
         End Property
 
-        Public Sub New(data As IList(Of Double()), Optional safe As Boolean = False, Optional abs As Boolean = False)
+        Public Sub New(data As IEnumerable(Of ClusterEntity), Optional strict As Boolean = True, Optional abs As Boolean = False)
             Me.m_data = data.ToArray
-            Me.m_safe = safe
+            Me.m_safe = Not strict
             Me.m_abs = abs
         End Sub
 
