@@ -53,11 +53,7 @@ Namespace GMM.EMGaussianMixtureModel
                 wkList.Add(GMMk.componentPDFandProb(datum))
             Next
 
-            Dim denominator As Double = 0
-
-            For Each component As GaussianMixtureComponent In components
-                denominator += component.componentPDFandProb(datum)
-            Next
+            Dim denominator As Double = wkList.Sum
 
             If denominator = 0.0 Then
                 denominator = min

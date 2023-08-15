@@ -22,18 +22,6 @@ Namespace GMM.EMGaussianMixtureModel
             Me.Weight = weight
         End Sub
 
-        Public Overridable Function multiVariateGaussianPDF(x As Double(), means As RealMatrix, CovMatrix As RealMatrix) As Double
-            Dim d = x.Length
-            Dim xMatrix As RealMatrix = New RealMatrix(x)
-            Dim xMinusMeansMatrix = xMatrix - means
-            Dim lu As LUDecomposition = New LUDecomposition(CovMatrix)
-            Dim CovInverse As RealMatrix = CType(CType(lu.Solve(CType(RealMatrix.Identity(lu.Pivot.Length), RealMatrix)), RealMatrix).Inverse(), RealMatrix)
-            Dim eExponent As Double = -0.5 * (CType((CType(xMinusMeansMatrix.Transpose(), RealMatrix) * CovInverse), RealMatrix) * xMinusMeansMatrix)(0, 0)
-            Dim CovMatrixDeterminant As Double = (New LUDecomposition(CovMatrix)).Determinant()
-
-            Return 1 / (std.Pow(2 * PI, d / 2) * std.Sqrt(CovMatrixDeterminant)) * std.Pow(e, eExponent)
-        End Function
-
         Public Sub New(position As Integer, mean As Double(), variance As Double()(), weight As Double)
             Me.New(position, New RealMatrix(mean), New RealMatrix(variance), weight)
         End Sub
@@ -45,6 +33,18 @@ Namespace GMM.EMGaussianMixtureModel
 
         Public Overrides Function ToString() As String
             Return $"[{Position}] weight: {Weight}"
+        End Function
+
+        Public Shared Function multiVariateGaussianPDF(x As Double(), means As RealMatrix, CovMatrix As RealMatrix) As Double
+            Dim d = x.Length
+            Dim xMatrix As RealMatrix = New RealMatrix(x)
+            Dim xMinusMeansMatrix = xMatrix - means
+            Dim lu As LUDecomposition = New LUDecomposition(CovMatrix)
+            Dim CovInverse As RealMatrix = CType(CType(lu.Solve(CType(RealMatrix.Identity(lu.Pivot.Length), RealMatrix)), RealMatrix).Inverse(), RealMatrix)
+            Dim eExponent As Double = -0.5 * (CType((CType(xMinusMeansMatrix.Transpose(), RealMatrix) * CovInverse), RealMatrix) * xMinusMeansMatrix)(0, 0)
+            Dim CovMatrixDeterminant As Double = (New LUDecomposition(CovMatrix)).Determinant()
+
+            Return 1 / (std.Pow(2 * PI, d / 2) * std.Sqrt(CovMatrixDeterminant)) * std.Pow(e, eExponent)
         End Function
     End Class
 End Namespace
