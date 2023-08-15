@@ -24,6 +24,12 @@ Namespace GMM.EMGaussianMixtureModel
 
         ReadOnly m_width As Integer
 
+        Public ReadOnly Property DataSet As ClusterEntity()
+            Get
+                Return m_data
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property Components As GaussianMixtureComponent()
             Get
                 Return m_components
