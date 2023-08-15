@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports RealMatrix = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.NumericMatrix
 Imports std = System.Math
 
@@ -12,44 +13,31 @@ Namespace GMM.EMGaussianMixtureModel
     ''' </remarks>
     Public Class GaussianMixtureModel
 
-        Public componentsField As IList(Of GaussianMixtureComponent)
-        Public ReadOnly data As IList(Of Double())
+        Dim m_components As GaussianMixtureComponent()
+        Dim m_data As Double()()
 
+        Public Overridable ReadOnly Property Components As GaussianMixtureComponent()
+            Get
+                Return m_components
+            End Get
+        End Property
 
         Public Sub New(data As IList(Of Double()))
-            Me.data = data
+            Me.m_data = data.ToArray
         End Sub
 
-        Public Overridable ReadOnly Property Components As IList(Of GaussianMixtureComponent)
-            Get
-                Return componentsField
-            End Get
-        End Property
-
-
-        Public Overridable ReadOnly Property ComponentValues As IList(Of IList(Of Object))
-            Get
-                Dim values As IList(Of IList(Of Object)) = New List(Of IList(Of Object))()
-                For i = 0 To componentsField.Count - 1
-                    Dim inner As IList(Of Object) = New List(Of Object)()
-                    inner.Add(componentsField(i).Weight)
-                    inner.Add(componentsField(i).Mean)
-                    inner.Add(componentsField(i).CovMatrix)
-                    values.Add(inner)
-                Next
-                Return values
-            End Get
-        End Property
-
-        ' Computes the E step for a single datum.
-        ' 		    wk array = pdfandweight(x, for each k)/ sum(pdfandweight(x, for each k))
-        ' 		    Assumes K existing weight parameters, K means corresponding to each component,
-        ' 		    and K variances corresponding to each component.
-        ' 		     
-
+        ''' <summary>
+        ''' Computes the E step for a single datum.
+        ''' wk array = pdfandweight(x, for each k)/ sum(pdfandweight(x, for each k))
+        ''' Assumes K existing weight parameters, K means corresponding to each component,
+        ''' and K variances corresponding to each component.
+        ''' </summary>
+        ''' <param name="datum"></param>
+        ''' <param name="components"></param>
+        ''' <returns></returns>
         Private Function eStepDatum(datum As Double(), components As IList(Of GaussianMixtureComponent)) As IList(Of Double)
-
             Dim wkList As IList(Of Double) = New List(Of Double)()
+
             For Each GMMk In components
                 wkList.Add(GMMk.componentPDFandProb(datum))
             Next
@@ -59,12 +47,13 @@ Namespace GMM.EMGaussianMixtureModel
                 denominator += component.componentPDFandProb(datum)
             Next
 
-            For i = 0 To wkList.Count - 1
+            For i As Integer = 0 To wkList.Count - 1
                 wkList(i) = wkList(i) / denominator
                 If wkList(i) < 0 OrElse wkList(i) > 1 Then
                     Throw New Exception("Probability must be between 0 and 1, returned" & wkList(i).ToString())
                 End If
             Next
+
             Return wkList
         End Function
 
@@ -80,32 +69,37 @@ Namespace GMM.EMGaussianMixtureModel
             Dim K = wkList(0).Count
             Dim N = data.Count
             Dim d = data(0).Length
-
             Dim mukList As IList(Of RealMatrix) = New List(Of RealMatrix)()
-            For j = 0 To K - 1
+
+            For j As Integer = 0 To K - 1
                 Dim initMatrixDby1 = New Double(d - 1) {}
-                ' Arrays.fill(initMatrixDby1, 0.0);
                 Dim componentMean As RealMatrix = New RealMatrix(initMatrixDby1)
+
                 For i = 0 To N - 1
                     Dim insideSum = multiplicationScalar(data(i), wkList(i)(j))
                     componentMean = CType((componentMean + (New RealMatrix(insideSum))), RealMatrix)
                 Next
+
                 componentMean = CType(componentMean * (1 / NkList(j)), RealMatrix)
                 mukList.Add(componentMean)
             Next
+
             Return mukList
         End Function
 
-        Private Function covMStep(data As IList(Of Double()), NkList As IList(Of Double), mukList As IList(Of RealMatrix), wkList As IList(Of IList(Of Double))) As IList(Of RealMatrix)
+        Private Function covMStep(data As IList(Of Double()),
+                                  NkList As IList(Of Double),
+                                  mukList As IList(Of RealMatrix),
+                                  wkList As IList(Of IList(Of Double))) As IList(Of RealMatrix)
             Dim K = NkList.Count
             Dim N = data.Count
             Dim d = data(0).Length
 
             Dim sigmakList As IList(Of RealMatrix) = New List(Of RealMatrix)()
-            For j = 0 To K - 1
+            For j As Integer = 0 To K - 1
 
                 Dim insideSumVal As RealMatrix = New RealMatrix(RectangularArray.Matrix(Of Double)(d, d))
-                For i = 0 To N - 1
+                For i As Integer = 0 To N - 1
                     Dim xiMinusMu As RealMatrix = (New RealMatrix(data(i))) - mukList(j)
                     Dim xiMinusMuT As RealMatrix = CType(xiMinusMu.Transpose(), RealMatrix)
                     insideSumVal = CType(insideSumVal + xiMinusMu.DotProduct(xiMinusMuT) * wkList(i)(j), RealMatrix)
@@ -123,20 +117,16 @@ Namespace GMM.EMGaussianMixtureModel
             Dim K = wkList(0).Count
             Dim N = data.Count
             Dim d = data(0).Length
-
             Dim NkList = columnSum(wkList)
-
             ' Calculate component probabilities (Alphas)
             Dim alphakList = divisionScalar(NkList, N)
-
             ' means calculation
             Dim mukList = meansMStep(data, NkList, wkList)
-
             ' covariance calculation
             Dim sigmakList = covMStep(data, NkList, mukList, wkList)
-
             Dim results As IList(Of GaussianMixtureComponent) = New List(Of GaussianMixtureComponent)()
-            For i = 0 To K - 1
+
+            For i As Integer = 0 To K - 1
                 results.Add(New GaussianMixtureComponent(i, mukList(i), sigmakList(i), alphakList(i)))
             Next
             Return results
@@ -154,7 +144,10 @@ Namespace GMM.EMGaussianMixtureModel
             Return logLikelihoodSum
         End Function
 
-        Private Function emStep(data As IList(Of Double()), estimatedCompCenters As IList(Of Double()), maxNumberIterations As Integer, deltaLogLikelihoodThreshold As Double) As IList(Of GaussianMixtureComponent)
+        Private Function emStep(data As IList(Of Double()),
+                                estimatedCompCenters As IList(Of Double()),
+                                maxNumberIterations As Integer,
+                                deltaLogLikelihoodThreshold As Double) As GaussianMixtureComponent()
 
             ' initialize wkList, weights are the L1 norm of the distance of a point xi to each estimated component center
             Dim EStepVals As IList(Of IList(Of Double)) = New List(Of IList(Of Double))()
@@ -175,7 +168,7 @@ Namespace GMM.EMGaussianMixtureModel
 
                 If deltaLogLikelihood < deltaLogLikelihoodThreshold Then
                     Console.WriteLine("after " & (k + 1).ToString() & " iterations, EM converged.")
-                    Return MStepVals
+                    Return MStepVals.ToArray
                 End If
                 prevLogLikelihood = currentLogLikelihood
             Next
@@ -183,9 +176,10 @@ Namespace GMM.EMGaussianMixtureModel
             Throw New Exception("After " & maxNumberIterations.ToString() & " iterations there was no convergence.")
         End Function
 
-        Public Overridable Sub fitGMM(estimatedCompCenters As IList(Of Double()), maxIterations As Integer, convergenceCriteria As Double)
-            componentsField = emStep(data, estimatedCompCenters, maxIterations, convergenceCriteria)
-        End Sub
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FitGMM(estimatedCompCenters As IList(Of Double()), maxIterations As Integer, convergenceCriteria As Double) As GaussianMixtureModel
+            m_components = emStep(m_data, estimatedCompCenters, maxIterations, convergenceCriteria)
+            Return Me
+        End Function
     End Class
-
 End Namespace
