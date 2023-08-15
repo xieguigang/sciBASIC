@@ -76,6 +76,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdNum = System.Math
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
+Imports System.Text
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearAlgebra.Matrix
 
@@ -1628,7 +1630,16 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[Row:{RowDimension}, Column:{ColumnDimension}]"
+            Dim sb As New StringBuilder($"[Row:{RowDimension}, Column:{ColumnDimension}]")
+
+            If RowDimension * ColumnDimension < 25 Then
+                For Each row As Double() In buffer
+                    Call sb.AppendLine(row.GetJson)
+                    Call sb.AppendLine()
+                Next
+            End If
+
+            Return sb.ToString
         End Function
 
         ''' <summary>

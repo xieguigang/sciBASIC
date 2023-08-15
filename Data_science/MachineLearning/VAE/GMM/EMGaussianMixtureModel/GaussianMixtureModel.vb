@@ -148,7 +148,7 @@ Namespace GMM.EMGaussianMixtureModel
             For Each datum As ClusterEntity In m_data
                 Dim componentPDFSum As Double = 0.0
 
-                For Each comp In components
+                For Each comp As GaussianMixtureComponent In components
                     componentPDFSum += comp.componentPDFandProb(datum.entityVector)
                 Next
 
