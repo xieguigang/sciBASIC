@@ -5,7 +5,7 @@ Imports std = System.Math
 
 Namespace GMM.EMGaussianMixtureModel
 
-    Public Module ArrayUtilities
+    Public Module Math
 
         Public Function divisionScalar(X As IList(Of Double), j As Double) As Double()
             If j = 0.0 Then
