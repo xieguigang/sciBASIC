@@ -99,7 +99,8 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
         ''' <returns>A 2-dimensional array containing data to cluster</returns>
-        <Extension> Public Function ToFloatMatrix(table As DataTable) As Double(,)
+        <Extension>
+        Public Function ToFloatMatrix(table As DataTable) As Double(,)
             Dim rowCount As Integer = table.Rows.Count
             Dim fieldCount As Integer = table.Columns.Count
             Dim dataPoints As Double(,)

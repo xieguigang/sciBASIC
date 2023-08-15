@@ -150,6 +150,22 @@ Namespace LinearAlgebra.Matrix
 
 #Region "Constructors"
 
+        ''' <summary>
+        ''' Create a new (column) RealMatrix using {@code v} as the
+        ''' data for the unique column of the created matrix.
+        ''' The input array Is copied.
+        ''' </summary>
+        ''' <param name="v">
+        ''' Column vector holding data for new matrix.
+        ''' </param>
+        ''' <remarks>
+        ''' 20230815 创建一个只有一列数据的矩阵，矩阵的行数
+        ''' 等于<paramref name="v"/>的元素数量
+        ''' </remarks>
+        Sub New(v As Double())
+            Call Me.New(v.Select(Function(vi) New Double() {vi}))
+        End Sub
+
         ''' <summary>Construct an m-by-n matrix of zeros. </summary>
         ''' <param name="m">Number of rows.</param>
         ''' <param name="n">Number of colums.</param>
@@ -1163,23 +1179,7 @@ Namespace LinearAlgebra.Matrix
                 Return B.Multiply(Me.RowVectors.First)
             End If
 
-            Dim X As New NumericMatrix(m, B.ColumnDimension)
-            Dim C As Double()() = X.Array
-            Dim Bcolj As Double() = New Double(n - 1) {}
-            For j As Integer = 0 To B.ColumnDimension - 1
-                For k As Integer = 0 To n - 1
-                    Bcolj(k) = B(k, j)
-                Next
-                For i As Integer = 0 To m - 1
-                    Dim Arowi As Double() = buffer(i)
-                    Dim s As Double = 0
-                    For k As Integer = 0 To n - 1
-                        s += Arowi(k) * Bcolj(k)
-                    Next
-                    C(i)(j) = s
-                Next
-            Next
-            Return X
+            Return DotProduct(B)
         End Function
 
 #Region "Operator Overloading"
@@ -1475,7 +1475,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Matrix inverse or pseudoinverse</summary>
         ''' <returns>     inverse(A) if A is square, pseudoinverse otherwise.
         ''' </returns>
-
+        ''' <remarks>solve identity</remarks>
         Public Overridable Function Inverse() As GeneralMatrix
             Return Solve(Identity(m, m))
         End Function
@@ -1533,6 +1533,11 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             Return A
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Identity(m As Integer) As GeneralMatrix
+            Return Identity(m, m)
         End Function
 
 #End Region
@@ -1704,6 +1709,26 @@ Namespace LinearAlgebra.Matrix
 
         Public Shared Function Zero(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Return New NumericMatrix(rowDimension, columnDimension)
+        End Function
+
+        Public Function DotProduct(B As NumericMatrix) As NumericMatrix
+            Dim X As New NumericMatrix(m, B.ColumnDimension)
+            Dim C As Double()() = X.Array
+            Dim Bcolj As Double() = New Double(n - 1) {}
+            For j As Integer = 0 To B.ColumnDimension - 1
+                For k As Integer = 0 To n - 1
+                    Bcolj(k) = B(k, j)
+                Next
+                For i As Integer = 0 To m - 1
+                    Dim Arowi As Double() = buffer(i)
+                    Dim s As Double = 0
+                    For k As Integer = 0 To n - 1
+                        s += Arowi(k) * Bcolj(k)
+                    Next
+                    C(i)(j) = s
+                Next
+            Next
+            Return X
         End Function
     End Class
 End Namespace
