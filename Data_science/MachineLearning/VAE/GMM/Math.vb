@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports ext = Microsoft.VisualBasic.Linq.Extensions
 Imports std = System.Math
 
 Namespace GMM.EMGaussianMixtureModel
@@ -21,13 +20,13 @@ Namespace GMM.EMGaussianMixtureModel
         ''' <param name="input"></param>
         ''' <returns></returns>
         Public Function columnSum(input As IList(Of IList(Of Double))) As IList(Of Double)
-            Dim results As IList(Of Double) = New List(Of Double)(ext.Repeats(0.0, input(0).Count))
+            Dim results As Vector = Vector.Zero([Dim]:=input(0).Count)
 
             For Each i As IList(Of Double) In input
                 results = New Vector(results) + New Vector(i)
             Next
 
-            Return results
+            Return results.AsList
         End Function
 
         Public Function l1Norm(inVector As IList(Of Double)) As IList(Of Double)

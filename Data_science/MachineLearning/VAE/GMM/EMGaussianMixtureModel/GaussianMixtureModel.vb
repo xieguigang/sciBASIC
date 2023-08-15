@@ -20,6 +20,8 @@ Namespace GMM.EMGaussianMixtureModel
         Dim m_safe As Boolean = False
         Dim m_abs As Boolean = False
 
+        ReadOnly m_width As Integer
+
         Public Overridable ReadOnly Property Components As GaussianMixtureComponent()
             Get
                 Return m_components
@@ -30,6 +32,7 @@ Namespace GMM.EMGaussianMixtureModel
             Me.m_data = data.ToArray
             Me.m_safe = Not strict
             Me.m_abs = abs
+            Me.m_width = m_data(0).Length
         End Sub
 
         ''' <summary>
@@ -65,29 +68,28 @@ Namespace GMM.EMGaussianMixtureModel
             Return wkList
         End Function
 
-        Private Function eStep(data As IList(Of Double()), components As GaussianMixtureComponent()) As IList(Of IList(Of Double))
+        Private Function eStep(components As GaussianMixtureComponent()) As IList(Of IList(Of Double))
             Dim results As New List(Of IList(Of Double))()
 
-            For Each datum As Double() In data
-                results.Add(eStepDatum(datum, components))
+            For Each datum As ClusterEntity In m_data
+                Call results.Add(eStepDatum(datum.entityVector, components))
             Next
 
             Return results
         End Function
 
-        Private Iterator Function meansMStep(data As IList(Of Double()),
-                                             NkList As IList(Of Double),
-                                             wkList As IList(Of IList(Of Double))) As IEnumerable(Of RealMatrix)
+        Private Iterator Function meansMStep(NkList As IList(Of Double), wkList As IList(Of IList(Of Double))) As IEnumerable(Of RealMatrix)
             Dim K = wkList(0).Count
-            Dim N = data.Count
-            Dim d = data(0).Length
+            Dim N = m_data.Length
+            Dim d = m_width
+            Dim insideSum As Double()
 
             For j As Integer = 0 To K - 1
                 Dim initMatrixDby1 = New Double(d - 1) {}
                 Dim componentMean As RealMatrix = New RealMatrix(initMatrixDby1)
 
                 For i As Integer = 0 To N - 1
-                    Dim insideSum As Double() = New Vector(data(i)) * wkList(i)(j)
+                    insideSum = New Vector(m_data(i).entityVector) * wkList(i)(j)
                     componentMean = CType((componentMean + (New RealMatrix(insideSum))), RealMatrix)
                 Next
 
@@ -97,19 +99,18 @@ Namespace GMM.EMGaussianMixtureModel
             Next
         End Function
 
-        Private Iterator Function covMStep(data As IList(Of Double()),
-                                           NkList As IList(Of Double),
+        Private Iterator Function covMStep(NkList As IList(Of Double),
                                            mukList As RealMatrix(),
                                            wkList As IList(Of IList(Of Double))) As IEnumerable(Of RealMatrix)
             Dim K = NkList.Count
-            Dim N = data.Count
-            Dim d = data(0).Length
+            Dim N = m_data.Length
+            Dim d = m_width
 
             For j As Integer = 0 To K - 1
                 Dim insideSumVal As RealMatrix = New RealMatrix(RectangularArray.Matrix(Of Double)(d, d))
 
                 For i As Integer = 0 To N - 1
-                    Dim xiMinusMu As RealMatrix = (New RealMatrix(data(i))) - mukList(j)
+                    Dim xiMinusMu As RealMatrix = (New RealMatrix(m_data(i).entityVector)) - mukList(j)
                     Dim xiMinusMuT As RealMatrix = CType(xiMinusMu.Transpose(), RealMatrix)
 
                     insideSumVal = CType(insideSumVal + xiMinusMu.DotProduct(xiMinusMuT) * wkList(i)(j), RealMatrix)
@@ -125,31 +126,30 @@ Namespace GMM.EMGaussianMixtureModel
             Next
         End Function
 
-        Private Iterator Function mStep(data As IList(Of Double()), wkList As IList(Of IList(Of Double))) As IEnumerable(Of GaussianMixtureComponent)
+        Private Iterator Function mStep(wkList As IList(Of IList(Of Double))) As IEnumerable(Of GaussianMixtureComponent)
             Dim K = wkList(0).Count
-            Dim N = data.Count
-            Dim d = data(0).Length
+            Dim N = m_data.Length
             Dim NkList = columnSum(wkList)
             ' Calculate component probabilities (Alphas)
             Dim alphakList = divisionScalar(NkList, N)
             ' means calculation
-            Dim mukList = meansMStep(data, NkList, wkList).ToArray
+            Dim mukList = meansMStep(NkList, wkList).ToArray
             ' covariance calculation
-            Dim sigmakList = covMStep(data, NkList, mukList, wkList).ToArray
+            Dim sigmakList = covMStep(NkList, mukList, wkList).ToArray
 
             For i As Integer = 0 To K - 1
                 Yield New GaussianMixtureComponent(i, mukList(i), sigmakList(i), alphakList(i))
             Next
         End Function
 
-        Private Function logLikelihoodGMM(data As IList(Of Double()), components As IList(Of GaussianMixtureComponent)) As Double
+        Private Function logLikelihoodGMM(components As IList(Of GaussianMixtureComponent)) As Double
             Dim logLikelihoodSum = 0.0
 
-            For Each datum As Double() In data
-                Dim componentPDFSum = 0.0
+            For Each datum As ClusterEntity In m_data
+                Dim componentPDFSum As Double = 0.0
 
                 For Each comp In components
-                    componentPDFSum += comp.componentPDFandProb(datum)
+                    componentPDFSum += comp.componentPDFandProb(datum.entityVector)
                 Next
 
                 logLikelihoodSum += std.Log(componentPDFSum)
@@ -158,26 +158,22 @@ Namespace GMM.EMGaussianMixtureModel
             Return logLikelihoodSum
         End Function
 
-        Private Function emStep(data As IList(Of Double()),
-                                estimatedCompCenters As IList(Of Double()),
-                                maxNumberIterations As Integer,
-                                deltaLogLikelihoodThreshold As Double) As GaussianMixtureComponent()
-
+        Private Function emStep(estimatedCompCenters As IList(Of Double()), maxNumberIterations As Integer, deltaLogLikelihoodThreshold As Double) As GaussianMixtureComponent()
             ' initialize wkList, weights are the L1 norm of the distance of a point xi to each estimated component center
             Dim EStepVals As IList(Of IList(Of Double)) = New List(Of IList(Of Double))()
 
-            For Each datum As Double() In data
-                EStepVals.Add(distToCenterL1(datum, estimatedCompCenters))
+            For Each datum As ClusterEntity In m_data
+                EStepVals.Add(distToCenterL1(datum.entityVector, estimatedCompCenters))
             Next
 
-            Dim MStepVals As GaussianMixtureComponent() = mStep(data, EStepVals).ToArray
-            Dim prevLogLikelihood = logLikelihoodGMM(data, MStepVals)
+            Dim MStepVals As GaussianMixtureComponent() = mStep(EStepVals).ToArray
+            Dim prevLogLikelihood = logLikelihoodGMM(MStepVals)
             Dim currentLogLikelihood, deltaLogLikelihood As Double
 
             For k As Integer = 0 To maxNumberIterations - 1 - 1
-                EStepVals = eStep(data, MStepVals)
-                MStepVals = mStep(data, EStepVals).ToArray
-                currentLogLikelihood = logLikelihoodGMM(data, MStepVals)
+                EStepVals = eStep(MStepVals)
+                MStepVals = mStep(EStepVals).ToArray
+                currentLogLikelihood = logLikelihoodGMM(MStepVals)
 
                 If m_abs Then
                     deltaLogLikelihood = std.Abs(currentLogLikelihood - prevLogLikelihood)
@@ -208,7 +204,7 @@ Namespace GMM.EMGaussianMixtureModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FitGMM(estimatedCompCenters As IList(Of Double()), maxIterations As Integer, convergenceCriteria As Double) As GaussianMixtureModel
-            m_components = emStep(m_data, estimatedCompCenters, maxIterations, convergenceCriteria)
+            m_components = emStep(estimatedCompCenters, maxIterations, convergenceCriteria)
             Return Me
         End Function
     End Class
