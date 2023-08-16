@@ -1146,6 +1146,20 @@ Namespace LinearAlgebra.Matrix
             Return New Vector(out)
         End Function
 
+        Public Function max(axis As Integer) As Vector
+            If axis = 0 Then
+                Return Enumerable.Range(0, ColumnDimension) _
+                    .Select(Function(ci) Me.ColumnVector(ci).Max) _
+                    .AsVector
+            Else
+                Return buffer.Select(Function(r) r.Max).AsVector
+            End If
+        End Function
+
+        Public Function max() As Double
+            Return buffer.Select(Function(r) r.Max).Max
+        End Function
+
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
         ''' <param name="s">   
         ''' scalar
