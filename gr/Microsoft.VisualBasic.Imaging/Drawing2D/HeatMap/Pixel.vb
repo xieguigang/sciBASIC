@@ -93,6 +93,10 @@ Namespace Drawing2D.HeatMap
             End Get
         End Property
 
+        Sub New(raster As RasterPixel, data As Double)
+            Call Me.New(raster.X, raster.Y, data)
+        End Sub
+
         Sub New(p As Point, data As Double)
             X = p.X
             Y = p.Y
