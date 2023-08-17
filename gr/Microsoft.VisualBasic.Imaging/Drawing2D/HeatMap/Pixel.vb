@@ -78,6 +78,9 @@ Namespace Drawing2D.HeatMap
 
     End Interface
 
+    ''' <summary>
+    ''' A pixel spot object associate [x,y] with intensity scale data
+    ''' </summary>
     Public Structure PixelData : Implements Pixel
 
         Public Property X As Integer Implements Pixel.X
