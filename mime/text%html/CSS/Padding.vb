@@ -127,6 +127,10 @@ Namespace CSS
             End Get
         End Property
 
+        ''' <summary>
+        ''' all padding value is ZERO then it means empty
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
