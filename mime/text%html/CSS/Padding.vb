@@ -189,6 +189,13 @@ Namespace CSS
             Left = layoutVector(3)
         End Sub
 
+        Sub New(layoutVector As Double())
+            Top = layoutVector(0)
+            Right = layoutVector(1)
+            Bottom = layoutVector(2)
+            Left = layoutVector(3)
+        End Sub
+
         Public Function GetCanvasRegion(size As Size) As Rectangle
             Dim location As New Point(Left, Top)
             Dim width = size.Width - Horizontal
