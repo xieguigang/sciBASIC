@@ -94,6 +94,10 @@ Namespace Components
             Me.type = type
         End Sub
 
+        Sub New(name As String, chars As String)
+            Call Me.New(name, chars, type:=CDFDataTypes.CHAR)
+        End Sub
+
         Public Function getObjectValue() As Object
             Select Case type
                 Case CDFDataTypes.BYTE : Return Byte.Parse(value)
