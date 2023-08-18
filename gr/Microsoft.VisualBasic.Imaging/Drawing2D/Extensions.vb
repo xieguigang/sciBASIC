@@ -287,7 +287,7 @@ Namespace Drawing2D
             Dim x0 As New Vector(From v In vector Select v(0))
             Dim y0 As New Vector(From v In vector Select v(1))
             Dim x1 As Vector = x0 - center.X
-            Dim y1 As Vector = y0 - center.X
+            Dim y1 As Vector = y0 - center.Y
 
             Return (x1, y1).Point2D.ToArray
         End Function
