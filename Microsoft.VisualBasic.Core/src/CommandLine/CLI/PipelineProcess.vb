@@ -248,6 +248,15 @@ Namespace CommandLine
             Return p
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="app$"></param>
+        ''' <param name="args$"></param>
+        ''' <param name="in$"></param>
+        ''' <returns>The standard output of the target <paramref name="app"/>, the 
+        ''' data inside this stream object may contains text or image or other
+        ''' binary data.</returns>
         Public Function ExecSub(app$, args$, Optional in$ = "") As MemoryStream
             Dim p As Process = CreatePipeline(app, args)
             Dim reader As Stream = p.StandardOutput.BaseStream
