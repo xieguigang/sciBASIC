@@ -571,6 +571,10 @@ Public Class CDFWriter : Implements IDisposable
     'End Sub
 
     ' This code added by Visual Basic to correctly implement the disposable pattern.
+
+    ''' <summary>
+    ''' Save and close the underlying file
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
         Dispose(True)
