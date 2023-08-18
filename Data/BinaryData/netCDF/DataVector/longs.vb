@@ -71,7 +71,7 @@ Namespace DataVector
         End Sub
 
         Sub New(iu32 As IEnumerable(Of UInteger))
-            Call Me.New(From i As Integer In iu32 Select CLng(i))
+            Call Me.New(From i As UInteger In iu32 Select CLng(i))
         End Sub
 
         Sub New(i32 As IEnumerable(Of Integer))
