@@ -358,8 +358,11 @@ Public Module EmitReflection
     ''' <param name="depth">类型继承的距离值，当这个值越大的时候，说明二者的继承越远，当进行函数重载判断的时候，选择这个距离值越小的越好</param>
     ''' <returns></returns>
     ''' <remarks>假若两个类型是来自于不同的assembly文件的话，即使这两个类型是相同的对象，也会无法判断出来</remarks>
-    <ExportAPI("Is.InheritsFrom")>
-    <Extension> Public Function IsInheritsFrom(a As Type, base As Type, Optional strict As Boolean = True, Optional ByRef depth% = -1) As Boolean
+    <Extension>
+    Public Function IsInheritsFrom(a As Type, base As Type,
+                                   Optional strict As Boolean = True,
+                                   Optional ByRef depth% = -1) As Boolean
+
         Dim baseType As Type = a.BaseType
 
         If Not strict Then
@@ -415,7 +418,8 @@ Public Module EmitReflection
     ''' <returns></returns>
     '''
     <ExportAPI("Get.Description")>
-    <Extension> Public Function Description(type As Type) As String
+    <Extension>
+    Public Function Description(type As Type) As String
         Dim customAttrs As Object() = type.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then
@@ -460,7 +464,8 @@ Public Module EmitReflection
     ''' <remarks></remarks>
     '''
     <ExportAPI("Collection2GenericIEnumerable")>
-    <Extension> Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
+    <Extension>
+    Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
         If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
 EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
             Return type
