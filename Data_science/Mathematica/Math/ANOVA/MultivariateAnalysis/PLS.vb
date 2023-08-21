@@ -1,0 +1,881 @@
+﻿Imports System.Collections.ObjectModel
+Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
+
+Public Class PLS
+
+#Region "pls"
+    Public Shared Function PartialLeastSquares(ByVal statObject As StatisticsObject, ByVal Optional component As Integer = -1) As MultivariateAnalysisResult
+        Dim dataArray = statObject.CopyX()
+        Dim yArray = statObject.CopyY()
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+        Dim maxLV = rowSize
+        Dim nFold = getOptimalFoldValue(rowSize)
+
+        Dim ss = New List(Of Double)()
+        Dim press = New List(Of Double)()
+        Dim total = New List(Of Double)()
+        Dim q2 = New List(Of Double)()
+        Dim q2cum = New List(Of Double)()
+        Dim optfactor = 1
+
+        PlsCrossValidation(yArray, dataArray, maxLV, nFold, ss, press, total, q2, q2cum, optfactor)
+
+        If component > 0 Then optfactor = component
+        If optfactor < 2 Then optfactor = 2
+
+        ' again, initialization
+        dataArray = statObject.CopyX()
+        yArray = statObject.CopyY()
+
+        Dim ssPred, cPred As Double()
+        Dim wPred, pPred, tPred, uPred As Double(,)
+
+        PlsModeling(optfactor, yArray, dataArray, ssPred, wPred, pPred, cPred, tPred, uPred)
+
+        ' calculate coefficients
+        Dim coeffVector = GetPlsCoefficients(optfactor, pPred, wPred, cPred)
+
+        ' calculate vips
+        Dim vip = GetVips(wPred, ssPred)
+
+        ' yPred
+        Dim yPred = GetPredictedYvariables(coeffVector, statObject)
+        Dim ySumofSqure = BasicMathematics.ErrorOfSquareVs2(statObject.YVariables, yPred)
+        Dim rmsee = std.Sqrt(ySumofSqure / (rowSize - optfactor - 1))
+
+        Dim maResult = New MultivariateAnalysisResult() With {
+                .StatisticsObject = statObject,
+                .NFold = nFold,
+                .SsCVs = New ObservableCollection(Of Double)(ss),
+                .Presses = New ObservableCollection(Of Double)(press),
+                .Totals = New ObservableCollection(Of Double)(total),
+                .Q2Values = New ObservableCollection(Of Double)(q2),
+                .Q2Cums = New ObservableCollection(Of Double)(q2cum),
+                .OptimizedFactor = optfactor,
+                .SsPreds = New ObservableCollection(Of Double)(ssPred),
+                .CPreds = New ObservableCollection(Of Double)(cPred),
+                .Coefficients = New ObservableCollection(Of Double)(coeffVector),
+                .Vips = New ObservableCollection(Of Double)(vip),
+                .PredictedYs = New ObservableCollection(Of Double)(yPred),
+                .Rmsee = rmsee
+            }
+
+        For i = 0 To optfactor - 1
+            Dim wArray = New Double(columnSize - 1) {}
+            Dim pArray = New Double(columnSize - 1) {}
+            For j = 0 To columnSize - 1
+                wArray(j) = wPred(i, j)
+                pArray(j) = pPred(i, j)
+            Next
+            maResult.WPreds.Add(wArray)
+            maResult.PPreds.Add(pArray)
+        Next
+
+        For i = 0 To optfactor - 1
+            Dim uArray = New Double(rowSize - 1) {}
+            Dim tArray = New Double(rowSize - 1) {}
+            For j = 0 To rowSize - 1
+                uArray(j) = uPred(i, j)
+                tArray(j) = tPred(i, j)
+            Next
+            maResult.UPreds.Add(uArray)
+            maResult.TPreds.Add(tArray)
+        Next
+
+        Return maResult
+    End Function
+
+    Private Shared Function getOptimalFoldValue(ByVal rowSize As Integer) As Integer
+        If rowSize < 7 Then
+            Return rowSize
+        Else
+            Return 7
+        End If
+    End Function
+
+    Private Shared Function GetPredictedYvariables(ByVal coeffVector As Double(), ByVal statObject As StatisticsObject) As Double()
+
+        Dim yPreds = New Double(statObject.RowSize() - 1) {}
+        For i = 0 To statObject.RowSize() - 1
+            Dim s = 0.0
+            For j = 0 To statObject.ColumnSize() - 1
+                s += coeffVector(j) * statObject.XScaled(i, j)
+            Next
+            yPreds(i) = statObject.YBackTransform(s)
+        Next
+
+        Return yPreds
+    End Function
+
+    Private Shared Function GetPredictedYvariables(ByVal coeffVector As Double(), ByVal statObject As StatisticsObject, ByVal woPred As Double(,), ByVal poPred As Double(,)) As Double()
+        Dim yPreds = New Double(statObject.RowSize() - 1) {}
+        For i = 0 To statObject.RowSize() - 1
+
+            ' x vector
+            Dim xnew = New Double(statObject.ColumnSize() - 1) {}
+            For j = 0 To statObject.ColumnSize() - 1
+                xnew(j) = statObject.XScaled(i, j)
+            Next
+
+            xnew = convertToFilteredX(xnew, woPred, poPred)
+
+            Dim s = 0.0
+            For j = 0 To statObject.ColumnSize() - 1
+                s += coeffVector(j) * xnew(j)
+            Next
+            yPreds(i) = statObject.YBackTransform(s)
+        Next
+
+        Return yPreds
+    End Function
+
+    Private Shared Function convertToFilteredX(ByVal xnew As Double(), ByVal woPred As Double(,), ByVal poPred As Double(,)) As Double()
+
+        For j = 0 To woPred.GetLength(0) - 1
+            Dim tneworth = 0.0
+            Dim wo2 = 0.0
+            For k = 0 To xnew.Length - 1
+                tneworth += xnew(k) * woPred(j, k)
+                wo2 += std.Pow(woPred(j, k), 2)
+            Next
+            tneworth /= wo2
+
+            For k = 0 To xnew.Length - 1
+                xnew(k) = xnew(k) - poPred(j, k) * tneworth
+            Next
+        Next
+
+        Return xnew
+    End Function
+
+    Public Shared Function GetVips(ByVal wPred As Double(,), ByVal ssPred As Double()) As Double()
+        Dim optfactor = wPred.GetLength(0) ' optfactor
+        Dim columnSize = wPred.GetLength(1) ' metabolites
+
+        Dim vip = New Double(columnSize - 1) {}
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To optfactor - 1
+                s += std.Pow(wPred(j, i), 2) * (ssPred(j) - ssPred(j + 1)) * columnSize / (ssPred(0) - ssPred(optfactor))
+            Next
+            vip(i) = std.Sqrt(s)
+        Next
+        Return vip
+    End Function
+
+    Public Shared Function GetPlsCoefficients(ByVal optfactor As Integer, ByVal pPred As Double(,), ByVal wPred As Double(,), ByVal cPred As Double()) As Double()
+        Dim columnSize = pPred.GetLength(1) ' metabolites
+
+        Dim coeffVector = New Double(columnSize - 1) {}
+#Region ""
+
+        Dim pwMatrix = New Double(optfactor - 1, optfactor - 1) {}
+        For i = 0 To optfactor - 1
+            For j = 0 To optfactor - 1
+                Dim s = 0.0
+                For k = 0 To columnSize - 1
+                    s += pPred(i, k) * wPred(j, k)
+                Next
+                pwMatrix(i, j) = s
+            Next
+        Next
+
+        Dim pwMatrixLU = New NumericMatrix(pwMatrix).LUD
+        Dim pwMatrixInv = DirectCast(pwMatrixLU.Solve(), NumericMatrix).Inverse
+
+        Dim wStar = New Double(optfactor - 1, columnSize - 1) {}
+        For i = 0 To optfactor - 1
+            For j = 0 To columnSize - 1
+                Dim s = 0.0
+                For k = 0 To optfactor - 1
+                    s += wPred(k, j) * pwMatrixInv(k, i)
+                Next
+                wStar(i, j) = s
+            Next
+        Next
+
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To optfactor - 1
+                s += wStar(j, i) * cPred(j)
+            Next
+            coeffVector(i) = s
+        Next
+#End Region
+
+        Return coeffVector
+    End Function
+
+    Public Shared Sub OplsModeling(ByVal biofactor As Integer, ByVal orthofactor As Integer, ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,), <Out> ByRef woPred As Double(,), <Out> ByRef poPred As Double(,), <Out> ByRef toPred As Double(,), <Out> ByRef filteredXMatrix As Double(,))
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim ssPredList = New List(Of Double)()
+        Dim cPredList = New List(Of Double)()
+        Dim wPredList = New List(Of Double())()
+        Dim pPredList = New List(Of Double())()
+        Dim tPredList = New List(Of Double())()
+        Dim uPredList = New List(Of Double())()
+        Dim woPredList = New List(Of Double())()
+        Dim poPredList = New List(Of Double())()
+        Dim toPredList = New List(Of Double())()
+
+        Dim originalY = New Double(yArray.Length - 1) {}
+        For i = 0 To yArray.Length - 1
+            originalY(i) = yArray(i)
+        Next
+
+        Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+        ssPredList.Add(currentSS)
+
+        Dim wfirst = getWeightLoading(yArray, dataArray) ' to keep weight loading for the first trial of pls
+        ' modeling
+#Region ""
+        For i = 0 To orthofactor - 1
+
+            ' t: score vector calculation
+            ' u: y score vector calculation
+            ' p: loading vector calculation
+            ' w: weight (X) factor calculation
+            ' c: weight (Y) factor calculation
+            ' to: score vector calculation
+            ' po: loading vector calculation
+            ' wo: weight (X) factor calculation
+
+            Dim u, t, p, w, [to], po, wo As Double()
+            Dim c As Double
+
+            OplsVectorsCalculations(yArray, dataArray, wfirst, u, t, c, p, wo, [to], po)
+            dataArray = PlsMatrixUpdate([to], po, dataArray)
+            yArray = PlsMatrixUpdate([to], c, yArray)
+            'Debug.WriteLine("C value\t" + c);
+            woPredList.Add(wo)
+            poPredList.Add(po)
+            toPredList.Add([to])
+        Next
+#End Region
+
+        ' save filtered x array
+        filteredXMatrix = dataArray
+
+        ' ss value calc
+        currentSS = BasicMathematics.SumOfSquare(yArray)
+        ssPredList.Add(currentSS)
+
+        ' finally, pls modeling is performed to the filtered matrix by othrogonal components
+        Dim uf, tf, pf, wf, tof, pof, wof As Double()
+        Dim cf As Double
+        OplsVectorsCalculations(yArray, dataArray, wfirst, uf, tf, cf, pf, wof, tof, pof)
+        wPredList.Add(wfirst)
+        pPredList.Add(pf)
+        cPredList.Add(cf)
+        tPredList.Add(tf)
+        uPredList.Add(uf)
+
+        ssPred = ssPredList.ToArray()
+        cPred = cPredList.ToArray()
+        wPred = New Double(biofactor - 1, columnSize - 1) {}
+        pPred = New Double(biofactor - 1, columnSize - 1) {}
+        For i = 0 To biofactor - 1
+            For j = 0 To columnSize - 1
+                wPred(i, j) = wPredList(i)(j)
+                pPred(i, j) = pPredList(i)(j)
+            Next
+        Next
+
+        tPred = New Double(biofactor - 1, rowSize - 1) {}
+        uPred = New Double(biofactor - 1, rowSize - 1) {}
+        For i = 0 To biofactor - 1
+            For j = 0 To rowSize - 1
+                tPred(i, j) = tPredList(i)(j)
+                uPred(i, j) = uPredList(i)(j)
+            Next
+        Next
+
+        woPred = New Double(orthofactor - 1, columnSize - 1) {}
+        poPred = New Double(orthofactor - 1, columnSize - 1) {}
+        For i = 0 To orthofactor - 1
+            For j = 0 To columnSize - 1
+                woPred(i, j) = woPredList(i)(j)
+                poPred(i, j) = poPredList(i)(j)
+            Next
+        Next
+
+        toPred = New Double(orthofactor - 1, rowSize - 1) {}
+        For i = 0 To orthofactor - 1
+            For j = 0 To rowSize - 1
+                toPred(i, j) = toPredList(i)(j)
+            Next
+        Next
+    End Sub
+
+    Private Shared Sub PlsModeling(ByVal optfactor As Integer, ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,))
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim ssPredList = New List(Of Double)()
+        Dim cPredList = New List(Of Double)()
+        Dim wPredList = New List(Of Double())()
+        Dim pPredList = New List(Of Double())()
+        Dim tPredList = New List(Of Double())()
+        Dim uPredList = New List(Of Double())()
+
+        Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+        ssPredList.Add(currentSS)
+
+        ' modeling
+#Region ""
+        For i = 0 To optfactor - 1
+            ' t: score vector calculation
+            ' u: y score vector calculation
+            ' p: loading vector calculation
+            ' w: weight (X) factor calculation
+            ' c: weight (Y) factor calculation
+
+            Dim u, t, p, w As Double()
+            Dim c As Double
+
+            PlsVectorsCalculations(yArray, dataArray, u, w, t, c, p)
+            dataArray = PlsMatrixUpdate(t, p, dataArray)
+            yArray = PlsMatrixUpdate(t, c, yArray)
+
+            wPredList.Add(w)
+            pPredList.Add(p)
+            cPredList.Add(c)
+            tPredList.Add(t)
+            uPredList.Add(u)
+
+            currentSS = BasicMathematics.SumOfSquare(yArray)
+            ssPredList.Add(currentSS)
+        Next
+#End Region
+
+        ssPred = ssPredList.ToArray()
+        cPred = cPredList.ToArray()
+        wPred = New Double(optfactor - 1, columnSize - 1) {}
+        pPred = New Double(optfactor - 1, columnSize - 1) {}
+        For i = 0 To optfactor - 1
+            For j = 0 To columnSize - 1
+                wPred(i, j) = wPredList(i)(j)
+                pPred(i, j) = pPredList(i)(j)
+            Next
+        Next
+
+        tPred = New Double(optfactor - 1, rowSize - 1) {}
+        uPred = New Double(optfactor - 1, rowSize - 1) {}
+        For i = 0 To optfactor - 1
+            For j = 0 To rowSize - 1
+                tPred(i, j) = tPredList(i)(j)
+                uPred(i, j) = uPredList(i)(j)
+            Next
+        Next
+    End Sub
+
+    Private Shared Sub OplsCrossValidation(ByVal yArray As Double(),
+                                           ByVal dataArray As Double(,),
+                                           ByVal maxLV As Integer,
+                                           ByVal nFold As Integer,
+                                           <Out> ByRef ss As List(Of Double),
+                                           <Out> ByRef press As List(Of Double),
+                                           <Out> ByRef total As List(Of Double),
+                                           <Out> ByRef q2 As List(Of Double),
+                                           <Out> ByRef q2cum As List(Of Double),
+                                           <Out> ByRef orthofactor As Integer)
+
+        ss = New List(Of Double)()
+        press = New List(Of Double)()
+        total = New List(Of Double)()
+        q2 = New List(Of Double)()
+        q2cum = New List(Of Double)()
+        orthofactor = 1
+
+        Dim w = getWeightLoading(yArray, dataArray) ' this w is fixed for opls modeling
+
+        For i = 0 To maxLV - 1
+            Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+            ss.Add(currentSS)
+            Dim currentPress = PlsPressCalculation(nFold, dataArray, yArray) ' same in opls
+            press.Add(currentPress)
+            q2.Add(1 - press(i) / ss(i))
+            If i = 0 Then
+                total.Add(press(i) / ss(i))
+                q2cum.Add(1 - press(i) / ss(i))
+            Else
+                total.Add(total(i - 1) * press(i) / ss(i))
+                q2cum.Add(1 - total(i - 1) * press(i) / ss(i))
+            End If
+
+            If isOptimaized(yArray.Length, ss, press, total, q2, q2cum, orthofactor) Then
+                orthofactor -= 1 ' because the optimal value includes the biological componemnt
+                Exit For
+            End If
+
+            ' t: score vector calculation
+            ' u: y score vector calculation
+            ' p: loading vector calculation
+            ' w: weight (X) factor calculation
+            ' c: weight (Y) factor calculation
+            ' to: score vector calculation
+            ' po: loading vector calculation
+            ' wo: weight (X) factor calculation
+
+            Dim u, t, p, [to], po, wo As Double()
+            Dim c As Double
+
+            OplsVectorsCalculations(yArray, dataArray, w, u, t, c, p, wo, [to], po)
+            dataArray = PlsMatrixUpdate([to], po, dataArray)
+            yArray = PlsMatrixUpdate([to], c, yArray)
+        Next
+    End Sub
+
+    Private Shared Function getWeightLoading(ByVal yArray As Double(), ByVal dataArray As Double(,)) As Double()
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim uScalar = 0.0
+        Dim u = New Double(yArray.Length - 1) {}
+
+        ' score initialize
+        For i = 0 To yArray.Length - 1
+            u(i) = yArray(i)
+            uScalar += std.Pow(u(i), 2)
+        Next
+
+        Dim w = New Double(columnSize - 1) {} ' weight (X) factor calculation
+#Region ""
+        ' weight factor initialization
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To rowSize - 1
+                s += dataArray(j, i) * u(j)
+            Next
+            w(i) = s / uScalar
+        Next
+
+        ' weight scalar
+        Dim wScalar = BasicMathematics.RootSumOfSquare(w)
+
+        ' weight vector
+        For i = 0 To columnSize - 1
+            w(i) = w(i) / wScalar
+        Next
+#End Region
+
+        Return w
+    End Function
+
+    Public Shared Sub PlsCrossValidation(ByVal yArray As Double(),
+                                         ByVal dataArray As Double(,),
+                                         ByVal maxLV As Integer,
+                                         ByVal nFold As Integer,
+                                         <Out> ByRef ss As List(Of Double),
+                                         <Out> ByRef press As List(Of Double),
+                                         <Out> ByRef total As List(Of Double),
+                                         <Out> ByRef q2 As List(Of Double),
+                                         <Out> ByRef q2cum As List(Of Double),
+                                         <Out> ByRef optfactor As Integer)
+        ss = New List(Of Double)()
+        press = New List(Of Double)()
+        total = New List(Of Double)()
+        q2 = New List(Of Double)()
+        q2cum = New List(Of Double)()
+        optfactor = 1
+
+        For i = 0 To maxLV - 1
+            Dim currentSS = BasicMathematics.SumOfSquare(yArray)
+            ss.Add(currentSS)
+            Dim currentPress = PlsPressCalculation(nFold, dataArray, yArray)
+            press.Add(currentPress)
+            q2.Add(1 - press(i) / ss(i))
+            If i = 0 Then
+                total.Add(press(i) / ss(i))
+                q2cum.Add(1 - press(i) / ss(i))
+            Else
+                total.Add(total(i - 1) * press(i) / ss(i))
+                q2cum.Add(1 - total(i - 1) * press(i) / ss(i))
+            End If
+
+            If isOptimaized(yArray.Length, ss, press, total, q2, q2cum, optfactor) Then
+                Exit For
+            End If
+
+            ' t: score vector calculation
+            ' u: y score vector calculation
+            ' p: loading vector calculation
+            ' w: weight (X) factor calculation
+            ' c: weight (Y) factor calculation
+
+            Dim u, t, p, w As Double()
+            Dim c As Double
+
+            PlsVectorsCalculations(yArray, dataArray, u, w, t, c, p)
+            dataArray = PlsMatrixUpdate(t, p, dataArray)
+            yArray = PlsMatrixUpdate(t, c, yArray)
+        Next
+    End Sub
+
+    Private Shared Function isOptimaized(ByVal size As Integer,
+                                         ByVal ss As List(Of Double),
+                                         ByVal press As List(Of Double),
+                                         ByVal total As List(Of Double),
+                                         ByVal q2 As List(Of Double),
+                                         ByVal q2cum As List(Of Double),
+                                         <Out>
+                                         ByRef optfactor As Integer) As Boolean
+
+        Dim latestQ2cum = q2cum(q2cum.Count - 1)
+        Dim latestQ2 = q2(q2.Count - 1)
+
+        ' rule 1
+        If size > 100 Then
+            If latestQ2cum <= 0.0 Then
+                optfactor = q2.Count - 1
+                If optfactor = 0 Then Return True
+                ss.RemoveAt(ss.Count - 1)
+                press.RemoveAt(press.Count - 1)
+                total.RemoveAt(total.Count - 1)
+                q2.RemoveAt(q2.Count - 1)
+                q2cum.RemoveAt(q2cum.Count - 1)
+
+                Return True
+            End If
+        Else
+            If latestQ2cum <= 0.05 Then
+                optfactor = q2.Count - 1
+                If optfactor = 0 Then Return True
+                ss.RemoveAt(ss.Count - 1)
+                press.RemoveAt(press.Count - 1)
+                total.RemoveAt(total.Count - 1)
+                q2.RemoveAt(q2.Count - 1)
+                q2cum.RemoveAt(q2cum.Count - 1)
+
+                Return True
+            End If
+        End If
+
+        ' rule 2
+        Dim limit = 0.0
+        If size >= 25 Then
+            limit = size * 0.2 * 0.01
+        Else
+            limit = std.Sqrt(size) * 0.01
+        End If
+
+        If latestQ2 < limit Then
+            optfactor = q2.Count - 1
+            If optfactor = 0 Then Return True
+            ss.RemoveAt(ss.Count - 1)
+            press.RemoveAt(press.Count - 1)
+            total.RemoveAt(total.Count - 1)
+            q2.RemoveAt(q2.Count - 1)
+            q2cum.RemoveAt(q2cum.Count - 1)
+
+            Return True
+        End If
+
+        ' rule N4
+        Dim explained = total(total.Count - 1) / total(0)
+        If explained < 0.01 Then
+            optfactor = q2.Count - 1
+            If optfactor = 0 Then Return True
+            ss.RemoveAt(ss.Count - 1)
+            press.RemoveAt(press.Count - 1)
+            total.RemoveAt(total.Count - 1)
+            q2.RemoveAt(q2.Count - 1)
+            q2cum.RemoveAt(q2cum.Count - 1)
+
+            Return True
+        End If
+
+        ' rule N5 defined by Hiroshi
+        If q2cum.Count > 1 Then
+            Dim diff = std.Abs(q2cum(q2cum.Count - 1) - q2cum(q2cum.Count - 2)) * 100
+            If diff < 2 Then
+                optfactor = q2.Count - 1
+                Return True
+            End If
+        End If
+        optfactor = q2.Count
+        Return False
+    End Function
+
+    Private Shared Function PlsMatrixUpdate(ByVal t As Double(), ByVal p As Double(), ByVal dataArray As Double(,)) As Double(,)
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim nArray = New Double(rowSize - 1, columnSize - 1) {}
+        For i = 0 To rowSize - 1
+            For j = 0 To columnSize - 1
+                nArray(i, j) = dataArray(i, j) - t(i) * p(j)
+            Next
+        Next
+        Return nArray
+    End Function
+
+    Private Shared Function PlsMatrixUpdate(ByVal t As Double(), ByVal c As Double, ByVal yArray As Double()) As Double()
+        Dim size = yArray.Length
+        Dim nArray = New Double(size - 1) {}
+
+        For i = 0 To size - 1
+            nArray(i) = yArray(i) - t(i) * c
+        Next
+        Return nArray
+    End Function
+
+
+    Private Shared Sub OplsVectorsCalculations(ByVal yArray As Double(),
+                                               ByVal dataArray As Double(,),
+                                               ByVal w As Double(),
+                                               <Out> ByRef u As Double(),
+                                               <Out> ByRef t As Double(),
+                                               <Out> ByRef c As Double,
+                                               <Out> ByRef p As Double(),
+                                               <Out> ByRef wo As Double(),
+                                               <Out> ByRef [to] As Double(),
+                                               <Out> ByRef po As Double())
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        u = New Double(rowSize - 1) {}
+        'w = new double[columnSize];
+        t = New Double(rowSize - 1) {}
+        c = 0.0
+        p = New Double(columnSize - 1) {}
+
+        'PlsVectorsCalculations(yArray, dataArray, out u, out w, out t, out c, out p);
+        t = New Double(rowSize - 1) {} ' score vector calculation
+#Region ""
+        ' score initialization
+        For i = 0 To rowSize - 1
+            Dim s = 0.0
+            For j = 0 To columnSize - 1
+                s += dataArray(i, j) * w(j)
+            Next
+            t(i) = s
+        Next
+
+#End Region
+
+        ' score scalar
+        Dim tScalar = BasicMathematics.SumOfSquare(t)
+
+        Debug.WriteLine("Y array" & Microsoft.VisualBasic.Constants.vbTab & String.Join(Microsoft.VisualBasic.Constants.vbTab, yArray))
+        Debug.WriteLine("T array" & Microsoft.VisualBasic.Constants.vbTab & String.Join(Microsoft.VisualBasic.Constants.vbTab, t))
+
+        c = BasicMathematics.InnerProduct(yArray, t) / tScalar ' weight (Y) factor calculation
+        p = New Double(columnSize - 1) {} ' loading vector calculation
+
+#Region ""
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To rowSize - 1
+                s += dataArray(j, i) * t(j)
+            Next
+            p(i) = s / tScalar
+        Next
+#End Region
+        For i = 0 To rowSize - 1
+            u(i) = yArray(i) / c
+        Next
+
+        ' wo calc
+        wo = New Double(columnSize - 1) {}
+        Dim wp = BasicMathematics.InnerProduct(w, p)
+        Dim w2 = BasicMathematics.SumOfSquare(w)
+        For i = 0 To columnSize - 1
+            wo(i) = p(i) - wp / w2 * w(i)
+        Next
+
+        Dim wonorm = BasicMathematics.RootSumOfSquare(wo)
+        For i = 0 To columnSize - 1
+            wo(i) /= wonorm
+        Next
+
+
+        ' score initialization
+        [to] = New Double(rowSize - 1) {}
+        For i = 0 To rowSize - 1
+            Dim s = 0.0
+            For j = 0 To columnSize - 1
+                s += dataArray(i, j) * wo(j)
+            Next
+            [to](i) = s
+        Next
+
+        ' score scalar
+        Dim toScalar = BasicMathematics.SumOfSquare([to])
+
+        po = New Double(columnSize - 1) {} ' loading vector calculation
+
+#Region ""
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To rowSize - 1
+                s += dataArray(j, i) * [to](j)
+            Next
+            po(i) = s / toScalar
+        Next
+#End Region
+    End Sub
+
+    Public Shared Sub PlsVectorsCalculations(ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef u As Double(), <Out> ByRef w As Double(), <Out> ByRef t As Double(), <Out> ByRef c As Double, <Out> ByRef p As Double())
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim uScalar = 0.0
+        u = New Double(yArray.Length - 1) {}
+
+        ' score initialize
+        For i = 0 To yArray.Length - 1
+            u(i) = yArray(i)
+            uScalar += std.Pow(u(i), 2)
+        Next
+
+        w = New Double(columnSize - 1) {} ' weight (X) factor calculation
+#Region ""
+        ' weight factor initialization
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To rowSize - 1
+                s += dataArray(j, i) * u(j)
+            Next
+            w(i) = s / uScalar
+        Next
+
+        ' weight scalar
+        Dim wScalar = BasicMathematics.RootSumOfSquare(w)
+
+        ' weight vector
+        For i = 0 To columnSize - 1
+            w(i) = w(i) / wScalar
+        Next
+#End Region
+
+        t = New Double(rowSize - 1) {} ' score vector calculation
+#Region ""
+        ' score initialization
+        For i = 0 To rowSize - 1
+            Dim s = 0.0
+            For j = 0 To columnSize - 1
+                s += dataArray(i, j) * w(j)
+            Next
+            t(i) = s
+        Next
+
+#End Region
+
+        ' score scalar
+        Dim tScalar = BasicMathematics.SumOfSquare(t)
+
+        c = BasicMathematics.InnerProduct(yArray, t) / tScalar ' weight (Y) factor calculation
+        p = New Double(columnSize - 1) {} ' loading vector calculation
+
+#Region ""
+        For i = 0 To columnSize - 1
+            Dim s = 0.0
+            For j = 0 To rowSize - 1
+                s += dataArray(j, i) * t(j)
+            Next
+            p(i) = s / tScalar
+        Next
+#End Region
+    End Sub
+
+
+    Public Shared Function PlsPressCalculation(ByVal cvNumber As Integer, ByVal cvFold As Integer, ByVal dataArray As Double(,), ByVal yArray As Double()) As Double
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+
+        Dim trainMatrix, testMatrix As Double(,)
+        Dim trainYvalues, testYvalues As Double()
+        DivideMatrixToTrainTest(yArray, dataArray, cvFold, cvNumber, trainMatrix, testMatrix, trainYvalues, testYvalues)
+
+        Dim uTrain, tTrain, pTrain, wTrain As Double()
+        Dim cTrain As Double
+
+        PlsVectorsCalculations(trainYvalues, trainMatrix, uTrain, wTrain, tTrain, cTrain, pTrain)
+
+        Dim testSize = testYvalues.Length
+        Dim tTest = New Double(testSize - 1) {}
+        For i = 0 To testSize - 1
+            Dim s = 0.0
+            For j = 0 To columnSize - 1
+                s += testMatrix(i, j) * wTrain(j)
+            Next
+            tTest(i) = s
+        Next
+
+        Dim yPred = New Double(testSize - 1) {}
+        For i = 0 To testSize - 1
+            yPred(i) = cTrain * tTest(i)
+        Next
+        Dim press = BasicMathematics.ErrorOfSquareVs2(testYvalues, yPred)
+        Return press
+    End Function
+
+    Public Shared Function PlsPressCalculation(ByVal cvFold As Integer, ByVal dataArray As Double(,), ByVal yArray As Double()) As Double
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+        Dim press = 0.0
+        For i = 0 To cvFold - 1
+            press += PlsPressCalculation(i, cvFold, dataArray, yArray)
+        Next
+
+        Return press
+    End Function
+
+    Public Shared Sub DivideMatrixToTrainTest(ByVal yArray As Double(),
+                                              ByVal dataArray As Double(,),
+                                              ByVal cvFold As Integer,
+                                              ByVal cvNumber As Integer,
+                                              <Out> ByRef trainMatrix As Double(,),
+                                              <Out> ByRef testMatrix As Double(,),
+                                              <Out> ByRef trainYvalues As Double(),
+                                              <Out> ByRef testYvalues As Double())
+
+        Dim rowSize = dataArray.GetLength(0) ' files
+        Dim columnSize = dataArray.GetLength(1) ' metabolites
+        Dim testSize = 0
+
+        For i = 0 To rowSize - 1
+            Dim isTestData = If(i Mod cvFold = cvNumber, True, False)
+            If isTestData Then testSize += 1
+        Next
+
+        trainMatrix = New Double(rowSize - testSize - 1, columnSize - 1) {}
+        testMatrix = New Double(testSize - 1, columnSize - 1) {}
+
+        trainYvalues = New Double(rowSize - testSize - 1) {}
+        testYvalues = New Double(testSize - 1) {}
+
+        Dim trainCounter = 0
+        Dim testCounter = 0
+
+        For i = 0 To rowSize - 1
+            Dim isTestData = If(i Mod cvFold = cvNumber, True, False)
+            If isTestData Then
+                For j = 0 To columnSize - 1
+                    testMatrix(testCounter, j) = dataArray(i, j)
+                Next
+                testYvalues(testCounter) = yArray(i)
+                testCounter += 1
+            Else
+                For j = 0 To columnSize - 1
+                    trainMatrix(trainCounter, j) = dataArray(i, j)
+                Next
+                trainYvalues(trainCounter) = yArray(i)
+                trainCounter += 1
+            End If
+        Next
+    End Sub
+#End Region
+End Class
