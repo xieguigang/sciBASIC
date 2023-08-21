@@ -260,11 +260,11 @@ Namespace Drawing2D
         ' theta * stdNum.PI / 180
 
         ''' <summary>
-        ''' 
+        ''' The required alpha angle data should be in data unit of radians
         ''' </summary>
         ''' <param name="shape"></param>
         ''' <param name="center"></param>
-        ''' <param name="alpha">the angle in radius</param>
+        ''' <param name="alpha">the angle in radius, could be translate from angle via function <see cref="ToRadians"/></param>
         ''' <returns></returns>
         ''' 
         <Extension>
