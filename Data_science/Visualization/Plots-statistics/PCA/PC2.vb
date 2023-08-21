@@ -119,7 +119,7 @@ Namespace PCA
                 .ToArray
 
             ' 进行聚类获取得到分组
-            Dim kmeans As ClusterCollection(Of ClusterEntity) = pts.ClusterDataSet(sampleGroup)
+            Dim kmeans As ClusterCollection(Of ClusterEntity) = New KMeansAlgorithm(Of ClusterEntity)().ClusterDataSet(pts, k:=sampleGroup)
             ' 赋值颜色到分组上
             Dim colors() = Designer.GetColors(colorSchema)
             ' 点为黑色的，border则才是所上的颜色

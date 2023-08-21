@@ -157,7 +157,8 @@ Namespace KMeans
         ''' <param name="[stop]"></param>
         ''' <returns></returns>
         Private Function __firstCluster(Of T As ClusterEntity)(source As IEnumerable(Of T), [stop] As Integer, kmeansStop As Integer, parallelDepth%) As ClusterEntity()
-            Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(2, debug:=True, [stop]:=kmeansStop).ToArray
+            Dim kmeans As New KMeansAlgorithm(Of T)(debug:=True, [stop]:=kmeansStop)
+            Dim result As KMeansCluster(Of T)() = kmeans.ClusterDataSet(source, k:=2).ToArray
             ' 假设在刚开始不会出现为零的情况
             Dim cluster1 As AsyncHandle(Of ClusterEntity()) =
                 New AsyncHandle(Of ClusterEntity())(Function() __rootCluster(result(0), "1", [stop], kmeansStop, parallelDepth)).Run    ' cluster1
@@ -204,10 +205,11 @@ EXIT_:          Dim array As T() = source.ToArray
             End If
 
             Dim list As New List(Of ClusterEntity)
-            Dim result As KMeansCluster(Of T)() = source.ClusterDataSet(
-                2, ,
+            Dim kmeans As New KMeansAlgorithm(Of T)(
                 [stop]:=kmeansStop, ' 当递归的深度到达一定程度之后会自动使用非并行算法，以防止并行化的颗粒度过细，影响性能
-                parallel:=parallelDepth >= 0).ToArray
+                parallel:=parallelDepth >= 0
+            )
+            Dim result As KMeansCluster(Of T)() = kmeans.ClusterDataSet(source, k:=2).ToArray
 
             ' 检查数据
             Dim b0 As Boolean = False ', b20 As Boolean = False

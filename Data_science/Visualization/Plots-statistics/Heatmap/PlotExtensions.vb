@@ -115,6 +115,7 @@ Namespace Heatmap
                       }
 
             Dim clusters As ClusterCollection(Of ClusterEntity)
+            Dim kmeans As New KMeansAlgorithm(Of ClusterEntity)
 
             n = entityList.Length / n
 
@@ -128,7 +129,7 @@ Namespace Heatmap
                     Call clusters.Add(c)
                 Next
             Else
-                clusters = entityList.ClusterDataSet(n)
+                clusters = kmeans.ClusterDataSet(entityList, k:=n)
             End If
 
             Dim out As New List(Of NamedValue(Of Dictionary(Of String, Double)))
@@ -147,7 +148,7 @@ Namespace Heatmap
 
             Dim keysOrder As New List(Of String)
 
-            For Each cluster In keysEntity.ClusterDataSet(CInt(keys.Length / 5))
+            For Each cluster In kmeans.ClusterDataSet(keysEntity, k:=CInt(keys.Length / 5))
                 For Each k In cluster
                     keysOrder += k.uid
                 Next
