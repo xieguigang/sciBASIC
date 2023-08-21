@@ -185,7 +185,7 @@ Public Class PLS
         Next
 
         Dim pwMatrixLU = New NumericMatrix(pwMatrix).LUD
-        Dim pwMatrixInv = DirectCast(pwMatrixLU.Solve(), NumericMatrix).Inverse
+        Dim pwMatrixInv = DirectCast(pwMatrixLU.Solve(NumericMatrix.Identity(pwMatrixLU.Pivot.Length)), NumericMatrix).Inverse
 
         Dim wStar = New Double(optfactor - 1, columnSize - 1) {}
         For i = 0 To optfactor - 1
