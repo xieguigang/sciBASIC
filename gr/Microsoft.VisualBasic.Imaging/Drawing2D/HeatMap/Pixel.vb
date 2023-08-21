@@ -58,6 +58,10 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace Drawing2D.HeatMap
 
@@ -121,6 +125,56 @@ Namespace Drawing2D.HeatMap
 
         Public Overrides Function ToString() As String
             Return $"[{X},{Y} = {Scale.ToString("G4")}]"
+        End Function
+
+        Public Shared Function ParseStream(data As Byte()) As IEnumerable(Of PixelData)
+            Using ms As New MemoryStream(data)
+                ms.Seek(Scan0, SeekOrigin.Begin)
+                Return ParseStream(ms)
+            End Using
+        End Function
+
+        Public Shared Iterator Function ParseStream(data As Stream) As IEnumerable(Of PixelData)
+            Dim bytes As Byte() = New Byte(RawStream.INT32 - 1) {}
+            data.Read(bytes, Scan0, bytes.Length)
+            Dim n As Integer = BitConverter.ToInt32(bytes, Scan0)
+            Dim x = New Byte((n * RawStream.INT32) - 1) {}
+            data.Read(x, Scan0, x.Length)
+            Dim y = New Byte((n * RawStream.INT32) - 1) {}
+            data.Read(y, Scan0, y.Length)
+            bytes = New Byte((n * RawStream.DblFloat) - 1) {}
+            data.Read(bytes, Scan0, bytes.Length)
+            Dim z As Double() = New NetworkByteOrderBuffer().decode(bytes)
+            Dim xbytes = New Byte(RawStream.INT32 - 1) {}
+            Dim ybytes = New Byte(RawStream.INT32 - 1) {}
+
+            For i As Integer = 0 To n - 1
+                Array.ConstrainedCopy(x, i * RawStream.INT32, xbytes, Scan0, RawStream.INT32)
+                Array.ConstrainedCopy(y, i * RawStream.INT32, ybytes, Scan0, RawStream.INT32)
+
+                Yield New PixelData(BitConverter.ToInt32(x, Scan0), BitConverter.ToInt32(y, Scan0), z(i))
+            Next
+        End Function
+
+        Public Shared Function CreateStream(pixels As IEnumerable(Of PixelData)) As MemoryStream
+            Dim layer As PixelData() = pixels.ToArray
+            Dim x As Byte() = layer.Select(Function(p) BitConverter.GetBytes(p.X)).IteratesALL.ToArray
+            Dim y As Byte() = layer.Select(Function(p) BitConverter.GetBytes(p.Y)).IteratesALL.ToArray
+            Dim z As Double() = layer.Select(Function(p) p.Scale).ToArray
+            Dim buf As New MemoryStream
+            Dim bytes As Byte()
+            Dim encode As New NetworkByteOrderBuffer
+
+            bytes = BitConverter.GetBytes(layer.Length)
+            Call buf.Write(bytes, Scan0, bytes.Length)
+            Call buf.Write(x, Scan0, x.Length)
+            Call buf.Write(y, Scan0, y.Length)
+
+            bytes = encode.encode(z)
+            Call buf.Write(bytes, Scan0, bytes.Length)
+            Call buf.Flush()
+
+            Return buf
         End Function
 
     End Structure
