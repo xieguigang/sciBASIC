@@ -371,6 +371,10 @@ Namespace Imaging.Math2D
             Return GetShoelaceArea(xpoints, ypoints)
         End Function
 
+        ''' <summary>
+        ''' Get the layout rectangle of current polygon object
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRectangle() As RectangleF
             Return New RectangleF(xpoints.Min, ypoints.Min, width, height)
@@ -463,6 +467,13 @@ Namespace Imaging.Math2D
         Public Shared Operator +(p As Polygon2D, offset As PointF) As Polygon2D
             Dim x = SIMD.Add.f64_op_add_f64_scalar(p.xpoints, offset.X)
             Dim y = SIMD.Add.f64_op_add_f64_scalar(p.ypoints, offset.Y)
+
+            Return New Polygon2D(x, y)
+        End Operator
+
+        Public Shared Operator -(p As Polygon2D, offset As PointF) As Polygon2D
+            Dim x = SIMD.Subtract.f64_op_subtract_f64_scalar(p.xpoints, offset.X)
+            Dim y = SIMD.Subtract.f64_op_subtract_f64_scalar(p.ypoints, offset.Y)
 
             Return New Polygon2D(x, y)
         End Operator
