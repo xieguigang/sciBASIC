@@ -30,7 +30,6 @@ Public Class StatisticsObject
 
 #Region "y - class labels"
     Public Property decoder As Dictionary(Of String, Integer)
-    Public Property labels As String()
 #End Region
 
     Public Property YVariables As Double() = Nothing ' files
