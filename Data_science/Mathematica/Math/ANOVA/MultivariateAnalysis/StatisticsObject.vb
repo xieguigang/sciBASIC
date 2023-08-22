@@ -52,8 +52,10 @@ Public Class StatisticsObject
     Public Property Scale As ScaleMethod = ScaleMethod.AutoScale
     Public Property Transform As TransformMethod = TransformMethod.None
 
-    Sub New(x As Double()())
+    Sub New(x As Double()(), y As Double())
         XDataMatrix = x.ToMatrix
+        YVariables = y
+
         StatInitialization()
     End Sub
 
