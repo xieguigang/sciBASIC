@@ -53,6 +53,7 @@ Namespace GMM
                 newLog = mix.logLike()
 
                 dev.WriteLine($" [{vbTab}{++i}]{vbTab}new-loglike: {newLog}")
+                dev.Flush()
             Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > threshold
 
             mix.printStats(dev)
