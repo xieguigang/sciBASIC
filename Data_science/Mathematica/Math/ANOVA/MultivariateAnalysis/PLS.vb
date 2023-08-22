@@ -55,21 +55,22 @@ Public Class PLS
         Dim rmsee = std.Sqrt(ySumofSqure / (rowSize - optfactor - 1))
 
         Dim maResult = New MultivariateAnalysisResult() With {
-                .StatisticsObject = statObject,
-                .NFold = nFold,
-                .SsCVs = New ObservableCollection(Of Double)(ss),
-                .Presses = New ObservableCollection(Of Double)(press),
-                .Totals = New ObservableCollection(Of Double)(total),
-                .Q2Values = New ObservableCollection(Of Double)(q2),
-                .Q2Cums = New ObservableCollection(Of Double)(q2cum),
-                .OptimizedFactor = optfactor,
-                .SsPreds = New ObservableCollection(Of Double)(ssPred),
-                .CPreds = New ObservableCollection(Of Double)(cPred),
-                .Coefficients = New ObservableCollection(Of Double)(coeffVector),
-                .Vips = New ObservableCollection(Of Double)(vip),
-                .PredictedYs = New ObservableCollection(Of Double)(yPred),
-                .Rmsee = rmsee
-            }
+            .StatisticsObject = statObject,
+            .NFold = nFold,
+            .SsCVs = New ObservableCollection(Of Double)(ss),
+            .Presses = New ObservableCollection(Of Double)(press),
+            .Totals = New ObservableCollection(Of Double)(total),
+            .Q2Values = New ObservableCollection(Of Double)(q2),
+            .Q2Cums = New ObservableCollection(Of Double)(q2cum),
+            .OptimizedFactor = optfactor,
+            .SsPreds = New ObservableCollection(Of Double)(ssPred),
+            .CPreds = New ObservableCollection(Of Double)(cPred),
+            .Coefficients = New ObservableCollection(Of Double)(coeffVector),
+            .Vips = New ObservableCollection(Of Double)(vip),
+            .PredictedYs = New ObservableCollection(Of Double)(yPred),
+            .Rmsee = rmsee,
+            .analysis = GetType(PLS)
+        }
 
         For i = 0 To optfactor - 1
             Dim wArray = New Double(columnSize - 1) {}

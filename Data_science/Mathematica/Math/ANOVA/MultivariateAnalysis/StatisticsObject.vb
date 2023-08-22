@@ -45,15 +45,15 @@ Public Class StatisticsObject
     Public Property XMeans As Double() = Nothing
     Public Property XStdevs As Double() = Nothing
 
-    Public Property YIndexes As ObservableCollection(Of Integer) = New ObservableCollection(Of Integer)()
-    Public Property XIndexes As ObservableCollection(Of Integer) = New ObservableCollection(Of Integer)()
+    Public Property YIndexes As New ObservableCollection(Of Integer)()
+    Public Property XIndexes As New ObservableCollection(Of Integer)()
 
-    Public Property YLabels As ObservableCollection(Of String) = New ObservableCollection(Of String)()
-    Public Property YLabels2 As ObservableCollection(Of String) = New ObservableCollection(Of String)()
-    Public Property XLabels As ObservableCollection(Of String) = New ObservableCollection(Of String)()
+    Public Property YLabels As New ObservableCollection(Of String)()
+    Public Property YLabels2 As New ObservableCollection(Of String)()
+    Public Property XLabels As New ObservableCollection(Of String)()
 
-    Public Property YColors As ObservableCollection(Of Byte()) = New ObservableCollection(Of Byte())() ' [0] R [1] G [2] B [3] A
-    Public Property XColors As ObservableCollection(Of Byte()) = New ObservableCollection(Of Byte())() ' [0] R [1] G [2] B [3] A
+    Public Property YColors As New ObservableCollection(Of Byte())() ' [0] R [1] G [2] B [3] A
+    Public Property XColors As New ObservableCollection(Of Byte())() ' [0] R [1] G [2] B [3] A
 
     Public Property Scale As ScaleMethod = ScaleMethod.AutoScale
     Public Property Transform As TransformMethod = TransformMethod.None
@@ -69,7 +69,6 @@ Public Class StatisticsObject
     End Sub
 
     Public Sub StatInitialization()
-
         Dim rowSize = XDataMatrix.GetLength(0) ' files
         Dim columnSize = XDataMatrix.GetLength(1) ' metabolites
 
