@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.DataFrame
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 Public Module PLSData
