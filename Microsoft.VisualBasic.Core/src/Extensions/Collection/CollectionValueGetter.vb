@@ -330,16 +330,16 @@ Public Module CollectionValueGetter
     End Function
 
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash Is Nothing Then
+    Public Function TryGetValue(Of TKey, TValue, TProp)(dict As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
+        If dict Is Nothing Then
             Return Nothing
         End If
 
-        If Not hash.ContainsKey(Index) Then
+        If Not dict.ContainsKey(Index) Then
             Return Nothing
         End If
 
-        Dim obj As TValue = hash(Index)
+        Dim obj As TValue = dict(Index)
         Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
 
         If propertyInfo Is Nothing Then
