@@ -53,6 +53,7 @@
 
 Imports System.Data
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -94,9 +95,15 @@ Public Class DataFrame
         End Set
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function delete(featureName As String) As Boolean
         Return features.Remove(featureName)
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub add(featureName As String, v As Double())
+        Call features.Add(featureName, New FeatureVector(featureName, v))
+    End Sub
 
     ''' <summary>
     ''' current dataframe object append the additional data 
