@@ -6,7 +6,14 @@ Imports std = System.Math
 Public Class PLS
 
 #Region "pls"
-    Public Shared Function PartialLeastSquares(ByVal statObject As StatisticsObject, ByVal Optional component As Integer = -1) As MultivariateAnalysisResult
+
+    ''' <summary>
+    ''' PLS-DA analysis
+    ''' </summary>
+    ''' <param name="statObject"></param>
+    ''' <param name="component"></param>
+    ''' <returns></returns>
+    Public Shared Function PartialLeastSquares(statObject As StatisticsObject, Optional component As Integer = -1) As MultivariateAnalysisResult
         Dim dataArray = statObject.CopyX()
         Dim yArray = statObject.CopyY()
 
@@ -89,7 +96,7 @@ Public Class PLS
         Return maResult
     End Function
 
-    Private Shared Function getOptimalFoldValue(ByVal rowSize As Integer) As Integer
+    Private Shared Function getOptimalFoldValue(rowSize As Integer) As Integer
         If rowSize < 7 Then
             Return rowSize
         Else
@@ -97,7 +104,7 @@ Public Class PLS
         End If
     End Function
 
-    Private Shared Function GetPredictedYvariables(ByVal coeffVector As Double(), ByVal statObject As StatisticsObject) As Double()
+    Private Shared Function GetPredictedYvariables(coeffVector As Double(), statObject As StatisticsObject) As Double()
 
         Dim yPreds = New Double(statObject.RowSize() - 1) {}
         For i = 0 To statObject.RowSize() - 1
@@ -111,7 +118,7 @@ Public Class PLS
         Return yPreds
     End Function
 
-    Private Shared Function GetPredictedYvariables(ByVal coeffVector As Double(), ByVal statObject As StatisticsObject, ByVal woPred As Double(,), ByVal poPred As Double(,)) As Double()
+    Private Shared Function GetPredictedYvariables(coeffVector As Double(), statObject As StatisticsObject, woPred As Double(,), poPred As Double(,)) As Double()
         Dim yPreds = New Double(statObject.RowSize() - 1) {}
         For i = 0 To statObject.RowSize() - 1
 
@@ -133,7 +140,7 @@ Public Class PLS
         Return yPreds
     End Function
 
-    Private Shared Function convertToFilteredX(ByVal xnew As Double(), ByVal woPred As Double(,), ByVal poPred As Double(,)) As Double()
+    Private Shared Function convertToFilteredX(xnew As Double(), woPred As Double(,), poPred As Double(,)) As Double()
 
         For j = 0 To woPred.GetLength(0) - 1
             Dim tneworth = 0.0
@@ -152,7 +159,7 @@ Public Class PLS
         Return xnew
     End Function
 
-    Public Shared Function GetVips(ByVal wPred As Double(,), ByVal ssPred As Double()) As Double()
+    Public Shared Function GetVips(wPred As Double(,), ssPred As Double()) As Double()
         Dim optfactor = wPred.GetLength(0) ' optfactor
         Dim columnSize = wPred.GetLength(1) ' metabolites
 
@@ -167,7 +174,7 @@ Public Class PLS
         Return vip
     End Function
 
-    Public Shared Function GetPlsCoefficients(ByVal optfactor As Integer, ByVal pPred As Double(,), ByVal wPred As Double(,), ByVal cPred As Double()) As Double()
+    Public Shared Function GetPlsCoefficients(optfactor As Integer, pPred As Double(,), wPred As Double(,), cPred As Double()) As Double()
         Dim columnSize = pPred.GetLength(1) ' metabolites
 
         Dim coeffVector = New Double(columnSize - 1) {}
@@ -210,7 +217,7 @@ Public Class PLS
         Return coeffVector
     End Function
 
-    Public Shared Sub OplsModeling(ByVal biofactor As Integer, ByVal orthofactor As Integer, ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,), <Out> ByRef woPred As Double(,), <Out> ByRef poPred As Double(,), <Out> ByRef toPred As Double(,), <Out> ByRef filteredXMatrix As Double(,))
+    Public Shared Sub OplsModeling(biofactor As Integer, orthofactor As Integer, yArray As Double(), dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,), <Out> ByRef woPred As Double(,), <Out> ByRef poPred As Double(,), <Out> ByRef toPred As Double(,), <Out> ByRef filteredXMatrix As Double(,))
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
 
@@ -313,7 +320,7 @@ Public Class PLS
         Next
     End Sub
 
-    Private Shared Sub PlsModeling(ByVal optfactor As Integer, ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,))
+    Private Shared Sub PlsModeling(optfactor As Integer, yArray As Double(), dataArray As Double(,), <Out> ByRef ssPred As Double(), <Out> ByRef wPred As Double(,), <Out> ByRef pPred As Double(,), <Out> ByRef cPred As Double(), <Out> ByRef tPred As Double(,), <Out> ByRef uPred As Double(,))
 
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
@@ -376,10 +383,10 @@ Public Class PLS
         Next
     End Sub
 
-    Private Shared Sub OplsCrossValidation(ByVal yArray As Double(),
-                                           ByVal dataArray As Double(,),
-                                           ByVal maxLV As Integer,
-                                           ByVal nFold As Integer,
+    Private Shared Sub OplsCrossValidation(yArray As Double(),
+                                           dataArray As Double(,),
+                                           maxLV As Integer,
+                                           nFold As Integer,
                                            <Out> ByRef ss As List(Of Double),
                                            <Out> ByRef press As List(Of Double),
                                            <Out> ByRef total As List(Of Double),
@@ -433,7 +440,7 @@ Public Class PLS
         Next
     End Sub
 
-    Private Shared Function getWeightLoading(ByVal yArray As Double(), ByVal dataArray As Double(,)) As Double()
+    Private Shared Function getWeightLoading(yArray As Double(), dataArray As Double(,)) As Double()
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
 
@@ -469,10 +476,10 @@ Public Class PLS
         Return w
     End Function
 
-    Public Shared Sub PlsCrossValidation(ByVal yArray As Double(),
-                                         ByVal dataArray As Double(,),
-                                         ByVal maxLV As Integer,
-                                         ByVal nFold As Integer,
+    Public Shared Sub PlsCrossValidation(yArray As Double(),
+                                         dataArray As Double(,),
+                                         maxLV As Integer,
+                                         nFold As Integer,
                                          <Out> ByRef ss As List(Of Double),
                                          <Out> ByRef press As List(Of Double),
                                          <Out> ByRef total As List(Of Double),
@@ -519,12 +526,12 @@ Public Class PLS
         Next
     End Sub
 
-    Private Shared Function isOptimaized(ByVal size As Integer,
-                                         ByVal ss As List(Of Double),
-                                         ByVal press As List(Of Double),
-                                         ByVal total As List(Of Double),
-                                         ByVal q2 As List(Of Double),
-                                         ByVal q2cum As List(Of Double),
+    Private Shared Function isOptimaized(size As Integer,
+                                         ss As List(Of Double),
+                                         press As List(Of Double),
+                                         total As List(Of Double),
+                                         q2 As List(Of Double),
+                                         q2cum As List(Of Double),
                                          <Out>
                                          ByRef optfactor As Integer) As Boolean
 
@@ -604,7 +611,7 @@ Public Class PLS
         Return False
     End Function
 
-    Private Shared Function PlsMatrixUpdate(ByVal t As Double(), ByVal p As Double(), ByVal dataArray As Double(,)) As Double(,)
+    Private Shared Function PlsMatrixUpdate(t As Double(), p As Double(), dataArray As Double(,)) As Double(,)
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
 
@@ -617,7 +624,7 @@ Public Class PLS
         Return nArray
     End Function
 
-    Private Shared Function PlsMatrixUpdate(ByVal t As Double(), ByVal c As Double, ByVal yArray As Double()) As Double()
+    Private Shared Function PlsMatrixUpdate(t As Double(), c As Double, yArray As Double()) As Double()
         Dim size = yArray.Length
         Dim nArray = New Double(size - 1) {}
 
@@ -628,9 +635,9 @@ Public Class PLS
     End Function
 
 
-    Private Shared Sub OplsVectorsCalculations(ByVal yArray As Double(),
-                                               ByVal dataArray As Double(,),
-                                               ByVal w As Double(),
+    Private Shared Sub OplsVectorsCalculations(yArray As Double(),
+                                               dataArray As Double(,),
+                                               w As Double(),
                                                <Out> ByRef u As Double(),
                                                <Out> ByRef t As Double(),
                                                <Out> ByRef c As Double,
@@ -724,7 +731,7 @@ Public Class PLS
 #End Region
     End Sub
 
-    Public Shared Sub PlsVectorsCalculations(ByVal yArray As Double(), ByVal dataArray As Double(,), <Out> ByRef u As Double(), <Out> ByRef w As Double(), <Out> ByRef t As Double(), <Out> ByRef c As Double, <Out> ByRef p As Double())
+    Public Shared Sub PlsVectorsCalculations(yArray As Double(), dataArray As Double(,), <Out> ByRef u As Double(), <Out> ByRef w As Double(), <Out> ByRef t As Double(), <Out> ByRef c As Double, <Out> ByRef p As Double())
 
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
@@ -789,7 +796,7 @@ Public Class PLS
     End Sub
 
 
-    Public Shared Function PlsPressCalculation(ByVal cvNumber As Integer, ByVal cvFold As Integer, ByVal dataArray As Double(,), ByVal yArray As Double()) As Double
+    Public Shared Function PlsPressCalculation(cvNumber As Integer, cvFold As Integer, dataArray As Double(,), yArray As Double()) As Double
 
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
@@ -821,7 +828,7 @@ Public Class PLS
         Return press
     End Function
 
-    Public Shared Function PlsPressCalculation(ByVal cvFold As Integer, ByVal dataArray As Double(,), ByVal yArray As Double()) As Double
+    Public Shared Function PlsPressCalculation(cvFold As Integer, dataArray As Double(,), yArray As Double()) As Double
 
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
@@ -833,10 +840,10 @@ Public Class PLS
         Return press
     End Function
 
-    Public Shared Sub DivideMatrixToTrainTest(ByVal yArray As Double(),
-                                              ByVal dataArray As Double(,),
-                                              ByVal cvFold As Integer,
-                                              ByVal cvNumber As Integer,
+    Public Shared Sub DivideMatrixToTrainTest(yArray As Double(),
+                                              dataArray As Double(,),
+                                              cvFold As Integer,
+                                              cvNumber As Integer,
                                               <Out> ByRef trainMatrix As Double(,),
                                               <Out> ByRef testMatrix As Double(,),
                                               <Out> ByRef trainYvalues As Double(),

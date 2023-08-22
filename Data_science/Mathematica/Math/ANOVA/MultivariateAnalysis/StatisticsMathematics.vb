@@ -3,7 +3,7 @@ Imports std = System.Math
 
 Public Class StatisticsMathematics
 
-    Public Shared Function LogTransform(ByVal dataArray As Double(,)) As Double(,)
+    Public Shared Function LogTransform(dataArray As Double(,)) As Double(,)
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
 
@@ -20,7 +20,7 @@ Public Class StatisticsMathematics
         Return resultArray
     End Function
 
-    Public Shared Function QuadRootTransform(ByVal dataArray As Double(,)) As Double(,)
+    Public Shared Function QuadRootTransform(dataArray As Double(,)) As Double(,)
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
 
@@ -37,7 +37,7 @@ Public Class StatisticsMathematics
         Return resultArray
     End Function
 
-    Public Shared Function MeanCentering(ByVal dataArray As Double(,), ByVal mean As Double()) As Double(,)
+    Public Shared Function MeanCentering(dataArray As Double(,), mean As Double()) As Double(,)
 
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
@@ -53,7 +53,7 @@ Public Class StatisticsMathematics
         Return resultArray
     End Function
 
-    Public Shared Function ParetoScaling(ByVal dataArray As Double(,), ByVal mean As Double(), ByVal stdev As Double()) As Double(,)
+    Public Shared Function ParetoScaling(dataArray As Double(,), mean As Double(), stdev As Double()) As Double(,)
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
 
@@ -71,7 +71,7 @@ Public Class StatisticsMathematics
         Return resultArray
     End Function
 
-    Public Shared Function AutoScaling(ByVal dataArray As Double(,), ByVal mean As Double(), ByVal stdev As Double()) As Double(,)
+    Public Shared Function AutoScaling(dataArray As Double(,), mean As Double(), stdev As Double()) As Double(,)
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
 
@@ -90,7 +90,7 @@ Public Class StatisticsMathematics
         Return resultArray
     End Function
 
-    Public Shared Sub StatisticsProperties(ByVal dataArray As Double(,), <Out> ByRef mean As Double(), <Out> ByRef stdev As Double())
+    Public Shared Sub StatisticsProperties(dataArray As Double(,), <Out> ByRef mean As Double(), <Out> ByRef stdev As Double())
 
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
@@ -116,7 +116,7 @@ Public Class StatisticsMathematics
         Next
     End Sub
 
-    Public Shared Sub StatisticsProperties(ByVal dataArray As Double(), <Out> ByRef mean As Double, <Out> ByRef stdev As Double)
+    Public Shared Sub StatisticsProperties(dataArray As Double(), <Out> ByRef mean As Double, <Out> ByRef stdev As Double)
         Dim size = dataArray.Length
 
         mean = 0.0

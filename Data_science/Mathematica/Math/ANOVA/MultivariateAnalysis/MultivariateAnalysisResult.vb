@@ -47,7 +47,7 @@ Public Class MultivariateAnalysisResult
     ' pca
     Public Property Contributions As ObservableCollection(Of Double) = New ObservableCollection(Of Double)()
 
-    Public Sub WritePlsResult(ByVal output As String)
+    Public Sub WritePlsResult(output As String)
         Using sw As StreamWriter = New StreamWriter(output, False, Encoding.ASCII)
             sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & "PLS")
             sw.WriteLine("Optimized factor" & Microsoft.VisualBasic.Constants.vbTab & OptimizedFactor.ToString())
@@ -111,7 +111,7 @@ Public Class MultivariateAnalysisResult
         End Using
     End Sub
 
-    Public Sub WriteOplsResult(ByVal output As String)
+    Public Sub WriteOplsResult(output As String)
         Using sw As StreamWriter = New StreamWriter(output, False, Encoding.ASCII)
             sw.WriteLine("Method" & Microsoft.VisualBasic.Constants.vbTab & "OPLS")
             sw.WriteLine("Optimized biological factor" & Microsoft.VisualBasic.Constants.vbTab & OptimizedFactor.ToString())
@@ -187,7 +187,7 @@ Public Class MultivariateAnalysisResult
         End Using
     End Sub
 
-    Public Sub WritePcaResult(ByVal output As String)
+    Public Sub WritePcaResult(output As String)
 
         Using sw As StreamWriter = New StreamWriter(output, False, Encoding.ASCII)
             'header set

@@ -2,7 +2,7 @@
 
 Public Class BasicMathematics
 
-    Public Shared Function ErrorOfSquareVs2(ByVal x As Double(), ByVal y As Double()) As Double
+    Public Shared Function ErrorOfSquareVs2(x As Double(), y As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To x.Length - 1
             sum += std.Pow(x(i) - y(i), 2)
@@ -10,7 +10,7 @@ Public Class BasicMathematics
         Return sum
     End Function
 
-    Public Shared Function Stdev(ByVal array As Double()) As Double
+    Public Shared Function Stdev(array As Double()) As Double
         Dim sum As Double = 0, mean As Double = 0
         For i = 0 To array.Length - 1
             sum += array(i)
@@ -24,7 +24,7 @@ Public Class BasicMathematics
         Return std.Sqrt(sum / (array.Length - 1))
     End Function
 
-    Public Shared Function SumOfSquare(ByVal array As Double()) As Double
+    Public Shared Function SumOfSquare(array As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To array.Length - 1
             sum += std.Pow(array(i), 2)
@@ -32,7 +32,7 @@ Public Class BasicMathematics
         Return sum
     End Function
 
-    Public Shared Function RootSumOfSquare(ByVal array As Double()) As Double
+    Public Shared Function RootSumOfSquare(array As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To array.Length - 1
             sum += std.Pow(array(i), 2)
@@ -40,7 +40,7 @@ Public Class BasicMathematics
         Return std.Sqrt(sum)
     End Function
 
-    Public Shared Function Var(ByVal array As Double()) As Double
+    Public Shared Function Var(array As Double()) As Double
         Dim sum As Double = 0, mean As Double = 0
         For i = 0 To array.Length - 1
             sum += array(i)
@@ -54,7 +54,7 @@ Public Class BasicMathematics
         Return sum / (array.Length - 1)
     End Function
 
-    Public Shared Function InnerProduct(ByVal array1 As Double(), ByVal array2 As Double()) As Double
+    Public Shared Function InnerProduct(array1 As Double(), array2 As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To array1.Length - 1
             sum += array1(i) * array2(i)

@@ -105,7 +105,7 @@ Public Class StatisticsObject
 
     End Sub
 
-    Public Function YBackTransform(ByVal scaledY As Double) As Double
+    Public Function YBackTransform(scaledY As Double) As Double
         Return scaledY + YMean
         'var backY = scaledY;
         'switch (this.Scale) {
