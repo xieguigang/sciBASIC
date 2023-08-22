@@ -591,8 +591,8 @@ Public Class PLS
         ' score scalar
         Dim tScalar = BasicMathematics.SumOfSquare(t)
 
-        Debug.WriteLine("Y array" & ASCII.TAB & String.Join(ASCII.TAB, yArray))
-        Debug.WriteLine("T array" & ASCII.TAB & String.Join(ASCII.TAB, t))
+        ' Debug.WriteLine("Y array" & ASCII.TAB & String.Join(ASCII.TAB, yArray))
+        ' Debug.WriteLine("T array" & ASCII.TAB & String.Join(ASCII.TAB, t))
 
         c = BasicMathematics.InnerProduct(yArray, t) / tScalar ' weight (Y) factor calculation
         p = New Double(columnSize - 1) {} ' loading vector calculation
