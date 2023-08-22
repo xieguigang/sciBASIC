@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Enum ScaleMethod
     None
@@ -50,6 +51,10 @@ Public Class StatisticsObject
 
     Public Property Scale As ScaleMethod = ScaleMethod.AutoScale
     Public Property Transform As TransformMethod = TransformMethod.None
+
+    Sub New(x As Double()())
+        XDataMatrix = x.ToMatrix
+    End Sub
 
     Public Sub StatInitialization()
 
