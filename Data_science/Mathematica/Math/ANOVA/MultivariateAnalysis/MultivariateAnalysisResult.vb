@@ -8,7 +8,11 @@ Public Class MultivariateAnalysisResult
 
     ' model set
     Public Property StatisticsObject As StatisticsObject
-    ' Public Property MultivariateAnalysisOption As MultivariateAnalysisOption = MultivariateAnalysisOption.Plsda
+
+#Region "y - class labels"
+    Public Property decoder As Dictionary(Of String, Integer)
+    Public Property labels As String()
+#End Region
 
     ' cv result
     Public Property NFold As Integer = 7
