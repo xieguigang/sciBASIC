@@ -52,6 +52,37 @@ Public Module PLSData
         Return df
     End Function
 
+    <Extension>
+    Public Function GetPLSLoading(mvar As MultivariateAnalysisResult) As df
+        Dim features As String() = mvar.StatisticsObject.XLabels.ToArray
+        Dim Ploads As New List(Of Double())
+        Dim metSize = mvar.StatisticsObject.XIndexes.Count
+        Dim vips As Double() = mvar.Vips.ToArray
+        Dim cors As Double() = mvar.Coefficients.ToArray
+
+        For i = 0 To mvar.OptimizedFactor - 1
+            Call Ploads.Add(New Double(features.Length - 1) {})
+        Next
+
+        For i As Integer = 0 To metSize - 1
+            For j As Integer = 0 To mvar.PPreds.Count - 1
+                Ploads(j)(i) = mvar.PPreds(j)(i)
+            Next
+        Next
+
+        Dim df As New df With {.rownames = features}
+        Dim index As i32 = 1
+
+        For Each p As Double() In Ploads
+            Call df.add($"P{++index}", p)
+        Next
+
+        Call df.add("VIP", vips)
+        Call df.add("Coefficients", cors)
+
+        Return df
+    End Function
+
 End Module
 
 Public Class Component
