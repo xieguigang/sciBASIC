@@ -25,7 +25,13 @@ Public Class BasicStats
     Public Property SeventyFiveValue As Double
     Public Property MaxValue As Double
 End Class
+
 Public Class StatisticsObject
+
+#Region "y - class labels"
+    Public Property decoder As Dictionary(Of String, Integer)
+    Public Property labels As String()
+#End Region
 
     Public Property YVariables As Double() = Nothing ' files
     Public Property YTransformed As Double() = Nothing
