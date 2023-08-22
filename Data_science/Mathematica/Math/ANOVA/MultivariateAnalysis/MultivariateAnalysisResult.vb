@@ -7,7 +7,7 @@ Public Class MultivariateAnalysisResult
     End Sub
 
     ' model set
-    Public Property StatisticsObject As StatisticsObject = New StatisticsObject()
+    Public Property StatisticsObject As StatisticsObject
     ' Public Property MultivariateAnalysisOption As MultivariateAnalysisOption = MultivariateAnalysisOption.Plsda
 
     ' cv result

@@ -54,6 +54,10 @@ Public Class StatisticsObject
 
     Sub New(x As Double()())
         XDataMatrix = x.ToMatrix
+        StatInitialization()
+    End Sub
+
+    Sub New()
     End Sub
 
     Public Sub StatInitialization()
