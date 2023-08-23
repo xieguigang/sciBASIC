@@ -18,7 +18,7 @@ Namespace CNN
             builder.addLayer(Layer.buildOutputLayer(output_width))
             Dim cnn As CNN = New CNN(builder, 50, output_width)
 
-            Dim fileName = "dataset/train.format"
+            Dim fileName = "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\train.format"
             Dim dataset As ds = ds.load(fileName, ",", 784)
             cnn.train(dataset, 3)
             Dim modelName = "model/model.cnn"
@@ -27,8 +27,8 @@ Namespace CNN
             dataset = Nothing
 
             ' CNN cnn = CNN.loadModel(modelName);	
-            Dim testset = ds.load("dataset/test.format", ",", -1)
-            cnn.predict(testset, "dataset/test.predict")
+            Dim testset = ds.load("\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\test.format", ",", -1)
+            cnn.predict(testset, "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\test.predict")
         End Sub
     End Class
 End Namespace

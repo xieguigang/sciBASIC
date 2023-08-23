@@ -64,8 +64,7 @@ Namespace CNN.Dataset
         End Function
 
         Public Shared Function load(filePath As String, tag As String, lableIndex As Integer) As Dataset
-            Dim dataset As Dataset = New Dataset()
-            dataset.lableIndexField = lableIndex
+            Dim dataset As New Dataset(lableIndex)
             Dim file As Stream = IO.File.OpenRead(filePath)
             Dim sep = tag.ToArray
             Try

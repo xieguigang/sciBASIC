@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Layer
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
@@ -87,9 +88,9 @@ Namespace CNN
                 [set].Add(randf.Next(size))
             End While
             Dim randPerm = New Integer(batchSize - 1) {}
-            Dim i = 0
+            Dim i As i32 = 0
             For Each value In [set]
-                randPerm(std.Min(Threading.Interlocked.Increment(i), i - 1)) = value.Value
+                randPerm(++i) = value.Value
             Next
             Return randPerm
         End Function
