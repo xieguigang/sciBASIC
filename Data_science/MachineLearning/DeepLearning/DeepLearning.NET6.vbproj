@@ -157,4 +157,8 @@
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CNN\test_new\" />
+  </ItemGroup>
+
 </Project>
