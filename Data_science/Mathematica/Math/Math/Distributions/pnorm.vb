@@ -136,7 +136,8 @@ Namespace Distributions
         ''' 将其转化为无量纲的纯数值，便于不同单位或量级的指标能够进行比较和加权。
         ''' 其中最典型的就是0-1标准化和Z标准化
         ''' </remarks>
-        <Extension> Public Function DeviationStandardization(x As Vector) As Vector
+        <Extension>
+        Public Function DeviationStandardization(x As Vector) As Vector
             Dim max# = x.Max
             Dim min# = x.Min
             Dim x1 As Vector = (x - min) / (max - min)

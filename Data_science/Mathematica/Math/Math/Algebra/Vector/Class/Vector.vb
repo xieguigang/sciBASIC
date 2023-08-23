@@ -137,6 +137,12 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Public ReadOnly Property IsNaN As BooleanVector
+            Get
+                Return New BooleanVector(From xi As Double In buffer Select xi.IsNaNImaginary)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>

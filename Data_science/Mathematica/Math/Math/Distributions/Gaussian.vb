@@ -67,15 +67,14 @@ Namespace Distributions
         ''' <param name="x#"></param>
         ''' <param name="a#">is the height of the curve's peak</param>
         ''' <param name="b#">is the position of the center of the peak</param>
-        ''' <param name="c#">(the standard deviation, sometimes called the Gaussian RMS width) 
+        ''' <param name="sigma#">(the standard deviation, sometimes called the Gaussian RMS width) 
         ''' controls the width of the "bell"</param>
         ''' <returns></returns>
-        Public Function Gaussian(x#, a#, b#, c#) As Double
-            Dim p# = ((x - b) ^ 2) / (2 * c ^ 2)
+        Public Function Gaussian(x#, a#, b#, sigma#) As Double
+            Dim p# = ((x - b) ^ 2) / (2 * sigma ^ 2)
             Dim fx# = a * stdNum.E ^ (-p)
             Return fx
         End Function
-
 
     End Module
 End Namespace
