@@ -279,6 +279,13 @@ Namespace Distributions
             Return answer
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="m"></param>
+        ''' <param name="sd"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
             Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
