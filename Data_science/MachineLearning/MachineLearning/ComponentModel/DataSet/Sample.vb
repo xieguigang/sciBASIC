@@ -82,6 +82,14 @@ Namespace ComponentModel.StoreProcedure
             labels = sample.target
         End Sub
 
+        ''' <summary>
+        ''' create the dataset for predictions, so no label data
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As Double())
+            Me.features = data
+        End Sub
+
         Sub New(features As Double(), label As Double)
             Me.features = features
             Me.labels = {label}
