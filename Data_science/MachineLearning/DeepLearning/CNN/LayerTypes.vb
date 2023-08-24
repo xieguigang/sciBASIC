@@ -58,11 +58,23 @@ Imports System.ComponentModel
 Namespace Convolutional
 
     Public Enum LayerTypes
+
+        ''' <summary>
+        ''' conv
+        ''' </summary>
         <Description("conv")> Convolution
+        ''' <summary>
+        ''' input
+        ''' </summary>
         <Description("input")> Input
+        ''' <summary>
+        ''' output
+        ''' </summary>
         <Description("output")> Output
         <Description("pool")> Pool
         <Description("relu")> ReLU
         <Description("softmax")> SoftMax
+
+        samp
     End Enum
 End Namespace

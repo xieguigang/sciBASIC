@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace CNN
@@ -13,10 +14,16 @@ Namespace CNN
         Private Shared recordInBatch As Integer = 0
 
         Public Overridable Property MapSize As Size
-        Public Overridable ReadOnly Property Type As LayerType
+        Public Overridable ReadOnly Property Type As LayerTypes
         Public Overridable Property OutMapNum As Integer
         Public Overridable ReadOnly Property KernelSize As Size
         Public Overridable ReadOnly Property ScaleSize As Size
+
+        Public Overridable ReadOnly Property Maps As Double()()()()
+            Get
+                Return outmaps
+            End Get
+        End Property
 
         Public Overridable ReadOnly Property Errors As Double()()()()
             Get
@@ -46,7 +53,7 @@ Namespace CNN
 
         Public Shared Function buildInputLayer(mapSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer._Type = LayerType.input
+            layer._Type = LayerTypes.Input
             layer._OutMapNum = 1
             layer._MapSize = mapSize
             Return layer
@@ -54,7 +61,7 @@ Namespace CNN
 
         Public Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer._Type = LayerType.conv
+            layer._Type = LayerTypes.Convolution
             layer._OutMapNum = outMapNum
             layer._KernelSize = kernelSize
             Return layer
@@ -62,7 +69,7 @@ Namespace CNN
 
         Public Shared Function buildSampLayer(scaleSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer._Type = LayerType.samp
+            layer._Type = LayerTypes.samp
             layer._ScaleSize = scaleSize
             Return layer
         End Function
@@ -70,7 +77,7 @@ Namespace CNN
         Public Shared Function buildOutputLayer(classNum As Integer) As Layer
             Dim layer As New Layer()
             layer._ClassNum = classNum
-            layer._Type = LayerType.output
+            layer._Type = LayerTypes.Output
             layer._MapSize = New Size(1, 1)
             layer._OutMapNum = classNum
             ' int outMapNum = 1;
@@ -80,13 +87,6 @@ Namespace CNN
             Call Log.i("outMapNum:" & layer.OutMapNum.ToString())
             Return layer
         End Function
-
-        Public Enum LayerType
-            input
-            output
-            conv
-            samp
-        End Enum
 
         Public Overridable Sub initKernel(frontMapNum As Integer)
             m_kernel = ReturnRectangularDoubleArray(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
@@ -169,12 +169,6 @@ Namespace CNN
         Public Overridable Sub setBias(mapNo As Integer, value As Double)
             bias(mapNo) = value
         End Sub
-
-        Public Overridable ReadOnly Property Maps As Double()()()()
-            Get
-                Return outmaps
-            End Get
-        End Property
 
         Public Overridable Function getError(recordId As Integer, mapNo As Integer) As Double()()
             Return m_errors(recordId)(mapNo)

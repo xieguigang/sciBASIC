@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
 Imports std = System.Math
+Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
 
 Namespace CNN
 
@@ -18,7 +19,7 @@ Namespace CNN
         Private multiply_lambda As [Operator]
 
         Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
-            layers = layerBuilder.mLayers
+            layers = layerBuilder.m_layers
             layerNum = layers.Count
             Me.batchSize = batchSize
 
@@ -165,7 +166,7 @@ Namespace CNN
                 Dim layer = layers(l)
                 Dim lastLayer = layers(l - 1)
                 Select Case layer.Type
-                    Case Layer.LayerType.conv, Layer.LayerType.output
+                    Case layerTypes.Convolution, layerTypes.Output
                         updateKernels(layer, lastLayer)
                         updateBias(layer, lastLayer)
                     Case Else
@@ -221,9 +222,9 @@ Namespace CNN
                 Dim layer = layers(l)
                 Dim nextLayer = layers(l + 1)
                 Select Case layer.Type
-                    Case Layer.LayerType.samp
+                    Case layerTypes.samp
                         setSampErrors(layer, nextLayer)
-                    Case Layer.LayerType.conv
+                    Case layerTypes.Convolution
                         setConvErrors(layer, nextLayer)
                     Case Else
                 End Select
@@ -309,11 +310,11 @@ Namespace CNN
                 Dim layer = layers(l)
                 Dim lastLayer = layers(l - 1)
                 Select Case layer.Type
-                    Case Layer.LayerType.conv
+                    Case layerTypes.Convolution
                         setConvOutput(layer, lastLayer)
-                    Case Layer.LayerType.samp
+                    Case layerTypes.samp
                         setSampOutput(layer, lastLayer)
-                    Case Layer.LayerType.output
+                    Case layerTypes.Output
                         setConvOutput(layer, lastLayer)
                     Case Else
                 End Select
@@ -381,58 +382,26 @@ Namespace CNN
                 Dim frontLayer = layers(i - 1)
                 Dim frontMapNum = frontLayer.OutMapNum
                 Select Case layer.Type
-                    Case Layer.LayerType.input
-                    Case Layer.LayerType.conv
-                        ' ����map�Ĵ�С
+                    Case layerTypes.Input
+                    Case layerTypes.Convolution
                         layer.MapSize = frontLayer.MapSize.subtract(layer.KernelSize, 1)
-                        ' ��ʼ������ˣ�����frontMapNum*outMapNum�������
-
                         layer.initKernel(frontMapNum)
-                        ' ��ʼ��ƫ�ã�����frontMapNum*outMapNum��ƫ��
                         layer.initBias(frontMapNum)
-                        ' batch��ÿ����¼��Ҫ����һ�ݲв�
                         layer.initErros(batchSize)
-                        ' ÿһ�㶼��Ҫ��ʼ�����map
                         layer.initOutmaps(batchSize)
-                    Case Layer.LayerType.samp
-                        ' �������map��������һ����ͬ
+                    Case layerTypes.samp
                         layer.OutMapNum = frontMapNum
-                        ' ������map�Ĵ�С����һ��map�Ĵ�С����scale��С
                         layer.MapSize = frontLayer.MapSize.divide(layer.ScaleSize)
-                        ' batch��ÿ����¼��Ҫ����һ�ݲв�
                         layer.initErros(batchSize)
-                        ' ÿһ�㶼��Ҫ��ʼ�����map
                         layer.initOutmaps(batchSize)
-                    Case Layer.LayerType.output
-                        ' ��ʼ��Ȩ�أ�����ˣ��������ľ���˴�СΪ��һ���map��С
+                    Case layerTypes.Output
                         layer.initOutputKerkel(frontMapNum, frontLayer.MapSize)
-                        ' ��ʼ��ƫ�ã�����frontMapNum*outMapNum��ƫ��
                         layer.initBias(frontMapNum)
-                        ' batch��ÿ����¼��Ҫ����һ�ݲв�
                         layer.initErros(batchSize)
-                        ' ÿһ�㶼��Ҫ��ʼ�����map
                         layer.initOutmaps(batchSize)
                 End Select
             Next
         End Sub
-
-        Public Class LayerBuilder
-            Friend mLayers As IList(Of Layer)
-
-            Public Sub New()
-                mLayers = New List(Of Layer)()
-            End Sub
-
-            Public Sub New(layer As Layer)
-                Me.New()
-                mLayers.Add(layer)
-            End Sub
-
-            Public Overridable Function addLayer(layer As Layer) As LayerBuilder
-                mLayers.Add(layer)
-                Return Me
-            End Function
-        End Class
 
         Public Overridable Sub saveModel(fileName As String)
             'ObjectOutputStream oos = new ObjectOutputStream(new System.IO.FileStream(fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write));
