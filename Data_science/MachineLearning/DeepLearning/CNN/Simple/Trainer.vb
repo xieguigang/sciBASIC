@@ -42,8 +42,8 @@ Namespace CNN
                 cnn.updateParas()
 
                 If i Mod d = 0 Then
+                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
                     ti = Now
-                    Call log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
                 End If
             Next
         End Sub

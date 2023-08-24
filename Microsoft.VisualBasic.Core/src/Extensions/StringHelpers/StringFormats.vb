@@ -95,7 +95,7 @@ Public Module StringFormats
             If showDays Then
                 dhms = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
             Else
-                dhms = $"{ZeroFill(std.Ceiling(.TotalHours), 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+                dhms = $"{ZeroFill(std.Ceiling(.TotalHours) - 1, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
             End If
 
             If showMs Then
