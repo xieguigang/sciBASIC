@@ -52,7 +52,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language.C
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module StringFormats
 
@@ -71,9 +71,9 @@ Public Module StringFormats
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}
-        Dim exp = stdNum.Floor(stdNum.Log(bytes) / stdNum.Log(1000))
+        Dim exp = std.Floor(std.Log(bytes) / std.Log(1000))
         Dim symbol = symbols(exp)
-        Dim val = (bytes / (1000 ^ stdNum.Floor(exp)))
+        Dim val = (bytes / (1000 ^ std.Floor(exp)))
 
         Return sprintf($"%.2f %s", val, symbol)
     End Function
@@ -86,9 +86,17 @@ Public Module StringFormats
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FormatTime(t As TimeSpan, Optional showMs As Boolean = True) As String
+    Public Function FormatTime(t As TimeSpan,
+                               Optional showMs As Boolean = True,
+                               Optional showDays As Boolean = False) As String
         With t
-            Dim dhms As String = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Dim dhms As String
+
+            If showDays Then
+                dhms = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Else
+                dhms = $"{ZeroFill(std.Ceiling(.TotalHours), 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            End If
 
             If showMs Then
                 Return $"{dhms}.{ZeroFill(.Milliseconds, 3)}"
@@ -117,11 +125,11 @@ Public Module StringFormats
 
         If microtime >= 1000 Then
             unit = "s"
-            time = stdNum.Round(microtime / 1000, round)
+            time = std.Round(microtime / 1000, round)
 
             If time >= 60 Then
                 unit = "min"
-                time = stdNum.Round(time / 60, round)
+                time = std.Round(time / 60, round)
             End If
 
             format = sprintf(format, time, unit)

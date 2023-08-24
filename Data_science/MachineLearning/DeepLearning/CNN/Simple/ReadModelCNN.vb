@@ -23,7 +23,7 @@ Namespace CNN
             Dim alpha As Double = rd.ReadDouble
             Dim lambda As Double = rd.ReadDouble
             Dim batchSize As Integer = rd.ReadInt32
-            Dim layers As New LayerBuilder
+            Dim layers As New LayerBuilder(initialized:=True)
 
             For i As Integer = 0 To layerNum - 1
                 Call layers.add(ReadLayer(rd))
@@ -60,6 +60,16 @@ Namespace CNN
             Dim kernel = readMatrix(rd).ToArray
             Dim outmaps = readMatrix(rd).ToArray
             Dim errors = readMatrix(rd).ToArray
+
+            If kernel.Length = 0 Then
+                kernel = Nothing
+            End If
+            If outmaps.Length = 0 Then
+                outmaps = Nothing
+            End If
+            If errors.Length = 0 Then
+                errors = Nothing
+            End If
 
             Return New Layer(mapSize, kernelSize, scaleSize, type, outMapNum, classNum) With {
                 .bias = bias,

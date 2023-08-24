@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
@@ -37,7 +36,10 @@ Namespace CNN
             Me.layerNum = layers.Count
             Me.batchSize = batchSize
 
-            Call setup(batchSize)
+            If Not layerBuilder.Initialized Then
+                Call setup(batchSize)
+            End If
+
             Call initPerator()
         End Sub
 

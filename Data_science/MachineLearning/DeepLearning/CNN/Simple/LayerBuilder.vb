@@ -9,12 +9,24 @@ Namespace CNN
 
         ReadOnly m_layers As New List(Of Layer)
 
+        ''' <summary>
+        ''' the layers object in this builder is already been initialized?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Initialized As Boolean = False
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(layer As Layer)
+            Initialized = False
             m_layers = New List(Of Layer) From {layer}
         End Sub
 
         Sub New()
+            Initialized = False
+        End Sub
+
+        Sub New(initialized As Boolean)
+            _Initialized = initialized
         End Sub
 
         Public Function add(layer As Layer) As LayerBuilder

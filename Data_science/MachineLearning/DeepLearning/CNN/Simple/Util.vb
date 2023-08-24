@@ -24,15 +24,6 @@ Namespace CNN
 
         Public Shared minus As OperatorOnTwo = Function(a, b) a - b
 
-        Public Shared Sub printMatrix(matrix As Double()())
-            For i = 0 To matrix.Length - 1
-                Dim line = String.Join(", ", matrix(i))
-                line = line.Replace(", ", vbTab)
-                Console.WriteLine(line)
-            Next
-            Console.WriteLine()
-        End Sub
-
         Public Shared Function rot180(matrix As Double()()) As Double()()
             matrix = cloneMatrix(matrix)
             Dim m = matrix.Length
@@ -101,13 +92,14 @@ Namespace CNN
         Public Shared Function matrixOp(ma As Double()(), [operator] As [Operator]) As Double()()
             Dim m = ma.Length
             Dim n = ma(0).Length
+
             For i = 0 To m - 1
                 For j = 0 To n - 1
                     ma(i)(j) = [operator](ma(i)(j))
                 Next
             Next
-            Return ma
 
+            Return ma
         End Function
 
         Public Shared Function matrixOp(ma As Double()(),
@@ -117,6 +109,7 @@ Namespace CNN
                                         [operator] As OperatorOnTwo) As Double()()
             Dim m = ma.Length
             Dim n = ma(0).Length
+
             If m <> mb.Length OrElse n <> mb(0).Length Then
                 Throw New Exception("ma.length:" & ma.Length.ToString() & "  mb.length:" & mb.Length.ToString())
             End If

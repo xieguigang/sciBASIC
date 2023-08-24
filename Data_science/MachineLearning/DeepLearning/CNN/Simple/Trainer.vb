@@ -1,17 +1,22 @@
-﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
+﻿Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace CNN
 
-    Public Module Trainer
+    Public Class Trainer
 
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
 
-        <Extension>
+        Sub New(Optional log As Action(Of String) = Nothing)
+            If Not log Is Nothing Then
+                Me.log = log
+            End If
+        End Sub
+
         Private Sub TrainEpochs(cnn As CNN, trainset As SampleData(), epochsNum As Integer, ByRef right As Integer, ByRef count As Integer)
             Dim d As Integer = epochsNum / 25
             Dim t0 = Now
             Dim randPerm As Integer()
+            Dim ti As Date
 
             right = 0
             count = 0
@@ -20,7 +25,7 @@ Namespace CNN
                 d = 1
             End If
 
-            For i = 0 To epochsNum - 1
+            For i As Integer = 0 To epochsNum - 1
                 Call Layer.prepareForNewBatch()
 
                 randPerm = Util.randomPerm(trainset.Length, cnn.batchSize)
@@ -37,7 +42,8 @@ Namespace CNN
                 cnn.updateParas()
 
                 If i Mod d = 0 Then
-                    Call VBDebugger.EchoLine($"[{i + 1}/{epochsNum}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
+                    ti = Now
+                    Call log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
                 End If
             Next
         End Sub
@@ -49,7 +55,6 @@ Namespace CNN
         ''' <param name="trainset"></param>
         ''' <param name="max_loops"></param>
         ''' <returns></returns>
-        <Extension>
         Public Function train(cnn As CNN, trainset As SampleData(), max_loops As Integer) As CNN
             Dim t = 0
             Dim stopTrain As Boolean
@@ -65,7 +70,7 @@ Namespace CNN
 
                 Call log("")
                 Call log(t.ToString() & "th iter epochsNum: " & epochsNum.ToString())
-                Call cnn.TrainEpochs(trainset, epochsNum, right, count)
+                Call TrainEpochs(cnn, trainset, epochsNum, right, count)
 
                 Dim p = 1.0 * right / count
 
@@ -82,5 +87,5 @@ Namespace CNN
             Return cnn
         End Function
 
-    End Module
+    End Class
 End Namespace
