@@ -38,8 +38,10 @@ Public Class RunCNN
         Try
             Dim max = cnn(cnn.layerNum - 1).ClassNum
             Dim writer As StreamWriter = New StreamWriter(fileName.Open(FileMode.OpenOrCreate, doClear:=True))
-            Call Layer.prepareForNewBatch()
             Dim iter As IEnumerator(Of SampleData) = testset.iter()
+
+            Call Layer.prepareForNewBatch()
+
             While iter.MoveNext()
                 Dim record = iter.Current
                 ' int lable =
