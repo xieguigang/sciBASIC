@@ -1275,19 +1275,22 @@ Namespace Text
         ''' </summary>
         ''' <param name="ch"></param>
         ''' <returns></returns>
-        Public Function PinYin(ch As Char) As String
+        Public Function PinYin(ch As Char, Optional ByRef isZhChar As Boolean = False) As String
             Static gb2312 As Encoding = Encodings.GB2312.CodePage
 
             ' 拉丁字符            
             If ch <= "ÿ"c Then
+                isZhChar = False
                 Return ch.ToString()
             End If
             ' 标点符号、分隔符            
             If [Char].IsPunctuation(ch) OrElse [Char].IsSeparator(ch) Then
+                isZhChar = False
                 Return ch.ToString()
             End If
             ' 非中文字符            
             If ch < "一"c OrElse ch > "龥"c Then
+                isZhChar = False
                 Return ch.ToString()
             End If
             Dim arr As Byte() = gb2312.GetBytes(ch.ToString())
@@ -1296,16 +1299,21 @@ Namespace Text
             Dim chr = CType(arr(0), Int16) * 256 + CType(arr(1), Int16) - 65536
             '***// 单字符--英文或半角字符  
             If chr > 0 AndAlso chr < 160 Then
+                isZhChar = False
                 Return ch.ToString()
             End If
 
 #Region "中文字符处理"
             ' 判断是否超过GB2312-80标准中的汉字范围
             If chr > lastChCode OrElse chr < firstChCode Then
+                isZhChar = False
                 Return ch.ToString()
+            Else
+                isZhChar = True
+            End If
 
-                ' 如果是在一级汉字中
-            ElseIf chr <= lastOfOneLevelChCode Then
+            ' 如果是在一级汉字中
+            If chr <= lastOfOneLevelChCode Then
                 ' 将一级汉字分为12块,每块33个汉字.
                 For aPos As Integer = 11 To 0 Step -1
                     Dim aboutPos As Integer = aPos * 33
@@ -1326,6 +1334,7 @@ Namespace Text
             Else
                 ' 如果是在二级汉字中
                 Dim pos As Integer = Array.IndexOf(otherChinese, ch.ToString())
+
                 If pos <> Decimal.MinusOne Then
                     Return otherPinYin(pos)
                 End If
@@ -1337,7 +1346,22 @@ Namespace Text
             '{                
             '    if (pyValue[i] <= chr) return pyName[i];//这只能对应数组已经定义的           
             '}             
+            isZhChar = False
+
             Return String.Empty
+        End Function
+
+        Public Function GetZhFlags(str As String) As Boolean()
+            Dim b As Boolean() = New Boolean(str.Length - 1) {}
+            Dim test As Boolean = False
+
+            For i As Integer = 0 To str.Length - 1
+                test = False
+                PinYin(str(i), isZhChar:=test)
+                b(i) = test
+            Next
+
+            Return b
         End Function
 
         Public Iterator Function SplitZhChars(str As String) As IEnumerable(Of String)
