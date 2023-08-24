@@ -1,5 +1,4 @@
 Imports Microsoft.VisualBasic.MachineLearning.CNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.CNN
 Imports ds = Microsoft.VisualBasic.MachineLearning.CNN.Dataset.Dataset
 
 Public Class RunCNN
