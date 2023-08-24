@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
 Imports std = System.Math
@@ -12,16 +13,15 @@ Namespace CNN
         Private layers As IList(Of Layer)
         Private layerNum As Integer
         Private batchSize As Integer
-        Private [end] As Integer
         Private divide_batchSize As [Operator]
         Private multiply_alpha As [Operator]
         Private multiply_lambda As [Operator]
 
-        Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer, classNumber As Integer)
+        Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
             layers = layerBuilder.mLayers
             layerNum = layers.Count
             Me.batchSize = batchSize
-            Me.end = classNumber
+
             setup(batchSize)
             initPerator()
         End Sub
@@ -44,6 +44,9 @@ Namespace CNN
                 Call Log.i(t.ToString() & "th iter epochsNum:" & epochsNum.ToString())
                 Dim right = 0
                 Dim count = 0
+                Dim d As Integer = epochsNum / 25
+                Dim t0 = Now
+
                 For i = 0 To epochsNum - 1
                     Dim randPerm As Integer() = Util.randomPerm(trainset.size(), batchSize)
                     Call Layer.prepareForNewBatch()
@@ -58,11 +61,9 @@ Namespace CNN
                     Next
 
                     updateParas()
-                    If i Mod 50 = 0 Then
-                        Console.Write("..")
-                        If i + 50 > epochsNum Then
-                            Console.WriteLine()
-                        End If
+
+                    If i Mod d = 0 Then
+                        Call VBDebugger.EchoLine($"[{i + 1}/{epochsNum}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
                     End If
                 Next
                 Dim p = 1.0 * right / count
@@ -104,7 +105,7 @@ Namespace CNN
             Log.i("begin predict")
             Try
                 Dim max = layers(layerNum - 1).ClassNum
-                Dim writer As StreamWriter = New StreamWriter(File.OpenRead(fileName))
+                Dim writer As StreamWriter = New StreamWriter(fileName.Open(FileMode.OpenOrCreate, doClear:=True))
                 Call Layer.prepareForNewBatch()
                 Dim iter As IEnumerator(Of Record) = testset.iter()
                 While iter.MoveNext()
@@ -124,7 +125,7 @@ Namespace CNN
                     ' if (lable >= max)
                     ' lable = lable - (1 << (out.length -
                     ' 1));
-                    writer.WriteLine(lable.ToString() & vbLf)
+                    writer.WriteLine(lable.ToString())
                 End While
                 writer.Flush()
                 writer.Close()
@@ -178,7 +179,7 @@ Namespace CNN
             Dim errors = layer.Errors
             Dim mapNum = layer.OutMapNum
 
-            For j = start To [end] - 1
+            For j = start To mapNum - 1
                 Dim [error] = Util.sum(errors, j)
                 ' ����ƫ��
                 Dim deltaBias = Util.sum([error]) / batchSize
@@ -193,7 +194,7 @@ Namespace CNN
             Dim mapNum = layer.OutMapNum
             Dim lastMapNum = lastLayer.OutMapNum
 
-            For j = start To [end] - 1
+            For j = start To mapNum - 1
                 For i = 0 To lastMapNum - 1
                     Dim deltaKernel As Double()() = Nothing
                     For r = 0 To batchSize - 1
@@ -233,7 +234,7 @@ Namespace CNN
             Dim mapNum = layer.OutMapNum
             Dim nextMapNum = nextLayer.OutMapNum
 
-            For i = start To [end] - 1
+            For i = start To mapNum - 1
                 Dim sum As Double()() = Nothing
                 For j = 0 To nextMapNum - 1
                     Dim nextError = nextLayer.getError(j)
@@ -253,7 +254,7 @@ Namespace CNN
         Private Sub setConvErrors(layer As Layer, nextLayer As Layer)
             Dim mapNum = layer.OutMapNum
 
-            For m = start To [end] - 1
+            For m = start To mapNum - 1
                 Dim scale = nextLayer.ScaleSize
                 Dim nextError = nextLayer.getError(m)
                 Dim map = layer.getMap(m)
@@ -339,7 +340,7 @@ Namespace CNN
             Dim mapNum = layer.OutMapNum
             Dim lastMapNum = lastLayer.OutMapNum
 
-            For j = start To [end] - 1
+            For j = start To mapNum - 1
                 Dim sum As Double()() = Nothing
                 For i = 0 To lastMapNum - 1
                     Dim lastMap = lastLayer.getMap(i)
@@ -362,7 +363,7 @@ Namespace CNN
         Private Sub setSampOutput(layer As Layer, lastLayer As Layer)
             Dim lastMapNum = lastLayer.OutMapNum
 
-            For i = start To [end] - 1
+            For i = start To lastMapNum - 1
                 Dim lastMap = lastLayer.getMap(i)
                 Dim scaleSize = layer.ScaleSize
                 Dim sampMatrix = Util.scaleMatrix(lastMap, scaleSize)

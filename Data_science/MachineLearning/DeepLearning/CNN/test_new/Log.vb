@@ -4,11 +4,11 @@
         'internal static PrintStream stream = System.out;
 
         Public Shared Sub i(tag As String, msg As String)
-            'stream.println(tag + "\t" + msg);
+            Call VBDebugger.EchoLine(tag & vbTab & msg)
         End Sub
 
         Public Shared Sub i(msg As String)
-            'stream.println(msg);
+            Call VBDebugger.EchoLine(msg)
         End Sub
 
     End Class
