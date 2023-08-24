@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -85,7 +86,7 @@ Namespace CNN
         End Function
 
         Public Overridable Sub initKernel(frontMapNum As Integer)
-            m_kernel = ReturnRectangularDoubleArray(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
+            m_kernel = RectangularArray.CubicMatrix(Of Double)(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
 
             For i = 0 To frontMapNum - 1
                 For j = 0 To _OutMapNum - 1
@@ -96,7 +97,7 @@ Namespace CNN
 
         Public Overridable Sub initOutputKerkel(frontMapNum As Integer, size As Size)
             _KernelSize = size
-            m_kernel = ReturnRectangularDoubleArray(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
+            m_kernel = RectangularArray.CubicMatrix(Of Double)(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
 
             For i = 0 To frontMapNum - 1
                 For j = 0 To _OutMapNum - 1
@@ -112,7 +113,7 @@ Namespace CNN
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub initOutmaps(batchSize As Integer)
-            outmaps = ReturnRectangularDoubleArray(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
+            outmaps = RectangularArray.CubicMatrix(Of Double)(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -151,7 +152,7 @@ Namespace CNN
         End Function
 
         Public Overridable Sub initErros(batchSize As Integer)
-            m_errors = ReturnRectangularDoubleArray(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
+            m_errors = RectangularArray.CubicMatrix(Of Double)(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
         End Sub
 
         Public Overridable Sub setKernel(lastMapNo As Integer, mapNo As Integer, kernel As Double()())

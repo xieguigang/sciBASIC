@@ -238,7 +238,8 @@ Namespace CNN
                 Throw New Exception($"the size of matrix should equals to the kernel size!")
             End If
 
-            Dim outMatrix = ReturnRectangularDoubleArray(kms, kns, khs)
+            Dim outMatrix = RectangularArray.Cubic(Of Double)(kms, kns, khs)
+
             For i = 0 To kms - 1
                 For j = 0 To kns - 1
                     For k = 0 To khs - 1
