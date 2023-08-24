@@ -8,12 +8,12 @@ Namespace CNN.Dataset
     Public Class Dataset
 
         Private records As IList(Of Record)
-        Friend lableIndexField As Integer
+
+        Friend m_lableIndex As Integer = -1
         Friend maxLable As Double = -1
 
         Public Sub New(classIndex As Integer)
-
-            lableIndexField = classIndex
+            m_lableIndex = classIndex
             records = New List(Of Record)()
         End Sub
 
@@ -25,7 +25,7 @@ Namespace CNN.Dataset
         End Sub
 
         Private Sub New()
-            lableIndexField = -1
+            m_lableIndex = -1
             records = New List(Of Record)()
         End Sub
 
@@ -35,7 +35,7 @@ Namespace CNN.Dataset
 
         Public Overridable ReadOnly Property LableIndex As Integer
             Get
-                Return lableIndexField
+                Return m_lableIndex
             End Get
         End Property
 
@@ -102,58 +102,55 @@ Namespace CNN.Dataset
 
     Public Class Record
 
-        Friend attrsField As Double()
-        Friend lableField As Double?
-        Friend lableIndexField As Integer = -1
+        Dim m_attrs As Double()
+        Dim m_lable As Double?
+        Dim m_lableIndex As Integer = -1
+
+        Public Overridable ReadOnly Property Attrs As Double()
+            Get
+                Return m_attrs
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property Lable As Double?
+            Get
+                If m_lableIndex = -1 Then
+                    Return Nothing
+                End If
+                Return m_lable
+            End Get
+        End Property
 
         Friend Sub New(attrs As Double(), lable As Double?)
-            attrsField = attrs
-            lableField = lable
+            m_attrs = attrs
+            m_lable = lable
         End Sub
 
-        Public Sub New(outerInstance As Dataset, data As Double())
-            If outerInstance.lableIndexField = -1 Then
-                attrsField = data
+        Public Sub New(ds As Dataset, data As Double())
+            If ds.m_lableIndex = -1 Then
+                m_attrs = data
             Else
-                lableField = data(outerInstance.lableIndexField)
-                lableIndexField = outerInstance.lableIndexField
+                m_lable = data(ds.m_lableIndex)
+                m_lableIndex = ds.m_lableIndex
 
-                If lableField.Value > outerInstance.maxLable Then
-                    outerInstance.maxLable = lableField.Value
+                If m_lable.Value > ds.maxLable Then
+                    ds.maxLable = m_lable.Value
                 End If
-                If outerInstance.lableIndexField = 0 Then
-                    attrsField = Arrays.copyOfRange(data, 1, data.Length)
+                If ds.m_lableIndex = 0 Then
+                    m_attrs = Arrays.copyOfRange(data, 1, data.Length)
                 Else
-                    attrsField = Arrays.copyOfRange(data, 0, data.Length - 1)
+                    m_attrs = Arrays.copyOfRange(data, 0, data.Length - 1)
                 End If
             End If
         End Sub
 
-        Public Overridable ReadOnly Property Attrs As Double()
-            Get
-                Return attrsField
-            End Get
-        End Property
-
         Public Overrides Function ToString() As String
             Dim sb As StringBuilder = New StringBuilder()
             sb.Append("attrs:")
-            sb.Append(String.Join(", ", attrsField))
+            sb.Append(String.Join(", ", m_attrs))
             sb.Append("lable:")
-            sb.Append(lableField)
+            sb.Append(m_lable)
             Return sb.ToString()
         End Function
-
-        Public Overridable ReadOnly Property Lable As Double?
-            Get
-                If lableIndexField = -1 Then
-                    Return Nothing
-                End If
-                Return lableField
-            End Get
-        End Property
-
     End Class
-
-
 End Namespace

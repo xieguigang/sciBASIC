@@ -80,11 +80,7 @@ Namespace CNN
             layer._Type = LayerTypes.Output
             layer._MapSize = New Size(1, 1)
             layer._OutMapNum = classNum
-            ' int outMapNum = 1;
-            ' while ((1 << outMapNum) < classNum)
-            ' outMapNum += 1;
-            ' layer.outMapNum = outMapNum;
-            Call Log.i("outMapNum:" & layer.OutMapNum.ToString())
+
             Return layer
         End Function
 

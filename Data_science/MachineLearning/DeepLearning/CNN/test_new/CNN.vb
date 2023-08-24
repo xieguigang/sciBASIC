@@ -2,7 +2,6 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
-Imports std = System.Math
 Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
 
 Namespace CNN
@@ -18,13 +17,15 @@ Namespace CNN
         Private multiply_alpha As [Operator]
         Private multiply_lambda As [Operator]
 
+        Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
+
         Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
-            layers = layerBuilder
-            layerNum = layers.Count
+            Me.layers = layerBuilder
+            Me.layerNum = layers.Count
             Me.batchSize = batchSize
 
-            setup(batchSize)
-            initPerator()
+            Call setup(batchSize)
+            Call initPerator()
         End Sub
 
         Private Sub initPerator()
@@ -38,11 +39,14 @@ Namespace CNN
 
             While t < repeat AndAlso Not stopTrain
                 Dim epochsNum As Integer = trainset.size() / batchSize
+
                 If trainset.size() Mod batchSize <> 0 Then
                     epochsNum += 1
                 End If
-                Log.i("")
-                Call Log.i(t.ToString() & "th iter epochsNum:" & epochsNum.ToString())
+
+                Call log("")
+                Call log(t.ToString() & "th iter epochsNum:" & epochsNum.ToString())
+
                 Dim right = 0
                 Dim count = 0
                 Dim d As Integer = epochsNum / 25
@@ -70,9 +74,9 @@ Namespace CNN
                 Dim p = 1.0 * right / count
                 If t Mod 10 = 1 AndAlso p > 0.96 Then
                     ALPHA = 0.001 + ALPHA * 0.9
-                    Call Log.i("Set alpha = " & ALPHA.ToString())
+                    Call log("Set alpha = " & ALPHA.ToString())
                 End If
-                Call Log.i("precision " & right.ToString() & "/" & count.ToString() & "=" & p.ToString())
+                Call log("precision " & right.ToString() & "/" & count.ToString() & "=" & p.ToString())
                 t += 1
             End While
         End Sub
@@ -98,12 +102,12 @@ Namespace CNN
                 End If
             End While
             Dim p As Double = 1.0 * right / trainset.size()
-            Call Log.i("precision", p.ToString() & "")
+            Call log("precision: " & p.ToString() & "")
             Return p
         End Function
 
         Public Overridable Sub predict(testset As Dataset.Dataset, fileName As String)
-            Log.i("begin predict")
+            log("begin predict")
             Try
                 Dim max = layers(layerNum - 1).ClassNum
                 Dim writer As StreamWriter = New StreamWriter(fileName.Open(FileMode.OpenOrCreate, doClear:=True))
@@ -133,20 +137,8 @@ Namespace CNN
             Catch e As IOException
                 ' throw new Exception(e);
             End Try
-            Log.i("end predict")
+            log("end predict")
         End Sub
-
-        Private Function isSame(output As Double(), target As Double()) As Boolean
-            Dim r = True
-            For i = 0 To output.Length - 1
-                If std.Abs(output(i) - target(i)) > 0.5 Then
-                    r = False
-                    Exit For
-                End If
-            Next
-
-            Return r
-        End Function
 
         Private Function train(record As Record) As Boolean
             forward(record)
@@ -182,12 +174,11 @@ Namespace CNN
 
             For j = start To mapNum - 1
                 Dim [error] = Util.sum(errors, j)
-                ' ����ƫ��
                 Dim deltaBias = Util.sum([error]) / batchSize
                 Dim bias = layer.getBias(j) + ALPHA * deltaBias
+
                 layer.setBias(j, bias)
             Next
-
         End Sub
 
 
@@ -198,10 +189,11 @@ Namespace CNN
             For j = start To mapNum - 1
                 For i = 0 To lastMapNum - 1
                     Dim deltaKernel As Double()() = Nothing
+
                     For r = 0 To batchSize - 1
                         Dim [error] = layer.getError(r, j)
                         If deltaKernel Is Nothing Then
-                            deltaKernel = Util.convnValid(lastLayer.getMap(r, i), [error]) ' �ۻ����
+                            deltaKernel = Util.convnValid(lastLayer.getMap(r, i), [error])
                         Else
                             deltaKernel = Util.matrixOp(Util.convnValid(lastLayer.getMap(r, i), [error]), deltaKernel, Nothing, Nothing, Util.plus)
                         End If
@@ -267,25 +259,8 @@ Namespace CNN
         End Sub
 
         Private Function setOutLayerErrors(record As Record) As Boolean
-
             Dim outputLayer = layers(layerNum - 1)
             Dim mapNum = outputLayer.OutMapNum
-            ' double[] target =
-            ' record.getDoubleEncodeTarget(mapNum);
-            ' double[] outmaps = new double[mapNum];
-            ' for (int m = 0; m < mapNum; m++) {
-            ' double[][] outmap = outputLayer.getMap(m);
-            ' double output = outmap[0][0];
-            ' outmaps[m] = output;
-            ' double errors = output * (1 - output) *
-            ' (target[m] - output);
-            ' outputLayer.setError(m, 0, 0, errors);
-            ' }
-            ' // ��ȷ
-            ' if (isSame(outmaps, target))
-            ' return true;
-            ' return false;
-
             Dim target = New Double(mapNum - 1) {}
             Dim outmaps = New Double(mapNum - 1) {}
             For m = 0 To mapNum - 1
@@ -295,9 +270,7 @@ Namespace CNN
             Next
             Dim lable As Integer = record.Lable.Value
             target(lable) = 1
-            ' Log.i(record.getLable() + "outmaps:" +
-            ' Util.fomart(outmaps)
-            ' + Arrays.toString(target));
+
             For m = 0 To mapNum - 1
                 outputLayer.setError(m, 0, 0, outmaps(m) * (1 - outmaps(m)) * (target(m) - outmaps(m)))
             Next
