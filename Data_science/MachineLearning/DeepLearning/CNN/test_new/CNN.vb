@@ -14,7 +14,6 @@ Namespace CNN
         Protected Friend LAMBDA As Double = 0
 
         Private layers As List(Of Layer)
-        Private layerNum As Integer
         Private divide_batchSize As [Operator]
         Private multiply_alpha As [Operator]
         Private multiply_lambda As [Operator]
@@ -22,6 +21,13 @@ Namespace CNN
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
 
         Public ReadOnly Property batchSize As Integer
+        Public ReadOnly Property layerNum As Integer
+
+        Default Public ReadOnly Property Layer(i As Integer) As Layer
+            Get
+                Return layers(i)
+            End Get
+        End Property
 
         Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
             Me.layers = layerBuilder
@@ -38,29 +44,6 @@ Namespace CNN
             multiply_lambda = Function(value) value * (1 - LAMBDA * ALPHA)
         End Sub
 
-        Public Overridable Function test(trainset As Dataset.Dataset) As Double
-            Call Layer.prepareForNewBatch()
-            Dim iter As IEnumerator(Of Record) = trainset.iter()
-            Dim right = 0
-            While iter.MoveNext()
-                Dim record = iter.Current
-                forward(record)
-                Dim outputLayer = layers(layerNum - 1)
-                Dim mapNum = outputLayer.OutMapNum
-                Dim out = New Double(mapNum - 1) {}
-                For m = 0 To mapNum - 1
-                    Dim outmap = outputLayer.getMap(m)
-                    out(m) = outmap(0)(0)
-                Next
-                If record.Lable.Value = which.Max(out) Then
-                    right += 1
-                End If
-            End While
-            Dim p As Double = 1.0 * right / trainset.size()
-            Call log("precision: " & p.ToString() & "")
-            Return p
-        End Function
-
         Public Function predict(record As Record) As Double()
             Dim outputLayer = layers(layerNum - 1)
             Dim mapNum = outputLayer.OutMapNum
@@ -76,31 +59,6 @@ Namespace CNN
 
             Return out
         End Function
-
-        Public Overridable Sub predict(testset As Dataset.Dataset, fileName As String)
-            log("begin predict")
-            Try
-                Dim max = layers(layerNum - 1).ClassNum
-                Dim writer As StreamWriter = New StreamWriter(fileName.Open(FileMode.OpenOrCreate, doClear:=True))
-                Call Layer.prepareForNewBatch()
-                Dim iter As IEnumerator(Of Record) = testset.iter()
-                While iter.MoveNext()
-                    Dim record = iter.Current
-                    ' int lable =
-                    ' Util.binaryArray2int(out);
-                    Dim lable = which.max(predict(record))
-                    ' if (lable >= max)
-                    ' lable = lable - (1 << (out.length -
-                    ' 1));
-                    writer.WriteLine(lable.ToString())
-                End While
-                writer.Flush()
-                writer.Close()
-            Catch e As IOException
-                ' throw new Exception(e);
-            End Try
-            log("end predict")
-        End Sub
 
         Friend Function train(record As Record) As Boolean
             forward(record)
