@@ -52,39 +52,6 @@ Namespace CNN
             recordInBatch += 1
         End Sub
 
-        Public Shared Function buildInputLayer(mapSize As Size) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.Input
-            layer._OutMapNum = 1
-            layer._MapSize = mapSize
-            Return layer
-        End Function
-
-        Public Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Size) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.Convolution
-            layer._OutMapNum = outMapNum
-            layer._KernelSize = kernelSize
-            Return layer
-        End Function
-
-        Public Shared Function buildSampLayer(scaleSize As Size) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.samp
-            layer._ScaleSize = scaleSize
-            Return layer
-        End Function
-
-        Public Shared Function buildOutputLayer(classNum As Integer) As Layer
-            Dim layer As New Layer()
-            layer._ClassNum = classNum
-            layer._Type = LayerTypes.Output
-            layer._MapSize = New Size(1, 1)
-            layer._OutMapNum = classNum
-
-            Return layer
-        End Function
-
         Public Overridable Sub initKernel(frontMapNum As Integer)
             m_kernel = RectangularArray.CubicMatrix(Of Double)(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
 

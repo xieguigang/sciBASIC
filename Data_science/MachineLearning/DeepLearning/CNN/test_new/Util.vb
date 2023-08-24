@@ -1,7 +1,5 @@
-﻿Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MachineLearning.CNN.Layer
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -256,10 +254,6 @@ Namespace CNN
                 Next
             Next
             Return outMatrix(0)
-        End Function
-
-        Public Shared Function sigmod(x As Double) As Double
-            Return 1 / (1 + std.Pow(std.E, -x))
         End Function
 
         Public Shared Function sum([error] As Double()()) As Double
