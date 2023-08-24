@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 
+<Assembly: InternalsVisibleTo("MLkit")>
+
 Namespace CNN
 
     Public Class LayerBuilder
@@ -15,17 +17,22 @@ Namespace CNN
         Sub New()
         End Sub
 
-        Public Overridable Function buildInputLayer(mapSize As Size) As LayerBuilder
+        Public Function add(layer As Layer) As LayerBuilder
+            m_layers.Add(layer)
+            Return Me
+        End Function
+
+        Public Overridable Function buildInputLayer(mapSize As Dimension) As LayerBuilder
             m_layers.Add(Layer.buildInputLayer(mapSize))
             Return Me
         End Function
 
-        Public Function buildConvLayer(outMapNum As Integer, kernelSize As Size) As LayerBuilder
+        Public Function buildConvLayer(outMapNum As Integer, kernelSize As Dimension) As LayerBuilder
             m_layers.Add(Layer.buildConvLayer(outMapNum, kernelSize))
             Return Me
         End Function
 
-        Public Function buildSampLayer(scaleSize As Size) As LayerBuilder
+        Public Function buildSampLayer(scaleSize As Dimension) As LayerBuilder
             m_layers.Add(Layer.buildSampLayer(scaleSize))
             Return Me
         End Function
@@ -48,7 +55,7 @@ Namespace CNN
 
     Partial Class Layer
 
-        Friend Shared Function buildInputLayer(mapSize As Size) As Layer
+        Friend Shared Function buildInputLayer(mapSize As Dimension) As Layer
             Dim layer As Layer = New Layer()
             layer._Type = LayerTypes.Input
             layer._OutMapNum = 1
@@ -56,7 +63,7 @@ Namespace CNN
             Return layer
         End Function
 
-        Friend Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Size) As Layer
+        Friend Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Dimension) As Layer
             Dim layer As Layer = New Layer()
             layer._Type = LayerTypes.Convolution
             layer._OutMapNum = outMapNum
@@ -64,7 +71,7 @@ Namespace CNN
             Return layer
         End Function
 
-        Friend Shared Function buildSampLayer(scaleSize As Size) As Layer
+        Friend Shared Function buildSampLayer(scaleSize As Dimension) As Layer
             Dim layer As Layer = New Layer()
             layer._Type = LayerTypes.samp
             layer._ScaleSize = scaleSize
@@ -75,7 +82,7 @@ Namespace CNN
             Dim layer As New Layer()
             layer._ClassNum = classNum
             layer._Type = LayerTypes.Output
-            layer._MapSize = New Size(1, 1)
+            layer._MapSize = New Dimension(1, 1)
             layer._OutMapNum = classNum
 
             Return layer

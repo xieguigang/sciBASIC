@@ -14,11 +14,11 @@ Namespace CNN
 
         Private Shared recordInBatch As Integer = 0
 
-        Public Overridable Property MapSize As Size
+        Public Overridable Property MapSize As Dimension
         Public Overridable ReadOnly Property Type As LayerTypes
         Public Overridable Property OutMapNum As Integer
-        Public Overridable ReadOnly Property KernelSize As Size
-        Public Overridable ReadOnly Property ScaleSize As Size
+        Public Overridable ReadOnly Property KernelSize As Dimension
+        Public Overridable ReadOnly Property ScaleSize As Dimension
 
         Public Overridable ReadOnly Property Maps As Double()()()()
             Get
@@ -62,7 +62,7 @@ Namespace CNN
             Next
         End Sub
 
-        Public Overridable Sub initOutputKerkel(frontMapNum As Integer, size As Size)
+        Public Overridable Sub initOutputKerkel(frontMapNum As Integer, size As Dimension)
             _KernelSize = size
             m_kernel = RectangularArray.CubicMatrix(Of Double)(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
 

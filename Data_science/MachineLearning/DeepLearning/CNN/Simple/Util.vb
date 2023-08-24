@@ -137,7 +137,7 @@ Namespace CNN
             Return mb
         End Function
 
-        Public Shared Function kronecker(matrix As Double()(), scale As Size) As Double()()
+        Public Shared Function kronecker(matrix As Double()(), scale As Dimension) As Double()()
             Dim m = matrix.Length
             Dim n = matrix(0).Length
             Dim outMatrix = RectangularArray.Matrix(Of Double)(m * scale.x, n * scale.y)
@@ -154,7 +154,7 @@ Namespace CNN
             Return outMatrix
         End Function
 
-        Public Shared Function scaleMatrix(matrix As Double()(), scale As Size) As Double()()
+        Public Shared Function scaleMatrix(matrix As Double()(), scale As Dimension) As Double()()
             Dim m = matrix.Length
             Dim n = matrix(0).Length
             Dim sm As Integer = m / scale.x
