@@ -16,6 +16,10 @@ Namespace CNN
             right = 0
             count = 0
 
+            If d = 0 Then
+                d = 1
+            End If
+
             For i = 0 To epochsNum - 1
                 Call Layer.prepareForNewBatch()
 
