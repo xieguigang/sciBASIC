@@ -1,9 +1,10 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
-Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
+Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
 
 Namespace CNN
 
@@ -98,13 +99,29 @@ Namespace CNN
                     Dim outmap = outputLayer.getMap(m)
                     out(m) = outmap(0)(0)
                 Next
-                If record.Lable.Value = Util.getMaxIndex(out) Then
+                If record.Lable.Value = which.Max(out) Then
                     right += 1
                 End If
             End While
             Dim p As Double = 1.0 * right / trainset.size()
             Call log("precision: " & p.ToString() & "")
             Return p
+        End Function
+
+        Public Function predict(record As Record) As Double()
+            Dim outputLayer = layers(layerNum - 1)
+            Dim mapNum = outputLayer.OutMapNum
+            Dim out = New Double(mapNum - 1) {}
+            Dim outmap As Double()()
+
+            Call forward(record)
+
+            For m = 0 To mapNum - 1
+                outmap = outputLayer.getMap(m)
+                out(m) = outmap(0)(0)
+            Next
+
+            Return out
         End Function
 
         Public Overridable Sub predict(testset As Dataset.Dataset, fileName As String)
@@ -116,18 +133,9 @@ Namespace CNN
                 Dim iter As IEnumerator(Of Record) = testset.iter()
                 While iter.MoveNext()
                     Dim record = iter.Current
-                    forward(record)
-                    Dim outputLayer = layers(layerNum - 1)
-
-                    Dim mapNum = outputLayer.OutMapNum
-                    Dim out = New Double(mapNum - 1) {}
-                    For m = 0 To mapNum - 1
-                        Dim outmap = outputLayer.getMap(m)
-                        out(m) = outmap(0)(0)
-                    Next
                     ' int lable =
                     ' Util.binaryArray2int(out);
-                    Dim lable = Util.getMaxIndex(out)
+                    Dim lable = which.max(predict(record))
                     ' if (lable >= max)
                     ' lable = lable - (1 << (out.length -
                     ' 1));
@@ -275,7 +283,7 @@ Namespace CNN
             For m = 0 To mapNum - 1
                 outputLayer.setError(m, 0, 0, outmaps(m) * (1 - outmaps(m)) * (target(m) - outmaps(m)))
             Next
-            Return lable = Util.getMaxIndex(outmaps)
+            Return lable = which.Max(outmaps)
         End Function
 
         Private Sub forward(record As Record)

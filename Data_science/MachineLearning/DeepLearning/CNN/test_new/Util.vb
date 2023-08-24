@@ -283,17 +283,5 @@ Namespace CNN
             Next
             Return result
         End Function
-
-        Public Shared Function getMaxIndex(out As Double()) As Integer
-            Dim max = out(0)
-            Dim index = 0
-            For i = 1 To out.Length - 1
-                If out(i) > max Then
-                    max = out(i)
-                    index = i
-                End If
-            Next
-            Return index
-        End Function
     End Class
 End Namespace
