@@ -1,11 +1,17 @@
-﻿Namespace CNN
+﻿Imports System.Runtime.CompilerServices
+
+Namespace CNN
 
     Public Class LayerBuilder
 
         ReadOnly m_layers As New List(Of Layer)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(layer As Layer)
             m_layers = New List(Of Layer) From {layer}
+        End Sub
+
+        Sub New()
         End Sub
 
         ''' <summary>
@@ -18,9 +24,14 @@
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{m_layers.Count} CNN layers: {m_layers.JoinBy(" -> ")}"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(lb As LayerBuilder) As List(Of Layer)
+            Return lb.m_layers
+        End Operator
     End Class
 End Namespace

@@ -19,7 +19,7 @@ Namespace CNN
         Private multiply_lambda As [Operator]
 
         Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
-            layers = layerBuilder.m_layers
+            layers = layerBuilder
             layerNum = layers.Count
             Me.batchSize = batchSize
 
