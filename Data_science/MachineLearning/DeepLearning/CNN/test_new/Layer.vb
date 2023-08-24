@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace CNN
 
@@ -134,7 +135,7 @@ Namespace CNN
         End Sub
 
         Public Overridable Sub initBias(frontMapNum As Integer)
-            bias = Util.randomArray(outMapNumField)
+            bias = Vector.rand(outMapNumField)
         End Sub
 
         Public Overridable Sub initOutmaps(batchSize As Integer)

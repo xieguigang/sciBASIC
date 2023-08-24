@@ -1,6 +1,4 @@
-﻿Imports System.Text
-
-Namespace CNN
+﻿Namespace CNN
 
     Public Class Size
 
@@ -13,22 +11,24 @@ Namespace CNN
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim s As StringBuilder = (New StringBuilder("Size(")).Append(" x = ").Append(x).Append(" y= ").Append(y).Append(")")
-            Return s.ToString()
+            Return $"size[x:{x}, y:{y}]"
         End Function
 
         Public Overridable Function divide(scaleSize As Size) As Size
             Dim x As Integer = Me.x / scaleSize.x
             Dim y As Integer = Me.y / scaleSize.y
+
             If x * scaleSize.x <> Me.x OrElse y * scaleSize.y <> Me.y Then
-                Throw New Exception(ToString() & "��������" & scaleSize.ToString())
+                Call $"{Me.ToString} is not matched with scale {scaleSize.ToString}?".Warning
             End If
+
             Return New Size(x, y)
         End Function
 
         Public Overridable Function subtract(size As Size, append As Integer) As Size
             Dim x = Me.x - size.x + append
             Dim y = Me.y - size.y + append
+
             Return New Size(x, y)
         End Function
     End Class

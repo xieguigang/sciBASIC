@@ -73,15 +73,6 @@ Namespace CNN
             Return matrix
         End Function
 
-        Public Shared Function randomArray(len As Integer) As Double()
-            Dim data = New Double(len - 1) {}
-            For i = 0 To len - 1
-                ' data[i] = r.nextDouble() / 10 - 0.05;
-                data(i) = 0
-            Next
-            Return data
-        End Function
-
         Public Shared Function randomPerm(size As Integer, batchSize As Integer) As Integer()
             Dim [set] As ISet(Of Integer?) = New HashSet(Of Integer?)()
             While [set].Count < batchSize
