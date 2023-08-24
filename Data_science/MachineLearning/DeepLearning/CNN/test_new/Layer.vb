@@ -108,7 +108,7 @@ Namespace CNN
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub initBias(frontMapNum As Integer)
-            bias = Vector.rand(_OutMapNum)
+            bias = Vector.Zero(_OutMapNum)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

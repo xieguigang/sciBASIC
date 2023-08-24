@@ -278,7 +278,8 @@ Namespace CNN
         End Function
 
         Private Sub forward(record As Record)
-            InLayerOutput = record
+            Call setInLayerOutput(record)
+
             For l = 1 To layers.Count - 1
                 Dim layer = layers(l)
                 Dim lastLayer = layers(l - 1)
@@ -294,21 +295,19 @@ Namespace CNN
             Next
         End Sub
 
-        Private WriteOnly Property InLayerOutput As Record
-            Set(value As Record)
-                Dim inputLayer = layers(0)
-                Dim mapSize = inputLayer.MapSize
-                Dim attr = value.Attrs
-                If attr.Length <> mapSize.x * mapSize.y Then
-                    Throw New Exception()
-                End If
-                For i = 0 To mapSize.x - 1
-                    For j = 0 To mapSize.y - 1
-                        inputLayer.setMapValue(0, i, j, attr(mapSize.x * i + j))
-                    Next
+        Private Sub setInLayerOutput(value As Record)
+            Dim inputLayer = layers(0)
+            Dim mapSize = inputLayer.MapSize
+            Dim attr = value.Attrs
+            If attr.Length <> mapSize.x * mapSize.y Then
+                Throw New Exception()
+            End If
+            For i = 0 To mapSize.x - 1
+                For j = 0 To mapSize.y - 1
+                    inputLayer.setMapValue(0, i, j, attr(mapSize.x * i + j))
                 Next
-            End Set
-        End Property
+            Next
+        End Sub
 
         Private Sub setConvOutput(layer As Layer, lastLayer As Layer)
             Dim mapNum = layer.OutMapNum
