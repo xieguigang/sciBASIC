@@ -44,6 +44,10 @@ Namespace CNN
 
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{Type.Description}()"
+        End Function
+
         Public Shared Sub prepareForNewBatch()
             recordInBatch = 0
         End Sub
