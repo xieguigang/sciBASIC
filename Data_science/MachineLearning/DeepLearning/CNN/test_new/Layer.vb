@@ -1,26 +1,36 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace CNN
 
     Public Class Layer
-        ''' 
 
-        Private typeField As LayerType
-        Private outMapNumField As Integer
-        Private mapSizeField As Size
-        Private kernelSizeField As Size
-        Private scaleSizeField As Size
-        Private kernelField As Double()()()()
+        Private m_kernel As Double()()()()
         Private bias As Double()
-
         Private outmaps As Double()()()()
-
-        Private errorsField As Double()()()()
+        Private m_errors As Double()()()()
 
         Private Shared recordInBatch As Integer = 0
 
-        Private classNumField As Integer = -1
+        Public Overridable Property MapSize As Size
+        Public Overridable ReadOnly Property Type As LayerType
+        Public Overridable Property OutMapNum As Integer
+        Public Overridable ReadOnly Property KernelSize As Size
+        Public Overridable ReadOnly Property ScaleSize As Size
+
+        Public Overridable ReadOnly Property Errors As Double()()()()
+            Get
+                Return m_errors
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ClassNum As Integer = -1
+
+        Public Overridable ReadOnly Property Kernel As Double()()()()
+            Get
+                Return m_kernel
+            End Get
+        End Property
 
         Private Sub New()
 
@@ -36,76 +46,40 @@ Namespace CNN
 
         Public Shared Function buildInputLayer(mapSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer.typeField = LayerType.input
-            layer.outMapNumField = 1
-            layer.MapSize = mapSize
+            layer._Type = LayerType.input
+            layer._OutMapNum = 1
+            layer._MapSize = mapSize
             Return layer
         End Function
 
         Public Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer.typeField = LayerType.conv
-            layer.outMapNumField = outMapNum
-            layer.kernelSizeField = kernelSize
+            layer._Type = LayerType.conv
+            layer._OutMapNum = outMapNum
+            layer._KernelSize = kernelSize
             Return layer
         End Function
 
         Public Shared Function buildSampLayer(scaleSize As Size) As Layer
             Dim layer As Layer = New Layer()
-            layer.typeField = LayerType.samp
-            layer.scaleSizeField = scaleSize
+            layer._Type = LayerType.samp
+            layer._ScaleSize = scaleSize
             Return layer
         End Function
 
         Public Shared Function buildOutputLayer(classNum As Integer) As Layer
-            Dim layer As Layer = New Layer()
-            layer.classNumField = classNum
-            layer.typeField = LayerType.output
-            layer.mapSizeField = New Size(1, 1)
-            layer.outMapNumField = classNum
+            Dim layer As New Layer()
+            layer._ClassNum = classNum
+            layer._Type = LayerType.output
+            layer._MapSize = New Size(1, 1)
+            layer._OutMapNum = classNum
             ' int outMapNum = 1;
             ' while ((1 << outMapNum) < classNum)
             ' outMapNum += 1;
             ' layer.outMapNum = outMapNum;
-            Call Log.i("outMapNum:" & layer.outMapNumField.ToString())
+            Call Log.i("outMapNum:" & layer.OutMapNum.ToString())
             Return layer
         End Function
-
-        Public Overridable Property MapSize As Size
-            Get
-                Return mapSizeField
-            End Get
-            Set(value As Size)
-                mapSizeField = value
-            End Set
-        End Property
-
-        Public Overridable ReadOnly Property Type As LayerType
-            Get
-                Return typeField
-            End Get
-        End Property
-
-        Public Overridable Property OutMapNum As Integer
-            Get
-                Return outMapNumField
-            End Get
-            Set(value As Integer)
-                outMapNumField = value
-            End Set
-        End Property
-
-        Public Overridable ReadOnly Property KernelSize As Size
-            Get
-                Return kernelSizeField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property ScaleSize As Size
-            Get
-                Return scaleSizeField
-            End Get
-        End Property
 
         Public Enum LayerType
             input
@@ -115,33 +89,37 @@ Namespace CNN
         End Enum
 
         Public Overridable Sub initKernel(frontMapNum As Integer)
-            kernelField = ReturnRectangularDoubleArray(frontMapNum, outMapNumField, kernelSizeField.x, kernelSizeField.y)
+            m_kernel = ReturnRectangularDoubleArray(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
+
             For i = 0 To frontMapNum - 1
-                For j = 0 To outMapNumField - 1
-                    kernelField(i)(j) = Util.randomMatrix(kernelSizeField.x, kernelSizeField.y, True)
+                For j = 0 To _OutMapNum - 1
+                    m_kernel(i)(j) = Util.randomMatrix(_KernelSize.x, _KernelSize.y, True)
                 Next
             Next
         End Sub
 
         Public Overridable Sub initOutputKerkel(frontMapNum As Integer, size As Size)
-            kernelSizeField = size
-            kernelField = ReturnRectangularDoubleArray(frontMapNum, outMapNumField, kernelSizeField.x, kernelSizeField.y)
+            _KernelSize = size
+            m_kernel = ReturnRectangularDoubleArray(frontMapNum, _OutMapNum, _KernelSize.x, _KernelSize.y)
 
             For i = 0 To frontMapNum - 1
-                For j = 0 To outMapNumField - 1
-                    kernelField(i)(j) = Util.randomMatrix(kernelSizeField.x, kernelSizeField.y, False)
+                For j = 0 To _OutMapNum - 1
+                    m_kernel(i)(j) = Util.randomMatrix(_KernelSize.x, _KernelSize.y, False)
                 Next
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub initBias(frontMapNum As Integer)
-            bias = Vector.rand(outMapNumField)
+            bias = Vector.rand(_OutMapNum)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub initOutmaps(batchSize As Integer)
-            outmaps = ReturnRectangularDoubleArray(batchSize, outMapNumField, mapSizeField.x, mapSizeField.y)
+            outmaps = ReturnRectangularDoubleArray(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setMapValue(mapNo As Integer, mapX As Integer, mapY As Integer, value As Double)
             outmaps(recordInBatch)(mapNo)(mapX)(mapY) = value
         End Sub
@@ -159,35 +137,29 @@ Namespace CNN
         End Function
 
         Public Overridable Function getKernel(i As Integer, j As Integer) As Double()()
-            Return kernelField(i)(j)
+            Return m_kernel(i)(j)
         End Function
 
         Public Overridable Sub setError(mapNo As Integer, mapX As Integer, mapY As Integer, value As Double)
-            errorsField(recordInBatch)(mapNo)(mapX)(mapY) = value
+            m_errors(recordInBatch)(mapNo)(mapX)(mapY) = value
         End Sub
 
         Public Overridable Sub setError(mapNo As Integer, matrix As Double()())
             ' Log.i(type.toString());
             ' Util.printMatrix(matrix);
-            errorsField(recordInBatch)(mapNo) = matrix
+            m_errors(recordInBatch)(mapNo) = matrix
         End Sub
 
         Public Overridable Function getError(mapNo As Integer) As Double()()
-            Return errorsField(recordInBatch)(mapNo)
+            Return m_errors(recordInBatch)(mapNo)
         End Function
 
-        Public Overridable ReadOnly Property Errors As Double()()()()
-            Get
-                Return errorsField
-            End Get
-        End Property
-
         Public Overridable Sub initErros(batchSize As Integer)
-            errorsField = ReturnRectangularDoubleArray(batchSize, outMapNumField, mapSizeField.x, mapSizeField.y)
+            m_errors = ReturnRectangularDoubleArray(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
         End Sub
 
         Public Overridable Sub setKernel(lastMapNo As Integer, mapNo As Integer, kernel As Double()())
-            kernelField(lastMapNo)(mapNo) = kernel
+            m_kernel(lastMapNo)(mapNo) = kernel
         End Sub
 
         Public Overridable Function getBias(mapNo As Integer) As Double
@@ -205,25 +177,11 @@ Namespace CNN
         End Property
 
         Public Overridable Function getError(recordId As Integer, mapNo As Integer) As Double()()
-            Return errorsField(recordId)(mapNo)
+            Return m_errors(recordId)(mapNo)
         End Function
 
         Public Overridable Function getMap(recordId As Integer, mapNo As Integer) As Double()()
             Return outmaps(recordId)(mapNo)
         End Function
-
-        Public Overridable ReadOnly Property ClassNum As Integer
-            Get
-                Return classNumField
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Kernel As Double()()()()
-            Get
-                Return kernelField
-            End Get
-        End Property
-
     End Class
-
 End Namespace
