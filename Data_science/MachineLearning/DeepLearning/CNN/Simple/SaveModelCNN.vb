@@ -54,6 +54,7 @@ Namespace CNN
         Private Sub Write(m As Double()()()(), wr As BinaryWriter)
             If m.IsNullOrEmpty Then
                 Call wr.Write(-1)
+                Return
             Else
                 Call wr.Write(m.Length)
             End If
