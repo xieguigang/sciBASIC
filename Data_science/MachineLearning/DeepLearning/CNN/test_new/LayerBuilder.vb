@@ -31,7 +31,7 @@ Namespace CNN
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(lb As LayerBuilder) As List(Of Layer)
-            Return lb.m_layers
+            Return lb.m_layers.AsEnumerable.AsList
         End Operator
     End Class
 End Namespace

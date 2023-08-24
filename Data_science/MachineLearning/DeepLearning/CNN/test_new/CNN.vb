@@ -11,7 +11,7 @@ Namespace CNN
 
         Private Shared ALPHA As Double = 0.85
         Protected Friend Const LAMBDA As Double = 0
-        Private layers As IList(Of Layer)
+        Private layers As List(Of Layer)
         Private layerNum As Integer
         Private batchSize As Integer
         Private divide_batchSize As [Operator]
