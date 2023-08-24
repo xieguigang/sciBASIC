@@ -8,6 +8,7 @@ Namespace CNN
         Public Sub Write(cnn As CNN, file As Stream)
             Using writer As New BinaryWriter(file, Encoding.ASCII)
                 Call Write(cnn, writer)
+                Call writer.Flush()
             End Using
         End Sub
 
@@ -35,9 +36,15 @@ Namespace CNN
             Call Write(layer.KernelSize, wr)
             Call Write(layer.ScaleSize, wr)
 
-            For Each d As Double In layer.bias
-                Call wr.Write(d)
-            Next
+            If layer.bias Is Nothing Then
+                Call wr.Write(-1)
+            Else
+                Call wr.Write(layer.bias.Length)
+
+                For Each d As Double In layer.bias
+                    Call wr.Write(d)
+                Next
+            End If
 
             Call Write(layer.m_kernel, wr)
             Call Write(layer.m_outmaps, wr)

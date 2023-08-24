@@ -40,7 +40,30 @@ Namespace CNN
         End Property
 
         Private Sub New()
+        End Sub
 
+        ''' <summary>
+        ''' the constructor for the model binary reader
+        ''' </summary>
+        ''' <param name="mapsize"></param>
+        ''' <param name="kernel"></param>
+        ''' <param name="scale"></param>
+        ''' <param name="type"></param>
+        ''' <param name="outmapSize"></param>
+        ''' <param name="classNum"></param>
+        Friend Sub New(mapsize As Dimension,
+                       kernel As Dimension,
+                       scale As Dimension,
+                       type As LayerTypes,
+                       outmapSize As Integer,
+                       classNum As Integer)
+
+            Me.MapSize = mapsize
+            Me.Type = type
+            Me.KernelSize = kernel
+            Me.ScaleSize = scale
+            Me.OutMapNum = outmapSize
+            Me.ClassNum = classNum
         End Sub
 
         Public Overrides Function ToString() As String
