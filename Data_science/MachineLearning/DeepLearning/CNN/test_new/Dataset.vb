@@ -80,7 +80,7 @@ Namespace CNN.Dataset
                         dataset.append(New SampleData(data, -1))
                     Else
                         Dim label As Double = data(lableIndex)
-                        data = data.Take(lableIndex).JoinIterates(data.Skip(lableIndex)).ToArray
+                        data = data.Take(lableIndex).JoinIterates(data.Skip(lableIndex + 1)).ToArray
                         dataset.append(New SampleData(data, label))
                     End If
                 End While
