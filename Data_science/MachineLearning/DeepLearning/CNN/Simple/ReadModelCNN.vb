@@ -57,9 +57,9 @@ Namespace CNN
                 Next
             End If
 
-            Dim kernel = readMatrix(rd)
-            Dim outmaps = readMatrix(rd)
-            Dim errors = readMatrix(rd)
+            Dim kernel = readMatrix(rd).ToArray
+            Dim outmaps = readMatrix(rd).ToArray
+            Dim errors = readMatrix(rd).ToArray
 
             Return New Layer(mapSize, kernelSize, scaleSize, type, outMapNum, classNum) With {
                 .bias = bias,
@@ -69,8 +69,37 @@ Namespace CNN
             }
         End Function
 
-        Private Function readMatrix(rd As BinaryReader) As Double()()()()
+        Private Iterator Function readMatrix(rd As BinaryReader) As IEnumerable(Of Double()()())
+            Dim lm As Integer = rd.ReadInt32
 
+            If lm = -1 Then
+                Return
+            End If
+
+            For i As Integer = 0 To lm - 1
+                Dim li As Integer = rd.ReadInt32
+                Dim ri As Double()()() = New Double(li - 1)()() {}
+
+                For j As Integer = 0 To ri.Length - 1
+                    Dim lj As Integer = rd.ReadInt32
+                    Dim rj As Double()() = New Double(lj - 1)() {}
+
+                    For k As Integer = 0 To rj.Length - 1
+                        Dim lk As Integer = rd.ReadInt32
+                        Dim rk As Double() = New Double(lk - 1) {}
+
+                        For n As Integer = 0 To rk.Length - 1
+                            rk(n) = rd.ReadDouble
+                        Next
+
+                        rj(k) = rk
+                    Next
+
+                    ri(j) = rj
+                Next
+
+                Yield ri
+            Next
         End Function
 
         Private Function readDims(rd As BinaryReader) As Dimension
