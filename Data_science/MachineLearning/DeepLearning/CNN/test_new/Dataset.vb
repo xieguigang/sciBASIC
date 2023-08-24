@@ -2,31 +2,26 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace CNN.Dataset
 
     Public Class Dataset
 
-        Private records As IList(Of Record)
+        Private records As IList(Of SampleData)
 
         Friend m_lableIndex As Integer = -1
         Friend maxLable As Double = -1
 
         Public Sub New(classIndex As Integer)
             m_lableIndex = classIndex
-            records = New List(Of Record)()
-        End Sub
-
-        Public Sub New(datas As IList(Of Double()))
-            Me.New()
-            For Each data As Double() In datas
-                append(New Record(Me, data))
-            Next
+            records = New List(Of SampleData)()
         End Sub
 
         Private Sub New()
             m_lableIndex = -1
-            records = New List(Of Record)()
+            records = New List(Of SampleData)()
         End Sub
 
         Public Overridable Function size() As Integer
@@ -39,7 +34,7 @@ Namespace CNN.Dataset
             End Get
         End Property
 
-        Public Overridable Sub append(record As Record)
+        Public Overridable Sub append(record As SampleData)
             records.Add(record)
         End Sub
 
@@ -48,19 +43,19 @@ Namespace CNN.Dataset
         End Sub
 
         Public Overridable Sub append(attrs As Double(), lable As Double?)
-            records.Add(New Record(attrs, lable))
+            records.Add(New SampleData(attrs, lable))
         End Sub
 
-        Public Overridable Function iter() As IEnumerator(Of Record)
+        Public Overridable Function iter() As IEnumerator(Of SampleData)
             Return records.GetEnumerator()
         End Function
 
         Public Overridable Function getAttrs(index As Integer) As Double()
-            Return records(index).Attrs
+            Return records(index).features
         End Function
 
         Public Overridable Function getLable(index As Integer) As Double?
-            Return records(index).Lable
+            Return records(index).labels(0)
         End Function
 
         Public Shared Function load(filePath As String, tag As String, lableIndex As Integer) As Dataset
@@ -80,8 +75,14 @@ Namespace CNN.Dataset
                     For i = 0 To datas.Length - 1
                         data(i) = Double.Parse(datas(i))
                     Next
-                    Dim record As Record = New Record(dataset, data)
-                    dataset.append(record)
+
+                    If lableIndex < 0 Then
+                        dataset.append(New SampleData(data, -1))
+                    Else
+                        Dim label As Double = data(lableIndex)
+                        data = data.Take(lableIndex).JoinIterates(data.Skip(lableIndex)).ToArray
+                        dataset.append(New SampleData(data, label))
+                    End If
                 End While
                 [in].Close()
             Catch e As IOException
@@ -89,68 +90,13 @@ Namespace CNN.Dataset
                 Console.Write(e.StackTrace)
                 Return Nothing
             End Try
-            Console.WriteLine("��������:" & dataset.size().ToString())
+            Console.WriteLine("get data set with data records:" & dataset.size().ToString())
             Return dataset
         End Function
 
-        Public Overridable Function getRecord(index As Integer) As Record
+        Public Overridable Function getRecord(index As Integer) As SampleData
             Return records(index)
         End Function
 
-    End Class
-
-
-    Public Class Record
-
-        Dim m_attrs As Double()
-        Dim m_lable As Double?
-        Dim m_lableIndex As Integer = -1
-
-        Public Overridable ReadOnly Property Attrs As Double()
-            Get
-                Return m_attrs
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Lable As Double?
-            Get
-                If m_lableIndex = -1 Then
-                    Return Nothing
-                End If
-                Return m_lable
-            End Get
-        End Property
-
-        Friend Sub New(attrs As Double(), lable As Double?)
-            m_attrs = attrs
-            m_lable = lable
-        End Sub
-
-        Public Sub New(ds As Dataset, data As Double())
-            If ds.m_lableIndex = -1 Then
-                m_attrs = data
-            Else
-                m_lable = data(ds.m_lableIndex)
-                m_lableIndex = ds.m_lableIndex
-
-                If m_lable.Value > ds.maxLable Then
-                    ds.maxLable = m_lable.Value
-                End If
-                If ds.m_lableIndex = 0 Then
-                    m_attrs = Arrays.copyOfRange(data, 1, data.Length)
-                Else
-                    m_attrs = Arrays.copyOfRange(data, 0, data.Length - 1)
-                End If
-            End If
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Dim sb As StringBuilder = New StringBuilder()
-            sb.Append("attrs:")
-            sb.Append(String.Join(", ", m_attrs))
-            sb.Append("lable:")
-            sb.Append(m_lable)
-            Return sb.ToString()
-        End Function
     End Class
 End Namespace

@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
 
 Namespace CNN
@@ -44,7 +45,7 @@ Namespace CNN
             multiply_lambda = Function(value) value * (1 - LAMBDA * ALPHA)
         End Sub
 
-        Public Function predict(record As Record) As Double()
+        Public Function predict(record As SampleData) As Double()
             Dim outputLayer = layers(layerNum - 1)
             Dim mapNum = outputLayer.OutMapNum
             Dim out = New Double(mapNum - 1) {}
@@ -60,12 +61,12 @@ Namespace CNN
             Return out
         End Function
 
-        Friend Function train(record As Record) As Boolean
+        Friend Function train(record As SampleData) As Boolean
             forward(record)
             Return backPropagation(record)
         End Function
 
-        Private Function backPropagation(record As Record) As Boolean
+        Private Function backPropagation(record As SampleData) As Boolean
             Dim result = setOutLayerErrors(record)
             setHiddenLayerErrors()
             Return result
@@ -98,7 +99,6 @@ Namespace CNN
                 layer.setBias(j, bias)
             Next
         End Sub
-
 
         Private Sub updateKernels(layer As Layer, lastLayer As Layer)
             Dim mapNum = layer.OutMapNum
@@ -176,7 +176,7 @@ Namespace CNN
 
         End Sub
 
-        Private Function setOutLayerErrors(record As Record) As Boolean
+        Private Function setOutLayerErrors(record As SampleData) As Boolean
             Dim outputLayer = layers(layerNum - 1)
             Dim mapNum = outputLayer.OutMapNum
             Dim target = New Double(mapNum - 1) {}
@@ -186,7 +186,7 @@ Namespace CNN
                 outmaps(m) = outmap(0)(0)
 
             Next
-            Dim lable As Integer = record.Lable.Value
+            Dim lable As Integer = record.labels(0)
             target(lable) = 1
 
             For m = 0 To mapNum - 1
@@ -195,7 +195,7 @@ Namespace CNN
             Return lable = which.Max(outmaps)
         End Function
 
-        Private Sub forward(record As Record)
+        Private Sub forward(record As SampleData)
             Call setInLayerOutput(record)
 
             For l = 1 To layers.Count - 1
@@ -213,10 +213,10 @@ Namespace CNN
             Next
         End Sub
 
-        Private Sub setInLayerOutput(value As Record)
+        Private Sub setInLayerOutput(value As SampleData)
             Dim inputLayer = layers(0)
             Dim mapSize = inputLayer.MapSize
-            Dim attr = value.Attrs
+            Dim attr = value.features
             If attr.Length <> mapSize.x * mapSize.y Then
                 Throw New Exception()
             End If

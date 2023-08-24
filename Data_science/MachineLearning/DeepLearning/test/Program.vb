@@ -2,6 +2,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports ds = Microsoft.VisualBasic.MachineLearning.CNN.Dataset.Dataset
 
 Public Class RunCNN
@@ -33,18 +34,18 @@ Public Class RunCNN
         predict(cnn, testset, "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\test.predict")
     End Sub
 
-    Public Shared Sub predict(cnn As CNN, testset As Dataset, fileName As String)
+    Public Shared Sub predict(cnn As CNN, testset As ds, fileName As String)
         log("begin predict")
         Try
             Dim max = cnn(cnn.layerNum - 1).ClassNum
             Dim writer As StreamWriter = New StreamWriter(fileName.Open(FileMode.OpenOrCreate, doClear:=True))
             Call Layer.prepareForNewBatch()
-            Dim iter As IEnumerator(Of Record) = testset.iter()
+            Dim iter As IEnumerator(Of SampleData) = testset.iter()
             While iter.MoveNext()
                 Dim record = iter.Current
                 ' int lable =
                 ' Util.binaryArray2int(out);
-                Dim lable = which.max(cnn.predict(record))
+                Dim lable = which.Max(cnn.predict(record))
                 ' if (lable >= max)
                 ' lable = lable - (1 << (out.length -
                 ' 1));

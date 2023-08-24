@@ -68,6 +68,37 @@ Imports Microsoft.VisualBasic.Net.Http
 Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
+    ''' the in-memory sample data object
+    ''' </summary>
+    Public Class SampleData
+
+        Public Property id As String
+        Public Property features As Double()
+        Public Property labels As Double()
+
+        Sub New(sample As Sample)
+            id = sample.ID
+            features = sample.vector
+            labels = sample.target
+        End Sub
+
+        Sub New(features As Double(), label As Double)
+            Me.features = features
+            Me.labels = {label}
+        End Sub
+
+        Sub New(features As Double(), labels As Double())
+            Me.features = features
+            Me.labels = labels
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
+
+    End Class
+
+    ''' <summary>
     ''' The training dataset, a data point with known label
     ''' </summary>
     Public Class Sample : Implements INamedValue
