@@ -7,10 +7,10 @@ Namespace CNN
 
     Public Class Layer
 
-        Private m_kernel As Double()()()()
-        Private bias As Double()
-        Private outmaps As Double()()()()
-        Private m_errors As Double()()()()
+        Friend m_kernel As Double()()()()
+        Friend m_outmaps As Double()()()()
+        Friend m_errors As Double()()()()
+        Friend bias As Double()
 
         Private Shared recordInBatch As Integer = 0
 
@@ -19,10 +19,11 @@ Namespace CNN
         Public Overridable Property OutMapNum As Integer
         Public Overridable ReadOnly Property KernelSize As Dimension
         Public Overridable ReadOnly Property ScaleSize As Dimension
+        Public Overridable ReadOnly Property ClassNum As Integer = -1
 
         Public Overridable ReadOnly Property Maps As Double()()()()
             Get
-                Return outmaps
+                Return m_outmaps
             End Get
         End Property
 
@@ -31,8 +32,6 @@ Namespace CNN
                 Return m_errors
             End Get
         End Property
-
-        Public Overridable ReadOnly Property ClassNum As Integer = -1
 
         Public Overridable ReadOnly Property Kernel As Double()()()()
             Get
@@ -84,12 +83,12 @@ Namespace CNN
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub initOutmaps(batchSize As Integer)
-            outmaps = RectangularArray.CubicMatrix(Of Double)(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
+            m_outmaps = RectangularArray.CubicMatrix(Of Double)(batchSize, _OutMapNum, _MapSize.x, _MapSize.y)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setMapValue(mapNo As Integer, mapX As Integer, mapY As Integer, value As Double)
-            outmaps(recordInBatch)(mapNo)(mapX)(mapY) = value
+            m_outmaps(recordInBatch)(mapNo)(mapX)(mapY) = value
         End Sub
 
         Friend Shared count As Integer = 0
@@ -97,11 +96,11 @@ Namespace CNN
         Public Overridable Sub setMapValue(mapNo As Integer, outMatrix As Double()())
             ' Log.i(type.toString());
             ' Util.printMatrix(outMatrix);
-            outmaps(recordInBatch)(mapNo) = outMatrix
+            m_outmaps(recordInBatch)(mapNo) = outMatrix
         End Sub
 
         Public Overridable Function getMap(index As Integer) As Double()()
-            Return outmaps(recordInBatch)(index)
+            Return m_outmaps(recordInBatch)(index)
         End Function
 
         Public Overridable Function getKernel(i As Integer, j As Integer) As Double()()
@@ -143,7 +142,7 @@ Namespace CNN
         End Function
 
         Public Overridable Function getMap(recordId As Integer, mapNo As Integer) As Double()()
-            Return outmaps(recordId)(mapNo)
+            Return m_outmaps(recordId)(mapNo)
         End Function
     End Class
 End Namespace

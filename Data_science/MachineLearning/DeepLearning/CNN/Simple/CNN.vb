@@ -18,9 +18,12 @@ Namespace CNN
         Private multiply_alpha As [Operator]
         Private multiply_lambda As [Operator]
 
-        Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
-
         Public ReadOnly Property batchSize As Integer
+
+        ''' <summary>
+        ''' The layer numbers
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property layerNum As Integer
 
         Default Public ReadOnly Property Layer(i As Integer) As Layer
@@ -289,31 +292,5 @@ Namespace CNN
                 End Select
             Next
         End Sub
-
-        Public Overridable Sub saveModel(fileName As String)
-            'ObjectOutputStream oos = new ObjectOutputStream(new System.IO.FileStream(fileName, System.IO.FileMode.Create, System.IO.FileAccess.Write));
-            'oos.writeObject(this);
-            'oos.flush();
-            'oos.close();
-            Try
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-
-        End Sub
-
-        Public Shared Function loadModel(fileName As String) As CNN
-            'ObjectInputStream @in = new ObjectInputStream(new System.IO.FileStream(fileName, System.IO.FileMode.Open, System.IO.FileAccess.Read));
-            'CNN cnn = (CNN) @in.readObject();
-            '@in.close();
-            'return cnn;
-            Try
-            Catch e As Exception
-                'e.printStackTrace();
-            End Try
-            Return Nothing
-        End Function
     End Class
-
 End Namespace

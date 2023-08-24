@@ -57,7 +57,7 @@ Imports System.ComponentModel
 
 Namespace Convolutional
 
-    Public Enum LayerTypes
+    Public Enum LayerTypes As Integer
 
         ''' <summary>
         ''' conv
