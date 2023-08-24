@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace CNN
 
@@ -7,7 +8,7 @@ Namespace CNN
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
 
         <Extension>
-        Private Sub TrainEpochs(cnn As CNN, trainset As Dataset.Dataset, epochsNum As Integer, ByRef right As Integer, ByRef count As Integer)
+        Private Sub TrainEpochs(cnn As CNN, trainset As SampleData(), epochsNum As Integer, ByRef right As Integer, ByRef count As Integer)
             Dim d As Integer = epochsNum / 25
             Dim t0 = Now
             Dim randPerm As Integer()
@@ -18,10 +19,10 @@ Namespace CNN
             For i = 0 To epochsNum - 1
                 Call Layer.prepareForNewBatch()
 
-                randPerm = Util.randomPerm(trainset.size(), cnn.batchSize)
+                randPerm = Util.randomPerm(trainset.Length, cnn.batchSize)
 
                 For Each index In randPerm
-                    Dim isRight = cnn.train(trainset.getRecord(index))
+                    Dim isRight = cnn.train(trainset(index))
                     If isRight Then
                         right += 1
                     End If
@@ -45,16 +46,16 @@ Namespace CNN
         ''' <param name="max_loops"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function train(cnn As CNN, trainset As Dataset.Dataset, max_loops As Integer) As CNN
+        Public Function train(cnn As CNN, trainset As SampleData(), max_loops As Integer) As CNN
             Dim t = 0
             Dim stopTrain As Boolean
             Dim right = 0
             Dim count = 0
 
             While t < max_loops AndAlso Not stopTrain
-                Dim epochsNum As Integer = trainset.size() / cnn.batchSize
+                Dim epochsNum As Integer = trainset.Length / cnn.batchSize
 
-                If trainset.size() Mod cnn.batchSize <> 0 Then
+                If trainset.Length Mod cnn.batchSize <> 0 Then
                     epochsNum += 1
                 End If
 

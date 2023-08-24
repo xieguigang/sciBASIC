@@ -1,9 +1,8 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.Dataset
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
-Imports ds = Microsoft.VisualBasic.MachineLearning.CNN.Dataset.Dataset
+Imports ds = test.Dataset
 
 Public Class RunCNN
 
@@ -23,7 +22,7 @@ Public Class RunCNN
 
         Dim fileName = "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\train.format"
         Dim dataset As ds = ds.load(fileName, ",", 784)
-        cnn.train(dataset, 5)
+        cnn.train(dataset.records.ToArray, 5)
         Dim modelName = "model/model.cnn"
         cnn.saveModel(modelName)
         dataset.clear()
