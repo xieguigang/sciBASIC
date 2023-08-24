@@ -10,16 +10,18 @@ Namespace CNN
 
     Public Class CNN
 
-        Private Shared ALPHA As Double = 0.85
-        Protected Friend Const LAMBDA As Double = 0
+        Protected Friend ALPHA As Double = 0.85
+        Protected Friend LAMBDA As Double = 0
+
         Private layers As List(Of Layer)
         Private layerNum As Integer
-        Private batchSize As Integer
         Private divide_batchSize As [Operator]
         Private multiply_alpha As [Operator]
         Private multiply_lambda As [Operator]
 
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
+
+        Public ReadOnly Property batchSize As Integer
 
         Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
             Me.layers = layerBuilder
@@ -31,59 +33,10 @@ Namespace CNN
         End Sub
 
         Private Sub initPerator()
-            divide_batchSize = Function(value) value / batchSize
+            divide_batchSize = Function(value) value / _batchSize
             multiply_alpha = Function(value) value * ALPHA
             multiply_lambda = Function(value) value * (1 - LAMBDA * ALPHA)
         End Sub
-
-        Public Overridable Sub train(trainset As Dataset.Dataset, repeat As Integer)
-            Dim t = 0
-
-            While t < repeat AndAlso Not stopTrain
-                Dim epochsNum As Integer = trainset.size() / batchSize
-
-                If trainset.size() Mod batchSize <> 0 Then
-                    epochsNum += 1
-                End If
-
-                Call log("")
-                Call log(t.ToString() & "th iter epochsNum:" & epochsNum.ToString())
-
-                Dim right = 0
-                Dim count = 0
-                Dim d As Integer = epochsNum / 25
-                Dim t0 = Now
-
-                For i = 0 To epochsNum - 1
-                    Dim randPerm As Integer() = Util.randomPerm(trainset.size(), batchSize)
-                    Call Layer.prepareForNewBatch()
-
-                    For Each index In randPerm
-                        Dim isRight = train(trainset.getRecord(index))
-                        If isRight Then
-                            right += 1
-                        End If
-                        count += 1
-                        Call Layer.prepareForNewRecord()
-                    Next
-
-                    updateParas()
-
-                    If i Mod d = 0 Then
-                        Call VBDebugger.EchoLine($"[{i + 1}/{epochsNum}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
-                    End If
-                Next
-                Dim p = 1.0 * right / count
-                If t Mod 10 = 1 AndAlso p > 0.96 Then
-                    ALPHA = 0.001 + ALPHA * 0.9
-                    Call log("Set alpha = " & ALPHA.ToString())
-                End If
-                Call log("precision " & right.ToString() & "/" & count.ToString() & "=" & p.ToString())
-                t += 1
-            End While
-        End Sub
-
-        Private Shared stopTrain As Boolean
 
         Public Overridable Function test(trainset As Dataset.Dataset) As Double
             Call Layer.prepareForNewBatch()
@@ -149,11 +102,9 @@ Namespace CNN
             log("end predict")
         End Sub
 
-        Private Function train(record As Record) As Boolean
+        Friend Function train(record As Record) As Boolean
             forward(record)
-            Dim result = backPropagation(record)
-            Return result
-            ' System.exit(0);
+            Return backPropagation(record)
         End Function
 
         Private Function backPropagation(record As Record) As Boolean
@@ -162,7 +113,7 @@ Namespace CNN
             Return result
         End Function
 
-        Private Sub updateParas()
+        Friend Sub updateParas()
             For l = 1 To layerNum - 1
                 Dim layer = layers(l)
                 Dim lastLayer = layers(l - 1)
@@ -183,7 +134,7 @@ Namespace CNN
 
             For j = start To mapNum - 1
                 Dim [error] = Util.sum(errors, j)
-                Dim deltaBias = Util.sum([error]) / batchSize
+                Dim deltaBias = Util.sum([error]) / _batchSize
                 Dim bias = layer.getBias(j) + ALPHA * deltaBias
 
                 layer.setBias(j, bias)
@@ -199,7 +150,7 @@ Namespace CNN
                 For i = 0 To lastMapNum - 1
                     Dim deltaKernel As Double()() = Nothing
 
-                    For r = 0 To batchSize - 1
+                    For r = 0 To _batchSize - 1
                         Dim [error] = layer.getError(r, j)
                         If deltaKernel Is Nothing Then
                             deltaKernel = Util.convnValid(lastLayer.getMap(r, i), [error])
