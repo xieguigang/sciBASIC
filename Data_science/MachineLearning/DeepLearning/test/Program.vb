@@ -12,11 +12,11 @@ Public Class RunCNN
         Dim builder As LayerBuilder = New LayerBuilder()
         Dim output_width = 10
 
-        builder.buildInputLayer(New Size(28, 28))
-        builder.buildConvLayer(6, New Size(5, 5))
-        builder.buildSampLayer(New Size(2, 2))
-        builder.buildConvLayer(12, New Size(5, 5))
-        builder.buildSampLayer(New Size(2, 2))
+        builder.buildInputLayer(New Dimension(28, 28))
+        builder.buildConvLayer(6, New Dimension(5, 5))
+        builder.buildSampLayer(New Dimension(2, 2))
+        builder.buildConvLayer(12, New Dimension(5, 5))
+        builder.buildSampLayer(New Dimension(2, 2))
         builder.buildOutputLayer(output_width)
         Dim cnn As CNN = New CNN(builder, 50)
 
