@@ -10,7 +10,7 @@ Public Class OPLS
     ''' <param name="statObject"></param>
     ''' <param name="component"></param>
     ''' <returns></returns>
-    Public Shared Function OrthogonalProjectionsToLatentStructures(ByVal statObject As StatisticsObject, ByVal Optional component As Integer = -1) As MultivariateAnalysisResult
+    Public Shared Function OrthogonalProjectionsToLatentStructures(statObject As StatisticsObject, Optional component As Integer = -1) As MultivariateAnalysisResult
         Dim dataArray = statObject.CopyX()
         Dim yArray = statObject.CopyY()
 
@@ -139,7 +139,7 @@ Public Class OPLS
         Return plsresult
     End Function
 
-    Private Shared Function GetStdevOfFilteredXArray(ByVal dataArray As Double(,)) As Double()
+    Private Shared Function GetStdevOfFilteredXArray(dataArray As Double(,)) As Double()
         Dim rowSize = dataArray.GetLength(0) ' files
         Dim columnSize = dataArray.GetLength(1) ' metabolites
 
