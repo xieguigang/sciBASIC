@@ -177,7 +177,7 @@ Namespace CNN
         End Sub
 
         Private Sub setPoolErrors(layer As Layer, nextLayer As Layer)
-        Dim mapNum = layer.OutMapNum
+            Dim mapNum = layer.OutMapNum
             Dim nextMapNum = nextLayer.OutMapNum
 
             For i = start To mapNum - 1
@@ -323,13 +323,13 @@ Namespace CNN
         End Sub
 
         Public Overridable Sub setup(batchSize As Integer)
-            Dim inputLayer = layers(0)
+            Call layers(0).initOutmaps(batchSize)
 
-            inputLayer.initOutmaps(batchSize)
             For i = 1 To layers.Count - 1
                 Dim layer = layers(i)
                 Dim frontLayer = layers(i - 1)
                 Dim frontMapNum = frontLayer.OutMapNum
+
                 Select Case layer.Type
                     Case layerTypes.Input
                     Case layerTypes.Convolution

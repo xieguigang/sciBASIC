@@ -187,6 +187,12 @@ Namespace ComponentModel.DataSourceModel
             End With
         End Sub
 
+        Sub New(val As NamedValue(Of T()))
+            Me.name = val.Name
+            Me.value = val.Value
+            Me.description = val.Description
+        End Sub
+
         Sub New(name$, data As IEnumerable(Of T), Optional description$ = Nothing)
             Call Me.New(name, data.SafeQuery.ToArray, description)
         End Sub

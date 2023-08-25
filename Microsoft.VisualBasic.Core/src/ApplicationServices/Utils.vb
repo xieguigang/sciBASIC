@@ -60,10 +60,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel.Tasks
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace ApplicationServices
 
@@ -84,7 +84,7 @@ Namespace ApplicationServices
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Shell(commandLine$, Optional windowStyle As ProcessWindowStyle = ProcessWindowStyle.Normal, Optional waitForExit As Boolean = False) As Integer
-            Dim tokens As String() = CLIParser.GetTokens(commandLine)
+            Dim tokens As String() = DelimiterParser.GetTokens(commandLine)
             Dim command As String = tokens.First
             Dim arguments As String = tokens.Skip(1).Select(AddressOf Utils.CLIToken).JoinBy(" ")
 

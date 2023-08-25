@@ -6,6 +6,7 @@ Namespace CNN
 
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
 
+        <DebuggerStepThrough>
         Sub New(Optional log As Action(Of String) = Nothing)
             If Not log Is Nothing Then
                 Me.log = log
