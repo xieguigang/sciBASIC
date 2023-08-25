@@ -74,7 +74,5 @@ Namespace Convolutional
         <Description("pool")> Pool
         <Description("relu")> ReLU
         <Description("softmax")> SoftMax
-
-        samp
     End Enum
 End Namespace

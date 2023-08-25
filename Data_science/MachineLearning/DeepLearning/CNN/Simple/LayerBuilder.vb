@@ -44,8 +44,8 @@ Namespace CNN
             Return Me
         End Function
 
-        Public Function buildSampLayer(scaleSize As Dimension) As LayerBuilder
-            m_layers.Add(Layer.buildSampLayer(scaleSize))
+        Public Function buildPoolLayer(scaleSize As Dimension) As LayerBuilder
+            m_layers.Add(Layer.buildPoolLayer(scaleSize))
             Return Me
         End Function
 
@@ -83,9 +83,9 @@ Namespace CNN
             Return layer
         End Function
 
-        Friend Shared Function buildSampLayer(scaleSize As Dimension) As Layer
+        Friend Shared Function buildPoolLayer(scaleSize As Dimension) As Layer
             Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.samp
+            layer._Type = LayerTypes.Pool
             layer._ScaleSize = scaleSize
             Return layer
         End Function

@@ -31,10 +31,15 @@ Namespace CNN
             End Get
         End Property
 
-        Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer)
+        Public Sub New(layerBuilder As LayerBuilder, batchSize As Integer,
+                       Optional alpha As Double = 0.85,
+                       Optional lambda As Double = 1.0E-20)
+
             Me.layers = layerBuilder
             Me.layerNum = layers.Count
             Me.batchSize = batchSize
+            Me.ALPHA = alpha
+            Me.LAMBDA = lambda
 
             If Not layerBuilder.Initialized Then
                 Call setup(batchSize)
@@ -136,8 +141,8 @@ Namespace CNN
                 Dim layer = layers(l)
                 Dim nextLayer = layers(l + 1)
                 Select Case layer.Type
-                    Case layerTypes.samp
-                        setSampErrors(layer, nextLayer)
+                    Case layerTypes.Pool
+                        setPoolErrors(layer, nextLayer)
                     Case layerTypes.Convolution
                         setConvErrors(layer, nextLayer)
                     Case Else
@@ -145,7 +150,7 @@ Namespace CNN
             Next
         End Sub
 
-        Private Sub setSampErrors(layer As Layer, nextLayer As Layer)
+        Private Sub setPoolErrors(layer As Layer, nextLayer As Layer)
             Dim mapNum = layer.OutMapNum
             Dim nextMapNum = nextLayer.OutMapNum
 
@@ -208,8 +213,8 @@ Namespace CNN
                 Select Case layer.Type
                     Case layerTypes.Convolution
                         setConvOutput(layer, lastLayer)
-                    Case layerTypes.samp
-                        setSampOutput(layer, lastLayer)
+                    Case layerTypes.Pool
+                        setPoolOutput(layer, lastLayer)
                     Case layerTypes.Output
                         setConvOutput(layer, lastLayer)
                     Case Else
@@ -254,7 +259,7 @@ Namespace CNN
             Next
         End Sub
 
-        Private Sub setSampOutput(layer As Layer, lastLayer As Layer)
+        Private Sub setPoolOutput(layer As Layer, lastLayer As Layer)
             Dim lastMapNum = lastLayer.OutMapNum
 
             For i = start To lastMapNum - 1
@@ -281,7 +286,7 @@ Namespace CNN
                         layer.initBias(frontMapNum)
                         layer.initErros(batchSize)
                         layer.initOutmaps(batchSize)
-                    Case layerTypes.samp
+                    Case layerTypes.Pool
                         layer.OutMapNum = frontMapNum
                         layer.MapSize = frontLayer.MapSize.divide(layer.ScaleSize)
                         layer.initErros(batchSize)

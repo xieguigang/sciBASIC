@@ -14,17 +14,18 @@ Public Class RunCNN
 
         builder.buildInputLayer(New Dimension(28, 28))
         builder.buildConvLayer(6, New Dimension(5, 5))
-        builder.buildSampLayer(New Dimension(2, 2))
+        builder.buildPoolLayer(New Dimension(2, 2))
         builder.buildConvLayer(12, New Dimension(5, 5))
-        builder.buildSampLayer(New Dimension(2, 2))
+        builder.buildPoolLayer(New Dimension(2, 2))
         builder.buildOutputLayer(output_width)
         Dim cnn As CNN = New CNN(builder, 50)
 
         Dim fileName = "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\NIST-text\train.format"
         Dim dataset As ds = ds.load(fileName, ",", 784)
-        cnn.train(dataset.records.ToArray, 5)
+        Dim trainer As New Trainer
+        trainer.train(cnn, dataset.records.ToArray, 5)
         Dim modelName = "model/model.cnn"
-        cnn.saveModel(modelName)
+        ' cnn.saveModel(modelName)
         dataset.clear()
         dataset = Nothing
 
