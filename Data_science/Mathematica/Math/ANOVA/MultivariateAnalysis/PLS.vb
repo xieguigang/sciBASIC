@@ -97,7 +97,7 @@ Public Class PLS
         Return maResult
     End Function
 
-    Private Shared Function getOptimalFoldValue(rowSize As Integer) As Integer
+    Friend Shared Function getOptimalFoldValue(rowSize As Integer) As Integer
         If rowSize < 7 Then
             Return rowSize
         Else
@@ -176,120 +176,6 @@ Public Class PLS
 
         Return coeffVector
     End Function
-
-    Public Shared Sub OplsModeling(biofactor As Integer, orthofactor As Integer, yArray As Double(), dataArray As Double(,),
-                                   <Out> ByRef ssPred As Double(),
-                                   <Out> ByRef wPred As Double(,),
-                                   <Out> ByRef pPred As Double(,),
-                                   <Out> ByRef cPred As Double(),
-                                   <Out> ByRef tPred As Double(,),
-                                   <Out> ByRef uPred As Double(,),
-                                   <Out> ByRef woPred As Double(,),
-                                   <Out> ByRef poPred As Double(,),
-                                   <Out> ByRef toPred As Double(,),
-                                   <Out> ByRef filteredXMatrix As Double(,))
-
-        Dim rowSize = dataArray.GetLength(0) ' files
-        Dim columnSize = dataArray.GetLength(1) ' metabolites
-
-        Dim ssPredList = New List(Of Double)()
-        Dim cPredList = New List(Of Double)()
-        Dim wPredList = New List(Of Double())()
-        Dim pPredList = New List(Of Double())()
-        Dim tPredList = New List(Of Double())()
-        Dim uPredList = New List(Of Double())()
-        Dim woPredList = New List(Of Double())()
-        Dim poPredList = New List(Of Double())()
-        Dim toPredList = New List(Of Double())()
-
-        Dim originalY = New Double(yArray.Length - 1) {}
-        For i = 0 To yArray.Length - 1
-            originalY(i) = yArray(i)
-        Next
-
-        Dim currentSS = BasicMathematics.SumOfSquare(yArray)
-        ssPredList.Add(currentSS)
-
-        Dim wfirst = getWeightLoading(yArray, dataArray) ' to keep weight loading for the first trial of pls
-        ' modeling
-#Region ""
-        For i = 0 To orthofactor - 1
-
-            ' t: score vector calculation
-            ' u: y score vector calculation
-            ' p: loading vector calculation
-            ' w: weight (X) factor calculation
-            ' c: weight (Y) factor calculation
-            ' to: score vector calculation
-            ' po: loading vector calculation
-            ' wo: weight (X) factor calculation
-
-            Dim u, t, p, w, [to], po, wo As Double()
-            Dim c As Double
-
-            OplsVectorsCalculations(yArray, dataArray, wfirst, u, t, c, p, wo, [to], po)
-            dataArray = PlsMatrixUpdate([to], po, dataArray)
-            yArray = PlsMatrixUpdate([to], c, yArray)
-            'Debug.WriteLine("C value\t" + c);
-            woPredList.Add(wo)
-            poPredList.Add(po)
-            toPredList.Add([to])
-        Next
-#End Region
-
-        ' save filtered x array
-        filteredXMatrix = dataArray
-
-        ' ss value calc
-        currentSS = BasicMathematics.SumOfSquare(yArray)
-        ssPredList.Add(currentSS)
-
-        ' finally, pls modeling is performed to the filtered matrix by othrogonal components
-        Dim uf, tf, pf, wf, tof, pof, wof As Double()
-        Dim cf As Double
-        OplsVectorsCalculations(yArray, dataArray, wfirst, uf, tf, cf, pf, wof, tof, pof)
-        wPredList.Add(wfirst)
-        pPredList.Add(pf)
-        cPredList.Add(cf)
-        tPredList.Add(tf)
-        uPredList.Add(uf)
-
-        ssPred = ssPredList.ToArray()
-        cPred = cPredList.ToArray()
-        wPred = New Double(biofactor - 1, columnSize - 1) {}
-        pPred = New Double(biofactor - 1, columnSize - 1) {}
-        For i = 0 To biofactor - 1
-            For j = 0 To columnSize - 1
-                wPred(i, j) = wPredList(i)(j)
-                pPred(i, j) = pPredList(i)(j)
-            Next
-        Next
-
-        tPred = New Double(biofactor - 1, rowSize - 1) {}
-        uPred = New Double(biofactor - 1, rowSize - 1) {}
-        For i = 0 To biofactor - 1
-            For j = 0 To rowSize - 1
-                tPred(i, j) = tPredList(i)(j)
-                uPred(i, j) = uPredList(i)(j)
-            Next
-        Next
-
-        woPred = New Double(orthofactor - 1, columnSize - 1) {}
-        poPred = New Double(orthofactor - 1, columnSize - 1) {}
-        For i = 0 To orthofactor - 1
-            For j = 0 To columnSize - 1
-                woPred(i, j) = woPredList(i)(j)
-                poPred(i, j) = poPredList(i)(j)
-            Next
-        Next
-
-        toPred = New Double(orthofactor - 1, rowSize - 1) {}
-        For i = 0 To orthofactor - 1
-            For j = 0 To rowSize - 1
-                toPred(i, j) = toPredList(i)(j)
-            Next
-        Next
-    End Sub
 
     Private Shared Sub PlsModeling(optfactor As Integer, yArray As Double(), dataArray As Double(,),
                                    <Out> ByRef ssPred As Double(),
