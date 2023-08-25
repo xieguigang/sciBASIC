@@ -94,6 +94,14 @@ Namespace ComponentModel.Activations
             End If
         End Function
 
+        Public Shared Function ReLU(x As Double) As Double
+            If x < 0 Then
+                Return 0
+            Else
+                Return x
+            End If
+        End Function
+
         Public Shared Function ReLU(x As Vector) As Vector
             x(x < 0.0) = Vector.Zero
             Return x

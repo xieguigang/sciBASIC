@@ -54,6 +54,16 @@ Namespace CNN
             Return Me
         End Function
 
+        Public Function buildReLULayer() As LayerBuilder
+            m_layers.Add(Layer.buildReLULayer())
+            Return Me
+        End Function
+
+        Public Function buildSoftmaxLayer() As LayerBuilder
+            m_layers.Add(Layer.buildSoftmaxLayer())
+            Return Me
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{m_layers.Count} CNN layers: {m_layers.JoinBy(" -> ")}"
@@ -80,6 +90,16 @@ Namespace CNN
             layer._Type = LayerTypes.Convolution
             layer._OutMapNum = outMapNum
             layer._KernelSize = kernelSize
+            Return layer
+        End Function
+
+        Friend Shared Function buildReLULayer() As Layer
+            Dim layer As New Layer With {._Type = LayerTypes.ReLU}
+            Return layer
+        End Function
+
+        Friend Shared Function buildSoftmaxLayer() As Layer
+            Dim layer As New Layer With {._Type = LayerTypes.SoftMax}
             Return layer
         End Function
 

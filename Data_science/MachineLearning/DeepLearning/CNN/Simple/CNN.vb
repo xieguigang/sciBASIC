@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.Util
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports layerTypes = Microsoft.VisualBasic.MachineLearning.Convolutional.LayerTypes
+Imports std = System.Math
 
 Namespace CNN
 
@@ -145,13 +146,38 @@ Namespace CNN
                         setPoolErrors(layer, nextLayer)
                     Case layerTypes.Convolution
                         setConvErrors(layer, nextLayer)
+                    Case layerTypes.ReLU
+                        setReLUErrors(layer, nextLayer)
+                    Case layerTypes.SoftMax
+                        setSoftMaxErrors(layer, nextLayer)
                     Case Else
                 End Select
             Next
         End Sub
+        Private Sub setSoftMaxErrors(layer As Layer, nextLayer As Layer)
+            Dim mapNum = layer.OutMapNum
+
+            For m = start To mapNum - 1
+                Dim nextError = nextLayer.getError(m)
+                Dim map = layer.getMap(m)
+                Dim outMatrix = Util.matrixOp(map, nextError, Nothing, Nothing, Util.multiply)
+                layer.setError(m, outMatrix)
+            Next
+        End Sub
+
+        Private Sub setReLUErrors(layer As Layer, nextLayer As Layer)
+            Dim mapNum = layer.OutMapNum
+
+            For m = start To mapNum - 1
+                Dim nextError = nextLayer.getError(m)
+                Dim map = layer.getMap(m)
+                Dim outMatrix = Util.matrixOp(map, nextError, Nothing, Nothing, Util.multiply)
+                layer.setError(m, outMatrix)
+            Next
+        End Sub
 
         Private Sub setPoolErrors(layer As Layer, nextLayer As Layer)
-            Dim mapNum = layer.OutMapNum
+        Dim mapNum = layer.OutMapNum
             Dim nextMapNum = nextLayer.OutMapNum
 
             For i = start To mapNum - 1
@@ -217,6 +243,10 @@ Namespace CNN
                         setPoolOutput(layer, lastLayer)
                     Case layerTypes.Output
                         setConvOutput(layer, lastLayer)
+                    Case layerTypes.ReLU
+                        setReLUOutput(layer, lastLayer)
+                    Case layerTypes.SoftMax
+                        setSoftMaxOutput(layer, lastLayer)
                     Case Else
                 End Select
             Next
@@ -258,6 +288,28 @@ Namespace CNN
                 layer.setMapValue(j, sum)
             Next
         End Sub
+        Private Sub setSoftMaxOutput(layer As Layer, lastLayer As Layer)
+            Dim lastMapNum = lastLayer.OutMapNum
+
+            For i = start To lastMapNum - 1
+                Dim lastMap = lastLayer.getMap(i)
+                Dim bias = layer.getBias(i)
+                Dim max As Double = lastMap.IteratesALL.Max
+                Dim outMatrix = Util.matrixOp(lastMap, Function(value) std.Exp((value + bias) - max))
+                layer.setMapValue(i, outMatrix)
+            Next
+        End Sub
+
+        Private Sub setReLUOutput(layer As Layer, lastLayer As Layer)
+            Dim lastMapNum = lastLayer.OutMapNum
+
+            For i = start To lastMapNum - 1
+                Dim lastMap = lastLayer.getMap(i)
+                Dim bias = layer.getBias(i)
+                Dim outMatrix = Util.matrixOp(lastMap, Function(value) ReLU.ReLU(value + bias))
+                layer.setMapValue(i, outMatrix)
+            Next
+        End Sub
 
         Private Sub setPoolOutput(layer As Layer, lastLayer As Layer)
             Dim lastMapNum = lastLayer.OutMapNum
@@ -293,6 +345,12 @@ Namespace CNN
                         layer.initOutmaps(batchSize)
                     Case layerTypes.Output
                         layer.initOutputKerkel(frontMapNum, frontLayer.MapSize)
+                        layer.initBias(frontMapNum)
+                        layer.initErros(batchSize)
+                        layer.initOutmaps(batchSize)
+                    Case layerTypes.ReLU, layerTypes.SoftMax
+                        layer.OutMapNum = frontMapNum
+                        layer.MapSize = frontLayer.MapSize
                         layer.initBias(frontMapNum)
                         layer.initErros(batchSize)
                         layer.initOutmaps(batchSize)
