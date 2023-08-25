@@ -1,8 +1,10 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 Public Module PCA
 
+    <Extension>
     Public Function PrincipalComponentAnalysis(statObject As StatisticsObject, Optional maxPC As Integer = 5) As MultivariateAnalysisResult
         Dim dataArray = statObject.XScaled
         Dim rowSize = dataArray.GetLength(0)
