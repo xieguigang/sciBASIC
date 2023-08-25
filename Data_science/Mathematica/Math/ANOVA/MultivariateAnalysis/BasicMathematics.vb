@@ -32,6 +32,14 @@ Public Class BasicMathematics
         Return sum
     End Function
 
+    Public Shared Function RootSumOfSquare(array1 As Double(), array2 As Double()) As Double
+        Dim sum As Double = 0
+        For i = 0 To array1.Length - 1
+            sum += std.Pow(array1(i) - array2(i), 2)
+        Next
+        Return std.Sqrt(sum)
+    End Function
+
     Public Shared Function RootSumOfSquare(array As Double()) As Double
         Dim sum As Double = 0
         For i = 0 To array.Length - 1
