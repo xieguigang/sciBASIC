@@ -194,7 +194,7 @@ Namespace ComponentModel.StoreProcedure
                 .DataSamples = New SampleList With {
                     .items = union
                 },
-                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(union, inputNames, estimateQuantile),
+                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples:=union, inputNames, estimateQuantile),
                 .output = outputNames
             }
         End Function

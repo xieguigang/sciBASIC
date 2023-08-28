@@ -132,7 +132,7 @@ Namespace ComponentModel.StoreProcedure
                     .ToArray
             End If
 
-            Dim normalize As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(items, namesOfInput)
+            Dim normalize As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples:=items, namesOfInput)
 
             Return New DataSet With {
                 .DataSamples = Me,

@@ -124,6 +124,14 @@ Namespace ComponentModel.StoreProcedure
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CreateFromSamples(sampleList As SampleList,
+                                                 names As IEnumerable(Of String),
+                                                 Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+
+            Return CreateFromSamples(sampleList.AsEnumerable, names, estimateQuantile)
+        End Function
+
         ''' <summary>
         ''' 神经网络会要求输入的属性值之间是可以直接进行比较的,
         ''' 所以为了能够直接进行比较,
@@ -135,6 +143,7 @@ Namespace ComponentModel.StoreProcedure
         Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample),
                                                  names As IEnumerable(Of String),
                                                  Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+
             With samples.Select(Function(sample) sample.vector).ToArray
                 Dim len% = .First.Length
                 Dim matrix As SampleDistribution() = len _
