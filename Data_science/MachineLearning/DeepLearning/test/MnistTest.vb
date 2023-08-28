@@ -76,8 +76,9 @@ Namespace ConsoleApp1
             For j = 1 To 500
                 Dim loss As Double = 0
                 Dim i As i32 = 1
+                Dim n As Integer = 100
 
-                For Each img In mr.ExtractVectors
+                For Each img In mr.ExtractVectors.Take(n)
                     db.addImageData(img.value.Select(Function(b) CInt(b)).ToArray, img.value.Max)
                     tr = trainer.train(db, img.description)
                     loss += tr.Loss
@@ -93,35 +94,26 @@ Namespace ConsoleApp1
                 Next
 
 
-                Console.WriteLine("Loss: " & loss / 60000.0.ToString())
+                Console.WriteLine("Loss: " & (loss / n).ToString)
                 ' mr.reset()
-
-                If j <> 1 Then
-                    Console.WriteLine("Last run:")
-                    Console.WriteLine("=================================")
-                    printPredictions(correctPredictions, numberDistribution, i, 10)
-                End If
 
                 start = CLng(UnixTimeStamp)
                 correctPredictions.fill(0)
                 numberDistribution.fill(0)
-                'For i As Integer = 0 To mrTest.size() - 1
-                '    db.addImageData(mrTest.readNextImage(), mr.Maxvalue)
-                '    net.forward(db, False)
-                '    Dim correct As Integer = mrTest.readNextLabel()
-                '    Dim prediction = net.Prediction
-                '    If correct = prediction Then
-                '        correctPredictions(correct) += 1
-                '    End If
-                '    numberDistribution(correct) += 1
-                'Next
-                'mrTest.reset()
-                'Console.WriteLine("Testing time: " & (CLng(UnixTimeStamp) - start).ToString())
+                For Each img In mr.ExtractVectors.Take(n)
+                    db.addImageData(img.value.Select(Function(b) CInt(b)).ToArray, img.value.Max)
+                    net.forward(db, False)
+                    Dim correct As Integer = img.description
+                    Dim prediction = net.Prediction
+                    If correct = prediction Then
+                        correctPredictions(correct) += 1
+                    End If
+                    numberDistribution(correct) += 1
+                Next
 
-                'Console.WriteLine("Current run:")
-                'Console.WriteLine("=================================")
-                'printPredictions(correctPredictions, numberDistribution, mrTest.size(), mrTest.numOfClasses())
-                'start = CLng(UnixTimeStamp)
+                Console.WriteLine("Last run:")
+                Console.WriteLine("=================================")
+                printPredictions(correctPredictions, numberDistribution, i, 10)
             Next
         End Sub
 

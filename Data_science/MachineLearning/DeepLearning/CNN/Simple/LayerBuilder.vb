@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 
 <Assembly: InternalsVisibleTo("MLkit")>
@@ -8,6 +9,7 @@ Namespace CNN
     Public Class LayerBuilder
 
         ReadOnly m_layers As New List(Of Layer)
+        ReadOnly def As New OutputDefinition
 
         ''' <summary>
         ''' the layers object in this builder is already been initialized?
