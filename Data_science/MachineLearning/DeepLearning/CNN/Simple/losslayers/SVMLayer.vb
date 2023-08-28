@@ -1,7 +1,6 @@
-﻿Imports System
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
-Namespace ConsoleApp1.losslayers
+Namespace CNN.losslayers
 
     ''' <summary>
     ''' This layer uses the input area trying to find a line to

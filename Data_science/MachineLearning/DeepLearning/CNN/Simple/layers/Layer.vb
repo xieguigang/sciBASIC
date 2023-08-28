@@ -1,6 +1,6 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' A convolution neural network is built of layers that the data traverses

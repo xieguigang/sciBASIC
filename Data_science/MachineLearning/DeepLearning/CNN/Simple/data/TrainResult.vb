@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 
-Namespace ConsoleApp1.data
+Namespace CNN.data
 
     ''' <summary>
     ''' Created by danielp on 1/27/17.

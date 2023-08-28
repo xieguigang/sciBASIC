@@ -1,9 +1,10 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
 
 
-Namespace ConsoleApp1.trainers
+Namespace CNN.trainers
 
 
     ''' <summary>

@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' This layer will remove some random activations in order to

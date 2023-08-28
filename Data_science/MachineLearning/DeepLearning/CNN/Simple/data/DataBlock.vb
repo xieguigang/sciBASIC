@@ -2,7 +2,7 @@
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
-Namespace ConsoleApp1.data
+Namespace CNN.data
 
     ''' <summary>
     ''' Holding all the data handled by the network. So a layer will receive

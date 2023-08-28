@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' This is a layer of neurons that applies the non-saturating activation

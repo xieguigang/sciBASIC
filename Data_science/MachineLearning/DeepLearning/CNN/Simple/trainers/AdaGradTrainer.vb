@@ -1,6 +1,6 @@
 ﻿Imports std = System.Math
 
-Namespace ConsoleApp1.trainers
+Namespace CNN.trainers
 
 
     ''' <summary>

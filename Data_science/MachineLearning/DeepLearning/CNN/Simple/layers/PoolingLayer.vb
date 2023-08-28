@@ -1,9 +1,9 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
 
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' This layer will reduce the dataset by creating a smaller zoomed out

@@ -1,9 +1,8 @@
 ﻿
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.layers
-
-Namespace ConsoleApp1.losslayers
+Namespace CNN.losslayers
 
     ''' <summary>
     ''' Created by danielp on 1/25/17.

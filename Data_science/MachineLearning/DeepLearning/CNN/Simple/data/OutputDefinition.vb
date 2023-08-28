@@ -1,4 +1,6 @@
-﻿Namespace ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace CNN.data
 
     ''' <summary>
     ''' This class will hold the definitions that bridge two layers.
@@ -11,6 +13,10 @@
         Public Overridable Property OutX As Integer
         Public Overridable Property OutY As Integer
         Public Overridable Property Depth As Integer
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 

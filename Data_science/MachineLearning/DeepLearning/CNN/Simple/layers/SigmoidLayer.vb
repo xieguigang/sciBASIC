@@ -1,8 +1,7 @@
-﻿Imports std = System.Math
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports std = System.Math
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' Implements Sigmoid nonlinearity elementwise x to 1/(1+e^(-x))

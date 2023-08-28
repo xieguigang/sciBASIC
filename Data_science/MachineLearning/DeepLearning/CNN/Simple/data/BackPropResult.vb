@@ -1,4 +1,4 @@
-﻿Namespace ConsoleApp1.data
+﻿Namespace CNN.data
 
     ''' <summary>
     ''' When we have done a back propagation of the network we will receive a

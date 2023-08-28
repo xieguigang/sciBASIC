@@ -2,12 +2,9 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.layers
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.losslayers
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.trainers
 
 Namespace ConsoleApp1
 

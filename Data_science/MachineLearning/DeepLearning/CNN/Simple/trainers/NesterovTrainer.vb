@@ -1,5 +1,5 @@
 ﻿
-Namespace ConsoleApp1.trainers
+Namespace CNN.trainers
 
     ''' <summary>
     ''' Another extension of gradient descent is due to Yurii Nesterov from 1983,[7] and has been subsequently generalized

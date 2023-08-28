@@ -1,8 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
 
-Namespace ConsoleApp1.losslayers
+Namespace CNN.losslayers
 
 
     ''' <summary>

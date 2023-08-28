@@ -1,9 +1,8 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.losslayers
-Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.layers
-Imports Microsoft.VisualBasic.MachineLearning.CNN
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
+Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
 
-Namespace ConsoleApp1
+Namespace CNN
 
     ''' <summary>
     ''' A network class holding the layers and some helper functions

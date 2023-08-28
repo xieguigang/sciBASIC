@@ -1,5 +1,5 @@
 ﻿
-Namespace ConsoleApp1.trainers
+Namespace CNN.trainers
 
     ''' <summary>
     ''' Stochastic gradient descent (often shortened in SGD), also known as incremental gradient descent, is a

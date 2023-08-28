@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
 
-Namespace ConsoleApp1.layers
+Namespace CNN.layers
 
     ''' <summary>
     ''' Implements Tanh nonlinearity elementwise x to tanh(x)
