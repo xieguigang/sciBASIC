@@ -58,6 +58,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.hqx
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Drawing2D.HeatMap
 
@@ -105,24 +106,51 @@ Namespace Drawing2D.HeatMap
         ''' Get grayscale raster data
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GetRasterData() As IEnumerable(Of PixelData)
+        Public Iterator Function GetRasterData(Optional byrow As Boolean = True) As IEnumerable(Of PixelData)
             Dim w = buffer.Width
             Dim h = buffer.Height
             Dim c As Color
             Dim l As Double
 
-            For x As Integer = 0 To buffer.Width - 1
+            If byrow Then
                 For y As Integer = 0 To buffer.Height - 1
-                    c = buffer.GetPixel(x, y)
-                    l = formula(c)
+                    For x As Integer = 0 To buffer.Width - 1
+                        c = buffer.GetPixel(x, y)
+                        l = formula(c)
 
-                    Yield New PixelData With {
-                        .Scale = l,
-                        .X = x + 1,
-                        .Y = y + 1
-                    }
+                        Yield New PixelData With {
+                            .Scale = l,
+                            .X = x + 1,
+                            .Y = y + 1
+                        }
+                    Next
                 Next
-            Next
+            Else
+                ' bycol
+                For x As Integer = 0 To buffer.Width - 1
+                    For y As Integer = 0 To buffer.Height - 1
+                        c = buffer.GetPixel(x, y)
+                        l = formula(c)
+
+                        Yield New PixelData With {
+                            .Scale = l,
+                            .X = x + 1,
+                            .Y = y + 1
+                        }
+                    Next
+                Next
+            End If
+        End Function
+
+        Public Shared Function ToRasterVector(img As Image, Optional resize As Integer() = Nothing) As Vector
+            If Not resize.IsNullOrEmpty Then
+                img = img.ResizeScaled(resize)
+            End If
+
+            Return New RasterScaler(img) _
+                .GetRasterData(byrow:=True) _
+                .Select(Function(i) i.Scale) _
+                .AsVector
         End Function
 
         Public Function Scale(newWidth As Integer, newHeight As Integer) As Bitmap

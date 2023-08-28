@@ -106,6 +106,14 @@ Namespace Imaging.BitmapImage
             Return PutOnCanvas(image, width, height, Color.White)
         End Function
 
+        <Extension>
+        Public Function ResizeScaled(image As Image, newSize As Integer()) As Image
+            Using g As Graphics2D = New Size(newSize(0), newSize(1)).CreateGDIDevice
+                Call g.DrawImage(image, New RectangleF(New PointF, g.Size))
+                Return g.ImageResource
+            End Using
+        End Function
+
         ''' <summary>
         ''' resize an image and maintain aspect ratio
         ''' </summary>
