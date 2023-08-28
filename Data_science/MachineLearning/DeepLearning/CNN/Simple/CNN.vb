@@ -304,9 +304,9 @@ Namespace CNN
                     Dim lastMap = lastLayer.getMap(i)
                     Dim kernel = layer.getKernel(i, j)
                     If sum Is Nothing Then
-                        sum = Util.convnValid(lastMap, kernel, w:=layer.MapSize.x)
+                        sum = Util.convnValid(lastMap, kernel)
                     Else
-                        sum = Util.matrixOp(Util.convnValid(lastMap, kernel, w:=layer.MapSize.x), sum, Nothing, Nothing, Util.plus)
+                        sum = Util.matrixOp(Util.convnValid(lastMap, kernel), sum, Nothing, Nothing, Util.plus)
                     End If
                 Next
 
