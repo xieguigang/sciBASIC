@@ -63,7 +63,7 @@ Public Class RunCNN
 End Class
 
 Module Program
-    Sub Main(args As String())
+    Sub Main2(args As String())
         RunCNN.runCnn()
     End Sub
 End Module

@@ -1,0 +1,53 @@
+﻿Imports System
+Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+
+Namespace ConsoleApp1.losslayers
+
+    ''' <summary>
+    ''' This layer uses the input area trying to find a line to
+    ''' separate the correct activation from the incorrect ones.
+    ''' 
+    ''' @author Daniel Persson (mailto.woden@gmail.com)
+    ''' </summary>
+    <Serializable>
+    Public Class SVMLayer
+        Inherits LossLayer
+
+        Public Sub New(def As OutputDefinition)
+            MyBase.New(def)
+        End Sub
+
+        Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
+            in_act = db
+            out_act = db ' nothing to do, output raw scores
+            Return db
+        End Function
+
+        Public Overrides Function backward(y As Integer) As Double
+            ' compute and accumulate gradient wrt weights and bias of this layer
+            Dim x = in_act
+            x.clearGradient()
+
+            ' we're using structured loss here, which means that the score
+            ' of the ground truth should be higher than the score of any other
+            ' class, by a margin
+            Dim yscore = x.getWeight(y) ' score of ground truth
+            Dim margin = 1.0
+            Dim loss = 0.0
+            For i = 0 To out_depth - 1
+                If y = i Then
+                    Continue For
+                End If
+                Dim ydiff = -yscore + x.getWeight(i) + margin
+                If ydiff > 0 Then
+                    ' violating dimension, apply loss
+                    x.addGradient(i, 1)
+                    x.subGradient(y, 1)
+                    loss += ydiff
+                End If
+            Next
+            Return loss
+        End Function
+    End Class
+
+End Namespace

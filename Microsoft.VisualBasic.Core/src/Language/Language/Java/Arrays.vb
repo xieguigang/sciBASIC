@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -69,7 +70,7 @@ Namespace Language.Java
         ''' <param name="a"></param>
         ''' <param name="val"></param>
         <Extension>
-        Public Sub fill(Of T)(ByRef a As T(), val As T)
+        Public Sub fill(Of T)(<Out> ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next

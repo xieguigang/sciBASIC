@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\..\MLDataStorage\MLDataStorage.vbproj" />
     <ProjectReference Include="..\DeepLearning.NET6.vbproj" />
   </ItemGroup>
 

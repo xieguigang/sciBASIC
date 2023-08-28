@@ -66,6 +66,14 @@ Public Class MNIST : Implements IDisposable
         Next
     End Function
 
+    ''' <summary>
+    ''' Extract all vector data from the given dataset file
+    ''' </summary>
+    ''' <returns>
+    ''' name - unique reference id
+    ''' value - image data vector
+    ''' description - class label
+    ''' </returns>
     Public Iterator Function ExtractVectors() As IEnumerable(Of NamedCollection(Of Byte))
         For i As Integer = 0 To count - 1
             Yield ExtractRaw()
@@ -105,6 +113,14 @@ Public Class MNIST : Implements IDisposable
         Return ConvertImage(raw:=ExtractRaw())
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns>
+    ''' name - unique reference id
+    ''' value - image data vector
+    ''' description - class label
+    ''' </returns>
     Private Function ExtractRaw() As NamedCollection(Of Byte)
         Dim label As Byte = labelReader.ReadByte()
         Dim rgbValues = New Byte(rows * columns - 1) {}

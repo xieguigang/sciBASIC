@@ -1,0 +1,48 @@
+﻿Imports std = System.Math
+Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
+
+Namespace ConsoleApp1.layers
+
+    ''' <summary>
+    ''' Implements Sigmoid nonlinearity elementwise x to 1/(1+e^(-x))
+    ''' so the output is between 0 and 1.
+    ''' 
+    ''' @author Daniel Persson (mailto.woden@gmail.com)
+    ''' </summary>
+    <Serializable>
+    Public Class SigmoidLayer
+        Implements Layer
+
+        Private in_act, out_act As DataBlock
+
+        Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
+            in_act = db
+            Dim V2 As DataBlock = db.cloneAndZero()
+            Dim N = db.Weights.Length
+            For i = 0 To N - 1
+                V2.setWeight(i, 1.0 / (1.0 + std.Exp(-V2.getWeight(i))))
+            Next
+            out_act = V2
+            Return out_act
+        End Function
+
+        Public Overridable Sub backward() Implements Layer.backward
+            Dim V = in_act ' we need to set dw of this
+            Dim V2 = out_act
+            Dim N = V.Weights.Length
+            V.clearGradient() ' zero out gradient wrt data
+            For i = 0 To N - 1
+                Dim v2wi = V2.getWeight(i)
+                V.setGradient(i, v2wi * (1.0 - v2wi) * V2.getGradient(i))
+            Next
+        End Sub
+
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Return New List(Of BackPropResult)()
+            End Get
+        End Property
+    End Class
+
+End Namespace
