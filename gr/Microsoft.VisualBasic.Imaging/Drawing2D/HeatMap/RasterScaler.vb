@@ -64,6 +64,9 @@ Namespace Drawing2D.HeatMap
     ''' <summary>
     ''' do image size scaling
     ''' </summary>
+    ''' <remarks>
+    ''' A internal image data readonly matrix object
+    ''' </remarks>
     Public Class RasterScaler : Implements IDisposable
 
         Dim disposedValue As Boolean
