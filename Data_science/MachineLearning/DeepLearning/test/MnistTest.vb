@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1
 Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
@@ -20,8 +21,7 @@ Namespace ConsoleApp1
     Public Class MnistTest
 
         Public Shared Sub Main()
-            Dim layers As IList(Of Layer) = New List(Of Layer)()
-            Dim def As OutputDefinition = New OutputDefinition()
+            Dim layers As New LayerBuilder
 
             '        Reader mr = new MnistReader("mnist/train-labels-idx1-ubyte", "mnist/train-images-idx3-ubyte");
             ' Reader mr = new PGMReader("pgmfiles/train");
@@ -31,18 +31,18 @@ Namespace ConsoleApp1
                 "D:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-labels-idx1-ubyte"
             )
 
-            layers.Add(New InputLayer(def, mr.ImageSize.Width, mr.ImageSize.Height, 1))
-            layers.Add(New ConvolutionLayer(def, 5, 32, 1, 2))
-            layers.Add(New RectifiedLinearUnitsLayer())
-            layers.Add(New PoolingLayer(def, 2, 2, 0))
-            layers.Add(New ConvolutionLayer(def, 5, 64, 1, 2))
-            layers.Add(New RectifiedLinearUnitsLayer())
-            layers.Add(New PoolingLayer(def, 2, 2, 0))
-            layers.Add(New FullyConnectedLayer(def, 1024))
-            layers.Add(New LocalResponseNormalizationLayer())
-            layers.Add(New DropoutLayer(def))
-            layers.Add(New FullyConnectedLayer(def, 10))
-            layers.Add(New SoftMaxLayer(def))
+            layers.buildInputLayer(New Dimension(mr.ImageSize.Width, mr.ImageSize.Height), 1)
+            layers.buildConvLayer(5, 32, 1, 2)
+            layers.buildRectifiedLinearUnitsLayer()
+            layers.buildPoolLayer(2, 2, 0)
+            layers.buildConvLayer(5, 64, 1, 2)
+            layers.buildRectifiedLinearUnitsLayer()
+            layers.buildPoolLayer(2, 2, 0)
+            layers.buildFullyConnectedLayer(1024)
+            layers.buildLocalResponseNormalizationLayer()
+            layers.buildDropoutLayer()
+            layers.buildFullyConnectedLayer(10)
+            layers.buildSoftmaxLayer()
 
 
             ' 

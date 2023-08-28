@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
 Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.losslayers
 Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.layers
+Imports Microsoft.VisualBasic.MachineLearning.CNN
 
 Namespace ConsoleApp1
 
@@ -50,8 +51,8 @@ Namespace ConsoleApp1
             End Get
         End Property
 
-        Public Sub New(layers As IList(Of Layer))
-            Me.m_layers = layers.ToArray
+        Public Sub New(layers As LayerBuilder)
+            Me.m_layers = CType(layers, List(Of Layer)).ToArray
         End Sub
 
         ' 

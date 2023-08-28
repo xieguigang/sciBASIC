@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.data
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
+Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.layers
+Imports Microsoft.VisualBasic.MachineLearning.ConsoleApp1.losslayers
 
 <Assembly: InternalsVisibleTo("MLkit")>
 
@@ -17,12 +18,6 @@ Namespace CNN
         ''' <returns></returns>
         Public ReadOnly Property Initialized As Boolean = False
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(layer As Layer)
-            Initialized = False
-            m_layers = New List(Of Layer) From {layer}
-        End Sub
-
         Sub New()
             Initialized = False
         End Sub
@@ -36,34 +31,36 @@ Namespace CNN
             Return Me
         End Function
 
-        Public Overridable Function buildInputLayer(mapSize As Dimension) As LayerBuilder
-            m_layers.Add(Layer.buildInputLayer(mapSize))
-            Return Me
+        Public Overridable Function buildInputLayer(mapSize As Dimension, Optional depth As Integer = 1) As LayerBuilder
+            Return add(New InputLayer(def, mapSize.x, mapSize.y, depth))
         End Function
 
-        Public Function buildConvLayer(outMapNum As Integer, kernelSize As Dimension) As LayerBuilder
-            m_layers.Add(Layer.buildConvLayer(outMapNum, kernelSize))
-            Return Me
+        Public Function buildConvLayer(sx As Integer, filters As Integer, stride As Integer, padding As Integer) As LayerBuilder
+            Return add(New ConvolutionLayer(def, sx, filters, stride, padding))
         End Function
 
-        Public Function buildPoolLayer(scaleSize As Dimension) As LayerBuilder
-            m_layers.Add(Layer.buildPoolLayer(scaleSize))
-            Return Me
+        Public Function buildRectifiedLinearUnitsLayer() As LayerBuilder
+            Return add(New RectifiedLinearUnitsLayer)
         End Function
 
-        Public Function buildOutputLayer(classNum As Integer, Optional w As Integer = 1) As LayerBuilder
-            m_layers.Add(Layer.buildOutputLayer(classNum, w))
-            Return Me
+        Public Function buildPoolLayer(sx As Integer, stride As Integer, padding As Integer) As LayerBuilder
+            Return add(New PoolingLayer(def, sx, stride, padding))
         End Function
 
-        Public Function buildReLULayer() As LayerBuilder
-            m_layers.Add(Layer.buildReLULayer())
-            Return Me
+        Public Function buildFullyConnectedLayer(num_neurons As Integer) As LayerBuilder
+            Return add(New FullyConnectedLayer(def, num_neurons))
+        End Function
+
+        Public Function buildLocalResponseNormalizationLayer() As LayerBuilder
+            Return add(New LocalResponseNormalizationLayer)
+        End Function
+
+        Public Function buildDropoutLayer() As LayerBuilder
+            Return add(New DropoutLayer(def))
         End Function
 
         Public Function buildSoftmaxLayer() As LayerBuilder
-            m_layers.Add(Layer.buildSoftmaxLayer())
-            Return Me
+            Return add(New SoftMaxLayer(def))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -76,51 +73,4 @@ Namespace CNN
             Return lb.m_layers.AsEnumerable.AsList
         End Operator
     End Class
-
-    Partial Class Layer
-
-        Friend Shared Function buildInputLayer(mapSize As Dimension) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.Input
-            layer._OutMapNum = 1
-            layer._MapSize = mapSize
-            Return layer
-        End Function
-
-        Friend Shared Function buildConvLayer(outMapNum As Integer, kernelSize As Dimension) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.Convolution
-            layer._OutMapNum = outMapNum
-            layer._KernelSize = kernelSize
-            Return layer
-        End Function
-
-        Friend Shared Function buildReLULayer() As Layer
-            Dim layer As New Layer With {._Type = LayerTypes.ReLU}
-            Return layer
-        End Function
-
-        Friend Shared Function buildSoftmaxLayer() As Layer
-            Dim layer As New Layer With {._Type = LayerTypes.SoftMax}
-            Return layer
-        End Function
-
-        Friend Shared Function buildPoolLayer(scaleSize As Dimension) As Layer
-            Dim layer As Layer = New Layer()
-            layer._Type = LayerTypes.Pool
-            layer._ScaleSize = scaleSize
-            Return layer
-        End Function
-
-        Friend Shared Function buildOutputLayer(classNum As Integer, w As Integer) As Layer
-            Dim layer As New Layer()
-            layer._ClassNum = classNum
-            layer._Type = LayerTypes.Output
-            layer._MapSize = New Dimension(w, 1)
-            layer._OutMapNum = classNum
-
-            Return layer
-        End Function
-    End Class
-
 End Namespace
