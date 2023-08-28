@@ -13,7 +13,7 @@ Namespace ConsoleApp1.trainers
     Public Class SGDTrainer
         Inherits Trainer
 
-        Public Sub New(net As JavaCNN, batch_size As Integer, l2_decay As Single)
+        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
             MyBase.New(net, batch_size, l2_decay)
         End Sub
 

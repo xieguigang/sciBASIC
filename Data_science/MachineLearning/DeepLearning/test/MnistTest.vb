@@ -57,7 +57,7 @@ Namespace ConsoleApp1
             ' 			layers.add(new FullyConnectedLayer(def, 2));
             ' 			layers.add(new SoftMaxLayer(def));
             ' 			
-            Dim net As JavaCNN = New JavaCNN(layers)
+            Dim net As ConvolutionalNN = New ConvolutionalNN(layers)
             Dim trainer As Trainer = New AdaGradTrainer(net, 20, 0.001F)
 
             'Reader mrTest = new MnistReader("mnist/t10k-labels-idx1-ubyte", "mnist/t10k-images-idx3-ubyte");

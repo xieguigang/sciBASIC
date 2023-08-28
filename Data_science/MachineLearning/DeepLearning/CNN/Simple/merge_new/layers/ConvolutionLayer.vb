@@ -11,9 +11,9 @@ Namespace ConsoleApp1.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    <Serializable>
     Public Class ConvolutionLayer
         Implements Layer
+
         Private l1_decay_mul As Double = 0.0
         Private l2_decay_mul As Double = 1.0
 

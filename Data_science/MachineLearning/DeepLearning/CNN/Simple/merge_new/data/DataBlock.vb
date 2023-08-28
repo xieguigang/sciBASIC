@@ -20,6 +20,18 @@ Namespace ConsoleApp1.data
         Public Overridable ReadOnly Property SY As Integer
         Public Overridable ReadOnly Property Depth As Integer
 
+        Public Overridable ReadOnly Property Weights As Double()
+            Get
+                Return w
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property Gradients As Double()
+            Get
+                Return dw
+            End Get
+        End Property
+
         Public Sub New(sx As Integer, sy As Integer, depth As Integer)
             Me.New(sx, sy, depth, -1.0)
         End Sub
@@ -129,18 +141,6 @@ Namespace ConsoleApp1.data
             dw.fill(0)
         End Sub
 
-        Public Overridable ReadOnly Property Weights As Double()
-            Get
-                Return w
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property Gradients As Double()
-            Get
-                Return dw
-            End Get
-        End Property
-
         Public Overridable Sub addFrom(db As DataBlock)
             For i = 0 To w.Length - 1
                 w(i) = db.w(i)
@@ -152,14 +152,5 @@ Namespace ConsoleApp1.data
                 w(i) = db.w(i) * a
             Next
         End Sub
-
-        Public Overridable WriteOnly Property [Const] As Double
-            Set(value As Double)
-                For i = 0 To w.Length - 1
-                    w(i) = value
-                Next
-            End Set
-        End Property
     End Class
-
 End Namespace

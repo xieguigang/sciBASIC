@@ -14,13 +14,13 @@ Namespace ConsoleApp1.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     Public MustInherit Class Trainer
-        Private net As JavaCNN
+        Private net As ConvolutionalNN
         Protected Friend learning_rate, l1_decay, l2_decay As Double
         Protected Friend batch_size, k As Integer
         Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
 
-        Public Sub New(net As JavaCNN, batch_size As Integer, l2_decay As Single)
+        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
             Me.net = net
 
             learning_rate = 0.01
@@ -46,11 +46,11 @@ Namespace ConsoleApp1.trainers
             k += 1
             If k Mod batch_size = 0 Then
 
-                Dim pglist = net.BackPropagationResult
+                Dim pglist = net.BackPropagationResult.ToArray
 
                 ' initialize lists for accumulators. Will only be done once on first iteration
                 If gsum.Count = 0 AndAlso momentum > 0.0 Then
-                    For i = 0 To pglist.Count - 1
+                    For i = 0 To pglist.Length - 1
                         Dim newGsumArr = New Double(pglist(i).Weights.Length - 1) {}
                         newGsumArr.fill(0)
                         gsum.Add(newGsumArr)
@@ -59,7 +59,7 @@ Namespace ConsoleApp1.trainers
                 End If
 
                 ' perform an update for all sets of weights
-                For i = 0 To pglist.Count - 1
+                For i = 0 To pglist.Length - 1
                     Dim pg = pglist(i) ' param, gradient, other options in future (custom learning rate etc)
                     Dim p = pg.Weights
                     Dim g = pg.Gradients

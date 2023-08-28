@@ -16,7 +16,7 @@ Namespace ConsoleApp1.trainers
         Private ReadOnly beta1 As Double = 0.9
         Private ReadOnly beta2 As Double = 0.999
 
-        Public Sub New(net As JavaCNN, batch_size As Integer, l2_decay As Single)
+        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
             MyBase.New(net, batch_size, l2_decay)
         End Sub
 
