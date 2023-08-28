@@ -49,8 +49,8 @@ Namespace CNN
             Return Me
         End Function
 
-        Public Function buildOutputLayer(classNum As Integer) As LayerBuilder
-            m_layers.Add(Layer.buildOutputLayer(classNum))
+        Public Function buildOutputLayer(classNum As Integer, Optional w As Integer = 1) As LayerBuilder
+            m_layers.Add(Layer.buildOutputLayer(classNum, w))
             Return Me
         End Function
 
@@ -110,11 +110,11 @@ Namespace CNN
             Return layer
         End Function
 
-        Friend Shared Function buildOutputLayer(classNum As Integer) As Layer
+        Friend Shared Function buildOutputLayer(classNum As Integer, w As Integer) As Layer
             Dim layer As New Layer()
             layer._ClassNum = classNum
             layer._Type = LayerTypes.Output
-            layer._MapSize = New Dimension(1, 1)
+            layer._MapSize = New Dimension(w, 1)
             layer._OutMapNum = classNum
 
             Return layer
