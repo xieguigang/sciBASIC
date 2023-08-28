@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Transactions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -75,6 +76,9 @@ Namespace ComponentModel.StoreProcedure
         Public Property id As String
         Public Property features As Double()
         Public Property labels As Double()
+
+        Sub New()
+        End Sub
 
         Sub New(sample As Sample)
             id = sample.ID
@@ -102,6 +106,26 @@ Namespace ComponentModel.StoreProcedure
 
         Public Overrides Function ToString() As String
             Return id
+        End Function
+
+        Public Shared Function CreateDataSet(ds As IEnumerable(Of SampleData)) As DataSet
+            Dim samples As New SampleList With {
+                .items = ds _
+                    .Select(Function(si) New Sample(si.features, si.labels, si.id)) _
+                    .ToArray
+            }
+            Dim featureNames As String() = samples(0).vector _
+                .Select(Function(di, i) $"x{i + 1}") _
+                .ToArray
+            Dim norm As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples, featureNames, estimateQuantile:=False)
+
+            Return New DataSet With {
+                .DataSamples = samples,
+                .output = samples(0).target _
+                    .Select(Function(di, i) $"y{i + 1}") _
+                    .ToArray,
+                .NormalizeMatrix = norm
+            }
         End Function
 
     End Class

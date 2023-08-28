@@ -324,6 +324,27 @@ Namespace ComponentModel.DataSourceModel
         }
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T">the data type of the element inside a data collection</typeparam>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        Public Function IsCollection(Of T)(type As Type) As Boolean
+            If type.IsArray Then
+                Return type.GetElementType Is GetType(T)
+            Else
+                If type _
+                    .ImplementInterface(GetType(IEnumerable(Of )) _
+                    .MakeGenericType(GetType(T))) Then
+
+                    Return True
+                End If
+            End If
+
+            Return False
+        End Function
+
+        ''' <summary>
         ''' Does the given type is any kind of numeric collection type?
         ''' </summary>
         ''' <param name="type"></param>

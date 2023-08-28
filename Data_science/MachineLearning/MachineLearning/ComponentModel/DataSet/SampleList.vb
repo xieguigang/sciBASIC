@@ -78,6 +78,13 @@ Namespace ComponentModel.StoreProcedure
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(samples As IEnumerable(Of Sample))
+            items = samples.SafeQuery.ToArray
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function getSize() As Integer
             Return items?.Length
