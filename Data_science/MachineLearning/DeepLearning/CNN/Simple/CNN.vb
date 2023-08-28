@@ -242,7 +242,7 @@ Namespace CNN
                     Case layerTypes.Pool
                         setPoolOutput(layer, lastLayer)
                     Case layerTypes.Output
-                        setConvOutput(layer, lastLayer)
+                        setNNOutput(layer, lastLayer)
                     Case layerTypes.ReLU
                         setReLUOutput(layer, lastLayer)
                     Case layerTypes.SoftMax
@@ -288,6 +288,36 @@ Namespace CNN
                 layer.setMapValue(j, sum)
             Next
         End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="layer">is the output layer</param>
+        ''' <param name="lastLayer"></param>
+        Private Sub setNNOutput(layer As Layer, lastLayer As Layer)
+            Dim mapNum = layer.OutMapNum
+            Dim lastMapNum = lastLayer.OutMapNum
+
+            For j = start To mapNum - 1
+                Dim sum As Double()() = Nothing
+                For i = 0 To lastMapNum - 1
+                    Dim lastMap = lastLayer.getMap(i)
+                    Dim kernel = layer.getKernel(i, j)
+                    If sum Is Nothing Then
+                        sum = Util.convnValid(lastMap, kernel, w:=layer.MapSize.x)
+                    Else
+                        sum = Util.matrixOp(Util.convnValid(lastMap, kernel, w:=layer.MapSize.x), sum, Nothing, Nothing, Util.plus)
+                    End If
+                Next
+
+                Dim bias = layer.getBias(j)
+
+                sum = Util.matrixOp(sum, Function(value) Sigmoid.doCall(value + bias))
+                layer.setMapValue(j, sum)
+            Next
+        End Sub
+
+
         Private Sub setSoftMaxOutput(layer As Layer, lastLayer As Layer)
             Dim lastMapNum = lastLayer.OutMapNum
 

@@ -189,6 +189,31 @@ Namespace CNN
             Return convnValid(extendMatrix, kernel)
         End Function
 
+        Public Shared Function convnValid(matrix As Double()(), kernel As Double()(), w As Integer) As Double()()
+            'kernel = rot180(kernel);
+            Dim m = matrix.Length
+            Dim n = matrix(0).Length
+            Dim km = kernel.Length
+            Dim kn = kernel(0).Length
+            Dim kns = n - kn + 1
+            Dim kms = m - km + 1
+            Dim outMatrix = RectangularArray.Matrix(Of Double)(w, kns)
+
+            For i = 0 To kms - 1
+                For j = 0 To kns - 1
+                    Dim sum = 0.0
+                    For ki = 0 To km - 1
+                        For kj = 0 To kn - 1
+                            sum += matrix(i + ki)(j + kj) * kernel(ki)(kj)
+                        Next
+                    Next
+                    outMatrix(i)(j) = sum
+                Next
+            Next
+
+            Return outMatrix
+        End Function
+
         Public Shared Function convnValid(matrix As Double()(), kernel As Double()()) As Double()()
             'kernel = rot180(kernel);
             Dim m = matrix.Length
