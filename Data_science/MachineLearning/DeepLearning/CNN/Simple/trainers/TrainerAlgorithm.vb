@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
@@ -21,29 +22,40 @@ Namespace CNN.trainers
         ''' </summary>
         Protected Friend learning_rate As Double
         Protected Friend l1_decay, l2_decay As Double
-        Protected Friend k As Integer
+
+        ''' <summary>
+        ''' iteration counter
+        ''' </summary>
+        Protected Friend k As Integer = 0
         Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
 
         Public ReadOnly Property batch_size As Integer
+
         Public ReadOnly Property conv_net As ConvolutionalNN
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return net
             End Get
         End Property
 
+        Public ReadOnly Property get_output As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return conv_net.output.OutAct.Weights
+            End Get
+        End Property
+
         Public Sub New(batch_size As Integer, l2_decay As Single)
-            learning_rate = 0.01
-            l1_decay = 0.001
+            Me.learning_rate = 0.01
+            Me.l1_decay = 0.001
             Me.l2_decay = l2_decay
             Me.batch_size = batch_size
-            momentum = 0.9
-            eps = 0.00000001
+            Me.momentum = 0.9
+            Me.eps = 0.00000001
 
             gsum = New List(Of Double())()
             xsum = New List(Of Double())()
-
-            k = 0 ' iteration counter
         End Sub
 
         Public Function SetKernel(cnn As ConvolutionalNN) As TrainerAlgorithm

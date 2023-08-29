@@ -48,7 +48,7 @@ Namespace CNN
                     tr = alg.train(data, img.labels(0))
                     loss += tr.Loss
 
-                    If img.labels(0) = which.Max(alg.conv_net.output.OutAct.Weights) Then
+                    If img.labels(0) = which.Max(alg.get_output) Then
                         right += 1
                     End If
 
