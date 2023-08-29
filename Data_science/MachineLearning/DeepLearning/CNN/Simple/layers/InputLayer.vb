@@ -33,6 +33,9 @@ Namespace CNN.layers
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         Public Sub New(def As OutputDefinition, out_sx As Integer, out_sy As Integer, out_depth As Integer)
             def.outX = out_sx
             def.outY = out_sy

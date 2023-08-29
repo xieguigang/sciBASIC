@@ -35,6 +35,9 @@ Namespace CNN.losslayers
             def.depth = out_depth
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             Dim A As DataBlock = New DataBlock(1, 1, out_depth, 0.0)
 

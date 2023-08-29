@@ -40,6 +40,9 @@ Namespace CNN.layers
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         Public Sub New(def As OutputDefinition, num_neurons As Integer)
             out_depth = num_neurons
 

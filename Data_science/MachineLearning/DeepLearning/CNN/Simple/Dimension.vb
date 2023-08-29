@@ -13,6 +13,9 @@
             Me.y = y
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"size[x:{x}, y:{y}]"
         End Function

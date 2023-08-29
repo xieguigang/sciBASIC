@@ -39,6 +39,9 @@ Namespace CNN.losslayers
             def.depth = out_depth
         End Sub
 
+        Sub New()
+        End Sub
+
         ''' <summary>
         ''' compute and accumulate gradient wrt weights and bias of this layer
         ''' </summary>

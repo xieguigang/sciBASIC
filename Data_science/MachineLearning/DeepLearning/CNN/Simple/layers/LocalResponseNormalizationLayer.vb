@@ -49,6 +49,9 @@ Namespace CNN.layers
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         Public Sub New(n As Integer)
             ' checks
             If n Mod 2 = 0 Then

@@ -35,6 +35,9 @@ Namespace CNN.layers
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         Public Sub New(def As OutputDefinition, sx As Integer, stride As Integer, padding As Integer)
             Me.sx = sx
             Me.stride = stride

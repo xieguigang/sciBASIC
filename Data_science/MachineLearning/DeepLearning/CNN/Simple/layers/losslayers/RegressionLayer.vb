@@ -22,6 +22,9 @@ Namespace CNN.losslayers
             MyBase.New(def)
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             in_act = db
             out_act = db ' nothing to do, output raw scores
