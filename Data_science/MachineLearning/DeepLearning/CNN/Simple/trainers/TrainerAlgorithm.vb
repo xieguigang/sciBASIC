@@ -12,7 +12,7 @@ Namespace CNN.trainers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public MustInherit Class Trainer
+    Public MustInherit Class TrainerAlgorithm
 
         Dim net As ConvolutionalNN
 
@@ -35,7 +35,7 @@ Namespace CNN.trainers
             k = 0 ' iteration counter
         End Sub
 
-        Public Function SetKernel(cnn As ConvolutionalNN) As Trainer
+        Public Function SetKernel(cnn As ConvolutionalNN) As TrainerAlgorithm
             Me.net = cnn
             Return Me
         End Function

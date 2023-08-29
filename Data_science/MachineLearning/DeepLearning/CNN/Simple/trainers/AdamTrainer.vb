@@ -11,7 +11,7 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
 
-    Public Class AdamTrainer : Inherits Trainer
+    Public Class AdamTrainer : Inherits TrainerAlgorithm
 
         Private ReadOnly beta1 As Double = 0.9
         Private ReadOnly beta2 As Double = 0.999

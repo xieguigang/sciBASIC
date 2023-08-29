@@ -9,7 +9,7 @@ Namespace CNN.trainers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class AdaGradTrainer : Inherits Trainer
+    Public Class AdaGradTrainer : Inherits TrainerAlgorithm
 
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)

@@ -9,7 +9,7 @@ Namespace CNN.trainers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class AdaDeltaTrainer : Inherits Trainer
+    Public Class AdaDeltaTrainer : Inherits TrainerAlgorithm
 
         Private ReadOnly ro As Double = 0.95
 

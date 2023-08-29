@@ -10,7 +10,7 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
 
-    Public Class SGDTrainer : Inherits Trainer
+    Public Class SGDTrainer : Inherits TrainerAlgorithm
 
         Public Sub New(batch_size As Integer, l2_decay As Single)
             MyBase.New(batch_size, l2_decay)

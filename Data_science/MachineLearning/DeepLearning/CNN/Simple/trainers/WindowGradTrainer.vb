@@ -10,7 +10,7 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
 
-    Public Class WindowGradTrainer : Inherits Trainer
+    Public Class WindowGradTrainer : Inherits TrainerAlgorithm
 
         Private ReadOnly ro As Double = 0.95
 
