@@ -105,9 +105,9 @@ Namespace Serialization.BinaryDumping
             If BitConverter.IsLittleEndian Then
                 Dim fltBytes As Byte() = New Byte(RawStream.SingleFloat - 1) {}
                 Array.ConstrainedCopy(bytes, Scan0, fltBytes, Scan0, RawStream.SingleFloat)
-                Return BitConverter.ToSingle(fltBytes)
+                Return BitConverter.ToSingle(fltBytes, Scan0)
             Else
-                Return BitConverter.ToSingle(bytes)
+                Return BitConverter.ToSingle(bytes, Scan0)
             End If
         End Function
 
