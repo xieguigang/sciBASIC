@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ValueTypes
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Serialization.BinaryDumping
@@ -43,20 +44,44 @@ Namespace Serialization.BinaryDumping
                 .ToDictionary(Function(f)
                                   Return f.Name
                               End Function)
+            Dim buf As Buffer
+            Dim code As TypeCode
 
             For i As Integer = 0 To nsize - 1
                 Dim name As String = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer)
                 Dim field As FieldInfo = fields(name)
 
                 If DataFramework.IsPrimitive(field.FieldType) Then
-                    Dim buf As Buffer = Buffer.Parse(stream)
+                    buf = Buffer.Parse(stream)
 
                     Select Case field.FieldType
                         Case GetType(Integer) : value = BitConverter.ToInt32(buf.buffer, Scan0)
                         Case GetType(Double) : value = network.ToDouble(buf.buffer)
+                        Case GetType(String) : value = Encoding.UTF8.GetString(buf.buffer)
+                        Case GetType(Single) : value = network.ToFloat(buf.buffer)
+                        Case GetType(Long) : value = BitConverter.ToInt64(buf.buffer)
+                        Case GetType(Short) : value = BitConverter.ToInt16(buf.buffer)
+                        Case GetType(Byte) : value = buf.buffer(0)
+                        Case GetType(Boolean) : value = If(buf.buffer(0) > 0, True, False)
+                        Case GetType(Date) : value = DateTimeHelper.FromUnixTimeStamp(network.ToDouble(buf.buffer))
                         Case Else
                             Throw New NotImplementedException($"{field.Name}: {field.FieldType.Name}")
                     End Select
+                ElseIf field.FieldType.IsArray Then
+                    If DataFramework.IsPrimitive(field.FieldType.GetElementType) Then
+                        buf = Buffer.Parse(stream)
+                        code = stream.ReadInt32
+                        value = RawStream.GetData(buf.buffer, code)
+                    Else
+                        Dim nlen As Integer = stream.ReadInt32
+                        Dim array As Array = Array.CreateInstance(field.FieldType.GetElementType, nlen)
+
+                        For j As Integer = 0 To nlen - 1
+                            array.SetValue(Me.ReadObject, j)
+                        Next
+
+                        value = array
+                    End If
                 Else
                     value = Me.ReadObject
                 End If

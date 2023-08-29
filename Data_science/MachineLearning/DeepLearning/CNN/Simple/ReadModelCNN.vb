@@ -2,6 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Layer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 
 Namespace CNN
 
@@ -39,7 +40,7 @@ Namespace CNN
             Dim type As LayerTypes = CType(rd.ReadInt32, LayerTypes)
             Dim layer As Layer = DirectCast(New ObjectInputStream(rd).ReadObject, Layer)
 
-            If type <> layer.type Then
+            If type <> layer.Type Then
                 Throw New InvalidDataException("The CNN layer type mis-matched!")
             Else
                 Return layer

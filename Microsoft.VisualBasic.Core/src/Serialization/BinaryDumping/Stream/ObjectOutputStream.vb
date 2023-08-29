@@ -3,7 +3,9 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ValueTypes
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Serialization.BinaryDumping
@@ -57,6 +59,10 @@ Namespace Serialization.BinaryDumping
                         Case GetType(String) : bytes = Encoding.UTF8.GetBytes(CStr(value))
                         Case GetType(Single) : bytes = network.GetBytes(CSng(value))
                         Case GetType(Long) : bytes = BitConverter.GetBytes(CLng(value))
+                        Case GetType(Short) : bytes = BitConverter.GetBytes(CShort(value))
+                        Case GetType(Byte) : bytes = New Byte() {CByte(value)}
+                        Case GetType(Boolean) : bytes = New Byte() {If(CBool(value), 1, 0)}
+                        Case GetType(Date) : bytes = network.GetBytes(CDate(value).UnixTimeStamp)
                         Case Else
                             Throw New NotImplementedException(field.Name & ": " & field.FieldType.Name)
                     End Select
@@ -67,6 +73,7 @@ Namespace Serialization.BinaryDumping
                         ' write numeric/string vector
                         bytes = RawStream.GetBytes(DirectCast(value, Array))
                         stream.Write(New Buffer(bytes).Serialize)
+                        stream.Write(CInt(field.FieldType.GetElementType.PrimitiveTypeCode))
                     Else
                         ' write object array
                         Dim array As Array = value
