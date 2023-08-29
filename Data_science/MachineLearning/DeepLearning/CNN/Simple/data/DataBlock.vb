@@ -24,12 +24,14 @@ Namespace CNN.data
         ''' </summary>
         ''' <returns></returns>
         Public Overridable ReadOnly Property Weights As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return w
             End Get
         End Property
 
         Public Overridable ReadOnly Property Gradients As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return dw
             End Get
@@ -38,8 +40,14 @@ Namespace CNN.data
         Dim w As Double()
         Dim dw As Double()
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(sx As Integer, sy As Integer, depth As Integer)
             Me.New(sx, sy, depth, -1.0)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(dims As Dimension, depth As Integer, c As Double)
+            Call Me.New(dims.x, dims.y, depth, c)
         End Sub
 
         Public Sub New(sx As Integer, sy As Integer, depth As Integer, c As Double)
