@@ -14,11 +14,13 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class InputLayer
-        Implements Layer
+    Public Class InputLayer : Implements Layer
 
         Private in_act As DataBlock
         Private out_act As DataBlock
+
+        Public ReadOnly Property dims As Dimension
+        Public ReadOnly Property out_depth As Integer
 
         Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
@@ -30,6 +32,9 @@ Namespace CNN.layers
             def.outX = out_sx
             def.outY = out_sy
             def.depth = out_depth
+
+            Me.dims = New Dimension(out_sx, out_sy)
+            Me.out_depth = out_depth
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward

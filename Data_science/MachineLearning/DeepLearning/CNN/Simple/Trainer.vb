@@ -1,4 +1,7 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
@@ -23,7 +26,11 @@ Namespace CNN
             Dim t0 = Now
             Dim randPerm As Integer()
             Dim ti As Date
-            Dim data As New DataBlock
+            Dim input As InputLayer = alg.conv_net.input
+            Dim data As New DataBlock(input.dims.x, input.dims.y, 1, 0)
+            Dim tr As TrainResult = Nothing
+            Dim img As SampleData
+            Dim loss As New List(Of Double)
 
             right = 0
             count = 0
@@ -35,15 +42,18 @@ Namespace CNN
             For i As Integer = 0 To epochsNum - 1
                 randPerm = Util.randomPerm(trainset.Length, alg.batch_size)
 
-                For Each index In randPerm
-                    Dim isRight = alg.train(trainset(index).features, trainset(index).labels(0))
-                    If isRight Then
+                For Each index As Integer In randPerm
+                    img = trainset(index)
+                    data.addImageData(img.features, img.features.Max)
+                    tr = alg.train(data, img.labels(0))
+                    loss += tr.Loss
+
+                    If img.labels(0) = which.Max(alg.conv_net.output.OutAct.Weights) Then
                         right += 1
                     End If
+
                     count += 1
                 Next
-
-                CNN.updateParas()
 
                 If i Mod d = 0 Then
                     log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
@@ -60,12 +70,12 @@ Namespace CNN
         ''' <param name="max_loops"></param>
         ''' <returns></returns>
         Public Function train(cnn As ConvolutionalNN, trainset As SampleData(), max_loops As Integer) As ConvolutionalNN
-            Dim t = 0
+            Dim t As Integer = 0
             Dim stopTrain As Boolean
             Dim right = 0
             Dim count = 0
 
-            alg.SetKernel(cnn)
+            Call alg.SetKernel(cnn)
 
             While t < max_loops AndAlso Not stopTrain
                 Dim epochsNum As Integer = trainset.Length / alg.batch_size
@@ -76,16 +86,8 @@ Namespace CNN
 
                 Call log("")
                 Call log(t.ToString() & "th iter epochsNum: " & epochsNum.ToString())
-                Call TrainEpochs(cnn, trainset, epochsNum, right, count)
-
-                Dim p = 1.0 * right / count
-
-                If t Mod 10 = 1 AndAlso p > 0.96 Then
-                    cnn.ALPHA = 0.001 + cnn.ALPHA * 0.9
-                    Call log("Set alpha = " & cnn.ALPHA.ToString())
-                End If
-
-                Call log("precision " & right.ToString() & "/" & count.ToString() & "=" & p.ToString())
+                Call TrainEpochs(trainset, epochsNum, right, count)
+                Call log("precision " & right.ToString() & "/" & count.ToString() & $"={(100 * right / count).ToString("F2")}%")
 
                 t += 1
             End While

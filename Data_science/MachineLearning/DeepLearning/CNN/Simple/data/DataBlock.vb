@@ -82,6 +82,17 @@ Namespace CNN.data
         ''' </summary>
         ''' <param name="imgData"></param>
         ''' <param name="maxvalue"></param>
+        Public Overridable Sub addImageData(imgData As Double(), maxvalue As Double)
+            For i = 0 To imgData.Length - 1
+                w(i) = imgData(i) / maxvalue - 0.5 ' normalize image pixels to [-0.5, 0.5]
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' prepare the input: get pixels and normalize them
+        ''' </summary>
+        ''' <param name="imgData"></param>
+        ''' <param name="maxvalue"></param>
         Public Overridable Sub addImageData(imgData As Integer(), maxvalue As Integer)
             Dim max As Double = maxvalue
 

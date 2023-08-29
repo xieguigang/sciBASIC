@@ -16,12 +16,21 @@ Namespace CNN.trainers
 
         Dim net As ConvolutionalNN
 
-        Protected Friend learning_rate, l1_decay, l2_decay As Double
+        ''' <summary>
+        ''' alpha
+        ''' </summary>
+        Protected Friend learning_rate As Double
+        Protected Friend l1_decay, l2_decay As Double
         Protected Friend k As Integer
         Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
 
         Public ReadOnly Property batch_size As Integer
+        Public ReadOnly Property conv_net As ConvolutionalNN
+            Get
+                Return net
+            End Get
+        End Property
 
         Public Sub New(batch_size As Integer, l2_decay As Single)
             learning_rate = 0.01
@@ -43,18 +52,20 @@ Namespace CNN.trainers
         End Function
 
         Public Overridable Function train(x As DataBlock, y As Integer) As TrainResult
-            net.forward(x, True) ' also set the flag that lets the net know we're just training
+            ' also set the flag that lets the net know we're just training
+            Call net.forward(x, True)
 
             Dim cost_loss = net.backward(y)
             Dim l2_decay_loss = 0.0
             Dim l1_decay_loss = 0.0
 
             k += 1
-            If k Mod batch_size = 0 Then
 
+            If k Mod batch_size = 0 Then
                 Dim pglist = net.BackPropagationResult.ToArray
 
-                ' initialize lists for accumulators. Will only be done once on first iteration
+                ' initialize lists for accumulators.
+                ' Will only be done once on first iteration
                 If gsum.Count = 0 AndAlso momentum > 0.0 Then
                     For i = 0 To pglist.Length - 1
                         Dim newGsumArr = New Double(pglist(i).Weights.Length - 1) {}
@@ -65,7 +76,7 @@ Namespace CNN.trainers
                 End If
 
                 ' perform an update for all sets of weights
-                For i = 0 To pglist.Length - 1
+                For i As Integer = 0 To pglist.Length - 1
                     Dim pg = pglist(i) ' param, gradient, other options in future (custom learning rate etc)
                     Dim p = pg.Weights
                     Dim g = pg.Gradients
@@ -96,13 +107,17 @@ Namespace CNN.trainers
             ' in future, TODO: have to completely redo the way loss is done around the network as currently
             ' loss is a bit of a hack. Ideally, user should specify arbitrary number of loss functions on any layer
             ' and it should all be computed correctly and automatically.
-            Return New TrainResult(0, 0, l1_decay_loss, l2_decay_loss, cost_loss, cost_loss, cost_loss + l1_decay_loss + l2_decay_loss)
+            Return New TrainResult(
+                0, 0, l1_decay_loss, l2_decay_loss, cost_loss, cost_loss,
+                loss:=cost_loss + l1_decay_loss + l2_decay_loss
+            )
         End Function
 
         Public MustOverride Sub update(i As Integer, j As Integer, gij As Double, p As Double())
 
         Public Overridable Sub initTrainData(bpr As BackPropResult)
         End Sub
+
     End Class
 
 End Namespace
