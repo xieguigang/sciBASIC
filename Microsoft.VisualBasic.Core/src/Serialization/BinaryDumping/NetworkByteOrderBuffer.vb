@@ -74,6 +74,26 @@ Namespace Serialization.BinaryDumping
             End If
         End Sub
 
+        Public Function GetBytes(d As Double) As Byte()
+            If BitConverter.IsLittleEndian Then
+                Dim bytes As Byte() = BitConverter.GetBytes(d)
+                Array.Reverse(bytes)
+                Return bytes
+            Else
+                Return BitConverter.GetBytes(d)
+            End If
+        End Function
+
+        Public Function ToDouble(bytes As Byte()) As Double
+            If BitConverter.IsLittleEndian Then
+                Dim dblBytes As Byte() = New Byte(RawStream.DblFloat - 1) {}
+                Array.ConstrainedCopy(bytes, Scan0, dblBytes, Scan0, RawStream.DblFloat)
+                Return BitConverter.ToDouble(dblBytes, Scan0)
+            Else
+                Return BitConverter.ToDouble(bytes, Scan0)
+            End If
+        End Function
+
         Private Shared Function defaultDecoder(buffer As Byte()) As Double()
             Dim nums As Double() = New Double(buffer.Length / 8 - 1) {}
 

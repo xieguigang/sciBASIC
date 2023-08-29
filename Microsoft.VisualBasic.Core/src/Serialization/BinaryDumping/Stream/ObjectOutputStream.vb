@@ -1,7 +1,9 @@
 ﻿Imports System.IO
+Imports System.Reflection
 Imports System.Text
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Serialization.BinaryDumping
 
@@ -26,10 +28,33 @@ Namespace Serialization.BinaryDumping
         Private Sub WriteObjectInternal(obj As Object)
             Dim info As New TypeInfo(obj.GetType)
             Dim json As String = info.GetJson
-            Dim bytes As Byte() = Encoding.ASCII.GetBytes(json)
+            Dim fields As FieldInfo() = ObjectVisitor.GetAllFields(obj.GetType)
+            Dim bytes As Byte()
+            Dim value As Object
 
-            Call stream.Write(bytes.Length)
-            Call stream.Write(bytes,)
+            Call stream.Write(New Buffer(Encoding.ASCII.GetBytes(json)).Serialize)
+
+            For Each field As FieldInfo In fields
+                Call stream.Write(New Buffer(Encoding.ASCII.GetBytes(field.Name)).Serialize)
+
+                If DataFramework.IsPrimitive(field.FieldType) Then
+                    value = field.GetValue(obj)
+
+                    ' write value at here
+                    Select Case field.FieldType
+                        Case GetType(Integer) : bytes = BitConverter.GetBytes(CInt(value))
+                        Case GetType(Double) : bytes = network.GetBytes(CDbl(value))
+                        Case GetType(String) : bytes = Encoding.UTF8.GetBytes(CStr(value))
+                        Case Else
+                            Throw New NotImplementedException(field.Name & ": " & field.FieldType.Name)
+                    End Select
+
+                    Call stream.Write(New Buffer(bytes).Serialize)
+                Else
+                    ' class/struct contains properties
+                    Call WriteObject(obj)
+                End If
+            Next
         End Sub
 
         Public Sub Flush()
