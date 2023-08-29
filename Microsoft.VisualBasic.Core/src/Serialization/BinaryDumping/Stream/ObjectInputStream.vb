@@ -29,6 +29,8 @@ Namespace Serialization.BinaryDumping
 
             If flag <= 0 Then
                 Return Nothing
+            Else
+                Call stream.BaseStream.Seek(-4, SeekOrigin.Current)
             End If
 
             Dim info As TypeInfo = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer).LoadJSON(Of TypeInfo)
