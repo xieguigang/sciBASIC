@@ -61,6 +61,8 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -122,7 +124,15 @@ Namespace Serialization.BinaryDumping
 
         End Sub
 
-        Public Shared Iterator Function GetAllFields(type As Type) As IEnumerable(Of FieldInfo)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetAllFields(type As Type) As IEnumerable(Of FieldInfo)
+            Return LoadAllFieldsInternal(type) _
+                .Where(Function(f)
+                           Return f.GetCustomAttribute(Of IgnoreDataMemberAttribute) Is Nothing
+                       End Function)
+        End Function
+
+        Private Shared Iterator Function LoadAllFieldsInternal(type As Type) As IEnumerable(Of FieldInfo)
             For Each field As FieldInfo In type.GetFields(AllFields)
                 Yield field
             Next

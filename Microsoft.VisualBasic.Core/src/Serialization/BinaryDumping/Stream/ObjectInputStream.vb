@@ -34,6 +34,7 @@ Namespace Serialization.BinaryDumping
             Dim value As Object
             Dim fields As Dictionary(Of String, FieldInfo) = ObjectVisitor _
                 .GetAllFields(obj.GetType) _
+                .Distinct _
                 .ToDictionary(Function(f)
                                   Return f.Name
                               End Function)
