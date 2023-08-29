@@ -17,9 +17,11 @@ Namespace CNN.trainers
         Dim net As ConvolutionalNN
 
         Protected Friend learning_rate, l1_decay, l2_decay As Double
-        Protected Friend batch_size, k As Integer
+        Protected Friend k As Integer
         Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
+
+        Public ReadOnly Property batch_size As Integer
 
         Public Sub New(batch_size As Integer, l2_decay As Single)
             learning_rate = 0.01

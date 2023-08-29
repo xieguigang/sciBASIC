@@ -24,6 +24,18 @@ Namespace CNN
             End Get
         End Property
 
+        Public ReadOnly Property input As InputLayer
+            Get
+                Return m_layers(0)
+            End Get
+        End Property
+
+        Public ReadOnly Property output As LossLayer
+            Get
+                Return m_layers(m_layers.Length - 1)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Accumulate parameters and gradients for the entire network
         ''' </summary>
@@ -43,7 +55,7 @@ Namespace CNN
         ''' </summary>
         Public Overridable ReadOnly Property Prediction As Integer
             Get
-                Dim S = CType(m_layers(m_layers.Length - 1), LossLayer)
+                Dim S As LossLayer = output
                 Dim p = S.OutAct.Weights
                 Dim i As Integer = which.Max(p)
 
@@ -58,8 +70,9 @@ Namespace CNN
         Public Function predict(db As DataBlock) As Double()
             Call forward(db, training:=False)
 
-            Dim S = CType(m_layers(m_layers.Length - 1), LossLayer)
+            Dim S As LossLayer = output
             Dim p = S.OutAct.Weights
+
             Return p
         End Function
 
@@ -82,9 +95,8 @@ Namespace CNN
         End Function
 
         Public Overridable Function getCostLoss(db As DataBlock, y As Integer) As Double
-            Dim N = m_layers.Length
             forward(db, False)
-            Return CType(m_layers(N - 1), LossLayer).backward(y)
+            Return output.backward(y)
         End Function
 
         ''' <summary>
@@ -92,7 +104,7 @@ Namespace CNN
         ''' </summary>
         Public Overridable Function backward(y As Integer) As Double
             Dim N = m_layers.Length
-            Dim loss = CType(m_layers(N - 1), LossLayer).backward(y)
+            Dim loss = output.backward(y)
 
             For i As Integer = N - 2 To 0 Step -1 ' first layer assumed input
                 m_layers(i).backward()

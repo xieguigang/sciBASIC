@@ -56,7 +56,7 @@ Namespace ConsoleApp1
             ' 			layers.add(new SoftMaxLayer(def));
             ' 			
             Dim net As ConvolutionalNN = New ConvolutionalNN(layers)
-            Dim trainer As TrainerAlgorithm = New AdaGradTrainer(net, 20, 0.001F)
+            Dim trainer As TrainerAlgorithm = New AdaGradTrainer(20, 0.001F).SetKernel(net)
 
             'Reader mrTest = new MnistReader("mnist/t10k-labels-idx1-ubyte", "mnist/t10k-images-idx3-ubyte");
             ' Reader mrTest = new PGMReader("pgmfiles/test");
