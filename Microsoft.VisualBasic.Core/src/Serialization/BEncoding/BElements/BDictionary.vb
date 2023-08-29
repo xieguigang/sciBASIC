@@ -59,8 +59,7 @@ Namespace Serialization.Bencoding
     ''' <summary>
     ''' A bencode dictionary.
     ''' </summary>
-    Public Class BDictionary
-        Inherits SortedDictionary(Of BString, BElement)
+    Public Class BDictionary : Inherits SortedDictionary(Of BString, BElement)
         Implements BElement
 
         ''' <summary>
