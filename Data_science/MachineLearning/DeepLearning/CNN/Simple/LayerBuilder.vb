@@ -39,8 +39,12 @@ Namespace CNN
             Return add(New ConvolutionLayer(def, sx, filters, stride, padding))
         End Function
 
-        Public Function buildRectifiedLinearUnitsLayer() As LayerBuilder
+        Public Function buildReLULayer() As LayerBuilder
             Return add(New RectifiedLinearUnitsLayer)
+        End Function
+
+        Public Function buildSigmoidLayer() As LayerBuilder
+            Return add(New SigmoidLayer)
         End Function
 
         Public Function buildPoolLayer(sx As Integer, stride As Integer, padding As Integer) As LayerBuilder
@@ -51,8 +55,17 @@ Namespace CNN
             Return add(New FullyConnectedLayer(def, num_neurons))
         End Function
 
-        Public Function buildLocalResponseNormalizationLayer() As LayerBuilder
-            Return add(New LocalResponseNormalizationLayer)
+        Public Function buildTanhLayer() As LayerBuilder
+            Return add(New TanhLayer)
+        End Function
+
+        ''' <summary>
+        ''' LRN
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Function buildLocalResponseNormalizationLayer(n As Integer) As LayerBuilder
+            Return add(New LocalResponseNormalizationLayer(n))
         End Function
 
         Public Function buildDropoutLayer() As LayerBuilder
@@ -61,6 +74,10 @@ Namespace CNN
 
         Public Function buildSoftmaxLayer() As LayerBuilder
             Return add(New SoftMaxLayer(def))
+        End Function
+
+        Public Function buildMaxoutLayer() As LayerBuilder
+            Return add(New MaxoutLayer(def))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

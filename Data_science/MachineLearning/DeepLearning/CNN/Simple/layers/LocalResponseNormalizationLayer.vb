@@ -18,7 +18,6 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    <Serializable>
     Public Class LocalResponseNormalizationLayer
         Implements Layer
 
@@ -43,11 +42,13 @@ Namespace CNN.layers
             End Get
         End Property
 
-        Public Sub New()
+        Public Sub New(n As Integer)
             ' checks
             If n Mod 2 = 0 Then
                 VBDebugger.EchoLine("WARNING: n should be odd for LRN layer")
             End If
+
+            Me.n = n
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
@@ -114,7 +115,7 @@ Namespace CNN.layers
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"local_response_norm()"
+            Return $"LRN()"
         End Function
     End Class
 

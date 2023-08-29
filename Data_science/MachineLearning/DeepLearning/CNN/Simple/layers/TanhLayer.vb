@@ -9,9 +9,9 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class TanhLayer
-        Implements Layer
-        Private in_act, out_act As DataBlock
+    Public Class TanhLayer : Implements Layer
+
+        Dim in_act, out_act As DataBlock
 
         Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
             Get

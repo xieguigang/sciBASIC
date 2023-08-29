@@ -10,6 +10,9 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
+    ''' <remarks>
+    ''' ReLU
+    ''' </remarks>
     Public Class RectifiedLinearUnitsLayer
         Implements Layer
         Private in_act, out_act As DataBlock
@@ -49,7 +52,7 @@ Namespace CNN.layers
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"rectified_linear()"
+            Return $"ReLU()"
         End Function
     End Class
 

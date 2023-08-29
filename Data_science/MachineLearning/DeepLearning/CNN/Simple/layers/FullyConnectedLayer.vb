@@ -10,8 +10,8 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class FullyConnectedLayer
-        Implements Layer
+    Public Class FullyConnectedLayer : Implements Layer
+
         Private l1_decay_mul As Double = 0.0
         Private l2_decay_mul As Double = 1.0
 
@@ -59,9 +59,11 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            in_act = db
             Dim lA As DataBlock = New DataBlock(1, 1, out_depth, 0.0)
             Dim Vw = db.Weights
+
+            in_act = db
+
             For i = 0 To out_depth - 1
                 Dim a = 0.0
                 Dim wi = filters(i).Weights
