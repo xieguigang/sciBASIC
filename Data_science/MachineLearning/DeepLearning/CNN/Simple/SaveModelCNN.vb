@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 
 Namespace CNN
 
@@ -21,35 +22,25 @@ Namespace CNN
 
             '            Call wr.Write(cnn.batchSize)
 
-            '            For i As Integer = 0 To cnn.layerNum - 1
-            '                Call Write(layer:=cnn(i), wr)
-            '            Next
+            For i As Integer = 0 To cnn.LayerNum - 1
+                Call Write(layer:=cnn(i), wr)
+            Next
         End Sub
 
-        '        Private Sub Write(layer As Layer, wr As BinaryWriter)
-        '            Call wr.Write(0&)
-        '            Call wr.Write(CInt(layer.Type))
-        '            Call wr.Write(layer.OutMapNum)
-        '            Call wr.Write(layer.ClassNum)
+        Private Sub Write(layer As Layer, wr As BinaryWriter)
+            Call wr.Write(0&)
+            Call wr.Write(CInt(layer.Type))
 
-        '            Call Write(layer.MapSize, wr)
-        '            Call Write(layer.KernelSize, wr)
-        '            Call Write(layer.ScaleSize, wr)
+            Select Case layer.Type
+                Case Convolutional.LayerTypes.Convolution
+                Case Convolutional.LayerTypes.Input
+                Case Convolutional.LayerTypes.Output
+                Case Convolutional.LayerTypes.Pool
+                Case Convolutional.LayerTypes.ReLU
+                Case Convolutional.LayerTypes.SoftMax
 
-        '            If layer.bias Is Nothing Then
-        '                Call wr.Write(-1)
-        '            Else
-        '                Call wr.Write(layer.bias.Length)
-
-        '                For Each d As Double In layer.bias
-        '                    Call wr.Write(d)
-        '                Next
-        '            End If
-
-        '            Call Write(layer.m_kernel, wr)
-        '            Call Write(layer.m_outmaps, wr)
-        '            Call Write(layer.m_errors, wr)
-        '        End Sub
+            End Select
+        End Sub
 
         '        Private Sub Write(m As Double()()()(), wr As BinaryWriter)
         '            If m.IsNullOrEmpty Then

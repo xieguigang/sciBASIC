@@ -36,6 +36,12 @@ Namespace CNN
             End Get
         End Property
 
+        Default Public ReadOnly Property Layer(i As Integer) As Layer
+            Get
+                Return m_layers(i)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Accumulate parameters and gradients for the entire network
         ''' </summary>

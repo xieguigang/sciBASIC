@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 
 Namespace CNN.layers
 
@@ -11,6 +12,7 @@ Namespace CNN.layers
     Public Interface Layer
 
         ReadOnly Property BackPropagationResult As IEnumerable(Of BackPropResult)
+        ReadOnly Property Type As LayerTypes
 
         Function forward(db As DataBlock, training As Boolean) As DataBlock
         ''' <summary>

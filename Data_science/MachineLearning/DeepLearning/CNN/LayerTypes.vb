@@ -74,5 +74,13 @@ Namespace Convolutional
         <Description("pool")> Pool
         <Description("relu")> ReLU
         <Description("softmax")> SoftMax
+        <Description("sigmoid")> Sigmoid
+        <Description("tanh")> Tanh
+        <Description("maxout")> Maxout
+        <Description("lrn")> LRN
+        <Description("dropout")> Dropout
+        <Description("fully_connect")> FullyConnected
+        <Description("regression")> Regression
+        <Description("svm")> SVM
     End Enum
 End Namespace
