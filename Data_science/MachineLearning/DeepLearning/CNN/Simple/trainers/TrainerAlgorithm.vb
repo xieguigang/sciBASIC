@@ -74,45 +74,7 @@ Namespace CNN.trainers
             k += 1
 
             If k Mod batch_size = 0 Then
-                Dim pglist = net.BackPropagationResult.ToArray
-
-                ' initialize lists for accumulators.
-                ' Will only be done once on first iteration
-                If gsum.Count = 0 AndAlso momentum > 0.0 Then
-                    For i = 0 To pglist.Length - 1
-                        Dim newGsumArr = New Double(pglist(i).Weights.Length - 1) {}
-                        newGsumArr.fill(0)
-                        gsum.Add(newGsumArr)
-                        initTrainData(pglist(i))
-                    Next
-                End If
-
-                ' perform an update for all sets of weights
-                For i As Integer = 0 To pglist.Length - 1
-                    Dim pg = pglist(i) ' param, gradient, other options in future (custom learning rate etc)
-                    Dim p = pg.Weights
-                    Dim g = pg.Gradients
-
-                    ' learning rate for some parameters.
-                    Dim l2_decay_mul = pg.L2DecayMul
-                    Dim l1_decay_mul = pg.L1DecayMul
-                    Dim l2_decay = Me.l2_decay * l2_decay_mul
-                    Dim l1_decay = Me.l1_decay * l1_decay_mul
-
-                    Dim plen = p.Length
-                    For j = 0 To plen - 1
-                        l2_decay_loss += l2_decay * p(j) * p(j) / 2 ' accumulate weight decay loss
-                        l1_decay_loss += l1_decay * std.Abs(p(j))
-                        Dim l1grad = l1_decay * If(p(j) > 0, 1, -1)
-                        Dim l2grad = l2_decay * p(j)
-
-                        Dim gij = (l2grad + l1grad + g(j)) / batch_size ' raw batch gradient
-
-                        update(i, j, gij, p)
-
-                        g(j) = 0.0 ' zero out gradient so that we can begin accumulating anew
-                    Next
-                Next
+                Call adjustWeights(l2_decay_loss, l1_decay_loss)
             End If
 
             ' appending softmax_loss for backwards compatibility, but from now on we will always use cost_loss
@@ -124,6 +86,48 @@ Namespace CNN.trainers
                 loss:=cost_loss + l1_decay_loss + l2_decay_loss
             )
         End Function
+
+        Private Sub adjustWeights(ByRef l2_decay_loss As Double, ByRef l1_decay_loss As Double)
+            Dim pglist As BackPropResult() = net.BackPropagationResult.ToArray
+
+            ' initialize lists for accumulators.
+            ' Will only be done once on first iteration
+            If gsum.Count = 0 AndAlso momentum > 0.0 Then
+                For i As Integer = 0 To pglist.Length - 1
+                    Dim newGsumArr = New Double(pglist(i).Weights.Length - 1) {}
+                    newGsumArr.fill(0)
+                    gsum.Add(newGsumArr)
+                    initTrainData(pglist(i))
+                Next
+            End If
+
+            ' perform an update for all sets of weights
+            For i As Integer = 0 To pglist.Length - 1
+                Dim pg = pglist(i) ' param, gradient, other options in future (custom learning rate etc)
+                Dim p = pg.Weights
+                Dim g = pg.Gradients
+
+                ' learning rate for some parameters.
+                Dim l2_decay_mul = pg.L2DecayMul
+                Dim l1_decay_mul = pg.L1DecayMul
+                Dim l2_decay = Me.l2_decay * l2_decay_mul
+                Dim l1_decay = Me.l1_decay * l1_decay_mul
+                Dim plen = p.Length
+
+                For j As Integer = 0 To plen - 1
+                    l2_decay_loss += l2_decay * p(j) * p(j) / 2 ' accumulate weight decay loss
+                    l1_decay_loss += l1_decay * std.Abs(p(j))
+
+                    Dim l1grad = l1_decay * If(p(j) > 0, 1, -1)
+                    Dim l2grad = l2_decay * p(j)
+                    Dim gij = (l2grad + l1grad + g(j)) / batch_size ' raw batch gradient
+
+                    Call update(i, j, gij, p)
+
+                    g(j) = 0.0 ' zero out gradient so that we can begin accumulating anew
+                Next
+            Next
+        End Sub
 
         Public MustOverride Sub update(i As Integer, j As Integer, gij As Double, p As Double())
 
