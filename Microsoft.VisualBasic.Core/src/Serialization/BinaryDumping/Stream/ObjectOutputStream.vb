@@ -37,7 +37,7 @@ Namespace Serialization.BinaryDumping
         Private Sub WriteObjectInternal(obj As Object)
             Dim info As New TypeInfo(obj.GetType)
             Dim json As String = info.GetJson
-            Dim fields As FieldInfo() = ObjectVisitor.GetAllFields(obj.GetType)
+            Dim fields As FieldInfo() = ObjectVisitor.GetAllFields(obj.GetType).ToArray
             Dim bytes As Byte()
             Dim value As Object
 
