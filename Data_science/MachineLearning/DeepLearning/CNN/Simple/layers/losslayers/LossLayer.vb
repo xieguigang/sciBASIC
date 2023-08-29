@@ -1,6 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
+Imports Layer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 
 Namespace CNN.losslayers
 
@@ -23,6 +24,8 @@ Namespace CNN.losslayers
                 Return out_act
             End Get
         End Property
+
+        Public MustOverride ReadOnly Property Type As LayerTypes Implements Layer.Type
 
         Public Sub New(def As OutputDefinition)
             ' computed

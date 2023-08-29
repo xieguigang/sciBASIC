@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
 
 Namespace CNN.losslayers
@@ -13,6 +14,12 @@ Namespace CNN.losslayers
     Public Class SoftMaxLayer : Inherits LossLayer
 
         Dim es As Double()
+
+        Public Overrides ReadOnly Property Type As LayerTypes
+            Get
+                Return LayerTypes.SoftMax
+            End Get
+        End Property
 
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)

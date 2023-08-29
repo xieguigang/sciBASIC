@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
 
 Namespace CNN.layers
@@ -22,6 +23,12 @@ Namespace CNN.layers
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
+            End Get
+        End Property
+
+        Public ReadOnly Property Type As LayerTypes Implements Layer.Type
+            Get
+                Return LayerTypes.Maxout
             End Get
         End Property
 

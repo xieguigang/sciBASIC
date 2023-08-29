@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 
 Namespace CNN.layers
 
@@ -30,6 +31,12 @@ Namespace CNN.layers
                 Next
 
                 Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0)
+            End Get
+        End Property
+
+        Public ReadOnly Property Type As LayerTypes Implements Layer.Type
+            Get
+                Return LayerTypes.FullyConnected
             End Get
         End Property
 
