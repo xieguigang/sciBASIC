@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
 
 Namespace CNN.layers
@@ -13,17 +14,15 @@ Namespace CNN.layers
     Public Class ConvolutionLayer : Inherits DataLink
         Implements Layer
 
-        Private l1_decay_mul As Double = 0.0
-        Private l2_decay_mul As Double = 1.0
-
-        Private ReadOnly BIAS_PREF As Single = 0.1F
-
-        Private out_depth, out_sx, out_sy As Integer
-        Private in_depth, in_sx, in_sy As Integer
-        Private sx, sy As Integer
-        Private stride, padding As Integer
-        Private filters As IList(Of DataBlock)
-        Private biases As DataBlock
+        Friend l1_decay_mul As Double = 0.0
+        Friend l2_decay_mul As Double = 1.0
+        Friend BIAS_PREF As Single = 0.1F
+        Friend out_depth, out_sx, out_sy As Integer
+        Friend in_depth, in_sx, in_sy As Integer
+        Friend sx, sy As Integer
+        Friend stride, padding As Integer
+        Friend filters As DataBlock()
+        Friend biases As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
@@ -32,6 +31,12 @@ Namespace CNN.layers
                 Next
 
                 Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0)
+            End Get
+        End Property
+
+        Public ReadOnly Property Type As LayerTypes Implements Layer.Type
+            Get
+                Return LayerTypes.Convolution
             End Get
         End Property
 
@@ -56,10 +61,12 @@ Namespace CNN.layers
             out_sy = CInt(std.Floor((in_sy + Me.padding * 2 - sy) / Me.stride + 1))
 
             ' initializations
-            Me.filters = New List(Of DataBlock)()
-            For i = 0 To out_depth - 1
-                Me.filters.Add(New DataBlock(Me.sx, sy, in_depth))
+            Me.filters = New DataBlock(out_depth - 1) {}
+
+            For i As Integer = 0 To out_depth - 1
+                Me.filters(i) = New DataBlock(Me.sx, sy, in_depth)
             Next
+
             biases = New DataBlock(1, 1, out_depth, BIAS_PREF)
 
             def.outX = out_sx
