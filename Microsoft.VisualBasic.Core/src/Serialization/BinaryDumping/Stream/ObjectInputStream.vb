@@ -47,7 +47,7 @@ Namespace Serialization.BinaryDumping
 
                     Select Case field.FieldType
                         Case GetType(Integer) : value = BitConverter.ToInt32(buf.buffer, Scan0)
-                        Case GetType(Double) : value = BitConverter.ToDouble(buf.buffer, Scan0)
+                        Case GetType(Double) : value = network.ToDouble(buf.buffer)
                         Case Else
                             Throw New NotImplementedException($"{field.Name}: {field.FieldType.Name}")
                     End Select
