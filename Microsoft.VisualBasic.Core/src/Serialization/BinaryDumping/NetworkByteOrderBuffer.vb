@@ -71,7 +71,7 @@ Namespace Serialization.BinaryDumping
                 encode32 = AddressOf networkByteOrderEncoder
                 decode32 = AddressOf networkByteOrderDecoder32
 
-                Call VBDebugger.EchoLine("system byte order is little endian.")
+                ' Call VBDebugger.EchoLine("system byte order is little endian.")
             Else
                 ' no bytes sequence reverse
                 encode = AddressOf defaultEncoder
