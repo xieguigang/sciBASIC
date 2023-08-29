@@ -11,13 +11,13 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
 
-    Public Class AdamTrainer
-        Inherits Trainer
+    Public Class AdamTrainer : Inherits Trainer
+
         Private ReadOnly beta1 As Double = 0.9
         Private ReadOnly beta2 As Double = 0.999
 
-        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
-            MyBase.New(net, batch_size, l2_decay)
+        Public Sub New(batch_size As Integer, l2_decay As Single)
+            MyBase.New(batch_size, l2_decay)
         End Sub
 
         Public Overrides Sub initTrainData(bpr As BackPropResult)

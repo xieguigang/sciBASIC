@@ -3,9 +3,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
 
-
 Namespace CNN.trainers
-
 
     ''' <summary>
     ''' Trainers take the generated output of activations and gradients in
@@ -15,6 +13,7 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     Public MustInherit Class Trainer
+
         Dim net As ConvolutionalNN
 
         Protected Friend learning_rate, l1_decay, l2_decay As Double
@@ -22,9 +21,7 @@ Namespace CNN.trainers
         Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
 
-        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
-            Me.net = net
-
+        Public Sub New(batch_size As Integer, l2_decay As Single)
             learning_rate = 0.01
             l1_decay = 0.001
             Me.l2_decay = l2_decay
@@ -37,6 +34,11 @@ Namespace CNN.trainers
 
             k = 0 ' iteration counter
         End Sub
+
+        Public Function SetKernel(cnn As ConvolutionalNN) As Trainer
+            Me.net = cnn
+            Return Me
+        End Function
 
         Public Overridable Function train(x As DataBlock, y As Integer) As TrainResult
             net.forward(x, True) ' also set the flag that lets the net know we're just training

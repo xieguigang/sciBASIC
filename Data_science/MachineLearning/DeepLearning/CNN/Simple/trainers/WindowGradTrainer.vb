@@ -10,12 +10,12 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
 
-    Public Class WindowGradTrainer
-        Inherits Trainer
+    Public Class WindowGradTrainer : Inherits Trainer
+
         Private ReadOnly ro As Double = 0.95
 
-        Public Sub New(net As ConvolutionalNN, batch_size As Integer, l2_decay As Single)
-            MyBase.New(net, batch_size, l2_decay)
+        Public Sub New(batch_size As Integer, l2_decay As Single)
+            MyBase.New(batch_size, l2_decay)
         End Sub
 
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
