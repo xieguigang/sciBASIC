@@ -35,7 +35,7 @@ Namespace Serialization.BinaryDumping
             End If
 
             Dim info As TypeInfo = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer).LoadJSON(Of TypeInfo)
-            Dim obj As Object = Activator.CreateInstance(info.GetType)
+            Dim obj As Object = Activator.CreateInstance(info.GetType(knownFirst:=True))
             Dim nsize As Integer = stream.ReadInt32
             Dim value As Object
             Dim fields As Dictionary(Of String, FieldInfo) = ObjectVisitor _

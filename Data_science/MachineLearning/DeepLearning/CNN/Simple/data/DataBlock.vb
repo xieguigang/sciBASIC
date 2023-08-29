@@ -40,6 +40,9 @@ Namespace CNN.data
         Dim w As Double()
         Dim dw As Double()
 
+        Sub New()
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(sx As Integer, sy As Integer, depth As Integer)
             Me.New(sx, sy, depth, -1.0)
