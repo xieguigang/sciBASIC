@@ -7,11 +7,10 @@ Namespace CNN.losslayers
     ''' <summary>
     ''' Created by danielp on 1/25/17.
     ''' </summary>
-    Public MustInherit Class LossLayer
+    Public MustInherit Class LossLayer : Inherits DataLink
         Implements Layer
 
         Protected Friend num_inputs, out_depth, out_sx, out_sy As Integer
-        Protected Friend in_act, out_act As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get

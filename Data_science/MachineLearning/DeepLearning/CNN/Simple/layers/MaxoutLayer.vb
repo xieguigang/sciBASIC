@@ -12,10 +12,10 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class MaxoutLayer ： Implements Layer
+    Public Class MaxoutLayer : Inherits DataLink
+        Implements Layer
 
         Private out_depth, out_sx, out_sy As Integer
-        Private in_act, out_act As DataBlock
         Private ReadOnly group_size As Integer = 2
         Private switches As Integer()
 

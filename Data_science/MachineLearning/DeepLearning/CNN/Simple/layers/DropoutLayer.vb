@@ -9,11 +9,10 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class DropoutLayer
+    Public Class DropoutLayer : Inherits DataLink
         Implements Layer
 
         Private out_depth, out_sx, out_sy As Integer
-        Private in_act, out_act As DataBlock
         Private ReadOnly drop_prob As Double = 0.5
         Private dropped As Boolean()
 

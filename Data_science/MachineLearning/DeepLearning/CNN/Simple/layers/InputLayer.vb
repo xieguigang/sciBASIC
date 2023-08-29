@@ -14,10 +14,8 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class InputLayer : Implements Layer
-
-        Private in_act As DataBlock
-        Private out_act As DataBlock
+    Public Class InputLayer : Inherits DataLink
+        Implements Layer
 
         Public ReadOnly Property dims As Dimension
         Public ReadOnly Property out_depth As Integer

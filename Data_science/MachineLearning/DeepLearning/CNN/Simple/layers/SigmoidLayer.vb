@@ -10,10 +10,8 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class SigmoidLayer
+    Public Class SigmoidLayer : Inherits DataLink
         Implements Layer
-
-        Private in_act, out_act As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get

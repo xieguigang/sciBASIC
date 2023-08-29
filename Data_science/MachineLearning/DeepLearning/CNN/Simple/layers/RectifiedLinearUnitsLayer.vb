@@ -13,10 +13,8 @@ Namespace CNN.layers
     ''' <remarks>
     ''' ReLU
     ''' </remarks>
-    Public Class RectifiedLinearUnitsLayer
+    Public Class RectifiedLinearUnitsLayer : Inherits DataLink
         Implements Layer
-
-        Dim in_act, out_act As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get

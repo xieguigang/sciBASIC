@@ -10,14 +10,11 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class ConvolutionLayer
+    Public Class ConvolutionLayer : Inherits DataLink
         Implements Layer
 
         Private l1_decay_mul As Double = 0.0
         Private l2_decay_mul As Double = 1.0
-
-        Private in_act As DataBlock
-        Private out_act As DataBlock
 
         Private ReadOnly BIAS_PREF As Single = 0.1F
 

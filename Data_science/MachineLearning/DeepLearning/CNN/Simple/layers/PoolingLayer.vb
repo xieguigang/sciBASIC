@@ -13,7 +13,8 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class PoolingLayer : Implements Layer
+    Public Class PoolingLayer : Inherits DataLink
+        Implements Layer
 
         Private in_depth, in_sx, in_sy As Integer
         Private out_depth, out_sx, out_sy As Integer
@@ -21,8 +22,6 @@ Namespace CNN.layers
 
         Private switchx As Integer()
         Private switchy As Integer()
-
-        Private in_act, out_act As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get

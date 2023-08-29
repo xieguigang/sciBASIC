@@ -18,7 +18,7 @@ Namespace CNN.layers
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
-    Public Class LocalResponseNormalizationLayer
+    Public Class LocalResponseNormalizationLayer : Inherits DataLink
         Implements Layer
 
         ' 
@@ -34,7 +34,7 @@ Namespace CNN.layers
         Private ReadOnly alpha As Double = 0.0001
         Private ReadOnly beta As Double = 0.75
 
-        Private in_act, out_act, S_cache_ As DataBlock
+        Dim S_cache_ As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
