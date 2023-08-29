@@ -32,22 +32,25 @@ Namespace CNN.layers
         Sub New()
         End Sub
 
-        Public Sub New(def As OutputDefinition)
+        Public Sub New(def As OutputDefinition, drop_prob As Double)
             ' computed
             out_sx = def.outX
             out_sy = def.outY
             out_depth = def.depth
 
-            dropped = New Boolean(out_sx * out_sy * out_depth - 1) {}
+            Me.dropped = New Boolean(out_sx * out_sy * out_depth - 1) {}
+            Me.drop_prob = drop_prob
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            in_act = db
             Dim V2 As DataBlock = db.clone()
             Dim N = db.Weights.Length
+
+            in_act = db
+
             If training Then
                 ' do dropout
-                For i = 0 To N - 1
+                For i As Integer = 0 To N - 1
                     If randf.NextDouble() < drop_prob Then
                         V2.setWeight(i, 0)
                         dropped(i) = True
@@ -58,12 +61,15 @@ Namespace CNN.layers
                 Next
             Else
                 ' scale the activations during prediction
-                For i = 0 To N - 1
+                For i As Integer = 0 To N - 1
                     V2.mulGradient(i, drop_prob)
                 Next
             End If
+
             out_act = V2
-            Return out_act ' dummy identity function for now
+
+            ' dummy identity function for now
+            Return out_act
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward

@@ -68,8 +68,8 @@ Namespace CNN
             Return add(New LocalResponseNormalizationLayer(n))
         End Function
 
-        Public Function buildDropoutLayer() As LayerBuilder
-            Return add(New DropoutLayer(def))
+        Public Function buildDropoutLayer(Optional drop_prob As Double = 0.5) As LayerBuilder
+            Return add(New DropoutLayer(def, drop_prob))
         End Function
 
         Public Function buildSoftmaxLayer() As LayerBuilder

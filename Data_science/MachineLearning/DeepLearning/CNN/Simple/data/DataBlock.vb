@@ -53,6 +53,15 @@ Namespace CNN.data
             Call Me.New(dims.x, dims.y, depth, c)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="sx"></param>
+        ''' <param name="sy"></param>
+        ''' <param name="depth"></param>
+        ''' <param name="c">use for initialize the weight vector: 
+        ''' weight vector will be filled with the value of this parameter.
+        ''' </param>
         Public Sub New(sx As Integer, sy As Integer, depth As Integer, c As Double)
             Dim n = sx * sy * depth
 
@@ -64,7 +73,7 @@ Namespace CNN.data
             dw = New Double(n - 1) {}
 
             If c <> -1.0 Then
-                w.fill(c)
+                Call w.fill(c)
             Else
                 Dim scale = std.Sqrt(1.0 / n)
 
@@ -72,7 +81,6 @@ Namespace CNN.data
                     w(i) = randf.NextDouble() * scale
                 Next
             End If
-            dw.fill(0)
         End Sub
 
         ''' <summary>
@@ -122,6 +130,7 @@ Namespace CNN.data
             Return w(ix)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setWeight(ix As Integer, val As Double)
             w(ix) = val
         End Sub
@@ -141,6 +150,7 @@ Namespace CNN.data
             Return getGradient(ix)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function getGradient(ix As Integer) As Double
             Return dw(ix)
         End Function
@@ -150,53 +160,59 @@ Namespace CNN.data
             setGradient(ix, val)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setGradient(ix As Integer, val As Double)
             dw(ix) = val
         End Sub
-
 
         Public Overridable Sub addGradient(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             addGradient(ix, val)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub addGradient(ix As Integer, val As Double)
             dw(ix) += val
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub subGradient(ix As Integer, val As Double)
             dw(ix) -= val
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub mulGradient(ix As Integer, val As Double)
             dw(ix) *= val
         End Sub
 
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function cloneAndZero() As DataBlock
             Return New DataBlock(_SX, _SY, _Depth, 0.0)
         End Function
 
         Public Overridable Function clone() As DataBlock
-            Dim db As DataBlock = New DataBlock(_SX, _SY, _Depth, 0.0)
-            For i = 0 To w.Length - 1
+            Dim db As New DataBlock(_SX, _SY, _Depth, 0.0)
+
+            For i As Integer = 0 To w.Length - 1
                 db.w(i) = w(i)
             Next
+
             Return db
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub clearGradient()
-            dw.fill(0)
+            Call dw.fill(0)
         End Sub
 
         Public Overridable Sub addFrom(db As DataBlock)
-            For i = 0 To w.Length - 1
+            For i As Integer = 0 To w.Length - 1
                 w(i) = db.w(i)
             Next
         End Sub
 
         Public Overridable Sub addFromScaled(db As DataBlock, a As Double)
-            For i = 0 To w.Length - 1
+            For i As Integer = 0 To w.Length - 1
                 w(i) = db.w(i) * a
             Next
         End Sub

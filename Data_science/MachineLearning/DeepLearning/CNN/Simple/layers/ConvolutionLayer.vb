@@ -78,15 +78,14 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            Dim lA As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0)
-
-            in_act = db
-
+            Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0)
             Dim V_sx = in_sx
             Dim V_sy = in_sy
             Dim xy_stride = stride
 
-            For d = 0 To out_depth - 1
+            in_act = db
+
+            For d As Integer = 0 To out_depth - 1
                 Dim f = filters(d)
                 Dim y = -padding
                 Dim ay = 0
@@ -127,12 +126,14 @@ Namespace CNN.layers
 
         Public Overridable Sub backward() Implements Layer.backward
             Dim db = in_act
-            db.clearGradient() ' zero out gradient wrt bottom data, we're about to fill it
             Dim V_sx = db.SX
             Dim V_sy = db.SY
             Dim xy_stride = stride
 
-            For d = 0 To out_depth - 1
+            ' zero out gradient wrt bottom data, we're about to fill it
+            Call db.clearGradient()
+
+            For d As Integer = 0 To out_depth - 1
                 Dim f = filters(d)
                 Dim y = -padding
                 Dim ay = 0
@@ -142,24 +143,29 @@ Namespace CNN.layers
                     Dim ax = 0
 
                     While ax < out_sx
-
                         ' convolve centered at this particular location
-                        Dim chain_grad = out_act.getGradient(ax, ay, d) ' gradient from above, from chain rule
-                        For fy = 0 To f.SY - 1
-                            Dim oy = y + fy ' coordinates in the original input array coordinates
-                            For fx = 0 To f.SX - 1
+                        ' gradient from above, from chain rule
+                        Dim chain_grad = out_act.getGradient(ax, ay, d)
+
+                        For fy As Integer = 0 To f.SY - 1
+                            Dim oy As Integer = y + fy ' coordinates in the original input array coordinates
+
+                            For fx As Integer = 0 To f.SX - 1
                                 Dim ox = x + fx
+
                                 If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
-                                    For fd = 0 To f.Depth - 1
+                                    For fd As Integer = 0 To f.Depth - 1
                                         ' avoid function call overhead (x2) for efficiency, compromise modularity :(
                                         Dim ix1 = (V_sx * oy + ox) * db.Depth + fd
                                         Dim ix2 = (f.SY * fy + fx) * f.Depth + fd
+
                                         f.addGradient(ix2, db.getWeight(ix1) * chain_grad)
                                         db.addGradient(ix1, f.getWeight(ix2) * chain_grad)
                                     Next
                                 End If
                             Next
                         Next
+
                         biases.addGradient(d, chain_grad)
                         x += xy_stride
                         ax += 1 ' xy_stride
