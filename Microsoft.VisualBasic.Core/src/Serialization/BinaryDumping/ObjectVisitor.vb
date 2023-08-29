@@ -133,15 +133,23 @@ Namespace Serialization.BinaryDumping
         End Function
 
         Private Shared Iterator Function LoadAllFieldsInternal(type As Type) As IEnumerable(Of FieldInfo)
+            Dim check As New Index(Of String)
+
             For Each field As FieldInfo In type.GetFields(AllFields)
-                Yield field
+                If Not field.Name Like check Then
+                    Call check.Add(field.Name)
+                    Yield field
+                End If
             Next
 
             Dim base As Value(Of Type) = type
 
             Do While Not (base = base.Value.BaseType) Is Nothing
                 For Each field As FieldInfo In base.Value.GetFields(AllFields)
-                    Yield field
+                    If Not field.Name Like check Then
+                        Call check.Add(field.Name)
+                        Yield field
+                    End If
                 Next
             Loop
         End Function
