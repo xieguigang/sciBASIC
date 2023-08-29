@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -13,10 +14,12 @@ Namespace Serialization.BinaryDumping
         Dim stream As BinaryReader
         Dim network As New NetworkByteOrderBuffer
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(s As Stream)
             stream = New BinaryReader(s)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(rd As BinaryReader)
             stream = rd
         End Sub
