@@ -32,24 +32,26 @@ Namespace CNN.losslayers
 
         Public Overrides Function backward(y As Integer) As Double
             ' compute and accumulate gradient wrt weights and bias of this layer
-            Dim x = in_act
-            x.clearGradient()
-
+            Dim x = in_act.clearGradient()
             ' we're using structured loss here, which means that the score
             ' of the ground truth should be higher than the score of any other
             ' class, by a margin
             Dim yscore = x.getWeight(y) ' score of ground truth
             Dim margin = 1.0
             Dim loss = 0.0
-            For i = 0 To out_depth - 1
+
+            For i As Integer = 0 To out_depth - 1
                 If y = i Then
                     Continue For
                 End If
+
                 Dim ydiff = -yscore + x.getWeight(i) + margin
+
                 If ydiff > 0 Then
                     ' violating dimension, apply loss
                     x.addGradient(i, 1)
                     x.subGradient(y, 1)
+
                     loss += ydiff
                 End If
             Next

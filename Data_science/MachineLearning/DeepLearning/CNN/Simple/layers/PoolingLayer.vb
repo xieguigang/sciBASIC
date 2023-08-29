@@ -67,12 +67,12 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
+            Dim lA As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0)
+            Dim n As Integer = 0 ' a counter for switches
+
             in_act = db
 
-            Dim lA As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0)
-
-            Dim n = 0 ' a counter for switches
-            For d = 0 To out_depth - 1
+            For d As Integer = 0 To out_depth - 1
                 Dim x = -padding
                 Dim ax = 0
 
@@ -81,11 +81,11 @@ Namespace CNN.layers
                     Dim ay = 0
 
                     While ay < out_sy
-
                         ' convolve centered at this particular location
                         Dim a As Double = -99999 ' hopefully small enough ;\
                         Dim winx = -1
                         Dim winy = -1
+
                         For fx = 0 To sx - 1
                             For fy = 0 To sy - 1
                                 Dim oy = y + fy
@@ -103,6 +103,7 @@ Namespace CNN.layers
                                 End If
                             Next
                         Next
+
                         switchx(n) = winx
                         switchy(n) = winy
                         n += 1
@@ -115,7 +116,9 @@ Namespace CNN.layers
                     ax += 1
                 End While
             Next
+
             out_act = lA
+
             Return out_act
         End Function
 

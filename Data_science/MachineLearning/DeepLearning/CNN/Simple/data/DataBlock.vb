@@ -47,11 +47,11 @@ Namespace CNN.data
         ''' <summary>
         ''' backend of <see cref="Weights"/>
         ''' </summary>
-        Dim w As Double()
+        Friend w As Double()
         ''' <summary>
         ''' backend of <see cref="Gradients"/>
         ''' </summary>
-        Dim dw As Double()
+        Friend dw As Double()
 
         Sub New()
         End Sub
@@ -133,6 +133,11 @@ Namespace CNN.data
             Next
         End Sub
 
+        ''' <summary>
+        ''' set <see cref="w"/>
+        ''' </summary>
+        ''' <param name="ix"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function getWeight(ix As Integer) As Double
             Return w(ix)
@@ -143,6 +148,11 @@ Namespace CNN.data
             Return w(ix)
         End Function
 
+        ''' <summary>
+        ''' get <see cref="w"/>
+        ''' </summary>
+        ''' <param name="ix"></param>
+        ''' <param name="val"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setWeight(ix As Integer, val As Double)
             w(ix) = val
@@ -194,6 +204,11 @@ Namespace CNN.data
             dw(ix) = val
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub setGradient(val As Double())
+            Array.ConstrainedCopy(val, Scan0, dw, Scan0, dw.Length)
+        End Sub
+
         Public Overridable Sub addGradient(x As Integer, y As Integer, depth As Integer, val As Double)
             Dim ix = (_SX * y + x) * _Depth + depth
             addGradient(ix, val)
@@ -237,10 +252,13 @@ Namespace CNN.data
             Return db
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub clearGradient()
+        ''' <summary>
+        ''' set <see cref="dw"/> vector to zero
+        ''' </summary>
+        Public Function clearGradient() As DataBlock
             Call dw.fill(0)
-        End Sub
+            Return Me
+        End Function
 
         Public Overridable Sub addFrom(db As DataBlock)
             For i As Integer = 0 To w.Length - 1
