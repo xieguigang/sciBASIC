@@ -9,9 +9,15 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     Public Interface Layer
-        Function forward(db As DataBlock, training As Boolean) As DataBlock
-        Sub backward()
+
         ReadOnly Property BackPropagationResult As IList(Of BackPropResult)
+
+        Function forward(db As DataBlock, training As Boolean) As DataBlock
+        ''' <summary>
+        ''' compute and accumulate gradient wrt weights and bias of this layer
+        ''' </summary>
+        Sub backward()
+
     End Interface
 
 End Namespace

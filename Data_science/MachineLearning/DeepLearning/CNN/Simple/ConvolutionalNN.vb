@@ -55,16 +55,29 @@ Namespace CNN
             Me.m_layers = CType(layers, List(Of Layer)).ToArray
         End Sub
 
-        ' 
-        ' 		 Forward prop the network.
-        ' 		 The trainer class passes is_training = true, but when this function is
-        ' 		 called from outside (not from the trainer), it defaults to prediction mode
-        ' 		
+        Public Function predict(db As DataBlock) As Double()
+            Call forward(db, training:=False)
+
+            Dim S = CType(m_layers(m_layers.Length - 1), LossLayer)
+            Dim p = S.OutAct.Weights
+            Return p
+        End Function
+
+        ''' <summary>
+        ''' Forward prop the network.
+        ''' The trainer class passes is_training = true, but when this function is
+        ''' called from outside (not from the trainer), it defaults to prediction mode
+        ''' </summary>
+        ''' <param name="db"></param>
+        ''' <param name="training"></param>
+        ''' <returns></returns>
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock
             Dim act = m_layers(0).forward(db, training)
-            For i = 1 To m_layers.Length - 1
+
+            For i As Integer = 1 To m_layers.Length - 1
                 act = m_layers(i).forward(act, training)
             Next
+
             Return act
         End Function
 
@@ -80,9 +93,11 @@ Namespace CNN
         Public Overridable Function backward(y As Integer) As Double
             Dim N = m_layers.Length
             Dim loss = CType(m_layers(N - 1), LossLayer).backward(y)
-            For i = N - 2 To 0 Step -1 ' first layer assumed input
+
+            For i As Integer = N - 2 To 0 Step -1 ' first layer assumed input
                 m_layers(i).backward()
             Next
+
             Return loss
         End Function
 

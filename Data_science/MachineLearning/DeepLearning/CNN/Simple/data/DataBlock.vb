@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Java
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -13,13 +14,15 @@ Namespace CNN.data
     ''' </summary>
     Public Class DataBlock
 
-        Private w As Double()
-        Private dw As Double()
-
         Public Overridable ReadOnly Property SX As Integer
         Public Overridable ReadOnly Property SY As Integer
         Public Overridable ReadOnly Property Depth As Integer
 
+        ''' <summary>
+        ''' the multiple class classify probability weight
+        ''' (or the prediction result) 
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property Weights As Double()
             Get
                 Return w
@@ -31,6 +34,9 @@ Namespace CNN.data
                 Return dw
             End Get
         End Property
+
+        Dim w As Double()
+        Dim dw As Double()
 
         Public Sub New(sx As Integer, sy As Integer, depth As Integer)
             Me.New(sx, sy, depth, -1.0)
@@ -58,13 +64,33 @@ Namespace CNN.data
             dw.fill(0)
         End Sub
 
-        Public Overridable Sub addImageData(imgData As Integer(), maxvalue As Integer)
-            ' prepare the input: get pixels and normalize them
+        ''' <summary>
+        ''' prepare the input: get pixels and normalize them
+        ''' </summary>
+        ''' <param name="imgData"></param>
+        ''' <param name="maxvalue"></param>
+        Public Overridable Sub addImageData(imgData As Byte(), maxvalue As Byte)
+            Dim max As Double = maxvalue
+
             For i = 0 To imgData.Length - 1
-                w(i) = imgData(i) / CSng(maxvalue) - 0.5 ' normalize image pixels to [-0.5, 0.5]
+                w(i) = imgData(i) / max - 0.5 ' normalize image pixels to [-0.5, 0.5]
             Next
         End Sub
 
+        ''' <summary>
+        ''' prepare the input: get pixels and normalize them
+        ''' </summary>
+        ''' <param name="imgData"></param>
+        ''' <param name="maxvalue"></param>
+        Public Overridable Sub addImageData(imgData As Integer(), maxvalue As Integer)
+            Dim max As Double = maxvalue
+
+            For i = 0 To imgData.Length - 1
+                w(i) = imgData(i) / max - 0.5 ' normalize image pixels to [-0.5, 0.5]
+            Next
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function getWeight(ix As Integer) As Double
             Return w(ix)
         End Function

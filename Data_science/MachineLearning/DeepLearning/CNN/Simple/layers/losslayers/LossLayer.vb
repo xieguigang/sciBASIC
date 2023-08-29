@@ -37,8 +37,17 @@ Namespace CNN.losslayers
             def.depth = out_depth
         End Sub
 
+        ''' <summary>
+        ''' compute and accumulate gradient wrt weights and bias of this layer
+        ''' </summary>
         Public Overridable Sub backward() Implements Layer.backward
         End Sub
+
+        ''' <summary>
+        ''' compute and accumulate gradient wrt weights and bias of this layer
+        ''' </summary>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Public MustOverride Function backward(y As Integer) As Double
         Public MustOverride Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
 

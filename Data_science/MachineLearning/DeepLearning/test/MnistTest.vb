@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
@@ -73,14 +74,15 @@ Namespace ConsoleApp1
             For j = 1 To 500
                 Dim loss As Double = 0
                 Dim i As i32 = 1
-                Dim n As Integer = 200
+                Dim n As Integer = 300
+                Dim d As Integer = n / 25
 
                 For Each img In mr.ExtractVectors.Take(n)
-                    db.addImageData(img.value.Select(Function(b) CInt(b)).ToArray, img.value.Max)
+                    db.addImageData(img.value, img.value.Max)
                     tr = trainer.train(db, img.description)
                     loss += tr.Loss
 
-                    If (++i) Mod 5 = 0 Then
+                    If (++i) Mod d = 0 Then
                         Console.WriteLine()
                         Console.WriteLine("Pass " & j.ToString() & " Read images: " & i.ToString())
                         Console.WriteLine("Training time: " & (CLng(UnixTimeStamp) - start).ToString())
@@ -98,10 +100,9 @@ Namespace ConsoleApp1
                 correctPredictions.fill(0)
                 numberDistribution.fill(0)
                 For Each img In mr.ExtractVectors.Take(n)
-                    db.addImageData(img.value.Select(Function(b) CInt(b)).ToArray, img.value.Max)
-                    net.forward(db, False)
+                    db.addImageData(img.value, img.value.Max)
                     Dim correct As Integer = img.description
-                    Dim prediction = net.Prediction
+                    Dim prediction = which.Max(net.predict(db))
                     If correct = prediction Then
                         correctPredictions(correct) += 1
                     End If
