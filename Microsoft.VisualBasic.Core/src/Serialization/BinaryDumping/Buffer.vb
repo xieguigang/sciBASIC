@@ -117,6 +117,12 @@ Namespace Serialization.BinaryDumping
             Call s.Read(bytes, Scan0, nlen)
             Return New Buffer(bytes)
         End Function
+
+        Public Shared Function Parse(rd As BinaryReader) As Buffer
+            Dim nlen As Integer = rd.ReadInt32
+            Dim bytes As Byte() = rd.ReadBytes(nlen)
+            Return New Buffer(bytes)
+        End Function
     End Structure
 
     Public Delegate Function IGetBuffer(Of T)(x As T) As Byte()

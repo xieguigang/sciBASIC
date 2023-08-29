@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace CNN
 
@@ -19,108 +20,30 @@ Namespace CNN
         End Function
 
         Private Function Read(rd As BinaryReader) As ConvolutionalNN
-            '            Dim layerNum As Integer = rd.ReadInt32
-            '            Dim alpha As Double = rd.ReadDouble
-            '            Dim lambda As Double = rd.ReadDouble
-            '            Dim batchSize As Integer = rd.ReadInt32
-            '            Dim layers As New LayerBuilder(initialized:=True)
+            Dim layerNum As Integer = rd.ReadInt32
+            Dim layers As New LayerBuilder(initialized:=True)
 
-            '            For i As Integer = 0 To layerNum - 1
-            '                Call layers.add(ReadLayer(rd))
-            '            Next
+            For i As Integer = 0 To layerNum - 1
+                Call layers.add(ReadLayer(rd))
+            Next
 
-            '            Return New CNN(layers, batchSize) With {
-            '                .ALPHA = alpha,
-            '                .LAMBDA = lambda
-            '            }
+            Return New ConvolutionalNN(layers)
         End Function
 
-        '        Private Function ReadLayer(rd As BinaryReader) As Layer
-        '            If 0 <> rd.ReadInt64() Then
-        '                Throw New InvalidDataException("invalid file format!")
-        '            End If
+        Private Function ReadLayer(rd As BinaryReader) As Layer
+            If 0 <> rd.ReadInt64() Then
+                Throw New InvalidDataException("invalid file format!")
+            End If
 
-        '            Dim type As LayerTypes = CType(rd.ReadInt32, LayerTypes)
-        '            Dim outMapNum As Integer = rd.ReadInt32
-        '            Dim classNum As Integer = rd.ReadInt32
-        '            Dim mapSize As Dimension = readDims(rd)
-        '            Dim kernelSize As Dimension = readDims(rd)
-        '            Dim scaleSize As Dimension = readDims(rd)
-        '            Dim blen As Integer = rd.ReadInt32
-        '            Dim bias As Double() = Nothing
+            ' verify the stream parser by use this flag data
+            Dim type As LayerTypes = CType(rd.ReadInt32, LayerTypes)
+            Dim layer As Layer = DirectCast(New ObjectInputStream(rd).ReadObject, Layer)
 
-        '            If blen <> -1 Then
-        '                bias = New Double(blen - 1) {}
-
-        '                For i As Integer = 0 To bias.Length - 1
-        '                    bias(i) = rd.ReadDouble
-        '                Next
-        '            End If
-
-        '            Dim kernel = readMatrix(rd).ToArray
-        '            Dim outmaps = readMatrix(rd).ToArray
-        '            Dim errors = readMatrix(rd).ToArray
-
-        '            If kernel.Length = 0 Then
-        '                kernel = Nothing
-        '            End If
-        '            If outmaps.Length = 0 Then
-        '                outmaps = Nothing
-        '            End If
-        '            If errors.Length = 0 Then
-        '                errors = Nothing
-        '            End If
-
-        '            Return New Layer(mapSize, kernelSize, scaleSize, type, outMapNum, classNum) With {
-        '                .bias = bias,
-        '                .m_errors = errors,
-        '                .m_kernel = kernel,
-        '                .m_outmaps = outmaps
-        '            }
-        '        End Function
-
-        '        Private Iterator Function readMatrix(rd As BinaryReader) As IEnumerable(Of Double()()())
-        '            Dim lm As Integer = rd.ReadInt32
-
-        '            If lm = -1 Then
-        '                Return
-        '            End If
-
-        '            For i As Integer = 0 To lm - 1
-        '                Dim li As Integer = rd.ReadInt32
-        '                Dim ri As Double()()() = New Double(li - 1)()() {}
-
-        '                For j As Integer = 0 To ri.Length - 1
-        '                    Dim lj As Integer = rd.ReadInt32
-        '                    Dim rj As Double()() = New Double(lj - 1)() {}
-
-        '                    For k As Integer = 0 To rj.Length - 1
-        '                        Dim lk As Integer = rd.ReadInt32
-        '                        Dim rk As Double() = New Double(lk - 1) {}
-
-        '                        For n As Integer = 0 To rk.Length - 1
-        '                            rk(n) = rd.ReadDouble
-        '                        Next
-
-        '                        rj(k) = rk
-        '                    Next
-
-        '                    ri(j) = rj
-        '                Next
-
-        '                Yield ri
-        '            Next
-        '        End Function
-
-        '        Private Function readDims(rd As BinaryReader) As Dimension
-        '            Dim x = rd.ReadInt32
-        '            Dim y = rd.ReadInt32
-
-        '            If x = -1 AndAlso y = -1 Then
-        '                Return Nothing
-        '            Else
-        '                Return New Dimension(x, y)
-        '            End If
-        '        End Function
+            If type <> layer.type Then
+                Throw New InvalidDataException("The CNN layer type mis-matched!")
+            Else
+                Return layer
+            End If
+        End Function
     End Module
 End Namespace

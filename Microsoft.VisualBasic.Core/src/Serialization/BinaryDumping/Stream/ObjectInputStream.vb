@@ -1,4 +1,9 @@
 ﻿Imports System.IO
+Imports System.Reflection
+Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Serialization.BinaryDumping
 
@@ -12,6 +17,10 @@ Namespace Serialization.BinaryDumping
             stream = New BinaryReader(s)
         End Sub
 
+        Sub New(rd As BinaryReader)
+            stream = rd
+        End Sub
+
         Public Function ReadObject() As Object
             Dim flag As Integer = stream.ReadInt32
 
@@ -19,7 +28,37 @@ Namespace Serialization.BinaryDumping
                 Return Nothing
             End If
 
+            Dim info As TypeInfo = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer).LoadJSON(Of TypeInfo)
+            Dim obj As Object = Activator.CreateInstance(info.GetType)
+            Dim nsize As Integer = stream.ReadInt32
+            Dim value As Object
+            Dim fields As Dictionary(Of String, FieldInfo) = ObjectVisitor _
+                .GetAllFields(obj.GetType) _
+                .ToDictionary(Function(f)
+                                  Return f.Name
+                              End Function)
 
+            For i As Integer = 0 To nsize - 1
+                Dim name As String = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer)
+                Dim field As FieldInfo = fields(name)
+
+                If DataFramework.IsPrimitive(field.FieldType) Then
+                    Dim buf As Buffer = Buffer.Parse(stream)
+
+                    Select Case field.FieldType
+                        Case GetType(Integer) : value = BitConverter.ToInt32(buf.buffer, Scan0)
+                        Case GetType(Double) : value = BitConverter.ToDouble(buf.buffer, Scan0)
+                        Case Else
+                            Throw New NotImplementedException($"{field.Name}: {field.FieldType.Name}")
+                    End Select
+                Else
+                    value = Me.ReadObject
+                End If
+
+                Call field.SetValue(obj, value)
+            Next
+
+            Return obj
         End Function
 
         Public Sub Close()

@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace CNN
 
@@ -17,11 +18,6 @@ Namespace CNN
             Call wr.Write(Encoding.ASCII.GetBytes("CNN"))
             Call wr.Write(cnn.layerNum)
 
-            '            Call wr.Write(cnn.ALPHA)
-            '            Call wr.Write(cnn.LAMBDA)
-
-            '            Call wr.Write(cnn.batchSize)
-
             For i As Integer = 0 To cnn.LayerNum - 1
                 Call Write(layer:=cnn(i), wr)
             Next
@@ -30,17 +26,14 @@ Namespace CNN
         Private Sub Write(layer As Layer, wr As BinaryWriter)
             Call wr.Write(0&)
             Call wr.Write(CInt(layer.Type))
+            Call wr.Flush()
 
-            Select Case layer.Type
-                Case Convolutional.LayerTypes.Convolution : Write(layer, wr)
-
-                Case Else
-                    Throw New NotImplementedException(layer.Type.Description)
-            End Select
-        End Sub
-
-        Private Sub Write(layer As ConvolutionLayer, wr As BinaryWriter)
-
+            Dim save As New ObjectOutputStream(wr)
+            ' do not close/dispose the stream at here
+            ' or the file stream data will be close at here
+            ' so that we can not save the next layer object
+            Call save.WriteObject(layer)
+            Call save.Flush()
         End Sub
     End Module
 End Namespace

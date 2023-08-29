@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -13,8 +14,16 @@ Namespace Serialization.BinaryDumping
         Dim stream As BinaryWriter
         Dim network As New NetworkByteOrderBuffer
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Sub New(s As Stream)
             stream = New BinaryWriter(s)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Sub New(wr As BinaryWriter)
+            stream = wr
         End Sub
 
         Public Sub WriteObject(obj As Object)
@@ -33,6 +42,7 @@ Namespace Serialization.BinaryDumping
             Dim value As Object
 
             Call stream.Write(New Buffer(Encoding.ASCII.GetBytes(json)).Serialize)
+            Call stream.Write(fields.Length)
 
             For Each field As FieldInfo In fields
                 Call stream.Write(New Buffer(Encoding.ASCII.GetBytes(field.Name)).Serialize)
