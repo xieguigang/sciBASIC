@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -23,6 +24,7 @@ Namespace CNN.data
         ''' (or the prediction result) 
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>get <see cref="w"/></remarks>
         Public Overridable ReadOnly Property Weights As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -30,6 +32,11 @@ Namespace CNN.data
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>get <see cref="dw"/></remarks>
         Public Overridable ReadOnly Property Gradients As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -37,7 +44,13 @@ Namespace CNN.data
             End Get
         End Property
 
+        ''' <summary>
+        ''' backend of <see cref="Weights"/>
+        ''' </summary>
         Dim w As Double()
+        ''' <summary>
+        ''' backend of <see cref="Gradients"/>
+        ''' </summary>
         Dim dw As Double()
 
         Sub New()
@@ -150,6 +163,14 @@ Namespace CNN.data
             Return getGradient(ix)
         End Function
 
+        ''' <summary>
+        ''' get <see cref="Gradients"/>
+        ''' </summary>
+        ''' <param name="ix"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' get element value from <see cref="dw"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function getGradient(ix As Integer) As Double
             Return dw(ix)
@@ -160,6 +181,14 @@ Namespace CNN.data
             setGradient(ix, val)
         End Sub
 
+        ''' <summary>
+        ''' set element value to <see cref="Gradients"/>
+        ''' </summary>
+        ''' <param name="ix"></param>
+        ''' <param name="val"></param>
+        ''' <remarks>
+        ''' set value to <see cref="dw"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Sub setGradient(ix As Integer, val As Double)
             dw(ix) = val
@@ -180,9 +209,13 @@ Namespace CNN.data
             dw(ix) -= val
         End Sub
 
+        ''' <summary>
+        ''' <paramref name="val"/> * <see cref="Gradients"/>
+        ''' </summary>
+        ''' <param name="val"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub mulGradient(ix As Integer, val As Double)
-            dw(ix) *= val
+        Public Overridable Sub mulGradient(val As Double)
+            dw = SIMD.Multiply.f64_scalar_op_multiply_f64(val, dw)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -190,6 +223,10 @@ Namespace CNN.data
             Return New DataBlock(_SX, _SY, _Depth, 0.0)
         End Function
 
+        ''' <summary>
+        ''' make a copy of <see cref="w"/> or <see cref="Weights"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function clone() As DataBlock
             Dim db As New DataBlock(_SX, _SY, _Depth, 0.0)
 

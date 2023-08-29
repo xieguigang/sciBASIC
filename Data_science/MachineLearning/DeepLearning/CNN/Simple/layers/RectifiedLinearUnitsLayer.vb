@@ -33,16 +33,20 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            in_act = db
             Dim V2 As DataBlock = db.clone()
             Dim N = db.Weights.Length
             Dim V2w = V2.Weights
-            For i = 0 To N - 1
+
+            in_act = db
+
+            For i As Integer = 0 To N - 1
                 If V2w(i) < 0 Then
                     V2.setGradient(i, 0) ' threshold at 0
                 End If
             Next
+
             out_act = V2
+
             Return out_act
         End Function
 

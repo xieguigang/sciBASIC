@@ -61,9 +61,7 @@ Namespace CNN.layers
                 Next
             Else
                 ' scale the activations during prediction
-                For i As Integer = 0 To N - 1
-                    V2.mulGradient(i, drop_prob)
-                Next
+                V2.mulGradient(drop_prob)
             End If
 
             out_act = V2
@@ -76,10 +74,16 @@ Namespace CNN.layers
             Dim V = in_act ' we need to set dw of this
             Dim chain_grad = out_act
             Dim N = V.Weights.Length
+
             V.clearGradient() ' zero out gradient wrt data
-            For i = 0 To N - 1
+
+            Dim V_dw = V.Gradients
+            Dim chain_dw = chain_grad.Gradients
+
+            For i As Integer = 0 To N - 1
                 If Not dropped(i) Then
-                    V.setGradient(i, chain_grad.getGradient(i)) ' copy over the gradient
+                    ' copy over the gradient
+                    V_dw(i) = chain_dw(i)
                 End If
             Next
         End Sub
