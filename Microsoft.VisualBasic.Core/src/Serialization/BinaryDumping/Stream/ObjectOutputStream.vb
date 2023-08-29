@@ -47,22 +47,39 @@ Namespace Serialization.BinaryDumping
             For Each field As FieldInfo In fields
                 Call stream.Write(New Buffer(Encoding.ASCII.GetBytes(field.Name)).Serialize)
 
-                If DataFramework.IsPrimitive(field.FieldType) Then
-                    value = field.GetValue(obj)
+                value = field.GetValue(obj)
 
+                If DataFramework.IsPrimitive(field.FieldType) Then
                     ' write value at here
                     Select Case field.FieldType
                         Case GetType(Integer) : bytes = BitConverter.GetBytes(CInt(value))
                         Case GetType(Double) : bytes = network.GetBytes(CDbl(value))
                         Case GetType(String) : bytes = Encoding.UTF8.GetBytes(CStr(value))
+                        Case GetType(Single) : bytes = network.GetBytes(CSng(value))
+                        Case GetType(Long) : bytes = BitConverter.GetBytes(CLng(value))
                         Case Else
                             Throw New NotImplementedException(field.Name & ": " & field.FieldType.Name)
                     End Select
 
                     Call stream.Write(New Buffer(bytes).Serialize)
+                ElseIf field.FieldType.IsArray Then
+                    If DataFramework.IsPrimitive(field.FieldType.GetElementType) Then
+                        ' write numeric/string vector
+                        bytes = RawStream.GetBytes(DirectCast(value, Array))
+                        stream.Write(New Buffer(bytes).Serialize)
+                    Else
+                        ' write object array
+                        Dim array As Array = value
+
+                        Call stream.Write(array.Length)
+
+                        For i As Integer = 0 To array.Length - 1
+                            Call WriteObject(array.GetValue(i))
+                        Next
+                    End If
                 Else
                     ' class/struct contains properties
-                    Call WriteObject(obj)
+                    Call WriteObject(value)
                 End If
             Next
         End Sub
