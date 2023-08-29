@@ -15,7 +15,8 @@ Namespace CNN.trainers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     Public MustInherit Class Trainer
-        Private net As ConvolutionalNN
+        Dim net As ConvolutionalNN
+
         Protected Friend learning_rate, l1_decay, l2_decay As Double
         Protected Friend batch_size, k As Integer
         Protected Friend momentum, eps As Double

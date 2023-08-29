@@ -10,9 +10,9 @@ Namespace CNN.data
     ''' </summary>
     Public Class OutputDefinition
 
-        Public Overridable Property OutX As Integer
-        Public Overridable Property OutY As Integer
-        Public Overridable Property Depth As Integer
+        Public Overridable Property outX As Integer
+        Public Overridable Property outY As Integer
+        Public Overridable Property depth As Integer
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

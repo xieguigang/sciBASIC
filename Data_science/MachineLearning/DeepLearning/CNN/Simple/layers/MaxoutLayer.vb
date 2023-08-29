@@ -21,11 +21,17 @@ Namespace CNN.layers
         Private ReadOnly group_size As Integer = 2
         Private switches As Integer()
 
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Return New List(Of BackPropResult)()
+            End Get
+        End Property
+
         Public Sub New(def As OutputDefinition)
             ' computed
-            out_sx = def.OutX
-            out_sy = def.OutY
-            out_depth = CInt(std.Floor(def.Depth / group_size))
+            out_sx = def.outX
+            out_sy = def.outY
+            out_depth = CInt(std.Floor(def.depth / group_size))
 
             switches = New Integer(out_sx * out_sy * out_depth - 1) {} ' useful for backprop
             switches.fill(0)
@@ -108,11 +114,9 @@ Namespace CNN.layers
             End If
         End Sub
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
-            Get
-                Return New List(Of BackPropResult)()
-            End Get
-        End Property
+        Public Overrides Function ToString() As String
+            Return "maxout()"
+        End Function
     End Class
 
 End Namespace

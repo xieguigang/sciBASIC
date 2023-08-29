@@ -37,10 +37,16 @@ Namespace CNN.layers
 
         Private in_act, out_act, S_cache_ As DataBlock
 
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Return New List(Of BackPropResult)()
+            End Get
+        End Property
+
         Public Sub New()
             ' checks
             If n Mod 2 = 0 Then
-                Console.WriteLine("WARNING n should be odd for LRN layer")
+                VBDebugger.EchoLine("WARNING: n should be odd for LRN layer")
             End If
         End Sub
 
@@ -107,11 +113,9 @@ Namespace CNN.layers
             Next
         End Sub
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
-            Get
-                Return New List(Of BackPropResult)()
-            End Get
-        End Property
+        Public Overrides Function ToString() As String
+            Return $"local_response_norm()"
+        End Function
     End Class
 
 End Namespace

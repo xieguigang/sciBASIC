@@ -47,6 +47,10 @@ Namespace CNN.losslayers
             Next
             Return loss
         End Function
+
+        Public Overrides Function ToString() As String
+            Return "svm()"
+        End Function
     End Class
 
 End Namespace

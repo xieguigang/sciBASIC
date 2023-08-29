@@ -14,6 +14,12 @@ Namespace CNN.layers
         Implements Layer
         Private in_act, out_act As DataBlock
 
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Return New List(Of BackPropResult)()
+            End Get
+        End Property
+
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
             Dim V2 As DataBlock = db.clone()
@@ -42,11 +48,9 @@ Namespace CNN.layers
             Next
         End Sub
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
-            Get
-                Return New List(Of BackPropResult)()
-            End Get
-        End Property
+        Public Overrides Function ToString() As String
+            Return $"rectified_linear()"
+        End Function
     End Class
 
 End Namespace

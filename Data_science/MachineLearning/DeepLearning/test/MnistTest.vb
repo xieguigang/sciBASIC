@@ -24,8 +24,8 @@ Namespace ConsoleApp1
             ' Reader mr = new PGMReader("pgmfiles/train");
             '        Reader mr = new ImageReader("pngfiles/train");
             Dim mr As New MNIST(
-                "D:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-images-idx3-ubyte",
-                "D:\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-labels-idx1-ubyte"
+                "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-images-idx3-ubyte",
+                "\GCModeller\src\R-sharp\test\demo\machineLearning\umap\mnist_dataset\train-labels-idx1-ubyte"
             )
 
             layers.buildInputLayer(New Dimension(mr.ImageSize.Width, mr.ImageSize.Height), 1)
@@ -73,7 +73,7 @@ Namespace ConsoleApp1
             For j = 1 To 500
                 Dim loss As Double = 0
                 Dim i As i32 = 1
-                Dim n As Integer = 100
+                Dim n As Integer = 200
 
                 For Each img In mr.ExtractVectors.Take(n)
                     db.addImageData(img.value.Select(Function(b) CInt(b)).ToArray, img.value.Max)

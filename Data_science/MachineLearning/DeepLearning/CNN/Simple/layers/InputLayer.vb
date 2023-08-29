@@ -16,14 +16,20 @@ Namespace CNN.layers
     <Serializable>
     Public Class InputLayer
         Implements Layer
+
         Private in_act As DataBlock
         Private out_act As DataBlock
 
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Return New List(Of BackPropResult)()
+            End Get
+        End Property
 
         Public Sub New(def As OutputDefinition, out_sx As Integer, out_sy As Integer, out_depth As Integer)
-            def.OutX = out_sx
-            def.OutY = out_sy
-            def.Depth = out_depth
+            def.outX = out_sx
+            def.outY = out_sy
+            def.depth = out_depth
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
@@ -36,11 +42,9 @@ Namespace CNN.layers
 
         End Sub
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
-            Get
-                Return New List(Of BackPropResult)()
-            End Get
-        End Property
+        Public Overrides Function ToString() As String
+            Return "input()"
+        End Function
     End Class
 
 End Namespace

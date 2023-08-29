@@ -11,6 +11,7 @@ Namespace CNN.losslayers
     ''' </summary>
     Public Class RegressionLayer
         Inherits LossLayer
+
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)
         End Sub
@@ -46,6 +47,10 @@ Namespace CNN.losslayers
             loss += 0.5 * dy * dy
 
             Return loss
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return "regression()"
         End Function
     End Class
 

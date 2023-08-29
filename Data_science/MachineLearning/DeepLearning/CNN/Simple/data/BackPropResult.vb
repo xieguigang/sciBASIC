@@ -1,4 +1,6 @@
-﻿Namespace CNN.data
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace CNN.data
 
     ''' <summary>
     ''' When we have done a back propagation of the network we will receive a
@@ -44,6 +46,10 @@
             Me.l1_decay_mul = l1_decay_mul
             Me.l2_decay_mul = l2_decay_mul
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 End Namespace

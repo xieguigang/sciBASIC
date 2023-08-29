@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
+Imports Microsoft.VisualBasic.Linq
 
 Namespace CNN
 
@@ -16,6 +17,12 @@ Namespace CNN
     Public Class ConvolutionalNN
 
         Dim m_layers As Layer()
+
+        Public ReadOnly Property LayerNum As Integer
+            Get
+                Return m_layers.Length
+            End Get
+        End Property
 
         ''' <summary>
         ''' Accumulate parameters and gradients for the entire network
@@ -38,15 +45,9 @@ Namespace CNN
             Get
                 Dim S = CType(m_layers(m_layers.Length - 1), LossLayer)
                 Dim p = S.OutAct.Weights
-                Dim maxv = p(0)
-                Dim maxi = 0
-                For i = 1 To p.Length - 1
-                    If p(i) > maxv Then
-                        maxv = p(i)
-                        maxi = i
-                    End If
-                Next
-                Return maxi
+                Dim i As Integer = which.Max(p)
+
+                Return i
             End Get
         End Property
 
@@ -83,6 +84,10 @@ Namespace CNN
                 m_layers(i).backward()
             Next
             Return loss
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{m_layers.Count} CNN layers: {m_layers.JoinBy(" -> ")}"
         End Function
     End Class
 

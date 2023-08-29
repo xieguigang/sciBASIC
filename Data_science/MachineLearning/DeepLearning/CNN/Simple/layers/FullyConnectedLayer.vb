@@ -25,12 +25,23 @@ Namespace CNN.layers
         Private filters As IList(Of DataBlock)
         Private biases As DataBlock
 
+        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+            Get
+                Dim results As IList(Of BackPropResult) = New List(Of BackPropResult)()
+                For i = 0 To out_depth - 1
+                    results.Add(New BackPropResult(filters(i).Weights, filters(i).Gradients, l1_decay_mul, l2_decay_mul))
+                Next
+                results.Add(New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0))
+
+                Return results
+            End Get
+        End Property
 
         Public Sub New(def As OutputDefinition, num_neurons As Integer)
             out_depth = num_neurons
 
             ' computed
-            num_inputs = def.OutX * def.OutY * def.Depth
+            num_inputs = def.outX * def.outY * def.depth
             out_sx = 1
             out_sy = 1
 
@@ -42,9 +53,9 @@ Namespace CNN.layers
             Next
             biases = New DataBlock(1, 1, out_depth, bias)
 
-            def.OutX = out_sx
-            def.OutY = out_sy
-            def.Depth = out_depth
+            def.outX = out_sx
+            def.outY = out_sy
+            def.depth = out_depth
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
@@ -80,17 +91,9 @@ Namespace CNN.layers
             Next
         End Sub
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
-            Get
-                Dim results As IList(Of BackPropResult) = New List(Of BackPropResult)()
-                For i = 0 To out_depth - 1
-                    results.Add(New BackPropResult(filters(i).Weights, filters(i).Gradients, l1_decay_mul, l2_decay_mul))
-                Next
-                results.Add(New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0))
-
-                Return results
-            End Get
-        End Property
+        Public Overrides Function ToString() As String
+            Return $"full_connected({out_depth})"
+        End Function
     End Class
 
 End Namespace
