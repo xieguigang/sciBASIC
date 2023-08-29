@@ -5,13 +5,20 @@ Namespace Serialization.BinaryDumping
     Public Class ObjectInputStream : Implements IDisposable
 
         Dim disposedValue As Boolean
-        Dim stream As Stream
+        Dim stream As BinaryReader
+        Dim network As New NetworkByteOrderBuffer
 
         Sub New(s As Stream)
-            stream = s
+            stream = New BinaryReader(s)
         End Sub
 
         Public Function ReadObject() As Object
+            Dim flag As Integer = stream.ReadInt32
+
+            If flag <= 0 Then
+                Return Nothing
+            End If
+
 
         End Function
 

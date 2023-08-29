@@ -1,18 +1,35 @@
 ﻿Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Serialization.BinaryDumping
 
     Public Class ObjectOutputStream : Implements IDisposable
 
         Dim disposedValue As Boolean
-        Dim stream As Stream
+        Dim stream As BinaryWriter
+        Dim network As New NetworkByteOrderBuffer
 
         Sub New(s As Stream)
-            stream = s
+            stream = New BinaryWriter(s)
         End Sub
 
         Public Sub WriteObject(obj As Object)
+            If obj Is Nothing Then
+                Call stream.Write(-1)
+            Else
+                Call WriteObjectInternal(obj)
+            End If
+        End Sub
 
+        Private Sub WriteObjectInternal(obj As Object)
+            Dim info As New TypeInfo(obj.GetType)
+            Dim json As String = info.GetJson
+            Dim bytes As Byte() = Encoding.ASCII.GetBytes(json)
+
+            Call stream.Write(bytes.Length)
+            Call stream.Write(bytes,)
         End Sub
 
         Public Sub Flush()
