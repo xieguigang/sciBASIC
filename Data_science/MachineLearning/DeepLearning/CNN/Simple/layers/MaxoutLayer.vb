@@ -12,18 +12,16 @@ Namespace CNN.layers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class MaxoutLayer
-        Implements Layer
+    Public Class MaxoutLayer ： Implements Layer
+
         Private out_depth, out_sx, out_sy As Integer
-
         Private in_act, out_act As DataBlock
-
         Private ReadOnly group_size As Integer = 2
         Private switches As Integer()
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                Return New List(Of BackPropResult)()
+                ' no data
             End Get
         End Property
 

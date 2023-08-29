@@ -10,7 +10,7 @@ Namespace CNN.layers
     ''' </summary>
     Public Interface Layer
 
-        ReadOnly Property BackPropagationResult As IList(Of BackPropResult)
+        ReadOnly Property BackPropagationResult As IEnumerable(Of BackPropResult)
 
         Function forward(db As DataBlock, training As Boolean) As DataBlock
         ''' <summary>

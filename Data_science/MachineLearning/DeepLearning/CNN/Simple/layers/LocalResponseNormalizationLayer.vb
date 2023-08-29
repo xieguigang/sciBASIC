@@ -36,9 +36,9 @@ Namespace CNN.layers
 
         Private in_act, out_act, S_cache_ As DataBlock
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                Return New List(Of BackPropResult)()
+                ' no data
             End Get
         End Property
 

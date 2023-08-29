@@ -13,9 +13,9 @@ Namespace CNN.losslayers
         Protected Friend num_inputs, out_depth, out_sx, out_sy As Integer
         Protected Friend in_act, out_act As DataBlock
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                Return New List(Of BackPropResult)()
+                ' no data
             End Get
         End Property
 

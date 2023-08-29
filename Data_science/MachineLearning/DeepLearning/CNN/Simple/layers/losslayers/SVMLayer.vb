@@ -9,8 +9,7 @@ Namespace CNN.losslayers
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
     <Serializable>
-    Public Class SVMLayer
-        Inherits LossLayer
+    Public Class SVMLayer : Inherits LossLayer
 
         Public Sub New(def As OutputDefinition)
             MyBase.New(def)

@@ -22,9 +22,9 @@ Namespace CNN.layers
         Public ReadOnly Property dims As Dimension
         Public ReadOnly Property out_depth As Integer
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                Return New List(Of BackPropResult)()
+                ' no data
             End Get
         End Property
 

@@ -25,15 +25,13 @@ Namespace CNN.layers
         Private filters As IList(Of DataBlock)
         Private biases As DataBlock
 
-        Public Overridable ReadOnly Property BackPropagationResult As IList(Of BackPropResult) Implements Layer.BackPropagationResult
+        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                Dim results As IList(Of BackPropResult) = New List(Of BackPropResult)()
-                For i = 0 To out_depth - 1
-                    results.Add(New BackPropResult(filters(i).Weights, filters(i).Gradients, l1_decay_mul, l2_decay_mul))
+                For i As Integer = 0 To out_depth - 1
+                    Yield New BackPropResult(filters(i).Weights, filters(i).Gradients, l1_decay_mul, l2_decay_mul)
                 Next
-                results.Add(New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0))
 
-                Return results
+                Yield New BackPropResult(biases.Weights, biases.Gradients, 0.0, 0.0)
             End Get
         End Property
 
