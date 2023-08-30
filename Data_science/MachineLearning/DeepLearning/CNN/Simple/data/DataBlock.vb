@@ -96,6 +96,10 @@ Namespace CNN.data
             End If
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"shape(w:{SX}, h:{SY}, channels_depth:{Depth})[{Weights.Length}]"
+        End Function
+
         ''' <summary>
         ''' prepare the input: get pixels and normalize them
         ''' </summary>
