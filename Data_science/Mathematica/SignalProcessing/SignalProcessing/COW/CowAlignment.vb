@@ -10,12 +10,25 @@ Namespace COW
     ''' <remarks>
     ''' http://prime.psc.riken.jp/compms/msdial/main.html
     ''' </remarks>
-    Public NotInheritable Class CowAlignment
+    Public NotInheritable Class CowAlignment(Of S As {IPeak2D})
 
-        Private Sub New()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="id"><see cref="IPeak2D.ID"/></param>
+        ''' <param name="dim1"><see cref="IPeak2D.Dimension1"/></param>
+        ''' <param name="dim2"><see cref="IPeak2D.Dimension2"/></param>
+        ''' <param name="intensity"><see cref="IPeak2D.Intensity"/></param>
+        ''' <returns></returns>
+        Public Delegate Function CreatePeak(id As String, dim1 As Double, dim2 As Double, intensity As Double) As S
+
+        ReadOnly peak2D As CreatePeak
+
+        Sub New(createPeak As CreatePeak)
+            peak2D = createPeak
         End Sub
 
-        Public Shared Function GaussianFunction(ByVal normalizedValue As Double, ByVal mean As Double, ByVal standardDeviation As Double, ByVal variable As Double) As Double
+        Public Shared Function GaussianFunction(normalizedValue As Double, mean As Double, standardDeviation As Double, variable As Double) As Double
             Dim result = normalizedValue * std.Exp(-1 * std.Pow(variable - mean, 2) / (2 * std.Pow(standardDeviation, 2)))
             Return result
         End Function
@@ -38,7 +51,11 @@ Namespace COW
         ''' <param name="sampleChromatogram"></param>
         ''' <param name="borderLimit"></param>
         ''' <returns></returns>
-        Public Shared Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer, referenceChromatogram As List(Of IPeak2D), sampleChromatogram As List(Of IPeak2D), borderLimit As BorderLimit) As List(Of IPeak2D)
+        Public Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer,
+                                                    referenceChromatogram As List(Of IPeak2D),
+                                                    sampleChromatogram As List(Of IPeak2D),
+                                                    borderLimit As BorderLimit) As List(Of IPeak2D)
+
             Dim alignedChromatogram = New List(Of IPeak2D)()
             Dim referenceDatapointNumber = referenceChromatogram.Count, sampleDatapointNumber = sampleChromatogram.Count
 
@@ -140,93 +157,42 @@ Namespace COW
                     If positionEnd > sampleDatapointNumber - 1 Then positionEnd = sampleDatapointNumber - 1
 
                     'Set
-                    Dim peakInformation = New IPeak2D(referenceChromatogram(counter).ID, (1 - fraction) * sampleChromatogram(positionFlont).Dimension1 + fraction * sampleChromatogram(positionEnd).Dimension1, (1 - fraction) * sampleChromatogram(positionFlont).Intensity + fraction * sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).Dimension2)
+                    Dim peakInformation As S = peak2D(
+                        id:=referenceChromatogram(counter).ID,
+                        dim1:=(1 - fraction) * sampleChromatogram(positionFlont).Dimension1 + fraction * sampleChromatogram(positionEnd).Dimension1,
+                        intensity:=(1 - fraction) * sampleChromatogram(positionFlont).Intensity + fraction * sampleChromatogram(positionEnd).Intensity,
+                        dim2:=referenceChromatogram(counter).Dimension2
+                    )
                     alignedChromatogram.Add(peakInformation)
                     counter += 1
                 Next
+
                 endPosition += segmentSize + warp
                 totalWarp += warp
-                'Debug.Print(endPosition + "\t" + totalWarp + "\t" + warp);
-
             Next
 
             'Reminder
             If enabledLength < referenceDatapointNumber Then
                 For i = enabledLength To referenceDatapointNumber - 1
                     positionEnd += 1
-                    If positionEnd > sampleDatapointNumber - 1 Then positionEnd = sampleDatapointNumber - 1
 
-                    Dim peakInformation = New IPeak2D(referenceChromatogram(counter).ID, sampleChromatogram(positionEnd).Dimension1, sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).Dimension2)
+                    If positionEnd > sampleDatapointNumber - 1 Then
+                        positionEnd = sampleDatapointNumber - 1
+                    End If
+
+                    Dim peakInformation = peak2D(
+                        id:=referenceChromatogram(counter).ID,
+                        dim1:=sampleChromatogram(positionEnd).Dimension1,
+                        intensity:=sampleChromatogram(positionEnd).Intensity,
+                        dim2:=referenceChromatogram(counter).Dimension2
+                    )
                     alignedChromatogram.Add(peakInformation)
                     counter += 1
                 Next
             End If
 #End Region
 
-            'Debug.Print(referenceChromatogram.Count + "\t" + sampleChromatogram.Count + "\t" + alignedChromatogram.Count);
-
             Return alignedChromatogram
-        End Function
-
-        ''' <summary>
-        ''' The point of dynamic programming based alignment is to get the suitable reference chromatogram.
-        ''' Selecting the reference chromatogram which should look like 'center' of chromatograms will be better to get nice alignment results.
-        ''' So, this program is used to get the suitable reference chromatogram from imported chromatograms.
-        ''' Please see Tsugawa et. al. Front. Genet. 5:471, 2015
-        ''' </summary>
-        ''' <param name="chromatograms"></param>
-        ''' <returns></returns>
-        Public Shared Function AutomaticParameterDefinder(chromatograms As List(Of Double())) As CowParameter
-            Dim chromatogramsNumber = chromatograms(0).Length - 3
-            Dim gravityArray = New Double(chromatogramsNumber - 1) {}
-            Dim totalIntensity, sum As Double, maxIntensity = Double.MinValue
-            For i = 0 To chromatogramsNumber - 1
-                sum = 0
-                totalIntensity = 0
-                For j = 0 To chromatograms.Count - 1
-                    sum += chromatograms(j)(1) * chromatograms(j)(3 + i)
-                    totalIntensity += chromatograms(j)(3 + i)
-                    If maxIntensity < chromatograms(j)(3 + i) Then maxIntensity = chromatograms(j)(3 + i)
-                Next
-                gravityArray(i) = sum / totalIntensity
-            Next
-
-            Dim maxGravity, minGravity, centerGravity As Double
-            maxGravity = gravityArray.Max
-            minGravity = gravityArray.Min
-            centerGravity = (maxGravity + minGravity) / 2
-
-            Dim referenceID = GetNearestIndex(gravityArray, centerGravity)
-            Dim slack As Integer = (maxGravity - minGravity) * (chromatograms(chromatograms.Count - 1)(0) - chromatograms(0)(0)) / (chromatograms(chromatograms.Count - 1)(1) - chromatograms(0)(1))
-
-            Dim alignmentParameter As CowParameter = New CowParameter() With {
-                .ReferenceID = referenceID,
-                .Slack = slack
-            }
-
-            Return alignmentParameter
-        End Function
-
-        Public Shared Function GetNearestIndex(ByVal x As Double(), ByVal value As Double) As Integer
-            Dim index = -1
-            Dim diff = Double.MaxValue
-            For i = 0 To x.Length - 1
-
-                If std.Abs(x(i) - value) < diff Then
-                    diff = std.Abs(x(i) - value)
-                    index = i
-                End If
-            Next
-
-            Return index
-        End Function
-
-        Public Shared Function Mean(ByVal list As List(Of Double()), ByVal index As Integer) As Double
-            Dim sum As Double = 0
-            For i = 0 To list.Count - 1
-                sum += list(i)(index)
-            Next
-            Return sum / list.Count
         End Function
 
         ''' <summary>
@@ -242,13 +208,15 @@ Namespace COW
             Dim alignedChromatogram As List(Of Double()) = New List(Of Double())()
             Dim referenceDatapointNumber = referenceChromatogram.Count, sampleDatapointNumber = sampleChromatogram.Count
             Dim movePoint As Integer = moveTime * referenceDatapointNumber / (referenceChromatogram(referenceDatapointNumber - 1)(1) - referenceChromatogram(0)(1))
-
-            Dim referenceMean = Mean(referenceChromatogram, 3)
-            Dim sampleMean = Mean(sampleChromatogram, 3)
+            Dim referenceMean = Aggregate x As Double() In referenceChromatogram Let xi = x(3) Into Average(xi)
+            Dim sampleMean = Aggregate x As Double()
+                             In sampleChromatogram
+                             Let xi As Double = x(3)
+                             Into Average(xi)
 
             Dim covariance As Double, covarianceMax = Double.MinValue
             Dim covarianceMaxId = 0
-            For i = -movePoint To movePoint
+            For i As Integer = -movePoint To movePoint
                 covariance = 0
                 For j = 0 To referenceChromatogram.Count - 1
                     If j + i < 0 Then Continue For
@@ -291,7 +259,13 @@ Namespace COW
             Return alignedChromatogram
         End Function
 
-        Private Shared Function cowFunctionCalculation(rowPosition As Integer, columnPosition As Integer, u As Integer, segmentSize As Integer, referenceChromatogram As List(Of IPeak2D), sampleChromatogram As List(Of IPeak2D)) As Double
+        Private Shared Function cowFunctionCalculation(rowPosition As Integer,
+                                                       columnPosition As Integer,
+                                                       u As Integer,
+                                                       segmentSize As Integer,
+                                                       referenceChromatogram As List(Of IPeak2D),
+                                                       sampleChromatogram As List(Of IPeak2D)) As Double
+
             Dim positionFlont, positionEnd As Integer
             Dim warpedPosition, fraction, wT, wS As Double
             Dim targetArray = New Double(segmentSize + u + 1 - 1) {}, alingedArray = New Double(segmentSize + u + 1 - 1) {}
@@ -320,7 +294,7 @@ Namespace COW
             Return std.Abs(Coefficient(targetArray, alingedArray))
         End Function
 
-        Public Shared Function Coefficient(ByVal array1 As Double(), ByVal array2 As Double()) As Double
+        Public Shared Function Coefficient(array1 As Double(), array2 As Double()) As Double
             Dim sum1 As Double = 0, sum2 As Double = 0, mean1 As Double = 0, mean2 As Double = 0, covariance As Double = 0, sqrt1 As Double = 0, sqrt2 As Double = 0
             For i = 0 To array1.Length - 1
                 sum1 += array1(i)
