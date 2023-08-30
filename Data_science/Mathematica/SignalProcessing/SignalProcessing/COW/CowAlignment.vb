@@ -38,8 +38,8 @@ Namespace COW
         ''' <param name="sampleChromatogram"></param>
         ''' <param name="borderLimit"></param>
         ''' <returns></returns>
-        Public Shared Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer, referenceChromatogram As List(Of ChromatogramPeak), sampleChromatogram As List(Of ChromatogramPeak), borderLimit As BorderLimit) As List(Of ChromatogramPeak)
-            Dim alignedChromatogram = New List(Of ChromatogramPeak)()
+        Public Shared Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer, referenceChromatogram As List(Of IPeak2D), sampleChromatogram As List(Of IPeak2D), borderLimit As BorderLimit) As List(Of IPeak2D)
+            Dim alignedChromatogram = New List(Of IPeak2D)()
             Dim referenceDatapointNumber = referenceChromatogram.Count, sampleDatapointNumber = sampleChromatogram.Count
 
             Dim segmentNumber As Integer = sampleDatapointNumber / segmentSize
@@ -140,7 +140,7 @@ Namespace COW
                     If positionEnd > sampleDatapointNumber - 1 Then positionEnd = sampleDatapointNumber - 1
 
                     'Set
-                    Dim peakInformation = New ChromatogramPeak(referenceChromatogram(counter).ID, (1 - fraction) * sampleChromatogram(positionFlont).Mass + fraction * sampleChromatogram(positionEnd).Mass, (1 - fraction) * sampleChromatogram(positionFlont).Intensity + fraction * sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).time)
+                    Dim peakInformation = New IPeak2D(referenceChromatogram(counter).ID, (1 - fraction) * sampleChromatogram(positionFlont).Dimension1 + fraction * sampleChromatogram(positionEnd).Dimension1, (1 - fraction) * sampleChromatogram(positionFlont).Intensity + fraction * sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).Dimension2)
                     alignedChromatogram.Add(peakInformation)
                     counter += 1
                 Next
@@ -156,7 +156,7 @@ Namespace COW
                     positionEnd += 1
                     If positionEnd > sampleDatapointNumber - 1 Then positionEnd = sampleDatapointNumber - 1
 
-                    Dim peakInformation = New ChromatogramPeak(referenceChromatogram(counter).ID, sampleChromatogram(positionEnd).Mass, sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).time)
+                    Dim peakInformation = New IPeak2D(referenceChromatogram(counter).ID, sampleChromatogram(positionEnd).Dimension1, sampleChromatogram(positionEnd).Intensity, referenceChromatogram(counter).Dimension2)
                     alignedChromatogram.Add(peakInformation)
                     counter += 1
                 Next
@@ -291,7 +291,7 @@ Namespace COW
             Return alignedChromatogram
         End Function
 
-        Private Shared Function cowFunctionCalculation(rowPosition As Integer, columnPosition As Integer, u As Integer, segmentSize As Integer, referenceChromatogram As List(Of ChromatogramPeak), sampleChromatogram As List(Of ChromatogramPeak)) As Double
+        Private Shared Function cowFunctionCalculation(rowPosition As Integer, columnPosition As Integer, u As Integer, segmentSize As Integer, referenceChromatogram As List(Of IPeak2D), sampleChromatogram As List(Of IPeak2D)) As Double
             Dim positionFlont, positionEnd As Integer
             Dim warpedPosition, fraction, wT, wS As Double
             Dim targetArray = New Double(segmentSize + u + 1 - 1) {}, alingedArray = New Double(segmentSize + u + 1 - 1) {}
