@@ -7,7 +7,8 @@ Namespace CNN
     ''' </summary>
     Friend MustInherit Class VectorTask
 
-        Dim workLen As Integer
+        Protected workLen As Integer
+        Protected sequenceMode As Boolean = False
 
         Public Shared n_threads As Integer = 4
 
@@ -25,7 +26,7 @@ Namespace CNN
 #If NET48 Then
             span_size = 0
 #End If
-            If span_size < 1 Then
+            If sequenceMode OrElse span_size < 1 Then
                 ' run in sequence
                 Call Solve(0, workLen - 1)
             Else

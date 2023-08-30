@@ -92,6 +92,7 @@ Namespace CNN.layers
                 Me.db = db
                 Me.la = lA
                 Me.layer = layer
+                Me.sequenceMode = True
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer)
@@ -165,6 +166,7 @@ Namespace CNN.layers
                 MyBase.New(layer.out_depth)
                 Me.v = v
                 Me.layer = layer
+                Me.sequenceMode = True
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer)
