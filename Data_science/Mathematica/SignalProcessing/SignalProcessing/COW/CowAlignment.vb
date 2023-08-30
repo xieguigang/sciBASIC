@@ -88,7 +88,7 @@ Namespace COW
 
                 'bool amplitudeCheck = checkAmplitude(1000, referenceChromatogram, intervalStart, intervalEnd + segmentSize + slack[i]);
 
-                For x = intervalStart To intervalEnd
+                For x As Integer = intervalStart To intervalEnd
                     For u = delta - slack(i) To delta + slack(i)
                         If 0 <= x + segmentSize + u AndAlso x + segmentSize + u <= enabledLength Then
                             cumCoefficient = functionMatrixBean(i + 1, x + segmentSize + u).Score + cowFunctionCalculation(i, x, u, segmentSize, referenceChromatogram, sampleChromatogram)
