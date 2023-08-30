@@ -43,16 +43,19 @@ Namespace CNN.layers
         Sub New()
         End Sub
 
-        Public Sub New(def As OutputDefinition, sx As Integer, filters As Integer, stride As Integer, padding As Integer)
+        Public Sub New(def As OutputDefinition, sx As Integer, filters As Integer,
+                       Optional stride As Integer = 1,
+                       Optional padding As Integer = 0)
+
             ' required
-            out_depth = filters
+            Me.out_depth = filters
             Me.sx = sx ' filter size. Should be odd if possible, it's cleaner.
             in_depth = def.depth
             in_sx = def.outX
             in_sy = def.outY
 
             ' optional
-            sy = Me.sx
+            Me.sy = Me.sx
             Me.stride = stride
             Me.padding = padding
 
