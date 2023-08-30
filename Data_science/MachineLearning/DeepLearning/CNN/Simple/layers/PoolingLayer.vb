@@ -19,8 +19,10 @@ Namespace CNN.layers
         Private out_depth, out_sx, out_sy As Integer
         Private sx, sy, stride, padding As Integer
 
-        Private switchx As Integer()
-        Private switchy As Integer()
+        ''' <summary>
+        ''' [ax,ay] map to [x,y]
+        ''' </summary>
+        Private switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, Integer()))
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
@@ -55,10 +57,11 @@ Namespace CNN.layers
             out_sy = CInt(std.Floor((in_sy + Me.padding * 2 - sy) / Me.stride + 1))
 
             ' store switches for x,y coordinates for where the max comes from, for each output neuron
-            switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
-            switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
-            switchx.Fill(0)
-            switchy.Fill(0)
+            ' switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
+            ' switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
+            For d As Integer = 0 To out_depth - 1
+                Call switchMaps.Add(d, New Dictionary(Of String, Integer()))
+            Next
 
             def.outX = out_sx
             def.outY = out_sy
@@ -66,89 +69,129 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            Dim lA As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0)
-            Dim n As Integer = 0 ' a counter for switches
+            Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0)
 
             in_act = db
-
-            For d As Integer = 0 To out_depth - 1
-                Dim x = -padding
-                Dim ax = 0
-
-                While ax < out_sx
-                    Dim y = -padding
-                    Dim ay = 0
-
-                    While ay < out_sy
-                        ' convolve centered at this particular location
-                        Dim a As Double = -99999 ' hopefully small enough ;\
-                        Dim winx = -1
-                        Dim winy = -1
-
-                        For fx = 0 To sx - 1
-                            For fy = 0 To sy - 1
-                                Dim oy = y + fy
-                                Dim ox = x + fx
-                                If oy >= 0 AndAlso oy < db.SY AndAlso ox >= 0 AndAlso ox < db.SX Then
-                                    Dim v = db.getWeight(ox, oy, d)
-                                    ' perform max pooling and store pointers to where
-                                    ' the max came from. This will speed up backprop
-                                    ' and can help make nice visualizations in future
-                                    If v > a Then
-                                        a = v
-                                        winx = ox
-                                        winy = oy
-                                    End If
-                                End If
-                            Next
-                        Next
-
-                        switchx(n) = winx
-                        switchy(n) = winy
-                        n += 1
-                        lA.setWeight(ax, ay, d, a)
-                        y += stride
-                        ay += 1
-                    End While
-
-                    x += stride
-                    ax += 1
-                End While
-            Next
-
             out_act = lA
+            ' clear all mapping
+            ' a counter for switches
+            switchMaps.Clear()
+
+            Call New ForwardTask(Me, lA, db).Run()
 
             Return out_act
         End Function
 
+        Private Class ForwardTask : Inherits VectorTask
+
+            Dim layer As PoolingLayer
+            Dim lA, db As DataBlock
+
+            Public Sub New(layer As PoolingLayer, lA As DataBlock, db As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.db = db
+                Me.la = lA
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                For d As Integer = start To ends
+                    Dim x = -layer.padding
+                    Dim ax = 0
+                    Dim map As New Dictionary(Of String, Integer())
+
+                    While ax < layer.out_sx
+                        Dim y = -layer.padding
+                        Dim ay = 0
+
+                        While ay < layer.out_sy
+                            ' convolve centered at this particular location
+                            Dim a As Double = -99999 ' hopefully small enough ;\
+                            Dim winx = -1
+                            Dim winy = -1
+
+                            For fx = 0 To layer.sx - 1
+                                For fy = 0 To layer.sy - 1
+                                    Dim oy = y + fy
+                                    Dim ox = x + fx
+                                    If oy >= 0 AndAlso oy < db.SY AndAlso ox >= 0 AndAlso ox < db.SX Then
+                                        Dim v = db.getWeight(ox, oy, d)
+                                        ' perform max pooling and store pointers to where
+                                        ' the max came from. This will speed up backprop
+                                        ' and can help make nice visualizations in future
+                                        If v > a Then
+                                            a = v
+                                            winx = ox
+                                            winy = oy
+                                        End If
+                                    End If
+                                Next
+                            Next
+
+                            map.Add(ax & "," & ay, {winx, winy})
+
+                            'switchx(n) = winx
+                            'switchy(n) = winy
+                            'n += 1
+                            lA.setWeight(ax, ay, d, a)
+                            y += layer.stride
+                            ay += 1
+                        End While
+
+                        x += layer.stride
+                        ax += 1
+                    End While
+
+                    SyncLock layer.switchMaps
+                        Call layer.switchMaps.Add(d, map)
+                    End SyncLock
+                Next
+            End Sub
+        End Class
+
         Public Overridable Sub backward() Implements Layer.backward
             ' pooling layers have no parameters, so simply compute
             ' gradient wrt data here
-            Dim V = in_act
-            V.clearGradient() ' zero out gradient wrt data
-
-            Dim n = 0
-            For d = 0 To out_depth - 1
-                Dim x = -padding
-                Dim ax = 0
-
-                While ax < out_sx
-                    Dim y = -padding
-                    Dim ay = 0
-
-                    While ay < out_sy
-                        Dim chain_grad = out_act.getGradient(ax, ay, d)
-                        V.addGradient(switchx(n), switchy(n), d, chain_grad)
-                        n += 1
-                        y += stride
-                        ay += 1
-                    End While
-
-                    x += stride
-                    ax += 1
-                End While
-            Next
+            ' zero out gradient wrt data
+            Call New BackwardTask(Me, v:=in_act.clearGradient()).Run()
         End Sub
+
+        Private Class BackwardTask : Inherits VectorTask
+
+            Dim layer As PoolingLayer
+            Dim v As DataBlock
+
+            Public Sub New(layer As PoolingLayer, v As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.v = v
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                For d As Integer = start To ends
+                    Dim x = -layer.padding
+                    Dim ax = 0
+                    Dim map = layer.switchMaps(key:=CUInt(d))
+
+                    While ax < layer.out_sx
+                        Dim y = -layer.padding
+                        Dim ay = 0
+
+                        While ay < layer.out_sy
+                            Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
+                            Dim switch = map(ax & "," & ay)
+                            ' V.addGradient(switchx(n), switchy(n), d, chain_grad)
+                            v.addGradient(switch(0), switch(1), d, chain_grad)
+                            y += layer.stride
+                            ay += 1
+                        End While
+
+                        x += layer.stride
+                        ax += 1
+                    End While
+                Next
+            End Sub
+        End Class
 
         Public Overrides Function ToString() As String
             Return "pooling()"
