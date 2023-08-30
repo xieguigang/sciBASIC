@@ -16,8 +16,10 @@ Namespace CNN.trainers
         Private ReadOnly beta1 As Double = 0.9
         Private ReadOnly beta2 As Double = 0.999
 
-        Public Sub New(batch_size As Integer, l2_decay As Single)
+        Public Sub New(batch_size As Integer, l2_decay As Single, Optional beta1 As Double = 0.9, Optional beta2 As Double = 0.999)
             MyBase.New(batch_size, l2_decay)
+            Me.beta1 = beta1
+            Me.beta2 = beta2
         End Sub
 
         Public Overrides Sub initTrainData(bpr As BackPropResult)

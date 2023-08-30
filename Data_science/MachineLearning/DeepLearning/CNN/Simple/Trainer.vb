@@ -1,9 +1,12 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
+Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Namespace CNN
 
@@ -11,6 +14,9 @@ Namespace CNN
 
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
         Dim alg As TrainerAlgorithm
+        Dim global_featureMax As Double
+        Dim global_generativeMax As Double = Double.NegativeInfinity
+        Dim is_generative As Boolean = False
 
         <DebuggerStepThrough>
         Sub New(alg As TrainerAlgorithm, Optional log As Action(Of String) = Nothing)
@@ -25,12 +31,13 @@ Namespace CNN
             Dim d As Integer = epochsNum / 25
             Dim t0 = Now
             Dim randPerm As Integer()
-            Dim ti As Date
+            Dim ti As Date = Now
             Dim input As InputLayer = alg.conv_net.input
             Dim data As New DataBlock(input.dims.x, input.dims.y, 1, 0)
             Dim tr As TrainResult = Nothing
             Dim img As SampleData
             Dim loss As New List(Of Double)
+            Dim cpu As New PerformanceCounter
 
             right = 0
             count = 0
@@ -44,19 +51,25 @@ Namespace CNN
 
                 For Each index As Integer In randPerm
                     img = trainset(index)
-                    data.addImageData(img.features, img.features.Max)
-                    tr = alg.train(data, img.labels(0))
+                    data.addImageData(img.features, global_featureMax)
+                    tr = alg.train(data, img.labels, checkpoints:=cpu.Set)
                     loss += tr.Loss
 
-                    If img.labels(0) = which.Max(alg.get_output) Then
-                        right += 1
+                    If is_generative Then
+                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output).Select(Function(dd) std.Abs(dd)).Average < 0.2 Then
+                            right += 1
+                        End If
+                    Else
+                        If img.labels(0) = which.Max(alg.get_output) Then
+                            right += 1
+                        End If
                     End If
 
                     count += 1
                 Next
 
                 If i Mod d = 0 Then
-                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% ...... {(Now - t0).FormatTime(False)}")
+                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss={loss.Where(Function(a) Not a.IsNaNImaginary).Average}...... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
@@ -74,6 +87,34 @@ Namespace CNN
             Dim stopTrain As Boolean
             Dim right = 0
             Dim count = 0
+
+            global_featureMax = Double.MinValue
+            global_generativeMax = Double.MinValue
+            is_generative = trainset(0).labels.Length > 1
+
+            For Each i As SampleData In trainset
+                Dim max As Double = i.features.Max
+
+                If max > global_featureMax Then
+                    global_featureMax = max
+                End If
+
+                If is_generative Then
+                    max = i.labels.Max
+
+                    If max > global_generativeMax Then
+                        global_generativeMax = max
+                    End If
+                End If
+            Next
+
+            If is_generative Then
+                For Each i As SampleData In trainset
+                    For idx As Integer = 0 To i.labels.Length - 1
+                        i.labels(idx) /= global_generativeMax
+                    Next
+                Next
+            End If
 
             Call alg.SetKernel(cnn)
 

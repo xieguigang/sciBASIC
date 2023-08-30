@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
 
-
 Namespace CNN.layers
 
     ''' <summary>
@@ -58,8 +57,8 @@ Namespace CNN.layers
             ' store switches for x,y coordinates for where the max comes from, for each output neuron
             switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
             switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
-            switchx.fill(0)
-            switchy.fill(0)
+            switchx.Fill(0)
+            switchy.Fill(0)
 
             def.outX = out_sx
             def.outY = out_sy

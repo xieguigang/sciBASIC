@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace CNN.losslayers
 
@@ -79,18 +81,25 @@ Namespace CNN.losslayers
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Overrides Function backward(y As Integer) As Double
-            Dim x = in_act
-
-            x.clearGradient() ' zero out the gradient of input Vol
+            Dim x As DataBlock = in_act.clearGradient() ' zero out the gradient of input Vol
 
             For i = 0 To out_depth - 1
                 Dim indicator = If(i = y, 1.0, 0.0)
                 Dim mul = -(indicator - es(i))
+
                 x.setGradient(i, mul)
             Next
 
             ' loss is the class negative log likelihood
             Return -std.Log(es(y))
+        End Function
+
+        Public Overrides Function backward(y() As Double) As Double()
+            Dim x As DataBlock = in_act.clearGradient
+            ' -(y-es) = es - y
+            Dim mul = SIMD.Subtract.f64_op_subtract_f64(es, y)
+            x.setGradient(mul)
+            Return New Vector(es).Log * -1
         End Function
 
         Public Overrides Function ToString() As String

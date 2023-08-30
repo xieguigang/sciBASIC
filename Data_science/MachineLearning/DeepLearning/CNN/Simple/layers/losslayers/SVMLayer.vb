@@ -61,6 +61,10 @@ Namespace CNN.losslayers
         Public Overrides Function ToString() As String
             Return "svm()"
         End Function
+
+        Public Overrides Function backward(y() As Double) As Double()
+            Throw New NotSupportedException("svm not supported")
+        End Function
     End Class
 
 End Namespace

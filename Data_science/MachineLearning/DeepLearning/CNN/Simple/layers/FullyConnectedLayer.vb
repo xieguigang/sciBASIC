@@ -84,8 +84,7 @@ Namespace CNN.layers
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
-            Dim V = in_act
-            V.clearGradient()
+            Dim V = in_act.clearGradient()
 
             ' compute gradient wrt weights and data
             For i = 0 To out_depth - 1

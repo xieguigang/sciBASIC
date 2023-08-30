@@ -54,6 +54,7 @@ Namespace CNN.losslayers
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public MustOverride Function backward(y As Integer) As Double
+        Public MustOverride Function backward(y As Double()) As Double()
         Public MustOverride Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
 
     End Class

@@ -163,6 +163,10 @@ Namespace Parallel.Threads
             Me.New(LQuerySchedule.Recommended_NUM_THREADS, exceptionCallback:=exceptionCallback)
         End Sub
 
+        ''' <summary>
+        ''' Start the background task, and stop until the <see cref="Dispose()"/> method has been called
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Start() As ThreadPool
             Call ParallelExtension.RunTask(AddressOf allocate)
             Return Me

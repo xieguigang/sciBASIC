@@ -80,6 +80,10 @@ Namespace CNN
             Return add(New MaxoutLayer(def))
         End Function
 
+        Public Function buildRegressionLayer() As LayerBuilder
+            Return add(New RegressionLayer(def))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{m_layers.Count} CNN layers: {m_layers.JoinBy(" -> ")}"

@@ -79,103 +79,132 @@ Namespace CNN.layers
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(out_sx, out_sy, out_depth, 0.0)
-            Dim V_sx = in_sx
-            Dim V_sy = in_sy
-            Dim xy_stride = stride
-
             in_act = db
-
-            For d As Integer = 0 To out_depth - 1
-                Dim f = filters(d)
-                Dim y = -padding
-                Dim ay = 0
-
-                While ay < out_sy
-                    Dim x = -padding
-                    Dim ax = 0
-
-                    While ax < out_sx
-
-                        ' convolve centered at this particular location
-                        Dim a = 0.0
-                        For fy = 0 To f.SY - 1
-                            Dim oy = y + fy ' coordinates in the original input array coordinates
-                            For fx = 0 To f.SX - 1
-                                Dim ox = x + fx
-                                If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
-                                    For fd = 0 To f.Depth - 1
-                                        ' avoid function call overhead (x2) for efficiency, compromise modularity :(
-                                        a += f.getWeight(fx, fy, fd) * db.getWeight(ox, oy, fd)
-                                    Next
-                                End If
-                            Next
-                        Next
-                        a += biases.getWeight(d)
-                        lA.setWeight(ax, ay, d, a)
-                        x += xy_stride
-                        ax += 1 ' xy_stride
-                    End While
-
-                    y += xy_stride
-                    ay += 1 ' xy_stride
-                End While
-            Next
             out_act = lA
+            Call New ForwardTask(Me, lA).Run()
             Return lA
         End Function
 
-        Public Overridable Sub backward() Implements Layer.backward
-            Dim db = in_act
-            Dim V_sx = db.SX
-            Dim V_sy = db.SY
-            Dim xy_stride = stride
+        Private Class ForwardTask : Inherits VectorTask
 
-            ' zero out gradient wrt bottom data, we're about to fill it
-            Call db.clearGradient()
+            Dim layer As ConvolutionLayer
+            Dim lA As DataBlock
 
-            For d As Integer = 0 To out_depth - 1
-                Dim f = filters(d)
-                Dim y = -padding
-                Dim ay = 0
+            Public Sub New(layer As ConvolutionLayer, lA As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.lA = lA
+                Me.layer = layer
+            End Sub
 
-                While ay < out_sy
-                    Dim x = -padding
-                    Dim ax = 0
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                Dim V_sx = layer.in_sx
+                Dim V_sy = layer.in_sy
+                Dim xy_stride = layer.stride
+                Dim db = layer.in_act
 
-                    While ax < out_sx
-                        ' convolve centered at this particular location
-                        ' gradient from above, from chain rule
-                        Dim chain_grad = out_act.getGradient(ax, ay, d)
+                For d As Integer = start To ends
+                    Dim f = layer.filters(d)
+                    Dim y = -layer.padding
+                    Dim ay = 0
 
-                        For fy As Integer = 0 To f.SY - 1
-                            Dim oy As Integer = y + fy ' coordinates in the original input array coordinates
+                    While ay < layer.out_sy
+                        Dim x = -layer.padding
+                        Dim ax = 0
 
-                            For fx As Integer = 0 To f.SX - 1
-                                Dim ox = x + fx
+                        While ax < layer.out_sx
 
-                                If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
-                                    For fd As Integer = 0 To f.Depth - 1
-                                        ' avoid function call overhead (x2) for efficiency, compromise modularity :(
-                                        Dim ix1 = (V_sx * oy + ox) * db.Depth + fd
-                                        Dim ix2 = (f.SY * fy + fx) * f.Depth + fd
-
-                                        f.addGradient(ix2, db.getWeight(ix1) * chain_grad)
-                                        db.addGradient(ix1, f.getWeight(ix2) * chain_grad)
-                                    Next
-                                End If
+                            ' convolve centered at this particular location
+                            Dim a = 0.0
+                            For fy = 0 To f.SY - 1
+                                Dim oy = y + fy ' coordinates in the original input array coordinates
+                                For fx = 0 To f.SX - 1
+                                    Dim ox = x + fx
+                                    If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
+                                        For fd = 0 To f.Depth - 1
+                                            ' avoid function call overhead (x2) for efficiency, compromise modularity :(
+                                            a += f.getWeight(fx, fy, fd) * db.getWeight(ox, oy, fd)
+                                        Next
+                                    End If
+                                Next
                             Next
-                        Next
+                            a += layer.biases.getWeight(d)
+                            lA.setWeight(ax, ay, d, a)
+                            x += xy_stride
+                            ax += 1 ' xy_stride
+                        End While
 
-                        biases.addGradient(d, chain_grad)
-                        x += xy_stride
-                        ax += 1 ' xy_stride
+                        y += xy_stride
+                        ay += 1 ' xy_stride
                     End While
+                Next
+            End Sub
+        End Class
 
-                    y += xy_stride
-                    ay += 1 ' xy_stride
-                End While
-            Next
+        Public Overridable Sub backward() Implements Layer.backward
+            ' zero out gradient wrt bottom data, we're about to fill it
+            Call New BackwardTask(Me, in_act.clearGradient()).Run()
         End Sub
+
+        Private Class BackwardTask : Inherits VectorTask
+
+            Dim layer As ConvolutionLayer
+            Dim db As DataBlock
+
+            Public Sub New(layer As ConvolutionLayer, db As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.db = db
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                Dim V_sx = db.SX
+                Dim V_sy = db.SY
+                Dim xy_stride = layer.stride
+
+                For d As Integer = start To ends
+                    Dim f = layer.filters(d)
+                    Dim y = -layer.padding
+                    Dim ay = 0
+
+                    While ay < layer.out_sy
+                        Dim x = -layer.padding
+                        Dim ax = 0
+
+                        While ax < layer.out_sx
+                            ' convolve centered at this particular location
+                            ' gradient from above, from chain rule
+                            Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
+
+                            For fy As Integer = 0 To f.SY - 1
+                                Dim oy As Integer = y + fy ' coordinates in the original input array coordinates
+
+                                For fx As Integer = 0 To f.SX - 1
+                                    Dim ox = x + fx
+
+                                    If oy >= 0 AndAlso oy < V_sy AndAlso ox >= 0 AndAlso ox < V_sx Then
+                                        For fd As Integer = 0 To f.Depth - 1
+                                            ' avoid function call overhead (x2) for efficiency, compromise modularity :(
+                                            Dim ix1 = (V_sx * oy + ox) * db.Depth + fd
+                                            Dim ix2 = (f.SY * fy + fx) * f.Depth + fd
+
+                                            f.addGradient(ix2, db.getWeight(ix1) * chain_grad)
+                                            db.addGradient(ix1, f.getWeight(ix2) * chain_grad)
+                                        Next
+                                    End If
+                                Next
+                            Next
+
+                            layer.biases.addGradient(d, chain_grad)
+                            x += xy_stride
+                            ax += 1 ' xy_stride
+                        End While
+
+                        y += xy_stride
+                        ay += 1 ' xy_stride
+                    End While
+                Next
+            End Sub
+        End Class
 
         Public Overrides Function ToString() As String
             Return "conv()"

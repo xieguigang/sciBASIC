@@ -1,7 +1,8 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+﻿Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
-Imports Microsoft.VisualBasic.Linq
 
 Namespace CNN
 
@@ -74,7 +75,7 @@ Namespace CNN
         End Sub
 
         Public Function predict(db As DataBlock) As Double()
-            Call forward(db, training:=False)
+            Call forward(db, training:=Nothing)
 
             Dim S As LossLayer = output
             Dim p = S.OutAct.Weights
@@ -90,33 +91,75 @@ Namespace CNN
         ''' <param name="db"></param>
         ''' <param name="training"></param>
         ''' <returns></returns>
-        Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock
-            Dim act = m_layers(0).forward(db, training)
+        Public Overridable Function forward(db As DataBlock, training As PerformanceCounter) As DataBlock
+            Dim flag As Boolean = Not training Is Nothing
+            Dim act = m_layers(0).forward(db, training:=flag)
+
+            If Not training Is Nothing Then
+                Call training.Mark("[forward]" & m_layers(0).ToString)
+            End If
 
             For i As Integer = 1 To m_layers.Length - 1
-                act = m_layers(i).forward(act, training)
+                act = m_layers(i).forward(act, training:=flag)
+
+                If Not training Is Nothing Then
+                    Call training.Mark("[forward]" & m_layers(i).ToString)
+                End If
             Next
 
             Return act
         End Function
 
-        Public Overridable Function getCostLoss(db As DataBlock, y As Integer) As Double
-            forward(db, False)
-            Return output.backward(y)
+        ''' <summary>
+        ''' Backprop: compute gradients wrt all parameters
+        ''' </summary>
+        Public Overridable Function backward(y As Double(), training As PerformanceCounter) As Double()
+            Dim N = m_layers.Length
+            Dim loss = output.backward(y)
+
+            If Not training Is Nothing Then
+                Call training.Mark("[backward]" & output.ToString)
+            End If
+
+            For i As Integer = N - 2 To 0 Step -1 ' first layer assumed input
+                Call m_layers(i).backward()
+
+                If Not training Is Nothing Then
+                    Call training.Mark("[backward]" & m_layers(i).ToString)
+                End If
+            Next
+
+            Return loss
         End Function
 
         ''' <summary>
         ''' Backprop: compute gradients wrt all parameters
         ''' </summary>
-        Public Overridable Function backward(y As Integer) As Double
+        Public Overridable Function backward(y As Integer, training As PerformanceCounter) As Double
             Dim N = m_layers.Length
             Dim loss = output.backward(y)
 
+            If Not training Is Nothing Then
+                Call training.Mark("[backward]" & output.ToString)
+            End If
+
             For i As Integer = N - 2 To 0 Step -1 ' first layer assumed input
-                m_layers(i).backward()
+                Call m_layers(i).backward()
+
+                If Not training Is Nothing Then
+                    Call training.Mark("[backward]" & m_layers(i).ToString)
+                End If
             Next
 
             Return loss
+        End Function
+
+        Public Shared Sub SetThreads(n As Integer)
+            VectorTask.n_threads = n
+        End Sub
+
+        Public Shared Function GetThreads() As Integer
+            Return VectorTask.n_threads
         End Function
 
         Public Overrides Function ToString() As String

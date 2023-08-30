@@ -51,11 +51,12 @@ Namespace CNN.layers
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
-            Dim V = in_act ' we need to set dw of this
+            ' zero out gradient wrt data
+            Dim V = in_act.clearGradient() ' we need to set dw of this
             Dim V2 = out_act
             Dim N = V.Weights.Length
-            V.clearGradient() ' zero out gradient wrt data
-            For i = 0 To N - 1
+
+            For i As Integer = 0 To N - 1
                 If V2.getWeight(i) <= 0 Then
                     V.setGradient(i, 0) ' threshold
                 Else

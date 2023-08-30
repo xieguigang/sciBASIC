@@ -14,8 +14,9 @@ Namespace CNN.trainers
 
         Private ReadOnly ro As Double = 0.95
 
-        Public Sub New(batch_size As Integer, l2_decay As Single)
+        Public Sub New(batch_size As Integer, l2_decay As Single, Optional ro As Double = 0.95)
             MyBase.New(batch_size, l2_decay)
+            Me.ro = ro
         End Sub
 
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
