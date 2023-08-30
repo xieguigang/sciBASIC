@@ -8,6 +8,9 @@ Namespace CNN
     Friend MustInherit Class VectorTask
 
         Protected workLen As Integer
+        ''' <summary>
+        ''' set this flag value to value TRUE for run algorithm debug
+        ''' </summary>
         Protected sequenceMode As Boolean = False
 
         Public Shared n_threads As Integer = 4

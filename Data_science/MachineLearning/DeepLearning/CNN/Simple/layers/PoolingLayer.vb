@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
+﻿Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
@@ -22,7 +22,8 @@ Namespace CNN.layers
         ''' <summary>
         ''' [ax,ay] map to [x,y]
         ''' </summary>
-        Private switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, Integer()))
+        <IgnoreDataMember>
+        Dim switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, Integer()))
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
@@ -75,7 +76,9 @@ Namespace CNN.layers
             out_act = lA
             ' clear all mapping
             ' a counter for switches
-            switchMaps.Clear()
+            For Each d As UInteger In switchMaps.Keys
+                Call switchMaps(key:=d).Clear()
+            Next
 
             Call New ForwardTask(Me, lA, db).Run()
 
@@ -90,16 +93,16 @@ Namespace CNN.layers
             Public Sub New(layer As PoolingLayer, lA As DataBlock, db As DataBlock)
                 MyBase.New(layer.out_depth)
                 Me.db = db
-                Me.la = lA
+                Me.lA = lA
                 Me.layer = layer
-                Me.sequenceMode = True
+                ' Me.sequenceMode = True
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer)
                 For d As Integer = start To ends
                     Dim x = -layer.padding
                     Dim ax = 0
-                    Dim map As New Dictionary(Of String, Integer())
+                    Dim map As Dictionary(Of String, Integer()) = layer.switchMaps(key:=CUInt(d))
 
                     While ax < layer.out_sx
                         Dim y = -layer.padding
@@ -142,10 +145,6 @@ Namespace CNN.layers
                         x += layer.stride
                         ax += 1
                     End While
-
-                    SyncLock layer.switchMaps
-                        Call layer.switchMaps.Add(d, map)
-                    End SyncLock
                 Next
             End Sub
         End Class
@@ -166,7 +165,7 @@ Namespace CNN.layers
                 MyBase.New(layer.out_depth)
                 Me.v = v
                 Me.layer = layer
-                Me.sequenceMode = True
+                ' Me.sequenceMode = True
             End Sub
 
             Protected Overrides Sub Solve(start As Integer, ends As Integer)
