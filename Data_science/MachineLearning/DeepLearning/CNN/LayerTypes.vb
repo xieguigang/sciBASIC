@@ -83,6 +83,6 @@ Namespace Convolutional
         <Description("regression")> Regression
         <Description("svm")> SVM
         <Description("conv_transpose")> Conv2DTranspose
-
+        <Description("fourier_feature")> FourierFeature
     End Enum
 End Namespace
