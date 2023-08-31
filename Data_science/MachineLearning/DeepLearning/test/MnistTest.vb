@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
@@ -36,9 +37,10 @@ Namespace ConsoleApp1
             layers.buildConvLayer(5, 64, 1, 2)
             layers.buildReLULayer()
             layers.buildPoolLayer(2, 2, 0)
-            layers.buildFullyConnectedLayer(1024)
-            layers.buildLocalResponseNormalizationLayer(5)
-            layers.buildDropoutLayer()
+            'layers.buildFullyConnectedLayer(1024)
+            'layers.buildLocalResponseNormalizationLayer(5)
+            ' layers.buildDropoutLayer()
+            layers.buildConv2DTransposeLayer(10, 1, 0)
             layers.buildFullyConnectedLayer(10)
             layers.buildSoftmaxLayer()
 
@@ -76,10 +78,11 @@ Namespace ConsoleApp1
                 Dim i As i32 = 1
                 Dim n As Integer = 300
                 Dim d As Integer = n / 25
+                Dim check As New PerformanceCounter
 
                 For Each img In mr.ExtractVectors.Take(n)
                     db.addImageData(img.value, img.value.Max)
-                    tr = trainer.train(db, img.description)
+                    tr = trainer.train(db, {Val(img.description)}, check.Set)
                     loss += tr.Loss
 
                     If (++i) Mod d = 0 Then

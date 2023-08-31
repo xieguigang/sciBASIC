@@ -82,5 +82,7 @@ Namespace Convolutional
         <Description("fully_connect")> FullyConnected
         <Description("regression")> Regression
         <Description("svm")> SVM
+        <Description("conv_transpose")> Conv2DTranspose
+
     End Enum
 End Namespace

@@ -62,11 +62,12 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            in_act = db
-
             Dim A As DataBlock = db.cloneAndZero()
-            S_cache_ = db.cloneAndZero()
             Dim n2 = std.Floor(n / 2)
+
+            in_act = db
+            S_cache_ = db.cloneAndZero()
+
             For x = 0 To db.SX - 1
                 For y = 0 To db.SY - 1
                     For i = 0 To db.Depth - 1
@@ -94,10 +95,10 @@ Namespace CNN.layers
 
         Public Overridable Sub backward() Implements Layer.backward
             ' evaluate gradient wrt data
-            Dim V = in_act ' we need to set dw of this
-            V.clearGradient()
-
+            ' we need to set dw of this
+            Dim V = in_act.clearGradient()
             Dim n2 As Integer = std.Floor(n / 2)
+
             For x = 0 To V.SX - 1
                 For y = 0 To V.SY - 1
                     For i = 0 To V.Depth - 1
