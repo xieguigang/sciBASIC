@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional
-Imports std = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace CNN.layers
 
@@ -35,10 +35,6 @@ Namespace CNN.layers
 
         Dim in_depth, in_sx, in_sy As Integer
         Dim out_depth, out_sx, out_sy As Integer
-        ''' <summary>
-        ''' where we'll store (x, y) ==> their equivalent Fourier Feature Mapping
-        ''' </summary>
-        Dim inputMapCache As New Dictionary(Of Object, Object)
         Dim gaussian_mapping_scale As Double = -1
 
         ''' <summary>
@@ -65,20 +61,7 @@ Namespace CNN.layers
             Call in_act.clearGradient()
         End Sub
 
-        Public Function forward(v As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            Dim coordinateVolume = v
-            in_act = v
-            If Not inputMapCache.ContainsKey(v.w) Then
-                ' compute for the first time
-                Dim transformedVolume = transform(coordinateVolume)
-                ' save for future queries at these coordinates
-                inputMapCache(coordinateVolume.w) = transformedVolume
-            End If
-
-            Return inputMapCache(coordinateVolume.w)
-        End Function
-
-        Private Function transform(db As DataBlock)
+        Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim mappedFeature As New DataBlock(out_sx, out_sy, out_depth, 0)
 
             For d As Integer = 0 To out_depth - 1
@@ -109,6 +92,7 @@ Namespace CNN.layers
             Next
 
             out_act = mappedFeature
+
             Return out_act
         End Function
     End Class
