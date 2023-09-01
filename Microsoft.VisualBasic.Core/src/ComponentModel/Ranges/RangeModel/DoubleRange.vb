@@ -92,10 +92,16 @@ Namespace ComponentModel.Ranges.Model
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
         ''' 
-        Public ReadOnly Property Length() As Double
+        Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Max - Min
+            End Get
+        End Property
+
+        Public ReadOnly Property MinMax As Double()
+            Get
+                Return New Double() {Min, Max}
             End Get
         End Property
 

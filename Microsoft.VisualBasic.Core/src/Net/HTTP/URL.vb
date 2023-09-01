@@ -100,6 +100,12 @@ Namespace Net.Http
             End Get
         End Property
 
+        Public ReadOnly Property Host As String
+            Get
+                Return $"{protocol}{hostName}:{port}"
+            End Get
+        End Property
+
         Sub New(url As String)
             Call Parser(url, hashcode, query, protocol, port, hostName, path)
         End Sub
