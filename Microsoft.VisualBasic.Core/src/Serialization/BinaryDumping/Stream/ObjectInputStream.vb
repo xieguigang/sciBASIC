@@ -49,7 +49,12 @@ Namespace Serialization.BinaryDumping
 
             For i As Integer = 0 To nsize - 1
                 Dim name As String = Encoding.ASCII.GetString(Buffer.Parse(stream).buffer)
-                Dim field As FieldInfo = fields(name)
+                Dim field As FieldInfo = fields.TryGetValue(name)
+
+                If field Is Nothing Then
+                    Call $"the data record('{name}') inside the binary data file is not required in target object?".Warning
+                    Continue For
+                End If
 
                 If DataFramework.IsPrimitive(field.FieldType) Then
                     buf = Buffer.Parse(stream)
