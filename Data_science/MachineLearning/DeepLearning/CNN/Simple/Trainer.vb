@@ -38,6 +38,7 @@ Namespace CNN
             Dim img As SampleData
             Dim loss As New List(Of Double)
             Dim cpu As New PerformanceCounter
+            Dim valid_loss As Double()
 
             right = 0
             count = 0
@@ -69,7 +70,8 @@ Namespace CNN
                 Next
 
                 If i Mod d = 0 Then
-                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss={loss.Where(Function(a) Not a.IsNaNImaginary).Average}...... {(Now - t0).FormatTime(False)}")
+                    valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
+                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss={If(valid_loss.Length > 0, valid_loss.Average, "N/A")}...... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
