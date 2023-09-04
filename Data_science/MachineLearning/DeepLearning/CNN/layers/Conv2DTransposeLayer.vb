@@ -15,7 +15,7 @@ Namespace CNN.layers
 
         Public ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-
+                Yield New BackPropResult(filterw, filterws, l1_decay_mul, l2_decay_mul)
             End Get
         End Property
 
@@ -28,10 +28,11 @@ Namespace CNN.layers
         Friend out_depth, out_sx, out_sy As Integer
         Friend in_depth, in_sx, in_sy As Integer
         Friend filterWidth, filterHeight As Integer
-        Friend stride, padding As Integer
+        Friend stride As Integer
         Friend l1_decay_mul As Double = 0.0
         Friend l2_decay_mul As Double = 1.0
 
+        Dim filters As Integer
         Dim filterw, filterws As Double()
         Dim useBias As Boolean
         Dim inData As Double()
@@ -52,7 +53,6 @@ Namespace CNN.layers
                        filter As Dimension,
                        Optional filters As Integer = 3,
                        Optional stride As Integer = 1,
-                       Optional padding As Integer = 0,
                        Optional useBias As Boolean = False)
 
             Me.in_depth = def.depth
@@ -66,8 +66,7 @@ Namespace CNN.layers
             Me.filterHeight = filter.y
 
             Me.stride = stride
-            Me.padding = padding
-
+            Me.filters = filters
             Me.filterw = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
             Me.filterws = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
             Me.inData = New Double(
@@ -136,11 +135,77 @@ Namespace CNN.layers
         End Sub
 
         Public Sub backward() Implements Layer.backward
+            in_act.clearGradient()
 
+            Dim costs As Double() = in_act.Gradients
+            Dim err = out_act.Gradients
+
+            For i As Integer = 0 To filters - 1
+                Dim iHMFWMF = i * hMFWMF
+                Dim iFWIHID = i * fWIHID
+                For g As Integer = 0 To hMFHPO - 1
+                    Dim ga = g * stride
+                    Dim gWMFWPO = g * wMFWPO
+                    For b As Integer = 0 To wMFWPO - 1
+                        Dim odi = b + gWMFWPO + iHMFWMF
+                        Dim ba = b * stride
+                        For h As Integer = 0 To in_depth - 1
+                            Dim hWIH = h * wIH
+                            Dim hFWIH = h * fWIH + iFWIHID
+                            For j As Integer = 0 To filterHeight - 1
+                                Dim jGAIWBA = (j + ga) * in_sx + hWIH + ba
+                                Dim jFWHFWIH = j * filterWidth + hFWIH
+                                For k As Integer = 0 To filterWidth - 1
+                                    costs(odi) += filterw(k + jFWHFWIH) * err(k + jGAIWBA)
+                                    filterws(k + jFWHFWIH) += inData(odi) * err(k + jGAIWBA)
+                                Next
+                            Next
+                        Next
+                    Next
+                Next
+            Next
+
+            For i As Integer = 0 To out_act.Weights.Length - 1
+                bs(i) += err(i)
+            Next
         End Sub
 
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
+            in_act = db.clone
+            Dim outData = out_act.w
 
+            ' -------------Beginning of monstrosity-----------------
+            For i As Integer = 0 To filters - 1
+                Dim iHMFWMF = i * hMFWMF
+                Dim iFWIHID = i * fWIHID
+
+                For g As Integer = 0 To hMFHPO - 1
+                    Dim ga = g * stride
+                    Dim gWMFWPO = g * wMFWPO
+                    For b As Integer = 0 To wMFWPO - 1
+                        Dim odi = b + gWMFWPO + iHMFWMF
+                        Dim ba = b * stride
+                        For h As Integer = 0 To in_depth - 1
+                            Dim hWIH = h * wIH + ba
+                            Dim hFWIH = h * fWIH + iFWIHID
+                            For j As Integer = 0 To filterHeight - 1
+                                Dim jGAIWBA = (j + ga) * in_sx + hWIH
+                                Dim jFWHFWIH = j * filterWidth + hFWIH
+                                For k As Integer = 0 To filterWidth - 1
+                                    outData(k + jGAIWBA) += inData(odi) * filterw(k + jFWHFWIH)
+                                Next
+                            Next
+                        Next
+                    Next
+                Next
+            Next
+            ' -------------End of monstrosity-----------------
+
+            For i As Integer = 0 To outData.Length - 1
+                outData(i) += b(i)
+            Next
+
+            Return out_act
         End Function
     End Class
 End Namespace
