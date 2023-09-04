@@ -46,13 +46,12 @@ Namespace CNN
         ''' <summary>
         ''' Accumulate parameters and gradients for the entire network
         ''' </summary>
-        Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult)
+        Public Overridable ReadOnly Property BackPropagationResult As BackPropResult()
             Get
-                For Each l As Layer In m_layers
-                    For Each subset In l.BackPropagationResult
-                        Yield subset
-                    Next
-                Next
+                Return m_layers _
+                    .Select(Function(l) l.BackPropagationResult) _
+                    .IteratesALL _
+                    .ToArray
             End Get
         End Property
 

@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.Runtime.CompilerServices
+Imports System.Threading
 
 Namespace CNN
 
@@ -23,6 +24,11 @@ Namespace CNN
         End Sub
 
         Protected MustOverride Sub Solve(start As Integer, ends As Integer)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Solve()
+            Call Solve(0, workLen - 1)
+        End Sub
 
         Public Sub Run()
             Dim span_size As Integer = workLen / n_threads

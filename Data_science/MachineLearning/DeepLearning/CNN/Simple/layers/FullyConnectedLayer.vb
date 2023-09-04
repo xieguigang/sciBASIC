@@ -66,37 +66,75 @@ Namespace CNN.layers
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             Dim lA As New DataBlock(1, 1, out_depth, 0.0)
-            Dim Vw = db.Weights
 
             in_act = db
-
-            For i = 0 To out_depth - 1
-                Dim a = 0.0
-                Dim wi = filters(i).Weights
-                For d = 0 To num_inputs - 1
-                    a += Vw(d) * wi(d) ' for efficiency use Vols directly for now
-                Next
-                a += biases.getWeight(i)
-                lA.setWeight(i, a)
-            Next
             out_act = lA
+
+            Call New ForwardTask(Me, lA, db).Solve()
+
             Return out_act
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
-            Dim V = in_act.clearGradient()
-
-            ' compute gradient wrt weights and data
-            For i = 0 To out_depth - 1
-                Dim tfi = filters(i)
-                Dim chain_grad = out_act.Gradients(i)
-                For d = 0 To num_inputs - 1
-                    V.addGradient(d, tfi.getWeight(d) * chain_grad) ' grad wrt input data
-                    tfi.addGradient(d, V.getWeight(d) * chain_grad) ' grad wrt params
-                Next
-                biases.addGradient(i, chain_grad)
-            Next
+            Call New BackwardTask(Me, v:=in_act.clearGradient()).Solve()
         End Sub
+
+        Private Class ForwardTask : Inherits VectorTask
+
+            Dim layer As FullyConnectedLayer
+            Dim lA As DataBlock
+            Dim db As DataBlock
+
+            Public Sub New(layer As FullyConnectedLayer, lA As DataBlock, db As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.lA = lA
+                Me.db = db
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                Dim Vw As Double() = db.Weights
+
+                For i As Integer = start To ends
+                    Dim a = 0.0
+                    Dim wi = layer.filters(i).Weights
+
+                    For d As Integer = 0 To layer.num_inputs - 1
+                        a += Vw(d) * wi(d) ' for efficiency use Vols directly for now
+                    Next
+
+                    a += layer.biases.getWeight(i)
+                    lA.setWeight(i, a)
+                Next
+            End Sub
+        End Class
+
+        Private Class BackwardTask : Inherits VectorTask
+
+            Dim v As DataBlock
+            Dim layer As FullyConnectedLayer
+
+            Public Sub New(layer As FullyConnectedLayer, v As DataBlock)
+                MyBase.New(layer.out_depth)
+                Me.v = v
+                Me.layer = layer
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                ' compute gradient wrt weights and data
+                For i As Integer = start To ends
+                    Dim tfi = Layer.filters(i)
+                    Dim chain_grad = layer.out_act.Gradients(i)
+
+                    For d As Integer = 0 To layer.num_inputs - 1
+                        Call v.addGradient(d, tfi.getWeight(d) * chain_grad) ' grad wrt input data
+                        Call tfi.addGradient(d, v.getWeight(d) * chain_grad) ' grad wrt params
+                    Next
+
+                    Call layer.biases.addGradient(i, chain_grad)
+                Next
+            End Sub
+        End Class
 
         Public Overrides Function ToString() As String
             Return $"full_connected({out_depth})"
