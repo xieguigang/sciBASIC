@@ -57,16 +57,20 @@ Namespace CNN.layers
             out_sx = CInt(std.Floor((in_sx + Me.padding * 2 - Me.sx) / Me.stride + 1))
             out_sy = CInt(std.Floor((in_sy + Me.padding * 2 - sy) / Me.stride + 1))
 
+            def.outX = out_sx
+            def.outY = out_sy
+            def.depth = out_depth
+
+            Call initSwitchMaps()
+        End Sub
+
+        Private Sub initSwitchMaps()
             ' store switches for x,y coordinates for where the max comes from, for each output neuron
             ' switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
             ' switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
             For d As Integer = 0 To out_depth - 1
                 Call switchMaps.Add(d, New Dictionary(Of String, Integer()))
             Next
-
-            def.outX = out_sx
-            def.outY = out_sy
-            def.depth = out_depth
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
@@ -74,6 +78,13 @@ Namespace CNN.layers
 
             in_act = db
             out_act = lA
+
+            If Not training Then
+                If switchMaps.IsNullOrEmpty Then
+                    Call initSwitchMaps()
+                End If
+            End If
+
             ' clear all mapping
             ' a counter for switches
             For Each d As UInteger In switchMaps.Keys
