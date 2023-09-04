@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.DeepLearning</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
-		<Version>5.0.1.2389</Version>
+		<Version>6.0.1.2389</Version>
 		<Copyright>GPL3</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
@@ -16,61 +16,14 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop</Configurations>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-	  <OutputPath>bin\x64\</OutputPath>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1</DefineConstants>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-	  <Optimize>false</Optimize>
-	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
-	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<UseApplicationFramework>True</UseApplicationFramework>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile>Microsoft.VisualBasic.DeepLearning.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -80,19 +33,19 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <DefineConstants>UNIX=1</DefineConstants>
 	  <OutputPath>../../../../../\R-sharp\App\</OutputPath>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -104,7 +57,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -116,7 +69,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
+	  
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
@@ -124,6 +77,270 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net4.8|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net4.8|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	  <DefineConstants>UNIX=1</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>
