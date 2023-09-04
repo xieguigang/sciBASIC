@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports std = System.Math
@@ -21,14 +20,16 @@ Namespace CNN.trainers
         ''' <summary>
         ''' alpha
         ''' </summary>
-        Protected Friend learning_rate As Double
+        Public Property learning_rate As Double = 0.01
+        Public Property eps As Double = 0.00000001
+        Public Property momentum As Double = 0.9
+
         Protected Friend l1_decay, l2_decay As Double
 
         ''' <summary>
         ''' iteration counter
         ''' </summary>
         Protected Friend k As Integer = 0
-        Protected Friend momentum, eps As Double
         Protected Friend gsum, xsum As IList(Of Double())
 
         Public ReadOnly Property batch_size As Integer

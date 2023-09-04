@@ -33,7 +33,7 @@ Namespace CNN
             Dim randPerm As Integer()
             Dim ti As Date = Now
             Dim input As InputLayer = alg.conv_net.input
-            Dim data As New DataBlock(input.dims.x, input.dims.y, 1, 0)
+            Dim data As New DataBlock(input.dims.x, input.dims.y, input.out_depth, 0)
             Dim tr As TrainResult = Nothing
             Dim img As SampleData
             Dim loss As New List(Of Double)
