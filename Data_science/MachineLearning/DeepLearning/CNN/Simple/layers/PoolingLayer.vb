@@ -180,10 +180,16 @@ Namespace CNN.layers
 
                         While ay < layer.out_sy
                             Dim chain_grad = layer.out_act.getGradient(ax, ay, d)
-                            Dim switch = map(ax & "," & ay)
-                            ' V.addGradient(switchx(n), switchy(n), d, chain_grad)
-                            v.addGradient(switch(0), switch(1), d, chain_grad)
-                            y += layer.stride
+                            Dim key As String = ax & "," & ay
+
+                            If map.ContainsKey(key) Then
+                                Dim switch As Integer() = map(key)
+
+                                ' V.addGradient(switchx(n), switchy(n), d, chain_grad)
+                                v.addGradient(switch(0), switch(1), d, chain_grad)
+                                y += layer.stride
+                            End If
+
                             ay += 1
                         End While
 
