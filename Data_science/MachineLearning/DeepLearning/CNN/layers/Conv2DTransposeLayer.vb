@@ -133,6 +133,8 @@ Namespace CNN.layers
             def.outX = in_sx
             def.outY = in_sy
             def.depth = in_depth
+
+            out_act = New DataBlock(in_sx, in_sy, in_depth)
         End Sub
 
         Public Sub backward() Implements Layer.backward
