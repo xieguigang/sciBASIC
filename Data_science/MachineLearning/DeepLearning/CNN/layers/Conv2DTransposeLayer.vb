@@ -50,14 +50,15 @@ Namespace CNN.layers
         End Sub
 
         Public Sub New(def As OutputDefinition,
+                       output As OutputDefinition,
                        filter As Dimension,
                        Optional filters As Integer = 3,
                        Optional stride As Integer = 1,
                        Optional useBias As Boolean = False)
 
-            Me.in_depth = def.depth
-            Me.in_sx = def.outX
-            Me.in_sy = def.outY
+            Me.in_depth = output.depth
+            Me.in_sx = output.outX
+            Me.in_sy = output.outY
 
             Me.out_depth = def.depth
             Me.useBias = useBias

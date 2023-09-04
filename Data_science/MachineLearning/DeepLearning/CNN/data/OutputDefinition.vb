@@ -29,6 +29,15 @@ Namespace CNN.data
         ''' <returns></returns>
         Public Overridable Property depth As Integer
 
+        Sub New()
+        End Sub
+
+        Sub New(w As Integer, h As Integer, depth As Integer)
+            Me.outX = w
+            Me.outY = h
+            Me.depth = depth
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

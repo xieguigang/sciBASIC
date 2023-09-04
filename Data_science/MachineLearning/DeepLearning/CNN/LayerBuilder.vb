@@ -31,8 +31,8 @@ Namespace CNN
             Return Me
         End Function
 
-        Public Function buildConv2DTransposeLayer(dims As Dimension, filters As Integer, stride As Integer) As LayerBuilder
-            Return add(New Conv2DTransposeLayer(def, dims, filters, stride))
+        Public Function buildConv2DTransposeLayer(dims As OutputDefinition, filter As Dimension, filters As Integer, stride As Integer) As LayerBuilder
+            Return add(New Conv2DTransposeLayer(def, dims, filter, filters, stride))
         End Function
 
         Public Overridable Function buildInputLayer(mapSize As Dimension, Optional depth As Integer = 1) As LayerBuilder
