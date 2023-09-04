@@ -202,7 +202,7 @@ Namespace ApplicationServices.Development.NetCoreApp
             Dim dependencies = deps.LoadDependencies(package).ToDictionary(Function(d) d.Name)
 
             For Each project As NamedValue(Of String) In referenceList
-                Dim dllFileName As NamedValue(Of Runtime) = dependencies.TryGetValue(project.Description)
+                Dim dllFileName As NamedValue(Of runtime) = GetDllFileAuto(dependencies, project)
 
                 If dllFileName.Description.StringEmpty Then
                     Call $"no dll file module of: {project.Description}?".Warning
@@ -219,5 +219,20 @@ Namespace ApplicationServices.Development.NetCoreApp
                 End If
             Next
         End Sub
+
+        Private Shared Function GetDllFileAuto(deps As Dictionary(Of String, NamedValue(Of runtime)), proj As NamedValue(Of String))
+            If deps.ContainsKey(proj.Description) Then
+                Return deps(proj.Description)
+            Else
+                Dim key1 As String = $"{proj.Name}.Reference/{proj.Value}"
+                Dim key2 As String = key1 & ".0"
+
+                If deps.ContainsKey(key1) Then
+                    Return deps(key1)
+                Else
+                    Return deps.TryGetValue(key2)
+                End If
+            End If
+        End Function
     End Class
 End Namespace
