@@ -37,7 +37,6 @@ Namespace CNN.layers
         Dim useBias As Boolean
         Dim inData As Double()
         Dim b, bs As Double()
-        Dim accessed As Double()
         Dim hMFHPO As Double
         Dim wMFWPO As Double
         Dim hMFWMF As Double
@@ -78,7 +77,6 @@ Namespace CNN.layers
 
             Me.b = New Double(out_len - 1) {}
             Me.bs = New Double(out_len - 1) {}
-            Me.accessed = New Double(inData.Length - 1) {}
 
             If filterWidth > in_sx OrElse filterHeight > in_sy Then
                 Throw New InvalidProgramException("Conv layer error: filters cannot be bigger than the input")
@@ -204,9 +202,11 @@ Namespace CNN.layers
             Next
             ' -------------End of monstrosity-----------------
 
-            For i As Integer = 0 To outData.Length - 1
-                outData(i) += b(i)
-            Next
+            If useBias Then
+                For i As Integer = 0 To outData.Length - 1
+                    outData(i) += b(i)
+                Next
+            End If
 
             Return out_act
         End Function
