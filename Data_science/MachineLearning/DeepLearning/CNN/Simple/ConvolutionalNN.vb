@@ -13,7 +13,8 @@ Namespace CNN
     ''' @author Daniel Persson (mailto.woden@gmail.com) and s.chekanov 
     ''' </summary>
     ''' <remarks>
-    ''' https://github.com/kalaspuffar/JavaCNN
+    ''' + https://github.com/kalaspuffar/JavaCNN
+    ''' + https://github.com/karpathy/convnetjs
     ''' </remarks>
     Public Class ConvolutionalNN
 

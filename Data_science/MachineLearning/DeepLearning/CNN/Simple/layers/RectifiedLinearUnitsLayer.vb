@@ -23,13 +23,13 @@ Namespace CNN.layers
             End Get
         End Property
 
-        Public ReadOnly Property Type As LayerTypes Implements Layer.Type
+        Public Overridable ReadOnly Property Type As LayerTypes Implements Layer.Type
             Get
                 Return LayerTypes.ReLU
             End Get
         End Property
 
-        Dim threshold As Double = 0.0
+        Protected threshold As Double = 0.0
 
         Sub New()
         End Sub

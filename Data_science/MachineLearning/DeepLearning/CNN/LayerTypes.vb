@@ -84,5 +84,6 @@ Namespace Convolutional
         <Description("svm")> SVM
         <Description("conv_transpose")> Conv2DTranspose
         <Description("fourier_feature")> FourierFeature
+        <Description("leaky_relu")> LeakyReLU
     End Enum
 End Namespace
