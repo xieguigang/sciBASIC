@@ -103,10 +103,10 @@ Namespace Convolutional
             Call wr.Write(layer.type.Description)
 
             Select Case layer.type
-                Case LayerTypes.Convolution : Call model.save(DirectCast(layer, Convolution), wr)
-                Case LayerTypes.ReLU : Call model.save(DirectCast(layer, ReLU), wr)
-                Case LayerTypes.Pool : Call model.save(DirectCast(layer, Pool), wr)
-                Case LayerTypes.SoftMax : Call model.save(DirectCast(layer, SoftMax), wr)
+                Case CNN.LayerTypes.Convolution : Call model.save(DirectCast(layer, Convolution), wr)
+                Case CNN.LayerTypes.ReLU : Call model.save(DirectCast(layer, ReLU), wr)
+                Case CNN.LayerTypes.Pool : Call model.save(DirectCast(layer, Pool), wr)
+                Case CNN.LayerTypes.SoftMax : Call model.save(DirectCast(layer, SoftMax), wr)
                 Case Else
                     Throw New InvalidDataException(layer.type.ToString)
             End Select

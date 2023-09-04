@@ -65,9 +65,9 @@ Namespace Convolutional
         Public pool As Integer()
         Public stride As Integer()
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.Pool
+                Return CNN.LayerTypes.Pool
             End Get
         End Property
 

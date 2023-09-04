@@ -62,9 +62,9 @@ Namespace Convolutional
         Public ReadOnly Property sortedClasses As String()
         Public ReadOnly Property probabilities As Single()
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.Output
+                Return CNN.LayerTypes.Output
             End Get
         End Property
 

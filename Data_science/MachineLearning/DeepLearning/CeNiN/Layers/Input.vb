@@ -72,9 +72,9 @@ Namespace Convolutional
         Public inputSize As Integer()
         Public avgPixel As Single()
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.Input
+                Return CNN.LayerTypes.Input
             End Get
         End Property
 

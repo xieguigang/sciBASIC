@@ -60,9 +60,9 @@ Namespace Convolutional
 
     Public Class SoftMax : Inherits Layer
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.SoftMax
+                Return CNN.LayerTypes.SoftMax
             End Get
         End Property
 

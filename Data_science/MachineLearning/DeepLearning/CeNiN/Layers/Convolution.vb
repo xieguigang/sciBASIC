@@ -69,9 +69,9 @@ Namespace Convolutional
         Public weights As Tensor
         Public biases As Tensor
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.Convolution
+                Return CNN.LayerTypes.Convolution
             End Get
         End Property
 

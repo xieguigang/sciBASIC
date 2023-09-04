@@ -57,9 +57,9 @@ Namespace Convolutional
 
     Friend Class ReLU : Inherits Layer
 
-        Public Overrides ReadOnly Property type As LayerTypes
+        Public Overrides ReadOnly Property type As CNN.LayerTypes
             Get
-                Return LayerTypes.ReLU
+                Return CNN.LayerTypes.ReLU
             End Get
         End Property
 

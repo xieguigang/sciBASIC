@@ -64,7 +64,7 @@ Namespace Convolutional
 
     Public MustInherit Class Layer : Implements IDisposable
 
-        Public MustOverride ReadOnly Property type As LayerTypes
+        Public MustOverride ReadOnly Property type As CNN.LayerTypes
 
         Public ReadOnly Property inputTensorDims As Integer()
 
