@@ -103,13 +103,28 @@ Namespace Imaging.BitmapImage
             Me.channels = channel
         End Sub
 
+        ''' <summary>
+        ''' The dimension width of the current bitmap buffer object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Width As Integer
+        ''' <summary>
+        ''' The dimension height of the current bitmap buffer object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Integer
+        ''' <summary>
+        ''' the dimension size of current bitmap buffer object, 
+        ''' it is constructed via the <see cref="Width"/> and 
+        ''' <see cref="Height"/> data.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
         Public ReadOnly Property Stride As Integer
 
         ''' <summary>
-        ''' Gets a copy of the original raw image value that which constructed this bitmap object class
+        ''' Gets a copy of the original raw image value that which constructed 
+        ''' this bitmap object class
         ''' </summary>
         ''' <returns></returns>
         ''' 

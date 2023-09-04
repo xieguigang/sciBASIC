@@ -75,6 +75,16 @@ Namespace Drawing2D.HeatMap
         Dim formula As Func(Of Color, Single)
 
         ''' <summary>
+        ''' the dimension size of the bitmap buffer data
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Size
+            Get
+                Return buffer.Size
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="heatmap">
@@ -101,6 +111,10 @@ Namespace Drawing2D.HeatMap
         Public Sub ScaleTo(g As IGraphics, region As Rectangle)
             Call Scale(g, region.Size, region.Location)
         End Sub
+
+        Public Function GetPixel(x As Integer, y As Integer) As Color
+            Return buffer.GetPixel(x, y)
+        End Function
 
         ''' <summary>
         ''' Get grayscale raster data
