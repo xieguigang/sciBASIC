@@ -29,9 +29,11 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            in_act = db
             Dim V2 As DataBlock = db.cloneAndZero()
             Dim N = db.Weights.Length
+
+            in_act = db
+
             For i = 0 To N - 1
                 V2.setWeight(i, std.Tanh(db.getWeight(i)))
             Next

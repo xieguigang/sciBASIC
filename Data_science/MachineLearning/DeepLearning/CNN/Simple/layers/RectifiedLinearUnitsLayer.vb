@@ -29,6 +29,8 @@ Namespace CNN.layers
             End Get
         End Property
 
+        Dim threshold As Double = 0.0
+
         Sub New()
         End Sub
 
@@ -40,8 +42,8 @@ Namespace CNN.layers
             in_act = db
 
             For i As Integer = 0 To N - 1
-                If V2w(i) < 0 Then
-                    V2.setGradient(i, 0) ' threshold at 0
+                If V2w(i) < threshold Then
+                    V2.setWeight(i, threshold) ' threshold at 0
                 End If
             Next
 
@@ -57,8 +59,8 @@ Namespace CNN.layers
             Dim N = V.Weights.Length
 
             For i As Integer = 0 To N - 1
-                If V2.getWeight(i) <= 0 Then
-                    V.setGradient(i, 0) ' threshold
+                If V2.getWeight(i) <= threshold Then
+                    V.setGradient(i, threshold) ' threshold
                 Else
                     V.setGradient(i, V2.getGradient(i))
                 End If
