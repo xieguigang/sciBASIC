@@ -3,9 +3,18 @@
     ''' <summary>
     ''' The layer dimension data
     ''' </summary>
+    ''' <remarks>
+    ''' width and height
+    ''' </remarks>
     Public Class Dimension
 
+        ''' <summary>
+        ''' the image dimension width
+        ''' </summary>
         Public ReadOnly x As Integer
+        ''' <summary>
+        ''' the image dimension height
+        ''' </summary>
         Public ReadOnly y As Integer
 
         Public Sub New(x As Integer, y As Integer)

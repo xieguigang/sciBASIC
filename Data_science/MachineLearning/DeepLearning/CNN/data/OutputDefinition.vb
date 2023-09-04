@@ -8,10 +8,25 @@ Namespace CNN.data
     ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com)
     ''' </summary>
+    ''' <remarks>
+    ''' width, height and depth
+    ''' </remarks>
     Public Class OutputDefinition
 
+        ''' <summary>
+        ''' the image width
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property outX As Integer
+        ''' <summary>
+        ''' the image height
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property outY As Integer
+        ''' <summary>
+        ''' the data depth channel, example as 3 probably stands for rgb channels
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property depth As Integer
 
         Public Overrides Function ToString() As String

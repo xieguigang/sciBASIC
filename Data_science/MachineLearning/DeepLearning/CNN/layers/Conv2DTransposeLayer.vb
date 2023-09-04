@@ -1,16 +1,21 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports std = System.Math
 
 Namespace CNN.layers
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/TrevorBlythe/MentisJS/blob/main/src/layers/DeconvLayer.js
+    ''' </remarks>
     Public Class Conv2DTransposeLayer : Inherits DataLink
         Implements Layer
 
         Public ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
-                For i As Integer = 0 To out_depth - 1
-                    Yield New BackPropResult(filters(i).Weights, filters(i).Gradients, l2_decay_mul, l1_decay_mul)
-                Next
+
             End Get
         End Property
 
@@ -22,87 +27,120 @@ Namespace CNN.layers
 
         Friend out_depth, out_sx, out_sy As Integer
         Friend in_depth, in_sx, in_sy As Integer
-        Friend sx, sy As Integer
+        Friend filterWidth, filterHeight As Integer
         Friend stride, padding As Integer
-        Friend filters As DataBlock()
         Friend l1_decay_mul As Double = 0.0
         Friend l2_decay_mul As Double = 1.0
 
-        Public Sub New(def As OutputDefinition, sx As Integer, stride As Integer, padding As Integer)
-            Me.out_depth = def.depth
+        Dim filterw, filterws As Double()
+        Dim useBias As Boolean
+        Dim inData As Double()
+        Dim b, bs As Double()
+        Dim accessed As Double()
+        Dim hMFHPO As Double
+        Dim wMFWPO As Double
+        Dim hMFWMF As Double
+        Dim wIH As Integer
+        Dim wIHID As Integer
+        Dim fWIH As Integer
+        Dim fWIHID As Integer
+
+        Sub New()
+        End Sub
+
+        Public Sub New(def As OutputDefinition,
+                       filter As Dimension,
+                       Optional filters As Integer = 3,
+                       Optional stride As Integer = 1,
+                       Optional padding As Integer = 0,
+                       Optional useBias As Boolean = False)
+
             Me.in_depth = def.depth
             Me.in_sx = def.outX
             Me.in_sy = def.outY
-            Me.sx = sx
-            Me.sy = sx
+
+            Me.out_depth = def.depth
+            Me.useBias = useBias
+
+            Me.filterWidth = filter.x
+            Me.filterHeight = filter.y
+
             Me.stride = stride
             Me.padding = padding
 
-            out_sx = (in_sx - 1) * stride + sx
-            out_sy = (in_sy - 1) * stride + sy
+            Me.filterw = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
+            Me.filterws = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
+            Me.inData = New Double(
+                std.Ceiling((in_sx - filterWidth + 1) / stride) *
+                std.Ceiling((in_sy - filterHeight + 1) / stride) * filters) {}
 
-            ' initializations
-            Me.filters = New DataBlock(out_depth - 1) {}
+            Dim out_len As Integer = in_sx * in_sy * in_depth
 
-            For i As Integer = 0 To out_depth - 1
-                Me.filters(i) = New DataBlock(Me.sx, sy, in_depth)
+            Me.b = New Double(out_len - 1) {}
+            Me.bs = New Double(out_len - 1) {}
+            Me.accessed = New Double(inData.Length - 1) {}
+
+            If filterWidth > in_sx OrElse filterHeight > in_sy Then
+                Throw New InvalidProgramException("Conv layer error: filters cannot be bigger than the input")
+            End If
+
+            ' init random weights
+            Me.filterw = Vector.rand(-1, 1, size:=filterw.Length)
+
+            For a As Integer = 0 To 3 - 1
+                Dim newFilterw = Me.filterw.ToArray
+                For f As Integer = 0 To filters - 1
+                    For d As Integer = 0 To in_depth - 1
+                        For x As Integer = 0 To filterWidth - 1
+                            For y As Integer = 0 To filterHeight - 1
+                                Dim count As Integer = 0
+                                Dim ind As Integer = f * in_depth * filterWidth * filterHeight + x + y * filterWidth + d * filterWidth * filterHeight
+                                Dim indR As Integer = f * in_depth * filterWidth * filterHeight + (x + 1) + y * filterWidth + d * filterWidth * filterHeight
+                                Dim indL As Integer = f * in_depth * filterWidth * filterHeight + (x - 1) + y * filterWidth + d * filterWidth * filterHeight
+                                Dim indD As Integer = f * in_depth * filterWidth * filterHeight + x + (y + 1) * filterWidth + d * filterWidth * filterHeight
+                                Dim indU As Integer = f * in_depth * filterWidth * filterHeight + x + (y - 1) * filterWidth + d * filterWidth * filterHeight
+
+                                If (x < filterWidth - 1) Then count += filterw(indR)
+                                If (x > 1) Then count += filterw(indL)
+                                If (y < filterHeight - 1) Then count += filterw(indD)
+                                If (y > 1) Then count += filterw(indU)
+                                newFilterw(ind) += count / 5
+                            Next
+                        Next
+                    Next
+                Next
+
+                filterw = newFilterw
             Next
 
-            ' biases = New DataBlock(1, 1, out_depth, BIAS_PREF)
+            If useBias Then
+                b = Vector.rand(-1, 1, b.Length)
+            Else
+                b = Vector.Zero([Dim]:=b.Length)
+            End If
 
-            def.outX = out_sx
-            def.outY = out_sy
-            def.depth = out_depth
+            'Everything below here Is precalculated constants used in forward/backward
+            'to optimize this And make sure we are as effeiciant as possible.
+            'DONT CHANGE THESE Or BIG BREAKY BREAKY!
+            Me.hMFHPO = std.Ceiling((Me.in_sy - Me.filterHeight + 1) / Me.stride)
+            Me.wMFWPO = std.Ceiling((Me.in_sx - Me.filterWidth + 1) / Me.stride)
+            Me.hMFWMF = Me.hMFHPO * Me.wMFWPO
+            Me.wIH = Me.in_sx * Me.in_sy
+            Me.wIHID = Me.in_sx * Me.in_sy * Me.in_depth
+            Me.fWIH = Me.filterWidth * Me.filterHeight
+            Me.fWIHID = Me.in_depth * Me.filterHeight * Me.filterWidth
+
+            def.outX = in_sx
+            def.outY = in_sy
+            def.depth = in_depth
         End Sub
 
         Public Sub backward() Implements Layer.backward
-            Dim db = in_act.clearGradient
-            Dim V_sx = db.SX
-            Dim V_sy = db.SY
 
-            For d As Integer = 0 To out_depth - 1
-                Dim f = filters(d)
-
-                For i As Integer = 0 To out_sx
-                    Dim i_prime = i * stride
-                    For j As Integer = 0 To out_sy
-                        Dim j_prime = j * stride
-                        Dim chain_grad = out_act.getGradient(i, j, d)
-
-                        For k_row As Integer = 0 To f.SX
-                            For k_col As Integer = 0 To f.SY
-                                f.addGradient(k_row, k_col, d, in_act.getWeight(i, j, d) * chain_grad)
-                                in_act.addGradient(i_prime + k_row, j_prime + k_col, d, f.getWeight(k_row, k_col, d) * chain_grad)
-                            Next
-                        Next
-                    Next
-                Next
-            Next
         End Sub
 
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            out_act = New DataBlock(out_sx, out_sy, out_depth)
-            in_act = db
 
-            For d As Integer = 0 To out_depth - 1
-                Dim f = filters(d)
-                Dim wi As Double
-
-                For i As Integer = 0 To out_sx
-                    Dim i_prime = i * stride
-                    For j As Integer = 0 To out_sy
-                        Dim j_prime = j * stride
-                        For k_row As Integer = 0 To f.SX - 1
-                            For k_col As Integer = 0 To f.SY - 1
-                                wi = out_act.getWeight(i, j, d) + f.getWeight(k_row, k_col, d) * in_act.getWeight(i, j, d)
-                                out_act.setWeight(i_prime + k_row, j_prime + k_col, d, wi)
-                            Next
-                        Next
-                    Next
-                Next
-            Next
-
-            Return out_act
         End Function
     End Class
 End Namespace
