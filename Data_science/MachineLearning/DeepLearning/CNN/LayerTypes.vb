@@ -55,7 +55,7 @@
 
 Imports System.ComponentModel
 
-Namespace Convolutional
+Namespace CNN
 
     Public Enum LayerTypes As Integer
 
