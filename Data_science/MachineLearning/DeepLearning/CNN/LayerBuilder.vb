@@ -31,8 +31,8 @@ Namespace CNN
             Return Me
         End Function
 
-        Public Function buildConv2DTransposeLayer(sx As Integer, stride As Integer, padding As Integer) As LayerBuilder
-            Return add(New Conv2DTransposeLayer(def, sx, stride, padding))
+        Public Function buildConv2DTransposeLayer(dims As Dimension, filters As Integer, stride As Integer) As LayerBuilder
+            Return add(New Conv2DTransposeLayer(def, dims, filters, stride))
         End Function
 
         Public Overridable Function buildInputLayer(mapSize As Dimension, Optional depth As Integer = 1) As LayerBuilder
@@ -45,6 +45,10 @@ Namespace CNN
 
         Public Function buildReLULayer() As LayerBuilder
             Return add(New RectifiedLinearUnitsLayer)
+        End Function
+
+        Public Function buildLeakyReLULayer() As LayerBuilder
+            Return add(New LeakyReluLayer)
         End Function
 
         Public Function buildSigmoidLayer() As LayerBuilder
