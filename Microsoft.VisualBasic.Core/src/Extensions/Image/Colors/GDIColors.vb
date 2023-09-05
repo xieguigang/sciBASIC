@@ -73,6 +73,21 @@ Namespace Imaging
     ''' </summary>
     Public Module GDIColors
 
+        <Extension>
+        Public Function Red(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.R))
+        End Function
+
+        <Extension>
+        Public Function Green(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.G))
+        End Function
+
+        <Extension>
+        Public Function Blue(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.B))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function HTMLColors(colors As IEnumerable(Of Color)) As IEnumerable(Of String)
