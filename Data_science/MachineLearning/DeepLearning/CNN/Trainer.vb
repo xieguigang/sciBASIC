@@ -39,6 +39,7 @@ Namespace CNN
             Dim loss As New List(Of Double)
             Dim cpu As New PerformanceCounter
             Dim valid_loss As Double()
+            Dim loss_sum, loss_mean As Double
 
             right = 0
             count = 0
@@ -72,7 +73,9 @@ Namespace CNN
 
                 If i Mod d = 0 Then
                     valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
-                    log($"[{i + 1}/{epochsNum};  {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss={If(valid_loss.Length > 0, valid_loss.Average, "N/A")}...... {(Now - t0).FormatTime(False)}")
+                    loss_sum = valid_loss.Sum
+                    loss_mean = loss_sum / (valid_loss.Length + 1)
+                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss:{loss_mean}, total:{loss_sum}...... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
