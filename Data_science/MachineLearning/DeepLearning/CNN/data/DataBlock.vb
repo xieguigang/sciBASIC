@@ -96,11 +96,12 @@ Namespace CNN.data
 
         Public Overrides Function ToString() As String
             Dim sb As String = $"shape(w:{SX}, h:{SY}, channels_depth:{Depth})[{Weights.Length}]"
+            Dim njs As String = w.Take(13).JoinBy(", ")
 
             If trace.StringEmpty Then
-                Return sb & " [from_unknown]"
+                Return sb & $" [from_unknown] [{njs}...]"
             Else
-                Return $"{sb} [{trace}]"
+                Return $"{sb} [{trace}] [{njs}...]"
             End If
         End Function
 
