@@ -18,6 +18,9 @@ Namespace CNN.layers
             Me.leakySlope = leakySlope
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
             Dim V2 As DataBlock = db.clone()
             Dim N = db.Weights.Length
