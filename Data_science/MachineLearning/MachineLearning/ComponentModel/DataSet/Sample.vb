@@ -130,7 +130,11 @@ Namespace ComponentModel.StoreProcedure
 
         Public Shared Iterator Function TransformDataset(trainset As SampleData(), is_generative As Boolean, is_training As Boolean) As IEnumerable(Of SampleData)
             Dim featureMax As Double() = New Double(trainset(0).features.Length - 1) {}
-            Dim labelMax As Double() = New Double(trainset(0).labels.Length - 1) {}
+            Dim labelMax As Double() = Nothing
+
+            If is_training Then
+                labelMax = New Double(trainset(0).labels.Length - 1) {}
+            End If
 
             For i As Integer = 0 To trainset.Length - 1
                 Dim d As SampleData = trainset(i)
