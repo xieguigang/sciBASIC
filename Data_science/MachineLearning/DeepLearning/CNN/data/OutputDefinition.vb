@@ -17,17 +17,23 @@ Namespace CNN.data
         ''' the image width
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property outX As Integer
+        Public Property outX As Integer
         ''' <summary>
         ''' the image height
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property outY As Integer
+        Public Property outY As Integer
         ''' <summary>
         ''' the data depth channel, example as 3 probably stands for rgb channels
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Property depth As Integer
+        Public Property depth As Integer
+
+        Public ReadOnly Property len As Integer
+            Get
+                Return outX * outY * depth
+            End Get
+        End Property
 
         Sub New()
         End Sub
@@ -39,7 +45,7 @@ Namespace CNN.data
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"w:{outX};h:{outY};d:{depth};len={len}"
         End Function
 
     End Class

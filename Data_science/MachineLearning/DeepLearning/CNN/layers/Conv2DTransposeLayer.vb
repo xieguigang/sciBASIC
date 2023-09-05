@@ -70,8 +70,12 @@ Namespace CNN.layers
             Me.filterw = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
             Me.filterws = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
 
-            ' Dim in_w As Integer = std.Ceiling((in_sx - filterWidth + 1) / stride)
-            ' Dim in_h As Integer = std.Ceiling((in_sy - filterHeight + 1) / stride)
+            Dim in_w As Integer = std.Ceiling((in_sx - filterWidth + 1) / stride)
+            Dim in_h As Integer = std.Ceiling((in_sy - filterHeight + 1) / stride)
+
+            If def.outX <> in_w OrElse def.outY <> in_h OrElse def.depth <> filters Then
+                Throw New InvalidProgramException($"The dimension of the input is not matched! required(w:{in_w}, h:{in_h}, depth:{filters}), but given(w:{def.outX}, h:{def.outY}, depth:{def.depth})!")
+            End If
 
             ' Me.inData = New Double(in_w * in_h * filters - 1) {}
 
@@ -184,6 +188,7 @@ Namespace CNN.layers
             outData = out_act.w
 
             Dim inData As Double() = in_act.w
+            Dim odiMax As New List(Of Integer)
 
             ' -------------Beginning of monstrosity-----------------
             For i As Integer = 0 To filters - 1
@@ -196,6 +201,7 @@ Namespace CNN.layers
                     For b As Integer = 0 To wMFWPO - 1
                         Dim odi = b + gWMFWPO + iHMFWMF
                         Dim ba = b * stride
+                        odiMax.Add(odi)
                         For h As Integer = 0 To in_depth - 1
                             Dim hWIH = h * wIH + ba
                             Dim hFWIH = h * fWIH + iFWIHID
@@ -211,6 +217,7 @@ Namespace CNN.layers
                 Next
             Next
             ' -------------End of monstrosity-----------------
+            Dim max = odiMax.Max
 
             If useBias Then
                 For i As Integer = 0 To outData.Length - 1
