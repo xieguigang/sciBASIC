@@ -88,9 +88,9 @@ Namespace CNN.data
             dw = New Double(n - 1) {}
 
             If c <> -1.0 Then
-                w = Vector.Zero([Dim]:=n)
+                w = c.Replicate(n).ToArray
             Else
-                w = Vector.rand(size:=n) * std.Sqrt(1.0 / n)
+                w = Vector.rand(-1, 1, size:=n) * std.Sqrt(1.0 / n)
             End If
         End Sub
 

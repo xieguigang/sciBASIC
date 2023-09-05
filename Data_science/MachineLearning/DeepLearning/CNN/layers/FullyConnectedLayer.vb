@@ -17,7 +17,7 @@ Namespace CNN.layers
         Private l1_decay_mul As Double = 0.0
         Private l2_decay_mul As Double = 1.0
 
-        Private ReadOnly BIAS_PREF As Single = 0.0F
+        Private ReadOnly BIAS_PREF As Single = 0.1F
 
         Private out_depth, out_sx, out_sy As Integer
         Private num_inputs As Integer
