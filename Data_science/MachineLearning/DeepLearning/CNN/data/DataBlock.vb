@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -82,17 +83,12 @@ Namespace CNN.data
             _SY = sy
             _Depth = depth
 
-            w = New Double(n - 1) {}
             dw = New Double(n - 1) {}
 
             If c <> -1.0 Then
-                Call w.fill(c)
+                w = Vector.Zero([Dim]:=n)
             Else
-                Dim scale = std.Sqrt(1.0 / n)
-
-                For i = 0 To n - 1
-                    w(i) = randf.NextDouble() * scale
-                Next
+                w = Vector.rand(size:=n) * std.Sqrt(1.0 / n)
             End If
         End Sub
 
