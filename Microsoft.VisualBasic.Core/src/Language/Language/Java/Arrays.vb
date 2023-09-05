@@ -69,6 +69,9 @@ Namespace Language.Java
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a"></param>
         ''' <param name="val"></param>
+        ''' <remarks>
+        ''' this function will not break the given vector its class reference
+        ''' </remarks>
         <Extension>
         Public Sub fill(Of T)(<Out> ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1

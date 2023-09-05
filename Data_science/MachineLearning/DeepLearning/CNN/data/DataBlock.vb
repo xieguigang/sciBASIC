@@ -16,9 +16,11 @@ Namespace CNN.data
     ''' </summary>
     Public Class DataBlock
 
-        Public Overridable ReadOnly Property SX As Integer
-        Public Overridable ReadOnly Property SY As Integer
-        Public Overridable ReadOnly Property Depth As Integer
+        Public ReadOnly Property SX As Integer
+        Public ReadOnly Property SY As Integer
+        Public ReadOnly Property Depth As Integer
+
+        Public Property trace As String
 
         ''' <summary>
         ''' the multiple class classify probability weight
@@ -26,7 +28,7 @@ Namespace CNN.data
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>get <see cref="w"/></remarks>
-        Public Overridable ReadOnly Property Weights As Double()
+        Public ReadOnly Property Weights As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return w
@@ -38,7 +40,7 @@ Namespace CNN.data
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>get <see cref="dw"/></remarks>
-        Public Overridable ReadOnly Property Gradients As Double()
+        Public ReadOnly Property Gradients As Double()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return dw
@@ -93,7 +95,13 @@ Namespace CNN.data
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"shape(w:{SX}, h:{SY}, channels_depth:{Depth})[{Weights.Length}]"
+            Dim sb As String = $"shape(w:{SX}, h:{SY}, channels_depth:{Depth})[{Weights.Length}]"
+
+            If trace.StringEmpty Then
+                Return sb & " [from_unknown]"
+            Else
+                Return $"{sb} [{trace}]"
+            End If
         End Function
 
         ''' <summary>
@@ -235,7 +243,7 @@ Namespace CNN.data
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function cloneAndZero() As DataBlock
-            Return New DataBlock(_SX, _SY, _Depth, 0.0)
+            Return New DataBlock(_SX, _SY, _Depth, 0.0) With {.trace = trace}
         End Function
 
         ''' <summary>
@@ -243,7 +251,7 @@ Namespace CNN.data
         ''' </summary>
         ''' <returns></returns>
         Public Overridable Function clone() As DataBlock
-            Dim db As New DataBlock(_SX, _SY, _Depth, 0.0)
+            Dim db As New DataBlock(_SX, _SY, _Depth, 0.0) With {.trace = trace}
 
             For i As Integer = 0 To w.Length - 1
                 db.w(i) = w(i)
@@ -253,7 +261,7 @@ Namespace CNN.data
         End Function
 
         ''' <summary>
-        ''' set <see cref="dw"/> vector to zero
+        ''' just set <see cref="dw"/> vector to zero
         ''' </summary>
         Public Function clearGradient() As DataBlock
             Call dw.fill(0)

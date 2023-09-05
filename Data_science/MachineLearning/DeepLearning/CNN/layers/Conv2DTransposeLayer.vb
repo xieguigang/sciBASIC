@@ -138,7 +138,7 @@ Namespace CNN.layers
             def.outY = in_sy
             def.depth = in_depth
 
-            out_act = New DataBlock(in_sx, in_sy, in_depth)
+            out_act = New DataBlock(in_sx, in_sy, in_depth) With {.trace = Me.ToString}
         End Sub
 
         Public Sub backward() Implements Layer.backward
@@ -181,7 +181,7 @@ Namespace CNN.layers
 
             If out_act Is Nothing Then
                 ' fix the null reference when load model
-                out_act = New DataBlock(in_sx, in_sy, in_depth)
+                out_act = New DataBlock(in_sx, in_sy, in_depth) With {.trace = Me.ToString}
             End If
 
             in_act = db.clone

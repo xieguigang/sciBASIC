@@ -65,7 +65,7 @@ Namespace CNN.layers
         End Sub
 
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            Dim lA As New DataBlock(1, 1, out_depth, 0.0)
+            Dim lA As New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
 
             in_act = db
             out_act = lA

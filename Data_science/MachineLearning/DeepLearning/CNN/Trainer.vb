@@ -33,7 +33,7 @@ Namespace CNN
             Dim randPerm As Integer()
             Dim ti As Date = Now
             Dim input As InputLayer = alg.conv_net.input
-            Dim data As New DataBlock(input.dims.x, input.dims.y, input.out_depth, 0)
+            Dim data As New DataBlock(input.dims.x, input.dims.y, input.out_depth, 0) With {.trace = Me.ToString}
             Dim tr As TrainResult = Nothing
             Dim img As SampleData
             Dim loss As New List(Of Double)
@@ -53,6 +53,7 @@ Namespace CNN
                 For Each index As Integer In randPerm
                     img = trainset(index)
                     data.addImageData(img.features, global_featureMax)
+                    data.trace = $"input_data({img.id})"
                     tr = alg.train(data, img.labels, checkpoints:=cpu.Set)
                     loss += tr.Loss
 

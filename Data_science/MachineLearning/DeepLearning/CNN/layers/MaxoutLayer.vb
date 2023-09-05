@@ -48,7 +48,7 @@ Namespace CNN.layers
         Public Overridable Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
             in_act = db
             Dim lN = out_depth
-            Dim V2 As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0)
+            Dim V2 As DataBlock = New DataBlock(out_sx, out_sy, out_depth, 0.0) With {.trace = Me.ToString}
 
             ' optimization branch. If we're operating on 1D arrays we dont have
             ' to worry about keeping track of x,y,d coordinates inside

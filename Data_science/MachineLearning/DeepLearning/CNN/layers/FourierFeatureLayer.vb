@@ -62,7 +62,7 @@ Namespace CNN.layers
         End Sub
 
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
-            Dim mappedFeature As New DataBlock(out_sx, out_sy, out_depth, 0)
+            Dim mappedFeature As New DataBlock(out_sx, out_sy, out_depth, 0) With {.trace = Me.ToString}
 
             For d As Integer = 0 To out_depth - 1
                 Dim x = 0, y = 0
