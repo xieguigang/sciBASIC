@@ -52,5 +52,9 @@ Namespace CNN.layers
                 End If
             Next
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return "leaky_relu()"
+        End Function
     End Class
 End Namespace

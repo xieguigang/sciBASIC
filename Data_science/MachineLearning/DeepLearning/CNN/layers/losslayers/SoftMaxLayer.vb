@@ -41,7 +41,7 @@ Namespace CNN.losslayers
         End Sub
 
         Public Overrides Function forward(db As DataBlock, training As Boolean) As DataBlock
-            Dim A As DataBlock = New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
+            Dim A As New DataBlock(1, 1, out_depth, 0.0) With {.trace = Me.ToString}
 
             in_act = db
 
