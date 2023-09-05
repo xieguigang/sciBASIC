@@ -136,10 +136,8 @@ Namespace CNN.layers
         End Sub
 
         Public Sub backward() Implements Layer.backward
-            in_act.clearGradient()
-
-            Dim costs As Double() = in_act.Gradients
-            Dim err = out_act.Gradients
+            Dim costs As Double() = in_act.clearGradient().Gradients
+            Dim err As Double() = out_act.Gradients
 
             For i As Integer = 0 To filters - 1
                 Dim iHMFWMF = i * hMFWMF
