@@ -120,6 +120,9 @@ Namespace Drawing2D.HeatMap
         ''' Get grayscale raster data
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' default scale value of each <see cref="PixelData"/> is the color brightness
+        ''' </remarks>
         Public Iterator Function GetRasterData(Optional byrow As Boolean = True) As IEnumerable(Of PixelData)
             Dim w = buffer.Width
             Dim h = buffer.Height
