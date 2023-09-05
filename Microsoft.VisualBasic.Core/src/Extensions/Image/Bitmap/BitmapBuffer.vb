@@ -337,12 +337,12 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
-        ''' Sets the color of the specified pixel in this System.Drawing.Bitmap.(这个函数线程不安全)
+        ''' Sets the color of the specified pixel in this <see cref="Bitmap"/>.(这个函数线程不安全)
         ''' </summary>
         ''' <param name="x">The x-coordinate of the pixel to set. [0, width-1]</param>
         ''' <param name="y">The y-coordinate of the pixel to set. [0, height-1]</param>
         ''' <param name="color">
-        ''' A System.Drawing.Color structure that represents the color to assign to the specified
+        ''' A <see cref="Color"/> structure that represents the color to assign to the specified
         ''' pixel.</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

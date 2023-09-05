@@ -13,8 +13,8 @@ Namespace CNN.data
 
         Friend l1_decay_mul, l2_decay_mul As Double
 
-        Private w As Double()
-        Private dw As Double()
+        Dim w As Double()
+        Dim dw As Double()
 
         Public Overridable ReadOnly Property L1DecayMul As Double
             Get
@@ -48,7 +48,7 @@ Namespace CNN.data
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"[len:{w.Length}] l1_decay_mul:{l1_decay_mul}, l2_decay_mul:{l2_decay_mul}; w:{w.Take(13).JoinBy(", ")}...; dw:{dw.Take(13).JoinBy(", ")}..."
         End Function
 
     End Class
