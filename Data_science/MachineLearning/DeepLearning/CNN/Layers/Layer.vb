@@ -11,6 +11,10 @@ Namespace CNN.layers
     ''' </summary>
     Public Interface Layer
 
+        ''' <summary>
+        ''' adjust the weight at here in the trainer module
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property BackPropagationResult As IEnumerable(Of BackPropResult)
         ReadOnly Property Type As LayerTypes
 

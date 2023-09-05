@@ -59,7 +59,7 @@ Namespace CNN
                     loss += tr.Loss
 
                     If is_generative Then
-                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output).Select(Function(dd) std.Abs(dd)).Average < 0.2 Then
+                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output).Select(Function(dd) std.Abs(dd)).Average < 0.01 Then
                             right += 1
                         End If
                     Else

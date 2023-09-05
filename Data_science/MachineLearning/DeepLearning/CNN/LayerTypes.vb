@@ -85,5 +85,7 @@ Namespace CNN
         <Description("conv_transpose")> Conv2DTranspose
         <Description("fourier_feature")> FourierFeature
         <Description("leaky_relu")> LeakyReLU
+        <Description("gaussian")> Gaussian
+
     End Enum
 End Namespace

@@ -21,7 +21,7 @@ Namespace CNN.layers
 
         Private out_depth, out_sx, out_sy As Integer
         Private num_inputs As Integer
-        Private filters As IList(Of DataBlock)
+        Private filters As DataBlock()
         Private biases As DataBlock
 
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
@@ -52,12 +52,13 @@ Namespace CNN.layers
             out_sy = 1
 
             ' initializations
-            Dim bias = BIAS_PREF
-            filters = New List(Of DataBlock)()
-            For i = 0 To out_depth - 1
-                filters.Add(New DataBlock(1, 1, num_inputs))
+            filters = New DataBlock(out_depth - 1) {}
+
+            For i As Integer = 0 To out_depth - 1
+                filters(i) = New DataBlock(1, 1, num_inputs)
             Next
-            biases = New DataBlock(1, 1, out_depth, bias)
+
+            biases = New DataBlock(1, 1, out_depth, BIAS_PREF)
 
             def.outX = out_sx
             def.outY = out_sy
@@ -123,7 +124,7 @@ Namespace CNN.layers
             Protected Overrides Sub Solve(start As Integer, ends As Integer)
                 ' compute gradient wrt weights and data
                 For i As Integer = start To ends
-                    Dim tfi = Layer.filters(i)
+                    Dim tfi = layer.filters(i)
                     Dim chain_grad = layer.out_act.Gradients(i)
 
                     For d As Integer = 0 To layer.num_inputs - 1

@@ -31,6 +31,10 @@ Namespace CNN
             Return Me
         End Function
 
+        Public Function buildGaussian() As LayerBuilder
+            Return add(New GaussianLayer(def))
+        End Function
+
         Public Function buildConv2DTransposeLayer(dims As OutputDefinition, filter As Dimension, filters As Integer, stride As Integer) As LayerBuilder
             Return add(New Conv2DTransposeLayer(def, dims, filter, filters, stride))
         End Function

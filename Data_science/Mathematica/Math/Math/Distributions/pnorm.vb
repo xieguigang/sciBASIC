@@ -263,6 +263,10 @@ Namespace Distributions
             End If
         End Function
 
+        ' exp((x-mu)^2/(2*sd^2))/(sd * sqrt(2*PI)) 
+        ' mu = exp(mu)
+        ' sd = 2*sd^(-4)
+
         ''' <summary>
         ''' Normal Distribution.(正态分布)
         ''' </summary>
