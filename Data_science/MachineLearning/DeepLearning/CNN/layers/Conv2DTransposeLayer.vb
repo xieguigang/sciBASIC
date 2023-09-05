@@ -210,5 +210,9 @@ Namespace CNN.layers
 
             Return out_act
         End Function
+
+        Public Overrides Function ToString() As String
+            Return "conv2d_transpose()"
+        End Function
     End Class
 End Namespace
