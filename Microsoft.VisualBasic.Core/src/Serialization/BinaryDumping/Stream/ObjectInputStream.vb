@@ -64,7 +64,7 @@ Namespace Serialization.BinaryDumping
                     Select Case field.FieldType
                         Case GetType(Integer) : value = BitConverter.ToInt32(buf.buffer, Scan0)
                         Case GetType(Double) : value = network.ToDouble(buf.buffer)
-                        Case GetType(String) : value = Encoding.UTF8.GetString(buf.buffer)
+                        Case GetType(String) : value = If(buf.Length = 0, Nothing, Encoding.UTF8.GetString(buf.buffer))
                         Case GetType(Single) : value = network.ToFloat(buf.buffer)
                         Case GetType(Long) : value = BitConverter.ToInt64(buf.buffer, Scan0)
                         Case GetType(Short) : value = BitConverter.ToInt16(buf.buffer, Scan0)

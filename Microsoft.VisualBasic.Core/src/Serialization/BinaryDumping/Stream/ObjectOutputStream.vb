@@ -56,7 +56,7 @@ Namespace Serialization.BinaryDumping
                     Select Case field.FieldType
                         Case GetType(Integer) : bytes = BitConverter.GetBytes(CInt(value))
                         Case GetType(Double) : bytes = network.GetBytes(CDbl(value))
-                        Case GetType(String) : bytes = Encoding.UTF8.GetBytes(CStr(value))
+                        Case GetType(String) : bytes = If(value Is Nothing, New Byte() {}, Encoding.UTF8.GetBytes(CStr(value)))
                         Case GetType(Single) : bytes = network.GetBytes(CSng(value))
                         Case GetType(Long) : bytes = BitConverter.GetBytes(CLng(value))
                         Case GetType(Short) : bytes = BitConverter.GetBytes(CShort(value))
@@ -77,10 +77,11 @@ Namespace Serialization.BinaryDumping
                     Else
                         ' write object array
                         Dim array As Array = value
+                        Dim vec_dims As Integer = If(array Is Nothing, 0, array.Length)
 
-                        Call stream.Write(array.Length)
+                        Call stream.Write(vec_dims)
 
-                        For i As Integer = 0 To array.Length - 1
+                        For i As Integer = 0 To vec_dims - 1
                             Call WriteObject(array.GetValue(i))
                         Next
                     End If
