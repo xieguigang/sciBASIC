@@ -155,7 +155,11 @@ legacy:
             Dim result As Double() = New Double(v1.Length - 1) {}
 
             For i As Integer = 0 To v1.Length - 1
-                result(i) = v1(i) / v2(i)
+                If v1(i) = 0.0 Then
+                    result(i) = 0
+                Else
+                    result(i) = v1(i) / v2(i)
+                End If
             Next
 
             Return result

@@ -14,8 +14,6 @@ Namespace CNN
 
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
         Dim alg As TrainerAlgorithm
-        Dim global_featureMax As Double
-        Dim global_generativeMax As Double = Double.NegativeInfinity
         Dim is_generative As Boolean = False
 
         <DebuggerStepThrough>
@@ -53,7 +51,8 @@ Namespace CNN
 
                 For Each index As Integer In randPerm
                     img = trainset(index)
-                    data.addImageData(img.features, global_featureMax)
+                    ' the feature input data has already been scaled
+                    data.addImageData(img.features, 1.0)
                     data.trace = $"input_data({img.id})"
                     tr = alg.train(data, img.labels, checkpoints:=cpu.Set)
                     loss += tr.Loss
@@ -94,33 +93,12 @@ Namespace CNN
             Dim right = 0
             Dim count = 0
 
-            global_featureMax = Double.MinValue
-            global_generativeMax = Double.MinValue
             is_generative = trainset(0).labels.Length > 1
-
-            For Each i As SampleData In trainset
-                Dim max As Double = i.features.Max
-
-                If max > global_featureMax Then
-                    global_featureMax = max
-                End If
-
-                If is_generative Then
-                    max = i.labels.Max
-
-                    If max > global_generativeMax Then
-                        global_generativeMax = max
-                    End If
-                End If
-            Next
-
-            If is_generative Then
-                For Each i As SampleData In trainset
-                    For idx As Integer = 0 To i.labels.Length - 1
-                        i.labels(idx) /= global_generativeMax
-                    Next
-                Next
-            End If
+            trainset = SampleData.TransformDataset(
+                trainset:=trainset,
+                is_generative:=is_generative,
+                is_training:=True
+            ).ToArray
 
             Call alg.SetKernel(cnn)
 

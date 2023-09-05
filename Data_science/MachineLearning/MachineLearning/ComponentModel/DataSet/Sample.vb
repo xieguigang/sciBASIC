@@ -57,12 +57,12 @@
 #End Region
 
 Imports System.IO
-Imports System.Transactions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Net.Http
 
@@ -126,6 +126,43 @@ Namespace ComponentModel.StoreProcedure
                     .ToArray,
                 .NormalizeMatrix = norm
             }
+        End Function
+
+        Public Shared Iterator Function TransformDataset(trainset As SampleData(), is_generative As Boolean, is_training As Boolean) As IEnumerable(Of SampleData)
+            Dim featureMax As Double() = New Double(trainset(0).features.Length - 1) {}
+            Dim labelMax As Double() = New Double(trainset(0).labels.Length - 1) {}
+
+            For i As Integer = 0 To trainset.Length - 1
+                Dim d As SampleData = trainset(i)
+
+                For j As Integer = 0 To d.features.Length - 1
+                    If d.features(j) > featureMax(j) Then
+                        featureMax(j) = d.features(j)
+                    End If
+                Next
+
+                If is_training Then
+                    For j As Integer = 0 To d.labels.Length - 1
+                        If d.labels(j) > labelMax(j) Then
+                            labelMax(j) = d.labels(j)
+                        End If
+                    Next
+                End If
+            Next
+
+            For i As Integer = 0 To trainset.Length - 1
+                Dim label As Double() = trainset(i).labels
+
+                If is_training AndAlso is_generative Then
+                    label = SIMD.Divide.f64_op_divide_f64(label, labelMax)
+                End If
+
+                Yield New SampleData With {
+                    .features = SIMD.Divide.f64_op_divide_f64(trainset(i).features, featureMax),
+                    .labels = label,
+                    .id = trainset(i).id
+                }
+            Next
         End Function
 
     End Class
