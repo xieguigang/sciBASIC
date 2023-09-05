@@ -58,7 +58,10 @@ Namespace CNN
                     loss += tr.Loss
 
                     If is_generative Then
-                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output).Select(Function(dd) std.Abs(dd)).Average < 0.01 Then
+                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output) _
+                            .Select(Function(dd) std.Abs(dd)) _
+                            .Average < 0.01 Then
+
                             right += 1
                         End If
                     Else
@@ -74,7 +77,7 @@ Namespace CNN
                     valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
                     loss_sum = valid_loss.Sum
                     loss_mean = loss_sum / (valid_loss.Length + 1)
-                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss:{loss_mean}, total:{loss_sum}...... {(Now - t0).FormatTime(False)}")
+                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss:{loss_mean}, total:{loss_sum}..... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
