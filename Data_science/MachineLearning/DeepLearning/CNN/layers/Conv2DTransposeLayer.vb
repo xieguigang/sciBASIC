@@ -37,9 +37,9 @@ Namespace CNN.layers
         Dim useBias As Boolean
         Dim inData As Double()
         Dim b, bs As Double()
-        Dim hMFHPO As Double
-        Dim wMFWPO As Double
-        Dim hMFWMF As Double
+        Dim hMFHPO As Integer
+        Dim wMFWPO As Integer
+        Dim hMFWMF As Integer
         Dim wIH As Integer
         Dim wIHID As Integer
         Dim fWIH As Integer
