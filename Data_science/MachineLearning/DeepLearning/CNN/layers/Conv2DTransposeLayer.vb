@@ -35,7 +35,7 @@ Namespace CNN.layers
         Dim filters As Integer
         Dim filterw, filterws As Double()
         Dim useBias As Boolean
-        Dim inData As Double()
+        ' Dim inData As Double()
         Dim b, bs As Double()
         Dim hMFHPO As Integer
         Dim wMFWPO As Integer
@@ -69,9 +69,11 @@ Namespace CNN.layers
             Me.filters = filters
             Me.filterw = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
             Me.filterws = New Double(filters * in_depth * filterWidth * filterHeight - 1) {}
-            Me.inData = New Double(
-                std.Ceiling((in_sx - filterWidth + 1) / stride) *
-                std.Ceiling((in_sy - filterHeight + 1) / stride) * filters) {}
+
+            ' Dim in_w As Integer = std.Ceiling((in_sx - filterWidth + 1) / stride)
+            ' Dim in_h As Integer = std.Ceiling((in_sy - filterHeight + 1) / stride)
+
+            ' Me.inData = New Double(in_w * in_h * filters - 1) {}
 
             Dim out_len As Integer = in_sx * in_sy * in_depth
 
@@ -138,6 +140,7 @@ Namespace CNN.layers
         Public Sub backward() Implements Layer.backward
             Dim costs As Double() = in_act.clearGradient().Gradients
             Dim err As Double() = out_act.Gradients
+            Dim inData As Double() = in_act.w
 
             For i As Integer = 0 To filters - 1
                 Dim iHMFWMF = i * hMFWMF
@@ -179,6 +182,8 @@ Namespace CNN.layers
 
             in_act = db.clone
             outData = out_act.w
+
+            Dim inData As Double() = in_act.w
 
             ' -------------Beginning of monstrosity-----------------
             For i As Integer = 0 To filters - 1
