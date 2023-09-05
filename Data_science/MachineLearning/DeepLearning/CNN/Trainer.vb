@@ -77,7 +77,7 @@ Namespace CNN
                     valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
                     loss_sum = valid_loss.Sum
                     loss_mean = loss_sum / (valid_loss.Length + 1)
-                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% mean_loss:{loss_mean}, total:{loss_sum}..... {(Now - t0).FormatTime(False)}")
+                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean}, total:{loss_sum}..... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
