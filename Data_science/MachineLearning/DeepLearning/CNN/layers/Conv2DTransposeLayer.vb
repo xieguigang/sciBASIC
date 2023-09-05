@@ -172,8 +172,15 @@ Namespace CNN.layers
         End Sub
 
         Public Function forward(db As DataBlock, training As Boolean) As DataBlock Implements Layer.forward
+            Dim outData As Double()
+
+            If out_act Is Nothing Then
+                ' fix the null reference when load model
+                out_act = New DataBlock(in_sx, in_sy, in_depth)
+            End If
+
             in_act = db.clone
-            Dim outData = out_act.w
+            outData = out_act.w
 
             ' -------------Beginning of monstrosity-----------------
             For i As Integer = 0 To filters - 1
