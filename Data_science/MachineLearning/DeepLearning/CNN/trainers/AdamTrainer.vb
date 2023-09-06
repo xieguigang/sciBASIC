@@ -38,6 +38,10 @@ Namespace CNN.trainers
             Dim dx = -learning_rate * biasCorr1 / (std.Sqrt(biasCorr2) + eps)
             p(j) += dx
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"adam(batch_size:{batch_size}, l2_decay:{l2_decay}, beta1:{beta1}, beta2:{beta2})"
+        End Function
     End Class
 
 End Namespace

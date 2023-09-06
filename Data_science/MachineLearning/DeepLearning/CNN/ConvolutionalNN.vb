@@ -10,6 +10,12 @@ Namespace CNN
     ''' A network class holding the layers and some helper functions
     ''' for training and validation.
     ''' 
+    ''' Convolutional neural network (CNN) is a regularized type of feed-forward 
+    ''' neural network that learns feature engineering by itself via filters
+    ''' (or kernel) optimization. Vanishing gradients and exploding gradients, 
+    ''' seen during backpropagation in earlier neural networks, are prevented by 
+    ''' using regularized weights over fewer connections.
+    ''' 
     ''' @author Daniel Persson (mailto.woden@gmail.com) and s.chekanov 
     ''' </summary>
     ''' <remarks>

@@ -11,7 +11,7 @@ Namespace CNN.trainers
     ''' </summary>
     Public Class AdaDeltaTrainer : Inherits TrainerAlgorithm
 
-        Private ReadOnly ro As Double = 0.95
+        Dim ro As Double = 0.95
 
         Public Sub New(batch_size As Integer, l2_decay As Single, Optional ro As Double = 0.95)
             MyBase.New(batch_size, l2_decay)
@@ -20,20 +20,26 @@ Namespace CNN.trainers
 
         Public Overrides Sub initTrainData(bpr As BackPropResult)
             Dim newXSumArr = New Double(bpr.Weights.Length - 1) {}
-            newXSumArr.fill(0)
-            xsum.Add(newXSumArr)
-        End Sub
 
+            Call newXSumArr.fill(0)
+            Call xsum.Add(newXSumArr)
+        End Sub
 
         Public Overrides Sub update(i As Integer, j As Integer, gij As Double, p As Double())
             Dim gsumi = gsum(i)
             Dim xsumi = xsum(i)
+            Dim dx As Double
+
             gsumi(j) = ro * gsumi(j) + (1 - ro) * gij * gij
-            Dim dx = -std.Sqrt((xsumi(j) + eps) / (gsumi(j) + eps)) * gij
-            xsumi(j) = ro * xsumi(j) + (1 - ro) * dx * dx ' yes, xsum lags behind gsum by 1.
+            dx = -std.Sqrt((xsumi(j) + eps) / (gsumi(j) + eps)) * gij
+            ' yes, xsum lags behind gsum by 1.
+            xsumi(j) = ro * xsumi(j) + (1 - ro) * dx * dx
             p(j) += dx
         End Sub
-    End Class
 
+        Public Overrides Function ToString() As String
+            Return $"ada_delta(ro:{ro})"
+        End Function
+    End Class
 
 End Namespace
