@@ -66,12 +66,12 @@ Namespace CNN.trainers
         End Function
 
         Public Overridable Function train(x As DataBlock, y As Double(), checkpoints As PerformanceCounter) As TrainResult
-            ' also set the flag that lets the net know we're just training
-            Call net.forward(x, checkpoints)
-
             Dim cost_loss As Double
             Dim l2_decay_loss = 0.0
             Dim l1_decay_loss = 0.0
+
+            ' also set the flag that lets the net know we're just training
+            Call net.forward(x, checkpoints)
 
             If y.Length = 1 Then
                 cost_loss = net.backward(CInt(y(0)), checkpoints)
