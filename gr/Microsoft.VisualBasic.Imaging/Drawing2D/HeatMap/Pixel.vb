@@ -72,6 +72,9 @@ Namespace Drawing2D.HeatMap
     ''' <summary>
     ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
     ''' </summary>
+    ''' <remarks>
+    ''' the layout information comes from the base <see cref="RasterPixel"/> model
+    ''' </remarks>
     Public Interface Pixel : Inherits Imaging.RasterPixel
 
         ''' <summary>

@@ -71,13 +71,13 @@ Namespace CNN.layers
             in_act = db
             out_act = lA
 
-            Call New ForwardTask(Me, lA, db).Solve()
+            Call New ForwardTask(Me, lA, db).Run()
 
             Return out_act
         End Function
 
         Public Overridable Sub backward() Implements Layer.backward
-            Call New BackwardTask(Me, v:=in_act.clearGradient()).Solve()
+            Call New BackwardTask(Me, v:=in_act.clearGradient()).Run()
         End Sub
 
         Private Class ForwardTask : Inherits VectorTask

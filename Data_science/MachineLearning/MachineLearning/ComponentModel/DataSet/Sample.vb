@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
@@ -65,6 +66,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace ComponentModel.StoreProcedure
 
@@ -169,6 +172,48 @@ Namespace ComponentModel.StoreProcedure
             Next
         End Function
 
+        Public Shared Sub Save(data As IEnumerable(Of SampleData), file As Stream)
+            Dim wr As New BinaryWriter(file)
+            Dim encode As New NetworkByteOrderBuffer
+            Dim feature_size As Integer = -1
+            Dim label_size As Integer = -1
+
+            For Each sample As SampleData In data
+                If feature_size = -1 Then
+                    feature_size = sample.features.Length
+                    label_size = sample.labels.Length
+
+                    Call wr.Write(BitConverter.GetBytes(feature_size))
+                    Call wr.Write(BitConverter.GetBytes(label_size))
+                End If
+
+                Call wr.Write(New Buffer(Encoding.ASCII.GetBytes(sample.id)).Serialize)
+                Call wr.Write(encode.encode(sample.features))
+                Call wr.Write(encode.encode(sample.labels))
+            Next
+
+            Call wr.Flush()
+        End Sub
+
+        Public Shared Iterator Function Load(file As Stream) As IEnumerable(Of SampleData)
+            Dim rd As New BinaryReader(file)
+            Dim decode As New NetworkByteOrderBuffer
+            Dim feature_size As Integer = BitConverter.ToInt32(rd.ReadBytes(RawStream.INT32), Scan0)
+            Dim label_size As Integer = BitConverter.ToInt32(rd.ReadBytes(RawStream.INT32), Scan0)
+
+            Do While file.Position < file.Length
+                Dim sbuf As Buffer = Buffer.Parse(rd)
+                Dim id As String = Encoding.ASCII.GetString(sbuf.buffer)
+                Dim features As Double() = decode.decode(rd.ReadBytes(feature_size * RawStream.DblFloat))
+                Dim labels As Double() = decode.decode(rd.ReadBytes(label_size * RawStream.DblFloat))
+
+                Yield New SampleData With {
+                    .id = id,
+                    .features = features,
+                    .labels = labels
+                }
+            Loop
+        End Function
     End Class
 
     ''' <summary>
