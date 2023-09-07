@@ -99,6 +99,18 @@ Public Module ListExtensions
         Return i
     End Function
 
+    ''' <summary>
+    ''' Get the element count which matched with the given <paramref name="predicate"/> expression
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <param name="predicate"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Count(Of T)(list As IEnumerable(Of T), predicate As Predicate(Of T)) As Integer
+        Return list.Where(AddressOf predicate.Invoke).Count
+    End Function
+
     '<Extension>
     'Public Function Count(Of T As IComparable(Of T))(list As IEnumerable(Of T), item As T) As Integer
 
