@@ -120,6 +120,46 @@ Public Module SpecialFunctions
         Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
+    Public Function FactorialCalculation(ByVal n As Integer) As ULong
+        Dim result As ULong = 1
+        For i = 1 To n
+            result *= CULng(i)
+        Next
+        Return result
+    End Function
+
+    Public Function BinomialCoefficient(ByVal n As Integer, ByVal k As Integer) As ULong
+        Dim coefficient As ULong
+        If k = 0 Then
+            Return 1
+        ElseIf n = k Then
+            Return 1
+        Else
+            Dim nkfactor = FactorialCalculation(n, k)
+            Dim kfactor = FactorialCalculation(k)
+            If kfactor <> 0 Then
+                Return nkfactor / kfactor
+            Else
+                Return 1
+            End If
+            'return coefficient;
+        End If
+    End Function
+
+    Public Function FactorialCalculation(ByVal n As Integer, ByVal k As Integer) As ULong
+        Dim result As ULong = 1
+        For i = n - k + 1 To n
+            result *= CULng(i)
+        Next
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
     Public Function Binom(n As Integer, k As Integer) As Double
         Return VBMath.Factorial(n) / (VBMath.Factorial(k) * VBMath.Factorial(n - k))
     End Function
