@@ -84,7 +84,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
-        Public ReadOnly Property Length As Integer
+        Public ReadOnly Property Interval As Integer
             Get
                 Return Max - Min
             End Get
