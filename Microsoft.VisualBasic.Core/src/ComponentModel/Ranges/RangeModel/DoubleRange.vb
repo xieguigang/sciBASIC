@@ -381,7 +381,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <returns></returns>
         Public Function ScaleMapping(x As Double, valueRange As IntRange) As Integer
             Dim percent# = (x - Min) / Length
-            Dim value# = percent * valueRange.Length + valueRange.Min
+            Dim value# = percent * valueRange.Interval + valueRange.Min
             Return CInt(value)
         End Function
 

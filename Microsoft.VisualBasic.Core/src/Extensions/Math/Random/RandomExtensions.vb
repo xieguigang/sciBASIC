@@ -281,7 +281,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * seeds.NextDouble + rng.Min
+            Return rng.Interval * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>

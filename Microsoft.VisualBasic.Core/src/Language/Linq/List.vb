@@ -229,7 +229,7 @@ Namespace Language
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
+                Return New List(Of T)(Me.Skip(range.Min).Take(range.Interval))
             End Get
             Set(value As List(Of T))
                 Dim indices As Integer() = range.ToArray

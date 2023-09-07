@@ -179,8 +179,8 @@ Namespace ComponentModel.Ranges.Model
         ''' <param name="valueRange"></param>
         ''' <returns></returns>
         Public Function ScaleMapping(x%, valueRange As IntRange) As Double
-            Dim percent# = (x - Min) / Length
-            Dim value# = percent * valueRange.Length + valueRange.Min
+            Dim percent# = (x - Min) / Interval
+            Dim value# = percent * valueRange.Interval + valueRange.Min
             Return value
         End Function
 

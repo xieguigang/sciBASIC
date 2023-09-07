@@ -85,7 +85,7 @@ Namespace Scripting.TokenIcer
         Public Property Stack As String
 
         Public Function GetRange(Of T)(data As IEnumerable(Of T)) As IEnumerable(Of T)
-            Return data.Skip(Range.Min).Take(Range.Length + 1)
+            Return data.Skip(Range.Min).Take(Range.Interval + 1)
         End Function
 
         Public Function Left(Of T)(data As IEnumerable(Of T)) As T
