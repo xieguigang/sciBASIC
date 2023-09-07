@@ -328,4 +328,26 @@ Public Module IEnumerations
 
         Return recurse(0)
     End Function
+
+
+    Public Function CartesianProduct(Of T)(ByVal collections As IReadOnlyList(Of IReadOnlyList(Of T))) As IEnumerable(Of T())
+        Dim [set] = New T(collections.Count - 1) {}
+        Dim rec As Func(Of Integer, IEnumerable(Of T())) =
+            Iterator Function(i As Integer) As IEnumerable(Of T())
+                If i = collections.Count Then
+                    Yield [set].ToArray()
+                Else
+                    Dim collection = collections(i)
+
+                    For Each item In collection
+                        [set](i) = item
+                        For Each res In rec(i + 1)
+                            Yield res
+                        Next
+                    Next
+                End If
+            End Function
+
+        Return rec(0)
+    End Function
 End Module
