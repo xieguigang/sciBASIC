@@ -723,9 +723,11 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function POST(url$, data As Dictionary(Of String, String()),
-                        Optional Referer$ = "",
-                        Optional proxy$ = Nothing,
-                        Optional ua As String = UserAgent.GoogleChrome) As String
+                         Optional Referer$ = "",
+                         Optional proxy$ = Nothing,
+                         Optional ua As String = UserAgent.GoogleChrome,
+                         Optional unsafe As Boolean = True,
+                         Optional ByRef error$ = Nothing) As String
 
         Dim postString As New List(Of String)
 
@@ -755,9 +757,30 @@ Public Module WebServiceUtils
             sender.Write(postData)
         End Using
 
-        ' returned values are returned as a stream, then read into a string
-        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
-        Using responseStream As New StreamReader(response.GetResponseStream())
+        Dim page_stream As Stream = Nothing
+        Dim err As Exception = Nothing
+
+        Try
+            ' returned values are returned as a stream, then read into a string
+            Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+            page_stream = response.GetResponseStream
+        Catch ex As Exception When TypeOf ex Is WebException
+            err = ex
+            page_stream = DirectCast(ex, WebException).Response.GetResponseStream
+        Catch ex As Exception
+            err = ex
+        End Try
+
+        If page_stream Is Nothing Then
+            If unsafe Then
+                Throw err
+            Else
+                [error] = err.Message
+                Return Nothing
+            End If
+        End If
+
+        Using responseStream As New StreamReader(page_stream)
             Dim html As New StringBuilder
             Dim s As New Value(Of String)
 
@@ -766,6 +789,10 @@ Public Module WebServiceUtils
             Loop
 
             Call $"[GET] {html.Length} bytes...".__DEBUG_ECHO
+
+            If err IsNot Nothing Then
+                [error] = err.Message
+            End If
 
             Return html.ToString
         End Using
