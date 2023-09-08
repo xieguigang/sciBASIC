@@ -148,7 +148,7 @@ Namespace LinearAlgebra.Matrix
 
                 Dim p As Integer = j
                 For i As Integer = j + 1 To m - 1
-                    If System.std.Abs(LUcolj(i)) > System.std.Abs(LUcolj(p)) Then
+                    If std.Abs(LUcolj(i)) > std.Abs(LUcolj(p)) Then
                         p = i
                     End If
                 Next
