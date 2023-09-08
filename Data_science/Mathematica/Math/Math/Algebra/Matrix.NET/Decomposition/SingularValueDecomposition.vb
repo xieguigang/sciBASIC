@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::39da3f7fc404e6c31b7ae26e66212dd2, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 572
-    '    Code Lines: 410
-    ' Comment Lines: 92
-    '   Blank Lines: 70
-    '     File Size: 23.05 KB
+' Summaries:
 
 
-    '     Class SingularValueDecomposition
-    ' 
-    '         Properties: Condition, Norm2, Rank, S, SingularValues
-    '                     U, V
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: ISerializable_GetObjectData
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 572
+'    Code Lines: 410
+' Comment Lines: 92
+'   Blank Lines: 70
+'     File Size: 23.05 KB
+
+
+'     Class SingularValueDecomposition
+' 
+'         Properties: Condition, Norm2, Rank, S, SingularValues
+'                     U, V
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: ISerializable_GetObjectData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports stdnum = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -330,7 +331,7 @@ Namespace LinearAlgebra.Matrix
                     If k = -1 Then
                         Exit For
                     End If
-                    If std.Abs(e(k)) <= eps * (std.Abs(m_s(k)) + std.Abs(m_s(k + 1))) Then
+                    If stdnum.Abs(e(k)) <= eps * (stdnum.Abs(m_s(k)) + stdnum.Abs(m_s(k + 1))) Then
                         e(k) = 0.0
                         Exit For
                     End If
@@ -343,8 +344,8 @@ Namespace LinearAlgebra.Matrix
                         If ks = k Then
                             Exit For
                         End If
-                        Dim t As Double = (If(ks <> p, std.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, std.Abs(e(ks - 1)), 0.0))
-                        If std.Abs(m_s(ks)) <= eps * t Then
+                        Dim t As Double = (If(ks <> p, stdnum.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, stdnum.Abs(e(ks - 1)), 0.0))
+                        If stdnum.Abs(m_s(ks)) <= eps * t Then
                             m_s(ks) = 0.0
                             Exit For
                         End If
@@ -422,7 +423,7 @@ Namespace LinearAlgebra.Matrix
                         If True Then
                             ' Calculate the shift.
 
-                            Dim scale As Double = System.Math.Max(System.Math.Max(System.Math.Max(System.Math.Max(std.Abs(m_s(p - 1)), std.Abs(m_s(p - 2))), std.Abs(e(p - 2))), std.Abs(m_s(k))), std.Abs(e(k)))
+                            Dim scale As Double = stdnum.Max(stdnum.Max(stdnum.Max(stdnum.Max(stdnum.Abs(m_s(p - 1)), stdnum.Abs(m_s(p - 2))), stdnum.Abs(e(p - 2))), stdnum.Abs(m_s(k))), stdnum.Abs(e(k)))
                             Dim sp As Double = m_s(p - 1) / scale
                             Dim spm1 As Double = m_s(p - 2) / scale
                             Dim epm1 As Double = e(p - 2) / scale
@@ -432,7 +433,7 @@ Namespace LinearAlgebra.Matrix
                             Dim c As Double = (sp * epm1) * (sp * epm1)
                             Dim shift As Double = 0.0
                             If (b <> 0.0) Or (c <> 0.0) Then
-                                shift = System.Math.Sqrt(b * b + c)
+                                shift = stdnum.Sqrt(b * b + c)
                                 If b < 0.0 Then
                                     shift = -shift
                                 End If
