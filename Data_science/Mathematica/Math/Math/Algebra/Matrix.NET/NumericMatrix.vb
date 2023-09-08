@@ -1225,9 +1225,11 @@ Namespace LinearAlgebra.Matrix
                 Next
 
                 Dim rows As New List(Of Vector)
+                Dim idx As Integer
 
                 For i As Integer = 0 To m.RowDimension - 1
-                    rows.Add(cols.Select(Function(j) j(i)).AsVector)
+                    idx = i
+                    rows.Add(cols.Select(Function(j) j(idx)).AsVector)
                 Next
 
                 Return New NumericMatrix(rows)

@@ -120,7 +120,7 @@ Public Module SpecialFunctions
         Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
-    Public Function FactorialCalculation(ByVal n As Integer) As ULong
+    Public Function FactorialCalculation(n As Integer) As ULong
         Dim result As ULong = 1
         For i = 1 To n
             result *= CULng(i)
@@ -128,8 +128,7 @@ Public Module SpecialFunctions
         Return result
     End Function
 
-    Public Function BinomialCoefficient(ByVal n As Integer, ByVal k As Integer) As ULong
-        Dim coefficient As ULong
+    Public Function BinomialCoefficient(n As Integer, k As Integer) As ULong
         If k = 0 Then
             Return 1
         ElseIf n = k Then
@@ -146,7 +145,7 @@ Public Module SpecialFunctions
         End If
     End Function
 
-    Public Function FactorialCalculation(ByVal n As Integer, ByVal k As Integer) As ULong
+    Public Function FactorialCalculation(n As Integer, k As Integer) As ULong
         Dim result As ULong = 1
         For i = n - k + 1 To n
             result *= CULng(i)

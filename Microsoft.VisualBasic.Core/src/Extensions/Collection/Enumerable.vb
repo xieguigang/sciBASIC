@@ -330,7 +330,7 @@ Public Module IEnumerations
     End Function
 
 
-    Public Function CartesianProduct(Of T)(ByVal collections As IReadOnlyList(Of IReadOnlyList(Of T))) As IEnumerable(Of T())
+    Public Function CartesianProduct(Of T)(collections As IReadOnlyList(Of IReadOnlyList(Of T))) As IEnumerable(Of T())
         Dim [set] = New T(collections.Count - 1) {}
         Dim rec As Func(Of Integer, IEnumerable(Of T())) =
             Iterator Function(i As Integer) As IEnumerable(Of T())

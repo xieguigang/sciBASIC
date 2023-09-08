@@ -4,12 +4,12 @@
         Private ReadOnly _v As Integer
         Private ReadOnly _g As List(Of Integer)()
 
-        Public Sub New(ByVal v As Integer)
+        Public Sub New(v As Integer)
             _v = v
             _g = Enumerable.Repeat(0, v).[Select](Function(__) New List(Of Integer)()).ToArray()
         End Sub
 
-        Public Sub AddEdge(ByVal u As Integer, ByVal v As Integer)
+        Public Sub AddEdge(u As Integer, v As Integer)
             _g(u).Add(v)
             _g(v).Add(u)
         End Sub
@@ -28,7 +28,7 @@
             Return res
         End Function
 
-        Private Function Dfs(ByVal v As Integer, ByVal used As Boolean(), ByVal matches As Integer()) As Boolean
+        Private Function Dfs(v As Integer, used As Boolean(), matches As Integer()) As Boolean
             used(v) = True
             For i As Integer = 0 To _g(v).Count - 1
                 Dim u = _g(v)(i), w = matches(u)
