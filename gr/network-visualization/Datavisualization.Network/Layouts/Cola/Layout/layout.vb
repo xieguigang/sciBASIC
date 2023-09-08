@@ -178,7 +178,7 @@ Namespace Layouts.Cola
             If s1 = 0 Then
                 Me._alpha = 0
             ElseIf Me._lastStress IsNot Nothing Then
-                'Math.abs(Math.abs(this._lastStress / s1) - 1);
+                'std.Abs(std.Abs(this._lastStress / s1) - 1);
                 Me._alpha = s1
             End If
             Me._lastStress = s1

@@ -134,7 +134,7 @@ Namespace LinearAlgebra.Matrix
                 Dim scale As Double = 0.0
                 Dim h As Double = 0.0
                 For k As Integer = 0 To i - 1
-                    scale = scale + System.Math.Abs(m_d(k))
+                    scale = scale + System.std.Abs(m_d(k))
                 Next
                 If scale = 0.0 Then
                     e(i) = m_d(i - 1)
@@ -249,10 +249,10 @@ Namespace LinearAlgebra.Matrix
             For l As Integer = 0 To n - 1
                 ' Find small subdiagonal element
 
-                tst1 = System.Math.Max(tst1, System.Math.Abs(m_d(l)) + System.Math.Abs(e(l)))
+                tst1 = System.Math.Max(tst1, System.std.Abs(m_d(l)) + System.std.Abs(e(l)))
                 Dim m As Integer = l
                 While m < n
-                    If System.Math.Abs(e(m)) <= eps * tst1 Then
+                    If System.std.Abs(e(m)) <= eps * tst1 Then
                         Exit While
                     End If
                     m += 1
@@ -318,7 +318,7 @@ Namespace LinearAlgebra.Matrix
 
                         ' Check for convergence.
                         m_d(l) = c * p
-                    Loop While System.Math.Abs(e(l)) > eps * tst1
+                    Loop While System.std.Abs(e(l)) > eps * tst1
                 End If
                 m_d(l) = m_d(l) + f
                 e(l) = 0.0
@@ -365,7 +365,7 @@ Namespace LinearAlgebra.Matrix
 
                 Dim scale As Double = 0.0
                 For i As Integer = m To high
-                    scale = scale + System.Math.Abs(H(i)(m - 1))
+                    scale = scale + System.std.Abs(H(i)(m - 1))
                 Next
                 If scale <> 0.0 Then
 
@@ -448,7 +448,7 @@ Namespace LinearAlgebra.Matrix
 
         Private Sub cdiv(xr As Double, xi As Double, yr As Double, yi As Double)
             Dim r As Double, d As Double
-            If System.Math.Abs(yr) > System.Math.Abs(yi) Then
+            If System.std.Abs(yr) > System.std.Abs(yi) Then
                 r = yi / yr
                 d = yr + r * yi
                 cdivr = (xr + r * xi) / d
@@ -491,7 +491,7 @@ Namespace LinearAlgebra.Matrix
                     e(i) = 0.0
                 End If
                 For j As Integer = System.Math.Max(i - 1, 0) To nn - 1
-                    norm = norm + System.Math.Abs(H(i)(j))
+                    norm = norm + System.std.Abs(H(i)(j))
                 Next
             Next
 
@@ -504,11 +504,11 @@ Namespace LinearAlgebra.Matrix
 
                 Dim l As Integer = n
                 While l > low
-                    s = System.Math.Abs(H(l - 1)(l - 1)) + System.Math.Abs(H(l)(l))
+                    s = System.std.Abs(H(l - 1)(l - 1)) + System.std.Abs(H(l)(l))
                     If s = 0.0 Then
                         s = norm
                     End If
-                    If System.Math.Abs(H(l)(l - 1)) < eps * s Then
+                    If System.std.Abs(H(l)(l - 1)) < eps * s Then
                         Exit While
                     End If
                     l -= 1
@@ -529,7 +529,7 @@ Namespace LinearAlgebra.Matrix
                     w = H(n)(n - 1) * H(n - 1)(n)
                     p = (H(n - 1)(n - 1) - H(n)(n)) / 2.0
                     q = p * p + w
-                    z = System.Math.Sqrt(System.Math.Abs(q))
+                    z = System.Math.Sqrt(System.std.Abs(q))
                     H(n)(n) = H(n)(n) + exshift
                     H(n - 1)(n - 1) = H(n - 1)(n - 1) + exshift
                     x = H(n)(n)
@@ -550,7 +550,7 @@ Namespace LinearAlgebra.Matrix
                         e(n - 1) = 0.0
                         e(n) = 0.0
                         x = H(n)(n - 1)
-                        s = System.Math.Abs(x) + System.Math.Abs(z)
+                        s = System.std.Abs(x) + System.std.Abs(z)
                         p = x / s
                         q = z / s
                         r = System.Math.Sqrt(p * p + q * q)
@@ -611,7 +611,7 @@ Namespace LinearAlgebra.Matrix
                         For i As Integer = low To n
                             H(i)(i) -= x
                         Next
-                        s = System.Math.Abs(H(n)(n - 1)) + System.Math.Abs(H(n - 1)(n - 2))
+                        s = System.std.Abs(H(n)(n - 1)) + System.std.Abs(H(n - 1)(n - 2))
                         y = 0.75 * s
                         x = y
                         w = (-0.4375) * s * s
@@ -650,14 +650,14 @@ Namespace LinearAlgebra.Matrix
                         p = (r * s - w) / H(m + 1)(m) + H(m)(m + 1)
                         q = H(m + 1)(m + 1) - z - r - s
                         r = H(m + 2)(m + 1)
-                        s = System.Math.Abs(p) + System.Math.Abs(q) + System.Math.Abs(r)
+                        s = System.std.Abs(p) + System.std.Abs(q) + System.std.Abs(r)
                         p = p / s
                         q = q / s
                         r = r / s
                         If m = l Then
                             Exit While
                         End If
-                        If System.Math.Abs(H(m)(m - 1)) * (System.Math.Abs(q) + System.Math.Abs(r)) < eps * (System.Math.Abs(p) * (System.Math.Abs(H(m - 1)(m - 1)) + System.Math.Abs(z) + System.Math.Abs(H(m + 1)(m + 1)))) Then
+                        If System.std.Abs(H(m)(m - 1)) * (System.std.Abs(q) + System.std.Abs(r)) < eps * (System.std.Abs(p) * (System.std.Abs(H(m - 1)(m - 1)) + System.std.Abs(z) + System.std.Abs(H(m + 1)(m + 1)))) Then
                             Exit While
                         End If
                         m -= 1
@@ -678,7 +678,7 @@ Namespace LinearAlgebra.Matrix
                             p = H(k)(k - 1)
                             q = H(k + 1)(k - 1)
                             r = (If(notlast, H(k + 2)(k - 1), 0.0))
-                            x = System.Math.Abs(p) + System.Math.Abs(q) + System.Math.Abs(r)
+                            x = System.std.Abs(p) + System.std.Abs(q) + System.std.Abs(r)
                             If x <> 0.0 Then
                                 p = p / x
                                 q = q / x
@@ -788,7 +788,7 @@ Namespace LinearAlgebra.Matrix
                                 q = (m_d(i) - p) * (m_d(i) - p) + e(i) * e(i)
                                 t = (x * s - z * r) / q
                                 H(i)(n) = t
-                                If System.Math.Abs(x) > System.Math.Abs(z) Then
+                                If System.std.Abs(x) > System.std.Abs(z) Then
                                     H(i + 1)(n) = (-r - w * t) / x
                                 Else
                                     H(i + 1)(n) = (-s - y * t) / z
@@ -797,7 +797,7 @@ Namespace LinearAlgebra.Matrix
 
                             ' Overflow control
 
-                            t = System.Math.Abs(H(i)(n))
+                            t = System.std.Abs(H(i)(n))
                             If (eps * t) * t > 1 Then
                                 For j As Integer = i To n
                                     H(j)(n) = H(j)(n) / t
@@ -812,7 +812,7 @@ Namespace LinearAlgebra.Matrix
 
                     ' Last vector component imaginary so matrix is triangular
 
-                    If System.Math.Abs(H(n)(n - 1)) > System.Math.Abs(H(n - 1)(n)) Then
+                    If System.std.Abs(H(n)(n - 1)) > System.std.Abs(H(n - 1)(n)) Then
                         H(n - 1)(n - 1) = q / H(n)(n - 1)
                         H(n - 1)(n) = (-(H(n)(n) - p)) / H(n)(n - 1)
                     Else
@@ -851,12 +851,12 @@ Namespace LinearAlgebra.Matrix
                                 vr = (m_d(i) - p) * (m_d(i) - p) + e(i) * e(i) - q * q
                                 vi = (m_d(i) - p) * 2.0 * q
                                 If vr = 0.0 And vi = 0.0 Then
-                                    vr = eps * norm * (System.Math.Abs(w) + System.Math.Abs(q) + System.Math.Abs(x) + System.Math.Abs(y) + System.Math.Abs(z))
+                                    vr = eps * norm * (System.std.Abs(w) + System.std.Abs(q) + System.std.Abs(x) + System.std.Abs(y) + System.std.Abs(z))
                                 End If
                                 cdiv(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi)
                                 H(i)(n - 1) = cdivr
                                 H(i)(n) = cdivi
-                                If System.Math.Abs(x) > (System.Math.Abs(z) + System.Math.Abs(q)) Then
+                                If System.std.Abs(x) > (System.std.Abs(z) + System.std.Abs(q)) Then
                                     H(i + 1)(n - 1) = (-ra - w * H(i)(n - 1) + q * H(i)(n)) / x
                                     H(i + 1)(n) = (-sa - w * H(i)(n) - q * H(i)(n - 1)) / x
                                 Else
@@ -868,7 +868,7 @@ Namespace LinearAlgebra.Matrix
 
                             ' Overflow control
 
-                            t = System.Math.Max(System.Math.Abs(H(i)(n - 1)), System.Math.Abs(H(i)(n)))
+                            t = System.Math.Max(System.std.Abs(H(i)(n - 1)), System.std.Abs(H(i)(n)))
                             If (eps * t) * t > 1 Then
                                 For j As Integer = i To n
                                     H(j)(n - 1) = H(j)(n - 1) / t

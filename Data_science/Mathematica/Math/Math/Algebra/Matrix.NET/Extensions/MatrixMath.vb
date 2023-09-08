@@ -455,11 +455,11 @@ Namespace LinearAlgebra.Matrix
                     While i1 <= m
                         If temp(i1, j) <> 0 And i1 <> i Then
                             temp1 = temp(i, j) / temp(i1, j)
-                            error1 = System.Math.Abs((temp(i, j) - temp(i1, j) * temp1)) * 100 '误差控制。因为有时候temp(i, j) - temp(i1, j) * (temp(i, j) / temp(i1, j))≠0
+                            error1 = System.std.Abs((temp(i, j) - temp(i1, j) * temp1)) * 100 '误差控制。因为有时候temp(i, j) - temp(i1, j) * (temp(i, j) / temp(i1, j))≠0
                             error1 += error0
                             For j1 = 0 To n
                                 temp(i1, j1) = temp(i, j1) - temp(i1, j1) * temp1
-                                If System.Math.Abs(temp(i1, j1)) < error1 Then
+                                If System.std.Abs(temp(i1, j1)) < error1 Then
                                     temp(i1, j1) = 0
                                 End If
                             Next

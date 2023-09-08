@@ -108,7 +108,7 @@ Namespace LinearAlgebra
 
                 If i < m Then
                     For k = i To m - 1
-                        scale += System.Math.Abs(a(k, i))
+                        scale += System.std.Abs(a(k, i))
                     Next
 
                     If scale <> 0.0 Then
@@ -152,7 +152,7 @@ Namespace LinearAlgebra
 
                 If (i < m) AndAlso (i <> n - 1) Then
                     For k = l To n - 1
-                        scale += System.Math.Abs(a(i, k))
+                        scale += System.std.Abs(a(i, k))
                     Next
 
                     If scale <> 0.0 Then
@@ -189,7 +189,7 @@ Namespace LinearAlgebra
                         Next
                     End If
                 End If
-                anorm = System.Math.Max(anorm, (System.Math.Abs(w(i)) + System.Math.Abs(rv1(i))))
+                anorm = System.Math.Max(anorm, (System.std.Abs(w(i)) + System.std.Abs(rv1(i))))
             Next
 
             ' accumulation of right-hand transformations
@@ -274,12 +274,12 @@ Namespace LinearAlgebra
                         ' test for splitting
                         nm = l - 1
 
-                        If System.Math.Abs(rv1(l)) + anorm = anorm Then
+                        If System.std.Abs(rv1(l)) + anorm = anorm Then
                             flag = 0
                             Exit For
                         End If
 
-                        If System.Math.Abs(w(nm)) + anorm = anorm Then
+                        If System.std.Abs(w(nm)) + anorm = anorm Then
                             Exit For
                         End If
                     Next
@@ -290,7 +290,7 @@ Namespace LinearAlgebra
                         For i = l To k
                             f = s * rv1(i)
 
-                            If System.Math.Abs(f) + anorm <> anorm Then
+                            If System.std.Abs(f) + anorm <> anorm Then
                                 g = w(i)
                                 h = Pythag(f, g)
                                 w(i) = h
@@ -391,11 +391,11 @@ Namespace LinearAlgebra
         End Sub
 
         Private Function Sign(a As Double, b As Double) As Double
-            Return If((b >= 0.0), System.Math.Abs(a), -System.Math.Abs(a))
+            Return If((b >= 0.0), System.std.Abs(a), -System.std.Abs(a))
         End Function
 
         Private Function Pythag(a As Double, b As Double) As Double
-            Dim at As Double = System.Math.Abs(a), bt As Double = System.Math.Abs(b), ct As Double, result As Double
+            Dim at As Double = System.std.Abs(a), bt As Double = System.std.Abs(b), ct As Double, result As Double
 
             If at > bt Then
                 ct = bt / at

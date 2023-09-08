@@ -387,7 +387,7 @@ Namespace Graphic.Axis
             '    End If
             'End If
 
-            Dim p% = stdNum.Round(stdNum.Log10(stdNum.Abs(n)), 0) ' Fix(Math.Log10(Math.Abs(n))) ' stdNum.Round(Math.Log10(Math.Abs(n)), 0)
+            Dim p% = stdNum.Round(stdNum.Log10(stdNum.Abs(n)), 0) ' Fix(Math.Log10(std.Abs(n))) ' stdNum.Round(Math.Log10(std.Abs(n)), 0)
             Dim d = 10 ^ (p - 1)
             Dim v#
             Dim s = stdNum.Sign(n)

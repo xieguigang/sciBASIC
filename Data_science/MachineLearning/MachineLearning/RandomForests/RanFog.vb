@@ -302,7 +302,7 @@ Namespace RandomForests
                     Else
                         temp = branch(k).getMean(train.phenotype)
                     End If
-                    MSE_oob = MSE_oob + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
+                    MSE_oob = MSE_oob + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'std.Abs(phenotype[branch_oob[k].list.get(i)]-temp);
                 End If
             Next
             k = 0
@@ -346,7 +346,7 @@ Namespace RandomForests
                         Else
                             temp = branch(k).getMean(train.phenotype)
                         End If
-                        MSE_vi = MSE_vi + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'Math.abs(phenotype[branch_oob[k].list.get(i)]-temp);
+                        MSE_vi = MSE_vi + LossFunction.getLossFunctionOOB(LF_c, branch_oob(k), train.phenotype, temp, false_positive_cost, false_negative_cost) 'std.Abs(phenotype[branch_oob[k].list.get(i)]-temp);
                     End If
                 Next
                 MSE_vi = MSE_vi / N_oob 'compare miss-classification rate permuting Feature j on MSE_oob

@@ -131,7 +131,7 @@ Namespace Distributions
             If z = 0.0 Then
                 x = 0.0
             Else
-                Dim y = 0.5 * System.Math.Abs(z)
+                Dim y = 0.5 * System.std.Abs(z)
                 If y >= Z_MAX * 0.5 Then
                     x = 1.0
                 Else
@@ -360,7 +360,7 @@ Namespace Distributions
             End If
 
             Dim fValue = 1.0 / p
-            While System.Math.Abs(maxF - minF) > F_EPSILON
+            While System.std.Abs(maxF - minF) > F_EPSILON
                 If FDistribution(fValue, freedom1, freedom2) < p Then
                     maxF = fValue
                 Else

@@ -330,7 +330,7 @@ Namespace LinearAlgebra.Matrix
                     If k = -1 Then
                         Exit For
                     End If
-                    If System.Math.Abs(e(k)) <= eps * (System.Math.Abs(m_s(k)) + System.Math.Abs(m_s(k + 1))) Then
+                    If System.std.Abs(e(k)) <= eps * (System.std.Abs(m_s(k)) + System.std.Abs(m_s(k + 1))) Then
                         e(k) = 0.0
                         Exit For
                     End If
@@ -343,8 +343,8 @@ Namespace LinearAlgebra.Matrix
                         If ks = k Then
                             Exit For
                         End If
-                        Dim t As Double = (If(ks <> p, System.Math.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, System.Math.Abs(e(ks - 1)), 0.0))
-                        If System.Math.Abs(m_s(ks)) <= eps * t Then
+                        Dim t As Double = (If(ks <> p, System.std.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, System.std.Abs(e(ks - 1)), 0.0))
+                        If System.std.Abs(m_s(ks)) <= eps * t Then
                             m_s(ks) = 0.0
                             Exit For
                         End If
@@ -422,7 +422,7 @@ Namespace LinearAlgebra.Matrix
                         If True Then
                             ' Calculate the shift.
 
-                            Dim scale As Double = System.Math.Max(System.Math.Max(System.Math.Max(System.Math.Max(System.Math.Abs(m_s(p - 1)), System.Math.Abs(m_s(p - 2))), System.Math.Abs(e(p - 2))), System.Math.Abs(m_s(k))), System.Math.Abs(e(k)))
+                            Dim scale As Double = System.Math.Max(System.Math.Max(System.Math.Max(System.Math.Max(System.std.Abs(m_s(p - 1)), System.std.Abs(m_s(p - 2))), System.std.Abs(e(p - 2))), System.std.Abs(m_s(k))), System.std.Abs(e(k)))
                             Dim sp As Double = m_s(p - 1) / scale
                             Dim spm1 As Double = m_s(p - 2) / scale
                             Dim epm1 As Double = e(p - 2) / scale
