@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::5809d94b0a493bbe804747524575a5ad, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 275
-    '    Code Lines: 170
-    ' Comment Lines: 66
-    '   Blank Lines: 39
-    '     File Size: 9.69 KB
+' Summaries:
 
 
-    '     Class LUDecomposition
-    ' 
-    '         Properties: DoublePivot, IsNonSingular, L, Pivot, U
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Determinant, Solve
-    ' 
-    '         Sub: ISerializable_GetObjectData
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 275
+'    Code Lines: 170
+' Comment Lines: 66
+'   Blank Lines: 39
+'     File Size: 9.69 KB
+
+
+'     Class LUDecomposition
+' 
+'         Properties: DoublePivot, IsNonSingular, L, Pivot, U
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Determinant, Solve
+' 
+'         Sub: ISerializable_GetObjectData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.Serialization
+Imports stdnum = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -148,7 +149,7 @@ Namespace LinearAlgebra.Matrix
 
                 Dim p As Integer = j
                 For i As Integer = j + 1 To m - 1
-                    If std.Abs(LUcolj(i)) > std.Abs(LUcolj(p)) Then
+                    If stdnum.Abs(LUcolj(i)) > stdnum.Abs(LUcolj(p)) Then
                         p = i
                     End If
                 Next

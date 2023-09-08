@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
 
 Namespace Distributions
 
