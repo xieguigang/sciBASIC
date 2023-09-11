@@ -76,7 +76,7 @@ Namespace Distributions
             Return fx
         End Function
 
-        Public Function StandadizedGaussianFunction(ByVal diff As Double, ByVal devi As Double) As Double
+        Public Function StandadizedGaussianFunction(diff As Double, devi As Double) As Double
             ' exp(-(diff/devi)^2 / 2)
             Dim result = std.Exp(-0.5 * std.Pow(diff / devi, 2))
             Return result

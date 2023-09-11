@@ -39,10 +39,16 @@ Public Class SequenceGraphTransform
     End Enum
 
     Public ReadOnly Property alphabets As Char()
+
+    ''' <summary>
+    ''' the feature name is the combination of <see cref="alphabets"/>
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property feature_names As String()
 
     Dim kappa As Double
     Dim lengthsensitive As Boolean
+    Dim graph_matrix As String()()
 
     ''' <summary>
     ''' algorithm applied for check position
@@ -117,13 +123,38 @@ Public Class SequenceGraphTransform
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' set the alphabet data
+    ''' </summary>
+    ''' <param name="corpus"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 1. set the alphabet vector
+    ''' 2. then set the feature names for the transformation output
+    ''' 3. finally create the graph matrix index in this function
+    ''' </remarks>
     Public Function set_alphabets(corpus As String()) As SequenceGraphTransform
         _alphabets = estimate_alphabets(corpus)
         _feature_names = __set_feature_name(alphabets)
 
+        graph_matrix = alphabets _
+            .Select(Function(c)
+                        Return alphabets _
+                            .Select(Function(c2) New String({c, ","c, c2})) _
+                            .ToArray
+                    End Function) _
+            .ToArray
+
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="alphabets"></param>
+    ''' <returns>
+    ''' returns an array of x,y combination result
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __set_feature_name(alphabets As Char()) As String()
         Return CombinationExtensions.FullCombination(alphabets) _
@@ -139,6 +170,22 @@ Public Class SequenceGraphTransform
     ''' sgt matrix or vector (depending on Flatten==False or True)
     ''' </returns>
     Public Function fit(sequence As String) As Dictionary(Of String, Double)
+        If alphabets.IsNullOrEmpty Then
+            _alphabets = estimate_alphabets(sequence)
+            _feature_names = __set_feature_name(alphabets)
+        End If
+
+        Dim sgtv As Double() = fitInternal(sequence)
+        Dim map As New Dictionary(Of String, Double)
+
+        For i As Integer = 0 To feature_names.Length - 1
+            Call map.Add(feature_names(i), sgtv(i))
+        Next
+
+        Return map
+    End Function
+
+    Public Function fitVector(sequence As String) As Double()
         If alphabets.IsNullOrEmpty Then
             _alphabets = estimate_alphabets(sequence)
             _feature_names = __set_feature_name(alphabets)
@@ -203,7 +250,22 @@ Public Class SequenceGraphTransform
 
     Private Delegate Function Combine(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
 
-    Private Function fitInternal(sequence As String) As Dictionary(Of String, Double)
+    Public Function TranslateMatrix(v As Dictionary(Of String, Double)) As Double()()
+        Dim m As Double()() = New Double(alphabets.Length - 1)() {}
+
+        For i As Integer = 0 To graph_matrix.Length - 1
+            Dim row_i = graph_matrix(i)
+            Dim vr As Double() = row_i _
+                .Select(Function(c) v.TryGetValue(c)) _
+                .ToArray
+
+            m(i) = vr
+        Next
+
+        Return m
+    End Function
+
+    Private Function fitInternal(sequence As String) As Double()
         Dim size = alphabets.Length
         Dim l = 0
         Dim W0 As NumericMatrix = NumericMatrix.Zero(size, size)
@@ -255,12 +317,7 @@ Public Class SequenceGraphTransform
 
         Dim sgt = (Wk / W0) ^ (1 / kappa)
         Dim sgtv As Double() = sgt.ArrayPack.IteratesALL.ToArray
-        Dim map As New Dictionary(Of String, Double)
 
-        For i As Integer = 0 To feature_names.Length - 1
-            Call map.Add(feature_names(i), sgtv(i))
-        Next
-
-        Return map
+        Return sgtv
     End Function
 End Class

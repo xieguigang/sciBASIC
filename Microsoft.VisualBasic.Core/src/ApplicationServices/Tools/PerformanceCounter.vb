@@ -5,10 +5,10 @@ Namespace ApplicationServices
     Public Class PerformanceCounter
 
         Dim t0 As Date = Now
-        Dim spans As New List(Of Counter)
+        Dim spans As New List(Of TimeCounter)
         Dim checkpoint As Date
 
-        Public ReadOnly Property Top As Counter()
+        Public ReadOnly Property Top As TimeCounter()
             Get
                 Return spans.OrderByDescending(Function(t) t.span1).ToArray
             End Get
@@ -23,7 +23,7 @@ Namespace ApplicationServices
         End Function
 
         Public Sub Mark(title As String)
-            spans.Add(New Counter With {
+            spans.Add(New TimeCounter With {
                 .task = title,
                 .start = checkpoint,
                 .span0 = Now - t0,
@@ -33,7 +33,7 @@ Namespace ApplicationServices
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetCounters() As IEnumerable(Of Counter)
+        Public Function GetCounters() As IEnumerable(Of TimeCounter)
             Return spans.AsEnumerable
         End Function
 
@@ -42,7 +42,7 @@ Namespace ApplicationServices
         End Function
     End Class
 
-    Public Class Counter
+    Public Class TimeCounter
 
         Public Property task As String
         Public Property start As Date
