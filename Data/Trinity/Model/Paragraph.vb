@@ -65,12 +65,7 @@ Namespace Model
             Return sentences.JoinBy(". ")
         End Function
 
-        Public Shared Iterator Function Segmentation(text As String,
-                                                     Optional delimiter As String = ".?!",
-                                                     Optional chemicalNameRule As Boolean = False) As IEnumerable(Of Paragraph)
-            Dim p As New Value(Of Paragraph)
-            Dim del As Char() = delimiter.ToArray
-
+        Public Shared Iterator Function SplitParagraph(text As String) As IEnumerable(Of String)
             For Each block As String() In text.LineTokens.Split(Function(str) str.Trim = "")
                 Dim trim As String() = block _
                     .Select(AddressOf Strings.Trim) _
@@ -80,11 +75,20 @@ Namespace Model
                     Continue For
                 End If
 
-                If Not p = trim.Where(Function(si) si <> "") _
+                Yield trim.Where(Function(si) si <> "") _
                     .JoinBy(" ") _
-                    .Trim _
-                    .DoCall(Function(si) GetParagraph(si, del, chemicalNameRule)) Is Nothing Then
+                    .Trim
+            Next
+        End Function
 
+        Public Shared Iterator Function Segmentation(text As String,
+                                                     Optional delimiter As String = ".?!",
+                                                     Optional chemicalNameRule As Boolean = False) As IEnumerable(Of Paragraph)
+            Dim p As New Value(Of Paragraph)
+            Dim del As Char() = delimiter.ToArray
+
+            For Each par As String In SplitParagraph(text)
+                If Not p = GetParagraph(par, del, chemicalNameRule) Is Nothing Then
                     Yield p
                 End If
             Next
