@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.hqx
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -68,7 +69,7 @@ Namespace Drawing2D.HeatMap
     ''' <remarks>
     ''' A internal image data readonly matrix object
     ''' </remarks>
-    Public Class RasterScaler : Implements IDisposable
+    Public Class RasterScaler : Implements IDisposable, IRasterGrayscaleHeatmap
 
         Dim disposedValue As Boolean
         Dim buffer As BitmapBuffer
@@ -108,12 +109,20 @@ Namespace Drawing2D.HeatMap
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="region"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ScaleTo(g As IGraphics, region As Rectangle)
             Call Scale(g, region.Size, region.Location)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Return buffer.GetPixel(x, y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function GetRasterPixels() As IEnumerable(Of Pixel) Implements IRasterGrayscaleHeatmap.GetRasterPixels
+            Return GetRasterData.Select(Function(p) DirectCast(p, Pixel))
         End Function
 
         ''' <summary>
