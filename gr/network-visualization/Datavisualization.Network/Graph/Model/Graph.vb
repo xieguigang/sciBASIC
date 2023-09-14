@@ -661,5 +661,18 @@ Namespace Graph
         Public Function Copy() As NetworkGraph
             Return DirectCast(Clone(), NetworkGraph)
         End Function
+
+        ''' <summary>
+        ''' The degress data of each node should be computed at first, 
+        ''' before calling this method for make the graph object 
+        ''' cleanup.
+        ''' </summary>
+        Public Sub RemovesIsolatedNodes()
+            For Each v As Node In vertex
+                If v.degree.In = 0 AndAlso v.degree.Out = 0 Then
+                    Call RemoveNode(v)
+                End If
+            Next
+        End Sub
     End Class
 End Namespace
