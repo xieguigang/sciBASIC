@@ -191,6 +191,9 @@ Namespace Graph
         ''' 则会自动更新<see cref="Node.ID"/>之后添加进入图之中
         ''' </summary>
         ''' <param name="node"></param>
+        ''' <param name="assignId">
+        ''' make update and assign the <see cref="Node.ID"/> hashcode value?
+        ''' </param>
         ''' <returns></returns>
         Public Function AddNode(node As Node, Optional assignId As Boolean = True) As Node
             If Not vertices.ContainsKey(node.label) Then
@@ -506,6 +509,10 @@ Namespace Graph
         ''' Delete a graph edge connection from current network graph model
         ''' </summary>
         ''' <param name="edge"></param>
+        ''' <remarks>
+        ''' this method just break the edge connection, the edge node 
+        ''' will be keeps in the graph.
+        ''' </remarks>
         Public Sub RemoveEdge(edge As Edge)
             Call _index.RemoveEdge(edge)
             Call Delete(edge)
