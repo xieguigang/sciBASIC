@@ -202,6 +202,11 @@ Namespace Net.Http
             Call cache.Flush()
         End Sub
 
+        Public Sub Clear404URLIndex()
+            Call url404.Clear()
+            Call Write404CacheList()
+        End Sub
+
         ''' <summary>
         ''' test if the given key is empty or nothing
         ''' </summary>
