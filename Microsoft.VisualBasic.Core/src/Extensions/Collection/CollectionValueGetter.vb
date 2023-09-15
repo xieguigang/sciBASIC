@@ -198,13 +198,8 @@ Public Module CollectionValueGetter
     ''' <param name="source"></param>
     ''' <param name="index"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Item")>
     <Extension>
     Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#Else
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#End If
         If source Is Nothing Then
             Return Nothing
         Else
@@ -299,7 +294,7 @@ Public Module CollectionValueGetter
     ''' 
     <DebuggerStepThrough>
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+    Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue),
                                                  index As TKey,
                                                  Optional [default] As TValue = Nothing,
                                                  Optional mute As Boolean = False,

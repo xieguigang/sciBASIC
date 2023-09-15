@@ -135,7 +135,7 @@ none:               Dim result As Double() = New Double(v2.Length - 1) {}
                     GoTo legacy
                 Case SIMDConfiguration.legacy
 legacy:
-                    Dim array_v1 As Double() = New Double(SIMDEnvironment.countFloat - 1) {}
+                    Dim array_v1 As Double() = New Double(SIMDEnvironment.countDouble - 1) {}
 
                     For i As Integer = 0 To array_v1.Length - 1
                         array_v1(i) = v1
@@ -144,10 +144,10 @@ legacy:
                     Dim x1 As Vector(Of Double)
                     Dim x2 As Vector(Of Double) = New Vector(Of Double)(array_v1, Scan0)
                     Dim vec As Double() = New Double(v2.Length - 1) {}
-                    Dim remaining As Integer = v2.Length Mod SIMDEnvironment.countFloat
+                    Dim remaining As Integer = v2.Length Mod SIMDEnvironment.countDouble
                     Dim ends As Integer = v2.Length - remaining - 1
 
-                    For i As Integer = 0 To ends Step SIMDEnvironment.countFloat
+                    For i As Integer = 0 To ends Step SIMDEnvironment.countDouble
                         x1 = New Vector(Of Double)(v2, i)
 
                         Call (x1 * x2).CopyTo(vec, i)
