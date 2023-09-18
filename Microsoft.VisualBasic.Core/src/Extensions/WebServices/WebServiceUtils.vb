@@ -567,7 +567,7 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' POST http request for get html.
     ''' (请注意，假若<paramref name="params"/>之中含有字符串数组的话，则会出错，这个时候需要使用
-    ''' <see cref="Post(String, Dictionary(Of String, String()), String, String, String)"/>方法)
+    ''' <see cref="Post"/>方法)
     ''' </summary>
     ''' <param name="url$"></param>
     ''' <param name="params"></param>

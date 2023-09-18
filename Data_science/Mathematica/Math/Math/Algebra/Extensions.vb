@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace LinearAlgebra
 
@@ -156,15 +157,41 @@ Namespace LinearAlgebra
         End Function
 
         Public Function jaccard_coeff_parallel(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
-            Dim nrow As Integer = idx.Length
+            ' Dim nrow As Integer = idx.Length
             Dim div As Double = If(symmetrize, 2, 1)
-            Dim weightMatrixFold = (From i As Integer
-                                    In Enumerable.Range(0, nrow).AsParallel
-                                    Let node = idx(i).ToArray
-                                    Select node.jaccard_row(i, idx, div).ToArray).ToArray
+            'Dim weightMatrixFold = (From i As Integer
+            '                        In Enumerable.Range(0, nrow).AsParallel
+            '                        Let node = idx(i).ToArray
+            '                        Select node.jaccard_row(i, idx, div).ToArray).ToArray
+            Dim par As JaccardTask = New JaccardTask(idx, div).Run
+            Dim weightMatrixFold = par.weightMatrixFold
 
             Return New NumericMatrix(weightMatrixFold.IteratesALL.ToArray)
         End Function
+
+        Private Class JaccardTask : Inherits VectorTask
+
+            Friend ReadOnly idx As Integer()()
+            Friend ReadOnly weightMatrixFold As Double()()()
+            Friend ReadOnly div As Double
+
+            Sub New(idx As Integer()(), div As Double)
+                Call MyBase.New(idx.Length)
+
+                Me.idx = idx
+                Me.weightMatrixFold = New Double(idx.Length - 1)()() {}
+                Me.div = div
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                For i As Integer = start To ends
+                    Dim node = idx(i).ToArray
+                    Dim weights = node.jaccard_row(i, idx, div).ToArray
+
+                    weightMatrixFold(i) = weights
+                Next
+            End Sub
+        End Class
 
         <Extension>
         Private Iterator Function jaccard_row(nodei As Integer(), i As Integer, idx As Integer()(), div As Double) As IEnumerable(Of Double())

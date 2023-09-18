@@ -17,6 +17,7 @@ Namespace CNN
         Dim is_generative As Boolean = False
         Dim verbose As Integer = 25
         Dim action As Action(Of Integer, ConvolutionalNN)
+        Dim precision_cutoff As Double = 0.05
 
         <DebuggerStepThrough>
         Sub New(alg As TrainerAlgorithm,
@@ -46,6 +47,7 @@ Namespace CNN
             Dim cpu As New PerformanceCounter
             Dim valid_loss As Double()
             Dim loss_sum, loss_mean As Double
+            Dim mean_errors As Double
 
             right = 0
             count = 0
@@ -66,10 +68,11 @@ Namespace CNN
                     loss += tr.Loss
 
                     If is_generative Then
-                        If SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output) _
+                        mean_errors = SIMD.Subtract.f64_op_subtract_f64(img.labels, alg.get_output) _
                             .Select(Function(dd) std.Abs(dd)) _
-                            .Average < 0.01 Then
+                            .Average
 
+                        If mean_errors < precision_cutoff Then
                             right += 1
                         End If
                     Else
@@ -85,7 +88,7 @@ Namespace CNN
                     valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
                     loss_sum = valid_loss.Sum
                     loss_mean = loss_sum / (valid_loss.Length + 1)
-                    log($"[{i + 1}/{epochsNum}; {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean}, total:{loss_sum}..... {(Now - t0).FormatTime(False)}")
+                    log($"[{i + 1}/{epochsNum} {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean.ToString("G3")}, total:{loss_sum.ToString("G4")}, mean_errors={mean_errors.ToString("F5")}..... {(Now - t0).FormatTime(False)}")
                     ti = Now
                 End If
             Next
@@ -121,7 +124,7 @@ Namespace CNN
                 End If
 
                 Call log("")
-                Call log(t.ToString() & "th iter epochsNum: " & epochsNum.ToString())
+                Call log("(" & t.ToString() & $"th/{max_loops}) iter epochsNum: " & epochsNum.ToString())
                 Call TrainEpochs(trainset, epochsNum, right, count)
                 Call log("precision " & right.ToString() & "/" & count.ToString() & $"={(100 * right / count).ToString("F2")}%")
 

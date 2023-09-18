@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace CNN
 

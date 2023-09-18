@@ -113,13 +113,13 @@ Namespace Analysis.Louvain
             builder.global_edge = New Louvain.Edge(louvain.m - 1) {}
             builder.global_head = New Integer(louvain.n - 1) {}
 
-            For i = 0 To louvain.n - 1
+            For i As Integer = 0 To louvain.n - 1
                 builder.global_head(i) = -1
             Next
 
             louvain.global_cluster = New Integer(louvain.n - 1) {}
 
-            For i = 0 To louvain.global_n - 1
+            For i As Integer = 0 To louvain.global_n - 1
                 louvain.global_cluster(i) = i
             Next
 

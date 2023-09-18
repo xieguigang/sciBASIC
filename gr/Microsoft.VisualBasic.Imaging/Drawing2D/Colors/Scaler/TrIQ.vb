@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::deff0d278f13dcd8ff38ddfa6b1e332c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\TrIQ.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 186
-    '    Code Lines: 77
-    ' Comment Lines: 85
-    '   Blank Lines: 24
-    '     File Size: 6.87 KB
+' Summaries:
 
 
-    '     Module TrIQ
-    ' 
-    '         Function: CDF, DiscreteLevels, (+2 Overloads) FindThreshold, GetTrIQRange
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 186
+'    Code Lines: 77
+' Comment Lines: 85
+'   Blank Lines: 24
+'     File Size: 6.87 KB
+
+
+'     Module TrIQ
+' 
+'         Function: CDF, DiscreteLevels, (+2 Overloads) FindThreshold, GetTrIQRange
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -86,6 +86,33 @@ Namespace Drawing2D.Colors.Scaler
             Dim p As Double = sumHk / N
 
             Return p
+        End Function
+
+        ''' <summary>
+        ''' trim the head intensity data by a given cutoff threshold 
+        ''' which is evaluated via the TrIQ algorithm.
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="q"></param>
+        ''' <param name="N"></param>
+        ''' <param name="eps"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function CutThreshold(data As IEnumerable(Of Double), q As Double,
+                                     Optional N As Integer = 100,
+                                     Optional eps As Double = 0.1) As IEnumerable(Of Double)
+
+            Dim v As Double() = data.ToArray
+            Dim cut As Double = v.FindThreshold(q, N, eps)
+
+            Return v _
+                .Select(Function(xi)
+                            If xi > cut Then
+                                Return cut
+                            Else
+                                Return xi
+                            End If
+                        End Function)
         End Function
 
         ''' <summary>

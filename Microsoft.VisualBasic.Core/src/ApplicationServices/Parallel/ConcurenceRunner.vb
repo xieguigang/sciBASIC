@@ -1,12 +1,12 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Threading
 
-Namespace CNN
+Namespace Parallel
 
     ''' <summary>
     ''' the parallel task helper
     ''' </summary>
-    Friend MustInherit Class VectorTask
+    Public MustInherit Class VectorTask
 
         Protected workLen As Integer
         ''' <summary>
@@ -25,12 +25,21 @@ Namespace CNN
 
         Protected MustOverride Sub Solve(start As Integer, ends As Integer)
 
+        ''' <summary>
+        ''' Run in sequence
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Solve()
+        Public Function Solve() As VectorTask
             Call Solve(0, workLen - 1)
-        End Sub
+            Return Me
+        End Function
 
-        Public Sub Run()
+        ''' <summary>
+        ''' Run in parallel
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Run() As VectorTask
             Dim span_size As Integer = workLen / n_threads
 #If NET48 Then
             span_size = 0
@@ -61,7 +70,9 @@ Namespace CNN
                 Throw New NotImplementedException
 #End If
             End If
-        End Sub
+
+            Return Me
+        End Function
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
             Dim copy As T() = New T(start - ends - 1) {}

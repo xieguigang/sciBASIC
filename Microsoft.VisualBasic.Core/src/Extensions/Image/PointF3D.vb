@@ -95,4 +95,20 @@ Namespace Imaging
         Property Y As Integer
 
     End Interface
+
+    ''' <summary>
+    ''' a generic data model for HeatMap raster
+    ''' </summary>
+    ''' <remarks>
+    ''' the layout information comes from the base <see cref="RasterPixel"/> model
+    ''' </remarks>
+    Public Interface Pixel : Inherits Imaging.RasterPixel
+
+        ''' <summary>
+        ''' the color scale data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Scale As Double
+
+    End Interface
 End Namespace

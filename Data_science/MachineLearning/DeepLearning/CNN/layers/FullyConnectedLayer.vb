@@ -1,5 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace CNN.layers
 

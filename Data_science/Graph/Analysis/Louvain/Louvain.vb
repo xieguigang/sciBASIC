@@ -350,7 +350,7 @@ Namespace Analysis.Louvain
                 count += 1
                 cluster_weight = New Double(n - 1) {}
 
-                For j = 0 To n - 1
+                For j As Integer = 0 To n - 1
                     ' 生成簇的权值
                     cluster_weight(cluster(j)) += node_weight(j)
                 Next

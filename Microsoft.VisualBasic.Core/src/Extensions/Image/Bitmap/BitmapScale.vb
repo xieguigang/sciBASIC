@@ -306,7 +306,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="R"></param>
         ''' <param name="G"></param>
         ''' <param name="B"></param>
-        ''' <returns></returns>
+        ''' <returns>[0,255]</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GrayScale(R%, G%, B%) As Integer
             Return CInt(Truncate(R * 0.3 + G * 0.59 + B * 0.11))

@@ -70,22 +70,6 @@ Namespace Drawing2D.HeatMap
     End Interface
 
     ''' <summary>
-    ''' a generic data model for <see cref="HeatMapRaster(Of T)"/>
-    ''' </summary>
-    ''' <remarks>
-    ''' the layout information comes from the base <see cref="RasterPixel"/> model
-    ''' </remarks>
-    Public Interface Pixel : Inherits Imaging.RasterPixel
-
-        ''' <summary>
-        ''' the color scale data
-        ''' </summary>
-        ''' <returns></returns>
-        Property Scale As Double
-
-    End Interface
-
-    ''' <summary>
     ''' A pixel spot object associate [x,y] with intensity scale data
     ''' </summary>
     Public Structure PixelData : Implements Pixel
