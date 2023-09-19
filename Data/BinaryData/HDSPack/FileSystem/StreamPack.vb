@@ -614,5 +614,14 @@ Namespace FileSystem
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
             Call flushStreamPack()
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            Return Me.ListFiles _
+                .Where(Function(b) TypeOf b Is StreamBlock) _
+                .Select(Function(f)
+                            Return f.referencePath.ToString
+                        End Function)
+        End Function
     End Class
 End Namespace

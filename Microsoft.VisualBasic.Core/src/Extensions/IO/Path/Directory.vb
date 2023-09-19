@@ -61,6 +61,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace FileIO
 
@@ -274,5 +275,10 @@ Namespace FileIO
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
             ' do nothing
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            Return ls - l - r - "*.*" <= folder
+        End Function
     End Class
 End Namespace
