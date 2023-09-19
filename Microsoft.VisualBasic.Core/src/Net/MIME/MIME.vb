@@ -109,8 +109,12 @@ Namespace Net.Protocols.ContentTypes
                                   Return x
                               End Function)
             ContentTypes = SuffixTable.Values _
+                .GroupBy(Function(f) f.MIMEType.ToLower) _
                 .ToDictionary(Function(x)
-                                  Return x.MIMEType.ToLower
+                                  Return x.Key
+                              End Function,
+                              Function(x)
+                                  Return x.First
                               End Function)
         End Sub
 
