@@ -112,6 +112,15 @@ Namespace ApplicationServices
         Function ReadAllText(path As String) As String
 
         ''' <summary>
+        ''' get all files inside current filesystem object
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' be careful when running this on local filesystem object!
+        ''' </remarks>
+        Function GetFiles() As IEnumerable(Of String)
+
+        ''' <summary>
         ''' close current filesystem session
         ''' </summary>
         ''' <remarks>
