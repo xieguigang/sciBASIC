@@ -38,6 +38,15 @@ Namespace PCA
             Return ctx.Path
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="level"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://github.com/DoAutumn/confidence-ellipse/blob/main/src/helper.ts
+        ''' </remarks>
         Public Shared Function ConfidenceEllipse(data As Polygon2D, Optional level As Double = 0.95) As Ellipse
             Dim xData = data.xpoints
             Dim xDataDev = xData.StandardDeviation
