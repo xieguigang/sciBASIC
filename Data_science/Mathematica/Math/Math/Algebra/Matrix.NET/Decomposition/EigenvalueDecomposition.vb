@@ -972,6 +972,9 @@ Namespace LinearAlgebra.Matrix
 #End Region
 
 #Region "Public Properties"
+
+        ' return { lambda:R.getDiag(), E:E };
+
         ''' <summary>Return the real parts of the eigenvalues</summary>
         ''' <returns>     real(diag(D))
         ''' </returns>

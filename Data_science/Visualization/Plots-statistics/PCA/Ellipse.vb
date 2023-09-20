@@ -52,12 +52,13 @@ Namespace PCA
             }
             Dim eig = New NumericMatrix(covmat).Eigen
             Dim scale = Distribution.ChiSquareInverse(level, 2)
-            Dim eigLambdaX As Double()
+            ' return { lambda:R.getDiag(), E:E };
+            Dim eigLambdaX As Double() = eig.RealEigenvalues
             Dim maxLambdaI As Integer = which.Max(eigLambdaX)
             Dim minLambdaI As Integer = which.Min(eigLambdaX)
             Dim rx As Double = If(xDataDev > yDataDev, std.Sqrt(eigLambdaX(maxLambdaI)) * scale, std.Sqrt(eigLambdaX(minLambdaI)) * scale)
             Dim ry As Double = If(yDataDev > xDataDev, std.Sqrt(eigLambdaX(maxLambdaI)) * scale, std.Sqrt(eigLambdaX(minLambdaI)) * scale)
-            Dim v1 As Double()
+            Dim v1 As Double() = eig.V.X(maxLambdaI)
             Dim theta = std.Atan2(v1(1), v1(0))
 
             If theta < 0 Then
