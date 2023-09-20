@@ -92,7 +92,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Arrays for internal storage of eigenvalues.
         ''' @serial internal storage of eigenvalues.
         ''' </summary>
-        Private m_d As Double(), e As Double()
+        Private m_d As Double(), m_e As Double()
 
         ''' <summary>Array for internal storage of eigenvectors.
         ''' @serial internal storage of eigenvectors.
@@ -137,7 +137,7 @@ Namespace LinearAlgebra.Matrix
                     scale = scale + stdnum.Abs(m_d(k))
                 Next
                 If scale = 0.0 Then
-                    e(i) = m_d(i - 1)
+                    m_e(i) = m_d(i - 1)
                     For j As Integer = 0 To i - 1
                         m_d(j) = V(i - 1)(j)
                         V(i)(j) = 0.0
@@ -155,11 +155,11 @@ Namespace LinearAlgebra.Matrix
                     If f > 0 Then
                         g = -g
                     End If
-                    e(i) = scale * g
+                    m_e(i) = scale * g
                     h = h - f * g
                     m_d(i - 1) = f - g
                     For j As Integer = 0 To i - 1
-                        e(j) = 0.0
+                        m_e(j) = 0.0
                     Next
 
                     ' Apply similarity transformation to remaining columns.
@@ -167,27 +167,27 @@ Namespace LinearAlgebra.Matrix
                     For j As Integer = 0 To i - 1
                         f = m_d(j)
                         V(j)(i) = f
-                        g = e(j) + V(j)(j) * f
+                        g = m_e(j) + V(j)(j) * f
                         For k As Integer = j + 1 To i - 1
                             g += V(k)(j) * m_d(k)
-                            e(k) += V(k)(j) * f
+                            m_e(k) += V(k)(j) * f
                         Next
-                        e(j) = g
+                        m_e(j) = g
                     Next
                     f = 0.0
                     For j As Integer = 0 To i - 1
-                        e(j) /= h
-                        f += e(j) * m_d(j)
+                        m_e(j) /= h
+                        f += m_e(j) * m_d(j)
                     Next
                     Dim hh As Double = f / (h + h)
                     For j As Integer = 0 To i - 1
-                        e(j) -= hh * m_d(j)
+                        m_e(j) -= hh * m_d(j)
                     Next
                     For j As Integer = 0 To i - 1
                         f = m_d(j)
-                        g = e(j)
+                        g = m_e(j)
                         For k As Integer = j To i - 1
-                            V(k)(j) -= (f * e(k) + g * m_d(k))
+                            V(k)(j) -= (f * m_e(k) + g * m_d(k))
                         Next
                         m_d(j) = V(i - 1)(j)
                         V(i)(j) = 0.0
@@ -225,7 +225,7 @@ Namespace LinearAlgebra.Matrix
                 V(n - 1)(j) = 0.0
             Next
             V(n - 1)(n - 1) = 1.0
-            e(0) = 0.0
+            m_e(0) = 0.0
         End Sub
 
         ' Symmetric tridiagonal QL algorithm.
@@ -239,9 +239,9 @@ Namespace LinearAlgebra.Matrix
             Dim V = _V
 
             For i As Integer = 1 To n - 1
-                e(i - 1) = e(i)
+                m_e(i - 1) = m_e(i)
             Next
-            e(n - 1) = 0.0
+            m_e(n - 1) = 0.0
 
             Dim f As Double = 0.0
             Dim tst1 As Double = 0.0
@@ -249,10 +249,10 @@ Namespace LinearAlgebra.Matrix
             For l As Integer = 0 To n - 1
                 ' Find small subdiagonal element
 
-                tst1 = System.Math.Max(tst1, stdnum.Abs(m_d(l)) + stdnum.Abs(e(l)))
+                tst1 = System.Math.Max(tst1, stdnum.Abs(m_d(l)) + stdnum.Abs(m_e(l)))
                 Dim m As Integer = l
                 While m < n
-                    If stdnum.Abs(e(m)) <= eps * tst1 Then
+                    If stdnum.Abs(m_e(m)) <= eps * tst1 Then
                         Exit While
                     End If
                     m += 1
@@ -269,13 +269,13 @@ Namespace LinearAlgebra.Matrix
                         ' Compute implicit shift
 
                         Dim g As Double = m_d(l)
-                        Dim p As Double = (m_d(l + 1) - g) / (2.0 * e(l))
+                        Dim p As Double = (m_d(l + 1) - g) / (2.0 * m_e(l))
                         Dim r As Double = Hypot(p, 1.0)
                         If p < 0 Then
                             r = -r
                         End If
-                        m_d(l) = e(l) / (p + r)
-                        m_d(l + 1) = e(l) * (p + r)
+                        m_d(l) = m_e(l) / (p + r)
+                        m_d(l + 1) = m_e(l) * (p + r)
                         Dim dl1 As Double = m_d(l + 1)
                         Dim h As Double = g - m_d(l)
                         For i As Integer = l + 2 To n - 1
@@ -289,18 +289,18 @@ Namespace LinearAlgebra.Matrix
                         Dim c As Double = 1.0
                         Dim c2 As Double = c
                         Dim c3 As Double = c
-                        Dim el1 As Double = e(l + 1)
+                        Dim el1 As Double = m_e(l + 1)
                         Dim s As Double = 0.0
                         Dim s2 As Double = 0.0
                         For i As Integer = m - 1 To l Step -1
                             c3 = c2
                             c2 = c
                             s2 = s
-                            g = c * e(i)
+                            g = c * m_e(i)
                             h = c * p
-                            r = Hypot(p, e(i))
-                            e(i + 1) = s * r
-                            s = e(i) / r
+                            r = Hypot(p, m_e(i))
+                            m_e(i + 1) = s * r
+                            s = m_e(i) / r
                             c = p / r
                             p = c * m_d(i) - s * g
                             m_d(i + 1) = h + s * (c * g + s * m_d(i))
@@ -313,15 +313,15 @@ Namespace LinearAlgebra.Matrix
                                 V(k)(i) = c * V(k)(i) - s * h
                             Next
                         Next
-                        p = (-s) * s2 * c3 * el1 * e(l) / dl1
-                        e(l) = s * p
+                        p = (-s) * s2 * c3 * el1 * m_e(l) / dl1
+                        m_e(l) = s * p
 
                         ' Check for convergence.
                         m_d(l) = c * p
-                    Loop While stdnum.Abs(e(l)) > eps * tst1
+                    Loop While stdnum.Abs(m_e(l)) > eps * tst1
                 End If
                 m_d(l) = m_d(l) + f
-                e(l) = 0.0
+                m_e(l) = 0.0
             Next
 
             ' Sort eigenvalues and corresponding vectors.
@@ -488,7 +488,7 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To nn - 1
                 If i < low Or i > high Then
                     m_d(i) = H(i)(i)
-                    e(i) = 0.0
+                    m_e(i) = 0.0
                 End If
                 For j As Integer = stdnum.Max(i - 1, 0) To nn - 1
                     norm = norm + stdnum.Abs(H(i)(j))
@@ -520,7 +520,7 @@ Namespace LinearAlgebra.Matrix
                 If l = n Then
                     H(n)(n) = H(n)(n) + exshift
                     m_d(n) = H(n)(n)
-                    e(n) = 0.0
+                    m_e(n) = 0.0
                     n -= 1
 
                     ' Two roots found
@@ -547,8 +547,8 @@ Namespace LinearAlgebra.Matrix
                         If z <> 0.0 Then
                             m_d(n) = x - w / z
                         End If
-                        e(n - 1) = 0.0
-                        e(n) = 0.0
+                        m_e(n - 1) = 0.0
+                        m_e(n) = 0.0
                         x = H(n)(n - 1)
                         s = stdnum.Abs(x) + stdnum.Abs(z)
                         p = x / s
@@ -585,8 +585,8 @@ Namespace LinearAlgebra.Matrix
                     Else
                         m_d(n - 1) = x + p
                         m_d(n) = x + p
-                        e(n - 1) = z
-                        e(n) = -z
+                        m_e(n - 1) = z
+                        m_e(n) = -z
                     End If
                     n = n - 2
 
@@ -756,7 +756,7 @@ Namespace LinearAlgebra.Matrix
 
             For n = nn - 1 To 0 Step -1
                 p = m_d(n)
-                q = e(n)
+                q = m_e(n)
 
                 ' Real vector
 
@@ -769,12 +769,12 @@ Namespace LinearAlgebra.Matrix
                         For j As Integer = l To n
                             r = r + H(i)(j) * H(j)(n)
                         Next
-                        If e(i) < 0.0 Then
+                        If m_e(i) < 0.0 Then
                             z = w
                             s = r
                         Else
                             l = i
-                            If e(i) = 0.0 Then
+                            If m_e(i) = 0.0 Then
                                 If w <> 0.0 Then
                                     H(i)(n) = (-r) / w
                                 Else
@@ -785,7 +785,7 @@ Namespace LinearAlgebra.Matrix
                             Else
                                 x = H(i)(i + 1)
                                 y = H(i + 1)(i)
-                                q = (m_d(i) - p) * (m_d(i) - p) + e(i) * e(i)
+                                q = (m_d(i) - p) * (m_d(i) - p) + m_e(i) * m_e(i)
                                 t = (x * s - z * r) / q
                                 H(i)(n) = t
                                 If stdnum.Abs(x) > stdnum.Abs(z) Then
@@ -832,13 +832,13 @@ Namespace LinearAlgebra.Matrix
                         Next
                         w = H(i)(i) - p
 
-                        If e(i) < 0.0 Then
+                        If m_e(i) < 0.0 Then
                             z = w
                             r = ra
                             s = sa
                         Else
                             l = i
-                            If e(i) = 0 Then
+                            If m_e(i) = 0 Then
                                 cdiv(-ra, -sa, w, q)
                                 H(i)(n - 1) = cdivr
                                 H(i)(n) = cdivi
@@ -848,7 +848,7 @@ Namespace LinearAlgebra.Matrix
 
                                 x = H(i)(i + 1)
                                 y = H(i + 1)(i)
-                                vr = (m_d(i) - p) * (m_d(i) - p) + e(i) * e(i) - q * q
+                                vr = (m_d(i) - p) * (m_d(i) - p) + m_e(i) * m_e(i) - q * q
                                 vi = (m_d(i) - p) * 2.0 * q
                                 If vr = 0.0 And vi = 0.0 Then
                                     vr = eps * norm * (stdnum.Abs(w) + stdnum.Abs(q) + stdnum.Abs(x) + stdnum.Abs(y) + stdnum.Abs(z))
@@ -920,7 +920,7 @@ Namespace LinearAlgebra.Matrix
                 V(i) = New Double(n - 1) {}
             Next
             m_d = New Double(n - 1) {}
-            e = New Double(n - 1) {}
+            m_e = New Double(n - 1) {}
             _V = V
 
             issymmetric = True
@@ -986,7 +986,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
         Public Overridable ReadOnly Property ImagEigenvalues() As Double()
             Get
-                Return e
+                Return m_e
             End Get
         End Property
 
@@ -1002,10 +1002,10 @@ Namespace LinearAlgebra.Matrix
                         Da(i)(j) = 0.0
                     Next
                     Da(i)(i) = m_d(i)
-                    If e(i) > 0 Then
-                        Da(i)(i + 1) = e(i)
-                    ElseIf e(i) < 0 Then
-                        Da(i)(i - 1) = e(i)
+                    If m_e(i) > 0 Then
+                        Da(i)(i + 1) = m_e(i)
+                    ElseIf m_e(i) < 0 Then
+                        Da(i)(i - 1) = m_e(i)
                     End If
                 Next
                 Return X
