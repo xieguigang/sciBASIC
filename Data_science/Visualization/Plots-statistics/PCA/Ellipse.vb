@@ -49,10 +49,10 @@ Namespace PCA
         ''' </remarks>
         Public Shared Function ConfidenceEllipse(data As Polygon2D, Optional level As Double = 0.95) As Ellipse
             Dim xData = data.xpoints
-            Dim xDataDev = xData.StandardDeviation
+            Dim xDataDev = xData.StandardDeviation ^ 2
             Dim xMean = xData.Average
             Dim yData = data.ypoints
-            Dim yDataDev = yData.StandardDeviation
+            Dim yDataDev = yData.StandardDeviation ^ 2
             Dim yMean = yData.Average
             Dim cor As Double = Correlations.GetPearson(xData, yData)
             Dim cov As Double = cor * xDataDev * yDataDev

@@ -92,12 +92,18 @@ Public Class StatisticsObject
         YTransformed = YVariables
 
         Dim xMeans, xStdevs As Double()
-        StatisticsMathematics.StatisticsProperties(XTransformed, xMeans, xStdevs)
+
+        Call StatisticsMathematics.StatisticsProperties(XTransformed, xMeans, xStdevs)
+
         Me.XMeans = xMeans
         Me.XStdevs = xStdevs
 
         Dim yMean, yStdev As Double
-        StatisticsMathematics.StatisticsProperties(YTransformed, yMean, yStdev)
+
+        If Not YTransformed.IsNullOrEmpty Then
+            Call StatisticsMathematics.StatisticsProperties(YTransformed, yMean, yStdev)
+        End If
+
         Me.YMean = yMean
         Me.YStdev = yStdev
 

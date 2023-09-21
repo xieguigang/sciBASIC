@@ -68,6 +68,14 @@ Public Class DataFrame
     Public Property features As New Dictionary(Of String, FeatureVector)
     Public Property rownames As String()
 
+    ''' <summary>
+    ''' the dimension size of current dataframe object, with data axis dimension 
+    ''' mapping of:
+    ''' 
+    ''' 1. width: feature size, column size
+    ''' 2. height: sample size, row size
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property dims As Size
         Get
             Return New Size(width:=features.Count, height:=rownames.Length)

@@ -106,4 +106,9 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
     Public Shared Function FromMatrix(Of T As {INamedValue, IVector})(m As IEnumerable(Of T), eq As Double, gt As Double) As AlignmentComparison
         Return New AlignmentComparison(m.ToDictionary(Function(a) a.Key, Function(a) a.Data), eq, gt)
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function GetObject(id As String) As Object
+        Return dataIndex(id)
+    End Function
 End Class

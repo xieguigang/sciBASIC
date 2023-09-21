@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::a97670ed0d5849f8ec54d55ab3f1f99f, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\Entity.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 79
-    '    Code Lines: 51
-    ' Comment Lines: 20
-    '   Blank Lines: 8
-    '     File Size: 3.09 KB
+' Summaries:
 
 
-    '     Class ClusterEntity
-    ' 
-    '         Properties: cluster, uid
-    ' 
-    '         Function: (+2 Overloads) ToDataModel, ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 79
+'    Code Lines: 51
+' Comment Lines: 20
+'   Blank Lines: 8
+'     File Size: 3.09 KB
+
+
+'     Class ClusterEntity
+' 
+'         Properties: cluster, uid
+' 
+'         Function: (+2 Overloads) ToDataModel, ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace KMeans
@@ -73,10 +74,23 @@ Namespace KMeans
     ''' </remarks>
     Public Class ClusterEntity : Inherits EntityBase(Of Double)
         Implements INamedValue
+        Implements IVector
 
         <XmlAttribute> Public Property uid As String Implements INamedValue.Key
         <XmlAttribute> Public Property cluster As Integer
 
+        <XmlAttribute("v")>
+        Public Overrides Property entityVector As Double() Implements IVector.Data
+
+        Sub New()
+        End Sub
+
+        Sub New(id As String, data As Double())
+            uid = id
+            entityVector = data
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{entityVector.Select(Function(x) x.ToString("G3")).JoinBy(", ")}]"
         End Function

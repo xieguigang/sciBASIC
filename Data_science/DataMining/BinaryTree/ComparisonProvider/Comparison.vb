@@ -66,6 +66,11 @@ Public Class Comparison : Inherits ComparisonProvider
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function GetObject(id As String) As Object
+        Return d.GetVector(name:=id)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetSimilarity(x As String, y As String) As Double
         Return d(x, y)
     End Function

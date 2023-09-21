@@ -68,6 +68,7 @@ Public MustInherit Class ComparisonProvider
     End Sub
 
     Public MustOverride Function GetSimilarity(x As String, y As String) As Double
+    Public MustOverride Function GetObject(id As String) As Object
 
     ''' <summary>
     ''' binary tree generator

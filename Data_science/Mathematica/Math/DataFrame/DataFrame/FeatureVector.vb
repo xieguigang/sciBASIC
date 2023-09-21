@@ -84,6 +84,16 @@ Public Class FeatureVector : Implements IReadOnlyId
         End Get
     End Property
 
+    Default Public ReadOnly Property GetValue(i As Integer) As Object
+        Get
+            If isScalar Then
+                Return vector.GetValue(0)
+            Else
+                Return vector.GetValue(i)
+            End If
+        End Get
+    End Property
+
     Private Sub New(name As String)
         Me.name = name
     End Sub

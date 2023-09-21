@@ -1,15 +1,21 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
 Public Module PCA
 
     <Extension>
-    Public Function PrincipalComponentAnalysis(statObject As StatisticsObject, Optional maxPC As Integer = 5) As MultivariateAnalysisResult
+    Public Function PrincipalComponentAnalysis(statObject As StatisticsObject,
+                                               Optional maxPC As Integer = 5,
+                                               Optional cutoff As Double = 0.0000001) As MultivariateAnalysisResult
         Dim dataArray = statObject.XScaled
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
-        If rowSize < maxPC Then maxPC = rowSize
+
+        If rowSize < maxPC Then
+            maxPC = rowSize
+        End If
 
         'PrincipalComponentAnalysisResult pcaBean = new PrincipalComponentAnalysisResult() {
         '    ScoreIdCollection = statObject.YIndexes,
@@ -21,85 +27,21 @@ Public Module PCA
         '};
 
         Dim tpMatrix = New Double(rowSize - 1, columnSize - 1) {}
-        Dim mean, var, scoreOld, scoreNew, loading As Double()
-        Dim sum, maxVar, threshold, scoreScalar, scoreVar, loadingScalar As Double, contributionOriginal As Double = 1
-        Dim maxVarID As Integer
-
         Dim contributions = New ObservableCollection(Of Double)()
         Dim scores = New ObservableCollection(Of Double())()
         Dim loadings = New ObservableCollection(Of Double())()
+        Dim t0 As Date
+        Dim t1 As Date
+        Dim ticks As Integer
 
-        For i = 0 To maxPC - 1
-            mean = New Double(columnSize - 1) {}
-            var = New Double(columnSize - 1) {}
-            scoreOld = New Double(rowSize - 1) {}
-            scoreNew = New Double(rowSize - 1) {}
-            loading = New Double(columnSize - 1) {}
+        For i As Integer = 0 To maxPC - 1
+            Call VBDebugger.EchoLine($"Calculate component {i + 1}...")
 
-            For j = 0 To columnSize - 1
-                sum = 0
-                For k = 0 To rowSize - 1
-                    sum += dataArray(k, j)
-                Next
-                mean(j) = sum / rowSize
-            Next
+            t0 = Now
+            ticks = dataArray.CalculateComponent(i, columnSize, rowSize, cutoff, tpMatrix, contributions, scores, loadings)
+            t1 = Now
 
-            For j = 0 To columnSize - 1
-                sum = 0
-                For k = 0 To rowSize - 1
-                    sum += std.Pow(dataArray(k, j) - mean(j), 2)
-                Next
-                var(j) = sum / (rowSize - 1)
-            Next
-            If i = 0 Then contributionOriginal = var.Sum
-
-            maxVar = var.Max
-            maxVarID = Array.IndexOf(var, maxVar)
-
-            For j = 0 To rowSize - 1
-                scoreOld(j) = dataArray(j, maxVarID)
-            Next
-
-            threshold = Double.MaxValue
-            While threshold > 0.00000001
-                scoreScalar = BasicMathematics.SumOfSquare(scoreOld)
-                For j = 0 To columnSize - 1
-                    sum = 0
-                    For k = 0 To rowSize - 1
-                        sum += dataArray(k, j) * scoreOld(k)
-                    Next
-                    loading(j) = sum / scoreScalar
-                Next
-
-                loadingScalar = BasicMathematics.RootSumOfSquare(loading)
-                For j = 0 To columnSize - 1
-                    loading(j) = loading(j) / loadingScalar
-                Next
-
-                For j = 0 To rowSize - 1
-                    sum = 0
-                    For k = 0 To columnSize - 1
-                        sum += dataArray(j, k) * loading(k)
-                    Next
-                    scoreNew(j) = sum
-                Next
-
-                threshold = BasicMathematics.RootSumOfSquare(scoreNew, scoreOld)
-                For j = 0 To scoreNew.Length - 1
-                    scoreOld(j) = scoreNew(j)
-                Next
-            End While
-
-            For j = 0 To columnSize - 1
-                For k = 0 To rowSize - 1
-                    tpMatrix(k, j) = scoreNew(k) * loading(j)
-                    dataArray(k, j) = dataArray(k, j) - tpMatrix(k, j)
-                Next
-            Next
-            scoreVar = BasicMathematics.Var(scoreNew)
-            contributions.Add(scoreVar / contributionOriginal * 100)
-            scores.Add(scoreNew)
-            loadings.Add(loading)
+            Call VBDebugger.EchoLine($"Cost {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)} and run {ticks} loop")
         Next
 
         Dim maResult = New MultivariateAnalysisResult() With {
@@ -114,4 +56,171 @@ Public Module PCA
         Return maResult
     End Function
 
+    <Extension>
+    Private Function CalculateComponent(ByRef dataArray As Double(,),
+                                        i As Integer,
+                                        columnSize As Integer,
+                                        rowSize As Integer,
+                                        cutoff As Double,
+                                        ByRef tpMatrix As Double(,),
+                                        ByRef contributions As ObservableCollection(Of Double),
+                                        ByRef scores As ObservableCollection(Of Double()),
+                                        ByRef loadings As ObservableCollection(Of Double())) As Integer
+
+        Dim mean = New Double(columnSize - 1) {}
+        Dim var = New Double(columnSize - 1) {}
+        Dim scoreOld = New Double(rowSize - 1) {}
+        Dim scoreNew = New Double(rowSize - 1) {}
+        Dim loading = New Double(columnSize - 1) {}
+        Dim sum As Double
+        Dim contributionOriginal As Double = 1
+
+        For j = 0 To columnSize - 1
+            sum = 0
+            For k = 0 To rowSize - 1
+                sum += dataArray(k, j)
+            Next
+            mean(j) = sum / rowSize
+        Next
+
+        For j = 0 To columnSize - 1
+            sum = 0
+            For k = 0 To rowSize - 1
+                sum += std.Pow(dataArray(k, j) - mean(j), 2)
+            Next
+            var(j) = sum / (rowSize - 1)
+        Next
+
+        If i = 0 Then
+            contributionOriginal = var.Sum
+        End If
+
+        Dim maxVar = var.Max
+        Dim maxVarID = Array.IndexOf(var, maxVar)
+
+        For j = 0 To rowSize - 1
+            scoreOld(j) = dataArray(j, maxVarID)
+        Next
+
+        Dim threshold = Double.MaxValue
+        Dim loadingVector As New LoadingTask(columnSize, rowSize) With {
+            .dataArray = dataArray,
+            .loading = loading,
+            .scoreOld = scoreOld
+        }
+        Dim scoreVector As New ScoreTask(rowSize, columnSize) With {
+            .dataArray = dataArray,
+            .loading = loading,
+            .scoreNew = scoreNew
+        }
+
+        i = 0
+
+        While threshold > cutoff
+            Dim scoreScalar = BasicMathematics.SumOfSquare(scoreOld)
+
+            loadingVector.scoreScalar = scoreScalar
+            loadingVector.Run()
+
+            'For j = 0 To columnSize - 1
+            '    sum = 0
+            '    For k = 0 To rowSize - 1
+            '        sum += dataArray(k, j) * scoreOld(k)
+            '    Next
+            '    loading(j) = sum / scoreScalar
+            'Next
+
+            Dim loadingScalar = BasicMathematics.RootSumOfSquare(loading)
+
+            For j = 0 To columnSize - 1
+                loading(j) = loading(j) / loadingScalar
+            Next
+
+            Call scoreVector.Run()
+
+            'For j = 0 To rowSize - 1
+            '    sum = 0
+            '    For k = 0 To columnSize - 1
+            '        sum += dataArray(j, k) * loading(k)
+            '    Next
+            '    scoreNew(j) = sum
+            'Next
+
+            threshold = BasicMathematics.RootSumOfSquare(scoreNew, scoreOld)
+
+            For j = 0 To scoreNew.Length - 1
+                scoreOld(j) = scoreNew(j)
+            Next
+
+            i += 1
+        End While
+
+        For j = 0 To columnSize - 1
+            For k = 0 To rowSize - 1
+                tpMatrix(k, j) = scoreNew(k) * loading(j)
+                dataArray(k, j) = dataArray(k, j) - tpMatrix(k, j)
+            Next
+        Next
+
+        Dim scoreVar = BasicMathematics.Var(scoreNew)
+
+        contributions.Add(scoreVar / contributionOriginal * 100)
+        scores.Add(scoreNew)
+        loadings.Add(loading)
+
+        Return i
+    End Function
+
+    Private Class LoadingTask : Inherits VectorTask
+
+        ReadOnly rowSize As Integer
+
+        Public loading As Double()
+        Public dataArray As Double(,)
+        Public scoreScalar As Double
+        Public scoreOld As Double()
+
+        Sub New(columnSize As Integer, rowSize As Integer)
+            Call MyBase.New(columnSize)
+            Me.rowSize = rowSize
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Dim sum As Double
+
+            For j As Integer = start To ends
+                sum = 0
+                For k = 0 To rowSize - 1
+                    sum += dataArray(k, j) * scoreOld(k)
+                Next
+                loading(j) = sum / scoreScalar
+            Next
+        End Sub
+    End Class
+
+    Private Class ScoreTask : Inherits VectorTask
+
+        ReadOnly columnSize As Integer
+
+        Public dataArray As Double(,)
+        Public loading As Double()
+        Public scoreNew As Double()
+
+        Sub New(rowSize As Integer, columnSize As Integer)
+            Call MyBase.New(rowSize)
+            Me.columnSize = columnSize
+        End Sub
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Dim sum As Double
+
+            For j As Integer = start To ends
+                sum = 0
+                For k = 0 To columnSize - 1
+                    sum += dataArray(j, k) * loading(k)
+                Next
+                scoreNew(j) = sum
+            Next
+        End Sub
+    End Class
 End Module
