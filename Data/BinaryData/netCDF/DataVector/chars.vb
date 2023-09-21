@@ -78,11 +78,15 @@ Namespace DataVector
         End Sub
 
         ''' <summary>
-        ''' convert the string collection into json string
+        ''' This constructor function will convert the given string 
+        ''' collection <paramref name="strs"/> into json string and 
+        ''' then get the char vector data for save into cdf file.
         ''' </summary>
         ''' <param name="strs"></param>
         Sub New(strs As IEnumerable(Of String))
-            buffer = strs.ToArray.GetJson.ToArray
+            buffer = strs.ToArray _
+                .GetJson _
+                .ToArray
         End Sub
 
         ''' <summary>
