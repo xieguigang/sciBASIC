@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::a3ea239d238695c4706389e0e5498349, sciBASIC#\Data_science\Mathematica\Math\ODEsViewer\FormODEsViewer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 314
-    '    Code Lines: 255
-    ' Comment Lines: 5
-    '   Blank Lines: 54
-    '     File Size: 12.35 KB
+' Summaries:
 
 
-    ' Class FormODEsViewer
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __plot, LoadModel
-    ' 
-    '     Sub: AddReference, Draw, FormODEsViewer_Load, LoadParametersToolStripMenuItem_Click, OpenToolStripMenuItem_Click
-    '          OpenToolStripMenuItem1_Click, SaveAsGAFInputsToolStripMenuItem_Click, SavePlotToolStripMenuItem_Click, SaveResultToolStripMenuItem_Click, ToolStripButton1_Click
-    '          ToolStripTextBox1_TextChanged, ToolStripTextBox2_TextChanged, ToolStripTextBox3_TextChanged
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 314
+'    Code Lines: 255
+' Comment Lines: 5
+'   Blank Lines: 54
+'     File Size: 12.35 KB
+
+
+' Class FormODEsViewer
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __plot, LoadModel
+' 
+'     Sub: AddReference, Draw, FormODEsViewer_Load, LoadParametersToolStripMenuItem_Click, OpenToolStripMenuItem_Click
+'          OpenToolStripMenuItem1_Click, SaveAsGAFInputsToolStripMenuItem_Click, SavePlotToolStripMenuItem_Click, SaveResultToolStripMenuItem_Click, ToolStripButton1_Click
+'          ToolStripTextBox1_TextChanged, ToolStripTextBox2_TextChanged, ToolStripTextBox3_TextChanged
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Mathematical.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -113,9 +114,9 @@ Public Class FormODEsViewer
                     Call FlowLayoutPanel2.Controls.Remove(ctrl)
                 Next
 
-                For Each x In vars.Values
-                    Call Controls.Remove(x)
-                    Call x.Dispose()
+                For Each X In vars.Values
+                    Call Controls.Remove(X)
+                    Call X.Dispose()
                 Next
 
                 For Each var$ In MonteCarlo.Model.GetVariables(model)
@@ -171,11 +172,11 @@ Public Class FormODEsViewer
         Dim plots As New List(Of (String, Image))
         Dim x = result.x.SeqIterator.ToArray
 
-        For Each y As NamedValue(Of Double()) In result.y.Values
+        For Each y As NamedCollection(Of Double) In result.y.Values
             Try
                 Call plots.Add(__plot(x, y))
             Catch ex As Exception
-                ex = New Exception(y.Name, ex)
+                ex = New Exception(y.name, ex)
                 Call BeginInvoke(Sub() Call TextBox1.WriteLine(vbCrLf & ex.ToString & vbCrLf))
             End Try
         Next
@@ -241,11 +242,11 @@ Public Class FormODEsViewer
             If file.ShowDialog = DialogResult.OK Then
                 defines = ODEsOut.LoadFromDataFrame(file.FileName).params
 
-                For Each x In defines.ToArray
-                    If inputs.ContainsKey(x.Key) Then
-                        inputs(x.Key).Text = CStr(x.Value)
+                For Each X In defines.ToArray
+                    If inputs.ContainsKey(X.Key) Then
+                        inputs(X.Key).Text = CStr(X.Value)
                     End If
-                    Call App.JoinVariable(x.Key, x.Value)
+                    Call App.JoinVariable(X.Key, X.Value)
                 Next
 
                 Call TextBox1.AppendText("Load parameter data from file: " & file.FileName & vbCrLf)

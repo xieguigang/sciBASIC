@@ -355,36 +355,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{c0e1efdf-f716-4375-a8be-c105fd149aa9}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{f6f90c6f-4d16-413f-9715-d7a8f7468330}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.vbproj">
-      <Project>{1b42809b-603f-4cea-a0db-91276582b9ca}</Project>
-      <Name>DataMining</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\ODESolver.Extensions\ODESolver.Extensions.vbproj">
-      <Project>{731d9af0-0ac1-451a-8d57-d997d0c03d1d}</Project>
-      <Name>ODESolver.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\ODE\ODEsSolver.vbproj">
-      <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>
-      <Name>ODEsSolver</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MachineLearning\MachineLearning.vbproj">
-      <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
-      <Name>MachineLearning</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj">
+      <Project>{0a99f277-6751-4e74-ae9a-e6f4c30a6ef2}</Project>
+      <Name>odes-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

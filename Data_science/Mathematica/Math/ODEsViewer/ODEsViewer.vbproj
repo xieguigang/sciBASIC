@@ -160,6 +160,10 @@
     <Content Include="Project1.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{13e9f05e-6cef-419a-995a-dcf11df73135}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{bbeb913b-1e02-4f59-a7c4-f92593335c04}</Project>
       <Name>imaging.NET5</Name>
@@ -171,6 +175,10 @@
     <ProjectReference Include="..\..\..\..\mime\text%25html\html_netcore5.vbproj">
       <Project>{206bcae8-32f2-42f6-a94f-9edeb769d951}</Project>
       <Name>html_netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\MachineLearning\Bootstrapping\Bootstrapping.vbproj">
+      <Project>{b21b924a-d67f-4554-8946-a154563394b2}</Project>
+      <Name>Bootstrapping</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Visualization\Plots\plots-netcore5.vbproj">
       <Project>{b21e2e57-9839-491c-ad72-f12b7e769a47}</Project>
