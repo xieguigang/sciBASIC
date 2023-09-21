@@ -96,6 +96,11 @@ Namespace SecurityString
             Return GetMd5Bytes(input).ToLong
         End Function
 
+        ''' <summary>
+        ''' Calculate the md5 hashcode based on the given <paramref name="input"/> data.
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         Public Function GetMd5Hash(input As Byte()) As String
             If input.IsNullOrEmpty Then
                 Return ""
