@@ -389,7 +389,8 @@ Namespace Linq
         ''' <remarks></remarks>
         '''
         <ExportAPI("Sequence")>
-        <Extension> Public Function Sequence(n As Long) As Long()
+        <Extension>
+        Public Function Sequence(n As Long) As Long()
             Dim List As Long() = New Long(n - 1) {}
             For i As Integer = 0 To n - 1
                 List(i) = i
@@ -405,7 +406,8 @@ Namespace Linq
         ''' <remarks></remarks>
         '''
         <ExportAPI("Sequence")>
-        <Extension> Public Function Sequence(n As UInteger) As Integer()
+        <Extension>
+        Public Function Sequence(n As UInteger) As Integer()
             Dim List(n - 1) As Integer
             For i As Integer = 0 To n - 1
                 List(i) = i
@@ -421,7 +423,8 @@ Namespace Linq
         ''' <param name="elementAt"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToArray(Of T)(len As Integer, elementAt As Func(Of Integer, T)) As T()
+        <Extension>
+        Public Function ToArray(Of T)(len As Integer, elementAt As Func(Of Integer, T)) As T()
             Return len _
                 .Sequence _
                 .Select(elementAt) _
@@ -429,7 +432,8 @@ Namespace Linq
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToArray(Of T)(len&, elementAt As Func(Of Long, T)) As T()
+        <Extension>
+        Public Function ToArray(Of T)(len&, elementAt As Func(Of Long, T)) As T()
             Return len _
                 .Sequence _
                 .Select(elementAt) _
@@ -445,7 +449,12 @@ Namespace Linq
         ''' If the sequence is nothing or contains no elements, then this default value will be returned.
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
-        <Extension> Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
+        <Extension>
+        Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
+            If source Is Nothing Then
+                Return [default]
+            End If
+
             Dim value As TSource = source.FirstOrDefault
 
             If value Is Nothing Then
@@ -475,7 +484,8 @@ Namespace Linq
         ''' If the sequence is nothing or contains no elements, then this default value will be returned.
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
-        <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
+        <Extension>
+        Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
             If source Is Nothing OrElse Not source.Any Then
                 Return [default]
             Else
