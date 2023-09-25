@@ -208,9 +208,22 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function NextInteger(upper As Integer) As Integer
-            SyncLock seeds
-                Return seeds.Next(upper)
-            End SyncLock
+            Return seeds.Next(upper)
+        End Function
+
+        ''' <summary>
+        ''' Returns a random integer that is within a specified range.
+        ''' </summary>
+        ''' <param name="min">The inclusive lower bound of the random number returned.</param>
+        ''' <param name="max">The exclusive upper bound of the random number returned. maxValue must be greater
+        ''' than or equal to minValue.</param>
+        ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue;
+        ''' that is, the range of return values includes minValue but not maxValue. If minValue
+        ''' equals maxValue, minValue is returned.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function NextInteger(min As Integer, max As Integer) As Integer
+            Return seeds.Next(min, max)
         End Function
 
         ''' <summary>
