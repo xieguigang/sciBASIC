@@ -11,13 +11,16 @@ Namespace Hypothesis
         Public Property SD As Double
         Public Property pvalue As Double
 
-        Public Shared Function moran_test(spatial As IEnumerable(Of Pixel), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
+        Public Shared Function moran_test(spatial As IEnumerable(Of Pixel),
+                                          Optional alternative As Hypothesis = Hypothesis.TwoSided,
+                                          Optional resolution As Integer = 97) As MoranTest
             With spatial.ToArray
                 Return moran_test(
                     .Select(Function(p) p.Scale).ToArray,
                     .Select(Function(p) CDbl(p.X)).ToArray,
                     .Select(Function(p) CDbl(p.Y)).ToArray,
-                    alternative:=alternative
+                    alternative:=alternative,
+                    resolution:=resolution
                 )
             End With
         End Function
@@ -36,7 +39,7 @@ Namespace Hypothesis
         ''' <returns></returns>
         Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(),
                                           Optional alternative As Hypothesis = Hypothesis.TwoSided,
-                                          Optional resolution As Integer = 80000) As MoranTest
+                                          Optional resolution As Integer = 97) As MoranTest
 
             Dim res = Moran.calc_moran(x, c1, c2)
             Dim pv As Double = pnorm.eval(res.observed,
@@ -56,7 +59,9 @@ Namespace Hypothesis
             End If
 
             If pv < 0 Then
-                pv = 1 / Double.MaxValue
+                pv = 1 / Single.MaxValue
+            ElseIf pv.IsNaNImaginary Then
+                pv = 1
             End If
 
             Return New MoranTest With {

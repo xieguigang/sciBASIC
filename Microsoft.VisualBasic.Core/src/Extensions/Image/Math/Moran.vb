@@ -14,13 +14,12 @@ Namespace Imaging.Math2D
         Public Function distanceCalculate(x1 As Double, y1 As Double, x2 As Double, y2 As Double) As Double
             Dim x = x1 - x2
             Dim y = y1 - y2
-            Dim dist = std.Sqrt(x ^ 2 + y ^ 2)
 
-            If dist > 0 Then
-                dist = 1 / dist
+            If x = 0.0 AndAlso y = 0.0 Then
+                Return 0
+            Else
+                Return 1 / std.Sqrt(x ^ 2 + y ^ 2)
             End If
-
-            Return dist
         End Function
 
         Public Function normalize(x As Double()) As Double()
@@ -58,7 +57,10 @@ Namespace Imaging.Math2D
 
             Dim ei = -(1 / (N - 1))
             Dim k = (Math.SIMD.Divide.f64_op_divide_f64_scalar(Math.SIMD.Exponent.f64_op_exponent_f64_scalar(x_norm, 4), N).Sum) / ((denom / N) ^ 2)
-            Dim sd = std.Sqrt((N * (((N ^ 2) - 3 * N + 3) * S1 - N * S2 + 3 * (w ^ 2)) - k * (N * (N - 1) * S1 - 2 * N * S2 + 6 * (w ^ 2))) / ((N - 1) * (N - 2) * (N - 3) * (w ^ 2)) - (ei ^ 2))
+            Dim up = (N * (((N ^ 2) - 3 * N + 3) * S1 - N * S2 + 3 * (w ^ 2)) - k * (N * (N - 1) * S1 - 2 * N * S2 + 6 * (w ^ 2)))
+            Dim down = ((N - 1) * (N - 2) * (N - 3) * (w ^ 2))
+            Dim sd2 = up / down - (ei ^ 2)
+            Dim sd = std.Sqrt(std.Abs(sd2))
             Dim moran = (N / w) * (num / denom)
 
             Return (moran, ei, sd)

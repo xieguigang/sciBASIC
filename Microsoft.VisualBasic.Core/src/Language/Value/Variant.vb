@@ -89,6 +89,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="A"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="A"/>
+        ''' </remarks>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -104,6 +107,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="B"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="B"/>
+        ''' </remarks>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
