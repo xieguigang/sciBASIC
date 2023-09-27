@@ -30,7 +30,7 @@ Namespace Imaging.Math2D
             Return x_norm
         End Function
 
-        Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double()) As (I As Double, ei As Double, sd As Double)
+        Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double()) As (observed As Double, expected As Double, sd As Double)
             ' Easy variables to calculate
             Dim x_norm = normalize(x)
             Dim N = x.Length
