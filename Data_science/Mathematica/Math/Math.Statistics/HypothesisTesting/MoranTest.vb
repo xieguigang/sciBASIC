@@ -49,6 +49,10 @@ Namespace Hypothesis
                 pv = 1 - pv
             End If
 
+            If pv < 0 Then
+                pv = 1 / Double.MaxValue
+            End If
+
             Return New MoranTest With {
                 .Observed = res.observed,
                 .Expected = res.expected,
