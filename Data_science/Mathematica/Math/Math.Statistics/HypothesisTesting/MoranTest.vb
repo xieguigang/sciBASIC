@@ -22,6 +22,18 @@ Namespace Hypothesis
             End With
         End Function
 
+        ''' <summary>
+        ''' Calculate Moran's I quickly for point data
+        ''' </summary>
+        ''' <param name="x">a numeric vector, the value distributed over space</param>
+        ''' <param name="c1">a numeric vector, the first (x) value of a column of coordinates</param>
+        ''' <param name="c2">a numeric vector, the second (y) value of a column of coordinates</param>
+        ''' <param name="alternative">
+        ''' alternative a character sring specifying the alternative hypothesis that
+        ''' is tested against; must be one of "two.sided", "less", or "greater", 
+        ''' or any unambiguous abbreviation of these.
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
             Dim res = Moran.calc_moran(x, c1, c2)
             Dim pv As Double = pnorm.ProbabilityDensity(res.observed, m:=res.expected, sd:=res.sd)
