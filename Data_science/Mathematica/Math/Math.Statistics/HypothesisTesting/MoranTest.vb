@@ -34,9 +34,15 @@ Namespace Hypothesis
         ''' or any unambiguous abbreviation of these.
         ''' </param>
         ''' <returns></returns>
-        Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
+        Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(),
+                                          Optional alternative As Hypothesis = Hypothesis.TwoSided,
+                                          Optional resolution As Integer = 80000) As MoranTest
+
             Dim res = Moran.calc_moran(x, c1, c2)
-            Dim pv As Double = pnorm.eval(res.observed, mean:=res.expected, sd:=res.sd)
+            Dim pv As Double = pnorm.eval(res.observed,
+                                          mean:=res.expected,
+                                          sd:=res.sd,
+                                          resolution:=resolution)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
