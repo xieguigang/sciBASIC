@@ -36,7 +36,7 @@ Namespace Hypothesis
         ''' <returns></returns>
         Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
             Dim res = Moran.calc_moran(x, c1, c2)
-            Dim pv As Double = pnorm.ProbabilityDensity(res.observed, m:=res.expected, sd:=res.sd)
+            Dim pv As Double = pnorm.eval(res.observed, mean:=res.expected, sd:=res.sd)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
