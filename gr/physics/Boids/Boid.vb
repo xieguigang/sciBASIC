@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace Boids.Model
     Public Class Boid
@@ -47,19 +47,19 @@ Namespace Boids.Model
         Public Function GetAngle() As Double
             If Double.IsNaN(Xvel) OrElse Double.IsNaN(Yvel) Then Return 0
             If Xvel = 0 AndAlso Yvel = 0 Then Return 0
-            Dim angle = Math.Atan(Yvel / Xvel) * 180 / Math.PI - 90
+            Dim angle = std.Atan(Yvel / Xvel) * 180 / std.PI - 90
             If Xvel < 0 Then angle += 180
             Return angle
         End Function
 
         Public Function GetSpeed() As Double
-            Return Math.Sqrt(Xvel * Xvel + Yvel * Yvel)
+            Return std.Sqrt(Xvel * Xvel + Yvel * Yvel)
         End Function
 
         Public Function GetDistance(ByVal otherBoid As Boid) As Double
             Dim dX = otherBoid.X - X
             Dim dY = otherBoid.Y - Y
-            Dim dist = Math.Sqrt(dX * dX + dY * dY)
+            Dim dist = std.Sqrt(dX * dX + dY * dY)
             Return dist
         End Function
     End Class
