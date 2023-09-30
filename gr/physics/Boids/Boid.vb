@@ -1,9 +1,10 @@
 ﻿Imports std = System.Math
 
 Namespace Boids.Model
-    Public Class Boid
-        Public X As Double
-        Public Y As Double
+    Public Class Boid : Implements Layout2D
+        Public Property X As Double Implements Layout2D.X
+        Public Property Y As Double Implements Layout2D.Y
+
         Public Xvel As Double
         Public Yvel As Double
 
