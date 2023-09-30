@@ -1,27 +1,27 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports std = System.Math
 
 Namespace Boids.Model
-    Public Class Boid : Implements Layout2D
-        Public Property X As Double Implements Layout2D.X
-        Public Property Y As Double Implements Layout2D.Y
+    Public Class Boid : Inherits Vector2D
+        Implements Layout2D
 
         Public Xvel As Double
         Public Yvel As Double
 
         Public Sub New(ByVal x As Double, ByVal y As Double, ByVal xVel As Double, ByVal yVel As Double)
-            Call (x, y, xVel, yVel).Set(Me.X, Me.Y, Me.Xvel, Me.Yvel)
+            Call (x, y, xVel, yVel).Set(Me.x, Me.y, Me.Xvel, Me.Yvel)
         End Sub
 
         Public Sub New(ByVal rand As Random, ByVal width As Double, ByVal height As Double)
-            X = rand.NextDouble() * width
-            Y = rand.NextDouble() * height
+            x = rand.NextDouble() * width
+            y = rand.NextDouble() * height
             Xvel = (rand.NextDouble() - 0.5)
             Yvel = (rand.NextDouble() - 0.5)
         End Sub
 
         Public Sub MoveForward(ByVal Optional minSpeed As Double = 1, ByVal Optional maxSpeed As Double = 5)
-            X += Xvel
-            Y += Yvel
+            x += Xvel
+            y += Yvel
 
             Dim speed = GetSpeed()
             If speed > maxSpeed Then
@@ -37,7 +37,7 @@ Namespace Boids.Model
         End Sub
 
         Public Function GetPosition(ByVal time As Double) As (Double, Double)
-            Return (X + Xvel * time, Y + Yvel * time)
+            Return (x + Xvel * time, y + Yvel * time)
         End Function
 
         Public Sub Accelerate(ByVal Optional scale As Double = 1.0)
@@ -55,13 +55,6 @@ Namespace Boids.Model
 
         Public Function GetSpeed() As Double
             Return std.Sqrt(Xvel * Xvel + Yvel * Yvel)
-        End Function
-
-        Public Function GetDistance(ByVal otherBoid As Boid) As Double
-            Dim dX = otherBoid.X - X
-            Dim dY = otherBoid.Y - Y
-            Dim dist = std.Sqrt(dX * dX + dY * dY)
-            Return dist
         End Function
     End Class
 End Namespace
