@@ -1,9 +1,9 @@
-﻿Imports Boids.Model.Boids.Model
-Imports System.Drawing
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Physics.Boids
 
 Namespace Boids.Viewer
     Public Module SDRender
-        Public Function RenderField(ByVal field As Field) As Bitmap
+        Public Function RenderField(field As Field) As Bitmap
             Dim bmp As Bitmap = New Bitmap(CInt(field.Width), CInt(field.Height))
             Using gfx = Graphics.FromImage(bmp)
                 gfx.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
@@ -19,7 +19,7 @@ Namespace Boids.Viewer
             Return bmp
         End Function
 
-        Private Sub RenderBoid(ByVal gfx As Graphics, ByVal boid As Boid, ByVal color As Color)
+        Private Sub RenderBoid(gfx As Graphics, boid As BOID, color As Color)
             Dim boidOutline = New Point() {New Point(0, 0), New Point(-4, -1), New Point(0, 8), New Point(4, -1), New Point(0, 0)}
 
             Using brush = New SolidBrush(color)

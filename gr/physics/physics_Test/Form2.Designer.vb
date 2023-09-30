@@ -10,8 +10,8 @@ Namespace Boids.Viewer
         ''' <summary>
         ''' Clean up any resources being used.
         ''' </summary>
-        ''' <paramname="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        ''' <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        Protected Overrides Sub Dispose(disposing As Boolean)
             If disposing AndAlso components IsNot Nothing Then
                 components.Dispose()
             End If

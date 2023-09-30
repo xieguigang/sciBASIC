@@ -1,25 +1,25 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
-Namespace Boids.Model
+Namespace Boids
     Public Class Boid : Inherits Vector2D
         Implements Layout2D
 
         Public Xvel As Double
         Public Yvel As Double
 
-        Public Sub New(ByVal x As Double, ByVal y As Double, ByVal xVel As Double, ByVal yVel As Double)
+        Public Sub New(x As Double, y As Double, xVel As Double, yVel As Double)
             Call (x, y, xVel, yVel).Set(Me.x, Me.y, Me.Xvel, Me.Yvel)
         End Sub
 
-        Public Sub New(ByVal rand As Random, ByVal width As Double, ByVal height As Double)
+        Public Sub New(rand As Random, width As Double, height As Double)
             x = rand.NextDouble() * width
             y = rand.NextDouble() * height
             Xvel = (rand.NextDouble() - 0.5)
             Yvel = (rand.NextDouble() - 0.5)
         End Sub
 
-        Public Sub MoveForward(ByVal Optional minSpeed As Double = 1, ByVal Optional maxSpeed As Double = 5)
+        Public Sub MoveForward(Optional minSpeed As Double = 1, Optional maxSpeed As Double = 5)
             x += Xvel
             y += Yvel
 
@@ -36,11 +36,11 @@ Namespace Boids.Model
             If Double.IsNaN(Yvel) Then Yvel = 0
         End Sub
 
-        Public Function GetPosition(ByVal time As Double) As (Double, Double)
+        Public Function GetPosition(time As Double) As (Double, Double)
             Return (x + Xvel * time, y + Yvel * time)
         End Function
 
-        Public Sub Accelerate(ByVal Optional scale As Double = 1.0)
+        Public Sub Accelerate(Optional scale As Double = 1.0)
             Xvel *= scale
             Yvel *= scale
         End Sub

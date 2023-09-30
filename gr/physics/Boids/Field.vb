@@ -2,14 +2,14 @@
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace Boids.Model
+Namespace Boids
     Public Class Field
         Public ReadOnly Width As Double
         Public ReadOnly Height As Double
         Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
         Private ReadOnly Rand As Random = New Random()
 
-        Public Sub New(ByVal width As Double, ByVal height As Double, ByVal Optional boidCount As Integer = 100)
+        Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
 
             For i = 0 To boidCount - 1
@@ -17,7 +17,7 @@ Namespace Boids.Model
             Next
         End Sub
 
-        Public Sub Advance(ByVal Optional bounceOffWalls As Boolean = True, ByVal Optional wrapAroundEdges As Boolean = False)
+        Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
             Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing, alignXvel As Double = Nothing, alignYvel As Double = Nothing, avoidXvel As Double = Nothing, avoidYvel As Double = Nothing, predXvel As Double = Nothing, predYval As Double = Nothing
             ' update void speed and direction (velocity) based on rules
             For Each boid In Boids
@@ -38,7 +38,7 @@ Namespace Boids.Model
             Next
         End Sub
 
-        Private Function Flock(ByVal boid As Boid, ByVal distance As Double, ByVal power As Double) As (Double, Double)
+        Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
             Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
             Dim meanX As Double = neighbors.Sum(Function(x) x.X) / neighbors.Count()
@@ -48,7 +48,7 @@ Namespace Boids.Model
             Return (deltaCenterX * power, deltaCenterY * power)
         End Function
 
-        Private Function Avoid(ByVal boid As Boid, ByVal distance As Double, ByVal power As Double) As (Double, Double)
+        Private Function Avoid(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as boids get close
             Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
@@ -62,7 +62,7 @@ Namespace Boids.Model
         End Function
 
         Public PredatorCount As Integer = 3
-        Private Function Predator(ByVal boid As Boid, ByVal distance As Double, ByVal power As Double) As (Double, Double)
+        Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as predators get close
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
 
@@ -78,7 +78,7 @@ Namespace Boids.Model
             Return (sumClosenessX * power, sumClosenessY * power)
         End Function
 
-        Private Function Align(ByVal boid As Boid, ByVal distance As Double, ByVal power As Double) As (Double, Double)
+        Private Function Align(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
             Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
             Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
@@ -88,7 +88,7 @@ Namespace Boids.Model
             Return (dXvel * power, dYvel * power)
         End Function
 
-        Private Sub BounceOffWalls(ByVal boid As Boid)
+        Private Sub BounceOffWalls(boid As Boid)
             Dim pad As Double = 50
             Dim turn = 0.5
             If boid.X < pad Then boid.Xvel += turn
@@ -97,7 +97,7 @@ Namespace Boids.Model
             If boid.Y > Height - pad Then boid.Yvel -= turn
         End Sub
 
-        Private Sub WrapAround(ByVal boid As Boid)
+        Private Sub WrapAround(boid As Boid)
             If boid.X < 0 Then boid.X += Width
             If boid.X > Width Then boid.X -= Width
             If boid.Y < 0 Then boid.Y += Height
