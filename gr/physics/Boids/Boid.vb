@@ -2,6 +2,13 @@
 Imports std = System.Math
 
 Namespace Boids
+
+    ''' <summary>
+    ''' Boids flocking algorithm
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
+    ''' </remarks>
     Public Class Boid : Inherits Vector2D
         Implements Layout2D
 

@@ -3,6 +3,13 @@ Imports System.Collections.Generic
 Imports System.Linq
 
 Namespace Boids
+
+    ''' <summary>
+    ''' Boids flocking algorithm
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
+    ''' </remarks>
     Public Class Field
         Public ReadOnly Width As Double
         Public ReadOnly Height As Double
@@ -41,10 +48,10 @@ Namespace Boids
         Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
             Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
-            Dim meanX As Double = neighbors.Sum(Function(x) x.X) / neighbors.Count()
-            Dim meanY As Double = neighbors.Sum(Function(x) x.Y) / neighbors.Count()
-            Dim deltaCenterX = meanX - boid.X
-            Dim deltaCenterY = meanY - boid.Y
+            Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
+            Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
+            Dim deltaCenterX = meanX - boid.x
+            Dim deltaCenterY = meanY - boid.y
             Return (deltaCenterX * power, deltaCenterY * power)
         End Function
 
@@ -55,8 +62,8 @@ Namespace Boids
 
             For Each neighbor In neighbors
                 Dim closeness = distance - boid.GetDistance(neighbor)
-                sumClosenessX += (boid.X - neighbor.X) * closeness
-                sumClosenessY += (boid.Y - neighbor.Y) * closeness
+                sumClosenessX += (boid.x - neighbor.x) * closeness
+                sumClosenessY += (boid.y - neighbor.y) * closeness
             Next
             Return (sumClosenessX * power, sumClosenessY * power)
         End Function
@@ -71,8 +78,8 @@ Namespace Boids
                 Dim distanceAway = boid.GetDistance(lPredator)
                 If distanceAway < distance Then
                     Dim closeness = distance - distanceAway
-                    sumClosenessX += (boid.X - lPredator.X) * closeness
-                    sumClosenessY += (boid.Y - lPredator.Y) * closeness
+                    sumClosenessX += (boid.x - lPredator.x) * closeness
+                    sumClosenessY += (boid.y - lPredator.y) * closeness
                 End If
             Next
             Return (sumClosenessX * power, sumClosenessY * power)
@@ -91,17 +98,17 @@ Namespace Boids
         Private Sub BounceOffWalls(boid As Boid)
             Dim pad As Double = 50
             Dim turn = 0.5
-            If boid.X < pad Then boid.Xvel += turn
-            If boid.X > Width - pad Then boid.Xvel -= turn
-            If boid.Y < pad Then boid.Yvel += turn
-            If boid.Y > Height - pad Then boid.Yvel -= turn
+            If boid.x < pad Then boid.Xvel += turn
+            If boid.x > Width - pad Then boid.Xvel -= turn
+            If boid.y < pad Then boid.Yvel += turn
+            If boid.y > Height - pad Then boid.Yvel -= turn
         End Sub
 
         Private Sub WrapAround(boid As Boid)
-            If boid.X < 0 Then boid.X += Width
-            If boid.X > Width Then boid.X -= Width
-            If boid.Y < 0 Then boid.Y += Height
-            If boid.Y > Height Then boid.Y -= Height
+            If boid.x < 0 Then boid.x += Width
+            If boid.x > Width Then boid.x -= Width
+            If boid.y < 0 Then boid.y += Height
+            If boid.y > Height Then boid.y -= Height
         End Sub
     End Class
 End Namespace
