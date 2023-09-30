@@ -135,7 +135,7 @@ Namespace Imaging.Math2D
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function DistanceTo(v As Layout2D) As Double
+        Public Function GetDistance(v As Layout2D) As Double
             Return GeomTransform.Distance(x, y, v.X, v.Y)
         End Function
     End Class
