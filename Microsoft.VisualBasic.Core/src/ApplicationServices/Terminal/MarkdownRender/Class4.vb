@@ -124,4 +124,49 @@ Namespace ApplicationServices.Terminal
             Return Matches(keyInfo)
         End Function
     End Structure
+
+
+    ''' <summary>
+    ''' A rule that modifies a set of characters.
+    ''' </summary>
+    'INSTANT VB WARNING: VB has no equivalent to the C# readonly struct:
+    'ORIGINAL LINE: public readonly struct CharacterSetModificationRule
+    Public Structure CharacterSetModificationRule
+        ''' <summary>
+        ''' The kind of modification.
+        ''' </summary>
+        Public ReadOnly Property Kind() As CharacterSetModificationKind
+
+        ''' <summary>
+        ''' One or more characters.
+        ''' </summary>
+        Public ReadOnly Property Characters() As ImmutableArray(Of Char)
+
+        'INSTANT VB NOTE: The variable kind was renamed since Visual Basic does not handle local variables named the same as class members well:
+        'INSTANT VB NOTE: The variable characters was renamed since Visual Basic does not handle local variables named the same as class members well:
+        Public Sub New(ByVal kind_Conflict As CharacterSetModificationKind, ByVal characters_Conflict As ImmutableArray(Of Char))
+            Me.Kind = kind_Conflict
+            Me.Characters = characters_Conflict
+        End Sub
+    End Structure
+
+    ''' <summary>
+    ''' The kind of character set modification.
+    ''' </summary>
+    Public Enum CharacterSetModificationKind
+        ''' <summary>
+        ''' The rule adds new characters onto the existing set of characters.
+        ''' </summary>
+        Add
+
+        ''' <summary>
+        ''' The rule removes characters from the existing set of characters.
+        ''' </summary>
+        Remove
+
+        ''' <summary>
+        ''' The rule replaces the existing set of characters.
+        ''' </summary>
+        Replace
+    End Enum
 End Namespace
