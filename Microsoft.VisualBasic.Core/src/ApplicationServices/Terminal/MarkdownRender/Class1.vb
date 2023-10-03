@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+﻿Imports System.Globalization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace ApplicationServices.Terminal
 #Region "License Header"
