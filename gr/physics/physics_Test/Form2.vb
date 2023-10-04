@@ -23,7 +23,7 @@ Namespace Boids.Viewer
             Reset()
         End Sub
         Private Sub Reset()
-            field = New Field(pictureBox1.Width, pictureBox1.Height, 300)
+            field = New Field(pictureBox1.Width, pictureBox1.Height, 1000)
         End Sub
 
         Private Sub timer1_Tick(sender As Object, e As EventArgs)
