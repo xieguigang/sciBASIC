@@ -159,6 +159,14 @@
       <Project>{5878f22d-92a8-45bd-a24a-90eee156a60f}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\mime\text%25html\html_netcore5.vbproj">
+      <Project>{bc196690-17bb-4562-a209-a05e197320bc}</Project>
+      <Name>html_netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{5f018723-06f2-434f-8d89-ba1cf6766f01}</Project>
+      <Name>imaging.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\physics-netcore5.vbproj">
       <Project>{b08a4168-a590-4d98-9ac0-d42ae661f184}</Project>
       <Name>physics-netcore5</Name>

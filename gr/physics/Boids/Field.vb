@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Boids
 
@@ -14,18 +12,21 @@ Namespace Boids
         Public ReadOnly Width As Double
         Public ReadOnly Height As Double
         Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
-        Private ReadOnly Rand As Random = New Random()
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
 
             For i = 0 To boidCount - 1
-                Boids.Add(New Boid(Rand, width, height))
+                Boids.Add(New Boid(randf.seeds, width, height))
             Next
         End Sub
 
         Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
-            Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing, alignXvel As Double = Nothing, alignYvel As Double = Nothing, avoidXvel As Double = Nothing, avoidYvel As Double = Nothing, predXvel As Double = Nothing, predYval As Double = Nothing
+            Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing,
+                alignXvel As Double = Nothing, alignYvel As Double = Nothing,
+                avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,
+                predXvel As Double = Nothing, predYval As Double = Nothing
+
             ' update void speed and direction (velocity) based on rules
             For Each boid In Boids
                 Flock(boid, 50, 0.0003).Set(flockXvel, flockYvel)
