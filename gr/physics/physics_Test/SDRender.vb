@@ -20,7 +20,7 @@ Namespace Boids.Viewer
         End Function
 
         Private Sub RenderBoid(gfx As Graphics, boid As BOID, color As Color)
-            Dim boidOutline = New Point() {New Point(0, 0), New Point(-4, -1), New Point(0, 8), New Point(4, -1), New Point(0, 0)}
+
 
             Using brush = New SolidBrush(color)
                 gfx.TranslateTransform(boid.X, boid.Y)
