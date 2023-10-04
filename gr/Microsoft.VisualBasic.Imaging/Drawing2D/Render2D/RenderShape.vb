@@ -52,7 +52,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Security.Cryptography
 
 Namespace Drawing2D
 
@@ -73,9 +72,9 @@ Namespace Drawing2D
         }
 
 #Disable Warning
-        Public Shared Sub RenderBoid(gfx As Graphics, boid As Point, angle As Single, color As Color)
+        Public Shared Sub RenderBoid(gfx As Graphics, x As Single, y As Single, angle As Single, color As Color)
             Using brush = New SolidBrush(color)
-                gfx.TranslateTransform(boid.X, boid.Y)
+                gfx.TranslateTransform(x, y)
                 gfx.RotateTransform(angle)
                 gfx.FillClosedCurve(brush, boidArrow)
                 gfx.ResetTransform()
