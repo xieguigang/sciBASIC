@@ -105,6 +105,15 @@ Namespace GridGraph
             End Get
         End Property
 
+        ''' <summary>
+        ''' get target cell data via a given pixel point
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="hit"></param>
+        ''' <returns>
+        ''' nothing will be returns if there is no data on the given ``[x,y]`` pixel point.
+        ''' </returns>
         Default Public ReadOnly Property GetPoint(x As Integer, y As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

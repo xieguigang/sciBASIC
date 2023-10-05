@@ -3,18 +3,38 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 
 Public Module GridDynamics
 
-    <Extension>
-    Public Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As T, radius As Single) As IEnumerable(Of T)
+    ' [x-1,y-1] [x, y-1] [x+1, y-1]
+    ' [x-1, y]    [c]    [x+1, y]
+    ' [x-1,y+1] [x,y+1] [x+1,y+1]
+    ReadOnly lookups As (dx As Integer, dy As Integer)() = {
+        (-1, -1), (0, -1), (+1, -1),
+        (-1, 0), (0, 0), (+1, 0),
+        (-1, +1), (0, +1), (+1, +1)
+    }
 
+    <Extension>
+    Public Iterator Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As T, radius As Single) As IEnumerable(Of T)
+        Dim cx As Integer = tar.X / radius
+        Dim cy As Integer = tar.Y / radius
+        Dim q As T()
+
+        For Each dxdy In lookups
+            q = grid(cx + dxdy.dx, cy + dxdy.dy)
+
+            If Not q Is Nothing Then
+                For i As Integer = 0 To q.Length - 1
+                    Yield q(i)
+                Next
+            End If
+        Next
     End Function
 
     <Extension>
     Public Function EncodeGrid(Of T As Layout2D)(field As IContainer(Of T), radius As Single) As Grid(Of T())
-        Dim sq_w As Single = radius * 2
         Dim groups = field.Entity _
             .Select(Function(a)
-                        Dim cx As Integer = a.X / sq_w
-                        Dim cy As Integer = a.Y / sq_w
+                        Dim cx As Integer = a.X / radius
+                        Dim cy As Integer = a.Y / radius
 
                         Return (cx, cy, hash:=HashCell(cx, cy), a)
                     End Function) _
