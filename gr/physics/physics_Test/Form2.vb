@@ -1,5 +1,6 @@
 ﻿Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Physics.Boids
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Boids.Viewer
 
@@ -23,6 +24,7 @@ Namespace Boids.Viewer
             Reset()
         End Sub
         Private Sub Reset()
+            VectorTask.n_threads = 16
             field = New Field(pictureBox1.Width, pictureBox1.Height, 1000)
         End Sub
 
