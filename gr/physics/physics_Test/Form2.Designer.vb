@@ -65,7 +65,7 @@ Namespace Boids.Viewer
 
 #End Region
 
-        Private pictureBox1 As Windows.Forms.PictureBox
-        Private timer1 As Windows.Forms.Timer
+        Private WithEvents pictureBox1 As Windows.Forms.PictureBox
+        Private WithEvents timer1 As Windows.Forms.Timer
     End Class
 End Namespace
