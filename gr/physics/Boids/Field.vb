@@ -9,10 +9,17 @@ Namespace Boids
     ''' <remarks>
     ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
     ''' </remarks>
-    Public Class Field
-        Public ReadOnly Width As Double
-        Public ReadOnly Height As Double
-        Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
+    Public Class Field : Implements IContainer(Of Boid)
+
+        Public ReadOnly Property Width As Double Implements IContainer(Of Boid).Width
+        Public ReadOnly Property Height As Double Implements IContainer(Of Boid).Height
+        Public ReadOnly Property Entity As IReadOnlyCollection(Of Boid) Implements IContainer(Of Boid).Entity
+            Get
+                Return Boids
+            End Get
+        End Property
+
+        ReadOnly Boids As List(Of Boid)
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
@@ -94,6 +101,7 @@ Namespace Boids
         End Function
 
         Public PredatorCount As Integer = 3
+
         Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as predators get close
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
