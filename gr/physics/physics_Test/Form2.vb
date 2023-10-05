@@ -25,7 +25,7 @@ Namespace Boids.Viewer
         End Sub
         Private Sub Reset()
             VectorTask.n_threads = 16
-            field = New Field(pictureBox1.Width, pictureBox1.Height, 1000)
+            field = New Field(pictureBox1.Width, pictureBox1.Height, 5000)
         End Sub
 
         Private Sub timer1_Tick(sender As Object, e As EventArgs) Handles timer1.Tick
