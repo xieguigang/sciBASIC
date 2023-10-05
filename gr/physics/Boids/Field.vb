@@ -26,7 +26,7 @@ Namespace Boids
             End Get
         End Property
 
-        Dim Boids As List(Of Boid)
+        Dim Boids As New List(Of Boid)
         Dim grid As Grid(Of Boid())
         Dim radius As Single = 15
 
