@@ -4,6 +4,11 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Public Module GridDynamics
 
     <Extension>
+    Public Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As T, radius As Single) As IEnumerable(Of T)
+
+    End Function
+
+    <Extension>
     Public Function EncodeGrid(Of T As Layout2D)(field As IContainer(Of T), radius As Single) As Grid(Of T())
         Dim sq_w As Single = radius * 2
         Dim groups = field.Entity _
