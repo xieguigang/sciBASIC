@@ -9,8 +9,11 @@ Namespace Boids.Viewer
             Using gfx = Graphics.FromImage(bmp)
                 gfx.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
                 gfx.Clear(ColorTranslator.FromHtml("#003366"))
-                For i = 0 To field.Boids.Count() - 1
-                    Dim boid = field.Boids(i)
+
+                Dim len As Integer = field.Entity.Count
+
+                For i = 0 To len - 1
+                    Dim boid As Boid = field(i)
 
                     If i < 3 Then
                         RenderShape.RenderBoid(gfx, boid.x, boid.y, boid.GetAngle, Color.White)

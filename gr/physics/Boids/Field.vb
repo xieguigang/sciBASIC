@@ -19,6 +19,12 @@ Namespace Boids
             End Get
         End Property
 
+        Default Public ReadOnly Property Item(i As Integer) As Boid
+            Get
+                Return Boids(i)
+            End Get
+        End Property
+
         ReadOnly Boids As List(Of Boid)
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
