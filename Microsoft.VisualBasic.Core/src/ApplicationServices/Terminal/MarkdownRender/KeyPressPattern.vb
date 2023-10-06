@@ -5,7 +5,6 @@ Namespace ApplicationServices.Terminal
 
     'INSTANT VB WARNING: VB has no equivalent to the C# readonly struct:
     'ORIGINAL LINE: public readonly struct KeyPressPattern
-    <DebuggerDisplay("{" & NameOf(GetDebuggerDisplay) & "()}")>
     Public Structure KeyPressPattern
         Private ReadOnly type As KeyPressPatternType
 
@@ -92,7 +91,7 @@ Namespace ApplicationServices.Terminal
         End Operator
 
         Public Function Matches(ByVal keyInfo As ConsoleKeyInfo) As Boolean
-            If TypeOf DefinedPatterns Is Nothing Then
+            If DefinedPatterns Is Nothing Then
                 Return False
             End If
             For Each pattern In DefinedPatterns

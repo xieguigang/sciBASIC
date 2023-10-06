@@ -11,7 +11,7 @@ Imports System.Threading
 Imports System.Threading.Tasks
 Imports PrettyPrompt.Documents
 
-Private PrettyPrompt As namespace
+
 
 ''' <summary>
 ''' Datastructure that provides a window over a segment of an array, similar to <see cref="ArraySegment{T}"/>, but

@@ -8,7 +8,7 @@ Imports System
 Imports System.Threading
 Imports PrettyPrompt.Consoles
 
-Private PrettyPrompt As namespace
+
 
 Friend NotInheritable Class CancellationManager
 	Private ReadOnly console As IConsole

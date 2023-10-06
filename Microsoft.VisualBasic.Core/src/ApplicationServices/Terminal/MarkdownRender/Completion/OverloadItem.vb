@@ -9,7 +9,7 @@ Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports PrettyPrompt.Highlighting
 
-Private PrettyPrompt As namespace
+
 
 ''' <summary>
 ''' An overload item in the Overload Menu Pane.

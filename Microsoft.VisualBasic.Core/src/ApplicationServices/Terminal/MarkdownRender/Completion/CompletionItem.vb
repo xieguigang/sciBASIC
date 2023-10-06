@@ -13,7 +13,7 @@ Imports PrettyPrompt.Consoles
 Imports PrettyPrompt.Documents
 Imports PrettyPrompt.Highlighting
 
-Private PrettyPrompt As namespace
+
 
 ''' <summary>
 ''' A menu item in the Completion Menu Pane.
