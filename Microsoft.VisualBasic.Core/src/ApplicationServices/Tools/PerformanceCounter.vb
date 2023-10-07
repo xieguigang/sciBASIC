@@ -14,6 +14,10 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        ''' <summary>
+        ''' reset the counter
+        ''' </summary>
+        ''' <returns></returns>
         <DebuggerStepThrough>
         Public Function [Set]() As PerformanceCounter
             t0 = Now
@@ -22,6 +26,10 @@ Namespace ApplicationServices
             Return Me
         End Function
 
+        ''' <summary>
+        ''' create a checkpoint
+        ''' </summary>
+        ''' <param name="title"></param>
         Public Sub Mark(title As String)
             spans.Add(New TimeCounter With {
                 .task = title,

@@ -355,11 +355,18 @@ Public Module Extensions
              )
     End Function
 
-    <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path$, Optional encoding As Encoding = Nothing) As Boolean
+    ''' <summary>
+    ''' Export the given data set as csv file
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path$, Optional encoding As Encoding = Nothing) As Boolean
         Dim headers As Dictionary(Of String, Integer) = data.First.Schema
         Dim LQuery = LinqAPI.Exec(Of RowObject) _
- _
+                                                _
             () <= From x As DynamicObjectLoader
                   In data
                   Let content = (From p In headers Select x.GetValue(p.Value)) '

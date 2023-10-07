@@ -43,8 +43,9 @@ Namespace Imaging.Math2D
                 Dim S2_a As Double = 0
                 For j As Integer = 0 To N - 1
                     Dim w_ij = distanceCalculate(c1(i), c2(i), c1(j), c2(j))
-                    w += w_ij
                     Dim w_x1_x2 = w_ij * x_norm(i) * x_norm(j)
+
+                    w += w_ij
                     num += w_x1_x2
                     S1 += (2 * w_ij) ^ 2
                     S2_a += w_ij
