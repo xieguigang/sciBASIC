@@ -97,7 +97,7 @@ Namespace ApplicationServices.Terminal
 						Me.formatSpans_Conflict = If(formatSpans_Conflict(0).Length > 0, formatSpans_Conflict, Array.Empty(Of FormatSpan)())
 					Case Else
 						'slow path
-						Me.formatSpans_Conflict = formatSpans_Conflict!.Where(Function(s) s.Length > 0).OrderBy(Function(s) s.Start).ToArray()
+						Me.formatSpans_Conflict = formatSpans_Conflict.Where(Function(s) s.Length > 0).OrderBy(Function(s) s.Start).ToArray()
 						CheckFormatSpans()
 				End Select
 			End If
@@ -116,7 +116,7 @@ Namespace ApplicationServices.Terminal
 					Me.formatSpans_Conflict = If(formatSpans_Conflict(0).Length > 0, formatSpans_Conflict.ToArray(), Array.Empty(Of FormatSpan)())
 				Case Else
 					'slow path
-					Me = New FormattedString(text_Conflict, formatSpans_Conflict.ToArray())
+					Me.formatSpans_Conflict = formatSpans_Conflict.ToArray()
 			End Select
 		End Sub
 
@@ -125,7 +125,7 @@ Namespace ApplicationServices.Terminal
 		'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:
 		'INSTANT VB WARNING: VB has no equivalent to C# 'in' parameters, so they will convert the same as by value parameters:
 		Public Sub New(ByVal text_Conflict As String, ByVal formatting As ConsoleFormat)
-			Me.New(text_Conflict, If((If(text_Conflict?.Length, 0)) = 0, Array.Empty(Of FormatSpan)(), {New FormatSpan(0, text_Conflict!.Length, formatting)}))
+			Me.New(text_Conflict, If((If(text_Conflict?.Length, 0)) = 0, Array.Empty(Of FormatSpan)(), {New FormatSpan(0, text_Conflict.Length, formatting)}))
 		End Sub
 
 		'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:

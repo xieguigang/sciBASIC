@@ -103,8 +103,8 @@ Public Structure FormatSpan
 	''' </summary>
 	'INSTANT VB NOTE: The variable start was renamed since Visual Basic does not handle local variables named the same as class members well:
 	'INSTANT VB NOTE: The variable length was renamed since Visual Basic does not handle local variables named the same as class members well:
-	Public Function OverlapsWith(ByVal start_Conflict As Integer, ByVal length_Conflict As Integer) As Boolean
-		Return Math.Max(Me.Start, start_Conflict) < Math.Min([End], start_Conflict + length_Conflict)
+	Public Function OverlapsWith(ByVal start As Integer, ByVal length As Integer) As Boolean
+		Return Math.Max(Me.Start, start) < Math.Min([End], start + length)
 	End Function
 
 	''' <summary>
