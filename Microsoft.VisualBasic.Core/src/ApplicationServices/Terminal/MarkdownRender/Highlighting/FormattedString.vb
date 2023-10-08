@@ -85,9 +85,9 @@ Namespace ApplicationServices.Terminal
 		'ORIGINAL LINE: public FormattedString(string? text, params FormatSpan[]? formatSpans)
 		'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:
 		'INSTANT VB NOTE: The variable formatSpans was renamed since Visual Basic does not handle local variables named the same as class members well:
-		Public Sub New(ByVal text_Conflict As String, ParamArray FormatSpan()? ByVal formatSpans_Conflict As )
+		Public Sub New(ByVal text_Conflict As String, ParamArray ByVal formatSpans_Conflict As FormatSpan())
 			Me.Text = text_Conflict
-			If TypeOf formatSpans_Conflict Is Nothing Then
+			If formatSpans_Conflict Is Nothing Then
 				Me.formatSpans_Conflict = Array.Empty(Of FormatSpan)()
 			Else
 				Select Case formatSpans_Conflict.Length
@@ -129,8 +129,8 @@ Namespace ApplicationServices.Terminal
 		End Sub
 
 		'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:
-		Public Shared Widening Operator CType(String? ByVal text_Conflict As ) As FormattedString
-			Return New(text_Conflict)
+		Public Shared Widening Operator CType(text_Conflict As String) As FormattedString
+			Return New FormattedString(text_Conflict)
 		End Operator
 
 		Public Shared Operator +(ByVal left As FormattedString, ByVal right As FormattedString) As FormattedString
@@ -186,7 +186,7 @@ Namespace ApplicationServices.Terminal
 			Debug.Assert(startIndex >= 0 AndAlso startIndex <= Me.Length)
 			Debug.Assert(length_Conflict >= 0 AndAlso length_Conflict - startIndex <= Me.Length)
 
-			If TypeOf Text Is Nothing OrElse length_Conflict = 0 Then
+			If Text Is Nothing OrElse length_Conflict = 0 Then
 				Return Empty
 			End If
 			If length_Conflict - startIndex = Me.Length Then

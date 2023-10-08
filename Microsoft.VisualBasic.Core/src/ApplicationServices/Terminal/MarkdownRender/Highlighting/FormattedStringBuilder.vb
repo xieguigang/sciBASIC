@@ -28,15 +28,15 @@ Namespace ApplicationServices.Terminal
 		End Property
 		Public ReadOnly Property IsDefault() As Boolean
 			Get
-				Return TypeOf stringBuilder Is Nothing
-		End Get
+				Return stringBuilder Is Nothing
+			End Get
 		End Property
 
 		Public Function Append(ByVal text As FormattedString) As FormattedStringBuilder
-			For Each readonly As In text.FormatSpans
-				formatSpans.Add(span.Offset(stringBuilder.Length))
-			Next readonly
-		stringBuilder.Append(text.Text)
+			For Each [readonly] As In text.FormatSpans
+				formatSpans.Add(Span.Offset(stringBuilder.Length))
+			Next
+			stringBuilder.Append(text.Text)
 			Return Me
 		End Function
 
