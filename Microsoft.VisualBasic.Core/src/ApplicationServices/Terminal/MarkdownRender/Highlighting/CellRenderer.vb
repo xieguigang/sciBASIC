@@ -119,7 +119,7 @@ Namespace ApplicationServices.Terminal
 						result = pool.Pop()
 					End If
 				End SyncLock
-				If TypeOf result Is Nothing Then
+				If result Is Nothing Then
 					result = New Dictionary(Of Integer, FormatSpan)(highlights.Count)
 				Else
 					result.EnsureCapacity(highlights.Count)

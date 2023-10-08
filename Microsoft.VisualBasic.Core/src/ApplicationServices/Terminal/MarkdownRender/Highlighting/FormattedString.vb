@@ -59,7 +59,11 @@ Namespace ApplicationServices.Terminal
 		End Property
 
 		<MemberNotNullWhen(False, NameOf(Text))>
-		Public IsEmpty As Function(Boolean) Length = 0
+		Public ReadOnly Property IsEmpty As Boolean
+			Get
+				Return Length = 0
+			End Get
+		End Property
 
 		'INSTANT VB WARNING: Nullable reference types have no equivalent in VB:
 		'ORIGINAL LINE: public FormattedString(string? text, System.Nullable<IEnumerable<FormatSpan>> formatSpans)
@@ -157,7 +161,7 @@ Namespace ApplicationServices.Terminal
 		''' Removes all leading and trailing white-space characters from the current string.
 		''' </summary>
 		Public Function Trim() As FormattedString
-			If TypeOf Text Is Nothing Then
+			If Text Is Nothing Then
 				Return Empty
 			End If
 			If FormatSpansOrEmpty.Length = 0 Then
@@ -213,7 +217,7 @@ Namespace ApplicationServices.Terminal
 		''' Returns a new string in which all occurrences of a specified string in the current instance are replaced with another specified string.
 		''' </summary>
 		Public Function Replace(ByVal oldValue As String, ByVal newValue As String) As FormattedString
-			If TypeOf Text Is Nothing Then
+			If Text Is Nothing Then
 				Return Empty
 			End If
 			If FormatSpansOrEmpty.Length = 0 Then
@@ -279,12 +283,12 @@ Namespace ApplicationServices.Terminal
 		Public Iterator Function Split(ByVal separator As Char) As IEnumerable(Of FormattedString)
 			'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:
 			Dim text_Conflict As String = Text
-			If TypeOf text_Conflict Is Nothing Then
+			If text_Conflict Is Nothing Then
 				Return
 			End If
 
 			If FormatSpansOrEmpty.Length = 0 Then
-				For Each part In text_Conflict.Split(separator)
+				For Each part As String In text_Conflict.Split(separator)
 					Yield part
 				Next part
 			Else
@@ -319,7 +323,7 @@ Namespace ApplicationServices.Terminal
 
 			'INSTANT VB NOTE: The variable text was renamed since Visual Basic does not handle local variables named the same as class members well:
 			Dim text_Conflict As String = Text
-			If TypeOf text_Conflict Is Nothing Then
+			If text_Conflict Is Nothing Then
 				Return
 			End If
 
@@ -395,7 +399,7 @@ Namespace ApplicationServices.Terminal
 		End Sub
 
 		Public Function EnumerateTextElements() As TextElementsEnumerator
-			Return New(TextOrEmpty, formatSpans_Conflict)
+			Return New TextElementsEnumerator(TextOrEmpty, formatSpans_Conflict)
 		End Function
 
 		Private Sub CheckFormatSpans()
@@ -448,7 +452,7 @@ Namespace ApplicationServices.Terminal
 			Return True
 		End Function
 
-		Public Overrides Function Equals(Object? ByVal obj As ) As Boolean
+		Public Overrides Function Equals(ByVal obj As Object) As Boolean
 			Dim tempVar As Boolean = TypeOf obj Is FormattedString
 			Dim other As FormattedString = If(tempVar, CType(obj, FormattedString), Nothing)
 			Return tempVar AndAlso Equals(other)
@@ -456,8 +460,8 @@ Namespace ApplicationServices.Terminal
 		Public Overrides Function GetHashCode() As Integer
 			Return String.GetHashCode(Text)
 		End Function
-		Public Overrides String? Function ToString() As
-		Return Text
+		Public Overrides Function ToString() As String
+			Return Text
 		End Function
 
 		Public Shared Operator =(ByVal left As FormattedString, ByVal right As FormattedString) As Boolean
@@ -496,6 +500,10 @@ Namespace ApplicationServices.Terminal
 			'		{
 			'			Return ref enumerator.current;
 			'		}
+
+			Friend Shared Function GetCurrentByRef(enumerator As TextElementsEnumerator) As Result
+				Return enumerator.Current
+			End Function
 
 			Public Function MoveNext() As Boolean
 				If Not elementsEnumerator.MoveNext() Then
@@ -549,7 +557,7 @@ Namespace ApplicationServices.Terminal
 
 				'INSTANT VB NOTE: The variable element was renamed since Visual Basic does not handle local variables named the same as class members well:
 				'INSTANT VB NOTE: The variable formatting was renamed since Visual Basic does not handle local variables named the same as class members well:
-				Public Sub Deconstruct(<System.Runtime.InteropServices.Out()> ByRef element_Conflict As ReadOnlySpan(Of Char), <System.Runtime.InteropServices.Out()> ByRef formatting_Conflict As ConsoleFormat)
+				Public Sub Deconstruct(<System.Runtime.InteropServices.Out()> ByRef element_Conflict As ReadOnlySpan(Of Char), <Out> ByRef formatting_Conflict As ConsoleFormat)
 					element_Conflict = Me.Element
 					formatting_Conflict = Me.Formatting
 				End Sub
@@ -590,5 +598,10 @@ Namespace ApplicationServices.Terminal
 		'	{
 		'		Return ref FormattedString.TextElementsEnumerator.GetCurrentByRef(in enumerator);
 		'	}
+
+		<Extension>
+		Public Function GetCurrentByRef(enumerator As FormattedString.TextElementsEnumerator) As FormattedString.TextElementsEnumerator.Result
+			Return FormattedString.TextElementsEnumerator.GetCurrentByRef(enumerator)
+		End Function
 	End Module
 End Namespace

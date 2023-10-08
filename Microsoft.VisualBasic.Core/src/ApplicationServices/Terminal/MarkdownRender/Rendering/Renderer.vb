@@ -51,9 +51,9 @@ Namespace ApplicationServices.Terminal
 		'ORIGINAL LINE: public void RenderOutput(PromptResult? result, CodePane codePane, OverloadPane overloadPane, CompletionPane completionPane, IReadOnlyCollection<FormatSpan> highlights, KeyPress key)
 		'INSTANT VB NOTE: The parameter overloadPane was renamed since it may cause conflicts with calls to static members of the user-defined type with this name:
 		Public Sub RenderOutput(ByVal result As PromptResult, ByVal codePane As CodePane, ByVal overloadPane_Conflict As OverloadPane, ByVal completionPane As CompletionPane, ByVal highlights As IReadOnlyCollection(Of FormatSpan), ByVal key As KeyPress)
-			If TypeOf result Is [not] Nothing Then
-			Dim redraw As Boolean = False
-				If wasTextSelectedDuringPreviousRender AndAlso TypeOf codePane.Selection Is Nothing Then
+			If result IsNot Nothing Then
+				Dim redraw As Boolean = False
+				If wasTextSelectedDuringPreviousRender AndAlso codePane.Selection Is Nothing Then
 					redraw = True
 				End If
 
@@ -69,7 +69,7 @@ Namespace ApplicationServices.Terminal
 				End If
 
 				If redraw Then
-					Redraw()
+					redraw()
 				End If
 
 				console.Write(GetMoveCursorDown(codePane.WordWrappedLines.Count - codePane.Cursor.Row - 1) + GetMoveCursorToColumn(1) & vbLf & ClearToEndOfScreen, hideCursor:=True)
