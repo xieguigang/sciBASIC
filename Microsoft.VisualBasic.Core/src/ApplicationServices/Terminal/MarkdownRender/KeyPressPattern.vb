@@ -13,17 +13,17 @@ Namespace ApplicationServices.Terminal
         Public ReadOnly Character As Char
 
         'INSTANT VB NOTE: The variable key was renamed since Visual Basic does not handle local variables named the same as class members well:
-        Public Sub New(ByVal key_Conflict As ConsoleKey)
-            Me.New(modifiers:= Default, key_Conflict)
+        Public Sub New(ByVal key As ConsoleKey)
+            Me.New(modifiers:=Nothing, key)
         End Sub
 
         'INSTANT VB NOTE: The variable modifiers was renamed since Visual Basic does not handle local variables named the same as class members well:
         'INSTANT VB NOTE: The variable key was renamed since Visual Basic does not handle local variables named the same as class members well:
-        Public Sub New(ByVal modifiers_Conflict As ConsoleModifiers, ByVal key_Conflict As ConsoleKey)
+        Public Sub New(ByVal modifiers As ConsoleModifiers, ByVal key As ConsoleKey)
             type = KeyPressPatternType.ConsoleKey
-            Me.Modifiers = modifiers_Conflict
-            Me.Key = key_Conflict
-            Character = MapToCharacter(key_Conflict)
+            Me.Modifiers = modifiers
+            Me.Key = key
+            Character = MapToCharacter(key)
         End Sub
 
         'INSTANT VB NOTE: The variable character was renamed since Visual Basic does not handle local variables named the same as class members well:
@@ -35,8 +35,8 @@ Namespace ApplicationServices.Terminal
         End Sub
 
         Public Function Matches(ByVal keyInfo As ConsoleKeyInfo) As Boolean
-            Dim tempVar As Boolean = TypeOf keyInfo.Modifiers Is CType(Nothing, ConsoleModifiers)
-		Dim [or] As CType(Nothing, ConsoleModifiers) = If(tempVar, CType(keyInfo.Modifiers, CType(Nothing, ConsoleModifiers)), Nothing)
+            Dim tempVar As Boolean = TypeOf keyInfo.Modifiers Is ConsoleModifiers
+            Dim [or] As CType(Nothing, ConsoleModifiers) = If(tempVar, CType(keyInfo.Modifiers, CType(Nothing, ConsoleModifiers)), Nothing)
 		Return If(type = KeyPressPatternType.ConsoleKey, keyInfo.Modifiers = Modifiers AndAlso keyInfo.Key = Key, (tempVar ConsoleModifiers.Shift) AndAlso keyInfo.KeyChar = Character) 'Shift is ok, it only determines casing of letter
 	End Function
 

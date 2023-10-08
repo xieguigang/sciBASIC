@@ -4,15 +4,10 @@
 ' file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #End Region
 
-Imports System
 Imports System.Buffers
-Imports System.Collections.Generic
-Imports System.Diagnostics
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Globalization
-Imports System.Linq
 Imports System.Runtime.CompilerServices
-Imports PrettyPrompt.Rendering
 
 Namespace ApplicationServices.Terminal
 

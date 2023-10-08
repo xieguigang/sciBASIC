@@ -11,9 +11,9 @@ Namespace ApplicationServices.Terminal
 		Private Const Bold As Char = "1"c
 		Private Const Underline As Char = "4"c
 		Private Const Reverse As String = "7"
-		Public Const ClearLine As String = $"{Escape}[0K"
-		Public Const ClearToEndOfScreen As String = $"{Escape}[0J"
-		Public Const ClearEntireScreen As String = $"{Escape}[2J"
+		Public ReadOnly ClearLine As String = $"{Escape}[0K"
+		Public ReadOnly ClearToEndOfScreen As String = $"{Escape}[0J"
+		Public ReadOnly ClearEntireScreen As String = $"{Escape}[2J"
 		Public ReadOnly Reset As String = $"{Escape}[{ResetChar}m"
 
 		''' <param name="index">Index starts at 1.</param>

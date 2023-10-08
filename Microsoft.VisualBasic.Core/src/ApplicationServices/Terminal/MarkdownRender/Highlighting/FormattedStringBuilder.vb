@@ -4,11 +4,8 @@
 ' file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Diagnostics.CodeAnalysis
 Imports System.Text
-Imports PrettyPrompt.Documents
 
 Namespace ApplicationServices.Terminal
 
@@ -33,7 +30,7 @@ Namespace ApplicationServices.Terminal
 		End Property
 
 		Public Function Append(ByVal text As FormattedString) As FormattedStringBuilder
-			For Each [readonly] As In text.FormatSpans
+			For Each [readonly] As FormatSpan In text.FormatSpans
 				formatSpans.Add(Span.Offset(stringBuilder.Length))
 			Next
 			stringBuilder.Append(text.Text)
