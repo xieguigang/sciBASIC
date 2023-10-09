@@ -13,6 +13,7 @@ Namespace Parallel
         ''' set this flag value to value TRUE for run algorithm debug
         ''' </summary>
         Protected sequenceMode As Boolean = False
+        Protected flags As Boolean()
 
         Public Shared n_threads As Integer = 4
 
@@ -31,7 +32,8 @@ Namespace Parallel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
-            Call Solve(0, workLen - 1)
+            flags = New Boolean(0) {}
+            Solve(0, workLen - 1)
             Return Me
         End Function
 
@@ -46,8 +48,10 @@ Namespace Parallel
 #End If
             If sequenceMode OrElse span_size < 1 Then
                 ' run in sequence
-                Call Solve(0, workLen - 1)
+                Return Solve()
             Else
+                flags = New Boolean(n_threads) {}
+
                 For cpu As Integer = 0 To n_threads
                     Dim start As Integer = cpu * span_size
                     Dim ends As Integer = start + span_size - 1
@@ -59,16 +63,26 @@ Namespace Parallel
                         ends = workLen - 1
                     End If
 
-                    ThreadPool.QueueUserWorkItem(Sub() Solve(start, ends))
+                    ThreadPool.QueueUserWorkItem(
+                        Sub()
+                            Call Solve(start, ends)
+
+                            SyncLock flags
+                                flags(cpu) = True
+                            End SyncLock
+                        End Sub)
                 Next
 
-#If NETCOREAPP Then
-                Do While ThreadPool.PendingWorkItemCount > 0
-                    Thread.Sleep(1)
+                '#If NETCOREAPP Then
+                '                Do While ThreadPool.PendingWorkItemCount > 0
+                '                    Thread.Sleep(1)
+                '                Loop
+                '#Else
+                '                Throw New NotImplementedException
+                '#End If
+                Do While flags.Any(Function(b) b = False)
+                    Call Thread.Sleep(1)
                 Loop
-#Else
-                Throw New NotImplementedException
-#End If
             End If
 
             Return Me
