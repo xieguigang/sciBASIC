@@ -1154,17 +1154,24 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:n的序列
-    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果
+    ''' Generates the shuffle index result
+    ''' 
+    ''' (返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:<paramref name="n"/>的序列
+    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果)
     ''' </summary>
-    ''' <param name="n"></param>
+    ''' <param name="n">the size of the index vector</param>
     ''' <returns></returns>
-    <ExportAPI("Sequence.Random")>
+    ''' <remarks>
+    ''' 1. generates a index vector in range 0:<paramref name="n"/>-1
+    ''' 2. make index shuffles
+    ''' 
+    ''' returns the shuffles result
+    ''' </remarks>
     <Extension>
     Public Function SeqRandom(n As Integer) As Integer()
         Dim source As Integer() = n.Sequence.ToArray
-        Dim Random As Integer() = source.Shuffles
-        Return Random
+        Dim random As Integer() = source.Shuffles
+        Return random
     End Function
 
     ''' <summary>

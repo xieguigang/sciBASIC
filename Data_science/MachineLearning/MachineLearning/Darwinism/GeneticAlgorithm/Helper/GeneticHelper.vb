@@ -196,11 +196,12 @@ Namespace Darwinism.GAF.Helper
         <Extension>
         Public Sub Crossover(Of T)(random As Random, ByRef v1 As T(), ByRef v2 As T())
             ' 在这里减掉1是为了防止两个变量被全部替换掉
-            Dim index As Integer = random.Next(v1.Length - 1)
+            Dim size As Integer = random.Next(v1.Length - 1)
+            Dim index As Integer() = v1.Length.SeqRandom
             Dim tmp As T
 
             ' one point crossover
-            For i As Integer = index To v1.Length - 1
+            For Each i As Integer In index.Take(size)
                 tmp = v1(i)
                 v1(i) = v2(i)
                 v2(i) = tmp
