@@ -13,7 +13,6 @@ Namespace Parallel
         ''' set this flag value to value TRUE for run algorithm debug
         ''' </summary>
         Protected sequenceMode As Boolean = False
-        Protected flags As Boolean()
 
         Public Shared n_threads As Integer = 4
 
@@ -32,7 +31,6 @@ Namespace Parallel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
-            flags = New Boolean(0) {}
             Solve(0, workLen - 1)
             Return Me
         End Function
@@ -43,14 +41,14 @@ Namespace Parallel
         ''' <returns></returns>
         Public Function Run() As VectorTask
             Dim span_size As Integer = workLen / n_threads
-#If NET48 Then
-            span_size = 0
-#End If
+            '#If NET48 Then
+            '            span_size = 0
+            '#End If
             If sequenceMode OrElse span_size < 1 Then
                 ' run in sequence
                 Return Solve()
             Else
-                flags = New Boolean(n_threads) {}
+                Dim flags As New List(Of Boolean)
 
                 For cpu As Integer = 0 To n_threads
                     Dim start As Integer = cpu * span_size
@@ -63,13 +61,18 @@ Namespace Parallel
                         ends = workLen - 1
                     End If
 
-                    ThreadPool.QueueUserWorkItem(
+                    Call flags.Add(False)
+                    Call ThreadPool.QueueUserWorkItem(
                         Sub()
                             Call Solve(start, ends)
 
-                            SyncLock flags
-                                flags(cpu) = True
-                            End SyncLock
+                            Try
+                                SyncLock flags
+                                    flags(cpu) = True
+                                End SyncLock
+                            Catch ex As Exception
+
+                            End Try
                         End Sub)
                 Next
 
