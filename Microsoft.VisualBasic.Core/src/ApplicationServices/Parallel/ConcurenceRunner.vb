@@ -79,7 +79,7 @@ Namespace Parallel
                         Catch ex As Exception
                             ' just ignores of this error, or the task
                             ' flag check code will be a dead loop
-                            exp = New Exception($"Error while execute the task in range from {start} to {ends}. (thread offset {thread_id})", ex)
+                            exp = New Exception($"Error while execute the ParallelFor task in range from {start} to {ends}. (thread offset {thread_id})", ex)
                         End Try
 
                         Try
