@@ -85,7 +85,7 @@ Namespace Parallel
                         Try
                             ' set flag for task complete
                             SyncLock flags
-                                flags(cpu) = True
+                                flags(thread_id) = True
                             End SyncLock
                         Catch ex As Exception
                             ' try to avoid the possible dead loop
