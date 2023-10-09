@@ -57,10 +57,12 @@ Namespace Parallel
         Private Sub ParallelFor(span_size As Integer)
             Dim flags As New List(Of Boolean)
             Dim err As Boolean = False
+            Dim exp As Exception = Nothing
 
             For cpu As Integer = 0 To n_threads
                 Dim start As Integer = cpu * span_size
                 Dim ends As Integer = start + span_size - 1
+                Dim thread_id As Integer = cpu
 
                 If start >= workLen Then
                     Exit For
@@ -77,6 +79,7 @@ Namespace Parallel
                         Catch ex As Exception
                             ' just ignores of this error, or the task
                             ' flag check code will be a dead loop
+                            exp = New Exception($"Error while execute the task in range from {start} to {ends}. (thread offset {thread_id})", ex)
                         End Try
 
                         Try
@@ -105,6 +108,10 @@ Namespace Parallel
                     Exit Do
                 End If
             Loop
+
+            If Not exp Is Nothing Then
+                Throw exp
+            End If
         End Sub
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
