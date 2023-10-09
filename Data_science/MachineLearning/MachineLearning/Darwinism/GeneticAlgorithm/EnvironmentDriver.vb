@@ -91,6 +91,10 @@ Namespace Darwinism.GAF
         Public Property Iterations As Integer
         Public Property Threshold As Double
 
+        ''' <summary>
+        ''' get the <see cref="GeneticAlgorithm(Of Chr).Best"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property BestModel As Chr
             Get
                 Return core.Best
