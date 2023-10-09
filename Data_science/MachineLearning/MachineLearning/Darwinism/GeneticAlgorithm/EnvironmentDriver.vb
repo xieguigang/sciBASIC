@@ -82,7 +82,6 @@ Namespace Darwinism.GAF
 
         Dim core As GeneticAlgorithm(Of Chr)
         Dim terminated As Boolean = False
-        Dim takeBestSnapshot As Action(Of Chr, Double)
 
         ''' <summary>
         ''' 需要运行的总的迭代次数
@@ -105,10 +104,21 @@ Namespace Darwinism.GAF
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
         ''' <param name="ga"></param>
-        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double), Optional iterations% = 500000)
+        Sub New(ga As GeneticAlgorithm(Of Chr), Optional takeBestSnapshot As Action(Of Chr, Double) = Nothing, Optional iterations% = 500000)
             Me.core = ga
-            Me.takeBestSnapshot = takeBestSnapshot
             Me.Iterations = iterations
+
+            If Not takeBestSnapshot Is Nothing Then
+                Call AttachReporter(
+                    Sub(iteration%, error#, model As GeneticAlgorithm(Of Chr))
+                        Call takeBestSnapshot(model.Best, error#)
+                    End Sub)
+            Else
+                Call AttachReporter(
+                    Sub(i, err, model)
+                        Call VBDebugger.EchoLine($"[{i}/{iterations}] {(i / iterations * 100).ToString("F2")}% ...... {err}")
+                    End Sub)
+            End If
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
@@ -133,11 +143,7 @@ Namespace Darwinism.GAF
                 End If
 
                 With core.GetFitness(core.Best)
-                    If Not reporter Is Nothing Then
-                        Call reporter(i, .ByRef, core)
-                    Else
-                        Call .DoCall(core.Best.PipeOf(takeBestSnapshot))
-                    End If
+                    Call reporter(i, .ByRef, core)
 
                     ' NaN的结果值与阈值相比较也是小于零的
                     ' 在这里跳过NaN值的测试
@@ -191,7 +197,7 @@ Namespace Darwinism.GAF
             core = newCore
 
             Call "GA module do RE-seeding as local optimal solution was found...".Warning
-            Call takeBestSnapshot(bestSeed, fitness)
+            Call reporter(0, fitness, newCore)
         End Sub
 
         ''' <summary>

@@ -70,6 +70,11 @@ Public MustInherit Class IterationReporter(Of T As Model)
 
     Public Delegate Sub DoReport(iteration%, error#, model As T)
 
+    ''' <summary>
+    ''' Attach the delegate function DoReport(iteration%, error#, model As <typeparamref name="T"/>)
+    ''' </summary>
+    ''' <param name="reporter"></param>
+    ''' <returns></returns>
     <DebuggerStepThrough>
     Public Function AttachReporter(reporter As DoReport) As IterationReporter(Of T)
         Me.reporter = reporter
