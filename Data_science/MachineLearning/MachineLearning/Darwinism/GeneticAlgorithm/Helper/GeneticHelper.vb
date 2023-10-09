@@ -54,6 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Darwinism.GAF.Helper
 
@@ -187,8 +188,11 @@ Namespace Darwinism.GAF.Helper
         ''' (两个向量的长度必须要一致, 输入的两个数组参数会被同时修改值)
         ''' </summary>
         ''' <param name="random"></param>
-        ''' <param name="v1#"></param>
-        ''' <param name="v2#"></param>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <remarks>
+        ''' the size of <paramref name="v1"/> and <paramref name="v2"/> should be equals to each other!
+        ''' </remarks>
         <Extension>
         Public Sub Crossover(Of T)(random As Random, ByRef v1 As T(), ByRef v2 As T())
             ' 在这里减掉1是为了防止两个变量被全部替换掉
@@ -201,6 +205,12 @@ Namespace Darwinism.GAF.Helper
                 v1(i) = v2(i)
                 v2(i) = tmp
             Next
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Crossover(Of T)(ByRef v1 As T(), ByRef v2 As T())
+            Call randf.seeds.Crossover(v1, v2)
         End Sub
 
         ''' <summary>
