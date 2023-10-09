@@ -46,50 +46,66 @@ Namespace Parallel
             '#End If
             If sequenceMode OrElse span_size < 1 Then
                 ' run in sequence
-                Return Solve()
+                Call Solve()
             Else
-                Dim flags As New List(Of Boolean)
-
-                For cpu As Integer = 0 To n_threads
-                    Dim start As Integer = cpu * span_size
-                    Dim ends As Integer = start + span_size - 1
-
-                    If start >= workLen Then
-                        Exit For
-                    End If
-                    If ends >= workLen Then
-                        ends = workLen - 1
-                    End If
-
-                    Call flags.Add(False)
-                    Call ThreadPool.QueueUserWorkItem(
-                        Sub()
-                            Call Solve(start, ends)
-
-                            Try
-                                SyncLock flags
-                                    flags(cpu) = True
-                                End SyncLock
-                            Catch ex As Exception
-
-                            End Try
-                        End Sub)
-                Next
-
-                '#If NETCOREAPP Then
-                '                Do While ThreadPool.PendingWorkItemCount > 0
-                '                    Thread.Sleep(1)
-                '                Loop
-                '#Else
-                '                Throw New NotImplementedException
-                '#End If
-                Do While flags.Any(Function(b) b = False)
-                    Call Thread.Sleep(1)
-                Loop
+                Call ParallelFor(span_size)
             End If
 
             Return Me
         End Function
+
+        Private Sub ParallelFor(span_size As Integer)
+            Dim flags As New List(Of Boolean)
+            Dim err As Boolean = False
+
+            For cpu As Integer = 0 To n_threads
+                Dim start As Integer = cpu * span_size
+                Dim ends As Integer = start + span_size - 1
+
+                If start >= workLen Then
+                    Exit For
+                End If
+                If ends >= workLen Then
+                    ends = workLen - 1
+                End If
+
+                Call flags.Add(False)
+                Call ThreadPool.QueueUserWorkItem(
+                    Sub()
+                        Try
+                            Call Solve(start, ends)
+                        Catch ex As Exception
+                            ' just ignores of this error, or the task
+                            ' flag check code will be a dead loop
+                        End Try
+
+                        Try
+                            ' set flag for task complete
+                            SyncLock flags
+                                flags(cpu) = True
+                            End SyncLock
+                        Catch ex As Exception
+                            ' try to avoid the possible dead loop
+                            err = True
+                        End Try
+                    End Sub)
+            Next
+
+            '#If NETCOREAPP Then
+            '                Do While ThreadPool.PendingWorkItemCount > 0
+            '                    Thread.Sleep(1)
+            '                Loop
+            '#Else
+            '                Throw New NotImplementedException
+            '#End If
+            Do While flags.Any(Function(b) b = False)
+                Call Thread.Sleep(1)
+
+                If err Then
+                    Exit Do
+                End If
+            Loop
+        End Sub
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
             Dim copy As T() = New T(start - ends - 1) {}
