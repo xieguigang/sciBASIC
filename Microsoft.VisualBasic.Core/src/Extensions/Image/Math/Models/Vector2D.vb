@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 80
-    '    Code Lines: 47
-    ' Comment Lines: 20
-    '   Blank Lines: 13
-    '     File Size: 2.30 KB
+' Summaries:
 
 
-    '     Class Vector2D
-    ' 
-    '         Properties: Length, x, y
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
-    '         Operators: (+2 Overloads) -, (+2 Overloads) *, +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 80
+'    Code Lines: 47
+' Comment Lines: 20
+'   Blank Lines: 13
+'     File Size: 2.30 KB
+
+
+'     Class Vector2D
+' 
+'         Properties: Length, x, y
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ToString
+'         Operators: (+2 Overloads) -, (+2 Overloads) *, +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
@@ -132,5 +133,10 @@ Namespace Imaging.Math2D
                 Return New Vector2D(scale * .x, scale * .y)
             End With
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetDistance(v As Layout2D) As Double
+            Return GeomTransform.Distance(x, y, v.X, v.Y)
+        End Function
     End Class
 End Namespace
