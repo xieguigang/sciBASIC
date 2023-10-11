@@ -101,11 +101,23 @@ Namespace Parallel
             '#Else
             '                Throw New NotImplementedException
             '#End If
-            Do While flags.Any(Function(b) b = False)
+            Dim check As Boolean()
+
+            ' 20231011 try to avoid the collection was modified, enumerator
+            ' will not executate problem
+            SyncLock flags
+                check = flags.ToArray
+            End SyncLock
+
+            Do While check.Any(Function(b) b = False)
                 Call Thread.Sleep(1)
 
                 If err Then
                     Exit Do
+                Else
+                    SyncLock flags
+                        check = flags.ToArray
+                    End SyncLock
                 End If
             Loop
 
