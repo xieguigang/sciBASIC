@@ -30,15 +30,18 @@ Namespace ApplicationServices
         ''' create a checkpoint
         ''' </summary>
         ''' <param name="title"></param>
-        Public Sub Mark(title As String)
-            spans.Add(New TimeCounter With {
+        Public Function Mark(title As String) As TimeCounter
+            Dim _checkpoint As New TimeCounter With {
                 .task = title,
                 .start = checkpoint,
                 .span0 = Now - t0,
                 .span1 = Now - checkpoint
-            })
+            }
+            spans.Add(_checkpoint)
             checkpoint = Now
-        End Sub
+
+            Return _checkpoint
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetCounters() As IEnumerable(Of TimeCounter)
