@@ -289,6 +289,12 @@ Namespace Drawing2D.Colors
             "#988ED5", "#027093", "#73945A", "#8C564B", "#9467BD", "#D62829", "#2CA02C"
         }.AsColor()
 
+        Public ReadOnly Property Typhoon As Color() = {
+            "#FFFFFF", "#AAAAD4", "#5F59A0", "#3B277F", "#31277F",
+            "#355C83", "#539144", "#72AC3E", "#8CB73A", "#BACB2D",
+            "#FAEB3A", "#E4A726", "#CE5C18", "#C42917"
+        }.AsColor
+
         Const rgbPattern$ = "rgb\(\d+\s*(,\s*\d+\s*)+\)"
         Const rgbListPattern$ = rgbPattern & "(\s*,\s*" & rgbPattern & ")+"
 
@@ -409,6 +415,7 @@ Namespace Drawing2D.Colors
 
             Select Case Strings.LCase(term).Trim
                 Case "material" : Return MaterialPalette
+                Case "typhoon" : Return Typhoon
                 Case "console.colors", "console" : Return ConsoleColors
                 Case "tsf" : Return CustomDesigns.TSF
                 Case "halloween" : Return CustomDesigns.Halloween
