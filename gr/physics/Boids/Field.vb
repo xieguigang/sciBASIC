@@ -1,0 +1,114 @@
+﻿Imports System
+Imports System.Collections.Generic
+Imports System.Linq
+
+Namespace Boids
+
+    ''' <summary>
+    ''' Boids flocking algorithm
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
+    ''' </remarks>
+    Public Class Field
+        Public ReadOnly Width As Double
+        Public ReadOnly Height As Double
+        Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
+        Private ReadOnly Rand As Random = New Random()
+
+        Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
+            Call (width, height).Set(Me.Width, Me.Height)
+
+            For i = 0 To boidCount - 1
+                Boids.Add(New Boid(Rand, width, height))
+            Next
+        End Sub
+
+        Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
+            Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing, alignXvel As Double = Nothing, alignYvel As Double = Nothing, avoidXvel As Double = Nothing, avoidYvel As Double = Nothing, predXvel As Double = Nothing, predYval As Double = Nothing
+            ' update void speed and direction (velocity) based on rules
+            For Each boid In Boids
+                Flock(boid, 50, 0.0003).Set(flockXvel, flockYvel)
+                Align(boid, 50, 0.01).Set(alignXvel, alignYvel)
+                Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
+                Predator(boid, 150, 0.00005).Set(predXvel, predYval)
+
+                boid.Xvel += flockXvel + avoidXvel + alignXvel + predXvel
+                boid.Yvel += flockYvel + avoidYvel + alignYvel + predYval
+            Next
+
+            ' move all boids forward in time
+            For Each boid In Boids
+                boid.MoveForward()
+                If bounceOffWalls Then Me.BounceOffWalls(boid)
+                If wrapAroundEdges Then WrapAround(boid)
+            Next
+        End Sub
+
+        Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
+            ' point toward the center of the flock (mean flock boid position)
+            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
+            Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
+            Dim deltaCenterX = meanX - boid.x
+            Dim deltaCenterY = meanY - boid.y
+            Return (deltaCenterX * power, deltaCenterY * power)
+        End Function
+
+        Private Function Avoid(boid As Boid, distance As Double, power As Double) As (Double, Double)
+            ' point away as boids get close
+            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
+
+            For Each neighbor In neighbors
+                Dim closeness = distance - boid.GetDistance(neighbor)
+                sumClosenessX += (boid.x - neighbor.x) * closeness
+                sumClosenessY += (boid.y - neighbor.y) * closeness
+            Next
+            Return (sumClosenessX * power, sumClosenessY * power)
+        End Function
+
+        Public PredatorCount As Integer = 3
+        Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
+            ' point away as predators get close
+            Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
+
+            For i = 0 To PredatorCount - 1
+                Dim lPredator = Boids(i)
+                Dim distanceAway = boid.GetDistance(lPredator)
+                If distanceAway < distance Then
+                    Dim closeness = distance - distanceAway
+                    sumClosenessX += (boid.x - lPredator.x) * closeness
+                    sumClosenessY += (boid.y - lPredator.y) * closeness
+                End If
+            Next
+            Return (sumClosenessX * power, sumClosenessY * power)
+        End Function
+
+        Private Function Align(boid As Boid, distance As Double, power As Double) As (Double, Double)
+            ' point toward the center of the flock (mean flock boid position)
+            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
+            Dim meanYvel As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
+            Dim dXvel = meanXvel - boid.Xvel
+            Dim dYvel = meanYvel - boid.Yvel
+            Return (dXvel * power, dYvel * power)
+        End Function
+
+        Private Sub BounceOffWalls(boid As Boid)
+            Dim pad As Double = 50
+            Dim turn = 0.5
+            If boid.x < pad Then boid.Xvel += turn
+            If boid.x > Width - pad Then boid.Xvel -= turn
+            If boid.y < pad Then boid.Yvel += turn
+            If boid.y > Height - pad Then boid.Yvel -= turn
+        End Sub
+
+        Private Sub WrapAround(boid As Boid)
+            If boid.x < 0 Then boid.x += Width
+            If boid.x > Width Then boid.x -= Width
+            If boid.y < 0 Then boid.y += Height
+            If boid.y > Height Then boid.y -= Height
+        End Sub
+    End Class
+End Namespace
