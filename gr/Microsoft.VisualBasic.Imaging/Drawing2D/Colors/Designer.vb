@@ -292,7 +292,7 @@ Namespace Drawing2D.Colors
         Public ReadOnly Property Typhoon As Color() = {
             "#FFFFFF", "#AAAAD4", "#5F59A0", "#3B277F", "#31277F",
             "#355C83", "#539144", "#72AC3E", "#8CB73A", "#BACB2D",
-            "#FAEB3A", "#E4A726", "#CE5C18", "#C42917", "red"
+            "#FAEB3A", "#E4A726", "#CE5C18", "#C42917"
         }.AsColor
 
         Const rgbPattern$ = "rgb\(\d+\s*(,\s*\d+\s*)+\)"
