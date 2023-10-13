@@ -14,6 +14,11 @@ Namespace Parallel
         ''' </summary>
         Protected sequenceMode As Boolean = False
 
+        ''' <summary>
+        ''' <see cref="n_threads"/>
+        ''' </summary>
+        Protected ReadOnly cpu_count As Integer = n_threads
+
         Public Shared n_threads As Integer = 4
 
         Sub New(nsize As Integer)
@@ -21,6 +26,7 @@ Namespace Parallel
             ThreadPool.SetMinThreads(n_threads, 2)
 
             workLen = nsize
+            cpu_count = n_threads
         End Sub
 
         Protected MustOverride Sub Solve(start As Integer, ends As Integer)
@@ -31,6 +37,7 @@ Namespace Parallel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
+            sequenceMode = True
             Solve(0, workLen - 1)
             Return Me
         End Function
@@ -40,7 +47,7 @@ Namespace Parallel
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As VectorTask
-            Dim span_size As Integer = workLen / n_threads
+            Dim span_size As Integer = workLen / cpu_count
             '#If NET48 Then
             '            span_size = 0
             '#End If
@@ -54,12 +61,16 @@ Namespace Parallel
             Return Me
         End Function
 
+        ''' <summary>
+        ''' implements the parallel for use the thread pool
+        ''' </summary>
+        ''' <param name="span_size"></param>
         Private Sub ParallelFor(span_size As Integer)
             Dim flags As New List(Of Boolean)
             Dim err As Boolean = False
             Dim exp As Exception = Nothing
 
-            For cpu As Integer = 0 To n_threads
+            For cpu As Integer = 0 To cpu_count
                 Dim start As Integer = cpu * span_size
                 Dim ends As Integer = start + span_size - 1
                 Dim thread_id As Integer = cpu

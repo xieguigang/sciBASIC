@@ -327,7 +327,7 @@ Namespace LDA
         ''' <param name="K"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub gibbs(K As Integer)
-            gibbs(K, 2.0, 0.5)
+            Call gibbs(K, 2.0, 0.5)
         End Sub
 
         ''' <summary>

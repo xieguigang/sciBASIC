@@ -26,19 +26,42 @@ Namespace LDA
         End Sub
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer)
-            Dim nw As Integer() = New Integer(K - 1) {}
-            Dim nd As Integer() = New Integer(K - 1) {}
-            Dim nwsum As Integer() = New Integer(K - 1) {}
-            Dim ndsum As Integer() = New Integer(gibbs.ndsum.Length - 1) {}
+            Dim nw As Integer()
+            Dim nd As Integer()
+            Dim nwsum As Integer()
+            Dim ndsum As Integer()
             Dim topic As Integer
 
-            Array.ConstrainedCopy(gibbs.nwsum, Scan0, nwsum, Scan0, nwsum.Length)
-            Array.ConstrainedCopy(gibbs.ndsum, Scan0, ndsum, Scan0, ndsum.Length)
-            Array.ConstrainedCopy(gibbs.nd(zi), Scan0, nd, Scan0, nd.Length)
+            If sequenceMode Then
+                'nw = gibbs.nw
+                'nd = gibbs.nd
+                nwsum = gibbs.nwsum
+                ndsum = gibbs.ndsum
+                nd = gibbs.nd(zi)
+                nw = Nothing
+            Else
+                nw = New Integer(K - 1) {}
+                nd = New Integer(K - 1) {}
+                nwsum = New Integer(K - 1) {}
+                ndsum = New Integer(gibbs.ndsum.Length - 1) {}
+
+                Array.ConstrainedCopy(gibbs.nwsum, Scan0, nwsum, Scan0, nwsum.Length)
+                Array.ConstrainedCopy(gibbs.ndsum, Scan0, ndsum, Scan0, ndsum.Length)
+                Array.ConstrainedCopy(gibbs.nd(zi), Scan0, nd, Scan0, nd.Length)
+            End If
 
             For n As Integer = start To ends
                 topic = v(n)
-                Array.ConstrainedCopy(gibbs.nw(gibbs.documents(zi)(n)), Scan0, nw, Scan0, nw.Length)
+
+                If sequenceMode Then
+                    nw = gibbs.nw(gibbs.documents(zi)(n))
+                Else
+                    Call Array.ConstrainedCopy(
+                        gibbs.nw(gibbs.documents(zi)(n)), Scan0,
+                        nw, Scan0,
+                        nw.Length
+                    )
+                End If
 
                 ' (z_i = z[m][n])
                 ' sample from p(z_i|z_-i, w)
