@@ -66,7 +66,6 @@ Namespace Parallel
         ''' </summary>
         ''' <param name="span_size"></param>
         Private Sub ParallelFor(span_size As Integer)
-            Dim flags As New List(Of Boolean)
             Dim err As Boolean = False
             Dim exp As Exception = Nothing
 
@@ -82,7 +81,6 @@ Namespace Parallel
                     ends = workLen - 1
                 End If
 
-                Call flags.Add(False)
                 Call ThreadPool.QueueUserWorkItem(
                     Sub()
                         Try
@@ -92,44 +90,21 @@ Namespace Parallel
                             ' flag check code will be a dead loop
                             exp = New Exception($"Error while execute the ParallelFor task in range from {start} to {ends}. (thread offset {thread_id})", ex)
                         End Try
-
-                        Try
-                            ' set flag for task complete
-                            SyncLock flags
-                                flags(thread_id) = True
-                            End SyncLock
-                        Catch ex As Exception
-                            ' try to avoid the possible dead loop
-                            err = True
-                        End Try
                     End Sub)
             Next
 
-            '#If NETCOREAPP Then
-            '                Do While ThreadPool.PendingWorkItemCount > 0
-            '                    Thread.Sleep(1)
-            '                Loop
-            '#Else
-            '                Throw New NotImplementedException
-            '#End If
-            Dim check As Boolean()
+            Dim workers As Integer = -1
+            Dim n_threads As Integer = -1
 
-            ' 20231011 try to avoid the collection was modified, enumerator
-            ' will not executate problem
-            SyncLock flags
-                check = flags.ToArray
-            End SyncLock
+            Do While True
+                Call ThreadPool.GetAvailableThreads(workerThreads:=workers, 0)
+                Call ThreadPool.GetMaxThreads(workerThreads:=n_threads, 0)
 
-            Do While check.Any(Function(b) b = False)
-                Call Thread.Sleep(1)
-
-                If err Then
+                If workers >= n_threads Then
                     Exit Do
-                Else
-                    SyncLock flags
-                        check = flags.ToArray
-                    End SyncLock
                 End If
+
+                Thread.Sleep(1)
             Loop
 
             If Not exp Is Nothing Then
