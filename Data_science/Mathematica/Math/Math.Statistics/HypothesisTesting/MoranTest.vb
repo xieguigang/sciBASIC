@@ -13,14 +13,14 @@ Namespace Hypothesis
 
         Public Shared Function moran_test(spatial As IEnumerable(Of Pixel),
                                           Optional alternative As Hypothesis = Hypothesis.TwoSided,
-                                          Optional resolution As Integer = 97) As MoranTest
+                                          Optional throwMaxIterError As Boolean = True) As MoranTest
             With spatial.ToArray
                 Return moran_test(
                     .Select(Function(p) p.Scale).ToArray,
                     .Select(Function(p) CDbl(p.X)).ToArray,
                     .Select(Function(p) CDbl(p.Y)).ToArray,
                     alternative:=alternative,
-                    resolution:=resolution
+                    throwMaxIterError:=throwMaxIterError
                 )
             End With
         End Function
@@ -39,13 +39,18 @@ Namespace Hypothesis
         ''' <returns></returns>
         Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(),
                                           Optional alternative As Hypothesis = Hypothesis.TwoSided,
-                                          Optional resolution As Integer = 97) As MoranTest
+                                          Optional throwMaxIterError As Boolean = True) As MoranTest
 
             Dim res = Moran.calc_moran(x, c1, c2)
-            Dim pv As Double = pnorm.eval(res.observed,
-                                          mean:=res.expected,
-                                          sd:=res.sd,
-                                          resolution:=resolution)
+            'Dim pv As Double = pnorm.eval(res.observed,
+            '                              mean:=res.expected,
+            '                              sd:=res.sd,
+            '                              resolution:=resolution)
+            Dim pv As Double
+            Dim n As Integer = x.Length
+            Dim z As Double, prob2 As Double, t As Double, df As Double
+
+            Call Correlations.TestStats(res.observed, n, z, pv, prob2, t, df, throwMaxIterError)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
