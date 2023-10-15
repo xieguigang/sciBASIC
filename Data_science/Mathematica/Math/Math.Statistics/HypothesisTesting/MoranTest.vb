@@ -52,14 +52,12 @@ Namespace Hypothesis
             Dim pv As Double = pnorm.eval(res.observed,
                                      mean:=res.expected,
                                      sd:=res.sd,
-                                     resolution:=10000)
+                                     resolution:=1000)
             Dim n As Integer = x.Length
             Dim z As Double, prob2 As Double, t As Double, df As Double
             Dim prob As Double
 
             Call Correlations.TestStats(res.observed, n, z, prob, prob2, t, df, throwMaxIterError)
-
-            pv = 1 - (pv - 1)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
