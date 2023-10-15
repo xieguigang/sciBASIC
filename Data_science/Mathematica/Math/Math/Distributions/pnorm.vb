@@ -332,15 +332,6 @@ Namespace Distributions
             Return 1 - TrapezodialRule(lowerX, upperX, resolution, m, sd)
         End Function
 
-        Public Delegate Function ITrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
-
-        Dim TrapezodialRule As ITrapezodialRule = AddressOf TrapezodialRuleImpl
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub SetRK45(tr As ITrapezodialRule)
-            TrapezodialRule = tr
-        End Sub
-
         ''' <summary>
         ''' 
         ''' </summary>
@@ -350,7 +341,7 @@ Namespace Distributions
         ''' <param name="m#"></param>
         ''' <param name="sd#"></param>
         ''' <returns></returns>
-        Private Function TrapezodialRuleImpl(a#, b#, resolution%, m#, sd#) As Double
+        Private Function TrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
             Dim dx As Double = (b - a) / resolution
             Dim a1 As Double = ProbabilityDensity(a, m, sd)
             Dim b1 As Double = ProbabilityDensity(b, m, sd)

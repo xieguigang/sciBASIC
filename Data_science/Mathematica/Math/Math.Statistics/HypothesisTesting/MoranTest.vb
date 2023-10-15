@@ -49,14 +49,17 @@ Namespace Hypothesis
                                           Optional parallel As Boolean = True) As MoranTest
 
             Dim res = Moran.calc_moran(x, c1, c2, parallel)
-            Dim pv As Double = pnorm(res.observed,
+            Dim pv As Double = pnorm.eval(res.observed,
                                      mean:=res.expected,
                                      sd:=res.sd,
-                                     resolution:=100)
+                                     resolution:=10000)
             Dim n As Integer = x.Length
             Dim z As Double, prob2 As Double, t As Double, df As Double
+            Dim prob As Double
 
-            Call Correlations.TestStats(res.observed, n, z, 0, prob2, t, df, throwMaxIterError)
+            Call Correlations.TestStats(res.observed, n, z, prob, prob2, t, df, throwMaxIterError)
+
+            pv = 1 - (pv - 1)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
