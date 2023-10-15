@@ -59,7 +59,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports stdNum = System.Math
 
 Namespace Imaging.Math2D

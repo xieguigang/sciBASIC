@@ -11,7 +11,7 @@ Namespace Imaging.Math2D
     ''' </remarks>
     Public Module Moran
 
-        Public Function distanceCalculate(x1 As Double, y1 As Double, x2 As Double, y2 As Double) As Double
+        Friend Function distanceCalculate(x1 As Double, y1 As Double, x2 As Double, y2 As Double) As Double
             Dim x = x1 - x2
             Dim y = y1 - y2
 
@@ -22,11 +22,39 @@ Namespace Imaging.Math2D
             End If
         End Function
 
-        Public Function normalize(x As Double()) As Double()
+        Friend Function normalize(x As Double()) As Double()
             Dim x_bar = x.Average
             Dim x_norm As Double() = Math.SIMD.Subtract.f64_op_subtract_f64_scalar(x, x_bar)
 
             Return x_norm
+        End Function
+
+        Public Function calc_spatial(c1 As Double(), c2 As Double()) As (wij As Double()(), w As Double, S1 As Double, S2 As Double)
+            Dim N = c1.Length
+            Dim wij As Double()() = New Double(N - 1)() {}
+            Dim w As Double
+            Dim S1, S2 As Double
+
+            For i As Integer = 0 To N - 1
+                Dim wi As Double() = New Double(N - 1) {}
+                Dim S2_a As Double = 0
+
+                For j As Integer = 0 To N - 1
+                    Dim w_ij As Double = distanceCalculate(c1(i), c2(i), c1(j), c2(j))
+
+                    wi(j) = w_ij
+                    w += w_ij
+                    S1 += (2 * w_ij) ^ 2
+                    S2_a += w_ij
+                Next
+
+                S2 += (2 * S2_a) ^ 2
+                wij(i) = wi
+            Next
+
+            S1 = S1 / 2
+
+            Return (wij, w, S1, S2)
         End Function
 
         Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double()) As (observed As Double, expected As Double, sd As Double)
@@ -38,23 +66,18 @@ Namespace Imaging.Math2D
             Dim w As Double = 0
             Dim num As Double = 0
             Dim S1, S2 As Double
+            Dim wij As Double()() = Nothing
+
+            Call calc_spatial(c1, c2).Set(wij, w, S1, S2)
 
             For i As Integer = 0 To N - 1
-                Dim S2_a As Double = 0
                 For j As Integer = 0 To N - 1
-                    Dim w_ij = distanceCalculate(c1(i), c2(i), c1(j), c2(j))
+                    Dim w_ij = wij(i)(j)
                     Dim w_x1_x2 = w_ij * x_norm(i) * x_norm(j)
 
-                    w += w_ij
                     num += w_x1_x2
-                    S1 += (2 * w_ij) ^ 2
-                    S2_a += w_ij
                 Next
-
-                S2 += (2 * S2_a) ^ 2
             Next
-
-            S1 = S1 / 2
 
             Dim ei = -(1 / (N - 1))
             Dim k = (Math.SIMD.Divide.f64_op_divide_f64_scalar(Math.SIMD.Exponent.f64_op_exponent_f64_scalar(x_norm, 4), N).Sum) / ((denom / N) ^ 2)
