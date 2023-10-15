@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace Hypothesis
 
@@ -48,15 +49,14 @@ Namespace Hypothesis
                                           Optional parallel As Boolean = True) As MoranTest
 
             Dim res = Moran.calc_moran(x, c1, c2, parallel)
-            'Dim pv As Double = pnorm.eval(res.observed,
-            '                              mean:=res.expected,
-            '                              sd:=res.sd,
-            '                              resolution:=resolution)
-            Dim pv As Double
+            Dim pv As Double = pnorm(res.observed,
+                                     mean:=res.expected,
+                                     sd:=res.sd,
+                                     resolution:=100)
             Dim n As Integer = x.Length
             Dim z As Double, prob2 As Double, t As Double, df As Double
 
-            Call Correlations.TestStats(res.observed, n, z, pv, prob2, t, df, throwMaxIterError)
+            Call Correlations.TestStats(res.observed, n, z, 0, prob2, t, df, throwMaxIterError)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
