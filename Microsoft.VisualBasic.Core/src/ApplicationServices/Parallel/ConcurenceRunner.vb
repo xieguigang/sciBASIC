@@ -22,8 +22,7 @@ Namespace Parallel
         Public Shared n_threads As Integer = 4
 
         Sub New(nsize As Integer)
-            ThreadPool.SetMaxThreads(n_threads, 8)
-            ThreadPool.SetMinThreads(n_threads, 2)
+            ThreadPool.SetMaxThreads(n_threads)
 
             workLen = nsize
             cpu_count = n_threads
@@ -93,17 +92,7 @@ Namespace Parallel
                     End Sub)
             Next
 
-            Dim workers As Integer = -1
-            Dim n_threads As Integer = -1
-
-            Do While True
-                Call ThreadPool.GetAvailableThreads(workerThreads:=workers, 0)
-                Call ThreadPool.GetMaxThreads(workerThreads:=n_threads, 0)
-
-                If workers >= n_threads Then
-                    Exit Do
-                End If
-
+            Do While Not ThreadPool.JobComplete
                 Thread.Sleep(1)
             Loop
 
@@ -111,6 +100,80 @@ Namespace Parallel
                 Throw exp
             End If
         End Sub
+
+        Private Class ThreadPool
+
+            Shared ReadOnly threads As New List(Of Task)
+            Shared max As Integer
+
+            Public Shared ReadOnly Property JobComplete As Boolean
+                Get
+                    Return threads.All(Function(t) Not t.isRunning)
+                End Get
+            End Property
+
+            Public Shared Sub QueueUserWorkItem(task As Action)
+                Dim t = GetAvaiableThread()
+                t.SetTask(task)
+            End Sub
+
+            Public Shared Sub SetMaxThreads(n As Integer)
+                max = n
+
+                If max > threads.Count Then
+                    For i As Integer = threads.Count To max - 1
+                        Call threads.Add(Task.Start)
+                    Next
+                End If
+            End Sub
+
+            Private Shared Function GetAvaiableThread() As Task
+re0:
+                For i As Integer = 0 To max - 1
+                    If Not threads(i).isRunning Then
+                        Return threads(i)
+                    End If
+                Next
+
+                Call Thread.Sleep(1)
+
+                GoTo re0
+            End Function
+
+            Private Class Task
+
+                Dim t As Thread
+                Dim task As Action
+                Dim running As Boolean = False
+
+                Public ReadOnly Property isRunning As Boolean
+                    Get
+                        Return running
+                    End Get
+                End Property
+
+                Public Sub SetTask(task As Action)
+                    Me.task = task
+                End Sub
+
+                Public Shared Function Start() As Task
+                    Return New Task With {.t = Parallel.RunTask(AddressOf .Run)}
+                End Function
+
+                Private Sub Run()
+                    Do While App.Running
+                        If Not task Is Nothing Then
+                            running = True
+                            task()
+                            task = Nothing
+                            running = False
+                        End If
+
+                        Thread.Sleep(1)
+                    Loop
+                End Sub
+            End Class
+        End Class
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
             Dim copy As T() = New T(start - ends - 1) {}
