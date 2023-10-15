@@ -1,6 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace Hypothesis
 
@@ -10,17 +9,23 @@ Namespace Hypothesis
         Public Property Expected As Double
         Public Property SD As Double
         Public Property pvalue As Double
+        Public Property z As Double
+        Public Property prob2 As Double
+        Public Property t As Double
+        Public Property df As Double
 
         Public Shared Function moran_test(spatial As IEnumerable(Of Pixel),
                                           Optional alternative As Hypothesis = Hypothesis.TwoSided,
-                                          Optional throwMaxIterError As Boolean = True) As MoranTest
+                                          Optional throwMaxIterError As Boolean = True,
+                                          Optional parallel As Boolean = True) As MoranTest
             With spatial.ToArray
                 Return moran_test(
                     .Select(Function(p) p.Scale).ToArray,
                     .Select(Function(p) CDbl(p.X)).ToArray,
                     .Select(Function(p) CDbl(p.Y)).ToArray,
                     alternative:=alternative,
-                    throwMaxIterError:=throwMaxIterError
+                    throwMaxIterError:=throwMaxIterError,
+                    parallel:=parallel
                 )
             End With
         End Function
@@ -39,9 +44,10 @@ Namespace Hypothesis
         ''' <returns></returns>
         Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(),
                                           Optional alternative As Hypothesis = Hypothesis.TwoSided,
-                                          Optional throwMaxIterError As Boolean = True) As MoranTest
+                                          Optional throwMaxIterError As Boolean = True,
+                                          Optional parallel As Boolean = True) As MoranTest
 
-            Dim res = Moran.calc_moran(x, c1, c2)
+            Dim res = Moran.calc_moran(x, c1, c2, parallel)
             'Dim pv As Double = pnorm.eval(res.observed,
             '                              mean:=res.expected,
             '                              sd:=res.sd,
@@ -73,7 +79,11 @@ Namespace Hypothesis
                 .Observed = res.observed,
                 .Expected = res.expected,
                 .pvalue = pv,
-                .SD = res.sd
+                .SD = res.sd,
+                .df = df,
+                .prob2 = prob2,
+                .t = t,
+                .z = z
             }
         End Function
     End Class

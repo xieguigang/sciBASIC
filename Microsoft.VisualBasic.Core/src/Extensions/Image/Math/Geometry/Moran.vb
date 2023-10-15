@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Parallel
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -29,35 +30,74 @@ Namespace Imaging.Math2D
             Return x_norm
         End Function
 
-        Public Function calc_spatial(c1 As Double(), c2 As Double()) As (wij As Double()(), w As Double, S1 As Double, S2 As Double)
+        Public Function calc_spatial(c1 As Double(), c2 As Double(), Optional parallel As Boolean = True) As (wij As Double()(), w As Double, S1 As Double, S2 As Double)
             Dim N = c1.Length
             Dim wij As Double()() = New Double(N - 1)() {}
             Dim w As Double
             Dim S1, S2 As Double
+            Dim vec As New SpatialTask(N) With {.wij = wij, .c1 = c1, .c2 = c2}
 
-            For i As Integer = 0 To N - 1
-                Dim wi As Double() = New Double(N - 1) {}
-                Dim S2_a As Double = 0
+            If parallel Then
+                Call vec.Run()
+            Else
+                Call vec.Solve()
+            End If
 
-                For j As Integer = 0 To N - 1
-                    Dim w_ij As Double = distanceCalculate(c1(i), c2(i), c1(j), c2(j))
-
-                    wi(j) = w_ij
-                    w += w_ij
-                    S1 += (2 * w_ij) ^ 2
-                    S2_a += w_ij
-                Next
-
-                S2 += (2 * S2_a) ^ 2
-                wij(i) = wi
-            Next
-
+            S1 = vec.S1.Sum
+            S2 = vec.S2.Sum
+            w = vec.w.Sum
             S1 = S1 / 2
 
             Return (wij, w, S1, S2)
         End Function
 
-        Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double()) As (observed As Double, expected As Double, sd As Double)
+        Private Class SpatialTask : Inherits VectorTask
+
+            Public wij As Double()()
+            Public c1 As Double(), c2 As Double()
+            Public w() As Double
+            Public S1(), S2() As Double
+
+            Dim N As Integer
+
+            Public Sub New(N As Integer)
+                MyBase.New(N)
+
+                w = New Double(N - 1) {}
+                S1 = New Double(N - 1) {}
+                S2 = New Double(N - 1) {}
+
+                Me.N = N
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                Dim w As Double
+                Dim S1, S2 As Double
+
+                For i As Integer = start To ends
+                    Dim wi As Double() = New Double(N - 1) {}
+                    Dim S2_a As Double = 0
+
+                    For j As Integer = 0 To N - 1
+                        Dim w_ij As Double = distanceCalculate(c1(i), c2(i), c1(j), c2(j))
+
+                        wi(j) = w_ij
+                        w += w_ij
+                        S1 += (2 * w_ij) ^ 2
+                        S2_a += w_ij
+                    Next
+
+                    S2 += (2 * S2_a) ^ 2
+                    wij(i) = wi
+
+                    Me.S1(i) = S1 : S1 = 0
+                    Me.S2(i) = S2 : S2 = 0
+                    Me.w(i) = w : w = 0
+                Next
+            End Sub
+        End Class
+
+        Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double(), Optional parallel As Boolean = True) As (observed As Double, expected As Double, sd As Double)
             ' Easy variables to calculate
             Dim x_norm = normalize(x)
             Dim N = x.Length
