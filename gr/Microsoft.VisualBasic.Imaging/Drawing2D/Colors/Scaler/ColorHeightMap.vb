@@ -1,11 +1,16 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Drawing2D.HeatMap
+Namespace Drawing2D.Colors.Scaler
 
+    ''' <summary>
+    ''' Map a color to a single numeric value
+    ''' </summary>
+    ''' <remarks>
+    ''' Extract numeric value from a raster data
+    ''' </remarks>
     Public Class ColorHeightMap : Implements IBucketVector
 
         Dim ruler As Color()
