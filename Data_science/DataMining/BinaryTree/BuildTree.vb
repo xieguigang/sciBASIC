@@ -78,8 +78,10 @@ Public Module BuildTree
     Public Function BTreeClusterVector(Of T As {INamedValue, IVector})(data As IEnumerable(Of T),
                                                                        Optional equals As Double = 0.9,
                                                                        Optional gt As Double = 0.7) As BTreeCluster
-        Dim list = data _
-            .Select(Function(d) New NamedCollection(Of Double)(d.Key, d.Data)) _
+        Dim list As NamedCollection(Of Double)() = data _
+            .Select(Function(d)
+                        Return New NamedCollection(Of Double)(d.Key, d.Data)
+                    End Function) _
             .ToArray
         Dim compares As New AlignmentComparison(list, equals, gt)
         Dim btree As New AVLTree(Of String, String)(compares.GetComparer, Function(str) str)
