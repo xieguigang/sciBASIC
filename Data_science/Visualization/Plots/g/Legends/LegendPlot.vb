@@ -68,14 +68,13 @@ Namespace Graphic.Legend
     <HideModuleName>
     Public Module LegendPlotExtensions
 
-        ReadOnly legendExpressions As Dictionary(Of String, LegendStyles) =
-            Enums(Of LegendStyles) _
-                .ToDictionary(Function(l)
-                                  Return l.ToString.ToLower
-                              End Function)
+        ReadOnly legendExpressions As Dictionary(Of String, LegendStyles)
 
         Sub New()
-            Dim flags = Enums(Of LegendStyles) _
+            ' parse the shape enums and the corresponding element description text
+            ' used the shape symbol name and the description key as the text parser 
+            ' key inputs
+            legendExpressions = Enums(Of LegendStyles) _
                 .Select(Iterator Function(f) As IEnumerable(Of (key As String, flag As LegendStyles))
                             Yield (f.ToString.ToLower, f)
                             Yield (f.Description.ToLower, f)
