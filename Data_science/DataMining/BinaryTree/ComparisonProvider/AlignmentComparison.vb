@@ -55,13 +55,19 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Class AlignmentComparison : Inherits ComparisonProvider
 
     ReadOnly dataIndex As Dictionary(Of String, Double())
+    ReadOnly compare As CompareMethods = CompareMethods.SpectrumDotProduct
 
-    Sub New(dataset As NamedValue(Of Dictionary(Of String, Double))(), equals As Double, gt As Double)
+    Sub New(dataset As NamedValue(Of Dictionary(Of String, Double))(),
+            equals As Double,
+            gt As Double,
+            Optional method As CompareMethods = CompareMethods.SpectrumDotProduct)
+
         Call MyBase.New(equals, gt)
 
         Dim names As String() = dataset _
@@ -77,9 +83,14 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
                                   .Select(Function(col) d.Value.TryGetValue(col)) _
                                   .ToArray
                           End Function)
+        compare = method
     End Sub
 
-    Sub New(dataset As IEnumerable(Of NamedCollection(Of Double)), equals As Double, gt As Double)
+    Sub New(dataset As IEnumerable(Of NamedCollection(Of Double)),
+            equals As Double,
+            gt As Double,
+            Optional method As CompareMethods = CompareMethods.SpectrumDotProduct)
+
         Call MyBase.New(equals, gt)
 
         dataIndex = dataset _
@@ -87,19 +98,36 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
                           Function(d)
                               Return d.value
                           End Function)
+        compare = method
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Sub New(m As Dictionary(Of String, Double()), eq As Double, gt As Double)
+    Private Sub New(m As Dictionary(Of String, Double()),
+                    eq As Double,
+                    gt As Double,
+                    Optional method As CompareMethods = CompareMethods.SpectrumDotProduct)
+
         Call MyBase.New(eq, gt)
+
         dataIndex = m
+        compare = method
     End Sub
 
     Public Overrides Function GetSimilarity(x As String, y As String) As Double
-        Dim xvec As New Vector(dataIndex(x))
-        Dim yvec As New Vector(dataIndex(y))
+        Select Case compare
+            Case CompareMethods.SpectrumDotProduct
+                Dim xvec As New Vector(dataIndex(x))
+                Dim yvec As New Vector(dataIndex(y))
 
-        Return SSM(xvec, yvec)
+                Return SSM(xvec, yvec)
+            Case CompareMethods.RelativeDistance
+                Dim xvec As Double() = SIMD.Divide.f64_op_divide_f64_scalar(dataIndex(x), dataIndex(x).Max)
+                Dim yvec As Double() = SIMD.Divide.f64_op_divide_f64_scalar(dataIndex(y), dataIndex(y).Max)
+
+                Return xvec.EuclideanDistance(yvec)
+            Case Else
+                Throw New NotImplementedException(compare.Description)
+        End Select
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -112,3 +140,8 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
         Return dataIndex(id)
     End Function
 End Class
+
+Public Enum CompareMethods
+    SpectrumDotProduct
+    RelativeDistance
+End Enum
