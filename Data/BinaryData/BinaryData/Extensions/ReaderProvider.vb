@@ -59,6 +59,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Text
 
@@ -143,7 +144,7 @@ Public Class ReaderProvider : Implements IDisposable
     ''' <param name="run">
     ''' 请不要在这里面执行<see cref="BinaryDataReader.Close()"/>或者<see cref="BinaryDataReader.Dispose()"/>
     ''' </param>
-    Public Sub Read(run As Action(Of BinaryDataReader))
+    Public Sub Read(run As Action(Of BinaryDataReader), Optional offset As Long = Scan0)
         If m_bufferedReader Is Nothing Then
             Using file As New FileStream(
                 URI,
@@ -155,11 +156,47 @@ Public Class ReaderProvider : Implements IDisposable
             End Using
         Else
             SyncLock m_bufferedReader
+                Call m_bufferedReader.Seek(offset, SeekOrigin.Begin)
                 Call run(m_bufferedReader)
                 Call m_bufferedReader.Seek(Scan0, SeekOrigin.Begin)
             End SyncLock
         End If
     End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="offset"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' only read the rawdata with <see cref="FieldAttribute"/> layout information
+    ''' </remarks>
+    Public Function LoadObject(Of T As {New, Class})(Optional offset As Long = Scan0) As T
+        Dim obj As New T
+        Dim props As (layout As FieldAttribute, tar As PropertyInfo)() = DataFramework _
+            .Schema(GetType(T), PropertyAccess.Writeable, nonIndex:=True) _
+            .Values.Select(Function(i)
+                               Dim bind As FieldAttribute = i.GetCustomAttribute(Of FieldAttribute)
+                               Return (bind, i)
+                           End Function) _
+            .Where(Function(i) Not i.bind Is Nothing) _
+            .OrderBy(Function(i) i.bind.Index) _
+            .ToArray
+        Dim task As Action(Of BinaryDataReader) =
+            Sub(read As BinaryDataReader)
+                Dim val As Object
+
+                For Each bind In props
+                    val = bind.layout.Read(read, bind.tar)
+                    bind.tar.SetValue(obj, val)
+                Next
+            End Sub
+
+        Call Read(run:=task, offset)
+
+        Return obj
+    End Function
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
@@ -214,7 +251,6 @@ Public Class FieldAttribute : Inherits Field
     ''' <param name="n">for array used only, means array length to read, default negative means scalar</param>
     Sub New(ordinal As Integer, Optional n As Integer = -1)
         Call MyBase.New(ordinal)
-
         Me.N = n
     End Sub
 
