@@ -6,7 +6,15 @@ Imports Microsoft.VisualBasic.Serialization
 
 Public Class FieldAttribute : Inherits Field
 
+    ''' <summary>
+    ''' the array length
+    ''' </summary>
+    ''' <returns></returns>
     Public Property N As Integer
+    ''' <summary>
+    ''' the binary data file offset
+    ''' </summary>
+    ''' <returns></returns>
     Public Property offset As Long = -1
 
     Public ReadOnly Property ReadArray As Boolean
