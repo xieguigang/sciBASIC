@@ -44,8 +44,8 @@ Public Class FieldAttribute : Inherits Field
         If type.IsArray Then
             Dim scalar As Type = type.GetElementType
             Dim sizeof As Integer = Marshal.SizeOf(scalar)
-            Dim n As Integer = sizeof * n
-            Dim view As New MemoryStream(buf.ReadBytes(n))
+            Dim len As Integer = sizeof * N
+            Dim view As New MemoryStream(buf.ReadBytes(len))
 
             Return RawStream.GetData(view, code:=Type.GetTypeCode(scalar))
         ElseIf type Is GetType(String) AndAlso ReadArray Then
