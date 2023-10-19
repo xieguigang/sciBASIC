@@ -42,11 +42,12 @@ Public Class FieldAttribute : Inherits Field
         End If
 
         If type.IsArray Then
-            Dim sizeof As Integer = Marshal.SizeOf(p.PropertyType)
+            Dim scalar As Type = type.GetElementType
+            Dim sizeof As Integer = Marshal.SizeOf(scalar)
             Dim n As Integer = sizeof * n
             Dim view As New MemoryStream(buf.ReadBytes(n))
 
-            Return RawStream.GetData(view, code:=Type.GetTypeCode(type.GetElementType))
+            Return RawStream.GetData(view, code:=Type.GetTypeCode(scalar))
         ElseIf type Is GetType(String) AndAlso ReadArray Then
             ' read chars array with fix length
             Dim chars As Char() = buf.ReadChars(N)
