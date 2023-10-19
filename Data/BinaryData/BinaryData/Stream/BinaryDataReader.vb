@@ -267,6 +267,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' stream by sixteen bytes.
     ''' </summary>
     ''' <returns>The 16-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Decimal)>
     Public Overrides Function ReadDecimal() As Decimal
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(Marshal.SizeOf(GetType(Decimal)))
@@ -294,6 +296,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' by eight bytes.
     ''' </summary>
     ''' <returns>The 8-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Double)>
     Public Overrides Function ReadDouble() As Double
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
@@ -321,6 +325,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 2-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int16)>
     Public Overrides Function ReadInt16() As Int16
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(2)
@@ -348,6 +354,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' four bytes.
     ''' </summary>
     ''' <returns>The 4-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int32)>
     Public Overrides Function ReadInt32() As Int32
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -375,6 +383,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' eight bytes.
     ''' </summary>
     ''' <returns>The 8-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int64)>
     Public Overrides Function ReadInt64() As Int64
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
@@ -414,6 +424,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' by four bytes.
     ''' </summary>
     ''' <returns>The 4-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Single)>
     Public Overrides Function ReadSingle() As Single
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -503,6 +515,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' position of the stream by two bytes.
     ''' </summary>
     ''' <returns>The 2-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt16)>
     Public Overrides Function ReadUInt16() As UInt16
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(2)
@@ -532,6 +546,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 4-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt32)>
     Public Overrides Function ReadUInt32() As UInt32
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -561,6 +577,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 8-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt64)>
     Public Overrides Function ReadUInt64() As UInt64
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
