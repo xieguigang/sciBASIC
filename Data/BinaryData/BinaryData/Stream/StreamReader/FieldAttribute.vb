@@ -59,4 +59,14 @@ Public Class FieldAttribute : Inherits Field
             Return ReaderProvider.ReadScalar(code)(buf)
         End If
     End Function
+
+    Public Overrides Function ToString() As String
+        Dim offset As String = If(Me.offset >= 0, $"offset:{StringFormats.Lanudry(Me.offset)}", "")
+
+        If ReadArray Then
+            Return $"#{Index} vec; {offset}".Trim
+        Else
+            Return $"#{Index} scalar; {offset}".Trim
+        End If
+    End Function
 End Class
