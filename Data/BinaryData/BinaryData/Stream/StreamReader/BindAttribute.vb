@@ -5,8 +5,10 @@
 Public Class BindAttribute : Inherits Attribute
 
     Public ReadOnly Property Type As TypeCode
+    Public ReadOnly Property Par As Object
 
-    Sub New(type As TypeCode)
+    Sub New(type As TypeCode, Optional par As Object = Nothing)
+        Me.Par = par
         Me.Type = type
     End Sub
 

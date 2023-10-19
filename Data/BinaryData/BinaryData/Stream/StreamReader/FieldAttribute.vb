@@ -26,8 +26,10 @@ Public Class FieldAttribute : Inherits Field
         Dim code As TypeCode = Type.GetTypeCode(type)
 
         If type.IsArray Then
+        ElseIf type Is GetType(String) AndAlso ReadArray Then
+            ' read chars array
         Else
-
+            ' read scalar
         End If
     End Function
 End Class

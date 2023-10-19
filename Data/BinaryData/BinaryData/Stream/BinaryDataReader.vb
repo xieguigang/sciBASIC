@@ -221,6 +221,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' <summary>
     ''' Mark current stream buffer position
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Mark()
         _markedPos = Position
     End Sub
@@ -228,6 +230,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' <summary>
     ''' Move the buffer back to the position that marked by <see cref="Mark"/> method.
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Reset()
         Position = _markedPos
     End Sub
@@ -236,9 +240,38 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' Aligns the reader to the next given byte multiple.
     ''' </summary>
     ''' <param name="alignment">The byte multiple.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Align(alignment As Integer)
         Seek((-Position Mod alignment + alignment) Mod alignment)
     End Sub
+
+#Region "Bind Base"
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Boolean)>
+    Public Overrides Function ReadBoolean() As Boolean
+        Return MyBase.ReadBoolean()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Char)>
+    Public Overrides Function ReadChar() As Char
+        Return MyBase.ReadChar()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Byte)>
+    Public Overrides Function ReadByte() As Byte
+        Return MyBase.ReadByte()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.SByte)>
+    Public Overrides Function ReadSByte() As SByte
+        Return MyBase.ReadSByte()
+    End Function
+#End Region
 
     ''' <summary>
     ''' Reads a <see cref="DateTime"/> from the current stream. The <see cref="DateTime"/> is available in the
@@ -246,6 +279,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' </summary>
     ''' <param name="format">The binary format, in which the <see cref="DateTime"/> will be read.</param>
     ''' <returns>The <see cref="DateTime"/> read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.DateTime, BinaryDateTimeFormat.CTime)>
     Public Function ReadDateTime(format As BinaryDateTimeFormat) As DateTime
         Select Case format
             Case BinaryDateTimeFormat.CTime
@@ -453,6 +488,7 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' </summary>
     ''' <param name="format">The binary format, in which the string will be read.</param>
     ''' <returns>The string read from the current stream.</returns>
+    ''' 
     Public Overloads Function ReadString(format As BinaryStringFormat) As String
         Return ReadString(format, Encoding)
     End Function
