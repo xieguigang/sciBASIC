@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::51e86c3ac5fa0b5c906c5ec7d2076a80, sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 119
-    '    Code Lines: 75
-    ' Comment Lines: 29
-    '   Blank Lines: 15
-    '     File Size: 4.25 KB
+' Summaries:
 
 
-    ' Class ReaderProvider
-    ' 
-    '     Properties: Length, URI
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: Open
-    ' 
-    '     Sub: Cleanup, (+2 Overloads) Dispose, Read
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 119
+'    Code Lines: 75
+' Comment Lines: 29
+'   Blank Lines: 15
+'     File Size: 4.25 KB
+
+
+' Class ReaderProvider
+' 
+'     Properties: Length, URI
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: Open
+' 
+'     Sub: Cleanup, (+2 Overloads) Dispose, Read
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,12 @@ Public Class ReaderProvider : Implements IDisposable
     ''' <returns></returns>
     Public ReadOnly Property URI As String
 
+    ''' <summary>
+    ''' Read a single scalar value
+    ''' </summary>
+    ''' <returns></returns>
+    Public Shared ReadOnly Property ReadScalar As Dictionary(Of TypeCode, Func(Of BinaryDataReader, Object))
+
     ReadOnly m_bufferedReader As BinaryDataReader
     ReadOnly m_encoding As Encoding
 
@@ -80,6 +86,32 @@ Public Class ReaderProvider : Implements IDisposable
             Return FileIO.FileSystem.GetFileInfo(URI).Length
         End Get
     End Property
+
+    Shared Sub New()
+        Dim bindings = GetType(BinaryDataReader).GetMethods _
+            .Select(Function(m)
+                        Dim bind As BindAttribute = m.GetCustomAttribute(Of BindAttribute)
+                        Return (bind, m)
+                    End Function) _
+            .Where(Function(fun) Not fun.bind Is Nothing) _
+            .ToArray
+
+        ReadScalar = New Dictionary(Of TypeCode, Func(Of BinaryDataReader, Object))
+
+        For Each map In bindings
+            Dim func As Func(Of BinaryDataReader, Object)
+            Dim calls As MethodInfo = map.m
+            Dim par As Object = map.bind.Par
+
+            If map.bind.Par Is Nothing Then
+                func = Function(buf) calls.Invoke(buf, {})
+            Else
+                func = Function(buf) calls.Invoke(buf, {par})
+            End If
+
+            ReadScalar(map.bind.Type) = func
+        Next
+    End Sub
 
     Sub New(buf As Stream, Optional encoding As Encodings = Encodings.ASCII)
         m_encoding = encoding.CodePage

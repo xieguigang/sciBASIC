@@ -1,5 +1,8 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Serialization
 
 Public Class FieldAttribute : Inherits Field
 
@@ -26,10 +29,20 @@ Public Class FieldAttribute : Inherits Field
         Dim code As TypeCode = Type.GetTypeCode(type)
 
         If type.IsArray Then
+            Dim sizeof As Integer = Marshal.SizeOf(p.PropertyType)
+            Dim n As Integer = sizeof * n
+            Dim view As New MemoryStream(buf.ReadBytes(n))
+
+            Return RawStream.GetData(view, code:=Type.GetTypeCode(type.GetElementType))
         ElseIf type Is GetType(String) AndAlso ReadArray Then
-            ' read chars array
+            ' read chars array with fix length
+            Dim chars As Char() = buf.ReadChars(N)
+            Dim si As New String(chars)
+
+            Return si
         Else
             ' read scalar
+
         End If
     End Function
 End Class
