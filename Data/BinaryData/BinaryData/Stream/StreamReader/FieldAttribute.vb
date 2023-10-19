@@ -42,7 +42,7 @@ Public Class FieldAttribute : Inherits Field
             Return si
         Else
             ' read scalar
-
+            Return ReaderProvider.ReadScalar(code)(buf)
         End If
     End Function
 End Class
