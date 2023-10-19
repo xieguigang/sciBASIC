@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.Serialization
 Public Class FieldAttribute : Inherits Field
 
     Public Property N As Integer
+    Public Property offset As Long = -1
 
     Public ReadOnly Property ReadArray As Boolean
         Get
@@ -27,6 +28,10 @@ Public Class FieldAttribute : Inherits Field
     Public Function Read(buf As BinaryDataReader, p As PropertyInfo) As Object
         Dim type As Type = p.PropertyType
         Dim code As TypeCode = Type.GetTypeCode(type)
+
+        If offset >= 0 Then
+            Call buf.Seek(offset, SeekOrigin.Begin)
+        End If
 
         If type.IsArray Then
             Dim sizeof As Integer = Marshal.SizeOf(p.PropertyType)
