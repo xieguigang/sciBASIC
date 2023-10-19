@@ -56,17 +56,22 @@
 #End Region
 
 Imports System.IO
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Text
 
-Public Class ReaderProvider
-    Implements IDisposable
+Public Class ReaderProvider : Implements IDisposable
 
+    ''' <summary>
+    ''' The target file path
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property URI As String
 
-    ReadOnly __bufferedReader As BinaryDataReader
-    ReadOnly __encoding As Encoding
+    ReadOnly m_bufferedReader As BinaryDataReader
+    ReadOnly m_encoding As Encoding
 
     Public ReadOnly Property Length As Long
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -75,13 +80,30 @@ Public Class ReaderProvider
         End Get
     End Property
 
-    Sub New(path$, Optional encoding As Encodings = Encodings.ASCII, Optional buffered& = 1024 * 1024 * 10)
+    Sub New(buf As Stream, Optional encoding As Encodings = Encodings.ASCII)
+        m_encoding = encoding.CodePage
+        m_bufferedReader = New BinaryDataReader(buf, m_encoding)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="buffered"></param>
+    ''' <remarks>
+    ''' Create a lazy data
+    ''' </remarks>
+    Sub New(path$,
+            Optional encoding As Encodings = Encodings.ASCII,
+            Optional buffered& = 1024 * 1024 * 10)
+
         URI = path$
-        __encoding = encoding.CodePage
+        m_encoding = encoding.CodePage
 
         If FileIO.FileSystem.GetFileInfo(path).Length <= buffered Then
             Dim byts As Byte() = FileIO.FileSystem.ReadAllBytes(path)   ' 文件数据将会被缓存
-            __bufferedReader = New BinaryDataReader(New MemoryStream(byts), __encoding)
+            m_bufferedReader = New BinaryDataReader(New MemoryStream(byts), m_encoding)
         End If
     End Sub
 
@@ -90,15 +112,15 @@ Public Class ReaderProvider
     ''' </summary>
     ''' <returns></returns>
     Public Function Open() As BinaryDataReader
-        If __bufferedReader Is Nothing Then
+        If m_bufferedReader Is Nothing Then
             Dim file As New FileStream(
                 URI,
                 mode:=FileMode.Open,
                 access:=FileAccess.Read,
                 share:=FileShare.Read)
-            Return New BinaryDataReader(file, __encoding)
+            Return New BinaryDataReader(file, m_encoding)
         Else
-            Return __bufferedReader
+            Return m_bufferedReader
         End If
     End Function
 
@@ -107,7 +129,7 @@ Public Class ReaderProvider
     ''' </summary>
     ''' <param name="reader"></param>
     Public Sub Cleanup(reader As BinaryDataReader)
-        If __bufferedReader Is Nothing OrElse (Not __bufferedReader Is reader) Then
+        If m_bufferedReader Is Nothing OrElse (Not m_bufferedReader Is reader) Then
             Call reader.Close()
             Call reader.Dispose()
         Else
@@ -122,19 +144,19 @@ Public Class ReaderProvider
     ''' 请不要在这里面执行<see cref="BinaryDataReader.Close()"/>或者<see cref="BinaryDataReader.Dispose()"/>
     ''' </param>
     Public Sub Read(run As Action(Of BinaryDataReader))
-        If __bufferedReader Is Nothing Then
+        If m_bufferedReader Is Nothing Then
             Using file As New FileStream(
                 URI,
                 mode:=FileMode.Open,
                 access:=FileAccess.Read,
-                share:=FileShare.Read), reader As New BinaryDataReader(file, __encoding)
+                share:=FileShare.Read), reader As New BinaryDataReader(file, m_encoding)
 
                 Call run(reader)
             End Using
         Else
-            SyncLock __bufferedReader
-                Call run(__bufferedReader)
-                Call __bufferedReader.Seek(Scan0, SeekOrigin.Begin)
+            SyncLock m_bufferedReader
+                Call run(m_bufferedReader)
+                Call m_bufferedReader.Seek(Scan0, SeekOrigin.Begin)
             End SyncLock
         End If
     End Sub
@@ -147,8 +169,8 @@ Public Class ReaderProvider
         If Not Me.disposedValue Then
             If disposing Then
                 ' TODO: dispose managed state (managed objects).
-                If Not __bufferedReader Is Nothing Then
-                    Call __bufferedReader.Dispose()
+                If Not m_bufferedReader Is Nothing Then
+                    Call m_bufferedReader.Dispose()
                 End If
             End If
 
@@ -173,4 +195,30 @@ Public Class ReaderProvider
         ' GC.SuppressFinalize(Me)
     End Sub
 #End Region
+End Class
+
+Public Class FieldAttribute : Inherits Field
+
+    Public Property N As Integer
+
+    Public ReadOnly Property ReadArray As Boolean
+        Get
+            Return N > 0
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ordinal">The ordinal position in the rawdata layout</param>
+    ''' <param name="n">for array used only, means array length to read, default negative means scalar</param>
+    Sub New(ordinal As Integer, Optional n As Integer = -1)
+        Call MyBase.New(ordinal)
+
+        Me.N = n
+    End Sub
+
+    Public Function Read(buf As BinaryDataReader, p As PropertyInfo) As Object
+
+    End Function
 End Class
