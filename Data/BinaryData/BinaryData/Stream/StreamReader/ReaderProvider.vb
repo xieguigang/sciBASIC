@@ -118,6 +118,11 @@ Public Class ReaderProvider : Implements IDisposable
         m_bufferedReader = New BinaryDataReader(buf, m_encoding)
     End Sub
 
+    Sub New(read As BinaryDataReader)
+        m_encoding = read.Encoding
+        m_bufferedReader = read
+    End Sub
+
     ''' <summary>
     ''' 
     ''' </summary>
