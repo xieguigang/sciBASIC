@@ -53,7 +53,7 @@ Public Class FieldAttribute : Inherits Field
             Dim chars As Char() = buf.ReadChars(N)
             Dim si As New String(chars)
 
-            Return si
+            Return Strings.Trim(si)
         Else
             ' read scalar
             Return ReaderProvider.ReadScalar(code)(buf)
