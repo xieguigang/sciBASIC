@@ -53,6 +53,8 @@ Public Class FieldAttribute : Inherits Field
             Dim chars As Char() = buf.ReadChars(N)
             Dim si As New String(chars)
 
+            ' fix length string may contains ZERO bytes
+            ' removes it
             Return Strings.Trim(si).Trim(vbNullChar)
         Else
             ' read scalar
