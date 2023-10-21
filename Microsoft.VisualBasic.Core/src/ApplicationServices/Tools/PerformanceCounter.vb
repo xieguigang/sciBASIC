@@ -14,6 +14,10 @@ Namespace ApplicationServices
             End Get
         End Property
 
+        ''' <summary>
+        ''' reset the counter
+        ''' </summary>
+        ''' <returns></returns>
         <DebuggerStepThrough>
         Public Function [Set]() As PerformanceCounter
             t0 = Now
@@ -22,15 +26,22 @@ Namespace ApplicationServices
             Return Me
         End Function
 
-        Public Sub Mark(title As String)
-            spans.Add(New TimeCounter With {
+        ''' <summary>
+        ''' create a checkpoint
+        ''' </summary>
+        ''' <param name="title"></param>
+        Public Function Mark(title As String) As TimeCounter
+            Dim _checkpoint As New TimeCounter With {
                 .task = title,
                 .start = checkpoint,
                 .span0 = Now - t0,
                 .span1 = Now - checkpoint
-            })
+            }
+            spans.Add(_checkpoint)
             checkpoint = Now
-        End Sub
+
+            Return _checkpoint
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetCounters() As IEnumerable(Of TimeCounter)

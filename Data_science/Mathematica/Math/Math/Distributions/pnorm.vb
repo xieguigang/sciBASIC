@@ -341,7 +341,7 @@ Namespace Distributions
         ''' <param name="m#"></param>
         ''' <param name="sd#"></param>
         ''' <returns></returns>
-        Public Function TrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
+        Private Function TrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
             Dim dx As Double = (b - a) / resolution
             Dim a1 As Double = ProbabilityDensity(a, m, sd)
             Dim b1 As Double = ProbabilityDensity(b, m, sd)

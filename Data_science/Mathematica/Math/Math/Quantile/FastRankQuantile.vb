@@ -89,6 +89,8 @@ Namespace Quantile
 
             If i >= data.Length Then
                 Return max
+            ElseIf i < 0 Then
+                Return min
             Else
                 Return data(i)
             End If

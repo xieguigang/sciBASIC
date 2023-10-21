@@ -516,6 +516,12 @@ Namespace FileSystem
             )
         End Function
 
+        Public Shared Function OpenReadOnly(filepath As String) As StreamPack
+            Dim stream As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim pack As New StreamPack(stream, [readonly]:=True)
+            Return pack
+        End Function
+
         ''' <summary>
         ''' just write stream header data
         ''' </summary>

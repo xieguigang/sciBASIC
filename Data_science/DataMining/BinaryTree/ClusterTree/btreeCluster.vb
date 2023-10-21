@@ -91,8 +91,17 @@ Public Class BTreeCluster : Implements INamedValue
         End If
 
         If Not compares Is Nothing Then
-            data = New Dictionary(Of String, Object) From {{btree.Key, compares.GetObject(btree.Key)}}
-            btree.Members.SafeQuery.DoEach(Function(id) data(id) = compares.GetObject(id))
+            ' add root
+            data = New Dictionary(Of String, Object) From {
+                {btree.Key, compares.GetObject(btree.Key)}
+            }
+            ' and then add members
+            btree.Members _
+                .SafeQuery _
+                .DoEach(Sub(id)
+                            ' assign members to the result collection
+                            data(id) = compares.GetObject(id)
+                        End Sub)
         End If
 
         Return New BTreeCluster With {

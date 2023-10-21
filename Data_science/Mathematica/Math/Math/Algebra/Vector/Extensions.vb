@@ -126,7 +126,7 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' 默认返回目标长度的``[0-1]``之间的随机数向量
         ''' </summary>
-        ''' <param name="size%"></param>
+        ''' <param name="size">the length of the result vector, or n lements</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.

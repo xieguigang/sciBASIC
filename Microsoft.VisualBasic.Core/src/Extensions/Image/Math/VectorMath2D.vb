@@ -66,10 +66,6 @@ Namespace Imaging.Math2D
             Return New Vector2D(paramVector2D1.x - paramVector2D2.x, paramVector2D1.y - paramVector2D2.y)
         End Function
 
-        Public Shared Function length(paramVector2D As Vector2D) As Double
-            Return stdNum.Sqrt(paramVector2D.x * paramVector2D.x + paramVector2D.y * paramVector2D.y)
-        End Function
-
         Public Shared Function absAngle(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
             Dim d1 As Double = paramVector2D1.Length()
             Dim d2 As Double = paramVector2D2.Length()

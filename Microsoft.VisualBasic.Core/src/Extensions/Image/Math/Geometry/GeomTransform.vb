@@ -59,7 +59,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports stdNum = System.Math
 
 Namespace Imaging.Math2D
@@ -215,7 +214,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <ExportAPI("Offset")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, offset As Point) As Point
+        <Extension>
+        Public Function OffSet2D(p As Point, offset As Point) As Point
             Return p.OffSet2D(offset.PointF)
         End Function
 
@@ -227,7 +227,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <ExportAPI("Offset")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, offset As PointF) As Point
+        <Extension>
+        Public Function OffSet2D(p As Point, offset As PointF) As Point
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
@@ -324,7 +325,7 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(x1#, y1#, x2#, y2#) As Double
-            Return stdNum.Sqrt(stdNum.Pow(x1 - x2, 2) + stdNum.Pow(y1 - y2, 2))
+            Return stdNum.Sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
         End Function
 
         ''' <summary>
@@ -400,7 +401,8 @@ Namespace Imaging.Math2D
         ''' <param name="p2"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
+        <Extension>
+        Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
             Dim a = stdNum.Atan2(yDiff, xDiff) * 180.0 / PI
@@ -415,7 +417,8 @@ Namespace Imaging.Math2D
         ''' <param name="p2"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+        <Extension>
+        Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Return CalculateAngle(p1.PointF, p2.PointF)
         End Function
 

@@ -367,26 +367,29 @@ Namespace Layouts.EdgeBundling.Mingle
             data.mass = weight1 + weight2
 
             ans = New Node With {
-            .label = name,
-            .data = data
-        }
+                .label = name,
+                .data = data
+            }
 
             computeIntermediateNodePositions(ans)
 
             Return ans
         End Function
 
-
+        ''' <summary>
+        ''' the generated node id is assigned via the bundle object id
+        ''' </summary>
+        ''' <param name="nodes"></param>
+        ''' <returns></returns>
         Public Function coalesceNodes(nodes As Node()) As Node
             Dim node = nodes(0),
-            Data As MingleNodeData = node.data,
-            m1 = Data.m1,
-            m2 = Data.m2,
-            weight = nodes.reduce(Function(acum, n) acum + n.data.mass, 0),
-            coords As Double() = Data.coords,
-            bundle As Node = Data.bundle,
-            nodeArray As New List(Of Node)
-
+                Data As MingleNodeData = node.data,
+                m1 = Data.m1,
+                m2 = Data.m2,
+                weight = nodes.reduce(Function(acum, n) acum + n.data.mass, 0),
+                coords As Double() = Data.coords,
+                bundle As Node = Data.bundle,
+                nodeArray As New List(Of Node)
 
             If Not m1.IsNullOrEmpty Then
                 coords = {m1(0), m1(1), m2(0), m2(1)}
@@ -402,15 +405,15 @@ Namespace Layouts.EdgeBundling.Mingle
 
                 Return New Node With {
                     .ID = bundle.ID,
-                .label = bundle.label,
-                .data = New MingleNodeData With {
-                    .nodeArray = nodeArray.ToArray,
-                    .parents = nodes,
-                    .coords = coords,
-                    .mass = weight,
-                    .parentsInk = CDbl(DirectCast(bundle.data, MingleNodeData).ink)
+                    .label = bundle.label,
+                    .data = New MingleNodeData With {
+                        .nodeArray = nodeArray.ToArray,
+                        .parents = nodes,
+                        .coords = coords,
+                        .mass = weight,
+                        .parentsInk = CDbl(DirectCast(bundle.data, MingleNodeData).ink)
+                    }
                 }
-            }
             End If
 
             Return nodes(0)
@@ -445,7 +448,7 @@ Namespace Layouts.EdgeBundling.Mingle
                 n.eachEdge(checkConnection)
                 graph.RemoveNode(n.label)
             Next
-            graph.AddNode(groupedNode)
+            graph.AddNode(groupedNode, assignId:=False)
             For i As Integer = 0 To connections.Count - 1
                 graph.AddEdge(groupedNode, connections(i))
             Next

@@ -437,6 +437,26 @@ Namespace ComponentModel.Collection
             Return Not index = count
         End Operator
 
+        ''' <summary>
+        ''' The element count inside current index object greater than the given <paramref name="count"/>?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator >(index As Index(Of T), count%) As Boolean
+            Return index.Count > count
+        End Operator
+
+        ''' <summary>
+        ''' The element count inside current index object smaller than the given <paramref name="count"/>?
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <param name="count%"></param>
+        ''' <returns></returns>
+        Public Shared Operator <(index As Index(Of T), count%) As Boolean
+            Return index.Count < count
+        End Operator
+
         Public Shared Operator IsTrue(index As Index(Of T)) As Boolean
             If index Is Nothing Then
                 Return False
