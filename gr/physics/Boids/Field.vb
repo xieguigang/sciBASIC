@@ -1,6 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports Microsoft.VisualBasic.Parallel
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Boids
 
@@ -14,36 +13,62 @@ Namespace Boids
         Public ReadOnly Width As Double
         Public ReadOnly Height As Double
         Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
-        Private ReadOnly Rand As Random = New Random()
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
 
             For i = 0 To boidCount - 1
-                Boids.Add(New Boid(Rand, width, height))
+                Boids.Add(New Boid(randf.seeds, width, height))
             Next
+
+            task = New PhysicTask(Me)
         End Sub
 
-        Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
-            Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing, alignXvel As Double = Nothing, alignYvel As Double = Nothing, avoidXvel As Double = Nothing, avoidYvel As Double = Nothing, predXvel As Double = Nothing, predYval As Double = Nothing
-            ' update void speed and direction (velocity) based on rules
-            For Each boid In Boids
-                Flock(boid, 50, 0.0003).Set(flockXvel, flockYvel)
-                Align(boid, 50, 0.01).Set(alignXvel, alignYvel)
-                Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
-                Predator(boid, 150, 0.00005).Set(predXvel, predYval)
+        Dim task As PhysicTask
 
-                boid.Xvel += flockXvel + avoidXvel + alignXvel + predXvel
-                boid.Yvel += flockYvel + avoidYvel + alignYvel + predYval
-            Next
+        Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
+            Call task.Run()
 
             ' move all boids forward in time
+            ' just update the fields of each boid
             For Each boid In Boids
                 boid.MoveForward()
                 If bounceOffWalls Then Me.BounceOffWalls(boid)
                 If wrapAroundEdges Then WrapAround(boid)
             Next
         End Sub
+
+        Private Class PhysicTask : Inherits VectorTask
+
+            ReadOnly field As Field
+            ReadOnly boids As List(Of Boid)
+
+            Sub New(field As Field)
+                Call MyBase.New(field.Boids.Count)
+                Me.field = field
+                Me.boids = field.Boids
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+                Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing,
+               alignXvel As Double = Nothing, alignYvel As Double = Nothing,
+               avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,
+               predXvel As Double = Nothing, predYval As Double = Nothing
+
+                ' update void speed and direction (velocity) based on rules
+                For i As Integer = start To ends
+                    Dim boid As Boid = boids(i)
+
+                    field.Flock(boid, 50, 0.0003).Set(flockXvel, flockYvel)
+                    field.Align(boid, 50, 0.01).Set(alignXvel, alignYvel)
+                    field.Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
+                    field.Predator(boid, 150, 0.00005).Set(predXvel, predYval)
+
+                    boid.Xvel += flockXvel + avoidXvel + alignXvel + predXvel
+                    boid.Yvel += flockYvel + avoidYvel + alignYvel + predYval
+                Next
+            End Sub
+        End Class
 
         Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
