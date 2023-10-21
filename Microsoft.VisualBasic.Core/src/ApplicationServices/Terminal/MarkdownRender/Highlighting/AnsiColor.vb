@@ -1,4 +1,5 @@
 ﻿Imports System.Globalization
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace ApplicationServices.Terminal
@@ -86,7 +87,7 @@ Namespace ApplicationServices.Terminal
             Return friendlyName
         End Function
 
-        Public Shared Function TryParse(ByVal input As String, <System.Runtime.InteropServices.Out()> ByRef result As AnsiColor) As Boolean
+        Public Shared Function TryParse(ByVal input As String, <Out()> ByRef result As AnsiColor) As Boolean
             If PromptConfiguration.HasUserOptedOutFromColor Then
                 result = White
                 Return True

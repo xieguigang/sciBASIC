@@ -32,9 +32,6 @@
 			Me.Inverted = Inverted
 		End Sub
 
-		'INSTANT VB TODO TASK: Instant VB has no equivalent to readonly methods:
-		'ORIGINAL LINE: public readonly bool Equals(in ConsoleFormat other)
-		'INSTANT VB WARNING: VB has no equivalent to C# 'in' parameters, so they will convert the same as by value parameters:
 		Public Overloads Function Equals(ByVal other As ConsoleFormat) As Boolean
 			'this is hot from IncrementalRendering.CalculateDiff, so we want to use custom Equals where 'other' is by-ref
 			Return Foreground = other.Foreground AndAlso Background = other.Background AndAlso Bold = other.Bold AndAlso Underline = other.Underline AndAlso Inverted = other.Inverted
