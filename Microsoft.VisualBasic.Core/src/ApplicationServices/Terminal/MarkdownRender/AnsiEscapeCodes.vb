@@ -2,6 +2,27 @@
 
 Namespace ApplicationServices.Terminal
 
+	''' <summary>
+	''' https://en.wikipedia.org/wiki/ANSI_escape_code
+	''' 
+	''' ANSI escape sequences are a standard for in-band signaling to control 
+	''' cursor location, color, font styling, and other options on video text 
+	''' terminals and terminal emulators. Certain sequences of bytes, most 
+	''' starting with an ASCII escape character and a bracket character, are
+	''' embedded into text. The terminal interprets these sequences as commands,
+	''' rather than text to display verbatim.
+	''' 
+	''' ANSI sequences were introduced In the 1970S To replace vendor-specific 
+	''' sequences And became widespread In the computer equipment market by 
+	''' the early 1980S. They are used In development, scientific, commercial 
+	''' text-based applications As well As bulletin board systems To offer 
+	''' standardized functionality.
+	''' 
+	''' Although hardware text terminals have become increasingly rare In the 
+	''' 21St century, the relevance Of the ANSI standard persists because a great
+	''' majority Of terminal emulators And command consoles interpret at least
+	''' a portion Of the ANSI standard.
+	''' </summary>
 	Public Module AnsiEscapeCodes
 		Private Const EscapeChar As Char = ChrW(&H1B)
 		Private Const Escape As String = ChrW(&H1B)
