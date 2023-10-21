@@ -25,47 +25,44 @@ Namespace Boids.Viewer
         ''' the contents of this method with the code editor.
         ''' </summary>
         Private Sub InitializeComponent()
-            components = New ComponentModel.Container()
-            pictureBox1 = New Windows.Forms.PictureBox()
-            timer1 = New Windows.Forms.Timer(components)
-            CType(pictureBox1, ComponentModel.ISupportInitialize).BeginInit()
-            SuspendLayout()
-            ' 
-            ' pictureBox1
-            ' 
-            pictureBox1.BackColor = Drawing.Color.Purple
-            pictureBox1.Dock = Windows.Forms.DockStyle.Fill
-            pictureBox1.Location = New Drawing.Point(0, 0)
-            pictureBox1.Name = "pictureBox1"
-            pictureBox1.Size = New Drawing.Size(584, 361)
-            pictureBox1.TabIndex = 0
-            pictureBox1.TabStop = False
-            AddHandler pictureBox1.SizeChanged, New EventHandler(AddressOf pictureBox1_SizeChanged)
-            AddHandler pictureBox1.Click, New EventHandler(AddressOf pictureBox1_Click)
-            ' 
-            ' timer1
-            ' 
-            timer1.Enabled = True
-            timer1.Interval = 1
-            AddHandler timer1.Tick, New EventHandler(AddressOf timer1_Tick)
-            ' 
-            ' Form2
-            ' 
-            AutoScaleDimensions = New Drawing.SizeF(6.0F, 13.0F)
-            AutoScaleMode = Windows.Forms.AutoScaleMode.Font
-            ClientSize = New Drawing.Size(584, 361)
-            Controls.Add(pictureBox1)
-            Name = "Form2"
-            StartPosition = Windows.Forms.FormStartPosition.CenterScreen
-            Text = "Boids - C# Data Visualization"
-            CType(pictureBox1, ComponentModel.ISupportInitialize).EndInit()
-            ResumeLayout(False)
+            Me.components = New System.ComponentModel.Container()
+            Me.pictureBox1 = New System.Windows.Forms.PictureBox()
+            Me.timer1 = New System.Windows.Forms.Timer(Me.components)
+            CType(Me.pictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.SuspendLayout()
+            '
+            'pictureBox1
+            '
+            Me.pictureBox1.BackColor = System.Drawing.Color.Purple
+            Me.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.pictureBox1.Location = New System.Drawing.Point(0, 0)
+            Me.pictureBox1.Name = "pictureBox1"
+            Me.pictureBox1.Size = New System.Drawing.Size(980, 606)
+            Me.pictureBox1.TabIndex = 0
+            Me.pictureBox1.TabStop = False
+            '
+            'timer1
+            '
+            Me.timer1.Enabled = True
+            Me.timer1.Interval = 1
+            '
+            'Form2
+            '
+            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+            Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.ClientSize = New System.Drawing.Size(980, 606)
+            Me.Controls.Add(Me.pictureBox1)
+            Me.Name = "Form2"
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+            Me.Text = "Boids - C# Data Visualization"
+            CType(Me.pictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.ResumeLayout(False)
 
         End Sub
 
 #End Region
 
-        Private pictureBox1 As Windows.Forms.PictureBox
-        Private timer1 As Windows.Forms.Timer
+        Private WithEvents pictureBox1 As Windows.Forms.PictureBox
+        Private WithEvents timer1 As Windows.Forms.Timer
     End Class
 End Namespace

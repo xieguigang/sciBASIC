@@ -21,6 +21,7 @@ Namespace Boids
                 Boids.Add(New Boid(randf.seeds, width, height))
             Next
 
+            VectorTask.n_threads = App.CPUCoreNumbers
             task = New PhysicTask(Me)
         End Sub
 
