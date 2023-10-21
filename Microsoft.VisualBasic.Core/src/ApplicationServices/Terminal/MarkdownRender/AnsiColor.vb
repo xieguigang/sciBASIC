@@ -87,20 +87,29 @@ Namespace ApplicationServices.Terminal
             Return friendlyName
         End Function
 
-        Public Shared Function TryParse(ByVal input As String, <Out()> ByRef result As AnsiColor) As Boolean
-            If PromptConfiguration.HasUserOptedOutFromColor Then
+        Public Shared Function TryParse(ByVal input As String, <Out()> ByRef result As AnsiColor, Optional HasUserOptedOutFromColor As Boolean = False) As Boolean
+            If HasUserOptedOutFromColor Then
                 result = White
                 Return True
             End If
 
-            Dim span = input.AsSpan()
             Dim r As Byte
             Dim g As Byte
             Dim b As Byte
-            If input.StartsWith("#"c) AndAlso span.Length = 7 AndAlso Byte.TryParse(span.Slice(1, 2), NumberStyles.AllowHexSpecifier, Nothing, r) AndAlso Byte.TryParse(span.Slice(3, 2), NumberStyles.AllowHexSpecifier, Nothing, g) AndAlso Byte.TryParse(span.Slice(5, 2), NumberStyles.AllowHexSpecifier, Nothing, b) Then
+
+#If NETCOREAPP Then
+            Dim span = input.AsSpan()
+
+            If input.StartsWith("#"c) AndAlso span.Length = 7 AndAlso
+                Byte.TryParse(span.Slice(1, 2), NumberStyles.AllowHexSpecifier, Nothing, r) AndAlso
+                Byte.TryParse(span.Slice(3, 2), NumberStyles.AllowHexSpecifier, Nothing, g) AndAlso
+                Byte.TryParse(span.Slice(5, 2), NumberStyles.AllowHexSpecifier, Nothing, b) Then
                 result = Rgb(r, g, b)
                 Return True
             End If
+#Else
+            Throw New NotImplementedException
+#End If
 
             Dim color As AnsiColor
             If ansiColorNames.TryGetValue(input, color) Then
