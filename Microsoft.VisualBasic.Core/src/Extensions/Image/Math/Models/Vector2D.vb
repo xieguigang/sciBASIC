@@ -60,13 +60,26 @@ Imports stdNum = System.Math
 Namespace Imaging.Math2D
 
     ''' <summary>
-    ''' <see cref="Drawing.PointF"/>
+    ''' <see cref="Drawing.PointF"/>, basic model for physical simulator
     ''' </summary>
     Public Class Vector2D : Implements Layout2D
 
+        ''' <summary>
+        ''' position x
+        ''' </summary>
+        ''' <returns></returns>
         Public Property x As Double Implements Layout2D.X
+
+        ''' <summary>
+        ''' position y
+        ''' </summary>
+        ''' <returns></returns>
         Public Property y As Double Implements Layout2D.Y
 
+        ''' <summary>
+        ''' distance to zero [0,0]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Length As Double
             Get
                 Return stdNum.Sqrt(x ^ 2 + y ^ 2)
