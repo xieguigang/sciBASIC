@@ -37,7 +37,7 @@ Namespace Boids.Viewer
             Me.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.pictureBox1.Location = New System.Drawing.Point(0, 0)
             Me.pictureBox1.Name = "pictureBox1"
-            Me.pictureBox1.Size = New System.Drawing.Size(980, 606)
+            Me.pictureBox1.Size = New System.Drawing.Size(1107, 665)
             Me.pictureBox1.TabIndex = 0
             Me.pictureBox1.TabStop = False
             '
@@ -50,7 +50,7 @@ Namespace Boids.Viewer
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(980, 606)
+            Me.ClientSize = New System.Drawing.Size(1107, 665)
             Me.Controls.Add(Me.pictureBox1)
             Me.Name = "Form2"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
