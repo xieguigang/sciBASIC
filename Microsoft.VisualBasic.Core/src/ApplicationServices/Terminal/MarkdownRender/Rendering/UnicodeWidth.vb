@@ -60,21 +60,15 @@
 ' *
 ' * Latest version: http://www.cl.cam.ac.uk/~mgk25/ucs/wcwidth.c
 ' 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 
 Namespace ApplicationServices.Terminal
 
 	Public Module UnicodeWidth
-		'INSTANT VB WARNING: VB has no equivalent to the C# readonly struct:
-		'ORIGINAL LINE: private readonly struct Interval
+
 		Private Structure Interval
 			Public ReadOnly Property First() As Integer
 			Public ReadOnly Property Last() As Integer
 
-			'INSTANT VB NOTE: The variable first was renamed since Visual Basic does not handle local variables named the same as class members well:
-			'INSTANT VB NOTE: The variable last was renamed since Visual Basic does not handle local variables named the same as class members well:
 			Public Sub New(ByVal first_Conflict As Integer, ByVal last_Conflict As Integer)
 				Me.First = first_Conflict
 				Me.Last = last_Conflict
@@ -310,17 +304,38 @@ Namespace ApplicationServices.Terminal
 			End If
 
 			'PrettyPrompt's correction
-			Dim tempVar As Boolean = TypeOf character Is &H26AA
-		Dim [or] As &H26AA = If(tempVar, CType(character, &H26AA), Nothing)
-		If CInt(tempVar &H26AB) [or] &H2B55 [or] &H26A1 [or] &H2B1B [or] &H2B1C [or] &H274C [or] &H2705 Then
+			Dim tempVar As Integer = AscW(character)
+
+			If tempVar = &H26AA Or ' ⚫
+				tempVar = &H26AB Or '⚪
+				tempVar = &H2B55 Or' ⭕
+				tempVar = &H26A1 Or' ⚡
+				tempVar = &H2B1B Or'⬛
+				tempVar = &H2B1C Or'⬜
+				tempVar = &H274C Or'❌
+				tempVar = &H2705 Then '✅
+
 				Return 2
 			End If
 
 			' if we arrive here, ucs is not a combining or C0/C1 control character 
-			Return If(AscW(character) >= &H1100 AndAlso (AscW(character) <= &H115F OrElse AscW(character) = &H2329 OrElse AscW(character) = &H232A OrElse (AscW(character) >= &H2E80 AndAlso AscW(character) <= &HA4CF AndAlso AscW(character) <> &H303F) OrElse (AscW(character) >= &HAC00 AndAlso AscW(character) <= &HD7A3) OrElse (AscW(character) >= &HF900 AndAlso AscW(character) <= &HFAFF) OrElse (AscW(character) >= &HFE10 AndAlso AscW(character) <= &HFE19) OrElse (AscW(character) >= &HFE30 AndAlso AscW(character) <= &HFE6F) OrElse (AscW(character) >= &HFF00 AndAlso AscW(character) <= &HFF60) OrElse (AscW(character) >= &HFFE0 AndAlso AscW(character) <= &HFFE6) OrElse (AscW(character) >= &H20000 AndAlso AscW(character) <= &H2FFFD) OrElse (AscW(character) >= &H30000 AndAlso AscW(character) <= &H3FFFD)), 2, 1)
+			Return If(AscW(character) >= &H1100 AndAlso
+				(AscW(character) <= &H115F OrElse ' Hangul Jamo init. consonants 
+				AscW(character) = &H2329 OrElse AscW(character) = &H232A OrElse
+				(AscW(character) >= &H2E80 AndAlso AscW(character) <= &HA4CF AndAlso
+				AscW(character) <> &H303F) OrElse ' CJK ... Yi
+				(AscW(character) >= &HAC00 AndAlso AscW(character) <= &HD7A3) OrElse ' Hangul Syllables
+				(AscW(character) >= &HF900 AndAlso AscW(character) <= &HFAFF) OrElse ' CJK Compatibility Ideographs
+				(AscW(character) >= &HFE10 AndAlso AscW(character) <= &HFE19) OrElse ' Vertical forms
+				(AscW(character) >= &HFE30 AndAlso AscW(character) <= &HFE6F) OrElse ' CJK Compatibility Forms
+				(AscW(character) >= &HFF00 AndAlso AscW(character) <= &HFF60) OrElse ' Fullwidth Forms
+				(AscW(character) >= &HFFE0 AndAlso AscW(character) <= &HFFE6) OrElse
+				(AscW(character) >= &H20000 AndAlso AscW(character) <= &H2FFFD) OrElse
+				(AscW(character) >= &H30000 AndAlso AscW(character) <= &H3FFFD)),
+				2, 1)
 		End Function
 
-		Public Function GetWidth(ByVal text As ReadOnlySpan(Of Char)) As Integer
+		Public Function GetWidth(ByVal text As String) As Integer
 			Dim width As Integer = 0
 			For i As Integer = 0 To text.Length - 1
 				Dim w As Integer = GetWidth(text(i))
