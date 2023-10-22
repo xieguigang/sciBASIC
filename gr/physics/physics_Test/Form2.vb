@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Drawing
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Physics.Boids
 Imports Microsoft.VisualBasic.Parallel
 
@@ -15,6 +16,8 @@ Namespace Boids.Viewer
         Public Sub New()
             InitializeComponent()
             Reset()
+
+            Size = New Size(1920, 1080)
         End Sub
 
         Private Sub pictureBox1_SizeChanged(sender As Object, e As EventArgs) Handles pictureBox1.SizeChanged
@@ -25,7 +28,7 @@ Namespace Boids.Viewer
         End Sub
         Private Sub Reset()
             VectorTask.n_threads = 12
-            field = New Field(pictureBox1.Width, pictureBox1.Height, 15000)
+            field = New Field(pictureBox1.Width, pictureBox1.Height, 10000)
         End Sub
 
         Private Sub timer1_Tick(sender As Object, e As EventArgs) Handles timer1.Tick
