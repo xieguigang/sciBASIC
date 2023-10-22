@@ -10,6 +10,7 @@ Public Class Form3
     Public velocity As Vector2()
     Public particleSize As Single = 20
     Public collisionDamping As Single = 0.99
+    Public smoothingRadius As Single = 100
 
     Public ReadOnly Property deltaTime As Single
         Get
@@ -26,6 +27,25 @@ Public Class Form3
         Next
     End Sub
 
+    Public Function smoothingKernel(radius As Single, dst As Single) As Single
+        Dim volume = PI * radius ^ 8 / 4
+        Dim value = Max(0, radius ^ 2 - dst ^ 2)
+        Return value ^ 3 / volume
+    End Function
+
+    Public Function CalculateDensity(samplePoint As Vector2) As Single
+        Dim density As Single = 0
+        Dim mass As Single = 1
+
+        For Each position As Vector2 In Me.position
+            Dim dst = (position - samplePoint).magnitude
+            Dim influence = smoothingKernel(smoothingRadius, dst)
+
+            density += mass * influence
+        Next
+
+        Return density
+    End Function
 
     Private Sub ResolveCollisions(i As Integer)
         If position(i).x > Width - particleSize OrElse position(i).x < particleSize Then

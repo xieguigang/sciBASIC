@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports System.Math
 
 Public Class Vector2 : Inherits Vector2D
 
@@ -22,6 +23,12 @@ Public Class Vector2 : Inherits Vector2D
     Public Shared ReadOnly Property one As Vector2
         Get
             Return New Vector2(1, 1)
+        End Get
+    End Property
+
+    Public ReadOnly Property magnitude As Double
+        Get
+            Return Sqrt(x ^ 2 - y ^ 2)
         End Get
     End Property
 
@@ -55,5 +62,10 @@ Public Class Vector2 : Inherits Vector2D
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Operator -(n As Double, v As Vector2) As Vector2
         Return New Vector2(n - v.x, n - v.y)
+    End Operator
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Shared Operator -(a As Vector2, b As Layout2D) As Vector2
+        Return New Vector2(a.x - b.X, a.y - b.Y)
     End Operator
 End Class
