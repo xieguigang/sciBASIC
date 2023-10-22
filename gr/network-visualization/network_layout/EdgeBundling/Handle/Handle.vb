@@ -57,7 +57,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts.EdgeBundling
+Namespace EdgeBundling
 
     ' 20200610
     ' 在计算三角函数的时候似乎误差非常大

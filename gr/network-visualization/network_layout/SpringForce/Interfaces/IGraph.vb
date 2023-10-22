@@ -89,7 +89,7 @@
 '
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts.SpringForce.Interfaces
+Namespace SpringForce.Interfaces
 
     Public Interface IGraphEventListener
 

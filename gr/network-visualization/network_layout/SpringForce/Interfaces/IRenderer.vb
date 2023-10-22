@@ -92,7 +92,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 
-Namespace Layouts.SpringForce.Interfaces
+Namespace SpringForce.Interfaces
 
     Public Interface IRenderer
 

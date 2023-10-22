@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     ''' <summary>
     ''' 依据节点度值的大小对每一个节点动态生产排斥力权重：

@@ -54,7 +54,7 @@
 
 #End Region
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     Public Enum Algorithms
         Plain

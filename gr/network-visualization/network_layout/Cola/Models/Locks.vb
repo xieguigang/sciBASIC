@@ -52,7 +52,7 @@
 
 #End Region
 
-Namespace Layouts.Cola
+Namespace Cola
 
     ''' <summary>
     ''' Descent respects a collection of locks over nodes that should not move

@@ -69,7 +69,7 @@ Imports any = System.Object
 Imports number = System.Double
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class packingOptions
         Public PADDING As Integer = 10

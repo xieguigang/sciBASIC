@@ -79,7 +79,7 @@ Imports any = System.Object
 Imports number = System.Double
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class GridRouter(Of Node)
 

@@ -75,7 +75,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports GridIndex = Microsoft.VisualBasic.Data.GraphTheory.GridGraph.Grid
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace Layouts.Orthogonal
+Namespace Orthogonal
 
     Public Class GridCell : Inherits GridCell(Of Node)
 

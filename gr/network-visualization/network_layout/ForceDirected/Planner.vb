@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     ''' <summary>
     ''' 力导向原始算法代码

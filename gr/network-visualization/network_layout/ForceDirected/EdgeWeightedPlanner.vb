@@ -55,7 +55,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     ''' <summary>
     ''' 力导向+边权重：边权重越大，两个节点的引力越大

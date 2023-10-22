@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Layouts.Cola
+Namespace Cola
 
     ''' <summary>
     ''' 这个模块是对外开放网络布局生成的计算函数的接口

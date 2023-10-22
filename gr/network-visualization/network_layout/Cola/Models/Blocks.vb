@@ -58,7 +58,7 @@
 
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Blocks : Implements IEnumerable(Of Block)
 

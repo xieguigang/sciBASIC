@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports stdNum = System.Math
 
-Namespace Layouts.Orthogonal
+Namespace Orthogonal
 
     ''' <summary>
     ''' The algorithm math helper module

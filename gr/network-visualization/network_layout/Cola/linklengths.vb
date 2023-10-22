@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Module linkLengthExtensions
 

@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Layouts.EdgeBundling.Mingle
+Namespace EdgeBundling.Mingle
 
     Public Class MingleNodeData : Inherits NodeData
 

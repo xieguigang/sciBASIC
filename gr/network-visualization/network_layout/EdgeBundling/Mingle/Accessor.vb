@@ -55,7 +55,7 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
 Imports stdNum = System.Math
 
-Namespace Layouts.EdgeBundling.Mingle
+Namespace EdgeBundling.Mingle
 
     Public Class Accessor : Inherits KdNodeAccessor(Of GraphKdNode)
 

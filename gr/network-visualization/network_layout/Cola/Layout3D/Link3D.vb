@@ -54,7 +54,7 @@
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Link3D
 

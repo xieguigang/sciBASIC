@@ -102,7 +102,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfa
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     Public MustInherit Class ForceDirected(Of Vector As IVector)
         Implements IForceDirected

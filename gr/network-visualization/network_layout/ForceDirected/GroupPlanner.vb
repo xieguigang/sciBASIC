@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     ''' <summary>
     ''' 这个模块之中的方法会尽量让相同类型分组的节点聚集在一块

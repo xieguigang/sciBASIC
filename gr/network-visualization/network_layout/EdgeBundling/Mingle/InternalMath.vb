@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports number = System.Double
 Imports stdNum = System.Math
 
-Namespace Layouts.EdgeBundling.Mingle
+Namespace EdgeBundling.Mingle
 
     Public Module InternalMath
 

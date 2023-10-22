@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Projection(Of GraphNode As IGraphNode)
 

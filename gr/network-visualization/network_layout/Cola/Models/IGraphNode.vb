@@ -53,7 +53,7 @@
 
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Layouts.Cola
+Namespace Cola
 
     ''' <summary>
     ''' The common type interface that will be used in <see cref="Projection"/>

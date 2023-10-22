@@ -100,7 +100,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     ''' <summary>
     ''' The position of the node object in the fdg data model.

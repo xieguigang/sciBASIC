@@ -80,7 +80,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class PolyPoint : Inherits Point2D
 

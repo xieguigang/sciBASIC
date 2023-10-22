@@ -59,7 +59,7 @@
 
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Block
         Public ps As PositionStats

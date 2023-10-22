@@ -53,7 +53,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     Public Class ForceDirected3D
         Inherits ForceDirected(Of FDGVector3)

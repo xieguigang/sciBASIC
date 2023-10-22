@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Module ProjectionExtensions
 

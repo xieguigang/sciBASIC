@@ -50,7 +50,7 @@
 
 #End Region
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Node3D : Inherits Node
 

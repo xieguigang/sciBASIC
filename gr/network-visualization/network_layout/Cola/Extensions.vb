@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Leaf : Inherits JavaScriptObject
         Public Overridable Property bounds As Rectangle2D
@@ -120,12 +120,12 @@ Namespace Layouts.Cola
         End Function
 
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
-            g.bounds = If(Not g.leaves Is Nothing, g.leaves.Reduce(Function(r As Rectangle2D, C As Leaf)
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Function(r As Rectangle2D, C As Leaf)
                                                                        Return C.bounds.Union(r)
                                                                    End Function, New Rectangle2D()), New Rectangle2D())
 
             If Not g.groups Is Nothing Then
-                g.bounds = g.groups.Reduce(Function(r As Rectangle2D, C As ProjectionGroup)
+                g.bounds = g.groups.reduce(Function(r As Rectangle2D, C As ProjectionGroup)
                                                Return computeGroupBounds(C).Union(r)
                                            End Function, g.bounds)
             End If

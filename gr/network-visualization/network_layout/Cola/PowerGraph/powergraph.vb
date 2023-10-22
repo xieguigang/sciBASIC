@@ -60,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Interface network
 

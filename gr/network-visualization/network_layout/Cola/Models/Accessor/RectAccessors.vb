@@ -53,7 +53,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class RectAccessors
         Public getCentre As Func(Of Rectangle2D, Double)

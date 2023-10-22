@@ -78,7 +78,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports number = System.Double
 
-Namespace Layouts.Cola
+Namespace Cola
 
     ''' <summary>
     ''' An object with three point properties, the intersection with the

@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Orthogonal
+Namespace Orthogonal
 
     Public Module Router
 

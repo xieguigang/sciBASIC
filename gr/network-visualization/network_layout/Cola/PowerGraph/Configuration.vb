@@ -63,7 +63,7 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Configuration(Of Link)
 

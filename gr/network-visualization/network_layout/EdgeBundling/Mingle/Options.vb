@@ -52,7 +52,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts.EdgeBundling.Mingle
+Namespace EdgeBundling.Mingle
 
     Public Class Options
 

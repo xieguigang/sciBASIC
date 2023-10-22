@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
-Namespace Layouts.Radial
+Namespace Radial
 
     Public Module RadialLayout
 

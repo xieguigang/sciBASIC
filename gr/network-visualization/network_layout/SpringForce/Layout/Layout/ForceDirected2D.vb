@@ -53,7 +53,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     ''' <summary>
     ''' Layout provider engine for the 2D network graphics.

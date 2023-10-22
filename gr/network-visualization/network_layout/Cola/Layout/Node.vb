@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.My.JavaScript
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class InputNode : Inherits JavaScriptObject
 

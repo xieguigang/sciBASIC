@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.My.JavaScript
 Imports number = System.Double
 Imports stdNum = System.Math
 
-Namespace Layouts.EdgeBundling.Mingle
+Namespace EdgeBundling.Mingle
 
     'bundle = New Bundler({
     '  angleStrength: angleStrength

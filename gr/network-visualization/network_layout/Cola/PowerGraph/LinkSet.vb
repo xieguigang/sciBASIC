@@ -56,7 +56,7 @@
 
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class LinkSets
 

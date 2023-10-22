@@ -60,7 +60,7 @@
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class LinkAccessor : Inherits LinkAccessor(Of Link(Of Integer))
 

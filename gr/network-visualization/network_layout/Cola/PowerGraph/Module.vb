@@ -68,7 +68,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Layouts.Cola
+Namespace Cola
 
 
     Public Class [Module]

@@ -59,7 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Solver
         Public bs As Blocks

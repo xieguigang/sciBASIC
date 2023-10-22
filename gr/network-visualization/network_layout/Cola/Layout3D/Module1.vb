@@ -54,7 +54,7 @@
 
 #End Region
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class IConstraint
         Public Property axis As String

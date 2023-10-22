@@ -50,7 +50,7 @@
 
 #End Region
 
-Namespace Layouts.EdgeBundling
+Namespace EdgeBundling
 
     <HideModuleName> Module Extensions
 

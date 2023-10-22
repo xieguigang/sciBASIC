@@ -56,7 +56,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class TangentVisibilityGraph
 

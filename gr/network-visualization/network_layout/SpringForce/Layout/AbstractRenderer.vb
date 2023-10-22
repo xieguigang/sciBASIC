@@ -94,7 +94,7 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     Public MustInherit Class AbstractRenderer
         Implements IRenderer

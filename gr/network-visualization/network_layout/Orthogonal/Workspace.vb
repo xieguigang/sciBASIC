@@ -55,7 +55,7 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
-Namespace Layouts.Orthogonal
+Namespace Orthogonal
 
     Friend Class Workspace
 

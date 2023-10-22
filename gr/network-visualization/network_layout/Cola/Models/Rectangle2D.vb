@@ -54,7 +54,7 @@
 
 Imports RectangleF = Microsoft.VisualBasic.Imaging.LayoutModel.Rectangle2D
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Rectangle2D : Inherits RectangleF
 

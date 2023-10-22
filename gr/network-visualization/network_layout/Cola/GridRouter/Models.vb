@@ -111,7 +111,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Cola.GridRouter
+Namespace Cola.GridRouter
 
     Public Class SVGRoutePath
         Public routepath As String

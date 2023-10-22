@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports geometry = Microsoft.VisualBasic.Imaging.Math2D
 Imports stdNum = System.Math
 
-Namespace Layouts.EdgeBundling
+Namespace EdgeBundling
 
     ''' <summary>
     ''' handle point creator algorithm module

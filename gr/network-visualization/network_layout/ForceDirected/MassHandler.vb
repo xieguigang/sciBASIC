@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     Public Class MassHandler
 

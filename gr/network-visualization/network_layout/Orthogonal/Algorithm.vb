@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
-Namespace Layouts.Orthogonal
+Namespace Orthogonal
 
     Public Module Algorithm
 

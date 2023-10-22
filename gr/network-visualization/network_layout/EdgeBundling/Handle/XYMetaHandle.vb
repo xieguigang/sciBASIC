@@ -55,7 +55,7 @@
 
 Imports System.Drawing
 
-Namespace Layouts.EdgeBundling
+Namespace EdgeBundling
 
     ''' <summary>
     ''' 相对于<see cref="Handle"/>模型，这个矢量模型则是单纯的以xy偏移比例来进行矢量比例缩放

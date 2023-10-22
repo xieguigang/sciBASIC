@@ -60,7 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 
-Namespace Layouts.SpringForce
+Namespace SpringForce
 
     Public Module LayoutUpdater
 

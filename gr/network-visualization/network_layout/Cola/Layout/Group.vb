@@ -50,7 +50,7 @@
 
 #End Region
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Interface Indexed
         Property id As Integer

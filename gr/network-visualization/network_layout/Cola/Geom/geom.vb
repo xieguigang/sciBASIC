@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports stdNum = System.Math
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Partial Module Extensions
 

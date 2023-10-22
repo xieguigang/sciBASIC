@@ -55,7 +55,7 @@
 
 #End Region
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Variable
 

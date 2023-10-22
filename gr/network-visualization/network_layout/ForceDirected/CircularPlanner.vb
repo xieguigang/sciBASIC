@@ -55,7 +55,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
-Namespace Layouts.ForceDirected
+Namespace ForceDirected
 
     Public Class CircularPlanner : Inherits Planner
 

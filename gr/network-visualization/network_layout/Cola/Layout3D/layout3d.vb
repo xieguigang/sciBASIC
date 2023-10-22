@@ -60,7 +60,7 @@ Imports any = System.Object
 Imports number = System.Double
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Public Class Layout3D
 

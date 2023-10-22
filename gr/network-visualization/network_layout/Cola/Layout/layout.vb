@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Language
 Imports any = System.Object
 Imports number = System.Double
 
-Namespace Layouts.Cola
+Namespace Cola
 
     ''' <summary>
     ''' Main interface to cola layout.

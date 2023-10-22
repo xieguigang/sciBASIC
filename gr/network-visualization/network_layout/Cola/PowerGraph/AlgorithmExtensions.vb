@@ -55,7 +55,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace Layouts.Cola
+Namespace Cola
 
     Module powergraphExtensions
 

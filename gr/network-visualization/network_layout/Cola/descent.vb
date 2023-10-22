@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Math
 Imports stdNum = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace Layouts.Cola
+Namespace Cola
 
     '*
     ' * Uses a gradient descent approach to reduce a stress or p-stress goal function over a graph with specified ideal edge lengths or a square matrix of dissimilarities.
