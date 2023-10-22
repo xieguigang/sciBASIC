@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports geometry = Microsoft.VisualBasic.Imaging.Math2D
 Imports stdNum = System.Math
 
-Namespace EdgeBundling
+Namespace Graph.EdgeBundling
 
     ''' <summary>
     ''' handle point creator algorithm module
@@ -118,7 +118,7 @@ Namespace EdgeBundling
                 Dim v2x As Decimal = hx - sX
                 Dim v2y As Decimal = hy - sY
                 ' final double dist2 = Math.sqrt(Math.pow(v2x, 2) + Math.pow(v2y, 2));
-                Dim dist2 = geometry.Distance(sX, sY, hX, hY)
+                Dim dist2 = geometry.Distance(sX, sY, hx, hy)
 
                 ' Ratio of vector lengths
                 handle.ratio = dist2 / dist1
@@ -138,7 +138,7 @@ Namespace EdgeBundling
 
                 Dim validate = handle.convert(sX, sY, tX, tY)
 
-                If (stdNum.Abs(validate.X - hX) > 2 OrElse stdNum.Abs(validate.Y - hY) > 2) Then
+                If (stdNum.Abs(validate.X - hx) > 2 OrElse stdNum.Abs(validate.Y - hy) > 2) Then
                     handle.sinTheta = -handle.sinTheta
                 End If
 
