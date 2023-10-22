@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Imaging.Physics
 Imports System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 Public Class Form3
 
@@ -73,6 +74,7 @@ Public Class Engine : Implements IContainer(Of Particle)
     Public smoothingRadius As Single = 15
     Public particleProperties As Single()
     Public densities As Single()
+    Public predictedPositions As Vector2()
 
     Public targetDensity As Single = 30
     Public pressureMultiplier As Single = 2
@@ -106,7 +108,9 @@ Public Class Engine : Implements IContainer(Of Particle)
         particles = New Particle(numParticles - 1) {}
         particleProperties = New Single(numParticles - 1) {}
         densities = New Single(numParticles - 1) {}
+        predictedPositions = New Vector2(numParticles - 1) {}
 
+        Me.numParticles = numParticles
         Me.canvas = canvas
 
         For i As Integer = 0 To numParticles - 1
@@ -121,6 +125,7 @@ Public Class Engine : Implements IContainer(Of Particle)
         Parallel.For(0, numParticles, Sub(i)
                                           particles(i).velocity += Vector2.down * gravity * deltaTime
                                           densities(i) = CalculateDensity(particles(i))
+                                          ' predictedPositions(i) = particles(i).position + particles(i).velocity * deltaTime
                                       End Sub)
 
         'For i As Integer = 0 To numParticles - 1
@@ -245,14 +250,30 @@ End Class
 
 Public Module FluidRender
 
+    Dim colors As Brush()
+
+    Sub New()
+        colors = Designer.GetColors(ScalerPalette.turbo.Description).Select(Function(c) New SolidBrush(c)).ToArray
+    End Sub
+
     Public Function Render(canvas As Size, container As Engine) As Bitmap
         Dim bmp As New Bitmap(canvas.Width, canvas.Height)
+        Dim maxV As Double = Aggregate p In container.particles Into Max(p.velocity.magnitude)
+        Dim minV As Double = 0
 
         Using gfx As Graphics = Graphics.FromImage(bmp)
             Call gfx.Clear(Color.Black)
 
             For i As Integer = 0 To container.particles.Length - 1
-                Call gfx.DrawCircle(container.particles(i).position, container.particleSize / 2, Brushes.Blue)
+                Dim level As Integer = container.particles(i).velocity.magnitude / maxV * colors.Length
+
+                If level < 0 Then
+                    level = 0
+                ElseIf level >= colors.Length Then
+                    level = colors.Length - 1
+                End If
+
+                Call gfx.DrawCircle(container.particles(i).position, container.particleSize / 2, colors(level))
             Next
 
             Return bmp
