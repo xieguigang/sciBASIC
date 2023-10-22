@@ -10,7 +10,7 @@ Namespace Boids.Viewer
         Dim n As Integer = 30
 
         Sub New()
-            colors = Designer.GetColors(ScalerPalette.turbo.Description, n - 1)
+            colors = Designer.GetColors(ScalerPalette.turbo.Description, n)
         End Sub
 
         Public Function RenderField(field As Field) As Bitmap
@@ -19,7 +19,7 @@ Namespace Boids.Viewer
 
             Using gfx = Graphics.FromImage(bmp)
                 gfx.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
-                gfx.Clear(ColorTranslator.FromHtml("#003366"))
+                gfx.Clear(Color.Black) ' (ColorTranslator.FromHtml("#003366"))
 
                 Dim len As Integer = field.Entity.Count
 
@@ -33,6 +33,8 @@ Namespace Boids.Viewer
 
                         If lv < 0 Then
                             lv = 0
+                        ElseIf lv >= colors.Length Then
+                            lv = colors.Length - 1
                         End If
 
                         RenderShape.RenderBoid(gfx, boid.x, boid.y, boid.GetAngle, colors(lv))
