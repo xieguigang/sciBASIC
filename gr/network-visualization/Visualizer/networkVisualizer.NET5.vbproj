@@ -7,6 +7,15 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Network graph data render engine</Title>
+    <Company>xieguigang</Company>
+    <Authors>xie.guigang@live.com</Authors>
+    <Product>sciBASIC#</Product>
+    <Description>Network graph data render engine</Description>
+    <IncludeSymbols>True</IncludeSymbols>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>gpl</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
