@@ -141,7 +141,6 @@ Namespace Graph
 
         Dim _nextNodeId As Integer = 0
         Dim _nextEdgeId As Integer = 0
-        Dim _eventListeners As List(Of IGraphEventListener)
         Dim _index As GraphIndex(Of Node, Edge)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -152,7 +151,6 @@ Namespace Graph
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge), Optional ignoresBrokenLinks As Boolean = False)
             Call MyBase.New({}, {})
 
-            _eventListeners = New List(Of IGraphEventListener)
             _index = New GraphIndex(Of Node, Edge)
 
             For Each node As Node In nodes
@@ -210,8 +208,6 @@ Namespace Graph
             _index(node.label) = node
             _index(node.label).directedVertex = New DirectedVertex(node.label)
             _index(node.label).adjacencies = _index.CreateNodeAdjacencySet(node)
-
-            Call notify()
 
             Return node
         End Function
@@ -295,8 +291,6 @@ Namespace Graph
             edge.V.adjacencies = tuple.V
             edge.U.directedVertex.addEdge(edge)
             edge.V.directedVertex.addEdge(edge)
-
-            Call notify()
 
             Return edge
         End Function
@@ -505,8 +499,6 @@ Namespace Graph
                     Call RemoveEdge(e)
                 End If
             Next
-
-            Call notify()
         End Sub
 
         ''' <summary>
@@ -520,7 +512,6 @@ Namespace Graph
         Public Sub RemoveEdge(edge As Edge)
             Call _index.RemoveEdge(edge)
             Call Delete(edge)
-            Call notify()
         End Sub
 
         ''' <summary>
@@ -567,17 +558,6 @@ Namespace Graph
                 If Not match(e) Then
                     RemoveEdge(e)
                 End If
-            Next
-        End Sub
-
-        Public Sub AddGraphListener(iListener As IGraphEventListener)
-            _eventListeners.Add(iListener)
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub notify(<CallerMemberName> Optional event$ = Nothing)
-            For Each listener As IGraphEventListener In _eventListeners
-                Call listener.GraphChanged(Me, [event])
             Next
         End Sub
 
