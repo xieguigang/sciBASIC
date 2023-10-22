@@ -13,6 +13,24 @@ Public Class Vector2 : Inherits Vector2D
         End Get
     End Property
 
+    Public Shared ReadOnly Property up As Vector2
+        Get
+            Return New Vector2(0, -1)
+        End Get
+    End Property
+
+    Public Shared ReadOnly Property right As Vector2
+        Get
+            Return New Vector2(1, 0)
+        End Get
+    End Property
+
+    Public Shared ReadOnly Property left As Vector2
+        Get
+            Return New Vector2(-1, 0)
+        End Get
+    End Property
+
     Public Shared ReadOnly Property zero As Vector2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get

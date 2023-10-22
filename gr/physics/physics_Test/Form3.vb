@@ -56,10 +56,21 @@ Public Class Form3
         For i As Integer = 0 To position.Length - 1
             Dim dst = (position(i) - samplePoint).magnitude
             Dim influence = smoothingKernel(dst, smoothingRadius)
-            prop += particleProperties(i) * influence * mass
+            Dim density = CalculateDensity(position(i))
+            prop += particleProperties(i) * influence * mass / density
         Next
 
         Return prop
+    End Function
+
+    Const stepSize As Single = 0.001
+
+    Public Function CalculatepropertyGradient(samplePoint As Vector2) As Vector2
+        Dim dx = CalculateProperty(samplePoint + Vector2.right * stepSize) - CalculateProperty(samplePoint)
+        Dim dy = CalculateProperty(samplePoint + Vector2.up * stepSize) - CalculateProperty(samplePoint)
+        Dim gradient As New Vector2(dx / stepSize, dy / stepSize)
+
+        Return gradient
     End Function
 
     Private Sub ResolveCollisions(i As Integer)
