@@ -98,13 +98,14 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace SpringForce
 
     ''' <summary>
     ''' The position of the node object in the fdg data model.
     ''' </summary>
-    Public Class LayoutPoint
+    Public Class LayoutPoint : Implements Layout2D
 
         Public Property position As AbstractVector
         Public Property node As Node
@@ -119,6 +120,30 @@ Namespace SpringForce
 
         Public Property velocity As AbstractVector
         Public Property acceleration As AbstractVector
+
+#Region "spatial lookup"
+        Private Property X As Double Implements Layout2D.X
+            Get
+                Return position.x
+            End Get
+            Set(value As Double)
+                If Not position Is Nothing Then
+                    position.x = value
+                End If
+            End Set
+        End Property
+
+        Private Property Y As Double Implements Layout2D.Y
+            Get
+                Return position.y
+            End Get
+            Set(value As Double)
+                If Not position Is Nothing Then
+                    position.y = value
+                End If
+            End Set
+        End Property
+#End Region
 
         Public Sub New(position As AbstractVector, velocity As AbstractVector, acceleration As AbstractVector, node As Node)
             Me.position = position

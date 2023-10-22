@@ -100,6 +100,7 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
@@ -108,6 +109,7 @@ Namespace SpringForce
     Public MustInherit Class ForceDirected(Of Vector As AbstractVector)
         Implements IForceDirected
         Implements IDisposable
+        Implements IContainer(Of LayoutPoint)
 
         Public Property stiffness As Double Implements IForceDirected.Stiffness
         Public Property repulsion As Double Implements IForceDirected.Repulsion
@@ -115,6 +117,7 @@ Namespace SpringForce
         Public Property threshold As Double Implements IForceDirected.Threshold
         Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
         Public Property parallel As Boolean = False
+        Public Property radius As Double = 10
 
         Protected nodePoints As New Dictionary(Of String, LayoutPoint)
         Protected edgeSprings As New Dictionary(Of String, Spring)
@@ -124,6 +127,14 @@ Namespace SpringForce
 
         Public Property graph As NetworkGraph Implements IForceDirected.graph
         Public Property interactiveMode As Boolean = False Implements IForceDirected.interactiveMode
+        Private ReadOnly Property Entity As IReadOnlyCollection(Of LayoutPoint) Implements IContainer(Of LayoutPoint).Entity
+            Get
+                Return nodePoints.Values
+            End Get
+        End Property
+
+        Public ReadOnly Property Width As Double Implements IContainer(Of LayoutPoint).Width
+        Public ReadOnly Property Height As Double Implements IContainer(Of LayoutPoint).Height
 
         Public Sub Clear() Implements IForceDirected.Clear
             nodePoints.Clear()
@@ -223,21 +234,21 @@ Namespace SpringForce
         End Sub
 
         Private Sub applyCoulombsLaw(n1 As Node, partner As LayoutPoint)
-            For Each n2 As Node In graph.vertex
-                Dim current As LayoutPoint = GetPoint(n2)
+            Dim around = grid.SpatialLookup(partner, radius)
 
+            For Each current As LayoutPoint In around
                 If partner IsNot current Then
                     Dim d As AbstractVector = partner.position - current.position
                     Dim distance As Double = d.Magnitude() + 0.1F
                     Dim direction As AbstractVector = d.Normalize()
 
-                    If n1.pinned AndAlso n2.pinned Then
+                    If n1.pinned AndAlso current.node.pinned Then
                         partner.ApplyForce(direction * 0F)
                         current.ApplyForce(direction * 0F)
                     ElseIf n1.pinned Then
                         partner.ApplyForce(direction * 0F)
                         current.ApplyForce((direction * repulsion) / (distance * -1.0F))
-                    ElseIf n2.pinned Then
+                    ElseIf current.node.pinned Then
                         partner.ApplyForce((direction * repulsion) / (distance))
                         current.ApplyForce(direction * 0F)
                     Else
@@ -373,6 +384,8 @@ Namespace SpringForce
         End Function
 
         Public Sub Calculate(Optional timeStep As Double = Double.NaN) Implements IForceDirected.Collide
+            grid = Me.EncodeGrid(radius:=radius)
+
             ' time in second
             applyCoulombsLaw()
             applyHookesLaw()
