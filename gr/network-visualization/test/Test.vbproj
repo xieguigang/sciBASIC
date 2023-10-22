@@ -230,6 +230,10 @@
       <Project>{2e0946ae-b1ab-4c94-8306-1dd3d0971731}</Project>
       <Name>NetworkCanvas.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\network_layout\network_layout.vbproj">
+      <Project>{a9d2b967-d4a5-418b-8d72-daccb18aaccc}</Project>
+      <Name>network_layout</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Visualizer\networkVisualizer.NET5.vbproj">
       <Project>{8e5f302e-4d81-4c79-a18f-fa85466afd67}</Project>
       <Name>networkVisualizer.NET5</Name>
