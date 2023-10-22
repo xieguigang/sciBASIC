@@ -20,6 +20,8 @@ Namespace Boids
             End Get
         End Property
 
+        Public ReadOnly Property MaxSpeed As Double = 6
+
         Default Public ReadOnly Property Item(i As Integer) As Boid
             Get
                 Return Boids(i)
@@ -50,7 +52,7 @@ Namespace Boids
             ' move all boids forward in time
             ' just update the fields of each boid
             For Each boid In Boids
-                boid.MoveForward()
+                boid.MoveForward(maxSpeed:=MaxSpeed)
                 If bounceOffWalls Then Me.BounceOffWalls(boid)
                 If wrapAroundEdges Then WrapAround(boid)
             Next
