@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.physics_Test.Boids.Viewer.Form2
+            Me.MainForm = Global.physics_Test.Form3
         End Sub
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
