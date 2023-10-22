@@ -54,7 +54,7 @@ Namespace Boids.Viewer
             Me.Controls.Add(Me.pictureBox1)
             Me.Name = "Form2"
             Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-            Me.Text = "Boids - C# Data Visualization"
+            Me.Text = "Boids Algorithm"
             CType(Me.pictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
