@@ -40,7 +40,7 @@ Partial Class Form3
         'Timer1
         '
         Me.Timer1.Enabled = True
-        Me.Timer1.Interval = 50
+        Me.Timer1.Interval = 20
         '
         'Form3
         '

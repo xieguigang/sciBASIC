@@ -1,13 +1,15 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
+Imports System.Math
 
 Public Class Form3
 
-    Public gravity As Single = 9.8
-    Public position As Vector2 = Vector2.zero
-    Public velocity As Vector2 = Vector2.zero
-    Public particleSize As Single = 5
+    Public gravity As Single = 98
+    Public position As Vector2()
+    Public velocity As Vector2()
+    Public particleSize As Single = 20
+    Public collisionDamping As Single = 0.99
 
     Public ReadOnly Property deltaTime As Single
         Get
@@ -16,21 +18,39 @@ Public Class Form3
     End Property
 
     Private Sub Updates()
-        velocity += Vector2.down * gravity * deltaTime
-        position += velocity * deltaTime
+        For i As Integer = 0 To position.Length - 1
+            velocity(i) += Vector2.down * gravity * deltaTime
+            position(i) += velocity(i) * deltaTime
 
-        Call ResolveCollisions()
-
+            Call ResolveCollisions(i)
+        Next
     End Sub
 
 
-    Private Sub ResolveCollisions()
-
+    Private Sub ResolveCollisions(i As Integer)
+        If position(i).x > Width - particleSize OrElse position(i).x < particleSize Then
+            velocity(i).x *= -1 * collisionDamping
+        End If
+        If position(i).y > Height - particleSize OrElse position(i).y < particleSize Then
+            velocity(i).y *= -1 * collisionDamping
+        End If
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Call Updates()
         PictureBox1.Image = FluidRender.Render(PictureBox1.Size, Me)
+    End Sub
+
+    Private Sub Form3_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dim n As Integer = 10
+
+        position = New Vector2(n - 1) {}
+        velocity = New Vector2(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            position(i) = Vector2.random(Size)
+            velocity(i) = Vector2.zero
+        Next
     End Sub
 End Class
 
@@ -42,7 +62,9 @@ Public Module FluidRender
         Using gfx As Graphics = Graphics.FromImage(bmp)
             Call gfx.Clear(Color.Black)
 
-            Call gfx.DrawCircle(container.position, container.particleSize, Brushes.Blue)
+            For i As Integer = 0 To container.position.Length - 1
+                Call gfx.DrawCircle(container.position(i), container.particleSize / 2, Brushes.Blue)
+            Next
 
             Return bmp
         End Using
