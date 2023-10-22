@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Parallel
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Parallel
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Boids
@@ -9,10 +10,25 @@ Namespace Boids
     ''' <remarks>
     ''' https://github.com/swharden/Csharp-Data-Visualization/tree/main/dev/old/drawing/boids
     ''' </remarks>
-    Public Class Field
-        Public ReadOnly Width As Double
-        Public ReadOnly Height As Double
-        Public ReadOnly Boids As List(Of Boid) = New List(Of Boid)()
+    Public Class Field : Implements IContainer(Of Boid)
+
+        Public ReadOnly Property Width As Double Implements IContainer(Of Boid).Width
+        Public ReadOnly Property Height As Double Implements IContainer(Of Boid).Height
+        Public ReadOnly Property Entity As IReadOnlyCollection(Of Boid) Implements IContainer(Of Boid).Entity
+            Get
+                Return Boids
+            End Get
+        End Property
+
+        Default Public ReadOnly Property Item(i As Integer) As Boid
+            Get
+                Return Boids(i)
+            End Get
+        End Property
+
+        Dim Boids As New List(Of Boid)
+        Dim grid As Grid(Of Boid())
+        Dim radius As Single = 15
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
@@ -28,7 +44,8 @@ Namespace Boids
         Dim task As PhysicTask
 
         Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
-            Call task.Run()
+            grid = Me.EncodeGrid(radius)
+            task.Run()
 
             ' move all boids forward in time
             ' just update the fields of each boid
@@ -73,7 +90,7 @@ Namespace Boids
 
         Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
-            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
             Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
             Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
             Dim deltaCenterX = meanX - boid.x
@@ -83,7 +100,7 @@ Namespace Boids
 
         Private Function Avoid(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as boids get close
-            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance)
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
 
             For Each neighbor In neighbors
@@ -95,11 +112,12 @@ Namespace Boids
         End Function
 
         Public PredatorCount As Integer = 3
+
         Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as predators get close
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
 
-            For i = 0 To PredatorCount - 1
+            For i As Integer = 0 To PredatorCount - 1
                 Dim lPredator = Boids(i)
                 Dim distanceAway = boid.GetDistance(lPredator)
                 If distanceAway < distance Then
@@ -113,7 +131,7 @@ Namespace Boids
 
         Private Function Align(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
-            Dim neighbors = Boids.Where(Function(x) x.GetDistance(boid) < distance)
+            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
             Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
             Dim meanYvel As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
             Dim dXvel = meanXvel - boid.Xvel
