@@ -7,9 +7,10 @@ Namespace Boids.Viewer
     Public Module SDRender
 
         Dim colors As Color()
+        Dim n As Integer = 30
 
         Sub New()
-            colors = Designer.GetColors(ScalerPalette.turbo.Description, 30)
+            colors = Designer.GetColors(ScalerPalette.turbo.Description, n - 1)
         End Sub
 
         Public Function RenderField(field As Field) As Bitmap
@@ -28,7 +29,7 @@ Namespace Boids.Viewer
                     If i < 3 Then
                         RenderShape.RenderBoid(gfx, boid.x, boid.y, boid.GetAngle, Color.White)
                     Else
-                        Dim lv As Integer = boid.GetSpeed / max * colors.Length - 1
+                        Dim lv As Integer = ((boid.GetSpeed / max) * n) - 1
 
                         If lv < 0 Then
                             lv = 0
