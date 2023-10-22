@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::652ea18de042a22a481791dad1f8580f, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector3.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 224
-    '    Code Lines: 148
-    ' Comment Lines: 45
-    '   Blank Lines: 31
-    '     File Size: 7.60 KB
+' Summaries:
 
 
-    '     Class FDGVector3
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
-    '                   Magnitude, Multiply, Normalize, Random, SetIdentity
-    '                   SetZero, Subtract, Zero
-    '         Operators: -, (+2 Overloads) *, /, (+2 Overloads) +, <>
-    '                    =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 224
+'    Code Lines: 148
+' Comment Lines: 45
+'   Blank Lines: 31
+'     File Size: 7.60 KB
+
+
+'     Class FDGVector3
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
+'                   Magnitude, Multiply, Normalize, Random, SetIdentity
+'                   SetZero, Subtract, Zero
+'         Operators: -, (+2 Overloads) *, /, (+2 Overloads) +, <>
+'                    =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,14 +99,10 @@ Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts
 
-    Public Class FDGVector3
-        Inherits AbstractVector
+    Public Class FDGVector3 : Inherits AbstractVector
 
         Public Sub New()
             MyBase.New()
-            x = 0F
-            y = 0F
-            z = 0F
         End Sub
 
         Sub New(p As PointF)
@@ -132,7 +128,7 @@ Namespace Layouts
         Public Overrides Function GetHashCode() As Integer
             Return CInt(Truncate(x)) Xor CInt(Truncate(y)) Xor CInt(Truncate(z))
         End Function
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
@@ -140,7 +136,8 @@ Namespace Layouts
 
             ' If parameter cannot be cast to Point return false.
             Dim p As FDGVector3 = TryCast(obj, FDGVector3)
-            If DirectCast(p, System.Object) Is Nothing Then
+
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -150,7 +147,7 @@ Namespace Layouts
 
         Public Overloads Function Equals(p As FDGVector3) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -160,12 +157,12 @@ Namespace Layouts
 
         Public Overloads Shared Operator =(a As FDGVector3, b As FDGVector3) As Boolean
             ' If both are null, or both are same instance, return true.
-            If System.[Object].ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             End If
 
             ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+            If a Is Nothing OrElse b Is Nothing Then
                 Return False
             End If
 
@@ -176,43 +173,6 @@ Namespace Layouts
         Public Overloads Shared Operator <>(a As FDGVector3, b As FDGVector3) As Boolean
             Return Not (a = b)
         End Operator
-
-
-        Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
-            Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
-            x = x + v32.x
-            y = y + v32.y
-            z = z + v32.z
-            Return Me
-        End Function
-
-        Public Overrides Function Subtract(v2 As AbstractVector) As AbstractVector
-            Dim v32 As FDGVector3 = TryCast(v2, FDGVector3)
-            x = x - v32.x
-            y = y - v32.y
-            z = z - v32.z
-            Return Me
-        End Function
-
-        Public Overrides Function Multiply(n As Double) As AbstractVector
-            x = x * n
-            y = y * n
-            z = z * n
-            Return Me
-        End Function
-
-        Public Overrides Function Divide(n As Double) As AbstractVector
-            If n = 0F Then
-                x = 0F
-                y = 0F
-                z = 0F
-            Else
-                x = x / n
-                y = y / n
-                z = z / n
-            End If
-            Return Me
-        End Function
 
         Public Overrides Function Magnitude() As Double
             Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y) + CDbl(z * z)))
@@ -251,30 +211,37 @@ Namespace Layouts
         End Operator
 
         Public Overloads Shared Operator +(a As FDGVector3, b As FDGVector3) As FDGVector3
-            Dim temp As New FDGVector3(a.x, a.y, a.z)
-            temp.Add(b)
-            Return temp
+            Return New FDGVector3(a.x + b.x, a.y + b.y, a.z + b.z)
         End Operator
+
         Public Overloads Shared Operator -(a As FDGVector3, b As FDGVector3) As FDGVector3
-            Dim temp As New FDGVector3(a.x, a.y, a.z)
-            temp.Subtract(b)
-            Return temp
+            Return New FDGVector3(a.x - b.x, a.y - b.y, a.z - b.z)
         End Operator
+
         Public Overloads Shared Operator *(a As FDGVector3, b As Double) As FDGVector3
-            Dim temp As New FDGVector3(a.x, a.y, a.z)
-            temp.Multiply(b)
-            Return temp
+            Return New FDGVector3(a.x * b, a.y * b, a.z * b)
         End Operator
+
         Public Overloads Shared Operator *(a As Double, b As FDGVector3) As FDGVector3
-            Dim temp As New FDGVector3(b.x, b.y, b.z)
-            temp.Multiply(a)
-            Return temp
+            Return New FDGVector3(b.x * a, b.y * a, b.z * a)
         End Operator
 
         Public Overloads Shared Operator /(a As FDGVector3, b As Double) As FDGVector3
-            Dim temp As New FDGVector3(a.x, a.y, a.z)
-            temp.Divide(b)
-            Return temp
+            Dim x = a.x
+            Dim y = a.y
+            Dim z = a.z
+
+            If b = 0.0 Then
+                x = 0
+                y = 0
+                z = 0
+            Else
+                x /= b
+                y /= b
+                z /= b
+            End If
+
+            Return New FDGVector3(x, y, z)
         End Operator
 
     End Class

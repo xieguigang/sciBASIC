@@ -102,8 +102,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Layouts
@@ -155,7 +153,8 @@ Namespace Layouts
 
             ' If parameter cannot be cast to Point return false.
             Dim p As FDGVector2 = TryCast(obj, FDGVector2)
-            If DirectCast(p, System.Object) Is Nothing Then
+
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -165,7 +164,7 @@ Namespace Layouts
 
         Public Overloads Function Equals(p As FDGVector2) As Boolean
             ' If parameter is null return false:
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
@@ -175,12 +174,12 @@ Namespace Layouts
 
         Public Overloads Shared Operator =(a As FDGVector2, b As FDGVector2) As Boolean
             ' If both are null, or both are same instance, return true.
-            If System.[Object].ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             End If
 
             ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+            If a Is Nothing OrElse b Is Nothing Then
                 Return False
             End If
 
@@ -191,37 +190,6 @@ Namespace Layouts
         Public Overloads Shared Operator <>(a As FDGVector2, b As FDGVector2) As Boolean
             Return Not (a = b)
         End Operator
-
-        Public Overrides Function Add(v2 As AbstractVector) As AbstractVector
-            Dim v22 As FDGVector2 = TryCast(v2, FDGVector2)
-            x = x + v22.x
-            y = y + v22.y
-            Return Me
-        End Function
-
-        Public Overrides Function Subtract(v2 As AbstractVector) As AbstractVector
-            Dim v22 As FDGVector2 = TryCast(v2, FDGVector2)
-            x = x - v22.x
-            y = y - v22.y
-            Return Me
-        End Function
-
-        Public Overrides Function Multiply(n As Double) As AbstractVector
-            x = x * n
-            y = y * n
-            Return Me
-        End Function
-
-        Public Overrides Function Divide(n As Double) As AbstractVector
-            If n = 0F Then
-                x = 0F
-                y = 0F
-            Else
-                x = x / n
-                y = y / n
-            End If
-            Return Me
-        End Function
 
         ''' <summary>
         ''' Calculates the squared 2-norm of this instance.
@@ -236,7 +204,7 @@ Namespace Layouts
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function Magnitude() As Double
-            Return CSng(Sqrt(CDbl(x * x) + CDbl(y * y)))
+            Return Sqrt(x ^ 2 + y ^ 2)
         End Function
 
         ''' <summary>
@@ -296,34 +264,52 @@ Namespace Layouts
         End Operator
 
         Public Overloads Shared Operator +(a As FDGVector2, b As FDGVector2) As FDGVector2
-            Return New FDGVector2(a.x, a.y).With(Function(f) f.Add(b))
+            Return New FDGVector2(a.x + b.x, a.y + b.y)
         End Operator
 
         Public Overloads Shared Operator -(a As FDGVector2, b As FDGVector2) As FDGVector2
-            Dim temp As New FDGVector2(a.x, a.y)
-            temp.Subtract(b)
-            Return temp
+            Return New FDGVector2(a.x - b.x, a.y - b.y)
         End Operator
+
         Public Overloads Shared Operator *(a As FDGVector2, b As Double) As FDGVector2
-            Dim temp As New FDGVector2(a.x, a.y)
-            temp.Multiply(b)
-            Return temp
+            Return New FDGVector2(a.x * b, a.y * b)
         End Operator
+
         Public Overloads Shared Operator *(a As Double, b As FDGVector2) As FDGVector2
-            Dim temp As New FDGVector2(b.x, b.y)
-            temp.Multiply(a)
-            Return temp
+            Return New FDGVector2(b.x * a, b.y * a)
         End Operator
 
         Public Overloads Shared Operator /(a As FDGVector2, b As Double) As FDGVector2
-            Dim temp As New FDGVector2(a.x, a.y)
-            temp.Divide(b)
-            Return temp
+            Dim x = a.x
+            Dim y = a.y
+
+            If b = 0.0 Then
+                x = 0
+                y = 0
+            Else
+                x /= b
+                y /= b
+            End If
+
+            Return New FDGVector2(x, y)
         End Operator
+
         Public Overloads Shared Operator /(a As Double, b As FDGVector2) As FDGVector2
-            Dim temp As New FDGVector2(b.x, b.y)
-            temp.Divide(a)
-            Return temp
+            Dim x = b.x
+            Dim y = b.y
+
+            If x = 0.0 Then
+                x = 0
+            Else
+                x = a / x
+            End If
+            If y = 0.0 Then
+                y = 0
+            Else
+                y = a / y
+            End If
+
+            Return New FDGVector2(x, y)
         End Operator
 
     End Class

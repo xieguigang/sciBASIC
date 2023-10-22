@@ -94,16 +94,16 @@
 '
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Layouts
 
     Public MustInherit Class AbstractVector
-        Implements IVector
+        Implements PointF3D
 
-        Public Overridable Property x As Double Implements IVector.x
-        Public Overridable Property y As Double Implements IVector.y
-        Public Property z As Double Implements IVector.z
+        Public Overridable Property x As Double Implements PointF3D.X
+        Public Overridable Property y As Double Implements PointF3D.Y
+        Public Property z As Double Implements PointF3D.Z
 
         Const MaxGdiDimensionPixels = 20000
 
@@ -145,14 +145,11 @@ Namespace Layouts
             Return New FDGVector2(x, y)
         End Function
 
-        Public MustOverride Function Add(v2 As AbstractVector) As AbstractVector Implements IVector.Add
-        Public MustOverride Function Subtract(v2 As AbstractVector) As AbstractVector Implements IVector.Subtract
-        Public MustOverride Function Multiply(n As Double) As AbstractVector Implements IVector.Multiply
-        Public MustOverride Function Divide(n As Double) As AbstractVector Implements IVector.Divide
-        Public MustOverride Function Magnitude() As Double Implements IVector.Magnitude
-        Public MustOverride Function Normalize() As AbstractVector Implements IVector.Normalize
-        Public MustOverride Function SetZero() As AbstractVector Implements IVector.SetZero
-        Public MustOverride Function SetIdentity() As AbstractVector Implements IVector.SetIdentity
+        Public MustOverride Function Magnitude() As Double
+        Public MustOverride Function Normalize() As AbstractVector
+        Public MustOverride Function SetZero() As AbstractVector
+        Public MustOverride Function SetIdentity() As AbstractVector
+
 
         Public Shared Operator +(a As AbstractVector, b As Double) As AbstractVector
             If TypeOf a Is FDGVector2 Then
@@ -218,12 +215,12 @@ Namespace Layouts
 
         Public Shared Operator =(a As AbstractVector, b As AbstractVector) As Boolean
             ' If both are null, or both are same instance, return true.
-            If Object.ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             End If
 
             ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+            If a Is Nothing OrElse b Is Nothing Then
                 Return False
             End If
 
