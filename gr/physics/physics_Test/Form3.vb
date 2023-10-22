@@ -2,16 +2,10 @@
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 
 Public Class Form3
-
-    Public gravity As Single = 98
-    Public position As Vector2()
-    Public velocity As Vector2()
-    Public particleSize As Single = 20
-    Public collisionDamping As Single = 0.99
-    Public smoothingRadius As Single = 100
-    Public particleProperties As Single()
 
     Public ReadOnly Property deltaTime As Single
         Get
@@ -19,30 +13,165 @@ Public Class Form3
         End Get
     End Property
 
-    Private Sub Updates()
-        For i As Integer = 0 To position.Length - 1
-            velocity(i) += Vector2.down * gravity * deltaTime
-            position(i) += velocity(i) * deltaTime
+    Dim engine As Engine
 
-            Call ResolveCollisions(i)
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        If Not engine Is Nothing Then
+            Call engine.Updates(deltaTime)
+        End If
+
+        PictureBox1.Image = FluidRender.Render(PictureBox1.Size, engine)
+    End Sub
+
+    Private Sub Form3_Load(sender As Object, e As EventArgs) Handles Me.Load
+        engine = New Engine(3000, Size)
+    End Sub
+
+    Private Sub Form3_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        If Not engine Is Nothing Then
+            engine.canvas = Size
+        End If
+    End Sub
+End Class
+
+Public Class Particle : Implements Layout2D
+
+    Public Property X As Double Implements Layout2D.X
+        Get
+            Return position.x
+        End Get
+        Set(value As Double)
+            If Not position Is Nothing Then
+                position.x = value
+            End If
+        End Set
+    End Property
+
+    Public Property Y As Double Implements Layout2D.Y
+        Get
+            Return position.y
+        End Get
+        Set(value As Double)
+            If Not position Is Nothing Then
+                position.y = value
+            End If
+        End Set
+    End Property
+
+    Public position As Vector2
+    Public velocity As Vector2
+    Public index As Integer
+
+End Class
+
+Public Class Engine : Implements IContainer(Of Particle)
+
+    Public gravity As Single = 9.8
+    Public particles As Particle()
+    Public particleSize As Single = 5
+    Public collisionDamping As Single = 0.99
+    Public smoothingRadius As Single = 15
+    Public particleProperties As Single()
+    Public densities As Single()
+
+    Public targetDensity As Single = 30
+    Public pressureMultiplier As Single = 2
+    Public numParticles As Integer = 3000
+
+
+    Const stepSize As Single = 0.001
+    Const mass As Double = 1
+
+    Friend canvas As Size
+    Friend grid As Grid(Of Particle())
+
+    Public ReadOnly Property Entity As IReadOnlyCollection(Of Particle) Implements IContainer(Of Particle).Entity
+        Get
+            Return particles
+        End Get
+    End Property
+
+    Public ReadOnly Property Width As Double Implements IContainer(Of Particle).Width
+        Get
+            Return canvas.Width
+        End Get
+    End Property
+    Public ReadOnly Property Height As Double Implements IContainer(Of Particle).Height
+        Get
+            Return canvas.Height
+        End Get
+    End Property
+
+    Sub New(numParticles As Integer, canvas As Size)
+        particles = New Particle(numParticles - 1) {}
+        particleProperties = New Single(numParticles - 1) {}
+        densities = New Single(numParticles - 1) {}
+
+        Me.canvas = canvas
+
+        For i As Integer = 0 To numParticles - 1
+            particles(i) = New Particle With {.index = i, .position = Vector2.random(box:=canvas),
+            .velocity = Vector2.zero}
         Next
     End Sub
 
-    Public Function smoothingKernel(radius As Single, dst As Single) As Single
-        Dim volume = PI * radius ^ 8 / 4
-        Dim value = Max(0, radius ^ 2 - dst ^ 2)
-        Return value ^ 3 / volume
+    Public Sub Updates(deltaTime As Single)
+        grid = Me.EncodeGrid(smoothingRadius)
+
+        Parallel.For(0, numParticles, Sub(i)
+                                          particles(i).velocity += Vector2.down * gravity * deltaTime
+                                          densities(i) = CalculateDensity(particles(i))
+                                      End Sub)
+
+        'For i As Integer = 0 To numParticles - 1
+        '    densities(i) = CalculateDensity(position(i))
+        'Next
+
+        Parallel.For(0, numParticles, Sub(i)
+                                          Dim pressureForce = CalculatePressureForce(i)
+                                          Dim a = pressureForce / densities(i)
+                                          particles(i).velocity += a * deltaTime
+                                      End Sub)
+
+        Parallel.For(0, numParticles, Sub(i)
+                                          particles(i).position += particles(i).velocity * deltaTime
+                                          Call ResolveCollisions(i)
+                                      End Sub)
+    End Sub
+
+    Public Function smoothingKernel(dst As Single, radius As Single) As Single
+        If dst >= radius Then
+            Return 0
+        End If
+
+        Dim volume = PI * radius ^ 4 / 6
+        Return (radius - dst) ^ 2 / volume
     End Function
 
-    Const mass As Single = 1
+    Public Function SmoothingKernelDerivative(dst As Single, radius As Single) As Single
+        If dst >= radius Then
+            Return 0
+        End If
 
-    Public Function CalculateDensity(samplePoint As Vector2) As Single
+        Dim scale = 12 / (PI * radius ^ 4)
+        Return scale * (dst - radius)
+    End Function
+
+    Public Function ConvertDensityToPressure(density As Single) As Single
+        Dim densityErr = density - targetDensity
+        Dim pressure = densityErr * pressureMultiplier
+        Return pressure
+    End Function
+
+
+
+    Public Function CalculateDensity(samplePoint As Particle) As Single
         Dim density As Single = 0
+        Dim near = grid.SpatialLookup(samplePoint, smoothingRadius)
 
-
-        For Each position As Vector2 In Me.position
-            Dim dst = (position - samplePoint).magnitude
-            Dim influence = smoothingKernel(smoothingRadius, dst)
+        For Each position As Particle In near
+            Dim dst = (position.position - samplePoint.position).magnitude
+            Dim influence = smoothingKernel(dst, smoothingRadius)
 
             density += mass * influence
         Next
@@ -50,67 +179,80 @@ Public Class Form3
         Return density
     End Function
 
-    Public Function CalculateProperty(samplePoint As Vector2) As Single
-        Dim prop As Single = 0
+    'Public Function CalculateProperty(samplePoint As Vector2) As Single
+    '    Dim prop As Single = 0
+    '    Dim near = grid.SpatialLookup(samplePoint, smoothingRadius)
 
-        For i As Integer = 0 To position.Length - 1
-            Dim dst = (position(i) - samplePoint).magnitude
-            Dim influence = smoothingKernel(dst, smoothingRadius)
-            Dim density = CalculateDensity(position(i))
-            prop += particleProperties(i) * influence * mass / density
+    '    For i As Integer = 0 To positions.Length - 1
+    '        Dim dst = (positions(i) - samplePoint).magnitude
+    '        Dim influence = smoothingKernel(dst, smoothingRadius)
+    '        Dim density = CalculateDensity(positions(i))
+    '        prop += particleProperties(i) * influence * mass / density
+    '    Next
+
+    '    Return prop
+    'End Function
+
+    Public Function CalculatePressureForce(particleIndex As Integer) As Vector2
+        'Dim dx = CalculateProperty(samplePoint + Vector2.right * stepSize) - CalculateProperty(samplePoint)
+        'Dim dy = CalculateProperty(samplePoint + Vector2.up * stepSize) - CalculateProperty(samplePoint)
+        'Dim gradient As New Vector2(dx / stepSize, dy / stepSize)
+
+        'Return gradient
+        Dim propertyGradient As Vector2 = Vector2.zero
+        Dim near = grid.SpatialLookup(particles(particleIndex), smoothingRadius)
+
+        For Each otherParticle As Particle In near
+
+            If particleIndex = otherParticle.index Then
+                Continue For
+            End If
+
+            Dim offset = otherParticle.position - particles(particleIndex).position
+            Dim dst = offset.magnitude
+            Dim dir = If(dst = 0.0, GetRandomDir(), offset / dst)
+            Dim slope As Double = SmoothingKernelDerivative(dst, smoothingRadius)
+            Dim density As Double = densities(otherParticle.index)
+            Dim sharedPressure = CalculateSharedPressure(density, densities(particleIndex))
+
+            propertyGradient += sharedPressure * dir * slope * mass / density
         Next
 
-        Return prop
+        Return propertyGradient
     End Function
 
-    Const stepSize As Single = 0.001
+    Public Function CalculateSharedPressure(da As Single, db As Single) As Single
+        Dim pa = ConvertDensityToPressure(da)
+        Dim pb = ConvertDensityToPressure(db)
+        Return (pa + pb) / 2
+    End Function
 
-    Public Function CalculatepropertyGradient(samplePoint As Vector2) As Vector2
-        Dim dx = CalculateProperty(samplePoint + Vector2.right * stepSize) - CalculateProperty(samplePoint)
-        Dim dy = CalculateProperty(samplePoint + Vector2.up * stepSize) - CalculateProperty(samplePoint)
-        Dim gradient As New Vector2(dx / stepSize, dy / stepSize)
-
-        Return gradient
+    Private Function GetRandomDir() As Vector2
+        Return New Vector2(randf.NextDouble(-3, 3), randf.NextDouble(-3, 3))
     End Function
 
     Private Sub ResolveCollisions(i As Integer)
-        If position(i).x > Width - particleSize OrElse position(i).x < particleSize Then
-            velocity(i).x *= -1 * collisionDamping
+        Dim particleSize = Me.particleSize * 2
+
+        If particles(i).X > canvas.Width - particleSize OrElse particles(i).X < particleSize Then
+            particles(i).velocity.x *= -1 * collisionDamping
         End If
-        If position(i).y > Height - particleSize OrElse position(i).y < particleSize Then
-            velocity(i).y *= -1 * collisionDamping
+        If particles(i).Y > canvas.Height - particleSize OrElse particles(i).Y < particleSize Then
+            particles(i).velocity.y *= -1 * collisionDamping
         End If
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Call Updates()
-        PictureBox1.Image = FluidRender.Render(PictureBox1.Size, Me)
-    End Sub
-
-    Private Sub Form3_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim n As Integer = 10
-
-        position = New Vector2(n - 1) {}
-        velocity = New Vector2(n - 1) {}
-        particleProperties = New Single(n - 1) {}
-
-        For i As Integer = 0 To n - 1
-            position(i) = Vector2.random(Size)
-            velocity(i) = Vector2.zero
-        Next
     End Sub
 End Class
 
 Public Module FluidRender
 
-    Public Function Render(canvas As Size, container As Form3) As Bitmap
+    Public Function Render(canvas As Size, container As Engine) As Bitmap
         Dim bmp As New Bitmap(canvas.Width, canvas.Height)
 
         Using gfx As Graphics = Graphics.FromImage(bmp)
             Call gfx.Clear(Color.Black)
 
-            For i As Integer = 0 To container.position.Length - 1
-                Call gfx.DrawCircle(container.position(i), container.particleSize / 2, Brushes.Blue)
+            For i As Integer = 0 To container.particles.Length - 1
+                Call gfx.DrawCircle(container.particles(i).position, container.particleSize / 2, Brushes.Blue)
             Next
 
             Return bmp

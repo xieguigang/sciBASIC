@@ -162,6 +162,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{3db1da39-ef73-4bf4-bb20-0e9aedc4a900}</Project>
+      <Name>graph-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
       <Project>{fa06c326-92cd-4a8b-bb50-ed7d4a7da016}</Project>
       <Name>Math.NET5</Name>

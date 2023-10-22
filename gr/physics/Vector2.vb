@@ -46,7 +46,7 @@ Public Class Vector2 : Inherits Vector2D
 
     Public ReadOnly Property magnitude As Double
         Get
-            Return Sqrt(x ^ 2 - y ^ 2)
+            Return Sqrt(x ^ 2 + y ^ 2)
         End Get
     End Property
 
@@ -72,6 +72,10 @@ Public Class Vector2 : Inherits Vector2D
         Return New Vector2(v.x * a, v.y * a)
     End Operator
 
+    Public Overloads Shared Operator *(a As Double, v As Vector2) As Vector2
+        Return New Vector2(v.x * a, v.y * a)
+    End Operator
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Operator +(v As Vector2, a As Layout2D) As Vector2
         Return New Vector2(v.x + a.X, v.y + a.Y)
@@ -85,5 +89,13 @@ Public Class Vector2 : Inherits Vector2D
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Operator -(a As Vector2, b As Layout2D) As Vector2
         Return New Vector2(a.x - b.X, a.y - b.Y)
+    End Operator
+
+    Public Overloads Shared Operator /(v As Vector2, n As Double) As Vector2
+        If n = 0.0 Then
+            Return Vector2.zero
+        Else
+            Return New Vector2(v.x / n, v.y / n)
+        End If
     End Operator
 End Class
