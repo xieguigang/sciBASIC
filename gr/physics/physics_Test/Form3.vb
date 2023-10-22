@@ -11,6 +11,7 @@ Public Class Form3
     Public particleSize As Single = 20
     Public collisionDamping As Single = 0.99
     Public smoothingRadius As Single = 100
+    Public particleProperties As Single()
 
     Public ReadOnly Property deltaTime As Single
         Get
@@ -33,9 +34,11 @@ Public Class Form3
         Return value ^ 3 / volume
     End Function
 
+    Const mass As Single = 1
+
     Public Function CalculateDensity(samplePoint As Vector2) As Single
         Dim density As Single = 0
-        Dim mass As Single = 1
+
 
         For Each position As Vector2 In Me.position
             Dim dst = (position - samplePoint).magnitude
@@ -45,6 +48,18 @@ Public Class Form3
         Next
 
         Return density
+    End Function
+
+    Public Function CalculateProperty(samplePoint As Vector2) As Single
+        Dim prop As Single = 0
+
+        For i As Integer = 0 To position.Length - 1
+            Dim dst = (position(i) - samplePoint).magnitude
+            Dim influence = smoothingKernel(dst, smoothingRadius)
+            prop += particleProperties(i) * influence * mass
+        Next
+
+        Return prop
     End Function
 
     Private Sub ResolveCollisions(i As Integer)
@@ -66,6 +81,7 @@ Public Class Form3
 
         position = New Vector2(n - 1) {}
         velocity = New Vector2(n - 1) {}
+        particleProperties = New Single(n - 1) {}
 
         For i As Integer = 0 To n - 1
             position(i) = Vector2.random(Size)
