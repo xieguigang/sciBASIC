@@ -6,6 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Visualizer</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
