@@ -75,12 +75,15 @@ Namespace Boids
                avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,
                predXvel As Double = Nothing, predYval As Double = Nothing
 
+                Const distance As Double = 50
+
                 ' update void speed and direction (velocity) based on rules
                 For i As Integer = start To ends
                     Dim boid As Boid = boids(i)
+                    Dim neighbors As Boid() = field.grid.SpatialLookup(boid, field.radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
 
-                    field.Flock(boid, 50, 0.0003).Set(flockXvel, flockYvel)
-                    field.Align(boid, 50, 0.01).Set(alignXvel, alignYvel)
+                    field.Flock(boid, neighbors, 0.0003).Set(flockXvel, flockYvel)
+                    field.Align(boid, neighbors, 0.01).Set(alignXvel, alignYvel)
                     field.Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
                     field.Predator(boid, 150, 0.00005).Set(predXvel, predYval)
 
@@ -90,9 +93,8 @@ Namespace Boids
             End Sub
         End Class
 
-        Private Function Flock(boid As Boid, distance As Double, power As Double) As (Double, Double)
+        Private Function Flock(boid As Boid, neighbors As Boid(), power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
-            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
             Dim meanX As Double = neighbors.Sum(Function(x) x.x) / neighbors.Count()
             Dim meanY As Double = neighbors.Sum(Function(x) x.y) / neighbors.Count()
             Dim deltaCenterX = meanX - boid.x
@@ -105,7 +107,7 @@ Namespace Boids
             Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance)
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
 
-            For Each neighbor In neighbors
+            For Each neighbor As Boid In neighbors
                 Dim closeness = distance - boid.GetDistance(neighbor)
                 sumClosenessX += (boid.x - neighbor.x) * closeness
                 sumClosenessY += (boid.y - neighbor.y) * closeness
@@ -113,7 +115,7 @@ Namespace Boids
             Return (sumClosenessX * power, sumClosenessY * power)
         End Function
 
-        Public PredatorCount As Integer = 3
+        Public PredatorCount As Integer = 6
 
         Private Function Predator(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as predators get close
@@ -131,9 +133,9 @@ Namespace Boids
             Return (sumClosenessX * power, sumClosenessY * power)
         End Function
 
-        Private Function Align(boid As Boid, distance As Double, power As Double) As (Double, Double)
+        Private Function Align(boid As Boid, neighbors As Boid(), power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
-            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
+            ' Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
             Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
             Dim meanYvel As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
             Dim dXvel = meanXvel - boid.Xvel

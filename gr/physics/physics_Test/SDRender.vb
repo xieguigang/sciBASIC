@@ -10,7 +10,7 @@ Namespace Boids.Viewer
         Dim n As Integer = 30
 
         Sub New()
-            colors = Designer.GetColors(ScalerPalette.turbo.Description, n)
+            colors = Designer.GetColors(ScalerPalette.Typhoon.Description, n)
         End Sub
 
         Public Function RenderField(field As Field) As Bitmap
@@ -26,7 +26,7 @@ Namespace Boids.Viewer
                 For i = 0 To len - 1
                     Dim boid As Boid = field(i)
 
-                    If i < 3 Then
+                    If i < field.PredatorCount Then
                         RenderShape.RenderBoid(gfx, boid.x, boid.y, boid.GetAngle, Color.White)
                     Else
                         Dim lv As Integer = ((boid.GetSpeed / max) * n) - 1
