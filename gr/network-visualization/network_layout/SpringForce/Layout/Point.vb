@@ -98,7 +98,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SpringForce
 
@@ -141,7 +140,7 @@ Namespace SpringForce
             ' If parameter cannot be cast to Point return false.
             Dim p As LayoutPoint = TryCast(obj, LayoutPoint)
 
-            If DirectCast(p, Object) Is Nothing Then
+            If p Is Nothing Then
                 Return False
             End If
 
