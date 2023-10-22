@@ -148,11 +148,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Layouts\OrganicLayout\**" />
     <Compile Remove="test\**" />
-    <EmbeddedResource Remove="Layouts\OrganicLayout\**" />
     <EmbeddedResource Remove="test\**" />
-    <None Remove="Layouts\OrganicLayout\**" />
     <None Remove="test\**" />
   </ItemGroup>
 
