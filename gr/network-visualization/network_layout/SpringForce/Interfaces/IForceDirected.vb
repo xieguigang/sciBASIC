@@ -121,6 +121,9 @@ Namespace SpringForce.Interfaces
         Property Threshold As Double
         Property interactiveMode As Boolean
 
+        Property width As Double
+        Property height As Double
+
         Sub Clear()
 
         Sub EachEdge(del As EdgeAction)
@@ -134,5 +137,6 @@ Namespace SpringForce.Interfaces
         Function Nearest(position As AbstractVector) As NearestPoint
         Function GetBoundingBox() As BoundingBox
         Function GetPoint(iNode As Node) As LayoutPoint
+
     End Interface
 End Namespace

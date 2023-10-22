@@ -91,7 +91,7 @@ Public Class Canvas
     ''' <summary>
     ''' Render and layout engine works in 3D mode?
     ''' </summary>
-    Friend space3D As Boolean
+    Friend space3D As Boolean = False
 
     Private Sub setupGraph(net As NetworkGraph, space3D As Boolean)
         Dim showLabel As Boolean = Me.ShowLabel
@@ -123,6 +123,8 @@ Public Class Canvas
         End If
 
         Me.fdgPhysics.interactiveMode = True
+        Me.fdgPhysics.width = Width
+        Me.fdgPhysics.height = Height
         Me.ShowLabel = showLabel
     End Sub
 
@@ -293,5 +295,12 @@ Public Class Canvas
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         timer.Dispose()
         physicsEngine.Dispose()
+    End Sub
+
+    Private Sub Canvas_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+        If Not fdgPhysics Is Nothing Then
+            fdgPhysics.width = Width
+            fdgPhysics.height = Height
+        End If
     End Sub
 End Class

@@ -117,7 +117,7 @@ Namespace SpringForce
         Public Property threshold As Double Implements IForceDirected.Threshold
         Public Property withinThreshold As Boolean Implements IForceDirected.WithinThreshold
         Public Property parallel As Boolean = False
-        Public Property radius As Double = 10
+        Public Property radius As Double = 30
 
         Protected nodePoints As New Dictionary(Of String, LayoutPoint)
         Protected edgeSprings As New Dictionary(Of String, Spring)
@@ -133,8 +133,8 @@ Namespace SpringForce
             End Get
         End Property
 
-        Public ReadOnly Property Width As Double Implements IContainer(Of LayoutPoint).Width
-        Public ReadOnly Property Height As Double Implements IContainer(Of LayoutPoint).Height
+        Public Property Width As Double = 1920 Implements IContainer(Of LayoutPoint).Width, IForceDirected.width
+        Public Property Height As Double = 1080 Implements IContainer(Of LayoutPoint).Height, IForceDirected.height
 
         Public Sub Clear() Implements IForceDirected.Clear
             nodePoints.Clear()
@@ -234,9 +234,9 @@ Namespace SpringForce
         End Sub
 
         Private Sub applyCoulombsLaw(n1 As Node, partner As LayoutPoint)
-            Dim around = grid.SpatialLookup(partner, radius)
+            ' Dim around = grid.SpatialLookup(partner, radius)
 
-            For Each current As LayoutPoint In around
+            For Each current As LayoutPoint In nodePoints.Values
                 If partner IsNot current Then
                     Dim d As AbstractVector = partner.position - current.position
                     Dim distance As Double = d.Magnitude() + 0.1F
@@ -384,7 +384,7 @@ Namespace SpringForce
         End Function
 
         Public Sub Calculate(Optional timeStep As Double = Double.NaN) Implements IForceDirected.Collide
-            grid = Me.EncodeGrid(radius:=radius)
+            ' grid = Me.EncodeGrid(radius:=radius)
 
             ' time in second
             applyCoulombsLaw()
