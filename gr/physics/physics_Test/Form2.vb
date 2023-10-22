@@ -17,7 +17,7 @@ Namespace Boids.Viewer
             InitializeComponent()
             Reset()
 
-            Size = New Size(1920, 1080)
+            Size = New Size(2000, 1200)
         End Sub
 
         Private Sub pictureBox1_SizeChanged(sender As Object, e As EventArgs) Handles pictureBox1.SizeChanged
