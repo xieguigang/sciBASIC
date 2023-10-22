@@ -58,14 +58,6 @@ Namespace Imaging.Math2D
 
     Public Class VectorMath2D
 
-        Public Shared Function add(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Vector2D
-            Return New Vector2D(paramVector2D1.x + paramVector2D2.x, paramVector2D1.y + paramVector2D2.y)
-        End Function
-
-        Public Shared Function subtract(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Vector2D
-            Return New Vector2D(paramVector2D1.x - paramVector2D2.x, paramVector2D1.y - paramVector2D2.y)
-        End Function
-
         Public Shared Function absAngle(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
             Dim d1 As Double = paramVector2D1.Length()
             Dim d2 As Double = paramVector2D2.Length()
@@ -164,7 +156,7 @@ Namespace Imaging.Math2D
             Dim localVector2D3 As New Vector2D(paramDimension3.Width - paramDimension1.Width, paramDimension3.Height - paramDimension1.Height)
             localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
             localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
-            Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
+            Dim localVector2D1 As Vector2D = localVector2D2 + localVector2D3
             localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
             paramDimension1.Width -= CInt(stdNum.Truncate(localVector2D1.x))
             paramDimension1.Height -= CInt(stdNum.Truncate(localVector2D1.y))
@@ -220,7 +212,7 @@ Namespace Imaging.Math2D
             localVector2D3 = New Vector2D(DirectCast(paramVector(i1), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(i1), Rectangle2D).Height - paramDimension.Height)
             localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
             localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
-            Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)
+            Dim localVector2D1 As Vector2D = localVector2D2 + localVector2D3
             localVector2D1 = localVector2D1 * (paramInt / localVector2D1.Length())
             paramDimension.Width += CInt(stdNum.Truncate(localVector2D1.x))
             paramDimension.Height += CInt(stdNum.Truncate(localVector2D1.y))
