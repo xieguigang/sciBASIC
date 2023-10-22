@@ -78,8 +78,8 @@ Namespace SpringForce
 
         Public Overrides Function GetBoundingBox() As BoundingBox
             Dim boundingBox As New BoundingBox()
-            Dim bottomLeft As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB * -1.0F), FDGVector3)
-            Dim topRight As FDGVector3 = TryCast(FDGVector3.Identity().Multiply(BoundingBox.defaultBB), FDGVector3)
+            Dim bottomLeft As FDGVector3 = TryCast(FDGVector3.Identity() * (BoundingBox.defaultBB * -1.0F), FDGVector3)
+            Dim topRight As FDGVector3 = TryCast(FDGVector3.Identity() * (BoundingBox.defaultBB), FDGVector3)
 
             For Each n As Node In graph.vertex
                 Dim position As FDGVector3 = TryCast(GetPoint(n).position, FDGVector3)
@@ -103,10 +103,10 @@ Namespace SpringForce
                 End If
             Next
 
-            Dim padding As AbstractVector = (topRight - bottomLeft).Multiply(BoundingBox.defaultPadding)
+            Dim padding As AbstractVector = (topRight - bottomLeft) * BoundingBox.defaultPadding
 
-            boundingBox.bottomLeftFront = bottomLeft.Subtract(padding)
-            boundingBox.topRightBack = topRight.Add(padding)
+            boundingBox.bottomLeftFront = bottomLeft - padding
+            boundingBox.topRightBack = topRight + padding
 
             Return boundingBox
         End Function

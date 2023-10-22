@@ -104,7 +104,7 @@ Imports stdNum = System.Math
 
 Namespace SpringForce
 
-    Public MustInherit Class ForceDirected(Of Vector As IVector)
+    Public MustInherit Class ForceDirected(Of Vector As AbstractVector)
         Implements IForceDirected
         Implements IDisposable
 
@@ -304,8 +304,8 @@ Namespace SpringForce
             For Each n As Node In graph.vertex
                 Dim point As LayoutPoint = GetPoint(n)
 
-                point.velocity.Add(point.acceleration * timeStep)
-                point.velocity.Multiply(damping)
+                point.velocity = point.velocity + (point.acceleration * timeStep)
+                point.velocity = point.velocity * damping
                 point.acceleration.SetZero()
             Next
         End Sub
@@ -322,7 +322,7 @@ Namespace SpringForce
                 y = point.position.y
                 z = point.position.z
                 delta = point.velocity * timeStep
-                point.position.Add(delta)
+                point.position += delta
 
                 If interactiveMode Then
                     ' 20220625 

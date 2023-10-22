@@ -158,6 +158,7 @@
     <ProjectReference Include="..\..\physics\physics-netcore5.vbproj" />
     <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj" />
     <ProjectReference Include="..\Network.IO.Extensions\network_io-netcore5.vbproj" />
+    <ProjectReference Include="..\network_layout\network_layout.vbproj" />
   </ItemGroup>
 
 </Project>

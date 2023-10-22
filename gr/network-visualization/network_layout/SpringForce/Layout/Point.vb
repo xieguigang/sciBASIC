@@ -181,7 +181,7 @@ Namespace SpringForce
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ApplyForce(force As AbstractVector)
-            Call acceleration.Add(force / mass)
+            acceleration += (force / mass)
         End Sub
 
         Public Overrides Function ToString() As String
