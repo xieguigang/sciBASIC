@@ -14,13 +14,19 @@ Namespace Parallel
         ''' </summary>
         Protected sequenceMode As Boolean = False
 
+        ''' <summary>
+        ''' <see cref="n_threads"/>
+        ''' </summary>
+        Protected ReadOnly cpu_count As Integer = n_threads
+
+        Dim opt As ParallelOptions
+
         Public Shared n_threads As Integer = 4
 
         Sub New(nsize As Integer)
-            ThreadPool.SetMaxThreads(n_threads, 8)
-            ThreadPool.SetMinThreads(n_threads, 2)
-
             workLen = nsize
+            cpu_count = n_threads
+            opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
         End Sub
 
         Protected MustOverride Sub Solve(start As Integer, ends As Integer)
@@ -31,7 +37,8 @@ Namespace Parallel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
-            Call Solve(0, workLen - 1)
+            sequenceMode = True
+            Solve(0, workLen - 1)
             Return Me
         End Function
 
@@ -40,39 +47,40 @@ Namespace Parallel
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As VectorTask
-            Dim span_size As Integer = workLen / n_threads
-#If NET48 Then
-            span_size = 0
-#End If
+            Dim span_size As Integer = workLen / cpu_count
+
             If sequenceMode OrElse span_size < 1 Then
                 ' run in sequence
-                Call Solve(0, workLen - 1)
+                Call Solve()
             Else
-                For cpu As Integer = 0 To n_threads
-                    Dim start As Integer = cpu * span_size
-                    Dim ends As Integer = start + span_size - 1
-
-                    If start >= workLen Then
-                        Exit For
-                    End If
-                    If ends >= workLen Then
-                        ends = workLen - 1
-                    End If
-
-                    ThreadPool.QueueUserWorkItem(Sub() Solve(start, ends))
-                Next
-
-#If NETCOREAPP Then
-                Do While ThreadPool.PendingWorkItemCount > 0
-                    Thread.Sleep(1)
-                Loop
-#Else
-                Throw New NotImplementedException
-#End If
+                System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=cpu_count + 1,
+                    parallelOptions:=opt,
+                    body:=Sub(i) ParallelFor(i, span_size)
+                )
             End If
 
             Return Me
         End Function
+
+        ''' <summary>
+        ''' implements the parallel for use the thread pool
+        ''' </summary>
+        ''' <param name="span_size"></param>
+        Private Sub ParallelFor(thread_id As Integer, span_size As Integer)
+            Dim start As Integer = thread_id * span_size
+            Dim ends As Integer = start + span_size - 1
+
+            If start >= workLen Then
+                Return
+            End If
+            If ends >= workLen Then
+                ends = workLen - 1
+            End If
+
+            Call Solve(start, ends)
+        End Sub
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
             Dim copy As T() = New T(start - ends - 1) {}

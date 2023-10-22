@@ -395,6 +395,12 @@ Namespace LinearAlgebra
         Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
             Dim output As Double()
 
+            If v1 Is Nothing Then
+                Return New Vector(v2.ToArray)
+            ElseIf v2 Is Nothing Then
+                Return New Vector(v1.ToArray)
+            End If
+
             If v1.Length = 1 Then
                 output = SIMD.Add.f64_op_add_f64_scalar(v2.buffer, v1(Scan0))
             ElseIf v2.Length = 1 Then

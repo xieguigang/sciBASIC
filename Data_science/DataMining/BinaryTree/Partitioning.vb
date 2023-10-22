@@ -78,9 +78,18 @@ Public Module Partitioning
         Return btree.GetClusterResultInternal(vnames)
     End Function
 
+    ''' <summary>
+    ''' Just get data vector for generates the names
+    ''' </summary>
+    ''' <param name="btree"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function getAnyData(btree As BTreeCluster) As Double()
-        If btree.data.IsNullOrEmpty Then
+        If btree Is Nothing Then
+            Return Nothing
+        End If
+
+        If Not btree.data.IsNullOrEmpty Then
             Return btree.data.Values.First
         End If
 

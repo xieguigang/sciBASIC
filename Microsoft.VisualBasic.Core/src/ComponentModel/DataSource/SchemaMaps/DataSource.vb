@@ -113,6 +113,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Sub New(FieldName As String)
             Call MyBase.New(FieldName)
         End Sub
+
+        Sub New(ordinal As Integer)
+            Call MyBase.New(ordinal)
+        End Sub
     End Class
 
     ''' <summary>
@@ -131,7 +135,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' Gets the index.
         ''' </summary>
-        Public ReadOnly Property Index() As Integer
+        Public ReadOnly Property Index As Integer
 
         ''' <summary>
         ''' Gets the name.
@@ -160,6 +164,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             If index < 0 Then
                 Throw New ArgumentOutOfRangeException(NameOf(index))
             End If
+
             Me._Name = Nothing
             Me._Index = index
         End Sub

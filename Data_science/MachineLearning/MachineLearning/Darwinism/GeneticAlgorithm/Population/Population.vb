@@ -193,13 +193,16 @@ Namespace Darwinism.GAF.Population
                                       .Value
                               End Function)
 
-            chromosomes.OrderBy(Function(key) fitness(key))
+            ' fitness smaller is better
+            Call chromosomes.OrderBy(Function(key) fitness(key))
         End Sub
 
         ''' <summary>
         ''' Add chromosome
         ''' </summary>
         ''' <param name="chromosome"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Add(chromosome As Chr)
             Call chromosomes.Add(chromosome)
         End Sub

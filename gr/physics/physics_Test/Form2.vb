@@ -20,7 +20,7 @@ Namespace Boids.Viewer
         Private Sub pictureBox1_SizeChanged(sender As Object, e As EventArgs) Handles pictureBox1.SizeChanged
             Reset()
         End Sub
-        Private Sub pictureBox1_Click(sender As Object, e As EventArgs)
+        Private Sub pictureBox1_Click(sender As Object, e As EventArgs) Handles pictureBox1.Click
             Reset()
         End Sub
         Private Sub Reset()

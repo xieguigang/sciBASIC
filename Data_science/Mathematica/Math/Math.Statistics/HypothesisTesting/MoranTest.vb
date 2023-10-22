@@ -10,14 +10,23 @@ Namespace Hypothesis
         Public Property Expected As Double
         Public Property SD As Double
         Public Property pvalue As Double
+        Public Property z As Double
+        Public Property prob2 As Double
+        Public Property t As Double
+        Public Property df As Double
 
-        Public Shared Function moran_test(spatial As IEnumerable(Of Pixel), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
+        Public Shared Function moran_test(spatial As IEnumerable(Of Pixel),
+                                          Optional alternative As Hypothesis = Hypothesis.TwoSided,
+                                          Optional throwMaxIterError As Boolean = True,
+                                          Optional parallel As Boolean = True) As MoranTest
             With spatial.ToArray
                 Return moran_test(
                     .Select(Function(p) p.Scale).ToArray,
                     .Select(Function(p) CDbl(p.X)).ToArray,
                     .Select(Function(p) CDbl(p.Y)).ToArray,
-                    alternative:=alternative
+                    alternative:=alternative,
+                    throwMaxIterError:=throwMaxIterError,
+                    parallel:=parallel
                 )
             End With
         End Function
@@ -34,9 +43,21 @@ Namespace Hypothesis
         ''' or any unambiguous abbreviation of these.
         ''' </param>
         ''' <returns></returns>
-        Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(), Optional alternative As Hypothesis = Hypothesis.TwoSided) As MoranTest
-            Dim res = Moran.calc_moran(x, c1, c2)
-            Dim pv As Double = pnorm.ProbabilityDensity(res.observed, m:=res.expected, sd:=res.sd)
+        Public Shared Function moran_test(x As Double(), c1 As Double(), c2 As Double(),
+                                          Optional alternative As Hypothesis = Hypothesis.TwoSided,
+                                          Optional throwMaxIterError As Boolean = True,
+                                          Optional parallel As Boolean = True) As MoranTest
+
+            Dim res = Moran.calc_moran(x, c1, c2, parallel)
+            Dim pv As Double = pnorm.eval(res.observed,
+                                     mean:=res.expected,
+                                     sd:=res.sd,
+                                     resolution:=1000)
+            Dim n As Integer = x.Length
+            Dim z As Double, prob2 As Double, t As Double, df As Double
+            Dim prob As Double
+
+            Call Correlations.TestStats(res.observed, n, z, prob, prob2, t, df, throwMaxIterError)
 
             If alternative = Hypothesis.TwoSided Then
                 If res.observed <= -1 / (x.Length - 1) Then
@@ -49,11 +70,21 @@ Namespace Hypothesis
                 pv = 1 - pv
             End If
 
+            If pv < 0 Then
+                pv = 1 / Single.MaxValue
+            ElseIf pv.IsNaNImaginary Then
+                pv = 1
+            End If
+
             Return New MoranTest With {
                 .Observed = res.observed,
                 .Expected = res.expected,
                 .pvalue = pv,
-                .SD = res.sd
+                .SD = res.sd,
+                .df = df,
+                .prob2 = prob2,
+                .t = t,
+                .z = z
             }
         End Function
     End Class

@@ -142,7 +142,9 @@ Namespace Darwinism.GAF
         ''' </param>
         ''' <param name="createPopulation">By default is create with <see cref="PopulationList(Of Chr)"/></param>
         ''' <remarks>
-        ''' 
+        ''' Just put the model that implements the <see cref="Fitness(Of Chr)"/>, the
+        ''' <see cref="FitnessPool(Of Chr)"/> will be created automatically in this 
+        ''' constructor function.
         ''' </remarks>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr),
                        Optional replacementStrategy As Strategies = Strategies.Naive,

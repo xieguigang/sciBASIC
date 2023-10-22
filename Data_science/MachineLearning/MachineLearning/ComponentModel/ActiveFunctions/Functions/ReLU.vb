@@ -107,6 +107,16 @@ Namespace ComponentModel.Activations
             Return x
         End Function
 
+        Public Shared Function ReLU(x As Double()) As Double()
+            For i As Integer = 0 To x.Length - 1
+                If x(i) < 0 Then
+                    x(i) = 0
+                End If
+            Next
+
+            Return x
+        End Function
+
         Public Overrides Function CalculateDerivative(x As Double) As Double
             If x < threshold Then
                 Return threshold

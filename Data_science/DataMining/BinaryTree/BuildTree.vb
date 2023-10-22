@@ -77,11 +77,14 @@ Public Module BuildTree
     <Extension>
     Public Function BTreeClusterVector(Of T As {INamedValue, IVector})(data As IEnumerable(Of T),
                                                                        Optional equals As Double = 0.9,
-                                                                       Optional gt As Double = 0.7) As BTreeCluster
-        Dim list = data _
-            .Select(Function(d) New NamedCollection(Of Double)(d.Key, d.Data)) _
+                                                                       Optional gt As Double = 0.7,
+                                                                       Optional method As CompareMethods = CompareMethods.SpectrumDotProduct) As BTreeCluster
+        Dim list As NamedCollection(Of Double)() = data _
+            .Select(Function(d)
+                        Return New NamedCollection(Of Double)(d.Key, d.Data)
+                    End Function) _
             .ToArray
-        Dim compares As New AlignmentComparison(list, equals, gt)
+        Dim compares As New AlignmentComparison(list, equals, gt, method)
         Dim btree As New AVLTree(Of String, String)(compares.GetComparer, Function(str) str)
 
         For Each id As String In list.Keys
@@ -94,7 +97,8 @@ Public Module BuildTree
     <Extension>
     Public Function BTreeCluster(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet),
                                                                                               Optional equals As Double = 0.9,
-                                                                                              Optional gt As Double = 0.7) As BTreeCluster
+                                                                                              Optional gt As Double = 0.7,
+                                                                                              Optional method As CompareMethods = CompareMethods.SpectrumDotProduct) As BTreeCluster
         Dim list = data _
             .Select(Function(d)
                         Return New NamedValue(Of Dictionary(Of String, Double)) With {
@@ -103,7 +107,7 @@ Public Module BuildTree
                         }
                     End Function) _
             .ToArray
-        Dim compares As New AlignmentComparison(list, equals, gt)
+        Dim compares As New AlignmentComparison(list, equals, gt, method)
         Dim btree As New AVLTree(Of String, String)(compares.GetComparer, Function(str) str)
 
         For Each id As String In list.Keys
