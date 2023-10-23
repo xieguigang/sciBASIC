@@ -74,7 +74,7 @@ Namespace CSS
         ''' </summary>
         ''' <returns></returns>
         <Browsable(False)>
-        Public ReadOnly Property Horizontal As Integer
+        Public ReadOnly Property Horizontal As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Left + Right
@@ -92,35 +92,35 @@ Namespace CSS
         ''' </summary>
         ''' <returns>The padding, in pixels, for the top edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Top As Integer
+        Public Property Top As Single
 
         ''' <summary>
         ''' Gets or sets the padding value for the right edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the right edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Right As Integer
+        Public Property Right As Single
 
         ''' <summary>
         ''' Gets or sets the padding value for the left edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the left edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Left As Integer
+        Public Property Left As Single
 
         ''' <summary>
         ''' Gets or sets the padding value for the bottom edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the bottom edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Bottom As Integer
+        Public Property Bottom As Single
 
         ''' <summary>
         ''' Gets the combined padding for the top and bottom edges.
         ''' </summary>
         ''' <returns></returns>
         <Browsable(False)>
-        Public ReadOnly Property Vertical As Integer
+        Public ReadOnly Property Vertical As Single
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Top + Bottom
@@ -227,7 +227,7 @@ Namespace CSS
         ''' padding: top, right, bottom, left
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property LayoutVector As Integer()
+        Public ReadOnly Property LayoutVector As Single()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return {Top, Right, Bottom, Left}

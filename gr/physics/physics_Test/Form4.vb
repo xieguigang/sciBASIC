@@ -407,16 +407,15 @@ Public Class Form4
             timeFrames = 0
             timeSum = Nothing
         End If
-
-        draw()
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         [step]()
+        draw()
     End Sub
 
     Private Sub Form4_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Setup(10, 1000)
+        Setup(10, 100)
     End Sub
 
     Private Sub Form4_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
