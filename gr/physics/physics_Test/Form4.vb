@@ -384,7 +384,7 @@ Public Class Form4
          py = drawOrig.y - particles.pos(nr + 1) * drawScale
 
             nr += 2
-            gfx.DrawCircle(New PointF(px, py), particleRadius, Brushes.Black)
+            gfx.DrawCircle(New PointF(px, py), 5, Brushes.Black)
         Next
 
         Canvas.Image = bmp
@@ -403,7 +403,7 @@ Public Class Form4
 
         If timeFrames > 10 Then
             timeSum /= timeFrames
-            Text = timeSum.ToString("F3") & "ms"
+            Text = timeSum.ToString("F3") & "ms" & $"   [{Canvas.Width} x {Canvas.Height}]"
             timeFrames = 0
             timeSum = Nothing
         End If
