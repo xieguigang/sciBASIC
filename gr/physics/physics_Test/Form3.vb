@@ -1,16 +1,16 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Physics
 Imports System.Math
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Physics
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Form3
 
     Public ReadOnly Property deltaTime As Single
         Get
-            Return Timer1.Interval / 1000
+            Return Timer1.Interval / 500
         End Get
     End Property
 
@@ -25,12 +25,12 @@ Public Class Form3
     End Sub
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles Me.Load
-        engine = New Engine(3000, Size)
+        engine = New Engine(5000, PictureBox1.Size)
     End Sub
 
     Private Sub Form3_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         If Not engine Is Nothing Then
-            engine.canvas = Size
+            engine.canvas = PictureBox1.Size
         End If
     End Sub
 End Class
@@ -39,22 +39,22 @@ Public Class Particle : Implements Layout2D
 
     Public Property X As Double Implements Layout2D.X
         Get
-            Return position.x
+            Return predictedPosition.x
         End Get
         Set(value As Double)
-            If Not position Is Nothing Then
-                position.x = value
+            If Not predictedPosition Is Nothing Then
+                predictedPosition.x = value
             End If
         End Set
     End Property
 
     Public Property Y As Double Implements Layout2D.Y
         Get
-            Return position.y
+            Return predictedPosition.y
         End Get
         Set(value As Double)
-            If Not position Is Nothing Then
-                position.y = value
+            If Not predictedPosition Is Nothing Then
+                predictedPosition.y = value
             End If
         End Set
     End Property
@@ -62,23 +62,23 @@ Public Class Particle : Implements Layout2D
     Public position As Vector2
     Public velocity As Vector2
     Public index As Integer
+    Public predictedPosition As Vector2
 
 End Class
 
 Public Class Engine : Implements IContainer(Of Particle)
 
-    Public gravity As Single = 9.8
+    Public gravity As Single = 10
     Public particles As Particle()
     Public particleSize As Single = 5
-    Public collisionDamping As Single = 0.99
-    Public smoothingRadius As Single = 15
+    Public collisionDamping As Single = 0.95
+    Public smoothingRadius As Single = 0.35
     Public particleProperties As Single()
     Public densities As Single()
-    Public predictedPositions As Vector2()
 
-    Public targetDensity As Single = 30
-    Public pressureMultiplier As Single = 2
-    Public numParticles As Integer = 3000
+    Public targetDensity As Single = 5.2
+    Public pressureMultiplier As Single = 27.44
+    Public numParticles As Integer
 
 
     Const stepSize As Single = 0.001
@@ -108,7 +108,6 @@ Public Class Engine : Implements IContainer(Of Particle)
         particles = New Particle(numParticles - 1) {}
         particleProperties = New Single(numParticles - 1) {}
         densities = New Single(numParticles - 1) {}
-        predictedPositions = New Vector2(numParticles - 1) {}
 
         Me.numParticles = numParticles
         Me.canvas = canvas
@@ -120,17 +119,17 @@ Public Class Engine : Implements IContainer(Of Particle)
     End Sub
 
     Public Sub Updates(deltaTime As Single)
+        Parallel.For(0, numParticles, Sub(i)
+                                          particles(i).velocity += Vector2.down * gravity * deltaTime
+                                          ' densities(i) = CalculateDensity(particles(i))
+                                          particles(i).predictedPosition = particles(i).position + particles(i).velocity / 120.0F
+                                      End Sub)
+
         grid = Me.EncodeGrid(smoothingRadius)
 
         Parallel.For(0, numParticles, Sub(i)
-                                          particles(i).velocity += Vector2.down * gravity * deltaTime
                                           densities(i) = CalculateDensity(particles(i))
-                                          ' predictedPositions(i) = particles(i).position + particles(i).velocity * deltaTime
                                       End Sub)
-
-        'For i As Integer = 0 To numParticles - 1
-        '    densities(i) = CalculateDensity(position(i))
-        'Next
 
         Parallel.For(0, numParticles, Sub(i)
                                           Dim pressureForce = CalculatePressureForce(i)
@@ -143,6 +142,22 @@ Public Class Engine : Implements IContainer(Of Particle)
                                           Call ResolveCollisions(i)
                                       End Sub)
     End Sub
+
+
+    Public Function InteractionForce(inputPos As Vector2, radius As Single, strength As Single, particleIndex As Integer) As Vector2
+        Dim f As Vector2 = Vector2.zero
+        Dim offset = inputPos - particles(particleIndex).position
+        Dim sqrDst = offset.magnitude
+
+        If sqrDst < radius Then
+            Dim dst = sqrDst
+            Dim dirToInputPoint = If(dst < Single.Epsilon, Vector2.zero, offset / dst)
+            Dim centerT = 1 - dst / radius
+            f += (dirToInputPoint * strength - particles(particleIndex).velocity) * centerT
+        End If
+
+        Return f
+    End Function
 
     Public Function smoothingKernel(dst As Single, radius As Single) As Single
         If dst >= radius Then
@@ -175,7 +190,7 @@ Public Class Engine : Implements IContainer(Of Particle)
         Dim near = grid.SpatialLookup(samplePoint, smoothingRadius)
 
         For Each position As Particle In near
-            Dim dst = (position.position - samplePoint.position).magnitude
+            Dim dst = (position.predictedPosition - samplePoint.predictedPosition).magnitude
             Dim influence = smoothingKernel(dst, smoothingRadius)
 
             density += mass * influence
@@ -237,13 +252,21 @@ Public Class Engine : Implements IContainer(Of Particle)
     End Function
 
     Private Sub ResolveCollisions(i As Integer)
-        Dim particleSize = Me.particleSize * 2
+        Dim particleSize = Me.particleSize * 5
 
-        If particles(i).X > canvas.Width - particleSize OrElse particles(i).X < particleSize Then
+        If particles(i).position.x > canvas.Width - particleSize Then
             particles(i).velocity.x *= -1 * collisionDamping
+            particles(i).position.x = canvas.Width - particleSize
+        ElseIf particles(i).position.x < particleSize Then
+            particles(i).velocity.x *= -1 * collisionDamping
+            particles(i).position.x = particleSize
         End If
-        If particles(i).Y > canvas.Height - particleSize OrElse particles(i).Y < particleSize Then
+        If particles(i).position.y > canvas.Height - particleSize Then
             particles(i).velocity.y *= -1 * collisionDamping
+            particles(i).position.y = canvas.Height - particleSize
+        ElseIf particles(i).position.y < particleSize Then
+            particles(i).velocity.y *= -1 * collisionDamping
+            particles(i).position.y = particleSize
         End If
     End Sub
 End Class
