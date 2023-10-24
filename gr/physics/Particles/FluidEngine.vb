@@ -60,11 +60,15 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         For i As Integer = 0 To n - 1
             particles(i) = New Particle(i, canvas)
         Next
+
+        Call Resize(canvas.Width, canvas.Height)
     End Sub
 
     Public Sub Resize(w As Integer, h As Integer)
         _Width = w
         _Height = h
+
+        boundsSize = New Vector2(w, h)
     End Sub
 
     Private Function SmoothingKernelPoly6(ByVal dst As Single, ByVal radius As Single) As Single
@@ -218,17 +222,19 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
             vel.y *= -1 * collisionDamping
         End If
 
-        ' Collide particle against the test obstacle
-        Dim obstacleHalfSize As Vector2 = obstacleSize * 0.5
-        Dim obstacleEdgeDst As Vector2 = obstacleHalfSize - Vector2Math.Abs(pos - obstacleCentre)
+        If Not obstacleSize Is Nothing Then
+            ' Collide particle against the test obstacle
+            Dim obstacleHalfSize As Vector2 = obstacleSize * 0.5
+            Dim obstacleEdgeDst As Vector2 = obstacleHalfSize - Vector2Math.Abs(pos - obstacleCentre)
 
-        If obstacleEdgeDst.x >= 0 AndAlso obstacleEdgeDst.y >= 0 Then
-            If obstacleEdgeDst.x < obstacleEdgeDst.y Then
-                pos.x = obstacleHalfSize.x * Sign(pos.x - obstacleCentre.x) + obstacleCentre.x
-                vel.x *= -1 * collisionDamping
-            Else
-                pos.y = obstacleHalfSize.y * Sign(pos.y - obstacleCentre.y) + obstacleCentre.y
-                vel.y *= -1 * collisionDamping
+            If obstacleEdgeDst.x >= 0 AndAlso obstacleEdgeDst.y >= 0 Then
+                If obstacleEdgeDst.x < obstacleEdgeDst.y Then
+                    pos.x = obstacleHalfSize.x * Sign(pos.x - obstacleCentre.x) + obstacleCentre.x
+                    vel.x *= -1 * collisionDamping
+                Else
+                    pos.y = obstacleHalfSize.y * Sign(pos.y - obstacleCentre.y) + obstacleCentre.y
+                    vel.y *= -1 * collisionDamping
+                End If
             End If
         End If
 
