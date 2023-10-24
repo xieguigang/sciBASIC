@@ -32,7 +32,7 @@
 			Me.Inverted = Inverted
 		End Sub
 
-		Public Overloads Function Equals(ByVal other As ConsoleFormat) As Boolean
+		Public Overloads Function Equals(other As ConsoleFormat) As Boolean
 			'this is hot from IncrementalRendering.CalculateDiff, so we want to use custom Equals where 'other' is by-ref
 			Return Foreground = other.Foreground AndAlso Background = other.Background AndAlso Bold = other.Bold AndAlso Underline = other.Underline AndAlso Inverted = other.Inverted
 		End Function

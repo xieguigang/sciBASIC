@@ -69,14 +69,14 @@ Namespace ApplicationServices.Terminal
 			Public ReadOnly Property First() As Integer
 			Public ReadOnly Property Last() As Integer
 
-			Public Sub New(ByVal first_Conflict As Integer, ByVal last_Conflict As Integer)
+			Public Sub New(first_Conflict As Integer, last_Conflict As Integer)
 				Me.First = first_Conflict
 				Me.Last = last_Conflict
 			End Sub
 		End Structure
 
 		' auxiliary function for binary search in interval table 
-		Private Function BinarySearch(ByVal ucs As Char, ByVal table() As Interval) As Boolean
+		Private Function BinarySearch(ucs As Char, table() As Interval) As Boolean
 			Dim min As Integer = 0
 			Dim max As Integer = table.Length - 1
 			Dim mid As Integer
@@ -277,7 +277,7 @@ Namespace ApplicationServices.Terminal
 		'    * in ISO 10646.
 		'    
 
-		Public Function GetWidth(ByVal character As Char) As Integer
+		Public Function GetWidth(character As Char) As Integer
 			' test for 8-bit control characters 
 			If AscW(character) = 0 Then
 				Return 0
@@ -335,7 +335,7 @@ Namespace ApplicationServices.Terminal
 				2, 1)
 		End Function
 
-		Public Function GetWidth(ByVal text As String) As Integer
+		Public Function GetWidth(text As String) As Integer
 			Dim width As Integer = 0
 			For i As Integer = 0 To text.Length - 1
 				Dim w As Integer = GetWidth(text(i))

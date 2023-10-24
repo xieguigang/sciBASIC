@@ -47,39 +47,39 @@ Namespace ApplicationServices.Terminal
                               Return CType(f.GetValue(Nothing), AnsiColor)
                           End Function, StringComparer.OrdinalIgnoreCase)
 
-        Public Shared Function Rgb(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte) As AnsiColor
+        Public Shared Function Rgb(r As Byte, g As Byte, b As Byte) As AnsiColor
             Return New AnsiColor($"38;2;{r};{g};{b}", $"48;2;{r};{g};{b}", $"#{r:X2}{g:X2}{b:X2}")
         End Function
 
-        Public Sub New(ByVal foregroundCode As String, ByVal backgroundCode As String, ByVal friendlyName As String)
+        Public Sub New(foregroundCode As String, backgroundCode As String, friendlyName As String)
             Me.foregroundCode = foregroundCode
             Me.backgroundCode = backgroundCode
             Me.friendlyName = friendlyName
         End Sub
 
-        Public Function GetEscapeSequence(Optional ByVal type As Type = Type.Foreground) As String
+        Public Function GetEscapeSequence(Optional type As Type = Type.Foreground) As String
             Return AnsiEscapeCodes.ToAnsiEscapeSequence(GetCode(type))
         End Function
-        Friend Function GetCode(Optional ByVal type As Type = Type.Foreground) As String
+        Friend Function GetCode(Optional type As Type = Type.Foreground) As String
             Return If(type = AnsiColor.Type.Foreground, foregroundCode, backgroundCode)
         End Function
 
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             Dim tempVar As Boolean = TypeOf obj Is AnsiColor
             Dim other As AnsiColor = If(tempVar, CType(obj, AnsiColor), Nothing)
             Return tempVar AndAlso Equals(other)
         End Function
-        Public Overloads Function Equals(ByVal other As AnsiColor) As Boolean Implements IEquatable(Of AnsiColor).Equals
+        Public Overloads Function Equals(other As AnsiColor) As Boolean Implements IEquatable(Of AnsiColor).Equals
             Return foregroundCode = other.foregroundCode AndAlso backgroundCode = other.backgroundCode
         End Function
         Public Overrides Function GetHashCode() As Integer
             Return foregroundCode.GetHashCode()
         End Function
 
-        Public Shared Operator =(ByVal left As AnsiColor, ByVal right As AnsiColor) As Boolean
+        Public Shared Operator =(left As AnsiColor, right As AnsiColor) As Boolean
             Return EqualityComparer(Of AnsiColor).Default.Equals(left, right)
         End Operator
-        Public Shared Operator <>(ByVal left As AnsiColor, ByVal right As AnsiColor) As Boolean
+        Public Shared Operator <>(left As AnsiColor, right As AnsiColor) As Boolean
             Return Not (left = right)
         End Operator
 
@@ -87,7 +87,7 @@ Namespace ApplicationServices.Terminal
             Return friendlyName
         End Function
 
-        Public Shared Function TryParse(ByVal input As String, <Out()> ByRef result As AnsiColor, Optional HasUserOptedOutFromColor As Boolean = False) As Boolean
+        Public Shared Function TryParse(input As String, <Out()> ByRef result As AnsiColor, Optional HasUserOptedOutFromColor As Boolean = False) As Boolean
             If HasUserOptedOutFromColor Then
                 result = White
                 Return True

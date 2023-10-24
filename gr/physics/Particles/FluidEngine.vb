@@ -21,6 +21,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     Dim interactionInputPoint As Vector2
     Dim interactionInputStrength As Single
     Dim interactionInputRadius As Single
+    Dim particleSize As Single = 5
 
     Dim obstacleSize As Vector2
     Dim obstacleCentre As Vector2
@@ -71,7 +72,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         boundsSize = New Vector2(w, h)
     End Sub
 
-    Private Function SmoothingKernelPoly6(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function SmoothingKernelPoly6(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius * radius - dst * dst
             Return v * v * v * Poly6ScalingFactor
@@ -79,7 +80,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return 0
     End Function
 
-    Private Function SpikyKernelPow3(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function SpikyKernelPow3(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius - dst
             Return v * v * v * SpikyPow3ScalingFactor
@@ -87,7 +88,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return 0
     End Function
 
-    Private Function SpikyKernelPow2(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function SpikyKernelPow2(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius - dst
             Return v * v * SpikyPow2ScalingFactor
@@ -95,7 +96,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return 0
     End Function
 
-    Private Function DerivativeSpikyPow3(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function DerivativeSpikyPow3(dst As Single, radius As Single) As Single
         If dst <= radius Then
             Dim v As Single = radius - dst
             Return -v * v * SpikyPow3DerivativeScalingFactor
@@ -103,7 +104,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return 0
     End Function
 
-    Private Function DerivativeSpikyPow2(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function DerivativeSpikyPow2(dst As Single, radius As Single) As Single
         If dst <= radius Then
             Dim v As Single = radius - dst
             Return -v * SpikyPow2DerivativeScalingFactor
@@ -111,23 +112,23 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return 0
     End Function
 
-    Private Function DensityKernel(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function DensityKernel(dst As Single, radius As Single) As Single
         Return SpikyKernelPow2(dst, radius)
     End Function
 
-    Private Function NearDensityKernel(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function NearDensityKernel(dst As Single, radius As Single) As Single
         Return SpikyKernelPow3(dst, radius)
     End Function
 
-    Private Function DensityDerivative(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function DensityDerivative(dst As Single, radius As Single) As Single
         Return DerivativeSpikyPow2(dst, radius)
     End Function
 
-    Private Function NearDensityDerivative(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function NearDensityDerivative(dst As Single, radius As Single) As Single
         Return DerivativeSpikyPow3(dst, radius)
     End Function
 
-    Private Function ViscosityKernel(ByVal dst As Single, ByVal radius As Single) As Single
+    Private Function ViscosityKernel(dst As Single, radius As Single) As Single
         Return SmoothingKernelPoly6(dst, smoothingRadius)
     End Function
 
@@ -140,7 +141,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Call par.For(0, numParticles, Sub(i) UpdatePositions(i))
     End Sub
 
-    Private Function CalculateDensity(ByVal pos As Vector2, id As Integer) As Vector2
+    Private Function CalculateDensity(pos As Vector2, id As Integer) As Vector2
         Dim originCell = GetCell2D(pos, smoothingRadius)
         Dim sqrRadius As Single = smoothingRadius * smoothingRadius
         Dim density As Single = 0
@@ -172,15 +173,15 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return New Vector2(density, nearDensity)
     End Function
 
-    Private Function PressureFromDensity(ByVal density As Single) As Single
+    Private Function PressureFromDensity(density As Single) As Single
         Return (density - targetDensity) * pressureMultiplier
     End Function
 
-    Private Function NearPressureFromDensity(ByVal nearDensity As Single) As Single
+    Private Function NearPressureFromDensity(nearDensity As Single) As Single
         Return nearPressureMultiplier * nearDensity
     End Function
 
-    Private Function ExternalForces(ByVal pos As Vector2, ByVal velocity As Vector2) As Vector2
+    Private Function ExternalForces(pos As Vector2, velocity As Vector2) As Vector2
         ' Gravity
         Dim gravityAccel As New Vector2(0, gravity)
 
@@ -205,37 +206,53 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return gravityAccel
     End Function
 
-    Private Sub HandleCollisions(ByVal particleIndex As UInteger)
+    Private Sub HandleCollisions(particleIndex As UInteger)
         Dim pos As Vector2 = particles(particleIndex).position
         Dim vel As Vector2 = particles(particleIndex).velocity
 
-        ' Keep particle inside bounds
-        Dim halfSize As Vector2 = boundsSize * 0.5
-        Dim edgeDst As Vector2 = halfSize - Vector2Math.Abs(pos)
+        '' Keep particle inside bounds
+        'Dim halfSize As Vector2 = boundsSize * 0.5
+        'Dim edgeDst As Vector2 = halfSize - Vector2Math.Abs(pos)
 
-        If edgeDst.x <= 0 Then
-            pos.x = halfSize.x * Sign(pos.x)
+        'If edgeDst.x <= 0 Then
+        '    pos.x = halfSize.x * Sign(pos.x)
+        '    vel.x *= -1 * collisionDamping
+        'End If
+        'If edgeDst.y <= 0 Then
+        '    pos.y = halfSize.y * Sign(pos.y)
+        '    vel.y *= -1 * collisionDamping
+        'End If
+
+        'If Not obstacleSize Is Nothing Then
+        '    ' Collide particle against the test obstacle
+        '    Dim obstacleHalfSize As Vector2 = obstacleSize * 0.5
+        '    Dim obstacleEdgeDst As Vector2 = obstacleHalfSize - Vector2Math.Abs(pos - obstacleCentre)
+
+        '    If obstacleEdgeDst.x >= 0 AndAlso obstacleEdgeDst.y >= 0 Then
+        '        If obstacleEdgeDst.x < obstacleEdgeDst.y Then
+        '            pos.x = obstacleHalfSize.x * Sign(pos.x - obstacleCentre.x) + obstacleCentre.x
+        '            vel.x *= -1 * collisionDamping
+        '        Else
+        '            pos.y = obstacleHalfSize.y * Sign(pos.y - obstacleCentre.y) + obstacleCentre.y
+        '            vel.y *= -1 * collisionDamping
+        '        End If
+        '    End If
+        'End If
+        Dim padding = Me.particleSize * 5
+
+        If pos.x > Width - padding Then
             vel.x *= -1 * collisionDamping
+            pos.x = Width - padding
+        ElseIf pos.x < padding Then
+            vel.x *= -1 * collisionDamping
+            pos.x = padding
         End If
-        If edgeDst.y <= 0 Then
-            pos.y = halfSize.y * Sign(pos.y)
+        If pos.y > Height - padding Then
             vel.y *= -1 * collisionDamping
-        End If
-
-        If Not obstacleSize Is Nothing Then
-            ' Collide particle against the test obstacle
-            Dim obstacleHalfSize As Vector2 = obstacleSize * 0.5
-            Dim obstacleEdgeDst As Vector2 = obstacleHalfSize - Vector2Math.Abs(pos - obstacleCentre)
-
-            If obstacleEdgeDst.x >= 0 AndAlso obstacleEdgeDst.y >= 0 Then
-                If obstacleEdgeDst.x < obstacleEdgeDst.y Then
-                    pos.x = obstacleHalfSize.x * Sign(pos.x - obstacleCentre.x) + obstacleCentre.x
-                    vel.x *= -1 * collisionDamping
-                Else
-                    pos.y = obstacleHalfSize.y * Sign(pos.y - obstacleCentre.y) + obstacleCentre.y
-                    vel.y *= -1 * collisionDamping
-                End If
-            End If
+            pos.y = Height - padding
+        ElseIf pos.y < padding Then
+            vel.y *= -1 * collisionDamping
+            pos.y = padding
         End If
 
         ' Update position and velocity
@@ -243,7 +260,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         particles(particleIndex).velocity = vel
     End Sub
 
-    Private Sub ExternalForces(ByVal id As Integer)
+    Private Sub ExternalForces(id As Integer)
         If id >= numParticles Then
             Return
         End If
@@ -256,7 +273,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         particles(id).predictedPosition = particles(id).position + particles(id).velocity * predictionFactor
     End Sub
 
-    Private Sub CalculateDensities(ByVal id As Integer)
+    Private Sub CalculateDensities(id As Integer)
         If id >= numParticles Then
             Return
         End If
@@ -264,7 +281,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Dim pos As Vector2 = particles(id).predictedPosition
         particles(id).density = CalculateDensity(pos, id)
     End Sub
-    Private Sub CalculatePressureForce(ByVal id As Integer)
+    Private Sub CalculatePressureForce(id As Integer)
         If id >= numParticles Then
             Return
         End If
@@ -315,7 +332,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Dim acceleration As Vector2 = pressureForce / density
         particles(id).velocity += acceleration * deltaTime
     End Sub
-    Private Sub CalculateViscosity(ByVal id As Integer)
+    Private Sub CalculateViscosity(id As Integer)
         If id >= numParticles Then
             Return
         End If
@@ -353,7 +370,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         particles(id).velocity += viscosityForce * viscosityStrength * deltaTime
     End Sub
 
-    Private Sub UpdatePositions(ByVal id As Integer)
+    Private Sub UpdatePositions(id As Integer)
         If id >= numParticles Then
             Return
         End If
