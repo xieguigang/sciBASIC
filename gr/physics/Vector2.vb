@@ -53,9 +53,13 @@ Public Class Vector2 : Inherits Vector2D
     Sub New()
     End Sub
 
+    Sub New(x#, y#)
+        Call MyBase.New(x, y)
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(x!, y!)
-        Call MyBase.New(x, y)
+        Call MyBase.New(CDbl(x), CDbl(y))
     End Sub
 
     Public Shared Function random(box As Size) As Vector2
@@ -74,6 +78,10 @@ Public Class Vector2 : Inherits Vector2D
 
     Public Overloads Shared Operator *(a As Double, v As Vector2) As Vector2
         Return New Vector2(v.x * a, v.y * a)
+    End Operator
+
+    Public Overloads Shared Operator *(a As Vector2, b As Vector2) As Vector2
+        Return New Vector2(a.x * b.x, a.y * b.y)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

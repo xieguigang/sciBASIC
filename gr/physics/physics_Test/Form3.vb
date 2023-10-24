@@ -79,7 +79,7 @@ Public Class Engine : Implements IContainer(Of Particle)
     Public targetDensity As Single = 5.2
     Public pressureMultiplier As Single = 27.44
     Public numParticles As Integer
-
+    Public viscosityStrength As Single = 0.5
 
     Const stepSize As Single = 0.001
     Const mass As Double = 1
@@ -132,7 +132,7 @@ Public Class Engine : Implements IContainer(Of Particle)
                                       End Sub)
 
         Parallel.For(0, numParticles, Sub(i)
-                                          Dim pressureForce = CalculatePressureForce(i)
+                                          Dim pressureForce = CalculatePressureForce(i) + CalculateViscosityForce(i)
                                           Dim a = pressureForce / densities(i)
                                           particles(i).velocity += a * deltaTime
                                       End Sub)
@@ -143,6 +143,19 @@ Public Class Engine : Implements IContainer(Of Particle)
                                       End Sub)
     End Sub
 
+    Public Function CalculateViscosityForce(particleIndex As Integer) As Vector2
+        Dim f = Vector2.zero
+        Dim position = particles(particleIndex).position
+        Dim near = grid.SpatialLookup(particles(particleIndex), smoothingRadius)
+
+        For Each other In near
+            Dim dst = (position - other.position).magnitude
+            Dim influence = smoothingKernel(dst, smoothingRadius)
+            f += (other.velocity - particles(particleIndex).velocity) * influence
+        Next
+
+        Return f * viscosityStrength
+    End Function
 
     Public Function InteractionForce(inputPos As Vector2, radius As Single, strength As Single, particleIndex As Integer) As Vector2
         Dim f As Vector2 = Vector2.zero
