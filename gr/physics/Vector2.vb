@@ -50,6 +50,27 @@ Public Class Vector2 : Inherits Vector2D
         End Get
     End Property
 
+    Default Public Property Field(offset As Integer) As Double
+        Get
+            If offset = 0 Then
+                Return x
+            ElseIf offset = 1 Then
+                Return y
+            Else
+                Throw New InvalidProgramException(offset)
+            End If
+        End Get
+        Set(value As Double)
+            If offset = 0 Then
+                x = value
+            ElseIf offset = 1 Then
+                y = value
+            Else
+                Throw New InvalidProgramException(offset)
+            End If
+        End Set
+    End Property
+
     Sub New()
     End Sub
 

@@ -13,10 +13,10 @@ Public Module GridDynamics
     }
 
     <Extension>
-    Public Iterator Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As T, radius As Single) As IEnumerable(Of T)
-        Dim cx As Integer = tar.X / radius
-        Dim cy As Integer = tar.Y / radius
+    Public Iterator Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As (x As Integer, y As Integer)) As IEnumerable(Of T)
         Dim q As T()
+        Dim cx = tar.x
+        Dim cy = tar.y
 
         For Each dxdy In lookups
             q = grid(cx + dxdy.dx, cy + dxdy.dy)
@@ -27,6 +27,15 @@ Public Module GridDynamics
                 Next
             End If
         Next
+    End Function
+
+    <Extension>
+    Public Function SpatialLookup(Of T As Layout2D)(grid As Grid(Of T()), tar As T, radius As Single) As IEnumerable(Of T)
+        Return grid.SpatialLookup((CInt(tar.X / radius), CInt(tar.Y / radius)))
+    End Function
+
+    Public Function GetCell2D(v As Layout2D, radius As Single) As (x As Integer, y As Integer)
+        Return (CInt(v.X / radius), CInt(v.Y / radius))
     End Function
 
     <Extension>
@@ -45,8 +54,8 @@ Public Module GridDynamics
     End Function
 
     Private Function HashCell(cx As Integer, cy As Integer) As UInteger
-        Dim a As UInteger = cx * 15823
-        Dim b As UInteger = cy * 9737333
+        Dim a As UInteger = cx * 15823UI
+        Dim b As UInteger = cy * 9737333UI
         Return a + b
     End Function
 
