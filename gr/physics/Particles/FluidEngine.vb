@@ -9,7 +9,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     ' Settings
     ReadOnly numParticles As UInteger
 
-    Dim gravity As Single = 10
+    Dim gravity As Single = 100
     Dim deltaTime As Single = 1 / 60
     Dim collisionDamping As Single = 0.95
     Dim smoothingRadius As Single = 50
