@@ -83,6 +83,10 @@ Public Class Vector2 : Inherits Vector2D
         Call MyBase.New(CDbl(x), CDbl(y))
     End Sub
 
+    Public Shared Function random(box As SizeF) As Vector2
+        Return New Vector2(randf.NextDouble(0, box.Width), randf.NextDouble(0, box.Height))
+    End Function
+
     Public Shared Function random(box As Size) As Vector2
         Return New Vector2(randf.NextInteger(box.Width), randf.NextInteger(box.Height))
     End Function
