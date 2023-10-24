@@ -1,4 +1,6 @@
-﻿Public Class Particle : Implements Layout2D
+﻿Imports System.Drawing
+
+Public Class Particle : Implements Layout2D
 
     Public Property X As Double Implements Layout2D.X
         Get
@@ -31,5 +33,13 @@
     ''' Density, Near Density
     ''' </summary>
     Public density As Vector2
+
+    Sub New(i As Integer, box As Size)
+        index = i
+        position = Vector2.random(box)
+        velocity = Vector2.zero
+        predictedPosition = Vector2.zero
+        density = Vector2.zero
+    End Sub
 
 End Class

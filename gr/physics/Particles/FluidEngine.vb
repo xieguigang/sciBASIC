@@ -1,15 +1,18 @@
-﻿Imports System.Math
+﻿Imports System.Drawing
+Imports System.Math
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Imaging.Physics
+Imports par = System.Threading.Tasks.Parallel
 
 Public Class FluidEngine : Implements IContainer(Of Particle)
 
     ' Settings
-    Dim numParticles As UInteger
+    ReadOnly numParticles As UInteger
+
     Dim gravity As Single
-    Dim deltaTime As Single
-    Dim collisionDamping As Single
-    Dim smoothingRadius As Single
+    Dim deltaTime As Single = 1 / 60
+    Dim collisionDamping As Single = 0.95
+    Dim smoothingRadius As Single = 2
     Dim targetDensity As Single
     Dim pressureMultiplier As Single
     Dim nearPressureMultiplier As Single
@@ -23,12 +26,11 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     Dim obstacleCentre As Vector2
 
 
-    Dim Poly6ScalingFactor As Single
-    Dim SpikyPow3ScalingFactor As Single
-    Dim SpikyPow2ScalingFactor As Single
-    Dim SpikyPow3DerivativeScalingFactor As Single
-    Dim SpikyPow2DerivativeScalingFactor As Single
-
+    ReadOnly Poly6ScalingFactor As Single
+    ReadOnly SpikyPow3ScalingFactor As Single
+    ReadOnly SpikyPow2ScalingFactor As Single
+    ReadOnly SpikyPow3DerivativeScalingFactor As Single
+    ReadOnly SpikyPow2DerivativeScalingFactor As Single
 
     ' Buffers
     Dim particles As Particle()
@@ -41,6 +43,29 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
 
     Public ReadOnly Property Width As Double Implements IContainer(Of Particle).Width
     Public ReadOnly Property Height As Double Implements IContainer(Of Particle).Height
+
+    Sub New(n As Integer, canvas As Size, Optional smoothingRadius As Single = 2)
+        Poly6ScalingFactor = 4 / (PI * Pow(smoothingRadius, 8))
+        SpikyPow3ScalingFactor = 10 / (PI * Pow(smoothingRadius, 5))
+        SpikyPow2ScalingFactor = 6 / (PI * Pow(smoothingRadius, 4))
+        SpikyPow3DerivativeScalingFactor = 30 / (Pow(smoothingRadius, 5) * PI)
+        SpikyPow2DerivativeScalingFactor = 12 / (Pow(smoothingRadius, 4) * PI)
+
+        Me.smoothingRadius = smoothingRadius
+        Me.particles = New Particle(n - 1) {}
+        Me.Width = canvas.Width
+        Me.Height = canvas.Height
+        Me.numParticles = n
+
+        For i As Integer = 0 To n - 1
+            particles(i) = New Particle(i, canvas)
+        Next
+    End Sub
+
+    Public Sub Resize(w As Integer, h As Integer)
+        _Width = w
+        _Height = h
+    End Sub
 
     Private Function SmoothingKernelPoly6(ByVal dst As Single, ByVal radius As Single) As Single
         If dst < radius Then
@@ -102,8 +127,13 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Return SmoothingKernelPoly6(dst, smoothingRadius)
     End Function
 
-    Public Sub [Step]()
-
+    Public Sub RunSimulationStep()
+        Call par.For(0, numParticles, Sub(i) ExternalForces(i))
+        spatial = Me.EncodeGrid(smoothingRadius)
+        Call par.For(0, numParticles, Sub(i) CalculateDensities(i))
+        Call par.For(0, numParticles, Sub(i) CalculatePressureForce(i))
+        Call par.For(0, numParticles, Sub(i) CalculateViscosity(i))
+        Call par.For(0, numParticles, Sub(i) UpdatePositions(i))
     End Sub
 
     Private Function CalculateDensity(ByVal pos As Vector2, id As Integer) As Vector2
