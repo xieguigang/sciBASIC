@@ -9,14 +9,14 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     ' Settings
     ReadOnly numParticles As UInteger
 
-    Dim gravity As Single = 0
+    Dim gravity As Single = 10
     Dim deltaTime As Single = 1 / 60
     Dim collisionDamping As Single = 0.95
-    Dim smoothingRadius As Single = 2
-    Dim targetDensity As Single = 5.2
-    Dim pressureMultiplier As Single = 27.44
-    Dim nearPressureMultiplier As Single = 5
-    Dim viscosityStrength As Single = 0.5
+    Dim smoothingRadius As Single = 50
+    Dim targetDensity As Single = 5
+    Dim pressureMultiplier As Single = 5
+    Dim nearPressureMultiplier As Single = 2
+    Dim viscosityStrength As Single = 0.9
     Dim boundsSize As Vector2
     Dim interactionInputPoint As Vector2
     Dim interactionInputStrength As Single
@@ -45,7 +45,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     Public ReadOnly Property Width As Double Implements IContainer(Of Particle).Width
     Public ReadOnly Property Height As Double Implements IContainer(Of Particle).Height
 
-    Sub New(n As Integer, canvas As Size, Optional smoothingRadius As Single = 2)
+    Sub New(n As Integer, canvas As Size, Optional smoothingRadius As Single = 25)
         Poly6ScalingFactor = 4 / (PI * Pow(smoothingRadius, 8))
         SpikyPow3ScalingFactor = 10 / (PI * Pow(smoothingRadius, 5))
         SpikyPow2ScalingFactor = 6 / (PI * Pow(smoothingRadius, 4))
@@ -63,6 +63,36 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Next
 
         Call Resize(canvas.Width, canvas.Height)
+    End Sub
+
+    Public Sub RunDebugStep()
+        For i As Integer = 0 To numParticles - 1
+            ExternalForces(i)
+        Next
+
+        spatial = Me.EncodeGrid(smoothingRadius)
+
+        For i As Integer = 0 To numParticles - 1
+            CalculateDensities(i)
+        Next
+        For i As Integer = 0 To numParticles - 1
+            CalculatePressureForce(i)
+        Next
+        For i As Integer = 0 To numParticles - 1
+            CalculateViscosity(i)
+        Next
+        For i As Integer = 0 To numParticles - 1
+            UpdatePositions(i)
+        Next
+    End Sub
+
+    Public Sub RunSimulationStep()
+        Call par.For(0, numParticles, Sub(i) ExternalForces(i))
+        spatial = Me.EncodeGrid(smoothingRadius)
+        Call par.For(0, numParticles, Sub(i) CalculateDensities(i))
+        Call par.For(0, numParticles, Sub(i) CalculatePressureForce(i))
+        Call par.For(0, numParticles, Sub(i) CalculateViscosity(i))
+        Call par.For(0, numParticles, Sub(i) UpdatePositions(i))
     End Sub
 
     Public Sub Resize(w As Integer, h As Integer)
@@ -131,15 +161,6 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
     Private Function ViscosityKernel(dst As Single, radius As Single) As Single
         Return SmoothingKernelPoly6(dst, smoothingRadius)
     End Function
-
-    Public Sub RunSimulationStep()
-        Call par.For(0, numParticles, Sub(i) ExternalForces(i))
-        spatial = Me.EncodeGrid(smoothingRadius)
-        Call par.For(0, numParticles, Sub(i) CalculateDensities(i))
-        Call par.For(0, numParticles, Sub(i) CalculatePressureForce(i))
-        Call par.For(0, numParticles, Sub(i) CalculateViscosity(i))
-        Call par.For(0, numParticles, Sub(i) UpdatePositions(i))
-    End Sub
 
     Private Function CalculateDensity(pos As Vector2, id As Integer) As Vector2
         Dim originCell = GetCell2D(pos, smoothingRadius)

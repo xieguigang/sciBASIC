@@ -22,7 +22,7 @@ Public Class Form3
     End Sub
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles Me.Load
-        engine = New FluidEngine(100, PictureBox1.Size)
+        engine = New FluidEngine(5000, PictureBox1.Size)
     End Sub
 
     Private Sub Form3_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
