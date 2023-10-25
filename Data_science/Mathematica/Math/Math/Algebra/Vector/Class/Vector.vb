@@ -985,7 +985,13 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="v2"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DotProduct(v2 As Vector) As Double
+            Return DotProduct(buffer, v2.buffer)
+        End Function
+
+        Public Shared Function DotProduct(lhs As Double(), rhs As Double()) As Double
             'Dim sum#
 
             'For i As Integer = 0 To Me.Count - 1
@@ -993,7 +999,14 @@ Namespace LinearAlgebra
             'Next
 
             'Return sum
-            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(buffer, v2.buffer)
+            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(lhs, rhs)
+            Dim sum As Double = dot.Sum
+
+            Return sum
+        End Function
+
+        Public Shared Function DotProduct(lhs As Single(), rhs As Single()) As Double
+            Dim dot As Single() = SIMD.Multiply.f32_op_multiply_f32(lhs, rhs)
             Dim sum As Double = dot.Sum
 
             Return sum

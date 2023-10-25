@@ -61,6 +61,7 @@
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 力
@@ -114,8 +115,9 @@ Public Class Force
         Return f.strength = strength
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator =(f As Force, strength%) As Boolean
-        Return Abs(f.strength - strength) <= 0.0001
+        Return std.Abs(f.strength - strength) <= 0.0001
     End Operator
 
     Public Shared Operator <>(f As Force, strength#) As Boolean

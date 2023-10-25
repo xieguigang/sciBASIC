@@ -38,43 +38,43 @@ Namespace ApplicationServices.Terminal
 		Public ReadOnly Reset As String = $"{Escape}[{ResetChar}m"
 
 		''' <param name="index">Index starts at 1.</param>
-		Public Function GetMoveCursorToColumn(ByVal index As Integer) As String
+		Public Function GetMoveCursorToColumn(index As Integer) As String
 			Return $"{Escape}[{index}G"
 		End Function
 
-		Public Function GetMoveCursorUp(ByVal count As Integer) As String
+		Public Function GetMoveCursorUp(count As Integer) As String
 			Return If(count = 0, "", $"{Escape}[{count}A")
 		End Function
-		Public Function GetMoveCursorDown(ByVal count As Integer) As String
+		Public Function GetMoveCursorDown(count As Integer) As String
 			Return If(count = 0, "", $"{Escape}[{count}B")
 		End Function
-		Public Function GetMoveCursorRight(ByVal count As Integer) As String
+		Public Function GetMoveCursorRight(count As Integer) As String
 			Return If(count = 0, "", $"{Escape}[{count}C")
 		End Function
-		Public Function GetMoveCursorLeft(ByVal count As Integer) As String
+		Public Function GetMoveCursorLeft(count As Integer) As String
 			Return If(count = 0, "", $"{Escape}[{count}D")
 		End Function
 
 		''' <param name="sb">Target StringBUilder.</param>
 		''' <param name="index">Index starts at 1.</param>
-		Public Sub AppendMoveCursorToColumn(ByVal sb As StringBuilder, ByVal index As Integer)
+		Public Sub AppendMoveCursorToColumn(sb As StringBuilder, index As Integer)
 			MoveCursor(sb, index, "G"c)
 		End Sub
 
-		Public Sub AppendMoveCursorUp(ByVal sb As StringBuilder, ByVal count As Integer)
+		Public Sub AppendMoveCursorUp(sb As StringBuilder, count As Integer)
 			MoveCursor(sb, count, "A"c)
 		End Sub
-		Public Sub AppendMoveCursorDown(ByVal sb As StringBuilder, ByVal count As Integer)
+		Public Sub AppendMoveCursorDown(sb As StringBuilder, count As Integer)
 			MoveCursor(sb, count, "B"c)
 		End Sub
-		Public Sub AppendMoveCursorRight(ByVal sb As StringBuilder, ByVal count As Integer)
+		Public Sub AppendMoveCursorRight(sb As StringBuilder, count As Integer)
 			MoveCursor(sb, count, "C"c)
 		End Sub
-		Public Sub AppendMoveCursorLeft(ByVal sb As StringBuilder, ByVal count As Integer)
+		Public Sub AppendMoveCursorLeft(sb As StringBuilder, count As Integer)
 			MoveCursor(sb, count, "D"c)
 		End Sub
 
-		Private Sub MoveCursor(ByVal sb As StringBuilder, ByVal count As Integer, ByVal direction As Char)
+		Private Sub MoveCursor(sb As StringBuilder, count As Integer, direction As Char)
 			If count > 0 Then
 				sb.Append(EscapeChar)
 				sb.Append("["c)
@@ -83,17 +83,17 @@ Namespace ApplicationServices.Terminal
 			End If
 		End Sub
 
-		Friend Function ToAnsiEscapeSequence(ByVal colorCode As String) As String
+		Friend Function ToAnsiEscapeSequence(colorCode As String) As String
 			Return $"{Escape}[{colorCode}m"
 		End Function
 
-		Public Function ToAnsiEscapeSequenceSlow(ByVal formatting As ConsoleFormat) As String
+		Public Function ToAnsiEscapeSequenceSlow(formatting As ConsoleFormat) As String
 			Dim sb = New StringBuilder()
 			AppendAnsiEscapeSequence(sb, formatting)
 			Return sb.ToString()
 		End Function
 
-		Public Sub AppendAnsiEscapeSequence(ByVal stringBuilder As StringBuilder, ByVal formatting As ConsoleFormat)
+		Public Sub AppendAnsiEscapeSequence(stringBuilder As StringBuilder, formatting As ConsoleFormat)
 			stringBuilder.Append(EscapeChar)
 			stringBuilder.Append("["c)
 			If formatting.Inverted Then

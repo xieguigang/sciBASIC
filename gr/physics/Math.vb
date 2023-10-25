@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Math provider for <see cref="Force"/>
@@ -76,7 +76,7 @@ Public Module Math
     Public Function Decomposition2D(F As Force) As Vector
         Dim v = F.strength
         Dim a = F.angle
-        Return New Vector({v * stdNum.Cos(a), v * Sin(a)})
+        Return New Vector({v * std.Cos(a), v * Sin(a)})
     End Function
 
     <Extension>
@@ -101,7 +101,7 @@ Public Module Math
         End If
 
         Dim alpha = f1.angle - f2.angle
-        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * stdNum.Cos(alpha))
+        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * std.Cos(alpha))
 
         If F = 0R Then
             ' F 为零的之后，只有二者方向相反
@@ -109,7 +109,7 @@ Public Module Math
         Else
             Dim sina = Sin(alpha) * f1 / F
 
-            If Abs(sina) <= 0.000000000001 Then
+            If std.Abs(sina) <= 0.000000000001 Then
                 ' 要么二者相反，要么二者同向
                 If F > f1 AndAlso F > f2 Then
                     ' 二者同向相加才会出现都大于的情况
