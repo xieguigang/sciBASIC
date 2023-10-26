@@ -234,6 +234,9 @@ Namespace Language
         ''' </param>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this operator deal with the null reference error safely
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean
