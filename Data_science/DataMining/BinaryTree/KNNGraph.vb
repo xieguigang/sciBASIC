@@ -4,6 +4,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.Correlations
 
 Public Class KNNGraph
 
@@ -22,12 +23,19 @@ Public Class KNNGraph
         Dim all As New Dictionary(Of String, EntityClusterModel)(Me.all)
         Dim seed As EntityClusterModel
         Dim near As KdNodeHeapItem(Of EntityClusterModel)()
+        Dim meanDist As Double
 
         Do While all.Count > 0
             seed = all.First.Value
             near = tree.nearest(seed, maxNodes:=k).ToArray
             temp.AddRange(near)
+            meanDist = Aggregate xi As KdNodeHeapItem(Of EntityClusterModel)
+                       In temp
+                       Into Average(xi.distance)
 
+            Do While True
+
+            Loop
         Loop
 
         Return clusters
@@ -36,7 +44,7 @@ Public Class KNNGraph
     Private Class ObjAccess : Inherits KdNodeAccessor(Of EntityClusterModel)
 
         ReadOnly dims As String()
-        ReadOnly cache As Dictionary(Of String, Double())
+        ReadOnly cache As New Dictionary(Of String, Double())
 
         Sub New(dims As String())
             Me.dims = dims
@@ -66,7 +74,7 @@ Public Class KNNGraph
             x = cache(a.ID)
             y = cache(b.ID)
 
-            Return 1 - Math.SSM_SIMD(x, y)
+            Return x.EuclideanDistance(y)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
