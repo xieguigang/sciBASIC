@@ -54,6 +54,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.DataFrame
 
+''' <summary>
+''' A helper module for encode the feature vector into numeric feature
+''' </summary>
 Public Class Encoder
 
     ReadOnly encodings As New Dictionary(Of String, FeatureEncoder)
@@ -64,7 +67,7 @@ Public Class Encoder
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' Try to encode all non-numeric feature vector 
     ''' </summary>
     ''' <param name="data">
     ''' 不是所有的字段都需要进行编码操作的
