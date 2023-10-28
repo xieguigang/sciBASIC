@@ -36,6 +36,7 @@ Public Class KNNGraph
     Private Class ObjAccess : Inherits KdNodeAccessor(Of EntityClusterModel)
 
         ReadOnly dims As String()
+        ReadOnly cache As Dictionary(Of String, Double())
 
         Sub New(dims As String())
             Me.dims = dims
@@ -53,7 +54,19 @@ Public Class KNNGraph
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function metric(a As EntityClusterModel, b As EntityClusterModel) As Double
-            Throw New NotImplementedException()
+            Dim x, y As Double()
+
+            If Not cache.ContainsKey(a.ID) Then
+                cache.Add(a.ID, a(dims))
+            End If
+            If Not cache.ContainsKey(b.ID) Then
+                cache.Add(b.ID, b(dims))
+            End If
+
+            x = cache(a.ID)
+            y = cache(b.ID)
+
+            Return 1 - Math.SSM_SIMD(x, y)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
