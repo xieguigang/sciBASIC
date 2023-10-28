@@ -1,29 +1,44 @@
 ﻿
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Public Class KNNGraph
 
     ReadOnly tree As KdTree(Of EntityClusterModel)
+    ReadOnly all As Dictionary(Of String, EntityClusterModel)
 
     Sub New(rawdata As IEnumerable(Of EntityClusterModel))
-        tree = New KdTree(Of EntityClusterModel)(rawdata, metric:=New ObjAccess)
+        all = rawdata.ToDictionary(Function(a) a.ID)
+        tree = New KdTree(Of EntityClusterModel)(all.Values, metric:=New ObjAccess(all.First.Value.EnumerateKeys))
     End Sub
 
+    Public Function BuildClusterGraph(k As Integer) As Dictionary(Of String, String())
+        Dim assigned As New Index(Of String)
+        Dim clusters As New Dictionary(Of String, String())
+        Dim temp As New List(Of KdNodeHeapItem(Of EntityClusterModel))
+        Dim all As New Dictionary(Of String, EntityClusterModel)(Me.all)
+        Dim seed As EntityClusterModel
+        Dim near As KdNodeHeapItem(Of EntityClusterModel)()
 
+        Do While all.Count > 0
+            seed = all.First.Value
+            near = tree.nearest(seed, maxNodes:=k).ToArray
+            temp.AddRange(near)
+
+        Loop
+
+        Return clusters
+    End Function
 
     Private Class ObjAccess : Inherits KdNodeAccessor(Of EntityClusterModel)
 
-        Dim dims As String()
+        ReadOnly dims As String()
 
-        Sub New()
-            analysis_template = AddressOf loadTemplate
-        End Sub
-
-        Private Sub loadTemplate(a As EntityClusterModel)
-            dims = a.Properties.Keys.ToArray
+        Sub New(dims As String())
+            Me.dims = dims
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

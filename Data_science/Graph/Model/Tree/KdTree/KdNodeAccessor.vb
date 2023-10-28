@@ -63,8 +63,6 @@ Namespace KdTree
             End Set
         End Property
 
-        Protected Friend analysis_template As Action(Of T)
-
         Public MustOverride Function GetDimensions() As String()
         ''' <summary>
         ''' measuring of the node distance
