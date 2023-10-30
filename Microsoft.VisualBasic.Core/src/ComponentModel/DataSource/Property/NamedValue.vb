@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::8e36552f21fdff10a54a50f9e5800a15, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 200
-    '    Code Lines: 124
-    ' Comment Lines: 50
-    '   Blank Lines: 26
-    '     File Size: 7.74 KB
+' Summaries:
 
 
-    '     Structure NamedValue
-    ' 
-    '         Properties: Description, IsEmpty, Name, Value, ValueType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: FixValue, ToString
-    '         Operators: (+2 Overloads) +, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 200
+'    Code Lines: 124
+' Comment Lines: 50
+'   Blank Lines: 26
+'     File Size: 7.74 KB
+
+
+'     Structure NamedValue
+' 
+'         Properties: Description, IsEmpty, Name, Value, ValueType
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: FixValue, ToString
+'         Operators: (+2 Overloads) +, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.DataSourceModel
 
@@ -172,13 +174,28 @@ Namespace ComponentModel.DataSourceModel
                 ' 用户来通过重写ToString方法来自定义显示，而非强制使用GetJson方法
                 ' 将全部的对象都显示出来，对于属性很多的对象GetJson方法显示的效果不是太好
                 If Description.StringEmpty Then
-                    Return $"{Name} --> {Value.ToString}"
+                    Return $"{Name} -> {getValueStr()}"
                 Else
-                    Return $"{Name} --> {Value.ToString} ({Description})"
+                    Return $"{Name} -> {getValueStr()} ({Description.TrimNewLine})"
                 End If
             Catch ex As Exception
                 Return Name
             End Try
+        End Function
+
+        Private Function getValueStr() As String
+            If Value Is Nothing Then
+                Return "null"
+            End If
+
+            If DataFramework.IsPrimitive(ValueType) OrElse Not ValueType.IsArray Then
+                Return Value.ToString
+            Else
+                Return DirectCast(CObj(Value), Array) _
+                    .AsObjectEnumerator _
+                    .Select(Function(o) any.ToString(o)) _
+                    .JoinBy("; ")
+            End If
         End Function
 
         Public Function FixValue(h As Func(Of T, T)) As NamedValue(Of T)

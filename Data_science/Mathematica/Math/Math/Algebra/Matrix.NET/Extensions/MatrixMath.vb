@@ -62,6 +62,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports stdnum = System.Math
 
 Namespace LinearAlgebra.Matrix
@@ -79,7 +80,8 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks>
         ''' 其中A为m*n的矩阵,r为A的秩.即A=Return_M*Return_N.函数执行成功返回r(也就是其秩)
         ''' </remarks>
-        <Extension> Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
+        <Extension>
+        Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
             Dim erro As Double = stdnum.Pow(0.1, 10)
             Dim n As Int16 = K.RowDimension
             Dim m As Int16 = K.RowDimension / n
@@ -1836,14 +1838,36 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="A_n">A矩阵的列数或大小</param>
         ''' <param name="LoopNumber">控制的循环次数</param>
         ''' <param name="Erro">误差控制变量</param>
-        ''' <param name="Ret">返回的一个n*2的矩阵</param>
+        ''' <param name="ret">返回的一个n*2的矩阵</param>
         ''' <returns>函数执行完毕返回Ret的行数</returns>
         ''' <remarks>
-        ''' 对于多项式f(x)=(x^2+2x+3)(x^2-5x+9)=x^4-3x^3+2x^2+3x+27,则A(0,0)=1,A(0,1)=-3,A(0,2)=2,A(0,3)=3,A(0,4)=27,A_n=5.
-        ''' 当执行下面的函数后,Ret是一个2×2的矩阵,即Ret(0,0)=2,Ret(0,1)=3,Ret(0,0)的2对应于(x^2+2x+3)当中2x的2,Ret(0,1)的3
-        ''' 对应于(x^2+2x+3)当中常系数的3.用此函数前建议先把重根与实数根处理掉
+        ''' 对于多项式
+        ''' 
+        ''' ```
+        ''' f(x) = (x^2+2x+3)(x^2-5x+9)
+        '''      = x^4-3x^3+2x^2+3x+27
+        ''' ```
+        ''' 
+        ''' 则 A(0,0)=1,
+        '''    A(0,1)=-3,
+        '''    A(0,2)=2,
+        '''    A(0,3)=3,
+        '''    A(0,4)=27,
+        '''    A_n=5.
+        ''' 
+        ''' 当执行下面的函数后,Ret是一个2×2的矩阵,即
+        ''' 
+        ''' ```
+        ''' Ret(0,0)=2,
+        ''' Ret(0,1)=3,
+        ''' ```
+        ''' 
+        ''' Ret(0,0)的2对应于(x^2+2x+3)当中2x的2,
+        ''' Ret(0,1)的3对应于(x^2+2x+3)当中常系数的3.
+        ''' 
+        ''' 用此函数前建议先把重根与实数根处理掉
         ''' </remarks>
-        Public Function PolyRoots2(A As GeneralMatrix, A_n As Integer, LoopNumber As Int16, Erro As Integer, Ret As GeneralMatrix) As Integer '失败返回0。成功返回Ret行数
+        Public Function PolyRoots2(A As GeneralMatrix, A_n As Integer, LoopNumber As Int16, Erro As Integer, <Out> ByRef ret As GeneralMatrix) As Integer
             '本函数求解的根是复数根,且多项式A只有复数根,且不存在重根
             '如果A=(x^2+23x+4)则Ret（0,0）=23,Ret(0,1)=4
             '函数返回Ret的行数
@@ -1859,7 +1883,7 @@ Namespace LinearAlgebra.Matrix
             Dim ATemp(0, 0) As Double
             Dim ATemp2(0, 2) As Double
             Dim Erro1 As Double = stdnum.Pow(0.1, Erro)
-            Ret = New NumericMatrix(N, 1) '    ReDim Ret(N, 1)
+            ret = New NumericMatrix(N, 1) '    ReDim Ret(N, 1)
             While N >= 0
                 u = 1
                 v = 1
@@ -1883,11 +1907,11 @@ Namespace LinearAlgebra.Matrix
                         Exit While
                     End If
                 End While
-                Ret(N, 0) = -u
-                Ret(N, 1) = -v
+                ret(N, 0) = -u
+                ret(N, 1) = -v
                 ATemp2(0, 0) = 1
-                ATemp2(0, 1) = Ret(N, 0)
-                ATemp2(0, 2) = Ret(N, 1)
+                ATemp2(0, 1) = ret(N, 0)
+                ATemp2(0, 2) = ret(N, 1)
                 PolyDiv(A, New NumericMatrix(ATemp2), Nothing, New NumericMatrix(ATemp), 11)
                 A_n = ATemp.Length - 1
                 i = A_n
@@ -1898,7 +1922,7 @@ Namespace LinearAlgebra.Matrix
                 End While
                 N -= 1
             End While
-            Return Ret.RowDimension / 2
+            Return ret.RowDimension / 2
         End Function
 
         ''' <summary>
@@ -2298,7 +2322,7 @@ Loopexit:
         ''' <param name="Return_K">执行成功后返回的乘的结果的矩阵</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Mul(K1 As GeneralMatrix, K2 As GeneralMatrix, n As Integer, Return_K As GeneralMatrix) As Boolean '矩阵相乘K1为m*n,K2为n*l,Return_K为m*l
+        Public Function Mul(K1 As GeneralMatrix, K2 As GeneralMatrix, n As Integer, ByRef Return_K As GeneralMatrix) As Boolean '矩阵相乘K1为m*n,K2为n*l,Return_K为m*l
             Dim i As Integer = K1.RowDimension
             If i <> n Then
                 Return False
@@ -2563,9 +2587,15 @@ Loopexit:
         ''' <param name="RetMod">求得的余数多项式系数</param>
         ''' <param name="Ret">求得的多项式商系数</param>
         ''' <param name="Erro">误差控制参数</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
+        ''' </returns>
         ''' <remarks>A1/A2=Ret……RetMod</remarks>
-        Public Function PolyDiv(A1 As GeneralMatrix, A2 As GeneralMatrix, RetMod As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer '多项式的除法，里边的数组均为1*n的矩阵,原理:A1/A2=Ret……RetMod'函数最终返回Ret商的数组大小
+        Public Function PolyDiv(A1 As GeneralMatrix, A2 As GeneralMatrix,
+                                <Out> ByRef RetMod As GeneralMatrix,
+                                <Out> ByRef Ret As GeneralMatrix,
+                                Erro As Integer) As Integer
+
             Dim n1 As Integer = A1.RowDimension
             Dim n2 As Integer = A2.RowDimension
             Dim N As Integer
@@ -2635,7 +2665,7 @@ Loopexit:
         ''' <param name="Erro">误差控制参数</param>
         ''' <returns></returns>
         ''' <remarks>A1%A2=Ret</remarks>
-        Public Function PolyMod(A1 As GeneralMatrix, A2 As GeneralMatrix, Ret As GeneralMatrix, Erro As Integer) As Integer
+        Public Function PolyMod(A1 As GeneralMatrix, A2 As GeneralMatrix, <Out> ByRef Ret As GeneralMatrix, Erro As Integer) As Integer
             '多项式求余Ret=A1%A2,函数返回余项Ret的列数.A1，A2，Ret均为1行的矩阵
             Dim a1n As Integer = A1.RowDimension
             Dim a2n As Integer = A2.RowDimension
@@ -2710,7 +2740,7 @@ Loopexit:
         ''' <param name="X">离散傅里叶变换逆变换的结果矩阵是Number*2的矩阵,X里的第一列代表数据的实数部分,第2列代表数据的虚数部分</param>
         ''' <returns>本函数执行成功返回True.本函数相当于Matlab的快速傅里叶变换逆变换函数IFFT</returns>
         ''' <remarks></remarks>
-        Public Function IDFT(k As GeneralMatrix, m As Integer, Number As Integer, X As GeneralMatrix) As Boolean
+        Public Function IDFT(k As GeneralMatrix, m As Integer, Number As Integer, <Out> ByRef X As GeneralMatrix) As Boolean
             '离散傅里叶变换逆变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
@@ -2753,7 +2783,7 @@ Loopexit:
         ''' <param name="X">离散傅里叶变换的结果矩阵是Number*2的矩阵,X里的第一列代表数据的实数部分,第2列代表数据的虚数部分</param>
         ''' <returns>本函数执行成功返回True.本函数相当于Matlab的快速傅里叶变换函数FFT</returns>
         ''' <remarks></remarks>
-        Public Function DFT(k As GeneralMatrix, m As Integer, Number As Integer, X As GeneralMatrix) As Boolean
+        Public Function DFT(k As GeneralMatrix, m As Integer, Number As Integer, <Out> ByRef X As GeneralMatrix) As Boolean
             '离散傅里叶变换,Number为点数
             '返回Number*2的矩阵,第一列为实数部分,第2列为虚数部分
             'k是m*2的矩阵,第一列为实数,第2列为虚数
@@ -2795,7 +2825,7 @@ Loopexit:
         ''' <param name="ret">获得的一个正交基矩阵</param>
         ''' <returns>函数失败返回小于1的数据，成功返回ret的行数</returns>
         ''' <remarks>对矩阵进行svd分解即用SvdSplit得到k=usv*,则s是奇异值矩阵,可以奇异值是否为0获得矩阵的秩r,然后ret就是m*r的矩阵且其就是u里的m*r的部分值</remarks>
-        Public Function Orth(k As GeneralMatrix, m As Integer, ret As GeneralMatrix) As Integer
+        Public Function Orth(k As GeneralMatrix, m As Integer, <Out> ByRef ret As GeneralMatrix) As Integer
             Dim u(0, 0) As Double
             Dim s(0, 0) As Double
             Dim sm As Integer
@@ -2836,7 +2866,7 @@ Loopexit:
         ''' <param name="start">幻方的中最小的正整数,一般可以设置为1</param>
         ''' <param name="k">获得的幻方</param>
         ''' <remarks></remarks>
-        Private Sub Magic(n As Integer, start As Double, k As GeneralMatrix)
+        Private Sub Magic(n As Integer, start As Double, <Out> ByRef k As GeneralMatrix)
             k = New NumericMatrix(n - 1, n - 1) ' ReDim k(n - 1, n - 1)
             If n Mod 4 = 0 Then
                 Magic_4(n, start, k)
@@ -3002,7 +3032,7 @@ Loopexit:
         ''' 
         ''' 即AX=B
         ''' </remarks>
-        Public Function Sove2(A As GeneralMatrix, b As GeneralMatrix, A_m As Integer, B_m As Integer, X As GeneralMatrix) As Boolean
+        Public Function Sove2(A As GeneralMatrix, b As GeneralMatrix, A_m As Integer, B_m As Integer, <Out> ByRef X As GeneralMatrix) As Boolean
             '采用全选主元素法求解
             If A_m <> B_m Or B_m <> b.RowDimension Then
                 Return False

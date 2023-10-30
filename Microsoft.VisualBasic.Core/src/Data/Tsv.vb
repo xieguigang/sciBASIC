@@ -172,12 +172,12 @@ Namespace ComponentModel.DataSourceModel
         ReadOnly withoutProcess As New [Default](Of Func(Of String, String))(Function(str) str)
 
         ''' <summary>
-        ''' 
+        ''' Just read the first line and parse as the data headers
         ''' </summary>
-        ''' <param name="stream"></param>
+        ''' <param name="stream">A stream connection to the target text file</param>
         ''' <param name="lower"></param>
         ''' <param name="process"></param>
-        ''' <returns></returns>
+        ''' <returns>A data headers collection</returns>
         ''' <remarks>
         ''' Linux平台上面的mono这里有bug，为什么<see cref="StreamReader.ReadLine()"/>一直都输出空值？
         ''' </remarks>
@@ -186,6 +186,7 @@ Namespace ComponentModel.DataSourceModel
                                      Optional lower As Boolean = False,
                                      Optional process As Func(Of String, String) = Nothing) As Index(Of String)
 
+            ' just read the first line in the text file
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
                 .Split(ASCII.TAB) _

@@ -372,9 +372,11 @@ Public Module XmlExtensions
         Catch ex As Exception
             Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
-            If Len(xml) <= 4096 * 100 Then
-                ex = New Exception(xml, ex)
+            If Len(xml) > 512 Then
+                xml = Mid(xml, 1, 512) & "..."
             End If
+
+            ex = New Exception($"class_name: {schema.Name}, and the xml fragment: {xml}", ex)
 
             App.LogException(ex, curMethod)
 
@@ -411,12 +413,23 @@ Public Module XmlExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="ignoreXmlNs">
+    ''' ignores of the xml namespace delcaration attribute value by default,
+    ''' due to the reason of the input <paramref name="xml"/> text just a
+    ''' xml document fragment text.
+    ''' </param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' the input <paramref name="xml"/> probably has no namespace attribute data
+    ''' inside the xml root tag, so the <see cref="NamespaceIgnorantXmlTextReader"/>
+    ''' will be used for parse the xml in this helper function?
+    ''' </remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateObjectFromXmlFragment(Of T)(xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
+    Public Function CreateObjectFromXmlFragment(Of T)(xml$,
+                                                      Optional preprocess As Func(Of String, String) = Nothing,
+                                                      Optional ignoreXmlNs As Boolean = True) As T
         Dim xmlDoc$ =
             "<?xml version=""1.0"" encoding=""UTF-8""?>" &
             ASCII.LF &
@@ -426,18 +439,7 @@ Public Module XmlExtensions
             xmlDoc = preprocess(xmlDoc)
         End If
 
-        Try
-            Using s As New StringReader(s:=xmlDoc)
-                Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
-            End Using
-        Catch ex As Exception
-            Dim root$ = xml.GetBetween("<", ">").Split.First
-            Dim file$ = App.LogErrDIR & "/" & $"{root}-{Path.GetTempFileName.BaseName}.Xml"
-
-            Call xmlDoc.SaveTo(file)
-
-            Throw New Exception("Details at file dump: " & file, ex)
-        End Try
+        Return xmlDoc.LoadFromXml(Of T)(doNamespaceIgnorant:=ignoreXmlNs)
     End Function
 
     ''' <summary>

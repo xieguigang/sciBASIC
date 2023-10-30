@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::b444ddca74dd29280e23f69fbfa34375, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\FormattedParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 127
-    '    Code Lines: 55
-    ' Comment Lines: 54
-    '   Blank Lines: 18
-    '     File Size: 4.78 KB
+' Summaries:
 
 
-    '     Module FormattedParser
-    ' 
-    '         Function: CrossFields, FieldParser, FlagSplit
-    '         Delegate Function
-    ' 
-    '             Function: ReadHead, UntilBlank
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 127
+'    Code Lines: 55
+' Comment Lines: 54
+'   Blank Lines: 18
+'     File Size: 4.78 KB
+
+
+'     Module FormattedParser
+' 
+'         Function: CrossFields, FieldParser, FlagSplit
+'         Delegate Function
+' 
+'             Function: ReadHead, UntilBlank
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
@@ -69,12 +70,24 @@ Namespace Text.Parser
         ''' <summary>
         ''' String collection tokens by a certain delimiter string element.
         ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="isFlag"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function FlagSplit(s As StreamReader, isFlag As Func(Of String, Boolean)) As IEnumerable(Of String())
+            Return LargeTextFile.IteratesStream(s).FlagSplit(isFlag)
+        End Function
+
+        ''' <summary>
+        ''' String collection tokens by a certain delimiter string element.
+        ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="isFlag">
         ''' 
         ''' </param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function FlagSplit(source As IEnumerable(Of String), isFlag As Func(Of String, Boolean)) As IEnumerable(Of String())
+        <Extension>
+        Public Iterator Function FlagSplit(source As IEnumerable(Of String), isFlag As Func(Of String, Boolean)) As IEnumerable(Of String())
             Dim list As New List(Of String)
 
             ' >> .........
@@ -114,7 +127,8 @@ Namespace Text.Parser
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        <Extension> Public Function CrossFields(s As String) As Integer()
+        <Extension>
+        Public Function CrossFields(s As String) As Integer()
             Dim sps As String() = Regex.Matches(s, "\s+").ToArray
             Dim lens As String() = Regex.Matches(s, "-+").ToArray
             Dim fieldLens As New List(Of Integer)
@@ -135,7 +149,8 @@ Namespace Text.Parser
         ''' <param name="s">The input text line.</param>
         ''' <param name="fieldLength">The text length of each field property value.</param>
         ''' <returns></returns>
-        <Extension> Public Iterator Function FieldParser(s As String, fieldLength As Integer()) As IEnumerable(Of String)
+        <Extension>
+        Public Iterator Function FieldParser(s As String, fieldLength As Integer()) As IEnumerable(Of String)
             Dim offset As Integer = Scan0
 
             For Each len As Integer In fieldLength.Take(fieldLength.Length - 1)
