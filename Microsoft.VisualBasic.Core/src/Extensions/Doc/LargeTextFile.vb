@@ -62,7 +62,6 @@ Imports Microsoft.VisualBasic.Text
 ''' Wrapper for the file operations.
 ''' </summary>
 ''' <remarks></remarks>
-<[Namespace]("Large_Text_File")>
 Public Module LargeTextFile
 
     ''' <summary>
@@ -86,13 +85,17 @@ Public Module LargeTextFile
     End Function
 
     ''' <summary>
-    ''' Iterates read all lines in a very large text file, using for loading a very large size csv/tsv file
+    ''' Iterates read all lines in a very large text file, 
+    ''' using for loading a very large size csv/tsv file
     ''' </summary>
-    ''' <param name="path$">file path</param>
-    ''' <param name="title$">The header line of this large size csv/tsv file.</param>
-    ''' <param name="skip%">Skip n lines, then start to populate data lines.</param>
+    ''' <param name="path">file path</param>
+    ''' <param name="title">The header line of this large size csv/tsv file.</param>
+    ''' <param name="skip">Skip n lines, then start to populate data lines.</param>
     ''' <param name="encoding">Text file encoding.</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' A helper function for read the csv/tsv table file
+    ''' </remarks>
     <Extension>
     Public Function IteratesTableData(path$, ByRef title$, Optional skip% = -1, Optional encoding As Encodings = Encodings.ASCII) As IEnumerable(Of String)
         Using reader As StreamReader = path.OpenReader(encoding.CodePage)
@@ -111,10 +114,13 @@ Public Module LargeTextFile
     End Function
 
     ''' <summary>
-    ''' Populate all lines of the text data from current stream reader object
+    ''' Populate all lines of the text data from current 
+    ''' stream reader object
     ''' </summary>
-    ''' <param name="s"></param>
-    ''' <returns></returns>
+    ''' <param name="s">The stream connection to the target text file data resource.</param>
+    ''' <returns>
+    ''' Try to pull all text lines from the given text stream data
+    ''' </returns>
     <Extension>
     Public Iterator Function IteratesStream(s As StreamReader) As IEnumerable(Of String)
         Do While Not s.EndOfStream
