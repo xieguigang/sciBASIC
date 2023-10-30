@@ -61,18 +61,18 @@ Namespace Serialization
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class MessagePackMemberAttribute : Inherits Attribute
 
-        ReadOnly idField As Integer
+        ReadOnly m_id As Integer
 
         Public Property NilImplication As NilImplication
 
         Public ReadOnly Property Id As Integer
             Get
-                Return idField
+                Return m_id
             End Get
         End Property
 
         Public Sub New(id As Integer)
-            idField = id
+            m_id = id
             NilImplication = NilImplication.MemberDefault
         End Sub
 
