@@ -59,6 +59,10 @@
 
 #End Region
 
+#If NET_48 Or NETCOREAPP Then
+Imports Microsoft.VisualBasic.Net
+#End If
+
 Imports System.Collections.Specialized
 Imports System.IO
 Imports System.Net
@@ -73,27 +77,19 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
-Imports System.Threading
-Imports Microsoft.VisualBasic.Linq
-
-#If NET_48 Or NETCOREAPP Then
-Imports Microsoft.VisualBasic.Net
-#End If
+Imports System.Net.Sockets
 
 ''' <summary>
 ''' The extension module for web services works.
 ''' </summary>
 '''
-<Package("Utils.WebServices",
-                  Description:="The extension module for web services programming in your scripting.",
-                  Category:=APICategories.UtilityTools,
-                  Publisher:="<a href=""mailto://xie.guigang@gmail.com"">xie.guigang@gmail.com</a>")>
 Public Module WebServiceUtils
 
     ''' <summary>
@@ -176,7 +172,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function BuildReqparm(data As IEnumerable(Of KeyValuePair(Of String, String))) As Specialized.NameValueCollection
-        Dim reqparm As New Specialized.NameValueCollection
+        Dim reqparm As New NameValueCollection
         For Each Value As KeyValuePair(Of String, String) In data
             Call reqparm.Add(Value.Key, Value.Value)
         Next
@@ -192,7 +188,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <Extension>
     Public Function IsSocketPortOccupied(ex As Exception) As Boolean
-        If TypeOf ex Is System.Net.Sockets.SocketException AndAlso
+        If TypeOf ex Is SocketException AndAlso
             InStr(ex.ToString, PortOccupied, CompareMethod.Text) Then
             Return True
         Else
@@ -240,8 +236,8 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="url">URL parameters</param>
     ''' <returns></returns>
-    <ExportAPI("Request.Parser")>
-    <Extension> Public Function QueryStringParameters(url$, Optional transLower As Boolean = True) As NameValueCollection
+    <Extension>
+    Public Function QueryStringParameters(url$, Optional transLower As Boolean = True) As NameValueCollection
         Dim tokens$()
 
         With InStr(url, "://")
@@ -266,9 +262,10 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)),
-                                             Optional escaping As Boolean = False,
-                                             Optional stripNull As Boolean = True) As String
+    <Extension>
+    Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)),
+                                 Optional escaping As Boolean = False,
+                                 Optional stripNull As Boolean = True) As String
         If stripNull Then
             data = data _
                 .Where(Function(a)
@@ -284,7 +281,11 @@ Public Module WebServiceUtils
             .JoinBy("&")
     End Function
 
-    <ExportAPI("Build.Args")>
+    ''' <summary>
+    ''' Build the url query arguments string
+    ''' </summary>
+    ''' <param name="params"></param>
+    ''' <returns></returns>
     Public Function BuildArgs(ParamArray params As String()()) As String
         If params.IsNullOrEmpty Then
             Return ""
@@ -308,7 +309,6 @@ Public Module WebServiceUtils
         End If
     End Function
 
-    <ExportAPI("URL.Decode")>
     Public Sub UrlDecode(s As String, ByRef output As TextWriter)
         If s IsNot Nothing Then
             output.Write(UrlDecode(s))
@@ -327,7 +327,6 @@ Public Module WebServiceUtils
     ''' A extension method wrapper for <see cref="WebUtility.UrlEncode"/>
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("URL.Encode")>
     <Extension>
     Public Function UrlEncode(s As String, Optional jswhitespace As Boolean = False) As String
         Dim component As String = WebUtility.UrlEncode(s)
@@ -341,7 +340,6 @@ Public Module WebServiceUtils
         Return component
     End Function
 
-    <ExportAPI("URL.Encode")>
     Public Sub UrlEncode(s As String, ByRef output As TextWriter)
         If s IsNot Nothing Then
             output.Write(UrlEncode(s))
@@ -353,7 +351,6 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
-    <ExportAPI("URL.PathEncode")>
     <Extension>
     Public Function UrlPathEncode(s As String) As String
         If s Is Nothing Then
@@ -379,8 +376,8 @@ Public Module WebServiceUtils
     ''' <param name="data">转义的时候大小写无关</param>
     ''' <returns></returns>
     '''
-    <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
+    <Extension>
+    Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
             Return New NameValueCollection
         End If
@@ -563,6 +560,18 @@ Public Module WebServiceUtils
         End Function
 
     End Class
+
+    <Extension>
+    Public Function PostMultipartForm(url$, data As Dictionary(Of String, String)) As WebResponseResult
+        Dim form As New MultipartForm
+
+        For Each payload In data
+            Call form.Add(payload.Key, payload.Value)
+        Next
+
+        Dim result = form.POST(url)
+        Return result
+    End Function
 
     ''' <summary>
     ''' POST http request for get html.
@@ -791,7 +800,7 @@ Public Module WebServiceUtils
         Return readStreamText(page_stream)
     End Function
 
-    Private Function readStreamText(page_stream As Stream) As String
+    Friend Function readStreamText(page_stream As Stream) As String
         Using responseStream As New StreamReader(page_stream)
             Dim html As New StringBuilder
             Dim s As New Value(Of String)

@@ -134,7 +134,7 @@ Namespace Net.Http
         ''' <param name="api$"></param>
         ''' <param name="headers"></param>
         ''' <returns></returns>
-        Public Function POST(api$, Optional headers As Dictionary(Of String, String) = Nothing) As String
+        Public Function POST(api$, Optional headers As Dictionary(Of String, String) = Nothing) As WebResponseResult
             Dim request As HttpWebRequest = WebRequest.Create(api)
             request.ContentType = "multipart/form-data; boundary=" & boundary
             request.Method = "POST"
@@ -151,13 +151,32 @@ Namespace Net.Http
                 requestStream.Flush()
             End Using
 
-            Using response As WebResponse = request.GetResponse,
-                responseStream As Stream = response.GetResponseStream
+            Using response As WebResponse = request.GetResponse
+                Try
+                    Dim responseStream As Stream = response.GetResponseStream
 
-                Using responseReader As New IO.StreamReader(responseStream)
-                    Dim responseText = responseReader.ReadToEnd()
-                    Return responseText
-                End Using
+                    Using responseReader As New StreamReader(responseStream)
+                        Dim responseText = responseReader.ReadToEnd()
+
+                        Return New WebResponseResult With {
+                            .url = api,
+                            .headers = ResponseHeaders.Header200,
+                            .html = responseText,
+                            .timespan = 0,
+                            .payload = ""
+                        }
+                    End Using
+                Catch ex As Exception When TypeOf ex Is WebException
+                    Dim page_stream = DirectCast(ex, WebException).Response.GetResponseStream
+
+                    Return New WebResponseResult With {
+                        .html = WebServiceUtils.readStreamText(page_stream),
+                        .headers = ResponseHeaders.Header500InternalServerError,
+                        .url = api
+                    }
+                Catch ex As Exception
+                    Throw ex
+                End Try
             End Using
         End Function
 
