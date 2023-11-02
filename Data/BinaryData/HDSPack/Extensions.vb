@@ -132,4 +132,27 @@ Public Module Extensions
     Public Function ReadText(pack As StreamPack, file As StreamBlock, Optional encoding As Encodings = Encodings.UTF8) As String
         Return New StreamReader(pack.OpenBlock(file), encoding.CodePage).ReadToEnd
     End Function
+
+    ''' <summary>
+    ''' Get in-memory stream buffer data from the archive
+    ''' </summary>
+    ''' <param name="pack"></param>
+    ''' <param name="filename"></param>
+    ''' <returns>
+    ''' this function will returns nothing if the given resource 
+    ''' which is assoctaed with <paramref name="filename"/> is 
+    ''' not found inside the package file.
+    ''' </returns>
+    <Extension>
+    Public Function ReadBinary(pack As StreamPack, filename As String) As MemoryStream
+        If pack.GetObject(filename) Is Nothing Then
+            Return Nothing
+        Else
+            Dim s As Stream = pack.OpenBlock(filename)
+            Dim ms As New MemoryStream
+            Call s.CopyTo(ms)
+            Call ms.Flush()
+            Return ms
+        End If
+    End Function
 End Module

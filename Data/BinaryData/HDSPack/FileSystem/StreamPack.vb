@@ -621,6 +621,30 @@ Namespace FileSystem
             Call flushStreamPack()
         End Sub
 
+        ''' <summary>
+        ''' Get all files inside the given folder path
+        ''' </summary>
+        ''' <param name="dir"></param>
+        ''' <returns>
+        ''' this function returns an empty collection of the file 
+        ''' path string if the given <paramref name="dir"/> is not 
+        ''' exists in the archive file tree or its value is 
+        ''' nothing
+        ''' </returns>
+        Public Function GetFiles(dir As String) As IEnumerable(Of String)
+            Dim ls = Me.GetObject(dir & "/")
+
+            If ls Is Nothing Then
+                Return New String() {}
+            End If
+
+            Return From obj As StreamObject
+                   In DirectCast(ls, StreamGroup).ListFiles()
+                   Where TypeOf obj Is StreamBlock
+                   Let filepath As String = obj.referencePath.ToString
+                   Select filepath
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
             Return Me.ListFiles _

@@ -91,17 +91,13 @@ Public Module HttpGet
 
         Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
 
-        If echo Then
-            Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
-        End If
-
         ' do status indicator reset
         is404 = False
 
         ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
         If File.Exists(url) Then
             If echo Then
-                Call "[Job DONE!]".__DEBUG_ECHO
+                Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
             End If
 
             Return url.ReadAllText
