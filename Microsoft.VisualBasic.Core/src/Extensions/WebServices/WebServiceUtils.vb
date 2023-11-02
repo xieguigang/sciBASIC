@@ -640,7 +640,11 @@ Public Module WebServiceUtils
                         .url = url
                     }
                 Else
-                    Return Nothing
+                    Dim webEx As WebException = err
+                    Dim s = webEx.Response.GetResponseStream
+                    Dim error_s As String = readStreamText(s)
+
+                    str = error_s
                 End If
             Else
                 str = contentEncoding _
@@ -780,6 +784,14 @@ Public Module WebServiceUtils
             End If
         End If
 
+        If err IsNot Nothing Then
+            [error] = err.Message
+        End If
+
+        Return readStreamText(page_stream)
+    End Function
+
+    Private Function readStreamText(page_stream As Stream) As String
         Using responseStream As New StreamReader(page_stream)
             Dim html As New StringBuilder
             Dim s As New Value(Of String)
@@ -787,12 +799,6 @@ Public Module WebServiceUtils
             Do While Not (s = responseStream.ReadLine) Is Nothing
                 Call html.AppendLine(+s)
             Loop
-
-            Call $"[GET] {html.Length} bytes...".__DEBUG_ECHO
-
-            If err IsNot Nothing Then
-                [error] = err.Message
-            End If
 
             Return html.ToString
         End Using
