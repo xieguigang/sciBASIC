@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Layouts</AssemblyName>
     <UseApplicationFramework>True</UseApplicationFramework>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
