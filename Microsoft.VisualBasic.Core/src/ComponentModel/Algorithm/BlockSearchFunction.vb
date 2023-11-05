@@ -127,6 +127,12 @@ Namespace ComponentModel.Algorithm
         Public ReadOnly Property size As Integer
 
         ''' <summary>
+        ''' the raw input sequence data, element order keeps the same with the input sequence.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property raw As T()
+
+        ''' <summary>
         ''' get all keys which are evaluated from the input object
         ''' </summary>
         ''' <returns></returns>
@@ -159,6 +165,7 @@ Namespace ComponentModel.Algorithm
 
             Dim input = getOrderSeq(data, eval).ToArray
 
+            Me.raw = input.Select(Function(i) i.data).ToArray
             Me.tolerance = tolerance
             Me.eval = eval
             Me.size = input.Length
