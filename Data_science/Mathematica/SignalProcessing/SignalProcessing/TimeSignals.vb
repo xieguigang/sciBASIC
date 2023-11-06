@@ -88,6 +88,15 @@ Public Structure TimeSignal : Implements ITimeSignal
         Me.intensity = intensity
     End Sub
 
+    ''' <summary>
+    ''' make signal tick data copy
+    ''' </summary>
+    ''' <param name="tick"></param>
+    Sub New(tick As ITimeSignal)
+        Me.time = tick.time
+        Me.intensity = tick.intensity
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{time}, {intensity}]"
     End Function
@@ -121,8 +130,12 @@ Public Class Signal : Inherits Vector(Of TimeSignal)
     End Property
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Sub New(data As IEnumerable(Of TimeSignal))
+    Sub New(data As IEnumerable(Of TimeSignal))
         Call MyBase.New(data)
+    End Sub
+
+    Sub New(data As IEnumerable(Of ITimeSignal))
+        Call MyBase.New(From ti As ITimeSignal In data.SafeQuery Select New TimeSignal(ti))
     End Sub
 
     Public Shared Operator +(a As Signal, b As Signal) As Signal

@@ -14,6 +14,14 @@ Public Class BinSampler
         End Get
     End Property
 
+    Sub New(signal As Signal)
+        Me.signal = signal
+    End Sub
+
+    Sub New(time As Double(), intensity As Double())
+        Me.signal = New Signal(time.Select(Function(ti, i) New TimeSignal(ti, intensity(i))))
+    End Sub
+
     Public Function AggregateSignal(dt As Double) As Signal
         Return New Signal(GetTicks(dt))
     End Function
