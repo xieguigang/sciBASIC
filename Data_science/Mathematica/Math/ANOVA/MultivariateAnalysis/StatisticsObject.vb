@@ -91,7 +91,8 @@ Public Class StatisticsObject
         End Select
         YTransformed = YVariables
 
-        Dim xMeans, xStdevs As Double()
+        Dim xMeans As Double() = Nothing
+        Dim xStdevs As Double() = Nothing
 
         Call StatisticsMathematics.StatisticsProperties(XTransformed, xMeans, xStdevs)
 
