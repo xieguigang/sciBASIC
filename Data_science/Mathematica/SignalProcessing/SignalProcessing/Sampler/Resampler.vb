@@ -56,6 +56,9 @@ Imports Microsoft.VisualBasic.Linq
 ''' <summary>
 ''' data signal resampler for continuous signals
 ''' </summary>
+''' <remarks>
+''' usually used for align two signal data
+''' </remarks>
 Public Class Resampler
 
     Dim x As Double()
