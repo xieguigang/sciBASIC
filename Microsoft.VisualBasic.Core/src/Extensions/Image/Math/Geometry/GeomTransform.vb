@@ -202,7 +202,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <ExportAPI("Offset")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
+        <Extension>
+        Public Function OffSet2D(p As Point, x As Integer, y As Integer) As Point
             Return New Point(x + p.X, y + p.Y)
         End Function
 
@@ -475,7 +476,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <ExportAPI("Center")>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Centre(rect As Rectangle) As Point
+        <Extension>
+        Public Function Centre(rect As Rectangle) As Point
             Return New Point(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 
@@ -485,7 +487,8 @@ Namespace Imaging.Math2D
         ''' <param name="rect"></param>
         ''' <param name="factor"></param>
         ''' <returns></returns>
-        <Extension> Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
+        <Extension>
+        Public Function Scale(rect As RectangleF, factor As SizeF) As RectangleF
             Dim size = New SizeF(rect.Width * factor.Width, rect.Height * factor.Height)
             Dim delta = size - rect.Size
             Dim location As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
@@ -568,7 +571,8 @@ Namespace Imaging.Math2D
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Center")>
-        <Extension> Public Function Centre(rect As RectangleF) As PointF
+        <Extension>
+        Public Function Centre(rect As RectangleF) As PointF
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
         End Function
 

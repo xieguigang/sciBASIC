@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -111,7 +111,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Log2(x#) As Double
-            Return stdNum.Log(x, newBase:=2)
+            Return std.Log(x, newBase:=2)
         End Function
 
         <Extension>
@@ -236,7 +236,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
-            Return stdNum.Log(x) / stdNum.Log(N)
+            Return std.Log(x) / std.Log(N)
         End Function
 
         ''' <summary>
@@ -248,7 +248,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
-            Return stdNum.Max(a, stdNum.Max(b, c))
+            Return std.Max(a, std.Max(b, c))
         End Function
 
         ''' <summary>
@@ -261,12 +261,12 @@ Namespace Math
         Public Function Hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If stdNum.Abs(a) > stdNum.Abs(b) Then
+            If std.Abs(a) > std.Abs(b) Then
                 r = b / a
-                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(a) * std.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(b) * std.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
@@ -555,9 +555,9 @@ Namespace Math
             Dim var As Double = x.Variance
 
             If isSample Then
-                Return stdNum.Sqrt(var / (n - 1))
+                Return std.Sqrt(var / (n - 1))
             Else
-                Return stdNum.Sqrt(var / n)
+                Return std.Sqrt(var / n)
             End If
         End Function
 
@@ -624,7 +624,7 @@ Namespace Math
         <Extension>
         Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
-                Return stdNum.Sqrt(.Sum / .Length)
+                Return std.Sqrt(.Sum / .Length)
             End With
         End Function
 
@@ -636,7 +636,7 @@ Namespace Math
                 sum += (a(i) - b(i)) ^ 2
             Next
 
-            Return stdNum.Sqrt(sum)
+            Return std.Sqrt(sum)
         End Function
 
         ''' <summary>
@@ -712,9 +712,8 @@ Namespace Math
         ''' Poisson distribution.
         ''' </summary>
         ''' 
-        <ExportAPI("Poisson.PDF")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
-            Dim result As Double = stdNum.Exp(-lambda)
+            Dim result As Double = std.Exp(-lambda)
             Dim k As Integer = x
 
             While k >= 1
@@ -723,12 +722,6 @@ Namespace Math
             End While
 
             Return result
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.Select(Function(x) x.ToString("F" & digitals)).ToArray
         End Function
     End Module
 End Namespace

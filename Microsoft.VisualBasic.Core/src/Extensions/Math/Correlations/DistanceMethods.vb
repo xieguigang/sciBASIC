@@ -235,5 +235,11 @@ Namespace Math.Correlations
         End Function
 
 #End If
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DistanceTo(a As IVector, b As IVector) As Double
+            Return EuclideanDistance(a.Data, b.Data)
+        End Function
     End Module
 End Namespace
