@@ -64,6 +64,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Structure TimeSignal : Implements ITimeSignal
 
@@ -82,6 +83,20 @@ Public Structure TimeSignal : Implements ITimeSignal
         End Get
     End Property
 
+    Sub New(t As Double, intensity As Double)
+        Me.time = t
+        Me.intensity = intensity
+    End Sub
+
+    ''' <summary>
+    ''' make signal tick data copy
+    ''' </summary>
+    ''' <param name="tick"></param>
+    Sub New(tick As ITimeSignal)
+        Me.time = tick.time
+        Me.intensity = tick.intensity
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"[{time}, {intensity}]"
     End Function
@@ -98,9 +113,29 @@ End Structure
 
 Public Class Signal : Inherits Vector(Of TimeSignal)
 
+    Public ReadOnly Property times As Vector
+        Get
+            Return New Vector(From xi As TimeSignal In buffer Select xi.time)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Get the signal intensity vector of current signal data
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property intensities As Vector
+        Get
+            Return New Vector(From xi As TimeSignal In buffer Select xi.intensity)
+        End Get
+    End Property
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Sub New(data As IEnumerable(Of TimeSignal))
+    Sub New(data As IEnumerable(Of TimeSignal))
         Call MyBase.New(data)
+    End Sub
+
+    Sub New(data As IEnumerable(Of ITimeSignal))
+        Call MyBase.New(From ti As ITimeSignal In data.SafeQuery Select New TimeSignal(ti))
     End Sub
 
     Public Shared Operator +(a As Signal, b As Signal) As Signal

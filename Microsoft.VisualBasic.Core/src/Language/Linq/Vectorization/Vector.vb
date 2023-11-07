@@ -90,10 +90,14 @@ Namespace Language.Vectorization
             End Get
         End Property
 
+        ''' <summary>
+        ''' current vector size is one element?
+        ''' </summary>
+        ''' <returns></returns>
         <ScriptIgnore>
-        Public ReadOnly Property IsSingle As Boolean
+        Public ReadOnly Property IsScalar As Boolean
             Get
-                Return Length = 1
+                Return buffer.Length = 1
             End Get
         End Property
 

@@ -111,7 +111,7 @@ Namespace ApplicationServices.Terminal
             Throw New NotImplementedException
 #End If
 
-            Dim color As AnsiColor
+            Dim color As AnsiColor = Nothing
             If ansiColorNames.TryGetValue(input, color) Then
                 result = color
                 Return True

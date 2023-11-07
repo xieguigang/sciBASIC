@@ -110,7 +110,6 @@ Namespace GridGraph
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="y"></param>
-        ''' <param name="hit"></param>
         ''' <returns>
         ''' nothing will be returns if there is no data on the given ``[x,y]`` pixel point.
         ''' </returns>

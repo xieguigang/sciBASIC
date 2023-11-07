@@ -79,12 +79,21 @@ Namespace KMeans
         <XmlAttribute> Public Property uid As String Implements INamedValue.Key
         <XmlAttribute> Public Property cluster As Integer
 
+        ''' <summary>
+        ''' the point data vector
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute("v")>
         Public Overrides Property entityVector As Double() Implements IVector.Data
 
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a new entity point data
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="data"></param>
         Sub New(id As String, data As Double())
             uid = id
             entityVector = data
