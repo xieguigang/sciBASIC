@@ -64,7 +64,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing3D
 
@@ -104,6 +104,10 @@ Namespace Drawing3D
             Me.Z = z
         End Sub
 
+        Sub New(p As PointF3D)
+            Call Me.New(p.X, p.Y, p.Z)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(p As Point)
             Call Me.New(p.X, p.Y)
@@ -135,9 +139,9 @@ Namespace Drawing3D
         Public Function RotateX(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, yn As Single, zn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             yn = Me.Y * cosa - Me.Z * sina
             zn = Me.Y * sina + Me.Z * cosa
             Return New Point3D(Me.X, yn, zn)
@@ -146,9 +150,9 @@ Namespace Drawing3D
         Public Function RotateY(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Zn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Zn = Me.Z * cosa - Me.X * sina
             Xn = Me.Z * sina + Me.X * cosa
 
@@ -158,9 +162,9 @@ Namespace Drawing3D
         Public Function RotateZ(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Yn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Xn = Me.X * cosa - Me.Y * sina
             Yn = Me.X * sina + Me.Y * cosa
             Return New Point3D(Xn, Yn, Me.Z)
