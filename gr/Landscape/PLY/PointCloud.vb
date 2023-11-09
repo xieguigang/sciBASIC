@@ -1,10 +1,10 @@
 ﻿Namespace Ply
 
-    Public Class PointCloud
+    Public Class PointCloud : Implements PointF3D
 
-        Public Property x As Double
-        Public Property y As Double
-        Public Property z As Double
+        Public Property x As Double Implements PointF3D.X
+        Public Property y As Double Implements PointF3D.Y
+        Public Property z As Double Implements PointF3D.Z
         Public Property color As String
         Public Property intensity As Double
 
