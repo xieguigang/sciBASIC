@@ -84,9 +84,51 @@ Namespace LinearAlgebra.Matrix
             Return New Vector(data:=v)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function power(v As IEnumerable(Of Double), pow As Double) As Vector
+            Return New Vector(SIMD.Exponent.f64_op_exponent_f64_scalar(v.ToArray, pow))
+        End Function
     End Class
 
     <HideModuleName> Public Module NumpyExtensions
+
+        ''' <summary>
+        ''' Create column vector matrix
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function t(v As IEnumerable(Of Double)) As NumericMatrix
+            Dim column As Double()() = v _
+                .Select(Function(xi) New Double() {xi}) _
+                .ToArray
+            Dim cm As New NumericMatrix(column)
+
+            Return cm
+        End Function
+
+        ''' <summary>
+        ''' Create row vector matrix
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function r(v As IEnumerable(Of Double)) As NumericMatrix
+            Dim rows As Double()() = New Double()() {v.ToArray}
+            Dim rm As New NumericMatrix(rows)
+
+            Return rm
+        End Function
+
+        <Extension>
+        Public Function flatten(nd As Vector) As Vector
+            Return nd
+        End Function
+
+        <Extension>
+        Public Function shape(m As GeneralMatrix) As Integer()
+            Return {m.RowDimension, m.ColumnDimension}
+        End Function
 
         ''' <summary>
         ''' Returns the average of the array elements. The average is taken over the 
@@ -167,6 +209,11 @@ Namespace LinearAlgebra.Matrix
         <Extension>
         Public Function Sum(matrix As IEnumerable(Of Vector), Optional axis% = -1) As Vector
             Return matrix.Apply(Function(x) x.Sum, axis:=axis, aggregate:=AddressOf NumericsVector.AsVector)
+        End Function
+
+        <Extension>
+        Public Function sum(matrix As GeneralMatrix, Optional axis% = -1) As Vector
+            Return matrix.RowVectors.Sum(axis)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
