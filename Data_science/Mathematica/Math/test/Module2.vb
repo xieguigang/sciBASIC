@@ -1,0 +1,21 @@
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Solvers
+
+Module Module2
+
+    Sub Main()
+        Dim matrA = New Double()() {
+             New Double() {0.5757, -0.0758, 0.0152, 0.0303, 0.1061},
+             New Double() {0.0788, 0.9014, 0.0000, -0.0606, 0.0606},
+             New Double() {0.0455, 0.0000, 0.7242, -0.2121, 0.1212},
+             New Double() {-0.0909, 0.1909, 0.0000, 0.7121, -0.0303},
+             New Double() {0.3788, 0.0000, 0.1364, 0.0152, 0.8484}
+         }
+
+        Dim pm As PowerMethod = New PowerMethod(matrA)
+        pm.powerMethod()
+        pm.printDiscrepancy()
+        pm.printVectorDiscrepancy()
+
+        Pause()
+    End Sub
+End Module

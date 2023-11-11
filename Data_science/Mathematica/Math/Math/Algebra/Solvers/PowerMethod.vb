@@ -34,7 +34,7 @@ Namespace LinearAlgebra.Solvers
         Private polinom As Double() = New Double() {1, -3.1966884499998454, 3.7968475734968248, -2.0678062361747767, 0.50824834130184049, -0.044096040836169914}
 
 
-        Friend Sub New(matrA As Double()())
+        Sub New(matrA As Double()())
             n = matrA.Length
             prevX = New Double(n - 1) {}
             curX = New Double(n - 1) {}
