@@ -31,7 +31,6 @@ Namespace LinearAlgebra.Solvers
         Private n As Integer
         Private ReadOnly epsilon As Double = 0.00001
         Private count As Integer = 0
-        Private polinom As Double() = New Double() {1, -3.1966884499998454, 3.7968475734968248, -2.0678062361747767, 0.50824834130184049, -0.044096040836169914}
 
 
         Sub New(matrA As Double()())
@@ -94,17 +93,6 @@ Namespace LinearAlgebra.Solvers
         End Sub
 
 
-        Public Overridable Sub printDiscrepancy()
-            Dim discrepancy As Double = 0
-            For j = 0 To n - 1
-                discrepancy += std.Pow(curLambda, n - j) * polinom(j)
-            Next
-            discrepancy += polinom(n)
-            Console.WriteLine("discrepancy for lambda = " & curLambda.ToString())
-            Console.Write("{0,25}", discrepancy.ToString() & vbLf)
-        End Sub
-
-
         Private Function multiply(matr As Double()(), vector As Double()) As Double()
             Dim result = New Double(n - 1) {}
             For i = 0 To n - 1
@@ -138,8 +126,6 @@ Namespace LinearAlgebra.Solvers
                 Console.WriteLine(item)
             Next
         End Sub
-
-
 
         Private Function vectorsMultiply(first As Double(), second As Double()) As Double
             Dim res As Double = 0
