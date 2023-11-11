@@ -146,17 +146,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{c24034b2-0444-4b16-b42b-6da277c15ddc}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataFrame\DataFrame.vbproj">
-      <Project>{6140aed7-e317-46dd-9c15-7fe400795992}</Project>
-      <Name>DataFrame</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\Math\Math.NET5.vbproj">
+      <Project>{934c44c7-5392-4f23-949d-d526e192fb11}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
