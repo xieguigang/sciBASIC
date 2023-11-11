@@ -88,6 +88,17 @@ Namespace LinearAlgebra.Matrix
         Public Shared Function power(v As IEnumerable(Of Double), pow As Double) As Vector
             Return New Vector(SIMD.Exponent.f64_op_exponent_f64_scalar(v.ToArray, pow))
         End Function
+
+        Public Shared Function eye(n As Integer) As Double()()
+            Dim rows As Double()() = New Double(n - 1)() {}
+
+            For i As Integer = 0 To n - 1
+                rows(i) = New Double(n - 1) {}
+                rows(i)(i) = 1
+            Next
+
+            Return rows
+        End Function
     End Class
 
     <HideModuleName> Public Module NumpyExtensions
