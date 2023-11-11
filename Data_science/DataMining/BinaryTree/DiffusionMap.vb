@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
 Imports std = System.Math
 
+''' <summary>
+''' Generate a diffusion map embedding
+''' </summary>
 Public Class DiffusionMap
 
     ''' <summary>
