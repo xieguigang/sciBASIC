@@ -7,17 +7,6 @@ Module Module2
         Call test2()
     End Sub
 
-    Sub test3(ByVal args As String())
-        'try{
-        Dim e As Eigenvalue_calc = New Eigenvalue_calc()
-        Dim n = 0
-
-        e.populate(n, sites)
-        e.hamiltonian()
-        e.printarr()
-        e.eigen()
-        Console.WriteLine(e.finalarr.Length)
-    End Sub
 
     Sub test2()
         Dim identity = np.eye(13)
