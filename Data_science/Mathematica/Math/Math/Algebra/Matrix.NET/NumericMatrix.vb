@@ -1325,6 +1325,10 @@ Namespace LinearAlgebra.Matrix
             Return New NumericMatrix(m1.RowVectors).Multiply(B:=m2)
         End Operator
 
+        Public Shared Operator *(m1 As NumericMatrix, m2 As NumericMatrix) As NumericMatrix
+            Return m1.Multiply(m2)
+        End Operator
+
         Public Shared Operator *(m As NumericMatrix, v As Vector) As NumericMatrix
             Dim y As New NumericMatrix(m.RowDimension, m.ColumnDimension)
             Dim x As Double()() = m.Array
