@@ -64,6 +64,11 @@ Namespace LinearAlgebra.Matrix
     <HideModuleName>
     Public Module Extensions
 
+        <Extension>
+        Public Function eig(m As GeneralMatrix) As EigenvalueDecomposition
+            Return New EigenvalueDecomposition(m)
+        End Function
+
         ''' <summary>
         ''' get a specific column data as vector
         ''' </summary>
