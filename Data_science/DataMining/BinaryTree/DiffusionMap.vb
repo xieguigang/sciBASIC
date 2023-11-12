@@ -88,9 +88,50 @@ Public Class DiffusionMap
             k = std.Max(2, std.Sqrt(ndim))
         End If
 
-        Dim eigen_solver As New EigenvalueDecomposition(M)
-        eigen_solver.ImagEigenvalues
+        Dim eigen_solver As Func(Of GeneralMatrix, Integer, (lambdas As Double(), vectors As Double()())) = Nothing
+        Dim lambdas As Double(), vectors As Double()()
 
+        With eigen_solver(M, k)
+            lambdas = .lambdas
+            vectors = .vectors
+        End With
+
+        ' get max value index
+        Dim lambda_idx = np.argsort(lambdas).Last
+        Dim max_lambdas = lambdas(lambda_idx)
+        Dim max_vector = vectors(lambda_idx)
+
+        Return step_5(max_lambdas, max_vector, ndim, n_components, diffusion_time)
+    End Function
+
+    ''' <summary>
+    ''' This is a helper function for diffusion map computation.
+    ''' 
+    ''' The lambdas have been sorted in decreasing order.
+    ''' The vectors are ordered according To lambdas.
+    ''' </summary>
+    ''' <param name="lambdas"></param>
+    ''' <param name="vectors"></param>
+    ''' <param name="ndim"></param>
+    ''' <param name="n_components"></param>
+    ''' <param name="diffusion_time"></param>
+    ''' <returns></returns>
+    Private Shared Function step_5(lambdas As Double, vectors As Vector, ndim As Integer, n_components As Integer, diffusion_time As Double)
+        ' psi = vectors/vectors[:, [0]]
+        Dim psi = vectors / vectors.First
+        Dim diffusion_times = diffusion_time
+
+        If diffusion_time = 0.0 Then
+            diffusion_times = std.Exp(1 - std.Log(1 - lambdas) / std.Log(lambdas))
+            lambdas = lambdas / (1 - lambdas)
+        Else
+            lambdas = lambdas ^ diffusion_time
+        End If
+
+        Dim lambda_ratio = lambdas / lambdas
+        Dim threshold = std.Max(0.05, lambda_ratio)
+
+        Dim n_components_auto
     End Function
 
 End Class
