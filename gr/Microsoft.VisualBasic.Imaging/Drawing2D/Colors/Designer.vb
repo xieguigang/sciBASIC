@@ -572,6 +572,11 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="colors"></param>
         ''' <param name="n">所期望的颜色的数量</param>
+        ''' <param name="interpolate">
+        ''' set the interpolate parameter to value TRUE if apply the function 
+        ''' for the scalar palette, otherwise keeps the default value FALSE
+        ''' for deal with the category color palette.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' if the <paramref name="n"/> value less than the 
@@ -580,7 +585,11 @@ Namespace Drawing2D.Colors
         ''' color.
         ''' </remarks>
         <Extension>
-        Public Function CubicSpline(colors As IEnumerable(Of Color), Optional n% = 256, Optional alpha% = 255) As Color()
+        Public Function CubicSpline(colors As IEnumerable(Of Color),
+                                    Optional n% = 256,
+                                    Optional alpha% = 255,
+                                    Optional interpolate As Boolean = False) As Color()
+
             Dim source As Color() = colors.ToArray
 
             If source.Length = 1 Then
@@ -593,7 +602,7 @@ Namespace Drawing2D.Colors
             ElseIf n <= 0 Then
                 ' return raw color list if n is negative or zero
                 Return source
-            ElseIf n <= source.Length Then
+            ElseIf n <= source.Length AndAlso Not interpolate Then
                 Return source.Take(n).ToArray
             End If
 

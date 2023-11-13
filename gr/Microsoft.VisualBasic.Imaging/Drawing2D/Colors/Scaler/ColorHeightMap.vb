@@ -26,8 +26,13 @@ Namespace Drawing2D.Colors.Scaler
             Me.ruler = ruler
         End Sub
 
+        ''' <summary>
+        ''' scale the scalar color palette to a specific level.
+        ''' </summary>
+        ''' <param name="level"></param>
+        ''' <returns></returns>
         Public Function ScaleLevels(level As Integer) As ColorHeightMap
-            ruler = Designer.CubicSpline(ruler, level)
+            ruler = Designer.CubicSpline(ruler, level, interpolate:=True)
             Return Me
         End Function
 
