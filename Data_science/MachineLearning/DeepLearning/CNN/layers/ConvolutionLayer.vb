@@ -99,7 +99,7 @@ Namespace CNN.layers
                 Me.layer = layer
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 Dim V_sx = layer.in_sx
                 Dim V_sy = layer.in_sy
                 Dim xy_stride = layer.stride
@@ -159,7 +159,7 @@ Namespace CNN.layers
                 Me.layer = layer
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 Dim V_sx = db.SX
                 Dim V_sy = db.SY
                 Dim xy_stride = layer.stride

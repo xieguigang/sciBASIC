@@ -93,7 +93,7 @@ Namespace CNN.layers
                 Me.layer = layer
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 Dim Vw As Double() = db.Weights
 
                 For i As Integer = start To ends
@@ -121,7 +121,7 @@ Namespace CNN.layers
                 Me.layer = layer
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 ' compute gradient wrt weights and data
                 For i As Integer = start To ends
                     Dim tfi = layer.filters(i)

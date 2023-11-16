@@ -109,7 +109,7 @@ Namespace CNN.layers
                 ' Me.sequenceMode = True
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 For d As Integer = start To ends
                     Dim x = -layer.padding
                     Dim ax = 0
@@ -179,7 +179,7 @@ Namespace CNN.layers
                 ' Me.sequenceMode = True
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 For d As Integer = start To ends
                     Dim x = -layer.padding
                     Dim ax = 0

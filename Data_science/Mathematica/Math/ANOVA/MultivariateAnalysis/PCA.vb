@@ -185,7 +185,7 @@ Public Module PCA
             Me.rowSize = rowSize
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             Dim sum As Double
 
             For j As Integer = start To ends
@@ -211,7 +211,7 @@ Public Module PCA
             Me.columnSize = columnSize
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             Dim sum As Double
 
             For j As Integer = start To ends
