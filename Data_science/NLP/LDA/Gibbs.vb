@@ -25,7 +25,7 @@ Namespace LDA
             Me.voca_size = gibbs.V
         End Sub
 
-        Protected Overrides Sub Solve(start As Integer, ends As Integer)
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             Dim nw As Integer()
             Dim nd As Integer()
             Dim nwsum As Integer()
