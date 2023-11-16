@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports System.Threading
 
 Namespace Parallel
 
@@ -23,13 +22,26 @@ Namespace Parallel
 
         Public Shared n_threads As Integer = 4
 
+        ''' <summary>
+        ''' construct a new parallel task executator
+        ''' </summary>
+        ''' <param name="nsize"></param>
+        ''' <remarks>
+        ''' the thread count for run the parallel task is configed
+        ''' via the <see cref="n_threads"/> by default.
+        ''' </remarks>
         Sub New(nsize As Integer)
             workLen = nsize
             cpu_count = n_threads
             opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
         End Sub
 
-        Protected MustOverride Sub Solve(start As Integer, ends As Integer)
+        ''' <summary>
+        ''' solve a sub task
+        ''' </summary>
+        ''' <param name="start"></param>
+        ''' <param name="ends"></param>
+        Protected MustOverride Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
 
         ''' <summary>
         ''' Run in sequence
@@ -38,7 +50,7 @@ Namespace Parallel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
             sequenceMode = True
-            Solve(0, workLen - 1)
+            Solve(0, workLen - 1, 0)
             Return Me
         End Function
 
@@ -79,7 +91,7 @@ Namespace Parallel
                 ends = workLen - 1
             End If
 
-            Call Solve(start, ends)
+            Call Solve(start, ends, cpu_id:=thread_id)
         End Sub
 
         Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
