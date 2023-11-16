@@ -70,7 +70,7 @@ Namespace Imaging.Math2D
                 Me.N = N
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 Dim w As Double
                 Dim S1, S2 As Double
 

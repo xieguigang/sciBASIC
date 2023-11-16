@@ -201,7 +201,7 @@ Namespace LinearAlgebra
                 Me.div = div
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 For i As Integer = start To ends
                     Dim node = idx(i).ToArray
                     Dim weights = node.jaccard_row(i, idx, div).ToArray

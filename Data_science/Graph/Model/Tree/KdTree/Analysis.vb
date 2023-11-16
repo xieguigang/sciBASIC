@@ -146,7 +146,7 @@ Namespace KdTree
                 tree = New KdTree(Of TagVector)(allData, RowMetric(ncols:=allData(Scan0).size))
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 For i As Integer = start To ends
                     Dim row = allData(i)
                     Dim nn2 = tree.nearest(row, maxNodes:=k).OrderBy(Function(ki) ki.distance).ToArray

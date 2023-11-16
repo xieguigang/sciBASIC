@@ -69,7 +69,7 @@ Namespace Boids
                 Me.boids = field.Boids
             End Sub
 
-            Protected Overrides Sub Solve(start As Integer, ends As Integer)
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
                 Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing,
                alignXvel As Double = Nothing, alignYvel As Double = Nothing,
                avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,

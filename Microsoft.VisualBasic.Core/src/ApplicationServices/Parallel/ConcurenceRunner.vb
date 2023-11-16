@@ -77,9 +77,28 @@ Namespace Parallel
         End Function
 
         ''' <summary>
+        ''' allocate the result output memory data
+        ''' </summary>
+        ''' <typeparam name="TOut"></typeparam>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' element count problem see the dev comments about the 
+        ''' parameter ``thread_id`` from function 
+        ''' <see cref="ParallelFor"/>
+        ''' </remarks>
+        Protected Function Allocate(Of TOut)() As TOut()
+            Return New TOut(cpu_count) {}
+        End Function
+
+        ''' <summary>
         ''' implements the parallel for use the thread pool
         ''' </summary>
         ''' <param name="span_size"></param>
+        ''' <param name="thread_id">
+        ''' the thread id is start from based ZERO, but the upper index of 
+        ''' the thread id is equals to the <see cref="cpu_count"/>, so 
+        ''' group result vector should has value with ``<see cref="cpu_count"/> + 1`` elements.
+        ''' </param>
         Private Sub ParallelFor(thread_id As Integer, span_size As Integer)
             Dim start As Integer = thread_id * span_size
             Dim ends As Integer = start + span_size - 1

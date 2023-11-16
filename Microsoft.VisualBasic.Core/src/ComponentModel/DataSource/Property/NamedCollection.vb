@@ -153,6 +153,9 @@ Namespace ComponentModel.DataSourceModel
         ''' <see cref="Value"/> array length
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this is a safe property getter, null value will returns ZERO always
+        ''' </remarks>
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
