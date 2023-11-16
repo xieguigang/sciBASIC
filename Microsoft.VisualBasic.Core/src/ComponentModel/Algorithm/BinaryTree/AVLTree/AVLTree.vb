@@ -96,6 +96,15 @@ Namespace ComponentModel.Algorithm.BinaryTree
             MyBase.New(AddressOf compares.Compare, views)
         End Sub
 
+        ''' <summary>
+        ''' add key related value into current tree
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <param name="value"></param>
+        ''' <param name="valueReplace"></param>
+        ''' <remarks>
+        ''' get cluster value collection via the tree node ``values`` data
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
             _root = Add(key, value, _root, Sub(node, newValue)

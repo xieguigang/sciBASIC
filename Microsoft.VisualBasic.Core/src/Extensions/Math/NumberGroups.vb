@@ -65,6 +65,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
@@ -158,9 +159,12 @@ Namespace Math
         ''' Returns ``-1`` means no search result
         ''' </summary>
         ''' <param name="seq"></param>
-        ''' <param name="target#"></param>
+        ''' <param name="target"></param>
         ''' <param name="equals"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' gets the index value of the <paramref name="target"/> number inside 
+        ''' the input source <paramref name="seq"/> where we find it.
+        ''' </returns>
         <Extension>
         Public Function BinarySearch(seq As IEnumerable(Of Double), target#, equals As GenericLambda(Of Double).IEquals) As Integer
             With seq _
@@ -223,6 +227,38 @@ Namespace Math
 
         '    Return source.GroupBy(AddressOf evaluate.Invoke, equals)
         'End Function
+
+        ''' <summary>
+        ''' implements the group by function via AVLTree for large scale data
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
+        Public Iterator Function GroupByTree(source As IEnumerable(Of Double()), offset As Double) As IEnumerable(Of NamedCollection(Of Double))
+            Dim sort As New AVLTree(Of Double, Double)(NumberGroupHelper(offset))
+
+            For Each block As Double() In source.SafeQuery
+                For Each d As Double In block.SafeQuery
+                    Call sort.Add(d, d, valueReplace:=False)
+                Next
+            Next
+
+            For Each bin As BinaryTree(Of Double, Double) In sort.GetAllNodes
+                Yield New NamedCollection(Of Double)(bin.Key.ToString, bin.Members)
+            Next
+        End Function
+
+        Private Function NumberGroupHelper(offset As Double) As Comparison(Of Double)
+            Return Function(a, b)
+                       If std.Abs(a - b) <= offset Then
+                           Return 0
+                       ElseIf a < b Then
+                           Return 1
+                       Else
+                           Return -1
+                       End If
+                   End Function
+        End Function
 
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
