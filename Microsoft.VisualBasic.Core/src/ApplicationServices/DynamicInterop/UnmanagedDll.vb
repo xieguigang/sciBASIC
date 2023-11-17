@@ -60,6 +60,7 @@
 
 Imports System.Collections.Concurrent
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
@@ -78,13 +79,15 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         Public Property FileName As String
 
-        ' /// <summary>
-        ' /// Gets whether the current handle is equal to the invalid handle
-        ' /// </summary>
-        ' public override bool IsInvalid
-        ' {
-        '     get { return handle == IntPtr.Zero; }
-        ' }
+        ''' <summary>
+        ''' get the library handle which is load via the ``LoadLibrary`` function.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property LibraryHandle As IntPtr
+            Get
+                Return handle.LibraryHandle
+            End Get
+        End Property
 
         ''' <summary>
         ''' Creates a proxy for the specified dll.
@@ -111,13 +114,24 @@ Namespace ApplicationServices.DynamicInterop
             FileName = dllName
         End Sub
 
+        ''' <summary>
+        ''' Gets whether the current handle is equal to the invalid handle
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' public override bool IsInvalid
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckHandleInvalid() As Boolean
+            Return handle.LibraryHandle = IntPtr.Zero
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{handle} {FileName}"
         End Function
 
         Private Sub ReportLoadLibError(dllName As String, nativeError As String)
-            ' ThrowFailedLibraryLoad(dllName, nativeError)
-            ' 
             Dim dllFullName As String = dllName.GetFullPath
 
             If (File.Exists(dllFullName)) Then
@@ -165,7 +179,9 @@ Namespace ApplicationServices.DynamicInterop
         End Function
 
         Private Sub ThrowFailedLibraryLoad(dllFullName As String, nativeError As String)
-            Dim strMsg = String.Format("This {0}-bit process failed to load the library {1}", If(Environment.Is64BitProcess, "64", "32"), dllFullName)
+            Dim strMsg = String.Format("This {0}-bit process failed to load the library {1}",
+                                       If(Environment.Is64BitProcess, "64", "32"),
+                                       dllFullName)
 
             If Not String.IsNullOrEmpty(nativeError) Then
                 strMsg = strMsg & String.Format(". Native error message is '{0}'", nativeError)
@@ -184,7 +200,8 @@ Namespace ApplicationServices.DynamicInterop
         ''' <summary>
         ''' Creates the delegate function for the specified function defined in the DLL.
         ''' </summary>
-        ''' <typeparam name="TDelegate">The type of delegate. The name of the native function is assumed to be the same as the delegate type name.</typeparam>
+        ''' <typeparam name="TDelegate">The type of delegate. The name of the native 
+        ''' function is assumed to be the same as the delegate type name.</typeparam>
         ''' <returns>The delegate.</returns>
         Public Function GetFunction(Of TDelegate As Class)() As TDelegate
             Return GetFunction(Of TDelegate)(GetType(TDelegate).Name)
