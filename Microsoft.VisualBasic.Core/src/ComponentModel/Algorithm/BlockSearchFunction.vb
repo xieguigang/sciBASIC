@@ -233,7 +233,9 @@ Namespace ComponentModel.Algorithm
         ''' query data with a given tolerance value
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns an empty collection if no hits result
+        ''' </returns>
         Public Iterator Function Search(x As T, Optional tolerance As Double? = Nothing) As IEnumerable(Of T)
             Dim wrap As New Block(Of T) With {.min = eval(x)}
             Dim i As Integer = -1
