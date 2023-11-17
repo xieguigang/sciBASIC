@@ -93,13 +93,13 @@ Namespace ApplicationServices.DynamicInterop
         ''' Creates a proxy for the specified dll.
         ''' </summary>
         ''' <param name="dllName">The DLL's name.</param>
-        Public Sub New(dllName As String)
+        Public Sub New(dllName As String, Optional unix_dl_open_flag As Integer = UnixLibraryLoader.RTLD_LAZY)
             If dllName Is Nothing Then
                 Throw New ArgumentNullException("dllName", "The name of the library to load is a null reference")
             ElseIf dllName.StringEmpty Then
                 Throw New ArgumentException("The name of the library to load is an empty string", "dllName")
             Else
-                handle = New SafeHandleUnmanagedDll(dllName)
+                handle = New SafeHandleUnmanagedDll(dllName, unix_dl_open_flag)
             End If
 
             If handle.IsInvalid Then
@@ -252,6 +252,8 @@ Namespace ApplicationServices.DynamicInterop
         ''' </summary>
         ''' <returns>The function address.</returns>
         ''' <param name="lpProcName">name of the function in the native library</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFunctionAddress(lpProcName As String) As IntPtr
             Return handle.GetFunctionAddress(lpProcName)
         End Function

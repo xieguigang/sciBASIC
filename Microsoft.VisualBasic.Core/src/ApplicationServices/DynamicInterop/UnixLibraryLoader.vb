@@ -59,10 +59,16 @@ Imports System.Security.Permissions
 Namespace ApplicationServices.DynamicInterop
 
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
-    Friend Class UnixLibraryLoader : Implements IDynamicLibraryLoader
+    Public Class UnixLibraryLoader : Implements IDynamicLibraryLoader
+
+        Public Const RTLD_LAZY = &H1
+        Public Const RTLD_NOW As Integer = &H2
+        Public Const RTLD_GLOBAL As Integer = &H100
+
+        Public dlopen_flag As Integer = RTLD_LAZY
 
         Public Function LoadLibrary(filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
-            Return InternalLoadLibrary(filename)
+            Return InternalLoadLibrary(filename, dlopen_flag)
         End Function
 
         ''' <summary>
@@ -89,8 +95,7 @@ Namespace ApplicationServices.DynamicInterop
             Return dlsym(hModule, lpProcName)
         End Function
 
-        Friend Shared Function InternalLoadLibrary(filename As String) As IntPtr
-            Const RTLD_LAZY = &H1
+        Friend Shared Function InternalLoadLibrary(filename As String, dlopen_flag As Integer) As IntPtr
             '            if (filename.StartsWith ("/")) {
             '                return dlopen (filename, RTLD_LAZY);
             '            }
@@ -102,7 +107,7 @@ Namespace ApplicationServices.DynamicInterop
             '                + String.Join ("\n", searchPaths));
             '            }
 
-            Dim result = dlopen(filename, RTLD_LAZY)
+            Dim result = dlopen(filename, dlopen_flag)
             Return result
         End Function
 
