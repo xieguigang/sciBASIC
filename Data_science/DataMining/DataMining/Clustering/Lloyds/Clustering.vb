@@ -55,7 +55,7 @@
 
 Imports Microsoft.VisualBasic.Linq
 
-Namespace KMeans.CompleteLinkage
+Namespace Lloyds
 
     ''' <summary>
     ''' 

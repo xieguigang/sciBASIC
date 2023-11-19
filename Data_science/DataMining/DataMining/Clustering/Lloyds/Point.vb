@@ -60,7 +60,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Math.Correlations
 
-Namespace KMeans.CompleteLinkage
+Namespace Lloyds
 
     Public Class Point : Inherits EntityBase(Of Double)
 

@@ -56,7 +56,7 @@
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
-Namespace KMeans.CompleteLinkage
+Namespace Lloyds
 
     ''' <summary>
     ''' Voronoi
