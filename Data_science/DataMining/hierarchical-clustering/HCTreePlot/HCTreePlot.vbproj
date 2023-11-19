@@ -1,8 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>HCTreePlot</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot</RootNamespace>
     <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\Visualization\Plots\plots-netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\hierarchical-clustering\hctree.NET5.vbproj" />
+  </ItemGroup>
 
 </Project>
