@@ -68,18 +68,18 @@ Namespace KMeans.CompleteLinkage
         Friend _source As List(Of Point)
         Friend mNumDesiredClusters As Integer
 
+        Public Overridable ReadOnly Property Points As List(Of Point)
+            Get
+                Return _source
+            End Get
+        End Property
+
         Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
             _source = source.AsList
             mNumDesiredClusters = numClusters
         End Sub
 
         Public MustOverride Function Clustering() As List(Of Point)
-
-        Public Overridable ReadOnly Property Points As List(Of Point)
-            Get
-                Return _source
-            End Get
-        End Property
 
         Protected Shared Sub __writeCluster(source As IEnumerable(Of Cluster(Of Point)))
             For Each c In source.SeqIterator

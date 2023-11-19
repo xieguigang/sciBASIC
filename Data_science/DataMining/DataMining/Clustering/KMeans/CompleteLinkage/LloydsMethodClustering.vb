@@ -57,6 +57,9 @@ Imports stdNum = System.Math
 
 Namespace KMeans.CompleteLinkage
 
+    ''' <summary>
+    ''' Voronoi
+    ''' </summary>
     Public Class LloydsMethodClustering : Inherits Clustering
 
         Friend _lloydsPoints As List(Of Point)
