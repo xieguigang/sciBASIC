@@ -1,4 +1,4 @@
-﻿Namespace buet.touhiDroid.BisectingKMeans.models
+﻿Namespace BisectingKMeans
 
 	''' <summary>
 	''' Created by touhid on 12/21/15.
@@ -6,10 +6,7 @@
 	''' </summary>
 	Public Class DataPoint
 
-'JAVA TO VB CONVERTER NOTE: The field dx was renamed since Visual Basic does not allow fields to have the same name as other class members:
-'JAVA TO VB CONVERTER NOTE: The field dy was renamed since Visual Basic does not allow fields to have the same name as other class members:
 		Private dx_Conflict, dy_Conflict As Double
-'JAVA TO VB CONVERTER NOTE: The field clusterNo was renamed since Visual Basic does not allow fields to have the same name as other class members:
 		Private clusterNo_Conflict As Integer
 
 		Public Sub New(ByVal dx As Double, ByVal dy As Double)

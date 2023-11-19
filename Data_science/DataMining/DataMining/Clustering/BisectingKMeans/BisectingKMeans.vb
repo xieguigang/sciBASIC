@@ -1,6 +1,4 @@
-﻿Imports ClassLibrary1.buet.touhiDroid.BisectingKMeans.models
-
-Namespace buet.touhiDroid.BisectingKMeans
+﻿Namespace BisectingKMeans
 
 
     ''' <summary>

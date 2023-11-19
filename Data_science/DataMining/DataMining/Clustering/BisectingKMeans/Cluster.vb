@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
 
-Namespace buet.touhiDroid.BisectingKMeans.models
+Namespace BisectingKMeans
 
 
 	''' <summary>
@@ -12,10 +12,8 @@ Namespace buet.touhiDroid.BisectingKMeans.models
 	Public Class Cluster
 		Private Const CENTROID_THRESHOLD As Double = 0.005
 
-'JAVA TO VB CONVERTER NOTE: The field cx was renamed since Visual Basic does not allow fields to have the same name as other class members:
-'JAVA TO VB CONVERTER NOTE: The field cy was renamed since Visual Basic does not allow fields to have the same name as other class members:
+
 		Private cx_Conflict, cy_Conflict As Double
-'JAVA TO VB CONVERTER NOTE: The field dataPoints was renamed since Visual Basic does not allow fields to have the same name as other class members:
 		Private dataPoints_Conflict As List(Of DataPoint)
 
 		Public Sub New(ByVal cx As Double, ByVal cy As Double)
@@ -101,7 +99,7 @@ Namespace buet.touhiDroid.BisectingKMeans.models
 				sumY += p.Dy
 			Next p
 			Dim size As Integer = dataPoints_Conflict.Count
-			If size=0 Then
+			If size = 0 Then
 				size = 1
 			End If
 			Dim tcx As Double = cx_Conflict
