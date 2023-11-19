@@ -7,14 +7,15 @@
     ''' </summary>
     Public Class BisectingKMeans
 
-        Private Const NUM_ITERATIONS_BISECTION As Integer = 5
-
-        Private Const K_BISECTING As Integer = 6
-
+        Dim NUM_ITERATIONS_BISECTION As Integer = 5
+        Dim K_BISECTING As Integer = 6
         Dim clusterList As New List(Of Cluster)
 
-        Sub New(dataList As List(Of DataPoint))
+        Sub New(dataList As List(Of DataPoint), Optional k As Integer = 6, Optional iterations As Integer = 6)
             Call init(dataList)
+
+            Me.K_BISECTING = k
+            Me.NUM_ITERATIONS_BISECTION = iterations
         End Sub
 
         Private Sub init(dataList As List(Of DataPoint))
@@ -50,7 +51,7 @@
             End If
         End Sub
 
-        Private Function kMeansClustering(ByVal k As Integer, ByVal dataPoints As List(Of DataPoint)) As List(Of Cluster)
+        Private Function kMeansClustering(k As Integer, dataPoints As List(Of DataPoint)) As List(Of Cluster)
             Dim rand As New Random()
 
             Dim tempClusterList As New List(Of Cluster)()
@@ -109,7 +110,7 @@
         ''' </summary>
         ''' <param name="dataList"></param>
         ''' <returns></returns>
-        Private Function calcCluster(ByVal dataList As List(Of DataPoint)) As Cluster
+        Private Function calcCluster(dataList As List(Of DataPoint)) As Cluster
             Dim scx As Double = 0, scy As Double = 0
             For Each p As DataPoint In dataList
                 scx += p.Dx

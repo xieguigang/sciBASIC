@@ -10,19 +10,19 @@ Namespace BisectingKMeans
 	Public Class Cluster
 		Private Const CENTROID_THRESHOLD As Double = 0.005
 
-		Public Sub New(ByVal cx As Double, ByVal cy As Double)
+		Public Sub New(cx As Double, cy As Double)
 			Me.Cx = cx
 			Me.Cy = cy
 			DataPoints = New List(Of DataPoint)()
 		End Sub
 
-		Public Sub New(ByVal centroid As DataPoint)
+		Public Sub New(centroid As DataPoint)
 			Me.Cx = centroid.Dx
 			Me.Cy = centroid.Dy
 			DataPoints = New List(Of DataPoint)()
 		End Sub
 
-		Public Sub New(ByVal cx As Double, ByVal cy As Double, ByVal dataPoints As List(Of DataPoint))
+		Public Sub New(cx As Double, cy As Double, dataPoints As List(Of DataPoint))
 			Me.Cx = cx
 			Me.Cy = cy
 			Me.DataPoints = dataPoints
@@ -32,7 +32,7 @@ Namespace BisectingKMeans
 		Public Overridable Property Cy As Double
 		Public Overridable Property DataPoints As List(Of DataPoint)
 
-		Public Overridable Sub addPoint(ByVal p As DataPoint)
+		Public Overridable Sub addPoint(p As DataPoint)
 			Me.DataPoints.Add(p)
 		End Sub
 
@@ -49,7 +49,7 @@ Namespace BisectingKMeans
 			End Get
 		End Property
 
-		Public Overridable Function getDistSq(ByVal p As DataPoint) As Double
+		Public Overridable Function getDistSq(p As DataPoint) As Double
 			Dim dx As Double = p.Dx - Cx
 			Dim dy As Double = p.Dy - Cy
 			Return dx * dx + dy * dy

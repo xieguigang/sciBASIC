@@ -6,12 +6,12 @@
 	''' </summary>
 	Public Class DataPoint
 
-		Public Sub New(ByVal dx As Double, ByVal dy As Double)
+		Public Sub New(dx As Double, dy As Double)
 			Me.Dx = dx
 			Me.Dy = dy
 		End Sub
 
-		Public Sub New(ByVal dx As Double, ByVal dy As Double, ByVal clusterNo As Integer)
+		Public Sub New(dx As Double, dy As Double, clusterNo As Integer)
 			Me.Dx = dx
 			Me.Dy = dy
 			Me.ClusterNo = clusterNo
