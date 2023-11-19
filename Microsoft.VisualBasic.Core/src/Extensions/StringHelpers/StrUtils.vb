@@ -96,6 +96,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Module StrUtils
 
@@ -201,8 +202,6 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New [Default](Of Random)(Math.seeds)
-
     ''' <summary>
     ''' 32-126
     ''' </summary>
@@ -210,7 +209,7 @@ Public Module StrUtils
     ''' <param name="seed">默认是使用<see cref="Math.seeds"/>来作为随机种子的</param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
-        With seed Or newRandom
+        With If(seed, randf.seeds)
             Return CharString(len, Function() .RandomASCII(skipSymbols))
         End With
     End Function
@@ -239,7 +238,7 @@ Public Module StrUtils
 
     <Extension>
     Public Function RandomCharString(chars As IEnumerable(Of Char), len%) As String
-        With New Random
+        With randf.seeds
             Dim buffer = chars.ToArray
             Return CharString(len, Function() .Next(buffer))
         End With

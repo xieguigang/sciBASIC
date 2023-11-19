@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 
 Namespace Scripting.MathExpression
@@ -140,7 +141,6 @@ Namespace Scripting.MathExpression
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function RND(LowBound As Double, UpBound As Double) As Double
-            Dim rand As New Random(1000)
             If UpBound = 0R OrElse UpBound < LowBound Then
                 Return rand.NextDouble
             Else
