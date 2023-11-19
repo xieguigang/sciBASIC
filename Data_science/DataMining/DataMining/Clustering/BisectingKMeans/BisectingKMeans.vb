@@ -1,6 +1,5 @@
 ﻿Namespace BisectingKMeans
 
-
     ''' <summary>
     ''' Created by touhid on 12/21/15.
     ''' 
@@ -12,31 +11,27 @@
 
         Private Const K_BISECTING As Integer = 6
 
-        Private clusterList As List(Of Cluster)
+        Dim clusterList As New List(Of Cluster)
 
-        Private Sub New()
-            Dim dataList As List(Of DataPoint)
-            clusterList = New List(Of Cluster)()
+        Sub New(dataList As List(Of DataPoint))
+            Call init(dataList)
+        End Sub
 
+        Private Sub init(dataList As List(Of DataPoint))
             Dim cluster As Cluster = calcCluster(dataList)
             cluster.DataPoints = dataList
             clusterList.Add(cluster)
-            runBisectingKMeans(cluster)
-
-            Dim i As Integer = 1
-            For Each c As Cluster In clusterList
-                'JAVA TO VB CONVERTER WARNING: An assignment within expression was extracted from the following statement:
-                'ORIGINAL LINE: buet.touhiDroid.BisectingKMeans.utils.Lg.pl("Cluster "+ i++ + " :" + c.getCx() + ", " + c.getCy());
-                Console.WriteLine("Cluster " & i & " :" & c.Cx & ", " & c.Cy)
-                i += 1
-            Next c
         End Sub
 
-        Private Sub runBisectingKMeans(ByVal worstCluster As Cluster)
-            clusterList.Remove(worstCluster) ' TODO Recheck whether it's being removed or not
+        Public Sub runBisectingKMeans()
+            Call runBisectingKMeans(clusterList.First)
+        End Sub
 
+        Private Sub runBisectingKMeans(worstCluster As Cluster)
             Dim cluster1 As Cluster = Nothing, cluster2 As Cluster = Nothing
             Dim minSSE As Double = Double.MaxValue
+
+            clusterList.Remove(worstCluster)
 
             For i As Integer = 0 To NUM_ITERATIONS_BISECTION - 1
                 Dim ac As List(Of Cluster) = kMeansClustering(2, worstCluster.DataPoints)
@@ -109,6 +104,11 @@
             End Get
         End Property
 
+        ''' <summary>
+        ''' calculate the input data center as first cluster
+        ''' </summary>
+        ''' <param name="dataList"></param>
+        ''' <returns></returns>
         Private Function calcCluster(ByVal dataList As List(Of DataPoint)) As Cluster
             Dim scx As Double = 0, scy As Double = 0
             For Each p As DataPoint In dataList
