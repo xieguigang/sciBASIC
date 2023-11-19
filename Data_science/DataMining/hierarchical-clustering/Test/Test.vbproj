@@ -133,17 +133,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{e7caa625-b735-4b76-b53a-79623bb305a6}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{e683480e-46bd-44e0-9ef5-0d64c218849d}</Project>
+      <Name>imaging.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{8ac617fd-a143-41d8-8e76-2950e2ae3f41}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\mime\text%25html\html_netcore5.vbproj">
+      <Project>{fe680d1d-a3b7-48df-9db4-aa777fb56ce5}</Project>
+      <Name>html_netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj">
       <Project>{584ece39-27fa-4434-87d5-71ca4ff7c3a2}</Project>
       <Name>Math.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Visualization\Plots\plots-netcore5.vbproj">
+      <Project>{aa27beaa-4636-4395-8289-8288843c23e9}</Project>
+      <Name>plots-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\DataMining\DataMining.NET5.vbproj">
       <Project>{88982297-48d7-4aa8-a4c7-1ebd7d8a7c7d}</Project>
       <Name>DataMining.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HCTreePlot\HCTreePlot.vbproj">
+      <Project>{d831719e-1cc6-4904-beb8-b038a5757f22}</Project>
+      <Name>HCTreePlot</Name>
     </ProjectReference>
     <ProjectReference Include="..\hierarchical-clustering\hctree.NET5.vbproj">
       <Project>{fd8e0871-99b7-406c-9bed-0211213a54e5}</Project>

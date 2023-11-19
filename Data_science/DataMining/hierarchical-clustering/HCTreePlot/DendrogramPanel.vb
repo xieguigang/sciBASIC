@@ -53,14 +53,14 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Chart = Microsoft.VisualBasic.Data.ChartPlots.Graphic.Plot
 
-Public MustInherit Class DendrogramPanel : Inherits Plot
+Public MustInherit Class DendrogramPanel : Inherits Chart
 
     Protected Friend ReadOnly hist As Cluster
     Protected Friend ReadOnly classIndex As Dictionary(Of String, ColorClass)
