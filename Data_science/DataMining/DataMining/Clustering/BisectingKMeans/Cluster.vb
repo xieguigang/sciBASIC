@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports std = System.Math
 
 Namespace BisectingKMeans
-
 
 	''' <summary>
 	''' Created by touhid on 12/21/15.
@@ -88,7 +86,7 @@ Namespace BisectingKMeans
 		End Function
 
 		Public Overrides Function ToString() As String
-			Return "Cluster{" & "cx=" & cx_Conflict & ", cy=" & cy_Conflict & ", dataPoints=" & dataPoints_Conflict.jointby(", ") & "}"c
+			Return "Cluster{" & "cx=" & cx_Conflict & ", cy=" & cy_Conflict & ", dataPoints=" & dataPoints_Conflict.JoinBy(", ") & "}"c
 		End Function
 
 		Public Overridable Function updateCentroid() As Boolean
@@ -107,7 +105,7 @@ Namespace BisectingKMeans
 			Dim tcy As Double = cy_Conflict
 			cy_Conflict = sumY / size
 
-			Return Not (Math.Abs(tcx - cx_Conflict) < CENTROID_THRESHOLD AndAlso Math.Abs(tcy - cy_Conflict) < CENTROID_THRESHOLD)
+			Return Not (std.Abs(tcx - cx_Conflict) < CENTROID_THRESHOLD AndAlso std.Abs(tcy - cy_Conflict) < CENTROID_THRESHOLD)
 		End Function
 	End Class
 
