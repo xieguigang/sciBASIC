@@ -56,7 +56,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.DataMining.KMeans.CompleteLinkage
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
@@ -66,7 +65,7 @@ Namespace KMeans
     ''' A class containing a group of data with similar characteristics (cluster), KMeans Cluster
     ''' </summary>
     <Serializable>
-    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits CompleteLinkage.Cluster(Of T)
+    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits Cluster(Of T)
         Implements IEnumerable(Of T)
 
         ''' <summary>

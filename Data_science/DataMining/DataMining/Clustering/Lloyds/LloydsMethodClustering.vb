@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports stdNum = System.Math
 

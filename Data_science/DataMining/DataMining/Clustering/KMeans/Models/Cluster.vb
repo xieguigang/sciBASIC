@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
-Namespace Lloyds
+Namespace KMeans
 
     ''' <summary>
     ''' A collection of the target entity object will be a cluster
