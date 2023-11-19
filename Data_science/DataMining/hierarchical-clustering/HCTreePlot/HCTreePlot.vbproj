@@ -1,9 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.HierarchicalClustering</RootNamespace>
     <TargetFrameworks>net6.0;net6.0-windows;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.DataMining.HierarchicalClustering.Plot</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
