@@ -29,7 +29,7 @@ Public Class KNNGraph
         Return dims
     End Function
 
-    Public Iterator Function GetGraphMatrix(k As Integer, Optional aggregate As Func(Of Double(), Double) = Nothing) As IEnumerable(Of ClusterEntity)
+    Public Iterator Function GetGraphMatrix(k As Integer, Optional aggregate As Func(Of IEnumerable(Of Double), Double) = Nothing) As IEnumerable(Of ClusterEntity)
         Dim knn = Me.KNN(k).ToArray
         Dim cols As SeqValue(Of String)() = knn _
             .Select(Function(a) a.value) _
@@ -37,6 +37,11 @@ Public Class KNNGraph
             .Distinct _
             .SeqIterator _
             .ToArray
+
+        If aggregate Is Nothing Then
+            aggregate = AddressOf System.Linq.Enumerable.Average
+        End If
+
         Dim table = raw.AsParallel _
             .Select(Function(a) (a.uid, aggregate(a.entityVector))) _
             .ToDictionary(Function(a) a.uid,
