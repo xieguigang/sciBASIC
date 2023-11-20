@@ -63,12 +63,11 @@ Namespace Lloyds
 
     Public Class Point : Inherits ClusterEntity
 
-        Private mResultantKMeansCluster As Integer = -1
         Private mResultantClusterCompleteLinkage As Integer = -1
 
         Public ReadOnly Property LloydsResultCluster As Integer
             Get
-                Return mResultantKMeansCluster
+                Return cluster
             End Get
         End Property
 
@@ -92,7 +91,7 @@ Namespace Lloyds
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetKMeansCluster(kMeansCluster As Integer)
-            mResultantKMeansCluster = kMeansCluster
+            cluster = kMeansCluster
         End Sub
     End Class
 End Namespace
