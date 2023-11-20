@@ -80,7 +80,7 @@ Namespace ApplicationServices.Development.NetCoreApp
         Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of Runtime))
             Dim info As AssemblyInfo = package.FromAssembly
             Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
-            Dim assemblyKey2 As String = $"{info.Name}/{info.AssemblyVersion}222"
+            Dim assemblyKey2 As String = $"{info.Name}/{info.AssemblyVersion}"
             Dim targets As Dictionary(Of String, target) = Me.targets(runtimeTarget.name)
             Dim packageTarget As target = If(
                 targets.TryGetValue(assemblyKey),
