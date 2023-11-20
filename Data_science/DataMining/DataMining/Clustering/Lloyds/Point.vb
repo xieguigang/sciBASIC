@@ -57,12 +57,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.DataMining.KMeans
 
 Namespace Lloyds
 
-    Public Class Point : Inherits EntityBase(Of Double)
+    Public Class Point : Inherits ClusterEntity
 
         Private mResultantKMeansCluster As Integer = -1
         Private mResultantClusterCompleteLinkage As Integer = -1
@@ -86,27 +85,10 @@ Namespace Lloyds
         Public Sub New()
         End Sub
 
-        Public Shared Function fromStringArray(ParamArray unitsAsString As String()) As Point
-            Dim dimension As Integer = unitsAsString.Length
-
-            Dim unitsAsDouble As Double() = New Double(dimension - 1) {}
-
-            For i As Integer = 0 To dimension - 1
-                unitsAsDouble(i) = Convert.ToDouble(unitsAsString(i))
-            Next i
-
-            Return New Point(unitsAsDouble)
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub CompleteLinkageCluster(cluster As Integer)
             mResultantClusterCompleteLinkage = cluster
         End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function distanceToOtherPoint(otherPoint As Point) As Double
-            Return Me.entityVector.EuclideanDistance(otherPoint.entityVector)
-        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetKMeansCluster(kMeansCluster As Integer)

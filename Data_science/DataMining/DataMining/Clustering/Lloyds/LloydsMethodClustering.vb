@@ -54,8 +54,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Lloyds
 
@@ -74,8 +75,8 @@ Namespace Lloyds
             End Get
         End Property
 
-        Public Sub New(source As IEnumerable(Of Point), numClusters As Integer)
-            Call MyBase.New(source, numClusters)
+        Public Sub New(source As IEnumerable(Of Point), k As Integer)
+            Call MyBase.New(source, k)
 
             mKMeansClusters = New List(Of KMeansCluster(Of Point))
             _lloydsPoints = New List(Of Point)(_source)
@@ -90,7 +91,7 @@ Namespace Lloyds
                     mKMeansClusters.Clear()
                 End If
 
-                Dim currentKMeansCost = [Loop]()
+                Dim currentKMeansCost As Double = [Loop]()
 
                 If currentKMeansCost < minKMeansCost Then
                     minKMeansCost = currentKMeansCost
@@ -129,7 +130,7 @@ Namespace Lloyds
                     Dim minDistanceToCluster As Double = Double.MaxValue
                     For j As Integer = 0 To mKMeansClusters.Count - 1
 
-                        Dim distanceToCluster As Double = _lloydsPoints(i).distanceToOtherPoint(mKMeansClusters(j).Center)
+                        Dim distanceToCluster As Double = _lloydsPoints(i).DistanceTo(mKMeansClusters(j).Center)
 
                         If distanceToCluster < minDistanceToCluster Then
                             closestClusterToPoint = mKMeansClusters(j)
@@ -152,7 +153,7 @@ Namespace Lloyds
                     mKMeansClusters(i).Center = mKMeansClusters(i).CalculateCenter()
                     currentKMeansCost += mKMeansClusters(i).CalculateKMeansCost()
                 Next i
-            Loop While stdNum.Abs(oldKmeansCost - currentKMeansCost) > 1
+            Loop While std.Abs(oldKmeansCost - currentKMeansCost) > 1
 
             Return currentKMeansCost
         End Function
