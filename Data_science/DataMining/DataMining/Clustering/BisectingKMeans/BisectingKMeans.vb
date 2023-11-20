@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -34,6 +35,7 @@ Namespace BisectingKMeans
             clusterList.Add(cluster)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub runBisectingKMeans()
             Call runBisectingKMeans(clusterList.First)
         End Sub
@@ -45,14 +47,15 @@ Namespace BisectingKMeans
             clusterList.Remove(worstCluster)
 
             For i As Integer = 0 To NUM_ITERATIONS_BISECTION - 1
-                Dim ac As List(Of Cluster) = kMeansClustering(2, worstCluster.DataPoints)
-
+                Dim ac As Cluster() = kMeansClustering(worstCluster.DataPoints).ToArray
                 Dim sumSSE As Double = ac(0).SSE + ac(1).SSE
+
                 If sumSSE < minSSE Then
                     cluster1 = ac(0)
                     cluster2 = ac(1)
                 End If
-            Next i
+            Next
+
             clusterList.Add(cluster1)
             clusterList.Add(cluster2)
 
@@ -61,43 +64,17 @@ Namespace BisectingKMeans
             End If
         End Sub
 
-        Private Function kMeansClustering(k As Integer, dataPoints As List(Of ClusterEntity)) As List(Of Cluster)
-            Dim rand As New Random()
+        ''' <summary>
+        ''' k = 2
+        ''' </summary>
+        ''' <param name="dataPoints"></param>
+        ''' <returns></returns>
+        Private Iterator Function kMeansClustering(dataPoints As List(Of ClusterEntity)) As IEnumerable(Of Cluster)
+            Dim kmeans = New KMeansAlgorithm(Of ClusterEntity)().ClusterDataSet(dataPoints, k:=2)
 
-            Dim tempClusterList As New List(Of Cluster)()
-            For i As Integer = 0 To k - 1
-                Dim cluster As New Cluster(dataPoints(rand.Next(dataPoints.Count)))
-                tempClusterList.Add(cluster)
-            Next i
-
-            Dim isUpdated As Boolean = True
-            Do
-                ' Assign Data-points to each of the clusters
-                tempClusterList(0).DataPoints = New List(Of ClusterEntity)()
-                tempClusterList(1).DataPoints = New List(Of ClusterEntity)()
-                For Each p As ClusterEntity In dataPoints
-                    Dim minDist As Double = Double.MaxValue
-                    Dim idx As Integer = 0
-
-                    For i As Integer = 0 To tempClusterList.Count - 1
-                        Dim d As Double = tempClusterList(i).DistanceTo(p)
-                        If d < minDist Then
-                            minDist = d
-                            idx = i
-                        End If
-                    Next i
-                    tempClusterList(idx).addPoint(p)
-                Next p
-                isUpdated = False
-                For i As Integer = 0 To k - 1
-                    Dim isClUpdated As Boolean = tempClusterList(i).updateCentroid(CENTROID_THRESHOLD)
-                    If isClUpdated Then
-                        isUpdated = True
-                    End If
-                Next i
-            Loop While isUpdated
-
-            Return tempClusterList
+            For Each cluster As KMeansCluster(Of ClusterEntity) In kmeans
+                Yield New Cluster(cluster.ClusterMean, cluster.AsList)
+            Next
         End Function
 
         Public Function GetWorstCluster() As Cluster
