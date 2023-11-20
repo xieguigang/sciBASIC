@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -9,11 +10,11 @@ Namespace BisectingKMeans
 	''' 
 	''' @author touhid
 	''' </summary>
-	Public Class Cluster
+	Public Class Cluster : Implements IVector
 
 		Private Const CENTROID_THRESHOLD As Double = 0.005
 
-		Public Property centroid As Double()
+		Public Property centroid As Double() Implements IVector.Data
 		Public Overridable Property DataPoints As List(Of ClusterEntity)
 
 		Public Sub New(c As Double())

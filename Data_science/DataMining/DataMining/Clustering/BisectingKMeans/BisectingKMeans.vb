@@ -1,4 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace BisectingKMeans
 
@@ -53,7 +55,7 @@ Namespace BisectingKMeans
             End If
         End Sub
 
-        Private Function kMeansClustering(k As Integer, dataPoints As List(Of DataPoint)) As List(Of Cluster)
+        Private Function kMeansClustering(k As Integer, dataPoints As List(Of ClusterEntity)) As List(Of Cluster)
             Dim rand As New Random()
 
             Dim tempClusterList As New List(Of Cluster)()
@@ -65,14 +67,14 @@ Namespace BisectingKMeans
             Dim isUpdated As Boolean = True
             Do
                 ' Assign Data-points to each of the clusters
-                tempClusterList(0).DataPoints = New List(Of DataPoint)()
-                tempClusterList(1).DataPoints = New List(Of DataPoint)()
-                For Each p As DataPoint In dataPoints
+                tempClusterList(0).DataPoints = New List(Of ClusterEntity)()
+                tempClusterList(1).DataPoints = New List(Of ClusterEntity)()
+                For Each p As ClusterEntity In dataPoints
                     Dim minDist As Double = Double.MaxValue
                     Dim idx As Integer = 0
 
                     For i As Integer = 0 To tempClusterList.Count - 1
-                        Dim d As Double = tempClusterList(i).getDistSq(p)
+                        Dim d As Double = tempClusterList(i).DistanceTo(p)
                         If d < minDist Then
                             minDist = d
                             idx = i
@@ -113,13 +115,19 @@ Namespace BisectingKMeans
         ''' <param name="dataList"></param>
         ''' <returns></returns>
         Private Function calcCluster(dataList As IEnumerable(Of ClusterEntity)) As Cluster
-            Dim scx As Double = 0, scy As Double = 0
-            For Each p As DataPoint In dataList
-                scx += p.Dx
-                scy += p.Dy
-            Next p
-            Dim size As Integer = dataList.Count
-            Return New Cluster(scx / size, scy / size)
+            Dim centroid As Vector = Nothing
+
+            For Each p As ClusterEntity In dataList
+                If centroid Is Nothing Then
+                    centroid = New Vector(p.entityVector)
+                Else
+                    centroid = centroid + New Vector(p.entityVector)
+                End If
+            Next
+
+            centroid = centroid / dataList.Count
+
+            Return New Cluster(centroid)
         End Function
 
     End Class
