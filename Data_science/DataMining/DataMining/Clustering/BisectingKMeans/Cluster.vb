@@ -12,8 +12,6 @@ Namespace BisectingKMeans
 	''' </summary>
 	Public Class Cluster : Implements IVector
 
-		Private Const CENTROID_THRESHOLD As Double = 0.005
-
 		Public Property centroid As Double() Implements IVector.Data
 		Public Overridable Property DataPoints As List(Of ClusterEntity)
 
@@ -54,7 +52,7 @@ Namespace BisectingKMeans
 			Return "Cluster{" & centroid.GetJson & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
 		End Function
 
-		Public Overridable Function updateCentroid() As Boolean
+		Friend Overridable Function updateCentroid(Optional CENTROID_THRESHOLD As Double = 0.005) As Boolean
 			Dim sum As Vector = Vector.Zero(centroid.Length)
 
 			For Each p As ClusterEntity In DataPoints

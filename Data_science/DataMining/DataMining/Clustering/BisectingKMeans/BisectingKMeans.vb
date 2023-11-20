@@ -13,11 +13,17 @@ Namespace BisectingKMeans
 
         Dim NUM_ITERATIONS_BISECTION As Integer = 5
         Dim K_BISECTING As Integer = 6
+        Dim CENTROID_THRESHOLD As Double = 0.005
         Dim clusterList As New List(Of Cluster)
 
-        Sub New(dataList As IEnumerable(Of ClusterEntity), Optional k As Integer = 6, Optional iterations As Integer = 6)
+        Sub New(dataList As IEnumerable(Of ClusterEntity),
+                Optional k As Integer = 6,
+                Optional iterations As Integer = 6,
+                Optional sse_threshold As Double = 0.005)
+
             Call init(dataList)
 
+            Me.CENTROID_THRESHOLD = sse_threshold
             Me.K_BISECTING = k
             Me.NUM_ITERATIONS_BISECTION = iterations
         End Sub
@@ -51,7 +57,7 @@ Namespace BisectingKMeans
             clusterList.Add(cluster2)
 
             If clusterList.Count < K_BISECTING Then
-                runBisectingKMeans(worstCluster)
+                runBisectingKMeans(GetWorstCluster)
             End If
         End Sub
 
@@ -84,7 +90,7 @@ Namespace BisectingKMeans
                 Next p
                 isUpdated = False
                 For i As Integer = 0 To k - 1
-                    Dim isClUpdated As Boolean = tempClusterList(i).updateCentroid()
+                    Dim isClUpdated As Boolean = tempClusterList(i).updateCentroid(CENTROID_THRESHOLD)
                     If isClUpdated Then
                         isUpdated = True
                     End If
@@ -94,20 +100,18 @@ Namespace BisectingKMeans
             Return tempClusterList
         End Function
 
-        Private ReadOnly Property WorstCluster As Cluster
-            Get
-                Dim maxSSE As Double = -1
-                Dim worst As Cluster = Nothing
-                For Each c As Cluster In clusterList
-                    Dim sse As Double = c.SSE
-                    If sse > maxSSE Then
-                        worst = c
-                        maxSSE = sse
-                    End If
-                Next c
-                Return worst
-            End Get
-        End Property
+        Public Function GetWorstCluster() As Cluster
+            Dim maxSSE As Double = -1
+            Dim worst As Cluster = Nothing
+            For Each c As Cluster In clusterList
+                Dim sse As Double = c.SSE
+                If sse > maxSSE Then
+                    worst = c
+                    maxSSE = sse
+                End If
+            Next c
+            Return worst
+        End Function
 
         ''' <summary>
         ''' calculate the input data center as first cluster
@@ -129,7 +133,5 @@ Namespace BisectingKMeans
 
             Return New Cluster(centroid)
         End Function
-
     End Class
-
 End Namespace
