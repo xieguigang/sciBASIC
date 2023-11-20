@@ -36,9 +36,10 @@ Namespace BisectingKMeans
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub runBisectingKMeans()
+        Public Function runBisectingKMeans() As IEnumerable(Of Cluster)
             Call runBisectingKMeans(clusterList.First)
-        End Sub
+            Return clusterList
+        End Function
 
         Private Sub runBisectingKMeans(worstCluster As Cluster)
             Dim cluster1 As Cluster = Nothing, cluster2 As Cluster = Nothing

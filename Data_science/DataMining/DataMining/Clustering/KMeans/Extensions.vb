@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::91247300cba05097dd20b0fdad501687, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 154
-    '    Code Lines: 125
-    ' Comment Lines: 15
-    '   Blank Lines: 14
-    '     File Size: 7.03 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: (+2 Overloads) Kmeans, (+2 Overloads) ToKMeansModels, ValueGroups
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 154
+'    Code Lines: 125
+' Comment Lines: 15
+'   Blank Lines: 14
+'     File Size: 7.03 KB
+
+
+'     Module Extensions
+' 
+'         Function: (+2 Overloads) Kmeans, (+2 Overloads) ToKMeansModels, ValueGroups
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,15 +56,50 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
+
+    Public Class DataSetConvertor
+
+        ReadOnly maps As String()
+
+        Sub New(rawInput As EntityClusterModel())
+            maps = rawInput _
+                .Select(Function(a) a.Properties.Keys) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+        End Sub
+
+        Public Iterator Function GetVectors(rawInput As EntityClusterModel()) As IEnumerable(Of ClusterEntity)
+            For Each xi As EntityClusterModel In rawInput
+                Yield xi.ToModel(projection:=maps)
+            Next
+        End Function
+
+        Public Iterator Function GetObjects(cluster As IEnumerable(Of ClusterEntity), setClass As Integer) As IEnumerable(Of EntityClusterModel)
+            Dim yi As EntityClusterModel
+
+            For Each xi As ClusterEntity In cluster
+                yi = xi.ToDataModel(maps)
+                yi.Cluster = setClass
+
+                Yield yi
+            Next
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return maps.GetJson
+        End Function
+    End Class
 
     <HideModuleName>
     Public Module Extensions
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Iterator Public Function ToKMeansModels(data As IEnumerable(Of NamedCollection(Of Double))) As IEnumerable(Of EntityClusterModel)
+        Public Iterator Function ToKMeansModels(data As IEnumerable(Of NamedCollection(Of Double))) As IEnumerable(Of EntityClusterModel)
             For Each d In data
                 Yield New EntityClusterModel With {
                     .ID = d.name,
@@ -126,41 +161,24 @@ Namespace KMeans
         ''' 输出的元素和输入相比较是乱序的
         ''' </returns>
         <Extension>
-        Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
-                               expected%,
-                               Optional debug As Boolean = True,
-                               Optional parallel As Boolean = True) As List(Of EntityClusterModel)
+        Public Iterator Function Kmeans(source As IEnumerable(Of EntityClusterModel),
+                                        expected%,
+                                        Optional debug As Boolean = True,
+                                        Optional parallel As Boolean = True) As IEnumerable(Of EntityClusterModel)
 
             Dim rawInput As EntityClusterModel() = source.ToArray
-            Dim maps As String() = rawInput _
-                .Select(Function(a) a.Properties.Keys) _
-                .IteratesALL _
-                .Distinct _
-                .ToArray
+            Dim maps As New DataSetConvertor(rawInput)
             Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, parallel:=parallel)
             Dim clusters As ClusterCollection(Of ClusterEntity) = kmeansCore.ClusterDataSet(
                 k:=expected,
-                source:=rawInput _
-                    .Select(Function(xi)
-                                Return xi.ToModel(projection:=maps)
-                            End Function) _
-                    .ToArray
+                source:=maps.GetVectors(rawInput).ToArray
             )
-            Dim result As New List(Of EntityClusterModel)
 
             For Each cluster As SeqValue(Of KMeansCluster(Of ClusterEntity)) In clusters.SeqIterator(offset:=1)
-                Dim values As EntityClusterModel() = (+cluster) _
-                    .Select(Function(x) x.ToDataModel(maps)) _
-                    .ToArray
-
-                For Each x As EntityClusterModel In values
-                    x.Cluster = cluster.i
+                For Each xi As EntityClusterModel In maps.GetObjects(+cluster, setClass:=cluster.i)
+                    Yield xi
                 Next
-
-                result += values
             Next
-
-            Return result
         End Function
 
         <Extension>
