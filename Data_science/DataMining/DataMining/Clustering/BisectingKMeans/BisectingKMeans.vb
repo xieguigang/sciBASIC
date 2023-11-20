@@ -1,6 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace BisectingKMeans
@@ -30,8 +29,9 @@ Namespace BisectingKMeans
         End Sub
 
         Private Sub init(dataList As IEnumerable(Of ClusterEntity))
-            Dim cluster As Cluster = calcCluster(dataList)
-            cluster.DataPoints = dataList
+            Dim pull = dataList.AsList
+            Dim cluster As Cluster = calcCluster(pull)
+            cluster.DataPoints = pull
             clusterList.Add(cluster)
         End Sub
 
