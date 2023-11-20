@@ -1,4 +1,6 @@
-﻿Namespace BisectingKMeans
+﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+
+Namespace BisectingKMeans
 
     ''' <summary>
     ''' Created by touhid on 12/21/15.
@@ -11,14 +13,14 @@
         Dim K_BISECTING As Integer = 6
         Dim clusterList As New List(Of Cluster)
 
-        Sub New(dataList As List(Of DataPoint), Optional k As Integer = 6, Optional iterations As Integer = 6)
+        Sub New(dataList As IEnumerable(Of ClusterEntity), Optional k As Integer = 6, Optional iterations As Integer = 6)
             Call init(dataList)
 
             Me.K_BISECTING = k
             Me.NUM_ITERATIONS_BISECTION = iterations
         End Sub
 
-        Private Sub init(dataList As List(Of DataPoint))
+        Private Sub init(dataList As IEnumerable(Of ClusterEntity))
             Dim cluster As Cluster = calcCluster(dataList)
             cluster.DataPoints = dataList
             clusterList.Add(cluster)
@@ -110,7 +112,7 @@
         ''' </summary>
         ''' <param name="dataList"></param>
         ''' <returns></returns>
-        Private Function calcCluster(dataList As List(Of DataPoint)) As Cluster
+        Private Function calcCluster(dataList As IEnumerable(Of ClusterEntity)) As Cluster
             Dim scx As Double = 0, scy As Double = 0
             For Each p As DataPoint In dataList
                 scx += p.Dx

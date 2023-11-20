@@ -1,4 +1,6 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BisectingKMeans
 
@@ -8,74 +10,66 @@ Namespace BisectingKMeans
 	''' @author touhid
 	''' </summary>
 	Public Class Cluster
+
 		Private Const CENTROID_THRESHOLD As Double = 0.005
 
-		Public Sub New(cx As Double, cy As Double)
-			Me.Cx = cx
-			Me.Cy = cy
-			DataPoints = New List(Of DataPoint)()
+		Public Property centroid As Double()
+		Public Overridable Property DataPoints As List(Of ClusterEntity)
+
+		Public Sub New(c As Double())
+			Me.centroid = c
+			Me.DataPoints = New List(Of ClusterEntity)()
 		End Sub
 
-		Public Sub New(centroid As DataPoint)
-			Me.Cx = centroid.Dx
-			Me.Cy = centroid.Dy
-			DataPoints = New List(Of DataPoint)()
+		Public Sub New(centroid As ClusterEntity)
+			Me.centroid = centroid.entityVector.ToArray
+			Me.DataPoints = New List(Of ClusterEntity)()
 		End Sub
 
-		Public Sub New(cx As Double, cy As Double, dataPoints As List(Of DataPoint))
-			Me.Cx = cx
-			Me.Cy = cy
+		Public Sub New(centroid As Double(), dataPoints As List(Of ClusterEntity))
+			Me.centroid = centroid
 			Me.DataPoints = dataPoints
 		End Sub
 
-		Public Overridable Property Cx As Double
-		Public Overridable Property Cy As Double
-		Public Overridable Property DataPoints As List(Of DataPoint)
-
-		Public Overridable Sub addPoint(p As DataPoint)
+		Public Overridable Sub addPoint(p As ClusterEntity)
 			Me.DataPoints.Add(p)
 		End Sub
-
 
 		Public Overridable ReadOnly Property SSE As Double
 			Get
 				Dim sse_d As Double = 0.0
-				For Each p As DataPoint In DataPoints
-					Dim dx As Double = Cx - p.Dx
-					Dim dy As Double = Cy - p.Dy
-					sse_d += (dx * dx + dy * dy)
+				Dim c As New Vector(centroid)
+				Dim dx As Vector
+
+				For Each p As ClusterEntity In DataPoints
+					dx = (c - New Vector(p.entityVector)) ^ 2
+					sse_d += dx.Sum
 				Next p
 				Return sse_d
 			End Get
 		End Property
 
-		Public Overridable Function getDistSq(p As DataPoint) As Double
-			Dim dx As Double = p.Dx - Cx
-			Dim dy As Double = p.Dy - Cy
-			Return dx * dx + dy * dy
-		End Function
-
 		Public Overrides Function ToString() As String
-			Return "Cluster{" & "cx=" & Cx & ", cy=" & Cy & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
+			Return "Cluster{" & centroid.GetJson & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
 		End Function
 
 		Public Overridable Function updateCentroid() As Boolean
-			Dim sumX As Double = 0.0
-			Dim sumY As Double = 0.0
-			For Each p As DataPoint In DataPoints
-				sumX += p.Dx
-				sumY += p.Dy
-			Next p
+			Dim sum As Vector = Vector.Zero(centroid.Length)
+
+			For Each p As ClusterEntity In DataPoints
+				sum = sum + p.entityVector
+			Next
+
 			Dim size As Integer = DataPoints.Count
+
 			If size = 0 Then
 				size = 1
 			End If
-			Dim tcx As Double = Cx
-			Cx = sumX / size
-			Dim tcy As Double = Cy
-			Cy = sumY / size
 
-			Return Not (std.Abs(tcx - Cx) < CENTROID_THRESHOLD AndAlso std.Abs(tcy - Cy) < CENTROID_THRESHOLD)
+			Dim m As Vector = sum / size
+			Dim e As Vector = (m - New Vector(centroid)).Abs
+
+			Return Not (e < CENTROID_THRESHOLD).All
 		End Function
 	End Class
 
