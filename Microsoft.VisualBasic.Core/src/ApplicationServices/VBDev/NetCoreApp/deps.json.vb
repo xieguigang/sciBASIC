@@ -80,8 +80,16 @@ Namespace ApplicationServices.Development.NetCoreApp
         Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of Runtime))
             Dim info As AssemblyInfo = package.FromAssembly
             Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
+            Dim assemblyKey2 As String = $"{info.Name}/{info.AssemblyVersion}222"
             Dim targets As Dictionary(Of String, target) = Me.targets(runtimeTarget.name)
-            Dim packageTarget As target = targets.TryGetValue(assemblyKey)
+            Dim packageTarget As target = If(
+                targets.TryGetValue(assemblyKey),
+                targets.TryGetValue(assemblyKey2)
+            )
+
+            If packageTarget Is Nothing Then
+                packageTarget = GetByFileNameFallback(package, targets)
+            End If
 
             ' The given key 'roxygenNet/1.0.0+88489749f53dd4380c4c99434e7cee2e21e5ae29' was not present in the dictionary.
             ' why missing key?
@@ -105,6 +113,18 @@ Namespace ApplicationServices.Development.NetCoreApp
                     }
                 End If
             Next
+        End Function
+
+        Private Function GetByFileNameFallback(pkg As Assembly, targets As Dictionary(Of String, target)) As target
+            Dim libname As String = pkg.ManifestModule.Name
+
+            For Each libmod As target In targets.Values
+                If libmod.LibraryFile = libname Then
+                    Return libmod
+                End If
+            Next
+
+            Return Nothing
         End Function
 
         ''' <summary>
