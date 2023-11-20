@@ -11,6 +11,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <OutputPath>../../../../../R-sharp/App</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,7 +27,7 @@
     <DebugType>full</DebugType>
     <DefineConstants>netcore5=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.BinaryData.xml</DocumentationFile>
-    <OutputPath>bin\</OutputPath>
+    
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
   </PropertyGroup>
 
