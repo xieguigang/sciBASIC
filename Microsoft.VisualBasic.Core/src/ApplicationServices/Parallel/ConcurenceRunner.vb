@@ -110,6 +110,7 @@ Namespace Parallel
                 ends = workLen - 1
             End If
 
+            Call VBDebugger.EchoLine($"[{Me.GetType.Name}$t_{thread_id}] {start}...{ends}@total={workLen}")
             Call Solve(start, ends, cpu_id:=thread_id)
         End Sub
 
