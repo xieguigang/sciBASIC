@@ -108,7 +108,7 @@ Namespace Imaging.Math2D
             Dim S1, S2 As Double
             Dim wij As Double()() = Nothing
 
-            Call calc_spatial(c1, c2).Set(wij, w, S1, S2)
+            Call calc_spatial(c1, c2, parallel:=parallel).Set(wij, w, S1, S2)
 
             For i As Integer = 0 To N - 1
                 For j As Integer = 0 To N - 1

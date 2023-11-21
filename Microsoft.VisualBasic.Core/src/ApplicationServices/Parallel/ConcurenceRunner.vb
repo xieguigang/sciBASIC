@@ -19,6 +19,7 @@ Namespace Parallel
         Protected ReadOnly cpu_count As Integer = n_threads
 
         Dim opt As ParallelOptions
+        Dim is_verbose As Boolean = False
 
         Public Shared n_threads As Integer = 4
 
@@ -30,10 +31,11 @@ Namespace Parallel
         ''' the thread count for run the parallel task is configed
         ''' via the <see cref="n_threads"/> by default.
         ''' </remarks>
-        Sub New(nsize As Integer)
+        Sub New(nsize As Integer, Optional verbose As Boolean = False)
             workLen = nsize
             cpu_count = n_threads
             opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
+            is_verbose = verbose
         End Sub
 
         ''' <summary>
@@ -67,7 +69,7 @@ Namespace Parallel
             Else
                 System.Threading.Tasks.Parallel.For(
                     fromInclusive:=0,
-                    toExclusive:=cpu_count + 1,
+                    toExclusive:=cpu_count + 3,
                     parallelOptions:=opt,
                     body:=Sub(i) ParallelFor(i, span_size)
                 )
@@ -110,7 +112,10 @@ Namespace Parallel
                 ends = workLen - 1
             End If
 
-            Call VBDebugger.EchoLine($"[{Me.GetType.Name}$t_{thread_id}] {start}...{ends}@total={workLen}")
+            If is_verbose Then
+                Call VBDebugger.EchoLine($"[{Me.GetType.Name}$t_{thread_id}] {start}...{ends}@total={workLen}")
+            End If
+
             Call Solve(start, ends, cpu_id:=thread_id)
         End Sub
 
