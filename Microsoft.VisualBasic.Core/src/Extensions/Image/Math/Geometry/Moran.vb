@@ -35,7 +35,7 @@ Namespace Imaging.Math2D
             Dim wij As Double()() = New Double(N - 1)() {}
             Dim w As Double
             Dim S1, S2 As Double
-            Dim vec As New SpatialTask(N) With {.wij = wij, .c1 = c1, .c2 = c2}
+            Dim vec As New MoranSpatialTask(N) With {.wij = wij, .c1 = c1, .c2 = c2}
 
             If parallel Then
                 Call vec.Run()
@@ -51,7 +51,7 @@ Namespace Imaging.Math2D
             Return (wij, w, S1, S2)
         End Function
 
-        Private Class SpatialTask : Inherits VectorTask
+        Private Class MoranSpatialTask : Inherits VectorTask
 
             Public wij As Double()()
             Public c1 As Double(), c2 As Double()
