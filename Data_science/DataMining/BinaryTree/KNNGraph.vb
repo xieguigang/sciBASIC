@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -26,6 +27,40 @@ Public Class KNNGraph
         Next
 
         Return dims
+    End Function
+
+    Public Iterator Function GetGraphMatrix(k As Integer, Optional aggregate As Func(Of IEnumerable(Of Double), Double) = Nothing) As IEnumerable(Of ClusterEntity)
+        Dim knn = Me.KNN(k).ToArray
+        Dim cols As SeqValue(Of String)() = knn _
+            .Select(Function(a) a.value) _
+            .IteratesALL _
+            .Distinct _
+            .SeqIterator _
+            .ToArray
+
+        If aggregate Is Nothing Then
+            aggregate = AddressOf System.Linq.Enumerable.Average
+        End If
+
+        Dim table = raw.AsParallel _
+            .Select(Function(a) (a.uid, aggregate(a.entityVector))) _
+            .ToDictionary(Function(a) a.uid,
+                          Function(a)
+                              Return a.Item2
+                          End Function)
+
+        For Each q As NamedCollection(Of String) In knn
+            Dim v As Double() = New Double(cols.Length - 1) {}
+
+            For Each adjcent As String In q
+                v(cols(adjcent)) = table(adjcent)
+            Next
+
+            Yield New ClusterEntity With {
+                .uid = q.name,
+                .entityVector = v
+            }
+        Next
     End Function
 
     ''' <summary>

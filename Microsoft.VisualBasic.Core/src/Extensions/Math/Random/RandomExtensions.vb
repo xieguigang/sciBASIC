@@ -100,6 +100,14 @@ Namespace Math
             Return array(seeds.Next(0, array.Length))
         End Function
 
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upbound">The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function [Next](upbound As Integer) As Integer

@@ -62,7 +62,6 @@ Namespace KMeans
     ''' <summary>
     ''' A collection of Cluster objects or Clusters
     ''' </summary>
-    <Serializable>
     Public Class ClusterCollection(Of T As EntityBase(Of Double))
         Implements IEnumerable(Of KMeansCluster(Of T))
 

@@ -226,7 +226,7 @@ Namespace Math.Correlations
             Return MinkowskiDistance(X, Y, 1)
         End Function
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 = 1 Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

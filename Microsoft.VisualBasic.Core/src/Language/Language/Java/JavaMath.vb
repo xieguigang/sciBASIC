@@ -62,6 +62,7 @@
 #End Region
 
 Imports sys = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 '
 ' * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -765,10 +766,6 @@ Namespace Language.Java
         '    End If
         'End Function
 
-        Private NotInheritable Class RandomNumberGeneratorHolder
-            Friend Shared ReadOnly randomNumberGenerator As New Random
-        End Class
-
         ''' <summary>
         ''' Returns a {@code double} value with a positive sign, greater
         ''' than or equal to {@code 0.0} and less than {@code 1.0}.
@@ -791,7 +788,7 @@ Namespace Language.Java
         ''' <returns>  a pseudorandom {@code double} greater than or equal
         ''' to {@code 0.0} and less than {@code 1.0}. </returns>
         Public Function random() As Double
-            Return RandomNumberGeneratorHolder.randomNumberGenerator.NextDouble()
+            Return randf.NextDouble()
         End Function
 
         ''' <summary>

@@ -56,7 +56,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.DataMining.KMeans.CompleteLinkage
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
@@ -66,7 +65,7 @@ Namespace KMeans
     ''' A class containing a group of data with similar characteristics (cluster), KMeans Cluster
     ''' </summary>
     <Serializable>
-    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits CompleteLinkage.Cluster(Of T)
+    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits Cluster(Of T)
         Implements IEnumerable(Of T)
 
         ''' <summary>
@@ -121,7 +120,7 @@ Namespace KMeans
         Public Function CalculateCenter() As T
             ' If cluster is empty, the center will remain unchanged
             If m_innerList.Count = 0 Then
-                Return Center
+                Return Me.Center
             End If
 
             Dim dimension As Integer = m_innerList(Scan0).Length
@@ -132,9 +131,9 @@ Namespace KMeans
                 Next pointIndex
                 newCenterCoordinate(i) /= m_innerList.Count
             Next i
-            Dim ___center As T = Activator.CreateInstance(Of T)
-            ___center.entityVector = newCenterCoordinate
-            Return ___center
+            Dim center As T = Activator.CreateInstance(Of T)
+            center.entityVector = newCenterCoordinate
+            Return center
         End Function
 
         ''' <summary>
