@@ -58,7 +58,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -93,7 +92,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <summary>
     ''' Visit nodes directly by index number
     ''' </summary>
-    Protected Friend buffer As New HashList(Of V)
+    Protected Friend buffer As New Dictionary(Of UInteger, V)
 #End Region
 
     ''' <summary>
@@ -184,7 +183,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Public Function AddVertex(u As V) As G
         If Not vertices.Have(u) Then
             vertices += u
-            buffer.Add(u)
+            buffer.Add(u.ID, u)
         End If
 
         Return Me
@@ -242,7 +241,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
             Return vertices(label)
         Else
             With New V With {
-                .ID = buffer.GetAvailablePos,
+                .ID = buffer.Keys.Max + 1,
                 .label = label
             }
                 Call AddVertex(.ByRef)
@@ -273,11 +272,11 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
         If Not vertices.ContainsKey(u.label) Then
             vertices += u
-            buffer.Add(u)
+            buffer.Add(u.ID, u)
         End If
         If Not vertices.ContainsKey(v.label) Then
             vertices += v
-            buffer.Add(v)
+            buffer.Add(v.ID, v)
         End If
 
         Return Me
@@ -316,8 +315,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overridable Function AddEdge(i%, j%, Optional weight# = 0) As G
         edges += New Edge With {
-            .U = buffer(i),
-            .V = buffer(j),
+            .U = buffer(key:=CUInt(i)),
+            .V = buffer(key:=CUInt(j)),
             .weight = weight
         }
 
@@ -383,8 +382,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Delete(u%, v%) As G
-        Dim uNode As V = buffer(u)
-        Dim vNode As V = buffer(v)
+        Dim uNode As V = buffer(key:=CUInt(u))
+        Dim vNode As V = buffer(key:=CUInt(v))
 
         Return Delete(uNode.label, vNode.label)
     End Function

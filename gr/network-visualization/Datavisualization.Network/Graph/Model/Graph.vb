@@ -197,10 +197,10 @@ Namespace Graph
                 If assignId Then
                     ' 20201223 ID必须要在哈希表添加之前进行赋值
                     ' 编号必须从零开始
-                    node.ID = buffer.GetAvailablePos
+                    node.ID = buffer.Keys.Max + 1
                 End If
 
-                buffer.Add(node)
+                buffer.Add(node.ID, node)
                 vertices.Add(node)
             End If
 

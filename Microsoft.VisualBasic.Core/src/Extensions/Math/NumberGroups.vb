@@ -293,6 +293,24 @@ Namespace Math
             End If
         End Function
 
+        <Extension>
+        Public Iterator Function GroupByTree(Of T)(source As IEnumerable(Of T()),
+                                                   eval As Func(Of T, Double),
+                                                   compares As Comparison(Of Double)) As IEnumerable(Of NamedCollection(Of T))
+
+            Dim sort As New AVLTree(Of Double, T)(compares)
+
+            For Each block As T() In source.SafeQuery
+                For Each d As T In block.SafeQuery
+                    Call sort.Add(eval(d), d, valueReplace:=False)
+                Next
+            Next
+
+            For Each bin As BinaryTree(Of Double, T) In sort.GetAllNodes
+                Yield New NamedCollection(Of T)(bin.Key.ToString, bin.Members)
+            Next
+        End Function
+
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
