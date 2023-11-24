@@ -63,13 +63,22 @@ Namespace Model
         ''' 带有前后顺序的单词列表
         ''' </summary>
         ''' <returns></returns>
-        Public Property words As String()
+        Public Property words As Word()
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return words.IsNullOrEmpty OrElse words.All(AddressOf TextRank.IsEmpty)
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(tokens As IEnumerable(Of String))
+            words = tokens _
+                .Select(Function(si) New Word(si)) _
+                .ToArray
+        End Sub
 
         Public Function has(token As String) As Boolean
             Return Array.IndexOf(words, token) > -1
@@ -112,9 +121,7 @@ Namespace Model
                 tokens = Sentence.ChemicalNameRule(tokens).ToArray
             End If
 
-            Return New Sentence With {
-               .words = tokens
-            }
+            Return New Sentence(tokens)
         End Function
 
         ''' <summary>
