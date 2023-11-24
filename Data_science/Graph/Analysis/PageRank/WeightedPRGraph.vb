@@ -98,15 +98,15 @@ Namespace Analysis.PageRank
         ''' <param name="weight#">Weight value of this edge, default is no weight.</param>
         ''' <returns></returns>
         Public Overrides Function AddEdge(i%, j%, Optional weight# = 0) As WeightedPRGraph
-            If Not buffer.Contains(i) Then
+            If Not buffer.ContainsKey(i) Then
                 Call AddVertex(id:=i)
             End If
 
-            If Not buffer.Contains(j) Then
+            If Not buffer.ContainsKey(j) Then
                 Call AddVertex(id:=j)
             End If
 
-            Return AddEdge(buffer(i).Label, buffer(j).Label, weight)
+            Return AddEdge(buffer(key:=CUInt(i)).label, buffer(key:=CUInt(j)).label, weight)
         End Function
 
         ''' <summary>
@@ -208,10 +208,10 @@ Namespace Analysis.PageRank
                     Dim source As Integer = edge.ID
 
                     For Each map In edge.ConnectedTargets
-                        g.buffer(map.Key).Weight += a * nodes(source) * map.Value ' weight 
+                        g.buffer(key:=CUInt(map.Key)).Weight += a * nodes(source) * map.Value ' weight 
                     Next
 
-                    g.buffer(source).Weight += (1 - a) * inverse + leak * inverse
+                    g.buffer(key:=CUInt(source)).Weight += (1 - a) * inverse + leak * inverse
                 Next
 
                 d = 0
