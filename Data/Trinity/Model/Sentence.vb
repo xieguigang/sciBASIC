@@ -63,16 +63,16 @@ Namespace Model
         ''' 带有前后顺序的单词列表
         ''' </summary>
         ''' <returns></returns>
-        Public Property tokens As String()
+        Public Property words As String()
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
-                Return tokens.IsNullOrEmpty OrElse tokens.All(AddressOf TextRank.IsEmpty)
+                Return words.IsNullOrEmpty OrElse words.All(AddressOf TextRank.IsEmpty)
             End Get
         End Property
 
         Public Function has(token As String) As Boolean
-            Return Array.IndexOf(tokens, token) > -1
+            Return Array.IndexOf(words, token) > -1
         End Function
 
         ''' <summary>
@@ -81,7 +81,7 @@ Namespace Model
         ''' <param name="token"></param>
         ''' <returns></returns>
         Public Function matchIndex(token As String) As Integer
-            Return Array.IndexOf(tokens, token)
+            Return Array.IndexOf(words, token)
         End Function
 
         ''' <summary>
@@ -90,8 +90,8 @@ Namespace Model
         ''' <param name="token"></param>
         ''' <returns></returns>
         Public Function searchIndex(token As String) As Integer
-            For i As Integer = 0 To tokens.Length - 1
-                If _tokens(i).StartsWith(token) Then
+            For i As Integer = 0 To words.Length - 1
+                If _words(i).StartsWith(token) Then
                     Return i
                 End If
             Next
@@ -100,7 +100,7 @@ Namespace Model
         End Function
 
         Public Overrides Function ToString() As String
-            Return tokens.JoinBy(" ")
+            Return words.JoinBy(" ")
         End Function
 
         Friend Shared Function Parse(line As String, chemicalNameRule As Boolean) As Sentence
@@ -113,7 +113,7 @@ Namespace Model
             End If
 
             Return New Sentence With {
-               .tokens = tokens
+               .words = tokens
             }
         End Function
 
@@ -151,7 +151,7 @@ Namespace Model
 
         Friend Function Trim() As Sentence
             Return New Sentence With {
-               .tokens = tokens _
+               .words = words _
                    .Where(Function(si) Not TextRank.IsEmpty(si)) _
                    .ToArray
             }
