@@ -33,7 +33,7 @@ Namespace Model
         End Function
 
         Private Shared Function Trim(si As String) As String
-            Return si.Trim("."c, ","c, "-"c)
+            Return si.Trim("."c, ","c, "-"c, """"c, "'"c, " "c, vbTab)
         End Function
 
         Private Function WalkChar(c As Char) As String
