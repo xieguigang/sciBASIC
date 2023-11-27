@@ -1409,6 +1409,23 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' [height, width] or [rows, columns]
+    ''' </summary>
+    ''' <param name="size"></param>
+    ''' <param name="reverse">
+    ''' [width, height] or [columns, rows]
+    ''' </param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ToArray(size As SizeF, Optional reverse As Boolean = False) As Double()
+        If reverse Then
+            Return New Double() {size.Width, size.Height}
+        Else
+            Return New Double() {size.Height, size.Width}
+        End If
+    End Function
+
 #If FRAMEWORD_CORE Then
 
     ''' <summary>
