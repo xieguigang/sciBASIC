@@ -53,6 +53,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -94,6 +96,20 @@ Public Class Instance
 
     Public Overrides Function ToString() As String
         Return $"[{label}] {x.GetJson}"
+    End Function
+
+    Public Shared Function ZScore(data As Instance(), size As Integer) As Instance()
+        For i As Integer = 0 To size - 1
+            Dim offset As Integer = i
+            Dim v As New Vector(data.Select(Function(a) a.x(offset)))
+            Dim z As Double() = New Vector(v).Z
+
+            For j As Integer = 0 To data.Length - 1
+                data(j).x(i) = z(j)
+            Next
+        Next
+
+        Return data
     End Function
 
     ''' <summary>
