@@ -323,8 +323,15 @@ Public Module XmlExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <DebuggerStepThrough>
     <Extension>
-    Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True, Optional doNamespaceIgnorant As Boolean = False) As T
-        Return LoadFromXml(xml, GetType(T), throwEx, doNamespaceIgnorant)
+    Public Function LoadFromXml(Of T)(xml$,
+                                      Optional throwEx As Boolean = True,
+                                      Optional doNamespaceIgnorant As Boolean = False,
+                                      Optional variants As Type() = Nothing) As T
+
+        Return LoadFromXml(xml, GetType(T),
+                           throwEx:=throwEx,
+                           doNamespaceIgnorant:=doNamespaceIgnorant,
+                           variants:=variants)
     End Function
 
     ''' <summary>
@@ -347,7 +354,8 @@ Public Module XmlExtensions
     <Extension>
     Public Function LoadFromXml(xml$, schema As Type,
                                 Optional throwEx As Boolean = True,
-                                Optional doNamespaceIgnorant As Boolean = False) As Object
+                                Optional doNamespaceIgnorant As Boolean = False,
+                                Optional variants As Type() = Nothing) As Object
 
         If xml.StringEmpty Then
             If throwEx Then
@@ -362,11 +370,19 @@ Public Module XmlExtensions
         Try
             If doNamespaceIgnorant Then
                 Using xmlDoc As New StringReader(xml), reader As New NamespaceIgnorantXmlTextReader(xmlDoc)
-                    Return New XmlSerializer(schema).Deserialize(reader)
+                    If variants.IsNullOrEmpty Then
+                        Return New XmlSerializer(schema).Deserialize(reader)
+                    Else
+                        Return New XmlSerializer(schema, extraTypes:=variants).Deserialize(reader)
+                    End If
                 End Using
             Else
                 Using stream As New StringReader(s:=xml)
-                    Return New XmlSerializer(schema).Deserialize(stream)
+                    If variants.IsNullOrEmpty Then
+                        Return New XmlSerializer(schema).Deserialize(stream)
+                    Else
+                        Return New XmlSerializer(schema, extraTypes:=variants).Deserialize(stream)
+                    End If
                 End Using
             End If
         Catch ex As Exception

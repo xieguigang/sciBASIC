@@ -114,7 +114,7 @@ Namespace Text.Xml.Linq
         ''' </summary>
         ''' <param name="xml"></param>
         ''' <returns></returns>
-        Public Function LoadXml(xml As String) As T
+        Public Function LoadXml(xml As String, Optional variants As Type() = Nothing) As T
             Call sb.Clear()
             Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
             Call sb.AppendLine(process(xml))
@@ -126,7 +126,7 @@ Namespace Text.Xml.Linq
             xml = sb.ToString
 
             ' 对调整好的Xml文档执行反序列化操作
-            Return xml.LoadFromXml(Of T)(doNamespaceIgnorant:=True)
+            Return xml.LoadFromXml(Of T)(doNamespaceIgnorant:=True, variants:=variants)
         End Function
 
         Public Overrides Function ToString() As String
