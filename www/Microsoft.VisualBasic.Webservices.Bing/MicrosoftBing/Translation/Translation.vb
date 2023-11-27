@@ -122,7 +122,7 @@ Namespace Bing.Translation
                 .Select(Function(s) s.Trim.GetWords) _
                 .IteratesALL _
                 .Where(Function(s)
-                           Return Not s Is Nothing AndAlso Not s.Text.StringEmpty
+                           Return Not s Is Nothing AndAlso Not s.str.StringEmpty
                        End Function) _
                 .ToArray
 
@@ -149,9 +149,8 @@ Namespace Bing.Translation
 
             Return words _
                 .Select(Function(w)
-                            Return New Word With {
-                                .Class = [class],
-                                .Text = w.Trim
+                            Return New Word(w.Trim) With {
+                                .class = [class]
                             }
                         End Function) _
                 .ToArray
