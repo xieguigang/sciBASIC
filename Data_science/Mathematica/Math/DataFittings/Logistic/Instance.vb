@@ -63,7 +63,7 @@ Public Class Instance
     ''' the real label data
     ''' </summary>
     ''' <returns></returns>
-    Public Property label As Integer
+    Public Property label As Double
     ''' <summary>
     ''' the object properties vector
     ''' </summary>
@@ -84,6 +84,11 @@ Public Class Instance
     Public Sub New(label As Integer, x As Double())
         Me.label = label
         Me.x = x
+    End Sub
+
+    Sub New(label As Double, x As IEnumerable(Of Double))
+        Me.label = label
+        Me.x = x.ToArray
     End Sub
 
     Public Overrides Function ToString() As String
