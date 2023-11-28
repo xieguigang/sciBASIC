@@ -23,25 +23,54 @@ Namespace Data.Repository
         ''' <summary>
         ''' num characters seen
         ''' </summary>
-        Private count As Integer = 0
+        Dim count As Integer = 0
         ''' <summary>
         ''' accumulators for computing the digest
         ''' </summary>
-        Private acc As Integer() = New Integer(255) {}
+        Dim acc As Integer() = New Integer(255) {}
         ''' <summary>
         ''' the last four seen characters
         ''' </summary>
-        Private lastch As Integer() = New Integer(3) {}
+        Dim lastch As Integer() = New Integer(3) {}
         ''' <summary>
         ''' the Nilsimsa digest
         ''' </summary>
-        Private digest_Renamed As Byte() = Nothing
+        Dim digest_Renamed As Byte() = Nothing
 
         ''' <summary>
         ''' pre-defined transformation array
         ''' </summary>
-        Private Shared ReadOnly TRAN As Byte() = New Byte() {&H2, &HD6, &H9E, &H6F, &HF9, &H1D, &H4, &HAB, &HD0, &H22, &H16, &H1F, &HD8, &H73, &HA1, &HAC, &H3B, &H70, &H62, &H96, &H1E, &H6E, &H8F, &H39, &H9D, &H5, &H14, &H4A, &HA6, &HBE, &HAE, &HE, &HCF, &HB9, &H9C, &H9A, &HC7, &H68, &H13, &HE1, &H2D, &HA4, &HEB, &H51, &H8D, &H64, &H6B, &H50, &H23, &H80, &H3, &H41, &HEC, &HBB, &H71, &HCC, &H7A, &H86, &H7F, &H98, &HF2, &H36, &H5E, &HEE, &H8E, &HCE, &H4F, &HB8, &H32, &HB6, &H5F, &H59, &HDC, &H1B, &H31, &H4C, &H7B, &HF0, &H63, &H1, &H6C, &HBA, &H7, &HE8, &H12, &H77, &H49, &H3C, &HDA, &H46, &HFE, &H2F, &H79, &H1C, &H9B, &H30, &HE3, &H0, &H6, &H7E, &H2E, &HF, &H38, &H33, &H21, &HAD, &HA5, &H54, &HCA, &HA7, &H29, &HFC, &H5A, &H47, &H69, &H7D, &HC5, &H95, &HB5, &HF4, &HB, &H90, &HA3, &H81, &H6D, &H25, &H55, &H35, &HF5, &H75, &H74, &HA, &H26, &HBF, &H19, &H5C, &H1A, &HC6, &HFF, &H99, &H5D, &H84, &HAA, &H66, &H3E, &HAF, &H78, &HB3, &H20, &H43, &HC1, &HED, &H24, &HEA, &HE6, &H3F, &H18, &HF3, &HA0, &H42, &H57, &H8, &H53, &H60, &HC3, &HC0, &H83, &H40, &H82, &HD7, &H9, &HBD, &H44, &H2A, &H67, &HA8, &H93, &HE0, &HC2, &H56, &H9F, &HD9, &HDD, &H85, &H15, &HB4, &H8A, &H27, &H28, &H92, &H76, &HDE, &HEF, &HF8, &HB2, &HB7, &HC9, &H3D, &H45, &H94, &H4B, &H11, &HD, &H65, &HD5, &H34, &H8B, &H91, &HC, &HFA, &H87, &HE9, &H7C, &H5B, &HB1, &H4D, &HE5, &HD4, &HCB, &H10, &HA2, &H17, &H89, &HBC, &HDB, &HB0, &HE2, &H97, &H88, &H52, &HF7, &H48, &HD3, &H61, &H2C, &H3A, &H2B, &HD1, &H8C, &HFB, &HF1, &HCD, &HE4, &H6A, &HE7, &HA9, &HFD, &HC4, &H37, &HC8, &HD2, &HF6, &HDF, &H58, &H72, &H4E}
-
+        Shared ReadOnly TRAN As Byte() = New Byte() {
+            &H2, &HD6, &H9E, &H6F, &HF9, &H1D, &H4, &HAB, &HD0,
+            &H22, &H16, &H1F, &HD8, &H73, &HA1, &HAC, &H3B, &H70,
+            &H62, &H96, &H1E, &H6E, &H8F, &H39, &H9D, &H5, &H14,
+            &H4A, &HA6, &HBE, &HAE, &HE, &HCF, &HB9, &H9C, &H9A,
+            &HC7, &H68, &H13, &HE1, &H2D, &HA4, &HEB, &H51, &H8D,
+            &H64, &H6B, &H50, &H23, &H80, &H3, &H41, &HEC, &HBB,
+            &H71, &HCC, &H7A, &H86, &H7F, &H98, &HF2, &H36, &H5E,
+            &HEE, &H8E, &HCE, &H4F, &HB8, &H32, &HB6, &H5F, &H59,
+            &HDC, &H1B, &H31, &H4C, &H7B, &HF0, &H63, &H1, &H6C,
+            &HBA, &H7, &HE8, &H12, &H77, &H49, &H3C, &HDA, &H46,
+            &HFE, &H2F, &H79, &H1C, &H9B, &H30, &HE3, &H0, &H6,
+            &H7E, &H2E, &HF, &H38, &H33, &H21, &HAD, &HA5, &H54,
+            &HCA, &HA7, &H29, &HFC, &H5A, &H47, &H69, &H7D, &HC5,
+            &H95, &HB5, &HF4, &HB, &H90, &HA3, &H81, &H6D, &H25,
+            &H55, &H35, &HF5, &H75, &H74, &HA, &H26, &HBF, &H19,
+            &H5C, &H1A, &HC6, &HFF, &H99, &H5D, &H84, &HAA, &H66,
+            &H3E, &HAF, &H78, &HB3, &H20, &H43, &HC1, &HED, &H24,
+            &HEA, &HE6, &H3F, &H18, &HF3, &HA0, &H42, &H57, &H8,
+            &H53, &H60, &HC3, &HC0, &H83, &H40, &H82, &HD7, &H9,
+            &HBD, &H44, &H2A, &H67, &HA8, &H93, &HE0, &HC2, &H56,
+            &H9F, &HD9, &HDD, &H85, &H15, &HB4, &H8A, &H27, &H28,
+            &H92, &H76, &HDE, &HEF, &HF8, &HB2, &HB7, &HC9, &H3D,
+            &H45, &H94, &H4B, &H11, &HD, &H65, &HD5, &H34, &H8B,
+            &H91, &HC, &HFA, &H87, &HE9, &H7C, &H5B, &HB1, &H4D,
+            &HE5, &HD4, &HCB, &H10, &HA2, &H17, &H89, &HBC, &HDB,
+            &HB0, &HE2, &H97, &H88, &H52, &HF7, &H48, &HD3, &H61,
+            &H2C, &H3A, &H2B, &HD1, &H8C, &HFB, &HF1, &HCD, &HE4,
+            &H6A, &HE7, &HA9, &HFD, &HC4, &H37, &HC8, &HD2, &HF6,
+            &HDF, &H58, &H72, &H4E
+        }
 
         Public Sub New()
             reset()
@@ -52,19 +81,21 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="data"> the data to consider in the update. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
-        Public Overridable Function update(data As Byte()) As Nilsimsa
-            For Each chi As Integer In data
-                Dim ch = chi And &HFF
+        Public Function update(data As Byte()) As Nilsimsa
+            For Each ch As Integer In data
+                ch = ch And &HFF
                 count += 1
 
                 ' incr accumulators for triplets
                 If lastch(1) > -1 Then
                     acc(tran3(ch, lastch(0), lastch(1), 0)) += 1
                 End If
+
                 If lastch(2) > -1 Then
                     acc(tran3(ch, lastch(0), lastch(2), 1)) += 1
                     acc(tran3(ch, lastch(1), lastch(2), 2)) += 1
                 End If
+
                 If lastch(3) > -1 Then
                     acc(tran3(ch, lastch(0), lastch(3), 3)) += 1
                     acc(tran3(ch, lastch(1), lastch(3), 4)) += 1
@@ -77,9 +108,12 @@ Namespace Data.Repository
                 For i As Byte = 3 To 1 Step -1
                     lastch(i) = lastch(i - 1)
                 Next
+
                 lastch(0) = ch
             Next
+
             digest_Renamed = Nothing
+
             Return Me
         End Function
 
@@ -88,7 +122,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="s"> the String to add to the hash. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
-        Public Overridable Function update(s As String) As Nilsimsa
+        Public Function update(s As String) As Nilsimsa
             Return update(Encoding.UTF8.GetBytes(s))
         End Function
 
@@ -96,7 +130,7 @@ Namespace Data.Repository
         ''' Reset the Hash computation.
         ''' </summary>
         ''' <returns> A reset (i.e., empty) Nilsimsa object. </returns>
-        Public Overridable Function reset() As Nilsimsa
+        Public Function reset() As Nilsimsa
             count = 0
             acc.fill(0)
             lastch.fill(-1)
@@ -116,7 +150,7 @@ Namespace Data.Repository
         ''' Return the digest for the current Nilsimsa object.
         ''' </summary>
         ''' <returns> The digest of the current Nilsimsa object. </returns>
-        Public Overridable Function digest() As Byte()
+        Public Function digest() As Byte()
             If digest_Renamed IsNot Nothing Then
                 Return digest_Renamed
             End If
@@ -147,7 +181,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="s"> the String to hash </param>
         ''' <returns> The Nilsimsa digest. </returns>
-        Public Overridable Function digest(s As String) As Byte()
+        Public Function digest(s As String) As Byte()
             Return digest(Encoding.UTF8.GetBytes(s))
         End Function
 
@@ -157,7 +191,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="data"> an array of bytes to hash </param>
         ''' <returns> The Nilsimsa digest. </returns>
-        Public Overridable Function digest(data As Byte()) As Byte()
+        Public Function digest(data As Byte()) As Byte()
             reset()
             update(data)
             Return digest()
@@ -185,7 +219,7 @@ Namespace Data.Repository
         ''' Return the hex digest of the current Nilsimsa object.
         ''' </summary>
         ''' <returns> A String representation of the current state of the Nilsimsa object. </returns>
-        Public Overridable Function hexdigest() As String
+        Public Function hexdigest() As String
             Dim s As StringBuilder = New StringBuilder()
             For Each b In digest()
                 s.Append(String.Format("{0:x2}", b).ToUpper())
@@ -198,7 +232,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="data"> an array of bytes to hash </param>
         ''' <returns> The Nilsimsa hexdigest. </returns>
-        Public Overridable Function hexdigest(data As Byte()) As String
+        Public Function hexdigest(data As Byte()) As String
             digest(data)
             Return hexdigest()
         End Function
@@ -208,7 +242,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="s"> the String to hash </param>
         ''' <returns> The Nilsimsa hexdigest. </returns>
-        Public Overridable Function hexdigest(s As String) As String
+        Public Function hexdigest(s As String) As String
             digest(s)
             Return hexdigest()
         End Function
@@ -218,7 +252,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="cmp"> the comparison Nilsimsa object </param>
         ''' <returns> The number of bits in which the Nilsimsa digests differ. </returns>
-        Public Overridable Function bitwiseDifference(cmp As Nilsimsa) As Integer
+        Public Function bitwiseDifference(cmp As Nilsimsa) As Integer
             Dim distance = 0
             Dim h1 As Integer
             Dim h2 As Integer
@@ -250,7 +284,7 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="cmp"> comparison Nilsimsa object </param>
         ''' <returns> A value between -128 (no matching bits) and 128 (all bits match; both hashes are equal) </returns>
-        Public Overridable Function compare(cmp As Nilsimsa) As Integer
+        Public Function compare(cmp As Nilsimsa) As Integer
             Return 128 - bitwiseDifference(cmp)
         End Function
 
