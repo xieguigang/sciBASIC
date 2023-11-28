@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace Data.Repository
@@ -35,7 +36,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' the Nilsimsa digest
         ''' </summary>
-        Dim digest_Renamed As Byte() = Nothing
+        Dim m_digest As Byte() = Nothing
 
         ''' <summary>
         ''' pre-defined transformation array
@@ -112,7 +113,7 @@ Namespace Data.Repository
                 lastch(0) = ch
             Next
 
-            digest_Renamed = Nothing
+            m_digest = Nothing
 
             Return Me
         End Function
@@ -122,6 +123,8 @@ Namespace Data.Repository
         ''' </summary>
         ''' <paramname="s"> the String to add to the hash. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function update(s As String) As Nilsimsa
             Return update(Encoding.UTF8.GetBytes(s))
         End Function
@@ -134,7 +137,7 @@ Namespace Data.Repository
             count = 0
             acc.fill(0)
             lastch.fill(-1)
-            digest_Renamed = Nothing
+            m_digest = Nothing
             Return Me
         End Function
 
@@ -151,28 +154,30 @@ Namespace Data.Repository
         ''' </summary>
         ''' <returns> The digest of the current Nilsimsa object. </returns>
         Public Function digest() As Byte()
-            If digest_Renamed IsNot Nothing Then
-                Return digest_Renamed
-            End If
-            Dim total = 0
-            digest_Renamed = New Byte(31) {}
-            digest_Renamed.fill(0)
+            If m_digest Is Nothing Then
+                Dim total = 0
 
-            If count = 3 Then
-                total = 1
-            ElseIf count = 4 Then
-                total = 4
-            ElseIf count > 4 Then
-                total = 8 * count - 28
-            End If
+                m_digest = New Byte(31) {}
+                m_digest.fill(0)
 
-            Dim threshold As Integer = total / 256
-            For i = 0 To 255
-                If acc(i) > threshold Then
-                    digest_Renamed(31 - (i >> 3)) += CByte(1 << (i And 7))
+                If count = 3 Then
+                    total = 1
+                ElseIf count = 4 Then
+                    total = 4
+                ElseIf count > 4 Then
+                    total = 8 * count - 28
                 End If
-            Next
-            Return digest_Renamed
+
+                Dim threshold As Integer = total / 256
+
+                For i As Integer = 0 To 255
+                    If acc(i) > threshold Then
+                        m_digest(31 - (i >> 3)) += CByte(1 << (i And 7))
+                    End If
+                Next
+            End If
+
+            Return m_digest
         End Function
 
 
@@ -220,10 +225,12 @@ Namespace Data.Repository
         ''' </summary>
         ''' <returns> A String representation of the current state of the Nilsimsa object. </returns>
         Public Function hexdigest() As String
-            Dim s As StringBuilder = New StringBuilder()
-            For Each b In digest()
+            Dim s As New StringBuilder()
+
+            For Each b As Byte In digest()
                 s.Append(String.Format("{0:x2}", b).ToUpper())
             Next
+
             Return s.ToString()
         End Function
 
@@ -260,11 +267,12 @@ Namespace Data.Repository
             Dim n1 As Byte() = digest()
             Dim n2 As Byte() = cmp.digest()
 
-            For i = 0 To 31 Step 4
+            For i As Integer = 0 To 31 Step 4
                 h1 = n1(i) And &HFF Or (n1(i + 1) And &HFF) << 8 Or (n1(i + 2) And &HFF) << 16 Or (n1(i + 3) And &HFF) << 24
                 h2 = n2(i) And &HFF Or (n2(i + 1) And &HFF) << 8 Or (n2(i + 2) And &HFF) << 16 Or (n2(i + 3) And &HFF) << 24
                 distance += bitCount(h1 Xor h2)
             Next
+
             Return distance
         End Function
 
@@ -275,6 +283,7 @@ Namespace Data.Repository
             i = i + (i >> 4) And &HF0F0F0F
             i = i + (i >> 8)
             i = i + (i >> 16)
+
             Return i And &H3F
         End Function
 
@@ -287,28 +296,5 @@ Namespace Data.Repository
         Public Function compare(cmp As Nilsimsa) As Integer
             Return 128 - bitwiseDifference(cmp)
         End Function
-
-        Public Overrides Function Equals(o As Object) As Boolean
-            If o Is Nothing OrElse o.GetType() IsNot [GetType]() Then
-                Return False
-            End If
-            Return Equals(digest(), CType(o, Nilsimsa).digest())
-        End Function
-
-        Public Overrides Function GetHashCode() As Integer
-            Return GetHashCode(digest_Renamed)
-        End Function
-
-        Public Overloads Function GetHashCode(array As Byte()) As Integer
-            If array Is Nothing Then
-                Return 0
-            End If
-            Dim hash = 17
-            For Each element In array
-                hash = hash * 31 + element.GetHashCode()
-            Next
-            Return hash
-        End Function
     End Class
-
 End Namespace
