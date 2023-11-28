@@ -83,30 +83,43 @@ Namespace Data.Repository
         ''' <paramname="data"> the data to consider in the update. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
         Public Function update(data As Byte()) As Nilsimsa
+            Dim t0, t1, t2, t3, t4, t5, t6, t7 As Integer
+
             For Each ch As Integer In data
                 ch = ch And &HFF
                 count += 1
 
                 ' incr accumulators for triplets
                 If lastch(1) > -1 Then
-                    acc(tran3(ch, lastch(0), lastch(1), 0)) += 1
+                    t0 = tran3(ch, lastch(0), lastch(1), 0)
+
+                    acc(t0) += 1
                 End If
 
                 If lastch(2) > -1 Then
-                    acc(tran3(ch, lastch(0), lastch(2), 1)) += 1
-                    acc(tran3(ch, lastch(1), lastch(2), 2)) += 1
+                    t1 = tran3(ch, lastch(0), lastch(2), 1)
+                    t2 = tran3(ch, lastch(1), lastch(2), 2)
+
+                    acc(t1) += 1
+                    acc(t2) += 1
                 End If
 
                 If lastch(3) > -1 Then
-                    acc(tran3(ch, lastch(0), lastch(3), 3)) += 1
-                    acc(tran3(ch, lastch(1), lastch(3), 4)) += 1
-                    acc(tran3(ch, lastch(2), lastch(3), 5)) += 1
-                    acc(tran3(lastch(3), lastch(0), ch, 6)) += 1
-                    acc(tran3(lastch(3), lastch(2), ch, 7)) += 1
+                    t3 = tran3(ch, lastch(0), lastch(3), 3)
+                    t4 = tran3(ch, lastch(1), lastch(3), 4)
+                    t5 = tran3(ch, lastch(2), lastch(3), 5)
+                    t6 = tran3(lastch(3), lastch(0), ch, 6)
+                    t7 = tran3(lastch(3), lastch(2), ch, 7)
+
+                    acc(t3) += 1
+                    acc(t4) += 1
+                    acc(t5) += 1
+                    acc(t6) += 1
+                    acc(t7) += 1
                 End If
 
                 ' adjust lastch
-                For i As Byte = 3 To 1 Step -1
+                For i As Integer = 3 To 1 Step -1
                     lastch(i) = lastch(i - 1)
                 Next
 
