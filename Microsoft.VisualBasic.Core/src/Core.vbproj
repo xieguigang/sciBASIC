@@ -244,8 +244,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<DefineDebug>false</DefineDebug>
-		<DefineTrace>true</DefineTrace>
-		<OutputPath>../../../../../..\PlantMAT\PlantMAT\assembly\</OutputPath>
+		<DefineTrace>true</DefineTrace>		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
