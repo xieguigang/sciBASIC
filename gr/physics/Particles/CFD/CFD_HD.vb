@@ -158,7 +158,7 @@ Public Class CFD_HD : Inherits Simulation
     ''' **************************************************************************
     ''' </summary>
     Friend Overridable Sub collide()
-        Call m_collide.Run()
+        Call m_collide.Solve()
     End Sub
 
 

@@ -4,7 +4,7 @@ Public MustInherit Class Simulation
 
     Friend frameDelay As Integer = 30
     Friend timeStepsPerFrame As Integer = 1
-    Friend screenshotRate As Integer = 1
+    Friend screenshotRate As Integer = 3
     Friend shouldTakeScreenshots As Boolean = True
     Friend screenshotName As String = "Screenshot"
     Private time As Integer = 0
@@ -56,15 +56,18 @@ Public MustInherit Class Simulation
         End While
     End Sub
 
+    Dim i As Integer = 0
+
     Private Sub nextFrame()
         For s As Integer = 0 To timeStepsPerFrame - 1
             If time Mod screenshotRate = 0 AndAlso shouldTakeScreenshots Then
                 Dim g As Graphics2D = Graphics2D.CreateDevice(New Size(xdim, ydim))
                 draw(g)
-                Dim st As String = "" & time.ToString()
-                Dim filepath = screenshotName & "-T" & st & ".png"
+                Dim st As String = "" & i.ToString().PadLeft(5, "0"c)
+                Dim filepath = "video/" & screenshotName & "-T" & st & ".png"
                 Call g.Flush()
                 Call g.ImageResource.SaveAs(filepath)
+                i += 1
             End If
             advance()
             time += 1
