@@ -18,6 +18,15 @@ Namespace Imaging
             Call FromRgb(color.R / 255, color.G / 255, color.B / 255, Hue, Saturation, Brightness)
         End Sub
 
+        Sub New()
+        End Sub
+
+        Sub New(h As Double, s As Double, b As Double)
+            Hue = h
+            Saturation = s
+            Brightness = b
+        End Sub
+
         Public Function ToRgb() As Color
             Dim r, g, b As Double
             Call ToRgb(Hue, Saturation, Brightness, r, g, b)
