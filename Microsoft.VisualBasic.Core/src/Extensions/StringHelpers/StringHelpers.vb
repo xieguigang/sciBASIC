@@ -473,6 +473,9 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' NA, n/a, NULL, null, N/A, -
+    ''' </summary>
     ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-"}
 
     ''' <summary>
@@ -539,7 +542,9 @@ Public Module StringHelpers
     ''' and also treat the whitespace as empty?
     ''' </param>
     ''' <param name="testEmptyFactor">
-    ''' and also treat some NULL factor in R language as empty?
+    ''' and also treat some NULL factor in R language as empty? 
+    ''' factor string will be tested, example like: 
+    ''' NA, n/a, NULL, null, N/A, -
     ''' </param>
     ''' <returns>
     ''' this function returns TRUE if the string is empty,
