@@ -5,7 +5,7 @@ Public MustInherit Class Simulation
     Friend frameDelay As Integer = 30
     Friend timeStepsPerFrame As Integer = 1
     Friend screenshotRate As Integer = 1
-    Friend shouldTakeScreenshots As Boolean = False
+    Friend shouldTakeScreenshots As Boolean = True
     Friend screenshotName As String = "Screenshot"
     Private time As Integer = 0
 
@@ -16,7 +16,7 @@ Public MustInherit Class Simulation
     ' simulation canvas size
     Friend Shared width As Integer = 1200, height As Integer = 480
     ' number of data points / pixels per dimention
-    Friend Shared xdim As Integer = 4800, ydim As Integer = 1920 ' HD
+    Friend Shared xdim As Integer = 1920, ydim As Integer = 1080 ' HD
     ' static int xdim = 2400, ydim = 960;
     ' static int xdim = 1200, ydim = 480;
     ' static int xdim = 600, ydim = 240;
