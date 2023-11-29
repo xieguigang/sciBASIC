@@ -304,7 +304,7 @@ Public Class CFD_HD : Inherits Simulation
     ''' **************************************************************************
     ''' </summary>
 
-    Public Overrides Sub draw(g As IGraphics)
+    Protected Overrides Sub draw(g As IGraphics)
         Dim speedRange As DoubleRange = (From seed In speed2 Select New DoubleRange(seed)).Select(Function(a) {a.Min, a.Max}).IteratesALL.Range
         Dim offset As DoubleRange = New Double() {0, Palette.Length - 1}
 

@@ -54,9 +54,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 
 Namespace My.JavaScript
+
+    Public Interface requestAnimationFrame
+
+        Sub requestAnimationFrame(callback As IGraphics)
+    End Interface
 
     <HideModuleName> Public Module Linq
 

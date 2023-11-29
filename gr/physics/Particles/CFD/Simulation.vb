@@ -1,13 +1,8 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.My.JavaScript
 
-Public MustInherit Class Simulation
-
-    Friend frameDelay As Integer = 30
-    Friend timeStepsPerFrame As Integer = 1
-    Friend screenshotRate As Integer = 3
-    Friend shouldTakeScreenshots As Boolean = True
-    Friend screenshotName As String = "Screenshot"
-    Private time As Integer = 0
+Public MustInherit Class Simulation : Implements requestAnimationFrame
 
     ' *************************************************************************
     '                                - DIMENTIONS -                            *
@@ -27,6 +22,9 @@ Public MustInherit Class Simulation
     Public Overridable Sub setDimentions(width As Integer, height As Integer, xdim As Integer, ydim As Integer)
         ' StdDraw.setCanvasSize(width, height)
 
+        Me.xdim = xdim
+        Me.ydim = ydim
+
         ' Set the drawing scale to dimentions
         ' the -.5 is so that the coordinates align with the center of the pixel
         ' StdDraw.setXscale(0 - .5, xdim - .5)
@@ -45,33 +43,47 @@ Public MustInherit Class Simulation
 
     Public MustOverride Sub reset()
     Public MustOverride Sub advance()
-    Public MustOverride Sub draw(g As IGraphics)
+    Protected MustOverride Sub draw(g As IGraphics) Implements requestAnimationFrame.requestAnimationFrame
 
-    Public Overridable Sub run()
-        reset()
+End Class
 
-        ' animation loop
-        While True
-            nextFrame()
-        End While
-    End Sub
+''' <summary>
+''' the simulation viewer
+''' </summary>
+Public Class AnimationBuilder
 
+    Public Property fs As IFileSystemEnvironment
+    Public Property xdim As Integer = 1920
+    Public Property ydim As Integer = 1080
+
+    Friend frameDelay As Integer = 30
+    Friend timeStepsPerFrame As Integer = 1
+    Friend screenshotRate As Integer = 250
+    Friend shouldTakeScreenshots As Boolean = True
+    Friend screenshotName As String = "Screenshot"
+
+    Dim time As Integer = 0
     Dim i As Integer = 0
 
-    Private Sub nextFrame()
-        For s As Integer = 0 To timeStepsPerFrame - 1
+    Sub Run(source As Simulation)
+        Call source.reset()
+        Call source.setDimentions(0, 0, xdim, ydim)
+
+        Do While True
             If time Mod screenshotRate = 0 AndAlso shouldTakeScreenshots Then
                 Dim g As Graphics2D = Graphics2D.CreateDevice(New Size(xdim, ydim))
-                draw(g)
                 Dim st As String = "" & i.ToString().PadLeft(5, "0"c)
-                Dim filepath = "video/" & screenshotName & "-T" & st & ".png"
+                Dim filepath = fs.OpenFile("video/" & screenshotName & "-T" & st & ".png",, IO.FileAccess.Write)
+                Call DirectCast(source, requestAnimationFrame).requestAnimationFrame(g)
                 Call g.Flush()
-                Call g.ImageResource.SaveAs(filepath)
+                Call g.ImageResource.Save(filepath, ImageFormats.Png.GetFormat)
+                Call filepath.Flush()
+                Call filepath.Dispose()
                 i += 1
             End If
-            advance()
+            source.advance()
             time += 1
-        Next
+        Loop
     End Sub
 
 End Class
