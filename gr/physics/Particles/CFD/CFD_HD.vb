@@ -129,6 +129,8 @@ Public Class CFD_HD : Inherits Simulation
                 End If
             Next
         Next
+
+        m_collide = New CFD_collide(Me)
     End Sub
 
 
@@ -146,6 +148,7 @@ Public Class CFD_HD : Inherits Simulation
         End SyncLock
     End Sub
 
+    Dim m_collide As CFD_collide
 
     ''' <summary>
     ''' *************************************************************************
@@ -154,49 +157,8 @@ Public Class CFD_HD : Inherits Simulation
     ''' From: http://physics.weber.edu/schroeder/fluids/                         *
     ''' **************************************************************************
     ''' </summary>
-
     Friend Overridable Sub collide()
-        Dim n, one9thn, one36thn, vx, vy, vx2, vy2, vx3, vy3, vxvy2, v2, v215 As Double
-        Dim omega = 1 / (3 * viscocity + 0.5) ' reciprocal of tau, the relaxation time
-        For x As Integer = 0 To xdim - 1
-            For y As Integer = 0 To ydim - 1
-                If Not barrier(x)(y) Then
-                    n = n0(x)(y) + nN(x)(y) + nS(x)(y) + nE(x)(y) + nW(x)(y) + nNW(x)(y) + nNE(x)(y) + nSW(x)(y) + nSE(x)(y)
-                    density(x)(y) = n ' macroscopic density may be needed for plotting
-                    one9thn = one9th * n
-                    one36thn = one36th * n
-                    If n > 0 Then
-                        vx = (nE(x)(y) + nNE(x)(y) + nSE(x)(y) - nW(x)(y) - nNW(x)(y) - nSW(x)(y)) / n
-                    Else
-                        vx = 0
-                    End If
-                    xvel(x)(y) = vx ' may be needed for plotting
-                    If n > 0 Then
-                        vy = (nN(x)(y) + nNE(x)(y) + nNW(x)(y) - nS(x)(y) - nSE(x)(y) - nSW(x)(y)) / n
-                    Else
-                        vy = 0
-                    End If
-                    yvel(x)(y) = vy ' may be needed for plotting
-                    vx3 = 3 * vx
-                    vy3 = 3 * vy
-                    vx2 = vx * vx
-                    vy2 = vy * vy
-                    vxvy2 = 2 * vx * vy
-                    v2 = vx2 + vy2
-                    speed2(x)(y) = v2 ' may be needed for plotting
-                    v215 = 1.5 * v2
-                    n0(x)(y) += omega * (four9ths * n * (1 - v215) - n0(x)(y))
-                    nE(x)(y) += omega * (one9thn * (1 + vx3 + 4.5 * vx2 - v215) - nE(x)(y))
-                    nW(x)(y) += omega * (one9thn * (1 - vx3 + 4.5 * vx2 - v215) - nW(x)(y))
-                    nN(x)(y) += omega * (one9thn * (1 + vy3 + 4.5 * vy2 - v215) - nN(x)(y))
-                    nS(x)(y) += omega * (one9thn * (1 - vy3 + 4.5 * vy2 - v215) - nS(x)(y))
-                    nNE(x)(y) += omega * (one36thn * (1 + vx3 + vy3 + 4.5 * (v2 + vxvy2) - v215) - nNE(x)(y))
-                    nNW(x)(y) += omega * (one36thn * (1 - vx3 + vy3 + 4.5 * (v2 - vxvy2) - v215) - nNW(x)(y))
-                    nSE(x)(y) += omega * (one36thn * (1 + vx3 - vy3 + 4.5 * (v2 - vxvy2) - v215) - nSE(x)(y))
-                    nSW(x)(y) += omega * (one36thn * (1 - vx3 - vy3 + 4.5 * (v2 + vxvy2) - v215) - nSW(x)(y))
-                End If
-            Next
-        Next
+        Call m_collide.Run()
     End Sub
 
 

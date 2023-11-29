@@ -16,7 +16,7 @@ Public MustInherit Class Simulation
     ' simulation canvas size
     Friend Shared width As Integer = 1200, height As Integer = 480
     ' number of data points / pixels per dimention
-    Friend Shared xdim As Integer = 1920, ydim As Integer = 1080 ' HD
+    Friend xdim As Integer = 1920, ydim As Integer = 1080 ' HD
     ' static int xdim = 2400, ydim = 960;
     ' static int xdim = 1200, ydim = 480;
     ' static int xdim = 600, ydim = 240;
