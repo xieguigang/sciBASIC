@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 
 Namespace ConsoleTableApp
     Friend Class Program
-        Public Shared Sub Main1(ByVal args As String())
+        Public Shared Sub Main1(args As String())
             ConsoleTableBuilder.From(Function() New ConsoleTableBaseData With {
                             .Rows = New List(Of List(Of Object)) From {
                                 New List(Of Object) From {
@@ -310,7 +310,7 @@ Namespace ConsoleTableApp
         }
 
         Private Class Employee
-            Public Sub New(ByVal name As String, ByVal position As String, ByVal office As String, ByVal age As Integer, ByVal startDate As Date)
+            Public Sub New(name As String, position As String, office As String, age As Integer, startDate As Date)
                 Me.Name = name
                 Me.Position = position
                 Me.Office = office
