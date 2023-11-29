@@ -1,6 +1,8 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 ''' <summary>
@@ -331,6 +333,8 @@ Public Class CFD_HD : Inherits Simulation
         Next
     End Sub
 
+    Public Palette As SolidBrush()
+    Dim r = 1
 
     ''' <summary>
     ''' *************************************************************************
@@ -339,14 +343,18 @@ Public Class CFD_HD : Inherits Simulation
     ''' </summary>
 
     Public Overrides Sub draw(g As IGraphics)
+        Dim speedRange As DoubleRange = (From seed In speed2 Select New DoubleRange(seed)).Select(Function(a) {a.Min, a.Max}).IteratesALL.Range
+        Dim offset As DoubleRange = New Double() {0, Palette.Length - 1}
+
         For x As Integer = 0 To xdim - 1
             For Y As Integer = 0 To ydim - 1
                 ' draw speed value
-                Dim S = std.Min(CSng(std.Sqrt(speed2(x)(Y))) * 3.0F, 1.0F)
-                Dim color As Color = New HSBColor(0.5F, 1.0F, S).ToRgb
+                ' Dim S = std.Min(CSng(std.Sqrt(speed2(x)(Y))) * 3.0F, 1.0F)
+                ' Dim color As Color = New HSBColor(0.5F, 1.0F, S).ToRgb
+                Dim S As Integer = speedRange.ScaleMapping(speed2(x)(Y), offset)
+                Dim color As Brush = Palette(S)
 
-                Dim r = 1
-                g.FillRectangle(New SolidBrush(color), New Rectangle(x, Y, r, r))
+                g.FillRectangle(color, New Rectangle(x, Y, r, r))
             Next
         Next
     End Sub

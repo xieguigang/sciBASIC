@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Physics
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Module Module1
 
@@ -9,7 +10,7 @@ Module Module1
     ''' </summary>
 
     Public Sub Main()
-        Dim simulation As CFD_HD = New CFD_HD()
+        Dim simulation As CFD_HD = New CFD_HD() With {.Palette = Designer.GetBrushes(ScalerPalette.Typhoon.Description, n:=200)}
         'simulation.setDimentions(width, height, xdim, ydim)
         'simulation.frameDelay = 0 ' will be super slow anyway
         'simulation.timeStepsPerFrame = 10
