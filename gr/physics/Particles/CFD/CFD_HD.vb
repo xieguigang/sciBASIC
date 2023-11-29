@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 ''' <summary>
 ''' *****************************************************************************
@@ -38,29 +39,14 @@ Imports Microsoft.VisualBasic.Imaging
 ''' Adapted from: http://physics.weber.edu/schroeder/fluids/                     *
 ''' ******************************************************************************
 ''' </summary>
+''' <remarks>
+''' https://github.com/kobejean/cs-102-final-project-cfd
+''' </remarks>
 Public Class CFD_HD : Inherits Simulation
 
-    ''' <summary>
-    ''' *************************************************************************
-    '''                                - DIMENTIONS -                            *
-    ''' **************************************************************************
-    ''' </summary>
-    ' simulation canvas size
-    Friend Shared width As Integer = 1200, height As Integer = 480
-    ' number of data points / pixels per dimention
-    Friend Shared xdim As Integer = 4800, ydim As Integer = 1920 ' HD
-    ' static int xdim = 2400, ydim = 960;
-    ' static int xdim = 1200, ydim = 480;
-    ' static int xdim = 600, ydim = 240;
-    ' static int xdim = 400, ydim = 160;
-    ' static int xdim = 200, ydim = 80;
-    ' static int xdim = 100, ydim = 40;
-
-    ''' <summary>
-    ''' *************************************************************************
-    '''                           - SIMULATION VARIABLES -                       *
-    ''' **************************************************************************
-    ''' </summary>
+    ' *************************************************************************
+    '                           - SIMULATION VARIABLES -                       *
+    ' **************************************************************************
 
     ' Constants
     Friend velocity As Double = 0.07
@@ -83,7 +69,9 @@ Public Class CFD_HD : Inherits Simulation
     Friend yvel As Double()() = RectangularArray.Matrix(Of Double)(xdim, ydim)
     Friend speed2 As Double()() = RectangularArray.Matrix(Of Double)(xdim, ydim)
 
-    ' Boolean array, true at sites that contain barriers:
+    ''' <summary>
+    ''' Boolean array, true at sites that contain barriers:
+    ''' </summary>
     Friend barrier As Boolean()() = RectangularArray.Matrix(Of Boolean)(xdim, ydim)
 
 
@@ -91,30 +79,6 @@ Public Class CFD_HD : Inherits Simulation
     Friend four9ths As Double = 4.0 / 9
     Friend one9th As Double = 1.0 / 9
     Friend one36th As Double = 1.0 / 36
-
-    ''' <summary>
-    ''' *************************************************************************
-    '''                              - MAIN METHOD -                             *
-    ''' **************************************************************************
-    ''' </summary>
-
-    Public Shared Sub Main(args As String())
-        Dim simulation As CFD_HD = New CFD_HD()
-        simulation.setDimentions(width, height, xdim, ydim)
-        simulation.frameDelay = 0 ' will be super slow anyway
-        simulation.timeStepsPerFrame = 10
-        simulation.screenshotRate = 250
-        simulation.screenshotName = "CFD-HD"
-        simulation.shouldTakeScreenshots = True
-
-        ' messege to user
-        Dim message = "Note this program takes a long time to run. " & vbLf & "It takes roughly 3 mins to produce a screenshot. For the demo video," & vbLf & "it took me a day and a half to get all the screenshots. For a " & vbLf & "real time simulation try running CFD.java."
-        'JOptionPane.showMessageDialog(null, message);
-
-        ' Now start the simulation thread:
-        'Thread simThread = new Thread(simulation);
-        'simThread.Start();
-    End Sub
 
     ''' <summary>
     ''' *************************************************************************
@@ -128,9 +92,9 @@ Public Class CFD_HD : Inherits Simulation
             For y As Integer = 0 To ydim - 1
                 Dim relx As Integer = xdim / 2 - x
                 Dim rely As Integer = ydim / 2 - y
-                Dim r = Math.Sqrt(relx * relx + rely * rely)
+                Dim r = std.Sqrt(relx * relx + rely * rely)
 
-                barrier(x)(y) = r < Math.Min(xdim, ydim) * 0.2
+                barrier(x)(y) = r < std.Min(xdim, ydim) * 0.2
 
                 If barrier(x)(y) Then
                     n0(x)(y) = 0
@@ -374,16 +338,15 @@ Public Class CFD_HD : Inherits Simulation
     ''' **************************************************************************
     ''' </summary>
 
-    Public Overrides Sub draw()
+    Public Overrides Sub draw(g As IGraphics)
         For x As Integer = 0 To xdim - 1
             For Y As Integer = 0 To ydim - 1
                 ' draw speed value
-                Dim S = Math.Min(CSng(Math.Sqrt(speed2(x)(Y))) * 3.0F, 1.0F)
+                Dim S = std.Min(CSng(std.Sqrt(speed2(x)(Y))) * 3.0F, 1.0F)
                 Dim color As Color = New HSBColor(0.5F, 1.0F, S).ToRgb
 
-                Dim r = 0.5
-                'StdDraw.PenColor = color
-                'StdDraw.filledSquare(x, y, r)
+                Dim r = 1
+                g.FillRectangle(New SolidBrush(color), New Rectangle(x, Y, r, r))
             Next
         Next
     End Sub

@@ -1,4 +1,6 @@
-﻿Public Class Simulation
+﻿Imports System.Drawing
+
+Public MustInherit Class Simulation
 
     Friend frameDelay As Integer = 30
     Friend timeStepsPerFrame As Integer = 1
@@ -6,6 +8,21 @@
     Friend shouldTakeScreenshots As Boolean = False
     Friend screenshotName As String = "Screenshot"
     Private time As Integer = 0
+
+    ' *************************************************************************
+    '                                - DIMENTIONS -                            *
+    ' **************************************************************************
+
+    ' simulation canvas size
+    Friend Shared width As Integer = 1200, height As Integer = 480
+    ' number of data points / pixels per dimention
+    Friend Shared xdim As Integer = 4800, ydim As Integer = 1920 ' HD
+    ' static int xdim = 2400, ydim = 960;
+    ' static int xdim = 1200, ydim = 480;
+    ' static int xdim = 600, ydim = 240;
+    ' static int xdim = 400, ydim = 160;
+    ' static int xdim = 200, ydim = 80;
+    ' static int xdim = 100, ydim = 40;
 
     Public Overridable Sub setDimentions(width As Integer, height As Integer, xdim As Integer, ydim As Integer)
         ' StdDraw.setCanvasSize(width, height)
@@ -26,72 +43,32 @@
     ''' **************************************************************************
     ''' </summary>
 
-    Public Overridable Sub reset()
-        ' to be implemented in a subclass
-    End Sub
-
-    Public Overridable Sub advance()
-        ' to be implemented in a subclass
-    End Sub
-
-    Public Overridable Sub draw()
-        ' to be implemented in a subclass
-    End Sub
+    Public MustOverride Sub reset()
+    Public MustOverride Sub advance()
+    Public MustOverride Sub draw(g As IGraphics)
 
     Public Overridable Sub run()
         reset()
 
-        ' control when to show to save running time
-        ' StdDraw.enableDoubleBuffering()
-
-        Dim previouslyMousePressed = False
-
         ' animation loop
         While True
-            'If StdDraw.isKeyPressed(KeyEvent.VK_A) Then
-            '    ' if "a" key was pressed
-            '    playModeField = PlayMode.ANIMATE
-            'ElseIf StdDraw.isKeyPressed(KeyEvent.VK_C) Then
-            '    ' if "c" key was pressed
-            '    playModeField = PlayMode.CLICK_THROUGH
-            'ElseIf StdDraw.isKeyPressed(KeyEvent.VK_R) Then
-            '    ' if "r" key was pressed
-            time = 0
-            reset()
-            draw()
-            '    StdDraw.show()
-            'End If
-
-            ' draw frame depending on what play mode we are in
-            'Select Case playModeField
-            '    Case PlayMode.ANIMATE
             nextFrame()
-            '        StdDraw.pause(frameDelay)
-            '    Case PlayMode.CLICK_THROUGH
-            '        If StdDraw.mousePressed() AndAlso Not previouslyMousePressed Then
-            '            ' if new click
-            '            nextFrame()
-            '        End If
-            'End Select
-            'previouslyMousePressed = StdDraw.mousePressed()
         End While
     End Sub
 
     Private Sub nextFrame()
         For s As Integer = 0 To timeStepsPerFrame - 1
             If time Mod screenshotRate = 0 AndAlso shouldTakeScreenshots Then
-                draw()
-                ' StdDraw.show()
-                ' String st = String.format("%08d", time);
+                Dim g As Graphics2D = Graphics2D.CreateDevice(New Size(xdim, ydim))
+                draw(g)
                 Dim st As String = "" & time.ToString()
                 Dim filepath = screenshotName & "-T" & st & ".png"
-                ' StdDraw.save(filepath)
+                Call g.Flush()
+                Call g.ImageResource.SaveAs(filepath)
             End If
             advance()
             time += 1
         Next
-        draw()
-        ' StdDraw.show()
     End Sub
 
 End Class

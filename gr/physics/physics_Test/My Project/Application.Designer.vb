@@ -11,34 +11,3 @@
 Option Strict On
 Option Explicit On
 
-
-Namespace My
-    
-    '注意:此文件是自动生成的；请勿直接进行修改。若要更改，
-    ' 或者如果您在此文件中遇到生成错误，请转至项目设计器
-    ' (转至“项目属性”或在解决方案资源管理器中双击“我的项目”节点)，
-    ' 然后在“应用程序”选项卡中进行更改。
-    '
-    Partial Friend Class MyApplication
-        
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
-        Public Sub New()
-            MyBase.New(Global.Microsoft.VisualBasic.ApplicationServices.AuthenticationMode.Windows)
-            Me.IsSingleInstance = false
-            Me.EnableVisualStyles = true
-            Me.SaveMySettingsOnExit = true
-            Me.ShutDownStyle = Global.Microsoft.VisualBasic.ApplicationServices.ShutdownMode.AfterMainFormCloses
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
-        Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.physics_Test.Form3
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
-        Protected Overrides Function OnInitialize(commandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String)) As Boolean
-            Me.MinimumSplashScreenDisplayTime = 0
-            Return MyBase.OnInitialize(commandLineArgs)
-        End Function
-    End Class
-End Namespace
