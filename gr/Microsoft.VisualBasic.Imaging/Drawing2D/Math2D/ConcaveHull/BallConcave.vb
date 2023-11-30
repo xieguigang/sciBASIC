@@ -159,11 +159,12 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
 
         Public Function GetConcave_Ball(radius As Double) As List(Of Point)
-            Dim ret As New List(Of Point)()
+            Dim ret As New List(Of Point)() From {points(0)}
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
-            ret.Add(points(0))
+
             'flags[0] = true;
             Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
+
             While True
                 j = GetNextPoint_BallPivoting(prev, i, adjs(i), radius)
                 If j = -1 Then
@@ -175,6 +176,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 prev = i
                 i = j
             End While
+
             Return ret
         End Function
 
