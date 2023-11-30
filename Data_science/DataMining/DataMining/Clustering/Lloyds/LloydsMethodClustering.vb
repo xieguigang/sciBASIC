@@ -66,8 +66,8 @@ Namespace Lloyds
     Public Class LloydsMethodClustering : Inherits Clustering
 
         Friend _lloydsPoints As List(Of Point)
-        Friend mKMeansClusters As List(Of KMeansCluster(Of Point))
-        Friend mMinKMeansClusters As List(Of KMeansCluster(Of Point))
+        Friend _kmeansClusters As List(Of KMeansCluster(Of Point))
+        Friend _minKMeansClusters As List(Of KMeansCluster(Of Point))
 
         Public Overrides ReadOnly Property Points As List(Of Point)
             Get
@@ -78,7 +78,7 @@ Namespace Lloyds
         Public Sub New(source As IEnumerable(Of Point), k As Integer)
             Call MyBase.New(source, k)
 
-            mKMeansClusters = New List(Of KMeansCluster(Of Point))
+            _kmeansClusters = New List(Of KMeansCluster(Of Point))
             _lloydsPoints = New List(Of Point)(_source)
         End Sub
 
@@ -87,15 +87,15 @@ Namespace Lloyds
 
             For runningTimes As Integer = 0 To 99
                 ' for grabbing random points from input file
-                If mKMeansClusters.Count > 0 Then
-                    mKMeansClusters.Clear()
+                If _kmeansClusters.Count > 0 Then
+                    _kmeansClusters.Clear()
                 End If
 
                 Dim currentKMeansCost As Double = [Loop]()
 
                 If currentKMeansCost < minKMeansCost Then
                     minKMeansCost = currentKMeansCost
-                    mMinKMeansClusters = New List(Of KMeansCluster(Of Point))(mKMeansClusters)
+                    _minKMeansClusters = New List(Of KMeansCluster(Of Point))(_kmeansClusters)
                 End If
             Next
 
@@ -109,15 +109,15 @@ Namespace Lloyds
             ' First, create number of desired clusters
             ' Pick K (mNumDesiredRandomPoints)
             For i As Integer = 0 To mNumDesiredClusters - 1
-                mKMeansClusters.Add(New KMeansCluster(Of Point))
+                _kmeansClusters.Add(New KMeansCluster(Of Point))
                 Dim randomIndex As Integer = randf.Next(_source.Count)
-                mKMeansClusters(i).Center = _source(randomIndex)
+                _kmeansClusters(i).Center = _source(randomIndex)
             Next
 
             ' Until convergence:
             Do
-                For i As Integer = 0 To mKMeansClusters.Count - 1
-                    mKMeansClusters(i).refresh()
+                For i As Integer = 0 To _kmeansClusters.Count - 1
+                    _kmeansClusters(i).refresh()
                 Next
                 oldKmeansCost = currentKMeansCost
 
@@ -128,12 +128,12 @@ Namespace Lloyds
                 ' find the closest cluster to each point
                 For i As Integer = 0 To _lloydsPoints.Count - 1
                     Dim minDistanceToCluster As Double = Double.MaxValue
-                    For j As Integer = 0 To mKMeansClusters.Count - 1
+                    For j As Integer = 0 To _kmeansClusters.Count - 1
 
-                        Dim distanceToCluster As Double = _lloydsPoints(i).DistanceTo(mKMeansClusters(j).Center)
+                        Dim distanceToCluster As Double = _lloydsPoints(i).DistanceTo(_kmeansClusters(j).Center)
 
                         If distanceToCluster < minDistanceToCluster Then
-                            closestClusterToPoint = mKMeansClusters(j)
+                            closestClusterToPoint = _kmeansClusters(j)
                             minDistanceToCluster = distanceToCluster
                             minClusterIndex = j
                         End If
@@ -142,16 +142,16 @@ Namespace Lloyds
                     ' Indexing by one with naming, so add one
                     _lloydsPoints(i).SetKMeansCluster(minClusterIndex + 1)
 
-                    mKMeansClusters(minClusterIndex).Add(_lloydsPoints(i))
+                    _kmeansClusters(minClusterIndex).Add(_lloydsPoints(i))
                 Next
 
                 ' reset kmeans cost
                 currentKMeansCost = 0
 
                 ' calculate the new center
-                For i As Integer = 0 To mKMeansClusters.Count - 1
-                    mKMeansClusters(i).Center = mKMeansClusters(i).CalculateCenter()
-                    currentKMeansCost += mKMeansClusters(i).CalculateKMeansCost()
+                For i As Integer = 0 To _kmeansClusters.Count - 1
+                    _kmeansClusters(i).Center = _kmeansClusters(i).CalculateCenter()
+                    currentKMeansCost += _kmeansClusters(i).CalculateKMeansCost()
                 Next i
             Loop While std.Abs(oldKmeansCost - currentKMeansCost) > 1
 
