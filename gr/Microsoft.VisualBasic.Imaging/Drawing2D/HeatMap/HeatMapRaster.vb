@@ -58,7 +58,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.HeatMap
 
@@ -144,7 +144,7 @@ Namespace Drawing2D.HeatMap
                 Dim x = -r, j = 0
 
                 While j < gSize
-                    m_kernelField(i, j) = stdNum.Exp((x * x + y * y) / (-2 * gSigma * gSigma)) / (2 * stdNum.PI * gSigma * gSigma)
+                    m_kernelField(i, j) = std.Exp((x * x + y * y) / (-2 * gSigma * gSigma)) / (2 * std.PI * gSigma * gSigma)
                     x += 1
                     j += 1
                 End While
