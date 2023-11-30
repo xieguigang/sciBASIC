@@ -97,10 +97,15 @@ Public Class Resampler
             Dim x2 = Me.x(i + 1)
             Dim y1 = Me.y(i)
             Dim y2 = Me.y(i + 1)
-            Dim scale As Double = (x - x1) / (x2 - x1)
-            Dim dy As Double = (y2 - y1) * scale
 
-            Return y1 + dy
+            If x2 = x1 Then
+                Return (y1 + y2) / 2
+            Else
+                Dim scale As Double = (x - x1) / (x2 - x1)
+                Dim dy As Double = (y2 - y1) * scale
+
+                Return y1 + dy
+            End If
         End If
     End Function
 
