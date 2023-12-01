@@ -356,7 +356,7 @@ Namespace Text.Xml.Linq
 
         <Extension>
         Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$, selector As Func(Of XElement, Boolean)) As IEnumerable(Of XElement)
-            Using file As Stream = path.Open(FileMode.Open)
+            Using file As Stream = path.Open(FileMode.Open, [readOnly]:=True)
                 For Each node In UltraLargeXmlNodesIterator(nodeName, file, selector)
                     ' 因为在这里打开了一个文件,假若不使用iterator迭代的话
                     ' 文件会被直接关闭,导致无法读取
