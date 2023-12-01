@@ -65,6 +65,9 @@ Namespace My.FrameworkInternal
         ''' less than 2GB
         ''' </summary>
         Heavy
+        ''' <summary>
+        ''' load all data into memory even data file size is greater than 2GB
+        ''' </summary>
         Max
     End Enum
 End Namespace

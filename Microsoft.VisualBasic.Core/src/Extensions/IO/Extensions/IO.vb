@@ -261,7 +261,7 @@ Public Module IOExtensions
                 ' use a single memorystream object when file size 
                 ' is smaller than 2GB
                 Return New MemoryStream(path.ReadBinary)
-            Else
+            ElseIf App.MemoryLoad = My.FrameworkInternal.MemoryLoads.Max Then
                 ' 20221101
                 '
                 ' use a memorystream pool object when the file size
@@ -271,6 +271,7 @@ Public Module IOExtensions
             End If
         End If
 
+        ' light memory usage
         Return New FileStream(path, mode, access, shares, App.BufferSize)
     End Function
 
