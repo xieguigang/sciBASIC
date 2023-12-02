@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.DataStorage.HDSPack</AssemblyName>
     <Description>Hierarchical Data Stream Pack</Description>
 	  <Platforms>AnyCPU;x64</Platforms>
-	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
+	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32</Configurations>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
@@ -23,6 +23,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
+    <DocumentationFile>Microsoft.VisualBasic.DataStorage.HDSPack.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|AnyCPU'">
     <DocumentationFile>Microsoft.VisualBasic.DataStorage.HDSPack.xml</DocumentationFile>
   </PropertyGroup>
 
@@ -55,6 +59,16 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
+    <DocumentationFile>Microsoft.VisualBasic.DataStorage.HDSPack.xml</DocumentationFile>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>false</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|x64'">
     <DocumentationFile>Microsoft.VisualBasic.DataStorage.HDSPack.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>

@@ -15,7 +15,7 @@
 		<Platforms>AnyCPU;x64</Platforms>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 
@@ -45,6 +45,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -95,6 +99,17 @@
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <DefineTrace>true</DefineTrace>
 	 
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
@@ -169,6 +184,12 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
@@ -223,6 +244,12 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
@@ -269,6 +296,10 @@
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net5.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net5.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	</PropertyGroup>
@@ -302,6 +333,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net5.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net5.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	</PropertyGroup>
 
@@ -345,6 +380,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
 	  <DefineTrace>True</DefineTrace>
@@ -399,6 +440,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
 	  <DefineTrace>True</DefineTrace>
@@ -459,6 +506,12 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PlantMAT|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
@@ -508,6 +561,12 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <DebugType>full</DebugType>
 	  <DefineTrace>True</DefineTrace>
