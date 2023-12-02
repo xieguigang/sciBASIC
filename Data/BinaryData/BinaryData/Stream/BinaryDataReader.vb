@@ -66,6 +66,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -101,6 +102,10 @@ Public Class BinaryDataReader : Inherits BinaryReader
 
     Sub New(data As IEnumerable(Of Byte))
         Call Me.New(New MemoryStream(data.ToArray))
+    End Sub
+
+    Sub New(data As RequestStream)
+        Call Me.New(New MemoryStream(data.ChunkBuffer))
     End Sub
 
     ''' <summary>
