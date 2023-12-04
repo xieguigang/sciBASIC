@@ -22,7 +22,9 @@ Namespace Distributions
         ''' the upper bound raw value of the threshold
         ''' </returns>
         Public Function FindThreshold(q As Double, Optional eps As Double = 0.1) As Double
-            Dim sample As DataBinBox(Of Double)() = data.OrderBy(Function(b) b.Boundary.Min).ToArray
+            Dim sample As DataBinBox(Of Double)() = data _
+                .OrderBy(Function(b) b.Boundary.Min) _
+                .ToArray
             Dim N As Integer = Aggregate point As DataBinBox(Of Double)
                                In sample
                                Into Sum(point.Count)
