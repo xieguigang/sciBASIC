@@ -53,8 +53,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
-Imports stdNum = System.Math
 
 Namespace Drawing2D.Colors.Scaler
 
@@ -62,31 +62,6 @@ Namespace Drawing2D.Colors.Scaler
     ''' Contrast optimization of mass spectrometry imaging (MSI) data visualization by threshold intensity quantization (TrIQ)
     ''' </summary>
     Public Module TrIQ
-
-        ''' <summary>
-        ''' T computation involves the cumulative distributive
-        ''' function p(k)(CDF), defined As
-        ''' 
-        ''' ```
-        ''' q ~ p(k) = sum(h(i)) / N
-        ''' ```
-        '''
-        ''' h(i) stands For the i bin's frequency within an image 
-        ''' histogram, N is the image’s pixel count. Given a target 
-        ''' probability q it Is possible to find the bin k whose 
-        ''' CDF closely resembles q. Then, the upper limit Of the 
-        ''' bin k In h will be used As the threshold value T.
-        ''' </summary>
-        ''' <param name="bin"></param>
-        ''' <param name="N"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function CDF(bin As IEnumerable(Of DataBinBox(Of Double)), N As Integer) As Double
-            Dim sumHk As Double = Aggregate hi As DataBinBox(Of Double) In bin Into Sum(hi.Count)
-            Dim p As Double = sumHk / N
-
-            Return p
-        End Function
 
         ''' <summary>
         ''' trim the head intensity data by a given cutoff threshold 
@@ -128,9 +103,7 @@ Namespace Drawing2D.Colors.Scaler
                                       Optional N As Integer = 100,
                                       Optional eps As Double = 0.1) As Double
 
-            Return CutBins _
-                .FixedWidthBins(data, N, Function(x) x) _
-                .FindThreshold(q, eps)
+            Return New ECDF(data, N).FindThreshold(q, eps)
         End Function
 
         ''' <summary>
@@ -156,48 +129,6 @@ Namespace Drawing2D.Colors.Scaler
             Dim range As New DoubleRange(raw.Min, max)
 
             Return range
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="q"></param>
-        ''' <param name="eps"></param>
-        ''' <returns>
-        ''' the upper bound raw value of the threshold
-        ''' </returns>
-        <Extension>
-        Public Function FindThreshold(data As IEnumerable(Of DataBinBox(Of Double)), q As Double, Optional eps As Double = 0.1) As Double
-            Dim sample As DataBinBox(Of Double)() = data.OrderBy(Function(b) b.Boundary.Min).ToArray
-            Dim N As Integer = Aggregate point As DataBinBox(Of Double)
-                               In sample
-                               Into Sum(point.Count)
-            Dim minK As Integer = 1
-            Dim minD As Double = Double.MaxValue
-
-            If sample.Length = 0 Then
-                Return 0
-            End If
-
-            For k As Integer = 1 To sample.Length - 1
-                Dim cdf As Double = sample.Take(k).CDF(N)
-
-                If cdf > q Then
-                    Exit For
-                End If
-
-                Dim d As Double = stdNum.Abs(cdf - q)
-
-                If d <= eps Then
-                    Return sample(k).Boundary.Min
-                ElseIf d < minD Then
-                    minD = d
-                    minK = k
-                End If
-            Next
-
-            Return sample(minK - 1).Boundary.Max
         End Function
 
         ''' <summary>
