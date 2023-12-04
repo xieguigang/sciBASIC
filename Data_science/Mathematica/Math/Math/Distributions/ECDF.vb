@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports std = System.Math
 
@@ -7,6 +8,12 @@ Namespace Distributions
     Public Class ECDF
 
         ReadOnly data As DataBinBox(Of Double)()
+
+        Public ReadOnly Property X As IEnumerable(Of Double)
+            Get
+                Return data.Select(Function(bi) bi.Raw).IteratesALL
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(x As IEnumerable(Of Double), Optional k As Integer = 100)
