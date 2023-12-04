@@ -58,7 +58,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Triggers
 
 Namespace Parallel.Tasks
@@ -73,7 +72,7 @@ Namespace Parallel.Tasks
         Implements ITimer
 
         ''' <summary>
-        ''' Sleeps n **ms** interval
+        ''' The timer interval, sleeps n **ms** interval
         ''' </summary>
         ''' <returns></returns>
         Public Property Periods As Integer Implements ITimer.Interval
