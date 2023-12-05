@@ -45,7 +45,6 @@ Namespace Imaging
         ''' <param name="red">Output <paramref name="red"/> channel value range [0.0; 1.0]</param>
         ''' <param name="green">Output <paramref name="green"/> channel value range [0.0; 1.0]</param>
         ''' <param name="blue">Output <paramref name="blue"/> channel value range [0.0; 1.0]</param>
-        ''' <exception cref="ArgumentException"><inheritdoc cref="Rgb.IsBright(Double,Double,Double)"/></exception>
         Public Shared Sub ToRgb(hue As Double, saturation As Double, brightness As Double,
                                 <Out> ByRef red As Double,
                                 <Out> ByRef green As Double,
@@ -79,7 +78,6 @@ Namespace Imaging
         ''' <param name="hue">Output <paramref name="hue"/> value range [0.0; 1.0]</param>
         ''' <param name="saturation">Output <paramref name="saturation"/> value range [0.0; 1.0]</param>
         ''' <param name="brightness">Output <paramref name="brightness"/> value range [0.0; 1.0]</param>
-        ''' <exception cref="ArgumentException"><inheritdoc cref="Rgb.IsBright(Double,Double,Double)"/></exception>
         Public Shared Sub FromRgb(red As Double, green As Double, blue As Double,
                                   <Out> ByRef hue As Double,
                                   <Out> ByRef saturation As Double,
