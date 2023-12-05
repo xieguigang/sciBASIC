@@ -39,13 +39,13 @@ Namespace Imaging
         End Function
 
         ''' <summary>Converts HSB color model values to RGB values</summary>
-        ''' <paramname="hue">Input <paramrefname="hue"/> value range [0.0; 1.0]</param>
-        ''' <paramname="saturation">Input <paramrefname="saturation"/> value range [0.0; 1.0]</param>
-        ''' <paramname="brightness">Input <paramrefname="brightness"/> value range [0.0; 1.0]</param>
-        ''' <paramname="red">Output <paramrefname="red"/> channel value range [0.0; 1.0]</param>
-        ''' <paramname="green">Output <paramrefname="green"/> channel value range [0.0; 1.0]</param>
-        ''' <paramname="blue">Output <paramrefname="blue"/> channel value range [0.0; 1.0]</param>
-        ''' <exception cref="ArgumentException"><inheritdoccref="Rgb.IsBright(Double,Double,Double)"/></exception>
+        ''' <param name="hue">Input <paramref name="hue"/> value range [0.0; 1.0]</param>
+        ''' <param name="saturation">Input <paramref name="saturation"/> value range [0.0; 1.0]</param>
+        ''' <param name="brightness">Input <paramref name="brightness"/> value range [0.0; 1.0]</param>
+        ''' <param name="red">Output <paramref name="red"/> channel value range [0.0; 1.0]</param>
+        ''' <param name="green">Output <paramref name="green"/> channel value range [0.0; 1.0]</param>
+        ''' <param name="blue">Output <paramref name="blue"/> channel value range [0.0; 1.0]</param>
+        ''' <exception cref="ArgumentException"><inheritdoc cref="Rgb.IsBright(Double,Double,Double)"/></exception>
         Public Shared Sub ToRgb(hue As Double, saturation As Double, brightness As Double,
                                 <Out> ByRef red As Double,
                                 <Out> ByRef green As Double,
@@ -73,13 +73,13 @@ Namespace Imaging
         End Sub
 
         ''' <summary>Converts RGB color model values to HSB values</summary>
-        ''' <paramname="red">Input <paramrefname="red"/> channel value range [0.0; 1.0]</param>
-        ''' <paramname="green">Input <paramrefname="green"/> channel value range [0.0; 1.0]</param>
-        ''' <paramname="blue">Input <paramrefname="blue"/> channel value range [0.0; 1.0]</param>
-        ''' <paramname="hue">Output <paramrefname="hue"/> value range [0.0; 1.0]</param>
-        ''' <paramname="saturation">Output <paramrefname="saturation"/> value range [0.0; 1.0]</param>
-        ''' <paramname="brightness">Output <paramrefname="brightness"/> value range [0.0; 1.0]</param>
-        ''' <exception cref="ArgumentException"><inheritdoccref="Rgb.IsBright(Double,Double,Double)"/></exception>
+        ''' <param name="red">Input <paramref name="red"/> channel value range [0.0; 1.0]</param>
+        ''' <param name="green">Input <paramref name="green"/> channel value range [0.0; 1.0]</param>
+        ''' <param name="blue">Input <paramref name="blue"/> channel value range [0.0; 1.0]</param>
+        ''' <param name="hue">Output <paramref name="hue"/> value range [0.0; 1.0]</param>
+        ''' <param name="saturation">Output <paramref name="saturation"/> value range [0.0; 1.0]</param>
+        ''' <param name="brightness">Output <paramref name="brightness"/> value range [0.0; 1.0]</param>
+        ''' <exception cref="ArgumentException"><inheritdoc cref="Rgb.IsBright(Double,Double,Double)"/></exception>
         Public Shared Sub FromRgb(red As Double, green As Double, blue As Double,
                                   <Out> ByRef hue As Double,
                                   <Out> ByRef saturation As Double,

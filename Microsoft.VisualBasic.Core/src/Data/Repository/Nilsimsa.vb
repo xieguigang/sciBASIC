@@ -80,7 +80,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Updates the Nilsimsa digest with the given byte array.
         ''' </summary>
-        ''' <paramname="data"> the data to consider in the update. </param>
+        ''' <param name="data"> the data to consider in the update. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
         Public Function update(data As Byte()) As Nilsimsa
             Dim t0, t1, t2, t3, t4, t5, t6, t7 As Integer
@@ -134,7 +134,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Update the current Nilsimsa object with the given String s.
         ''' </summary>
-        ''' <paramname="s"> the String to add to the hash. </param>
+        ''' <param name="s"> the String to add to the hash. </param>
         ''' <returns> The updated Nilsimsa object. </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -197,7 +197,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa digest for the given String.
         ''' </summary>
-        ''' <paramname="s"> the String to hash </param>
+        ''' <param name="s"> the String to hash </param>
         ''' <returns> The Nilsimsa digest. </returns>
         Public Function digest(s As String) As Byte()
             Return digest(Encoding.UTF8.GetBytes(s))
@@ -207,7 +207,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa digest for the given String.
         ''' </summary>
-        ''' <paramname="data"> an array of bytes to hash </param>
+        ''' <param name="data"> an array of bytes to hash </param>
         ''' <returns> The Nilsimsa digest. </returns>
         Public Function digest(data As Byte()) As Byte()
             reset()
@@ -218,7 +218,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa digest for the given byte array.
         ''' </summary>
-        ''' <paramname="data"> to hash </param>
+        ''' <param name="data"> to hash </param>
         ''' <returns> The byte array's Nilsimsa hash. </returns>
         Public Shared Function getHash(data As Byte()) As Nilsimsa
             Return (New Nilsimsa()).update(data)
@@ -227,7 +227,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa digest for the given String.
         ''' </summary>
-        ''' <paramname="s"> the String to hash </param>
+        ''' <param name="s"> the String to hash </param>
         ''' <returns> The String's Nilsimsa hash. </returns>
         Public Shared Function getHash(s As String) As Nilsimsa
             Return getHash(Encoding.UTF8.GetBytes(s))
@@ -250,7 +250,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa hexDigest for the given String.
         ''' </summary>
-        ''' <paramname="data"> an array of bytes to hash </param>
+        ''' <param name="data"> an array of bytes to hash </param>
         ''' <returns> The Nilsimsa hexdigest. </returns>
         Public Function hexdigest(data As Byte()) As String
             digest(data)
@@ -260,7 +260,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compute the Nilsimsa hexDigest for the given String.
         ''' </summary>
-        ''' <paramname="s"> the String to hash </param>
+        ''' <param name="s"> the String to hash </param>
         ''' <returns> The Nilsimsa hexdigest. </returns>
         Public Function hexdigest(s As String) As String
             digest(s)
@@ -270,7 +270,7 @@ Namespace Data.Repository
         ''' <summary>
         ''' Compare a Nilsimsa object to the current one and return the number of bits that differ.
         ''' </summary>
-        ''' <paramname="cmp"> the comparison Nilsimsa object </param>
+        ''' <param name="cmp"> the comparison Nilsimsa object </param>
         ''' <returns> The number of bits in which the Nilsimsa digests differ. </returns>
         Public Function bitwiseDifference(cmp As Nilsimsa) As Integer
             Dim distance = 0
@@ -304,7 +304,7 @@ Namespace Data.Repository
         ''' Return a value between -128 and + 128 that indicates the difference between the nilsimsa digest
         ''' of the current object and cmp.
         ''' </summary>
-        ''' <paramname="cmp"> comparison Nilsimsa object </param>
+        ''' <param name="cmp"> comparison Nilsimsa object </param>
         ''' <returns> A value between -128 (no matching bits) and 128 (all bits match; both hashes are equal) </returns>
         Public Function compare(cmp As Nilsimsa) As Integer
             Return 128 - bitwiseDifference(cmp)

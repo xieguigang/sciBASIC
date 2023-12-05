@@ -48,7 +48,7 @@ Namespace Data.Repository
         ''' https://github.com/zenozeng/color-hash/blob/master/lib/bkdr-hash.js
         ''' Example values nodejs https://repl.it/@Jose_AA/BKDR-Hash
         ''' </summary>
-        ''' <paramname="value"></param>
+        ''' <param name="value"></param>
         ''' <returns></returns>
         Public Shared Function GenerateVersion3(value As String) As ULong
             Dim hash As ULong = 0
