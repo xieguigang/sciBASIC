@@ -1,7 +1,7 @@
-Imports ClassLibrary1.math
-Imports ClassLibrary1.nn.rbm.factory
-Imports ClassLibrary1.nn.rbm.learn
-Imports ClassLibrary1.utils
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.factory
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.learn
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.utils
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Module Program

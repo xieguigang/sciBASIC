@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Drawing.Drawing2D
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
@@ -22,7 +24,7 @@ Namespace math
 
         Protected Friend m As GeneralMatrix
 
-        Protected Friend Sub New(m As GeneralMatrix)
+        Sub New(m As GeneralMatrix)
             Me.m = m
         End Sub
 
@@ -41,11 +43,11 @@ Namespace math
 
         ' MUTABLE OPERATIONS 
 
-        Public Overloads Overrides Function apply([function] As DoubleFunction) As DenseMatrix
+        Public Overloads Function apply([function] As DoubleFunction) As DenseMatrix
             Return New DenseMatrix(m.assign([function]))
         End Function
 
-        Public Overloads Overrides Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As DenseMatrix
+        Public Overloads Function apply(m2 As DenseMatrix, [function] As DoubleDoubleFunction) As DenseMatrix
             Return New DenseMatrix(m.assign(m2.m, [function]))
         End Function
 
@@ -73,6 +75,23 @@ Namespace math
             Return m.ToString()
         End Function
 
+        Public Function addColumns(m2 As DenseMatrix) As DenseMatrix
+            Dim a = m.RowVectors.ToArray
+            Dim b = m2.m.RowVectors.ToArray
+            Dim rows As New List(Of Double())
+            Dim v As Double()
+            Dim len As Integer = m.ColumnDimension + m2.m.ColumnDimension
+
+            For i As Integer = 0 To a.Length - 1
+                v = New Double(len - 1) {}
+                Array.ConstrainedCopy(a(i).Array, 0, v, 0, m.ColumnDimension)
+                Array.ConstrainedCopy(b(i).Array, 0, v, m.ColumnDimension, m2.m.ColumnDimension)
+                rows.Add(v)
+            Next
+
+            Return New DenseMatrix(New NumericMatrix(rows))
+        End Function
+
         ' MUTABLE OPERATIONS 
 
         Public Overridable Function data() As GeneralMatrix
@@ -84,7 +103,7 @@ Namespace math
         End Function
 
 
-        Public Overridable Function [set](i As Integer, j As Integer, value As Double) As Matrix
+        Public Overridable Function [set](i As Integer, j As Integer, value As Double) As DenseMatrix
             m(i, j) = value
             Return Me
         End Function
