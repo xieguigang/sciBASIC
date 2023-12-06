@@ -507,6 +507,7 @@ Namespace Graph
         Public Sub RemoveNode(node As Node)
             Call _index.Delete(node)
             Call vertices.Remove(node)
+            Call buffer.Remove(CUInt(node.ID))
             Call DetachNode(node)
         End Sub
 
