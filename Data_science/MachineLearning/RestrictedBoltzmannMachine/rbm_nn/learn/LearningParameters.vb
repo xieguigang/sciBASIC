@@ -1,6 +1,6 @@
 ﻿
 
-Imports ClassLibrary1.math.functions
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
 
 Namespace nn.rbm.learn
 

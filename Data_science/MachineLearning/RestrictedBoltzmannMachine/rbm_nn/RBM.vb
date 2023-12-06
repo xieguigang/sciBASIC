@@ -1,4 +1,4 @@
-﻿Imports ClassLibrary1.math
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace nn.rbm
@@ -9,7 +9,7 @@ Namespace nn.rbm
     ''' </summary>
     Public Class RBM
 
-        Private weightsField As Matrix
+        Private weightsField As DenseMatrix
 
         Public Sub New(visibleSize As Integer, hiddenSize As Integer)
             weightsField = DenseMatrix.randomGaussian(visibleSize, hiddenSize)

@@ -1,7 +1,7 @@
 ﻿
-Imports ClassLibrary1.math
-Imports ClassLibrary1.math.functions.doubledouble.rbm
-Imports ClassLibrary1.nn.rbm.deep
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.doubledouble.rbm
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace nn.rbm.learn

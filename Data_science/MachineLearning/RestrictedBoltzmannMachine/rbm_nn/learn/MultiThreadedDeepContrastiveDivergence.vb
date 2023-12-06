@@ -1,5 +1,5 @@
-﻿Imports ClassLibrary1.math
-Imports ClassLibrary1.nn.rbm.deep
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Parallel
 

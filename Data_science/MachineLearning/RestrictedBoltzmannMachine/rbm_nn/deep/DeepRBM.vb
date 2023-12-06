@@ -1,5 +1,5 @@
-﻿Imports ClassLibrary1.nn.rbm.factory
-Imports ClassLibrary1.utils
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.factory
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.utils
 
 Namespace nn.rbm.deep
 

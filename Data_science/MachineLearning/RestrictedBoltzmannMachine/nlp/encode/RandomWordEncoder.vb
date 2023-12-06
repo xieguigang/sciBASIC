@@ -1,4 +1,4 @@
-﻿Imports ClassLibrary1.math
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 

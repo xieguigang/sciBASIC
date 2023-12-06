@@ -1,5 +1,5 @@
 ﻿
-Imports ClassLibrary1.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 
 Namespace nlp.encode
 
@@ -8,7 +8,7 @@ Namespace nlp.encode
     ''' TODO create word encoder that captures
     ''' </summary>
     Public Interface WordEncoder
-        Function encode(word As String) As Matrix
+        Function encode(word As String) As DenseMatrix
     End Interface
 
 End Namespace

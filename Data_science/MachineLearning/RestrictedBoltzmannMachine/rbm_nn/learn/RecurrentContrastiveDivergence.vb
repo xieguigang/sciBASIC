@@ -1,8 +1,8 @@
 ﻿
 
-Imports ClassLibrary1.math
-Imports ClassLibrary1.math.functions
-Imports ClassLibrary1.math.functions.doubledouble.rbm
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.doubledouble.rbm
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace nn.rbm.learn
@@ -32,8 +32,8 @@ Namespace nn.rbm.learn
         ''' <summary>
         ''' input memory will be of the form v_t-m, v_t-m-1, ..., v_t-1, v_t(current)
         ''' learn a sequence of events </summary>
-        ''' <paramname="rbm"> </param>
-        ''' <paramname="events"> </param>
+        ''' <param name="rbm"> </param>
+        ''' <param name="events"> </param>
         Public Overridable Sub learn(rbm As RBM, events As IList(Of Matrix))
             checkRBMConfigurations(rbm, events)
 
@@ -51,8 +51,8 @@ Namespace nn.rbm.learn
 
         ''' <summary>
         ''' learn many independent temporal events </summary>
-        ''' <paramname="rbm"> </param>
-        ''' <paramname="allEvents"> </param>
+        ''' <param name="rbm"> </param>
+        ''' <param name="allEvents"> </param>
         Public Overridable Sub learnMany(rbm As RBM, allEvents As IList(Of IList(Of Matrix)))
             checkRBMConfigurations(rbm, allEvents(0))
 

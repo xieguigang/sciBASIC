@@ -1,8 +1,6 @@
-﻿
-
-Imports ClassLibrary1.math
-Imports ClassLibrary1.math.functions.distance
-Imports ClassLibrary1.nlp.encode
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.distance
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nlp.encode
 
 Namespace nlp
 
@@ -13,7 +11,7 @@ Namespace nlp
     Public Class WordDictionary
 
         ' a unique word vector for each word (storing a 1xN matrix)
-        Private wordVectorsField As IDictionary(Of String, Matrix) = New Dictionary(Of String, Matrix)()
+        Private wordVectorsField As IDictionary(Of String, DenseMatrix) = New Dictionary(Of String, DenseMatrix)()
 
         Private wordEncoder As WordEncoder = New DiscreteRandomWordEncoder()
 
@@ -48,17 +46,17 @@ Namespace nlp
             Return wordVectorsField.ContainsKey(word)
         End Function
 
-        Public Overridable Function getVector(word As String) As Matrix
+        Public Overridable Function getVector(word As String) As DenseMatrix
             Return wordVectorsField(word)
         End Function
 
-        Public Overridable ReadOnly Property WordVectors As IList(Of Matrix)
+        Public Overridable ReadOnly Property WordVectors As IList(Of DenseMatrix)
             Get
-                Return New List(Of Matrix)(wordVectorsField.Values)
+                Return New List(Of DenseMatrix)(wordVectorsField.Values)
             End Get
         End Property
 
-        Public Overridable Function buildSentence(wordVectors As IList(Of Matrix)) As String
+        Public Overridable Function buildSentence(wordVectors As IList(Of DenseMatrix)) As String
             Dim words As IList(Of String) = New List(Of String)()
             For Each wordVector In wordVectors
                 words.Add(getClosestWord(wordVector))
@@ -67,13 +65,13 @@ Namespace nlp
         End Function
 
         ' TODO speed up
-        Public Overridable Function getClosestWord(wordVector As Matrix) As String
+        Public Overridable Function getClosestWord(wordVector As DenseMatrix) As String
 
             Dim distanceFunction As DistanceFunction = New EuclideanDistanceFunction()
 
             Dim closest As String = Nothing
             Dim minDistance = Double.MaxValue
-            For Each entry As KeyValuePair(Of String, Matrix) In wordVectorsField
+            For Each entry As KeyValuePair(Of String, DenseMatrix) In wordVectorsField
                 Dim distance = distanceFunction.distance(entry.Value, wordVector)
                 If distance < minDistance Then
                     minDistance = distance

@@ -1,5 +1,5 @@
-﻿Imports ClassLibrary1.math
-Imports ClassLibrary1.math.functions
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
 
 Namespace nn.rbm.learn
 
@@ -18,15 +18,15 @@ Namespace nn.rbm.learn
             Me.learningParameters = learningParameters
         End Sub
 
-        Public Overridable Function learn(rbm As RBM, trainData As IList(Of Matrix), teacherSignals As IList(Of Matrix)) As Double
+        Public Overridable Function learn(rbm As RBM, trainData As IList(Of DenseMatrix), teacherSignals As IList(Of DenseMatrix)) As Double
             Dim [error] As Double = 0
             For epoch = 0 To learningParameters.Epochs - 1
                 [error] = 0
                 For i = 0 To trainData.Count - 1
 
-                    Dim input As Matrix = trainData(i).copy()
+                    Dim input As DenseMatrix = trainData(i).copy()
 
-                    Dim teacherSignal As Matrix = teacherSignals(i).copy()
+                    Dim teacherSignal As DenseMatrix = teacherSignals(i).copy()
 
                     Dim output = feedFoward(rbm, input)
                     [error] += calculateAvgSquaredError(output, teacherSignal)
@@ -41,7 +41,7 @@ Namespace nn.rbm.learn
             Return [error]
         End Function
 
-        Public Overridable Function backPropagate(rbm As RBM, output As Matrix, teacherSignals As Matrix) As Double
+        Public Overridable Function backPropagate(rbm As RBM, output As DenseMatrix, teacherSignals As DenseMatrix) As Double
             Dim errors = calculateErrors(output, teacherSignals)
             adjustWeights(rbm, output, errors)
             Return calculateAvgSquaredError(output, teacherSignals)
@@ -50,7 +50,7 @@ Namespace nn.rbm.learn
         ''' <summary>
         ''' feed forward
         ''' </summary>
-        Public Overridable Function feedFoward(rbm As RBM, input As Matrix) As Matrix
+        Public Overridable Function feedFoward(rbm As RBM, input As DenseMatrix) As DenseMatrix
             Dim output = DenseMatrix.make(1, rbm.HiddenSize)
 
             Dim weights = rbm.Weights
@@ -67,16 +67,16 @@ Namespace nn.rbm.learn
         ''' <summary>
         ''' calculate the error
         ''' </summary>
-        Private Function calculateErrors(output As Matrix, teacherSignals As Matrix) As Matrix
+        Private Function calculateErrors(output As DenseMatrix, teacherSignals As DenseMatrix) As DenseMatrix
             ' (teacher_i - output_i)  * output_i * (1 - output_i)
-            Dim errors As Matrix = teacherSignals.copy().subtract(output).multiply(output).multiply(output.apply(ONE_MINUS_X))
+            Dim errors As DenseMatrix = teacherSignals.copy().subtract(output).multiply(output).multiply(output.apply(ONE_MINUS_X))
             Return errors
         End Function
 
         ''' <summary>
         ''' depending on the error, adjust the weights
         ''' </summary>
-        Private Sub adjustWeights(rbm As RBM, input As Matrix, errors As Matrix)
+        Private Sub adjustWeights(rbm As RBM, input As DenseMatrix, errors As DenseMatrix)
             Dim weights = rbm.Weights
             '  adjust the weights
             For i = 0 To rbm.VisibleSize - 1
@@ -91,7 +91,7 @@ Namespace nn.rbm.learn
         ''' output layer and teacher signal
         ''' 
         ''' </summary>
-        Private Function calculateAvgSquaredError(output As Matrix, teacherSignals As Matrix) As Double
+        Private Function calculateAvgSquaredError(output As DenseMatrix, teacherSignals As DenseMatrix) As Double
             Return output.copy().subtract(teacherSignals).pow(2).sum() / output.columns()
         End Function
     End Class

@@ -1,7 +1,7 @@
 ﻿
-Imports ClassLibrary1.math
-Imports ClassLibrary1.math.functions
-Imports ClassLibrary1.math.functions.doubledouble.rbm
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions.doubledouble.rbm
 Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace nn.rbm.learn
@@ -33,13 +33,13 @@ Namespace nn.rbm.learn
         ''' If a Matrix is too large I recommend splitting it into smaller matrices, but if they are reasonably small, this
         ''' is a fast way to "simultaneously" train multiple inputs and should generable be used unless the matrices are just
         ''' too large </summary>
-        ''' <paramname="rbm"> </param>
-        ''' <paramname="dataSet"> </param>
-        Public Overridable Sub learn(rbm As RBM, dataSet As Matrix)
-            learn(rbm, New List(Of Matrix)() From {dataSet})
+        ''' <param name="rbm"> </param>
+        ''' <param name="dataSet"> </param>
+        Public Overridable Sub learn(rbm As RBM, dataSet As DenseMatrix)
+            learn(rbm, New List(Of DenseMatrix)() From {dataSet})
         End Sub
 
-        Public Overridable Sub learn(rbm As RBM, dataSets As IReadOnlyCollection(Of Matrix))
+        Public Overridable Sub learn(rbm As RBM, dataSets As IReadOnlyCollection(Of DenseMatrix))
             Dim weights = rbm.Weights
 
             clock.start()
@@ -51,21 +51,21 @@ Namespace nn.rbm.learn
 
                     ' Read training data and sample from the hidden later, positive CD phase, (reality phase)
                     Dim positiveHiddenActivations = dataSet.dot(weights)
-                    Dim positiveHiddenProbabilities As Matrix = positiveHiddenActivations.copy().apply(logisticsFunction)
+                    Dim positiveHiddenProbabilities As DenseMatrix = positiveHiddenActivations.copy().apply(logisticsFunction)
                     Dim positiveHiddenStates = positiveHiddenProbabilities.apply(DenseMatrix.random(numberSamples, rbm.HiddenSize), ACTIVATION_STATE)
 
                     ' Note that we're using the activation *probabilities* of the hidden states, not the hidden states themselves, when computing associations.
                     ' We could also use the states; see section 3 of Hinton's A Practical Guide to Training Restricted Boltzmann Machines" for more.
-                    Dim positiveAssociations As Matrix = dataSet.transpose().dot(positiveHiddenProbabilities)
+                    Dim positiveAssociations As DenseMatrix = dataSet.transpose().dot(positiveHiddenProbabilities)
 
                     ' Reconstruct the visible units and sample again from the hidden units. negative CD phase, aka the daydreaming phase.
-                    Dim negativeVisibleActivations As Matrix = positiveHiddenStates.dot(weights.transpose())
+                    Dim negativeVisibleActivations As DenseMatrix = positiveHiddenStates.dot(weights.transpose())
                     Dim negativeVisibleProbabilities = negativeVisibleActivations.apply(logisticsFunction)
                     Dim negativeHiddenActivations = negativeVisibleProbabilities.dot(weights)
                     Dim negativeHiddenProbabilities = negativeHiddenActivations.apply(logisticsFunction)
 
                     ' Note, again, that we're using the activation *probabilities* when computing associations, not the states themselves.
-                    Dim negativeAssociations As Matrix = negativeVisibleProbabilities.transpose().dot(negativeHiddenProbabilities)
+                    Dim negativeAssociations As DenseMatrix = negativeVisibleProbabilities.transpose().dot(negativeHiddenProbabilities)
 
                     ' Update weights.
                     Dim updates = positiveAssociations.subtract(negativeAssociations).divide(numberSamples).multiply(learningParameters.LearningRate)
@@ -87,7 +87,7 @@ Namespace nn.rbm.learn
         ' 		    hidden_states, A matrix where each row consists of the hidden units activated from the visible
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runVisible(rbm As RBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runVisible(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
             Dim numberSamples As Integer = dataSet.rows()
             Dim weights = rbm.Weights
 
@@ -107,12 +107,12 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(rbm As RBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runHidden(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
             Dim numberSamples As Integer = dataSet.rows()
             Dim weights = rbm.Weights
 
             ' Calculate the activations of the hidden units.
-            Dim visibleActivations As Matrix = dataSet.dot(weights.transpose())
+            Dim visibleActivations As DenseMatrix = dataSet.dot(weights.transpose())
             ' Calculate the probabilities of turning the visible units on.
             Dim visibleProbabilities = visibleActivations.apply(logisticsFunction)
             ' Turn the visible units on with their specified probabilities.
@@ -128,7 +128,7 @@ Namespace nn.rbm.learn
         ' 		    Note that we only initialize the network *once*, so these samples are correlated.
         ' 		    samples: A matrix, where each row is a sample of the visible units produced while the network was daydreaming.
         ' 		 
-        Public Overridable Function dayDream(rbm As RBM, dataSet As Matrix, dreamSamples As Integer) As ISet(Of Matrix)
+        Public Overridable Function dayDream(rbm As RBM, dataSet As DenseMatrix, dreamSamples As Integer) As ISet(Of DenseMatrix)
             Dim weights = rbm.Weights
 
             ' Take the first sample from a uniform distribution.
@@ -136,7 +136,7 @@ Namespace nn.rbm.learn
             Dim sample = dataSet
 
             ' store all samples history
-            Dim samples As ISet(Of Matrix) = New HashSet(Of Matrix)()
+            Dim samples As ISet(Of DenseMatrix) = New HashSet(Of DenseMatrix)()
 
             ' Start the alternating Gibbs sampling.
             ' Note that we keep the hidden units binary states, but leave the visible units as real probabilities.
@@ -151,14 +151,14 @@ Namespace nn.rbm.learn
                 ' Calculate the probabilities of turning the hidden units on.
                 Dim hiddenProbabilities = hiddenActivations.apply(logisticsFunction)
                 ' Turn the hidden units on with their specified probabilities.
-                Dim hiddenStates As Matrix = hiddenProbabilities.apply(DenseMatrix.random(sample.rows(), rbm.HiddenSize), ACTIVATION_STATE)
+                Dim hiddenStates As DenseMatrix = hiddenProbabilities.apply(DenseMatrix.random(sample.rows(), rbm.HiddenSize), ACTIVATION_STATE)
 
                 ' Calculate the activations of the hidden units.
-                Dim visibleActivations As Matrix = hiddenStates.dot(weights.transpose())
+                Dim visibleActivations As DenseMatrix = hiddenStates.dot(weights.transpose())
                 ' Calculate the probabilities of turning the visible units on.
                 Dim visibleProbabilities = visibleActivations.apply(logisticsFunction)
                 ' Turn the visible units on with their specified probabilities.
-                Dim visibleStates As Matrix = visibleProbabilities.apply(DenseMatrix.random(sample.rows(), sample.columns()), ACTIVATION_STATE)
+                Dim visibleStates As DenseMatrix = visibleProbabilities.apply(DenseMatrix.random(sample.rows(), sample.columns()), ACTIVATION_STATE)
 
                 sample = visibleStates
             Next

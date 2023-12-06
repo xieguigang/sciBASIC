@@ -1,4 +1,4 @@
-﻿Imports ClassLibrary1.nn.rbm.deep
+﻿Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.nn.rbm.deep
 
 Namespace nn.rbm.save
 
