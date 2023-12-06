@@ -80,32 +80,16 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Overloads Property X(i As UInteger, j As UInteger) As Double Implements GeneralMatrix.X
+        Default Overloads Property X(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
             Get
-                ' missing index is ZERO
-                If rows.ContainsKey(i) Then
-                    If rows(i).ContainsKey(j) Then
-                        Return rows(i)(j)
-                    Else
-                        Return 0.0
-                    End If
-                Else
-                    Return 0.0
-                End If
+                Return [Get](i, j)
             End Get
             Set(value As Double)
-                If Not rows.ContainsKey(i) Then
-                    rows.Add(i, New Dictionary(Of UInteger, Double))
-                End If
-                If Not rows(i).ContainsKey(j) Then
-                    rows(i).Add(j, value)
-                Else
-                    rows(i)(j) = value
-                End If
+                Call [Set](value, i, j)
             End Set
         End Property
 
-        Default Public Overloads Property X(i As UInteger, Optional byrow As Boolean = True) As Vector Implements GeneralMatrix.X
+        Default Public Overloads Property X(i As Integer, Optional byrow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
                 Throw New NotImplementedException()
             End Get
@@ -181,6 +165,37 @@ Namespace LinearAlgebra.Matrix
 
         Sub New(v As IndexVector)
             Call Me.New(v.Row, v.Col, v.X)
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="j"></param>
+        ''' <returns>
+        ''' value of missing index is ZERO
+        ''' </returns>
+        Public Function [Get](i As UInteger, j As UInteger) As Double
+            If rows.ContainsKey(i) Then
+                If rows(i).ContainsKey(j) Then
+                    Return rows(i)(j)
+                Else
+                    Return 0.0
+                End If
+            Else
+                Return 0.0
+            End If
+        End Function
+
+        Public Sub [Set](xij As Double, i As UInteger, j As UInteger)
+            If Not rows.ContainsKey(i) Then
+                rows.Add(i, New Dictionary(Of UInteger, Double))
+            End If
+            If Not rows(i).ContainsKey(j) Then
+                rows(i).Add(j, xij)
+            Else
+                rows(i)(j) = xij
+            End If
         End Sub
 
         Public Function Resize(M As Integer, N As Integer) As GeneralMatrix Implements GeneralMatrix.Resize
