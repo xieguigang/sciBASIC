@@ -7,6 +7,9 @@ Namespace nn.rbm
     ''' Created by kenny on 5/12/14.
     ''' 
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/kennycason/rbm/tree/master
+    ''' </remarks>
     Public Class RBM
 
         Private weightsField As DenseMatrix
