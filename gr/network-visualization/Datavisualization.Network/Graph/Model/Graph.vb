@@ -255,12 +255,20 @@ Namespace Graph
             Return GetElementByID(id, dataLabel:=False)
         End Function
 
-        Public Function GetElementsByClassName(classname As String) As Node() Implements IStyleSelector(Of Node).GetElementsByClassName
-            Return vertex _
-                .Where(Function(node)
-                           Return classname = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
-                       End Function) _
-                .ToArray
+        ''' <summary>
+        ''' get node of given node type
+        ''' </summary>
+        ''' <param name="classname">the node type</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function check of the property with name <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>
+        ''' </remarks>
+        Public Iterator Function GetElementsByClassName(classname As String) As IEnumerable(Of Node) Implements IStyleSelector(Of Node).GetElementsByClassName
+            For Each v As Node In vertex
+                If classname = v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) Then
+                    Yield v
+                End If
+            Next
         End Function
 
         Public Function GetElementsByName(name As String) As Node() Implements IStyleSelector(Of Node).GetElementsByName
@@ -581,6 +589,10 @@ Namespace Graph
             Return g
         End Function
 
+        ''' <summary>
+        ''' removes the nodes which is not matched with the given condition <paramref name="match"/>.
+        ''' </summary>
+        ''' <param name="match"></param>
         Public Sub FilterNodes(match As Predicate(Of Node))
             For Each n As Node In vertex
                 If Not match(n) Then
@@ -589,6 +601,10 @@ Namespace Graph
             Next
         End Sub
 
+        ''' <summary>
+        ''' removes the edges which is not matched with the given condition <paramref name="match"/>.
+        ''' </summary>
+        ''' <param name="match"></param>
         Public Sub FilterEdges(match As Predicate(Of Edge))
             For Each e As Edge In graphEdges
                 If Not match(e) Then
