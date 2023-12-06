@@ -62,7 +62,10 @@ Namespace LinearAlgebra.Matrix
 
     Public Class SparseMatrix : Implements GeneralMatrix
 
-        Dim rows As New Dictionary(Of Integer, Dictionary(Of Integer, Double))
+        ''' <summary>
+        ''' just store the non-zero element index and the element value, all missing index is ZERO
+        ''' </summary>
+        Dim rows As New Dictionary(Of UInteger, Dictionary(Of UInteger, Double))
         Dim m, n As Integer
 
         Public ReadOnly Property RowDimension As Integer Implements GeneralMatrix.RowDimension
@@ -77,8 +80,9 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Default Overloads Property X(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
+        Default Overloads Property X(i As UInteger, j As UInteger) As Double Implements GeneralMatrix.X
             Get
+                ' missing index is ZERO
                 If rows.ContainsKey(i) Then
                     If rows(i).ContainsKey(j) Then
                         Return rows(i)(j)
@@ -91,7 +95,7 @@ Namespace LinearAlgebra.Matrix
             End Get
             Set(value As Double)
                 If Not rows.ContainsKey(i) Then
-                    rows.Add(i, New Dictionary(Of Integer, Double))
+                    rows.Add(i, New Dictionary(Of UInteger, Double))
                 End If
                 If Not rows(i).ContainsKey(j) Then
                     rows(i).Add(j, value)
@@ -101,7 +105,7 @@ Namespace LinearAlgebra.Matrix
             End Set
         End Property
 
-        Default Public Overloads Property X(i As Integer, Optional byrow As Boolean = True) As Vector Implements GeneralMatrix.X
+        Default Public Overloads Property X(i As UInteger, Optional byrow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
                 Throw New NotImplementedException()
             End Get
@@ -116,8 +120,8 @@ Namespace LinearAlgebra.Matrix
                 Dim rows = Me.rows _
                     .ToDictionary(Function(r) r.Key,
                                   Function(r)
-                                      Dim cols As New Dictionary(Of Integer, Double)
-                                      Dim src As Dictionary(Of Integer, Double) = r.Value
+                                      Dim cols As New Dictionary(Of UInteger, Double)
+                                      Dim src As Dictionary(Of UInteger, Double) = r.Value
 
                                       For Each j As Integer In idxList
                                           If src.ContainsKey(j) Then
@@ -138,7 +142,7 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
-        Private Sub New(matrix As Dictionary(Of Integer, Dictionary(Of Integer, Double)), m%, n%)
+        Private Sub New(matrix As Dictionary(Of UInteger, Dictionary(Of UInteger, Double)), m%, n%)
             Me.rows = matrix
             Me.m = m
             Me.n = n
@@ -160,9 +164,9 @@ Namespace LinearAlgebra.Matrix
                             Return (ri, ci:=col(i), xi:=x(i))
                         End Function) _
                 .GroupBy(Function(r) r.ri) _
-                .ToDictionary(Function(r) r.Key,
+                .ToDictionary(Function(r) CUInt(r.Key),
                               Function(r)
-                                  Return r.ToDictionary(Function(c) c.ci,
+                                  Return r.ToDictionary(Function(c) CUInt(c.ci),
                                                         Function(c)
                                                             Return c.xi
                                                         End Function)
@@ -190,7 +194,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns></returns>
         Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements GeneralMatrix.ArrayPack
             Dim real As Double()() = RectangularArray.Matrix(Of Double)(m, n)
-            Dim i As Integer
+            Dim i As UInteger
 
             For Each row In rows
                 i = row.Key
@@ -237,7 +241,7 @@ Namespace LinearAlgebra.Matrix
             End If
 
             Dim left As Integer = xindptr(Scan0)
-            Dim matrix As New Dictionary(Of Integer, Dictionary(Of Integer, Double))
+            Dim matrix As New Dictionary(Of UInteger, Dictionary(Of UInteger, Double))
             Dim i As i32 = Scan0
 
             If maxColumns <= 0 Then
@@ -248,7 +252,7 @@ Namespace LinearAlgebra.Matrix
                 Dim blocksize = idx - left
                 Dim subsetData As Single() = New Single(blocksize - 1) {}
                 Dim subsetIndex As Integer() = New Integer(blocksize - 1) {}
-                Dim row As New Dictionary(Of Integer, Double)
+                Dim row As New Dictionary(Of UInteger, Double)
 
                 Call Array.ConstrainedCopy(xdata, left, subsetData, Scan0, blocksize)
                 Call Array.ConstrainedCopy(xindices, left, subsetIndex, Scan0, blocksize)
@@ -262,6 +266,10 @@ Namespace LinearAlgebra.Matrix
             Next
 
             Return New SparseMatrix(matrix, m:=i, n:=maxColumns)
+        End Function
+
+        Public Function Dot(m2 As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
+            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace

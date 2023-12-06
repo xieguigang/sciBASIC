@@ -67,8 +67,8 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="i"></param>
         ''' <param name="j"></param>
         ''' <returns></returns>
-        Default Property X(i As Integer, j As Integer) As Double
-        Default Property X(i As Integer, Optional byRow As Boolean = True) As Vector
+        Default Property X(i As UInteger, j As UInteger) As Double
+        Default Property X(i As UInteger, Optional byRow As Boolean = True) As Vector
 
         ''' <summary>
         ''' column projection via column index
@@ -109,6 +109,12 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">   Submatrix indices
         ''' </exception>
         Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
+        ''' <summary>
+        ''' matrix dot product
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        Function Dot(m2 As GeneralMatrix) As GeneralMatrix
 
     End Interface
 End Namespace
