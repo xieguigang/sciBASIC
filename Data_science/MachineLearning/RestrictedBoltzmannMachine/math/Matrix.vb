@@ -1,0 +1,206 @@
+﻿Imports ClassLibrary1.math.functions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+
+Namespace math
+
+
+    ''' <summary>
+    ''' Currently this class is half mutable/immutable. The operations that are immutable are defined. This class serves
+    ''' to wrap the Parallel Colt library.
+    ''' If you need an operation to be immutable just call .copy().
+    ''' I am considering making a ImmutableDense,ImmutableSparse,MutableDense,MutableSparse class in the future if needed.
+    ''' Created by kenny on 5/24/14.
+    ''' </summary>
+    Public MustInherit Class Matrix
+
+        Protected Friend Shared ReadOnly ADDField As DoubleDoubleFunction = New math.functions.doubledouble.Add()
+        Protected Friend Shared ReadOnly SUBTRACTField As DoubleDoubleFunction = New math.functions.doubledouble.Subtract()
+        Protected Friend Shared ReadOnly MULTIPLYField As DoubleDoubleFunction = New math.functions.doubledouble.Multiply()
+        Protected Friend Shared ReadOnly DIVIDEField As DoubleDoubleFunction = New math.functions.doubledouble.Divide()
+        Protected Friend Shared ReadOnly RANDOM_GAUSSIAN As DoubleFunction = New RandomGaussian()
+        Protected Friend Shared ReadOnly RANDOM_DOUBLE As DoubleFunction = New RandomDouble(1.0)
+
+        Protected Friend m As GeneralMatrix
+
+        Protected Friend Sub New(m As GeneralMatrix)
+            Me.m = m
+        End Sub
+
+        ' IMMUTABLE OPERATIONS 
+
+        Public MustOverride Function copy() As Matrix
+
+        Public MustOverride Function transpose() As Matrix
+
+
+        Public MustOverride Function dot(m2 As Matrix) As Matrix
+
+
+        Public MustOverride Function addColumns(m2 As Matrix) As Matrix
+
+
+        Public MustOverride Function addRows(m2 As Matrix) As Matrix
+
+        Public MustOverride Function splitColumns(numPieces As Integer) As IList(Of Matrix)
+
+        ' MUTABLE OPERATIONS 
+
+        Public Overridable Function data() As GeneralMatrix
+            Return m
+        End Function
+
+        Public Overridable Function toArray() As Double()()
+            Return m.RowVectors().[Select](Function(v) v.ToArray()).ToArray()
+        End Function
+
+
+        Public Overridable Function [set](i As Integer, j As Integer, value As Double) As Matrix
+            m(i, j) = value
+            Return Me
+        End Function
+
+
+        Public Overridable Function row(pRow As Integer) As Vector
+            Return m(pRow)
+        End Function
+
+        Public Overridable Function [dim]() As Integer
+            Return rows() * columns()
+        End Function
+
+        Public Overridable Function rows() As Integer
+            Return m.RowDimension
+        End Function
+
+        Public Overridable Function columns() As Integer
+            Return m.ColumnDimension
+        End Function
+
+
+        Public Overridable Function [get](i As Integer, j As Integer) As Double
+            Return m(i, j)
+        End Function
+
+        Public Overridable Function add(m2 As Matrix) As Matrix
+            Return apply(m2, ADDField)
+        End Function
+
+        Public Overridable Function subtract(m2 As Matrix) As Matrix
+            Return apply(m2, SUBTRACTField)
+        End Function
+
+        Public Overridable Function multiply(m2 As Matrix) As Matrix
+            Return apply(m2, MULTIPLYField)
+        End Function
+
+        Public Overridable Function multiply(s As Double) As Matrix
+            Return apply(New functions.Multiply(s))
+        End Function
+
+        Public Overridable Function divide(m2 As Matrix) As Matrix
+            Return apply(m2, DIVIDEField)
+        End Function
+
+        Public Overridable Function divide(s As Double) As Matrix
+            Return apply(New functions.Divide(s))
+        End Function
+
+        Public Overridable Function pow(power As Double) As Matrix
+            Return apply(New Power(power))
+        End Function
+
+        Public Overridable Function sum() As Double
+            Dim lSum = 0.0
+            For i = 0 To rows() - 1
+                For j = 0 To columns() - 1
+                    lSum += [get](i, j)
+                Next
+            Next
+            Return lSum
+        End Function
+
+
+        Public MustOverride Function apply([function] As DoubleFunction) As Matrix
+
+
+        Public MustOverride Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As Matrix
+
+
+        Public Shared Function splitColumns(m As Matrix, numPieces As Integer) As IList(Of Double()())
+
+            Dim pieces As IList(Of Double()()) = New List(Of Double()())(numPieces)
+
+            Dim rows As Integer = m.rows()
+
+            Dim cols As Integer = m.columns() / numPieces ' must be evenly splittable
+            For p = 0 To numPieces - 1
+
+                Dim piece = RectangularArray.Matrix(Of Double)(rows, cols)
+                For i = 0 To rows - 1
+                    For j = 0 To cols - 1
+                        piece(i)(j) = m.get(i, j + p * cols)
+                    Next
+                Next
+                pieces.Add(piece)
+            Next
+            Return pieces
+        End Function
+
+        Public Shared Function concatColumns(ParamArray m As Matrix()) As Double()()
+            Dim totalCols = 0
+            For i = 0 To m.Length - 1
+                totalCols += m(i).columns()
+            Next
+            Dim rows As Integer = m(0).rows()
+
+            Dim appended = RectangularArray.Matrix(Of Double)(rows, totalCols)
+            For k = 0 To m.Length - 1
+
+                Dim cols As Integer = m(k).columns()
+                For i = 0 To rows - 1
+
+                    Dim start = k * cols
+                    Array.Copy(m(k).row(i).Array, 0, appended(i), start, cols)
+                Next
+            Next
+            Return appended
+        End Function
+
+
+        Public Shared Function concatRows(m As IList(Of Matrix)) As Double()()
+            Return concatRows(m.ToArray())
+        End Function
+
+
+        Public Shared Function concatRows(ParamArray m As Matrix()) As Double()()
+            Dim totalRows = 0
+            For i = 0 To m.Length - 1
+                totalRows += m(i).rows()
+            Next
+
+            Dim columns As Integer = m(0).columns()
+
+            Dim appended = RectangularArray.Matrix(Of Double)(totalRows, columns)
+            Dim row = 0
+            For k = 0 To m.Length - 1
+                For i = 0 To m(k).rows() - 1
+                    Array.Copy(m(k).row(i).Array, 0, appended(row), 0, columns)
+                Next
+                row += 1
+            Next
+            Return appended
+        End Function
+
+        Public Shared Function rows(m As Double()()) As Integer
+            Return m.Length
+        End Function
+
+        Public Shared Function cols(m As Double()()) As Integer
+            Return m(0).Length
+        End Function
+
+    End Class
+
+End Namespace
