@@ -194,6 +194,11 @@ Namespace ValueTypes
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
 
+        Public Function UnixTimeStampMillis(time As DateTime) As Double
+            Static ZERO As New DateTime(1970, 1, 1, 0, 0, 0)
+            Return (time.ToUniversalTime - ZERO).TotalMilliseconds
+        End Function
+
         ''' <summary>
         ''' 将Unix时间戳转换为可读的日期
         ''' </summary>
