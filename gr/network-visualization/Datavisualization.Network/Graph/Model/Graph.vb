@@ -570,15 +570,24 @@ Namespace Graph
             Next
         End Sub
 
-        Public Function Union(another As NetworkGraph) As NetworkGraph
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="another"></param>
+        ''' <param name="assignId">
+        ''' assign the new node id to the union graph vertex when
+        ''' insert target node into the union graph object.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function Union(another As NetworkGraph, Optional assignId As Boolean = True) As NetworkGraph
             Dim g As New NetworkGraph
 
             For Each v As Node In vertex
-                Call g.AddNode(v.Clone, assignId:=True)
+                Call g.AddNode(v.Clone, assignId:=assignId)
             Next
             For Each v As Node In another.vertex
                 If g.GetElementByID(v.label) Is Nothing Then
-                    Call g.AddNode(v.Clone, assignId:=True)
+                    Call g.AddNode(v.Clone, assignId:=assignId)
                 Else
                     ' union the node data?
                     ' just do nothing, currently
