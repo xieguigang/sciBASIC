@@ -1,10 +1,8 @@
-﻿Imports ClassLibrary1.math.functions
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace math
-
 
     ''' <summary>
     ''' Currently this class is half mutable/immutable. The operations that are immutable are defined. This class serves
@@ -13,7 +11,7 @@ Namespace math
     ''' I am considering making a ImmutableDense,ImmutableSparse,MutableDense,MutableSparse class in the future if needed.
     ''' Created by kenny on 5/24/14.
     ''' </summary>
-    Public MustInherit Class Matrix
+    Public Class DenseMatrix
 
         Protected Friend Shared ReadOnly ADDField As DoubleDoubleFunction = New math.functions.doubledouble.Add()
         Protected Friend Shared ReadOnly SUBTRACTField As DoubleDoubleFunction = New math.functions.doubledouble.Subtract()
@@ -29,21 +27,51 @@ Namespace math
         End Sub
 
         ' IMMUTABLE OPERATIONS 
+        Public Function transpose() As DenseMatrix
+            Return New DenseMatrix(m.Transpose)
+        End Function
 
-        Public MustOverride Function copy() As Matrix
+        Public Function copy() As DenseMatrix
+            Return New DenseMatrix(New NumericMatrix(m.RowVectors))
+        End Function
 
-        Public MustOverride Function transpose() As Matrix
+        Public Function dot(m2 As DenseMatrix) As DenseMatrix
+            Return New DenseMatrix(Me.m.Dot(m2.m))
+        End Function
 
+        ' MUTABLE OPERATIONS 
 
-        Public MustOverride Function dot(m2 As Matrix) As Matrix
+        Public Overloads Overrides Function apply([function] As DoubleFunction) As DenseMatrix
+            Return New DenseMatrix(m.assign([function]))
+        End Function
 
+        Public Overloads Overrides Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As Matrix
+            Return New DenseMatrix(m.assign(m2.m, [function]))
+        End Function
 
-        Public MustOverride Function addColumns(m2 As Matrix) As Matrix
+        Public Shared Function make(r As Integer, c As Integer) As DenseMatrix
+            Return New DenseMatrix(New NumericMatrix(r, c))
+        End Function
 
+        Public Shared Function randomGaussian(r As Integer, c As Integer) As DenseMatrix
+            Return New DenseMatrix(NumericMatrix.Gauss(c, r))
+        End Function
 
-        Public MustOverride Function addRows(m2 As Matrix) As Matrix
+        Public Shared Function random(r As Integer, c As Integer) As DenseMatrix
+            Return New DenseMatrix(NumericMatrix.Gauss(c, r))
+        End Function
 
-        Public MustOverride Function splitColumns(numPieces As Integer) As IList(Of Matrix)
+        Public Shared Function make(m As Double()()) As DenseMatrix
+            Return New DenseMatrix(New NumericMatrix(m))
+        End Function
+
+        Public Shared Function make(m As Vector) As DenseMatrix
+            Return New DenseMatrix(New NumericMatrix({m.ToArray}))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return m.ToString()
+        End Function
 
         ' MUTABLE OPERATIONS 
 
@@ -83,31 +111,31 @@ Namespace math
             Return m(i, j)
         End Function
 
-        Public Overridable Function add(m2 As Matrix) As Matrix
+        Public Overridable Function add(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, ADDField)
         End Function
 
-        Public Overridable Function subtract(m2 As Matrix) As Matrix
+        Public Overridable Function subtract(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, SUBTRACTField)
         End Function
 
-        Public Overridable Function multiply(m2 As Matrix) As Matrix
+        Public Overridable Function multiply(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, MULTIPLYField)
         End Function
 
-        Public Overridable Function multiply(s As Double) As Matrix
+        Public Overridable Function multiply(s As Double) As DenseMatrix
             Return apply(New functions.Multiply(s))
         End Function
 
-        Public Overridable Function divide(m2 As Matrix) As Matrix
+        Public Overridable Function divide(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, DIVIDEField)
         End Function
 
-        Public Overridable Function divide(s As Double) As Matrix
+        Public Overridable Function divide(s As Double) As DenseMatrix
             Return apply(New functions.Divide(s))
         End Function
 
-        Public Overridable Function pow(power As Double) As Matrix
+        Public Overridable Function pow(power As Double) As DenseMatrix
             Return apply(New Power(power))
         End Function
 
@@ -120,13 +148,6 @@ Namespace math
             Next
             Return lSum
         End Function
-
-
-        Public MustOverride Function apply([function] As DoubleFunction) As Matrix
-
-
-        Public MustOverride Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As Matrix
-
 
         Public Shared Function splitColumns(m As Matrix, numPieces As Integer) As IList(Of Double()())
 
