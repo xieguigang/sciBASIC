@@ -505,6 +505,12 @@ Namespace Graph
         ''' </remarks>
         ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
+            If node Is Nothing Then
+                ' node not found when call GetElementByID from
+                ' removeNode(label string) function
+                Return
+            End If
+
             Call _index.Delete(node)
             Call vertices.Remove(node)
             Call buffer.Remove(CUInt(node.ID))
