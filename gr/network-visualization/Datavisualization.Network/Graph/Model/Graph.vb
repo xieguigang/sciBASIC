@@ -129,11 +129,21 @@ Namespace Graph
         ''' 包括当前的这个<see cref="connectedNodes"/>和孤立点的总集合
         ''' </remarks>
         Public ReadOnly Property connectedNodes() As Node()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return graphEdges _
                     .Select(Function(d) d.Iterate2Nodes) _
                     .IteratesALL _
                     .Distinct _
+                    .ToArray
+            End Get
+        End Property
+
+        Public ReadOnly Property pinnedNodes As Node()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return vertex _
+                    .Where(Function(v) v.pinned) _
                     .ToArray
             End Get
         End Property

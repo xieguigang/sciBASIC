@@ -54,6 +54,10 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 
+#If DEBUG Then
+Imports Microsoft.VisualBasic.Serialization.JSON
+#End If
+
 Public Module CollectionValueGetter
 
     ''' <summary>
