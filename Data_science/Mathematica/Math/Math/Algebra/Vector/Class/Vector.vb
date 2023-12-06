@@ -980,6 +980,8 @@ Namespace LinearAlgebra
         End Function
 
         ''' <summary>
+        ''' dot
+        ''' 
         ''' + http://mathworld.wolfram.com/DotProduct.html
         ''' + http://www.mathsisfun.com/algebra/vectors-dot-product.html
         ''' </summary>
