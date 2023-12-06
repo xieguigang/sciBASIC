@@ -136,7 +136,6 @@ Namespace LinearAlgebra.Matrix
     <Serializable>
     Public Class NumericMatrix : Inherits Vector(Of Double())
         Implements ICloneable
-        Implements ISerializable
         Implements IDisposable
         Implements GeneralMatrix
 
@@ -1666,14 +1665,6 @@ Namespace LinearAlgebra.Matrix
             Return sb.ToString
         End Function
 
-        ''' <summary>
-        ''' A method called when serializing this class
-        ''' </summary>
-        ''' <param name="info"></param>
-        ''' <param name="context"></param>
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
-
         Public Shared Widening Operator CType(data#(,)) As NumericMatrix
             Return New NumericMatrix(data.RowIterator.ToArray)
         End Operator
@@ -1746,7 +1737,12 @@ Namespace LinearAlgebra.Matrix
             Return New NumericMatrix(rowDimension, columnDimension)
         End Function
 
-        Public Function DotProduct(B As NumericMatrix) As NumericMatrix
+        ''' <summary>
+        ''' 矩阵乘积(matrix product，也叫matmul product)：A 的列数必须和 B 的行数相等
+        ''' </summary>
+        ''' <param name="B"></param>
+        ''' <returns></returns>
+        Public Function DotProduct(B As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
             Dim X As New NumericMatrix(m, B.ColumnDimension)
             Dim C As Double()() = X.Array
             Dim Bcolj As Double() = New Double(n - 1) {}
@@ -1764,10 +1760,6 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             Return X
-        End Function
-
-        Public Function Dot(m2 As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
-            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace
