@@ -37,10 +37,10 @@ Namespace nn.rbm.learn
         ' 		   P(v,h1,h2,...hn) = P(v|h1)P(h1|h2)...P(hn-2|hn-1)P(hn-1|hn)
         ' 		   Train P(v|h1), use h1 for each v to train P(h1|h2), repeat until P(hn-1|hn) is trained
         ' 		 
-        Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As Matrix)
+        Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of Matrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             clock.reset()
@@ -63,7 +63,7 @@ Namespace nn.rbm.learn
         ' 		    hidden_states, A matrix where each row consists of the hidden units activated from the visible
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Return deepContrastiveDivergence.runVisible(deepRBM, dataSet)
         End Function
 
@@ -73,7 +73,7 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Return deepContrastiveDivergence.runHidden(deepRBM, dataSet)
         End Function
 
@@ -81,20 +81,20 @@ Namespace nn.rbm.learn
         ' 		    Pass data into visible layers and activate hidden layers.
         ' 		    return hidden layers
         ' 		 
-        Private Function buildSamplesFromActivatedHiddenLayers(sampleData As IList(Of Matrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of Matrix)
+        Private Function buildSamplesFromActivatedHiddenLayers(sampleData As IList(Of DenseMatrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of DenseMatrix)
             Dim rbmLayer = rbmLayers(layer)
 
             If layer = 0 Then
                 Return sampleData
             Else
                 Dim previousLayer = rbmLayers(layer - 1)
-                Dim previousLayerOutputs As Matrix() = New Matrix(previousLayer.size() - 1) {}
+                Dim previousLayerOutputs As DenseMatrix() = New DenseMatrix(previousLayer.size() - 1) {}
                 For r = 0 To previousLayer.size() - 1
                     Dim rbm = previousLayer.getRBM(r)
                     previousLayerOutputs(r) = contrastiveDivergence.runVisible(rbm, sampleData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(Matrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
             End If
         End Function
 
@@ -103,9 +103,9 @@ Namespace nn.rbm.learn
 
             Friend ReadOnly contrastiveDivergence As ContrastiveDivergence
             Friend ReadOnly rbmLayer As RBMLayer
-            Friend ReadOnly samplePieces As IList(Of Matrix)
+            Friend ReadOnly samplePieces As IList(Of DenseMatrix)
 
-            Public Sub New(rbmLayer As RBMLayer, samplePieces As IList(Of Matrix), learningParameters As LearningParameters)
+            Public Sub New(rbmLayer As RBMLayer, samplePieces As IList(Of DenseMatrix), learningParameters As LearningParameters)
                 MyBase.New(rbmLayer.size())
                 contrastiveDivergence = New ContrastiveDivergence(learningParameters)
                 Me.rbmLayer = rbmLayer

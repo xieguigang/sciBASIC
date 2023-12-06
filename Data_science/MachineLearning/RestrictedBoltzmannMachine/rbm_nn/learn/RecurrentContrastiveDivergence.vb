@@ -34,7 +34,7 @@ Namespace nn.rbm.learn
         ''' learn a sequence of events </summary>
         ''' <param name="rbm"> </param>
         ''' <param name="events"> </param>
-        Public Overridable Sub learn(rbm As RBM, events As IList(Of Matrix))
+        Public Overridable Sub learn(rbm As RBM, events As IList(Of DenseMatrix))
             checkRBMConfigurations(rbm, events)
 
             'LOGGER.info("Start Learning single recurrent event of (" + events.Count + " sequences)");
@@ -53,7 +53,7 @@ Namespace nn.rbm.learn
         ''' learn many independent temporal events </summary>
         ''' <param name="rbm"> </param>
         ''' <param name="allEvents"> </param>
-        Public Overridable Sub learnMany(rbm As RBM, allEvents As IList(Of IList(Of Matrix)))
+        Public Overridable Sub learnMany(rbm As RBM, allEvents As IList(Of IList(Of DenseMatrix)))
             checkRBMConfigurations(rbm, allEvents(0))
 
             For epoch = 0 To learningParameters.Epochs - 1
@@ -69,7 +69,7 @@ Namespace nn.rbm.learn
             Next
         End Sub
 
-        Private Function trainEvents(rbm As RBM, events As IList(Of Matrix)) As Double
+        Private Function trainEvents(rbm As RBM, events As IList(Of DenseMatrix)) As Double
             Dim numberEvents = events.Count
             Dim weights = rbm.Weights
 
@@ -81,20 +81,20 @@ Namespace nn.rbm.learn
                 ' Read training data and sample from the hidden later, positive CD phase, (reality phase)
                 Dim positiveHiddenActivations = currentAndNextEvent.dot(weights)
                 Dim positiveHiddenProbabilities = positiveHiddenActivations.apply(SIGMOID)
-                Dim positiveHiddenStates As Matrix = positiveHiddenProbabilities.copy().apply(DenseMatrix.random(currentAndNextEvent.rows(), rbm.HiddenSize), ACTIVATION_STATE)
+                Dim positiveHiddenStates As DenseMatrix = positiveHiddenProbabilities.copy().apply(DenseMatrix.random(currentAndNextEvent.rows(), rbm.HiddenSize), ACTIVATION_STATE)
 
                 ' Note that we're using the activation *probabilities* of the hidden states, not the hidden states themselves, when computing associations.
                 ' We could also use the states; see section 3 of Hinton's A Practical Guide to Training Restricted Boltzmann Machines" for more.
-                Dim positiveAssociations As Matrix = currentAndNextEvent.transpose().dot(positiveHiddenProbabilities)
+                Dim positiveAssociations As DenseMatrix = currentAndNextEvent.transpose().dot(positiveHiddenProbabilities)
 
                 ' Reconstruct the visible units and sample again from the hidden units. negative CD phase, aka the daydreaming phase.
-                Dim negativeVisibleActivations As Matrix = positiveHiddenStates.dot(weights.transpose())
+                Dim negativeVisibleActivations As DenseMatrix = positiveHiddenStates.dot(weights.transpose())
                 Dim negativeVisibleProbabilities = negativeVisibleActivations.apply(SIGMOID)
                 Dim negativeHiddenActivations = negativeVisibleProbabilities.dot(weights)
                 Dim negativeHiddenProbabilities = negativeHiddenActivations.apply(SIGMOID)
 
                 ' Note, again, that we're using the activation *probabilities* when computing associations, not the states themselves.
-                Dim negativeAssociations As Matrix = negativeVisibleProbabilities.transpose().dot(negativeHiddenProbabilities)
+                Dim negativeAssociations As DenseMatrix = negativeVisibleProbabilities.transpose().dot(negativeHiddenProbabilities)
 
                 ' Update weights.
                 weights.add(positiveAssociations.subtract(negativeAssociations).divide(numberEvents).multiply(learningParameters.LearningRate))
@@ -104,7 +104,7 @@ Namespace nn.rbm.learn
             Return [error] / events.Count
         End Function
 
-        Private Sub checkRBMConfigurations(rbm As RBM, events As IList(Of Matrix))
+        Private Sub checkRBMConfigurations(rbm As RBM, events As IList(Of DenseMatrix))
             Dim requiredSize As Integer = events(0).columns() + (events(0).columns() * memory)
             If rbm.VisibleSize <> requiredSize Then
                 Throw New ArgumentException("RBM Input size must equal event.columns() + event.columns() * memory, required = " & requiredSize.ToString() & ", actual = " & rbm.VisibleSize.ToString())
@@ -112,7 +112,7 @@ Namespace nn.rbm.learn
         End Sub
 
 
-        Private Function createTemporalInput([event] As Integer, events As IList(Of Matrix)) As Matrix
+        Private Function createTemporalInput([event] As Integer, events As IList(Of DenseMatrix)) As DenseMatrix
             Dim currentEvent = events([event])
 
             Dim temporalEvent = currentEvent
@@ -140,10 +140,10 @@ Namespace nn.rbm.learn
         ' 	
         ' 		    Recurrent version pass in an empty t-1 visible layer
         ' 		 
-        Public Overridable Function runVisible(rbm As RBM, [event] As Matrix) As Matrix
+        Public Overridable Function runVisible(rbm As RBM, [event] As DenseMatrix) As DenseMatrix
             Dim weights = rbm.Weights
 
-            Dim currentAndNoNextEvent As Matrix = [event].addColumns(DenseMatrix.make([event].rows(), [event].columns() * memory)) ' append an empty visible layer for next guess
+            Dim currentAndNoNextEvent As DenseMatrix = [event].addColumns(DenseMatrix.make([event].rows(), [event].columns() * memory)) ' append an empty visible layer for next guess
 
             ' Calculate the activations of the hidden units.
             Dim hiddenActivations = currentAndNoNextEvent.dot(weights)
@@ -156,10 +156,10 @@ Namespace nn.rbm.learn
         End Function
 
 
-        Public Overridable Function visualizeEvents(rbm As RBM, events As IList(Of Matrix)) As Matrix
+        Public Overridable Function visualizeEvents(rbm As RBM, events As IList(Of DenseMatrix)) As DenseMatrix
             Dim weights = rbm.Weights
 
-            Dim lastVisibleStates As Matrix
+            Dim lastVisibleStates As DenseMatrix
 
             Dim [event] = 0
             Do
@@ -171,15 +171,15 @@ Namespace nn.rbm.learn
                 ' Calculate the probabilities of turning the hidden units on.
                 Dim hiddenProbabilities = hiddenActivations.apply(SIGMOID)
                 ' Turn the hidden units on with their specified probabilities.
-                Dim hiddenStates As Matrix = hiddenProbabilities.apply(DenseMatrix.random(currentAndNextEvent.rows(), rbm.HiddenSize), ACTIVATION_STATE)
+                Dim hiddenStates As DenseMatrix = hiddenProbabilities.apply(DenseMatrix.random(currentAndNextEvent.rows(), rbm.HiddenSize), ACTIVATION_STATE)
 
                 ' run hidden
                 ' Calculate the activations of the hidden units.
-                Dim visibleActivations As Matrix = hiddenStates.dot(weights.transpose())
+                Dim visibleActivations As DenseMatrix = hiddenStates.dot(weights.transpose())
                 ' Calculate the probabilities of turning the visible units on.
                 Dim visibleProbabilities = visibleActivations.apply(SIGMOID)
                 ' Turn the visible units on with their specified probabilities.
-                Dim visibleStates As Matrix = visibleProbabilities.apply(DenseMatrix.random(hiddenStates.rows(), rbm.VisibleSize), ACTIVATION_STATE)
+                Dim visibleStates As DenseMatrix = visibleProbabilities.apply(DenseMatrix.random(hiddenStates.rows(), rbm.VisibleSize), ACTIVATION_STATE)
 
                 lastVisibleStates = visibleStates
 
@@ -195,16 +195,16 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(rbm As RBM, hidden As Matrix) As Matrix
+        Public Overridable Function runHidden(rbm As RBM, hidden As DenseMatrix) As DenseMatrix
 
             Dim weights = rbm.Weights
 
             ' Calculate the activations of the hidden units.
-            Dim visibleActivations As Matrix = hidden.dot(weights.transpose())
+            Dim visibleActivations As DenseMatrix = hidden.dot(weights.transpose())
             ' Calculate the probabilities of turning the visible units on.
             Dim visibleProbabilities = visibleActivations.apply(SIGMOID)
             ' Turn the visible units on with their specified probabilities.
-            Dim visibleStates As Matrix = visibleProbabilities.apply(DenseMatrix.random(hidden.rows(), rbm.VisibleSize), ACTIVATION_STATE)
+            Dim visibleStates As DenseMatrix = visibleProbabilities.apply(DenseMatrix.random(hidden.rows(), rbm.VisibleSize), ACTIVATION_STATE)
 
             Return visibleStates
         End Function

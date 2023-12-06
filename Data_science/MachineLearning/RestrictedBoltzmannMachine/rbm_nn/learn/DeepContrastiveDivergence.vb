@@ -30,10 +30,10 @@ Namespace nn.rbm.learn
         ' 		   P(v,h1,h2,...hn) = P(v|h1)P(h1|h2)...P(hn-2|hn-1)P(hn-1|hn)
         ' 		   Train P(v|h1), use h1 for each v to train P(h1|h2), repeat until P(hn-1|hn) is trained
         ' 		 
-        Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As Matrix)
+        Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of Matrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             clock.reset()
@@ -61,17 +61,17 @@ Namespace nn.rbm.learn
         ' 		    hidden_states, A matrix where each row consists of the hidden units activated from the visible
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of Matrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
-            Dim hiddenStatesArray = New Matrix(-1) {}
+            Dim hiddenStatesArray = New DenseMatrix(-1) {}
 
             For layer = 0 To rbmLayers.Length - 1
                 Dim rbmLayer = rbmLayers(layer)
-                hiddenStatesArray = New Matrix(rbmLayer.size() - 1) {}
+                hiddenStatesArray = New DenseMatrix(rbmLayer.size() - 1) {}
 
                 samplePieces = buildSampleData(samplePieces, layer, rbmLayers)
 
@@ -83,7 +83,7 @@ Namespace nn.rbm.learn
                 Next
             Next
 
-            Return DenseMatrix.make(Matrix.concatColumns(hiddenStatesArray))
+            Return DenseMatrix.make(DenseMatrix.concatColumns(hiddenStatesArray))
 
         End Function
 
@@ -93,17 +93,17 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As Matrix) As Matrix
+        Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of Matrix) = dataSet.splitColumns(rbmLayers(rbmLayers.Length - 1).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(rbmLayers.Length - 1).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
-            Dim visibleStatesArray = New Matrix(-1) {}
+            Dim visibleStatesArray = New DenseMatrix(-1) {}
 
             For layer = rbmLayers.Length - 1 To 0 Step -1
                 Dim rbmLayer = rbmLayers(layer)
-                visibleStatesArray = New Matrix(rbmLayer.size() - 1) {}
+                visibleStatesArray = New DenseMatrix(rbmLayer.size() - 1) {}
 
                 samplePieces = buildSampleDataReverse(samplePieces, layer, rbmLayers)
 
@@ -115,60 +115,60 @@ Namespace nn.rbm.learn
                     visibleStatesArray(r) = visibleStates
                 Next
             Next
-            Return DenseMatrix.make(Matrix.concatColumns(visibleStatesArray))
+            Return DenseMatrix.make(DenseMatrix.concatColumns(visibleStatesArray))
         End Function
 
         ' 
         ' 		    Pass data into visible layers and activate hidden layers.
         ' 		    return hidden layers
         ' 		 
-        Private Function buildSamplesFromActivatedHiddenLayers(sampleData As IList(Of Matrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of Matrix)
+        Private Function buildSamplesFromActivatedHiddenLayers(sampleData As IList(Of DenseMatrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of DenseMatrix)
             Dim rbmLayer = rbmLayers(layer)
 
             If layer = 0 Then
                 Return sampleData
             Else
                 Dim previousLayer = rbmLayers(layer - 1)
-                Dim previousLayerOutputs As Matrix() = New Matrix(previousLayer.size() - 1) {}
+                Dim previousLayerOutputs As DenseMatrix() = New DenseMatrix(previousLayer.size() - 1) {}
                 For r = 0 To previousLayer.size() - 1
                     Dim rbm = previousLayer.getRBM(r)
                     previousLayerOutputs(r) = contrastiveDivergence.runVisible(rbm, sampleData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(Matrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
             End If
         End Function
 
-        Private Function buildSampleData(trainingData As IList(Of Matrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of Matrix)
+        Private Function buildSampleData(trainingData As IList(Of DenseMatrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of DenseMatrix)
             Dim rbmLayer = rbmLayers(layer)
 
             If layer = 0 Then
                 Return trainingData
             Else
                 Dim previousLayer = rbmLayers(layer - 1)
-                Dim previousLayerOutputs As Matrix() = New Matrix(previousLayer.size() - 1) {}
+                Dim previousLayerOutputs As DenseMatrix() = New DenseMatrix(previousLayer.size() - 1) {}
                 For r = 0 To previousLayer.size() - 1
                     previousLayerOutputs(r) = contrastiveDivergence.runVisible(previousLayer.getRBM(r), trainingData(r))
                     ' previousLayer.getRBM(r).getHidden().getValues() };
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(Matrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
             End If
         End Function
 
-        Private Function buildSampleDataReverse(trainingData As IList(Of Matrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of Matrix)
+        Private Function buildSampleDataReverse(trainingData As IList(Of DenseMatrix), layer As Integer, rbmLayers As RBMLayer()) As IList(Of DenseMatrix)
             Dim rbmLayer = rbmLayers(layer)
 
             If layer = rbmLayers.Length - 1 Then
                 Return trainingData
             Else
                 Dim previousLayer = rbmLayers(layer + 1)
-                Dim previousLayerInputs As Matrix() = New Matrix(previousLayer.size() - 1) {}
+                Dim previousLayerInputs As DenseMatrix() = New DenseMatrix(previousLayer.size() - 1) {}
                 For r = 0 To previousLayer.size() - 1
                     previousLayerInputs(r) = contrastiveDivergence.runHidden(previousLayer.getRBM(r), trainingData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(Matrix.concatColumns(previousLayerInputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerInputs)).splitColumns(rbmLayer.size())
             End If
         End Function
 

@@ -45,11 +45,11 @@ Namespace nn.rbm
             weightsField = weights
         End Sub
 
-        Public Overridable Property Weights As Matrix
+        Public Overridable Property Weights As DenseMatrix
             Get
                 Return weightsField
             End Get
-            Set(value As Matrix)
+            Set(value As DenseMatrix)
                 weightsField = value
             End Set
         End Property
