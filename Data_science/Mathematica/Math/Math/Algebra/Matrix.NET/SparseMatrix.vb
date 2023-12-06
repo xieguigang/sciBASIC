@@ -116,25 +116,31 @@ Namespace LinearAlgebra.Matrix
 
         Default Public Overloads ReadOnly Property X(indices As IEnumerable(Of Integer)) As GeneralMatrix Implements GeneralMatrix.X
             Get
-                Dim idxList As Integer() = indices.ToArray
+                Dim idxList As UInteger() = indices _
+                    .Select(Function(offset) CUInt(offset)) _
+                    .ToArray
                 Dim rows = Me.rows _
                     .ToDictionary(Function(r) r.Key,
                                   Function(r)
-                                      Dim cols As New Dictionary(Of UInteger, Double)
-                                      Dim src As Dictionary(Of UInteger, Double) = r.Value
-
-                                      For Each j As Integer In idxList
-                                          If src.ContainsKey(j) Then
-                                              cols.Add(j, src(j))
-                                          End If
-                                      Next
-
-                                      Return cols
+                                      Return ColumnProject(r, idxList)
                                   End Function)
 
                 Return New SparseMatrix(rows, m, idxList.Length)
             End Get
         End Property
+
+        Private Shared Function ColumnProject(r As KeyValuePair(Of UInteger, Dictionary(Of UInteger, Double)), idxList As UInteger()) As Dictionary(Of UInteger, Double)
+            Dim cols As New Dictionary(Of UInteger, Double)
+            Dim src As Dictionary(Of UInteger, Double) = r.Value
+
+            For Each j As UInteger In idxList
+                If src.ContainsKey(j) Then
+                    Call cols.Add(j, src(j))
+                End If
+            Next
+
+            Return cols
+        End Function
 
         Default Public Overloads ReadOnly Property X(rowIdx As BooleanVector) As GeneralMatrix Implements GeneralMatrix.X
             Get
