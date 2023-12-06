@@ -56,7 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Analysis.Louvain
 
@@ -144,6 +144,14 @@ Namespace Analysis.Louvain
             Return global_cluster.Select(Function(cl) cl.ToString).ToArray
         End Function
 
+        ''' <summary>
+        ''' get the number of the cluster class the graph it has currently.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetClusterCount() As Integer
+            Return global_cluster.Distinct.Count
+        End Function
+
         Friend Overridable Sub addNewEdge(u As Integer, v As Integer, weight As Double)
             If new_edge(new_top) Is Nothing Then
                 new_edge(new_top) = New Edge()
@@ -152,7 +160,7 @@ Namespace Analysis.Louvain
             new_edge(new_top).v = v
             new_edge(new_top).weight = weight
             new_edge(new_top).next = new_head(u)
-            new_head(u) = stdNum.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
+            new_head(u) = std.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
         End Sub
 
         Friend Overridable Sub setCluster0()
@@ -242,7 +250,7 @@ Namespace Analysis.Louvain
                 End If
 
                 vis(cluster(i)) = True
-                change(stdNum.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
+                change(std.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
             Next
 
             ' index[i]代表 i号簇在新图中的结点编号
@@ -337,7 +345,14 @@ Namespace Analysis.Louvain
             n = new_n
         End Sub
 
-        Public Function SolveClusters() As LouvainCommunity
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max_clusters">
+        ''' set the limits of the max number of the node class we finally have.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function SolveClusters(Optional max_clusters As Integer = Integer.MaxValue) As LouvainCommunity
             Dim count As Integer = 0   ' 迭代次数
             Dim update_flag As Boolean ' 标记是否发生过更新
             Dim enum_time As Integer
@@ -409,6 +424,8 @@ Namespace Analysis.Louvain
                 Loop While enum_time < n
 
                 If count > maxIterations OrElse Not update_flag Then
+                    Exit Do
+                ElseIf GetClusterCount >= max_clusters Then
                     Exit Do
                 End If
 

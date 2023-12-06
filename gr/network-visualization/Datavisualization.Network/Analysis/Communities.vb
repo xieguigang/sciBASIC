@@ -192,6 +192,10 @@ Namespace Analysis
         ''' <param name="slotName">
         ''' the graph class community information will be save at the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> by default.
         ''' </param>
+        ''' <param name="max_class">
+        ''' controls the max number of the node class we have, default value 
+        ''' means no limits: get as more number of node class we can get.
+        ''' </param>
         ''' <returns>
         ''' a network model with the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> 
         ''' property data has been assigned as the community tags by default.
@@ -199,11 +203,12 @@ Namespace Analysis
         Public Shared Function Analysis(ByRef g As NetworkGraph,
                                         Optional eps As Double = 0.00001,
                                         Optional prefix As String = Nothing,
+                                        Optional max_class As Integer = Integer.MaxValue,
                                         Optional slotName As String = NamesOf.REFLECTION_ID_MAPPING_NODETYPE) As NetworkGraph
 
             Dim clusters As String() = Louvain.Builder _
                 .Load(g, eps:=eps) _
-                .SolveClusters _
+                .SolveClusters(max_class) _
                 .GetCommunity
 
             If Not prefix.StringEmpty Then
