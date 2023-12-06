@@ -24,8 +24,8 @@ Module Program
         Dim hidden = contrastiveDivergence.runVisible(rbm, testData)
         Dim visual = contrastiveDivergence.runHidden(rbm, hidden)
 
-        Call PrettyPrint.ToString(hidden.toArray)
-        Call PrettyPrint.ToString(visual.toArray)
+        Call Console.WriteLine(PrettyPrint.ToString(hidden.toArray))
+        Call Console.WriteLine(PrettyPrint.ToString(visual.toArray))
 
         Pause()
     End Sub

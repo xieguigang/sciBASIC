@@ -27,12 +27,10 @@ Namespace utils
 
         Public Overloads Shared Function ToString(arrays As Double()()) As String
             Dim stringBuilder As StringBuilder = New StringBuilder()
-            stringBuilder.Append("[")
+            stringBuilder.AppendLine("[")
             For i = 0 To arrays.Length - 1
-                stringBuilder.Append(arrays(i).GetJson())
-                If i < arrays.Length - 1 Then
-                    stringBuilder.Append(ChrW(10))
-                End If
+                stringBuilder.Append("   " & arrays(i).GetJson())
+                stringBuilder.Append(ChrW(10))
             Next
             stringBuilder.Append("]")
             Return stringBuilder.ToString()
