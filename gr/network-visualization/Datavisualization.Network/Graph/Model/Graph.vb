@@ -206,7 +206,12 @@ Namespace Graph
                 If assignId Then
                     ' 20201223 ID必须要在哈希表添加之前进行赋值
                     ' 编号必须从零开始
-                    node.ID = buffer.Keys.Max + 1
+                    If buffer.Count = 0 Then
+                        node.ID = 1
+                    Else
+                        ' the buffer dictionary key is the node ID collection
+                        node.ID = buffer.Keys.Max + 1
+                    End If
                 End If
 
                 buffer.Add(node.ID, node)
