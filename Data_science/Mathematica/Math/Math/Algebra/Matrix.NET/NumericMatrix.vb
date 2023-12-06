@@ -479,7 +479,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Overloads Property Item(i As UInteger, j As UInteger) As Double Implements GeneralMatrix.X
+        Default Public Overloads Property Item(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(i)(j)
@@ -673,10 +673,10 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  Submatrix indices
         ''' </exception>
 
-        Public Overridable Sub SetMatrix(i0 As UInteger, i1 As UInteger, j0 As UInteger, j1 As UInteger, X As GeneralMatrix)
+        Public Overridable Sub SetMatrix(i0 As Integer, i1 As Integer, j0 As Integer, j1 As Integer, X As GeneralMatrix)
             Try
-                For i As UInteger = i0 To i1
-                    For j As UInteger = j0 To j1
+                For i As Integer = i0 To i1
+                    For j As Integer = j0 To j1
                         buffer(i)(j) = X(i - i0, j - j0)
                     Next
                 Next
@@ -700,8 +700,8 @@ Namespace LinearAlgebra.Matrix
 
         Public Overridable Sub SetMatrix(r As Integer(), c As Integer(), X As GeneralMatrix)
             Try
-                For i As UInteger = 0 To r.Length - 1
-                    For j As UInteger = 0 To c.Length - 1
+                For i As Integer = 0 To r.Length - 1
+                    For j As Integer = 0 To c.Length - 1
                         buffer(r(i))(c(j)) = X(i, j)
                     Next
                 Next
@@ -726,10 +726,10 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException"> Submatrix indices
         ''' </exception>
 
-        Public Overridable Sub SetMatrix(r As Integer(), j0 As UInteger, j1 As UInteger, X As GeneralMatrix)
+        Public Overridable Sub SetMatrix(r As Integer(), j0 As Integer, j1 As Integer, X As GeneralMatrix)
             Try
-                For i As UInteger = 0 To r.Length - 1
-                    For j As UInteger = j0 To j1
+                For i As Integer = 0 To r.Length - 1
+                    For j As Integer = j0 To j1
                         buffer(r(i))(j) = X(i, j - j0)
                     Next
                 Next
@@ -754,10 +754,10 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  Submatrix indices
         ''' </exception>
 
-        Public Overridable Sub SetMatrix(i0 As UInteger, i1 As UInteger, c As Integer(), X As GeneralMatrix)
+        Public Overridable Sub SetMatrix(i0 As Integer, i1 As Integer, c As Integer(), X As GeneralMatrix)
             Try
-                For i As UInteger = i0 To i1
-                    For j As UInteger = 0 To c.Length - 1
+                For i As Integer = i0 To i1
+                    For j As Integer = 0 To c.Length - 1
                         buffer(i)(c(j)) = X(i - i0, j)
                     Next
                 Next
@@ -1764,6 +1764,10 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             Return X
+        End Function
+
+        Public Function Dot(m2 As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
+            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace
