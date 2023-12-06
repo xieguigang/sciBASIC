@@ -101,7 +101,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
@@ -533,6 +532,10 @@ Namespace Graph
             Return retEdge
         End Function
 
+        ''' <summary>
+        ''' merge another graph into current graph object
+        ''' </summary>
+        ''' <param name="another"></param>
         Public Sub Merge(another As NetworkGraph)
             Dim mergeNode As Node
             Dim fromNode, toNode As Node
@@ -553,6 +556,26 @@ Namespace Graph
                 _nextEdgeId += 1
             Next
         End Sub
+
+        Public Function Union(another As NetworkGraph) As NetworkGraph
+            Dim g As New NetworkGraph
+
+            For Each v As Node In vertex
+                Call g.AddNode(v.Clone, assignId:=True)
+            Next
+            For Each v As Node In another.vertex
+                If g.GetElementByID(v.label) Is Nothing Then
+                    Call g.AddNode(v.Clone, assignId:=True)
+                Else
+                    ' union the node data?
+                    ' just do nothing, currently
+                End If
+            Next
+
+            For Each edge As Edge In graphEdges
+
+            Next
+        End Function
 
         Public Sub FilterNodes(match As Predicate(Of Node))
             For Each n As Node In vertex
@@ -582,27 +605,6 @@ Namespace Graph
             Else
                 Return $"Network graph [{vertices.Count} nodes, {graphEdges.Count} edges] has {communities.Length} community class ({communities.JoinBy(", ")})."
             End If
-        End Function
-
-        ''' <summary>
-        ''' 应用于网络之中的节点对象的克隆
-        ''' </summary>
-        ''' <param name="vertices"></param>
-        ''' <param name="U"></param>
-        ''' <returns></returns>
-        Private Shared Function ComputeIfNotExists(vertices As Dictionary(Of Node), U As Node) As Node
-            If Not vertices.Have(U) Then
-                U = New Node With {
-                    .data = New NodeData(U.data),
-                    .degree = U.degree,
-                    .ID = U.ID,
-                    .label = U.label,
-                    .pinned = U.pinned
-                }
-                vertices.Add(U)
-            End If
-
-            Return vertices(DirectCast(U, INamedValue).Key)
         End Function
 
         ''' <summary>
