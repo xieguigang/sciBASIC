@@ -170,6 +170,9 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Construct an m-by-n matrix of zeros. </summary>
         ''' <param name="m">Number of rows.</param>
         ''' <param name="n">Number of colums.</param>
+        ''' <remarks>
+        ''' m is row number and n is column number
+        ''' </remarks>
         Public Sub New(m As Integer, n As Integer)
             Dim A = New Double(m - 1)() {}
 
