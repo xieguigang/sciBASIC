@@ -45,7 +45,7 @@ Namespace math
             Return New DenseMatrix(m.assign([function]))
         End Function
 
-        Public Overloads Overrides Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As Matrix
+        Public Overloads Overrides Function apply(m2 As Matrix, [function] As DoubleDoubleFunction) As DenseMatrix
             Return New DenseMatrix(m.assign(m2.m, [function]))
         End Function
 
@@ -149,7 +149,7 @@ Namespace math
             Return lSum
         End Function
 
-        Public Shared Function splitColumns(m As Matrix, numPieces As Integer) As IList(Of Double()())
+        Public Shared Function splitColumns(m As DenseMatrix, numPieces As Integer) As IList(Of Double()())
 
             Dim pieces As IList(Of Double()()) = New List(Of Double()())(numPieces)
 
@@ -169,7 +169,7 @@ Namespace math
             Return pieces
         End Function
 
-        Public Shared Function concatColumns(ParamArray m As Matrix()) As Double()()
+        Public Shared Function concatColumns(ParamArray m As DenseMatrix()) As Double()()
             Dim totalCols = 0
             For i = 0 To m.Length - 1
                 totalCols += m(i).columns()
@@ -190,12 +190,12 @@ Namespace math
         End Function
 
 
-        Public Shared Function concatRows(m As IList(Of Matrix)) As Double()()
+        Public Shared Function concatRows(m As IList(Of DenseMatrix)) As Double()()
             Return concatRows(m.ToArray())
         End Function
 
 
-        Public Shared Function concatRows(ParamArray m As Matrix()) As Double()()
+        Public Shared Function concatRows(ParamArray m As DenseMatrix()) As Double()()
             Dim totalRows = 0
             For i = 0 To m.Length - 1
                 totalRows += m(i).rows()

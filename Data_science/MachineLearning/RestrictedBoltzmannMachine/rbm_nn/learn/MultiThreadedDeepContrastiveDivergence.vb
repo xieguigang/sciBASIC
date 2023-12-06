@@ -40,7 +40,7 @@ Namespace nn.rbm.learn
         Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             clock.reset()
@@ -94,7 +94,7 @@ Namespace nn.rbm.learn
                     previousLayerOutputs(r) = contrastiveDivergence.runVisible(rbm, sampleData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.splitColumns(DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)), rbmLayer.size())
             End If
         End Function
 

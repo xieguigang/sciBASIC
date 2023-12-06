@@ -33,7 +33,7 @@ Namespace nn.rbm.learn
         Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             clock.reset()
@@ -64,7 +64,7 @@ Namespace nn.rbm.learn
         Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(0).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(0).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             Dim hiddenStatesArray = New DenseMatrix(-1) {}
@@ -96,7 +96,7 @@ Namespace nn.rbm.learn
         Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
-            Dim trainingData As IList(Of DenseMatrix) = dataSet.splitColumns(rbmLayers(rbmLayers.Length - 1).size()) ' split dataset across rbms
+            Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(rbmLayers.Length - 1).size()) ' split dataset across rbms
 
             Dim samplePieces = trainingData
             Dim visibleStatesArray = New DenseMatrix(-1) {}
@@ -135,7 +135,7 @@ Namespace nn.rbm.learn
                     previousLayerOutputs(r) = contrastiveDivergence.runVisible(rbm, sampleData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.splitColumns(DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)), rbmLayer.size())
             End If
         End Function
 
@@ -152,7 +152,7 @@ Namespace nn.rbm.learn
                     ' previousLayer.getRBM(r).getHidden().getValues() };
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.splitColumns(DenseMatrix.make(DenseMatrix.concatColumns(previousLayerOutputs)), rbmLayer.size())
             End If
         End Function
 
@@ -168,7 +168,7 @@ Namespace nn.rbm.learn
                     previousLayerInputs(r) = contrastiveDivergence.runHidden(previousLayer.getRBM(r), trainingData(r))
                 Next
                 ' combine all outputs off hidden layer, then re-split them to input into the next visual layer
-                Return DenseMatrix.make(DenseMatrix.concatColumns(previousLayerInputs)).splitColumns(rbmLayer.size())
+                Return DenseMatrix.splitColumns(DenseMatrix.make(DenseMatrix.concatColumns(previousLayerInputs)), rbmLayer.size())
             End If
         End Function
 
