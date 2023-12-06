@@ -67,8 +67,8 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="i"></param>
         ''' <param name="j"></param>
         ''' <returns></returns>
-        Default Property X(i As UInteger, j As UInteger) As Double
-        Default Property X(i As UInteger, Optional byRow As Boolean = True) As Vector
+        Default Property X(i As Integer, j As Integer) As Double
+        Default Property X(i As Integer, Optional byRow As Boolean = True) As Vector
 
         ''' <summary>
         ''' column projection via column index
