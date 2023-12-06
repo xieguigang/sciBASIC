@@ -279,6 +279,7 @@ Namespace Graph
             Yield V
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Edge Implements ICloneable(Of Edge).Clone
             Return New Edge With {
                 .ID = ID,

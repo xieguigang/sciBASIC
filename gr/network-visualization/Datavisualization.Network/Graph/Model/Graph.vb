@@ -573,8 +573,12 @@ Namespace Graph
             Next
 
             For Each edge As Edge In graphEdges
-
+                If Not g.GetEdges(g.GetElementByID(edge.U.label), g.GetElementByID(edge.V.label)).Any Then
+                    Call g.AddEdge(edge.Clone)
+                End If
             Next
+
+            Return g
         End Function
 
         Public Sub FilterNodes(match As Predicate(Of Node))
