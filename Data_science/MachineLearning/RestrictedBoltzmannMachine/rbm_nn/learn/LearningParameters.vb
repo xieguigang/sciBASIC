@@ -1,5 +1,6 @@
 ﻿
 
+Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
 
 Namespace nn.rbm.learn

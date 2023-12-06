@@ -150,7 +150,7 @@ Namespace nn.rbm.learn
             ' Calculate the probabilities of turning the hidden units on.
             Dim hiddenProbabilities = hiddenActivations.apply(SIGMOID)
             ' Turn the hidden units on with their specified probabilities.
-            Dim hiddenStates As Matrix = hiddenProbabilities.apply(DenseMatrix.random([event].rows(), rbm.HiddenSize), ACTIVATION_STATE)
+            Dim hiddenStates As DenseMatrix = hiddenProbabilities.apply(DenseMatrix.random([event].rows(), rbm.HiddenSize), ACTIVATION_STATE)
 
             Return hiddenStates
         End Function
