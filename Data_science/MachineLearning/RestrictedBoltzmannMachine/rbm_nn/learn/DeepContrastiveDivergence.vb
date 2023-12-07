@@ -30,7 +30,7 @@ Namespace nn.rbm.learn
         ' 		   P(v,h1,h2,...hn) = P(v|h1)P(h1|h2)...P(hn-2|hn-1)P(hn-1|hn)
         ' 		   Train P(v|h1), use h1 for each v to train P(h1|h2), repeat until P(hn-1|hn) is trained
         ' 		 
-        Public Overridable Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
+        Public Sub learn(deepRBM As DeepRBM, dataSet As DenseMatrix)
             Dim rbmLayers = deepRBM.RbmLayers
 
             Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(0).size()) ' split dataset across rbms
@@ -61,7 +61,7 @@ Namespace nn.rbm.learn
         ' 		    hidden_states, A matrix where each row consists of the hidden units activated from the visible
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runVisible(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
+        Public Function runVisible(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
             Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(0).size()) ' split dataset across rbms
@@ -93,7 +93,7 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
+        Public Function runHidden(deepRBM As DeepRBM, dataSet As DenseMatrix) As DenseMatrix
             Dim rbmLayers = deepRBM.RbmLayers
 
             Dim trainingData As IList(Of DenseMatrix) = DenseMatrix.splitColumns(dataSet, rbmLayers(rbmLayers.Length - 1).size()) ' split dataset across rbms

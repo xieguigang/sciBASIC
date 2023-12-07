@@ -12,25 +12,25 @@ Namespace nn.rbm
     ''' </remarks>
     Public Class RBM
 
-        Public Overridable Property Weights As DenseMatrix
-
-        Public Sub New(visibleSize As Integer, hiddenSize As Integer)
-            Weights = DenseMatrix.randomGaussian(visibleSize, hiddenSize)
-        End Sub
-
-        Public Overridable ReadOnly Property VisibleSize As Integer
+        Public ReadOnly Property VisibleSize As Integer
             Get
                 Return Weights.rows()
             End Get
         End Property
 
-        Public Overridable ReadOnly Property HiddenSize As Integer
+        Public ReadOnly Property HiddenSize As Integer
             Get
                 Return Weights.columns()
             End Get
         End Property
 
-        Public Overridable Sub addVisibleNodes(n As Integer)
+        Public Property Weights As DenseMatrix
+
+        Public Sub New(visibleSize As Integer, hiddenSize As Integer)
+            Weights = DenseMatrix.randomGaussian(visibleSize, hiddenSize)
+        End Sub
+
+        Public Sub addVisibleNodes(n As Integer)
             Dim weights = DenseMatrix.make(VisibleSize + n, HiddenSize)
 
             ' copy original values

@@ -70,19 +70,19 @@ Namespace nn.rbm.deep
             hiddenSizeField = rbmLayers(rbmLayers.Length - 1).size() * rbmLayers(rbmLayers.Length - 1).getRBM(0).VisibleSize
         End Sub
 
-        Public Overridable ReadOnly Property RbmLayers As RBMLayer()
+        Public ReadOnly Property RbmLayers As RBMLayer()
             Get
                 Return rbmLayersField
             End Get
         End Property
 
-        Public Overridable ReadOnly Property VisibleSize As Integer
+        Public ReadOnly Property VisibleSize As Integer
             Get
                 Return visibleSizeField
             End Get
         End Property
 
-        Public Overridable ReadOnly Property HiddenSize As Integer
+        Public ReadOnly Property HiddenSize As Integer
             Get
                 Return hiddenSizeField
             End Get

@@ -34,7 +34,7 @@ Namespace nn.rbm.learn
         ''' learn a sequence of events </summary>
         ''' <param name="rbm"> </param>
         ''' <param name="events"> </param>
-        Public Overridable Sub learn(rbm As RBM, events As IList(Of DenseMatrix))
+        Public Sub learn(rbm As RBM, events As IList(Of DenseMatrix))
             checkRBMConfigurations(rbm, events)
 
             'LOGGER.info("Start Learning single recurrent event of (" + events.Count + " sequences)");
@@ -53,7 +53,7 @@ Namespace nn.rbm.learn
         ''' learn many independent temporal events </summary>
         ''' <param name="rbm"> </param>
         ''' <param name="allEvents"> </param>
-        Public Overridable Sub learnMany(rbm As RBM, allEvents As IList(Of IList(Of DenseMatrix)))
+        Public Sub learnMany(rbm As RBM, allEvents As IList(Of IList(Of DenseMatrix)))
             checkRBMConfigurations(rbm, allEvents(0))
 
             For epoch = 0 To learningParameters.Epochs - 1
@@ -140,7 +140,7 @@ Namespace nn.rbm.learn
         ' 	
         ' 		    Recurrent version pass in an empty t-1 visible layer
         ' 		 
-        Public Overridable Function runVisible(rbm As RBM, [event] As DenseMatrix) As DenseMatrix
+        Public Function runVisible(rbm As RBM, [event] As DenseMatrix) As DenseMatrix
             Dim weights = rbm.Weights
 
             Dim currentAndNoNextEvent As DenseMatrix = [event].addColumns(DenseMatrix.make([event].rows(), [event].columns() * memory)) ' append an empty visible layer for next guess
@@ -156,7 +156,7 @@ Namespace nn.rbm.learn
         End Function
 
 
-        Public Overridable Function visualizeEvents(rbm As RBM, events As IList(Of DenseMatrix)) As DenseMatrix
+        Public Function visualizeEvents(rbm As RBM, events As IList(Of DenseMatrix)) As DenseMatrix
             Dim weights = rbm.Weights
 
             Dim lastVisibleStates As DenseMatrix
@@ -195,7 +195,7 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(rbm As RBM, hidden As DenseMatrix) As DenseMatrix
+        Public Function runHidden(rbm As RBM, hidden As DenseMatrix) As DenseMatrix
 
             Dim weights = rbm.Weights
 

@@ -15,11 +15,11 @@ Namespace nn.rbm.deep
             Me.rbms = rbms
         End Sub
 
-        Public Overridable Function getRBM(r As Integer) As RBM
+        Public Function getRBM(r As Integer) As RBM
             Return rbms(r)
         End Function
 
-        Public Overridable Function size() As Integer
+        Public Function size() As Integer
             Return rbms.Length
         End Function
 

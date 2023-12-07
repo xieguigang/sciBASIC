@@ -33,7 +33,7 @@ Namespace nlp
             Next
         End Sub
 
-        Public Overridable Sub add(word As String)
+        Public Sub add(word As String)
             ' LOGGER.info("adding: " + word);
             If wordVectorsField.ContainsKey(word) Then
                 Return
@@ -42,21 +42,21 @@ Namespace nlp
             wordVectorsField(word) = wordEncoder.encode(word)
         End Sub
 
-        Public Overridable Function contains(word As String) As Boolean
+        Public Function contains(word As String) As Boolean
             Return wordVectorsField.ContainsKey(word)
         End Function
 
-        Public Overridable Function getVector(word As String) As DenseMatrix
+        Public Function getVector(word As String) As DenseMatrix
             Return wordVectorsField(word)
         End Function
 
-        Public Overridable ReadOnly Property WordVectors As IList(Of DenseMatrix)
+        Public ReadOnly Property WordVectors As IList(Of DenseMatrix)
             Get
                 Return New List(Of DenseMatrix)(wordVectorsField.Values)
             End Get
         End Property
 
-        Public Overridable Function buildSentence(wordVectors As IList(Of DenseMatrix)) As String
+        Public Function buildSentence(wordVectors As IList(Of DenseMatrix)) As String
             Dim words As IList(Of String) = New List(Of String)()
             For Each wordVector In wordVectors
                 words.Add(getClosestWord(wordVector))
@@ -65,7 +65,7 @@ Namespace nlp
         End Function
 
         ' TODO speed up
-        Public Overridable Function getClosestWord(wordVector As DenseMatrix) As String
+        Public Function getClosestWord(wordVector As DenseMatrix) As String
 
             Dim distanceFunction As DistanceFunction = New EuclideanDistanceFunction()
 
@@ -81,7 +81,7 @@ Namespace nlp
             Return closest
         End Function
 
-        Public Overridable Function size() As Integer
+        Public Function size() As Integer
             Return wordVectorsField.Count
         End Function
 

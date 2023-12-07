@@ -35,11 +35,11 @@ Namespace nn.rbm.learn
         ''' too large </summary>
         ''' <param name="rbm"> </param>
         ''' <param name="dataSet"> </param>
-        Public Overridable Sub learn(rbm As RBM, dataSet As DenseMatrix)
+        Public Sub learn(rbm As RBM, dataSet As DenseMatrix)
             learn(rbm, New List(Of DenseMatrix)() From {dataSet})
         End Sub
 
-        Public Overridable Sub learn(rbm As RBM, dataSets As IReadOnlyCollection(Of DenseMatrix))
+        Public Sub learn(rbm As RBM, dataSets As IReadOnlyCollection(Of DenseMatrix))
             Dim weights = rbm.Weights
 
             clock.start()
@@ -89,7 +89,7 @@ Namespace nn.rbm.learn
         ' 		    hidden_states, A matrix where each row consists of the hidden units activated from the visible
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runVisible(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
+        Public Function runVisible(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
             Dim numberSamples As Integer = dataSet.rows()
             Dim weights = rbm.Weights
 
@@ -109,7 +109,7 @@ Namespace nn.rbm.learn
         ' 		    visible_states, A matrix where each row consists of the visible units activated from the hidden
         ' 		    units in the data matrix passed in.
         ' 		 
-        Public Overridable Function runHidden(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
+        Public Function runHidden(rbm As RBM, dataSet As DenseMatrix) As DenseMatrix
             Dim numberSamples As Integer = dataSet.rows()
             Dim weights = rbm.Weights
 
@@ -130,7 +130,7 @@ Namespace nn.rbm.learn
         ' 		    Note that we only initialize the network *once*, so these samples are correlated.
         ' 		    samples: A matrix, where each row is a sample of the visible units produced while the network was daydreaming.
         ' 		 
-        Public Overridable Function dayDream(rbm As RBM, dataSet As DenseMatrix, dreamSamples As Integer) As ISet(Of DenseMatrix)
+        Public Function dayDream(rbm As RBM, dataSet As DenseMatrix, dreamSamples As Integer) As ISet(Of DenseMatrix)
             Dim weights = rbm.Weights
 
             ' Take the first sample from a uniform distribution.

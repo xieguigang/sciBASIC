@@ -10,7 +10,7 @@ Namespace nn.rbm.save
 
         Private Const DELIM As Char = ","c
 
-        Public Overridable Sub save(rbm As RBM, file As String)
+        Public Sub save(rbm As RBM, file As String)
             'try
             '{
             '	System.IO.StreamWriter writer = new System.IO.StreamWriter(file);
@@ -23,7 +23,7 @@ Namespace nn.rbm.save
             '}
         End Sub
 
-        Public Overridable Sub save(rbm As RBM, writer As TextWriter)
+        Public Sub save(rbm As RBM, writer As TextWriter)
             'try
             '{
             '	writeStringBuilderData(rbm, writer);
@@ -34,7 +34,7 @@ Namespace nn.rbm.save
             '}
         End Sub
 
-        Public Overridable Sub writeStringBuilderData(rbm As RBM, writer As TextWriter)
+        Public Sub writeStringBuilderData(rbm As RBM, writer As TextWriter)
             'writer.write(rbm.VisibleSize.ToString());
             'writer.write(DELIM);
             'writer.write(rbm.HiddenSize.ToString());
@@ -56,7 +56,7 @@ Namespace nn.rbm.save
             '}
         End Sub
 
-        Public Overridable Function load(file As String) As RBM
+        Public Function load(file As String) As RBM
             'try
             '{
             '	return buildRBM(IOUtils.readLines(new System.IO.StreamReader(file)));
@@ -69,7 +69,7 @@ Namespace nn.rbm.save
             Throw New NotImplementedException()
         End Function
 
-        Public Overridable Function buildRBM(lines As IList(Of String)) As RBM
+        Public Function buildRBM(lines As IList(Of String)) As RBM
             'int[] metaData = COMMA_TO_INT_ARRAY_DESERIALIZER.apply(lines[0]);
             'int visibleSize = metaData[0];
             'int hiddenSize = metaData[1];

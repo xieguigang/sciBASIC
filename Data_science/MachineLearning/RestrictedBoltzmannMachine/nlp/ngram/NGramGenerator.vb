@@ -14,7 +14,7 @@ Namespace nlp.ngram
             Me.n = n
         End Sub
 
-        Public Overridable Function generate(sentence As String) As IList(Of String)
+        Public Function generate(sentence As String) As IList(Of String)
 
             Dim ngrams As IList(Of String) = New List(Of String)()
             Dim words = sentence.StringSplit(" ", True)
@@ -24,7 +24,7 @@ Namespace nlp.ngram
             Return ngrams
         End Function
 
-        Public Overridable Function concat(words As String(), start As Integer, [end] As Integer) As String
+        Public Function concat(words As String(), start As Integer, [end] As Integer) As String
             Dim sb As StringBuilder = New StringBuilder()
             For i = start To [end] - 1
                 sb.Append(If(i > start, " ", "") & words(i))

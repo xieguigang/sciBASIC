@@ -18,7 +18,7 @@ Namespace nn.rbm.learn
             Me.learningParameters = learningParameters
         End Sub
 
-        Public Overridable Function learn(rbm As RBM, trainData As IList(Of DenseMatrix), teacherSignals As IList(Of DenseMatrix)) As Double
+        Public Function learn(rbm As RBM, trainData As IList(Of DenseMatrix), teacherSignals As IList(Of DenseMatrix)) As Double
             Dim [error] As Double = 0
             For epoch = 0 To learningParameters.Epochs - 1
                 [error] = 0
@@ -41,7 +41,7 @@ Namespace nn.rbm.learn
             Return [error]
         End Function
 
-        Public Overridable Function backPropagate(rbm As RBM, output As DenseMatrix, teacherSignals As DenseMatrix) As Double
+        Public Function backPropagate(rbm As RBM, output As DenseMatrix, teacherSignals As DenseMatrix) As Double
             Dim errors = calculateErrors(output, teacherSignals)
             adjustWeights(rbm, output, errors)
             Return calculateAvgSquaredError(output, teacherSignals)
@@ -50,7 +50,7 @@ Namespace nn.rbm.learn
         ''' <summary>
         ''' feed forward
         ''' </summary>
-        Public Overridable Function feedFoward(rbm As RBM, input As DenseMatrix) As DenseMatrix
+        Public Function feedFoward(rbm As RBM, input As DenseMatrix) As DenseMatrix
             Dim output = DenseMatrix.make(1, rbm.HiddenSize)
 
             Dim weights = rbm.Weights

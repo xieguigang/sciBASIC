@@ -10,35 +10,35 @@
 
         Private hiddenUnitsPerRBMField As Integer = 1
 
-        Public Overridable ReadOnly Property NumRBMS As Integer
+        Public ReadOnly Property NumRBMS As Integer
             Get
                 Return numRBMSField
             End Get
         End Property
 
-        Public Overridable Function setNumRBMS(numRBMS As Integer) As LayerParameters
+        Public Function setNumRBMS(numRBMS As Integer) As LayerParameters
             numRBMSField = numRBMS
             Return Me
         End Function
 
-        Public Overridable ReadOnly Property VisibleUnitsPerRBM As Integer
+        Public ReadOnly Property VisibleUnitsPerRBM As Integer
             Get
                 Return visibleUnitsPerRBMField
             End Get
         End Property
 
-        Public Overridable Function setVisibleUnitsPerRBM(visibleUnitsPerRBM As Integer) As LayerParameters
+        Public Function setVisibleUnitsPerRBM(visibleUnitsPerRBM As Integer) As LayerParameters
             visibleUnitsPerRBMField = visibleUnitsPerRBM
             Return Me
         End Function
 
-        Public Overridable ReadOnly Property HiddenUnitsPerRBM As Integer
+        Public ReadOnly Property HiddenUnitsPerRBM As Integer
             Get
                 Return hiddenUnitsPerRBMField
             End Get
         End Property
 
-        Public Overridable Function setHiddenUnitsPerRBM(hiddenUnitsPerRBM As Integer) As LayerParameters
+        Public Function setHiddenUnitsPerRBM(hiddenUnitsPerRBM As Integer) As LayerParameters
             hiddenUnitsPerRBMField = hiddenUnitsPerRBM
             Return Me
         End Function

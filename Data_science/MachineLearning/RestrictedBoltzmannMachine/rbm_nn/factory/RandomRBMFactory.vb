@@ -11,7 +11,7 @@ Namespace nn.rbm.factory
         Public Sub New()
         End Sub
 
-        Public Overridable Function build(numVisibleNodes As Integer, numHiddenNodes As Integer) As RBM Implements RBMFactory.build
+        Public Function build(numVisibleNodes As Integer, numHiddenNodes As Integer) As RBM Implements RBMFactory.build
             Dim rbm As RBM = New RBM(numVisibleNodes, numHiddenNodes)
 
             Dim weights = rbm.Weights

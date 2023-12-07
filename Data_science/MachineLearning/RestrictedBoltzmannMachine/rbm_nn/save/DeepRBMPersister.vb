@@ -11,7 +11,7 @@ Namespace nn.rbm.save
 
         Private Shared ReadOnly RBM_PERSISTER As RBMPersister = New RBMPersister()
 
-        Public Overridable Sub save(deepRBM As DeepRBM, file As String)
+        Public Sub save(deepRBM As DeepRBM, file As String)
             'try
             '{
             '	System.IO.StreamWriter writer = new System.IO.StreamWriter(file);
@@ -48,7 +48,7 @@ Namespace nn.rbm.save
             '}
         End Sub
 
-        Public Overridable Function load(file As String) As DeepRBM
+        Public Function load(file As String) As DeepRBM
             'try
             '{
             '	IList<string> lines = IOUtils.readLines(new System.IO.StreamReader(file));

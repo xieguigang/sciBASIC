@@ -20,58 +20,58 @@ Namespace nn.rbm.learn
 
         Private memoryField As Integer = 1
 
-        Public Overridable ReadOnly Property LearningRate As Double
+        Public ReadOnly Property LearningRate As Double
             Get
                 Return learningRateField
             End Get
         End Property
 
-        Public Overridable Function setLearningRate(learningRate As Double) As LearningParameters
+        Public Function setLearningRate(learningRate As Double) As LearningParameters
             learningRateField = learningRate
             Return Me
         End Function
 
-        Public Overridable ReadOnly Property LogisticsFunction As DoubleFunction
+        Public ReadOnly Property LogisticsFunction As DoubleFunction
             Get
                 Return logisticsFunctionField
             End Get
         End Property
 
-        Public Overridable Function setLogisticsFunction(logisticsFunction As DoubleFunction) As LearningParameters
+        Public Function setLogisticsFunction(logisticsFunction As DoubleFunction) As LearningParameters
             logisticsFunctionField = logisticsFunction
             Return Me
         End Function
 
-        Public Overridable ReadOnly Property Epochs As Integer
+        Public ReadOnly Property Epochs As Integer
             Get
                 Return epochsField
             End Get
         End Property
 
-        Public Overridable Function setEpochs(epochs As Integer) As LearningParameters
+        Public Function setEpochs(epochs As Integer) As LearningParameters
             epochsField = epochs
             Return Me
         End Function
 
 
-        Public Overridable ReadOnly Property Log As Boolean
+        Public ReadOnly Property Log As Boolean
             Get
                 Return logField
             End Get
         End Property
 
-        Public Overridable Function setLog(log As Boolean) As LearningParameters
+        Public Function setLog(log As Boolean) As LearningParameters
             logField = log
             Return Me
         End Function
 
-        Public Overridable ReadOnly Property Memory As Integer
+        Public ReadOnly Property Memory As Integer
             Get
                 Return memoryField
             End Get
         End Property
 
-        Public Overridable Function setMemory(memory As Integer) As LearningParameters
+        Public Function setMemory(memory As Integer) As LearningParameters
             memoryField = memory
             Return Me
         End Function

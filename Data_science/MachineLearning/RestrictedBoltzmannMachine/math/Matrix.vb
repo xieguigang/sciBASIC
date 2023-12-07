@@ -94,71 +94,71 @@ Namespace math
 
         ' MUTABLE OPERATIONS 
 
-        Public Overridable Function data() As GeneralMatrix
+        Public Function data() As GeneralMatrix
             Return m
         End Function
 
-        Public Overridable Function toArray() As Double()()
+        Public Function toArray() As Double()()
             Return m.RowVectors().[Select](Function(v) v.ToArray()).ToArray()
         End Function
 
 
-        Public Overridable Function [set](i As Integer, j As Integer, value As Double) As DenseMatrix
+        Public Function [set](i As Integer, j As Integer, value As Double) As DenseMatrix
             m(i, j) = value
             Return Me
         End Function
 
 
-        Public Overridable Function row(pRow As Integer) As Vector
+        Public Function row(pRow As Integer) As Vector
             Return m(pRow)
         End Function
 
-        Public Overridable Function [dim]() As Integer
+        Public Function [dim]() As Integer
             Return rows() * columns()
         End Function
 
-        Public Overridable Function rows() As Integer
+        Public Function rows() As Integer
             Return m.RowDimension
         End Function
 
-        Public Overridable Function columns() As Integer
+        Public Function columns() As Integer
             Return m.ColumnDimension
         End Function
 
 
-        Public Overridable Function [get](i As Integer, j As Integer) As Double
+        Public Function [get](i As Integer, j As Integer) As Double
             Return m(i, j)
         End Function
 
-        Public Overridable Function add(m2 As DenseMatrix) As DenseMatrix
+        Public Function add(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, ADDField)
         End Function
 
-        Public Overridable Function subtract(m2 As DenseMatrix) As DenseMatrix
+        Public Function subtract(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, SUBTRACTField)
         End Function
 
-        Public Overridable Function multiply(m2 As DenseMatrix) As DenseMatrix
+        Public Function multiply(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, MULTIPLYField)
         End Function
 
-        Public Overridable Function multiply(s As Double) As DenseMatrix
+        Public Function multiply(s As Double) As DenseMatrix
             Return apply(New functions.Multiply(s))
         End Function
 
-        Public Overridable Function divide(m2 As DenseMatrix) As DenseMatrix
+        Public Function divide(m2 As DenseMatrix) As DenseMatrix
             Return apply(m2, DIVIDEField)
         End Function
 
-        Public Overridable Function divide(s As Double) As DenseMatrix
+        Public Function divide(s As Double) As DenseMatrix
             Return apply(New functions.Divide(s))
         End Function
 
-        Public Overridable Function pow(power As Double) As DenseMatrix
+        Public Function pow(power As Double) As DenseMatrix
             Return apply(New Power(power))
         End Function
 
-        Public Overridable Function sum() As Double
+        Public Function sum() As Double
             Dim lSum = 0.0
             For i = 0 To rows() - 1
                 For j = 0 To columns() - 1
