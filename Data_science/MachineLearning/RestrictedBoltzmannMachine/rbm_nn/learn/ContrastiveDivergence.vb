@@ -69,7 +69,7 @@ Namespace nn.rbm.learn
 
                     ' Update weights.
                     Dim updates = positiveAssociations.subtract(negativeAssociations).divide(numberSamples).multiply(learningParameters.LearningRate)
-                    weights.add(updates)
+                    weights = weights.add(updates)
 
                     [error] += dataSet.copy().subtract(negativeVisibleProbabilities).pow(2).sum()
                 Next
@@ -79,6 +79,8 @@ Namespace nn.rbm.learn
                 End If
                 clock.reset()
             Next
+
+            rbm.Weights = weights
         End Sub
 
         ' 
