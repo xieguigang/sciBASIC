@@ -143,7 +143,7 @@ Namespace nn.rbm.learn
             ' Start the alternating Gibbs sampling.
             ' Note that we keep the hidden units binary states, but leave the visible units as real probabilities.
             ' See section 3 of Hinton's "A Practical Guide to Training Restricted Boltzmann Machines" for more on why.
-            For i = 0 To dreamSamples - 1
+            For i As Integer = 0 To dreamSamples - 1
 
                 ' Calculate the activations of the hidden units.
                 Dim visibleValues = sample
