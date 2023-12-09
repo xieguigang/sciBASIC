@@ -136,7 +136,6 @@ Namespace LinearAlgebra.Matrix
     <Serializable>
     Public Class NumericMatrix : Inherits Vector(Of Double())
         Implements ICloneable
-        Implements ISerializable
         Implements IDisposable
         Implements GeneralMatrix
 
@@ -171,6 +170,9 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Construct an m-by-n matrix of zeros. </summary>
         ''' <param name="m">Number of rows.</param>
         ''' <param name="n">Number of colums.</param>
+        ''' <remarks>
+        ''' m is row number and n is column number
+        ''' </remarks>
         Public Sub New(m As Integer, n As Integer)
             Dim A = New Double(m - 1)() {}
 
@@ -479,7 +481,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Overloads Property Item(i%, j%) As Double Implements GeneralMatrix.X
+        Default Public Overloads Property Item(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(i)(j)
@@ -680,8 +682,8 @@ Namespace LinearAlgebra.Matrix
                         buffer(i)(j) = X(i - i0, j - j0)
                     Next
                 Next
-            Catch e As System.IndexOutOfRangeException
-                Throw New System.IndexOutOfRangeException("Submatrix indices", e)
+            Catch e As IndexOutOfRangeException
+                Throw New IndexOutOfRangeException("Submatrix indices", e)
             End Try
         End Sub
 
@@ -695,7 +697,7 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="X">   
         ''' A(r(:),c(:))
         ''' </param>
-        ''' <exception cref="System.IndexOutOfRangeException">  Submatrix indices
+        ''' <exception cref="IndexOutOfRangeException">  Submatrix indices
         ''' </exception>
 
         Public Overridable Sub SetMatrix(r As Integer(), c As Integer(), X As GeneralMatrix)
@@ -705,8 +707,8 @@ Namespace LinearAlgebra.Matrix
                         buffer(r(i))(c(j)) = X(i, j)
                     Next
                 Next
-            Catch e As System.IndexOutOfRangeException
-                Throw New System.IndexOutOfRangeException("Submatrix indices", e)
+            Catch e As IndexOutOfRangeException
+                Throw New IndexOutOfRangeException("Submatrix indices", e)
             End Try
         End Sub
 
@@ -1666,14 +1668,6 @@ Namespace LinearAlgebra.Matrix
             Return sb.ToString
         End Function
 
-        ''' <summary>
-        ''' A method called when serializing this class
-        ''' </summary>
-        ''' <param name="info"></param>
-        ''' <param name="context"></param>
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
-
         Public Shared Widening Operator CType(data#(,)) As NumericMatrix
             Return New NumericMatrix(data.RowIterator.ToArray)
         End Operator
@@ -1746,7 +1740,12 @@ Namespace LinearAlgebra.Matrix
             Return New NumericMatrix(rowDimension, columnDimension)
         End Function
 
-        Public Function DotProduct(B As NumericMatrix) As NumericMatrix
+        ''' <summary>
+        ''' 矩阵乘积(matrix product，也叫matmul product)：A 的列数必须和 B 的行数相等
+        ''' </summary>
+        ''' <param name="B"></param>
+        ''' <returns></returns>
+        Public Function DotProduct(B As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
             Dim X As New NumericMatrix(m, B.ColumnDimension)
             Dim C As Double()() = X.Array
             Dim Bcolj As Double() = New Double(n - 1) {}

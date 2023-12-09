@@ -157,6 +157,14 @@ Namespace Linq
             Return v.i = i
         End Operator
 
+        Public Shared Operator =(v As SeqValue(Of T), x As T) As Boolean
+            Return v.value.Equals(x)
+        End Operator
+
+        Public Shared Operator <>(v As SeqValue(Of T), x As T) As Boolean
+            Return Not v.value.Equals(x)
+        End Operator
+
         ''' <summary>
         ''' Get value from <see cref="value"/> property.
         ''' </summary>

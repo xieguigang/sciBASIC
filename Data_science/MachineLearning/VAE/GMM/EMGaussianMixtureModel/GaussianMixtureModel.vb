@@ -137,7 +137,7 @@ Namespace GMM.EMGaussianMixtureModel
                     Dim xiMinusMu As RealMatrix = (New RealMatrix(m_data(i).entityVector)) - mukList(j)
                     Dim xiMinusMuT As RealMatrix = CType(xiMinusMu.Transpose(), RealMatrix)
 
-                    insideSumVal = CType(insideSumVal + xiMinusMu.DotProduct(xiMinusMuT) * wkList(i)(j), RealMatrix)
+                    insideSumVal = CType(insideSumVal + DirectCast(xiMinusMu.DotProduct(xiMinusMuT), RealMatrix) * wkList(i)(j), RealMatrix)
                 Next
 
                 If NkList(j) = 0 Then

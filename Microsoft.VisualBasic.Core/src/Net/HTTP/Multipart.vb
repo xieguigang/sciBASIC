@@ -175,7 +175,7 @@ Namespace Net.Http
                         .url = api
                     }
                 Catch ex As Exception
-                    Throw ex
+                    Throw
                 End Try
             End Using
         End Function

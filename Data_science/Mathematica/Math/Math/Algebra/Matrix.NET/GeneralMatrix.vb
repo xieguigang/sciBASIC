@@ -109,6 +109,12 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">   Submatrix indices
         ''' </exception>
         Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
+        ''' <summary>
+        ''' matrix dot product
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        Function Dot(m2 As GeneralMatrix) As GeneralMatrix
 
     End Interface
 End Namespace

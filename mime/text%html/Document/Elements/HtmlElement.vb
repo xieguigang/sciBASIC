@@ -355,14 +355,13 @@ Namespace Document
         ''' The HTMLCollection Object represents a collection Of nodes. The nodes can be accessed by index numbers. The index starts at 0.
         ''' Tip: You can use the length Property Of the HTMLCollection Object To determine the number Of elements With a specified Class name, Then you can Loop through all elements And extract the info you want.
         ''' </remarks>
-        Public Function getElementsByClassName(classname As String) As HtmlElement() Implements IStyleSelector(Of HtmlElement).GetElementsByClassName
+        Public Function getElementsByClassName(classname As String) As IEnumerable(Of HtmlElement) Implements IStyleSelector(Of HtmlElement).GetElementsByClassName
             Static api As MethodInfo = GetType(HtmlElement).GetMethod(NameOf(getElementsByClassName))
 
             Return classIndex _
                 .TryGetValue(classname) _
                 .JoinIterates(Query(api, classname)) _
-                .Distinct _
-                .ToArray
+                .Distinct
         End Function
 
         ''' <summary>

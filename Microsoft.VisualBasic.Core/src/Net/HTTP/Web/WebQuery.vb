@@ -81,7 +81,7 @@ Namespace Net.Http
     ''' </remarks>
     ''' 
     <FrameworkConfig(WebQuery(Of Boolean).WebQueryDebug)>
-    Public Class WebQuery(Of Context) : Implements IDisposable
+    Public Class WebQuery(Of Context) : Implements IDisposable, IHttpGet
 
         Friend url As Func(Of Context, String)
         Friend contextGuid As IToString(Of Context)
@@ -235,11 +235,21 @@ Namespace Net.Http
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function queryTextImpl(context As Context, type As String) As (cache$, hitCache As Boolean)
-            Dim url = Me.url(context)
-            Dim id$ = Me.contextGuid(context)
+            Return queryTextImpl(id:=contextGuid(context), url:=url(context), type)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="id"></param>
+        ''' <param name="url"></param>
+        ''' <param name="type">the file extension name, for indicate the file type, example as: *.txt</param>
+        ''' <returns></returns>
+        Private Function queryTextImpl(id As String, url As String, type As String) As (cache$, hitCache As Boolean)
             ' the cache path
-            Dim cache_file$
+            Dim cache_file As String
             ' 如果是进行一些分子名称的查询,可能会因为分子名称超长而导致文件系统api调用出错
             ' 所以在这里需要截短一下文件名称
             ' 因为路径的总长度不能超过260个字符,所以文件名这里截短到200字符以内,留给文件夹名称一些长度
@@ -263,6 +273,12 @@ Namespace Net.Http
             'End If
 
             Return (cache_file, hitCache)
+        End Function
+
+        Private Function GetText(url As String) As String Implements IHttpGet.GetText
+            Dim q = queryTextImpl(id:=url.MD5, url, type:="*.txt")
+            Dim cache As String = Me.cache.ReadAllText(q.cache)
+            Return cache
         End Function
 
         ''' <summary>
