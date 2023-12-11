@@ -393,7 +393,8 @@ Namespace Document
                                             Where TypeOf obj Is HtmlElement
                                             Select DirectCast(obj, HtmlElement)
 
-                Dim collection As HtmlElement() = calls.Invoke(node, {arg})
+                Dim pull As IEnumerable(Of HtmlElement) = calls.Invoke(node, {arg})
+                Dim collection As HtmlElement() = pull.SafeQuery.ToArray
 
                 If collection.Length > 0 Then
                     For Each item In collection

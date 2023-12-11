@@ -601,7 +601,7 @@ Namespace Graph
                 End If
             Next
 
-            For Each edge As Edge In graphEdges
+            For Each edge As Edge In graphEdges.JoinIterates(another.graphEdges)
                 If Not g.GetEdges(g.GetElementByID(edge.U.label), g.GetElementByID(edge.V.label)).Any Then
                     Call g.AddEdge(edge.Clone)
                 End If
