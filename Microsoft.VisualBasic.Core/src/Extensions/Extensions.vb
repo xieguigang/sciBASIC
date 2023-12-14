@@ -418,13 +418,18 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' This is a safe function: if the source string collection is nothing, then whistle function will returns a empty string instead of throw exception. 
-    ''' (<see cref="String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
+    ''' Join the string tokens with a given delimiter text.
     ''' </summary>
     ''' <param name="tokens"></param>
     ''' <param name="delimiter"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' This is a safe function: if the source string collection is nothing, 
+    ''' then whistle function will returns a empty string instead of throw 
+    ''' exception.
     ''' 
+    ''' (a safe wrapper of <see cref="System.String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
+    ''' </remarks>
     <DebuggerStepThrough>
     <Extension>
     Public Function JoinBy(tokens As IEnumerable(Of String), delimiter$) As String

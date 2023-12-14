@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.[Default]
 
 Namespace Language
 
@@ -85,6 +86,34 @@ Namespace Language
             Else
                 Return str.Value.Trim(c)
             End If
+        End Function
+
+        ''' <summary>
+        ''' Returns a zero-based, one-dimensional array containing a specified number of
+        ''' substrings.
+        ''' </summary>
+        ''' <param name="str">Required. String expression containing substrings And delimiters.</param>
+        ''' <param name="deli">
+        ''' Optional. Any single character used to identify substring limits. If Delimiter
+        ''' Is omitted, the space character (" ") Is assumed to be the delimiter.
+        ''' </param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="regexp"></param>
+        ''' <returns>
+        ''' String array. If Expression Is a zero-length string (""), 
+        ''' Split returns a single-element array containing a zero-length 
+        ''' string. If Delimiter Is a zero-length string, Or if it does 
+        ''' Not appear anywhere in Expression, Split returns a single-element
+        ''' array containing the entire Expression string.
+        ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String),
+                              Optional deli$ = " ",
+                              Optional ignoreCase As Boolean = False,
+                              Optional regexp As Boolean = False) As String()
+
+            Return New DefaultString(str.Value).Split(deli, ignoreCase, regexp)
         End Function
 
         ''' <summary>
