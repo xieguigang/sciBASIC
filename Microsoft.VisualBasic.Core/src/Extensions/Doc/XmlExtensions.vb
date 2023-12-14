@@ -179,7 +179,7 @@ Public Module XmlExtensions
                 Dim ignores As New XmlAttributes()
 
                 ignores.XmlIgnore = True
-                args.Add(GetType(XmlComment), ignores)
+                args.Add(GetType(XmlComment), "TypeComment", ignores)
 
                 Dim handler As New XmlSerializer(type, [overrides]:=args)
                 Dim obj = handler.Deserialize(stream)
