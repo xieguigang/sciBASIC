@@ -106,7 +106,7 @@ Namespace Components
                 Case CDFDataTypes.FLOAT : Return Single.Parse(value)
                 Case CDFDataTypes.INT : Return Integer.Parse(value)
                 Case CDFDataTypes.SHORT : Return Short.Parse(value)
-                Case CDFDataTypes.LONG : Return Long.Parse(value)
+                Case CDFDataTypes.INT64 : Return Long.Parse(value)
                 Case CDFDataTypes.BOOLEAN
 
                     If value.IsPattern("\d+") Then
@@ -133,7 +133,7 @@ Namespace Components
                 Case CDFDataTypes.FLOAT : Return BitConverter.GetBytes(Single.Parse(value))
                 Case CDFDataTypes.INT : Return BitConverter.GetBytes(Integer.Parse(value))
                 Case CDFDataTypes.SHORT : Return BitConverter.GetBytes(Short.Parse(value))
-                Case CDFDataTypes.LONG : Return BitConverter.GetBytes(Long.Parse(value))
+                Case CDFDataTypes.INT64 : Return BitConverter.GetBytes(Long.Parse(value))
 
                 Case Else
                     Throw New NotSupportedException

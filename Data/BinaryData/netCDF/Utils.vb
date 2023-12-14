@@ -169,7 +169,7 @@ Module Utils
             Case CDFDataTypes.DOUBLE : Return buffer.ReadDoubles(size)
             Case CDFDataTypes.FLOAT : Return buffer.ReadSingles(size)
             Case CDFDataTypes.INT : Return buffer.ReadInt32s(size)
-            Case CDFDataTypes.LONG : Return buffer.ReadInt64s(size)
+            Case CDFDataTypes.INT64 : Return buffer.ReadInt64s(size)
             Case CDFDataTypes.SHORT : Return buffer.ReadInt16s(size)
             Case Else
                 ' istanbul ignore next
@@ -197,7 +197,7 @@ Module Utils
             Case CDFDataTypes.DOUBLE : Return CastNumber(Of Double)(reverse, AddressOf BitConverter.ToDouble)
             Case CDFDataTypes.FLOAT : Return CastNumber(Of Single)(reverse, AddressOf BitConverter.ToSingle)
             Case CDFDataTypes.INT : Return CastNumber(Of Integer)(reverse, AddressOf BitConverter.ToInt32)
-            Case CDFDataTypes.LONG : Return CastNumber(Of Long)(reverse, AddressOf BitConverter.ToInt64)
+            Case CDFDataTypes.INT64 : Return CastNumber(Of Long)(reverse, AddressOf BitConverter.ToInt64)
             Case CDFDataTypes.SHORT : Return CastNumber(Of Short)(reverse, AddressOf BitConverter.ToInt16)
 
             Case Else
@@ -248,7 +248,7 @@ Module Utils
                 Return readNumber(size, AddressOf buffer.ReadSingle)
             Case CDFDataTypes.DOUBLE
                 Return readNumber(size, AddressOf buffer.ReadDouble)
-            Case CDFDataTypes.LONG
+            Case CDFDataTypes.INT64
                 Return readNumber(size, AddressOf buffer.ReadInt64)
             Case CDFDataTypes.BOOLEAN
 

@@ -91,7 +91,7 @@ Namespace Components
                     Return CType(data.vectorAuto(Of Integer), integers)
                 Case CDFDataTypes.SHORT
                     Return CType(data.vectorAuto(Of Short), shorts)
-                Case CDFDataTypes.LONG
+                Case CDFDataTypes.INT64
                     Return CType(data.vectorAuto(Of Long), longs)
                 Case Else
                     Throw New NotImplementedException(type.Description)

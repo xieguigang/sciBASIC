@@ -74,7 +74,7 @@ Namespace Data
                 Case CDFDataTypes.DOUBLE : Return New Double(size - 1) {}
                 Case CDFDataTypes.FLOAT : Return New Single(size - 1) {}
                 Case CDFDataTypes.INT : Return New Integer(size - 1) {}
-                Case CDFDataTypes.LONG : Return New Long(size - 1) {}
+                Case CDFDataTypes.INT64 : Return New Long(size - 1) {}
                 Case CDFDataTypes.SHORT : Return New Short(size - 1) {}
                 Case Else
                     Throw New InvalidDataException("invalid data type!")

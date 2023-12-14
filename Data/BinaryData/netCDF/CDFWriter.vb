@@ -428,7 +428,7 @@ Public Class CDFWriter : Implements IDisposable
                 Case CDFDataTypes.SHORT
                     Call output.Write(1)
                     Call output.Write(Short.Parse(attr.value))
-                Case CDFDataTypes.LONG
+                Case CDFDataTypes.INT64
                     Call output.Write(1)
                     Call output.Write(Long.Parse(attr.value))
                 Case CDFDataTypes.BOOLEAN
