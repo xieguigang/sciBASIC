@@ -698,12 +698,14 @@ Public Module PathExtensions
     ''' Determine that the target directory is exists on the file system or not?(判断文件夹是否存在)
     ''' </summary>
     ''' <param name="DIR"></param>
-    ''' <returns></returns>
-    <ExportAPI("DIR.Exists")>
+    ''' <returns>
+    ''' 1. for directory parameter <paramref name="DIR"/> is nothing or empty string: return false
+    ''' 2. for directory not exists: return false
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
+        Return (Not String.IsNullOrEmpty(DIR)) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>
