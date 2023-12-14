@@ -172,6 +172,9 @@ Public Module XmlExtensions
 
         Using stream As New StringReader(s:=xmlDoc)
             Try
+                ' 20231214
+                ' xml comment data may be missing in the xml document file
+                ' try to ignores it!
                 Dim args As New XmlAttributeOverrides
                 Dim ignores As New XmlAttributes()
 
