@@ -76,7 +76,7 @@ Namespace Data
                 Case GetType(Short) : Return CDFDataTypes.SHORT
                 Case GetType(String) : Return CDFDataTypes.CHAR
                 Case GetType(Byte) : Return CDFDataTypes.BYTE
-                Case GetType(Long) : Return CDFDataTypes.LONG
+                Case GetType(Long) : Return CDFDataTypes.INT64
                 Case GetType(Boolean) : Return CDFDataTypes.BOOLEAN
                 Case Else
                     Return CDFDataTypes.undefined
@@ -112,7 +112,7 @@ Namespace Data
                     Return 4
                 Case CDFDataTypes.FLOAT
                     Return 4
-                Case CDFDataTypes.DOUBLE, CDFDataTypes.LONG
+                Case CDFDataTypes.DOUBLE, CDFDataTypes.INT64
                     Return 8
                 Case Else
                     ' istanbul ignore next 
@@ -142,7 +142,7 @@ Namespace Data
                 Case CDFDataTypes.DOUBLE : Return GetType(Double)
                 Case CDFDataTypes.FLOAT : Return GetType(Single)
                 Case CDFDataTypes.INT : Return GetType(Integer)
-                Case CDFDataTypes.LONG : Return GetType(Long)
+                Case CDFDataTypes.INT64 : Return GetType(Long)
                 Case CDFDataTypes.SHORT : Return GetType(Short)
                 Case Else
                     ' istanbul ignore next

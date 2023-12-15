@@ -59,7 +59,7 @@ Namespace DataVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.LONG
+                Return CDFDataTypes.INT64
             End Get
         End Property
 

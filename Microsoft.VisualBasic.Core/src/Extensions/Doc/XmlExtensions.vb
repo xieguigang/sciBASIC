@@ -172,7 +172,17 @@ Public Module XmlExtensions
 
         Using stream As New StringReader(s:=xmlDoc)
             Try
-                Dim obj = New XmlSerializer(type).Deserialize(stream)
+                ' 20231214
+                ' xml comment data may be missing in the xml document file
+                ' try to ignores it!
+                Dim args As New XmlAttributeOverrides
+                Dim ignores As New XmlAttributes()
+
+                ignores.XmlIgnore = True
+                args.Add(GetType(XmlComment), "TypeComment", ignores)
+
+                Dim handler As New XmlSerializer(type, [overrides]:=args)
+                Dim obj = handler.Deserialize(stream)
                 Return obj
             Catch ex As Exception
                 ex = New Exception(type.FullName, ex)

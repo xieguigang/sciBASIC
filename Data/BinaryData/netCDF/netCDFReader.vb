@@ -65,14 +65,87 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports System.Runtime.InteropServices
+
 
 #If NETCOREAPP Then
 Imports System.Data
 #End If
 
+'* Copyright 2004 University Corporation for Atmospheric Research/Unidata
+'* 
+'* Portions of this software were developed by the Unidata Program at the 
+'* University Corporation for Atmospheric Research.
+'* 
+'* Access and use of this software shall impose the following obligations
+'* and understandings on the user. The user is granted the right, without
+'* any fee or cost, to use, copy, modify, alter, enhance and distribute
+'* this software, and any derivative works thereof, and its supporting
+'* documentation for any purpose whatsoever, provided that this entire
+'* notice appears in all copies of the software, derivative works and
+'* supporting documentation.  Further, UCAR requests that the user credit
+'* UCAR/Unidata in any publications that result from the use of this
+'* software or in any product that includes this software. The names UCAR
+'* and/or Unidata, however, may not be used in any advertising or publicity
+'* to endorse or promote any products or commercial entity unless specific
+'* written permission is obtained from UCAR/Unidata. The user also
+'* understands that UCAR/Unidata is not obligated to provide the user with
+'* any support, consulting, training or assistance of any kind with regard
+'* to the use, operation and performance of this software nor to provide
+'* the user with any updates, revisions, new versions or "bug fixes."
+'* 
+'* THIS SOFTWARE IS PROVIDED BY UCAR/UNIDATA "AS IS" AND ANY EXPRESS OR
+'* IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+'* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+'* DISCLAIMED. IN NO EVENT SHALL UCAR/UNIDATA BE LIABLE FOR ANY SPECIAL,
+'* INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING
+'* FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+'* NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION
+'* WITH THE ACCESS, USE OR PERFORMANCE OF THIS SOFTWARE.
+'
+'This is a wrapper class for the netCDF dll.
+'
+'Get the netCDF dll from ftp://ftp.unidata.ucar.edu/pub/netcdf/contrib/win32
+'Put it somewhere in your path, or else in the bin subdirectory of your
+'VB project.
+'
+'Then include this class file in your project. Use the netcdf functions 
+'like this:
+'res = NetCDF.nc_create(name, NetCDF.cmode.NC_CLOBBER, ncid)
+'If (res <> 0) Then GoTo err
+'
+'NetCDF was ported to dll by John Caron (as far as I know).
+'This VB.NET wrapper created by Ed Hartnett, 3/10/4
+'
+'Some notes:
+'   Although the dll can be tested (and has passed for release 
+'3.5.0 and 3.5.1 at least), the VB wrapper class has not been
+'extensively tested. Use at your own risk. Writing test code to
+'test the netCDF interface is a non-trivial task, and one I haven't
+'undertaken. The tests run verify common use of netCDF, for example
+'creation of dims, vars, and atts of various types, and ensuring that
+'they can be written and read back. But I don't check type conversion,
+'or boundery conditions. These are all tested in the dll, but not the
+'VB wrapper.
+'
+'This class consists mearly of some defined enums, consts and declares, 
+'all inside a class called NetCDF.
+'
+'Passing strings: when passing in a string to a function, use a string,
+'when passing in a pointer to a string so that the function can fill it 
+'(for example when requesting an attribute name, use a 
+'System.Text.StringBuilder.
+'
+'Since VB doesn't have an unsigned byte, I've left those functions 
+'out of the wrapper class. If you need to read unsigned bytes, read them as 
+'shorts, and netcdf will automatically convert them for you.
+'
+
 ''' <summary>
-''' The dotCDF file of a CDF contains magic numbers and numerous internal records are used to organize information
-''' about the contents Of the CDF (For both Single-file And multi-file CDFs).
+''' The dotCDF file of a CDF contains magic numbers and numerous
+''' internal records are used to organize information about the 
+''' contents Of the CDF (For both Single-file And multi-file 
+''' CDFs).
 ''' </summary>
 ''' <remarks>
 ''' https://github.com/cheminfo-js/netcdfjs
@@ -232,6 +305,18 @@ Public Class netCDFReader : Implements IDisposable
         Call Me.New(path.OpenBinaryReader(encoding), ignoreDuplicated)
     End Sub
 
+    Public Function FindAttribute(ParamArray synonym As String()) As Object
+        For Each attributeName As String In synonym
+            With globalAttributeTable.TryGetValue(attributeName)
+                If Not .IsNothing Then
+                    Return .getObjectValue
+                End If
+            End With
+        Next
+
+        Return Nothing
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Open(filePath$, Optional encoding As Encodings = Encodings.UTF8) As netCDFReader
         Return New netCDFReader(filePath, encoding)
@@ -276,8 +361,8 @@ Public Class netCDFReader : Implements IDisposable
     ''' <param name="value">List with the variable values</param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub getDataVariable(variableName As String, ByRef value As ICDFDataVector)
-        value = getDataVariable(variableName)
+    Public Sub getDataVariable(variableName As String, <Out> ByRef value As ICDFDataVector)
+        value = getDataVariable(variableName, [overrides]:=value?.cdfDataType)
     End Sub
 
     ''' <summary>
@@ -285,11 +370,14 @@ Public Class netCDFReader : Implements IDisposable
     ''' </summary>
     ''' <param name="variableName">Name of the variable to search Or variable object</param>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variableName As String) As ICDFDataVector
+    Public Function getDataVariable(variableName As String, Optional [overrides] As CDFDataTypes? = Nothing) As ICDFDataVector
         ' search the variable
         Dim variable As variable = variableTable.TryGetValue(variableName)
         ' throws if variable Not found
         Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
+        If Not [overrides] Is Nothing Then
+            variable.type = [overrides]
+        End If
 
         Return getDataVariable(variable)
     End Function

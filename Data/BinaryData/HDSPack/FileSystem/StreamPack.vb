@@ -462,6 +462,9 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="buffer_size"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function may be too slow if too much file to process
+        ''' </remarks>
         Public Function Allocate(buffer_size As Integer) As BufferRegion
             Dim files As StreamBlock() = superBlock _
                 .ListFiles _
