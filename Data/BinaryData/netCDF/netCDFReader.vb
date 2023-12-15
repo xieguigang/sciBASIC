@@ -360,7 +360,7 @@ Public Class netCDFReader : Implements IDisposable
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub getDataVariable(variableName As String, ByRef value As ICDFDataVector)
-        value = getDataVariable(variableName)
+        value = getDataVariable(variableName, [overrides]:=value?.cdfDataType)
     End Sub
 
     ''' <summary>
@@ -368,11 +368,14 @@ Public Class netCDFReader : Implements IDisposable
     ''' </summary>
     ''' <param name="variableName">Name of the variable to search Or variable object</param>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variableName As String) As ICDFDataVector
+    Public Function getDataVariable(variableName As String, Optional [overrides] As CDFDataTypes? = Nothing) As ICDFDataVector
         ' search the variable
         Dim variable As variable = variableTable.TryGetValue(variableName)
         ' throws if variable Not found
         Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
+        If Not [overrides] Is Nothing Then
+            variable.type = [overrides]
+        End If
 
         Return getDataVariable(variable)
     End Function
