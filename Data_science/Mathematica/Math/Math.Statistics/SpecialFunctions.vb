@@ -120,12 +120,48 @@ Public Module SpecialFunctions
         Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
+    ''' <summary>
+    ''' n!
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' calculates `n!` === `P(n, n)`.
+    ''' 
+    ''' n! = permutation(n, n)
+    ''' 
+    ''' https://en.wikipedia.org/wiki/Factorial
+    ''' </remarks>
     Public Function FactorialCalculation(n As Integer) As ULong
         Dim result As ULong = 1
         For i = 1 To n
             result *= CULng(i)
         Next
         Return result
+    End Function
+
+    ''' <summary>
+    ''' calculates `C(n, k)`.
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' COMBIN(number, number_chosen)
+    ''' COMBIN(8,2) = 28
+    ''' 
+    ''' https://en.wikipedia.org/wiki/Combination
+    ''' </remarks>
+    Public Function Combination(n As Integer, k As Integer) As Double
+        If k = 0 Then
+            Return 1
+        ElseIf n = k Then
+            Return 1
+        ElseIf n < k Then
+            Return 0
+        End If
+
+        Return Permutation(n, k) / Permutation(k, k)
     End Function
 
     Public Function BinomialCoefficient(n As Integer, k As Integer) As ULong
@@ -143,6 +179,33 @@ Public Module SpecialFunctions
             End If
             'return coefficient;
         End If
+    End Function
+
+    ''' <summary>
+    ''' calculates `P(n, k)`.
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <param name="k"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' https://en.wikipedia.org/wiki/Permutation
+    ''' </remarks>
+    Public Function Permutation(n As Integer, k As Integer) As Double
+        If 0 = k Then
+            Return 1
+        ElseIf n < k Then
+            Return 0
+        End If
+
+        Dim bp As Double = 1
+
+        Do While k > 0
+            k -= 1
+            bp *= n
+            n -= 1
+        Loop
+
+        Return bp
     End Function
 
     Public Function FactorialCalculation(n As Integer, k As Integer) As ULong
