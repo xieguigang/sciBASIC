@@ -76,7 +76,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
     Public Class ConsoleTableBuilder
         Friend Property Column As List(Of Object)
         Friend Property FormattedColumns As List(Of String)
-        Friend Property Rows As List(Of List(Of Object))
+        Friend Property Rows As List(Of Object())
         Friend Property FormattedRows As List(Of List(Of Object))
         Friend Property TableFormat As ConsoleTableBuilderFormat
         Friend Property CharMapPositionStore As Dictionary(Of CharMapPositions, Char) = Nothing
@@ -99,7 +99,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
         Private Sub New()
             Column = New List(Of Object)()
-            Rows = New List(Of List(Of Object))()
+            Rows = New List(Of Object())()
             TableFormat = ConsoleTableBuilderFormat.Default
         End Sub
 
@@ -137,9 +137,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -149,9 +147,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -161,9 +157,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim builder = New ConsoleTableBuilder()
 
             For Each value In list
-                builder.Rows.Add(New List(Of Object) From {
-                    value
-                })
+                builder.Rows.Add({value})
             Next
 
             Return builder
@@ -180,7 +174,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             builder.Column = New List(Of Object)(columnNames)
 
             For Each row As DataRow In dt.Rows
-                builder.Rows.Add(New List(Of Object)(row.ItemArray))
+                builder.Rows.Add(row.ItemArray)
             Next
 
             Return builder
@@ -233,11 +227,9 @@ Namespace ApplicationServices.Terminal.TablePrinter
                         itemPropValues.Add(objValue)
                     Next
 
-                    builder.Rows.Add(itemPropValues)
+                    builder.Rows.Add(itemPropValues.ToArray)
                 Else
-                    builder.Rows.Add(New List(Of Object) From {
-                        item
-                    })
+                    builder.Rows.Add({item})
                 End If
             Next
 
@@ -252,7 +244,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             End If
 
             For Each row In rows
-                builder.Rows.Add(New List(Of Object)(row))
+                builder.Rows.Add(row)
             Next
 
             Return builder
@@ -266,7 +258,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             End If
 
             For Each row In rows
-                builder.Rows.Add(row)
+                builder.Rows.Add(row.ToArray)
             Next
 
             Return builder
