@@ -81,8 +81,8 @@ Namespace ApplicationServices.Terminal.TablePrinter
         Friend Property TableFormat As ConsoleTableBuilderFormat
         Friend Property CharMapPositionStore As Dictionary(Of CharMapPositions, Char) = Nothing
         Friend Property HeaderCharMapPositionStore As Dictionary(Of HeaderCharMapPositions, Char) = Nothing
-        Friend TopMetadataRows As List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String))) = New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
-        Friend BottomMetadataRows As List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String))) = New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
+        Friend TopMetadataRows As New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
+        Friend BottomMetadataRows As New List(Of KeyValuePair(Of MetaRowPositions, Func(Of ConsoleTableBuilder, String)))()
         Friend TextAligmentData As Dictionary(Of Integer, TextAligntment) = New Dictionary(Of Integer, TextAligntment)()
         Friend HeaderTextAligmentData As Dictionary(Of Integer, TextAligntment) = New Dictionary(Of Integer, TextAligntment)()
         Friend MinLengthData As Dictionary(Of Integer, Integer) = New Dictionary(Of Integer, Integer)()
