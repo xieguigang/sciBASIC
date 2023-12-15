@@ -83,11 +83,13 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
+Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports any = Microsoft.VisualBasic.Scripting
+
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
 #End If
-Imports Microsoft.VisualBasic.Text.Similarity
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -1175,14 +1177,16 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Convert target object type collection into a string array using the Object.ToString() interface function.
+    ''' Convert target object type collection into a string array using
+    ''' the <see cref="any.ToString(Object, String, Boolean)"/> interface
+    ''' function.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <returns></returns>
+    ''' <returns>A string array</returns>
     ''' <remarks></remarks>
     <Extension>
-    Public Function ToStringArray(Of T)(source As IEnumerable(Of T)) As String()
+    Public Function ToStringArray(Of T)(source As IEnumerable(Of T), Optional null As String = "") As String()
         If source Is Nothing Then
             Return {}
         End If
@@ -1191,7 +1195,7 @@ Public Module Extensions
                                                 _
             () <= From item As T
                   In source
-                  Let strItem As String = item?.ToString
+                  Let strItem As String = any.ToString(item, null:=null)
                   Select strItem
 
         Return LQuery
