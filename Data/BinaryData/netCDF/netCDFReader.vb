@@ -65,6 +65,8 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports System.Runtime.InteropServices
+
 
 #If NETCOREAPP Then
 Imports System.Data
@@ -359,7 +361,7 @@ Public Class netCDFReader : Implements IDisposable
     ''' <param name="value">List with the variable values</param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub getDataVariable(variableName As String, ByRef value As ICDFDataVector)
+    Public Sub getDataVariable(variableName As String, <Out> ByRef value As ICDFDataVector)
         value = getDataVariable(variableName, [overrides]:=value?.cdfDataType)
     End Sub
 
