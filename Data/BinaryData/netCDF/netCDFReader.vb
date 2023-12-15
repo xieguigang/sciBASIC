@@ -303,6 +303,18 @@ Public Class netCDFReader : Implements IDisposable
         Call Me.New(path.OpenBinaryReader(encoding), ignoreDuplicated)
     End Sub
 
+    Public Function FindAttribute(ParamArray synonym As String()) As Object
+        For Each attributeName As String In synonym
+            With globalAttributeTable.TryGetValue(attributeName)
+                If Not .IsNothing Then
+                    Return .getObjectValue
+                End If
+            End With
+        Next
+
+        Return Nothing
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Open(filePath$, Optional encoding As Encodings = Encodings.UTF8) As netCDFReader
         Return New netCDFReader(filePath, encoding)
