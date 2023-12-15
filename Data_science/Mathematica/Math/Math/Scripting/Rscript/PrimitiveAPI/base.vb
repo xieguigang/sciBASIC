@@ -341,11 +341,6 @@ Namespace Scripting.Rscript
             Return LQuery
         End Function
 
-        <ExportAPI("GetOption")>
-        Public Function getOption(x As String, Optional [default] As Boolean = NULL) As Boolean
-            Throw New NotImplementedException
-        End Function
-
         Public Const T As Boolean = True
         Public Const F As Boolean = False
 
