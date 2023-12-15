@@ -123,7 +123,7 @@ Namespace Data
             ' iterates over the data
             Dim data As Array = Array.CreateInstance(variable.type.ToType, size)
             Dim [step] As Integer = recordDimension.recordStep
-            Dim reader As Func(Of Byte(), Object) = Utils.GetRecordReader(variable.type)
+            Dim reader As Func(Of Byte(), Object) = Utils.GetRecordReader(variable.type, reversed:=False)
             Dim base As Stream = buffer.BaseStream
             Dim chunkSize As Long = [step] * size
             Dim mem As Byte() = New Byte(chunkSize - 1) {}
