@@ -147,7 +147,8 @@ Public Module SpecialFunctions
     ''' <param name="k"></param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' COMBIN(number, number_chosen)
+    ''' implements the excel function COMBIN(number, number_chosen).
+    ''' 
     ''' COMBIN(8,2) = 28
     ''' 
     ''' https://en.wikipedia.org/wiki/Combination
