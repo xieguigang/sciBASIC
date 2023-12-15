@@ -433,12 +433,18 @@ Namespace ApplicationServices.Terminal.TablePrinter
                         row = New String(" "c, Console.WindowWidth - lines(i).RealLength(True)) & lines(i)
                 End Select
 
-                If i = 0 AndAlso Not String.IsNullOrEmpty(builder.TableTitle) AndAlso builder.TableTitle.Trim().Length <> 0 AndAlso Not builder.TableTitleColor.IsForegroundColorNull AndAlso builder.TitlePositionStartAt > 0 AndAlso builder.TitlePositionLength > 0 Then
+                If i = 0 AndAlso
+                    Not String.IsNullOrEmpty(builder.TableTitle) AndAlso
+                    builder.TableTitle.Trim().Length <> 0 AndAlso
+                    builder.TableTitleColor.ForegroundColor IsNot Nothing AndAlso
+                    builder.TitlePositionStartAt > 0 AndAlso
+                    builder.TitlePositionLength > 0 Then
+
                     Dim newTitlePositionStartAt = builder.TitlePositionStartAt + (row.Length - lines(i).Length)
                     Console.Write(row.Substring(0, newTitlePositionStartAt))
                     Console.ForegroundColor = builder.TableTitleColor.ForegroundColor
 
-                    If Not builder.TableTitleColor.IsBackgroundColorNull Then
+                    If Not builder.TableTitleColor.BackgroundColor Is Nothing Then
                         Console.BackgroundColor = builder.TableTitleColor.BackgroundColor
                     End If
 
