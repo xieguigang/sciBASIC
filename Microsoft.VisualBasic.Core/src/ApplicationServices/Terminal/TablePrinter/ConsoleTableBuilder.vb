@@ -277,13 +277,13 @@ Namespace ApplicationServices.Terminal.TablePrinter
             For i = 0 To Rows.Count - 1
                 Dim index = i
 
-                FormattedRows.Add(Enumerable.Range(0, Rows(i).Count).[Select](Function(idx)
-                                                                                  If FormatterStore.ContainsKey(idx) Then
-                                                                                      Return FormatterStore(idx)(If(Rows(index)(idx) Is Nothing, String.Empty, Rows(index)(idx).ToString()))
-                                                                                  Else
-                                                                                      Return Rows(index)(idx)
-                                                                                  End If
-                                                                              End Function).ToList())
+                FormattedRows.Add(Enumerable.Range(0, Rows(i).Length).[Select](Function(idx)
+                                                                                   If FormatterStore.ContainsKey(idx) Then
+                                                                                       Return FormatterStore(idx)(If(Rows(index)(idx) Is Nothing, String.Empty, Rows(index)(idx).ToString()))
+                                                                                   Else
+                                                                                       Return Rows(index)(idx)
+                                                                                   End If
+                                                                               End Function).ToList())
             Next
         End Sub
 

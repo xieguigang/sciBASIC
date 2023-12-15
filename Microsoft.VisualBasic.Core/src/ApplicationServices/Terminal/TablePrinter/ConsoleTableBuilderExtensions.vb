@@ -368,7 +368,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim numberOfColumns = 0
 
             If builder.Rows.Any() Then
-                numberOfColumns = builder.Rows.Max(Function(x) x.Count)
+                numberOfColumns = builder.Rows.Max(Function(x) x.Length)
             Else
 
                 If builder.Column IsNot Nothing Then
