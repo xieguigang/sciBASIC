@@ -128,7 +128,7 @@ Namespace Data
             Dim chunkSize As Long = [step] * size
             Dim mem As Byte() = New Byte(chunkSize - 1) {}
             Dim i As i32 = Scan0
-            Dim parallel As Boolean = size >= 100000
+            Dim parallel As Boolean = False ' size >= 100000
 
             ' 20220630
             ' why needs offset of 4 bytes?
