@@ -59,6 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Terminal.TablePrinter
 
@@ -100,7 +101,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, ParamArray rowValues As Object()) As ConsoleTableBuilder
             If rowValues Is Nothing Then Return builder
-            builder.Rows.Add(New List(Of Object)(rowValues))
+            builder.Rows.Add(rowValues)
             Return builder
         End Function
 
@@ -247,7 +248,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, row As List(Of Object)) As ConsoleTableBuilder
             If row Is Nothing Then Return builder
-            builder.Rows.Add(row)
+            builder.Rows.Add(row.ToArray)
             Return builder
         End Function
 
@@ -261,7 +262,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
         <Extension()>
         Public Function AddRow(builder As ConsoleTableBuilder, row As DataRow) As ConsoleTableBuilder
             If row Is Nothing Then Return builder
-            builder.Rows.Add(New List(Of Object)(row.ItemArray))
+            builder.Rows.Add(row.ItemArray)
             Return builder
         End Function
 
@@ -401,12 +402,11 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
             For i = 0 To builder.Rows.Count - 1
 
-                If builder.Rows(i).Count < numberOfColumns Then
-                    Dim missCount = numberOfColumns - builder.Rows(i).Count
+                If builder.Rows(i).Length < numberOfColumns Then
+                    Dim missCount = numberOfColumns - builder.Rows(i).Length
+                    Dim miss As Object() = New Object(missCount - 1) {}
 
-                    For j = 0 To missCount - 1
-                        builder.Rows(i).Add(Nothing)
-                    Next
+                    builder.Rows(i) = builder.Rows(i).JoinIterates(miss).ToArray
                 End If
             Next
 
