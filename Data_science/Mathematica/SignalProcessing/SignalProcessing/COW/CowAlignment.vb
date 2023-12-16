@@ -18,6 +18,10 @@ Namespace COW
             peak2D = createPeak
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"COW({GetType(S).Name})"
+        End Function
+
         Public Shared Function GaussianFunction(normalizedValue As Double, mean As Double, standardDeviation As Double, variable As Double) As Double
             Dim result = normalizedValue * std.Exp(-1 * std.Pow(variable - mean, 2) / (2 * std.Pow(standardDeviation, 2)))
             Return result
@@ -28,23 +32,19 @@ Namespace COW
         ''' This program returns the chromatogram information as the list of ChromatogramPeak containing scan number, retention time, m/z, intensity.
         ''' As long as you use 'Constant' enum as the borderlimit, you do not have to mind maxSlack (second arg).
         ''' Now I'm making some border limits but please do not use others except for 'Constant' yet.
-        ''' The first argument, minSlack, should be 1 or 2 as long as ODS columns or GC are used.
-        ''' The second argument is please the same as the first argument.
-        ''' The third argument, segment size, should be set to the data point number of detected peaks (recommended).
-        ''' The sample chromatogram will be aligned to the reference chromatogram.
-        ''' The border limit please should be set to constant.
         ''' </summary>
-        ''' <param name="minSlack"></param>
-        ''' <param name="maxSlack"></param>
-        ''' <param name="segmentSize"></param>
-        ''' <param name="referenceChromatogram"></param>
+        ''' <param name="minSlack">The first argument, minSlack, should be 1 or 2 as long as ODS columns or GC are used.</param>
+        ''' <param name="maxSlack">The second argument is please the same as the first argument.</param>
+        ''' <param name="segmentSize">The third argument, segment size, should be set to the data point number of detected peaks (recommended).</param>
+        ''' <param name="referenceChromatogram">The sample chromatogram will be aligned to the reference chromatogram.</param>
         ''' <param name="sampleChromatogram"></param>
-        ''' <param name="borderLimit"></param>
+        ''' <param name="borderLimit">The border limit please should be set to constant.</param>
         ''' <returns></returns>
-        Public Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer,
-                                                    referenceChromatogram As List(Of S),
+        Public Function CorrelationOptimizedWarping(referenceChromatogram As List(Of S), segmentSize As Integer,
                                                     sampleChromatogram As List(Of S),
-                                                    borderLimit As BorderLimit) As List(Of S)
+                                                    Optional minSlack As Integer = 1,
+                                                    Optional maxSlack As Integer = 1,
+                                                    Optional borderLimit As BorderLimit = BorderLimit.Constant) As List(Of S)
 
             Dim alignedChromatogram = New List(Of S)()
             Dim referenceDatapointNumber = referenceChromatogram.Count
