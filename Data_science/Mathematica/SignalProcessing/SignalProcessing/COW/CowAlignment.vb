@@ -42,11 +42,11 @@ Namespace COW
         ''' <param name="borderLimit"></param>
         ''' <returns></returns>
         Public Function CorrelationOptimizedWarping(minSlack As Integer, maxSlack As Integer, segmentSize As Integer,
-                                                    referenceChromatogram As List(Of IPeak2D),
-                                                    sampleChromatogram As List(Of IPeak2D),
-                                                    borderLimit As BorderLimit) As List(Of IPeak2D)
+                                                    referenceChromatogram As List(Of S),
+                                                    sampleChromatogram As List(Of S),
+                                                    borderLimit As BorderLimit) As List(Of S)
 
-            Dim alignedChromatogram = New List(Of IPeak2D)()
+            Dim alignedChromatogram = New List(Of S)()
             Dim referenceDatapointNumber = referenceChromatogram.Count
             Dim sampleDatapointNumber = sampleChromatogram.Count
 
@@ -254,8 +254,8 @@ Namespace COW
                                                        columnPosition As Integer,
                                                        u As Integer,
                                                        segmentSize As Integer,
-                                                       referenceChromatogram As List(Of IPeak2D),
-                                                       sampleChromatogram As List(Of IPeak2D)) As Double
+                                                       referenceChromatogram As List(Of S),
+                                                       sampleChromatogram As List(Of S)) As Double
 
             Dim positionFlont, positionEnd As Integer
             Dim warpedPosition, fraction, wT, wS As Double
