@@ -25,9 +25,11 @@ Namespace COW
         End Sub
 
         Public Sub Initialize(segmentNumber As Integer, enabledLength As Integer)
+            Dim mat = funcBeanMatrix
+
             For i = 0 To segmentNumber
                 For j = 0 To enabledLength
-                    Me(i, j) = New FunctionElement(Double.MinValue, 0)
+                    mat(i)(j) = New FunctionElement(Double.MinValue, 0)
                 Next
             Next
 
