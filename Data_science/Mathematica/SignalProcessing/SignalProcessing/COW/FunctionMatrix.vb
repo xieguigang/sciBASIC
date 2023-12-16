@@ -1,6 +1,4 @@
-﻿
-Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace COW
