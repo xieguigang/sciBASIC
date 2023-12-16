@@ -55,9 +55,9 @@ Namespace COW
 
             Dim functionMatrixBean As FunctionMatrix = New FunctionMatrix(segmentNumber + 1, enabledLength + 1)
 
-            'Slack parameter set
-#Region ""
-            Dim slack As List(Of Integer) = New List(Of Integer)()
+#Region "Slack parameter set"
+            Dim slack As New List(Of Integer)()
+
             For i = 0 To segmentNumber - 1
                 If borderLimit = BorderLimit.Constant Then
                     slack.Add(minSlack)
@@ -75,8 +75,7 @@ Namespace COW
 
             Call functionMatrixBean.Initialize(segmentNumber, enabledLength)
 
-            'score matrix calculation
-#Region ""
+#Region "score matrix calculation"
             Dim intervalStart, intervalEnd As Integer
             Dim cumCoefficient As Double
 
@@ -101,8 +100,7 @@ Namespace COW
             Next
 #End Region
 
-            'Backtrace
-#Region ""
+#Region "Backtrace"
             Dim endPosition, positionFlont, totalWarp, warp, counter As Integer, positionEnd = 0
             Dim warpedPosition, fraction, score As Double
 
