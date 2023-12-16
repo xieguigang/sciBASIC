@@ -12,19 +12,9 @@ Namespace COW
     ''' </remarks>
     Public NotInheritable Class CowAlignment(Of S As {IPeak2D})
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="id"><see cref="IPeak2D.ID"/></param>
-        ''' <param name="dim1"><see cref="IPeak2D.Dimension1"/></param>
-        ''' <param name="dim2"><see cref="IPeak2D.Dimension2"/></param>
-        ''' <param name="intensity"><see cref="IPeak2D.Intensity"/></param>
-        ''' <returns></returns>
-        Public Delegate Function CreatePeak(id As String, dim1 As Double, dim2 As Double, intensity As Double) As S
+        ReadOnly peak2D As IDelegateCreatePeak2D(Of S)
 
-        ReadOnly peak2D As CreatePeak
-
-        Sub New(createPeak As CreatePeak)
+        Sub New(createPeak As IDelegateCreatePeak2D(Of S))
             peak2D = createPeak
         End Sub
 
@@ -57,7 +47,8 @@ Namespace COW
                                                     borderLimit As BorderLimit) As List(Of IPeak2D)
 
             Dim alignedChromatogram = New List(Of IPeak2D)()
-            Dim referenceDatapointNumber = referenceChromatogram.Count, sampleDatapointNumber = sampleChromatogram.Count
+            Dim referenceDatapointNumber = referenceChromatogram.Count
+            Dim sampleDatapointNumber = sampleChromatogram.Count
 
             Dim segmentNumber As Integer = sampleDatapointNumber / segmentSize
             Dim delta As Integer = referenceDatapointNumber / sampleDatapointNumber * segmentSize - segmentSize

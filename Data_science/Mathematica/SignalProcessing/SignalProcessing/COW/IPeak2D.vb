@@ -30,4 +30,15 @@
         ReadOnly Property Intensity As Double
 
     End Interface
+
+    ''' <summary>
+    ''' Function to create a signal peak object
+    ''' </summary>
+    ''' <param name="id"><see cref="IPeak2D.ID"/></param>
+    ''' <param name="dim1"><see cref="IPeak2D.Dimension1"/></param>
+    ''' <param name="dim2"><see cref="IPeak2D.Dimension2"/></param>
+    ''' <param name="intensity"><see cref="IPeak2D.Intensity"/></param>
+    ''' <returns></returns>
+    Public Delegate Function IDelegateCreatePeak2D(Of T)(id As String, dim1 As Double, dim2 As Double, intensity As Double) As T
+
 End Namespace
