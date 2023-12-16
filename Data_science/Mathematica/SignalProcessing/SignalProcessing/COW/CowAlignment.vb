@@ -165,6 +165,13 @@ Namespace COW
                         positionEnd = sampleDatapointNumber - 1
                     End If
 
+                    If counter >= referenceChromatogram.Count Then
+                        Continue For
+                    End If
+                    If positionEnd >= sampleChromatogram.Count Then
+                        Continue For
+                    End If
+
                     Dim peakInformation = peak2D(
                         id:=referenceChromatogram(counter).ID,
                         dim1:=sampleChromatogram(positionEnd).Dimension1,
