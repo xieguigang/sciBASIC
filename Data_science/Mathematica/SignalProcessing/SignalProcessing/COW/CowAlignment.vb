@@ -54,7 +54,6 @@ Namespace COW
             Dim enabledLength = (segmentSize + delta) * segmentNumber
 
             Dim functionMatrixBean As FunctionMatrix = New FunctionMatrix(segmentNumber + 1, enabledLength + 1)
-            Dim functionElementBean As FunctionElement
 
             'Slack parameter set
 #Region ""
@@ -74,21 +73,13 @@ Namespace COW
             Next
 #End Region
 
-            'Initialize
-#Region ""
-            For i = 0 To segmentNumber
-                For j = 0 To enabledLength
-                    functionElementBean = New FunctionElement(Double.MinValue, 0)
-                    functionMatrixBean(i, j) = functionElementBean
-                Next
-            Next
-            functionMatrixBean(segmentNumber, enabledLength).Score = 0
-#End Region
+            Call functionMatrixBean.Initialize(segmentNumber, enabledLength)
 
             'score matrix calculation
 #Region ""
             Dim intervalStart, intervalEnd As Integer
             Dim cumCoefficient As Double
+
             For i = segmentNumber - 1 To 0 Step -1
                 intervalStart = std.Max(i * (segmentSize + delta - slack(i)), enabledLength - (segmentNumber - i) * (segmentSize + delta + slack(i)))
                 intervalEnd = std.Min(i * (segmentSize + delta + slack(i)), enabledLength - (segmentNumber - i) * (segmentSize + delta - slack(i)))
