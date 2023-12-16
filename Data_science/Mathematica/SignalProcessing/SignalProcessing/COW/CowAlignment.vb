@@ -40,13 +40,12 @@ Namespace COW
         ''' <param name="sampleChromatogram"></param>
         ''' <param name="borderLimit">The border limit please should be set to constant.</param>
         ''' <returns></returns>
-        Public Function CorrelationOptimizedWarping(referenceChromatogram As List(Of S), segmentSize As Integer,
-                                                    sampleChromatogram As List(Of S),
-                                                    Optional minSlack As Integer = 1,
-                                                    Optional maxSlack As Integer = 1,
-                                                    Optional borderLimit As BorderLimit = BorderLimit.Constant) As List(Of S)
+        Public Iterator Function CorrelationOptimizedWarping(referenceChromatogram As List(Of S), sampleChromatogram As List(Of S),
+                                                             Optional segmentSize As Integer = 3,
+                                                             Optional minSlack As Integer = 1,
+                                                             Optional maxSlack As Integer = 1,
+                                                             Optional borderLimit As BorderLimit = BorderLimit.Constant) As IEnumerable(Of S)
 
-            Dim alignedChromatogram = New List(Of S)()
             Dim referenceDatapointNumber = referenceChromatogram.Count
             Dim sampleDatapointNumber = sampleChromatogram.Count
 
@@ -154,8 +153,9 @@ Namespace COW
                         intensity:=(1 - fraction) * sampleChromatogram(positionFlont).Intensity + fraction * sampleChromatogram(positionEnd).Intensity,
                         dim2:=referenceChromatogram(counter).Dimension2
                     )
-                    alignedChromatogram.Add(peakInformation)
                     counter += 1
+
+                    Yield peakInformation
                 Next
 
                 endPosition += segmentSize + warp
@@ -177,13 +177,12 @@ Namespace COW
                         intensity:=sampleChromatogram(positionEnd).Intensity,
                         dim2:=referenceChromatogram(counter).Dimension2
                     )
-                    alignedChromatogram.Add(peakInformation)
                     counter += 1
+
+                    Yield peakInformation
                 Next
             End If
 #End Region
-
-            Return alignedChromatogram
         End Function
 
         ''' <summary>
@@ -259,7 +258,8 @@ Namespace COW
 
             Dim positionFlont, positionEnd As Integer
             Dim warpedPosition, fraction, wT, wS As Double
-            Dim targetArray = New Double(segmentSize + u + 1 - 1) {}, alingedArray = New Double(segmentSize + u + 1 - 1) {}
+            Dim targetArray = New Double(segmentSize + u + 1 - 1) {}
+            Dim alingedArray = New Double(segmentSize + u + 1 - 1) {}
 
             For j = 0 To segmentSize + u
                 If columnPosition + j >= referenceChromatogram.Count Then Exit For
@@ -286,19 +286,24 @@ Namespace COW
         End Function
 
         Public Shared Function Coefficient(array1 As Double(), array2 As Double()) As Double
-            Dim sum1 As Double = 0, sum2 As Double = 0, mean1 As Double = 0, mean2 As Double = 0, covariance As Double = 0, sqrt1 As Double = 0, sqrt2 As Double = 0
+            Dim sum1 As Double = 0, sum2 As Double = 0
+            Dim covariance As Double = 0
+            Dim sqrt1 As Double = 0, sqrt2 As Double = 0
+
             For i = 0 To array1.Length - 1
                 sum1 += array1(i)
                 sum2 += array2(i)
             Next
-            mean1 = sum1 / array1.Length
-            mean2 = sum2 / array2.Length
+
+            Dim mean1 = sum1 / array1.Length
+            Dim mean2 = sum2 / array2.Length
 
             For i = 0 To array1.Length - 1
                 covariance += (array1(i) - mean1) * (array2(i) - mean2)
                 sqrt1 += std.Pow(array1(i) - mean1, 2)
                 sqrt2 += std.Pow(array2(i) - mean2, 2)
             Next
+
             If sqrt1 = 0 OrElse sqrt2 = 0 Then
                 Return 0
             Else
