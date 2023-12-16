@@ -8,8 +8,9 @@ Namespace COW
     Friend Class FunctionMatrix : Implements IDisposable
 
         Dim funcBeanMatrix As FunctionElement()()
-        Dim dims As (row As Integer, col As Integer)
-        Private disposedValue As Boolean
+        Dim disposedValue As Boolean
+
+        Public ReadOnly Property dims As (row As Integer, col As Integer)
 
         Default Public Property Item(rowPosition As Integer, columnPosition As Integer) As FunctionElement
             Get

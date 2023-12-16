@@ -110,7 +110,11 @@ Namespace COW
             score = 0
             totalWarp = 0
             counter = 0
-            For i = 0 To segmentNumber - 1
+            For i As Integer = 0 To segmentNumber - 1
+                If endPosition >= functionMatrixBean.dims.col Then
+                    Continue For
+                End If
+
                 warp = functionMatrixBean(i, endPosition).Warp
                 score = functionMatrixBean(i, endPosition).Score
 
