@@ -174,6 +174,7 @@ Namespace COW
                 Next
             End If
 #End Region
+            Call functionMatrixBean.Dispose()
         End Function
 
         ''' <summary>
