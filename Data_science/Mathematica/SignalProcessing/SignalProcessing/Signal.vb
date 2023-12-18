@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 ''' <summary>
 ''' A vector of the <see cref="TimeSignal"/>
 ''' </summary>
+''' <remarks>
+''' a <see cref="TimeSignal"/> point collection
+''' </remarks>
 Public Class Signal : Inherits Vector(Of TimeSignal)
 
     Public ReadOnly Property times As Vector

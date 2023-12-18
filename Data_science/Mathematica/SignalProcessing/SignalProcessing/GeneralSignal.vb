@@ -59,6 +59,12 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' a tuple of the signal vector data <see cref="Measures"/> and <see cref="Strength"/>
+''' </remarks>
 Public Class GeneralSignal : Implements INamedValue
 
     ''' <summary>
@@ -73,7 +79,7 @@ Public Class GeneralSignal : Implements INamedValue
     Public Property Strength As Double()
 
     ''' <summary>
-    ''' the unique reference
+    ''' the unique reference id, or the variable name
     ''' </summary>
     ''' <returns></returns>
     Public Property reference As String Implements INamedValue.Key
