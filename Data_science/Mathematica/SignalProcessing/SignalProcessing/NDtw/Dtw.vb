@@ -20,6 +20,7 @@
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 Imports std = System.Math
 
@@ -117,7 +118,11 @@ Namespace NDtw
                        Optional slopeStepSizeAside As Integer? = Nothing,
                        Optional sakoeChibaMaxShift As Integer? = Nothing)
 
-            Me.New({New GeneralSignal(x, y)}, distanceMeasure, boundaryConstraintStart, boundaryConstraintEnd, slopeStepSizeDiagonal, slopeStepSizeAside, sakoeChibaMaxShift)
+            Me.New(New GeneralSignal() {New GeneralSignal(x, y)},
+                   distanceMeasure,
+                   boundaryConstraintStart, boundaryConstraintEnd,
+                   slopeStepSizeDiagonal, slopeStepSizeAside,
+                   sakoeChibaMaxShift)
         End Sub
 
         ''' <summary>
@@ -463,16 +468,16 @@ Namespace NDtw
             Return std.Min(_pathCost(0).Min(), min2)
         End Function
 
-        Public Function GetPath() As Tuple(Of Integer, Integer)()
-            Dim path = New List(Of Tuple(Of Integer, Integer))()
+        Public Iterator Function GetPath() As IEnumerable(Of Point)
             Dim indexX = 0
             Dim indexY = 0
 
             Call Calculate()
 
             If Not _boundaryConstraintStart Then
-                'find the starting element with lowest cost
+                ' find the starting element with lowest cost
                 Dim min = Double.PositiveInfinity
+
                 For i As Integer = 0 To std.Max(_XLength, _YLength) - 1
                     If i < _XLength AndAlso _pathCost(i)(0) < min Then
                         indexX = i
@@ -487,19 +492,19 @@ Namespace NDtw
                 Next
             End If
 
-            path.Add(New Tuple(Of Integer, Integer)(indexX, indexY))
-            While If(_boundaryConstraintEnd, indexX < _XLength - 1 OrElse indexY < _YLength - 1, indexX < _XLength - 1 AndAlso indexY < _YLength - 1)
+            Yield New Point(indexX, indexY)
 
+            While If(_boundaryConstraintEnd, indexX < _XLength - 1 OrElse indexY < _YLength - 1, indexX < _XLength - 1 AndAlso indexY < _YLength - 1)
                 Dim stepX = _predecessorStepX(indexX)(indexY)
                 Dim stepY = _predecessorStepY(indexX)(indexY)
 
-                For i = 0 To stepX.Length - 1
+                For i As Integer = 0 To stepX.Length - 1
                     indexX += stepX(i)
                     indexY += stepY(i)
-                    path.Add(New Tuple(Of Integer, Integer)(indexX, indexY))
+
+                    Yield New Point(indexX, indexY)
                 Next
             End While
-            Return path.ToArray()
         End Function
 
         Public Function GetDistanceMatrix() As Double()()
