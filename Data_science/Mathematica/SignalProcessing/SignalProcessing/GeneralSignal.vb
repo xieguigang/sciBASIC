@@ -143,6 +143,13 @@ Public Class GeneralSignal : Implements INamedValue
         Strength = y
     End Sub
 
+    Sub New(x As Double(), y As Double(), id As String, weight As Double)
+        Call Me.New(x, y)
+
+        Me.reference = id
+        Me.weight = weight
+    End Sub
+
     Public Overrides Function ToString() As String
         Return description
     End Function
