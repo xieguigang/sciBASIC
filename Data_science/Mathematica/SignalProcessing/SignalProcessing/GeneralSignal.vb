@@ -53,11 +53,13 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 
 ''' <summary>
 ''' 
@@ -71,11 +73,17 @@ Public Class GeneralSignal : Implements INamedValue
     ''' usually is the time in unit second.(x axis)
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' x axis
+    ''' </remarks>
     Public Property Measures As Double()
     ''' <summary>
     ''' the signal strength.(y axis)
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' y axis
+    ''' </remarks>
     Public Property Strength As Double()
 
     ''' <summary>
@@ -86,6 +94,7 @@ Public Class GeneralSignal : Implements INamedValue
     Public Property measureUnit As String
     Public Property description As String
     Public Property meta As Dictionary(Of String, String)
+    Public Property weight As Double
 
     Public ReadOnly Property MeasureRange As DoubleRange
         Get
@@ -166,5 +175,18 @@ Public Class GeneralSignal : Implements INamedValue
                 .intensity = _Strength(i)
             }
         Next
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function Preprocessing(sig As GeneralSignal, process As IPreprocessor) As GeneralSignal
+        Return New GeneralSignal() With {
+            .description = sig.description,
+            .Measures = process(sig.Measures),
+            .measureUnit = sig.measureUnit,
+            .meta = sig.meta,
+            .reference = sig.reference,
+            .Strength = process(sig.Strength),
+            .weight = sig.weight
+        }
     End Function
 End Class

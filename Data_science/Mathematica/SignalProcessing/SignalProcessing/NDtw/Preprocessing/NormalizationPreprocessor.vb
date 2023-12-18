@@ -1,6 +1,6 @@
 ﻿Namespace NDtw.Preprocessing
 
-    Public Class NormalizationPreprocessor : Implements IPreprocessor
+    Public Class NormalizationPreprocessor : Inherits IPreprocessor
 
         Private ReadOnly _minBoundary As Double
         Private ReadOnly _maxBoundary As Double
@@ -20,7 +20,7 @@
             _maxBoundary = maxBoundary
         End Sub
 
-        Public Function Preprocess(data As Double()) As Double() Implements IPreprocessor.Preprocess
+        Public Overrides Function Preprocess(data As Double()) As Double()
             ' x = ((x - min_x) / (max_x - min_x)) * (maxBoundary - minBoundary) + minBoundary
 
             Dim min = data.Min()
@@ -30,7 +30,7 @@
             Return data.[Select](Function(x) (x - min) * constFactor + _minBoundary).ToArray()
         End Function
 
-        Public Overrides Function ToString() As String Implements IPreprocessor.ToString
+        Public Overrides Function ToString() As String
             Return "Normalization"
         End Function
     End Class

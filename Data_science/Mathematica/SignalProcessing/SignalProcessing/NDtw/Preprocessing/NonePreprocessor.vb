@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.CompilerServices
+
 Namespace NDtw.Preprocessing
 
     ''' <summary>
@@ -6,18 +8,20 @@ Namespace NDtw.Preprocessing
     ''' 
     ''' f(x) = x
     ''' </summary>
-    Public Class NonePreprocessor : Implements IPreprocessor
+    Public Class NonePreprocessor : Inherits IPreprocessor
 
         ''' <summary>
         ''' do nothing at here
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function Preprocess(data As Double()) As Double() Implements IPreprocessor.Preprocess
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function Preprocess(data As Double()) As Double()
             Return data
         End Function
 
-        Public Overrides Function ToString() As String Implements IPreprocessor.ToString
+        Public Overrides Function ToString() As String
             Return "None"
         End Function
     End Class
