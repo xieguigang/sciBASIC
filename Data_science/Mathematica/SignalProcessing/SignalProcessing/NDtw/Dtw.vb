@@ -58,7 +58,7 @@ Namespace NDtw
     ''' <remarks>
     ''' https://github.com/doblak/ndtw
     ''' </remarks>
-    Public Class Dtw : Implements IDtw
+    Public Class Dtw
 
         Private ReadOnly _isXLongerOrEqualThanY As Boolean
         Private ReadOnly _signalsLengthDifference As Integer
@@ -80,10 +80,10 @@ Namespace NDtw
         Private _predecessorStepX As Integer()()()
         Private _predecessorStepY As Integer()()()
 
-        Public ReadOnly Property XLength As Integer Implements IDtw.XLength
-        Public ReadOnly Property YLength As Integer Implements IDtw.YLength
+        Public ReadOnly Property XLength As Integer
+        Public ReadOnly Property YLength As Integer
 
-        Public ReadOnly Property SeriesVariables As SeriesVariable() Implements IDtw.SeriesVariables
+        Public ReadOnly Property SeriesVariables As SeriesVariable()
             Get
                 Return _seriesVariables
             End Get
@@ -437,7 +437,7 @@ Namespace NDtw
             End If
         End Sub
 
-        Public Function GetCost() As Double Implements IDtw.GetCost
+        Public Function GetCost() As Double
             Calculate()
 
             If _boundaryConstraintStart Then
@@ -447,7 +447,7 @@ Namespace NDtw
             Return std.Min(_pathCost(CInt(0)).Min(), Enumerable.Select(Of Double(), Global.System.[Double])(_pathCost, CType(Function(y) CDbl(y(CInt(0))), Func(Of Double(), Double))).Min())
         End Function
 
-        Public Function GetPath() As Tuple(Of Integer, Integer)() Implements IDtw.GetPath
+        Public Function GetPath() As Tuple(Of Integer, Integer)()
             Dim path = New List(Of Tuple(Of Integer, Integer))()
             Dim indexX = 0
             Dim indexY = 0
@@ -486,12 +486,12 @@ Namespace NDtw
             Return path.ToArray()
         End Function
 
-        Public Function GetDistanceMatrix() As Double()() Implements IDtw.GetDistanceMatrix
+        Public Function GetDistanceMatrix() As Double()()
             Calculate()
             Return _distances
         End Function
 
-        Public Function GetCostMatrix() As Double()() Implements IDtw.GetCostMatrix
+        Public Function GetCostMatrix() As Double()()
             Calculate()
             Return _pathCost
         End Function
