@@ -91,8 +91,8 @@ Namespace PeakFinding
             Return FindAllSignalPeaks(signals.GetTimeSignals)
         End Function
 
-        Public Iterator Function FindAllSignalPeaks(signals As IEnumerable(Of ITimeSignal)) As IEnumerable(Of SignalPeak)
-            Dim data As ITimeSignal() = signals.OrderBy(Function(t) t.time).ToArray
+        Public Iterator Function FindAllSignalPeaks(Of T As ITimeSignal)(signals As IEnumerable(Of T)) As IEnumerable(Of SignalPeak)
+            Dim data As ITimeSignal() = signals.OrderBy(Function(ti) ti.time).ToArray
 
             If data.Length = 0 Then
                 Call "no signal data was input...".Warning
@@ -100,11 +100,11 @@ Namespace PeakFinding
             End If
 
             Dim dt As Double = data _
-                .Select(Function(t, i)
+                .Select(Function(ti, i)
                             If i = 0 Then
                                 Return 0
                             Else
-                                Return t.time - data(i - 1).time
+                                Return ti.time - data(i - 1).time
                             End If
                         End Function) _
                 .Average
@@ -117,13 +117,13 @@ Namespace PeakFinding
             Dim slopes As SeqValue(Of Vector2D())() = filterBySinAngles(angles).ToArray
             Dim rawSignals As IVector(Of ITimeSignal) = data.Shadows
             Dim rtmin, rtmax As Double
-            Dim time As Vector = rawSignals.Select(Function(t) t.time).AsVector
+            Dim time As Vector = rawSignals.Select(Function(ti) ti.time).AsVector
             Dim area As Vector2D()
 
             For Each region As SeqValue(Of Vector2D()) In slopes
                 If region.value.Length = 1 Then
-                    Dim t As Single = region.value(Scan0).x
-                    Dim i As Integer = which(angles.Select(Function(a) std.Abs(a.x - t) <= dt)).First
+                    Dim ti As Single = region.value(Scan0).x
+                    Dim i As Integer = which(angles.Select(Function(a) std.Abs(a.x - ti) <= dt)).First
 
                     If i > 0 Then
                         If i < angles.Length - 1 Then
