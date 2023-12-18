@@ -20,9 +20,7 @@
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+Imports std = System.Math
 
 Namespace NDtw
 
@@ -176,7 +174,7 @@ Namespace NDtw
             End If
 
             _isXLongerOrEqualThanY = _XLength >= _YLength
-            _signalsLengthDifference = Math.Abs(_XLength - _YLength)
+            _signalsLengthDifference = std.Abs(_XLength - _YLength)
             _sakoeChibaConstraint = sakoeChibaMaxShift.HasValue
             _sakoeChibaMaxShift = If(sakoeChibaMaxShift.HasValue, sakoeChibaMaxShift.Value, Integer.MaxValue)
 
@@ -250,9 +248,9 @@ Namespace NDtw
                     Dim xVal = xSeriesForVariable(i)
                     For j = 0 To _YLength - 1
                         If _distanceMeasure = DistanceMeasure.Manhattan Then
-                            currentDistances(j) += Math.Abs(xVal - ySeriesForVariable(j)) * variableWeight
+                            currentDistances(j) += std.Abs(xVal - ySeriesForVariable(j)) * variableWeight
                         ElseIf _distanceMeasure = DistanceMeasure.Maximum Then
-                            currentDistances(j) = Math.Max(currentDistances(j), Math.Abs(xVal - ySeriesForVariable(j)) * variableWeight)
+                            currentDistances(j) = std.Max(currentDistances(j), std.Abs(xVal - ySeriesForVariable(j)) * variableWeight)
                         Else
                             'Math.Pow(xVal - ySeriesForVariable[j], 2) is much slower, so direct multiplication with temporary variable is used
                             Dim dist = (xVal - ySeriesForVariable(j)) * variableWeight
@@ -266,7 +264,7 @@ Namespace NDtw
                 For i = 0 To _XLength - 1
                     Dim currentDistances = _distances(i)
                     For j = 0 To _YLength - 1
-                        currentDistances(j) = Math.Sqrt(currentDistances(j))
+                        currentDistances(j) = std.Sqrt(currentDistances(j))
                     Next
                 Next
             End If
@@ -446,19 +444,20 @@ Namespace NDtw
                 Return _pathCost(0)(0)
             End If
 
-            Return Math.Min(_pathCost(CInt(0)).Min(), Enumerable.Select(Of Double(), Global.System.[Double])(_pathCost, CType(Function(y) CDbl(y(CInt(0))), Func(Of Double(), Double))).Min())
+            Return std.Min(_pathCost(CInt(0)).Min(), Enumerable.Select(Of Double(), Global.System.[Double])(_pathCost, CType(Function(y) CDbl(y(CInt(0))), Func(Of Double(), Double))).Min())
         End Function
 
         Public Function GetPath() As Tuple(Of Integer, Integer)() Implements IDtw.GetPath
-            Calculate()
-
             Dim path = New List(Of Tuple(Of Integer, Integer))()
             Dim indexX = 0
             Dim indexY = 0
+
+            Call Calculate()
+
             If Not _boundaryConstraintStart Then
                 'find the starting element with lowest cost
                 Dim min = Double.PositiveInfinity
-                For i = 0 To Math.Max(_XLength, _YLength) - 1
+                For i As Integer = 0 To std.Max(_XLength, _YLength) - 1
                     If i < _XLength AndAlso _pathCost(i)(0) < min Then
                         indexX = i
                         indexY = 0

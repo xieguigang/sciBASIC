@@ -1,4 +1,6 @@
-﻿Namespace NDtw
+﻿Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
+
+Namespace NDtw
 
     Public Class SeriesVariable
         Private ReadOnly _x As Double()
