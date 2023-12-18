@@ -20,6 +20,7 @@
 'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 'SOFTWARE.
 
+Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 Imports std = System.Math
 
 Namespace NDtw
@@ -62,7 +63,7 @@ Namespace NDtw
 
         Private ReadOnly _isXLongerOrEqualThanY As Boolean
         Private ReadOnly _signalsLengthDifference As Integer
-        Private ReadOnly _seriesVariables As SeriesVariable()
+        Private ReadOnly _seriesVariables As GeneralSignal()
         Private ReadOnly _distanceMeasure As DistanceMeasure
         Private ReadOnly _boundaryConstraintStart As Boolean
         Private ReadOnly _boundaryConstraintEnd As Boolean
@@ -83,11 +84,13 @@ Namespace NDtw
         Public ReadOnly Property XLength As Integer
         Public ReadOnly Property YLength As Integer
 
-        Public ReadOnly Property SeriesVariables As SeriesVariable()
+        Public ReadOnly Property SeriesVariables As GeneralSignal()
             Get
                 Return _seriesVariables
             End Get
         End Property
+
+        Public Property Processor As IPreprocessor
 
         ''' <summary>
         ''' Initialize class that performs single variable DTW calculation for given series and settings.
@@ -114,7 +117,7 @@ Namespace NDtw
                        Optional slopeStepSizeAside As Integer? = Nothing,
                        Optional sakoeChibaMaxShift As Integer? = Nothing)
 
-            Me.New({New SeriesVariable(x, y)}, distanceMeasure, boundaryConstraintStart, boundaryConstraintEnd, slopeStepSizeDiagonal, slopeStepSizeAside, sakoeChibaMaxShift)
+            Me.New({New GeneralSignal(x, y)}, distanceMeasure, boundaryConstraintStart, boundaryConstraintEnd, slopeStepSizeDiagonal, slopeStepSizeAside, sakoeChibaMaxShift)
         End Sub
 
         ''' <summary>
@@ -135,13 +138,14 @@ Namespace NDtw
         ''' <param name="sakoeChibaMaxShift">
         ''' Sakoe-Chiba max shift constraint (side steps). Leave null for no constraint.
         ''' </param>
-        Public Sub New(seriesVariables As SeriesVariable(),
+        Public Sub New(seriesVariables As GeneralSignal(),
                        Optional distanceMeasure As DistanceMeasure = DistanceMeasure.Euclidean,
                        Optional boundaryConstraintStart As Boolean = True,
                        Optional boundaryConstraintEnd As Boolean = True,
                        Optional slopeStepSizeDiagonal As Integer? = Nothing,
                        Optional slopeStepSizeAside As Integer? = Nothing,
-                       Optional sakoeChibaMaxShift As Integer? = Nothing)
+                       Optional sakoeChibaMaxShift As Integer? = Nothing,
+                       Optional preprocessor As IPreprocessor = Nothing)
 
             _seriesVariables = seriesVariables
             _distanceMeasure = distanceMeasure
@@ -153,17 +157,17 @@ Namespace NDtw
             End If
 
             For i = 1 To _seriesVariables.Length - 1
-                If _seriesVariables(i).OriginalXSeries.Length <> _seriesVariables(0).OriginalXSeries.Length Then
+                If _seriesVariables(i).Measures.Length <> _seriesVariables(0).Measures.Length Then
                     Throw New ArgumentException("All variables withing series should have the same number of values.")
                 End If
 
-                If _seriesVariables(i).OriginalYSeries.Length <> _seriesVariables(0).OriginalYSeries.Length Then
+                If _seriesVariables(i).Strength.Length <> _seriesVariables(0).Strength.Length Then
                     Throw New ArgumentException("All variables withing series should have the same number of values.")
                 End If
             Next
 
-            XLength = _seriesVariables(0).OriginalXSeries.Length
-            YLength = _seriesVariables(0).OriginalYSeries.Length
+            XLength = _seriesVariables(0).Measures.Length
+            YLength = _seriesVariables(0).Strength.Length
 
             If _XLength = 0 OrElse _YLength = 0 Then
                 Throw New ArgumentException("Both series should have at least one value.")
@@ -199,6 +203,11 @@ Namespace NDtw
             End If
 
             'todo: throw error when solution (path from (1, 1) to (m, n) is not even possible due to slope constraints)
+            If preprocessor Is Nothing Then
+                Processor = IPreprocessor.None
+            Else
+                Processor = preprocessor
+            End If
         End Sub
 
         Private Sub InitializeArrays()
@@ -237,11 +246,11 @@ Namespace NDtw
             Next
 
             'calculate distances for 'data' part of the matrix
-            For Each seriesVariable In _seriesVariables
-                Dim xSeriesForVariable = seriesVariable.GetPreprocessedXSeries()
-                Dim ySeriesForVariable = seriesVariable.GetPreprocessedYSeries()
+            For Each seriesVariable As GeneralSignal In _seriesVariables
+                Dim xSeriesForVariable = _Processor(seriesVariable.Measures)
+                Dim ySeriesForVariable = _Processor(seriesVariable.Strength)
                 'weight for current variable distances that is applied BEFORE the value is further transformed by distance measure
-                Dim variableWeight = seriesVariable.Weight
+                Dim variableWeight = seriesVariable.weight
 
                 For i As Integer = 0 To _XLength - 1
                     Dim currentDistances = _distances(i)

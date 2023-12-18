@@ -135,6 +135,14 @@ Public Class GeneralSignal : Implements INamedValue
         End Get
     End Property
 
+    Sub New()
+    End Sub
+
+    Sub New(x As Double(), y As Double())
+        Measures = x
+        Strength = y
+    End Sub
+
     Public Overrides Function ToString() As String
         Return description
     End Function
