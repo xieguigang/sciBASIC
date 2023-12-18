@@ -444,7 +444,12 @@ Namespace NDtw
                 Return _pathCost(0)(0)
             End If
 
-            Return std.Min(_pathCost(CInt(0)).Min(), Enumerable.Select(Of Double(), Global.System.[Double])(_pathCost, CType(Function(y) CDbl(y(CInt(0))), Func(Of Double(), Double))).Min())
+            Dim min2 As Double = Aggregate y As Double()
+                                 In _pathCost
+                                 Let ymin = y(0)
+                                 Into Min(ymin)
+
+            Return std.Min(_pathCost(0).Min(), min2)
         End Function
 
         Public Function GetPath() As Tuple(Of Integer, Integer)()
