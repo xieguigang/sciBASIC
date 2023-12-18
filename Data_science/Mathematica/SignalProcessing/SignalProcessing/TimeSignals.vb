@@ -60,12 +60,12 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
+''' <summary>
+''' a single scatter point in a time signal
+''' </summary>
 Public Structure TimeSignal : Implements ITimeSignal
 
     Dim time As Double
@@ -110,35 +110,3 @@ Public Structure TimeSignal : Implements ITimeSignal
         Next
     End Function
 End Structure
-
-Public Class Signal : Inherits Vector(Of TimeSignal)
-
-    Public ReadOnly Property times As Vector
-        Get
-            Return New Vector(From xi As TimeSignal In buffer Select xi.time)
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' Get the signal intensity vector of current signal data
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property intensities As Vector
-        Get
-            Return New Vector(From xi As TimeSignal In buffer Select xi.intensity)
-        End Get
-    End Property
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub New(data As IEnumerable(Of TimeSignal))
-        Call MyBase.New(data)
-    End Sub
-
-    Sub New(data As IEnumerable(Of ITimeSignal))
-        Call MyBase.New(From ti As ITimeSignal In data.SafeQuery Select New TimeSignal(ti))
-    End Sub
-
-    Public Shared Operator +(a As Signal, b As Signal) As Signal
-        Throw New NotImplementedException
-    End Operator
-End Class
