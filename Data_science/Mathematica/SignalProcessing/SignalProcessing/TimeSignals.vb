@@ -60,6 +60,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
 
@@ -97,6 +98,7 @@ Public Structure TimeSignal : Implements ITimeSignal
         Me.intensity = tick.intensity
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"[{time}, {intensity}]"
     End Function

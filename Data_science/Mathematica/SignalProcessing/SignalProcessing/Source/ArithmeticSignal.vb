@@ -76,10 +76,11 @@ Imports System.Runtime.CompilerServices
 
 Namespace Source.Arithmetic
 
-    '
-    '* Advanced Signal class for operations on two Signals.
-    '* Extend this class and implement the calculate method which is used by all the other methods.
-    '
+    ''' <summary>
+    ''' Advanced Signal class for operations on two Signals.
+    ''' Extend this class and implement the calculate method 
+    ''' which is used by all the other methods.
+    ''' </summary>
     Public MustInherit Class ArithmeticSignal
 
         Protected Friend audioPosA, audioPosB As Double
@@ -128,7 +129,7 @@ Namespace Source.Arithmetic
         ''' <summary>
         ''' Generates a byte array with Signal.BUFFER_SIZE samples to be played back, resembling the sound of the signal.
         ''' This method uses the internal phase and frequency values of its operand members. </summary>
-        ''' <returns>    	the samples </returns>
+        ''' <returns>the samples </returns>
         Public Overridable ReadOnly Property AudioBytes As SByte()
             Get
                 Dim samples(Signal.BUFFER_SIZE - 1) As SByte

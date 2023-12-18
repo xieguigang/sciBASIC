@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PeakFinding
 
@@ -82,7 +82,7 @@ Namespace PeakFinding
         ''' <param name="angle">这个是一个角度值，取值区间为[0,90]</param>
         ''' <param name="baselineQuantile"></param>
         Sub New(angle As Double, baselineQuantile As Double)
-            Me.sin_angle = stdNum.Sin((angle / 90) * (1 / 2 * stdNum.PI))
+            Me.sin_angle = std.Sin((angle / 90) * (1 / 2 * std.PI))
             Me.baseline_quantile = baselineQuantile
         End Sub
 
@@ -123,7 +123,7 @@ Namespace PeakFinding
             For Each region As SeqValue(Of Vector2D()) In slopes
                 If region.value.Length = 1 Then
                     Dim t As Single = region.value(Scan0).x
-                    Dim i As Integer = which(angles.Select(Function(a) stdNum.Abs(a.x - t) <= dt)).First
+                    Dim i As Integer = which(angles.Select(Function(a) std.Abs(a.x - t) <= dt)).First
 
                     If i > 0 Then
                         If i < angles.Length - 1 Then
@@ -149,7 +149,7 @@ Namespace PeakFinding
                     ' Dim t1 As Single = region.value(Scan0).x
                     Dim t2 As Single = region.value(1).x
                     ' Dim i As Integer = which(angles.Select(Function(a) a.x = t1)).First
-                    Dim j As Integer = which(angles.Select(Function(a) stdNum.Abs(a.x - t2) <= dt)).First
+                    Dim j As Integer = which(angles.Select(Function(a) std.Abs(a.x - t2) <= dt)).First
 
                     If j < angles.Length - 1 Then
                         region = New SeqValue(Of Vector2D()) With {
