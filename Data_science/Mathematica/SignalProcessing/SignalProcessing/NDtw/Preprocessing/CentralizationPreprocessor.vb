@@ -1,11 +1,15 @@
-﻿Imports System.Linq
+﻿Imports System.Runtime.CompilerServices
 
 Namespace NDtw.Preprocessing
-    Public Class CentralizationPreprocessor
-        Implements IPreprocessor
+
+    ''' <summary>
+    ''' f(x) = x - mean
+    ''' </summary>
+    Public Class CentralizationPreprocessor : Implements IPreprocessor
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Preprocess(data As Double()) As Double() Implements IPreprocessor.Preprocess
-            Dim avg = data.Average()
-            Return data.[Select](Function(x) x - avg).ToArray()
+            Return SIMD.Subtract.f64_op_subtract_f64_scalar(data, data.Average)
         End Function
 
         Public Overrides Function ToString() As String Implements IPreprocessor.ToString

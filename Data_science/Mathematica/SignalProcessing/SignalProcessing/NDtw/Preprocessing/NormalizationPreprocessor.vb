@@ -1,8 +1,7 @@
-﻿Imports System.Linq
+﻿Namespace NDtw.Preprocessing
 
-Namespace NDtw.Preprocessing
-    Public Class NormalizationPreprocessor
-        Implements IPreprocessor
+    Public Class NormalizationPreprocessor : Implements IPreprocessor
+
         Private ReadOnly _minBoundary As Double
         Private ReadOnly _maxBoundary As Double
 

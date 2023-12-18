@@ -1,6 +1,7 @@
 ﻿Imports System
 
 Namespace NDtw
+
     Public Interface IDtw
         Function GetCost() As Double
         Function GetPath() As Tuple(Of Integer, Integer)()

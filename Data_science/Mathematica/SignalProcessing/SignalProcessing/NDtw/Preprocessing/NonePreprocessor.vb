@@ -3,6 +3,8 @@ Namespace NDtw.Preprocessing
 
     ''' <summary>
     ''' signal data processor that do nothing
+    ''' 
+    ''' f(x) = x
     ''' </summary>
     Public Class NonePreprocessor : Implements IPreprocessor
 

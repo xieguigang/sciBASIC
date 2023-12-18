@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Linq
+﻿Imports std = System.Math
 
 Namespace NDtw.Preprocessing
 
@@ -15,7 +14,8 @@ Namespace NDtw.Preprocessing
 
             ' x = (x - mean) / std dev
             Dim mean = data.Average()
-            Dim stdDev = Math.Sqrt(data.[Select](Function(x) x - mean).Sum(Function(x) x * x) / (data.Length - 1))
+            Dim N As Integer = (data.Length - 1)
+            Dim stdDev = std.Sqrt(SIMD.Subtract.f64_op_subtract_f64_scalar(data, mean).Sum(Function(x) x ^ 2) / N)
 
             Return data.[Select](Function(x) (x - mean) / stdDev).ToArray()
         End Function

@@ -1,6 +1,5 @@
-﻿Imports NDtw.Preprocessing
+﻿Namespace NDtw
 
-Namespace NDtw
     Public Class SeriesVariable
         Private ReadOnly _x As Double()
         Private ReadOnly _y As Double()
