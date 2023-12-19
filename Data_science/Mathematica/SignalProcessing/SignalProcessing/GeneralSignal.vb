@@ -183,6 +183,12 @@ Public Class GeneralSignal : Implements INamedValue
         Next
     End Function
 
+    Public Iterator Function GetTimeSignals(Of T As ITimeSignal)(activator As Func(Of Double, Double, T)) As IEnumerable(Of T)
+        For i As Integer = 0 To _Measures.Length - 1
+            Yield activator(_Measures(i), _Strength(i))
+        Next
+    End Function
+
     Public Iterator Function GetTimeSignals() As IEnumerable(Of ITimeSignal)
         For i As Integer = 0 To _Measures.Length - 1
             Yield New TimeSignal With {
