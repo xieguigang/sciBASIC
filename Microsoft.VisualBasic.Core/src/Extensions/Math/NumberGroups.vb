@@ -95,7 +95,6 @@ Namespace Math
         ''' a numeric vector Or matrix containing the values To be differenced.
         ''' </param>
         ''' <returns></returns>
-        <ExportAPI("diff")>
         Public Function diff(x As Double()) As Double()
             Dim diffs As New List(Of Double)
             Dim base As Double = x(Scan0)
