@@ -151,7 +151,11 @@ Public Class GeneralSignal : Implements INamedValue
     End Sub
 
     Public Overrides Function ToString() As String
-        Return description
+        If description.StringEmpty Then
+            Return $"{reference}, {Measures.Length} data points"
+        Else
+            Return description
+        End If
     End Function
 
     Public Function GetText() As String
