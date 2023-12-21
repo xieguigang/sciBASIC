@@ -78,7 +78,7 @@ Namespace ComponentModel.DataSourceModel
         ''' The dynamics property object with specific type of value.
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks>Can not serialize the dictionary object in to xml document.</remarks>
+        ''' <remarks>Can not serialize the dictionary object in to xml document. **and this property ensure that the value always not null!**</remarks>
         <DynamicMetadata>
         <XmlIgnore>
         Public Overridable Property Properties As Dictionary(Of String, T) Implements IDynamicMeta(Of T).Properties

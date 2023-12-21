@@ -51,6 +51,10 @@ Namespace Parallel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Solve() As VectorTask
+            If is_verbose Then
+                VBDebugger.EchoLine("solve problem in sequence mode.")
+            End If
+
             sequenceMode = True
             Solve(0, workLen - 1, 0)
             Return Me
@@ -67,6 +71,11 @@ Namespace Parallel
                 ' run in sequence
                 Call Solve()
             Else
+                If is_verbose Then
+                    Call VBDebugger.EchoLine($"solve problem in parallel mode with {cpu_count} cpu threads!")
+                    Call VBDebugger.EchoLine($"each task span size: {span_size}.")
+                End If
+
                 System.Threading.Tasks.Parallel.For(
                     fromInclusive:=0,
                     toExclusive:=cpu_count + 3,

@@ -86,6 +86,7 @@ Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports any = Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -527,15 +528,22 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="collection"></param>
-    ''' <returns></returns>
+    ''' <returns>this is a safe function: this function returns zero 
+    ''' if the given input <paramref name="collection"/> object is nothing
+    ''' </returns>
     ''' <remarks></remarks>
-    <Extension> Public Function TryCount(Of T)(collection As IEnumerable(Of T)) As Integer
+    <Extension>
+    Public Function TryCount(Of T)(collection As IEnumerable(Of T)) As Integer
         If collection Is Nothing Then
             Return 0
         ElseIf TypeOf collection Is T() Then
             Return DirectCast(collection, T()).Length
         ElseIf collection.GetType.IsInheritsFrom(GetType(System.Collections.Generic.List(Of T))) Then
             Return DirectCast(collection, System.Collections.Generic.List(Of T)).Count
+        ElseIf collection.GetType.ImplementInterface(GetType(IList)) Then
+            Return DirectCast(collection, IList).Count
+        ElseIf collection.GetType.ImplementInterface(GetType(ICollection)) Then
+            Return DirectCast(collection, ICollection).Count
         Else
             Return Enumerable.Count(collection)
         End If

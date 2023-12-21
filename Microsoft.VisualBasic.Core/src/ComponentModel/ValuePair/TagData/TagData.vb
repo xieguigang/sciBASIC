@@ -81,7 +81,7 @@ Namespace ComponentModel.TagData
     ''' <summary>
     ''' Target value have a specific tag key.
     ''' </summary>
-    ''' <typeparam name="T">The type of the tag key</typeparam>
+    ''' <typeparam name="T">The type of the <see cref="Tag"/> key</typeparam>
     ''' <typeparam name="V">The type of the value data</typeparam>
     Public Class TagData(Of T, V) : Inherits Value(Of V)
         Implements INamedValue
@@ -103,7 +103,7 @@ Namespace ComponentModel.TagData
         ''' Target value have this specific tag data.
         ''' </summary>
         ''' <returns></returns>
-        Public Property Tag As T
+        Public Overridable Property Tag As T
 
         ''' <summary>
         ''' 默认都有一个字符串类型的标签用于保存其他的数据，但是主要还是使用``<see cref="Tag"/>``属性来进行标记
@@ -138,6 +138,9 @@ Namespace ComponentModel.TagData
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Class DoubleTagged(Of T) : Inherits TagData(Of Double, T)
+        Implements INumericKey
+
+        Public Overrides Property Tag As Double Implements INumericKey.key
 
         Sub New()
         End Sub
@@ -151,6 +154,19 @@ Namespace ComponentModel.TagData
             Return $"({TagStr}) {Tag.ToString("G3")} - {Value.ToString}"
         End Function
     End Class
+
+    ''' <summary>
+    ''' an object that tagged a number value as its index key
+    ''' </summary>
+    Public Interface INumericKey
+
+        ''' <summary>
+        ''' a number index key
+        ''' </summary>
+        ''' <returns></returns>
+        Property key As Double
+
+    End Interface
 
     ''' <summary>
     ''' 使用一个长整形数作为目标对象值的标签信息
