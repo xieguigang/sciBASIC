@@ -110,7 +110,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End Get
         End Property
 
-        Friend Sub New()
+        Sub New()
             properties = New Dictionary(Of String, List(Of ProjectMember))
             methods = New Dictionary(Of String, List(Of ProjectMember))
         End Sub
@@ -164,6 +164,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Private Shared Function getInternal(ByRef table As Dictionary(Of String, List(Of ProjectMember)), name$) As List(Of ProjectMember)
+            If table Is Nothing Then
+                table = New Dictionary(Of String, List(Of ProjectMember))
+            End If
+
             If table.ContainsKey(name) Then
                 Return table(name)
             Else
