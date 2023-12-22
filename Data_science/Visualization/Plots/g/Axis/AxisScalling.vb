@@ -108,6 +108,8 @@ Namespace Graphic.Axis
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
+                ElseIf range.Min = 0 AndAlso range.Max = 0 Then
+                    Return {0, 1}
                 ElseIf smallNumber.IsInside(.Min) AndAlso smallNumber.IsInside(.Max) Then
                     Dim v As New Vector({ .Min, .Max})
                     Dim factor As Double = 1 / v.Min
