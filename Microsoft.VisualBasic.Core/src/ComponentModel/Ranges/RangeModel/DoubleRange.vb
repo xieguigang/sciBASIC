@@ -99,6 +99,10 @@ Namespace ComponentModel.Ranges.Model
             End Get
         End Property
 
+        ''' <summary>
+        ''' A vector with 2 elements: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property MinMax As Double()
             Get
                 Return New Double() {Min, Max}
