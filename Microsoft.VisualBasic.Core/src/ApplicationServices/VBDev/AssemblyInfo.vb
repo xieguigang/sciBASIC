@@ -135,7 +135,7 @@ Namespace ApplicationServices.Development
         ''' </summary>
         ''' <param name="fullName">The full name of the type.</param>
         ''' <returns>An object that represents the specified class, or null if the class is not found.</returns>
-        Public Shared Function [GetType](fullName As String) As Type
+        Public Overloads Shared Function [GetType](fullName As String) As Type
             Static cache As New Dictionary(Of String, Type)
 
             SyncLock cache
