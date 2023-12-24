@@ -74,9 +74,13 @@ Namespace ComponentModel.StoreProcedure
     ''' <summary>
     ''' the in-memory sample data object
     ''' </summary>
-    Public Class SampleData
+    Public Class SampleData : Implements INamedValue
 
-        Public Property id As String
+        ''' <summary>
+        ''' the unique id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property id As String Implements INamedValue.Key
         Public Property features As Double()
         Public Property labels As Double()
 

@@ -101,7 +101,7 @@ Namespace Imaging
     End Interface
 
     ''' <summary>
-    ''' a generic data model for HeatMap raster
+    ''' a generic data model for HeatMap raster: [x,y,scale]
     ''' </summary>
     ''' <remarks>
     ''' the layout information comes from the base <see cref="RasterPixel"/> model
