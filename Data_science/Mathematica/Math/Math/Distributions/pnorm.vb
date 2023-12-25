@@ -294,12 +294,14 @@ Namespace Distributions
         'End Function
 
         ''' <summary>
+        ''' #### normal-pdf
+        ''' 
         ''' Normal Distribution.(正态分布)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="m">Mean</param>
         ''' <param name="sd"></param>
-        ''' <returns></returns>
+        ''' <returns>Get normal distribution density value at a point.</returns>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
             Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp As Double = (x - m) ^ 2

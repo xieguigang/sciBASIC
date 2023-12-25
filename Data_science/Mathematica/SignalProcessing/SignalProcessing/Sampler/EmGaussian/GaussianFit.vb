@@ -46,8 +46,13 @@ Namespace EmGaussian
         Public Function fit(samples As Double(), components As Variable()) As Variable()
             ' optimize components
             Dim lastLikelihood As Double = Double.NegativeInfinity
+            Dim pos_min As Double = samples _
+                .Select(Function(xi) std.Abs(xi)) _
+                .Where(Function(xi) xi > 0) _
+                .Min / 2
 
             membership = New Double(components.Length * samples.Length - 1) {}
+            samples = SIMD.Add.f64_op_add_f64_scalar(samples, pos_min)
 
             For i As Integer = 0 To opts.maxIterations - 1
                 Dim lh = likelihood(samples, components)
@@ -142,7 +147,7 @@ Namespace EmGaussian
                 .Select(Function(component, c)
                             ' get new amp as ratio of the total weight
                             If w(c) = 0.0 Then
-                                component.weight = 0
+                                component.weight = 0.00001
                             Else
                                 component.weight = w(c) / sumw
                             End If
