@@ -316,8 +316,8 @@ Namespace Math
         ''' <param name = "sigma">Standard deviation</param>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("NextGaussian")>
-        <Extension> Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+        <Extension>
+        Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
@@ -328,7 +328,6 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("NextGaussian")>
         Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Return seeds.NextGaussian(mu, sigma)
         End Function

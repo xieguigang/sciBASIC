@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Math.Distributions
+Imports std = System.Math
 
 Namespace COW
 
@@ -20,11 +21,6 @@ Namespace COW
 
         Public Overrides Function ToString() As String
             Return $"COW({GetType(S).Name})"
-        End Function
-
-        Public Shared Function GaussianFunction(normalizedValue As Double, mean As Double, standardDeviation As Double, variable As Double) As Double
-            Dim result = normalizedValue * std.Exp(-1 * std.Pow(variable - mean, 2) / (2 * std.Pow(standardDeviation, 2)))
-            Return result
         End Function
 
         ''' <summary>
@@ -68,7 +64,14 @@ Namespace COW
                 ElseIf borderLimit = BorderLimit.Diamond Then
                     slack.Add(maxSlack - 2 / (CDbl(segmentNumber) - 1) * std.Abs(i - (CDbl(segmentNumber) - 1) / 2))
                 ElseIf borderLimit = BorderLimit.Gaussian Then
-                    slack.Add(CInt(GaussianFunction(maxSlack - minSlack, segmentNumber / 2, segmentNumber / 4, i)) + minSlack)
+                    ' original function calls
+                    ' GaussianFunction(normalizedValue, mean, standardDeviation, variable)
+                    '    normalizedValue * std.Exp(-1 * std.Pow(variable - mean, 2) / (2 * std.Pow(standardDeviation, 2)))
+                    slack.Add(CInt(Gaussian.Gaussian(
+                              a:=maxSlack - minSlack,
+                              b:=segmentNumber / 2,
+                              sigma:=segmentNumber / 4,
+                              x:=i)) + minSlack)
                 End If
             Next
 #End Region

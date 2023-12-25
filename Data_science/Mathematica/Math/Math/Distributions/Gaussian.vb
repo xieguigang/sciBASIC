@@ -71,8 +71,8 @@ Namespace Distributions
         ''' controls the width of the "bell"</param>
         ''' <returns></returns>
         Public Function Gaussian(x#, a#, b#, sigma#) As Double
-            Dim p# = ((x - b) ^ 2) / (2 * sigma ^ 2)
-            Dim fx# = a * std.E ^ (-p)
+            Dim p# = ((x - b) ^ 2) / (2 * (sigma ^ 2))
+            Dim fx# = a * std.Exp(-p)
             Return fx
         End Function
 
