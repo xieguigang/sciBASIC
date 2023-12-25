@@ -56,7 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting.Rscript.MathExtension
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Distributions
 
@@ -121,7 +121,7 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Logistic(L#, x#, x0#, k#) As Double
-            Return L / (1 + stdNum.E ^ (-k * (x - x0)))
+            Return L / (1 + std.E ^ (-k * (x - x0)))
         End Function
 
         ''' <summary>
@@ -186,9 +186,9 @@ Namespace Distributions
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function StandardDistribution(x As Double) As Double
-            Dim answer As Double = 1 / ((stdNum.Sqrt(2 * stdNum.PI)))
-            Dim exp1 As Double = stdNum.Pow(x, 2) / 2
-            Dim exp As Double = stdNum.Pow(stdNum.E, -(exp1))
+            Dim answer As Double = 1 / ((std.Sqrt(2 * std.PI)))
+            Dim exp1 As Double = std.Pow(x, 2) / 2
+            Dim exp As Double = std.Pow(std.E, -(exp1))
             answer = answer * exp
             Return answer
         End Function
@@ -223,7 +223,7 @@ Namespace Distributions
             End If
 
             If logP Then
-                Return stdNum.Log10(p)
+                Return std.Log10(p)
             Else
                 Return p
             End If
@@ -273,6 +273,26 @@ Namespace Distributions
         ' mu = exp(mu)
         ' sd = 2*sd^(-4)
 
+        ReadOnly sqrt_2PI As Double = std.Sqrt(2 * std.PI)
+        ReadOnly PI2 As Double = 2 * std.PI
+
+        ''' <summary>
+        ''' #### normal-pdf
+        ''' 
+        ''' Get normal distribution density value at a point.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Function normal_pdf(x As Double, Optional u As Double = 0, Optional v As Double = 1) As Double
+            If v = 0 Then
+                Return If(x = u, Double.PositiveInfinity, 0)
+            End If
+
+            Return std.Exp(-0.5 * ((x - u) ^ 2) / v) / std.Sqrt(PI2 * v)
+        End Function
+
         ''' <summary>
         ''' Normal Distribution.(正态分布)
         ''' </summary>
@@ -281,10 +301,10 @@ Namespace Distributions
         ''' <param name="sd"></param>
         ''' <returns></returns>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
-            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
+            Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp As Double = (x - m) ^ 2
             Dim expP2 As Double = 2 * (sd ^ 2)
-            Dim expP3 As Double = stdNum.E ^ (-(exp / expP2))
+            Dim expP3 As Double = std.Exp(-(exp / expP2))
             answer = answer * expP3
             Return answer
         End Function
@@ -298,10 +318,10 @@ Namespace Distributions
         ''' <returns></returns>
         <Extension>
         Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
-            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
+            Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp = (x - m) ^ 2.0
-            Dim expP2 As Double = 2 * stdNum.Pow(sd, 2.0)
-            Dim expP3 = stdNum.E ^ -(exp / expP2)
+            Dim expP2 As Double = 2 * std.Pow(sd, 2.0)
+            Dim expP3 = Vector.Exp(-(exp / expP2))
             Dim y As Vector = answer * expP3
 
             Return y

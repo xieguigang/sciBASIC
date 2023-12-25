@@ -54,6 +54,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
+''' <summary>
+''' Try to make time serial signal data into multiple clusters
+''' </summary>
 Public Class SignalClustering
 
     ReadOnly tree As AVLTree(Of GeneralSignal, GeneralSignal)
