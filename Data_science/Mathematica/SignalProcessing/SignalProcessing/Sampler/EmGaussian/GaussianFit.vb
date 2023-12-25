@@ -115,7 +115,11 @@ Namespace EmGaussian
 
                 ' [c0, c1, c2, c0, c1, c2, ...]
                 For c As Integer = 0 To components.Length - 1
-                    membership(i * components.Length + c) = samples(i) * p(c) / sump
+                    If p(c) = 0.0 Then
+                        membership(i * components.Length + c) = 0
+                    Else
+                        membership(i * components.Length + c) = samples(i) * p(c) / sump
+                    End If
                 Next
             Next
 
@@ -135,14 +139,24 @@ Namespace EmGaussian
             Return components _
                 .Select(Function(component, c)
                             ' get new amp as ratio of the total weight
-                            component.weight = w(c) / sumw
+                            If w(c) = 0.0 Then
+                                component.weight = 0
+                            Else
+                                component.weight = w(c) / sumw
+                            End If
+
                             ' get new mean as weighted by ratios value
                             Dim sumu As Double = 0.0
 
                             For i As Integer = 0 To samples.Length - 1
                                 sumu += (i / n) * membership(i * components.Length + c)
                             Next
-                            component.mean = sumu / w(c)
+
+                            If w(c) = 0.0 Then
+                                component.mean = randf(0, 1)
+                            Else
+                                component.mean = sumu / w(c)
+                            End If
 
                             ' get new variations as weighted by ratios stdev
                             Dim sumv As Double = 0
@@ -150,7 +164,11 @@ Namespace EmGaussian
                                 sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
                             Next
 
-                            component.variance = std.Max(sumv / w(c), 0.00001)
+                            If w(c) = 0.0 Then
+                                component.variance = 0.00001
+                            Else
+                                component.variance = std.Max(sumv / w(c), 0.00001)
+                            End If
 
                             Return component
                         End Function) _
