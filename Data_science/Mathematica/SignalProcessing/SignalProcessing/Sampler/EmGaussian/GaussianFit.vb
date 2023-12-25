@@ -17,19 +17,27 @@ Namespace EmGaussian
             Me.opts = opts
         End Sub
 
-        Public Function fit(samples As Double(), Optional opts As Opts = Nothing) As Variable()
-            ' initialize components
-            Dim cn As Integer = opts.components.Length
-            Dim components = opts.components _
+        Public Function fit(samples As Double(), Optional npeaks As Integer = 6) As Variable()
+            Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
-                            If v.IsNullOrEmpty Then
-                                Return New Variable With {.weight = 1 / cn, .mean = i / cn, .variance = 1 / cn}
-                            Else
-                                Return New Variable With {.weight = v(0), .mean = v(1), .variance = v(2)}
-                            End If
+                            Return New Variable With {
+                                .weight = 1 / npeaks,
+                                .mean = i / npeaks,
+                                .variance = 1 / npeaks
+                            }
                         End Function) _
                 .ToArray
 
+            Return fit(samples, npeaks)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="samples"></param>
+        ''' <param name="components">initialize data, could be created from a random data</param>
+        ''' <returns></returns>
+        Public Function fit(samples As Double(), components As Variable()) As Variable()
             ' optimize components
             Dim lastLikelihood As Double = Double.NegativeInfinity
 
