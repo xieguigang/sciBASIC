@@ -79,7 +79,7 @@ Namespace EmGaussian
                 p = 0
                 For c As Integer = 0 To components.Length - 1
                     comp = components(c)
-                    p += samples(i) * comp.weight * pnorm.normal_pdf(i / n, comp.mean, comp.variance)
+                    p += samples(i) * comp.weight * pnorm.ProbabilityDensity(i / n, comp.mean, comp.variance)
                 Next
                 If p = 0.0 Then
                     l += -99999999
@@ -98,6 +98,8 @@ Namespace EmGaussian
         ''' <param name="components"></param>
         ''' <returns></returns>
         Private Function optimize(samples As Double(), components As Variable()) As Variable()
+            Dim comp As Variable
+
             For i As Integer = 0 To samples.Length - 1
                 Dim x = i / samples.Length
                 Dim p = New Double(components.Length - 1) {}
@@ -106,7 +108,8 @@ Namespace EmGaussian
                 Dim sump As Double = 0
 
                 For c As Integer = 0 To components.Length - 1
-                    p(c) = components(c).weight * pnorm.normal_pdf(x, components(c).mean, components(c).variance)
+                    comp = components(c)
+                    p(c) = comp.weight * pnorm.ProbabilityDensity(x, comp.mean, comp.variance)
                     sump += p(c)
                 Next
 
@@ -144,7 +147,7 @@ Namespace EmGaussian
                             ' get new variations as weighted by ratios stdev
                             Dim sumv As Double = 0
                             For i As Integer = 0 To samples.Length - 1
-                                sumv += membership(i * components.Length + c) * (1 / n - component.mean) ^ 2
+                                sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
                             Next
 
                             component.variance = std.Max(sumv / w(c), 0.00001)

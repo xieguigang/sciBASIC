@@ -276,22 +276,22 @@ Namespace Distributions
         ReadOnly sqrt_2PI As Double = std.Sqrt(2 * std.PI)
         ReadOnly PI2 As Double = 2 * std.PI
 
-        ''' <summary>
-        ''' #### normal-pdf
-        ''' 
-        ''' Get normal distribution density value at a point.
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="u"></param>
-        ''' <param name="v"></param>
-        ''' <returns></returns>
-        Public Function normal_pdf(x As Double, Optional u As Double = 0, Optional v As Double = 1) As Double
-            If v = 0 Then
-                Return If(x = u, Double.PositiveInfinity, 0)
-            End If
+        '''' <summary>
+        '''' #### normal-pdf
+        '''' 
+        '''' Get normal distribution density value at a point.
+        '''' </summary>
+        '''' <param name="x"></param>
+        '''' <param name="u"></param>
+        '''' <param name="v"></param>
+        '''' <returns></returns>
+        'Public Function normal_pdf(x As Double, Optional u As Double = 0, Optional v As Double = 1) As Double
+        '    If v = 0 Then
+        '        Return If(x = u, Double.PositiveInfinity, 0)
+        '    End If
 
-            Return std.Exp(-0.5 * ((x - u) ^ 2) / v) / std.Sqrt(PI2 * v)
-        End Function
+        '    Return std.Exp(-0.5 * ((x - u) ^ 2) / v) / std.Sqrt(PI2 * v)
+        'End Function
 
         ''' <summary>
         ''' Normal Distribution.(正态分布)
