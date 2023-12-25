@@ -28,7 +28,7 @@ Namespace EmGaussian
                         End Function) _
                 .ToArray
 
-            Return fit(samples, npeaks)
+            Return fit(samples, components:=random)
         End Function
 
         ''' <summary>
