@@ -60,7 +60,9 @@ Namespace EmGaussian
                 lastLikelihood = lh
             Next
 
-            Return components
+            Return components _
+                .OrderByDescending(Function(c) c.weight) _
+                .ToArray
         End Function
 
         ''' <summary>
