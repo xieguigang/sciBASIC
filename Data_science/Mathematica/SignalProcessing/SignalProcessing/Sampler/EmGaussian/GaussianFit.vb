@@ -17,6 +17,12 @@ Namespace EmGaussian
             Me.opts = opts
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="samples">the signal data should be normalized to range [0,1]</param>
+        ''' <param name="npeaks"></param>
+        ''' <returns></returns>
         Public Function fit(samples As Double(), Optional npeaks As Integer = 6) As Variable()
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
@@ -76,7 +82,7 @@ Namespace EmGaussian
                     p += samples(i) * comp.weight * pnorm.normal_pdf(i / n, comp.mean, comp.variance)
                 Next
                 If p = 0.0 Then
-                    Return Double.NegativeInfinity
+                    l += -99999999
                 Else
                     l += std.Log(p)
                 End If
