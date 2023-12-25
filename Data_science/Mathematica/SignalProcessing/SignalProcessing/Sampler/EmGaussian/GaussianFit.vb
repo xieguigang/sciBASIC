@@ -5,7 +5,8 @@ Imports std = System.Math
 Namespace EmGaussian
 
     ''' <summary>
-    ''' em-gaussian fit of a single data
+    ''' em-gaussian fit of a single data, fit time/spectrum/other sequential 
+    ''' data with a set of gaussians by expectation-maximization algoritm.
     ''' </summary>
     Public Class GaussianFit
 
