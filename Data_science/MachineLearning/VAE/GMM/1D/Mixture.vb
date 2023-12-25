@@ -21,12 +21,12 @@ Namespace GMM
             Me.data = data
             Me.components = New Component(Me.data.components() - 1) {}
 
-            Dim mean = data.Mean
+            Dim mean = data.Mean / Me.data.components
             Dim stdev = data.Stdev
 
             ' random initialization of component parameters
             For i As Integer = 0 To Me.data.components() - 1
-                components(i) = New Component(div, i / Me.data.components, 1)
+                components(i) = New Component(div, i * mean, 1)
             Next
         End Sub
 
