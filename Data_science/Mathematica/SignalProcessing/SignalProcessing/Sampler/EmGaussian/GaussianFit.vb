@@ -11,14 +11,13 @@ Namespace EmGaussian
     Public Class GaussianFit
 
         Dim membership As Double()
+        Dim opts As Opts
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function fit(samples As Double(), ParamArray components As Double()()) As Variable()
-            Return fit(samples, New Opts With {.components = components})
-        End Function
+        Sub New(opts As Opts)
+            Me.opts = opts
+        End Sub
 
         Public Function fit(samples As Double(), Optional opts As Opts = Nothing) As Variable()
-            Dim detectComponents As Boolean = opts.components.IsNullOrEmpty
             ' initialize components
             Dim cn As Integer = opts.components.Length
             Dim components = opts.components _
@@ -47,9 +46,7 @@ Namespace EmGaussian
                 lastLikelihood = lh
             Next
 
-            'If Not detectComponents Then
             Return components
-            'End If
         End Function
 
         ''' <summary>
