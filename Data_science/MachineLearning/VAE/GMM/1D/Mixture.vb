@@ -25,10 +25,8 @@ Namespace GMM
             Dim stdev = data.Stdev
 
             ' random initialization of component parameters
-            For i = 0 To Me.data.components() - 1
-                Dim c As Component = New Component(div, mean + (randf.NextDouble - 0.5) * 4, stdev + (randf.NextDouble - 0.5) * 4)
-
-                components(i) = c
+            For i As Integer = 0 To Me.data.components() - 1
+                components(i) = New Component(div, i / Me.data.components, 1)
             Next
         End Sub
 
