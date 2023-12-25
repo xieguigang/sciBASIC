@@ -37,10 +37,12 @@ Namespace GMM
             )
         End Function
 
-        Private Shared Function Training(mix As Mixture, threshold As Double) As Mixture
+        Private Shared Function Training(mix As Mixture, threshold As Double, verbose As Boolean) As Mixture
             Dim dev As TextWriter = App.StdOut
 
-            mix.printStats(dev)
+            If verbose Then
+                Call mix.printStats(dev)
+            End If
 
             Dim oldLog As Double = mix.logLike()
             Dim newLog = oldLog - 100.0
@@ -52,20 +54,25 @@ Namespace GMM
                 mix.Maximization()
                 newLog = mix.logLike()
 
-                dev.WriteLine($" [{vbTab}{++i}]{vbTab}new-loglike: {newLog}")
-                dev.Flush()
+                If verbose Then
+                    Call dev.WriteLine($" [{vbTab}{++i}]{vbTab}new-loglike: {newLog}")
+                    Call dev.Flush()
+                End If
             Loop While newLog <> 0 AndAlso std.Abs(newLog - oldLog) > threshold
 
-            mix.printStats(dev)
+            If verbose Then
+                Call mix.printStats(dev)
+            End If
 
             Return mix
         End Function
 
         Public Shared Function Predicts(x As IEnumerable(Of Double),
                                         Optional components As Integer = 3,
-                                        Optional threshold As Double = 0.00000001) As Mixture
+                                        Optional threshold As Double = 0.00000001,
+                                        Optional verbose As Boolean = False) As Mixture
 
-            Return Training(New Mixture(New DatumList(x, components)), threshold)
+            Return Training(New Mixture(New DatumList(x, components)), threshold, verbose)
         End Function
     End Class
 End Namespace

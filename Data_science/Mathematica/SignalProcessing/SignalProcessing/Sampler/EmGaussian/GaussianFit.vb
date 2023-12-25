@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.Distributions
+﻿Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 Namespace EmGaussian
