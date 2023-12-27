@@ -80,6 +80,9 @@ Namespace ComponentModel.Collection
     Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
+        ''' <summary>
+        ''' list value will be set to nothing on <see cref="Delete(T)"/>
+        ''' </summary>
         Dim index As HashList(Of SeqValue(Of T))
         ''' <summary>
         ''' the index offset value ,zero by default
@@ -455,6 +458,11 @@ Namespace ComponentModel.Collection
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
+                ' handling of the delete operation result
+                If o.value Is Nothing AndAlso o.i = 0 Then
+                    Continue For
+                End If
+
                 Yield o
             Next
         End Function
