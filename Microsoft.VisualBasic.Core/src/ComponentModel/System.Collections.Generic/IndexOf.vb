@@ -429,7 +429,8 @@ Namespace ComponentModel.Collection
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
-            Dim table = index.maps
+            ' make a data copy
+            Dim table As New Dictionary(Of T, Integer)(index.maps)
 
             For Each item As T In list
                 If table.ContainsKey(item) Then
@@ -458,6 +459,7 @@ Namespace ComponentModel.Collection
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
+                ' 20231227
                 ' handling of the delete operation result
                 If o.value Is Nothing AndAlso o.i = 0 Then
                     Continue For
@@ -467,6 +469,7 @@ Namespace ComponentModel.Collection
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
