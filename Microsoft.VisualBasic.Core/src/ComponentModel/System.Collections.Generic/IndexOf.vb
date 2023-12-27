@@ -215,8 +215,26 @@ Namespace ComponentModel.Collection
             Return maps.Keys.AsEnumerable
         End Function
 
+        ''' <summary>
+        ''' get element index
+        ''' </summary>
+        ''' <param name="items"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
             Return items.Select(Function(element) Me(element)).ToArray
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="synonym"></param>
+        ''' <returns>this function returns -1 if synonym value is not found inside the index</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSynonymOrdinal(ParamArray synonym As T()) As Integer
+            Return GetOrdinal(synonym) _
+                .Where(Function(i) i > -1) _
+                .DefaultFirst(-1)
         End Function
 
         Public Sub [Set](index As Integer, val As T)
@@ -227,6 +245,10 @@ Namespace ComponentModel.Collection
             }
         End Sub
 
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
         Public Sub Delete(index As T)
             Dim i = Me.IndexOf(index)
 
@@ -234,6 +256,16 @@ Namespace ComponentModel.Collection
                 Me.maps.Remove(index)
                 Me.index(i) = Nothing
             End If
+        End Sub
+
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
+        Public Sub Delete(ParamArray index As T())
+            For Each item As T In index
+                Call Delete(item)
+            Next
         End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
@@ -351,11 +383,21 @@ Namespace ComponentModel.Collection
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="objs"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(objs As T()) As Index(Of T)
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
             Return New Index(Of T)(source:=list)
