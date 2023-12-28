@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -15,6 +16,20 @@ Namespace BisectingKMeans
 		Public Property centroid As Double() Implements IVector.Data
 		Public Overridable Property DataPoints As List(Of ClusterEntity)
 
+		Public Overridable ReadOnly Property SSE As Double
+			Get
+				Dim sse_d As Double = 0.0
+				Dim c As New Vector(centroid)
+				Dim dx As Vector
+
+				For Each p As ClusterEntity In DataPoints
+					dx = (c - New Vector(p.entityVector)) ^ 2
+					sse_d += dx.Sum
+				Next p
+				Return sse_d
+			End Get
+		End Property
+
 		Public Sub New(c As Double())
 			Me.centroid = c
 			Me.DataPoints = New List(Of ClusterEntity)()
@@ -30,23 +45,10 @@ Namespace BisectingKMeans
 			Me.DataPoints = dataPoints
 		End Sub
 
+		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Overridable Sub addPoint(p As ClusterEntity)
 			Me.DataPoints.Add(p)
 		End Sub
-
-		Public Overridable ReadOnly Property SSE As Double
-			Get
-				Dim sse_d As Double = 0.0
-				Dim c As New Vector(centroid)
-				Dim dx As Vector
-
-				For Each p As ClusterEntity In DataPoints
-					dx = (c - New Vector(p.entityVector)) ^ 2
-					sse_d += dx.Sum
-				Next p
-				Return sse_d
-			End Get
-		End Property
 
 		Public Overrides Function ToString() As String
 			Return "Cluster{" & centroid.GetJson & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
