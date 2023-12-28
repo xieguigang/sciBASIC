@@ -236,6 +236,12 @@ Namespace Math.Correlations
 
 #End If
 
+        ''' <summary>
+        ''' implements via <see cref="EuclideanDistance"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DistanceTo(a As IVector, b As IVector) As Double

@@ -53,6 +53,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports stdNum = System.Math
 
@@ -66,9 +67,23 @@ Namespace KMeans
 
         Protected Friend ReadOnly m_innerList As New List(Of T)
 
+        ''' <summary>
+        ''' get member count in current cluster
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return m_innerList.Count
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(points As List(Of T))
             m_innerList = New List(Of T)(points)
+        End Sub
+
+        Sub New(points As IEnumerable(Of T))
+            m_innerList = New List(Of T)(points.SafeQuery)
         End Sub
 
         Public Sub New()

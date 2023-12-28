@@ -1,57 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::c01efe879a62dd983db25056f69b3d3a, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 106
-    '    Code Lines: 72
-    ' Comment Lines: 13
-    '   Blank Lines: 21
-    '     File Size: 3.66 KB
+' Summaries:
 
 
-    '     Module Evaluation
-    ' 
-    '         Function: AverageDistance, Dunn, Silhouette
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 106
+'    Code Lines: 72
+' Comment Lines: 13
+'   Blank Lines: 21
+'     File Size: 3.66 KB
+
+
+'     Module Evaluation
+' 
+'         Function: AverageDistance, Dunn, Silhouette
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KMeans
 
@@ -63,13 +65,54 @@ Namespace KMeans
         ''' <summary>
         ''' Silhouette Coefficient
         ''' </summary>
-        ''' <param name="clusters"></param>
+        ''' <param name="result"></param>
         ''' <returns></returns>
-        Public Function Silhouette(clusters As ClusterEntity()())
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Silhouette(result As IEnumerable(Of ClusterEntity)) As Double
+            Return result _
+                .GroupBy(Function(a) a.cluster) _
+                .Select(Function(cluster)
+                            Return New Cluster(Of ClusterEntity)(cluster)
+                        End Function) _
+                .Silhouette
+        End Function
+
+        ''' <summary>
+        ''' Silhouette Coefficient
+        ''' </summary>
+        ''' <param name="result">the cluster result</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Silhouette score is used to evaluate the quality of clusters created using clustering 
+        ''' algorithms such as K-Means in terms of how well samples are clustered with other samples 
+        ''' that are similar to each other. The Silhouette score is calculated for each sample of 
+        ''' different clusters. To calculate the Silhouette score for each observation/data point, 
+        ''' the following distances need to be found out for each observations belonging to all the 
+        ''' clusters:
+        ''' 
+        ''' Mean distance between the observation And all other data points In the same cluster. This
+        ''' distance can also be called a mean intra-cluster distance. The mean distance Is denoted by a
+        ''' Mean distance between the observation And all other data points Of the Next nearest cluster.
+        ''' This distance can also be called a mean nearest-cluster distance. The mean distance Is 
+        ''' denoted by b
+        ''' 
+        ''' Silhouette score, S, for Each sample Is calculated Using the following formula:
+        ''' 
+        ''' \(S = \frac{(b - a)}{max(a, b)}\)
+        ''' 
+        ''' The value Of the Silhouette score varies from -1 To 1. If the score Is 1, the cluster Is
+        ''' dense And well-separated than other clusters. A value near 0 represents overlapping clusters
+        ''' With samples very close To the decision boundary Of the neighboring clusters. A negative 
+        ''' score [-1, 0] indicates that the samples might have got assigned To the wrong clusters.
+        ''' </remarks>
+        <Extension>
+        Public Function Silhouette(result As IEnumerable(Of Cluster(Of ClusterEntity))) As Double
             Dim clusterInDist As Double = 0
             Dim clusterOutDist As Double = 0
-            Dim cluster As ClusterEntity()
-            Dim nextCluster As ClusterEntity()
+            Dim cluster As Cluster(Of ClusterEntity)
+            Dim nextCluster As Cluster(Of ClusterEntity)
+            Dim clusters = result.SafeQuery.ToArray
 
             For c As Integer = 0 To clusters.Length - 1
                 cluster = clusters(c)
@@ -87,27 +130,27 @@ Namespace KMeans
             clusterInDist /= clusters.Length
             clusterOutDist /= clusters.Length
 
-            Dim maxDist As Double = stdNum.Max(clusterInDist, clusterOutDist)
+            Dim maxDist As Double = std.Max(clusterInDist, clusterOutDist)
             Dim SI As Double = (clusterOutDist - clusterInDist) / maxDist
 
             Return SI
         End Function
 
-        Private Function AverageDistance(a As ClusterEntity(), b As ClusterEntity()) As Double
+        Private Function AverageDistance(a As Cluster(Of ClusterEntity), b As Cluster(Of ClusterEntity)) As Double
             Dim clusterAvgInDist As Double = 0
 
-            For Each individual1 In a
+            For Each individual1 In a.m_innerList
                 Dim avgInDist As Double = 0
 
-                For Each individual2 In b
-                    avgInDist += individual1.entityVector.EuclideanDistance(individual2.entityVector)
+                For Each individual2 In b.m_innerList
+                    avgInDist += individual1.DistanceTo(individual2)
                 Next
 
-                avgInDist /= a.Length
+                avgInDist /= a.size
                 clusterAvgInDist += avgInDist
             Next
 
-            Return clusterAvgInDist / a.Length
+            Return clusterAvgInDist / a.size
         End Function
 
         ''' <summary>
