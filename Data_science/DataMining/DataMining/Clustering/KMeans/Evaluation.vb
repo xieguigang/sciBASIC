@@ -51,7 +51,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Correlations
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KMeans
 
@@ -87,7 +87,7 @@ Namespace KMeans
             clusterInDist /= clusters.Length
             clusterOutDist /= clusters.Length
 
-            Dim maxDist As Double = stdNum.Max(clusterInDist, clusterOutDist)
+            Dim maxDist As Double = std.Max(clusterInDist, clusterOutDist)
             Dim SI As Double = (clusterOutDist - clusterInDist) / maxDist
 
             Return SI
