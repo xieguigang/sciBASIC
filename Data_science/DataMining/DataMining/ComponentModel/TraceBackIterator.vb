@@ -21,6 +21,14 @@ Namespace ComponentModel
             Next
         End Sub
 
+        Public Sub AddIteration(Of T As INamedValue, C As {IClusterPoint, IEnumerable(Of T)})(clusters As IEnumerable(Of C))
+            For Each cluster As C In clusters
+                For Each point As T In cluster
+                    Call traceback(point.Key).Add(cluster.Cluster)
+                Next
+            Next
+        End Sub
+
         ''' <summary>
         ''' get cluster traceback for each points
         ''' </summary>
