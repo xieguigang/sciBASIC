@@ -76,7 +76,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports numpy = Microsoft.VisualBasic.Language.Python
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearAlgebra
 
@@ -96,7 +96,7 @@ Namespace LinearAlgebra
         ''' <see cref="System.Double.NaN"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property NAN As Vector
+        Public Shared ReadOnly Property NaN As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Vector({Double.NaN})
@@ -187,7 +187,7 @@ Namespace LinearAlgebra
         Public ReadOnly Property SumMagnitude As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return stdNum.Sqrt(Me.Mod)
+                Return std.Sqrt(Me.Mod)
             End Get
         End Property
 
@@ -784,7 +784,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' Power: <see cref="stdNum.Pow(Double, Double)"/>
+        ''' Power: <see cref="std.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>
