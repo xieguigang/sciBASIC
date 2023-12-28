@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -11,7 +12,7 @@ Namespace BisectingKMeans
 	''' 
 	''' @author touhid
 	''' </summary>
-	Public Class Cluster : Implements IVector
+	Public Class Cluster : Implements IVector, IClusterPoint, IEnumerable(Of ClusterEntity)
 
 		Public Property centroid As Double() Implements IVector.Data
 		Public Overridable Property DataPoints As List(Of ClusterEntity)
@@ -29,6 +30,8 @@ Namespace BisectingKMeans
 				Return sse_d
 			End Get
 		End Property
+
+		Public Property Cluster As Integer Implements IClusterPoint.Cluster
 
 		Public Sub New(c As Double())
 			Me.centroid = c
@@ -54,23 +57,14 @@ Namespace BisectingKMeans
 			Return "Cluster{" & centroid.GetJson & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
 		End Function
 
-		Friend Overridable Function updateCentroid(Optional CENTROID_THRESHOLD As Double = 0.005) As Boolean
-			Dim sum As Vector = Vector.Zero(centroid.Length)
-
-			For Each p As ClusterEntity In DataPoints
-				sum = sum + p.entityVector
+		Public Iterator Function GetEnumerator() As IEnumerator(Of ClusterEntity) Implements IEnumerable(Of ClusterEntity).GetEnumerator
+			For Each point As ClusterEntity In DataPoints
+				Yield point
 			Next
+		End Function
 
-			Dim size As Integer = DataPoints.Count
-
-			If size = 0 Then
-				size = 1
-			End If
-
-			Dim m As Vector = sum / size
-			Dim e As Vector = (m - New Vector(centroid)).Abs
-
-			Return Not (e < CENTROID_THRESHOLD).All
+		Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+			Yield GetEnumerator()
 		End Function
 	End Class
 

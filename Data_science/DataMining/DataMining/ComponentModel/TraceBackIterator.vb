@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' A helper module for record the clustering traceback information for run algorithm debug
+    ''' </summary>
     Public Class TraceBackIterator
 
         ReadOnly traceback As New Dictionary(Of String, List(Of String))
