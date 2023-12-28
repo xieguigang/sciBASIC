@@ -80,6 +80,9 @@ Namespace ComponentModel.Collection
     Public Class Index(Of T) : Implements IEnumerable(Of SeqValue(Of T))
 
         Dim maps As New Dictionary(Of T, Integer)
+        ''' <summary>
+        ''' list value will be set to nothing on <see cref="Delete(T)"/>
+        ''' </summary>
         Dim index As HashList(Of SeqValue(Of T))
         ''' <summary>
         ''' the index offset value ,zero by default
@@ -215,8 +218,26 @@ Namespace ComponentModel.Collection
             Return maps.Keys.AsEnumerable
         End Function
 
+        ''' <summary>
+        ''' get element index
+        ''' </summary>
+        ''' <param name="items"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(items As IEnumerable(Of T)) As Integer()
             Return items.Select(Function(element) Me(element)).ToArray
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="synonym"></param>
+        ''' <returns>this function returns -1 if synonym value is not found inside the index</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSynonymOrdinal(ParamArray synonym As T()) As Integer
+            Return GetOrdinal(synonym) _
+                .Where(Function(i) i > -1) _
+                .DefaultFirst(-1)
         End Function
 
         Public Sub [Set](index As Integer, val As T)
@@ -227,6 +248,10 @@ Namespace ComponentModel.Collection
             }
         End Sub
 
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
         Public Sub Delete(index As T)
             Dim i = Me.IndexOf(index)
 
@@ -234,6 +259,16 @@ Namespace ComponentModel.Collection
                 Me.maps.Remove(index)
                 Me.index(i) = Nothing
             End If
+        End Sub
+
+        ''' <summary>
+        ''' just removes the key, the index ordinal offset will not make any changes
+        ''' </summary>
+        ''' <param name="index"></param>
+        Public Sub Delete(ParamArray index As T())
+            For Each item As T In index
+                Call Delete(item)
+            Next
         End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
@@ -351,11 +386,21 @@ Namespace ComponentModel.Collection
             Return New Dictionary(Of T, Integer)(index.maps)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="objs"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(objs As T()) As Index(Of T)
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        ''' <summary>
+        ''' Create a index of target element array with index base zero
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
             Return New Index(Of T)(source:=list)
@@ -384,7 +429,8 @@ Namespace ComponentModel.Collection
         ''' <param name="list"></param>
         ''' <returns></returns>
         Public Shared Operator -(index As Index(Of T), list As List(Of T)) As Index(Of T)
-            Dim table = index.maps
+            ' make a data copy
+            Dim table As New Dictionary(Of T, Integer)(index.maps)
 
             For Each item As T In list
                 If table.ContainsKey(item) Then
@@ -413,10 +459,17 @@ Namespace ComponentModel.Collection
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
+                ' 20231227
+                ' handling of the delete operation result
+                If o.value Is Nothing AndAlso o.i = 0 Then
+                    Continue For
+                End If
+
                 Yield o
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function

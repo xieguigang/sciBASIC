@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -9,23 +10,34 @@ Namespace BisectingKMeans
     ''' 
     ''' @author touhid
     ''' </summary>
-    Public Class BisectingKMeans
+    Public Class BisectingKMeans : Inherits TraceBackAlgorithm
 
         Dim NUM_ITERATIONS_BISECTION As Integer = 5
         Dim K_BISECTING As Integer = 6
-        Dim CENTROID_THRESHOLD As Double = 0.005
         Dim clusterList As New List(Of Cluster)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dataList"></param>
+        ''' <param name="k"></param>
+        ''' <param name="iterations"></param>
+        ''' <param name="traceback">record the traceback information for run debug?</param>
         Sub New(dataList As IEnumerable(Of ClusterEntity),
                 Optional k As Integer = 6,
                 Optional iterations As Integer = 6,
-                Optional sse_threshold As Double = 0.005)
+                Optional traceback As Boolean = False)
 
             Call init(dataList)
 
-            Me.CENTROID_THRESHOLD = sse_threshold
             Me.K_BISECTING = k
             Me.NUM_ITERATIONS_BISECTION = iterations
+
+            If traceback Then
+                Me.traceback = New TraceBackIterator
+                Me.traceback.SetPoints(clusterList.First.DataPoints)
+                Me.traceback.AddIteration(Of ClusterEntity, Cluster)(clusterList)
+            End If
         End Sub
 
         Private Sub init(dataList As IEnumerable(Of ClusterEntity))
@@ -37,7 +49,7 @@ Namespace BisectingKMeans
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function runBisectingKMeans() As IEnumerable(Of Cluster)
-            Call runBisectingKMeans(clusterList.First)
+            Call runBisectingKMeans(worstCluster:=clusterList.First)
             Return clusterList
         End Function
 
@@ -57,8 +69,15 @@ Namespace BisectingKMeans
                 End If
             Next
 
+            cluster1.Cluster = cluster1.GetHashCode
+            cluster2.Cluster = cluster2.GetHashCode
+
             clusterList.Add(cluster1)
             clusterList.Add(cluster2)
+
+            If Not traceback Is Nothing Then
+                Call traceback.AddIteration(Of ClusterEntity, Cluster)(clusterList)
+            End If
 
             If clusterList.Count < K_BISECTING Then
                 runBisectingKMeans(GetWorstCluster)
@@ -109,7 +128,7 @@ Namespace BisectingKMeans
 
             centroid = centroid / dataList.Count
 
-            Return New Cluster(centroid)
+            Return New Cluster(centroid) With {.Cluster = Me.GetHashCode}
         End Function
     End Class
 End Namespace

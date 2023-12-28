@@ -117,6 +117,28 @@ Namespace Language
         End Function
 
         ''' <summary>
+        ''' Splits a string into substrings based on a specified delimiting character and,
+        ''' optionally, options.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="deli">A character that delimits the substrings in this string.</param>
+        ''' <param name="options">
+        ''' A bitwise combination of the enumeration values that specifies whether to trim
+        ''' substrings and include empty substrings.
+        ''' </param>
+        ''' <returns>An array whose elements contain the substrings from this instance that are delimited
+        ''' by separator.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String), deli As Char, Optional options As StringSplitOptions = StringSplitOptions.None) As String()
+            If str.Value Is Nothing Then
+                Return {}
+            Else
+                Return str.Value.Split(deli)
+            End If
+        End Function
+
+        ''' <summary>
         ''' ``<see cref="sprintf"/>`` extensions
         ''' </summary>
         ''' <param name="s"></param>

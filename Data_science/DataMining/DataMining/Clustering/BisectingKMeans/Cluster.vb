@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -10,10 +12,26 @@ Namespace BisectingKMeans
 	''' 
 	''' @author touhid
 	''' </summary>
-	Public Class Cluster : Implements IVector
+	Public Class Cluster : Implements IVector, IClusterPoint, IEnumerable(Of ClusterEntity)
 
 		Public Property centroid As Double() Implements IVector.Data
 		Public Overridable Property DataPoints As List(Of ClusterEntity)
+
+		Public Overridable ReadOnly Property SSE As Double
+			Get
+				Dim sse_d As Double = 0.0
+				Dim c As New Vector(centroid)
+				Dim dx As Vector
+
+				For Each p As ClusterEntity In DataPoints
+					dx = (c - New Vector(p.entityVector)) ^ 2
+					sse_d += dx.Sum
+				Next p
+				Return sse_d
+			End Get
+		End Property
+
+		Public Property Cluster As Integer Implements IClusterPoint.Cluster
 
 		Public Sub New(c As Double())
 			Me.centroid = c
@@ -30,45 +48,23 @@ Namespace BisectingKMeans
 			Me.DataPoints = dataPoints
 		End Sub
 
+		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Overridable Sub addPoint(p As ClusterEntity)
 			Me.DataPoints.Add(p)
 		End Sub
-
-		Public Overridable ReadOnly Property SSE As Double
-			Get
-				Dim sse_d As Double = 0.0
-				Dim c As New Vector(centroid)
-				Dim dx As Vector
-
-				For Each p As ClusterEntity In DataPoints
-					dx = (c - New Vector(p.entityVector)) ^ 2
-					sse_d += dx.Sum
-				Next p
-				Return sse_d
-			End Get
-		End Property
 
 		Public Overrides Function ToString() As String
 			Return "Cluster{" & centroid.GetJson & ", dataPoints=" & DataPoints.JoinBy(", ") & "}"c
 		End Function
 
-		Friend Overridable Function updateCentroid(Optional CENTROID_THRESHOLD As Double = 0.005) As Boolean
-			Dim sum As Vector = Vector.Zero(centroid.Length)
-
-			For Each p As ClusterEntity In DataPoints
-				sum = sum + p.entityVector
+		Public Iterator Function GetEnumerator() As IEnumerator(Of ClusterEntity) Implements IEnumerable(Of ClusterEntity).GetEnumerator
+			For Each point As ClusterEntity In DataPoints
+				Yield point
 			Next
+		End Function
 
-			Dim size As Integer = DataPoints.Count
-
-			If size = 0 Then
-				size = 1
-			End If
-
-			Dim m As Vector = sum / size
-			Dim e As Vector = (m - New Vector(centroid)).Abs
-
-			Return Not (e < CENTROID_THRESHOLD).All
+		Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+			Yield GetEnumerator()
 		End Function
 	End Class
 

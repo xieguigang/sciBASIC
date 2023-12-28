@@ -254,8 +254,7 @@ Public Module IOExtensions
             ' should reads all data into memory!
             If path.FileLength < 1024& * 1024& * 1024& * 2& Then
                 If verbose Then
-                    Call VBDebugger.EchoLine($"read all({StringFormats.Lanudry(path.FileLength)}) {path}")
-                    Call VBDebugger.EchoLine($"loads all binary data into memory for max performance!")
+                    Call VBDebugger.EchoLine($"read all binary data into memory for max performance! (size={StringFormats.Lanudry(path.FileLength)}) {path}")
                 End If
 
                 ' use a single memorystream object when file size 

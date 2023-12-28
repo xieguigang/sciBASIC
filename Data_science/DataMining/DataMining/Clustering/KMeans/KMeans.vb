@@ -65,7 +65,7 @@ Namespace KMeans
     ''' <summary>
     ''' This class implement a KMeans clustering algorithm.(请注意，实体对象的属性必须要长度一致)
     ''' </summary>
-    Public Class KMeansAlgorithm(Of T As EntityBase(Of Double))
+    Public Class KMeansAlgorithm(Of T As EntityBase(Of Double)) : Inherits TraceBackAlgorithm
 
         ReadOnly debug As Boolean = False
         ReadOnly stop% = -1
@@ -76,11 +76,16 @@ Namespace KMeans
         ''' </param>
         Sub New(Optional debug As Boolean = False,
                 Optional stop% = -1,
-                Optional parallel As Boolean = True)
+                Optional parallel As Boolean = True,
+                Optional traceback As Boolean = False)
 
             Me.debug = debug
             Me.stop = [stop]
             Me.parallel = parallel
+
+            If traceback Then
+                Me.traceback = New TraceBackIterator
+            End If
         End Sub
 
         ''' <summary>
