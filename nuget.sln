@@ -315,8 +315,8 @@ Global
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|Any CPU.Build.0 = LipidSearch|Any CPU
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x64.ActiveCfg = LipidSearch|x64
-		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x64.Build.0 = LipidSearch|x64
+		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x64.Build.0 = nuget_release|x64
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x86.ActiveCfg = LipidSearch|Any CPU
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.nuget_release|x86.Build.0 = LipidSearch|Any CPU
 		{DEF1EAC3-60F4-43EF-AE07-EC26D5527D70}.PlantMAT|Any CPU.ActiveCfg = PlantMAT|Any CPU
@@ -723,8 +723,8 @@ Global
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x64.ActiveCfg = Rsharp_app_release|x64
-		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x64.Build.0 = Rsharp_app_release|x64
+		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x64.Build.0 = nuget_release|x64
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x86.ActiveCfg = Rsharp_app_release|Any CPU
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.nuget_release|x86.Build.0 = Rsharp_app_release|Any CPU
 		{BF2DD929-6C16-4186-A595-D1C6E747561E}.PlantMAT|Any CPU.ActiveCfg = PlantMAT|Any CPU
@@ -3579,8 +3579,8 @@ Global
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|Any CPU.Build.0 = Debug|Any CPU
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x64.ActiveCfg = Debug|x64
-		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x64.Build.0 = Debug|x64
+		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x64.Build.0 = nuget_release|x64
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x86.ActiveCfg = Debug|Any CPU
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.nuget_release|x86.Build.0 = Debug|Any CPU
 		{550F1862-315E-4529-93CA-EC8C30168C6C}.PlantMAT|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
