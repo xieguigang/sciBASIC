@@ -164,6 +164,10 @@
       <Project>{d41c39b2-8f2d-472a-91ac-009d8dfc08fb}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Math\DataFittings\linear-netcore5.vbproj">
+      <Project>{660aa958-ab0a-427a-853d-f53cf0d75678}</Project>
+      <Name>linear-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Math\Math\Math.NET5.vbproj">
       <Project>{662e885c-a888-45a6-9504-f0b49e6a0e52}</Project>
       <Name>Math.NET5</Name>
