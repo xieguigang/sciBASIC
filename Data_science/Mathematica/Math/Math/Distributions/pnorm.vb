@@ -303,6 +303,8 @@ Namespace Distributions
         ''' <param name="sd"></param>
         ''' <returns>Get normal distribution density value at a point.</returns>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
+            ' 1 / (sd * sqrt(2 * PI)) * exp(-(x - u)^2 / (2* sd ^ 2))
+
             Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp As Double = (x - m) ^ 2
             Dim expP2 As Double = 2 * (sd ^ 2)

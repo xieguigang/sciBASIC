@@ -67,11 +67,13 @@ Public Interface IFitError
 End Interface
 
 <XmlType("point", [Namespace]:="http://scibasic.net/math/Bootstrapping")>
-Public Structure TestPoint : Implements IFitError
+Public Class TestPoint : Inherits DataPoint
+    Implements IFitError
 
-    <XmlAttribute("x")> Public Property X As Double
-    <XmlAttribute("y")> Public Property Y As Double Implements IFitError.Y
-    <XmlAttribute("fx")> Public Property Yfit As Double Implements IFitError.Yfit
+    <XmlAttribute("y")>
+    Public Overrides Property Y As Double Implements IFitError.Y
+    <XmlAttribute("fx")>
+    Public Property Yfit As Double Implements IFitError.Yfit
 
     <XmlIgnore>
     Public ReadOnly Property Err As Double
@@ -85,7 +87,29 @@ Public Structure TestPoint : Implements IFitError
         Return $"[{X.ToString("F2")}, {Y.ToString("F2")}] {Yfit.ToString("F2")}"
     End Function
 
-    Public Shared Narrowing Operator CType(point As TestPoint) As PointF
+    Public Overloads Shared Narrowing Operator CType(point As TestPoint) As PointF
         Return New PointF(point.X, point.Y)
     End Operator
-End Structure
+End Class
+
+Public Class DataPoint
+
+    <XmlAttribute("x")> Public Property X As Double
+    <XmlAttribute("y")> Public Overridable Property Y As Double
+
+    Sub New()
+    End Sub
+
+    Sub New(x As Double, y As Double)
+        Me.X = x
+        Me.Y = y
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"[{X}, {Y}]"
+    End Function
+
+    Public Shared Narrowing Operator CType(point As DataPoint) As PointF
+        Return New PointF(point.X, point.Y)
+    End Operator
+End Class

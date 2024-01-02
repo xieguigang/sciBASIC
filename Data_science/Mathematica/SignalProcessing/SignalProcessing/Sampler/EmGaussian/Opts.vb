@@ -23,6 +23,8 @@
         ''' <returns></returns>
         Public Property tolerance As Double = 0.00001
 
+        Public Property eps As Double = 0.0000000001
+
         Public Shared Function GetDefault() As Opts
             Return New Opts
         End Function

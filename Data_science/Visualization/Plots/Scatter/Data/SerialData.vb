@@ -95,6 +95,14 @@ Public Class SerialData : Implements INamedValue
     ''' <returns></returns>
     Public Property DataAnnotations As Annotation()
 
+    ''' <summary>
+    ''' get x axis data 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function x() As Double()
+        Return pts.Select(Function(pi) CDbl(pi.pt.X)).ToArray
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetPen() As Pen
         Return New Pen(color:=color, width:=width) With {

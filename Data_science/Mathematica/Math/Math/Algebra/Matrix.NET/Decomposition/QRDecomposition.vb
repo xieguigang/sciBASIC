@@ -71,10 +71,7 @@ Namespace LinearAlgebra.Matrix
     ''' of simultaneous linear equations.  This will fail if IsFullRank()
     ''' returns false.
     ''' </summary>
-
-    <Serializable>
-    Public Class QRDecomposition
-        Implements ISerializable
+    Public Class QRDecomposition : Inherits Decomposition
 
 #Region "Class variables"
 
@@ -246,7 +243,7 @@ Namespace LinearAlgebra.Matrix
         ''' </exception>
         ''' <exception cref="System.SystemException"> Matrix is rank deficient.
         ''' </exception>
-        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
+        Public Overrides Function Solve(B As GeneralMatrix) As GeneralMatrix
             If B.RowDimension <> m Then
                 Throw New System.ArgumentException("GeneralMatrix row dimensions must agree.")
             End If
@@ -288,8 +285,5 @@ Namespace LinearAlgebra.Matrix
 
 #End Region
 
-        ' A method called when serializing this class.
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
     End Class
 End Namespace

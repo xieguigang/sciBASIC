@@ -11,9 +11,11 @@ Namespace EmGaussian
 
         Dim membership As Double()
         Dim opts As Opts
+        Dim eps As Double
 
         Sub New(opts As Opts)
             Me.opts = opts
+            Me.eps = opts.eps
         End Sub
 
         ''' <summary>
@@ -22,7 +24,7 @@ Namespace EmGaussian
         ''' <param name="samples">the signal data should be normalized to range [0,1]</param>
         ''' <param name="npeaks"></param>
         ''' <returns></returns>
-        Public Function fit(samples As Double(), Optional npeaks As Integer = 6) As Variable()
+        Public Function fit(samples As Double(), Optional npeaks As Integer = 6, Optional ByRef logp As Double() = Nothing) As Variable()
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
                             Return New Variable With {
@@ -33,7 +35,7 @@ Namespace EmGaussian
                         End Function) _
                 .ToArray
 
-            Return fit(samples, components:=random)
+            Return fit(samples, components:=random, logp:=logp)
         End Function
 
         ''' <summary>
@@ -42,16 +44,17 @@ Namespace EmGaussian
         ''' <param name="samples"></param>
         ''' <param name="components">initialize data, could be created from a random data</param>
         ''' <returns></returns>
-        Public Function fit(samples As Double(), components As Variable()) As Variable()
+        Public Function fit(samples As Double(), components As Variable(), Optional ByRef logp As Double() = Nothing) As Variable()
             ' optimize components
             Dim lastLikelihood As Double = Double.NegativeInfinity
-            Dim pos_min As Double = samples _
-                .Select(Function(xi) std.Abs(xi)) _
-                .Where(Function(xi) xi > 0) _
-                .Min / 2
+            Dim dx As Double = (1 / samples.Length) / 2
+            Dim x_axis As Double() = Enumerable.Range(0, samples.Length) _
+                .Select(Function(xi) xi / samples.Length) _
+                .ToArray
+            Dim _logp As New List(Of Double)
 
             membership = New Double(components.Length * samples.Length - 1) {}
-            samples = SIMD.Add.f64_op_add_f64_scalar(samples, pos_min)
+            ' samples = SIMD.Add.f64_op_add_f64_scalar(samples, pos_min)
 
             For i As Integer = 0 To opts.maxIterations - 1
                 Dim lh = likelihood(samples, components)
@@ -60,9 +63,18 @@ Namespace EmGaussian
                     Exit For
                 End If
 
-                components = optimize(samples, components)
+                _logp.Add(lh)
+                components = optimize(samples, x_axis, dx, components)
+                'Dim lh_new = likelihood(samples, components_new)
+
+                'If lh_new > lh Then
+                '    components = components_new
+                'End If
+
                 lastLikelihood = lh
             Next
+
+            logp = _logp.ToArray
 
             Return components _
                 .OrderByDescending(Function(c) c.weight) _
@@ -80,17 +92,20 @@ Namespace EmGaussian
             Dim p As Double = 0
             Dim n = samples.Length
             Dim comp As Variable
+            Dim xi As Double
 
             For i As Integer = 0 To samples.Length - 1
                 p = 0
+                xi = i / n
+
                 For c As Integer = 0 To components.Length - 1
                     comp = components(c)
-                    p += samples(i) * comp.weight * pnorm.ProbabilityDensity(i / n, comp.mean, comp.variance)
+                    p += std.Abs(samples(i) - comp.weight * pnorm.ProbabilityDensity(xi, comp.mean, comp.variance))
                 Next
                 If p = 0.0 Then
-                    l += -99999999
+                    l += Double.MaxValue
                 Else
-                    l += std.Log(p)
+                    l += -1 / std.Log(p)
                 End If
             Next
 
@@ -98,87 +113,84 @@ Namespace EmGaussian
         End Function
 
         ''' <summary>
-        ''' single iteration of em algorithm
+        ''' single iteration of em algorithm of one step for each component
         ''' </summary>
         ''' <param name="samples"></param>
         ''' <param name="components"></param>
         ''' <returns></returns>
-        Private Function optimize(samples As Double(), components As Variable()) As Variable()
-            Dim comp As Variable
+        Private Function optimize(samples As Double(), x_axis As Double(), dx As Double, components As Variable()) As Variable()
+            Dim new_components As Variable() = New Variable(components.Length - 1) {}
 
-            For i As Integer = 0 To samples.Length - 1
-                Dim x = i / samples.Length
-                Dim p = New Double(components.Length - 1) {}
+            For i As Integer = 0 To components.Length - 1
+                Dim c As Variable = components(i)
+                Dim offset As Double
+                Dim xi As Double = c.mean
 
-                ' total probability at the point
-                Dim sump As Double = 0
+                If randf(0, 1) > 0.5 Then
+                    offset = dx
+                Else
+                    offset = -dx
+                End If
 
-                For c As Integer = 0 To components.Length - 1
-                    comp = components(c)
-                    p(c) = comp.weight * pnorm.ProbabilityDensity(x, comp.mean, comp.variance)
-                    sump += p(c)
-                Next
+                xi += offset
 
-                ' [c0, c1, c2, c0, c1, c2, ...]
-                For c As Integer = 0 To components.Length - 1
-                    If p(c) = 0.0 Then
-                        membership(i * components.Length + c) = 0
-                    Else
-                        membership(i * components.Length + c) = samples(i) * p(c) / sump
-                    End If
-                Next
+                ' peaks can not be overlaps with each other
+                If components.Any(Function(ci)
+                                      If ci Is c Then
+                                          Return False
+                                      Else
+                                          Return std.Abs(ci.mean - xi) < opts.tolerance
+                                      End If
+                                  End Function) Then
+
+                    xi -= offset
+                End If
+
+                c = New Variable(c)
+                c.mean = xi
+
+                If c.mean < 0 Then
+                    c.mean = 0
+                End If
+
+                Dim y = x_axis.Select(Function(xj) c.gauss(xj)).ToArray
+                Dim xmax As Integer = c.mean * samples.Length - 1
+
+                If xmax < 0 Then
+                    xmax = 0
+                ElseIf xmax >= samples.Length Then
+                    xmax = samples.Length - 1
+                End If
+
+                Dim ymax As Double = samples(xmax)
+                Dim dw As Double = ymax / y.Max
+
+                If dw = 0.0 Then
+                    dw = eps
+                ElseIf dw.IsNaNImaginary Then
+                    dw = 1.125
+                End If
+
+                If dw > 1 Then
+                    c.weight *= dw
+                ElseIf dw > eps Then
+                    c.weight /= dw
+                End If
+
+                Dim width = (y.Where(Function(yi) yi >= 0.001).Count + 1) * dx
+
+                dw = c.variance / width
+
+                If dw > 1 Then
+                    c.variance *= dw
+                ElseIf dw > eps Then
+                    c.variance /= dw
+                End If
+
+                new_components(i) = c
             Next
 
-            ' M-step: update components to better cover member samples
-            Dim w = New Double(components.Length - 1) {}
-            Dim sumw As Double = 0
-
-            For c As Integer = 0 To components.Length - 1
-                For i As Integer = 0 To samples.Length - 1
-                    w(c) += membership(i * components.Length + c)
-                Next
-                sumw += w(c)
-            Next
-
-            Dim n = samples.Length
-
-            Return components _
-                .Select(Function(component, c)
-                            ' get new amp as ratio of the total weight
-                            If w(c) = 0.0 Then
-                                component.weight = 0.00001
-                            Else
-                                component.weight = w(c) / sumw
-                            End If
-
-                            ' get new mean as weighted by ratios value
-                            Dim sumu As Double = 0.0
-
-                            For i As Integer = 0 To samples.Length - 1
-                                sumu += (i / n) * membership(i * components.Length + c)
-                            Next
-
-                            If w(c) = 0.0 Then
-                                component.mean = randf(0, 1)
-                            Else
-                                component.mean = sumu / w(c)
-                            End If
-
-                            ' get new variations as weighted by ratios stdev
-                            Dim sumv As Double = 0
-                            For i As Integer = 0 To samples.Length - 1
-                                sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
-                            Next
-
-                            If w(c) = 0.0 Then
-                                component.variance = 0.00001
-                            Else
-                                component.variance = std.Max(sumv / w(c), 0.00001)
-                            End If
-
-                            Return component
-                        End Function) _
-                .ToArray
+            Return new_components
         End Function
     End Class
 End Namespace

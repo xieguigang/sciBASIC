@@ -56,10 +56,15 @@
 
 #End Region
 
-Imports System.Runtime.Serialization
-Imports stdnum = System.Math
+Imports __std = System.Math
 
 Namespace LinearAlgebra.Matrix
+
+    Public MustInherit Class Decomposition
+
+        Public MustOverride Function Solve(B As GeneralMatrix) As GeneralMatrix
+
+    End Class
 
     ''' <summary>LU Decomposition.
     ''' For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n
@@ -71,10 +76,7 @@ Namespace LinearAlgebra.Matrix
     ''' LU decomposition is in the solution of square systems of simultaneous
     ''' linear equations.  This will fail if IsNonSingular() returns false.
     ''' </summary>
-
-    <Serializable>
-    Public Class LUDecomposition
-        Implements ISerializable
+    Public Class LUDecomposition : Inherits Decomposition
 
 #Region "Class variables"
 
@@ -135,7 +137,7 @@ Namespace LinearAlgebra.Matrix
 
                     ' Most of the time is spent in the following dot product.
 
-                    Dim kmax As Integer = System.Math.Min(i, j)
+                    Dim kmax As Integer = __std.Min(i, j)
                     Dim s As Double = 0.0
                     For k As Integer = 0 To kmax - 1
                         s += LUrowi(k) * LUcolj(k)
@@ -149,7 +151,7 @@ Namespace LinearAlgebra.Matrix
 
                 Dim p As Integer = j
                 For i As Integer = j + 1 To m - 1
-                    If stdnum.Abs(LUcolj(i)) > stdnum.Abs(LUcolj(p)) Then
+                    If __std.Abs(LUcolj(i)) > __std.Abs(LUcolj(p)) Then
                         p = i
                     End If
                 Next
@@ -290,7 +292,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.SystemException"> Matrix is singular.
         ''' </exception>
 
-        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
+        Public Overrides Function Solve(B As GeneralMatrix) As GeneralMatrix
             If B.RowDimension <> m Then
                 Throw New System.ArgumentException("Matrix row dimensions must agree.")
             End If
@@ -327,8 +329,5 @@ Namespace LinearAlgebra.Matrix
 
 #End Region
 
-        ' A method called when serializing this class.
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
     End Class
 End Namespace
