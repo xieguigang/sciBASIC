@@ -76,7 +76,15 @@ Namespace KMeans
         Implements INamedValue
         Implements IVector
 
+        ''' <summary>
+        ''' the unique reference id of current entity object
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property uid As String Implements INamedValue.Key
+        ''' <summary>
+        ''' the cluster class label
+        ''' </summary>
+        ''' <returns></returns>
         <XmlAttribute> Public Property cluster As Integer
 
         ''' <summary>
