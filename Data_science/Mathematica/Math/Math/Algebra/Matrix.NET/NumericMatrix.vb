@@ -78,6 +78,7 @@ Imports stdNum = System.Math
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports System.Drawing
 
 Namespace LinearAlgebra.Matrix
 
@@ -143,9 +144,14 @@ Namespace LinearAlgebra.Matrix
 
         ''' <summary>Row and column dimensions.
         ''' @serial row dimension.
+        ''' </summary>
+        Dim m As Integer
+
+        ''' <summary>
+        ''' Row and column dimensions.
         ''' @serial column dimension.
         ''' </summary>
-        Dim m As Integer, n As Integer
+        Dim n As Integer
 
 #End Region
 
@@ -267,6 +273,14 @@ Namespace LinearAlgebra.Matrix
             Me.buffer = A
             Me.m = m
             Me.n = n
+        End Sub
+
+        ''' <summary>
+        ''' make the matrix value copy
+        ''' </summary>
+        ''' <param name="m"></param>
+        Sub New(m As NumericMatrix)
+            Call Me.New(m.buffer.Select(Function(r) r.ToArray).ToArray, m.m, m.n)
         End Sub
 
         ''' <summary>Construct a matrix from a one-dimensional packed array</summary>
@@ -392,6 +406,18 @@ Namespace LinearAlgebra.Matrix
         Public Overridable ReadOnly Property ColumnDimension() As Integer Implements GeneralMatrix.ColumnDimension
             Get
                 Return n
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get [n,m] shape data
+        ''' </summary>
+        ''' <returns>
+        ''' the width is the number of columns(n) and the height is the number of rows(m)
+        ''' </returns>
+        Public ReadOnly Property Dimension As Size
+            Get
+                Return New Size(n, m)
             End Get
         End Property
 

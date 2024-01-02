@@ -163,12 +163,29 @@ Namespace EmGaussian
                 End If
 
                 Dim ymax As Double = samples(xmax)
+                Dim dw As Double = ymax / y.Max
 
-                c.weight += ymax / y.Max
+                If dw = 0.0 Then
+                    dw = eps
+                ElseIf dw.IsNaNImaginary Then
+                    dw = 1.125
+                End If
 
-                Dim width = y.Where(Function(yi) yi >= 0.001).Count * dx
+                If dw > 1 Then
+                    c.weight *= dw
+                ElseIf dw > eps Then
+                    c.weight /= dw
+                End If
 
-                c.variance += 1 - (c.variance / width)
+                Dim width = (y.Where(Function(yi) yi >= 0.001).Count + 1) * dx
+
+                dw = c.variance / width
+
+                If dw > 1 Then
+                    c.variance *= dw
+                ElseIf dw > eps Then
+                    c.variance /= dw
+                End If
 
                 new_components(i) = c
             Next
