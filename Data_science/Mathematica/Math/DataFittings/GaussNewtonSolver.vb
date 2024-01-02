@@ -68,7 +68,7 @@ Public Class GaussNewtonSolver
             ' the internal LU decomposition has bug
             ' bigJ = bigJ.Inverse()
             ' use the LU decompositon function inside current module
-            Invert(bigJ).Set(success, bigJ)
+            Invert(bigJ, tol:=0).Set(success, bigJ)
 
             If Not success Then
                 Exit For
@@ -184,7 +184,13 @@ Public Class GaussNewtonSolver
             End If
 
             For j = i + 1 To N - 1
-                LU(j, i) = LU(j, i) / LU(i, i)
+                If LU(j, i) <> 0.0 Then
+                    If LU(i, i) <> 0.0 Then
+                        LU(j, i) = LU(j, i) / LU(i, i)
+                    Else
+                        LU(j, i) = LU(j, i) / 1.0E-17
+                    End If
+                End If
 
                 For k = i + 1 To N - 1
                     LU(j, k) -= LU(j, i) * LU(i, k)
@@ -225,7 +231,13 @@ Public Class GaussNewtonSolver
                     IA(i, j) -= lu(i, k) * IA(k, j)
                 Next
 
-                IA(i, j) /= lu(i, i)
+                If IA(i, j) <> 0.0 Then
+                    If lu(i, i) <> 0.0 Then
+                        IA(i, j) /= lu(i, i)
+                    Else
+                        IA(i, j) /= 1.0E-17
+                    End If
+                End If
             Next
         Next
 

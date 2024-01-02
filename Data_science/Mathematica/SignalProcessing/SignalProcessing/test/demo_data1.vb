@@ -17,7 +17,7 @@ Module demo_data1
     Sub fitMultipleGauss()
         Dim gauss As New GaussianFit(Opts.GetDefault)
         Dim logp As Double() = Nothing
-        Dim result = gauss.fit(v)
+        Dim result = gauss.fit(v, npeaks:=9)
 
         For Each peak In result
             Call Console.WriteLine(peak.GetJson)

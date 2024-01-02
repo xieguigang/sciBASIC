@@ -26,10 +26,10 @@ Namespace EmGaussian
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
                             Return New Variable With {
-                                .height = 1,
+                                .height = 10 * samples.Max,
                                 .center = i / npeaks,
                                 .width = 0.5,
-                                .offset = 0
+                                .offset = 0.01
                             }
                         End Function) _
                 .ToArray
