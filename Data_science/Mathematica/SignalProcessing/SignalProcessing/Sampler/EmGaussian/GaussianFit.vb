@@ -140,45 +140,53 @@ Namespace EmGaussian
                 sumw += w(c)
             Next
 
-            Dim n = samples.Length
-
             Return components _
                 .Select(Function(component, c)
-                            ' get new amp as ratio of the total weight
-                            If w(c) = 0.0 Then
-                                component.weight = 0.00001
-                            Else
-                                component.weight = w(c) / sumw
-                            End If
-
-                            ' get new mean as weighted by ratios value
-                            Dim sumu As Double = 0.0
-
-                            For i As Integer = 0 To samples.Length - 1
-                                sumu += (i / n) * membership(i * components.Length + c)
-                            Next
-
-                            If w(c) = 0.0 Then
-                                component.mean = randf(0, 1)
-                            Else
-                                component.mean = sumu / w(c)
-                            End If
-
-                            ' get new variations as weighted by ratios stdev
-                            Dim sumv As Double = 0
-                            For i As Integer = 0 To samples.Length - 1
-                                sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
-                            Next
-
-                            If w(c) = 0.0 Then
-                                component.variance = 0.00001
-                            Else
-                                component.variance = std.Max(sumv / w(c), 0.00001)
-                            End If
-
-                            Return component
+                            Return UpdateGaussComponent(component, c, w, samples, components, sumw)
                         End Function) _
                 .ToArray
+        End Function
+
+        Private Function UpdateGaussComponent(component As Variable, c As Integer,
+                                              w As Double(),
+                                              samples As Double(),
+                                              components As Variable(),
+                                              sumw As Double) As Variable
+            Dim n As Integer = samples.Length
+
+            ' get new amp as ratio of the total weight
+            If w(c) = 0.0 Then
+                component.weight = 0.00001
+            Else
+                component.weight = w(c) / sumw
+            End If
+
+            ' get new mean as weighted by ratios value
+            Dim sumu As Double = 0.0
+
+            For i As Integer = 0 To samples.Length - 1
+                sumu += (i / n) * membership(i * components.Length + c)
+            Next
+
+            If w(c) = 0.0 Then
+                component.mean = randf(0, 1)
+            Else
+                component.mean = sumu / w(c)
+            End If
+
+            ' get new variations as weighted by ratios stdev
+            Dim sumv As Double = 0
+            For i As Integer = 0 To samples.Length - 1
+                sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
+            Next
+
+            If w(c) = 0.0 Then
+                component.variance = 0.00001
+            Else
+                component.variance = std.Max(sumv / w(c), 0.00001)
+            End If
+
+            Return component
         End Function
     End Class
 End Namespace
