@@ -1511,24 +1511,18 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     solution if A is square, least squares solution otherwise
         ''' </returns>
 
-        Public Overridable Function Solve(B As GeneralMatrix, Optional ByRef success As Boolean = False, Optional strict As Boolean = True) As GeneralMatrix
+        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
             Dim decompose As Decomposition
 
             If m = n Then
                 Dim lu As New LUDecomposition(Me)
                 decompose = lu
-                success = lu.IsNonSingular
             Else
                 Dim qr As New QRDecomposition(Me)
                 decompose = qr
-                success = qr.FullRank
             End If
 
-            If (Not success) AndAlso (Not strict) Then
-                Return Nothing
-            Else
-                Return decompose.Solve(B)
-            End If
+            Return decompose.Solve(B)
         End Function
 
         ''' <summary>Solve X*A = B, which is also A'*X' = B'</summary>
@@ -1545,8 +1539,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     inverse(A) if A is square, pseudoinverse otherwise.
         ''' </returns>
         ''' <remarks>solve identity</remarks>
-        Public Overridable Function Inverse(Optional ByRef success As Boolean = False, Optional unsafe As Boolean = True) As GeneralMatrix
-            Return Solve(Identity(m, m), success, strict:=unsafe)
+        Public Overridable Function Inverse() As GeneralMatrix
+            Return Solve(Identity(m, m))
         End Function
 
         ''' <summary>GeneralMatrix determinant</summary>

@@ -65,7 +65,10 @@ Public Class GaussNewtonSolver
             Dim JT As NumericMatrix = lJ.Transpose()
             Dim bigJ = JT * lJ
 
-            bigJ = bigJ.Inverse(success, unsafe:=False)
+            ' the internal LU decomposition has bug
+            ' bigJ = bigJ.Inverse()
+            ' use the LU decompositon function inside current module
+            Invert(bigJ).Set(success, bigJ)
 
             If Not success Then
                 Exit For
@@ -134,5 +137,98 @@ Public Class GaussNewtonSolver
         Dim y = m_fitFunction(x, betaStep)
 
         Return (yZero - y) / [step]
+    End Function
+
+    Public Function LUPDecompose(m As NumericMatrix, Optional tol As Double = 0.0001) As (Boolean, NumericMatrix, Integer(), Integer)
+        Dim N = m.RowDimension
+        Dim S = 0
+        Dim P = New Integer(N - 1) {}
+
+        For i = 0 To N - 1
+            P(i) = i
+        Next
+
+        Dim LU As NumericMatrix = New NumericMatrix(m)
+
+        Dim uMax, absA As Double
+        Dim iMax As Integer
+
+        For i = 0 To N - 1
+            uMax = 0.0
+            iMax = i
+
+            ' find max pivot row
+            For k = i To N - 1
+                absA = std.Abs(LU(k, i))
+                If absA > uMax Then
+                    uMax = absA
+                    iMax = k
+                End If
+            Next
+
+            ' check for degeneracy
+            If uMax < tol Then
+                Return (False, Nothing, Nothing, -1)
+            End If
+
+            ' pivot if necessary
+            If iMax <> i Then
+                Dim v_temp = LU.Array(i)
+                LU.Array(i) = LU.Array(iMax)
+                LU.Array(iMax) = v_temp
+
+                Dim temp = P(i)
+                P(i) = P(iMax)
+                P(iMax) = temp
+                S += 1
+            End If
+
+            For j = i + 1 To N - 1
+                LU(j, i) = LU(j, i) / LU(i, i)
+
+                For k = i + 1 To N - 1
+                    LU(j, k) -= LU(j, i) * LU(i, k)
+                Next
+
+            Next
+        Next
+
+        Return (True, LU, P, S)
+    End Function
+
+    Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001) As (Boolean, NumericMatrix)
+        Dim success As Boolean = Nothing,
+            lu As NumericMatrix = Nothing,
+            p As Integer() = Nothing,
+            S As Integer = Nothing
+
+        LUPDecompose(m, tol).Set(success, lu, p, S)
+
+        If Not success Then
+            Return (False, Nothing)
+        End If
+
+        Dim N = m.RowDimension
+        Dim IA As New NumericMatrix(N, N)
+
+        For j = 0 To N - 1
+            For i = 0 To N - 1
+                IA(i, j) = If(p(i) = j, 1.0, 0.0)
+
+                For k = 0 To i - 1
+                    IA(i, j) -= lu(i, k) * IA(k, j)
+                Next
+            Next
+
+            For i = N - 1 To 0 Step -1
+                For k = i + 1 To N - 1
+                    IA(i, j) -= lu(i, k) * IA(k, j)
+                Next
+
+                IA(i, j) /= lu(i, i)
+            Next
+        Next
+
+        Return (True, IA)
     End Function
 End Class
