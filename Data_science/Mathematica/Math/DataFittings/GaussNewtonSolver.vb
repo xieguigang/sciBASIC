@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
-Imports System.Text
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
@@ -9,18 +10,12 @@ Public Class GaussNewtonSolver
     Public Delegate Function FitFunction(x As Double, args As NumericMatrix) As Double
 
     Dim m_fitFunction As FitFunction
-    Dim m_trainingInfo As New StringBuilder
 
     ReadOnly rmseTolerance As Double
     ReadOnly iterationTolerance As Double
     ReadOnly [step] As Double = 0.001
-    ReadOnly maxIterations As Integer
 
-    Public ReadOnly Property TrainingInfo As StringBuilder
-        Get
-            Return m_trainingInfo
-        End Get
-    End Property
+    ReadOnly MAX_ITERATIONS As Integer
 
     Public Sub New(fitFunction As FitFunction,
                    Optional maxIterations As Integer = 1000,
@@ -30,16 +25,32 @@ Public Class GaussNewtonSolver
         rmseTolerance = rmseTol
         iterationTolerance = iterTol
         m_fitFunction = fitFunction
-        Me.maxIterations = maxIterations
+        MAX_ITERATIONS = maxIterations
     End Sub
 
-    Public Function Fit(data As DataPoint(), initGuesses As NumericMatrix) As NumericMatrix
-        Dim beta As NumericMatrix = New NumericMatrix(initGuesses)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Fit(data As DataPoint(), argumentSize As Integer) As NumericMatrix
+        Return Fit(data, Vector.rand(-1, 1, argumentSize).ToArray)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Fit(data As DataPoint(), ParamArray args As Double()) As NumericMatrix
+        Return Fit(data, v:=New NumericMatrix(args))
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="v">should be a column vector</param>
+    ''' <returns></returns>
+    Public Function Fit(data As DataPoint(), v As NumericMatrix) As NumericMatrix
+        Dim beta As NumericMatrix = New NumericMatrix(v)
         Dim residuals = CalcResiduals(data, beta)
         Dim rB As New NumericMatrix(residuals)
         Dim rmse = residuals.RMS
 
-        For i As Integer = 0 To maxIterations - 1
+        For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
             Dim JT As NumericMatrix = lJ.Transpose()
             Dim bigJ = JT * lJ
@@ -62,7 +73,7 @@ Public Class GaussNewtonSolver
             End If
 
             If rmse < rmseTolerance Then
-                VBDebugger.EchoLine($"RMSE tolerance achieved on iteration {i + 1} of {maxIterations}.")
+                VBDebugger.EchoLine($"RMSE tolerance achieved on iteration {i + 1} of {MAX_ITERATIONS}.")
                 VBDebugger.EchoLine($"Beta estimation: {beta}")
                 Exit For
             End If
