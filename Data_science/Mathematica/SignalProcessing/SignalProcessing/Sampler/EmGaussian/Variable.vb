@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace EmGaussian
 
@@ -13,6 +15,11 @@ Namespace EmGaussian
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function gauss(x As Double) As Double
+            Return pnorm.ProbabilityDensity(x, mean, variance)
         End Function
 
     End Class

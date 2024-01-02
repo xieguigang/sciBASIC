@@ -80,12 +80,15 @@ Namespace EmGaussian
             Dim p As Double = 0
             Dim n = samples.Length
             Dim comp As Variable
+            Dim xi As Double
 
             For i As Integer = 0 To samples.Length - 1
                 p = 0
+                xi = i / n
+
                 For c As Integer = 0 To components.Length - 1
                     comp = components(c)
-                    p += samples(i) * comp.weight * pnorm.ProbabilityDensity(i / n, comp.mean, comp.variance)
+                    p += samples(i) * comp.weight * pnorm.ProbabilityDensity(xi, comp.mean, comp.variance)
                 Next
                 If p = 0.0 Then
                     l += -99999999
