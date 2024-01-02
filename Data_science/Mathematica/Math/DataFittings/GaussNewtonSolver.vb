@@ -1,16 +1,25 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
+''' <summary>
+''' least squares fitting for general curve functions
+''' </summary>
 Public Class GaussNewtonSolver
 
+    ''' <summary>
+    ''' A general curve function to fit
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     Public Delegate Function FitFunction(x As Double, args As NumericMatrix) As Double
 
-    Dim m_fitFunction As FitFunction
-
+    ReadOnly m_fitFunction As FitFunction
     ReadOnly rmseTolerance As Double
     ReadOnly iterationTolerance As Double
     ReadOnly [step] As Double = 0.001
@@ -29,12 +38,12 @@ Public Class GaussNewtonSolver
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Fit(data As DataPoint(), argumentSize As Integer) As NumericMatrix
+    Public Function Fit(data As DataPoint(), argumentSize As Integer) As Double()
         Return Fit(data, Vector.rand(-1, 1, argumentSize).ToArray)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function Fit(data As DataPoint(), ParamArray args As Double()) As NumericMatrix
+    Public Function Fit(data As DataPoint(), ParamArray args As Double()) As Double()
         Return Fit(data, v:=New NumericMatrix(args))
     End Function
 
@@ -43,12 +52,13 @@ Public Class GaussNewtonSolver
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="v">should be a column vector</param>
-    ''' <returns></returns>
-    Public Function Fit(data As DataPoint(), v As NumericMatrix) As NumericMatrix
+    ''' <returns>the function argument values</returns>
+    Public Function Fit(data As DataPoint(), v As NumericMatrix) As Double()
         Dim beta As NumericMatrix = New NumericMatrix(v)
         Dim residuals = CalcResiduals(data, beta)
         Dim rB As New NumericMatrix(residuals)
         Dim rmse = residuals.RMS
+        Dim temp_rmse As Double
 
         For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
@@ -64,22 +74,22 @@ Public Class GaussNewtonSolver
                 rB(j, 0) = residuals(j)
             Next
 
-            Dim temp = rmse
+            temp_rmse = rmse
             rmse = residuals.RMS
 
-            If std.Abs(temp - rmse) < iterationTolerance Then
-                VBDebugger.EchoLine($"Convergence to a solution met, change in RMSE smaller than tolerance.")
+            ' early stop, rmse no more changes
+            ' can not convergence?
+            If std.Abs(temp_rmse - rmse) < iterationTolerance Then
                 Exit For
             End If
 
+            ' early stop
             If rmse < rmseTolerance Then
-                VBDebugger.EchoLine($"RMSE tolerance achieved on iteration {i + 1} of {MAX_ITERATIONS}.")
-                VBDebugger.EchoLine($"Beta estimation: {beta}")
                 Exit For
             End If
         Next
 
-        Return beta
+        Return beta.IteratesALL.ToArray
     End Function
 
     Private Function CalcJacobian(data As DataPoint(), beta As NumericMatrix) As NumericMatrix
@@ -87,15 +97,15 @@ Public Class GaussNewtonSolver
         Dim Jacobian As New NumericMatrix(data.Length, betaSize.Height)
         Dim betaStep As New NumericMatrix(beta)
 
-        For i = 0 To betaSize.Height - 1
-            For j = 0 To betaSize.Height - 1
+        For i As Integer = 0 To betaSize.Height - 1
+            For j As Integer = 0 To betaSize.Height - 1
                 betaStep(j, 0) = beta(j, 0)
                 If i = j Then
                     betaStep(j, 0) += [step]
                 End If
             Next
 
-            For j = 0 To data.Length - 1
+            For j As Integer = 0 To data.Length - 1
                 Jacobian(j, i) = Me.CalcGradient(beta, betaStep, data(CInt(j)).X)
             Next
         Next
@@ -106,7 +116,7 @@ Public Class GaussNewtonSolver
     Private Function CalcResiduals(data As DataPoint(), beta As NumericMatrix) As Double()
         Dim ri = New Double(data.Length - 1) {}
 
-        For i = 0 To data.Length - 1
+        For i As Integer = 0 To data.Length - 1
             ri(i) = data(i).Y - m_fitFunction(data(CInt(i)).X, beta)
         Next
 
@@ -116,6 +126,7 @@ Public Class GaussNewtonSolver
     Private Function CalcGradient(beta As NumericMatrix, betaStep As NumericMatrix, x As Double) As Double
         Dim yZero = m_fitFunction(x, beta)
         Dim y = m_fitFunction(x, betaStep)
+
         Return (yZero - y) / [step]
     End Function
 End Class
