@@ -66,19 +66,18 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
-Imports System.Text
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports System.Drawing
+Imports stdNum = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -1512,8 +1511,24 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     solution if A is square, least squares solution otherwise
         ''' </returns>
 
-        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
-            Return (If(m = n, (New LUDecomposition(Me)).Solve(B), (New QRDecomposition(Me)).Solve(B)))
+        Public Overridable Function Solve(B As GeneralMatrix, Optional ByRef success As Boolean = False, Optional strict As Boolean = True) As GeneralMatrix
+            Dim decompose As Decomposition
+
+            If m = n Then
+                Dim lu As New LUDecomposition(Me)
+                decompose = lu
+                success = lu.IsNonSingular
+            Else
+                Dim qr As New QRDecomposition(Me)
+                decompose = qr
+                success = qr.FullRank
+            End If
+
+            If (Not success) AndAlso (Not strict) Then
+                Return Nothing
+            Else
+                Return decompose.Solve(B)
+            End If
         End Function
 
         ''' <summary>Solve X*A = B, which is also A'*X' = B'</summary>
@@ -1530,8 +1545,8 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     inverse(A) if A is square, pseudoinverse otherwise.
         ''' </returns>
         ''' <remarks>solve identity</remarks>
-        Public Overridable Function Inverse() As GeneralMatrix
-            Return Solve(Identity(m, m))
+        Public Overridable Function Inverse(Optional ByRef success As Boolean = False, Optional unsafe As Boolean = True) As GeneralMatrix
+            Return Solve(Identity(m, m), success, strict:=unsafe)
         End Function
 
         ''' <summary>GeneralMatrix determinant</summary>

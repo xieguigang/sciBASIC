@@ -55,10 +55,16 @@
 ' /********************************************************************************/
 
 #End Region
-Imports System.Runtime.Serialization
+
 Imports __std = System.Math
 
 Namespace LinearAlgebra.Matrix
+
+    Public MustInherit Class Decomposition
+
+        Public MustOverride Function Solve(B As GeneralMatrix) As GeneralMatrix
+
+    End Class
 
     ''' <summary>LU Decomposition.
     ''' For an m-by-n matrix A with m >= n, the LU decomposition is an m-by-n
@@ -70,9 +76,7 @@ Namespace LinearAlgebra.Matrix
     ''' LU decomposition is in the solution of square systems of simultaneous
     ''' linear equations.  This will fail if IsNonSingular() returns false.
     ''' </summary>
-
-    <Serializable>
-    Public Class LUDecomposition
+    Public Class LUDecomposition : Inherits Decomposition
 
 #Region "Class variables"
 
@@ -288,7 +292,7 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.SystemException"> Matrix is singular.
         ''' </exception>
 
-        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
+        Public Overrides Function Solve(B As GeneralMatrix) As GeneralMatrix
             If B.RowDimension <> m Then
                 Throw New System.ArgumentException("Matrix row dimensions must agree.")
             End If

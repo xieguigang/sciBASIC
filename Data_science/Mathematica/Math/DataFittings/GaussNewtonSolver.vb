@@ -58,18 +58,25 @@ Public Class GaussNewtonSolver
         Dim rB As New NumericMatrix(residuals)
         Dim rmse = residuals.RMS
         Dim temp_rmse As Double
+        Dim success As Boolean = False
 
         For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
             Dim JT As NumericMatrix = lJ.Transpose()
             Dim bigJ = JT * lJ
 
-            bigJ = bigJ.Inverse()
-            bigJ *= JT
-            beta -= bigJ * rB
+            bigJ = bigJ.Inverse(success, unsafe:=False)
+
+            If Not success Then
+                Exit For
+            Else
+                bigJ *= JT
+                beta -= bigJ * rB
+            End If
+
             residuals = CalcResiduals(data, beta)
 
-            For j = 0 To residuals.Length - 1
+            For j As Integer = 0 To residuals.Length - 1
                 rB(j, 0) = residuals(j)
             Next
 
