@@ -11,9 +11,11 @@ Namespace EmGaussian
 
         Dim membership As Double()
         Dim opts As Opts
+        Dim eps As Double
 
         Sub New(opts As Opts)
             Me.opts = opts
+            Me.eps = opts.tolerance
         End Sub
 
         ''' <summary>
@@ -119,12 +121,18 @@ Namespace EmGaussian
                 For c As Integer = 0 To components.Length - 1
                     comp = components(c)
                     p(c) = comp.weight * pnorm.ProbabilityDensity(x, comp.mean, comp.variance)
+
+                    If p(c).IsNaNImaginary Then
+                        p(c) = 0
+                    End If
+
+                    ' p(c) = pnorm.ProbabilityDensity(x, comp.mean, comp.variance)
                     sump += p(c)
                 Next
 
                 ' [c0, c1, c2, c0, c1, c2, ...]
                 For c As Integer = 0 To components.Length - 1
-                    If p(c) = 0.0 Then
+                    If p(c) = 0.0 OrElse sump = 0.0 Then
                         membership(i * components.Length + c) = 0
                     Else
                         membership(i * components.Length + c) = samples(i) * p(c) / sump
@@ -159,7 +167,7 @@ Namespace EmGaussian
 
             ' get new amp as ratio of the total weight
             If w(c) = 0.0 Then
-                component.weight = 0.00001
+                component.weight = eps
             Else
                 component.weight = w(c) / sumw
             End If
@@ -171,8 +179,8 @@ Namespace EmGaussian
                 sumu += (i / n) * membership(i * components.Length + c)
             Next
 
-            If w(c) = 0.0 Then
-                component.mean = randf(0, 1)
+            If std.Abs(w(c)) < eps Then
+                component.mean = sumu / eps
             Else
                 component.mean = sumu / w(c)
             End If
@@ -183,10 +191,10 @@ Namespace EmGaussian
                 sumv += membership(i * components.Length + c) * (i / n - component.mean) ^ 2
             Next
 
-            If w(c) = 0.0 Then
-                component.variance = 0.00001
+            If std.Abs(w(c)) <= eps Then
+                component.variance = sumv / eps
             Else
-                component.variance = std.Max(sumv / w(c), 0.00001)
+                component.variance = sumv / w(c)
             End If
 
             Return component

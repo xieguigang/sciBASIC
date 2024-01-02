@@ -19,7 +19,7 @@ Namespace EmGaussian
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function gauss(x As Double) As Double
-            Return pnorm.ProbabilityDensity(x, mean, variance)
+            Return pnorm.ProbabilityDensity(x, mean, variance) * weight
         End Function
 
     End Class
