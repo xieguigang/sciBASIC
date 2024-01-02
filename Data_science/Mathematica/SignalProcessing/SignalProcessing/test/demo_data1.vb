@@ -34,7 +34,7 @@ Module demo_data1
                 Return pnorm.ProbabilityDensity(x, args(0, 0), args(1, 0))
             End Function
         Dim solver As New GaussNewtonSolver(gauss)
-        Dim result = solver.Fit(data, 4, 2)
+        Dim result = solver.Fit(data, 9, 2)
         Dim m = result(0)
         Dim sd = result(1)
 
