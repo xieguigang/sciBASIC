@@ -105,6 +105,10 @@ Public Class DataPoint
         Me.Y = y
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"[{X}, {Y}]"
+    End Function
+
     Public Shared Narrowing Operator CType(point As DataPoint) As PointF
         Return New PointF(point.X, point.Y)
     End Operator
