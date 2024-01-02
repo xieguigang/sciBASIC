@@ -23,6 +23,7 @@ Public Class GaussNewtonSolver
     ReadOnly rmseTolerance As Double
     ReadOnly iterationTolerance As Double
     ReadOnly [step] As Double = 0.001
+    ReadOnly eps As Double = 0.001
 
     ReadOnly MAX_ITERATIONS As Integer
 
@@ -144,7 +145,7 @@ Public Class GaussNewtonSolver
         Dim S = 0
         Dim P = New Integer(N - 1) {}
 
-        For i = 0 To N - 1
+        For i As Integer = 0 To N - 1
             P(i) = i
         Next
 
@@ -153,12 +154,12 @@ Public Class GaussNewtonSolver
         Dim uMax, absA As Double
         Dim iMax As Integer
 
-        For i = 0 To N - 1
+        For i As Integer = 0 To N - 1
             uMax = 0.0
             iMax = i
 
             ' find max pivot row
-            For k = i To N - 1
+            For k As Integer = i To N - 1
                 absA = std.Abs(LU(k, i))
                 If absA > uMax Then
                     uMax = absA
@@ -183,12 +184,12 @@ Public Class GaussNewtonSolver
                 S += 1
             End If
 
-            For j = i + 1 To N - 1
+            For j As Integer = i + 1 To N - 1
                 If LU(j, i) <> 0.0 Then
                     If LU(i, i) <> 0.0 Then
                         LU(j, i) = LU(j, i) / LU(i, i)
                     Else
-                        LU(j, i) = LU(j, i) / 1.0E-17
+                        LU(j, i) = LU(j, i) / eps
                     End If
                 End If
 
@@ -235,7 +236,7 @@ Public Class GaussNewtonSolver
                     If lu(i, i) <> 0.0 Then
                         IA(i, j) /= lu(i, i)
                     Else
-                        IA(i, j) /= 1.0E-17
+                        IA(i, j) /= eps
                     End If
                 End If
             Next
