@@ -13,6 +13,19 @@ Namespace EmGaussian
         Public Property mean As Double
         Public Property variance As Double
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' make data copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As Variable)
+            weight = clone.weight
+            mean = clone.mean
+            variance = clone.variance
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
