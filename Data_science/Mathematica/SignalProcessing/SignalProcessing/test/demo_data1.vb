@@ -9,13 +9,15 @@ Module demo_data1
     Dim v As Double() = {0, 0.1, 0.2, 0.5, 0.9, 1.3, 1.25, 0.99, 0.7, 0.35, 0.4, 0.5, 0.6, 0.65, 0.45, 0.4, 0.35, 0.2, 0.1, 0}
 
     Sub Main()
-        Call fitCurveTest()
+        Call fitMultipleGauss()
+
+        ' Call fitCurveTest()
     End Sub
 
     Sub fitMultipleGauss()
         Dim gauss As New GaussianFit(Opts.GetDefault)
         Dim logp As Double() = Nothing
-        Dim result = gauss.fit(v, logp:=logp)
+        Dim result = gauss.fit(v)
 
         For Each peak In result
             Call Console.WriteLine(peak.GetJson)

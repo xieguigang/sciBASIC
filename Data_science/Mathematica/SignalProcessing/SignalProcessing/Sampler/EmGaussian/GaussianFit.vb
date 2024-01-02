@@ -26,9 +26,9 @@ Namespace EmGaussian
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
                             Return New Variable With {
-                                .height = 1 / npeaks,
+                                .height = 1,
                                 .center = i / npeaks,
-                                .width = 1 / npeaks,
+                                .width = 0.5,
                                 .offset = 0
                             }
                         End Function) _
