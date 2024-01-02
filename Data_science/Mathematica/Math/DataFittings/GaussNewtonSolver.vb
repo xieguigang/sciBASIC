@@ -39,22 +39,21 @@ Public Class GaussNewtonSolver
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Fit(data As DataPoint(), argumentSize As Integer) As Double()
-        Return Fit(data, Vector.rand(-1, 1, argumentSize).ToArray)
+        Return Fit(data, Vector.rand(0, 1, argumentSize).ToArray)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Fit(data As DataPoint(), ParamArray args As Double()) As Double()
-        Return Fit(data, v:=New NumericMatrix(args))
+        Return Fit(data, beta:=New NumericMatrix(args))
     End Function
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="data"></param>
-    ''' <param name="v">should be a column vector</param>
+    ''' <param name="beta">should be a column vector</param>
     ''' <returns>the function argument values</returns>
-    Public Function Fit(data As DataPoint(), v As NumericMatrix) As Double()
-        Dim beta As NumericMatrix = New NumericMatrix(v)
+    Private Function Fit(data As DataPoint(), beta As NumericMatrix) As Double()
         Dim residuals = CalcResiduals(data, beta)
         Dim rB As New NumericMatrix(residuals)
         Dim rmse = residuals.RMS

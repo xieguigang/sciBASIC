@@ -1676,7 +1676,9 @@ Namespace LinearAlgebra.Matrix
             Return Me
         End Function
 
-        ''' <summary>Clone the GeneralMatrix object.</summary>
+        ''' <summary>
+        ''' Clone the GeneralMatrix object.
+        ''' </summary>
         Public Function Clone() As Object Implements ICloneable.Clone
             Return Me.Copy()
         End Function
@@ -1686,7 +1688,7 @@ Namespace LinearAlgebra.Matrix
 
             If RowDimension * ColumnDimension < 25 Then
                 For Each row As Double() In buffer
-                    Call sb.AppendLine(row.GetJson)
+                    Call sb.AppendLine("[" & row.Select(Function(xi) xi.ToString("G4")).JoinBy(",") & "]")
                     Call sb.AppendLine()
                 Next
             End If

@@ -31,10 +31,10 @@ Module demo_data1
         Dim data As DataPoint() = v.Select(Function(vi, i) New DataPoint(i, vi)).ToArray
         Dim gauss As GaussNewtonSolver.FitFunction =
             Function(x As Double, args As NumericMatrix) As Double
-                Return pnorm.ProbabilityDensity(x, args(0, 0), args(0, 1))
+                Return pnorm.ProbabilityDensity(x, args(0, 0), args(1, 0))
             End Function
         Dim solver As New GaussNewtonSolver(gauss)
-        Dim result = solver.Fit(data, 2)
+        Dim result = solver.Fit(data, 4, 2)
         Dim m = result(0)
         Dim sd = result(1)
 
