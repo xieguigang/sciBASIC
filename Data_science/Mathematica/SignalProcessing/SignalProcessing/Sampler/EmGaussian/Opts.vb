@@ -3,11 +3,6 @@
     Public Class Opts
 
         ''' <summary>
-        ''' time points that possible has a peak
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property components As Double()()
-        ''' <summary>
         ''' max number of components in case of auto-detection
         ''' </summary>
         ''' <returns></returns>
