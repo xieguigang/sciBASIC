@@ -15,7 +15,7 @@ Namespace EmGaussian
 
         Sub New(opts As Opts)
             Me.opts = opts
-            Me.eps = opts.tolerance
+            Me.eps = opts.eps
         End Sub
 
         ''' <summary>
