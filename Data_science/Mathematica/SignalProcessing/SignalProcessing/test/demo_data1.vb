@@ -9,7 +9,11 @@ Module demo_data1
         Dim gauss As New GaussianFit(Opts.GetDefault)
         Dim result = gauss.fit(v)
 
-        Call Console.WriteLine(result.GetJson)
+        For Each peak In result
+            Call Console.WriteLine(peak.GetJson)
+        Next
+
+        ' Call Console.WriteLine(result.GetJson)
 
         Pause()
     End Sub
