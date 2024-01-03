@@ -11,33 +11,30 @@ Namespace model.impl
 
         Private ReadOnly constructor As ConstructorInfo
 
-        Protected Friend childField As Expression
+        Protected Friend m_child As Expression
 
         Public Sub New(child As Expression)
-            childField = child
+            m_child = child
             constructor = [GetType]().GetConstructorInfo(GetType(Expression))
         End Sub
 
         Public Overrides Function duplicate() As Expression
-
-
-            Return CType(constructor.Invoke(New Object() {childField.duplicate()}), UnaryExpression)
-
+            Return constructor.Invoke(New Object() {m_child.duplicate()})
         End Function
 
         Public Overridable Property Child As Expression Implements UnaryExpression.Child
             Get
-                Return childField
+                Return m_child
             End Get
             Set(value As Expression)
-                childField = value
+                m_child = value
             End Set
         End Property
 
 
         Public Overridable Function swapChild(newChild As Expression) As Expression Implements UnaryExpression.swapChild
-            Dim old = childField
-            childField = newChild
+            Dim old = m_child
+            m_child = newChild
             Return old
         End Function
 
@@ -49,7 +46,7 @@ Namespace model.impl
 
         Public Overrides ReadOnly Property Depth As Integer Implements Expression.Depth
             Get
-                Return 1 + childField.Depth
+                Return 1 + m_child.Depth
             End Get
         End Property
 

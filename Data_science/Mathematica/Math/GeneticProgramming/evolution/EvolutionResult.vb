@@ -18,5 +18,9 @@ Namespace evolution
             Me.fitnessProgress = fitnessProgress
             Me.timeProgress = timeProgress
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"fitness:{fitness} - {result.toStringExpression}"
+        End Function
     End Class
 End Namespace

@@ -10,11 +10,11 @@ Namespace model.impl
         End Sub
 
         Public Overrides Function eval(x As Double) As Double
-            Return std.Exp(childField.eval(x))
+            Return std.Exp(m_child.eval(x))
         End Function
 
         Public Overrides Function toStringExpression() As String
-            Return String.Format("exp({0})", childField.toStringExpression())
+            Return String.Format("exp({0})", m_child.toStringExpression())
         End Function
 
         Public Overrides Function ToString() As String
