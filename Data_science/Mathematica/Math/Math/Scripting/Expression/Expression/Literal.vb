@@ -55,6 +55,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' A number literal
+    ''' </summary>
     Public Class Literal : Inherits Expression
 
         Public ReadOnly Property number As Double

@@ -55,6 +55,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' x!
+    ''' </summary>
     Public Class Factorial : Inherits Expression
 
         Public ReadOnly Property factor As Integer

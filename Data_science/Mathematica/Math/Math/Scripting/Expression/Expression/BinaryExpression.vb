@@ -55,6 +55,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' left op right
+    ''' </summary>
     Public Class BinaryExpression : Inherits Expression
 
         Public ReadOnly Property left As Expression
