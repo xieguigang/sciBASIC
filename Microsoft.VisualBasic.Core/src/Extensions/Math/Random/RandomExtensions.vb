@@ -100,6 +100,18 @@ Namespace Math
             Return array(seeds.Next(0, array.Length))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As ISet(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As IList(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
         ''' <summary>
         ''' Returns a non-negative random integer that is less than the specified maximum.
         ''' </summary>

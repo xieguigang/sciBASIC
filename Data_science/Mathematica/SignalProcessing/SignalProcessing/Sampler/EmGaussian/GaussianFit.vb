@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.Bootstrapping
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace EmGaussian
@@ -11,9 +12,18 @@ Namespace EmGaussian
 
         Dim opts As Opts
         Dim peaks As Variable()
+        Dim kernel As KernelFunction = AddressOf Variable.Multi_gaussian
+        Dim sine_kernel As Boolean
 
-        Sub New(opts As Opts)
+        Public Delegate Function KernelFunction(x As Double, peaks As Variable(), offset As Double) As Double
+
+        Sub New(opts As Opts, Optional sine_kernel As Boolean = False)
+            Me.sine_kernel = sine_kernel
             Me.opts = opts
+
+            If sine_kernel Then
+                kernel = AddressOf Variable.Multi_sine
+            End If
         End Sub
 
         ''' <summary>
@@ -22,20 +32,27 @@ Namespace EmGaussian
         ''' <param name="samples">the signal data should be normalized to range [0,1]</param>
         ''' <param name="npeaks"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function fit(samples As Double(), Optional npeaks As Integer = 6) As Variable()
+            Return fit(seq(0, samples.Length).ToArray, samples, npeaks)
+        End Function
+
+        Public Function fit(x As Double(), samples As Double(), Optional npeaks As Integer = 6) As Variable()
+            Dim ymax As Double = samples.Max
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
                             Return New Variable With {
-                                .height = 10 * samples.Max,
-                                .center = i / npeaks,
-                                .width = 0.5,
+                                .height = ymax * randf(0.5, 1.1),
+                                .center = x((i / npeaks) * (x.Length - 1)),
+                                .width = randf(0.01, 0.1),
                                 .offset = 0.01
                             }
                         End Function) _
                 .ToArray
 
             peaks = random
-            gaussFit(samples)
+            gaussFit(x, samples)
             Return peaks
         End Function
 
@@ -54,7 +71,7 @@ Namespace EmGaussian
             Return args
         End Function
 
-        Private Sub gaussFit(samples As Double())
+        Private Sub gaussFit(x As Double(), samples As Double())
             Dim gauss As New GaussNewtonSolver(
                 fitFunction:=AddressOf target,
                 maxIterations:=opts.maxIterations,
@@ -62,7 +79,7 @@ Namespace EmGaussian
                 iterTol:=opts.eps)
             Dim nsize As Integer = samples.Length
             Dim points As DataPoint() = samples _
-                .Select(Function(yi, i) New DataPoint(i / nsize, yi)) _
+                .Select(Function(yi, i) New DataPoint(x(i), yi)) _
                 .ToArray
             Dim result As Double() = gauss.Fit(points, getBeta0)
 
@@ -91,7 +108,7 @@ Namespace EmGaussian
                 v(i) = args(i, 0)
             Next
 
-            Return Variable.Multi_gaussian(x, decode(v), offset:=0)
+            Return kernel(x, decode(v), offset:=0)
         End Function
     End Class
 End Namespace

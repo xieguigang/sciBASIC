@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing.NDtw.Preprocessing
 ''' <remarks>
 ''' a tuple of the signal vector data <see cref="Measures"/> and <see cref="Strength"/>
 ''' </remarks>
-Public Class GeneralSignal : Implements INamedValue
+Public Class GeneralSignal : Implements INamedValue, IVector
 
     ''' <summary>
     ''' usually is the time in unit second.(x axis)
@@ -84,7 +84,7 @@ Public Class GeneralSignal : Implements INamedValue
     ''' <remarks>
     ''' y axis
     ''' </remarks>
-    Public Property Strength As Double()
+    Public Property Strength As Double() Implements IVector.Data
 
     ''' <summary>
     ''' the unique reference id, or the variable name

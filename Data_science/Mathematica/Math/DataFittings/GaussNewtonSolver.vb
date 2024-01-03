@@ -60,6 +60,8 @@ Public Class GaussNewtonSolver
         Dim rmse = residuals.RMS
         Dim temp_rmse As Double
         Dim success As Boolean = False
+        Dim truncate As Double = 100
+        Dim truncate2 As Double = 5
 
         For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
@@ -69,7 +71,7 @@ Public Class GaussNewtonSolver
             ' the internal LU decomposition has bug
             ' bigJ = bigJ.Inverse()
             ' use the LU decompositon function inside current module
-            Invert(bigJ, tol:=0).Set(success, bigJ)
+            Invert(bigJ, tol:=0, truncate:=truncate).Set(success, bigJ)
 
             If Not success Then
                 Exit For
@@ -77,6 +79,14 @@ Public Class GaussNewtonSolver
                 bigJ *= JT
                 beta -= bigJ * rB
             End If
+
+            For offset As Integer = 0 To beta.RowDimension - 1
+                If beta(offset, 0) > truncate2 Then
+                    beta(offset, 0) = truncate2
+                ElseIf beta(offset, 0) < -truncate2 Then
+                    beta(offset, 0) = eps
+                End If
+            Next
 
             residuals = CalcResiduals(data, beta)
 
@@ -203,7 +213,7 @@ Public Class GaussNewtonSolver
         Return (True, LU, P, S)
     End Function
 
-    Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001) As (Boolean, NumericMatrix)
+    Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001, Optional truncate As Double = 10000) As (Boolean, NumericMatrix)
         Dim success As Boolean = Nothing,
             lu As NumericMatrix = Nothing,
             p As Integer() = Nothing,
@@ -237,6 +247,12 @@ Public Class GaussNewtonSolver
                         IA(i, j) /= lu(i, i)
                     Else
                         IA(i, j) /= eps
+                    End If
+
+                    If IA(i, j) > truncate Then
+                        IA(i, j) = truncate
+                    ElseIf IA(i, j) < -truncate Then
+                        IA(i, j) = -truncate
                     End If
                 End If
             Next

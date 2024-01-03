@@ -137,8 +137,15 @@ Namespace Text.Parser.HtmlParser
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Html.Href")>
-        <Extension> Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$) As String
-            Return html.attr("href")
+        <Extension>
+        Public Function href(<Parameter("HTML", "A string that contains the url string pattern like: href=""url_text""")> html$, Optional default$ = "") As String
+            Dim url As String = html.attr("href")
+
+            If url.StringEmpty Then
+                Return [default]
+            Else
+                Return url
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
