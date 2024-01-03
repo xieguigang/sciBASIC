@@ -203,7 +203,7 @@ Public Class GaussNewtonSolver
         Return (True, LU, P, S)
     End Function
 
-    Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001) As (Boolean, NumericMatrix)
+    Public Function Invert(m As NumericMatrix, Optional tol As Double = 0.0001, Optional truncate As Double = 10000) As (Boolean, NumericMatrix)
         Dim success As Boolean = Nothing,
             lu As NumericMatrix = Nothing,
             p As Integer() = Nothing,
@@ -237,6 +237,12 @@ Public Class GaussNewtonSolver
                         IA(i, j) /= lu(i, i)
                     Else
                         IA(i, j) /= eps
+                    End If
+
+                    If IA(i, j) > truncate Then
+                        IA(i, j) = truncate
+                    ElseIf IA(i, j) < -truncate Then
+                        IA(i, j) = -truncate
                     End If
                 End If
             Next
