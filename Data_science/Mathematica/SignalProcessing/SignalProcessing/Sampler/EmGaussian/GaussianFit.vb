@@ -12,9 +12,16 @@ Namespace EmGaussian
 
         Dim opts As Opts
         Dim peaks As Variable()
+        Dim kernel As KernelFunction = AddressOf Variable.Multi_gaussian
 
-        Sub New(opts As Opts)
+        Public Delegate Function KernelFunction(x As Double, peaks As Variable(), offset As Double) As Double
+
+        Sub New(opts As Opts, Optional sine_kernel As Boolean = False)
             Me.opts = opts
+
+            If sine_kernel Then
+                kernel = AddressOf Variable.Multi_sine
+            End If
         End Sub
 
         ''' <summary>
@@ -98,7 +105,7 @@ Namespace EmGaussian
                 v(i) = args(i, 0)
             Next
 
-            Return Variable.Multi_gaussian(x, decode(v), offset:=0)
+            Return kernel(x, decode(v), offset:=0)
         End Function
     End Class
 End Namespace

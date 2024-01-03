@@ -44,6 +44,11 @@ Namespace EmGaussian
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function sine(x As Double) As Double
+            Return height * std.Sin(2 * std.PI * (x - center) / 12 + width) + offset
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function gaussian(x As Double) As Double
             Return height * std.Exp(-((x - center) ^ 2) / (2 * (width ^ 2))) + offset
         End Function
@@ -51,6 +56,11 @@ Namespace EmGaussian
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Multi_gaussian(x As Double, vars As Variable(), offset As Double) As Double
             Return offset + Aggregate c As Variable In vars Into Sum(c.gaussian(x))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Multi_sine(x As Double, vars As Variable(), offset As Double) As Double
+            Return offset + Aggregate c As Variable In vars Into Sum(c.sine(x))
         End Function
 
     End Class
