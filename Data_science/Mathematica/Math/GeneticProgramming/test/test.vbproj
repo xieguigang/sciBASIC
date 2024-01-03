@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>test</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\mime\application%xml\xml-netcore5.vbproj" />
+    <ProjectReference Include="..\..\MathLambda\symbolic-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\GeneticProgramming.vbproj" />
+  </ItemGroup>
+
+</Project>

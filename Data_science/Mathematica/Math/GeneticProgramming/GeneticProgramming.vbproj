@@ -13,6 +13,11 @@
     <Title>Regression Problem: Use Genetic Programming (GP) to find a function that fits to the training data as best as possible.</Title>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\MathLambda\symbolic-netcore5.vbproj" />
     <ProjectReference Include="..\Math\Math.NET5.vbproj" />

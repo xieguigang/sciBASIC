@@ -1,14 +1,13 @@
-﻿
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
-Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports std = System.Math
 
-Public Class Runtime
-
-    Public Shared Sub Main(args As String())
+Module Program
+    Sub Main(args As String())
         Dim f1 As [Function] = New FunctionAnonymousInnerClass()
         Dim data1 = DataGenerator.generateDataTuples(f1, 0.0, 2.0 * std.PI, 200)
 
@@ -20,7 +19,7 @@ Public Class Runtime
         factory.BinaryExpressions = New CompositeExpression() {CompositeExpression.PLUS, CompositeExpression.MINUS, CompositeExpression.MULTIPLY, CompositeExpression.DIVIDE}
         factory.UnaryExpressions = New CompositeExpression() {CompositeExpression.SINE}
 
-        Dim evolution As evolution.Evolution = New evolution.Evolution()
+        Dim evolution As Evolution = New Evolution()
         evolution.ExpressionFactory = factory
 
         runGP(data1, evolution, 10)
@@ -41,20 +40,20 @@ Public Class Runtime
         End Function
     End Class
 
-    Private Shared Sub runGP(data As IList(Of Tuple), evolution As evolution.Evolution, n As Integer)
+    Private Sub runGP(data As IList(Of Tuple), evolution As Evolution, n As Integer)
         Dim config As GPConfiguration = GPConfiguration.createDefaultConfig()
         config.objective = ObjectiveFunction.MAE
         config.fitnessThreshold = 0.01
         config.initTreeDepth = 4
 
-        Dim results As IList(Of evolution.Evolution.Result) = New List(Of evolution.Evolution.Result)(n)
+        Dim results As IList(Of Evolution.Result) = New List(Of Evolution.Result)(n)
         For i = 0 To n - 1
             results.Add(evolution.evolveTreeFor(data, config))
         Next
         exportResults("GP", results)
     End Sub
 
-    Private Shared Sub runGA(data As IList(Of Tuple), evolution As evolution.Evolution, n As Integer)
+    Private Sub runGA(data As IList(Of Tuple), evolution As Evolution, n As Integer)
         Dim config As GAConfiguration = GAConfiguration.createDefaultConfig()
         config.objective = ObjectiveFunction.MAE
         config.fitnessThreshold = 0.1
@@ -62,14 +61,14 @@ Public Class Runtime
         config.paramRangeFrom = -5.0
         config.paramRangeTo = +5.0
 
-        Dim results As IList(Of evolution.Evolution.Result) = New List(Of evolution.Evolution.Result)(n)
+        Dim results As IList(Of Evolution.Result) = New List(Of Evolution.Result)(n)
         For i = 0 To n - 1
             results.Add(evolution.evolvePolyFor(data, config))
         Next
         exportResults("GA", results)
     End Sub
 
-    Private Shared Sub exportResults(filePrefix As String, results As IList(Of evolution.Evolution.Result))
+    Private Sub exportResults(filePrefix As String, results As IList(Of Evolution.Result))
         'try
         '{
         '	StreamWriter @out = new StreamWriter(filePrefix + ".out");
@@ -111,4 +110,4 @@ Public Class Runtime
         '}
     End Sub
 
-End Class
+End Module
