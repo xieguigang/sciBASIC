@@ -1,11 +1,12 @@
 ﻿
+Imports Microsoft.VisualBasic.Data.Bootstrapping
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 
 Namespace evolution
 
-    Public Class GPTree
-        Implements Individual
+    Public Class GPTree : Implements Individual
 
         Private Shared OBJECTIVEField As Objective = Nothing
 
@@ -75,10 +76,10 @@ Namespace evolution
             End Get
         End Property
 
-        Public Overridable Function computeFitness(dataTuples As IList(Of Tuple)) As Double Implements Individual.computeFitness
+        Public Overridable Function computeFitness(dataTuples As IList(Of DataPoint)) As Double Implements Individual.computeFitness
 
             Dim errors = New Double(dataTuples.Count - 1) {}
-            Dim iterator As IEnumerator(Of Tuple) = dataTuples.GetEnumerator()
+            Dim iterator As IEnumerator(Of DataPoint) = dataTuples.GetEnumerator()
             Dim i = 0
 
             While iterator.MoveNext()

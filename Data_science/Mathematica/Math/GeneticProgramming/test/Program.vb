@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
@@ -8,11 +9,11 @@ Imports std = System.Math
 
 Module Program
     Sub Main(args As String())
-        Dim f1 As [Function] = New FunctionAnonymousInnerClass()
-        Dim data1 = DataGenerator.generateDataTuples(f1, 0.0, 2.0 * std.PI, 200)
+        Dim f1 As DataGenerator.DataFunction = AddressOf test1
+        Dim data1 = DataGenerator.generateDataTuples(f1, 0.0, 2.0 * std.PI, 200).ToArray
 
-        Dim f2 As [Function] = New FunctionAnonymousInnerClass2()
-        Dim data2 = DataGenerator.generateDataTuples(f2, 0.0, 10.0, 100)
+        Dim f2 As DataGenerator.DataFunction = AddressOf test2
+        Dim data2 = DataGenerator.generateDataTuples(f2, 0.0, 10.0, 100).ToArray
 
         Dim factory As ExpressionFactory = New ExpressionFactory()
         factory.TerminalExpressions = New Expression() {Variable.X, New Number(1.0)}
@@ -26,19 +27,13 @@ Module Program
         runGA(data2, evolution, 10)
     End Sub
 
-    Private Class FunctionAnonymousInnerClass
-        Implements [Function]
-        Public Function eval(x As Double) As Double Implements [Function].eval
-            Return std.Cos(2.0 * x)
-        End Function
-    End Class
+    Private Function test1(x As Double) As Double
+        Return std.Cos(2.0 * x)
+    End Function
 
-    Private Class FunctionAnonymousInnerClass2
-        Implements [Function]
-        Public Function eval(x As Double) As Double Implements [Function].eval
-            Return x * x * x - 2.0 * x * x + x
-        End Function
-    End Class
+    Private Function test2(x As Double) As Double
+        Return x * x * x - 2.0 * x * x + x
+    End Function
 
     Private Sub runGP(data As IList(Of Tuple), evolution As Evolution, n As Integer)
         Dim config As GPConfiguration = GPConfiguration.createDefaultConfig()

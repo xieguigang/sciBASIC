@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+﻿Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 
 Namespace evolution
 
@@ -9,7 +10,7 @@ Namespace evolution
 
         ReadOnly Property Fitness As Double
 
-        Function computeFitness(dataTuples As IList(Of Tuple)) As Double
+        Function computeFitness(dataTuples As IList(Of DataPoint)) As Double
 
     End Interface
 

@@ -8,7 +8,7 @@ Namespace Scripting
 
         Public Delegate Function DataFunction(x As Double) As Double
 
-        Public Iterator Function generateDataTuples([function] As DataFunction, from As Double, [to] As Double, size As Integer) As IEnumerable(Of IList(Of DataPoint))
+        Public Iterator Function generateDataTuples([function] As DataFunction, from As Double, [to] As Double, size As Integer) As IEnumerable(Of DataPoint)
             For Each xi As Double In seq(from, [to], by:=([to] - from) / size)
                 Yield New DataPoint(xi, [function](xi))
             Next
