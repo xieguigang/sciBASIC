@@ -46,7 +46,7 @@ Module Program
         config.fitnessThreshold = 0.01
         config.initTreeDepth = 4
 
-        Dim results As IList(Of Evolution.Result) = New List(Of Evolution.Result)(n)
+        Dim results As IList(Of EvolutionResult) = New List(Of EvolutionResult)(n)
         For i = 0 To n - 1
             results.Add(evolution.evolveTreeFor(data, config))
         Next
@@ -61,14 +61,14 @@ Module Program
         config.paramRangeFrom = -5.0
         config.paramRangeTo = +5.0
 
-        Dim results As IList(Of Evolution.Result) = New List(Of Evolution.Result)(n)
+        Dim results As IList(Of EvolutionResult) = New List(Of EvolutionResult)(n)
         For i = 0 To n - 1
             results.Add(evolution.evolvePolyFor(data, config))
         Next
         exportResults("GA", results)
     End Sub
 
-    Private Sub exportResults(filePrefix As String, results As IList(Of Evolution.Result))
+    Private Sub exportResults(filePrefix As String, results As IList(Of EvolutionResult))
         'try
         '{
         '	StreamWriter @out = new StreamWriter(filePrefix + ".out");
