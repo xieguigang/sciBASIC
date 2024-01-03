@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+
 Namespace evolution
 
     ''' <summary>
@@ -26,11 +27,11 @@ Namespace evolution
         Public mutationType As GAPolynomialUtils.PolyMutationType
 
         Public Overrides Function validate() As Boolean
-            Return MyBase.validate() AndAlso initPolyOrder >= 0 AndAlso paramRangeFrom < paramRangeTo AndAlso crossoverType IsNot Nothing AndAlso mutationType IsNot Nothing
+            Return MyBase.validate() AndAlso initPolyOrder >= 0 AndAlso paramRangeFrom < paramRangeTo
         End Function
 
         ''' <returns> configuration with default values set </returns>
-        Public Shared Function createDefaultConfig() As GAConfiguration
+        Public Overloads Shared Function createDefaultConfig() As GAConfiguration
             Dim config As GAConfiguration = New GAConfiguration()
 
             config.objective = ObjectiveFunction.MSE

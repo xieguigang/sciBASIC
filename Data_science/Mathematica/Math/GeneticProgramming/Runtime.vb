@@ -1,9 +1,16 @@
 ﻿
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+Imports std = System.Math
+
 Public Class Runtime
 
     Public Shared Sub Main(args As String())
         Dim f1 As [Function] = New FunctionAnonymousInnerClass()
-        Dim data1 = DataGenerator.generateDataTuples(f1, 0.0, 2.0 * Math.PI, 200)
+        Dim data1 = DataGenerator.generateDataTuples(f1, 0.0, 2.0 * std.PI, 200)
 
         Dim f2 As [Function] = New FunctionAnonymousInnerClass2()
         Dim data2 = DataGenerator.generateDataTuples(f2, 0.0, 10.0, 100)
@@ -23,7 +30,7 @@ Public Class Runtime
     Private Class FunctionAnonymousInnerClass
         Implements [Function]
         Public Function eval(x As Double) As Double Implements [Function].eval
-            Return Math.Cos(2.0 * x)
+            Return std.Cos(2.0 * x)
         End Function
     End Class
 

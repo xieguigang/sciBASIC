@@ -1,6 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports cz.bia.ea.regression.model.impl
+﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+Imports std = System.Math
 
 Namespace model.factory
 
@@ -59,7 +58,7 @@ Namespace model.factory
             Me.type = type
 
             nameValue = name
-            ordinalValue = Math.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
+            ordinalValue = std.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
             innerEnumValue = innerEnum
         End Sub
 

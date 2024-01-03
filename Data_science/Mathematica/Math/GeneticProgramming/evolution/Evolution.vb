@@ -1,8 +1,7 @@
-﻿Imports cz.bia.ea.regression.model
-Imports cz.bia.ea.regression.model.factory
-Imports Microsoft.VisualBasic
-Imports Microsoft.VisualBasic.Language.Java.Arrays
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports Microsoft.VisualBasic.Language.Java.Arrays
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
+Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace evolution
 
@@ -143,7 +142,7 @@ Namespace evolution
             For round = 0 To size - 1
                 ' select the winner of one tournament
                 For i = 0 To tournament - 1
-                    Dim one = randf.[Next](population)
+                    Dim one = rndf.[Next](population)
                     If one.CompareTo(winner) < 0 Then
                         winner = one
                     End If
@@ -199,14 +198,14 @@ Namespace evolution
                     Dim from = CType(config, GAConfiguration).paramRangeFrom
                     Dim [to] = CType(config, GAConfiguration).paramRangeTo
                     For Each individual In CType(individuals, IList(Of GAPolynomial))
-                        If randf.NextDouble() < p Then
+                        If rndf.NextDouble() < p Then
                             GAPolynomialUtils.mutation(gaMutation, individual, from, [to])
                         End If
                     Next
                 Case EvolutionType.GP
                     Dim gpMutation = CType(config, GPConfiguration).mutationType
                     For Each individual In CType(individuals, IList(Of GPTree))
-                        If randf.NextDouble() < p Then
+                        If rndf.NextDouble() < p Then
                             GPTreeUtils.mutation(gpMutation, individual, factory)
                         End If
                     Next

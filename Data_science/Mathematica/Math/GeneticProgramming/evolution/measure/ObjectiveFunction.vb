@@ -1,4 +1,4 @@
-﻿Imports System.Collections.Generic
+﻿Imports std = System.Math
 
 Namespace evolution.measure
     Public NotInheritable Class ObjectiveFunction
@@ -35,7 +35,7 @@ Namespace evolution.measure
             Me.objective = objective
 
             nameValue = name
-            ordinalValue = Math.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
+            ordinalValue = std.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
             innerEnumValue = innerEnum
         End Sub
 

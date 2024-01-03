@@ -1,5 +1,5 @@
-﻿Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports std = System.Math
 
 Namespace model.impl
 
@@ -22,7 +22,7 @@ Namespace model.impl
 
         End Sub
 
-        Public Overrides Function duplicate() As BinaryExpression
+        Public Overrides Function duplicate() As Expression
 
             Return CType(constructor.Invoke(New Object() {leftChildField.duplicate(), rightChildField.duplicate()}), BinaryExpression)
 
@@ -68,7 +68,7 @@ Namespace model.impl
 
         Public Overrides ReadOnly Property Depth As Integer Implements Expression.Depth
             Get
-                Return 1 + Math.Max(leftChildField.Depth, rightChildField.Depth)
+                Return 1 + std.Max(leftChildField.Depth, rightChildField.Depth)
             End Get
         End Property
 

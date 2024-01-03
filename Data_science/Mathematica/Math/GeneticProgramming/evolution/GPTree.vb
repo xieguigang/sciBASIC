@@ -1,4 +1,7 @@
 ﻿
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+
 Namespace evolution
 
     Public Class GPTree

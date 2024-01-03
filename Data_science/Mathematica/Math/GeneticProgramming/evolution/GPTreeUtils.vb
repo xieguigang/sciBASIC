@@ -1,5 +1,7 @@
 ﻿
-Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
+Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace evolution
 
@@ -21,11 +23,11 @@ Namespace evolution
 
 
             ' select set of terminals or non-terminals
-            Dim takeTerm As Boolean = tree.NonTerminals.Count = 0 OrElse Rnd.NextBoolean() ' 50% chance
-            Dim [set] = If(takeTerm, tree.Terminals, tree.NonTerminals)
+            Dim takeTerm As Boolean = tree.NonTerminals.Count = 0 OrElse rndf.NextBoolean() ' 50% chance
+            Dim [set] As ISet(Of ExpressionWrapper) = If(takeTerm, tree.Terminals, tree.NonTerminals)
 
             ' select random element
-            Dim node = Rnd.[Next]([set])
+            Dim node = rndf.[Next]([set])
             If node.Equals(tree.Root) Then
                 Return
             End If
@@ -49,11 +51,11 @@ Namespace evolution
 
         Public Shared Sub subtreeMutation(tree As GPTree, factory As ExpressionFactory)
             ' select set of terminals or non-terminals
-            Dim takeTerm As Boolean = tree.NonTerminals.Count = 0 OrElse Rnd.NextBoolean() ' 50% chance
-            Dim [set] = If(takeTerm, tree.Terminals, tree.NonTerminals)
+            Dim takeTerm As Boolean = tree.NonTerminals.Count = 0 OrElse rndf.NextBoolean() ' 50% chance
+            Dim [set] As ISet(Of ExpressionWrapper) = If(takeTerm, tree.Terminals, tree.NonTerminals)
 
             ' select random element
-            Dim node = Rnd.[Next]([set])
+            Dim node = rndf.[Next]([set])
             If node.Equals(tree.Root) Then
                 Return
             End If
@@ -88,14 +90,14 @@ Namespace evolution
 
         Public Shared Sub subtreeCrossover(treeOne As GPTree, treeTwo As GPTree)
             ' select set of terminals or non-terminals
-            Dim takeTerm1 = treeOne.NonTerminals.Count = 0 OrElse Rnd.Next(10) = 0 ' 10% chance
+            Dim takeTerm1 = treeOne.NonTerminals.Count = 0 OrElse rndf.Next(10) = 0 ' 10% chance
             Dim oneSet = If(takeTerm1, treeOne.Terminals, treeOne.NonTerminals)
-            Dim takeTerm2 = treeTwo.NonTerminals.Count = 0 OrElse Rnd.Next(10) = 0 ' 10% chance
+            Dim takeTerm2 = treeTwo.NonTerminals.Count = 0 OrElse rndf.Next(10) = 0 ' 10% chance
             Dim twoSet = If(takeTerm2, treeTwo.Terminals, treeTwo.NonTerminals)
 
             ' select random elements
-            Dim one = Rnd.Next(oneSet)
-            Dim two = Rnd.Next(twoSet)
+            Dim one = rndf.Next(oneSet)
+            Dim two = rndf.Next(twoSet)
             If one.Equals(treeOne.Root) OrElse two.Equals(treeTwo.Root) Then
                 Return
             End If

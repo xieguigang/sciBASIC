@@ -1,4 +1,6 @@
-﻿Namespace model.impl
+﻿Imports std = System.Math
+
+Namespace model.impl
 
     Public Class PI
         Inherits Number
@@ -6,7 +8,7 @@
         Public Shared ReadOnly Pi As PI = New PI()
 
         Public Sub New()
-            MyBase.New(Math.PI)
+            MyBase.New(std.PI)
         End Sub
 
         Public Overrides Function duplicate() As Expression

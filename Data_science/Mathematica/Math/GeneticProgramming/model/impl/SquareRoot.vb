@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace model.impl
     Public Class SquareRoot
@@ -9,7 +9,7 @@ Namespace model.impl
         End Sub
 
         Public Overrides Function eval(x As Double) As Double
-            Return Math.Sqrt(childField.eval(x))
+            Return std.Sqrt(childField.eval(x))
         End Function
 
         Public Overrides Function toStringExpression() As String

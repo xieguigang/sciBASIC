@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace model.impl
 
@@ -10,7 +10,7 @@ Namespace model.impl
         End Sub
 
         Public Overrides Function eval(x As Double) As Double
-            Return Math.Sin(childField.eval(x))
+            Return std.Sin(childField.eval(x))
         End Function
 
         Public Overrides Function toStringExpression() As String

@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+
 Namespace evolution
 
     ''' <summary>
@@ -19,11 +21,11 @@ Namespace evolution
         Public mutationType As GPTreeUtils.TreeMutationType
 
         Public Overrides Function validate() As Boolean
-            Return MyBase.validate() AndAlso initTreeDepth >= 0 AndAlso crossoverType IsNot Nothing AndAlso mutationType IsNot Nothing
+            Return MyBase.validate() AndAlso initTreeDepth >= 0
         End Function
 
         ''' <returns> configuration with default values set </returns>
-        Public Shared Function createDefaultConfig() As GPConfiguration
+        Public Overloads Shared Function createDefaultConfig() As GPConfiguration
             Dim config As GPConfiguration = New GPConfiguration()
 
             config.objective = ObjectiveFunction.MSE

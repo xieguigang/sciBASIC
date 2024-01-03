@@ -1,4 +1,6 @@
-﻿Namespace evolution
+﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+
+Namespace evolution
 
     Public Interface Individual
         Inherits IComparable(Of Individual)

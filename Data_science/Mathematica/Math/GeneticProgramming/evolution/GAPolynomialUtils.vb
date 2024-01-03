@@ -1,5 +1,8 @@
 ﻿
-Imports rnd = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace evolution
 
@@ -20,18 +23,18 @@ Namespace evolution
 
         Public Shared Sub randomPointMutation(poly As GAPolynomial, rangeForm As Double, rangeTo As Double)
             ' select one parameter to change
-            Dim toChange = Rnd.Next(poly.Parameters)
+            Dim toChange = Rndf.Next(poly.Parameters)
             ' assign a random number
-            toChange.setNumber(Rnd.NextDouble(rangeForm, rangeTo))
+            toChange.setNumber(Rndf.NextDouble(rangeForm, rangeTo))
         End Sub
 
         Public Shared Sub gaussianPointMutation(poly As GAPolynomial, rangeForm As Double, rangeTo As Double)
 
             ' select one parameter to change
-            Dim toChange = Rnd.[Next](poly.Parameters)
+            Dim toChange = Rndf.[Next](poly.Parameters)
             Dim delta = 0.1 * (rangeTo - rangeForm)
             ' change number by 'normal' increment
-            toChange.setNumber(toChange.getNumber() + Rnd.NextGaussian() * delta)
+            toChange.setNumber(toChange.getNumber() + Rndf.NextGaussian() * delta)
         End Sub
 
         Public Shared Sub crossover(type As PolyCrossoverType, polyOne As GAPolynomial, polyTwo As GAPolynomial)
@@ -56,7 +59,7 @@ Namespace evolution
             End If
 
             ' selection of crossover point
-            Dim point = Rnd.Next(n)
+            Dim point = Rndf.Next(n)
             ' swap parameters
             For i = 0 To point
                 paramOne.MoveNext()
@@ -76,7 +79,7 @@ Namespace evolution
             Dim paramTwo As IEnumerator(Of Number) = polyTwo.Parameters.GetEnumerator()
 
             ' arithmetic recombination (affine combination)
-            Dim lambda As Double = Rnd.NextDouble()
+            Dim lambda As Double = Rndf.NextDouble()
             While paramOne.MoveNext()
                 paramTwo.MoveNext()
 
@@ -96,7 +99,7 @@ Namespace evolution
             Dim paramTwo As IEnumerator(Of Number) = polyTwo.Parameters.GetEnumerator()
 
             ' simulated binary crossover
-            Dim beta As Double = 1.0 + Rnd.NextGaussian()
+            Dim beta As Double = 1.0 + Rndf.NextGaussian()
             While paramOne.MoveNext()
                 paramTwo.MoveNext()
 
@@ -104,8 +107,8 @@ Namespace evolution
                 Dim two = paramTwo.Current
                 Dim n1 As Double = one.getNumber()
                 Dim n2 As Double = two.getNumber()
-                one.setNumber(0.5 * (n1 + n2 + beta * Math.Abs(n2 - n1)))
-                two.setNumber(0.5 * (n1 + n2 - beta * Math.Abs(n2 - n1)))
+                one.setNumber(0.5 * (n1 + n2 + beta * std.Abs(n2 - n1)))
+                two.setNumber(0.5 * (n1 + n2 - beta * std.Abs(n2 - n1)))
             End While
         End Sub
 

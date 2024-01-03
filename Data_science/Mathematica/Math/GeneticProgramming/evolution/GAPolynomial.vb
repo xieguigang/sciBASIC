@@ -1,4 +1,8 @@
-﻿Namespace evolution
+﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+
+Namespace evolution
 
 
     Public Class GAPolynomial

@@ -21,7 +21,7 @@ Namespace model.impl
 
         End Sub
 
-        Public Overrides Function duplicate() As UnaryExpression
+        Public Overrides Function duplicate() As Expression
 
 
             Return CType(constructor.Invoke(New Object() {childField.duplicate()}), UnaryExpression)

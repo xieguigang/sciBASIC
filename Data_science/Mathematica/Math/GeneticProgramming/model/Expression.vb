@@ -5,7 +5,7 @@
     ''' </summary>
     Public Interface Expression
 
-        ''' <paramname="x"> double variable <tt>x</tt> </param>
+        ''' <param name="x"> double variable <tt>x</tt> </param>
         ''' <returns> result of the expression for <tt>x</tt> </returns>
         Function eval(x As Double) As Double
 

@@ -1,7 +1,8 @@
 ﻿
 Imports System.Collections.Generic
 Imports System.Reflection
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
+Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace model.factory
 
@@ -52,14 +53,14 @@ Namespace model.factory
 
         Public Overridable Function generatePolyExpression(order As Integer, rangeFrom As Double, rangeTo As Double) As ExpressionWrapper
             If order < 1 Then
-                Return New ExpressionWrapper(New Number(randf.NextDouble(rangeFrom, rangeTo)))
+                Return New ExpressionWrapper(New Number(rndf.NextDouble(rangeFrom, rangeTo)))
             Else
 
                 Dim root As ExpressionWrapper = New ExpressionWrapper(New Plus(leaf, leaf))
                 root.RightChild = generatePolyExpression(order - 1, rangeFrom, rangeTo)
 
                 Dim node As ExpressionWrapper = New ExpressionWrapper(New Multiply(leaf, leaf))
-                node.LeftChild = New ExpressionWrapper(New Number(randf.NextDouble(rangeFrom, rangeTo)))
+                node.LeftChild = New ExpressionWrapper(New Number(rndf.NextDouble(rangeFrom, rangeTo)))
                 root.LeftChild = node
 
                 For i = 0 To order - 1 - 1
@@ -85,9 +86,9 @@ Namespace model.factory
         Public Overridable Function generateExpression(depth As Integer) As ExpressionWrapper
             If depth < 1 Then
                 Return createTerminalExpression()
-            ElseIf randf.NextDouble() < 0.75 Then
+            ElseIf rndf.NextDouble() < 0.75 Then
                 ' 75% chance for non-terminal, then 50% chance for binary/unary
-                If binaryExpressionsField.Length > 0 AndAlso randf.NextBoolean() Then
+                If binaryExpressionsField.Length > 0 AndAlso rndf.NextBoolean() Then
                     Dim binary As ExpressionWrapper = createBinaryExpression()
                     binary.LeftChild = generateExpression(depth - 1)
                     binary.RightChild = generateExpression(depth - 1)
@@ -103,18 +104,18 @@ Namespace model.factory
         End Function
 
         Public Overridable Function createTerminalExpression() As ExpressionWrapper
-            Return New ExpressionWrapper(randf.[Next](terminalExpressionsField))
+            Return New ExpressionWrapper(rndf.[Next](terminalExpressionsField))
         End Function
 
         Public Overridable Function createUnaryExpression() As ExpressionWrapper
-            Dim type = randf.[Next](unaryExpressionsField)
+            Dim type = rndf.[Next](unaryExpressionsField)
 
             Dim constructor = type.type.GetConstructor(BindingFlags.Public, New Type() {GetType(Expression)})
             Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf}), Expression))
         End Function
 
         Public Overridable Function createBinaryExpression() As ExpressionWrapper
-            Dim type = randf.[Next](binaryExpressionsField)
+            Dim type = rndf.[Next](binaryExpressionsField)
             Dim constructor = type.type.GetConstructor(BindingFlags.Public, New Type() {GetType(Expression), GetType(Expression)})
             Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf, leaf}), Expression))
 

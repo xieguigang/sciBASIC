@@ -1,4 +1,6 @@
-﻿Namespace evolution
+﻿Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
+
+Namespace evolution
 
     ''' <summary>
     ''' Basic configuration for the evolution.
