@@ -13,7 +13,8 @@
     <Title>Regression Problem: Use Genetic Programming (GP) to find a function that fits to the training data as best as possible.</Title>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
-    <ProjectReference Include="E:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\MathLambda\symbolic-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
   </ItemGroup>
 </Project>
