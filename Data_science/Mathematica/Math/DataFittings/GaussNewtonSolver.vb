@@ -61,6 +61,7 @@ Public Class GaussNewtonSolver
         Dim temp_rmse As Double
         Dim success As Boolean = False
         Dim truncate As Double = 100
+        Dim truncate2 As Double = 5
 
         For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
@@ -79,11 +80,11 @@ Public Class GaussNewtonSolver
                 beta -= bigJ * rB
             End If
 
-            For offset As Integer = 0 To beta.ColumnDimension - 1
-                If beta(offset, 0) > truncate Then
-                    beta(offset, 0) = truncate
-                ElseIf beta(offset, 0) < -truncate Then
-                    beta(offset, 0) = -truncate
+            For offset As Integer = 0 To beta.RowDimension - 1
+                If beta(offset, 0) > truncate2 Then
+                    beta(offset, 0) = truncate2
+                ElseIf beta(offset, 0) < -truncate2 Then
+                    beta(offset, 0) = eps
                 End If
             Next
 
