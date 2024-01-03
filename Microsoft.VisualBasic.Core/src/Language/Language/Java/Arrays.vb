@@ -105,7 +105,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function subList(Of T)(list As System.Collections.Generic.List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function subList(Of T)(list As IList(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 
