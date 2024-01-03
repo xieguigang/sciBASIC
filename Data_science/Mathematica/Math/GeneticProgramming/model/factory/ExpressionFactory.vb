@@ -8,15 +8,15 @@ Namespace model.factory
 
         Private ReadOnly leaf As Expression = Variable.X
 
+        Public Overridable Property TerminalExpressions As Expression()
+        Public Overridable Property UnaryExpressions As CompositeExpression()
+        Public Overridable Property BinaryExpressions As CompositeExpression()
+
         Public Sub New()
             TerminalExpressions = New Expression() {Variable.X, New Number(0.0), New Number(1.0), E.e, PI.Pi}
             UnaryExpressions = CompositeExpression.UnaryTypes
             BinaryExpressions = CompositeExpression.BinaryTypes
         End Sub
-
-        Public Overridable Property TerminalExpressions As Expression()
-        Public Overridable Property UnaryExpressions As CompositeExpression()
-        Public Overridable Property BinaryExpressions As CompositeExpression()
 
         Public Overridable Function generatePolyExpressions(size As Integer, order As Integer, rangeFrom As Double, rangeTo As Double) As IList(Of ExpressionWrapper)
             Dim list As IList(Of ExpressionWrapper) = New List(Of ExpressionWrapper)(size)
