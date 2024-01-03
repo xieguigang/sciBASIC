@@ -2,8 +2,7 @@
 
 Namespace model.impl
 
-    Public Class PI
-        Inherits Number
+    Public Class PI : Inherits Number
 
         Public Shared ReadOnly Pi As PI = New PI()
 

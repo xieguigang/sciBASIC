@@ -1,7 +1,6 @@
 ﻿Namespace model.impl
 
-    Public Class Number
-        Inherits AbstractExpression
+    Public Class Number : Inherits AbstractExpression
 
         Private number As Double
 

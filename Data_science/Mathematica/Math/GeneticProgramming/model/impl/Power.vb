@@ -2,8 +2,7 @@
 
 Namespace model.impl
 
-    Public Class Power
-        Inherits AbstractBinaryExpression
+    Public Class Power : Inherits AbstractBinaryExpression
 
         Public Sub New(leftChild As Expression, rightChild As Expression)
             MyBase.New(leftChild, rightChild)

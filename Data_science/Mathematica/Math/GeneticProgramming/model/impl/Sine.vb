@@ -2,8 +2,7 @@
 
 Namespace model.impl
 
-    Public Class Sine
-        Inherits AbstractUnaryExpression
+    Public Class Sine : Inherits AbstractUnaryExpression
 
         Public Sub New(child As Expression)
             MyBase.New(child)

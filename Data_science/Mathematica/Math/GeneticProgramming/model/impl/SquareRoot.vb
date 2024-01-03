@@ -1,8 +1,7 @@
 ﻿Imports std = System.Math
 
 Namespace model.impl
-    Public Class SquareRoot
-        Inherits AbstractUnaryExpression
+    Public Class SquareRoot : Inherits AbstractUnaryExpression
 
         Public Sub New(child As Expression)
             MyBase.New(child)

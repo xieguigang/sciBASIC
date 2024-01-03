@@ -2,8 +2,7 @@
 
 Namespace model.impl
 
-    Public Class Exponential
-        Inherits AbstractUnaryExpression
+    Public Class Exponential : Inherits AbstractUnaryExpression
 
         Public Sub New(child As Expression)
             MyBase.New(child)

@@ -1,6 +1,6 @@
 ﻿Namespace model.impl
-    Public Class Plus
-        Inherits AbstractBinaryExpression
+
+    Public Class Plus : Inherits AbstractBinaryExpression
 
         Public Sub New(leftChild As Expression, rightChild As Expression)
             MyBase.New(leftChild, rightChild)

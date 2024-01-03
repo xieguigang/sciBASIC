@@ -4,9 +4,9 @@ Imports std = System.Math
 
 Namespace model.impl
 
-    Public MustInherit Class AbstractBinaryExpression
-        Inherits AbstractExpression
+    Public MustInherit Class AbstractBinaryExpression : Inherits AbstractExpression
         Implements BinaryExpression
+
         Public MustOverride Overrides Function toStringExpression() As String Implements Expression.toStringExpression
         Public MustOverride Overrides Function eval(x As Double) As Double Implements Expression.eval
 

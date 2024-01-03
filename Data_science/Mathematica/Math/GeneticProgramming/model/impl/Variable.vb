@@ -1,7 +1,6 @@
 ﻿Namespace model.impl
 
-    Public Class Variable
-        Inherits AbstractExpression
+    Public Class Variable : Inherits AbstractExpression
 
         Public Shared ReadOnly X As Variable = New Variable()
 

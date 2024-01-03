@@ -1,8 +1,8 @@
 ﻿Imports std = System.Math
 
 Namespace model.impl
-    Public Class Tangent
-        Inherits AbstractUnaryExpression
+
+    Public Class Tangent : Inherits AbstractUnaryExpression
 
         Public Sub New(child As Expression)
             MyBase.New(child)

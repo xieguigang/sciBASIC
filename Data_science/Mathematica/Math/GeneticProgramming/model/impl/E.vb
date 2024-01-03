@@ -2,8 +2,7 @@
 
 Namespace model.impl
 
-    Public Class E
-        Inherits Number
+    Public Class E : Inherits Number
 
         Public Shared ReadOnly e As E = New E()
 
