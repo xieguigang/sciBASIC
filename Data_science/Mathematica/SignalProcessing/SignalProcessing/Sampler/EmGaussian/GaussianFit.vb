@@ -13,10 +13,12 @@ Namespace EmGaussian
         Dim opts As Opts
         Dim peaks As Variable()
         Dim kernel As KernelFunction = AddressOf Variable.Multi_gaussian
+        Dim sine_kernel As Boolean
 
         Public Delegate Function KernelFunction(x As Double, peaks As Variable(), offset As Double) As Double
 
         Sub New(opts As Opts, Optional sine_kernel As Boolean = False)
+            Me.sine_kernel = sine_kernel
             Me.opts = opts
 
             If sine_kernel Then
@@ -37,13 +39,14 @@ Namespace EmGaussian
         End Function
 
         Public Function fit(x As Double(), samples As Double(), Optional npeaks As Integer = 6) As Variable()
+            Dim ymax As Double = samples.Max
             Dim random As Variable() = Enumerable.Range(0, npeaks) _
                 .Select(Function(v, i)
                             Return New Variable With {
-                                .height = samples.Max / 10000,
+                                .height = ymax * randf(0.5, 1.1),
                                 .center = x((i / npeaks) * (x.Length - 1)),
-                                .width = 0.000005,
-                                .offset = 0.0001
+                                .width = randf(0.01, 0.1),
+                                .offset = 0.01
                             }
                         End Function) _
                 .ToArray

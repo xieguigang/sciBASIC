@@ -60,6 +60,7 @@ Public Class GaussNewtonSolver
         Dim rmse = residuals.RMS
         Dim temp_rmse As Double
         Dim success As Boolean = False
+        Dim truncate As Double = 100
 
         For i As Integer = 0 To MAX_ITERATIONS - 1
             Dim lJ = CalcJacobian(data, beta)
@@ -69,7 +70,7 @@ Public Class GaussNewtonSolver
             ' the internal LU decomposition has bug
             ' bigJ = bigJ.Inverse()
             ' use the LU decompositon function inside current module
-            Invert(bigJ, tol:=0).Set(success, bigJ)
+            Invert(bigJ, tol:=0, truncate:=truncate).Set(success, bigJ)
 
             If Not success Then
                 Exit For
@@ -77,6 +78,14 @@ Public Class GaussNewtonSolver
                 bigJ *= JT
                 beta -= bigJ * rB
             End If
+
+            For offset As Integer = 0 To beta.ColumnDimension - 1
+                If beta(offset, 0) > truncate Then
+                    beta(offset, 0) = truncate
+                ElseIf beta(offset, 0) < -truncate Then
+                    beta(offset, 0) = -truncate
+                End If
+            Next
 
             residuals = CalcResiduals(data, beta)
 
