@@ -1,5 +1,4 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace EmGaussian
@@ -20,6 +19,13 @@ Namespace EmGaussian
         Public Property offset As Double
 
         Sub New()
+        End Sub
+
+        Sub New(center As Double, width As Double, height As Double, Optional offset As Double = 0)
+            Me.center = center
+            Me.width = width
+            Me.height = height
+            Me.offset = offset
         End Sub
 
         ''' <summary>
