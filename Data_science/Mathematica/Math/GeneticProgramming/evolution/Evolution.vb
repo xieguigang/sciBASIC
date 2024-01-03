@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language.Java.Arrays
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
 Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
@@ -11,7 +12,7 @@ Namespace evolution
         Private factory As ExpressionFactory
         Private config As Configuration
         Private population As IList(Of Individual)
-        Private dataTuples As IList(Of Tuple)
+        Private dataTuples As IList(Of DataPoint)
 
         Public Overridable WriteOnly Property ExpressionFactory As ExpressionFactory
             Set(value As ExpressionFactory)
@@ -21,19 +22,17 @@ Namespace evolution
             End Set
         End Property
 
-        Public Overridable Function evolvePolyFor(dataTuples As IList(Of Tuple), configuration As GAConfiguration) As EvolutionResult
+        Public Overridable Function evolvePolyFor(dataTuples As IEnumerable(Of DataPoint), configuration As GAConfiguration) As EvolutionResult
             SyncLock Me
-                Me.dataTuples = dataTuples
+                Me.dataTuples = New List(Of DataPoint)(dataTuples)
                 config = configuration
-
-
                 Return evolve(EvolutionType.GA)
             End SyncLock
         End Function
 
-        Public Overridable Function evolveTreeFor(dataTuples As IList(Of Tuple), configuration As GPConfiguration) As EvolutionResult
+        Public Overridable Function evolveTreeFor(dataTuples As IEnumerable(Of DataPoint), configuration As GPConfiguration) As EvolutionResult
             SyncLock Me
-                Me.dataTuples = dataTuples
+                Me.dataTuples = New List(Of DataPoint)(dataTuples)
                 config = configuration
 
                 Return evolve(EvolutionType.GP)
@@ -154,14 +153,14 @@ Namespace evolution
             Return selection
         End Function
 
-        Private Function breadChildren(Of T1)(type As EvolutionType, parents As IList(Of T1)) As IList(Of Individual)
+        Private Function breadChildren(type As EvolutionType, parents As IList(Of Individual)) As IList(Of Individual)
             Select Case type
                 Case EvolutionType.GA
-                    Dim gaChildren As IList(Of GAPolynomial) = New List(Of GAPolynomial)(parents.Count)
+                    Dim gaChildren As IList(Of Individual) = New List(Of Individual)(parents.Count)
 
                     ' copy all parents
-                    For Each parent In CType(parents, IList(Of GAPolynomial))
-                        gaChildren.Add(New GAPolynomial(CType(parent.Root.duplicate(), ExpressionWrapper)))
+                    For Each parent In parents
+                        gaChildren.Add(New GAPolynomial(DirectCast(DirectCast(parent, GAPolynomial).Root.duplicate(), ExpressionWrapper)))
                     Next
 
                     ' crossover pairs of parents
@@ -170,7 +169,7 @@ Namespace evolution
                         GAPolynomialUtils.crossover(gaCrossover, gaChildren(i), gaChildren(i + 1))
                     Next
 
-                    Return CType(gaChildren, IList(Of Individual))
+                    Return gaChildren
                 Case EvolutionType.GP
                     Dim gpChildren As New List(Of Individual)(parents.Count)
 
@@ -197,7 +196,7 @@ Namespace evolution
                     Dim gaMutation = CType(config, GAConfiguration).mutationType
                     Dim from = CType(config, GAConfiguration).paramRangeFrom
                     Dim [to] = CType(config, GAConfiguration).paramRangeTo
-                    For Each individual In CType(individuals, IList(Of GAPolynomial))
+                    For Each individual In individuals
                         If rndf.NextDouble() < p Then
                             GAPolynomialUtils.mutation(gaMutation, individual, from, [to])
                         End If

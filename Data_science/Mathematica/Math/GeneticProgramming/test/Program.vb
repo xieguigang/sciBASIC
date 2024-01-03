@@ -35,7 +35,7 @@ Module Program
         Return x * x * x - 2.0 * x * x + x
     End Function
 
-    Private Sub runGP(data As IList(Of Tuple), evolution As Evolution, n As Integer)
+    Private Sub runGP(data As DataPoint(), evolution As Evolution, n As Integer)
         Dim config As GPConfiguration = GPConfiguration.createDefaultConfig()
         config.objective = ObjectiveFunction.MAE
         config.fitnessThreshold = 0.01
@@ -48,7 +48,7 @@ Module Program
         exportResults("GP", results)
     End Sub
 
-    Private Sub runGA(data As IList(Of Tuple), evolution As Evolution, n As Integer)
+    Private Sub runGA(data As DataPoint(), evolution As Evolution, n As Integer)
         Dim config As GAConfiguration = GAConfiguration.createDefaultConfig()
         config.objective = ObjectiveFunction.MAE
         config.fitnessThreshold = 0.1
@@ -64,6 +64,10 @@ Module Program
     End Sub
 
     Private Sub exportResults(filePrefix As String, results As IList(Of EvolutionResult))
+        For Each item In results
+            Call Console.WriteLine($"{filePrefix}  --  {item.ToString}")
+        Next
+
         'try
         '{
         '	StreamWriter @out = new StreamWriter(filePrefix + ".out");
