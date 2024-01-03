@@ -1,6 +1,5 @@
-﻿
-Imports System.Collections.Generic
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
 Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -109,16 +108,16 @@ Namespace model.factory
 
         Public Overridable Function createUnaryExpression() As ExpressionWrapper
             Dim type = rndf.[Next](unaryExpressionsField)
+            Dim constructor = type.type.GetConstructorInfo(GetType(Expression))
 
-            Dim constructor = type.type.GetConstructor(BindingFlags.Public, New Type() {GetType(Expression)})
             Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf}), Expression))
         End Function
 
         Public Overridable Function createBinaryExpression() As ExpressionWrapper
             Dim type = rndf.[Next](binaryExpressionsField)
-            Dim constructor = type.type.GetConstructor(BindingFlags.Public, New Type() {GetType(Expression), GetType(Expression)})
-            Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf, leaf}), Expression))
+            Dim constructor = type.type.GetConstructorInfo(GetType(Expression), GetType(Expression))
 
+            Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf, leaf}), Expression))
         End Function
 
     End Class

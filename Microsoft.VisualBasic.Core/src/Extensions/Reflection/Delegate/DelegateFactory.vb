@@ -919,8 +919,12 @@ Namespace Emit.Delegates
             Return EventAccessorImpl(Of TDelegate)(source, eventName, RemoveAccessor)
         End Function
 
-        Private Function GetConstructorInfo(source As Type, types As Type()) As ConstructorInfo
-            Return If((If(source.GetConstructor(BindingFlags.[Public], Nothing, types, Nothing), source.GetConstructor(BindingFlags.NonPublic, Nothing, types, Nothing))), source.GetConstructor(BindingFlags.NonPublic Or BindingFlags.[Public] Or BindingFlags.Instance, Nothing, types, Nothing))
+        <Extension>
+        Public Function GetConstructorInfo(source As Type, ParamArray types As Type()) As ConstructorInfo
+            Return If((
+                If(source.GetConstructor(BindingFlags.[Public], Nothing, types, Nothing),
+                source.GetConstructor(BindingFlags.NonPublic, Nothing, types, Nothing))),
+                source.GetConstructor(BindingFlags.NonPublic Or BindingFlags.[Public] Or BindingFlags.Instance, Nothing, types, Nothing))
         End Function
 
         Private Function GetEventInfo(eventName As String, sourceType As Type) As EventInfo

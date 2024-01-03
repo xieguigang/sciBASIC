@@ -1,5 +1,5 @@
-﻿Imports System
-Imports System.Reflection
+﻿Imports System.Reflection
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 Namespace model.impl
 
@@ -15,10 +15,7 @@ Namespace model.impl
 
         Public Sub New(child As Expression)
             childField = child
-
-
-            constructor = [GetType]().GetConstructor(BindingFlags.Public, New Type() {GetType(Expression)})
-
+            constructor = [GetType]().GetConstructorInfo(GetType(Expression))
         End Sub
 
         Public Overrides Function duplicate() As Expression
