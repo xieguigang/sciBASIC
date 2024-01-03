@@ -16,7 +16,7 @@ Module Program
         Dim data2 = DataGenerator.generateDataTuples(f2, 0.0, 10.0, 100).ToArray
 
         Dim factory As ExpressionFactory = New ExpressionFactory()
-        factory.TerminalExpressions = New Expression() {Variable.X, New Number(1.0)}
+        factory.TerminalExpressions = New Expression() {Variable.X, New Number(1.0), E.e, PI.Pi, Tau.Tau, New Number(12)}
         factory.BinaryExpressions = New CompositeExpression() {CompositeExpression.PLUS, CompositeExpression.MINUS, CompositeExpression.MULTIPLY, CompositeExpression.DIVIDE}
         factory.UnaryExpressions = New CompositeExpression() {CompositeExpression.SINE}
 

@@ -13,7 +13,7 @@ Namespace model.factory
         Public Overridable Property BinaryExpressions As CompositeExpression()
 
         Public Sub New()
-            TerminalExpressions = New Expression() {Variable.X, New Number(0.0), New Number(1.0), E.e, PI.Pi}
+            TerminalExpressions = New Expression() {Variable.X, New Number(0.0), New Number(1.0), E.e, PI.Pi, Tau.Tau}
             UnaryExpressions = CompositeExpression.UnaryTypes
             BinaryExpressions = CompositeExpression.BinaryTypes
         End Sub
