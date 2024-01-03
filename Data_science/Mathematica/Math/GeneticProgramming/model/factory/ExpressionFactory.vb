@@ -31,15 +31,15 @@ Namespace model.factory
                 Return New ExpressionWrapper(New Number(rndf.NextDouble(rangeFrom, rangeTo)))
             Else
 
-                Dim root As ExpressionWrapper = New ExpressionWrapper(New Plus(leaf, leaf))
+                Dim root As New ExpressionWrapper(New Plus(leaf, leaf))
                 root.RightChild = generatePolyExpression(order - 1, rangeFrom, rangeTo)
 
-                Dim node As ExpressionWrapper = New ExpressionWrapper(New Multiply(leaf, leaf))
+                Dim node As New ExpressionWrapper(New Multiply(leaf, leaf))
                 node.LeftChild = New ExpressionWrapper(New Number(rndf.NextDouble(rangeFrom, rangeTo)))
                 root.LeftChild = node
 
                 For i = 0 To order - 1 - 1
-                    Dim [next] As ExpressionWrapper = New ExpressionWrapper(New Multiply(leaf, leaf))
+                    Dim [next] As New ExpressionWrapper(New Multiply(leaf, leaf))
                     [next].LeftChild = New ExpressionWrapper(Variable.X)
                     node.RightChild = [next]
                     node = [next]
@@ -51,7 +51,7 @@ Namespace model.factory
         End Function
 
         Public Overridable Function generateExpressions(size As Integer, depth As Integer) As IList(Of ExpressionWrapper)
-            Dim list As IList(Of ExpressionWrapper) = New List(Of ExpressionWrapper)(size)
+            Dim list As New List(Of ExpressionWrapper)(size)
             For i = 0 To size - 1
                 list.Add(generateExpression(depth))
             Next
@@ -86,14 +86,14 @@ Namespace model.factory
             Dim expr = rndf.[Next](UnaryExpressions)
             Dim constructor = expr.type.GetConstructorInfo(GetType(Expression))
 
-            Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf}), Expression))
+            Return New ExpressionWrapper(DirectCast(constructor.Invoke(New Object() {leaf}), Expression))
         End Function
 
         Public Overridable Function createBinaryExpression() As ExpressionWrapper
             Dim expr = rndf.[Next](BinaryExpressions)
             Dim constructor = expr.type.GetConstructorInfo(GetType(Expression), GetType(Expression))
 
-            Return New ExpressionWrapper(CType(constructor.Invoke(New Object() {leaf, leaf}), Expression))
+            Return New ExpressionWrapper(DirectCast(constructor.Invoke(New Object() {leaf, leaf}), Expression))
         End Function
 
     End Class
