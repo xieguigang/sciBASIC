@@ -34,7 +34,7 @@ Namespace EmGaussian
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"gaussian(x) = {height} * exp(-((x - {center}) ^ 2) / (2 * ({width} ^ 2))) + {offset}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
