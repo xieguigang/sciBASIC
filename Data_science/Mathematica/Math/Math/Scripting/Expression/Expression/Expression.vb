@@ -52,6 +52,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' the abstract math expression
+    ''' </summary>
     Public MustInherit Class Expression
 
         Public MustOverride Function Evaluate(env As ExpressionEngine) As Double
