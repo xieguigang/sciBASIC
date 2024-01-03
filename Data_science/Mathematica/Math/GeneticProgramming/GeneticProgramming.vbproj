@@ -11,6 +11,7 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Regression Problem: Use Genetic Programming (GP) to find a function that fits to the training data as best as possible.</Title>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="test\**" />
