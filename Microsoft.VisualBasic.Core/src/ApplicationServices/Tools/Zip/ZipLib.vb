@@ -299,7 +299,7 @@ Namespace ApplicationServices.Zip
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' add files into the zip file archive object
         ''' </summary>
         ''' <param name="zipFile"></param>
         ''' <param name="files">
