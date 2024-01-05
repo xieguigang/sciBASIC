@@ -80,7 +80,7 @@ Namespace Imaging.Math2D
         ''' 这个方形区域的面积
         ''' </summary>
         ''' <param name="rect"></param>
-        ''' <returns></returns>
+        ''' <returns>value of ``width * height``</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -92,11 +92,11 @@ Namespace Imaging.Math2D
         ''' 这个方形区域的面积
         ''' </summary>
         ''' <param name="size"></param>
-        ''' <returns></returns>
+        ''' <returns>value of ``width * height``</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Area(size As Size) As Integer
+        Public Function Area(size As Size) As UInteger
             Return size.Width * size.Height
         End Function
 
