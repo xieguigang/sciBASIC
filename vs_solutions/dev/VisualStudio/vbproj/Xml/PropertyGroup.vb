@@ -79,7 +79,9 @@ Namespace vbproj.Xml
         Public Property FileAlignment As String
         Public Property MyType As String
         Public Property TargetFrameworkVersion As String
-        Public Property TargetFrameworkProfile
+        Public Property TargetFrameworkProfile As String
+        Public Property TargetFramework As String
+        Public Property Platforms As String
         Public Property StartupObject As String
         Public Property PublishUrl As String
         Public Property Install As String
