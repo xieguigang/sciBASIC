@@ -13,6 +13,7 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <PackageProjectUrl></PackageProjectUrl>
     <Copyright>https://github.com/kermitt/ANOVA</Copyright>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

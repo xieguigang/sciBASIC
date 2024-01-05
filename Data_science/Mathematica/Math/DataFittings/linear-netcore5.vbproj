@@ -17,6 +17,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop</Configurations>
+		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
