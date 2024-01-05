@@ -480,10 +480,10 @@ Namespace Linq
         ''' </summary>
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <param name="source">The System.Collections.Generic.IEnumerable`1 to return the first element of.</param>
-        ''' <param name="[default]">
+        ''' <param name="default">
         ''' If the sequence is nothing or contains no elements, then this default value will be returned.
         ''' </param>
-        ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
+        ''' <returns>default(<typeparamref name="T"/>) if source is empty; otherwise, the first element in source.</returns>
         <Extension>
         Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
             If source Is Nothing OrElse Not source.Any Then

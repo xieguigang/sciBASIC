@@ -121,6 +121,11 @@ Namespace vbproj.Xml
         Public Property GenerateSerializationAssemblies As String
         Public Property CodeAnalysisRuleSet As String
         Public Property AutoGenerateBindingRedirects As String
+        Public Property Company As String
+        Public Property Copyright As String
+        Public Property Description As String
+        Public Property AssemblyVersion As String
+        Public Property Version As String
 
         Public Overrides Function ToString() As String
             Return Condition
