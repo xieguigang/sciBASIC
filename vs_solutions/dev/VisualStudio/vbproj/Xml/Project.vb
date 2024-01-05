@@ -150,8 +150,9 @@ Namespace vbproj.Xml
                 vbproj = file _
                     .ReadAllText _
                     .CreateObjectFromXmlFragment(Of Project)(
-                        preprocess:=AddressOf ProcessDotNetCoreSDK
-                     )
+                        preprocess:=AddressOf ProcessDotNetCoreSDK,
+                        ignoreXmlNs:=False
+                    )
             End If
 
             vbproj.FilePath = file
