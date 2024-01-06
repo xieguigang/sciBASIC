@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
@@ -18,6 +19,12 @@ Namespace Drawing2D.HeatMap
         Public ReadOnly Property DenseMatrix As Boolean
             Get
                 Return Not TypeOf m Is SparseMatrix
+            End Get
+        End Property
+
+        Public ReadOnly Property Size As Size
+            Get
+                Return New Size(m.ColumnDimension, m.RowDimension)
             End Get
         End Property
 
