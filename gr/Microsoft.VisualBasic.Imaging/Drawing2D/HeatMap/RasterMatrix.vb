@@ -8,6 +8,10 @@ Namespace Drawing2D.HeatMap
     ''' <summary>
     ''' matrix helper for do heatmap rendering
     ''' </summary>
+    ''' <remarks>
+    ''' raster object is based on the <see cref="NumericMatrix"/> or <see cref="SparseMatrix"/> data
+    ''' object with specific size.
+    ''' </remarks>
     Public Class RasterMatrix : Implements IRasterGrayscaleHeatmap
 
         Dim m As GeneralMatrix
@@ -22,9 +26,27 @@ Namespace Drawing2D.HeatMap
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the 2d canvas dimension size of current raster object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
             Get
                 Return New Size(m.ColumnDimension, m.RowDimension)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get a dense numeric matrix for represents current raster object
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property RasterMatrix As NumericMatrix
+            Get
+                If TypeOf m Is NumericMatrix Then
+                    Return m
+                Else
+                    Return New NumericMatrix(DirectCast(m, SparseMatrix).ArrayPack)
+                End If
             End Get
         End Property
 

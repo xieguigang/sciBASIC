@@ -212,7 +212,7 @@ Namespace LinearAlgebra.Matrix
         ''' convert to real [m,n] matrix
         ''' </summary>
         ''' <param name="deepcopy"></param>
-        ''' <returns></returns>
+        ''' <returns>A dense matrix data</returns>
         Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements GeneralMatrix.ArrayPack
             Dim real As Double()() = RectangularArray.Matrix(Of Double)(m, n)
             Dim i As UInteger
