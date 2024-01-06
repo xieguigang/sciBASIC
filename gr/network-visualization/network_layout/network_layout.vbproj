@@ -7,6 +7,8 @@
     <UseApplicationFramework>True</UseApplicationFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

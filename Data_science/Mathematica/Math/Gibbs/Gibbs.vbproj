@@ -10,6 +10,8 @@
     <AssemblyName>Microsoft.VisualBasic.Math.GibbsSampling</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.Math.GibbsSampling</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
