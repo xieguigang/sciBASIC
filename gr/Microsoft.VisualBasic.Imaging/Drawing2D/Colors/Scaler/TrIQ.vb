@@ -60,6 +60,9 @@ Namespace Drawing2D.Colors.Scaler
     ''' <summary>
     ''' Contrast optimization of mass spectrometry imaging (MSI) data visualization by threshold intensity quantization (TrIQ)
     ''' </summary>
+    ''' <remarks>
+    ''' works based on the <see cref="ECDF"/>.
+    ''' </remarks>
     Public Module TrIQ
 
         ''' <summary>

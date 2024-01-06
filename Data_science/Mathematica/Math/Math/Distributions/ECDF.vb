@@ -5,10 +5,32 @@ Imports std = System.Math
 
 Namespace Distributions
 
+    ''' <summary>
+    ''' #### Empirical distribution function
+    ''' 
+    ''' In statistics, an empirical distribution function (commonly also called 
+    ''' an empirical cumulative distribution function, eCDF) is the distribution
+    ''' function associated with the empirical measure of a sample. This cumulative
+    ''' distribution function is a step function that jumps up by 1/n at each of
+    ''' the n data points. Its value at any specified value of the measured 
+    ''' variable is the fraction of observations of the measured variable that 
+    ''' are less than or equal to the specified value.
+    '''
+    ''' The empirical distribution Function Is an estimate Of the cumulative 
+    ''' distribution Function that generated the points In the sample. It converges 
+    ''' With probability 1 To that underlying distribution, according To the 
+    ''' Glivenko–Cantelli theorem. A number Of results exist To quantify the rate 
+    ''' Of convergence Of the empirical distribution Function To the underlying
+    ''' cumulative distribution Function.
+    ''' </summary>
     Public Class ECDF
 
         ReadOnly data As DataBinBox(Of Double)()
 
+        ''' <summary>
+        ''' the input x vector data
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property X As IEnumerable(Of Double)
             Get
                 Return data.Select(Function(bi) bi.Raw).IteratesALL
