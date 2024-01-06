@@ -91,6 +91,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' </summary>
         ''' <returns></returns>
         Public Property example As String
+        Public Property author As String
+        Public Property version As String
 
         Public ReadOnly Property Type() As ProjectType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

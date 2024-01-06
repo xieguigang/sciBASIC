@@ -190,12 +190,16 @@ Public Class MarkdownHTML
     ''' EscapeSpecialChars(), so that any *'s or _'s in the a
     ''' and img tags get encoded.
     ''' </remarks>
+    ''' <returns>
+    ''' this function is a safe function, empty string will be returns if the 
+    ''' input <paramref name="text"/> is null value or empty.
+    ''' </returns>
     Public Function Transform(text As String) As String
         If String.IsNullOrEmpty(text) Then
             Return ""
         End If
 
-        Setup()
+        Call Setup()
 
         text = Normalize(text)
 
@@ -204,7 +208,7 @@ Public Class MarkdownHTML
         text = RunBlockGamut(text)
         text = Unescape(text)
 
-        Cleanup()
+        Call Cleanup()
 
         Return text
     End Function
