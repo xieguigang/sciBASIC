@@ -84,33 +84,33 @@ Namespace LinearAlgebra.Matrix
     ''' <summary>
     ''' ### .NET GeneralMatrix class.
     ''' 
-    ''' The .NET GeneralMatrix Class provides the fundamental operations of numerical
+    ''' The .NET <see cref="GeneralMatrix"/> Class provides the fundamental operations of numerical
     ''' linear algebra.  Various constructors create Matrices from two dimensional
     ''' arrays of double precision floating point numbers.  Various "gets" and
     ''' "sets" provide access to submatrices and matrix elements.  Several methods 
     ''' implement basic matrix arithmetic, including matrix addition and
     ''' multiplication, matrix norms, and element-by-element array operations.
     ''' Methods for reading and printing matrices are also included.  All the
-    ''' operations in this version of the GeneralMatrix Class involve real matrices.
+    ''' operations in this version of the <see cref="GeneralMatrix"/> Class involve real matrices.
     ''' Complex matrices may be handled in a future version.
     ''' 
     ''' Five fundamental matrix decompositions, which consist of pairs or triples
     ''' of matrices, permutation vectors, and the like, produce results in five
-    ''' decomposition classes.  These decompositions are accessed by the GeneralMatrix
+    ''' decomposition classes.  These decompositions are accessed by the <see cref="GeneralMatrix"/>
     ''' class to compute solutions of simultaneous linear equations, determinants,
     ''' inverses and other matrix functions.  
     ''' 
     ''' The five decompositions are:
     ''' 
-    ''' + Cholesky Decomposition of symmetric, positive definite matrices.
-    ''' + LU Decomposition of rectangular matrices.
-    ''' + QR Decomposition of rectangular matrices.
-    ''' + Singular Value Decomposition of rectangular matrices.
-    ''' + Eigenvalue Decomposition of both symmetric and nonsymmetric square matrices.
+    ''' + <see cref="CholeskyDecomposition"/> of symmetric, positive definite matrices.
+    ''' + <see cref="LUDecomposition"/> of rectangular matrices.
+    ''' + <see cref="QRDecomposition"/> of rectangular matrices.
+    ''' + <see cref="SingularValueDecomposition"/> of rectangular matrices.
+    ''' + <see cref="EigenvalueDecomposition"/> of both symmetric and nonsymmetric square matrices.
     ''' 
     ''' Example of use:
     ''' 
-    ''' Solve a linear system A x = b and compute the residual norm, ||b - A x||.
+    ''' Solve a linear system A x = b and compute the residual norm, ``||b - A x||``.
     ''' 
     ''' ```csharp
     ''' double[][] vals;
@@ -124,14 +124,15 @@ Namespace LinearAlgebra.Matrix
     ''' <author>  
     ''' The MathWorks, Inc. and the National Institute of Standards and Technology.
     ''' 
-    ''' http://www.codeproject.com/Articles/5835/DotNetMatrix-Simple-Matrix-Library-for-NET
-    ''' https://github.com/fiji/Jama/blob/master/src/main/java/Jama/Matrix.java
+    ''' + http://www.codeproject.com/Articles/5835/DotNetMatrix-Simple-Matrix-Library-for-NET
+    ''' + https://github.com/fiji/Jama/blob/master/src/main/java/Jama/Matrix.java
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
     ''' <remarks>
     ''' Access the internal two-dimensional array.
     ''' Pointer to the two-dimensional array of matrix elements.
+    ''' this numeric matrix object consist with a collection of <see cref="Vector"/> as rows.
     ''' </remarks>
     <Serializable>
     Public Class NumericMatrix : Inherits Vector(Of Double())

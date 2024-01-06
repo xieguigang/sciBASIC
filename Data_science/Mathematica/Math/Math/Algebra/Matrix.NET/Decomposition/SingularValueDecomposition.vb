@@ -55,7 +55,6 @@
 #End Region
 
 Imports System.Runtime.Serialization
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports stdnum = System.Math
 
 Namespace LinearAlgebra.Matrix
