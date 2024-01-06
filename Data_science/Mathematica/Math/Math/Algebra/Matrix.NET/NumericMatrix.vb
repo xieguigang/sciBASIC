@@ -517,6 +517,27 @@ Namespace LinearAlgebra.Matrix
             End Set
         End Property
 
+        ''' <summary>Get a single element.</summary>
+        ''' <param name="i">   Row index.
+        ''' </param>
+        ''' <param name="j">   Column index.
+        ''' </param>
+        ''' <returns>     A(i,j)
+        ''' </returns>
+        ''' <exception cref="System.IndexOutOfRangeException">  
+        ''' </exception>
+
+        Default Public Overloads Property Item(i As UInteger, j As UInteger) As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return buffer(i)(j)
+            End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Set(value As Double)
+                buffer(i)(j) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' column projection via column index
         ''' </summary>
