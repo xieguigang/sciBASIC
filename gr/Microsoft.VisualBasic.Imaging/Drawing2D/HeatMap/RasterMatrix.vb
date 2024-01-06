@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace Drawing2D.HeatMap
 
+    ''' <summary>
+    ''' matrix helper for do heatmap rendering
+    ''' </summary>
     Public Class RasterMatrix : Implements IRasterGrayscaleHeatmap
 
         Dim m As GeneralMatrix
