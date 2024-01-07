@@ -74,7 +74,7 @@ Namespace Drawing2D.HeatMap
                         End If
                     End If
 
-                    m(i, j) = data
+                    m(j, i) = data
                 Next
             Next
 
