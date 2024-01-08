@@ -178,7 +178,7 @@ Namespace DBSCAN
                     Continue For
                 End If
 
-                Dim neighborPts As DbscanPoint(Of T)() = session.RegionQuery(p.ClusterPoint)
+                Dim neighborPts As DbscanPoint(Of T)() = session.RegionQuery(p.ClusterPoint, parallel:=True)
 
                 If neighborPts.Length < session.minPts Then
                     p.ClusterId = ClusterIDs.Noise

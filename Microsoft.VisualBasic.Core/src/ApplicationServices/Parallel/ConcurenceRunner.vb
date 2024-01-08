@@ -31,9 +31,9 @@ Namespace Parallel
         ''' the thread count for run the parallel task is configed
         ''' via the <see cref="n_threads"/> by default.
         ''' </remarks>
-        Sub New(nsize As Integer, Optional verbose As Boolean = False)
+        Sub New(nsize As Integer, Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
             workLen = nsize
-            cpu_count = n_threads
+            cpu_count = If(workers, n_threads)
             opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
             is_verbose = verbose
         End Sub
