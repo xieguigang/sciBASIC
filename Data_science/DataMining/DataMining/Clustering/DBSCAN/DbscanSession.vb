@@ -278,7 +278,7 @@ Namespace DBSCAN
             Friend out As New List(Of DbscanPoint(Of T))
 
             Sub New(session As DbscanSession(Of T), target As T)
-                Call MyBase.New(session.allPoints.Length, workers:=std.Min(App.CPUCoreNumbers, 8))
+                Call MyBase.New(session.allPoints.Length, workers:=std.Min(App.CPUCoreNumbers, 12))
 
                 Me.allPoints = session.allPoints
                 Me.target = target

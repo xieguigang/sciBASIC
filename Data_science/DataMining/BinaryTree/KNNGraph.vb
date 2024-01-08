@@ -14,6 +14,10 @@ Public Class KNNGraph
     ReadOnly tree As KdTree(Of ClusterEntity)
     ReadOnly raw As ClusterEntity()
 
+    ''' <summary>
+    ''' construct a kdtree for the given dataset points
+    ''' </summary>
+    ''' <param name="data">a collection of dataset points</param>
     Sub New(data As IEnumerable(Of ClusterEntity))
         raw = data.ToArray
         tree = New KdTree(Of ClusterEntity)(raw, metric:=New NodeVisits(sizeDims(raw(0))))
