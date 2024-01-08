@@ -65,8 +65,9 @@ Namespace KMeans
     ''' </summary>
     Public Class EntityClusterModel : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
+        Implements IReadOnlyId
 
-        Public Property ID As String Implements INamedValue.Key
+        Public Property ID As String Implements INamedValue.Key, IReadOnlyId.Identity
 
         ''' <summary>
         ''' 聚类结果的类编号
