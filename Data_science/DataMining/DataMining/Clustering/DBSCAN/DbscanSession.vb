@@ -55,13 +55,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace DBSCAN
 
-    Public Class DbscanSession(Of T)
+    Public Class DbscanSession(Of T As IReadOnlyId)
 
         ReadOnly dbscan As DbscanAlgorithm(Of T)
         ''' <summary>
@@ -90,7 +91,7 @@ Namespace DBSCAN
                 epsilon As Double,
                 minPts As Integer)
 
-            Me.maxStackSize = stdNum.Min(allPoints.Length / 2, 1024)
+            Me.maxStackSize = std.Min(allPoints.Length / 2, 1024)
             Me.allPoints = allPoints
             Me.epsilon = epsilon
             Me.minPts = minPts
