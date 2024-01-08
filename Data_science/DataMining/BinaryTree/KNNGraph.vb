@@ -107,6 +107,10 @@ Public Class KNNGraph
     ''' </summary>
     ''' <returns></returns>
     Private Iterator Function KNN(k As Integer) As IEnumerable(Of NamedCollection(Of String))
+        Dim n As Integer = raw.Length
+        Dim d As Integer = n / 25
+        Dim i As Integer = 0
+
         Call VBDebugger.EchoLine("do knn query...")
 
         For Each node As ClusterEntity In raw
@@ -119,6 +123,12 @@ Public Class KNNGraph
                 .name = node.uid,
                 .value = link
             }
+
+            If i Mod d = 0 Then
+                Call VBDebugger.Echo(CInt(i / n * 100) & vbTab)
+            End If
+
+            i += 1
         Next
     End Function
 
