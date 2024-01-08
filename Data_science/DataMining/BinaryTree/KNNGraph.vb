@@ -83,7 +83,7 @@ Public Class KNNGraph
                              Optional jaccard_cutoff As Double = 0.85,
                              Optional div_factor As Double = 2) As BTreeCluster
 
-        Dim knn = Me.KNN(k).ToArray
+        Dim knn As NamedCollection(Of String)() = Me.KNN(k).ToArray
         Dim metric As New JaccardAlignment(
             knn, raw,
             equals:=jaccard_cutoff,
@@ -91,9 +91,13 @@ Public Class KNNGraph
         )
         Dim btree As New AVLTree(Of String, String)(metric.GetComparer, Function(str) str)
 
+        Call VBDebugger.EchoLine("create binary avl-tree based on the jaccard alignment of the knn set...")
+
         For Each id As String In list.Keys
             Call btree.Add(id, id, valueReplace:=False)
         Next
+
+        Call VBDebugger.EchoLine("export cluster tree!")
 
         Return BTreeCluster.GetClusters(btree, metric)
     End Function
@@ -103,6 +107,8 @@ Public Class KNNGraph
     ''' </summary>
     ''' <returns></returns>
     Private Iterator Function KNN(k As Integer) As IEnumerable(Of NamedCollection(Of String))
+        Call VBDebugger.EchoLine("do knn query...")
+
         For Each node As ClusterEntity In raw
             Dim q = tree.nearest(node, maxNodes:=k).ToArray
             Dim link As String() = q _
