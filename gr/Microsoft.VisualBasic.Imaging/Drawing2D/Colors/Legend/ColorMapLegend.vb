@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Drawing2D.Colors
 
@@ -80,6 +81,9 @@ Namespace Drawing2D.Colors
         Public Property noblank As Boolean = True
         Public Property foreColor As Color = Color.Black
 
+        Sub New()
+        End Sub
+
         Sub New(palette As String, Optional mapLevels As Integer = 30)
             designer = GetColors(palette, mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
@@ -99,6 +103,8 @@ Namespace Drawing2D.Colors
         ''' <param name="layout">
         ''' the plot location and the rectangle region
         ''' </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Draw(ByRef g As IGraphics, layout As Rectangle)
             Call g.ColorMapLegend(
                 layout:=layout,
@@ -124,6 +130,14 @@ Namespace Drawing2D.Colors
             End Using
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ScaleColors(n As Integer) As Color()
+            Return Drawing2D.Colors _
+                .Designer _
+                .CubicSpline(designer.Select(Function(b) b.Color), n)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return title
         End Function
