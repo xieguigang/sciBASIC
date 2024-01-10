@@ -239,6 +239,23 @@ Public Module CollectionValueGetter
         End If
     End Function
 
+    <Extension>
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), synonyms As IEnumerable(Of TKey), Optional [default] As TValue = Nothing) As TValue
+        If table Is Nothing Then
+            Return [default]
+        End If
+
+        For Each key As TKey In synonyms
+            If table.ContainsKey(key) Then
+                Dim val As TValue = table(key)
+                table.Remove(key)
+                Return val
+            End If
+        Next
+
+        Return [default]
+    End Function
+
     ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
