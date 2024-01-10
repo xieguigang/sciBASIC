@@ -268,5 +268,18 @@ Namespace IO
                 Loop
             End Using
         End Function
+
+        Public Shared Function JoinVector(id As String, name As String(), val As Double()) As DataSet
+            Dim data As New Dictionary(Of String, Double)
+
+            For i As Integer = 0 To name.Length - 1
+                data(name(i)) = val(i)
+            Next
+
+            Return New DataSet With {
+                .ID = id,
+                .propertyTable = data
+            }
+        End Function
     End Class
 End Namespace
