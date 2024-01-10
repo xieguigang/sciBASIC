@@ -70,7 +70,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Darwinism.GAF
 
@@ -155,7 +155,7 @@ Namespace Darwinism.GAF
 
                         Dim firstError# = errors.First
 
-                        If stdNum.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
+                        If std.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
                             Call .DoCall(AddressOf reset)
 
                             ' 如果在这里不替换一下的话
