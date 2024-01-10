@@ -308,6 +308,10 @@ Namespace LinearAlgebra.Matrix
 
             buffer = A
         End Sub
+
+        Sub New(m As INumericMatrix)
+            Call Me.New(m.ArrayPack(deepcopy:=False))
+        End Sub
 #End Region
 
 #Region "Public Properties"

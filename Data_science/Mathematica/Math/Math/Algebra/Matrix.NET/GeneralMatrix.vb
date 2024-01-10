@@ -56,10 +56,19 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
 
+    Public Interface INumericMatrix
+
+        ''' <summary>Copy the internal two-dimensional array.</summary>
+        ''' <returns>Two-dimensional array copy of matrix elements.
+        ''' </returns>
+        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
+
+    End Interface
+
     ''' <summary>
     ''' [m,n]
     ''' </summary>
-    Public Interface GeneralMatrix
+    Public Interface GeneralMatrix : Inherits INumericMatrix
 
         ''' <summary>
         ''' get/set cell element value
@@ -93,7 +102,6 @@ Namespace LinearAlgebra.Matrix
         ReadOnly Property ColumnDimension As Integer
 
         Function Transpose() As GeneralMatrix
-        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
         Function Resize(m As Integer, n As Integer) As GeneralMatrix
         Function RowVectors() As IEnumerable(Of Vector)
 
