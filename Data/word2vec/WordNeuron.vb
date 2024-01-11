@@ -88,5 +88,9 @@ Namespace NlpVec
                 vector(i) = (randf.seeds.NextDouble - 0.5) / vectorSize
             Next
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{name}={frequency}"
+        End Function
     End Class
 End Namespace
