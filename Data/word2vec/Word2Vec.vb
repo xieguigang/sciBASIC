@@ -168,6 +168,9 @@ Namespace NlpVec
             Call tempCorpus.Add(tokenizer.words.Select(Function(wi) wi.str).ToArray)
         End Sub
 
+        ''' <summary>
+        ''' create a set of the <see cref="WordNeuron"/>
+        ''' </summary>
         Private Sub buildVocabulary()
             neuronMap = New Dictionary(Of String, WordNeuron)()
 

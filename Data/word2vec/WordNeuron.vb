@@ -65,9 +65,10 @@ Namespace NlpVec
 
         Public Property name As String
 
+        Dim m_pathNeurons As IList(Of HuffmanNode)
+
         Public ReadOnly Property pathNeurons As IList(Of HuffmanNode)
             Get
-
                 If m_pathNeurons IsNot Nothing Then
                     Return m_pathNeurons
                 End If
@@ -76,8 +77,6 @@ Namespace NlpVec
                 Return m_pathNeurons
             End Get
         End Property
-
-        Dim m_pathNeurons As IList(Of HuffmanNode)
 
         Public Sub New(name As String, freq As Integer, vectorSize As Integer)
             MyBase.New(freq, vectorSize)
