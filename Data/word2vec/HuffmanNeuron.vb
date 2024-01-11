@@ -63,8 +63,7 @@ Namespace NlpVec
     ''' <summary>
     ''' Created by fangy on 13-12-20.
     ''' </summary>
-    Public Class HuffmanNeuron
-        Implements HuffmanNode
+    Public Class HuffmanNeuron : Implements HuffmanNode
 
         Protected Friend parentNeuron As HuffmanNode
         Protected Friend code As Integer = 0
@@ -107,6 +106,10 @@ Namespace NlpVec
             Else
                 Return -1
             End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"frequency: {frequency}"
         End Function
     End Class
 End Namespace

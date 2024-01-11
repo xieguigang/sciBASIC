@@ -105,10 +105,6 @@ Namespace NlpVec
         ''' <param name="path"> 模型文件路径 </param>
         ''' <returns> 词向量模型 </returns>
         Public Shared Function loadFromFile(path As String) As VectorModel
-            If ReferenceEquals(path, Nothing) OrElse path.Length = 0 Then
-                Throw New ArgumentException("模型路径可以为null或空。")
-            End If
-
             Dim dis As BinaryReader = Nothing
             Dim wordCount As Integer, layerSizeLoaded = 0
             Dim wordMapLoaded As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
