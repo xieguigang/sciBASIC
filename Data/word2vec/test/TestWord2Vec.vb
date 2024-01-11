@@ -61,7 +61,7 @@ Namespace test
     ''' </summary>
     Public Class TestWord2Vec
         Public Shared Function readByJava(ByVal textFilePath As String, ByVal modelFilePath As String) As VectorModel
-            Dim wv As Word2Vec = (New Word2VecFactory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).build()
+            Dim wv As Word2Vec = (New Word2VecFactory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).setFreqThresold(1).build()
             Dim data As Paragraph() = Paragraph.Segmentation(textFilePath.ReadAllText).ToArray
 
             For Each p As Paragraph In data
@@ -75,7 +75,7 @@ Namespace test
         End Function
 
         Public Shared Sub testVector(vm As VectorModel)
-            Dim result1 As New SortedSet(Of WordScore)(vm.similar("亲"))
+            Dim result1 As New SortedSet(Of WordScore)(vm.similar("house"))
 
             For Each we In result1
                 Console.WriteLine(we.name & " :" & vbTab & we.score)
@@ -87,6 +87,7 @@ Namespace test
             Dim modelFilePath = "./swresult_withoutnature.vec"
 
             testVector(readByJava(textFilePath, modelFilePath))
+            Pause()
         End Sub
     End Class
 End Namespace
