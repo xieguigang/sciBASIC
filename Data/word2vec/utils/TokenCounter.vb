@@ -64,7 +64,7 @@ Namespace utils
     ''' 计数器
     ''' 最初代码来自Ansj的tree-split包中的love.cq.util;
     ''' @author fangy </summary>
-    Public Class Counter(Of tT)
+    Public Class TokenCounter(Of tT)
 
         Dim hm As Dictionary(Of tT, Counter) = Nothing
 

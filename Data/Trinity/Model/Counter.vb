@@ -2,6 +2,9 @@
 
 Namespace Model
 
+    ''' <summary>
+    ''' counter for a specific token string
+    ''' </summary>
     Public Class Counter
 
         Public Property token As String

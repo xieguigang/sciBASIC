@@ -112,7 +112,7 @@ Namespace NlpVec
         Private numOfThread As Integer ' 线程个数
 
         ' 单词或短语计数器
-        Private wordCounter As New Counter(Of String)()
+        Private wordCounter As New TokenCounter(Of String)()
         Private tempCorpus As String
         Private tempCorpusWriter As StreamWriter
 
