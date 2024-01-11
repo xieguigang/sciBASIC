@@ -55,10 +55,10 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports int = Microsoft.VisualBasic.ComponentModel.Counter
 
-Namespace utils
+Namespace Model
 
     ''' <summary>
     ''' 计数器
@@ -66,14 +66,14 @@ Namespace utils
     ''' @author fangy </summary>
     Public Class TokenCounter(Of tT)
 
-        Dim hm As Dictionary(Of tT, Counter) = Nothing
+        Dim hm As Dictionary(Of tT, int) = Nothing
 
         Public Sub New()
-            hm = New Dictionary(Of tT, Counter)()
+            hm = New Dictionary(Of tT, int)()
         End Sub
 
         Public Sub New(initialCapacity As Integer)
-            hm = New Dictionary(Of tT, Counter)(initialCapacity)
+            hm = New Dictionary(Of tT, int)(initialCapacity)
         End Sub
 
         ''' <summary>
@@ -82,7 +82,7 @@ Namespace utils
         ''' <param name="n"> 计数 </param>
         Public Sub add(t As tT, n As Integer)
             If Not hm.ContainsKey(t) Then
-                hm.Add(t, New Counter(0))
+                hm.Add(t, New int(0))
             End If
 
             hm(t).Add(n)
@@ -134,9 +134,9 @@ Namespace utils
         ''' 将计数器转换为字符串 </summary>
         ''' <returns> 字符串 </returns>
         Public Overrides Function ToString() As String
-            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, Counter)) = SetOfKeyValuePairs(Of tT, Counter)(hm).GetEnumerator()
-            Dim sb As StringBuilder = New StringBuilder()
-            Dim [next] As KeyValuePair(Of tT, Counter) = Nothing
+            Dim iterator As IEnumerator(Of KeyValuePair(Of tT, int)) = SetOfKeyValuePairs(hm).GetEnumerator()
+            Dim sb As New StringBuilder()
+            Dim [next] As KeyValuePair(Of tT, int) = Nothing
 
             While iterator.MoveNext()
                 [next] = iterator.Current
