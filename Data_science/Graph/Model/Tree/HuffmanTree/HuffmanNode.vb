@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d15f44e73daec06469a603dda3199aa6, sciBASIC#\Data\word2vec\test\counterTest.vb"
+﻿#Region "Microsoft.VisualBasic::c73901ef8aad04987419a8b1648bdf77, sciBASIC#\Data\word2vec\utils\HuffmanNode.vb"
 
 ' Author:
 ' 
@@ -34,40 +34,39 @@
 
 ' Code Statistics:
 
-'   Total Lines: 22
-'    Code Lines: 15
-' Comment Lines: 1
-'   Blank Lines: 6
-'     File Size: 609.00 B
+'   Total Lines: 14
+'    Code Lines: 9
+' Comment Lines: 4
+'   Blank Lines: 1
+'     File Size: 411.00 B
 
 
-' Module counterTest
+'     Interface HuffmanNode
 ' 
-'     Sub: Main
+'         Properties: frequency, parent
+' 
+'         Function: merge
+' 
+'         Sub: SetCode
+' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.NLP.Model
+Namespace HuffmanTree
 
-Module counterTest
+    ''' <summary>
+    ''' Created by fangy on 13-12-17.
+    ''' 哈夫曼树结点接口
+    ''' </summary>
+    Public Interface HuffmanNode : Inherits IComparable(Of HuffmanNode)
 
-    Public Sub Main()
-        Dim strKeys = New String() {"1", "2", "3", "1", "2", "1", "3", "3", "3", "1", "2"}
-        Dim counter As New TokenCounter(Of String)()
+        Property code As Integer
+        Property frequency As Integer
+        Property parent As HuffmanNode
 
-        For Each strKey In strKeys
-            counter.add(strKey)
-        Next
+        Function merge(sibling As HuffmanNode) As HuffmanNode
 
-        For Each strKey As String In counter.keySet
-            Console.WriteLine(strKey & " : " & counter.get(strKey))
-        Next
-
-        Console.WriteLine(counter.get("9"))
-        '        System.out.println(Long.MAX_VALUE);
-
-        Pause()
-    End Sub
-End Module
+    End Interface
+End Namespace

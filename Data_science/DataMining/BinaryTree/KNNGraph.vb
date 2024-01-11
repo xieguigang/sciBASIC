@@ -14,6 +14,10 @@ Public Class KNNGraph
     ReadOnly tree As KdTree(Of ClusterEntity)
     ReadOnly raw As ClusterEntity()
 
+    ''' <summary>
+    ''' construct a kdtree for the given dataset points
+    ''' </summary>
+    ''' <param name="data">a collection of dataset points</param>
     Sub New(data As IEnumerable(Of ClusterEntity))
         raw = data.ToArray
         tree = New KdTree(Of ClusterEntity)(raw, metric:=New NodeVisits(sizeDims(raw(0))))
@@ -79,7 +83,7 @@ Public Class KNNGraph
                              Optional jaccard_cutoff As Double = 0.85,
                              Optional div_factor As Double = 2) As BTreeCluster
 
-        Dim knn = Me.KNN(k).ToArray
+        Dim knn As NamedCollection(Of String)() = Me.KNN(k).ToArray
         Dim metric As New JaccardAlignment(
             knn, raw,
             equals:=jaccard_cutoff,
@@ -87,9 +91,13 @@ Public Class KNNGraph
         )
         Dim btree As New AVLTree(Of String, String)(metric.GetComparer, Function(str) str)
 
+        Call VBDebugger.EchoLine("create binary avl-tree based on the jaccard alignment of the knn set...")
+
         For Each id As String In list.Keys
             Call btree.Add(id, id, valueReplace:=False)
         Next
+
+        Call VBDebugger.EchoLine("export cluster tree!")
 
         Return BTreeCluster.GetClusters(btree, metric)
     End Function
@@ -99,6 +107,12 @@ Public Class KNNGraph
     ''' </summary>
     ''' <returns></returns>
     Private Iterator Function KNN(k As Integer) As IEnumerable(Of NamedCollection(Of String))
+        Dim n As Integer = raw.Length
+        Dim d As Integer = n / 25
+        Dim i As Integer = 0
+
+        Call VBDebugger.EchoLine("do knn query...")
+
         For Each node As ClusterEntity In raw
             Dim q = tree.nearest(node, maxNodes:=k).ToArray
             Dim link As String() = q _
@@ -109,6 +123,12 @@ Public Class KNNGraph
                 .name = node.uid,
                 .value = link
             }
+
+            If i Mod d = 0 Then
+                Call VBDebugger.Echo(CInt(i / n * 100) & vbTab)
+            End If
+
+            i += 1
         Next
     End Function
 

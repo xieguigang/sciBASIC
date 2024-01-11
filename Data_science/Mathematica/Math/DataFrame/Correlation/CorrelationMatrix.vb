@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' the correlation matrix join the pvalue matrix
@@ -127,7 +127,7 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     Public Function GetCorrelationQuantile() As FastRankQuantile
         Return GetUniqueTuples _
             .Select(Function(t)
-                        Return stdNum.Abs(Me(t.a, t.b))
+                        Return std.Abs(Me(t.a, t.b))
                     End Function) _
             .DoCall(Function(q)
                         Return New FastRankQuantile(q)
@@ -142,7 +142,7 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     Public Function GetPvalueQuantile() As FastRankQuantile
         Return GetUniqueTuples _
             .Select(Function(t)
-                        Return -stdNum.Log10(pvalue(t.a, t.b))
+                        Return -std.Log10(pvalue(t.a, t.b))
                     End Function) _
             .DoCall(Function(q)
                         Return New FastRankQuantile(q)
@@ -168,9 +168,37 @@ Public Class CorrelationMatrix : Inherits DataMatrix
     Public Function Sign() As Double()()
         Return matrix _
             .Select(Function(c)
-                        Return c.Select(Function(ci) CDbl(stdNum.Sign(ci))).ToArray
+                        Return c.Select(Function(ci) CDbl(std.Sign(ci))).ToArray
                     End Function) _
             .ToArray
+    End Function
+
+    ''' <summary>
+    ''' just get the positive correlation part of the matrix
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function PositiveMatrix() As CorrelationMatrix
+        Dim cor As Double()() = New Double(matrix.Length - 1)() {}
+        Dim pval As Double()() = New Double(matrix.Length - 1)() {}
+
+        For i As Integer = 0 To matrix.Length - 1
+            Dim row As Double() = matrix(i)
+            Dim p As Double() = pvalueMat(i)
+            Dim cor_v As Double() = New Double(row.Length - 1) {}
+            Dim p_v As Double() = New Double(row.Length - 1) {}
+
+            For j As Integer = 0 To row.Length - 1
+                If row(j) > 0 Then
+                    cor_v(j) = row(j)
+                    p_v(j) = p(j)
+                End If
+            Next
+
+            cor(i) = cor_v
+            pval(i) = p_v
+        Next
+
+        Return New CorrelationMatrix(names, cor, pval)
     End Function
 
     Public Shared Operator *(x As Double()(), y As CorrelationMatrix) As CorrelationMatrix

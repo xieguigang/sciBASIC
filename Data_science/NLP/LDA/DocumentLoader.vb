@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Language.Values
 
 Namespace LDA
 
-    Module DocumentLoader
+    Public Module DocumentLoader
 
         ''' <summary>
         ''' Load documents from disk
@@ -66,7 +66,7 @@ Namespace LDA
         ''' <returns> a corpus </returns>
         ''' <exception cref="IOException"> </exception>
         Public Function load(folderPath As String) As Corpus
-            Dim corpus As Corpus = New Corpus()
+            Dim corpus As New Corpus()
 
             For Each filepath As String In folderPath.ListFiles()
                 Dim file = filepath.Open(doClear:=False, [readOnly]:=True)

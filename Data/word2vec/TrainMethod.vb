@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d15f44e73daec06469a603dda3199aa6, sciBASIC#\Data\word2vec\test\counterTest.vb"
+﻿#Region "Microsoft.VisualBasic::762df4953b93ad6ed2fafa9f8317dded, sciBASIC#\Data\word2vec\trainer\TrainMethod.vb"
 
 ' Author:
 ' 
@@ -34,40 +34,28 @@
 
 ' Code Statistics:
 
-'   Total Lines: 22
-'    Code Lines: 15
-' Comment Lines: 1
-'   Blank Lines: 6
-'     File Size: 609.00 B
+'   Total Lines: 7
+'    Code Lines: 6
+' Comment Lines: 0
+'   Blank Lines: 1
+'     File Size: 109.00 B
 
 
-' Module counterTest
+'     Enum TrainMethod
 ' 
-'     Sub: Main
+'         CBow, Skip_Gram
+' 
+'  
+' 
+' 
+' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.NLP.Model
+Public Enum TrainMethod
+    CBow
+    Skip_Gram
+End Enum
 
-Module counterTest
-
-    Public Sub Main()
-        Dim strKeys = New String() {"1", "2", "3", "1", "2", "1", "3", "3", "3", "1", "2"}
-        Dim counter As New TokenCounter(Of String)()
-
-        For Each strKey In strKeys
-            counter.add(strKey)
-        Next
-
-        For Each strKey As String In counter.keySet
-            Console.WriteLine(strKey & " : " & counter.get(strKey))
-        Next
-
-        Console.WriteLine(counter.get("9"))
-        '        System.out.println(Long.MAX_VALUE);
-
-        Pause()
-    End Sub
-End Module

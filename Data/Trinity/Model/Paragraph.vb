@@ -57,6 +57,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Model
 
+    ''' <summary>
+    ''' a collection of the text <see cref="Sentence"/>.
+    ''' </summary>
     Public Class Paragraph
 
         Public Property sentences As Sentence()

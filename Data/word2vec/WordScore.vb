@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d0baebdac07b0d90d629848d101de4b, sciBASIC#\Data\word2vec\WordNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::1d1db035f98e444ff88c34d61ce8a0e3, sciBASIC#\Data\word2vec\trainer\WordScore.vb"
 
 ' Author:
 ' 
@@ -34,60 +34,47 @@
 
 ' Code Statistics:
 
-'   Total Lines: 38
-'    Code Lines: 24
-' Comment Lines: 4
-'   Blank Lines: 10
-'     File Size: 1.04 KB
+'   Total Lines: 31
+'    Code Lines: 23
+' Comment Lines: 3
+'   Blank Lines: 5
+'     File Size: 823.00 B
 
 
-'     Class WordNeuron
-' 
-'         Properties: name, pathNeurons
+'     Class WordScore
 ' 
 '         Constructor: (+1 Overloads) Sub New
+'         Function: CompareTo, ToString
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.GraphTheory
-Imports Microsoft.VisualBasic.Data.GraphTheory.HuffmanTree
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-
 ''' <summary>
-''' Created by fangy on 13-12-17.
-''' 词神经元
+''' the word score of the vector model
 ''' </summary>
-Public Class WordNeuron : Inherits HuffmanNeuron
+Public Class WordScore : Implements IComparable(Of WordScore)
 
-    Public Property name As String
+    Public name As String
+    Public score As Single
 
-    Dim m_pathNeurons As IList(Of HuffmanNode)
-
-    Public ReadOnly Property pathNeurons As IList(Of HuffmanNode)
-        Get
-            If m_pathNeurons IsNot Nothing Then
-                Return m_pathNeurons
-            End If
-
-            m_pathNeurons = HuffmanTree.getPath(Me)
-            Return m_pathNeurons
-        End Get
-    End Property
-
-    Public Sub New(name As String, freq As Integer, vectorSize As Integer)
-        MyBase.New(freq, vectorSize)
-
+    Public Sub New(name As String, score As Single)
         Me.name = name
-
-        For i = 0 To vector.Length - 1
-            vector(i) = (randf.seeds.NextDouble - 0.5) / vectorSize
-        Next
+        Me.score = score
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"{name}={frequency}"
+        Return name & vbTab & score
+    End Function
+
+    Public Function CompareTo(o As WordScore) As Integer Implements IComparable(Of WordScore).CompareTo
+        If score = o.score Then
+            Return 0
+        ElseIf score < o.score Then
+            Return 1
+        Else
+            Return -1
+        End If
     End Function
 End Class

@@ -67,18 +67,18 @@ Namespace LDA
     ''' </summary>
     Public Class Corpus
 
-        ReadOnly documentList As IList(Of Integer())
-        ReadOnly vocabularyField As Vocabulary
+        ReadOnly m_documentList As IList(Of Integer())
+        ReadOnly m_vocabulary As Vocabulary
 
         Public Overridable ReadOnly Property VocabularySize As Integer
             Get
-                Return vocabularyField.size()
+                Return m_vocabulary.size()
             End Get
         End Property
 
         Public Overridable ReadOnly Property Vocabulary As Vocabulary
             Get
-                Return vocabularyField
+                Return m_vocabulary
             End Get
         End Property
 
@@ -89,34 +89,39 @@ Namespace LDA
         End Property
 
         Public Sub New()
-            documentList = New List(Of Integer())()
-            vocabularyField = New Vocabulary()
+            m_documentList = New List(Of Integer())()
+            m_vocabulary = New Vocabulary()
         End Sub
 
+        ''' <summary>
+        ''' a collection of the words
+        ''' </summary>
+        ''' <param name="document"></param>
+        ''' <returns></returns>
         Public Overridable Function addDocument(document As IEnumerable(Of String)) As Integer()
             Dim doc As New List(Of Integer)
 
             For Each word As String In document
-                Call doc.Add(vocabularyField.getId(word, True))
+                Call doc.Add(m_vocabulary.getId(word, True))
             Next
 
-            Call documentList.Add(doc.ToArray)
+            Call m_documentList.Add(doc.ToArray)
 
-            Return documentList.Last
+            Return m_documentList.Last
         End Function
 
         Public Overridable Function toArray() As Integer()()
-            Return documentList.ToArray()
+            Return m_documentList.ToArray()
         End Function
 
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder()
 
-            For Each doc In documentList
+            For Each doc In m_documentList
                 sb.Append(doc.JoinBy(", ")).Append(vbLf)
             Next
 
-            Call sb.Append(vocabularyField)
+            Call sb.Append(m_vocabulary)
 
             Return sb.ToString()
         End Function

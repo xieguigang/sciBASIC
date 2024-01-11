@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::59ebcfcd4e0f0c512901ff8f7ce9a3ff, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 144
-    '    Code Lines: 95
-    ' Comment Lines: 29
-    '   Blank Lines: 20
-    '     File Size: 5.87 KB
+' Summaries:
 
 
-    '     Class DbscanAlgorithm
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ComputeClusterDBSCAN, IteratesAllPoints
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 144
+'    Code Lines: 95
+' Comment Lines: 29
+'   Blank Lines: 20
+'     File Size: 5.87 KB
+
+
+'     Class DbscanAlgorithm
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ComputeClusterDBSCAN, IteratesAllPoints
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
@@ -65,7 +66,7 @@ Namespace DBSCAN
     ''' 
     ''' > https://github.com/yusufuzun/dbscan
     ''' </remarks>
-    Public Class DbscanAlgorithm(Of T)
+    Public Class DbscanAlgorithm(Of T As IReadOnlyId)
 
         Friend ReadOnly _metricFunc As Func(Of T, T, Double)
         Friend ReadOnly _full As Boolean
@@ -87,7 +88,7 @@ Namespace DBSCAN
             _full = full
 
             If println Is Nothing Then
-                Me.println = Sub(any) Console.WriteLine(any.ToString)
+                Me.println = Sub(any) VBDebugger.EchoLine(any.ToString)
             Else
                 Me.println = println
             End If
@@ -114,7 +115,7 @@ Namespace DBSCAN
             Dim allPointsDbscan As DbscanPoint(Of T)() = allPoints _
                 .Select(Function(x, i)
                             Return New DbscanPoint(Of T)(x) With {
-                                .ID = (i + 1).ToHexString
+                                .ID = x.Identity
                             }
                         End Function) _
                 .ToArray()
@@ -177,7 +178,7 @@ Namespace DBSCAN
                     Continue For
                 End If
 
-                Dim neighborPts As DbscanPoint(Of T)() = session.RegionQuery(p.ClusterPoint)
+                Dim neighborPts As DbscanPoint(Of T)() = session.RegionQuery(p.ClusterPoint, parallel:=True)
 
                 If neighborPts.Length < session.minPts Then
                     p.ClusterId = ClusterIDs.Noise

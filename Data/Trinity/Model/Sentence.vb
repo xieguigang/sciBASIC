@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Model
 
+    ''' <summary>
+    ''' a collection of the <see cref="Word"/>
+    ''' </summary>
     Public Class Sentence
 
         ''' <summary>
@@ -69,6 +72,16 @@ Namespace Model
         Public ReadOnly Property IsEmpty As Boolean
             Get
                 Return words.IsNullOrEmpty OrElse words.All(AddressOf TextRank.IsEmpty)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the words count in current sentence
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return words.TryCount
             End Get
         End Property
 
@@ -107,6 +120,12 @@ Namespace Model
             Next
 
             Return -1
+        End Function
+
+        Public Iterator Function GetWords() As IEnumerable(Of String)
+            For Each w As Word In words.SafeQuery
+                Yield w.str
+            Next
         End Function
 
         Public Overrides Function ToString() As String

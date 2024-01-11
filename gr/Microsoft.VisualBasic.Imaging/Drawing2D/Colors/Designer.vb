@@ -442,13 +442,13 @@ Namespace Drawing2D.Colors
 
                     ' viridis
                 Case "viridis" : Return Viridis.viridis.ToArray
-                Case "viridis:magma" : Return Viridis.magma.ToArray
-                Case "viridis:inferno" : Return Viridis.inferno.ToArray
-                Case "viridis:plasma" : Return Viridis.plasma.ToArray
-                Case "viridis:cividis" : Return Viridis.cividis.ToArray
-                Case "viridis:mako" : Return Viridis.mako.ToArray
-                Case "viridis:rocket" : Return Viridis.rocket.ToArray
-                Case "viridis:turbo" : Return Viridis.turbo.ToArray
+                Case "viridis:magma", "magma" : Return Viridis.magma.ToArray
+                Case "viridis:inferno", "inferno" : Return Viridis.inferno.ToArray
+                Case "viridis:plasma", "plasma" : Return Viridis.plasma.ToArray
+                Case "viridis:cividis", "cividis" : Return Viridis.cividis.ToArray
+                Case "viridis:mako", "mako" : Return Viridis.mako.ToArray
+                Case "viridis:rocket", "rocket" : Return Viridis.rocket.ToArray
+                Case "viridis:turbo", "turbo" : Return Viridis.turbo.ToArray
 
                 Case Else
 

@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Data.Trinity.NLP
 
+    ''' <summary>
+    ''' A single word text token
+    ''' </summary>
     Public Class Word : Implements Value(Of String).IValueOf
 
         ''' <summary>

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Darwinism.GAF.Population.SubstitutionStrategy
 
@@ -9,7 +10,10 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
     Public Class EliteReplacement(Of Chr As {Class, Chromosome(Of Chr)})
         Implements IStrategy(Of Chr)
 
-        ReadOnly ranf As Random = Math.seeds
+        ''' <summary>
+        ''' top percentage to keeps as elite
+        ''' </summary>
+        ReadOnly top As Double = 0.65
 
         Public ReadOnly Property type As Strategies Implements IStrategy(Of Chr).type
             Get
@@ -30,12 +34,12 @@ Namespace Darwinism.GAF.Population.SubstitutionStrategy
             ' 只选择最好的前10个染色体
             ' 然后剩余的成员通过这些被保留下来的染色体间的交叉来生成
             Call newPop.SortPopulationByFitness(GA.chromosomesComparator)
-            Call newPop.Trim(newPop.capacitySize * 0.1)
+            Call newPop.Trim(newPop.capacitySize * top)
 
             ' 对剩下的精英个体进行杂交,补充种群的成员
             Do While newPop.Size < newPop.capacitySize
-                x = newPop.Random(ranf)
-                y = newPop.Random(ranf)
+                x = newPop.Random(randf.seeds)
+                y = newPop.Random(randf.seeds)
 
                 For Each newIndividual As Chr In x.Crossover(y)
                     Call newPop.Add(newIndividual)
