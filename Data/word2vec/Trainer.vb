@@ -57,106 +57,103 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports std = System.Math
 
-Namespace NlpVec
+Public Class Trainer : Implements ITaskDriver
 
-    Public Class Trainer : Implements ITaskDriver
+    Private ReadOnly outerInstance As Word2Vec
+    Friend corpusQueue As Queue(Of LinkedList(Of String()))
+    Friend corpusToBeTrained As LinkedList(Of String())
+    Friend trainingWordCount As Integer
+    Friend tempAlpha As Double
 
-        Private ReadOnly outerInstance As Word2Vec
-        Friend corpusQueue As Queue(Of LinkedList(Of String()))
-        Friend corpusToBeTrained As LinkedList(Of String())
-        Friend trainingWordCount As Integer
-        Friend tempAlpha As Double
+    Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String()))
+        Me.outerInstance = outerInstance
+        corpusToBeTrained = corpus
+        trainingWordCount = 0
+        corpusQueue = New Queue(Of LinkedList(Of String()))
+        corpusQueue.Enqueue(corpus)
+    End Sub
 
-        Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String()))
-            Me.outerInstance = outerInstance
-            corpusToBeTrained = corpus
-            trainingWordCount = 0
-            corpusQueue = New Queue(Of LinkedList(Of String()))
-            corpusQueue.Enqueue(corpus)
-        End Sub
+    Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String())))
+        Me.outerInstance = outerInstance
+        Me.corpusQueue = corpusQueue
+    End Sub
 
-        Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String())))
-            Me.outerInstance = outerInstance
-            Me.corpusQueue = corpusQueue
-        End Sub
+    Friend Sub computeAlpha()
+        SyncLock outerInstance.alphaLock
+            outerInstance.currentWordCount += trainingWordCount
+            outerInstance.alpha = outerInstance.initialAlpha * (1 - outerInstance.currentWordCount / (outerInstance.totalWordCount + 1))
 
-        Friend Sub computeAlpha()
-            SyncLock outerInstance.alphaLock
-                outerInstance.currentWordCount += trainingWordCount
-                outerInstance.alpha = outerInstance.initialAlpha * (1 - outerInstance.currentWordCount / (outerInstance.totalWordCount + 1))
+            If outerInstance.alpha < outerInstance.initialAlpha * 0.0001 Then
+                outerInstance.alpha = outerInstance.initialAlpha * 0.0001
+            End If
+            '                logger.info("alpha:" + tempAlpha + "\tProgress: "
+            '                        + (int) (currentWordCount / (double) (totalWordCount + 1) * 100) + "%");
+            VBDebugger.EchoLine("alpha:" & tempAlpha & vbTab & "Progress: " & outerInstance.currentWordCount / (outerInstance.totalWordCount + 1) * 100 & "%" & vbTab)
+        End SyncLock
+    End Sub
 
-                If outerInstance.alpha < outerInstance.initialAlpha * 0.0001 Then
-                    outerInstance.alpha = outerInstance.initialAlpha * 0.0001
+    Friend Sub training()
+        '            long nextRandom = 5;
+        For Each tokenizer As String() In corpusToBeTrained
+            Dim sentence As New List(Of WordNeuron)()
+
+            trainingWordCount += tokenizer.Length
+
+            For Each token As String In tokenizer
+                Dim entry = outerInstance.neuronMap.GetValueOrNull(token)
+
+                If entry Is Nothing Then
+                    Continue For
                 End If
-                '                logger.info("alpha:" + tempAlpha + "\tProgress: "
-                '                        + (int) (currentWordCount / (double) (totalWordCount + 1) * 100) + "%");
-                VBDebugger.EchoLine("alpha:" & tempAlpha & vbTab & "Progress: " & outerInstance.currentWordCount / (outerInstance.totalWordCount + 1) * 100 & "%" & vbTab)
-            End SyncLock
-        End Sub
-
-        Friend Sub training()
-            '            long nextRandom = 5;
-            For Each tokenizer As String() In corpusToBeTrained
-                Dim sentence As New List(Of WordNeuron)()
-
-                trainingWordCount += tokenizer.Length
-
-                For Each token As String In tokenizer
-                    Dim entry = outerInstance.neuronMap.GetValueOrNull(token)
-
-                    If entry Is Nothing Then
-                        Continue For
-                    End If
-                    ' The subsampling randomly discards frequent words while keeping the ranking same
-                    If outerInstance.sample > 0 Then
-                        Dim ran = (std.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) *
-                            (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
-                        outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
-
-                        If ran < (outerInstance.nextRandom And &HFFFF) / 65536 Then
-                            Continue For
-                        End If
-
-                        sentence.Add(entry)
-                    End If
-                Next
-
-                For index As Integer = 0 To sentence.Count - 1
+                ' The subsampling randomly discards frequent words while keeping the ranking same
+                If outerInstance.sample > 0 Then
+                    Dim ran = (std.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) *
+                        (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
                     outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
 
-                    Select Case outerInstance.trainMethod
-                        Case TrainMethod.CBow
-                            outerInstance.cbowGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
-                        Case TrainMethod.Skip_Gram
-                            outerInstance.skipGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
-                    End Select
-                Next
-            Next
-        End Sub
-
-        Public Function run() As Integer Implements ITaskDriver.Run
-            Dim hasCorpusToBeTrained = True
-
-            While hasCorpusToBeTrained
-                '                    System.out.println("get a corpus");
-                corpusToBeTrained = corpusQueue.Dequeue
-                '                    System.out.println("队列长度:" + corpusQueue.size());
-                If Nothing IsNot corpusToBeTrained Then
-                    tempAlpha = outerInstance.alpha
-                    trainingWordCount = 0
-                    training()
-                    computeAlpha() '更新alpha
-
-                    If corpusQueue.Count = 0 Then
-                        Return 0
+                    If ran < (outerInstance.nextRandom And &HFFFF) / 65536 Then
+                        Continue For
                     End If
-                Else
-                    ' 超过2s还没获得数据，认为主线程已经停止投放语料，即将停止训练。
-                    hasCorpusToBeTrained = False
-                End If
-            End While
 
-            Return 0
-        End Function
-    End Class
-End Namespace
+                    sentence.Add(entry)
+                End If
+            Next
+
+            For index As Integer = 0 To sentence.Count - 1
+                outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
+
+                Select Case outerInstance.trainMethod
+                    Case TrainMethod.CBow
+                        outerInstance.cbowGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
+                    Case TrainMethod.Skip_Gram
+                        outerInstance.skipGram(index, sentence, CInt(outerInstance.nextRandom) Mod outerInstance.windowSize, tempAlpha)
+                End Select
+            Next
+        Next
+    End Sub
+
+    Public Function run() As Integer Implements ITaskDriver.Run
+        Dim hasCorpusToBeTrained = True
+
+        While hasCorpusToBeTrained
+            '                    System.out.println("get a corpus");
+            corpusToBeTrained = corpusQueue.Dequeue
+            '                    System.out.println("队列长度:" + corpusQueue.size());
+            If Nothing IsNot corpusToBeTrained Then
+                tempAlpha = outerInstance.alpha
+                trainingWordCount = 0
+                training()
+                computeAlpha() '更新alpha
+
+                If corpusQueue.Count = 0 Then
+                    Return 0
+                End If
+            Else
+                ' 超过2s还没获得数据，认为主线程已经停止投放语料，即将停止训练。
+                hasCorpusToBeTrained = False
+            End If
+        End While
+
+        Return 0
+    End Function
+End Class

@@ -59,169 +59,169 @@
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace NlpVec
+''' <summary>
+''' User: fangy
+''' Date: 13-12-9
+''' Time: 下午2:30
+''' </summary>
+Public Class VectorModel
+
+    Public Property wordMap As New Dictionary(Of String, Single())
 
     ''' <summary>
-    ''' User: fangy
-    ''' Date: 13-12-9
-    ''' Time: 下午2:30
+    ''' 获取最相似词的数量 </summary>
+    ''' <returns> 最相似词的数量 </returns>
+    Public Property topNSize As Integer = 40
+
+    ''' <summary>
+    ''' 特征数
     ''' </summary>
-    Public Class VectorModel
+    ''' <returns></returns>
+    Public Property vectorSize As Integer = 200
 
-        Public Property wordMap As New Dictionary(Of String, Single())
+    ''' <summary>
+    ''' 私有构造函数 </summary>
+    ''' <param name="wordMap"> 词向量哈希表 </param>
+    ''' <param name="vectorSize"> 词向量长度 </param>
+    Public Sub New(wordMap As IDictionary(Of String, Single()), vectorSize As Integer)
+        Me.wordMap = New Dictionary(Of String, Single())(wordMap)
+        Me.vectorSize = vectorSize
+    End Sub
 
-        ''' <summary>
-        ''' 获取最相似词的数量 </summary>
-        ''' <returns> 最相似词的数量 </returns>
-        Public Property topNSize As Integer = 40
+    Sub New()
+    End Sub
 
-        ''' <summary>
-        ''' 特征数
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property vectorSize As Integer = 200
+    ''' <summary>
+    ''' 获取与词word最相近topNSize个词 </summary>
+    ''' <param name="queryWord"> 词 </param>
+    ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
+    Public Function similar(queryWord As String) As IEnumerable(Of WordScore)
+        Dim center = wordMap.GetValueOrNull(queryWord)
 
-        ''' <summary>
-        ''' 私有构造函数 </summary>
-        ''' <param name="wordMap"> 词向量哈希表 </param>
-        ''' <param name="vectorSize"> 词向量长度 </param>
-        Public Sub New(wordMap As IDictionary(Of String, Single()), vectorSize As Integer)
-            Me.wordMap = New Dictionary(Of String, Single())(wordMap)
-            Me.vectorSize = vectorSize
-        End Sub
+        If center Is Nothing Then
+            Return {}
+        End If
 
-        ''' <summary>
-        ''' 获取与词word最相近topNSize个词 </summary>
-        ''' <param name="queryWord"> 词 </param>
-        ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
-        Public Function similar(queryWord As String) As IEnumerable(Of WordScore)
-            Dim center = wordMap.GetValueOrNull(queryWord)
+        Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize + 1)
+        Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
 
-            If center Is Nothing Then
-                Return {}
+        For i = 0 To resultSize - 1
+            result.Add(New WordScore("^_^", -Single.MaxValue))
+        Next
+
+        Dim minDist = -Single.MaxValue
+
+        For Each entry In wordMap.SetOfKeyValuePairs()
+            Dim vector = entry.Value
+            Dim dist As Single = 0
+
+            For i = 0 To vector.Length - 1
+                dist += center(i) * vector(i)
+            Next
+
+            If dist > minDist Then
+                result.Add(New WordScore(entry.Key, dist))
+                minDist = result.PollLast().score
+            End If
+        Next
+
+        result.PollFirst()
+        Return result
+    End Function
+
+    Public Function similar(center As Single()) As IEnumerable(Of WordScore)
+        If center Is Nothing OrElse center.Length <> vectorSize Then
+            Return {}
+        End If
+
+        Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
+        Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+
+        For i = 0 To resultSize - 1
+            result.Add(New WordScore("^_^", -Single.MaxValue))
+        Next
+
+        Dim minDist = -Single.MaxValue
+
+        For Each entry In wordMap.SetOfKeyValuePairs()
+            Dim vector = entry.Value
+            Dim dist As Single = 0
+
+            For i = 0 To vector.Length - 1
+                dist += center(i) * vector(i)
+            Next
+
+            If dist > minDist Then
+                result.Add(New WordScore(entry.Key, dist))
+                minDist = result.PollLast().score
+            End If
+        Next
+        '        result.pollFirst();
+
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 词迁移，即word1 - word0 + word2 的结果，若三个词中有一个不在模型中，
+    ''' 也就是没有词向量，则返回空集 </summary>
+    ''' <param name="word0"> 词 </param>
+    ''' <param name="word1"> 词 </param>
+    ''' <param name="word2"> 词 </param>
+    ''' <returns> 与结果最相近的前topNSize个词 </returns>
+    Public Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
+        Dim wv0 = wordMap.GetValueOrNull(word0)
+        Dim wv1 = wordMap.GetValueOrNull(word1)
+        Dim wv2 = wordMap.GetValueOrNull(word2)
+
+        If wv1 Is Nothing OrElse wv2 Is Nothing OrElse wv0 Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim center = New Single(vectorSize - 1) {}
+
+        For i = 0 To vectorSize - 1
+            center(i) = wv1(i) - wv0(i) + wv2(i)
+        Next
+
+        Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
+        Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+
+        For i = 0 To resultSize - 1
+            result.Add(New WordScore("^_^", -Single.MaxValue))
+        Next
+
+        Dim name As String
+        Dim minDist = -Single.MaxValue
+
+        For Each entry In wordMap.SetOfKeyValuePairs()
+            name = entry.Key
+
+            If name.Equals(word1) OrElse name.Equals(word2) Then
+                Continue For
             End If
 
-            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize + 1)
-            Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+            Dim vector = entry.Value
+            Dim dist As Single = 0
 
-            For i = 0 To resultSize - 1
-                result.Add(New WordScore("^_^", -Single.MaxValue))
+            For i = 0 To vector.Length - 1
+                dist += center(i) * vector(i)
             Next
 
-            Dim minDist = -Single.MaxValue
-
-            For Each entry In wordMap.SetOfKeyValuePairs()
-                Dim vector = entry.Value
-                Dim dist As Single = 0
-
-                For i = 0 To vector.Length - 1
-                    dist += center(i) * vector(i)
-                Next
-
-                If dist > minDist Then
-                    result.Add(New WordScore(entry.Key, dist))
-                    minDist = result.PollLast().score
-                End If
-            Next
-
-            result.PollFirst()
-            Return result
-        End Function
-
-        Public Function similar(center As Single()) As IEnumerable(Of WordScore)
-            If center Is Nothing OrElse center.Length <> vectorSize Then
-                Return {}
+            If dist > minDist Then
+                result.Add(New WordScore(entry.Key, dist))
+                minDist = result.PollLast().score
             End If
+        Next
 
-            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
-            Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+        Return result
+    End Function
 
-            For i = 0 To resultSize - 1
-                result.Add(New WordScore("^_^", -Single.MaxValue))
-            Next
+    Public Function getWordVector(word As String) As Single()
+        Return wordMap.GetValueOrNull(word)
+    End Function
 
-            Dim minDist = -Single.MaxValue
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
-            For Each entry In wordMap.SetOfKeyValuePairs()
-                Dim vector = entry.Value
-                Dim dist As Single = 0
-
-                For i = 0 To vector.Length - 1
-                    dist += center(i) * vector(i)
-                Next
-
-                If dist > minDist Then
-                    result.Add(New WordScore(entry.Key, dist))
-                    minDist = result.PollLast().score
-                End If
-            Next
-            '        result.pollFirst();
-
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' 词迁移，即word1 - word0 + word2 的结果，若三个词中有一个不在模型中，
-        ''' 也就是没有词向量，则返回空集 </summary>
-        ''' <param name="word0"> 词 </param>
-        ''' <param name="word1"> 词 </param>
-        ''' <param name="word2"> 词 </param>
-        ''' <returns> 与结果最相近的前topNSize个词 </returns>
-        Public Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
-            Dim wv0 = wordMap.GetValueOrNull(word0)
-            Dim wv1 = wordMap.GetValueOrNull(word1)
-            Dim wv2 = wordMap.GetValueOrNull(word2)
-
-            If wv1 Is Nothing OrElse wv2 Is Nothing OrElse wv0 Is Nothing Then
-                Return Nothing
-            End If
-
-            Dim center = New Single(vectorSize - 1) {}
-
-            For i = 0 To vectorSize - 1
-                center(i) = wv1(i) - wv0(i) + wv2(i)
-            Next
-
-            Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
-            Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
-
-            For i = 0 To resultSize - 1
-                result.Add(New WordScore("^_^", -Single.MaxValue))
-            Next
-
-            Dim name As String
-            Dim minDist = -Single.MaxValue
-
-            For Each entry In wordMap.SetOfKeyValuePairs()
-                name = entry.Key
-
-                If name.Equals(word1) OrElse name.Equals(word2) Then
-                    Continue For
-                End If
-
-                Dim vector = entry.Value
-                Dim dist As Single = 0
-
-                For i = 0 To vector.Length - 1
-                    dist += center(i) * vector(i)
-                Next
-
-                If dist > minDist Then
-                    result.Add(New WordScore(entry.Key, dist))
-                    minDist = result.PollLast().score
-                End If
-            Next
-
-            Return result
-        End Function
-
-        Public Function getWordVector(word As String) As Single()
-            Return wordMap.GetValueOrNull(word)
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-
-    End Class
-End Namespace
+End Class
