@@ -74,15 +74,30 @@ Namespace NlpVec
     ''' </remarks>
     Public Class Word2Vec
 
-        Friend windowSize As Integer '文字窗口大小
-        Private vectorSize As Integer '词向量的元素个数
+        ''' <summary>
+        ''' 文字窗口大小
+        ''' </summary>
+        Friend windowSize As Integer
+        ''' <summary>
+        ''' 词向量的元素个数
+        ''' </summary>
+        Private vectorSize As Integer
 
-        Friend trainMethod As TrainMethod ' 神经网络学习方法
+        ''' <summary>
+        ''' 神经网络学习方法
+        ''' </summary>
+        Friend trainMethod As TrainMethod
         Friend sample As Double
         '    private int negativeSample;
-        Friend alpha As Double ' 学习率，并行时由线程更新
+        ''' <summary>
+        ''' 学习率，并行时由线程更新
+        ''' </summary>
+        Friend alpha As Double
         Private alphaThresold As Double
-        Friend initialAlpha As Double ' 初始学习率
+        ''' <summary>
+        ''' 初始学习率
+        ''' </summary>
+        Friend initialAlpha As Double
         Private freqThresold As Integer = 5
         Friend ReadOnly alphaLock As SByte() = New SByte(-1) {} ' alpha同步锁
         Private ReadOnly treeLock As SByte() = New SByte(-1) {} ' alpha同步锁
@@ -122,7 +137,7 @@ Namespace NlpVec
         ''' f(x) = x / (x + 1)
         ''' </summary>
         Private Sub computeExp()
-            For i = 0 To EXP_TABLE_SIZE - 1
+            For i As Integer = 0 To EXP_TABLE_SIZE - 1
                 expTable(i) = stdNum.Exp((i / EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
                 expTable(i) = expTable(i) / (expTable(i) + 1)
             Next

@@ -58,7 +58,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace NlpVec
 
@@ -132,7 +132,7 @@ Namespace NlpVec
                         value(j) = vector
                     Next
 
-                    len = stdNum.Sqrt(len)
+                    len = std.Sqrt(len)
 
                     For j = 0 To layerSizeLoaded - 1
                         value(j) /= CSng(len)

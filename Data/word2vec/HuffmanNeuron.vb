@@ -85,6 +85,11 @@ Namespace NlpVec
             End Get
         End Property
 
+        Public Sub New(freq As Integer, vectorSize As Integer)
+            frequency = freq
+            vector = New Double(vectorSize - 1) {}
+        End Sub
+
         Public Function merge(right As HuffmanNode) As HuffmanNode Implements HuffmanNode.merge
             Dim parent As HuffmanNode = New HuffmanNeuron(frequency + right.frequency, vector.Length)
             parentNeuron = parent
@@ -103,11 +108,5 @@ Namespace NlpVec
                 Return -1
             End If
         End Function
-
-        Public Sub New(freq As Integer, vectorSize As Integer)
-            frequency = freq
-            vector = New Double(vectorSize - 1) {}
-            parentNeuron = Nothing
-        End Sub
     End Class
 End Namespace
