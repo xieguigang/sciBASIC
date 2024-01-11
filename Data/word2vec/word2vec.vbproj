@@ -25,11 +25,19 @@
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <AssemblyName>Microsoft.VisualBasic.Data.NLP.Word2Vec</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.NLP.Word2Vec</RootNamespace>
+    <PackageLicenseExpression>gpl3</PackageLicenseExpression>
+    <IncludeSymbols>True</IncludeSymbols>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="test\**" />
 	  <EmbeddedResource Remove="test\**" />
 	  <None Remove="test\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 	</ItemGroup>
   </Project>
