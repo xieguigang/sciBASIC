@@ -63,24 +63,10 @@ Namespace HuffmanTree
     ''' </summary>
     Public Class HuffmanNeuron : Implements HuffmanNode
 
-        Protected Friend parentNeuron As HuffmanNode
-        Protected Friend code As Integer = 0
-        Protected Friend vector As Double()
-
-        Public Sub SetCode(value As Integer) Implements HuffmanNode.SetCode
-            code = value
-        End Sub
-
+        Public Property parentNeuron As HuffmanNode Implements HuffmanNode.parent
+        Public Property code As Integer = 0 Implements HuffmanNode.code
+        Public Property vector As Double()
         Public Property frequency As Integer Implements HuffmanNode.frequency
-
-        Public Property parent As HuffmanNode Implements HuffmanNode.parent
-            Set(value As HuffmanNode)
-                parentNeuron = value
-            End Set
-            Get
-                Return parentNeuron
-            End Get
-        End Property
 
         Public Sub New(freq As Integer, vectorSize As Integer)
             frequency = freq
@@ -90,9 +76,9 @@ Namespace HuffmanTree
         Public Function merge(right As HuffmanNode) As HuffmanNode Implements HuffmanNode.merge
             Dim parent As HuffmanNode = New HuffmanNeuron(frequency + right.frequency, vector.Length)
             parentNeuron = parent
-            SetCode(0)
+            code = (0)
             right.parent = parent
-            right.SetCode(1)
+            right.code = (1)
             Return parent
         End Function
 

@@ -62,9 +62,10 @@ Namespace HuffmanTree
     ''' </summary>
     Public Interface HuffmanNode : Inherits IComparable(Of HuffmanNode)
 
-        Sub SetCode(value As Integer)
+        Property code As Integer
         Property frequency As Integer
         Property parent As HuffmanNode
+
         Function merge(sibling As HuffmanNode) As HuffmanNode
 
     End Interface

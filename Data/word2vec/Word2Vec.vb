@@ -56,6 +56,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.HuffmanTree
 Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports std = System.Math
@@ -240,13 +242,14 @@ Public Class Word2Vec
             Dim neu1e = New Double(vectorSize - 1) {} '误差项
             'Hierarchical Softmax
             Dim pathNeurons = word.pathNeurons
-            Dim we = sentence(c)
+            Dim we As WordNeuron = sentence(c)
 
             For neuronIndex = 0 To pathNeurons.Count - 1 - 1
-                Dim out = CType(pathNeurons(neuronIndex), HuffmanNeuron)
+                Dim out As HuffmanNeuron = pathNeurons(neuronIndex)
                 Dim f As Double = 0
+
                 ' Propagate hidden -> output
-                For j = 0 To vectorSize - 1
+                For j As Integer = 0 To vectorSize - 1
                     f += we.vector(j) * out.vector(j)
                 Next
 
