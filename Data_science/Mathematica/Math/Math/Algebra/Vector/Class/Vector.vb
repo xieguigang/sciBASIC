@@ -431,6 +431,10 @@ Namespace LinearAlgebra
             Return New Vector(SIMD.Subtract.f64_op_subtract_f64(v1.buffer, v2.buffer))
         End Operator
 
+        Public Overloads Shared Operator *(x As IVector, y As Vector) As Vector
+            Return New Vector(SIMD.Multiply.f64_op_multiply_f64(x.Data, y.Array))
+        End Operator
+
         Public Overloads Shared Operator *(data As IEnumerable(Of Double), x As Vector) As Vector
             Dim N0 As Integer = x.[Dim]
             Dim v3 As New Vector(N0)
