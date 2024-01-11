@@ -56,8 +56,7 @@ Namespace NlpVec
     ''' <summary>
     ''' the word score of the vector model
     ''' </summary>
-    Public Class WordScore
-        Implements IComparable(Of WordScore)
+    Public Class WordScore : Implements IComparable(Of WordScore)
 
         Public name As String
         Public score As Single

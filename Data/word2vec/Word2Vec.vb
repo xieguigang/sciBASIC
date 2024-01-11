@@ -55,14 +55,10 @@
 
 #End Region
 
-Imports System.IO
-Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 Imports Microsoft.VisualBasic.Data.Trinity.NLP
-Imports Microsoft.VisualBasic.Text
 Imports std = System.Math
 
 Namespace NlpVec
@@ -381,45 +377,11 @@ Namespace NlpVec
         Friend nextRandom As Long = 5
 
         ''' <summary>
-        ''' 保存训练得到的模型 </summary>
-        ''' <param name="file"> 模型存放路径 </param>
-        Public Sub saveModel(file As FileStream)
-            Dim dataOutputStream As BinaryWriter = Nothing
-
-            Try
-                dataOutputStream = New BinaryWriter(file)
-                dataOutputStream.Write(neuronMap.Count)
-                dataOutputStream.Write(vectorSize)
-
-                For Each element In neuronMap.SetOfKeyValuePairs()
-                    dataOutputStream.Write(element.Key)
-
-                    For Each d In element.Value.vector
-                        dataOutputStream.Write(CType(d, Double?).Value)
-                    Next
-                Next
-
-                Call ("saving model successfully in " & file.Name).__INFO_ECHO
-            Catch e As IOException
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            Finally
-
-                Try
-
-                    If dataOutputStream IsNot Nothing Then
-                        dataOutputStream.Close()
-                    End If
-
-                Catch ioe As IOException
-                    Console.WriteLine(ioe.ToString())
-                    Console.Write(ioe.StackTrace)
-                End Try
-            End Try
-        End Sub
-
+        ''' export the trained word vector model from this function
+        ''' </summary>
+        ''' <returns></returns>
         Public Function outputVector() As VectorModel
-            Dim wordMapConverted As IDictionary(Of String, Single()) = New Dictionary(Of String, Single())()
+            Dim wordMapConverted As New Dictionary(Of String, Single())()
             Dim wordKey As String
             Dim vector As Single()
             Dim vectorLength As Double
