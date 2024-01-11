@@ -1,6 +1,7 @@
 ﻿Namespace ApplicationServices.Terminal
 
 	Public Structure ConsoleFormat
+
 		Public Shared ReadOnly Property None() As ConsoleFormat
 			Get
 				Return Nothing
@@ -24,7 +25,18 @@
 		ReadOnly Underline As Boolean
 		ReadOnly Inverted As Boolean
 
-		Sub New(Optional Foreground As AnsiColor = Nothing, Optional Background As AnsiColor = Nothing, Optional Bold As Boolean = False, Optional Underline As Boolean = False, Optional Inverted As Boolean = False)
+		Public ReadOnly Property IsDefault() As Boolean
+			Get
+				Return Not Foreground.HasValue AndAlso Not Background.HasValue AndAlso Not Bold AndAlso Not Underline AndAlso Not Inverted
+			End Get
+		End Property
+
+		Sub New(Optional Foreground As AnsiColor = Nothing,
+				Optional Background As AnsiColor = Nothing,
+				Optional Bold As Boolean = False,
+				Optional Underline As Boolean = False,
+				Optional Inverted As Boolean = False)
+
 			Me.Foreground = Foreground
 			Me.Background = Background
 			Me.Bold = Bold
@@ -34,13 +46,11 @@
 
 		Public Overloads Function Equals(other As ConsoleFormat) As Boolean
 			'this is hot from IncrementalRendering.CalculateDiff, so we want to use custom Equals where 'other' is by-ref
-			Return Foreground = other.Foreground AndAlso Background = other.Background AndAlso Bold = other.Bold AndAlso Underline = other.Underline AndAlso Inverted = other.Inverted
+			Return Foreground = other.Foreground AndAlso
+				Background = other.Background AndAlso
+				Bold = other.Bold AndAlso
+				Underline = other.Underline AndAlso
+				Inverted = other.Inverted
 		End Function
-
-		Public ReadOnly Property IsDefault() As Boolean
-			Get
-				Return Not Foreground.HasValue AndAlso Not Background.HasValue AndAlso Not Bold AndAlso Not Underline AndAlso Not Inverted
-			End Get
-		End Property
 	End Structure
 End Namespace

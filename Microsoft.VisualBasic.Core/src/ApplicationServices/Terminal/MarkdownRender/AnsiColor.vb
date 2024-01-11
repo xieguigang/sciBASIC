@@ -2,21 +2,21 @@
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
-Namespace ApplicationServices.Terminal
 #Region "License Header"
-    ' This Source Code Form is subject to the terms of the Mozilla Public
-    ' License, v. 2.0. If a copy of the MPL was not distributed with this
-    ' file, You can obtain one at https://mozilla.org/MPL/2.0/.
+' This Source Code Form is subject to the terms of the Mozilla Public
+' License, v. 2.0. If a copy of the MPL was not distributed with this
+' file, You can obtain one at https://mozilla.org/MPL/2.0/.
 #End Region
 
+Namespace ApplicationServices.Terminal
 
     ''' <summary>
     ''' ANSI color definitions for the terminal.
-    ''' Each color has a different code depending on if it's applied as a foreground or background color.
+    ''' Each color has a different code depending on if it's applied as a foreground or 
+    ''' background color.
     ''' </summary>
     ''' <remarks>https://en.wikipedia.org/wiki/ANSI_escape_code#Colors</remarks>
-    Public Structure AnsiColor
-        Implements IEquatable(Of AnsiColor)
+    Public Structure AnsiColor : Implements IEquatable(Of AnsiColor)
 
         Private ReadOnly foregroundCode As String
         Private ReadOnly backgroundCode As String

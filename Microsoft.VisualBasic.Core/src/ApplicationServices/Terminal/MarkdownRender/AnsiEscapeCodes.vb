@@ -24,6 +24,7 @@ Namespace ApplicationServices.Terminal
 	''' a portion Of the ANSI standard.
 	''' </summary>
 	Public Module AnsiEscapeCodes
+
 		Private Const EscapeChar As Char = ChrW(&H1B)
 		Private Const Escape As String = ChrW(&H1B)
 		Private Const ResetForegroundColor As String = "39"
@@ -83,7 +84,7 @@ Namespace ApplicationServices.Terminal
 			End If
 		End Sub
 
-		Friend Function ToAnsiEscapeSequence(colorCode As String) As String
+		Public Function ToAnsiEscapeSequence(colorCode As String) As String
 			Return $"{Escape}[{colorCode}m"
 		End Function
 
