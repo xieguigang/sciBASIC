@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::bd732f4f0eb94ba2de9bdb8786f86a91, sciBASIC#\Data\word2vec\Word2Vec.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 404
-    '    Code Lines: 273
-    ' Comment Lines: 55
-    '   Blank Lines: 76
-    '     File Size: 15.21 KB
+' Summaries:
 
 
-    '     Class Word2Vec
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: outputVector
-    ' 
-    '         Sub: buildVocabulary, cbowGram, computeExp, readTokens, saveModel
-    '              skipGram, training
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 404
+'    Code Lines: 273
+' Comment Lines: 55
+'   Blank Lines: 76
+'     File Size: 15.21 KB
+
+
+'     Class Word2Vec
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: outputVector
+' 
+'         Sub: buildVocabulary, cbowGram, computeExp, readTokens, saveModel
+'              skipGram, training
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,9 +59,10 @@ Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace NlpVec
 
@@ -138,7 +139,7 @@ Namespace NlpVec
         ''' </summary>
         Private Sub computeExp()
             For i As Integer = 0 To EXP_TABLE_SIZE - 1
-                expTable(i) = stdNum.Exp((i / EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
+                expTable(i) = std.Exp((i / EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
                 expTable(i) = expTable(i) / (expTable(i) + 1)
             Next
         End Sub
@@ -461,7 +462,7 @@ Namespace NlpVec
                     vector(vi) = CSng(vectorNorm(vi))
                 Next
 
-                vectorLength = stdNum.Sqrt(vectorLength)
+                vectorLength = std.Sqrt(vectorLength)
 
                 For vi = 0 To vector.Length - 1
                     vector(vi) /= CSng(vectorLength)

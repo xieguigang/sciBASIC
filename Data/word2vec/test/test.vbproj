@@ -129,14 +129,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{5b355fb2-e0ca-44d0-bfdd-fdc691773781}</Project>
+      <Name>graph-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{b783a8a0-898c-4a32-9d74-20845a54f712}</Project>
+      <Name>Math.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{d157b3f1-c617-4409-b8e7-e6c231dc9a8f}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Trinity\Trinity.NET5.vbproj">
+      <Project>{252a9f7b-99f0-4297-889e-d97c69a01a8b}</Project>
+      <Name>Trinity.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\word2vec.vbproj">
       <Project>{dfef08b5-fa92-4108-b240-301761824dae}</Project>
       <Name>word2vec</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
