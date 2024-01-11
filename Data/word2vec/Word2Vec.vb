@@ -115,7 +115,7 @@ Namespace NlpVec
 
         ' 单词或短语计数器
         Private wordCounter As New TokenCounter(Of String)()
-        Private tempCorpus As New List(Of String)
+        Private tempCorpus As New List(Of String())
 
         ''' <summary>
         ''' 语料中句子个数
@@ -163,8 +163,9 @@ Namespace NlpVec
             ' 读取文本中的词，并计数词频
             For Each word As Word In tokenizer.words
                 Call wordCounter.add(word.str)
-                Call tempCorpus.Add(word.str)
             Next
+
+            Call tempCorpus.Add(tokenizer.words.Select(Function(wi) wi.str).ToArray)
         End Sub
 
         Private Sub buildVocabulary()
@@ -195,7 +196,7 @@ Namespace NlpVec
             totalWordCount = currentWordCount
             currentWordCount = 0
 
-            For Each li As String In tempCorpus
+            For Each li As String() In tempCorpus
                 'Dim corpusQueue As BlockingQueue(Of LinkedList(Of String)) = New ArrayBlockingQueue(Of LinkedList(Of String))(numOfThread)
                 'Dim futures As LinkedList(Of Future) = New LinkedList(Of Future)() '每个线程的返回结果，用于等待线程
 

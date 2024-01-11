@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.NlpVec
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
 
@@ -63,25 +64,13 @@ Namespace test
     Public Class TestWord2Vec
         Public Shared Sub readByJava(ByVal textFilePath As String, ByVal modelFilePath As String)
             Dim wv As Word2Vec = (New Word2VecFactory()).setMethod(TrainMethod.Skip_Gram).setNumOfThread(1).build()
+            Dim data As Paragraph() = Paragraph.Segmentation(textFilePath.ReadAllText).ToArray
 
-            Try
-
-                Using br As StreamReader = New StreamReader(textFilePath)
-                    Dim lineCount = 0
-                    Dim line As String = br.ReadLine()
-
-                    While Not line Is Nothing
-                        wv.readTokens(New Tokenizer(line, vbTab))
-                        '                System.out.println(line);
-                        lineCount += 1
-                        line = br.ReadLine()
-                    End While
-                End Using
-
-            Catch ioe As IOException
-                Console.WriteLine(ioe.ToString())
-                Console.Write(ioe.StackTrace)
-            End Try
+            For Each p As Paragraph In data
+                For Each line In p.sentences
+                    Call wv.readTokens(line)
+                Next
+            Next
 
             wv.training()
             wv.saveModel(New FileStream(modelFilePath, FileMode.OpenOrCreate))
@@ -97,8 +86,8 @@ Namespace test
         End Sub
 
         Public Shared Sub Main(ByVal args As String())
-            Dim textFilePath = "C:\Users\Administrator\Downloads\swresult_withoutnature.txt"
-            Dim modelFilePath = "C:\Users\Administrator\Downloads\swresult_withoutnature.vec"
+            Dim textFilePath = "E:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Rapunzel.txt"
+            Dim modelFilePath = "./swresult_withoutnature.vec"
             readByJava(textFilePath, modelFilePath)
             testVector(modelFilePath)
         End Sub
