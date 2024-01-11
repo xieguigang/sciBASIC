@@ -26,4 +26,10 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <UseApplicationFramework>True</UseApplicationFramework>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="test\**" />
+	  <EmbeddedResource Remove="test\**" />
+	  <None Remove="test\**" />
+	</ItemGroup>
   </Project>
