@@ -67,14 +67,14 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Namespace ConsoleTableApp
     Friend Class Program
         Public Shared Sub Main1(args As String())
-            ConsoleTableBuilder.From(Function() New ConsoleTableBaseData With {
-                            .Rows = New List(Of List(Of Object)) From {
-                                New List(Of Object) From {
+            ConsoleTableBuilder.From(func:=Function() New ConsoleTableBaseData With {
+                            .Rows = New List(Of Object()) From {
+                                New Object() {
                                     "a1",
                                     "b1",
                                     "c1"
                                 },
-                                New List(Of Object) From {
+                                New Object() {
                                     "a2",
                                     "b2",
                                     "c2"
