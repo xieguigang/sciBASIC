@@ -51,7 +51,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.NLP.Model
-Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.NlpVec
+Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 
 Namespace test
 
