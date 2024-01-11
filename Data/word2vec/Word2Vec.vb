@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
+Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports Microsoft.VisualBasic.Text
 Imports std = System.Math
 
@@ -114,8 +115,12 @@ Namespace NlpVec
 
         ' 单词或短语计数器
         Private wordCounter As New TokenCounter(Of String)()
-        Private tempCorpus As String
-        Private tempCorpusWriter As StreamWriter
+        Private tempCorpus As New List(Of String)
+
+        ''' <summary>
+        ''' 语料中句子个数
+        ''' </summary>
+        Friend trainBlockSize As Integer = 500
 
         Friend Sub New(factory As Word2VecFactory)
             vectorSize = factory.vectorSize
@@ -148,47 +153,18 @@ Namespace NlpVec
         ''' 读取一段文本，统计词频和相邻词语出现的频率，
         ''' 文本将输出到一个临时文件中，以方便之后的训练 </summary>
         ''' <param name="tokenizer"> 标记 </param>
-        Public Sub readTokens(tokenizer As Tokenizer)
+        Public Sub readTokens(tokenizer As Sentence)
             If tokenizer Is Nothing OrElse tokenizer.size() < 1 Then
                 Return
+            Else
+                currentWordCount += tokenizer.size()
             End If
 
-            currentWordCount += tokenizer.size()
             ' 读取文本中的词，并计数词频
-            While tokenizer.hasMoreTokens()
-                wordCounter.add(tokenizer.nextToken())
-            End While
-            ' 将文本输出到临时文件中，供后续训练之用
-            Try
-
-                If tempCorpus Is Nothing Then
-                    Dim tempDir As String = App.GetTempFile
-
-                    If Not tempDir.DirectoryExists Then
-                        Dim tempCreated As Boolean = tempDir.MakeDir
-
-                        If Not tempCreated Then
-                            Call ("unable to create temp file in " & tempDir.GetDirectoryFullPath).Warning
-                        End If
-                    End If
-
-                    tempCorpus = TempFileSystem.GetAppSysTempFile(".txt", App.PID, "tempCorpus")
-                    tempCorpusWriter = New StreamWriter(tempCorpus.Open, Encoding.UTF8)
-                End If
-
-                tempCorpusWriter.Write(tokenizer.ToString(" "))
-                tempCorpusWriter.WriteLine()
-            Catch e As Exception
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-
-                Try
-                    tempCorpusWriter.Close()
-                Catch e1 As Exception
-                    Console.WriteLine(e1.ToString())
-                    Console.Write(e1.StackTrace)
-                End Try
-            End Try
+            For Each word As Word In tokenizer.words
+                Call wordCounter.add(word.str)
+                Call tempCorpus.Add(word.str)
+            Next
         End Sub
 
         Private Sub buildVocabulary()
@@ -204,28 +180,22 @@ Namespace NlpVec
                 neuronMap(wordText) = New WordNeuron(wordText, wordCounter.get(wordText), vectorSize)
             Next
 
-            Call ("read " & neuronMap.Count & " word totally.").__INFO_ECHO
-            '        System.out.println("共读取了 " + neuronMap.size() + " 个词。");
-
+            Call VBDebugger.EchoLine("read " & neuronMap.Count & " word totally.")
         End Sub
 
         Public Sub training()
-            If tempCorpus Is Nothing Then
-                Throw New NullReferenceException("训练语料为空，如果之前调用了training()，" & "请调用readLine(String sentence)重新输入语料")
-            End If
+            ' 若干文本组成的语料
+            Dim corpus As New LinkedList(Of String)()
+            Dim trainer As New Trainer(Me, corpus)
 
-            buildVocabulary()
-            HuffmanTree.make(neuronMap.Values)
+            Call buildVocabulary()
+            Call HuffmanTree.make(neuronMap.Values)
+
             ' 重新遍历语料
             totalWordCount = currentWordCount
             currentWordCount = 0
-            tempCorpusWriter.Close()
 
-            Dim corpus As LinkedList(Of String) = New LinkedList(Of String)() '若干文本组成的语料
-            Dim trainBlockSize = 500 '语料中句子个数
-            Dim trainer As New Trainer(Me, corpus)
-
-            For Each li As String In tempCorpus.LineIterators(Encodings.UTF8)
+            For Each li As String In tempCorpus
                 'Dim corpusQueue As BlockingQueue(Of LinkedList(Of String)) = New ArrayBlockingQueue(Of LinkedList(Of String))(numOfThread)
                 'Dim futures As LinkedList(Of Future) = New LinkedList(Of Future)() '每个线程的返回结果，用于等待线程
 
@@ -251,7 +221,7 @@ Namespace NlpVec
             Call ("the task queue has been allocated completely, " & "please wait the thread pool (" & numOfThread & ") to process...").__INFO_ECHO
 
             ' 等待线程处理完语料
-            Call trainer.run()
+            Call Trainer.run()
         End Sub
 
         Friend Sub skipGram(index As Integer, sentence As IList(Of WordNeuron), b As Integer, alpha As Double)
