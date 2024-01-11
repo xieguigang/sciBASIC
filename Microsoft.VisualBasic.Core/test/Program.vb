@@ -56,6 +56,7 @@ Module Program
 
         Console.WriteLine("Hello World!")
 
+        Call markdownDisplayTest.Main1()
         Call SIMDTest.Main1()
         Call streamTest.Main1()
     End Sub
