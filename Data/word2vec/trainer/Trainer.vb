@@ -55,28 +55,27 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Data.NLP.Word2Vec.utils
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace NlpVec
 
     Public Class Trainer : Implements ITaskDriver
 
         Private ReadOnly outerInstance As Word2Vec
-        Friend corpusQueue As Queue(Of LinkedList(Of String))
-        Friend corpusToBeTrained As LinkedList(Of String)
+        Friend corpusQueue As Queue(Of LinkedList(Of String()))
+        Friend corpusToBeTrained As LinkedList(Of String())
         Friend trainingWordCount As Integer
         Friend tempAlpha As Double
 
-        Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String))
+        Public Sub New(outerInstance As Word2Vec, corpus As LinkedList(Of String()))
             Me.outerInstance = outerInstance
             corpusToBeTrained = corpus
             trainingWordCount = 0
-            corpusQueue = New Queue(Of LinkedList(Of String))
+            corpusQueue = New Queue(Of LinkedList(Of String()))
             corpusQueue.Enqueue(corpus)
         End Sub
 
-        Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String)))
+        Public Sub New(outerInstance As Word2Vec, corpusQueue As Queue(Of LinkedList(Of String())))
             Me.outerInstance = outerInstance
             Me.corpusQueue = corpusQueue
         End Sub
@@ -91,38 +90,38 @@ Namespace NlpVec
                 End If
                 '                logger.info("alpha:" + tempAlpha + "\tProgress: "
                 '                        + (int) (currentWordCount / (double) (totalWordCount + 1) * 100) + "%");
-                Console.WriteLine("alpha:" & tempAlpha & vbTab & "Progress: " & outerInstance.currentWordCount / (outerInstance.totalWordCount + 1) * 100 & "%" & vbTab)
+                VBDebugger.EchoLine("alpha:" & tempAlpha & vbTab & "Progress: " & outerInstance.currentWordCount / (outerInstance.totalWordCount + 1) * 100 & "%" & vbTab)
             End SyncLock
         End Sub
 
         Friend Sub training()
             '            long nextRandom = 5;
-            For Each line In corpusToBeTrained
-                Dim sentence As IList(Of WordNeuron) = New List(Of WordNeuron)()
-                Dim tokenizer As Tokenizer = New Tokenizer(line, " ")
-                trainingWordCount += tokenizer.size()
+            For Each tokenizer As String() In corpusToBeTrained
+                Dim sentence As New List(Of WordNeuron)()
 
-                While tokenizer.hasMoreTokens()
-                    Dim token As String = tokenizer.nextToken()
+                trainingWordCount += tokenizer.Length
+
+                For Each token As String In tokenizer
                     Dim entry = outerInstance.neuronMap.GetValueOrNull(token)
 
                     If entry Is Nothing Then
-                        Continue While
+                        Continue For
                     End If
                     ' The subsampling randomly discards frequent words while keeping the ranking same
                     If outerInstance.sample > 0 Then
-                        Dim ran = (stdNum.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) * (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
+                        Dim ran = (std.Sqrt(entry.frequency / (outerInstance.sample * outerInstance.totalWordCount)) + 1) *
+                            (outerInstance.sample * outerInstance.totalWordCount) / entry.frequency
                         outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
 
                         If ran < (outerInstance.nextRandom And &HFFFF) / 65536 Then
-                            Continue While
+                            Continue For
                         End If
 
                         sentence.Add(entry)
                     End If
-                End While
+                Next
 
-                For index = 0 To sentence.Count - 1
+                For index As Integer = 0 To sentence.Count - 1
                     outerInstance.nextRandom = outerInstance.nextRandom * 25214903917L + 11
 
                     Select Case outerInstance.trainMethod

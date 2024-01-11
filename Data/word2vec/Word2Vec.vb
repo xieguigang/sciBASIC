@@ -185,7 +185,7 @@ Namespace NlpVec
 
         Public Sub training()
             ' 若干文本组成的语料
-            Dim corpus As New LinkedList(Of String)()
+            Dim corpus As New LinkedList(Of String())()
             Dim trainer As New Trainer(Me, corpus)
 
             Call buildVocabulary()
