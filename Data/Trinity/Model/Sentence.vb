@@ -122,6 +122,12 @@ Namespace Model
             Return -1
         End Function
 
+        Public Iterator Function GetWords() As IEnumerable(Of String)
+            For Each w As Word In words.SafeQuery
+                Yield w.str
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return words.JoinBy(" ")
         End Function
