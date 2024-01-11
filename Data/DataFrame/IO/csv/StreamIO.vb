@@ -88,14 +88,14 @@ Namespace IO
             Dim scores As New List(Of (Type, Integer, Integer))
             Dim headers As New Index(Of String)(header)
 
-            For Each schema In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
+            For Each schema As SchemaProvider In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
                 Dim allNames$() = schema.Properties _
-                                        .Select(Function(x) x.Name) _
-                                        .ToArray
+                    .Select(Function(x) x.Name) _
+                    .ToArray
                 Dim matches = Aggregate p As String
                               In allNames
                               Where headers.IndexOf(p) > -1
-                              Into Sum(1)
+                              Into Count
 
                 scores += (schema.DeclaringType, matches, allNames.Length)
             Next

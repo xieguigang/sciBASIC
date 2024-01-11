@@ -64,10 +64,11 @@ Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.S
 Public Class MappingsHelper
 
     ''' <summary>
-    ''' 
+    ''' Measure the best model type based on the header title row in target csv file
     ''' </summary>
-    ''' <param name="file"></param>
-    ''' <param name="types"></param>
+    ''' <param name="file">the file path to the target csv file, this function only reads 
+    ''' the first line for parsed as the title for do the clr type model matches.</param>
+    ''' <param name="types">a collection of the clr types.</param>
     ''' <returns>这个匹配函数是安全的函数, 如果一个结果都没有被匹配上,则这个函数会
     ''' 返回<see cref="System.Void"/>类型</returns>
     Public Shared Function [Typeof](file$, ParamArray types As Type()) As Type
