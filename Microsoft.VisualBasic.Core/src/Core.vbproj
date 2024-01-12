@@ -49,9 +49,7 @@
 		<PlatformTarget>x64</PlatformTarget>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>		
-		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<BaseAddress>4194304</BaseAddress>
+		<DebugType>full</DebugType>				
 		<OutputPath>../../.nuget/</OutputPath>
 	</PropertyGroup>
 
