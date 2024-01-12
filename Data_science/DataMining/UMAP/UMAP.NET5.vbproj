@@ -18,6 +18,9 @@
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
 		<Description>UMap</Description>
 		<RepositoryType>git</RepositoryType>
+		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Title>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction</Title>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
