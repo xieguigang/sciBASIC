@@ -14,6 +14,7 @@
     <PackageProjectUrl></PackageProjectUrl>
     <Copyright>https://github.com/kermitt/ANOVA</Copyright>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
