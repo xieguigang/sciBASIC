@@ -321,7 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{6da12323-fb7c-4ac7-9ada-2ce65b0b060d}</Project>
+      <Project>{f8c0a2fd-01f6-4a64-817d-119b91c9923b}</Project>
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>

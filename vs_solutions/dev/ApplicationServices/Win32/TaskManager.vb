@@ -62,6 +62,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports PerformanceCounter2 = System.Diagnostics.PerformanceCounter
 Imports sys = System.Math
 
 Namespace Win32
@@ -75,7 +76,7 @@ Namespace Win32
         ''' Using this property you can display the CPU usage (over all CPU usage like you would find on the task manager)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property CPU_Usages As New PerformanceCounter("Processor", "% Processor Time", "_Total")
+        Public ReadOnly Property CPU_Usages As New PerformanceCounter2("Processor", "% Processor Time", "_Total")
 
         ''' <summary>
         ''' 类似于任务管理器的函数：Memory, CPU, ProcessName, PID, CommandLine
@@ -89,7 +90,7 @@ Namespace Win32
                 Dim proc As Process() = Process.GetProcesses
 
                 For Each P As Process In proc
-                    Dim pCounter As New PerformanceCounter("Process", "% Processor Time", P.ProcessName)
+                    Dim pCounter As New PerformanceCounter2("Process", "% Processor Time", P.ProcessName)
 
                     counterList += New TaskInfo With {
                         .Memory = P.WorkingSet64,
