@@ -10,8 +10,7 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <OutputPath>../../../../../R-sharp/App</OutputPath>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>    
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
