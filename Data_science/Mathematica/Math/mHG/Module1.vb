@@ -236,10 +236,10 @@ Module Module1
 
         ' p - the statistic.
         ' N\B - number Of all \ black balls.
-        Dim W = N - B
+        Dim W As Integer = N - B
         Dim R_separation_line = R_separation_linecalc(p, N, B, n_max)
         Dim pi_r = pi_rcalc(N, B, R_separation_line)
-        Dim p_corrected As Double = 1 - pi_r(W + 2, B + 2)
+        Dim p_corrected As Double = 1 - pi_r(W + 2, CInt(B) + 2)
 
         Return p_corrected
     End Function
@@ -427,12 +427,12 @@ Module Module1
                             ' split the tree To two subtrees To be evaluated separately.
                             ' R_tree Will be used To calculate the HG_row_n entries corresponding To (b_n_start:b_n_start + r_split),
                             ' And L_tree will be used To calculate the rest.
-                            Dim r_split = Floor((b_n_end - b_n_start + 1) / 2)
+                            Dim r_split = std.Floor((b_n_end - b_n_start + 1) / 2)
                             Dim l_split = (b_n_end - b_n_start + 1) - r_split
 
                             'If m Is above the root Of the tree we are working On - Then some rows were already
                             ' calculated And we can take this To our advantage.
-                            Dim rows_already_calc = Max(m - m_start, 0)
+                            Dim rows_already_calc = std.Max(m - m_start, 0)
 
                             ' Go diagonally (increasing both b_n_start And m) until we Get To the root Of the right tree.
                             Dim i = rows_already_calc
