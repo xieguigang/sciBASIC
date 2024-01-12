@@ -53,6 +53,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 
 Module markdownDisplayTest
     Sub Main1()
+        Call consoleTest()
         Call MarkdownRender.Print("# title
 
 This is a inline ``code`` span. **bold** font style test.
@@ -71,5 +72,19 @@ A url test: http://test.url/a/b/c/xxxx.txt
 ", indent:=10)
 
         Pause()
+    End Sub
+
+    Sub consoleTest()
+
+        Dim format As New ConsoleFormat(Foreground:=AnsiColor.Green, Background:=AnsiColor.Red,
+                                        Bold:=False, Underline:=False, Inverted:=False)
+
+        Call Console.WriteLine(ToAnsiEscapeSequenceSlow(format) & "aaaaaaaa")
+
+        format = New ConsoleFormat(Foreground:=AnsiColor.White, Background:=AnsiColor.Blue, Bold:=True, Underline:=True)
+
+        Call Console.WriteLine(ToAnsiEscapeSequenceSlow(format) & "dgdfgdfg")
+
+        ' Pause()
     End Sub
 End Module

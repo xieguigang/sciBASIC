@@ -177,11 +177,11 @@ Namespace IO
         End Function
 
         Public Iterator Function EnumerateData() As IEnumerable(Of Dictionary(Of String, String))
-            For Each row In _innerTable
+            For Each row As RowObject In _innerTable
                 Dim out As New Dictionary(Of String, String)
 
                 For Each key In SchemaOridinal
-                    out.Add(key.Key, row(key.Value))
+                    Call out.Add(key.Key, row(key.Value))
                 Next
 
                 Yield out
