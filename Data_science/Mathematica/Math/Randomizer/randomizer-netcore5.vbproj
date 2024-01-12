@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Math</RootNamespace>
@@ -274,37 +274,12 @@
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|AnyCPU'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <DefineTrace>True</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|AnyCPU'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <DefineTrace>True</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|AnyCPU'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <DefineTrace>True</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|x64'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <Optimize>True</Optimize>
-    <DefineTrace>True</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|x64'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <Optimize>True</Optimize>
-    <DefineTrace>True</DefineTrace>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|x64'">
-    <RemoveIntegerChecks>True</RemoveIntegerChecks>
-    <Optimize>True</Optimize>
-    <DefineTrace>True</DefineTrace>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

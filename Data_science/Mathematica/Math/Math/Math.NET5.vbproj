@@ -605,41 +605,13 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|AnyCPU'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|AnyCPU'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|AnyCPU'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|x64'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|x64'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|x64'">
-	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
-	  <DebugType>full</DebugType>
-	  <DefineTrace>True</DefineTrace>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../../../.nuget/</OutputPath>
+  </PropertyGroup>
 
 	<ItemGroup>
 	  <Compile Remove="packages\**" />
