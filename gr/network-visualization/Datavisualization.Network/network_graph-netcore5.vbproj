@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network</RootNamespace>
@@ -6,8 +6,17 @@
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;gcmodeller_desktop;nuget_release</Configurations>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>

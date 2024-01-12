@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.visualize.Network.Layouts</RootNamespace>
@@ -9,8 +9,15 @@
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
