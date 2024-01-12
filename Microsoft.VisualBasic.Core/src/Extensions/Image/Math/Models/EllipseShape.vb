@@ -52,7 +52,7 @@
 #End Region
 
 Imports System.Drawing
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -83,8 +83,8 @@ Namespace Imaging.Math2D
 
         Private Shared Function EllipseDrawing(dHalfwidthEllipse As Double, dHalfheightEllipse As Double, origin As PointF, t As Integer) As PointF
             Return New PointF(
-                origin.X + dHalfwidthEllipse * stdNum.Cos(t * stdNum.PI / 180),
-                origin.Y + dHalfheightEllipse * stdNum.Sin(t * stdNum.PI / 180)
+                origin.X + dHalfwidthEllipse * std.Cos(t * std.PI / 180),
+                origin.Y + dHalfheightEllipse * std.Sin(t * std.PI / 180)
             )
         End Function
     End Class
