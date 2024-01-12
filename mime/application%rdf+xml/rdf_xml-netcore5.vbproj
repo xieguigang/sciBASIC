@@ -12,6 +12,7 @@
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <Title>Resource Description Framework</Title>
     <Description>Supports for application/rdf+xml MIME type</Description>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
