@@ -1,68 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::ae1746f721833e60c0213edca189a909, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 118
-    '    Code Lines: 74
-    ' Comment Lines: 27
-    '   Blank Lines: 17
-    '     File Size: 3.84 KB
+' Summaries:
 
 
-    '     Class NodeData
-    ' 
-    '         Properties: betweennessCentrality, color, force, initialPostion, mass
-    '                     neighborhoods, neighbours, origID, size, weights
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, SafeGetRadius, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 118
+'    Code Lines: 74
+' Comment Lines: 27
+'   Blank Lines: 17
+'     File Size: 3.84 KB
+
+
+'     Class NodeData
+' 
+'         Properties: betweennessCentrality, color, force, initialPostion, mass
+'                     neighborhoods, neighbours, origID, size, weights
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Clone, SafeGetRadius, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-#If netcore5 = 0 Then
-Imports System.Web.Script.Serialization
-#Else
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-#End If
-
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Linq
+
 
 Namespace Graph
 
