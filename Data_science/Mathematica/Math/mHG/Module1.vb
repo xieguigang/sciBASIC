@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::d247ddeb1767da2e3a8e7c12214ad5e5, sciBASIC#\Data_science\Mathematica\Math\mHG\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 470
-    '    Code Lines: 196
-    ' Comment Lines: 220
-    '   Blank Lines: 54
-    '     File Size: 23.25 KB
+' Summaries:
 
 
-    ' Module Module1
-    ' 
-    '     Function: HG_row_ncalc, mHGpvalcalc, mHGstatisticcalc, mHGtest, pi_rcalc
-    '               R_separation_linecalc
-    ' 
-    '     Sub: Main
-    '     Structure HG_row_n
-    ' 
-    '         Function: d_ratio, v_ratio
-    '         Delegate Function
-    ' 
-    ' 
-    '         Structure calc
-    ' 
-    '             Function: iter, recur
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 470
+'    Code Lines: 196
+' Comment Lines: 220
+'   Blank Lines: 54
+'     File Size: 23.25 KB
+
+
+' Module Module1
+' 
+'     Function: HG_row_ncalc, mHGpvalcalc, mHGstatisticcalc, mHGtest, pi_rcalc
+'               R_separation_linecalc
+' 
+'     Sub: Main
+'     Structure HG_row_n
+' 
+'         Function: d_ratio, v_ratio
+'         Delegate Function
+' 
+' 
+'         Structure calc
+' 
+'             Function: iter, recur
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,7 +72,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
+Imports std = System.Math
 
 ' author: Kobi Perl
 ' Based On the following thesis:
@@ -293,7 +295,7 @@ Module Module1
                 should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W)
                 Do While (should_inc_w) ' Increase w until we Get outside the R line (Or going outside the n_max zone)
                     W = W + 1
-                    HG_row("1:(b+1)") = HG_row("1:(b+1)") * v_ratio(B + W, Seq(0, B), N, B)
+                    HG_row("1:(b+1)") = HG_row("1:(b+1)") * v_ratio(B + W, seq(0, B), N, B)
                     HGT = 1 - HG_row("1:B").Sum  ' P(X >= b) = 1 - P(X <b)
                     should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W) AndAlso (B <= (n_max - W))
                 Loop
@@ -312,7 +314,7 @@ Module Module1
         Return (R_separation_line)
     End Function
 
-    Public Function pi_rcalc(N%, B%, R_separation_line As Vector) As Matrix
+    Public Function pi_rcalc(N%, B%, R_separation_line As Vector) As NumericMatrix
         '# Consider an urn With N balls, B Of which are black And W white. pi_r stores 
         '# The probability Of drawing w white And b black balls In n draws (n = w + b)
         '# With the constraint Of P(w,b) = 0 If (w, b) Is On Or above separation line.
@@ -328,15 +330,14 @@ Module Module1
         '#   Retrieved from http://bioinfo.cs.technion.ac.il/people/zohar/thesis/eran.pdf
         '#   (pages 20)
         Dim W As Double = N - B
-        Dim pi_r As Matrix = Matrix.Create(nrow:=W + 2, ncol:=B + 2)
+        Dim pi_r As NumericMatrix = NumericMatrix.Create(nrow:=W + 2, ncol:=B + 2)
 
         ' NOTE: Different from the thesis (see page 20 last paragraph),
         ' should be 1 according To that paragraph, but this seems wrong.
-        pi_r.Row(1) = 0
-        pi_r.Column(1) = 0
+        pi_r(1, 1) = 0
 
         For bi As Integer = 0 To B
-            Dim wi = R_separation_line(bi + 1)
+            Dim wi As Integer = R_separation_line(bi + 1)
             Do While (wi < (W + 1))
                 If ((wi = 0) AndAlso (bi = 0)) Then
                     pi_r(2, 2) = 1 ' Note, this cell will be 0 If it's left to the R separation line (should not occure) 

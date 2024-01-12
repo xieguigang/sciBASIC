@@ -51,7 +51,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module Extensions
 
@@ -81,8 +81,8 @@ Public Module Extensions
     End Function
 
     Public Function CI(m#, factor#, sd#, n%) As DoubleRange
-        Dim lower = m - factor * sd / stdNum.Sqrt(n)
-        Dim upper = m + factor * sd / stdNum.Sqrt(n)
+        Dim lower = m - factor * sd / std.Sqrt(n)
+        Dim upper = m + factor * sd / std.Sqrt(n)
         Return New DoubleRange(lower, upper)
     End Function
 
