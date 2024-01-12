@@ -20,6 +20,7 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Title>Math library</Title>
 		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
