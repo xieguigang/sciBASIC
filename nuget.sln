@@ -4401,8 +4401,8 @@ Global
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|Any CPU.Build.0 = Debug|Any CPU
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x64.ActiveCfg = Debug|x64
-		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x64.Build.0 = Debug|x64
+		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x64.Build.0 = nuget_release|x64
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x86.ActiveCfg = Debug|Any CPU
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.nuget_release|x86.Build.0 = Debug|Any CPU
 		{38A57DEE-B9BC-4976-BB3C-B8B0D478EECA}.PlantMAT|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
@@ -6849,8 +6849,8 @@ Global
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|Any CPU.Build.0 = mzkit_win32|Any CPU
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x64.ActiveCfg = mzkit_win32|x64
-		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x64.Build.0 = mzkit_win32|x64
+		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x64.Build.0 = nuget_release|x64
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x86.ActiveCfg = mzkit_win32|Any CPU
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.nuget_release|x86.Build.0 = mzkit_win32|Any CPU
 		{6FFA728B-CBAB-49EB-9F75-3C6A40C57546}.PlantMAT|Any CPU.ActiveCfg = PlantMAT|Any CPU
@@ -6985,8 +6985,8 @@ Global
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|Any CPU.Build.0 = mzkit|Any CPU
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|ARM32.ActiveCfg = mzkit|Any CPU
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|ARM32.Build.0 = mzkit|Any CPU
-		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x64.ActiveCfg = mzkit|x64
-		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x64.Build.0 = mzkit|x64
+		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x64.Build.0 = nuget_release|x64
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x86.ActiveCfg = mzkit|Any CPU
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.nuget_release|x86.Build.0 = mzkit|Any CPU
 		{BDC0643F-C105-4E0D-A0D6-01A9977D0D2B}.PlantMAT|Any CPU.ActiveCfg = PlantMAT|Any CPU
@@ -7121,8 +7121,8 @@ Global
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|Any CPU.Build.0 = mzkit_win32|Any CPU
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x64.ActiveCfg = mzkit_win32|x64
-		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x64.Build.0 = mzkit_win32|x64
+		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x64.Build.0 = nuget_release|x64
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x86.ActiveCfg = mzkit_win32|Any CPU
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.nuget_release|x86.Build.0 = mzkit_win32|Any CPU
 		{736BC4A1-0C53-4B30-BA77-B59D73C4CDE7}.PlantMAT|Any CPU.ActiveCfg = PlantMAT|Any CPU
@@ -7257,8 +7257,8 @@ Global
 		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|Any CPU.Build.0 = mzkit_win32|Any CPU
 		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x64.ActiveCfg = mzkit_win32|x64
-		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x64.Build.0 = mzkit_win32|x64
+		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x64.Build.0 = nuget_release|x64
 		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x86.ActiveCfg = mzkit_win32|Any CPU
 		{A594BBB5-141B-4505-B2F3-61A540586237}.nuget_release|x86.Build.0 = mzkit_win32|Any CPU
 		{A594BBB5-141B-4505-B2F3-61A540586237}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
@@ -8345,8 +8345,8 @@ Global
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|Any CPU.Build.0 = mzkit_win32|Any CPU
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x64.ActiveCfg = mzkit_win32|x64
-		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x64.Build.0 = mzkit_win32|x64
+		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x64.Build.0 = nuget_release|x64
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x86.ActiveCfg = mzkit_win32|Any CPU
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.nuget_release|x86.Build.0 = mzkit_win32|Any CPU
 		{7555B2EC-658D-4D2A-9C2D-F8D8FF90B5CE}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU
