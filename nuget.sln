@@ -3177,8 +3177,8 @@ Global
 		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|Any CPU.Build.0 = Debug|Any CPU
 		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|ARM32.ActiveCfg = mzkit_win32|Any CPU
 		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|ARM32.Build.0 = mzkit_win32|Any CPU
-		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x64.ActiveCfg = Debug|x64
-		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x64.Build.0 = Debug|x64
+		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x64.Build.0 = nuget_release|x64
 		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x86.ActiveCfg = Debug|Any CPU
 		{84D43653-CC78-4B58-BC7D-862F69385617}.nuget_release|x86.Build.0 = Debug|Any CPU
 		{84D43653-CC78-4B58-BC7D-862F69385617}.PlantMAT|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
