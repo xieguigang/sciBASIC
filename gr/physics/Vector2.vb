@@ -92,7 +92,7 @@ Public Class Vector2 : Inherits Vector2D
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Narrowing Operator CType(v As Vector2) As PointF
+    Public Overloads Shared Narrowing Operator CType(v As Vector2) As PointF
         Return New PointF(v.x, v.y)
     End Operator
 
