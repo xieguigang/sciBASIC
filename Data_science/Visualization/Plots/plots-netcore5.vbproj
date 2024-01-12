@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.ChartPlots</RootNamespace>
@@ -7,6 +7,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,7 +19,13 @@
     <DefineConstants>netcore5=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.xml</DocumentationFile>
   </PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../../.nuget/</OutputPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
