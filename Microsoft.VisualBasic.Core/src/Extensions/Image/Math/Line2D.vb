@@ -56,7 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * Copyright (c) 1997, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -280,7 +280,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified point
         '''                          to the specified line segment. </returns>
         Public Function ptSegDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return stdNum.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
+            Return std.Sqrt(ptSegDistSq(x1, y1, x2, y2, px, py))
         End Function
 
         ''' <summary>
@@ -338,7 +338,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
         Public Function ptLineDist(x1 As Double, y1 As Double, x2 As Double, y2 As Double, px As Double, py As Double) As Double
-            Return stdNum.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
+            Return std.Sqrt(ptLineDistSq(x1, y1, x2, y2, px, py))
         End Function
     End Module
 
@@ -402,7 +402,7 @@ Namespace Imaging.Math2D
         ''' <returns> a double value that is the distance from the specified
         '''                   point to the specified line. </returns>
         Public Function ptLineDist(x1 As Double, y1 As Double, z1 As Double, x2 As Double, y2 As Double, z2 As Double, px As Double, py As Double, pz As Double) As Double
-            Return stdNum.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
+            Return std.Sqrt(ptLineDistSq(x1, y1, z1, x2, y2, z2, px, py, pz))
         End Function
 
         <Extension>

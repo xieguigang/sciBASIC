@@ -13,9 +13,10 @@
 		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>GPL3</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
-		<PackageIcon>logo-knot.png</PackageIcon>
+    <PackageIcon>logo-knot.png</PackageIcon>
+		<PackageProjectUrl>http://scibasic.net</PackageProjectUrl>		
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
 		<Platforms>AnyCPU;x64;x86</Platforms>
 		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -24,7 +25,7 @@
 		<Description>sciBASIC#: Microsoft VisualBasic for Scientific Computing</Description>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
-    <UseApplicationFramework>True</UseApplicationFramework>
+    <UseApplicationFramework>True</UseApplicationFramework>    
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -49,9 +50,7 @@
 		<PlatformTarget>x64</PlatformTarget>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>		
-		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<BaseAddress>4194304</BaseAddress>
+		<DebugType>full</DebugType>				
 		<OutputPath>../../.nuget/</OutputPath>
 	</PropertyGroup>
 

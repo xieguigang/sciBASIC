@@ -173,7 +173,7 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(v.Select(Function(vi) New Double() {vi}))
         End Sub
 
-        ''' <summary>Construct an m-by-n matrix of zeros. </summary>
+        ''' <summary>Construct an m-by-n matrix of zeros. m is row number and n is column number</summary>
         ''' <param name="m">Number of rows.</param>
         ''' <param name="n">Number of colums.</param>
         ''' <remarks>
@@ -472,6 +472,10 @@ Namespace LinearAlgebra.Matrix
                 Next
             Next
             Return X
+        End Function
+
+        Public Shared Function Create(nrow As Integer, ncol As Integer) As NumericMatrix
+            Return New NumericMatrix(nrow, ncol)
         End Function
 
         Public Function Abs() As GeneralMatrix

@@ -54,8 +54,9 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -82,7 +83,7 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public ReadOnly Property Length As Double
             Get
-                Return stdNum.Sqrt(x ^ 2 + y ^ 2)
+                Return std.Sqrt(x ^ 2 + y ^ 2)
             End Get
         End Property
 
@@ -145,6 +146,10 @@ Namespace Imaging.Math2D
             With v
                 Return New Vector2D(scale * .x, scale * .y)
             End With
+        End Operator
+
+        Public Shared Narrowing Operator CType(v As Vector2D) As PointF
+            Return New PointF(v.x, v.y)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

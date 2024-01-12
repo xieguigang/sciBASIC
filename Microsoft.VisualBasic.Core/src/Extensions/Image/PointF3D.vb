@@ -61,6 +61,9 @@ Namespace Imaging
     ''' 
     ''' 这个接口是为了实现Imaging模块的Point3D对象和数学函数模块的3D插值模块的兼容
     ''' </summary>
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
     Public Interface PointF3D : Inherits Layout2D
 
         Property Z As Double

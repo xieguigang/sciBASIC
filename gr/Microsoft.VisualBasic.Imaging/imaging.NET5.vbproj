@@ -5,7 +5,7 @@
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
-		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32</Configurations>
+		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release</Configurations>
 
 		<GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
 
@@ -32,9 +32,17 @@
 		<RepositoryType>git</RepositoryType>
 
 		<PackageTags>gdi</PackageTags>
+
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		
 	</PropertyGroup>
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 		<DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
@@ -166,11 +174,15 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net5.0|x64'">
@@ -181,91 +193,127 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
@@ -356,171 +404,275 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|AnyCPU'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|x64'">
 	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
 	  <Optimize>False</Optimize>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net6.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	  <DebugType>full</DebugType>
+	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
 	<ItemGroup>

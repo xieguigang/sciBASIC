@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 Public Module PLSData
@@ -91,5 +92,9 @@ Public Class Component
     Public Property Press As Double
     Public Property Q2 As Double
     Public Property Q2cum As Double
+
+    Public Overrides Function ToString() As String
+        Return Me.GetJson
+    End Function
 
 End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13104db3a3ee0ac77538902faca29f28, sciBASIC#\mime\text%yaml\1.2\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::a6942910f23bbb1dd6479d47c9df6249, sciBASIC#\Data_science\Mathematica\Math\mHG\DATA.vb"
 
 ' Author:
 ' 
@@ -34,45 +34,57 @@
 
 ' Code Statistics:
 
-'   Total Lines: 23
-'    Code Lines: 18
-' Comment Lines: 0
+'   Total Lines: 45
+'    Code Lines: 12
+' Comment Lines: 28
 '   Blank Lines: 5
-'     File Size: 653.00 B
+'     File Size: 1.06 KB
 
 
-'     Class MappingEntry
+' Class htest
 ' 
-'         Properties: Key, Name, Value
+'     Properties: b, n, parameters, pvalue, statistic
 ' 
-'         Function: ToString
+' Class mHGstatisticInfo
 ' 
+'     Properties: b, mHG, n
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Data
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+''' <summary>
+''' mHG definition:
+''' 
+''' ```
+'''   mHG(lambdas) = min over 1 &lt;= n &lt;= N Of HGT (b_n(lambdas); N, B, n)
+''' ```
+'''   
+''' Where ``HGT`` Is the hypergeometric tail:
+''' 
+''' ```
+'''   HGT(b; N, B, n) = Probability(X >= b)
+''' ```
+'''   
+''' And:
+''' 
+''' ```
+'''   b_n = sum over 1 &lt;= i &lt;= n Of lambdas[i]
+''' ```
+''' </summary>
+Public Class mHGstatisticInfo
 
-Namespace Syntax
+    ''' <summary>
+    ''' the statistic itself
+    ''' </summary>
+    Public Property mHG As Double
+    ''' <summary>
+    ''' the index For which it was obtained
+    ''' </summary>
+    Public Property n As Double
+    ''' <summary>
+    ''' (Short For b_n) - sum over ``1 &lt;= i &lt;= n`` Of lambdas[i]
+    ''' </summary>
+    Public Property b As Double
 
-    Public Class MappingEntry : Implements INamedValue
-
-        Public Property Key As DataItem
-        Public Property Value As DataItem
-
-        Private Property Name As String Implements INamedValue.Key
-            Get
-                Return Scripting.ToString(Key)
-            End Get
-            Set(value As String)
-                Throw New ReadOnlyException
-            End Set
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return $"{Key}: {Value}"
-        End Function
-    End Class
-End Namespace
+End Class
