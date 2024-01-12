@@ -13,6 +13,8 @@ Module gaussTest
         Dim b As Vector = {8, -11, -3}
         Dim x As Vector = GaussianElimination.Solve(a, b)
 
+        Console.WriteLine(x)
+
         Pause()
     End Sub
 End Module

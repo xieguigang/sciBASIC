@@ -94,6 +94,22 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="b"></param>
         ''' <returns>x</returns>
         ''' <remarks></remarks>
+        ''' <example>
+        ''' Dim a As New NumericMatrix({
+        '''     { 2,  1, -1},
+        '''     {-3, -1,  2},
+        '''     {-2,  1,  2}
+        ''' })
+        ''' Dim b As Vector = {8, -11, -3}
+        ''' Dim x As Vector = GaussianElimination.Solve(a, b)
+        ''' 
+        '''  2x + y -  z =  8
+        ''' -3x - y + 2z = -11
+        ''' -2x + y + 2z = -3
+        ''' 
+        ''' ' &lt;dims: 3> [2, 3, -1...]
+        ''' Console.WriteLine(x)
+        ''' </example>
         Public Function Solve(A As GeneralMatrix, b As Vector) As Vector
             Dim n As Integer = b.Dim
             Dim TMP As Double
