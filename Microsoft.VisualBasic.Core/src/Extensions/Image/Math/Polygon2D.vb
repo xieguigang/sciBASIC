@@ -62,7 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -251,12 +251,12 @@ Namespace Imaging.Math2D
 
             For i As Integer = 0 To n - 1
                 Dim d5 As Double = x(i)
-                d1 = stdNum.Min(d1, d5)
-                d3 = stdNum.Max(d3, d5)
+                d1 = std.Min(d1, d5)
+                d3 = std.Max(d3, d5)
 
                 Dim d6 As Double = y(i)
-                d2 = stdNum.Min(d2, d6)
-                d4 = stdNum.Max(d4, d6)
+                d2 = std.Min(d2, d6)
+                d4 = std.Max(d4, d6)
             Next
 
             Me.bounds1 = New Vector2D(d1, d2)
@@ -436,7 +436,7 @@ Namespace Imaging.Math2D
             End If
 
             ' Finally, calculate the polygon area.
-            area = stdNum.Abs(area / 2)
+            area = std.Abs(area / 2)
 
             Return area
         End Function

@@ -110,8 +110,14 @@ Namespace Imaging.Math2D
             Return paramVector2D1.x * paramVector2D2.x + paramVector2D1.y * paramVector2D2.y
         End Function
 
-        Public Shared Function isNear(paramDouble1 As Double, paramDouble2 As Double, paramDouble3 As Double, paramDouble4 As Double, paramDouble5 As Double, paramDouble6 As Double,
-            paramDouble7 As Double) As Boolean
+        Public Shared Function isNear(paramDouble1 As Double,
+                                      paramDouble2 As Double,
+                                      paramDouble3 As Double,
+                                      paramDouble4 As Double,
+                                      paramDouble5 As Double,
+                                      paramDouble6 As Double,
+                                      paramDouble7 As Double) As Boolean
+
             If stdNum.Min(paramDouble1, paramDouble3) > paramDouble5 + paramDouble7 Then
                 Return False
             End If
@@ -183,12 +189,16 @@ Namespace Imaging.Math2D
             Dim localVector2D3 As Vector2D
 
             While i > 0
-                localVector2D2 = New Vector2D(DirectCast(paramVector(j), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(j), Rectangle2D).Height - paramDimension.Height)
+                localVector2D2 = New Vector2D(
+                    DirectCast(paramVector(j), Rectangle2D).Width - paramDimension.Width,
+                    DirectCast(paramVector(j), Rectangle2D).Height - paramDimension.Height)
                 d2 = 360.0
                 m = -1
                 For k = 0 To paramVector.Count - 1
                     If (arrayOfBoolean(k) = 0) AndAlso (j <> k) Then
-                        localVector2D3 = New Vector2D(DirectCast(paramVector(k), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(k), Rectangle2D).Height - paramDimension.Height)
+                        localVector2D3 = New Vector2D(
+                            DirectCast(paramVector(k), Rectangle2D).Width - paramDimension.Width,
+                            DirectCast(paramVector(k), Rectangle2D).Height - paramDimension.Height)
                         d1 = angleDeg(localVector2D2, localVector2D3)
                         If d1 < 0.0 Then
                             d1 += 360.0
