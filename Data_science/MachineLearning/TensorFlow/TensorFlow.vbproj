@@ -8,7 +8,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

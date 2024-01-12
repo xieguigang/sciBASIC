@@ -16,7 +16,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	</PropertyGroup>
 

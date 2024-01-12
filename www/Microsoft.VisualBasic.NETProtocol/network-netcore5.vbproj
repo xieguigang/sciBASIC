@@ -4,7 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.Net</RootNamespace>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Network</AssemblyName>
-    <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 

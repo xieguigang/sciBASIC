@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Variational Autoencoder</Title>
     <Description>Variational Autoencoder</Description>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 

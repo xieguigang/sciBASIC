@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.DataMining.HiddenMarkovChain</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <Title>A package to calculate probabilities from Markov Chains and Hidden Markov Models</Title>
     <Description>A package to calculate probabilities from Markov Chains and Hidden Markov Models</Description>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

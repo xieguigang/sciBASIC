@@ -13,7 +13,7 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageIconUrl />
     <Description>Extreme Gradient Boosting</Description>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <OptionStrict>Off</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
   </PropertyGroup>

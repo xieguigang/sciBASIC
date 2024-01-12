@@ -7,7 +7,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <AssemblyName>Microsoft.VisualBasic.Data.NLP</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.Data.NLP</RootNamespace>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

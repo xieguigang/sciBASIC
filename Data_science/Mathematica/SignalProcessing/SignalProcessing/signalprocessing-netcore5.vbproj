@@ -5,7 +5,7 @@
 	    <AssemblyName>Microsoft.VisualBasic.Math.SignalProcessing</AssemblyName>
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;nuget_release</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>xieguigang &lt;I@xieguigang.me&gt;</Authors>
