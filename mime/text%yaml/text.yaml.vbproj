@@ -22,4 +22,7 @@
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
   </Project> 
