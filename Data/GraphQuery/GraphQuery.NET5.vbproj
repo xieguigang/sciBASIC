@@ -6,7 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.GraphQuery</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
-    <PackageId>Microsoft.VisualBasic.Data.GraphQuery</PackageId>
+    <PackageId></PackageId>
     <Version>5.0.123</Version>
     <Description>GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.</Description>
     <Product>sciBASIC</Product>
@@ -19,6 +19,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">

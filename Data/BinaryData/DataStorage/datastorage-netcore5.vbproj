@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.IO</RootNamespace>
@@ -7,6 +7,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -22,7 +24,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <OutputPath>../../.nuget/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

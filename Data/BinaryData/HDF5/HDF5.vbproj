@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.IO.HDF5</RootNamespace>
@@ -8,6 +8,7 @@
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -15,7 +16,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <OutputPath>../../.nuget/</OutputPath>
+    <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
