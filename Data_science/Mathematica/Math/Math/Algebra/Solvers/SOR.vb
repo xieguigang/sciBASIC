@@ -51,7 +51,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearAlgebra.Solvers
 
@@ -66,13 +66,19 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="e">误差容限</param>
         ''' <param name="Iteration">最大允许迭代次数</param>
         ''' <returns></returns>
-        Public Function Solve(A As GeneralMatrix, b As Vector, Optional Omiga As Double = 1.2, Optional e As Double = 0.00000001, Optional Iteration As Integer = 50) As Vector
+        Public Function Solve(A As GeneralMatrix, b As Vector,
+                              Optional Omiga As Double = 1.2,
+                              Optional e As Double = 0.00000001,
+                              Optional Iteration As Integer = 50) As Vector
+
             Dim N As Integer = A.ColumnDimension
             Dim x1 As Vector = New Vector(N), x As Vector = New Vector(N)
+            Dim sum As Double
 
             For k As Integer = 0 To Iteration
                 For i As Integer = 0 To N - 1
-                    Dim sum As Double
+                    sum = 0
+
                     For j As Integer = 0 To N - 1
                         If j < i Then
                             sum += A(i, j) * x(j)
@@ -84,7 +90,7 @@ Namespace LinearAlgebra.Solvers
                     x(i) = (b(i) - sum) * Omiga / A(i, i) + (1.0 - Omiga) * x1(i)
                 Next
 
-                Dim dx As Vector = x - x1, err As Double = stdNum.Sqrt(dx.Mod)
+                Dim dx As Vector = x - x1, err As Double = std.Sqrt(dx.Mod)
 
                 If err < e Then
                     Exit For

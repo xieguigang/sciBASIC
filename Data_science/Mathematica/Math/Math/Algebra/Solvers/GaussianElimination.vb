@@ -75,7 +75,8 @@ Namespace LinearAlgebra.Solvers
                 Ab(i, n) = b(i)
             Next
 
-            For k As Integer = 0 To n - 2 'Gaussian Elimination Core
+            ' Gaussian Elimination Core
+            For k As Integer = 0 To n - 2
                 For i = k + 1 To n - 1
                     TMP = Ab(i, k) / Ab(k, k)
                     For j = 0 To n
@@ -114,6 +115,7 @@ Namespace LinearAlgebra.Solvers
                 Next
                 x(i) /= A(i, i)
             Next
+
             Return x
         End Function
     End Module

@@ -123,7 +123,4 @@ Namespace LinearAlgebra.Solvers
             Return res
         End Function
     End Class
-
-
-
 End Namespace
