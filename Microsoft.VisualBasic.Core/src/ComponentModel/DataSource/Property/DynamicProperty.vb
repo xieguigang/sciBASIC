@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -134,6 +135,38 @@ Namespace ComponentModel.DataSourceModel
                 For Each key As SeqValue(Of String) In keys.SeqIterator
                     Me(key.value) = value(key)
                 Next
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property ItemValue(keys As IEnumerable(Of INamedValue)) As T()
+            Get
+                Return keys.Select(Function(s) Me(s.Key)).ToArray
+            End Get
+            Set
+                Me(keys.Select(Function(s) s.Key).ToArray) = Value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Get a value package at once using a key collection, 
+        ''' if the key is not exists in the property, then its 
+        ''' correspoding value is nothing.
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property ItemValue(keys As IEnumerable(Of IReadOnlyId)) As T()
+            Get
+                Return keys.Select(Function(s) Me(s.Identity)).ToArray
+            End Get
+            Set(value As T())
+                Me(keys.Select(Function(s) s.Identity).ToArray) = value
             End Set
         End Property
 
