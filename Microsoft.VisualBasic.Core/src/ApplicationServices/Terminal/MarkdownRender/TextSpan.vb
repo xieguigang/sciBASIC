@@ -2,7 +2,7 @@
 
 Namespace ApplicationServices.Terminal
 
-    Public Class Span
+    Public Class TextSpan
 
         Public Property text As String
         Public Property style As ConsoleFormat
@@ -12,7 +12,7 @@ Namespace ApplicationServices.Terminal
             Return AnsiEscapeCodes.ToAnsiEscapeSequenceSlow(style) & text
         End Function
 
-        Public Shared Narrowing Operator CType(span As Span) As String
+        Public Shared Narrowing Operator CType(span As TextSpan) As String
             Return AnsiEscapeCodes.ToAnsiEscapeSequenceSlow(span.style) & span.text
         End Operator
     End Class

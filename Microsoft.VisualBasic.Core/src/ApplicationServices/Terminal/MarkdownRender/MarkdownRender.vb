@@ -133,7 +133,7 @@ Namespace ApplicationServices.Terminal
         Friend styleStack As New Stack(Of ConsoleFormat)
         Friend currentStyle As ConsoleFormat
 
-        Dim spans As New List(Of Span)
+        Dim spans As New List(Of TextSpan)
 
         Public Sub Reset()
             blockquote = False
@@ -197,7 +197,7 @@ Namespace ApplicationServices.Terminal
         Private Sub PrintSpans()
             Dim isNewLine As Boolean = True
 
-            For Each span As Span In spans
+            For Each span As TextSpan In spans
                 If isNewLine Then
                     Console.CursorLeft = indent
                 End If
@@ -223,7 +223,7 @@ Namespace ApplicationServices.Terminal
             End If
 
             If text.Length > 0 Then
-                spans += New Span With {
+                spans += New TextSpan With {
                     .style = style,
                     .text = text,
                     .IsEndByNewLine = byNewLine
