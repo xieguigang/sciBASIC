@@ -72,8 +72,8 @@ Namespace ApplicationServices.Terminal
 
         Public Shared Widening Operator CType(colors As (fore As ConsoleColor, back As ConsoleColor)) As ConsoleFormat
             Return New ConsoleFormat With {
-                .ForeColor = colors.fore,
-                .BackgroundColor = colors.back
+                .Foreground = colors.fore,
+                .Background = colors.back
             }
         End Operator
 

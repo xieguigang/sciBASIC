@@ -92,13 +92,13 @@ Namespace ApplicationServices.Terminal
         Dim markdown As CharPtr
         Dim indent As Integer
 
-        Dim initialGlobal As ConsoleFontStyle
+        Dim initialGlobal As ConsoleFormat
 
         Private Sub New(theme As MarkdownTheme)
             Me.theme = theme
-            Me.initialGlobal = New ConsoleFontStyle With {
-                .BackgroundColor = Console.BackgroundColor,
-                .ForeColor = Console.ForegroundColor
+            Me.initialGlobal = New ConsoleFormat With {
+                .Background = Console.BackgroundColor,
+                .Foreground = Console.ForegroundColor
             }
         End Sub
 
@@ -130,8 +130,8 @@ Namespace ApplicationServices.Terminal
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
 
-        Friend styleStack As New Stack(Of ConsoleFontStyle)
-        Friend currentStyle As ConsoleFontStyle
+        Friend styleStack As New Stack(Of ConsoleFormat)
+        Friend currentStyle As ConsoleFormat
 
         Dim spans As New List(Of Span)
 
@@ -202,7 +202,7 @@ Namespace ApplicationServices.Terminal
                     Console.CursorLeft = indent
                 End If
 
-                span.Print()
+                Console.Write(span)
                 isNewLine = span.IsEndByNewLine
             Next
 
@@ -212,14 +212,14 @@ Namespace ApplicationServices.Terminal
 
         Private Sub EndSpan(byNewLine As Boolean)
             Dim text As String = textBuf.CharString
-            Dim style As ConsoleFontStyle = currentStyle.Clone
+            Dim style As ConsoleFormat = currentStyle.Clone
 
             If text.StartsWith("((http(s)?)|(ftp))[:]//", RegexICSng) Then
                 style = theme.Url
             End If
 
             If styleStack.Count > 0 AndAlso styleStack.Peek.Equals(theme.CodeBlock) Then
-                style.BackgroundColor = theme.CodeBlock.BackgroundColor
+                style.Background = theme.CodeBlock.Background
             End If
 
             If text.Length > 0 Then

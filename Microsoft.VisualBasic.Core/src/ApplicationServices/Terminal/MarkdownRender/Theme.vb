@@ -67,21 +67,24 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Terminal
 
     Public Class MarkdownTheme
 
-        Public Property Url As ConsoleFontStyle
-        Public Property InlineCodeSpan As ConsoleFontStyle
-        Public Property CodeBlock As ConsoleFontStyle
-        Public Property BlockQuote As ConsoleFontStyle
-        Public Property [Global] As ConsoleFontStyle
-        Public Property Bold As ConsoleFontStyle
-        Public Property Italy As ConsoleFontStyle
-        Public Property HeaderSpan As ConsoleFontStyle
+        Public Property Url As ConsoleFormat
+        Public Property InlineCodeSpan As ConsoleFormat
+        Public Property CodeBlock As ConsoleFormat
+        Public Property BlockQuote As ConsoleFormat
+        Public Property [Global] As ConsoleFormat
+        Public Property Bold As ConsoleFormat
+        Public Property Italy As ConsoleFormat
+        Public Property HeaderSpan As ConsoleFormat
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
     End Class
 End Namespace

@@ -150,12 +150,6 @@ Namespace My
             Return False
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Sub Print(span As Span)
-            Call Print(span.text, span.style.ForeColor, span.style.BackgroundColor)
-        End Sub
-
         ''' <summary>
         ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
         ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，

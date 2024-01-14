@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 
 Module markdownDisplayTest
     Sub Main1()
-        Call consoleTest()
+        ' Call consoleTest()
         Call MarkdownRender.Print("# title
 
 This is a inline ``code`` span. **bold** font style test.
@@ -85,6 +85,6 @@ A url test: http://test.url/a/b/c/xxxx.txt
 
         Call Console.WriteLine(ToAnsiEscapeSequenceSlow(format) & "dgdfgdfg")
 
-        ' Pause()
+        Pause()
     End Sub
 End Module
