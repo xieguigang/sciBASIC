@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::5950d7ab9de8c7aa48cc2d7899e80d56, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 284
-    '    Code Lines: 228
-    ' Comment Lines: 22
-    '   Blank Lines: 34
-    '     File Size: 9.81 KB
+' Summaries:
 
 
-    '     Class MarkdownRender
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
-    ' 
-    '         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
-    '              PrintSpans, Reset, restoreStyle, WalkChar
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 284
+'    Code Lines: 228
+' Comment Lines: 22
+'   Blank Lines: 34
+'     File Size: 9.81 KB
+
+
+'     Class MarkdownRender
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: bufferAllIs, bufferIs, DefaultStyleRender
+' 
+'         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
+'              PrintSpans, Reset, restoreStyle, WalkChar
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text
@@ -216,6 +218,11 @@ Namespace ApplicationServices.Terminal
             Call Console.WriteLine()
         End Sub
 
+        ''' <summary>
+        ''' create new <see cref="TextSpan"/> and then clear the <see cref="textBuf"/> 
+        ''' for pull next text span object.
+        ''' </summary>
+        ''' <param name="byNewLine"></param>
         Private Sub EndSpan(byNewLine As Boolean)
             Dim text As String = textBuf.CharString
             Dim style As ConsoleFormat = currentStyle.Clone
@@ -240,22 +247,44 @@ Namespace ApplicationServices.Terminal
 
         Dim tableBuf As New List(Of String)
 
+        Private Sub buildTableSimple()
+            If tableBuf.Count = 0 Then
+                spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
+            End If
+
+            Dim header As String() = tableBuf(0).Split("|"c)
+            Dim rows As String()() = tableBuf.Skip(2).Select(Function(l) l.Split("|"c)).ToArray
+            Dim tbl As New ConsoleTableBaseData(header, rows)
+            Dim println As String = ConsoleTableBuilder.From(tbl).WithFormat(ConsoleTableBuilderFormat.Minimal).Export.ToString
+
+            spans.Add(New TextSpan With {.text = println})
+        End Sub
+
         Private Sub WalkChar(c As Char)
             If tableSpan Then
                 Select Case c
                     Case ASCII.LF
                         lastNewLine = True
                         tableBuf.Add(New String(textBuf.PopAll))
+
+                        If tableBuf.Last.StringEmpty Then
+                            ' break the table context by empty line
+                            tableSpan = False
+                            buildTableSimple()
+                        End If
+
                         Return
                     Case ""
                         ' is a empty line
                         ' end of table context
                         tableSpan = False
                         tableBuf.Add(New String(textBuf.PopAll))
+                        buildTableSimple()
                     Case ">"c, "`"c, "#"c
                         ' end of table context
                         tableSpan = False
                         tableBuf.Add(New String(textBuf.PopAll))
+                        buildTableSimple()
                     Case Else
                         textBuf += c
                         Return

@@ -88,6 +88,11 @@ Namespace ApplicationServices.Terminal
 			Return $"{Escape}[{colorCode}m"
 		End Function
 
+		''' <summary>
+		''' convert the console print style as the ANSI escape sequence string
+		''' </summary>
+		''' <param name="formatting"></param>
+		''' <returns></returns>
 		Public Function ToAnsiEscapeSequenceSlow(formatting As ConsoleFormat) As String
 			Dim sb = New StringBuilder()
 			AppendAnsiEscapeSequence(sb, formatting)

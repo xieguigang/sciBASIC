@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace ApplicationServices.Terminal
 
+    ''' <summary>
+    ''' define the <see cref="TextSpan.style"/> for print on the console.
+    ''' </summary>
     Public Class ConsoleFormat
         Implements IEquatable(Of ConsoleFormat)
         Implements ICloneable(Of ConsoleFormat)
@@ -66,6 +69,14 @@ Namespace ApplicationServices.Terminal
                 Bold = other.Bold AndAlso
                 Underline = other.Underline AndAlso
                 Inverted = other.Inverted
+        End Function
+
+        ''' <summary>
+        ''' <see cref="AnsiEscapeCodes.ToAnsiEscapeSequenceSlow"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return AnsiEscapeCodes.ToAnsiEscapeSequenceSlow(Me)
         End Function
 
 #If NET_48 Or NETCOREAPP Then
