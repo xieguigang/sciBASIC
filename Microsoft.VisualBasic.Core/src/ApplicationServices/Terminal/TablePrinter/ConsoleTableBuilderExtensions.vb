@@ -363,9 +363,14 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Return builder
         End Function
 
+        ''' <summary>
+        ''' export the table print content string
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <returns></returns>
         <Extension()>
         Public Function Export(builder As ConsoleTableBuilder) As StringBuilder
-            Dim numberOfColumns = 0
+            Dim numberOfColumns As Integer = 0
 
             If builder.Rows.Any() Then
                 numberOfColumns = builder.Rows.Max(Function(x) x.Length)

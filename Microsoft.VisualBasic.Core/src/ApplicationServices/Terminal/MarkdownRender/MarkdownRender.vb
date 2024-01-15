@@ -96,12 +96,16 @@ Namespace ApplicationServices.Terminal
 
         Dim initialGlobal As ConsoleFormat
 
-        Private Sub New(theme As MarkdownTheme)
+        Sub New(theme As MarkdownTheme)
             Me.theme = theme
             Me.initialGlobal = New ConsoleFormat With {
                 .Background = Console.BackgroundColor,
                 .Foreground = Console.ForegroundColor
             }
+        End Sub
+
+        Sub New()
+            Call Me.New(theme:=defaultTheme)
         End Sub
 
         ''' <summary>
@@ -255,9 +259,16 @@ Namespace ApplicationServices.Terminal
             Dim header As String() = tableBuf(0).Split("|"c)
             Dim rows As String()() = tableBuf.Skip(2).Select(Function(l) l.Split("|"c)).ToArray
             Dim tbl As New ConsoleTableBaseData(header, rows)
-            Dim println As String = ConsoleTableBuilder.From(tbl).WithFormat(ConsoleTableBuilderFormat.Minimal).Export.ToString
+            Dim println As String = ConsoleTableBuilder.From(tbl) _
+                .WithFormat(theme.Table) _
+                .Export _
+                .ToString
 
-            spans.Add(New TextSpan With {.text = println})
+            For Each line As String In println.LineTokens
+                spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
+            Next
+
+            spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
         End Sub
 
         Private Sub WalkChar(c As Char)
