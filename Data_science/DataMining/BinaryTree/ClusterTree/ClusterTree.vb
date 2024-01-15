@@ -93,31 +93,33 @@ Public Class ClusterTree : Inherits Tree(Of String)
             tree.Data = target
             tree.Childs = New Dictionary(Of String, Tree(Of String))
             tree.Members = New List(Of String) From {target}
+            Return target
+        End If
+
+        Dim score As Double = alignment.GetSimilarity(tree.Data, target)
+        Dim key As String = "zero"
+
+        If score > 0.0 Then
+            For v As Double = ds To 1 Step ds
+                If score < v Then
+                    key = $"<{v.ToString("F1")}"
+                    Exit For
+                ElseIf v >= threshold Then
+                    key = ""
+                    Exit For
+                End If
+            Next
+        End If
+
+        If key = "" Then
+            ' is cluster member
+            tree.Members.Add(target)
+            Return tree.Data
+        ElseIf tree.Childs.ContainsKey(key) Then
+            Return Add(tree(key), target, alignment, threshold)
         Else
-            Dim score As Double = alignment.GetSimilarity(tree.Data, target)
-            Dim key As String = "zero"
-
-            If score > 0.0 Then
-                For v As Double = ds To 1 Step ds
-                    If score < v Then
-                        key = $"<{v.ToString("F1")}"
-                        Exit For
-                    ElseIf v >= threshold Then
-                        key = ""
-                        Exit For
-                    End If
-                Next
-            End If
-
-            If key = "" Then
-                ' is cluster member
-                tree.Members.Add(target)
-            ElseIf tree.Childs.ContainsKey(key) Then
-                Call Add(tree(key), target, alignment, threshold)
-            Else
-                Call tree.Add(key)
-                Call Add(tree(key), target, alignment, threshold)
-            End If
+            Call tree.Add(key)
+            Return Add(tree(key), target, alignment, threshold)
         End If
     End Function
 
