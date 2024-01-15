@@ -1,4 +1,6 @@
-﻿Imports System.Globalization
+﻿Imports System.Drawing
+Imports System.Globalization
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
@@ -60,6 +62,7 @@ Namespace ApplicationServices.Terminal
         Public Function GetEscapeSequence(Optional type As Type = Type.Foreground) As String
             Return AnsiEscapeCodes.ToAnsiEscapeSequence(GetCode(type))
         End Function
+
         Friend Function GetCode(Optional type As Type = Type.Foreground) As String
             Return If(type = AnsiColor.Type.Foreground, foregroundCode, backgroundCode)
         End Function
@@ -69,9 +72,11 @@ Namespace ApplicationServices.Terminal
             Dim other As AnsiColor = If(tempVar, CType(obj, AnsiColor), Nothing)
             Return tempVar AndAlso Equals(other)
         End Function
+
         Public Overloads Function Equals(other As AnsiColor) As Boolean Implements IEquatable(Of AnsiColor).Equals
             Return foregroundCode = other.foregroundCode AndAlso backgroundCode = other.backgroundCode
         End Function
+
         Public Overrides Function GetHashCode() As Integer
             Return foregroundCode.GetHashCode()
         End Function
@@ -79,6 +84,7 @@ Namespace ApplicationServices.Terminal
         Public Shared Operator =(left As AnsiColor, right As AnsiColor) As Boolean
             Return EqualityComparer(Of AnsiColor).Default.Equals(left, right)
         End Operator
+
         Public Shared Operator <>(left As AnsiColor, right As AnsiColor) As Boolean
             Return Not (left = right)
         End Operator
@@ -119,6 +125,18 @@ Namespace ApplicationServices.Terminal
 
             result = Nothing
             Return False
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(color As ConsoleColor) As AnsiColor
+            Return FromConsoleColor(color)
+        End Operator
+
+        Public Shared Function FromConsoleColor(color As ConsoleColor) As AnsiColor
+            Dim rgb As Color = Drawing.Color.FromName(color.ToString)
+            Dim ansi As AnsiColor = AnsiColor.Rgb(rgb.R, rgb.G, rgb.B)
+
+            Return ansi
         End Function
 
         Public Enum Type

@@ -75,7 +75,7 @@ Namespace ApplicationServices.Terminal
     ''' </remarks>
     Public Class MarkdownRender
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
             .[Global] = Nothing,
@@ -92,13 +92,13 @@ Namespace ApplicationServices.Terminal
         Dim markdown As CharPtr
         Dim indent As Integer
 
-        Dim initialGlobal As ConsoleFontStyle
+        Dim initialGlobal As ConsoleFormat
 
         Private Sub New(theme As MarkdownTheme)
             Me.theme = theme
-            Me.initialGlobal = New ConsoleFontStyle With {
-                .BackgroundColor = Console.BackgroundColor,
-                .ForeColor = Console.ForegroundColor
+            Me.initialGlobal = New ConsoleFormat With {
+                .Background = Console.BackgroundColor,
+                .Foreground = Console.ForegroundColor
             }
         End Sub
 
@@ -130,10 +130,10 @@ Namespace ApplicationServices.Terminal
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
 
-        Friend styleStack As New Stack(Of ConsoleFontStyle)
-        Friend currentStyle As ConsoleFontStyle
+        Friend styleStack As New Stack(Of ConsoleFormat)
+        Friend currentStyle As ConsoleFormat
 
-        Dim spans As New List(Of Span)
+        Dim spans As New List(Of TextSpan)
 
         Public Sub Reset()
             blockquote = False
@@ -197,12 +197,12 @@ Namespace ApplicationServices.Terminal
         Private Sub PrintSpans()
             Dim isNewLine As Boolean = True
 
-            For Each span As Span In spans
+            For Each span As TextSpan In spans
                 If isNewLine Then
                     Console.CursorLeft = indent
                 End If
 
-                span.Print()
+                Console.Write(span)
                 isNewLine = span.IsEndByNewLine
             Next
 
@@ -212,18 +212,18 @@ Namespace ApplicationServices.Terminal
 
         Private Sub EndSpan(byNewLine As Boolean)
             Dim text As String = textBuf.CharString
-            Dim style As ConsoleFontStyle = currentStyle.Clone
+            Dim style As ConsoleFormat = currentStyle.Clone
 
             If text.StartsWith("((http(s)?)|(ftp))[:]//", RegexICSng) Then
                 style = theme.Url
             End If
 
             If styleStack.Count > 0 AndAlso styleStack.Peek.Equals(theme.CodeBlock) Then
-                style.BackgroundColor = theme.CodeBlock.BackgroundColor
+                style.Background = theme.CodeBlock.Background
             End If
 
             If text.Length > 0 Then
-                spans += New Span With {
+                spans += New TextSpan With {
                     .style = style,
                     .text = text,
                     .IsEndByNewLine = byNewLine
@@ -322,7 +322,7 @@ Namespace ApplicationServices.Terminal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
             Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
 #Else
             Throw New NotImplementedException
@@ -331,7 +331,7 @@ Namespace ApplicationServices.Terminal
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function DefaultStyleRender() As MarkdownRender
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
             Return New MarkdownRender(defaultTheme)
 #Else
             Throw New NotImplementedException
