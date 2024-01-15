@@ -8,6 +8,11 @@ Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 ''' </summary>
 Public Module PCAData
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="mvar"></param>
+    ''' <returns>a dataframe object that contains data field column: ``PC1, PC2, PCx``</returns>
     <Extension>
     Public Function GetPCAScore(mvar As MultivariateAnalysisResult) As df
         Dim score As New df

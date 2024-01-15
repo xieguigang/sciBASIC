@@ -117,6 +117,7 @@
     <ProjectReference Include="..\..\DataMining\hierarchical-clustering\HCTreePlot\HCTreePlot.vbproj" />
     <ProjectReference Include="..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hctree.NET5.vbproj" />
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\ANOVA\ANOVA.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\DataFittings\linear-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
