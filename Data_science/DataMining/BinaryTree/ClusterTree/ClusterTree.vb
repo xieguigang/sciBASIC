@@ -83,11 +83,11 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' <paramref name="target"/> as the member of
     ''' current node <paramref name="tree"/>.
     ''' </param>
-    Public Overloads Shared Sub Add(tree As ClusterTree,
-                                    target As String,
-                                    alignment As ComparisonProvider,
-                                    threshold As Double,
-                                    Optional ds As Double = 0.05)
+    Public Overloads Shared Function Add(tree As ClusterTree,
+                                         target As String,
+                                         alignment As ComparisonProvider,
+                                         threshold As Double,
+                                         Optional ds As Double = 0.05) As String
 
         If tree.Data.StringEmpty Then
             tree.Data = target
@@ -119,7 +119,7 @@ Public Class ClusterTree : Inherits Tree(Of String)
                 Call Add(tree(key), target, alignment, threshold)
             End If
         End If
-    End Sub
+    End Function
 
     Public Shared Function GetClusters(root As ClusterTree) As IEnumerable(Of ClusterTree)
         Dim links As New List(Of ClusterTree)
