@@ -193,14 +193,10 @@ Namespace Text
             Return sb.ToString
         End Function
 
-#If NET_48 = 1 Or netcore5 = 1 Then
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AlphabetUnescape(s$, contacts As (left As Char, right As Char), Optional upperCase As Boolean = False) As String
             Return s.unescapeInternal($"[{contacts.left}][a-z]{{2,10}}[{contacts.right}]", upperCase, True)
         End Function
-
-#End If
     End Module
 End Namespace
