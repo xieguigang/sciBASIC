@@ -82,7 +82,7 @@ Namespace ApplicationServices.Terminal
         Public Property Bold As ConsoleFormat
         Public Property Italy As ConsoleFormat
         Public Property HeaderSpan As ConsoleFormat
-        Public Property Table As ConsoleTableBuilderFormat = ConsoleTableBuilderFormat.Default
+        Public Property Table As ConsoleTableBuilderFormat = ConsoleTableBuilderFormat.Minimal
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

@@ -269,7 +269,7 @@ Namespace ApplicationServices.Terminal
                 Call spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
             Next
 
-            spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
+            spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = vbLf})
         End Sub
 
         Private Sub WalkChar(c As Char)
