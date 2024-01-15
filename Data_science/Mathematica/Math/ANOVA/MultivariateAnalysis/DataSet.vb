@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports any = Microsoft.VisualBasic.Scripting
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
@@ -14,8 +15,8 @@ Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 Public Module DataSetHelper
 
     <Extension>
-    Public Function CommonDataSet(df As df, colnames As String(), Optional labels As Array = Nothing) As StatisticsObject
-
+    Public Function CommonDataSet(df As df, Optional labels As Array = Nothing) As StatisticsObject
+        Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, labels)
     End Function
 
     ''' <summary>
