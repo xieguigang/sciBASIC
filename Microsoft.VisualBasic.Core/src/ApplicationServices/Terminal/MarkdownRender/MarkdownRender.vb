@@ -252,7 +252,11 @@ Namespace ApplicationServices.Terminal
                         ' end of table context
                         tableSpan = False
                     Case ">"c, "`"c, "#"c
+                        ' end of table context
                         tableSpan = False
+                    Case Else
+                        textBuf += c
+                        Return
                 End Select
             End If
 
