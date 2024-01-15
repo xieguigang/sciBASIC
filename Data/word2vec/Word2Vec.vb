@@ -155,11 +155,11 @@ Public Class Word2Vec
         Call readTokens((From wi As Word In tokenizer.words Select wi.str).ToArray)
     End Sub
 
-    Public Sub readTokens(tokenizer As String())
-        If tokenizer Is Nothing OrElse tokenizer.Length < 1 Then
+    Public Sub readTokens(tokenizer As ICollection(Of String))
+        If tokenizer Is Nothing OrElse tokenizer.Count < 1 Then
             Return
         Else
-            currentWordCount += tokenizer.Length
+            currentWordCount += tokenizer.Count
         End If
 
         ' 读取文本中的词，并计数词频
