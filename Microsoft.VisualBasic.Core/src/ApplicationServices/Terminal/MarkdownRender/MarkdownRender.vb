@@ -251,9 +251,11 @@ Namespace ApplicationServices.Terminal
                         ' is a empty line
                         ' end of table context
                         tableSpan = False
+                        tableBuf.Add(New String(textBuf.PopAll))
                     Case ">"c, "`"c, "#"c
                         ' end of table context
                         tableSpan = False
+                        tableBuf.Add(New String(textBuf.PopAll))
                     Case Else
                         textBuf += c
                         Return
