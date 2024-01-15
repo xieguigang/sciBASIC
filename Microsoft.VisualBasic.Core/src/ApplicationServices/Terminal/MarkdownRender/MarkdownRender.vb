@@ -194,6 +194,7 @@ Namespace ApplicationServices.Terminal
             Else
                 Call styleStack.Peek.SetConfig(Me)
             End If
+
         End Sub
 
         Private Sub applyGlobal()
