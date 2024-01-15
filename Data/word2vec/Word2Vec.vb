@@ -55,6 +55,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.GraphTheory.HuffmanTree
@@ -148,19 +149,25 @@ Public Class Word2Vec
     ''' 读取一段文本，统计词频和相邻词语出现的频率，
     ''' 文本将输出到一个临时文件中，以方便之后的训练 </summary>
     ''' <param name="tokenizer"> 标记 </param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub readTokens(tokenizer As Sentence)
-        If tokenizer Is Nothing OrElse tokenizer.size() < 1 Then
+        Call readTokens((From wi As Word In tokenizer.words Select wi.str).ToArray)
+    End Sub
+
+    Public Sub readTokens(tokenizer As String())
+        If tokenizer Is Nothing OrElse tokenizer.Length < 1 Then
             Return
         Else
-            currentWordCount += tokenizer.size()
+            currentWordCount += tokenizer.Length
         End If
 
         ' 读取文本中的词，并计数词频
-        For Each word As Word In tokenizer.words
-            Call wordCounter.add(word.str)
+        For Each word As String In tokenizer
+            Call wordCounter.add(word)
         Next
 
-        Call tempCorpus.Add(tokenizer.words.Select(Function(wi) wi.str).ToArray)
+        Call tempCorpus.Add(tokenizer.ToArray)
     End Sub
 
     ''' <summary>
