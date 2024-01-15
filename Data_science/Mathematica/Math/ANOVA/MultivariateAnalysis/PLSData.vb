@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
+''' <summary>
+''' get pls-da result
+''' </summary>
 Public Module PLSData
 
     <Extension>

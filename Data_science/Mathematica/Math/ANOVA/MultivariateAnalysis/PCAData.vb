@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Math.DataFrame
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 ''' <summary>
-''' contribution, score, loading
+''' get pca result: contribution, score, loading
 ''' </summary>
 Public Module PCAData
 
