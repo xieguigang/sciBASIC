@@ -265,7 +265,16 @@ Public Class Word2Vec
                     Continue For
                 Else
                     f = (f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2)
-                    f = expTable(f)
+
+                    Dim fi As Integer = CInt(f)
+
+                    If fi < 0 Then
+                        fi = 0
+                    ElseIf fi >= expTable.Length Then
+                        fi = expTable.Length - 1
+                    End If
+
+                    f = expTable(fi)
                 End If
                 ' 'g' is the gradient multiplied by the learning rate
                 Dim outNext = CType(pathNeurons(neuronIndex + 1), HuffmanNeuron)
