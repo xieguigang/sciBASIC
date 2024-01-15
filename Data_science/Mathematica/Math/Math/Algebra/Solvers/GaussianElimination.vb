@@ -124,16 +124,16 @@ Namespace LinearAlgebra.Solvers
 
             ' Gaussian Elimination Core
             For k As Integer = 0 To n - 2
-                For i = k + 1 To n - 1
+                For i As Integer = k + 1 To n - 1
                     TMP = Ab(i, k) / Ab(k, k)
-                    For j = 0 To n
+                    For j As Integer = 0 To n
                         Ab(i, j) = Ab(i, j) - TMP * Ab(k, j)
                     Next
                 Next
             Next
 
-            For i = 0 To n - 1
-                For j = 0 To n - 1
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To n - 1
                     A(i, j) = Ab(i, j)
                 Next
                 b(i) = Ab(i, n)
