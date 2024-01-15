@@ -76,7 +76,8 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' </summary>
     ''' <param name="tree"></param>
     ''' <param name="target"></param>
-    ''' <param name="alignment"></param>
+    ''' <param name="alignment">evaluate score by compare two dataset which are related 
+    ''' to the input key name as reference id.</param>
     ''' <param name="threshold">
     ''' the cutoff value for set current element 
     ''' <paramref name="target"/> as the member of
