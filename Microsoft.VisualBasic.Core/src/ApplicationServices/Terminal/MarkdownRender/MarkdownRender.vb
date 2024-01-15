@@ -77,8 +77,6 @@ Namespace ApplicationServices.Terminal
     ''' </remarks>
     Public Class MarkdownRender
 
-#If NET_48 Or NETCOREAPP Then
-
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
             .[Global] = Nothing,
             .BlockQuote = (ConsoleColor.Black, ConsoleColor.Gray),
@@ -89,7 +87,7 @@ Namespace ApplicationServices.Terminal
             .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
             .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
         }
-#End If
+
         Dim theme As MarkdownTheme
         Dim markdown As CharPtr
         Dim indent As Integer
