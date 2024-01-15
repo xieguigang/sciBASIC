@@ -102,6 +102,11 @@ Namespace ApplicationServices.Terminal
             }
         End Sub
 
+        ''' <summary>
+        ''' print the given markdown text with current theme styles
+        ''' </summary>
+        ''' <param name="markdown$"></param>
+        ''' <param name="indent%"></param>
         Public Sub DoPrint(markdown$, indent%)
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
             Me.indent = indent
@@ -129,6 +134,7 @@ Namespace ApplicationServices.Terminal
         Dim lastNewLine As Boolean = True
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
+        Dim tableSpan As Boolean = False
 
         Friend styleStack As New Stack(Of ConsoleFormat)
         Friend currentStyle As ConsoleFormat
@@ -232,7 +238,24 @@ Namespace ApplicationServices.Terminal
             End If
         End Sub
 
+        Dim tableBuf As New List(Of String)
+
         Private Sub WalkChar(c As Char)
+            If tableSpan Then
+                Select Case c
+                    Case ASCII.LF
+                        lastNewLine = True
+                        tableBuf.Add(New String(textBuf.PopAll))
+                        Return
+                    Case ""
+                        ' is a empty line
+                        ' end of table context
+                        tableSpan = False
+                    Case ">"c, "`"c, "#"c
+                        tableSpan = False
+                End Select
+            End If
+
             Select Case c
                 Case "`"c
                     controlBuf += c
@@ -247,6 +270,14 @@ Namespace ApplicationServices.Terminal
                     textBuf += ASCII.LF
                     EndSpan(True)
                     restoreStyle()
+                Case "|"c
+                    If lastNewLine AndAlso controlBuf = 0 Then
+                        ' is probably a markdown table
+                        tableSpan = True
+                    End If
+
+                    textBuf += c
+                    lastNewLine = False
                 Case ">"c
                     If lastNewLine AndAlso controlBuf = 0 Then
                         controlBuf += c
@@ -320,6 +351,14 @@ Namespace ApplicationServices.Terminal
             End Select
         End Sub
 
+        ''' <summary>
+        ''' do console writeline with styles
+        ''' </summary>
+        ''' <param name="markdown">the markdown text to print on the console</param>
+        ''' <param name="theme">
+        ''' the theme styles for make console print
+        ''' </param>
+        ''' <param name="indent">the prefix space indent number.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
 #If NET_48 Or NETCOREAPP Then
