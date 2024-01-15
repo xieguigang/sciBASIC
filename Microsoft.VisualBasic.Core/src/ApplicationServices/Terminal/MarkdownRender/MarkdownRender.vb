@@ -255,7 +255,10 @@ Namespace ApplicationServices.Terminal
             End If
 
             Dim header As String() = tableBuf(0).Split("|"c)
-            Dim rows As String()() = tableBuf.Skip(2).Select(Function(l) l.Split("|"c)).ToArray
+            Dim rows As String()() = tableBuf.Skip(2) _
+                .Where(Function(r) Not Strings.Trim(r).StringEmpty) _
+                .Select(Function(l) l.Split("|"c)) _
+                .ToArray
             Dim tbl As New ConsoleTableBaseData(header, rows)
             Dim println As String = ConsoleTableBuilder.From(tbl) _
                 .WithFormat(theme.Table) _
@@ -263,7 +266,7 @@ Namespace ApplicationServices.Terminal
                 .ToString
 
             For Each line As String In println.LineTokens
-                spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
+                Call spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
             Next
 
             spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
