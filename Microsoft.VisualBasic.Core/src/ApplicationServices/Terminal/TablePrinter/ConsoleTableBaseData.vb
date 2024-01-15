@@ -73,6 +73,8 @@ Namespace ApplicationServices.Terminal.TablePrinter
         Sub New(headers As String(), rows As IEnumerable(Of String()))
             Call Me.New(headers)
 
+            Me.Rows = New List(Of Object())
+
             For Each row As String() In rows.SafeQuery
                 Call AppendLine(DirectCast(row, IEnumerable))
             Next
