@@ -68,6 +68,26 @@ Namespace Scripting.MathExpression.Impl
             End Get
         End Property
 
+        ''' <summary>
+        ''' the literal value of 1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property One As Literal
+            Get
+                Return New Literal(1)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the literal value of 0
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property Zero As Literal
+            Get
+                Return New Literal(0)
+            End Get
+        End Property
+
         Sub New(text As String)
             Me.number = Val(text)
         End Sub
