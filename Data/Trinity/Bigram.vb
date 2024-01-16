@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.NLP.Model
 Imports Microsoft.VisualBasic.Linq
 
@@ -50,13 +51,18 @@ Public Class Bigram
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    Public Shared Iterator Function ParseText(text As String) As IEnumerable(Of Bigram)
-        Dim par = Paragraph.Segmentation(text).ToArray
-        Dim lines = par.Select(Function(p) p.sentences) _
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function ParseText(text As String) As IEnumerable(Of Bigram)
+        Return ParseText(Paragraph.Segmentation(text))
+    End Function
+
+    Public Shared Iterator Function ParseText(data As IEnumerable(Of Paragraph)) As IEnumerable(Of Bigram)
+        Dim lines = data.Select(Function(p) p.sentences) _
             .IteratesALL _
             .AsParallel _
             .Select(Function(s)
-                        Return ParseLine(s.GetWords.ToArray)
+                        Return ParseLine(s.GetWords.ToArray).ToArray
                     End Function) _
             .ToArray
         ' union counts
