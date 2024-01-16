@@ -106,21 +106,21 @@ Namespace Symbolic
         Private Function makeSimple(left As Expression, right As Literal, bin As Char) As Expression
             If bin = "+"c OrElse bin = "*"c Then
                 ' 加法与乘法可以交换位置
-                Return New BinaryExpression(right, left, bin)
+                Return makeSimple(New BinaryExpression(right, left, bin))
             ElseIf bin = "-"c Then
-                Return New BinaryExpression(right.GetNegative, left, bin)
+                Return makeSimple(New BinaryExpression(right.GetNegative, left, bin))
             ElseIf bin = "/"c Then
-                Return New BinaryExpression(right.GetReciprocal, left, bin)
+                Return makeSimple(New BinaryExpression(right.GetReciprocal, left, bin))
             ElseIf bin = "^" Then
                 If TypeOf left Is SymbolExpression Then
                     Return New UnifySymbol(left) With {
                         .power = right
                     }
                 Else
-                    Return New BinaryExpression(left, right, bin)
+                    Return makeSimple(New BinaryExpression(left, right, bin))
                 End If
             Else
-                Return New BinaryExpression(left, right, bin)
+                Return makeSimple(New BinaryExpression(left, right, bin))
             End If
         End Function
 

@@ -68,6 +68,9 @@ Module SymbolicTest
     Sub unit_test()
 
         Call Console.WriteLine(Symbolic.Simplify("0+x"))
+        Call Console.WriteLine(Symbolic.Simplify("0+x + 0 * a"))
+
+        Pause()
 
     End Sub
 
