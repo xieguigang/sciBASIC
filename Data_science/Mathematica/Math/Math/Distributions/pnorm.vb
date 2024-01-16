@@ -55,7 +55,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Scripting.Rscript.MathExtension
 Imports std = System.Math
 
 Namespace Distributions
