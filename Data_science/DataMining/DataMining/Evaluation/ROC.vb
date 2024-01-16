@@ -95,8 +95,8 @@ Namespace Evaluation
         End Function
 
         Public Function SimpleAUC(TPR As Vector, FPR As Vector) As Double
-            Dim dFPR As Vector = C(diff(FPR), 0)
-            Dim dTPR As Vector = C(diff(TPR), 0)
+            Dim dFPR As Vector = diff(FPR).AppendAfter(0).ToArray
+            Dim dTPR As Vector = diff(TPR).AppendAfter(0).ToArray
 
             Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
         End Function
