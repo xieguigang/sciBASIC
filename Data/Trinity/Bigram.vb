@@ -45,6 +45,11 @@ Public Class Bigram
         Return hist.Values
     End Function
 
+    ''' <summary>
+    ''' implements the bigram parser
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
     Public Shared Iterator Function ParseText(text As String) As IEnumerable(Of Bigram)
         Dim par = Paragraph.Segmentation(text).ToArray
         Dim lines = par.Select(Function(p) p.sentences) _
