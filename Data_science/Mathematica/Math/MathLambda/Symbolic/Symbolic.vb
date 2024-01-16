@@ -51,10 +51,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 
-Namespace Scripting.MathExpression
+Namespace Symbolic
 
     ''' <summary>
     ''' symbolic computation engine
