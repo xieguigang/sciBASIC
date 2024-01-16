@@ -60,24 +60,31 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
-''' User: fangy
-''' Date: 13-12-9
-''' Time: 下午2:30
+''' the word embedding vector set
 ''' </summary>
 Public Class VectorModel
 
+    ''' <summary>
+    ''' the word embedding vector set
+    ''' </summary>
+    ''' <returns></returns>
     Public Property wordMap As New Dictionary(Of String, Single())
 
     ''' <summary>
-    ''' 获取最相似词的数量 </summary>
-    ''' <returns> 最相似词的数量 </returns>
-    Public Property topNSize As Integer = 40
-
-    ''' <summary>
-    ''' 特征数
+    ''' the number of features, or the dimension of the word embedding vector
     ''' </summary>
     ''' <returns></returns>
     Public Property vectorSize As Integer = 200
+
+    ''' <summary>
+    ''' the number of the word tokens insdie the <see cref="wordMap"/>.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property words As Integer
+        Get
+            Return wordMap.TryCount
+        End Get
+    End Property
 
     ''' <summary>
     ''' 私有构造函数 </summary>
@@ -94,8 +101,11 @@ Public Class VectorModel
     ''' <summary>
     ''' 获取与词word最相近topNSize个词 </summary>
     ''' <param name="queryWord"> 词 </param>
+    ''' <param name="topNSize">
+    ''' 获取最相似词的数量
+    ''' </param>
     ''' <returns> 相近词集，若模型不包含词word，则返回空集 </returns>
-    Public Function similar(queryWord As String) As IEnumerable(Of WordScore)
+    Public Function similar(queryWord As String, Optional topNSize As Integer = 40) As IEnumerable(Of WordScore)
         Dim center = wordMap.GetValueOrNull(queryWord)
 
         If center Is Nothing Then
@@ -103,7 +113,7 @@ Public Class VectorModel
         End If
 
         Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize + 1)
-        Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+        Dim result As New SortedSet(Of WordScore)()
 
         For i = 0 To resultSize - 1
             result.Add(New WordScore("^_^", -Single.MaxValue))
@@ -129,13 +139,21 @@ Public Class VectorModel
         Return result
     End Function
 
-    Public Function similar(center As Single()) As IEnumerable(Of WordScore)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="center"></param>
+    ''' <param name="topNSize">
+    ''' 获取最相似词的数量
+    ''' </param>
+    ''' <returns></returns>
+    Public Function similar(center As Single(), Optional topNSize As Integer = 40) As IEnumerable(Of WordScore)
         If center Is Nothing OrElse center.Length <> vectorSize Then
             Return {}
         End If
 
         Dim resultSize = If(wordMap.Count < topNSize, wordMap.Count, topNSize)
-        Dim result As SortedSet(Of WordScore) = New SortedSet(Of WordScore)()
+        Dim result As New SortedSet(Of WordScore)()
 
         For i = 0 To resultSize - 1
             result.Add(New WordScore("^_^", -Single.MaxValue))
@@ -167,8 +185,11 @@ Public Class VectorModel
     ''' <param name="word0"> 词 </param>
     ''' <param name="word1"> 词 </param>
     ''' <param name="word2"> 词 </param>
+    ''' <param name="topNSize">
+    ''' 获取最相似词的数量
+    ''' </param>
     ''' <returns> 与结果最相近的前topNSize个词 </returns>
-    Public Function analogy(word0 As String, word1 As String, word2 As String) As SortedSet(Of WordScore)
+    Public Function analogy(word0 As String, word1 As String, word2 As String, Optional topNSize As Integer = 40) As SortedSet(Of WordScore)
         Dim wv0 = wordMap.GetValueOrNull(word0)
         Dim wv1 = wordMap.GetValueOrNull(word1)
         Dim wv2 = wordMap.GetValueOrNull(word2)
@@ -221,7 +242,7 @@ Public Class VectorModel
     End Function
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return wordMap.GetJson
     End Function
 
 End Class
