@@ -69,6 +69,10 @@ Namespace Symbolic
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Simplify(raw As Expression) As Expression
+            If TypeOf raw Is UnifySymbol Then
+                Return DirectCast(raw, UnifySymbol).GetSimplify
+            End If
+
             If Not TypeOf raw Is BinaryExpression Then
                 Return raw
             Else

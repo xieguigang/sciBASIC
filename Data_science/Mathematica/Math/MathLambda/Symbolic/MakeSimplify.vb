@@ -47,7 +47,7 @@ Namespace Symbolic
                 If TypeOf left Is SymbolExpression Then
                     Return New UnifySymbol(left) With {
                         .power = right
-                    }
+                    }.GetSimplify
                 Else
                     Return New BinaryExpression(left, right, bin)
                 End If
@@ -58,6 +58,11 @@ Namespace Symbolic
 
         Friend Function makeSimple(raw As BinaryExpression) As Expression
             Dim bin As BinaryExpression = raw
+
+            If raw.isNormalized Then
+                Return raw
+            End If
+
             Dim left = Simplify(bin.left)
             Dim right = Simplify(bin.right)
 
@@ -95,8 +100,14 @@ Namespace Symbolic
 
             If Not (a.isNormalized AndAlso b.isNormalized) Then
                 Return raw
-            ElseIf DirectCast(a.right, SymbolExpression).symbolName <> DirectCast(b.right, SymbolExpression).symbolName Then
+            ElseIf a.operator <> b.operator Then
                 Return raw
+            Else
+                If TypeOf a.right Is SymbolExpression AndAlso TypeOf b.right Is SymbolExpression Then
+                    If DirectCast(a.right, SymbolExpression).symbolName <> DirectCast(b.right, SymbolExpression).symbolName Then
+                        Return raw
+                    End If
+                End If
             End If
 
             Dim symbol As New SymbolExpression(DirectCast(a.right, SymbolExpression).symbolName)
@@ -131,8 +142,12 @@ Namespace Symbolic
         End Function
 
         <Extension>
-        Private Function isNormalized(exp As BinaryExpression) As Boolean
-            Return TypeOf exp.left Is Literal AndAlso TypeOf exp.right Is SymbolExpression
+        Friend Function isNormalized(exp As BinaryExpression) As Boolean
+            If exp.operator <> "^" Then
+                Return TypeOf exp.left Is Literal AndAlso TypeOf exp.right Is SymbolExpression
+            Else
+                Return TypeOf exp.right Is Literal AndAlso TypeOf exp.left Is SymbolExpression
+            End If
         End Function
 
     End Module

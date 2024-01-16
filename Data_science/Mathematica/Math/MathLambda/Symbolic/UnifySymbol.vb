@@ -72,6 +72,40 @@ Namespace Symbolic
             MyBase.New(symbol.symbolName)
         End Sub
 
+        Public Function GetExpressionType() As Type
+            If factor = Literal.Zero OrElse power = Literal.Zero Then
+                ' 0 * x ^ n = 0, or
+                ' m * x ^ 0 = m
+                Return GetType(Literal)
+            ElseIf factor = Literal.One AndAlso power = Literal.One Then
+                ' 1 * x ^ 1 = x
+                Return GetType(SymbolExpression)
+            Else
+                Return GetType(BinaryExpression)
+            End If
+        End Function
+
+        Public Function GetSimplify() As Expression
+            If factor = Literal.Zero Then
+                ' 0 * x ^ n = 0
+                Return Literal.Zero
+            ElseIf power = Literal.Zero Then
+                ' m * x ^ 0 = m
+                Return factor
+            ElseIf factor = Literal.One AndAlso power = Literal.One Then
+                ' 1 * x ^ 1 = x
+                Return New SymbolExpression(symbolName)
+            Else
+                Dim bin = CType(Me, BinaryExpression)
+
+                If bin.isNormalized Then
+                    Return bin
+                Else
+                    Return MakeSimplify.makeSimple(bin)
+                End If
+            End If
+        End Function
+
         Public Overrides Function Evaluate(env As ExpressionEngine) As Double
             Return factor.Evaluate(env) * (MyBase.Evaluate(env) ^ power.Evaluate(env))
         End Function
