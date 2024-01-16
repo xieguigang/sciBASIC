@@ -51,9 +51,8 @@
 
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Lambda
+Imports Microsoft.VisualBasic.Math.Lambda.Symbolic
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
-Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 
 Module SymbolicTest
 
