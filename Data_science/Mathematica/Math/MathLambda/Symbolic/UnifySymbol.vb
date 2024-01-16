@@ -78,9 +78,14 @@ Namespace Symbolic
 
         Public Overrides Function ToString() As String
             If power = Literal.One Then
+                If factor = Literal.One Then
+                    Return symbolName
+                End If
                 Return $"({factor} * {symbolName})"
             ElseIf power = Literal.Zero Then
                 Return factor.ToString
+            ElseIf factor = Literal.One Then
+                Return $"({symbolName} ^ {power})"
             Else
                 Return $"({factor} * ({symbolName} ^ {power}))"
             End If
