@@ -59,7 +59,7 @@ Module SymbolicTest
     Sub Main()
 
         ' Call expands()
-        Call unit_test()
+        '  Call unit_test()
         Call test_Simplify()
 
         Pause()

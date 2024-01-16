@@ -117,7 +117,7 @@ Namespace Symbolic
                         .power = right
                     }
                 Else
-                    Return makeSimple(New BinaryExpression(left, right, bin))
+                    Return New BinaryExpression(left, right, bin)
                 End If
             Else
                 Return makeSimple(New BinaryExpression(left, right, bin))
