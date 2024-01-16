@@ -131,8 +131,8 @@ Namespace Symbolic
 
             ' 都是binary表达式
             ' 并且都已经归一化为左边为常数，右边为变量
-            Dim a As BinaryExpression = left
-            Dim b As BinaryExpression = right
+            Dim a As BinaryExpression = CType(left, BinaryExpression)
+            Dim b As BinaryExpression = CType(right, BinaryExpression)
 
             If Not (a.isNormalized AndAlso b.isNormalized) Then
                 Return raw
