@@ -168,7 +168,8 @@ Namespace Distributions
             Dim z As New List(Of Double)()
 
             While z.Count < len
-                eps = Normal.rnorm(len, 1.0, sd)
+                eps = Gaussian.rnorm(len, 1.0, sd)
+
                 For Each it As Double In eps
                     If it >= 0.0 AndAlso it <= 2.0 Then
                         z.Add(it)
