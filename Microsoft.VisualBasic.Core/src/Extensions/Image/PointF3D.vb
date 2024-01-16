@@ -70,6 +70,30 @@ Namespace Imaging
 
     End Interface
 
+    Public Interface IPoint3D : Inherits RasterPixel
+
+        Property Z As Integer
+
+    End Interface
+
+    ''' <summary>
+    ''' a index point in 3d spatial geometry space
+    ''' </summary>
+    Public Structure SpatialIndex3D : Implements IPoint3D
+
+        Public Property X As Integer Implements IPoint3D.X
+        Public Property Y As Integer Implements IPoint3D.Y
+        ''' <summary>
+        ''' the z axis index data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Z As Integer Implements IPoint3D.Z
+
+    End Structure
+
+    ''' <summary>
+    ''' a float 2d point
+    ''' </summary>
     Public Interface Layout2D
 
         ''' <summary>

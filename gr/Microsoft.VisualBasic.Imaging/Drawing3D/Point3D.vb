@@ -91,6 +91,10 @@ Namespace Drawing3D
             End Get
         End Property
 
+        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
+        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
+        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
+
         Public Sub New(x!, y!, Optional z! = 0)
             Me.X = x
             Me.Y = y
@@ -122,10 +126,6 @@ Namespace Drawing3D
         Sub New(xyz As Single())
             Call Me.New(xyz(0), xyz(1), xyz.ElementAtOrDefault(2))
         End Sub
-
-        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
-        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
-        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

@@ -49,12 +49,21 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Imaging
+
 Namespace GridGraph
 
+    ''' <summary>
+    ''' 2d point data model in readonly
+    ''' </summary>
+    ''' <remarks>
+    ''' <see cref="RasterPixel"/> is not a readonly 2d point data model
+    ''' </remarks>
     Public Interface IPoint2D
 
         ReadOnly Property X As Integer
         ReadOnly Property Y As Integer
 
     End Interface
+
 End Namespace
