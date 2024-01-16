@@ -59,9 +59,16 @@ Module SymbolicTest
     Sub Main()
 
         ' Call expands()
+        Call unit_test()
         Call test_Simplify()
 
         Pause()
+    End Sub
+
+    Sub unit_test()
+
+        Call Console.WriteLine(Symbolic.Simplify("0+x"))
+
     End Sub
 
     Sub test_Simplify()
@@ -75,12 +82,14 @@ Module SymbolicTest
         Console.WriteLine($"{symbols} = {symbols.Evaluate(ScriptEngine.Expression)}")
         Console.WriteLine($"{result} = {result.Evaluate(ScriptEngine.Expression)}")
 
+        ' (x ^ 2 * 2 + -1) ^ -2
         symbols = ScriptEngine.ParseExpression("(2 * x ^ 2 - 1 + 0 * a) ^ -1 * (2 * x ^ 2  - 1 * 1) ^ -1")
         result = symbols.DoCall(AddressOf Symbolic.Simplify)
 
         Console.WriteLine($"{symbols} -> {result}")
 
-        ScriptEngine.SetVariable("x", 33)
+        ScriptEngine.SetVariable("a", Double.MaxValue)
+        ScriptEngine.SetVariable("x", 3)
 
         Console.WriteLine($"{symbols} = {symbols.Evaluate(ScriptEngine.Expression)}")
         Console.WriteLine($"{result} = {result.Evaluate(ScriptEngine.Expression)}")
