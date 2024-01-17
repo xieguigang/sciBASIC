@@ -4,31 +4,43 @@ Imports std = System.Math
 
 Namespace Distributions
 
+    ''' <summary>
     ''' cf paper: Fast Poisson Disk Sampling in Arbitrary Dimensions. Robert Bridson. ACM SIGGRAPH 2007
+    ''' 
     ''' How to use:
-    ''' 	1. set parameters. ( minDist / k / sampleRange )
-    ''' 	2. call Generate(). It will return the list contains sample points.
+    ''' 
+    ''' 1. set parameters. ( minDist / k / sampleRange )
+    ''' 2. call Generate(). It will return the list contains sample points.
+    ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/HexStark/PoissonDiskGeneratorForUnity/tree/master
+    ''' </remarks>
     Public NotInheritable Class PoissonDiskGenerator
-        Inherits Object
 
         ' min distance between each two samples.
         Public Shared minDist As Single = 5.0F          ' the minimumx distance between any of the two samples.
         Public Shared k As Integer = 30                 ' the time of throw darts. Higher k generate better result but slower.
         Public Shared sampleRange As Single = 256.0F    ' the range of generated samples. From 0[inclusive] to sampleRange[inclusive]
+
         Public Shared ReadOnly Property sampleCount As Integer
             Get
-                Return resultSetField.Count
-            End Get
-        End Property
-        Public Shared ReadOnly Property ResultSet As List(Of Vector2D)
-            Get
-                Return resultSetField
+                Return m_resultSet.Count
             End Get
         End Property
 
-        ' result of samples
-        Private Shared resultSetField As List(Of Vector2D)
-        ' grid for save sample locations.
+        Public Shared ReadOnly Property ResultSet As List(Of Vector2D)
+            Get
+                Return m_resultSet
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' result of samples
+        ''' </summary>
+        Private Shared m_resultSet As List(Of Vector2D)
+        ''' <summary>
+        ''' grid for save sample locations.
+        ''' </summary>
         Private Shared grid As Boolean(,)
         Private Shared gridvalueX, gridvalueY As Single(,)
         Private Shared m_CeiledSampleRange As Single
@@ -42,10 +54,10 @@ Namespace Distributions
         Private Shared Function IsInputsValid() As Boolean
             Return minDist > 0.0F AndAlso k > 0 AndAlso sampleRange > minDist
         End Function
+
         ''' <summary>
         ''' Generate samples. Based on minDist / k / sampleRange.
         ''' </summary>
-        ''' 
         Public Shared Function Generate() As List(Of Vector2D)
 
             If Not IsInputsValid() Then
@@ -155,35 +167,48 @@ Namespace Distributions
                 proc += 1
             End While
 
-            If resultSetField IsNot Nothing Then
-                resultSetField.Clear()
+            If m_resultSet IsNot Nothing Then
+                m_resultSet.Clear()
             Else
-                resultSetField = New List(Of Vector2D)()
+                m_resultSet = New List(Of Vector2D)()
             End If
 
-            Dim i = 0
+            Dim i As Integer = 0
 
             While i <= activePointCount
                 If activePointListX(i) <= sampleRange AndAlso activePointListY(i) <= sampleRange Then
-                    resultSetField.Add(New Vector2D(activePointListX(i), activePointListY(i)))
+                    m_resultSet.Add(New Vector2D(activePointListX(i), activePointListY(i)))
                 End If
 
                 i += 1
             End While
-            Return resultSetField
+
+            Return m_resultSet
         End Function
 
-        ' Given a float, return the grid index in any dimenssion 
+        ''' <summary>
+        ''' Given a float, return the grid index in any dimenssion 
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <returns></returns>
         Private Shared Function _PositionToGridIndex(f As Single) As Integer
             Return std.Floor(_WrapRepeatFloat(f) / gridCellSize)
         End Function
 
-        ' wrap float into generate range
+        ''' <summary>
+        ''' wrap float into generate range
+        ''' </summary>
+        ''' <param name="f"></param>
+        ''' <returns></returns>
         Private Shared Function _WrapRepeatFloat(f As Single) As Single
             Return f - std.Floor(f / m_CeiledSampleRange) * m_CeiledSampleRange
         End Function
 
-        ' wrap grid index into grid length
+        ''' <summary>
+        ''' wrap grid index into grid length
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         Private Shared Function _WrapIndex(index As Integer) As Integer
             Return If(index < 0, index Mod gridLength + gridLength, index Mod gridLength)
         End Function
