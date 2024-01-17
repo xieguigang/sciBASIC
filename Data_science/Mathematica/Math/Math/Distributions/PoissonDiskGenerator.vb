@@ -149,12 +149,12 @@ Namespace Distributions
 
                 If dartX < 1 Then
                     dartX = 1
-                ElseIf dartX >= sampleRange Then
+                ElseIf dartX >= sampleRange - 1 Then
                     dartX = sampleRange - 1
                 End If
                 If dartY < 1 Then
                     dartY = 1
-                ElseIf dartY >= sampleRange Then
+                ElseIf dartY >= sampleRange - 1 Then
                     dartY = sampleRange - 1
                 End If
 
