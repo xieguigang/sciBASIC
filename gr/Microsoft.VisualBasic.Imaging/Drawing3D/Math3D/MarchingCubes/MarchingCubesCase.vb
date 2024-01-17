@@ -5,7 +5,16 @@ Namespace Drawing3D.Math3D.MarchingCubes
 
     Public Class MarchingCubesCase
 
-        Private Shared ReadOnly _sVectorLookup As Vector3() = {New Vector3(0F, 0F, 0F), New Vector3(1.0F, 0F, 0F), New Vector3(0F, 1.0F, 0F), New Vector3(1.0F, 1.0F, 0F), New Vector3(0F, 0F, 1.0F), New Vector3(1.0F, 0F, 1.0F), New Vector3(0F, 1.0F, 1.0F), New Vector3(1.0F, 1.0F, 1.0F)}
+        Private Shared ReadOnly _sVectorLookup As Vector3() = {
+            New Vector3(0F, 0F, 0F),
+            New Vector3(1.0F, 0F, 0F),
+            New Vector3(0F, 1.0F, 0F),
+            New Vector3(1.0F, 1.0F, 0F),
+            New Vector3(0F, 0F, 1.0F),
+            New Vector3(1.0F, 0F, 1.0F),
+            New Vector3(0F, 1.0F, 1.0F),
+            New Vector3(1.0F, 1.0F, 1.0F)
+        }
 
         Private ReadOnly _vertices As Vertex()
         Private ReadOnly _edges As Edge()
@@ -14,8 +23,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
         Public Sub New(corners As Boolean())
             Dim verts = New List(Of Vertex)()
             Dim faces = New List(Of Vertex)(5) {}
-
-            Dim i = 0
+            Dim i As Integer = 0
 
             While i < 6
                 faces(i) = New List(Of Vertex)()
@@ -28,21 +36,23 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 Dim x = i Xor &H1
                 Dim y = i Xor &H2
                 Dim z = i Xor &H4
-
                 Dim vert As Vertex
 
                 If corners(i) AndAlso Not corners(x) Then
-                    verts.Add(CSharpImpl.__Assign(vert, New Vertex(i, x)))
+                    vert = New Vertex(i, x)
+                    verts.Add(vert)
                     faces(If((i And &H2) = 0, 2, 3)).Add(vert)
                     faces(If((i And &H4) = 0, 4, 5)).Add(vert)
                 End If
                 If corners(i) AndAlso Not corners(y) Then
-                    verts.Add(CSharpImpl.__Assign(vert, New Vertex(i, y)))
+                    vert = New Vertex(i, y)
+                    verts.Add(vert)
                     faces(If((i And &H1) = 0, 0, 1)).Add(vert)
                     faces(If((i And &H4) = 0, 4, 5)).Add(vert)
                 End If
                 If corners(i) AndAlso Not corners(z) Then
-                    verts.Add(CSharpImpl.__Assign(vert, New Vertex(i, z)))
+                    vert = New Vertex(i, z)
+                    verts.Add(vert)
                     faces(If((i And &H1) = 0, 0, 1)).Add(vert)
                     faces(If((i And &H2) = 0, 2, 3)).Add(vert)
                 End If
@@ -196,14 +206,5 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 i += 1
             End While
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
-
 End Namespace
