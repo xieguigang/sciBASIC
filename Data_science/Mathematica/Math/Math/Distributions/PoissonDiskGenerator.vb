@@ -22,15 +22,15 @@ Namespace Distributions
         ''' <summary>
         ''' the minimumx distance between any of the two samples.
         ''' </summary>
-        Public Shared minDist As Single = 5.0F
+        Public minDist As Single = 5.0F
         ''' <summary>
         ''' the time of throw darts. Higher k generate better result but slower.
         ''' </summary>
-        Public Shared k As Integer = 30
+        Public k As Integer = 30
         ''' <summary>
         ''' the range of generated samples. From 0[inclusive] to sampleRange[inclusive]
         ''' </summary>
-        Public Shared sampleRange As Single = 256.0F
+        Public sampleRange As Single = 256.0F
 
         Public ReadOnly Property sampleCount As Integer
             Get
@@ -62,23 +62,33 @@ Namespace Distributions
         Dim activePointListX As Single()
         Dim activePointListY As Single()
 
+        Private Sub New()
+        End Sub
+
         ''' <summary>
         ''' Determines if inputs are appropriate.
         ''' </summary>
         ''' <returns><c>true</c> if is inputs valid; otherwise, <c>false</c>.</returns>
-        Private Shared Function IsInputsValid() As Boolean
+        Private Shared Function IsInputsValid(minDist As Single, sampleRange As Single, k As Integer) As Boolean
             Return minDist > 0.0F AndAlso k > 0 AndAlso sampleRange > minDist
         End Function
 
         ''' <summary>
         ''' Generate samples. Based on minDist / k / sampleRange.
         ''' </summary>
-        Public Shared Function Generate() As List(Of Vector2D)
-            If Not IsInputsValid() Then
+        Public Shared Function Generate(Optional minDist As Single = 5.0F,
+                                        Optional sampleRange As Single = 256.0F,
+                                        Optional k As Integer = 30) As List(Of Vector2D)
+
+            If Not IsInputsValid(minDist, sampleRange, k) Then
                 ' TODO: handle error.
                 Return Nothing
             Else
-                Dim poisson As New PoissonDiskGenerator
+                Dim poisson As New PoissonDiskGenerator With {
+                    .minDist = minDist,
+                    .sampleRange = sampleRange,
+                    .k = k
+                }
 
                 Call poisson.Sampling()
                 Call poisson.PullSamples()
