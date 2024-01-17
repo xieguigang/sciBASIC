@@ -1,12 +1,8 @@
-﻿Imports Vector3 = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
+﻿Imports System.Numerics
 
 Namespace Drawing3D.Math3D.MarchingCubes
 
     Public Class MarchingCubes
-        Private Shared Function VertexIndexToString(index As Integer) As String
-            Return String.Format("{0}:{1}:{2}", index And 1, index >> 1 And 1, index >> 2 And 1)
-        End Function
-
 
         Private ReadOnly _lookupTable As MarchingCubesCase() = New MarchingCubesCase(255) {}
 
@@ -29,8 +25,18 @@ Namespace Drawing3D.Math3D.MarchingCubes
             Dim i = 0
 
             While i < 256
-                _lookupTable(i) = New MarchingCubesCase({(i And &H1) <> 0, (i And &H2) <> 0, (i And &H4) <> 0, (i And &H8) <> 0, (i And &H10) <> 0, (i And &H20) <> 0, (i And &H40) <> 0, (i And &H80) <> 0})
-                Threading.Interlocked.Increment(i)
+                _lookupTable(i) = New MarchingCubesCase({
+                     (i And &H1) <> 0,
+                     (i And &H2) <> 0,
+                     (i And &H4) <> 0,
+                     (i And &H8) <> 0,
+                     (i And &H10) <> 0,
+                     (i And &H20) <> 0,
+                     (i And &H40) <> 0,
+                     (i And &H80) <> 0
+                })
+
+                i += 1
             End While
         End Sub
 
@@ -54,7 +60,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
 
             While i < 8
                 lookup = lookup Or If(values(i) >= thresh, 1 << i, 0)
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             Return _lookupTable(lookup)
@@ -99,10 +105,6 @@ Namespace Drawing3D.Math3D.MarchingCubes
             mesh.RecalculateBounds()
             mesh.RecalculateNormals()
             mesh.UploadMeshData(False)
-        End Sub
-
-        Public Sub DrawGizmos(values As Single())
-            LookupCase(values).DrawGizmos(values, Threshold)
         End Sub
     End Class
 End Namespace

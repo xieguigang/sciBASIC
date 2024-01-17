@@ -101,7 +101,8 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 faces(i) = New List(Of Vertex)()
                 Threading.Interlocked.Increment(i)
             End While
-            Dim i = 0
+
+            i = 0
 
             While i < 8
                 Dim x = i Xor &H1
@@ -132,7 +133,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
             _vertices = verts.ToArray()
 
             Dim edges = New List(Of Edge)()
-            Dim i = 0
+            i = 0
 
             While i < 6
                 Dim face = faces(i)
@@ -254,7 +255,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 Threading.Interlocked.Increment(i)
             End While
 
-            Dim i = 0
+            i = 0
 
             While i < _triangles.Length
                 Dim face = _triangles(i)

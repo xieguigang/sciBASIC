@@ -59,13 +59,12 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
+Imports vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 Namespace Drawing3D
 
@@ -262,7 +261,7 @@ Namespace Drawing3D
         End Operator
 
         Public Shared Widening Operator CType(expr As String) As Point3D
-            With CType(expr, Vector)
+            With CType(expr, vec)
                 Return New Point3D(.Item(0), .Item(1), .ElementAtOrDefault(2))
             End With
         End Operator
