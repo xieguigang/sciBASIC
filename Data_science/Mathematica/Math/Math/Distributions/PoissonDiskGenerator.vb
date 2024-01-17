@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -62,6 +64,8 @@ Namespace Distributions
         Dim activePointListX As Single()
         Dim activePointListY As Single()
 
+        Dim grayscale As Image
+
         Private Sub New()
         End Sub
 
@@ -78,7 +82,8 @@ Namespace Distributions
         ''' </summary>
         Public Shared Function Generate(Optional minDist As Single = 5.0F,
                                         Optional sampleRange As Single = 256.0F,
-                                        Optional k As Integer = 30) As List(Of Vector2D)
+                                        Optional k As Integer = 30,
+                                        Optional dart As Image = Nothing) As List(Of Vector2D)
 
             If Not IsInputsValid(minDist, sampleRange, k) Then
                 ' TODO: handle error.
@@ -90,8 +95,21 @@ Namespace Distributions
                     .k = k
                 }
 
+                If Not dart Is Nothing Then
+                    Dim grayscale = New Bitmap(CInt(sampleRange), CInt(sampleRange))
+                    Dim g As Graphics = Graphics.FromImage(grayscale)
+
+                    dart = dart.Grayscale
+                    g.DrawImage(dart, 0, 0, grayscale.Width, grayscale.Height)
+                    g.Flush()
+                    g.Dispose()
+
+                    poisson.grayscale = grayscale
+                End If
+
                 Call poisson.Sampling()
                 Call poisson.PullSamples()
+                Call poisson.Dispose()
 
                 Return poisson.m_resultSet
             End If
@@ -116,6 +134,23 @@ Namespace Distributions
         End Sub
 
         Const Pi2 As Double = std.PI + std.PI
+
+        Private Sub getDartR(ByRef dartX As Single, ByRef dartY As Single, ByRef proc As Integer)
+            Dim dartRadians = 0.0F
+            Dim dartDist = 0.0F
+
+            If grayscale Is Nothing Then
+                ' randomly chose a dart in the ring area.
+                dartRadians = rand.NextDouble(0, Pi2)
+                ' range from minDist to 2*minDist ( r to 2r in cf paper )
+                dartDist = rand.NextDouble(minDist, 2.0F * minDist)
+                dartX = activePointListX(proc) + dartDist * std.Cos(dartRadians)
+                dartY = activePointListY(proc) + dartDist * std.Sin(dartRadians)
+            Else
+                ' get radians from pixel grayscale value
+                Throw New NotImplementedException
+            End If
+        End Sub
 
         Private Sub Sampling()
             ' Init.
@@ -142,24 +177,19 @@ Namespace Distributions
 
             ' throw darts
             Dim dartX = 0.0F, dartY = 0.0F
-            Dim dartRadians = 0.0F
-            Dim dartDist = 0.0F
             Dim gridX = 0, gridY = 0
 
             ' for each point in active list. 
             ' Note: in cf paper, the point is randomly chosen by its index.
-            Dim proc = 0
+            Dim proc As Integer = 0
 
             While proc <= activePointCount
                 ' throw darts to get samples.
-                Dim dart = 0
+                Dim dart As Integer = 0
 
                 While dart < k
-                    ' randomly chose a dart in the ring area.
-                    dartRadians = rand.NextDouble(0, Pi2)
-                    dartDist = rand.NextDouble(minDist, 2.0F * minDist) ' range from minDist to 2*minDist ( r to 2r in cf paper )
-                    dartX = activePointListX(proc) + dartDist * std.Cos(dartRadians)
-                    dartY = activePointListY(proc) + dartDist * std.Sin(dartRadians)
+                    Call getDartR(dartX, dartY, proc)
+
                     gridX = _PositionToGridIndex(dartX)
                     gridY = _PositionToGridIndex(dartY)
 
@@ -196,7 +226,9 @@ Namespace Distributions
 
                     If hasSamples Then
                         ' there is a sample inside the minimum distance circle, abandon.
-                        Continue While
+                        ' Continue While
+                        ' do nothing at here, disable continue while for avoid the
+                        ' dead loop
                     Else
                         ' no sample around, add this dart sample into processing list.
                         activePointCount += 1
@@ -242,5 +274,11 @@ Namespace Distributions
         Private Function _WrapIndex(index As Integer) As Integer
             Return If(index < 0, index Mod gridLength + gridLength, index Mod gridLength)
         End Function
+
+        Public Sub Dispose()
+            If Not grayscale Is Nothing Then
+                Call grayscale.Dispose()
+            End If
+        End Sub
     End Class
 End Namespace
