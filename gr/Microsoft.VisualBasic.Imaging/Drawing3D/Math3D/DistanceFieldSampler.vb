@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 Imports Vector3 = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
-Namespace Drawing3D.Math3D.MarchingCubes
+Namespace Drawing3D.Math3D
 
     Public Class DistanceFieldSampler
 #Region "Unity Junk"
