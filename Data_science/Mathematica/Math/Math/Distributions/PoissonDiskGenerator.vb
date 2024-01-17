@@ -149,12 +149,17 @@ Namespace Distributions
 
                 If dartX < 1 Then
                     dartX = 1
+                ElseIf dartX >= sampleRange Then
+                    dartX = sampleRange - 1
                 End If
                 If dartY < 1 Then
                     dartY = 1
+                ElseIf dartY >= sampleRange Then
+                    dartY = sampleRange - 1
                 End If
 
-                dartRadians = (1 - grayscale.GetPixel(dartX, dartY).GrayScale / 255) * Pi2
+                dartRadians = grayscale.GetPixel(dartX, dartY).GrayScale / 255
+                dartRadians = (dartRadians) * rand.NextDouble(0, Pi2)
             End If
 
             ' range from minDist to 2*minDist ( r to 2r in cf paper )
