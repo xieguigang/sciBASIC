@@ -676,8 +676,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Remove="Drawing3D\Models\screenshots\**" />
 		<Compile Remove="test\**" />
+		<EmbeddedResource Remove="Drawing3D\Models\screenshots\**" />
 		<EmbeddedResource Remove="test\**" />
+		<None Remove="Drawing3D\Models\screenshots\**" />
 		<None Remove="test\**" />
 	</ItemGroup>
 
