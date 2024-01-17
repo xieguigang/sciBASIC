@@ -18,17 +18,27 @@ Namespace Distributions
     Public NotInheritable Class PoissonDiskGenerator
 
         ' min distance between each two samples.
-        Public Shared minDist As Single = 5.0F          ' the minimumx distance between any of the two samples.
-        Public Shared k As Integer = 30                 ' the time of throw darts. Higher k generate better result but slower.
-        Public Shared sampleRange As Single = 256.0F    ' the range of generated samples. From 0[inclusive] to sampleRange[inclusive]
 
-        Public Shared ReadOnly Property sampleCount As Integer
+        ''' <summary>
+        ''' the minimumx distance between any of the two samples.
+        ''' </summary>
+        Public Shared minDist As Single = 5.0F
+        ''' <summary>
+        ''' the time of throw darts. Higher k generate better result but slower.
+        ''' </summary>
+        Public Shared k As Integer = 30
+        ''' <summary>
+        ''' the range of generated samples. From 0[inclusive] to sampleRange[inclusive]
+        ''' </summary>
+        Public Shared sampleRange As Single = 256.0F
+
+        Public ReadOnly Property sampleCount As Integer
             Get
                 Return m_resultSet.Count
             End Get
         End Property
 
-        Public Shared ReadOnly Property ResultSet As List(Of Vector2D)
+        Public ReadOnly Property ResultSet As List(Of Vector2D)
             Get
                 Return m_resultSet
             End Get
@@ -37,15 +47,20 @@ Namespace Distributions
         ''' <summary>
         ''' result of samples
         ''' </summary>
-        Private Shared m_resultSet As List(Of Vector2D)
+        Dim m_resultSet As List(Of Vector2D)
+
         ''' <summary>
         ''' grid for save sample locations.
         ''' </summary>
-        Private Shared grid As Boolean(,)
-        Private Shared gridvalueX, gridvalueY As Single(,)
-        Private Shared m_CeiledSampleRange As Single
-        Private Shared gridCellSize As Single = 0.0F
-        Private Shared gridLength As Integer = 0
+        Private grid As Boolean(,)
+        Private gridvalueX, gridvalueY As Single(,)
+        Private m_CeiledSampleRange As Single
+        Private gridCellSize As Single = 0.0F
+        Private gridLength As Integer = 0
+
+        Dim activePointCount As Integer = 0
+        Dim activePointListX As Single()
+        Dim activePointListY As Single()
 
         ''' <summary>
         ''' Determines if inputs are appropriate.
@@ -59,15 +74,40 @@ Namespace Distributions
         ''' Generate samples. Based on minDist / k / sampleRange.
         ''' </summary>
         Public Shared Function Generate() As List(Of Vector2D)
-
             If Not IsInputsValid() Then
                 ' TODO: handle error.
                 Return Nothing
+            Else
+                Dim poisson As New PoissonDiskGenerator
+
+                Call poisson.Sampling()
+                Call poisson.PullSamples()
+
+                Return poisson.m_resultSet
+            End If
+        End Function
+
+        Private Sub PullSamples()
+            If m_resultSet IsNot Nothing Then
+                m_resultSet.Clear()
+            Else
+                m_resultSet = New List(Of Vector2D)()
             End If
 
+            Dim i As Integer = 0
+
+            While i <= activePointCount
+                If activePointListX(i) <= sampleRange AndAlso activePointListY(i) <= sampleRange Then
+                    m_resultSet.Add(New Vector2D(activePointListX(i), activePointListY(i)))
+                End If
+
+                i += 1
+            End While
+        End Sub
+
+        Private Sub Sampling()
             ' Init.
             gridCellSize = minDist / MathF.Sqrt(2.0F)
-            Dim activePointCount = 0
 
             ' Create grid.
             gridLength = std.Ceiling(sampleRange / gridCellSize)
@@ -77,12 +117,13 @@ Namespace Distributions
             gridvalueY = New Single(gridLength - 1, gridLength - 1) {}
 
             ' Create processing list.
-            Dim activePointListX = New Single(gridLength * gridLength - 1) {}   ' x 
-            Dim activePointListY = New Single(gridLength * gridLength - 1) {}   ' y
+            activePointListX = New Single(gridLength * gridLength - 1) {}   ' x 
+            activePointListY = New Single(gridLength * gridLength - 1) {}   ' y
 
             ' randomly add first point
             activePointListX(0) = rand.NextDouble(0, m_CeiledSampleRange)
             activePointListY(0) = rand.NextDouble(0.0F, m_CeiledSampleRange)
+
             grid(_PositionToGridIndex(activePointListX(0)), _PositionToGridIndex(activePointListY(0))) = True
             gridvalueX(_PositionToGridIndex(activePointListX(0)), _PositionToGridIndex(activePointListY(0))) = activePointListX(0)
             gridvalueY(_PositionToGridIndex(activePointListX(0)), _PositionToGridIndex(activePointListY(0))) = activePointListY(0)
@@ -111,7 +152,6 @@ Namespace Distributions
                     gridY = _PositionToGridIndex(dartY)
 
                     ' find out if there is samples near this dart.
-
                     Dim isdebug = True
 
                     If isdebug And (_WrapRepeatFloat(dartX) - dartX <> 0.0F Or _WrapRepeatFloat(dartY) - dartY <> 0.0F) Then
@@ -125,8 +165,6 @@ Namespace Distributions
                         Dim y = -2
 
                         While y <= 2
-
-
                             If isdebug Then
                                 Dim xx = gridvalueX(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
                                 Dim yy = gridvalueY(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
@@ -139,7 +177,6 @@ Namespace Distributions
                             End If
 
                             y += 1
-                            '
                         End While
 
                         x += 1
@@ -158,7 +195,6 @@ Namespace Distributions
 
                         activePointListX(activePointCount) = _WrapRepeatFloat(dartX)
                         activePointListY(activePointCount) = _WrapRepeatFloat(dartY)
-
                     End If
 
                     dart += 1
@@ -166,32 +202,14 @@ Namespace Distributions
 
                 proc += 1
             End While
-
-            If m_resultSet IsNot Nothing Then
-                m_resultSet.Clear()
-            Else
-                m_resultSet = New List(Of Vector2D)()
-            End If
-
-            Dim i As Integer = 0
-
-            While i <= activePointCount
-                If activePointListX(i) <= sampleRange AndAlso activePointListY(i) <= sampleRange Then
-                    m_resultSet.Add(New Vector2D(activePointListX(i), activePointListY(i)))
-                End If
-
-                i += 1
-            End While
-
-            Return m_resultSet
-        End Function
+        End Sub
 
         ''' <summary>
         ''' Given a float, return the grid index in any dimenssion 
         ''' </summary>
         ''' <param name="f"></param>
         ''' <returns></returns>
-        Private Shared Function _PositionToGridIndex(f As Single) As Integer
+        Private Function _PositionToGridIndex(f As Single) As Integer
             Return std.Floor(_WrapRepeatFloat(f) / gridCellSize)
         End Function
 
@@ -200,7 +218,7 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="f"></param>
         ''' <returns></returns>
-        Private Shared Function _WrapRepeatFloat(f As Single) As Single
+        Private Function _WrapRepeatFloat(f As Single) As Single
             Return f - std.Floor(f / m_CeiledSampleRange) * m_CeiledSampleRange
         End Function
 
@@ -209,7 +227,7 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="index"></param>
         ''' <returns></returns>
-        Private Shared Function _WrapIndex(index As Integer) As Integer
+        Private Function _WrapIndex(index As Integer) As Integer
             Return If(index < 0, index Mod gridLength + gridLength, index Mod gridLength)
         End Function
     End Class
