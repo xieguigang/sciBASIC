@@ -105,9 +105,11 @@ Namespace Distributions
             End While
         End Sub
 
+        Const Pi2 As Double = std.PI + std.PI
+
         Private Sub Sampling()
             ' Init.
-            gridCellSize = minDist / MathF.Sqrt(2.0F)
+            gridCellSize = minDist / std.Sqrt(2.0F)
 
             ' Create grid.
             gridLength = std.Ceiling(sampleRange / gridCellSize)
@@ -144,10 +146,10 @@ Namespace Distributions
 
                 While dart < k
                     ' randomly chose a dart in the ring area.
-                    dartRadians = rand.NextDouble(0, MathF.PI + MathF.PI)
+                    dartRadians = rand.NextDouble(0, Pi2)
                     dartDist = rand.NextDouble(minDist, 2.0F * minDist) ' range from minDist to 2*minDist ( r to 2r in cf paper )
-                    dartX = activePointListX(proc) + dartDist * MathF.Cos(dartRadians)
-                    dartY = activePointListY(proc) + dartDist * MathF.Sin(dartRadians)
+                    dartX = activePointListX(proc) + dartDist * std.Cos(dartRadians)
+                    dartY = activePointListY(proc) + dartDist * std.Sin(dartRadians)
                     gridX = _PositionToGridIndex(dartX)
                     gridY = _PositionToGridIndex(dartY)
 
