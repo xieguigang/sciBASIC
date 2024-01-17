@@ -99,7 +99,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
 
             While i < 6
                 faces(i) = New List(Of Vertex)()
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             i = 0
@@ -127,7 +127,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
                     faces(If((i And &H2) = 0, 2, 3)).Add(vert)
                 End If
 
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             _vertices = verts.ToArray()
@@ -157,13 +157,13 @@ Namespace Drawing3D.Math3D.MarchingCubes
                                 edges.Add(New Edge(a, b))
                         End Select
 
-                        Threading.Interlocked.Increment(k)
+                        k += 1
                     End While
 
-                    Threading.Interlocked.Increment(j)
+                    j += 1
                 End While
 
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             Dim sortedEdges = New List(Of Edge)()
@@ -252,7 +252,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
 
             While i < _vertices.Length
                 vertIndices(i) = cubes.WriteVertex(FindVertex(values, threshold, _vertices(i)))
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
 
             i = 0
@@ -260,7 +260,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
             While i < _triangles.Length
                 Dim face = _triangles(i)
                 cubes.WriteFace(vertIndices(face.A), vertIndices(face.B), vertIndices(face.C))
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
         End Sub
 
@@ -272,8 +272,8 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 Dim a = FindVertex(values, threshold, edge.A)
                 Dim b = FindVertex(values, threshold, edge.B)
 
-                Gizmos.DrawLine(a, b)
-                Threading.Interlocked.Increment(i)
+                ' Gizmos.DrawLine(a, b)
+                i += 1
             End While
         End Sub
 

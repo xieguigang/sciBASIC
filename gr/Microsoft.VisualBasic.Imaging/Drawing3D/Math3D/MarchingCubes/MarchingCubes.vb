@@ -1,4 +1,5 @@
 ﻿Imports System.Numerics
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 
 Namespace Drawing3D.Math3D.MarchingCubes
 
@@ -51,7 +52,9 @@ Namespace Drawing3D.Math3D.MarchingCubes
         End Sub
 
         Private Function LookupCase(values As Single()) As MarchingCubesCase
-            If values.Length <> 8 Then Throw New Exception("Expected 8 values.")
+            If values.Length <> 8 Then
+                Throw New Exception("Expected 8 values.")
+            End If
 
             Dim thresh = Threshold
             Dim lookup = 0
@@ -70,13 +73,13 @@ Namespace Drawing3D.Math3D.MarchingCubes
             LookupCase(values).Write(Me, values, Threshold)
         End Sub
 
-        Private Sub WriteFace(a As Integer, b As Integer, c As Integer)
+        Friend Sub WriteFace(a As Integer, b As Integer, c As Integer)
             _indices.Add(a)
             _indices.Add(b)
             _indices.Add(c)
         End Sub
 
-        Private Function WriteVertex(vertex As Vector3) As Integer
+        Friend Function WriteVertex(vertex As Vector3) As Integer
             Const res = 4
             Const invRes = 1.0F / res
 
@@ -104,7 +107,6 @@ Namespace Drawing3D.Math3D.MarchingCubes
             mesh.SetTriangles(_indices, 0)
             mesh.RecalculateBounds()
             mesh.RecalculateNormals()
-            mesh.UploadMeshData(False)
         End Sub
     End Class
 End Namespace
