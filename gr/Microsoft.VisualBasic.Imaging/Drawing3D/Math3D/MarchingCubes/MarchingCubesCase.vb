@@ -1,89 +1,9 @@
 ﻿Imports System.Numerics
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 
 Namespace Drawing3D.Math3D.MarchingCubes
+
     Public Class MarchingCubesCase
-        Private Structure Vertex
-            Implements IEquatable(Of Vertex)
-            Public ReadOnly A As Integer
-            Public ReadOnly B As Integer
-
-            Public Sub New(a As Integer, b As Integer)
-                Me.A = a
-                Me.B = b
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return String.Format("{{{0}, {1}}}", VertexIndexToString(A), VertexIndexToString(B))
-            End Function
-
-            Public Overrides Function Equals(obj As Object) As Boolean
-                If ReferenceEquals(Nothing, obj) Then Return False
-                Return TypeOf obj Is Vertex AndAlso Equals(CType(obj, Vertex))
-            End Function
-
-            Public Overloads Function Equals(other As Vertex) As Boolean Implements IEquatable(Of Vertex).Equals
-                Return A = other.A AndAlso B = other.B
-            End Function
-
-            Public Overrides Function GetHashCode() As Integer
-                Return A * 397 Xor B
-            End Function
-        End Structure
-
-        Private Structure Edge
-            Implements IEquatable(Of Edge)
-            Public ReadOnly A As Vertex
-            Public ReadOnly B As Vertex
-
-            Public ReadOnly Property IsValid As Boolean
-                Get
-                    Return Not A.Equals(B)
-                End Get
-            End Property
-            Public ReadOnly Property Reverse As Edge
-                Get
-                    Return New Edge(B, A)
-                End Get
-            End Property
-
-            Public Sub New(a As Vertex, b As Vertex)
-                Me.A = a
-                Me.B = b
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return String.Format("({0}, {1})", A, B)
-            End Function
-
-            Public Overloads Function Equals(other As Edge) As Boolean Implements IEquatable(Of Edge).Equals
-                Return A.Equals(other.A) AndAlso B.Equals(other.B)
-            End Function
-
-            Public Overrides Function Equals(obj As Object) As Boolean
-                If ReferenceEquals(Nothing, obj) Then Return False
-                Return TypeOf obj Is Edge AndAlso Equals(CType(obj, Edge))
-            End Function
-
-            Public Overrides Function GetHashCode() As Integer
-                Return (A.GetHashCode() * 397) Xor B.GetHashCode()
-            End Function
-        End Structure
-
-        Private Structure Triangle
-            Public ReadOnly A As Integer
-            Public ReadOnly B As Integer
-            Public ReadOnly C As Integer
-
-            Public Sub New(a As Integer, b As Integer, c As Integer)
-                Me.A = a
-                Me.B = b
-                Me.C = c
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return String.Format("({0}, {1}, {2})", A, B, C)
-            End Function
-        End Structure
 
         Private Shared ReadOnly _sVectorLookup As Vector3() = {New Vector3(0F, 0F, 0F), New Vector3(1.0F, 0F, 0F), New Vector3(0F, 1.0F, 0F), New Vector3(1.0F, 1.0F, 0F), New Vector3(0F, 0F, 1.0F), New Vector3(1.0F, 0F, 1.0F), New Vector3(0F, 1.0F, 1.0F), New Vector3(1.0F, 1.0F, 1.0F)}
 
@@ -259,7 +179,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
 
             While i < _triangles.Length
                 Dim face = _triangles(i)
-                cubes.WriteFace(vertIndices(face.A), vertIndices(face.B), vertIndices(face.C))
+                cubes.WriteFace(vertIndices(face.P0Index), vertIndices(face.P1Index), vertIndices(face.P2Index))
                 i += 1
             End While
         End Sub
