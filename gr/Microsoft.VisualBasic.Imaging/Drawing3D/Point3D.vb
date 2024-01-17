@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::af051cf3aa4606a0cbc1fe3cea3856ef, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 172
-    '    Code Lines: 102
-    ' Comment Lines: 45
-    '   Blank Lines: 25
-    '     File Size: 6.67 KB
+' Summaries:
 
 
-    '     Structure Point3D
-    ' 
-    '         Properties: Depth, X, Y, Z
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Project, RotateX, RotateY, RotateZ, ToString
-    ' 
-    '         Sub: Project
-    ' 
-    '         Operators: -, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 172
+'    Code Lines: 102
+' Comment Lines: 45
+'   Blank Lines: 25
+'     File Size: 6.67 KB
+
+
+'     Structure Point3D
+' 
+'         Properties: Depth, X, Y, Z
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Project, RotateX, RotateY, RotateZ, ToString
+' 
+'         Sub: Project
+' 
+'         Operators: -, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
@@ -76,8 +77,7 @@ Namespace Drawing3D
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
     ''' 
-    <XmlType("vertex")> Public Structure Point3D
-        Implements PointF3D
+    <XmlType("vertex")> Public Structure Point3D : Implements PointF3D
 
         ''' <summary>
         ''' The depth of a point in the isometric plane
@@ -129,6 +129,16 @@ Namespace Drawing3D
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Dot(a As Point3D, b As Point3D) As Double
+            Return a.DotProduct(b)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Cross(v1 As Point3D, v2 As Point3D) As Point3D
+            Return v1.CrossProduct(v2)
         End Function
 
         ''' <summary>

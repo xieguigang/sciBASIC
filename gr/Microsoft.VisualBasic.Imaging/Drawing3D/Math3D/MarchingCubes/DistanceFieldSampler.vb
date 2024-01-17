@@ -1,27 +1,29 @@
-﻿Imports Vector3 = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports std = System.Math
+Imports Vector3 = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 
 Namespace Drawing3D.Math3D.MarchingCubes
 
     Public Class DistanceFieldSampler
 #Region "Unity Junk"
-        Public Path As Path
-        Public Result As Texture2D
+        Public Path As Path3D
         Public Resolution As Integer = 128
 
-        Private _lastSampleSize As Vector2
+        Private _lastSampleSize As Vector2D
         Private _lastSampledPosition As Vector3
 
-        Private ReadOnly Property SampleSize As Vector2
+        Private ReadOnly Property SampleSize As Vector2D
             Get
-                Dim scale = transform.lossyScale
-                Return New Vector2(scale.x, scale.y)
+                Return New Vector2D(1, 1)
             End Get
         End Property
 
         Private ReadOnly Property NeedsUpdate As Boolean
             Get
                 If Path Is Nothing Then Return False
-                Return Result Is Nothing OrElse Result.width <> Resolution OrElse _lastSampledPosition <> transform.position OrElse Math.Abs(_lastSampleSize.X - SampleSize.X) > Single.Epsilon OrElse Math.Abs(_lastSampleSize.Y - SampleSize.Y) > Single.Epsilon
+                Return std.Abs(_lastSampleSize.x - SampleSize.x) > Single.Epsilon OrElse std.Abs(_lastSampleSize.y - SampleSize.y) > Single.Epsilon
             End Get
         End Property
 #End Region
@@ -49,12 +51,6 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 Me.Pos = pos
                 Me.Radius = radius
                 StartPoint = start
-            End Sub
-
-            Public Sub New(node As PathNode)
-                Pos = node.transform.position
-                Radius = node.Radius
-                StartPoint = node.StartPoint
             End Sub
         End Structure
 
@@ -86,26 +82,26 @@ Namespace Drawing3D.Math3D.MarchingCubes
         ''' given rectangle, defined by it's vertical position (<paramrefname="layerPos"/>), and
         ''' minimum and maximum X and Z bounds (<paramrefname="min"/> and <paramrefname="max"/>).
         ''' </summary>
-        ''' <paramname="path">List of vertices to search through/</param>
-        ''' <paramname="layerPos">Vertical position of the rectangle to find edges near to.</param>
-        ''' <paramname="min">Minimum X and Z coordinates of the rectangle.</param>
-        ''' <paramname="max">Maximum X and Z coordinates of the rectangle.</param>
-        ''' <paramname="outEdges">List to append the results to.</param>
-        Private Shared Sub FindNearbyEdges(path As List(Of Vertex), layerPos As Single, min As Vector2, max As Vector2, outEdges As List(Of Edge))
+        ''' <param name="path">List of vertices to search through/</param>
+        ''' <param name="layerPos">Vertical position of the rectangle to find edges near to.</param>
+        ''' <param name="min">Minimum X and Z coordinates of the rectangle.</param>
+        ''' <param name="max">Maximum X and Z coordinates of the rectangle.</param>
+        ''' <param name="outEdges">List to append the results to.</param>
+        Private Shared Sub FindNearbyEdges(path As List(Of Vertex), layerPos As Single, min As Vector2D, max As Vector2D, outEdges As List(Of Edge))
             Dim prev = path(path.Count - 1)
-            For Each [Next] In path
-                If Not [Next].StartPoint Then
-                    Dim edge = New Edge(prev, [Next])
+            For Each [next] As Vertex In path
+                If Not [next].StartPoint Then
+                    Dim edge = New Edge(prev, [next])
                     If IsEdgeNearSampleRange(edge, layerPos, min, max) Then
                         outEdges.Add(edge)
                     End If
                 End If
 
-                prev = [Next]()
+                prev = [next]
             Next
         End Sub
 
-        Private Shared Function IsEdgeNearSampleRange(ByRef edge As Edge, layerPos As Single, min As Vector2, max As Vector2) As Boolean
+        Private Shared Function IsEdgeNearSampleRange(ByRef edge As Edge, layerPos As Single, min As Vector2D, max As Vector2D) As Boolean
             ' Check if completely above
             If edge.First.Pos.Y - edge.First.Radius > layerPos AndAlso edge.Second.Pos.Y - edge.First.Radius > layerPos Then Return False
 
@@ -121,27 +117,28 @@ Namespace Drawing3D.Math3D.MarchingCubes
             Dim bp = samplePos - edge.Second.Pos
             Dim ab = edge.Second.Pos - edge.First.Pos
 
-            If Vector3.Dot(ap, ab) < 0F Then Return ap.magnitude
-            If Vector3.Dot(bp, ab) > 0F Then Return bp.magnitude
+            If Vector3.Dot(ap, ab) < 0F Then Return ap.Magnitude
+            If Vector3.Dot(bp, ab) > 0F Then Return bp.Magnitude
 
-            Return Math.Sqrt(Vector3.Cross(CType(ap, Vector3), CType(bp, Vector3)).sqrMagnitude / ab.sqrMagnitude)
+            Return std.Sqrt(Vector3.Cross(CType(ap, Vector3), CType(bp, Vector3)).SqrMagnitude / ab.SqrMagnitude)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function DistanceToDistanceScore(distance As Single, radius As Single) As Single
-            Return Math.Clamp(1.0F - distance * 0.5F / radius)
+            Return std.Clamp(1.0F - distance * 0.5F / radius, 0, 1)
         End Function
 
         Private Shared Function GetDistanceScore(samplePos As Vector3, edges As List(Of Edge)) As Single
             Dim score = 0F
 
             For Each edge In edges
-                score = Math.Max(score, DistanceToDistanceScore(GetDistance(samplePos, edge), edge.First.Radius))
+                score = std.Max(score, DistanceToDistanceScore(GetDistance(samplePos, edge), edge.First.Radius))
             Next
 
             Return score
         End Function
 
-        Public Shared Sub SampleDistanceField(path As List(Of Vertex), origin As Vector3, size As Vector2, resolution As Integer, outSamples As Single())
+        Public Shared Sub SampleDistanceField(path As List(Of Vertex), origin As Vector3, size As Vector2D, resolution As Integer, outSamples As Single())
             If outSamples.Length < resolution * resolution Then
                 Throw New ArgumentException("Expected outSamples to be at least " & resolution * resolution.ToString() & " in length.")
             End If
@@ -151,7 +148,7 @@ Namespace Drawing3D.Math3D.MarchingCubes
             If path.Count < 2 Then Return
 
             Dim layerPos = origin.Y
-            Dim min = New Vector2(origin.X, origin.Z)
+            Dim min = New Vector2D(origin.X, origin.Z)
             Dim max = min + size
 
             If _sNearbyEdges Is Nothing Then
@@ -165,39 +162,26 @@ Namespace Drawing3D.Math3D.MarchingCubes
             Dim row = 0
 
             While row < resolution
-                Dim z = row * (max.Y - min.Y) / resolution + min.Y
+                Dim z = row * (max.y - min.y) / resolution + min.y
                 Dim col = 0
 
                 While col < resolution
-                    Dim x = col * (max.X - min.X) / resolution + min.X
+                    Dim x = col * (max.x - min.x) / resolution + min.x
                     Dim pos = New Vector3(x, layerPos, z)
 
                     outSamples(col + row * resolution) = GetDistanceScore(pos, _sNearbyEdges)
-                    Threading.Interlocked.Increment(col)
+                    col += 1
                 End While
 
-                Threading.Interlocked.Increment(row)
+                row += 1
             End While
         End Sub
 
-        <ThreadStatic>
-        Private Shared _sBuffer As Single()
-        <ThreadStatic>
-        Private Shared _sColors As Drawing.Color()
-        <ThreadStatic>
-        Private Shared _sPath As List(Of Vertex)
+        Shared _sPath As List(Of Vertex)
+        Shared _sBuffer As Single()
 
-        Private Sub Update()
+        Public Sub Update()
             If Not NeedsUpdate Then Return
-
-            _lastSampledPosition = transform.position
-            _lastSampleSize = SampleSize
-
-            If Result Is Nothing Then
-                Result = New Texture2D(Resolution, Resolution, TextureFormat.RGB24, False)
-            ElseIf Resolution <> Result.width Then
-                Result.Resize(Resolution, Resolution, TextureFormat.RGB24, False)
-            End If
 
             If _sPath Is Nothing Then
                 _sPath = New List(Of Vertex)()
@@ -205,31 +189,22 @@ Namespace Drawing3D.Math3D.MarchingCubes
                 _sPath.Clear()
             End If
 
-            Path.GetVertices(_sPath)
+            GetVertices(_sPath)
 
-            If _sBuffer Is Nothing OrElse _sBuffer.Length < Resolution * Resolution Then
+            If _sBuffer.TryCount <> Resolution * Resolution Then
                 _sBuffer = New Single(Resolution * Resolution - 1) {}
-                _sColors = New Drawing.Color(Resolution * Resolution - 1) {}
             End If
 
-            Dim origin = _lastSampledPosition - New Vector3(_lastSampleSize.X * 0.5F, 0F, _lastSampleSize.Y * 0.5F)
+            Dim origin = _lastSampledPosition - New Vector3(_lastSampleSize.x * 0.5F, 0F, _lastSampleSize.y * 0.5F)
             SampleDistanceField(_sPath, origin, _lastSampleSize, Resolution, _sBuffer)
 
-            Dim i = 0
 
-            While i < Resolution * Resolution
-                Dim value = _sBuffer(i)
-                _sColors(i) = New Drawing.Color(value, value, value, 1.0F)
-                Threading.Interlocked.Increment(i)
-            End While
+        End Sub
 
-            Result.SetPixels(_sColors)
-            Result.Apply(False)
-
-            Dim meshRenderer = GetComponent(Of MeshRenderer)()
-            If meshRenderer IsNot Nothing Then
-                meshRenderer.sharedMaterial.mainTexture = Result
-            End If
+        Friend Sub GetVertices(sPath As List(Of DistanceFieldSampler.Vertex))
+            For Each pathNode As Vector3 In Path.Points
+                Call sPath.Add(New Vertex(pathNode, 0, 0))
+            Next
         End Sub
     End Class
 End Namespace

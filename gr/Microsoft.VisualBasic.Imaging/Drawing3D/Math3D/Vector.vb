@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::b9e5f459c6c2c27072fceeaceb3a6bce, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 46
-    '    Code Lines: 36
-    ' Comment Lines: 1
-    '   Blank Lines: 9
-    '     File Size: 1.48 KB
+' Summaries:
 
 
-    '     Module VectorMath
-    ' 
-    '         Function: CrossProduct, DotProduct, Magnitude, Normalize
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 46
+'    Code Lines: 36
+' Comment Lines: 1
+'   Blank Lines: 9
+'     File Size: 1.48 KB
+
+
+'     Module VectorMath
+' 
+'         Function: CrossProduct, DotProduct, Magnitude, Normalize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,6 +79,13 @@ Namespace Drawing3D.Math3D
         Public Function Magnitude(v As Vector3) As Double
             With v
                 Return std.Sqrt(.X ^ 2 + .Y ^ 2 + .Z ^ 2)
+            End With
+        End Function
+
+        <Extension>
+        Public Function SqrMagnitude(v As Vector3) As Double
+            With v
+                Return .X ^ 2 + .Y ^ 2 + .Z ^ 2
             End With
         End Function
 
