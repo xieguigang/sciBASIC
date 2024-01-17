@@ -154,7 +154,7 @@ Namespace Distributions
                     dartY = 1
                 End If
 
-                dartRadians = (grayscale.GetPixel(dartX, dartY).GrayScale / 255) * Pi2
+                dartRadians = (1 - grayscale.GetPixel(dartX, dartY).GrayScale / 255) * Pi2
             End If
 
             ' range from minDist to 2*minDist ( r to 2r in cf paper )
@@ -206,34 +206,37 @@ Namespace Distributions
 
                     ' find out if there is samples near this dart.
                     Dim isdebug = True
+                    Dim hasSamples = False
 
                     If isdebug And (_WrapRepeatFloat(dartX) - dartX <> 0.0F Or _WrapRepeatFloat(dartY) - dartY <> 0.0F) Then
-                        Continue While
-                    End If
+                        ' Continue While
+                        ' do nothing at here, disable continue while for avoid the
+                        ' dead loop
+                        hasSamples = True
+                    Else
+                        Dim x As Integer = -2
 
-                    Dim hasSamples = False
-                    Dim x = -2
+                        While x <= 2
+                            Dim y = -2
 
-                    While x <= 2
-                        Dim y = -2
+                            While y <= 2
+                                If isdebug Then
+                                    Dim xx = gridvalueX(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
+                                    Dim yy = gridvalueY(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
 
-                        While y <= 2
-                            If isdebug Then
-                                Dim xx = gridvalueX(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
-                                Dim yy = gridvalueY(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
-
-                                If grid(_WrapIndex(gridX + x), _WrapIndex(gridY + y)) Then
-                                    hasSamples = hasSamples Or (xx - dartX) * (xx - dartX) + (yy - dartY) * (yy - dartY) < minDist * minDist
+                                    If grid(_WrapIndex(gridX + x), _WrapIndex(gridY + y)) Then
+                                        hasSamples = hasSamples Or (xx - dartX) * (xx - dartX) + (yy - dartY) * (yy - dartY) < minDist * minDist
+                                    End If
+                                Else
+                                    hasSamples = hasSamples Or grid(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
                                 End If
-                            Else
-                                hasSamples = hasSamples Or grid(_WrapIndex(gridX + x), _WrapIndex(gridY + y))
-                            End If
 
-                            y += 1
+                                y += 1
+                            End While
+
+                            x += 1
                         End While
-
-                        x += 1
-                    End While
+                    End If
 
                     If hasSamples Then
                         ' there is a sample inside the minimum distance circle, abandon.
