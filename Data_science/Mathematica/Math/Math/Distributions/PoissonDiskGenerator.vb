@@ -64,7 +64,7 @@ Namespace Distributions
         Dim activePointListX As Single()
         Dim activePointListY As Single()
 
-        Dim grayscale As Image
+        Dim grayscale As Bitmap
 
         Private Sub New()
         End Sub
@@ -142,14 +142,25 @@ Namespace Distributions
             If grayscale Is Nothing Then
                 ' randomly chose a dart in the ring area.
                 dartRadians = rand.NextDouble(0, Pi2)
-                ' range from minDist to 2*minDist ( r to 2r in cf paper )
-                dartDist = rand.NextDouble(minDist, 2.0F * minDist)
-                dartX = activePointListX(proc) + dartDist * std.Cos(dartRadians)
-                dartY = activePointListY(proc) + dartDist * std.Sin(dartRadians)
             Else
                 ' get radians from pixel grayscale value
-                Throw New NotImplementedException
+                dartX = activePointListX(proc) - 1
+                dartY = activePointListY(proc) - 1
+
+                If dartX < 1 Then
+                    dartX = 1
+                End If
+                If dartY < 1 Then
+                    dartY = 1
+                End If
+
+                dartRadians = (grayscale.GetPixel(dartX, dartY).GrayScale / 255) * Pi2
             End If
+
+            ' range from minDist to 2*minDist ( r to 2r in cf paper )
+            dartDist = rand.NextDouble(minDist, 2.0F * minDist)
+            dartX = activePointListX(proc) + dartDist * std.Cos(dartRadians)
+            dartY = activePointListY(proc) + dartDist * std.Sin(dartRadians)
         End Sub
 
         Private Sub Sampling()
