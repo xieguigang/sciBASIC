@@ -125,7 +125,11 @@ Namespace Drawing3D.Math3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function DistanceToDistanceScore(distance As Single, radius As Single) As Single
+#If NET48 Then
+            Return Math.Clamp(1.0F - distance * 0.5F / radius, 0, 1)
+#Else
             Return std.Clamp(1.0F - distance * 0.5F / radius, 0, 1)
+#End If
         End Function
 
         Private Shared Function GetDistanceScore(samplePos As Vector3, edges As List(Of Edge)) As Single
