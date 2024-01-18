@@ -85,11 +85,20 @@ Public Class ClusterTree : Inherits Tree(Of String)
         ''' current node <see cref="ClusterTree"/>.
         ''' </summary>
         Public threshold As Double
+
+        ''' <summary>
+        ''' default interval score value is 0.05
+        ''' </summary>
         Public diff As Double = 0.05
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSimilarity(id As String) As Double
             Return alignment.GetSimilarity(id, target)
+        End Function
+
+        Public Function SetTargetKey(target As String) As Argument
+            Me.target = target
+            Return Me
         End Function
 
     End Class
