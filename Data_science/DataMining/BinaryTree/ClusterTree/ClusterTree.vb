@@ -57,10 +57,17 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory
 
 ''' <summary>
-''' just provides the reference id of the peaks ms2 object
+''' A simple cluster tree builder
+''' 
+''' just provides the reference id of the target object for make the 
+''' alignment or comparision.
+''' 
+''' the comparision for build the tree is under the given <see cref="Argument"/>.
 ''' </summary>
 ''' <remarks>
 ''' implements the Molecule Networking via the tree clustering operation in mzkit
+''' this model is a kind of tree with multiple branches, each branches standards for
+''' different similarity SCORE LEVELs.
 ''' </remarks>
 Public Class ClusterTree : Inherits Tree(Of String)
 
