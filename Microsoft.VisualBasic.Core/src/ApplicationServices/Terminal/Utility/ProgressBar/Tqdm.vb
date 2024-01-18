@@ -81,7 +81,9 @@ Namespace ApplicationServices.Terminal.ProgressBar
 
                 SetThemeAscii()
 
-                ArgumentNullException.ThrowIfNull(_themeBars)
+                If _themeBars Is Nothing Then
+                    Throw New NullReferenceException("create progress bar theme data error!")
+                End If
             End Sub
 
             ''' <summary>
