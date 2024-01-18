@@ -107,6 +107,14 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' build tree
     ''' </summary>
     ''' <param name="tree"></param>
+    ''' <remarks>
+    ''' the <see cref="Argument.target"/> object will be added into <see cref="Members"/> 
+    ''' if a node is asserts that the similarity score between <see cref="Argument.target"/> and
+    ''' <see cref="Data"/> is greater than <see cref="Argument.threshold"/>.
+    ''' 
+    ''' or create a new node if no hits: the new node its <see cref="Data"/> is the
+    ''' <see cref="Argument.target"/>.
+    ''' </remarks>
     Public Overloads Shared Function Add(tree As ClusterTree, args As Argument, ByRef Optional find As ClusterTree = Nothing) As String
         If tree.Data.StringEmpty Then
             ' is empty node, just add target to current
