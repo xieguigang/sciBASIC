@@ -50,12 +50,12 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Initializes a new instance of the ProgressBar class.
             ''' </summary>
-            ''' <paramname="useExpMovingAvg">Whether to use exponential moving average for rate calculation.</param>
-            ''' <paramname="alpha">The smoothing factor for exponential moving average.</param>
-            ''' <paramname="total">The total number of iterations expected.</param>
-            ''' <paramname="width">The width of the progress bar in characters.</param>
-            ''' <paramname="printsPerSecond">The estimated number of updates to the progress bar per second.</param>
-            ''' <paramname="useColor">Indicates whether to use colored output for the progress bar.</param>
+            ''' <param name="useExpMovingAvg">Whether to use exponential moving average for rate calculation.</param>
+            ''' <param name="alpha">The smoothing factor for exponential moving average.</param>
+            ''' <param name="total">The total number of iterations expected.</param>
+            ''' <param name="width">The width of the progress bar in characters.</param>
+            ''' <param name="printsPerSecond">The estimated number of updates to the progress bar per second.</param>
+            ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
             ''' <remarks>The prints per second is not an absolute number, and gets constantly tuned as the process progresses.</remarks>
             Public Sub New(Optional useExpMovingAvg As Boolean = True,
                            Optional alpha As Double = 0.1,
@@ -110,7 +110,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Sets a label that appears at the end of the progress bar.
             ''' </summary>
-            ''' <paramname="text">The label text.</param>
+            ''' <param name="text">The label text.</param>
             Public Sub SetLabel(text As String)
                 _label = text
             End Sub
@@ -139,7 +139,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Sets the progress bar theme using a custom array of characters.
             ''' </summary>
-            ''' <paramname="bars">An array of characters to use in the progress bar. Must be exactly 9 characters.</param>
+            ''' <param name="bars">An array of characters to use in the progress bar. Must be exactly 9 characters.</param>
             Public Sub SetTheme(bars As Char())
                 If bars.Length <> 9 Then Throw New ArgumentException("Must contain exactly 9 characters.", NameOf(bars))
                 _themeBars = bars
@@ -156,8 +156,8 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Updates the progress bar with the current progress and total.
             ''' </summary>
-            ''' <paramname="current">The current progress.</param>
-            ''' <paramname="total">The total number of iterations expected. This will update the internal total counter given in the constructor.</param>
+            ''' <param name="current">The current progress.</param>
+            ''' <param name="total">The total number of iterations expected. This will update the internal total counter given in the constructor.</param>
             Public Sub Progress(current As Integer, total As Integer)
                 _total = total
                 Progress(current)
@@ -166,7 +166,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Updates the progress bar with the current progress.
             ''' </summary>
-            ''' <paramname="current">The current progress.</param>
+            ''' <param name="current">The current progress.</param>
             Public Sub Progress(current As Integer)
                 _current = current
                 ' _period is a number which is contantly tuned based on how often there are updates,
@@ -289,7 +289,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' <summary>
             ''' Clears the previous console line and prints a new line, ensuring subsequent prints appear on the next line.
             ''' </summary>
-            ''' <paramname="text">The text to be printed on the new line.</param>
+            ''' <param name="text">The text to be printed on the new line.</param>
             Public Sub PrintLine(text As String)
                 ' Clear the previous line by resetting the cursor position and overwriting with spaces
                 Console.Write(New String(" "c, std.Min(_prevLength, Console.BufferWidth - 1))) ' Clear the buffer
@@ -304,10 +304,10 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' <summary>
         ''' Wraps a collection with a progress bar for iteration, providing visual feedback on progress.
         ''' </summary>
-        ''' <paramname="collection">The collection to iterate over.</param>
-        ''' <paramname="width">The width of the progress bar.</param>
-        ''' <paramname="printsPerSecond">The update frequency of the progress bar.</param>
-        ''' <paramname="useColor">Indicates whether to use colored output for the progress bar.</param>
+        ''' <param name="collection">The collection to iterate over.</param>
+        ''' <param name="width">The width of the progress bar.</param>
+        ''' <param name="printsPerSecond">The update frequency of the progress bar.</param>
+        ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
         ''' <returns>An enumerable that iterates over the collection with progress tracking.</returns> 
         Public Function Wrap(Of T)(collection As ICollection(Of T),
                                    Optional width As Integer = 40,
@@ -321,11 +321,11 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' <summary>
         ''' Wraps an enumerable with a specified total count with a progress bar for iteration, providing visual feedback on progress.
         ''' </summary>
-        ''' <paramname="enumerable">The enumerable to iterate over.</param>
-        ''' <paramname="total">The total number of expected items in the enumerable.</param>
-        ''' <paramname="width">The width of the progress bar.</param>
-        ''' <paramname="printsPerSecond">The update frequency of the progress bar.</param>
-        ''' <paramname="useColor">Indicates whether to use colored output for the progress bar.</param>
+        ''' <param name="enumerable">The enumerable to iterate over.</param>
+        ''' <param name="total">The total number of expected items in the enumerable.</param>
+        ''' <param name="width">The width of the progress bar.</param>
+        ''' <param name="printsPerSecond">The update frequency of the progress bar.</param>
+        ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
         ''' <returns>An enumerable that iterates over the collection with progress tracking.</returns>
         Public Function Wrap(Of T)(enumerable As IEnumerable(Of T), total As Integer,
                                    Optional width As Integer = 40,
@@ -339,11 +339,11 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' <summary>
         ''' Wraps a collection with a progress bar for iteration and provides the progress bar instance for external control (like custom labels).
         ''' </summary>
-        ''' <paramname="collection">The collection to iterate over.</param>
-        ''' <paramname="bar">The progress bar instance used for tracking.</param>
-        ''' <paramname="width">The width of the progress bar.</param>
-        ''' <paramname="printsPerSecond">The update frequency of the progress bar.</param>
-        ''' <paramname="useColor">Indicates whether to use colored output for the progress bar.</param>
+        ''' <param name="collection">The collection to iterate over.</param>
+        ''' <param name="bar">The progress bar instance used for tracking.</param>
+        ''' <param name="width">The width of the progress bar.</param>
+        ''' <param name="printsPerSecond">The update frequency of the progress bar.</param>
+        ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
         ''' <returns>An enumerable that iterates over the collection with progress tracking.</returns>
         Public Function Wrap(Of T)(collection As ICollection(Of T), <Out> ByRef bar As ProgressBar,
                                    Optional width As Integer = 40,
@@ -357,12 +357,12 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' <summary>
         ''' Wraps an enumerable with a specified total count with a progress bar for iteration and provides the progress bar instance for external control (like custom labels).
         ''' </summary>
-        ''' <paramname="enumerable">The enumerable to iterate over.</param>
-        ''' <paramname="total">The total number of items in the enumerable.</param>
-        ''' <paramname="bar">The progress bar instance used for tracking.</param>
-        ''' <paramname="width">The width of the progress bar.</param>
-        ''' <paramname="printsPerSecond">The update frequency of the progress bar.</param>
-        ''' <paramname="useColor">Indicates whether to use colored output for the progress bar.</param>
+        ''' <param name="enumerable">The enumerable to iterate over.</param>
+        ''' <param name="total">The total number of items in the enumerable.</param>
+        ''' <param name="bar">The progress bar instance used for tracking.</param>
+        ''' <param name="width">The width of the progress bar.</param>
+        ''' <param name="printsPerSecond">The update frequency of the progress bar.</param>
+        ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
         ''' <returns>An enumerable that iterates over the collection with progress tracking.</returns>
         Public Function Wrap(Of T)(enumerable As IEnumerable(Of T), total As Integer, <Out> ByRef bar As ProgressBar,
                                    Optional width As Integer = 40,
