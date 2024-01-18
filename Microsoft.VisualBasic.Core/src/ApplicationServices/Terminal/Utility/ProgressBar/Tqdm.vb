@@ -259,7 +259,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 sb.Append($" {percent:F1}% ")
                 If _useColor Then sb.Append(ChrW(27) & "[34m")
                 sb.Append($"[ {current:N0} / {_total:N0} | ")
-                sb.Append($"{elapsed:F0}s < {remaining:F0}s ] ")
+                sb.Append($"{StringFormats.ReadableElapsedTime(elapsed * 1000)} < {StringFormats.ReadableElapsedTime(remaining * 1000)} ] ")
 
                 ' Finally, if there is one, print the label
                 sb.Append(_label)

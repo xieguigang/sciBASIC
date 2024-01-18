@@ -122,12 +122,25 @@ Public Module StringFormats
     End Function
 
     ''' <summary>
-    ''' 
+    ''' convert the ms value to human readable string
     ''' </summary>
     ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
     ''' <param name="format"></param>
     ''' <param name="round"></param>
-    ''' <returns></returns>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
+    ''' 
+    <Extension>
+    Public Function ReadableElapsedTime(span As TimeSpan, Optional format$ = "%.3f%s", Optional round% = 3) As String
+        Return ReadableElapsedTime(span.TotalMilliseconds, format, round)
+    End Function
+
+    ''' <summary>
+    ''' convert the ms value to human readable string
+    ''' </summary>
+    ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="format"></param>
+    ''' <param name="round"></param>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
     Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
         Dim unit$
         Dim time!
@@ -139,6 +152,16 @@ Public Module StringFormats
             If time >= 60 Then
                 unit = "min"
                 time = std.Round(time / 60, round)
+
+                If time >= 60 Then
+                    unit = "h"
+                    time = std.Round(time / 60, round)
+
+                    If time >= 24 Then
+                        unit = "days"
+                        time = std.Round(time / 24, round)
+                    End If
+                End If
             End If
 
             format = sprintf(format, time, unit)
