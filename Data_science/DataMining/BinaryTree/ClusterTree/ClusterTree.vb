@@ -71,40 +71,52 @@ Public Class ClusterTree : Inherits Tree(Of String)
     ''' <returns></returns>
     Public Property Members As New List(Of String)
 
+    Public Class Argument
+
+        Public target As String
+        ''' <summary>
+        ''' evaluate score by compare two dataset which are related 
+        ''' to the input key name as reference id.
+        ''' </summary>
+        Public alignment As ComparisonProvider
+        ''' <summary>
+        ''' the cutoff value for set current element 
+        ''' <see cref="target"/> as the member of
+        ''' current node <see cref="ClusterTree"/>.
+        ''' </summary>
+        Public threshold As Double
+        Public diff As Double = 0.05
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSimilarity(id As String) As Double
+            Return alignment.GetSimilarity(id, target)
+        End Function
+
+    End Class
+
     ''' <summary>
     ''' build tree
     ''' </summary>
     ''' <param name="tree"></param>
-    ''' <param name="target"></param>
-    ''' <param name="alignment">evaluate score by compare two dataset which are related 
-    ''' to the input key name as reference id.</param>
-    ''' <param name="threshold">
-    ''' the cutoff value for set current element 
-    ''' <paramref name="target"/> as the member of
-    ''' current node <paramref name="tree"/>.
-    ''' </param>
-    Public Overloads Shared Function Add(tree As ClusterTree,
-                                         target As String,
-                                         alignment As ComparisonProvider,
-                                         threshold As Double,
-                                         Optional ds As Double = 0.05) As String
-
+    Public Overloads Shared Function Add(tree As ClusterTree, args As Argument, ByRef Optional find As ClusterTree = Nothing) As String
         If tree.Data.StringEmpty Then
-            tree.Data = target
+            ' is empty node, just add target to current
+            tree.Data = args.target
             tree.Childs = New Dictionary(Of String, Tree(Of String))
-            tree.Members = New List(Of String) From {target}
-            Return target
+            tree.Members = New List(Of String) From {args.target}
+            find = tree
+            Return args.target
         End If
 
-        Dim score As Double = alignment.GetSimilarity(tree.Data, target)
+        Dim score As Double = args.GetSimilarity(tree.Data)
         Dim key As String = "zero"
 
         If score > 0.0 Then
-            For v As Double = ds To 1 Step ds
+            For v As Double = args.diff To 1 Step args.diff
                 If score < v Then
                     key = $"<{v.ToString("F1")}"
                     Exit For
-                ElseIf v >= threshold Then
+                ElseIf v >= args.threshold Then
                     key = ""
                     Exit For
                 End If
@@ -113,13 +125,14 @@ Public Class ClusterTree : Inherits Tree(Of String)
 
         If key = "" Then
             ' is cluster member
-            tree.Members.Add(target)
+            tree.Members.Add(args.target)
+            find = tree
             Return tree.Data
         ElseIf tree.Childs.ContainsKey(key) Then
-            Return Add(tree(key), target, alignment, threshold)
+            Return Add(tree(key), args, find)
         Else
             Call tree.Add(key)
-            Return Add(tree(key), target, alignment, threshold)
+            Return Add(tree(key), args, find)
         End If
     End Function
 
