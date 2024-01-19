@@ -78,8 +78,8 @@ Namespace ComponentModel
         End Function
 
         Public Sub SetTraceback(Of T As {INamedValue, IClusterPoint})(data As IEnumerable(Of T), itr As Integer)
-            If itr >= len - 1 Then
-                Throw New InvalidConstraintException("the given iteration number is out of range of the save traceback data")
+            If itr > len - 1 Then
+                Throw New InvalidConstraintException($"the given iteration number({itr}) is out of range of the save traceback data({size})!")
             End If
 
             For Each xi As T In data
