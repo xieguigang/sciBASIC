@@ -363,9 +363,14 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Return builder
         End Function
 
+        ''' <summary>
+        ''' export the table print content string
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <returns></returns>
         <Extension()>
         Public Function Export(builder As ConsoleTableBuilder) As StringBuilder
-            Dim numberOfColumns = 0
+            Dim numberOfColumns As Integer = 0
 
             If builder.Rows.Any() Then
                 numberOfColumns = builder.Rows.Max(Function(x) x.Length)
@@ -389,7 +394,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 End If
             End If
 
-            For i = 0 To 1 - 1
+            For i As Integer = 0 To 1 - 1
 
                 If builder.Column IsNot Nothing AndAlso builder.Column.Count < numberOfColumns Then
                     Dim missCount = numberOfColumns - builder.Column.Count
@@ -400,7 +405,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 End If
             Next
 
-            For i = 0 To builder.Rows.Count - 1
+            For i As Integer = 0 To builder.Rows.Count - 1
 
                 If builder.Rows(i).Length < numberOfColumns Then
                     Dim missCount = numberOfColumns - builder.Rows(i).Length
@@ -413,14 +418,19 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Return CreateTableForCustomFormat(builder)
         End Function
 
+        ''' <summary>
+        ''' export the table content as string and do console write
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <param name="alignment"></param>
         <Extension()>
         Public Sub ExportAndWrite(builder As ConsoleTableBuilder, Optional alignment As TableAligntment = TableAligntment.Left)
             Dim strBuilder = builder.Export()
-            Dim lines = strBuilder.ToString().Split(Microsoft.VisualBasic.Strings.ChrW(10))
-            Dim linesCount = lines.Count()
+            Dim lines = strBuilder.ToString.LineTokens
+            Dim linesCount = lines.Length
             Dim pad As Integer
 
-            For i = 0 To linesCount - 1
+            For i As Integer = 0 To linesCount - 1
                 Dim row = String.Empty
 
                 Select Case alignment
@@ -472,6 +482,11 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Next
         End Sub
 
+        ''' <summary>
+        ''' console write line of the table data
+        ''' </summary>
+        ''' <param name="builder"></param>
+        ''' <param name="alignment"></param>
         <Extension()>
         Public Sub ExportAndWriteLine(builder As ConsoleTableBuilder, Optional alignment As TableAligntment = TableAligntment.Left)
             builder.ExportAndWrite(alignment)

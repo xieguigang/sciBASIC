@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Terminal.TablePrinter
@@ -62,6 +63,28 @@ Namespace ApplicationServices.Terminal.TablePrinter
         Public Property Column As List(Of Object)
         Public Property Rows As List(Of Object())
 
+        Sub New()
+        End Sub
+
+        Sub New(ParamArray headers As String())
+            Column = headers.Select(Function(si) CObj(si)).AsList
+        End Sub
+
+        Sub New(headers As String(), rows As IEnumerable(Of String()))
+            Call Me.New(headers)
+
+            Me.Rows = New List(Of Object())
+
+            For Each row As String() In rows.SafeQuery
+                Call AppendLine(DirectCast(row, IEnumerable))
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' append one row data
+        ''' </summary>
+        ''' <param name="line">the row data collection, general data</param>
+        ''' <returns></returns>
         Public Function AppendLine(line As IEnumerable) As ConsoleTableBaseData
             Rows.Add((From x As Object In line Select x).ToArray)
             Return Me

@@ -64,6 +64,16 @@ Namespace LinearAlgebra.Matrix
     <HideModuleName>
     Public Module Extensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function nrow(x As GeneralMatrix) As Integer
+            Return x.RowDimension
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ncol(x As GeneralMatrix) As Integer
+            Return x.ColumnDimension
+        End Function
+
         <Extension>
         Public Function eig(m As GeneralMatrix) As EigenvalueDecomposition
             Return New EigenvalueDecomposition(m)

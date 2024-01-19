@@ -329,7 +329,7 @@ Namespace Imaging.BitmapImage
         ''' Color gray scale
         ''' </summary>
         ''' <param name="c"></param>
-        ''' <returns></returns>
+        ''' <returns>[0,255]</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

@@ -67,6 +67,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Terminal
@@ -81,6 +82,7 @@ Namespace ApplicationServices.Terminal
         Public Property Bold As ConsoleFormat
         Public Property Italy As ConsoleFormat
         Public Property HeaderSpan As ConsoleFormat
+        Public Property Table As ConsoleTableBuilderFormat = ConsoleTableBuilderFormat.Minimal
 
         Public Overrides Function ToString() As String
             Return Me.GetJson

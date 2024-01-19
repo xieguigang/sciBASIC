@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::5950d7ab9de8c7aa48cc2d7899e80d56, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 284
-    '    Code Lines: 228
-    ' Comment Lines: 22
-    '   Blank Lines: 34
-    '     File Size: 9.81 KB
+' Summaries:
 
 
-    '     Class MarkdownRender
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
-    ' 
-    '         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
-    '              PrintSpans, Reset, restoreStyle, WalkChar
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 284
+'    Code Lines: 228
+' Comment Lines: 22
+'   Blank Lines: 34
+'     File Size: 9.81 KB
+
+
+'     Class MarkdownRender
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: bufferAllIs, bufferIs, DefaultStyleRender
+' 
+'         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
+'              PrintSpans, Reset, restoreStyle, WalkChar
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text
@@ -75,8 +77,6 @@ Namespace ApplicationServices.Terminal
     ''' </remarks>
     Public Class MarkdownRender
 
-#If NET_48 Or NETCOREAPP Then
-
         Shared ReadOnly defaultTheme As [Default](Of MarkdownTheme) = New MarkdownTheme With {
             .[Global] = Nothing,
             .BlockQuote = (ConsoleColor.Black, ConsoleColor.Gray),
@@ -87,14 +87,14 @@ Namespace ApplicationServices.Terminal
             .Italy = (ConsoleColor.Yellow, ConsoleColor.DarkGray),
             .HeaderSpan = (ConsoleColor.DarkGreen, ConsoleColor.Yellow)
         }
-#End If
+
         Dim theme As MarkdownTheme
         Dim markdown As CharPtr
         Dim indent As Integer
 
         Dim initialGlobal As ConsoleFormat
 
-        Private Sub New(theme As MarkdownTheme)
+        Sub New(theme As MarkdownTheme)
             Me.theme = theme
             Me.initialGlobal = New ConsoleFormat With {
                 .Background = Console.BackgroundColor,
@@ -102,6 +102,15 @@ Namespace ApplicationServices.Terminal
             }
         End Sub
 
+        Sub New()
+            Call Me.New(theme:=defaultTheme)
+        End Sub
+
+        ''' <summary>
+        ''' print the given markdown text with current theme styles
+        ''' </summary>
+        ''' <param name="markdown$"></param>
+        ''' <param name="indent%"></param>
         Public Sub DoPrint(markdown$, indent%)
             Me.markdown = markdown.LineTokens.JoinBy(ASCII.LF)
             Me.indent = indent
@@ -129,6 +138,7 @@ Namespace ApplicationServices.Terminal
         Dim lastNewLine As Boolean = True
         Dim controlBuf As New List(Of Char)
         Dim textBuf As New List(Of Char)
+        Dim tableSpan As Boolean = False
 
         Friend styleStack As New Stack(Of ConsoleFormat)
         Friend currentStyle As ConsoleFormat
@@ -184,6 +194,7 @@ Namespace ApplicationServices.Terminal
             Else
                 Call styleStack.Peek.SetConfig(Me)
             End If
+
         End Sub
 
         Private Sub applyGlobal()
@@ -210,6 +221,11 @@ Namespace ApplicationServices.Terminal
             Call Console.WriteLine()
         End Sub
 
+        ''' <summary>
+        ''' create new <see cref="TextSpan"/> and then clear the <see cref="textBuf"/> 
+        ''' for pull next text span object.
+        ''' </summary>
+        ''' <param name="byNewLine"></param>
         Private Sub EndSpan(byNewLine As Boolean)
             Dim text As String = textBuf.CharString
             Dim style As ConsoleFormat = currentStyle.Clone
@@ -232,7 +248,62 @@ Namespace ApplicationServices.Terminal
             End If
         End Sub
 
+        Dim tableBuf As New List(Of String)
+
+        Private Sub buildTableSimple()
+            If tableBuf.Count = 0 Then
+                spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = ""})
+            End If
+
+            Dim header As String() = tableBuf(0).Split("|"c)
+            Dim rows As String()() = tableBuf.Skip(2) _
+                .Where(Function(r) Not Strings.Trim(r).StringEmpty) _
+                .Select(Function(l) l.Split("|"c)) _
+                .ToArray
+            Dim tbl As New ConsoleTableBaseData(header, rows)
+            Dim println As String = ConsoleTableBuilder.From(tbl) _
+                .WithFormat(theme.Table) _
+                .Export _
+                .ToString
+
+            For Each line As String In println.LineTokens
+                Call spans.Add(New TextSpan With {.text = line & vbCrLf, .IsEndByNewLine = True})
+            Next
+
+            spans.Add(New TextSpan With {.IsEndByNewLine = True, .text = vbLf})
+        End Sub
+
         Private Sub WalkChar(c As Char)
+            If tableSpan Then
+                Select Case c
+                    Case ASCII.LF
+                        lastNewLine = True
+                        tableBuf.Add(New String(textBuf.PopAll))
+
+                        If tableBuf.Last.StringEmpty Then
+                            ' break the table context by empty line
+                            tableSpan = False
+                            buildTableSimple()
+                        End If
+
+                        Return
+                    Case ""
+                        ' is a empty line
+                        ' end of table context
+                        tableSpan = False
+                        tableBuf.Add(New String(textBuf.PopAll))
+                        buildTableSimple()
+                    Case ">"c, "`"c, "#"c
+                        ' end of table context
+                        tableSpan = False
+                        tableBuf.Add(New String(textBuf.PopAll))
+                        buildTableSimple()
+                    Case Else
+                        textBuf += c
+                        Return
+                End Select
+            End If
+
             Select Case c
                 Case "`"c
                     controlBuf += c
@@ -247,6 +318,14 @@ Namespace ApplicationServices.Terminal
                     textBuf += ASCII.LF
                     EndSpan(True)
                     restoreStyle()
+                Case "|"c
+                    If lastNewLine AndAlso controlBuf = 0 Then
+                        ' is probably a markdown table
+                        tableSpan = True
+                    End If
+
+                    textBuf += c
+                    lastNewLine = False
                 Case ">"c
                     If lastNewLine AndAlso controlBuf = 0 Then
                         controlBuf += c
@@ -320,6 +399,14 @@ Namespace ApplicationServices.Terminal
             End Select
         End Sub
 
+        ''' <summary>
+        ''' do console writeline with styles
+        ''' </summary>
+        ''' <param name="markdown">the markdown text to print on the console</param>
+        ''' <param name="theme">
+        ''' the theme styles for make console print
+        ''' </param>
+        ''' <param name="indent">the prefix space indent number.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
 #If NET_48 Or NETCOREAPP Then

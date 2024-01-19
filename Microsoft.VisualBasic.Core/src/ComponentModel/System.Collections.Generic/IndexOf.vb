@@ -381,6 +381,11 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        ''' <summary>
+        ''' cast index to a dictionary mapping of object element value to its index value
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(index As Index(Of T)) As Dictionary(Of T, Integer)
             Return New Dictionary(Of T, Integer)(index.maps)

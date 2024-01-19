@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 
-Namespace Scripting.MathExpression
+Namespace Symbolic
 
     ''' <summary>
     ''' (a+b)^2 = a^2 + ab + ab + b ^ 2

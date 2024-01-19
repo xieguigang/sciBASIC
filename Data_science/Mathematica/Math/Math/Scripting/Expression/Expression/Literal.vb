@@ -68,6 +68,26 @@ Namespace Scripting.MathExpression.Impl
             End Get
         End Property
 
+        ''' <summary>
+        ''' the literal value of 1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property One As Literal
+            Get
+                Return New Literal(1)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the literal value of 0
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property Zero As Literal
+            Get
+                Return New Literal(0)
+            End Get
+        End Property
+
         Sub New(text As String)
             Me.number = Val(text)
         End Sub
@@ -110,6 +130,18 @@ Namespace Scripting.MathExpression.Impl
 
         Public Overloads Shared Widening Operator CType(x As Double) As Literal
             Return New Literal(x)
+        End Operator
+
+        Public Overloads Shared Operator =(literal As Literal, num As Double) As Boolean
+            If literal Is Nothing Then
+                Return num = 0.0
+            End If
+
+            Return literal.number = num
+        End Operator
+
+        Public Overloads Shared Operator <>(literal As Literal, num As Double) As Boolean
+            Return Not (literal = num)
         End Operator
     End Class
 End Namespace

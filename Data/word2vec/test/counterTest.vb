@@ -49,11 +49,26 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.NLP
 Imports Microsoft.VisualBasic.Data.NLP.Model
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module counterTest
 
     Public Sub Main()
+        Call bigramTest()
+    End Sub
+
+    Sub bigramTest()
+        Dim text As String = "E:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\Rapunzel.txt".ReadAllText
+        Dim bi = Bigram.ParseText(text).ToArray
+
+        Call Console.WriteLine(bi.OrderByDescending(Function(a) a.count).ToArray.GetJson)
+
+        Pause()
+    End Sub
+
+    Sub WordCountTest()
         Dim strKeys = New String() {"1", "2", "3", "1", "2", "1", "3", "3", "3", "1", "2"}
         Dim counter As New TokenCounter(Of String)()
 

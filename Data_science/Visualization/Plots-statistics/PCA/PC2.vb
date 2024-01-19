@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::a7c4dcfcd1cf27a4bb1ca3675c0b67a2, sciBASIC#\Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 120
-    '    Code Lines: 82
-    ' Comment Lines: 22
-    '   Blank Lines: 16
-    '     File Size: 4.58 KB
+' Summaries:
 
 
-    '     Module PCAPlot
-    ' 
-    '         Function: PC2, PlotPC2
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 120
+'    Code Lines: 82
+' Comment Lines: 22
+'   Blank Lines: 16
+'     File Size: 4.58 KB
+
+
+'     Module PCAPlot
+' 
+'         Function: PC2, PlotPC2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,8 +61,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports Microsoft.VisualBasic.MIME.HTML.CSS
-Imports PCA_analysis = Microsoft.VisualBasic.Math.LinearAlgebra.Prcomp.PCA
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace PCA
 
@@ -80,21 +80,15 @@ Namespace PCA
         ''' <param name="colorSchema$"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function PC2(input As GeneralMatrix,
+        Public Function PC2(input As MultivariateAnalysisResult,
                             sampleGroup%,
                             Optional labels$() = Nothing,
                             Optional size$ = "2000,1800",
                             Optional colorSchema$ = "Set1:c8") As GraphicsData
 
-            Dim result = New PCA_analysis(input)  ' x, y
-            Dim x As Vector
-            Dim y As Vector
-
-            With result.Project(nPC:=2)
-                x = .ByRef(0)
-                y = .ByRef(1)
-            End With
-
+            Dim score = input.GetPCAScore
+            Dim x As Vector = score!PC1
+            Dim y As Vector = score!PC2
             Dim getlabel As Func(Of Integer, String)
 
             If labels.IsNullOrEmpty Then

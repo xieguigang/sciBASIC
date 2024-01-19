@@ -59,5 +59,19 @@ Namespace Scripting.MathExpression.Impl
 
         Public MustOverride Function Evaluate(env As ExpressionEngine) As Double
 
+        Public Shared Operator =(expr As Expression, literal As Literal) As Boolean
+            ' test expression type is literal?
+            If expr Is Nothing OrElse Not TypeOf expr Is Literal Then
+                Return False
+            End If
+
+            ' test the literal value
+            Return DirectCast(expr, Literal).number = literal.number
+        End Operator
+
+        Public Shared Operator <>(expr As Expression, literal As Literal) As Boolean
+            Return Not expr = literal
+        End Operator
+
     End Class
 End Namespace

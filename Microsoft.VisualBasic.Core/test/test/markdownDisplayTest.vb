@@ -58,6 +58,20 @@ Module markdownDisplayTest
 
 This is a inline ``code`` span. **bold** font style test.
 
+table test:
+
+|id|name|value|
+|--|----|-----|
+|1 |aaa |bbb  |
+|2 |ccc |ddd  |
+|3 |eee |fff  |
+
+list test:
+
++ quote
++ list
++ data
+
 > quote
 > test
 > block

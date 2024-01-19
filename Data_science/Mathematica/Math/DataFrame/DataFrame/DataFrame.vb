@@ -82,12 +82,20 @@ Public Class DataFrame
         End Get
     End Property
 
+    ''' <summary>
+    ''' the column field names
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property featureNames As String()
         Get
             Return features.Keys.ToArray
         End Get
     End Property
 
+    ''' <summary>
+    ''' the n rows of the matrix
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property nsamples As Integer
         Get
             Return rownames.Length
