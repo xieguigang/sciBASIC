@@ -19,6 +19,24 @@ Namespace ComponentModel
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' from json data
+        ''' </summary>
+        Sub New(traceback As IEnumerable(Of NamedCollection(Of String)))
+            Me.traceback = traceback _
+                .ToDictionary(Function(a) a.name,
+                              Function(a)
+                                  Return New List(Of String)(a)
+                              End Function)
+
+            If Me.traceback.Count > 0 Then
+                Me.len = Me.traceback.First.Value.Count
+            End If
+        End Sub
+
         Public Sub SetPoints(Of T As INamedValue)(points As IEnumerable(Of T))
             traceback.Clear()
             len = 0
