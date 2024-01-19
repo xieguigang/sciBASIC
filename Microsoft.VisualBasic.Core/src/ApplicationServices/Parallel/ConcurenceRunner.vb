@@ -88,17 +88,24 @@ Namespace Parallel
         End Function
 
         ''' <summary>
-        ''' allocate the result output memory data
+        ''' allocate a block of result output memory data for one thread task
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
+        ''' <param name="all">
+        ''' allocate all result or just for current thread?
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' element count problem see the dev comments about the 
         ''' parameter ``thread_id`` from function 
         ''' <see cref="ParallelFor"/>
         ''' </remarks>
-        Protected Function Allocate(Of TOut)() As TOut()
-            Return New TOut(cpu_count) {}
+        Protected Function Allocate(Of TOut)(all As Boolean) As TOut()
+            If all Then
+                Return New TOut(workLen - 1) {}
+            Else
+                Return New TOut(cpu_count) {}
+            End If
         End Function
 
         ''' <summary>
