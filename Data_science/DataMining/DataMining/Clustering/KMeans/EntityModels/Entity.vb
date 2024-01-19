@@ -75,6 +75,7 @@ Namespace KMeans
     Public Class ClusterEntity : Inherits EntityBase(Of Double)
         Implements INamedValue
         Implements IVector
+        Implements IClusterPoint
 
         ''' <summary>
         ''' the unique reference id of current entity object
@@ -85,7 +86,7 @@ Namespace KMeans
         ''' the cluster class label
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property cluster As Integer
+        <XmlAttribute> Public Property cluster As Integer Implements IClusterPoint.Cluster
 
         ''' <summary>
         ''' the point data vector
