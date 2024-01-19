@@ -89,6 +89,13 @@ Namespace GridGraph
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the max value of x axis
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this assuming that all x axis value is positive
+        ''' </remarks>
         Public ReadOnly Property width As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -96,6 +103,13 @@ Namespace GridGraph
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the max value of y axis
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this assuming that all y axis value is positive
+        ''' </remarks>
         Public ReadOnly Property height As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

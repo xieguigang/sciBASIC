@@ -21,6 +21,7 @@ Namespace GridGraph
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property size As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Aggregate layer As Grid(Of T)
                        In matrix2D.Values.AsParallel
@@ -39,6 +40,14 @@ Namespace GridGraph
             Me.matrix2D = matrix2D
             Me.toPoint = toPoint
         End Sub
+
+        Public Function GetDimensions() As (xdims As Integer, ydims As Integer, zdims As Integer)
+            Dim z As Integer = matrix2D.Keys.Max
+            Dim x As Integer = Aggregate layer As Grid(Of T) In matrix2D.Values Into Max(layer.width)
+            Dim y As Integer = Aggregate layer As Grid(Of T) In matrix2D.Values Into Max(layer.height)
+
+            Return (x, y, z)
+        End Function
 
         ''' <summary>
         ''' implements the 3d spatial data lookup helper
@@ -59,6 +68,20 @@ Namespace GridGraph
             End If
         End Function
 
+        ''' <summary>
+        ''' get the grid index for each layer on z axis
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the populate out layer has already been re-ordered by the z-axis order.
+        ''' </remarks>
+        Public Iterator Function ZLayers() As IEnumerable(Of Grid(Of T))
+            For Each item In matrix2D.OrderBy(Function(lz) lz.Key)
+                Yield item.Value
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateSpatial3D(Of E As {T, IPoint3D})(data As IEnumerable(Of T)) As Spatial3D(Of E)
             Return Spatial3D(Of E).CreateSpatial3D(data, Function(a) a.X, Function(a) a.Y, Function(a) a.Z)
         End Function
