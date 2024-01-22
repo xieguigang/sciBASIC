@@ -81,7 +81,7 @@ Module Module1
         Dim json$ = GetExtendedJson(Of NamedValue(Of Integer()), TestDynamicsObject)(t)
         Dim t2 = LoadExtendedJson(Of NamedValue(Of Integer()), TestDynamicsObject)(json)
 
-        Call t.GetJson(True).SaveTo("./test_out.json")
+        Call t.GetJson(maskReadonly:=True).SaveTo("./test_out.json")
         Call json.SaveTo("./test_out2.json")
         Call t2.Tarray.GetJson(maskReadonly:=True).__DEBUG_ECHO
         Call t2.Tarray2.GetJson(maskReadonly:=True).__DEBUG_ECHO
