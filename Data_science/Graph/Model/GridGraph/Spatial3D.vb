@@ -68,10 +68,29 @@ Namespace GridGraph
             End If
         End Function
 
+        Public Iterator Function Query(x As Integer, y As Integer, z As Integer) As IEnumerable(Of T)
+            Dim hit As Boolean = False
+            Dim result As T
+
+            For xi As Integer = x - 1 To x + 1
+                For yi As Integer = y - 1 To y + 1
+                    For zi As Integer = z - 1 To z + 1
+                        hit = False
+                        result = GetData(xi, yi, zi, hit)
+
+                        If hit Then
+                            Yield result
+                        End If
+                    Next
+                Next
+            Next
+        End Function
+
         ''' <summary>
         ''' get the grid index for each layer on z axis
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>a collection of the 2d grid object which are re-order by z axis
+        ''' from zero to max(z). order in asc</returns>
         ''' <remarks>
         ''' the populate out layer has already been re-ordered by the z-axis order.
         ''' </remarks>

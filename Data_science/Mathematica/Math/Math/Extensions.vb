@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ' i++
 ' Math.Min(Threading.Interlocked.Increment(i), i - 1)
@@ -118,7 +118,7 @@ Imports stdNum = System.Math
         If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
             Return 0
         Else
-            Dim score As Double = (q * s).Sum / stdNum.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
+            Dim score As Double = (q * s).Sum / std.Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
 
             If score.IsNaNImaginary Then
                 Return 0
@@ -135,7 +135,7 @@ Imports stdNum = System.Math
 
         Dim qs_sum As Double = SIMD.Multiply.f64_op_multiply_f64(q, s).Sum
         Dim qqss_sum As Double = SIMD.Multiply.f64_op_multiply_f64(q, q).Sum * SIMD.Multiply.f64_op_multiply_f64(s, s).Sum
-        Dim score As Double = qs_sum / stdNum.Sqrt(qqss_sum)
+        Dim score As Double = qs_sum / std.Sqrt(qqss_sum)
 
         If score.IsNaNImaginary Then
             Return 0
@@ -218,7 +218,7 @@ Imports stdNum = System.Math
     ''' <returns></returns>
     <Extension>
     Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
-        Dim step% = stdNum.Sign(range.To - range.From)
+        Dim step% = std.Sign(range.To - range.From)
 
         For i As Integer = range.From To range.To Step [step]
             Yield i
@@ -325,7 +325,7 @@ Imports stdNum = System.Math
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
         For Each x As SeqValue(Of Double) In data.SeqIterator
-            If stdNum.Abs(x.value - n) <= offset Then
+            If std.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
         Next

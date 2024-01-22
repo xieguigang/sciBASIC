@@ -117,7 +117,11 @@ Public Class DataFrame
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub add(featureName As String, v As Double())
+    Public Sub add(featureName As String, v As IEnumerable(Of Double))
+        Call features.Add(featureName, New FeatureVector(featureName, v))
+    End Sub
+
+    Public Sub add(featureName As String, v As IEnumerable(Of Integer))
         Call features.Add(featureName, New FeatureVector(featureName, v))
     End Sub
 
