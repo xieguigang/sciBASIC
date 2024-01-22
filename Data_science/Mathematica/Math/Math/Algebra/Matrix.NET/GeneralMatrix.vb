@@ -56,6 +56,9 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
 
+    ''' <summary>
+    ''' an abstract model of the numeric matrix object
+    ''' </summary>
     Public Interface INumericMatrix
 
         ''' <summary>Copy the internal two-dimensional array.</summary>

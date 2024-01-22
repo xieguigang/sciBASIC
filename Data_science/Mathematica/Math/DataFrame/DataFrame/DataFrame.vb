@@ -54,12 +54,13 @@
 Imports System.Data
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' R language liked dataframe object
 ''' </summary>
-Public Class DataFrame
+Public Class DataFrame : Implements INumericMatrix
 
     ''' <summary>
     ''' the dataframe columns
@@ -158,5 +159,23 @@ Public Class DataFrame
             .GetJson
 
         Return $"[{size.Width}x{size.Height}] {featureSet}"
+    End Function
+
+    Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+        Dim m As Double()() = New Double(nsamples - 1)() {}
+        Dim colnames As String() = featureNames
+        Dim getters As Func(Of Integer, Double)() = colnames _
+            .Select(Function(name) features(name).NumericGetter) _
+            .ToArray
+        Dim offset As Integer
+
+        For i As Integer = 0 To m.Length - 1
+            offset = i
+            m(i) = getters _
+                .Select(Function(v) v(offset)) _
+                .ToArray
+        Next
+
+        Return m
     End Function
 End Class
