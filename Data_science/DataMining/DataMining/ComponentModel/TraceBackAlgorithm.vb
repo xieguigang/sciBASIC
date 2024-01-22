@@ -41,7 +41,8 @@ Namespace ComponentModel
         Public Shared Iterator Function MeasureCurve(data As ClusterEntity(), traceback As TraceBackIterator) As IEnumerable(Of EvaluationScore)
             Dim score As EvaluationScore
 
-            For i As Integer = 0 To traceback.size - 1
+            ' zero no clusters
+            For i As Integer = 1 To traceback.size - 1
                 traceback.SetTraceback(data, itr:=i)
                 score = EvaluationScore.Evaluate(data)
 

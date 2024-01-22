@@ -53,7 +53,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
 Namespace KMeans
@@ -138,20 +140,14 @@ Namespace KMeans
         End Function
 
         Private Function AverageDistance(a As Cluster(Of ClusterEntity), b As Cluster(Of ClusterEntity)) As Double
-            Dim clusterAvgInDist As Double = 0
+            Dim factor As Double = a.size
+            Dim clusterAvgInDist As Double =
+                Aggregate individual1 As ClusterEntity
+                In a.m_innerList.AsParallel
+                Let sumInDist = b.m_innerList.Select(Function(individual2) individual1.DistanceTo(individual2)).Sum
+                Into Sum(sumInDist / factor)
 
-            For Each individual1 In a.m_innerList
-                Dim avgInDist As Double = 0
-
-                For Each individual2 In b.m_innerList
-                    avgInDist += individual1.DistanceTo(individual2)
-                Next
-
-                avgInDist /= a.size
-                clusterAvgInDist += avgInDist
-            Next
-
-            Return clusterAvgInDist / a.size
+            Return clusterAvgInDist / factor
         End Function
 
         ''' <summary>
@@ -175,17 +171,112 @@ Namespace KMeans
         ''' <param name="clusters">A multiple cluster result</param>
         ''' <returns></returns>
         Public Function Dunn(clusters As ClusterEntity()()) As Double
-            Dim minOutDist = Double.MaxValue
-            Dim maxInDist As Double = 0
-            Dim dist As Double
+            Dim minOutDist As Double = clusters _
+                .Select(Function(cluster) cluster.CalcMinOutDist(clusters)) _
+                .Min
+            Dim maxInDist As Double = clusters _
+                .Select(Function(cluster) cluster.CalcMaxInDist()) _
+                .Max
+            Dim Di As Double = minOutDist / maxInDist
 
-            For Each cluster In clusters
+            Return Di
+        End Function
+
+        Const InternalParallelWorks As Integer = 30
+
+        ''' <summary>
+        ''' evaluate internal a cluster
+        ''' </summary>
+        ''' <param name="cluster"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function CalcMaxInDist(cluster As ClusterEntity()) As Double
+            Dim maxInDist As Double = Double.MinValue
+
+            If cluster.Length > VectorTask.n_threads * InternalParallelWorks Then
+                Dim eval As New CalcMaxInDistTask(cluster)
+
+                eval.Run()
+                maxInDist = eval.GetMax
+            Else
+                For Each individual1 In cluster
+                    For Each individual2 In cluster
+                        If Not individual1 Is individual2 Then
+                            Dim dist As Double = individual1.entityVector.EuclideanDistance(individual2.entityVector)
+
+                            ' evaluate the max distance internal a cluster
+                            If dist > maxInDist Then
+                                maxInDist = dist
+                            End If
+                        End If
+                    Next
+                Next
+            End If
+
+            Return maxInDist
+        End Function
+
+        Private Class CalcMaxInDistTask : Inherits VectorTask
+
+            Dim cluster As ClusterEntity()
+            Dim maxInDist As Double()
+
+            Sub New(cluster As ClusterEntity())
+                Call MyBase.New(cluster.Length)
+
+                Me.cluster = cluster
+                Me.maxInDist = Allocate(Of Double)(all:=False)
+            End Sub
+
+            Public Function GetMax() As Double
+                Return maxInDist.Max
+            End Function
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim max_dist As Double = Double.MinValue
+
+                For i As Integer = start To ends
+                    Dim individual1 As IVector = cluster(i)
+
+                    For Each individual2 As ClusterEntity In cluster
+                        If Not individual1 Is individual2 Then
+                            Dim dist As Double = individual1.DistanceTo(individual2)
+
+                            ' evaluate the max distance internal a cluster
+                            If dist > max_dist Then
+                                max_dist = dist
+                            End If
+                        End If
+                    Next
+                Next
+
+                maxInDist(cpu_id) = max_dist
+            End Sub
+        End Class
+
+        ''' <summary>
+        ''' evaluate between two clusters
+        ''' </summary>
+        ''' <param name="cluster"></param>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function CalcMinOutDist(cluster As ClusterEntity(), clusters As ClusterEntity()()) As Double
+            Dim minOutDist = Double.MaxValue
+
+            If cluster.Length > CalcMinOutDistTask.n_threads * InternalParallelWorks Then
+                Dim eval As New CalcMinOutDistTask(cluster, clusters)
+
+                eval.Run()
+                minOutDist = eval.GetMin
+            Else
                 For Each individual1 In cluster
                     For Each cluster2 In clusters
                         If Not cluster Is cluster2 Then
                             For Each individual2 In cluster2
-                                dist = individual1.entityVector.EuclideanDistance(individual2.entityVector)
+                                Dim dist As Double = individual1.DistanceTo(individual2)
 
+                                ' evaluate the min distance between the clusters
                                 If dist < minOutDist Then
                                     minOutDist = dist
                                 End If
@@ -193,58 +284,51 @@ Namespace KMeans
                         End If
                     Next
                 Next
-            Next
+            End If
 
-            For Each cluster In clusters
-                For Each individual1 In cluster
-                    For Each individual2 In cluster
-                        If Not individual1 Is individual2 Then
-                            dist = individual1.entityVector.EuclideanDistance(individual2.entityVector)
+            Return minOutDist
+        End Function
 
-                            If dist > maxInDist Then
-                                maxInDist = dist
-                            End If
+        Private Class CalcMinOutDistTask : Inherits VectorTask
+
+            Dim cluster As ClusterEntity()
+            Dim clusters As ClusterEntity()()
+            Dim minOutDist As Double()
+
+            Sub New(cluster As ClusterEntity(), clusters As ClusterEntity()())
+                Call MyBase.New(cluster.Length)
+
+                Me.minOutDist = Allocate(Of Double)(all:=False)
+                Me.cluster = cluster
+                Me.clusters = clusters
+            End Sub
+
+            Public Function GetMin() As Double
+                Return minOutDist.Min
+            End Function
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim min_dist As Double = Double.MaxValue
+
+                For i As Integer = start To ends
+                    Dim individual1 As IVector = cluster(i)
+
+                    For Each cluster2 In clusters
+                        If Not cluster Is cluster2 Then
+                            For Each individual2 In cluster2
+                                Dim dist As Double = individual1.DistanceTo(individual2)
+
+                                ' evaluate the min distance between the clusters
+                                If dist < min_dist Then
+                                    min_dist = dist
+                                End If
+                            Next
                         End If
                     Next
                 Next
-            Next
 
-            Dim Di = minOutDist / maxInDist
-
-            Return Di
-        End Function
+                minOutDist(cpu_id) = min_dist
+            End Sub
+        End Class
     End Module
-
-    Public Class EvaluationScore
-
-        Public Property silhouette As Double
-        Public Property dunn As Double
-        Public Property clusters As Dictionary(Of String, String())
-
-        Public ReadOnly Property num_class As Integer
-            Get
-                Return clusters.Count
-            End Get
-        End Property
-
-        Public Shared Function Evaluate(data As IEnumerable(Of ClusterEntity)) As EvaluationScore
-            Dim class_groups = data _
-                .GroupBy(Function(c) c.cluster) _
-                .Select(Function(c) c.ToArray) _
-                .ToArray
-            Dim dunn = Evaluation.Dunn(class_groups)
-            Dim silhouette = Evaluation.Silhouette(class_groups.Select(Function(g) New Cluster(Of ClusterEntity)(g)))
-
-            Return New EvaluationScore With {
-                .clusters = class_groups _
-                    .ToDictionary(Function(c) c.First.cluster.ToString,
-                                  Function(c)
-                                      Return c.Keys.ToArray
-                                  End Function),
-                .dunn = dunn,
-                .silhouette = silhouette
-            }
-        End Function
-
-    End Class
 End Namespace

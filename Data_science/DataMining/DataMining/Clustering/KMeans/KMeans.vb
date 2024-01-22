@@ -69,61 +69,27 @@ Namespace KMeans
 
         ReadOnly debug As Boolean = False
         ReadOnly stop% = -1
-        ReadOnly parallel As Boolean = True
+        ReadOnly n_threads As Integer = 16
+        ReadOnly auto_parallel As Boolean = True
 
-        ''' <param name="parallel">
+        ''' <param name="n_threads">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
         Sub New(Optional debug As Boolean = False,
                 Optional stop% = -1,
-                Optional parallel As Boolean = True,
+                Optional n_threads As Integer = 16,
+                Optional auto_parallel As Boolean = True,
                 Optional traceback As Boolean = False)
 
+            Me.auto_parallel = auto_parallel
             Me.debug = debug
             Me.stop = [stop]
-            Me.parallel = parallel
+            Me.n_threads = n_threads
 
             If traceback Then
                 Me.traceback = New TraceBackIterator
             End If
         End Sub
-
-        ''' <summary>
-        ''' Calculates The Mean Of A Cluster OR The Cluster Center
-        ''' 
-        ''' ```vbnet
-        ''' Dim cluster#(,) = {
-        '''     {15, 32, 35.6},
-        '''     {19, 54, 65.1}
-        ''' }
-        ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
-        '''
-        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
-        ''' ```
-        ''' </summary>
-        ''' <param name="cluster">
-        ''' A two-dimensional array containing a dataset of numeric values
-        ''' </param>
-        ''' <returns>
-        ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
-        ''' </returns>
-        Public Shared Function ClusterMean(cluster As Double(,)) As Double()
-            Dim rowCount = cluster.GetUpperBound(0) + 1
-            Dim fieldCount = cluster.GetUpperBound(1) + 1
-            Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
-            Dim centroid As Double() = New Double(fieldCount - 1) {}
-
-            '((20+30)/2), ((170+160)/2), ((80+120)/2)
-            For j As Integer = 0 To fieldCount - 1
-                For i As Integer = 0 To rowCount - 1
-                    dataSum(0, j) = dataSum(0, j) + cluster(i, j)
-                Next
-
-                centroid(j) = (dataSum(0, j) / rowCount)
-            Next
-
-            Return centroid
-        End Function
 
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
@@ -145,7 +111,6 @@ Namespace KMeans
             Dim data As T() = source.ToArray
             Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
-            Dim fieldCount As Integer = data(Scan0).Length
             Dim stableClustersCount As Integer = 0
             Dim iterationCount As Integer = 0
             Dim cluster As KMeansCluster(Of T) = Nothing
@@ -154,8 +119,7 @@ Namespace KMeans
             Dim [stop] = Me.stop
 
             If k >= rowCount Then
-                Dim msg$ = $"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!"
-                Throw New Exception(msg)
+                Throw New Exception($"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!")
             Else
                 If debug Then
                     Call "Init assigned random clusters...".__DEBUG_ECHO
@@ -179,15 +143,15 @@ Namespace KMeans
             If debug Then
                 Call "Start kmeans clustering....".__DEBUG_ECHO
             End If
-            If parallel Then
-                Call $"Kmeans have {LQuerySchedule.CPU_NUMBER} CPU core for parallel computing.".__DEBUG_ECHO
+            If n_threads > 1 Then
+                Call $"Kmeans have {n_threads} CPU core for parallel computing.".__DEBUG_ECHO
             End If
 
             Dim lastStables%
             Dim hits%
 
             While stableClustersCount <> clusters.NumOfCluster
-                Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data, parallel)
+                Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data)
 
                 stableClustersCount = 0
 
@@ -238,35 +202,6 @@ Namespace KMeans
             Return clusters
         End Function
 
-        Private Function CrossOver(stableClusters As ClusterCollection(Of T)) As ClusterCollection(Of T)
-            For null As Integer = 1 To 3
-                Dim i% = randf.NextInteger(stableClusters.NumOfCluster)
-                Dim j% = randf.NextInteger(stableClusters.NumOfCluster)
-
-                If i < 0 OrElse j < 0 Then
-                    Continue For
-                End If
-
-                If i <> j Then
-                    Dim x = stableClusters.m_innerList(i)
-                    Dim y = stableClusters.m_innerList(j)
-
-                    For r As Integer = 0 To 3
-                        i = randf.NextInteger(x.NumOfEntity)
-                        j = randf.NextInteger(y.NumOfEntity)
-
-                        If i < 0 OrElse j < 0 Then
-                            Continue For
-                        End If
-
-                        Call x.m_innerList(i).Swap(y.m_innerList(j))
-                    Next
-                End If
-            Next
-
-            Return stableClusters
-        End Function
-
         Const NoMember$ = "Cluster count cannot be ZERO!"
 
         ''' <summary>
@@ -274,36 +209,31 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="clusters">A collection of data clusters</param>
         ''' <param name="data">An array containing data to be clustered</param>
-        ''' <param name="parallel">是否采用并行算法</param>
         ''' <returns>A collection of clusters of data</returns>
         ''' 
-        Public Function ClusterDataSet(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
-            Dim fieldCount As Integer = data(Scan0).Length
+        Public Function ClusterDataSet(clusters As ClusterCollection(Of T), data As T()) As ClusterCollection(Of T)
+            ' number of features
+            Dim dataWidth As Integer = data(Scan0).Length
             Dim newClusters As New ClusterCollection(Of T)
 
             ' create a new collection of clusters
             For count As Integer = 0 To clusters.NumOfCluster - 1
-                Dim newCluster As New KMeansCluster(Of T)
-                newClusters.Add(newCluster)
+                Call newClusters.Add(New KMeansCluster(Of T))
             Next
 
             If clusters.NumOfCluster <= 0 Then
                 Throw New SystemException(NoMember)
             End If
 
-            If parallel Then
+            If CheckParallel(ncols:=dataWidth, clusters.NumOfCluster) Then
                 Dim min As SeqValue(Of Double)()
+                Dim index As Integer
 
                 ' Kmeans并行算法
                 For Each x As T In data
-                    If App.IsMicrosoftPlatform Then
-                        min = ParallelMicrosoft(clusters, x).ToArray
-                    Else
-                        min = ParallelUnix(clusters, x).ToArray
-                    End If
-
+                    min = ParallelEuclideanDistance(clusters, x).ToArray
                     ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
-                    Dim index As Integer = min _
+                    index = min _
                         .OrderBy(Function(distance) distance.value) _
                         .First.i
 
@@ -319,30 +249,33 @@ Namespace KMeans
             Return newClusters
         End Function
 
-        Private Function ParallelUnix(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
-            Dim blockQuery = From cblock As SeqValue(Of KMeansCluster(Of T))()
-                             In clusters _
-                                 .SeqIterator _
-                                 .Split(1 + clusters.NumOfCluster / 8) _
-                                 .AsParallel
-                             Select From c As SeqValue(Of KMeansCluster(Of T))
-                                    In cblock
-                                    Let cluster As KMeansCluster(Of T) = c.value
-                                    Let clusterMean As Double() = means(cluster, x)
-                                    Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
-                                    Select New SeqValue(Of Double) With {
-                                        .i = c.i,
-                                        .value = distance
-                                    }
+        Private Function CheckParallel(ncols As Integer, k As Integer) As Boolean
+            If n_threads <= 1 Then
+                Return False
+            End If
 
-            Return blockQuery.ToArray.IteratesALL
+            If auto_parallel Then
+                If ncols <= 6 Then
+                    Return False
+                ElseIf k <= 30 Then
+                    Return False
+                Else
+                    Return True
+                End If
+            Else
+                Return True
+            End If
         End Function
 
-        Private Function ParallelMicrosoft(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+        Private Function ParallelEuclideanDistance(clusters As ClusterCollection(Of T), x As T) As IEnumerable(Of SeqValue(Of Double))
+            Dim width As Integer = x.Length
+
             Return From c As SeqValue(Of KMeansCluster(Of T))
-                   In clusters.SeqIterator.AsParallel
+                   In clusters.SeqIterator _
+                       .AsParallel _
+                       .WithDegreeOfParallelism(n_threads)
                    Let cluster As KMeansCluster(Of T) = c.value
-                   Let clusterMean As Double() = means(cluster, x)
+                   Let clusterMean As Double() = means(cluster, width)
                    Let distance As Double = x.entityVector.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
                    Select New SeqValue(Of Double) With {
                        .i = c.i,
@@ -351,10 +284,16 @@ Namespace KMeans
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function means(cluster As KMeansCluster(Of T), x As T) As Double()
-            Return If(cluster.NumOfEntity = 0, New Double(x.entityVector.Length - 1) {}, cluster.ClusterMean)
+        Private Shared Function means(cluster As KMeansCluster(Of T), width As Integer) As Double()
+            Return If(cluster.NumOfEntity = 0, New Double(width - 1) {}, cluster.ClusterMean)
         End Function
 
+        ''' <summary>
+        ''' find index for non parallel code
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <param name="dataPoint"></param>
+        ''' <returns></returns>
         Private Shared Function minIndex(clusters As ClusterCollection(Of T), dataPoint As T) As Integer
             Dim position As Integer = 0
             Dim clusterMean As Double()

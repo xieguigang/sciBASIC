@@ -62,6 +62,43 @@ Namespace KMeans
     Public Module Kmedoids
 
         ''' <summary>
+        ''' Calculates The Mean Of A Cluster OR The Cluster Center
+        ''' 
+        ''' ```vbnet
+        ''' Dim cluster#(,) = {
+        '''     {15, 32, 35.6},
+        '''     {19, 54, 65.1}
+        ''' }
+        ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
+        '''
+        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
+        ''' ```
+        ''' </summary>
+        ''' <param name="cluster">
+        ''' A two-dimensional array containing a dataset of numeric values
+        ''' </param>
+        ''' <returns>
+        ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
+        ''' </returns>
+        Public Function ClusterMean(cluster As Double(,)) As Double()
+            Dim rowCount = cluster.GetUpperBound(0) + 1
+            Dim fieldCount = cluster.GetUpperBound(1) + 1
+            Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
+            Dim centroid As Double() = New Double(fieldCount - 1) {}
+
+            '((20+30)/2), ((170+160)/2), ((80+120)/2)
+            For j As Integer = 0 To fieldCount - 1
+                For i As Integer = 0 To rowCount - 1
+                    dataSum(0, j) = dataSum(0, j) + cluster(i, j)
+                Next
+
+                centroid(j) = (dataSum(0, j) / rowCount)
+            Next
+
+            Return centroid
+        End Function
+
+        ''' <summary>
         ''' Partitioning around medoids(PAM)
         ''' </summary>
         ''' <param name="source"></param>

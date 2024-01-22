@@ -129,11 +129,11 @@ Namespace KMeans
         Public Iterator Function Kmeans(source As IEnumerable(Of EntityClusterModel),
                                         expected%,
                                         Optional debug As Boolean = True,
-                                        Optional parallel As Boolean = True) As IEnumerable(Of EntityClusterModel)
+                                        Optional n_threads As Integer = 16) As IEnumerable(Of EntityClusterModel)
 
             Dim rawInput As EntityClusterModel() = source.ToArray
             Dim maps As New DataSetConvertor(rawInput)
-            Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, parallel:=parallel)
+            Dim kmeansCore As New KMeansAlgorithm(Of ClusterEntity)(debug, n_threads:=n_threads)
             Dim clusters As ClusterCollection(Of ClusterEntity) = kmeansCore.ClusterDataSet(
                 k:=expected,
                 source:=maps.GetVectors(rawInput).ToArray
@@ -150,7 +150,7 @@ Namespace KMeans
         Public Function Kmeans(points As IEnumerable(Of PointF),
                                Optional expected% = 3,
                                Optional debug As Boolean = True,
-                               Optional parallel As Boolean = True) As NamedCollection(Of PointF)()
+                               Optional n_threads As Integer = 16) As NamedCollection(Of PointF)()
 
             Dim source As EntityClusterModel() = points _
                 .Select(Function(pt, i)
@@ -164,7 +164,7 @@ Namespace KMeans
                             }
                         End Function) _
                 .ToArray
-            Dim result = source.Kmeans(expected, debug, parallel)
+            Dim result = source.Kmeans(expected, debug, n_threads:=n_threads)
             Dim resultPoints As NamedCollection(Of PointF)() = result _
                 .GroupBy(Function(e) e.Cluster) _
                 .Select(Function(e)

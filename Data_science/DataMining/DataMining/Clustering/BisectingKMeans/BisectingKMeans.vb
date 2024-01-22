@@ -15,6 +15,7 @@ Namespace BisectingKMeans
         Dim NUM_ITERATIONS_BISECTION As Integer = 5
         Dim K_BISECTING As Integer = 6
         Dim clusterList As New List(Of Cluster)
+        Dim n_threads As Integer = 16
 
         ''' <summary>
         ''' 
@@ -26,12 +27,14 @@ Namespace BisectingKMeans
         Sub New(dataList As IEnumerable(Of ClusterEntity),
                 Optional k As Integer = 6,
                 Optional iterations As Integer = 6,
-                Optional traceback As Boolean = False)
+                Optional traceback As Boolean = False,
+                Optional n_threads As Integer = 16)
 
             Call init(dataList)
 
             Me.K_BISECTING = k
             Me.NUM_ITERATIONS_BISECTION = iterations
+            Me.n_threads = n_threads
 
             If traceback Then
                 Me.traceback = New TraceBackIterator
@@ -90,7 +93,8 @@ Namespace BisectingKMeans
         ''' <param name="dataPoints"></param>
         ''' <returns></returns>
         Private Iterator Function kMeansClustering(dataPoints As List(Of ClusterEntity)) As IEnumerable(Of Cluster)
-            Dim kmeans = New KMeansAlgorithm(Of ClusterEntity)().ClusterDataSet(dataPoints, k:=2)
+            Dim kmeans = New KMeansAlgorithm(Of ClusterEntity)(n_threads:=n_threads) _
+                .ClusterDataSet(dataPoints, k:=2)
 
             For Each cluster As KMeansCluster(Of ClusterEntity) In kmeans
                 Yield New Cluster(cluster.ClusterMean, cluster.AsList)

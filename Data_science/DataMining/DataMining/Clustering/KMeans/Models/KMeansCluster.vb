@@ -57,6 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
 Imports std = System.Math
 
 Namespace KMeans
@@ -73,8 +74,6 @@ Namespace KMeans
         ''' </summary>
         Public ReadOnly Property ClusterSum() As Double()
 
-        Dim _clusterMean As Double()
-
         Public ReadOnly Property NumOfEntity As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -87,11 +86,10 @@ Namespace KMeans
         ''' </summary>
         Public ReadOnly Property ClusterMean() As Double()
             Get
-                For count As Integer = 0 To _clusterMean.Length - 1
-                    _clusterMean(count) = (_ClusterSum(count) / m_innerList.Count)
-                Next
+                Dim size As Integer = m_innerList.Count
+                Dim mean As Double() = Divide.f64_op_divide_f64_scalar(_ClusterSum, size)
 
-                Return _clusterMean
+                Return mean
             End Get
         End Property
 
@@ -146,7 +144,6 @@ Namespace KMeans
 
             If m_innerList.Count = 1 Then
                 _ClusterSum = New Double(data.Length - 1) {}
-                _clusterMean = New Double(data.Length - 1) {}
             End If
 
             For count As Integer = 0 To data.Length - 1

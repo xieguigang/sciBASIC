@@ -92,7 +92,8 @@ Namespace Parallel
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="all">
-        ''' allocate all result or just for current thread?
+        ''' allocate all result(len=<see cref="workLen"/>) or 
+        ''' just for cpu worker thread(len=<see cref="cpu_count"/>)?
         ''' </param>
         ''' <returns></returns>
         ''' <remarks>

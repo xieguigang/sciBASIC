@@ -70,7 +70,7 @@ Namespace KMeans
         ''' <summary>
         ''' the numbers of the kmeans clusters
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>k-centers</returns>
         Public ReadOnly Property NumOfCluster As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
