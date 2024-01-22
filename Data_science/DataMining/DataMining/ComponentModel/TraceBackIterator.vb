@@ -77,6 +77,13 @@ Namespace ComponentModel
             Next
         End Function
 
+        ''' <summary>
+        ''' set <see cref="IClusterPoint.Cluster"/> id to each entity of the 
+        ''' given <see cref="data"/> collection.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <param name="itr"></param>
         Public Sub SetTraceback(Of T As {INamedValue, IClusterPoint})(data As IEnumerable(Of T), itr As Integer)
             If itr > len - 1 Then
                 Throw New InvalidConstraintException($"the given iteration number({itr}) is out of range of the save traceback data({size})!")

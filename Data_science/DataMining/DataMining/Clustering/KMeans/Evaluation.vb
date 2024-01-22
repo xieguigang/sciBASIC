@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
@@ -158,6 +159,21 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="clusters"></param>
         ''' <returns></returns>
+        <Extension>
+        Public Function Dunn(clusters As IEnumerable(Of ClusterEntity)) As Double
+            Return clusters _
+                .GroupBy(Function(c) c.cluster) _
+                .Select(Function(c) c.ToArray) _
+                .DoCall(Function(c)
+                            Return Dunn(c.ToArray)
+                        End Function)
+        End Function
+
+        ''' <summary>
+        ''' Dunn Index
+        ''' </summary>
+        ''' <param name="clusters">A multiple cluster result</param>
+        ''' <returns></returns>
         Public Function Dunn(clusters As ClusterEntity()()) As Double
             Dim minOutDist = Double.MaxValue
             Dim maxInDist As Double = 0
@@ -198,4 +214,37 @@ Namespace KMeans
             Return Di
         End Function
     End Module
+
+    Public Class EvaluationScore
+
+        Public Property silhouette As Double
+        Public Property dunn As Double
+        Public Property clusters As Dictionary(Of String, String())
+
+        Public ReadOnly Property num_class As Integer
+            Get
+                Return clusters.Count
+            End Get
+        End Property
+
+        Public Shared Function Evaluate(data As IEnumerable(Of ClusterEntity)) As EvaluationScore
+            Dim class_groups = data _
+                .GroupBy(Function(c) c.cluster) _
+                .Select(Function(c) c.ToArray) _
+                .ToArray
+            Dim dunn = Evaluation.Dunn(class_groups)
+            Dim silhouette = Evaluation.Silhouette(class_groups.Select(Function(g) New Cluster(Of ClusterEntity)(g)))
+
+            Return New EvaluationScore With {
+                .clusters = class_groups _
+                    .ToDictionary(Function(c) c.First.cluster.ToString,
+                                  Function(c)
+                                      Return c.Keys.ToArray
+                                  End Function),
+                .dunn = dunn,
+                .silhouette = silhouette
+            }
+        End Function
+
+    End Class
 End Namespace
