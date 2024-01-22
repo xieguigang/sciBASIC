@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My.JavaScript
 
-<HideModuleName> Public Module Extensions
+<HideModuleName> Public Module JSONTextParser
 
     ''' <summary>
     ''' Parse json string
