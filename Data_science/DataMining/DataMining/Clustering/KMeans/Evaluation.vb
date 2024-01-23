@@ -280,7 +280,7 @@ Namespace KMeans
         ''' <summary>
         ''' Silhouette Coefficient
         ''' </summary>
-        ''' <param name="result">the cluster result</param>
+        ''' <param name="clusters">the cluster result</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' Silhouette score is used to evaluate the quality of clusters created using clustering 
@@ -306,12 +306,11 @@ Namespace KMeans
         ''' score [-1, 0] indicates that the samples might have got assigned To the wrong clusters.
         ''' </remarks>
         <Extension>
-        Public Function Silhouette(result As IEnumerable(Of Cluster(Of ClusterEntity))) As Double
+        Public Function Silhouette(clusters As Bisecting.Cluster()) As Double
             Dim clusterInDist As Double = 0
             Dim clusterOutDist As Double = 0
-            Dim cluster As Cluster(Of ClusterEntity)
-            Dim nextCluster As Cluster(Of ClusterEntity)
-            Dim clusters = result.SafeQuery.ToArray
+            Dim cluster As Bisecting.Cluster
+            Dim nextCluster As Bisecting.Cluster
 
             For c As Integer = 0 To clusters.Length - 1
                 cluster = clusters(c)
@@ -335,12 +334,12 @@ Namespace KMeans
             Return SI
         End Function
 
-        Private Function AverageDistance(a As Cluster(Of ClusterEntity), b As Cluster(Of ClusterEntity)) As Double
-            Dim factor As Double = a.size
+        Private Function AverageDistance(a As Bisecting.Cluster, b As Bisecting.Cluster) As Double
+            Dim factor As Double = a.Size
             Dim clusterAvgInDist As Double =
                 Aggregate individual1 As ClusterEntity
-                In a.m_innerList.AsParallel
-                Let sumInDist = b.m_innerList.Select(Function(individual2) individual1.DistanceTo(individual2)).Sum
+                In a.AsParallel
+                Let sumInDist = b.Select(Function(individual2) individual1.DistanceTo(individual2)).Sum
                 Into Sum(sumInDist / factor)
 
             Return clusterAvgInDist / factor
@@ -366,7 +365,7 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="clusters">A multiple cluster result</param>
         ''' <returns></returns>
-        Public Function Dunn(clusters As ClusterEntity()()) As Double
+        Public Function Dunn(clusters As Bisecting.Cluster()) As Double
             Dim minOutDist As Double = clusters _
                 .Select(Function(cluster) cluster.CalcMinOutDist(clusters)) _
                 .Min
@@ -386,7 +385,7 @@ Namespace KMeans
         ''' <param name="cluster"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function CalcMaxInDist(cluster As ClusterEntity()) As Double
+        Private Function CalcMaxInDist(cluster As Bisecting.Cluster) As Double
             Dim maxInDist As Double = Double.MinValue
 
             If cluster.Length > VectorTask.n_threads * InternalParallelWorks Then
@@ -457,10 +456,10 @@ Namespace KMeans
         ''' <param name="clusters"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function CalcMinOutDist(cluster As ClusterEntity(), clusters As ClusterEntity()()) As Double
+        Private Function CalcMinOutDist(cluster As Bisecting.Cluster, clusters As Bisecting.Cluster()) As Double
             Dim minOutDist = Double.MaxValue
 
-            If cluster.Length > CalcMinOutDistTask.n_threads * InternalParallelWorks Then
+            If cluster.Size > CalcMinOutDistTask.n_threads * InternalParallelWorks Then
                 Dim eval As New CalcMinOutDistTask(cluster, clusters)
 
                 eval.Run()
