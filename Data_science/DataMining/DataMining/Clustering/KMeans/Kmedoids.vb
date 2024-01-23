@@ -81,7 +81,9 @@ Namespace KMeans
         ''' <returns>
         ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
         ''' </returns>
-        Public Function ClusterMean(Of T As IVector)(cluster As IEnumerable(Of T)) As Double()
+        ''' 
+        <Extension>
+        Public Function CalculateClusterMean(Of T As IVector)(cluster As IEnumerable(Of T)) As Double()
             Dim sum As Double() = Nothing
             Dim n As Integer = 0
 

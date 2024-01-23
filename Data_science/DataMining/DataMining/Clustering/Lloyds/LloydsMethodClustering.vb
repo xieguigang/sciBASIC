@@ -105,12 +105,13 @@ Namespace Lloyds
         Private Function [Loop]() As Double
             Dim oldKmeansCost As Double = 0
             Dim currentKMeansCost As Double = 0
+            Dim randomIndex As Integer
 
             ' First, create number of desired clusters
             ' Pick K (mNumDesiredRandomPoints)
             For i As Integer = 0 To mNumDesiredClusters - 1
                 _kmeansClusters.Add(New KMeansCluster(Of Point))
-                Dim randomIndex As Integer = randf.Next(_source.Count)
+                randomIndex = randf.Next(_source.Count)
                 _kmeansClusters(i).Center = _source(randomIndex)
             Next
 
@@ -119,17 +120,16 @@ Namespace Lloyds
                 For i As Integer = 0 To _kmeansClusters.Count - 1
                     _kmeansClusters(i).refresh()
                 Next
+
                 oldKmeansCost = currentKMeansCost
 
                 Dim closestClusterToPoint As KMeansCluster(Of Point) = Nothing
-
                 Dim minClusterIndex As Integer = Integer.MaxValue
 
                 ' find the closest cluster to each point
                 For i As Integer = 0 To _lloydsPoints.Count - 1
                     Dim minDistanceToCluster As Double = Double.MaxValue
                     For j As Integer = 0 To _kmeansClusters.Count - 1
-
                         Dim distanceToCluster As Double = _lloydsPoints(i).DistanceTo(_kmeansClusters(j).Center)
 
                         If distanceToCluster < minDistanceToCluster Then
@@ -141,7 +141,6 @@ Namespace Lloyds
 
                     ' Indexing by one with naming, so add one
                     _lloydsPoints(i).SetKMeansCluster(minClusterIndex + 1)
-
                     _kmeansClusters(minClusterIndex).Add(_lloydsPoints(i))
                 Next
 
@@ -150,9 +149,11 @@ Namespace Lloyds
 
                 ' calculate the new center
                 For i As Integer = 0 To _kmeansClusters.Count - 1
-                    _kmeansClusters(i).Center = _kmeansClusters(i).CalculateCenter()
+                    _kmeansClusters(i).Center = New Point With {
+                        .entityVector = _kmeansClusters(i).CalculateClusterMean
+                    }
                     currentKMeansCost += _kmeansClusters(i).CalculateKMeansCost()
-                Next i
+                Next
             Loop While std.Abs(oldKmeansCost - currentKMeansCost) > 1
 
             Return currentKMeansCost
