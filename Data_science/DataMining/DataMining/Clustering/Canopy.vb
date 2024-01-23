@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.Math.Correlations
-Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.SIMD
+Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 
 Namespace Clustering
 
@@ -60,13 +60,7 @@ Namespace Clustering
                                     Continue For
                                 End If
 
-                                sum_i += Exponent.f64_op_exponent_f64_scalar(
-                                    v1:=Subtract.f64_op_subtract_f64(
-                                        i.entityVector,
-                                        j.entityVector
-                                    ),
-                                    v2:=2
-                                ).Sum
+                                sum_i += SquareDist(i, j)
                             Next
 
                             Return sum_i
@@ -78,6 +72,14 @@ Namespace Clustering
             Dim T2 As Double = sum / distanceNumber / 32
 
             Return T2
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function SquareDist(i As Double(), j As Double()) As Double
+            Return Exponent.f64_op_exponent_f64_scalar(
+                v1:=Subtract.f64_op_subtract_f64(i, j),
+                v2:=2
+            ).Sum
         End Function
 
         Public Function Solve() As Canopy()
@@ -125,7 +127,7 @@ Namespace Clustering
 
                 For Each canopy As Canopy In canopies
                     Dim center As Double() = canopy.centroid
-                    Dim d = ManhattanDistance(current.entityVector, center)
+                    Dim d = SquareDist(current, center)
 
                     ' 距离小于T1加入canopy，打上弱标记
                     If d < T1 Then
