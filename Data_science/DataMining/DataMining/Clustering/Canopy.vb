@@ -104,6 +104,7 @@ Namespace Clustering
             End If
 
             For Each c As Canopy In canopies
+                c.Cluster = c.GetHashCode
                 c.centroid = c.CalculateClusterMean
             Next
 
