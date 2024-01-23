@@ -43,7 +43,7 @@ Namespace ComponentModel
             Dim score As EvaluationScore
 
             ' zero no clusters
-            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size).ToArray, useColor:=True)
+            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size - 1).ToArray, useColor:=True)
                 traceback.SetTraceback(data, itr:=i)
                 score = EvaluationScore.Evaluate(data)
 
