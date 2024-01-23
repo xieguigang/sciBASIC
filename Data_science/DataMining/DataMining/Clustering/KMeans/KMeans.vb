@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::d0ec385451e64964603e5f3a1c435053, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 332
-    '    Code Lines: 223
-    ' Comment Lines: 60
-    '   Blank Lines: 49
-    '     File Size: 15.00 KB
+' Summaries:
 
 
-    '     Module KMeansAlgorithm
-    ' 
-    '         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, means, minIndex
-    '                   ParallelMicrosoft, ParallelUnix
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 332
+'    Code Lines: 223
+' Comment Lines: 60
+'   Blank Lines: 49
+'     File Size: 15.00 KB
+
+
+'     Module KMeansAlgorithm
+' 
+'         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, means, minIndex
+'                   ParallelMicrosoft, ParallelUnix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -91,6 +91,27 @@ Namespace KMeans
             End If
         End Sub
 
+        Private Function CreateInitialCenters(data As T(), k As Integer) As ClusterCollection(Of T)
+            Dim clusterNumbers As New List(Of Integer)
+            Dim clusterNumber As Integer = 0
+            Dim cluster As KMeansCluster(Of T) = Nothing
+            Dim clusters As New ClusterCollection(Of T)
+            Dim rowCount As Integer = data.Length
+
+            While clusterNumbers.Count < k
+                clusterNumber = randf.seeds.[Next](0, rowCount - 1)
+
+                If Not clusterNumbers.Contains(clusterNumber) Then
+                    cluster = New KMeansCluster(Of T)
+                    clusterNumbers.Add(clusterNumber)
+                    cluster.Add(data(clusterNumber))
+                    clusters.Add(cluster)
+                End If
+            End While
+
+            Return clusters
+        End Function
+
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
@@ -109,13 +130,10 @@ Namespace KMeans
         ''' </remarks>
         Public Function ClusterDataSet(source As IEnumerable(Of T), k%) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
-            Dim clusterNumber As Integer = 0
             Dim rowCount As Integer = data.Length
             Dim stableClustersCount As Integer = 0
             Dim iterationCount As Integer = 0
-            Dim cluster As KMeansCluster(Of T) = Nothing
-            Dim clusters As New ClusterCollection(Of T)
-            Dim clusterNumbers As New List(Of Integer)
+            Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(data, k)
             Dim [stop] = Me.stop
 
             If k >= rowCount Then
@@ -125,17 +143,6 @@ Namespace KMeans
                     Call "Init assigned random clusters...".__DEBUG_ECHO
                 End If
             End If
-
-            While clusterNumbers.Count < k
-                clusterNumber = randf.seeds.[Next](0, rowCount - 1)
-
-                If Not clusterNumbers.Contains(clusterNumber) Then
-                    cluster = New KMeansCluster(Of T)
-                    clusterNumbers.Add(clusterNumber)
-                    cluster.Add(data(clusterNumber))
-                    clusters.Add(cluster)
-                End If
-            End While
 
             If [stop] <= 0 Then
                 [stop] = k * rowCount
