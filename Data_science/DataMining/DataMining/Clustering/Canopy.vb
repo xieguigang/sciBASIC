@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
+Imports Microsoft.VisualBasic.Math.SIMD
 
 Namespace Clustering
 
@@ -57,7 +58,10 @@ Namespace Clustering
                         Continue For
                     End If
 
-                    sum += points(i).DistanceTo(points(j)) ^ 2
+                    sum += Exponent.f64_op_exponent_f64_scalar(
+                        v1:=Subtract.f64_op_subtract_f64(points(i).entityVector, points(j).entityVector),
+                        v2:=2
+                    ).Sum
                 Next
             Next
 
