@@ -99,15 +99,14 @@ Namespace KMeans
         ''' Performance the clustering operation on the entity data model.
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="expected"></param>
+        ''' <param name="expected">k-centers</param>
         ''' <returns>
         ''' 输出的元素和输入相比较是乱序的
         ''' </returns>
         <Extension>
-        Public Iterator Function Kmeans(source As IEnumerable(Of EntityClusterModel),
-                                        expected%,
-                                        Optional debug As Boolean = True,
-                                        Optional n_threads As Integer = 16) As IEnumerable(Of EntityClusterModel)
+        Public Function Kmeans(source As IEnumerable(Of EntityClusterModel), expected%,
+                               Optional debug As Boolean = True,
+                               Optional n_threads As Integer = 16) As IEnumerable(Of EntityClusterModel)
 
             Dim rawInput As EntityClusterModel() = source.ToArray
             Dim maps As New DataSetConvertor(rawInput)
@@ -117,7 +116,18 @@ Namespace KMeans
                 source:=maps.GetVectors(rawInput).ToArray
             )
 
-            For Each cluster As SeqValue(Of KMeansCluster(Of ClusterEntity)) In clusters.SeqIterator(offset:=1)
+            Return clusters.PopulateObjects(maps)
+        End Function
+
+        ''' <summary>
+        ''' a helper function for convert object data
+        ''' </summary>
+        ''' <param name="kmeans"></param>
+        ''' <param name="maps"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function PopulateObjects(kmeans As ClusterCollection(Of ClusterEntity), maps As DataSetConvertor) As IEnumerable(Of EntityClusterModel)
+            For Each cluster As SeqValue(Of KMeansCluster(Of ClusterEntity)) In kmeans.SeqIterator(offset:=1)
                 For Each xi As EntityClusterModel In maps.GetObjects(+cluster, setClass:=cluster.i)
                     Yield xi
                 Next
