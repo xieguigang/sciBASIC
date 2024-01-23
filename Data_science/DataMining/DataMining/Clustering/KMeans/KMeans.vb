@@ -62,7 +62,8 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Namespace KMeans
 
     ''' <summary>
-    ''' This class implement a KMeans clustering algorithm.(请注意，实体对象的属性必须要长度一致)
+    ''' This class implement a KMeans clustering algorithm.
+    ''' (请注意，实体对象的属性必须要长度一致)
     ''' </summary>
     Public Class KMeansAlgorithm(Of T As EntityBase(Of Double)) : Inherits TraceBackAlgorithm
 

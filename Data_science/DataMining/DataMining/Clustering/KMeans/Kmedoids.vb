@@ -51,6 +51,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -80,22 +81,21 @@ Namespace KMeans
         ''' <returns>
         ''' Returns an Array Defining A Data Point Representing The Cluster Mean or Centroid
         ''' </returns>
-        Public Function ClusterMean(cluster As Double(,)) As Double()
-            Dim rowCount = cluster.GetUpperBound(0) + 1
-            Dim fieldCount = cluster.GetUpperBound(1) + 1
-            Dim dataSum As Double(,) = New Double(0, fieldCount - 1) {}
-            Dim centroid As Double() = New Double(fieldCount - 1) {}
+        Public Function ClusterMean(Of T As IVector)(cluster As IEnumerable(Of T)) As Double()
+            Dim sum As Double() = Nothing
+            Dim n As Integer = 0
 
-            '((20+30)/2), ((170+160)/2), ((80+120)/2)
-            For j As Integer = 0 To fieldCount - 1
-                For i As Integer = 0 To rowCount - 1
-                    dataSum(0, j) = dataSum(0, j) + cluster(i, j)
-                Next
+            For Each xi As T In cluster
+                If sum Is Nothing Then
+                    sum = xi.Data
+                Else
+                    sum = SIMD.Add.f64_op_add_f64(sum, xi.Data)
+                End If
 
-                centroid(j) = (dataSum(0, j) / rowCount)
+                n += 1
             Next
 
-            Return centroid
+            Return SIMD.Divide.f64_op_divide_f64_scalar(sum, n)
         End Function
 
         ''' <summary>
