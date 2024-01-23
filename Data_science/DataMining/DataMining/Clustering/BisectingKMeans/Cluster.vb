@@ -38,6 +38,10 @@ Namespace KMeans.Bisecting
 			End Get
 		End Property
 
+		''' <summary>
+		''' current cluster class label
+		''' </summary>
+		''' <returns></returns>
 		Public Property Cluster As Integer Implements IClusterPoint.Cluster
 
 		Public ReadOnly Property Size As Integer

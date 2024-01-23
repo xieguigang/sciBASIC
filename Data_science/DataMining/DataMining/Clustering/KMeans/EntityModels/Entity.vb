@@ -167,5 +167,14 @@ Namespace KMeans
         Public Shared Operator <>(a As ClusterEntity, b As ClusterEntity) As Boolean
             Return Not a = b
         End Operator
+
+        ''' <summary>
+        ''' get the class label of current point
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(c As ClusterEntity) As Integer
+            Return c.cluster
+        End Operator
     End Class
 End Namespace

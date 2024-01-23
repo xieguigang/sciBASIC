@@ -46,7 +46,9 @@ Namespace KMeans
                 .ToArray
 
             For Each group As ClusterEntity() In class_groups
-                Yield New Bisecting.Cluster(group.CalculateClusterMean, group)
+                Yield New Bisecting.Cluster(group.CalculateClusterMean, group) With {
+                    .Cluster = group.First
+                }
             Next
         End Function
 
