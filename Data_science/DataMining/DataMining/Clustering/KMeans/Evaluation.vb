@@ -65,7 +65,7 @@ Namespace KMeans
     ''' </summary>
     Public Module Evaluation
 
-        Private Function calcularAverageBetweenClusterDistance(clusters As ClusterEntity()()) As Double
+        Public Function calcularAverageBetweenClusterDistance(clusters As Bisecting.Cluster()) As Double
             Dim averageDistanceBetween As Double
             Dim distA As Double = 0
             Dim cont As Double = 0
@@ -89,8 +89,12 @@ Namespace KMeans
             Return averageDistanceBetween
         End Function
 
-        'Distancia minima entre puntos de diferentes clusters
-        Private Function calcularMinimumDistance(clusters As ClusterEntity()()) As Double
+        ''' <summary>
+        ''' Distancia minima entre puntos de diferentes clusters
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
+        Public Function calcularMinimumDistance(clusters As Bisecting.Cluster()) As Double
             Dim minimumDistance As Double = -1
             Dim aux As Double
 
@@ -118,8 +122,7 @@ Namespace KMeans
             Return minimumDistance
         End Function
 
-
-        Public Function calcularAverageDistance(clusters As ClusterEntity()()) As Double
+        Public Function calcularAverageDistance(clusters As Bisecting.Cluster()) As Double
             Dim averageDistance As Double
             Dim distA As Double = 0
             Dim cont As Double = 0
@@ -139,7 +142,7 @@ Namespace KMeans
             Return averageDistance
         End Function
 
-        Private Function calcularDavidBouldin(clusters As ClusterEntity()()) As Double
+        Public Function calcularDavidBouldin(clusters As Bisecting.Cluster()) As Double
             Dim numberOfClusters = clusters.Length
             Dim david = 0.0
 
@@ -154,9 +157,9 @@ Namespace KMeans
 
             For Each cluster In clusters
                 For Each punto In cluster
-                    withinClusterDistance(i) += punto.DistanceTo(cluster.Centroide)
+                    withinClusterDistance(i) += punto.DistanceTo(cluster)
                 Next
-                withinClusterDistance(i) /= cluster.Length
+                withinClusterDistance(i) /= cluster.Size
                 i += 1
             Next
 
@@ -165,12 +168,12 @@ Namespace KMeans
 
             For i = 0 To numberOfClusters - 1
                 'if the cluster is null
-                If clusters(i).Centroide IsNot Nothing Then
+                If clusters(i).centroid IsNot Nothing Then
 
                     For j = 0 To numberOfClusters - 1
                         'if the cluster is null
-                        If i <> j AndAlso clusters(j).Centroide IsNot Nothing Then
-                            Dim val = (withinClusterDistance(i) + withinClusterDistance(j)) / clusters(i).Centroide.DistanceTo(clusters(j).Centroide)
+                        If i <> j AndAlso clusters(j).centroid IsNot Nothing Then
+                            Dim val = (withinClusterDistance(i) + withinClusterDistance(j)) / clusters(i).DistanceTo(clusters(j))
                             If val > max Then
                                 max = val
                             End If
@@ -186,7 +189,7 @@ Namespace KMeans
         End Function
 
         <Extension>
-        Public Function calcularSquaredDistance(clusters As ClusterEntity()()) As Double
+        Public Function calcularSquaredDistance(clusters As Bisecting.Cluster()) As Double
             Dim squaredDistance As Double = 0
             Dim aux As Double
             Dim cont As Double = 0
@@ -206,18 +209,18 @@ Namespace KMeans
             Return squaredDistance / cont
         End Function
 
-        Public Function calcularCalinskiHarabasz(clusters As ClusterEntity()()) As Double
+        Public Function calcularCalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
             Dim calinski = 0.0
             Dim squaredInterCluter As Double = 0
             Dim aux As Double
             Dim cont As Double = 0
 
             For Each cluster In clusters
-                If cluster.Centroide IsNot Nothing Then
+                If cluster.centroid IsNot Nothing Then
                     For Each cluster2 In clusters
-                        If cluster2.Centroide IsNot Nothing Then
-                            If Not cluster.Equals(cluster2) Then
-                                aux = cluster.Centroide.DistanceTo(cluster2.Centroide)
+                        If cluster2.centroid IsNot Nothing Then
+                            If Not cluster Is cluster2 Then
+                                aux = cluster.DistanceTo(cluster2)
                                 squaredInterCluter += aux * aux
                                 cont += 1
                             End If
@@ -238,7 +241,7 @@ Namespace KMeans
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function CalcularMaximumDiameter(clusters As ClusterEntity()()) As Double
+        Public Function CalcularMaximumDiameter(clusters As Bisecting.Cluster()) As Double
             Dim maximumDiameter As Double = 0
             Dim aux As Double
 

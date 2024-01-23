@@ -40,6 +40,12 @@ Namespace KMeans.Bisecting
 
 		Public Property Cluster As Integer Implements IClusterPoint.Cluster
 
+		Public ReadOnly Property Size As Integer
+			Get
+				Return DataPoints.TryCount
+			End Get
+		End Property
+
 		Public Sub New(c As Double())
 			Me.centroid = c
 			Me.DataPoints = New List(Of ClusterEntity)()
