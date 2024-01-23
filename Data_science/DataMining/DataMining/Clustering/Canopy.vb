@@ -1,107 +1,98 @@
 ﻿Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 
 Namespace Clustering
 
-    ''' <summary>
-    ''' use canopy method for measure the k for kmeans clustering
-    ''' </summary>
-    Public Class Canopy
+    Public Class CanopyBuilder
 
-        ''' <summary>
-        ''' 进行聚类的点
-        ''' </summary>
-        ReadOnly m_points As List(Of ClusterEntity)
-        ''' <summary>
-        ''' 存储簇
-        ''' </summary>
-        ReadOnly clusters As List(Of Bisecting.Cluster)
+        Dim T1 As Double = 8
+        Dim T2 As Double = 4
 
-        ''' <summary>
-        ''' 阈值
-        ''' </summary>
-        Dim T2 As Double = -1
-        Dim clnm As Integer
+        ReadOnly points As List(Of ClusterEntity)
+        ReadOnly canopies As New List(Of Canopy)
 
-        ''' <summary>
-        ''' 获取阈值T2
-        ''' </summary>
-        Public Overridable ReadOnly Property Threshold As Double
-            Get
-                Return T2
-            End Get
-        End Property
-
-        Public ReadOnly Property K As Integer
-            Get
-                Return clusters.Count
-            End Get
-        End Property
-
-        Public Sub New(dataSet As IEnumerable(Of ClusterEntity))
-            m_points = dataSet.ToList
+        Public Sub New(data As IEnumerable(Of ClusterEntity))
+            points = data.ToList
         End Sub
 
-        ''' <summary>
-        ''' 进行聚类，按照Canopy算法进行计算，将所有点进行聚类
-        ''' </summary>
-        ''' <returns></returns>
-        Public Overridable Function cluster() As Integer
-            Dim index As Integer
+        Public Function Solve() As Canopy()
+            If Not canopies.IsNullOrEmpty Then
+                Return canopies.ToArray
+            Else
+                While points.Count > 0
+                    Dim poll = IterateSingle() _
+                        .OrderByDescending(Function(i) i) _
+                        .ToArray
 
-            T2 = AverageDistance(m_points)
-
-            While m_points.Count <> 0 'point不为空
-                Dim lCluster As New Bisecting.Cluster
-                Dim basePoint As ClusterEntity = m_points(0) ' 基准点
-
-                index = 0
-                lCluster.addPoint(basePoint)
-                m_points.RemoveAt(0)
-
-                While index < m_points.Count
-                    Dim anotherPoint = m_points(index)
-                    Dim distance As Single = basePoint.DistanceTo(anotherPoint)
-
-                    If distance <= T2 Then
-                        lCluster.addPoint(anotherPoint)
-                        m_points.RemoveAt(index)
-                    Else
-                        index += 1
-                    End If
+                    For Each i As Integer In poll
+                        Call points.RemoveAt(i)
+                    Next
                 End While
+            End If
 
-                clusters.Add(lCluster)
-                clnm = clusters.Count
-            End While
-
-            Return clnm
-        End Function
-
-        ''' <summary>
-        ''' 得到平均距离
-        ''' </summary>
-        ''' <param name="points"></param>
-        ''' <returns></returns>
-        Private Shared Function AverageDistance(points As List(Of ClusterEntity)) As Double
-            Dim sum As Double = 0
-            Dim pointSize = points.Count
-
-            For i As Integer = 0 To pointSize - 1
-                For j As Integer = 0 To pointSize - 1
-                    If i = j Then
-                        Continue For
-                    End If
-
-                    sum += points(i).DistanceTo(points(j)) ^ 2
-                Next
+            For Each c As Canopy In canopies
+                c.centroid = c.CalculateClusterMean
             Next
 
-            Dim distanceNumber As Integer = pointSize * (pointSize + 1) / 2
-            ' 平均距离的1/8
-            Dim T2 As Double = sum / distanceNumber / 32
+            Return canopies.ToArray
+        End Function
 
-            Return T2
+        Private Iterator Function IterateSingle() As IEnumerable(Of Integer)
+            For i As Integer = 0 To points.Count - 1
+                Dim current As ClusterEntity = points(i)
+
+                ' 取一个点做为初始canopy
+                If canopies.Count = 0 Then
+                    Dim canopy As New Canopy() With {
+                        .centroid = current.entityVector,
+                        .DataPoints = New List(Of ClusterEntity) From {current}
+                    }
+                    Call canopies.Add(canopy)
+
+                    Yield i
+                    Continue For
+                End If
+
+                Dim isRemove = False
+                Dim index = 0
+
+                For Each canopy As Canopy In canopies
+                    Dim center As Double() = canopy.centroid
+                    Dim d = ManhattanDistance(current.entityVector, center)
+
+                    ' 距离小于T1加入canopy，打上弱标记
+                    If d < T1 Then
+                        current.cluster = Mark.MARK_WEAK
+                        canopy.addPoint(current)
+                    ElseIf d > T1 Then
+                        index += 1
+                    End If
+
+                    ' 距离小于T2则从列表中移除，打上强标记
+                    If d <= T2 Then
+                        current.cluster = Mark.MARK_STRONG
+                        isRemove = True
+                    End If
+                Next
+
+                ' 如果到所有canopy的距离都大于T1,生成新的canopy
+                If index = canopies.Count Then
+                    Dim newCanopy As New Canopy() With {.centroid = current.entityVector}
+                    newCanopy.addPoint(current)
+                    canopies.Add(newCanopy)
+                    isRemove = True
+                End If
+
+                If isRemove Then
+                    Yield i
+                End If
+            Next
         End Function
     End Class
+
+    Public Enum Mark As Integer
+        MARK_WEAK
+        MARK_STRONG
+    End Enum
 End Namespace
