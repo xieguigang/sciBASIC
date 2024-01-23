@@ -98,6 +98,10 @@ Namespace KMeans
         Sub New()
         End Sub
 
+        Sub New(v As IVector)
+            entityVector = v.Data
+        End Sub
+
         ''' <summary>
         ''' Create a new entity point data
         ''' </summary>

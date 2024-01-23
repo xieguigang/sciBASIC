@@ -65,7 +65,7 @@ Namespace KMeans
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Iterator Function ToKMeansModels(data As IEnumerable(Of NamedCollection(Of Double))) As IEnumerable(Of EntityClusterModel)
-            For Each d In data
+            For Each d As NamedCollection(Of Double) In data
                 Yield New EntityClusterModel With {
                     .ID = d.name,
                     .Cluster = "",
@@ -93,28 +93,6 @@ Namespace KMeans
                             }
                         End Function) _
                 .ToArray
-        End Function
-
-        ''' <summary>
-        ''' Grouping the numeric values by using the kmeans cluserting operations.
-        ''' (对一组数字进行聚类操作，其实在这里就是将这组数值生成Entity数据对象，然后将数值本身作为自动生成的Entity对象的一个唯一属性)
-        ''' </summary>
-        ''' <param name="array"></param>
-        ''' <param name="nd"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function ValueGroups(array As IEnumerable(Of Double), nd%) As List(Of EntityClusterModel)
-            Dim entities As EntityClusterModel() = array _
-                .Select(Function(x, i)
-                            Return New EntityClusterModel With {
-                                .ID = i & ":" & x,
-                                .Properties = New Dictionary(Of String, Double) From {
-                                    {"val", x}
-                                }
-                            }
-                        End Function) _
-                .ToArray
-            Return entities.Kmeans(nd)
         End Function
 
         ''' <summary>
@@ -146,43 +124,36 @@ Namespace KMeans
             Next
         End Function
 
+        ''' <summary>
+        ''' do clustering of a collection 2D points
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="expected">k-centers</param>
+        ''' <param name="debug"></param>
+        ''' <param name="n_threads"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Kmeans(points As IEnumerable(Of PointF),
-                               Optional expected% = 3,
-                               Optional debug As Boolean = True,
-                               Optional n_threads As Integer = 16) As NamedCollection(Of PointF)()
+        Public Iterator Function Kmeans(points As IEnumerable(Of PointF),
+                                        Optional expected% = 3,
+                                        Optional debug As Boolean = True,
+                                        Optional n_threads As Integer = 16) As IEnumerable(Of NamedCollection(Of PointF))
 
-            Dim source As EntityClusterModel() = points _
+            Dim source As ClusterEntity() = points _
                 .Select(Function(pt, i)
-                            Return New EntityClusterModel With {
-                                .ID = i,
-                                .Cluster = 0,
-                                .Properties = New Dictionary(Of String, Double) From {
-                                    {"x", CDbl(pt.X)},
-                                    {"y", CDbl(pt.Y)}
-                                }
+                            Return New ClusterEntity() With {
+                                .uid = i,
+                                .cluster = 0,
+                                .entityVector = {CDbl(pt.X), CDbl(pt.Y)}
                             }
                         End Function) _
                 .ToArray
-            Dim result = source.Kmeans(expected, debug, n_threads:=n_threads)
-            Dim resultPoints As NamedCollection(Of PointF)() = result _
-                .GroupBy(Function(e) e.Cluster) _
-                .Select(Function(e)
-                            Return New NamedCollection(Of PointF) With {
-                                .name = e.Key,
-                                .value = e _
-                                    .Select(Function(p)
-                                                Return New PointF With {
-                                                    .X = p!x,
-                                                    .Y = p!y
-                                                }
-                                            End Function) _
-                                    .ToArray
-                            }
-                        End Function) _
-                .ToArray
+            Dim workflow As New KMeansAlgorithm(Of ClusterEntity)(debug:=debug, n_threads:=n_threads)
+            Dim result As ClusterCollection(Of ClusterEntity) = workflow.ClusterDataSet(source, k:=expected)
+            Dim id As i32 = 1
 
-            Return resultPoints
+            For Each cluster As KMeansCluster(Of ClusterEntity) In result
+                Yield New NamedCollection(Of PointF)((++id).ToString, cluster.Select(Function(c) New PointF(c(0), c(1))))
+            Next
         End Function
     End Module
 End Namespace
