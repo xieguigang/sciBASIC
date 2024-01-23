@@ -77,8 +77,7 @@ Namespace FuzzyCMeans
         ''' <returns></returns>
         Public ReadOnly Property probablyMembership As Integer
             Get
-                Return memberships _
-                    .Keys _
+                Return memberships.Keys _
                     .Select(Function(i) memberships(i)) _
                     .MaxIndex
             End Get

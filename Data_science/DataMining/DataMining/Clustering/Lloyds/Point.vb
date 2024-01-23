@@ -63,13 +63,7 @@ Namespace Lloyds
 
     Public Class Point : Inherits ClusterEntity
 
-        Private mResultantClusterCompleteLinkage As Integer = -1
-
-        Public ReadOnly Property LloydsResultCluster As Integer
-            Get
-                Return cluster
-            End Get
-        End Property
+        Dim mResultantClusterCompleteLinkage As Integer = -1
 
         Public ReadOnly Property CompleteLinkageResultCluster As Integer
             Get

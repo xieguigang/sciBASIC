@@ -1,9 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
-Namespace BisectingKMeans
+Namespace KMeans.Bisecting
 
     ''' <summary>
     ''' Created by touhid on 12/21/15.
