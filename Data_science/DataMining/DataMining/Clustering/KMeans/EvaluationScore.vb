@@ -1,4 +1,8 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -28,7 +32,7 @@ Namespace KMeans
             Dim dunn = Evaluation.Dunn(class_groups)
             Dim silhouette = Evaluation.Silhouette(class_groups)
             Dim davidBouldin = Evaluation.calcularDavidBouldin(class_groups)
-            Dim calinskiHarabasz = Evaluation.calcularCalinskiHarabasz(class_groups)
+            Dim calinskiHarabasz = Evaluation.CalinskiHarabasz(class_groups)
             Dim maximumDiameter = Evaluation.CalcularMaximumDiameter(class_groups)
 
             Return New EvaluationScore With {
@@ -63,6 +67,23 @@ Namespace KMeans
                 Yield New Bisecting.Cluster(group.CalculateClusterMean, group) With {
                     .Cluster = group.First
                 }
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function SilhouetteCoeff(data As ClusterEntity(), traceback As TraceBackIterator) As IEnumerable(Of PointF)
+            Return SingleScore(data, traceback, AddressOf Evaluation.Silhouette)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CalinskiHarabaszs(data As ClusterEntity(), traceback As TraceBackIterator) As IEnumerable(Of PointF)
+            Return SingleScore(data, traceback, AddressOf Evaluation.CalinskiHarabasz)
+        End Function
+
+        Private Shared Iterator Function SingleScore(data As ClusterEntity(), traceback As TraceBackIterator, eval As Func(Of Bisecting.Cluster(), Double)) As IEnumerable(Of PointF)
+            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size - 1).ToArray, useColor:=True)
+                traceback.SetTraceback(data, itr:=i)
+                Yield New PointF(i, eval(CreateClusters(data).ToArray))
             Next
         End Function
 

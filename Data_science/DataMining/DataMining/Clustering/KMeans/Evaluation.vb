@@ -223,7 +223,15 @@ Namespace KMeans
             Return squaredDist / cont
         End Function
 
-        Public Function calcularCalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
+        <Extension>
+        Public Function CalinskiHarabasz(result As IEnumerable(Of ClusterEntity)) As Double
+            Return EvaluationScore.CreateClusters(result) _
+                .ToArray _
+                .CalinskiHarabasz
+        End Function
+
+        <Extension>
+        Public Function CalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
             Dim calinski As Double = 0.0
             Dim squaredInterCluter As Double = 0
             Dim aux As Double
@@ -235,6 +243,7 @@ Namespace KMeans
                         Continue For
                     End If
 
+                    ' get cluster centroid distance
                     aux = cluster.DistanceTo(cluster2)
                     squaredInterCluter += aux ^ 2
                     cont += 1
