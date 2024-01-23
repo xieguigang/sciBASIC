@@ -49,22 +49,30 @@ Namespace Clustering
         ''' <param name="points"></param>
         ''' <returns></returns>
         Private Shared Function AverageDistance(points As List(Of ClusterEntity)) As Double
-            Dim sum As Double = 0
             Dim pointSize As Integer = points.Count
+            Dim parts As Double() = points _
+                .AsParallel _
+                .Select(Function(i)
+                            Dim sum_i As Double = 0
 
-            For i As Integer = 0 To pointSize - 1
-                For j As Integer = 0 To pointSize - 1
-                    If i = j Then
-                        Continue For
-                    End If
+                            For Each j As ClusterEntity In points
+                                If i Is j Then
+                                    Continue For
+                                End If
 
-                    sum += Exponent.f64_op_exponent_f64_scalar(
-                        v1:=Subtract.f64_op_subtract_f64(points(i).entityVector, points(j).entityVector),
-                        v2:=2
-                    ).Sum
-                Next
-            Next
+                                sum_i += Exponent.f64_op_exponent_f64_scalar(
+                                    v1:=Subtract.f64_op_subtract_f64(
+                                        i.entityVector,
+                                        j.entityVector
+                                    ),
+                                    v2:=2
+                                ).Sum
+                            Next
 
+                            Return sum_i
+                        End Function) _
+                .ToArray
+            Dim sum As Double = parts.Sum
             Dim distanceNumber As Integer = pointSize * (pointSize + 1) / 2
             ' 平均距离的1/8
             Dim T2 As Double = sum / distanceNumber / 32
