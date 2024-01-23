@@ -23,7 +23,7 @@ Namespace KMeans
             Return $"[classes:{num_class}, silhouette: {silhouette}, dunn: {dunn}, davidBouldin: {davidBouldin}, calinskiHarabasz: {calinskiHarabasz}, maximumDiameter: {maximumDiameter}]" & clusters.GetJson
         End Function
 
-        Public Shared Function Evaluate(data As IEnumerable(Of ClusterEntity)) As EvaluationScore
+        Public Shared Function Evaluate(data As IEnumerable(Of ClusterEntity), Optional fast As Boolean = False) As EvaluationScore
             Dim class_groups As Bisecting.Cluster() = CreateClusters(data).ToArray
             Dim dunn = Evaluation.Dunn(class_groups)
             Dim silhouette = Evaluation.Silhouette(class_groups)
