@@ -65,6 +65,125 @@ Namespace KMeans
     ''' </summary>
     Public Module Evaluation
 
+        Private Function calcularDavidBouldin(clusters As ClusterEntity()()) As Double
+            Dim numberOfClusters = clusters.Length
+            Dim david = 0.0
+
+            If numberOfClusters = 1 Then
+                Call "Impossible to evaluate Davies-Bouldin index over a single cluster".Warning
+                Return 0
+            End If
+
+            ' counting distances within
+            Dim withinClusterDistance = New Double(numberOfClusters - 1) {}
+            Dim i = 0
+
+            For Each cluster In clusters
+                For Each punto In cluster
+                    withinClusterDistance(i) += punto.DistanceTo(cluster.Centroide)
+                Next
+                withinClusterDistance(i) /= cluster.Length
+                i += 1
+            Next
+
+            Dim result = 0.0
+            Dim max = Double.NegativeInfinity
+
+            For i = 0 To numberOfClusters - 1
+                'if the cluster is null
+                If clusters(i).Centroide IsNot Nothing Then
+
+                    For j = 0 To numberOfClusters - 1
+                        'if the cluster is null
+                        If i <> j AndAlso clusters(j).Centroide IsNot Nothing Then
+                            Dim val = (withinClusterDistance(i) + withinClusterDistance(j)) / clusters(i).Centroide.DistanceTo(clusters(j).Centroide)
+                            If val > max Then
+                                max = val
+                            End If
+                        End If
+                    Next
+                End If
+                result = result + max
+            Next
+
+            david = result / numberOfClusters
+
+            Return david
+        End Function
+
+        <Extension>
+        Public Function calcularSquaredDistance(clusters As ClusterEntity()()) As Double
+            Dim squaredDistance As Double = 0
+            Dim aux As Double
+            Dim cont As Double = 0
+
+            For Each cluster In clusters
+                For Each punto In cluster
+                    For Each punto2 In cluster
+                        If Not punto Is punto2 Then
+                            aux = punto.DistanceTo(punto2)
+                            squaredDistance += aux * aux
+                            cont += 1
+                        End If
+                    Next
+                Next
+            Next
+
+            Return squaredDistance / cont
+        End Function
+
+        Public Function calcularCalinskiHarabasz(clusters As ClusterEntity()()) As Double
+            Dim calinski = 0.0
+            Dim squaredInterCluter As Double = 0
+            Dim aux As Double
+            Dim cont As Double = 0
+
+            For Each cluster In clusters
+                If cluster.Centroide IsNot Nothing Then
+                    For Each cluster2 In clusters
+                        If cluster2.Centroide IsNot Nothing Then
+                            If Not cluster.Equals(cluster2) Then
+                                aux = cluster.Centroide.DistanceTo(cluster2.Centroide)
+                                squaredInterCluter += aux * aux
+                                cont += 1
+                            End If
+                        End If
+                    Next
+                End If
+            Next
+
+            calinski = calcularSquaredDistance(clusters) / (squaredInterCluter / cont)
+
+            Return calinski
+        End Function
+
+        ''' <summary>
+        ''' Diámetro máximo entre dos puntos que pertenecen al mismo cluster.
+        ''' </summary>
+        ''' <param name="clusters"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function CalcularMaximumDiameter(clusters As ClusterEntity()()) As Double
+            Dim maximumDiameter As Double = 0
+            Dim aux As Double
+
+            For Each cluster In clusters
+                For Each punto In cluster
+                    For Each punto2 In cluster
+                        If Not punto Is punto2 Then
+                            aux = punto.DistanceTo(punto2)
+                            If aux > maximumDiameter Then
+                                maximumDiameter = aux
+                            End If
+                        End If
+                    Next
+                Next
+            Next
+
+            Return maximumDiameter
+        End Function
+
         ''' <summary>
         ''' Silhouette Coefficient
         ''' </summary>
