@@ -50,6 +50,10 @@ Namespace KMeans.Bisecting
 			End Get
 		End Property
 
+		Sub New()
+			DataPoints = New List(Of ClusterEntity)
+		End Sub
+
 		Public Sub New(c As Double())
 			Me.centroid = c
 			Me.DataPoints = New List(Of ClusterEntity)()
