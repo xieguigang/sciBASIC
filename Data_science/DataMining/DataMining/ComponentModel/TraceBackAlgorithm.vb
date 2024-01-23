@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
 
@@ -42,7 +43,7 @@ Namespace ComponentModel
             Dim score As EvaluationScore
 
             ' zero no clusters
-            For i As Integer = 1 To traceback.size - 1
+            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size).ToArray, useColor:=True)
                 traceback.SetTraceback(data, itr:=i)
                 score = EvaluationScore.Evaluate(data)
 
