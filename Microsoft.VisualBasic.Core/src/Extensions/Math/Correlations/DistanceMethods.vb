@@ -226,6 +226,21 @@ Namespace Math.Correlations
             Return MinkowskiDistance(X, Y, 1)
         End Function
 
+        ''' <summary>
+        ''' Calculates the Manhattan Distance Measure between two data points
+        ''' </summary>
+        ''' <param name="X">An array with the values of an object or datapoint</param>
+        ''' <param name="Y">An array with the values of an object or datapoint</param>
+        ''' <returns>Returns the Manhattan Distance Measure Between Points X and Points Y</returns>
+        ''' <remarks>
+        ''' Manhattan 距离：是Minkowski, q=1时的特例
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ManhattanDistance(x As IVector, y As IVector) As Double
+            Return MinkowskiDistance(x.Data, y.Data, 1)
+        End Function
+
 #If NET_48 = 1 Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
