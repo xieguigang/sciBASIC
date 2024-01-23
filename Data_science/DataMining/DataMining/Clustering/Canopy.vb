@@ -93,6 +93,10 @@ Namespace Clustering
                         .OrderByDescending(Function(i) i) _
                         .ToArray
 
+                    If poll.Length = 0 Then
+                        Exit While
+                    End If
+
                     For Each i As Integer In poll
                         Call points.RemoveAt(i)
                     Next
