@@ -1,13 +1,31 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SIMD
 Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 
 Namespace Clustering
 
+    Public Class CanopySeeds
+
+        Public Property Canopy As IVector()
+        Public ReadOnly Property k As Integer
+            Get
+                Return Canopy.TryCount
+            End Get
+        End Property
+
+    End Class
+
     ''' <summary>
     ''' initial for k-means
     ''' </summary>
+    ''' <remarks>
+    ''' 与传统的聚类算法(比如K-means)不同，Canopy聚类最大的特点是不需要事先指定k值(即clustering的个数)，
+    ''' 因此具有很大的实际应用价值。与其他聚类算法相比，Canopy聚类虽然精度较低，但其在速度上有很大优势，
+    ''' 因此可以使用Canopy聚类先对数据进行“粗”聚类，得到k值，以及大致的K个初始质心，再使用K-means进行
+    ''' 进一步“细”聚类。所以Canopy+K-means这种形式聚类算法聚类效果良好。
+    ''' </remarks>
     Public Class CanopyBuilder
 
         Dim T1 As Double = Double.NaN
@@ -83,6 +101,20 @@ Namespace Clustering
                 v1:=Subtract.f64_op_subtract_f64(i, j),
                 v2:=2
             ).Sum
+        End Function
+
+        Public Function KMeansSeeds() As CanopySeeds
+            Return New CanopySeeds With {
+                .Canopy = Solve _
+                    .Select(Function(seed)
+                                Return New ClusterEntity With {
+                                    .cluster = seed.Cluster,
+                                    .entityVector = seed.centroid,
+                                    .uid = $"fake_seed_canopy_{seed.Cluster}"
+                                }
+                            End Function) _
+                    .ToArray
+            }
         End Function
 
         Public Function Solve() As Canopy()
