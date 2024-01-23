@@ -61,6 +61,10 @@ Namespace KMeans.Bisecting
 			Me.DataPoints = dataPoints
 		End Sub
 
+		Sub New(centroid As Double(), dataPoints As ClusterEntity())
+			Call Me.New(centroid, dataPoints.ToList)
+		End Sub
+
 		<MethodImpl(MethodImplOptions.AggressiveInlining)>
 		Public Overridable Sub addPoint(p As ClusterEntity)
 			Me.DataPoints.Add(p)

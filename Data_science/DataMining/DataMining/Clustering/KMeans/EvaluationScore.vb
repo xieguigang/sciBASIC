@@ -16,12 +16,9 @@ Namespace KMeans
         End Property
 
         Public Shared Function Evaluate(data As IEnumerable(Of ClusterEntity)) As EvaluationScore
-            Dim class_groups = data _
-                .GroupBy(Function(c) c.cluster) _
-                .Select(Function(c) c.ToArray) _
-                .ToArray
+            Dim class_groups As Bisecting.Cluster() = CreateClusters(data).ToArray
             Dim dunn = Evaluation.Dunn(class_groups)
-            Dim silhouette = Evaluation.Silhouette(class_groups.Select(Function(g) New Cluster(Of ClusterEntity)(g)))
+            Dim silhouette = Evaluation.Silhouette(class_groups)
 
             Return New EvaluationScore With {
                 .clusters = class_groups _
@@ -32,6 +29,25 @@ Namespace KMeans
                 .dunn = dunn,
                 .silhouette = silhouette
             }
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data">
+        ''' all of the data points inside this given collection should 
+        ''' be tagged with the <see cref="ClusterEntity.cluster"/> labels.
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Iterator Function CreateClusters(data As IEnumerable(Of ClusterEntity)) As IEnumerable(Of Bisecting.Cluster)
+            Dim class_groups = data _
+                .GroupBy(Function(c) c.cluster) _
+                .Select(Function(c) c.ToArray) _
+                .ToArray
+
+            For Each group As ClusterEntity() In class_groups
+                Yield New Bisecting.Cluster(group.CalculateClusterMean, group)
+            Next
         End Function
 
     End Class

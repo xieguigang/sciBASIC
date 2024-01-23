@@ -269,11 +269,8 @@ Namespace KMeans
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Silhouette(result As IEnumerable(Of ClusterEntity)) As Double
-            Return result _
-                .GroupBy(Function(a) a.cluster) _
-                .Select(Function(cluster)
-                            Return New Cluster(Of ClusterEntity)(cluster)
-                        End Function) _
+            Return EvaluationScore.CreateClusters(result) _
+                .ToArray _
                 .Silhouette
         End Function
 
@@ -352,9 +349,8 @@ Namespace KMeans
         ''' <returns></returns>
         <Extension>
         Public Function Dunn(clusters As IEnumerable(Of ClusterEntity)) As Double
-            Return clusters _
-                .GroupBy(Function(c) c.cluster) _
-                .Select(Function(c) c.ToArray) _
+            Return EvaluationScore _
+                .CreateClusters(clusters) _
                 .DoCall(Function(c)
                             Return Dunn(c.ToArray)
                         End Function)
@@ -388,7 +384,7 @@ Namespace KMeans
         Private Function CalcMaxInDist(cluster As Bisecting.Cluster) As Double
             Dim maxInDist As Double = Double.MinValue
 
-            If cluster.Length > VectorTask.n_threads * InternalParallelWorks Then
+            If cluster.Size > VectorTask.n_threads * InternalParallelWorks Then
                 Dim eval As New CalcMaxInDistTask(cluster)
 
                 eval.Run()
@@ -415,11 +411,13 @@ Namespace KMeans
 
             Dim cluster As ClusterEntity()
             Dim maxInDist As Double()
+            Dim centroid As Double()
 
-            Sub New(cluster As ClusterEntity())
-                Call MyBase.New(cluster.Length)
+            Sub New(cluster As Bisecting.Cluster)
+                Call MyBase.New(cluster.Size)
 
-                Me.cluster = cluster
+                Me.centroid = cluster.centroid
+                Me.cluster = cluster.ToArray
                 Me.maxInDist = Allocate(Of Double)(all:=False)
             End Sub
 
@@ -486,12 +484,12 @@ Namespace KMeans
 
         Private Class CalcMinOutDistTask : Inherits VectorTask
 
-            Dim cluster As ClusterEntity()
-            Dim clusters As ClusterEntity()()
+            Dim cluster As Bisecting.Cluster
+            Dim clusters As Bisecting.Cluster()
             Dim minOutDist As Double()
 
-            Sub New(cluster As ClusterEntity(), clusters As ClusterEntity()())
-                Call MyBase.New(cluster.Length)
+            Sub New(cluster As Bisecting.Cluster, clusters As Bisecting.Cluster())
+                Call MyBase.New(cluster.Size)
 
                 Me.minOutDist = Allocate(Of Double)(all:=False)
                 Me.cluster = cluster
