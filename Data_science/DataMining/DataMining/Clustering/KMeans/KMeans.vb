@@ -68,12 +68,18 @@ Namespace KMeans
     Public Class KMeansAlgorithm(Of T As EntityBase(Of Double)) : Inherits TraceBackAlgorithm
 
         ReadOnly debug As Boolean = False
+        ''' <summary>
+        ''' the max iteration loop number
+        ''' </summary>
         ReadOnly stop% = -1
         ReadOnly n_threads As Integer = 16
         ReadOnly auto_parallel As Boolean = True
 
         ''' <param name="n_threads">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
+        ''' </param>
+        ''' <param name="stop">
+        ''' the max iteration loop number
         ''' </param>
         Sub New(Optional debug As Boolean = False,
                 Optional stop% = -1,
@@ -97,6 +103,10 @@ Namespace KMeans
             Dim cluster As KMeansCluster(Of T) = Nothing
             Dim clusters As New ClusterCollection(Of T)
             Dim rowCount As Integer = data.Length
+
+            If debug Then
+                Call "Init assigned random clusters...".__DEBUG_ECHO
+            End If
 
             While clusterNumbers.Count < k
                 clusterNumber = randf.seeds.[Next](0, rowCount - 1)
@@ -131,31 +141,33 @@ Namespace KMeans
         Public Function ClusterDataSet(source As IEnumerable(Of T), k%) As ClusterCollection(Of T)
             Dim data As T() = source.ToArray
             Dim rowCount As Integer = data.Length
-            Dim stableClustersCount As Integer = 0
-            Dim iterationCount As Integer = 0
             Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(data, k)
             Dim [stop] = Me.stop
 
             If k >= rowCount Then
                 Throw New Exception($"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!")
-            Else
-                If debug Then
-                    Call "Init assigned random clusters...".__DEBUG_ECHO
-                End If
             End If
-
             If [stop] <= 0 Then
                 [stop] = k * rowCount
-            End If
-            If debug Then
-                Call "Start kmeans clustering....".__DEBUG_ECHO
             End If
             If n_threads > 1 Then
                 Call $"Kmeans have {n_threads} CPU core for parallel computing.".__DEBUG_ECHO
             End If
 
+            Return ClusterDataSetLoop(clusters, data, [stop])
+        End Function
+
+        Const NoMember$ = "Cluster count cannot be ZERO!"
+
+        Private Function ClusterDataSetLoop(clusters As ClusterCollection(Of T), data As T(), [stop] As Integer) As ClusterCollection(Of T)
             Dim lastStables%
             Dim hits%
+            Dim stableClustersCount As Integer = 0
+            Dim iterationCount As Integer = 0
+
+            If debug Then
+                Call "Start kmeans clustering....".__DEBUG_ECHO
+            End If
 
             While stableClustersCount <> clusters.NumOfCluster
                 Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data)
@@ -208,8 +220,6 @@ Namespace KMeans
 
             Return clusters
         End Function
-
-        Const NoMember$ = "Cluster count cannot be ZERO!"
 
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
