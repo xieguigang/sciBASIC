@@ -124,12 +124,12 @@ Namespace KMeans
             Call m_innerList.Add(data)
 
             If m_innerList.Count = 1 Then
-                _ClusterSum = New Double(data.Length - 1) {}
+                _ClusterSum = data.entityVector.ToArray
+            Else
+                For offset As Integer = 0 To data.Length - 1
+                    _ClusterSum(offset) = _ClusterSum(offset) + data(offset)
+                Next
             End If
-
-            For count As Integer = 0 To data.Length - 1
-                _ClusterSum(count) = _ClusterSum(count) + data.entityVector(count)
-            Next
         End Sub
 
         ''' <summary>

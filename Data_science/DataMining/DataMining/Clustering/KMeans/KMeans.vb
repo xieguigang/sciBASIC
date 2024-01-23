@@ -52,10 +52,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -122,6 +124,19 @@ Namespace KMeans
             Return clusters
         End Function
 
+        Private Function CreateInitialCenters(canopy As CanopySeeds, activator As Func(Of IVector, T)) As ClusterCollection(Of T)
+            Dim k_seeds As New ClusterCollection(Of T)
+            Dim ki As KMeansCluster(Of T)
+
+            For Each seed As IVector In canopy.Canopy
+                ki = New KMeansCluster(Of T)()
+                ki.Add(activator(seed))
+                k_seeds.Add(ki)
+            Next
+
+            Return k_seeds
+        End Function
+
         ''' <summary>
         ''' Seperates a dataset into clusters or groups with similar characteristics
         ''' </summary>
@@ -142,6 +157,26 @@ Namespace KMeans
             Dim data As T() = source.ToArray
             Dim rowCount As Integer = data.Length
             Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(data, k)
+            Dim [stop] = Me.stop
+
+            If k >= rowCount Then
+                Throw New Exception($"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!")
+            End If
+            If [stop] <= 0 Then
+                [stop] = k * rowCount
+            End If
+            If n_threads > 1 Then
+                Call $"Kmeans have {n_threads} CPU core for parallel computing.".__DEBUG_ECHO
+            End If
+
+            Return ClusterDataSetLoop(clusters, data, [stop])
+        End Function
+
+        Public Function ClusterDataSet(source As IEnumerable(Of T), canopy As CanopySeeds, activator As Func(Of IVector, T)) As ClusterCollection(Of T)
+            Dim data As T() = source.ToArray
+            Dim rowCount As Integer = data.Length
+            Dim k As Integer = canopy.k
+            Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(canopy, activator)
             Dim [stop] = Me.stop
 
             If k >= rowCount Then
