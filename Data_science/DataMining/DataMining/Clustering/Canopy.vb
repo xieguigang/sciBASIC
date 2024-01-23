@@ -4,10 +4,13 @@ Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 
 Namespace Clustering
 
+    ''' <summary>
+    ''' initial for k-means
+    ''' </summary>
     Public Class CanopyBuilder
 
-        Dim T1 As Double = 8
-        Dim T2 As Double = 4
+        Dim T1 As Double = Double.NaN
+        Dim T2 As Double = Double.NaN
 
         ReadOnly points As List(Of ClusterEntity)
         ReadOnly canopies As New List(Of Canopy)
@@ -16,10 +19,61 @@ Namespace Clustering
             points = data.ToList
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="T1"></param>
+        ''' <param name="T2"></param>
+        ''' <remarks>
+        ''' value of <paramref name="T1"/> should greater than <paramref name="T2"/>, example as:
+        ''' 
+        ''' T1 = 8 and T2 = 4
+        ''' </remarks>
+        Sub New(data As IEnumerable(Of ClusterEntity), T1 As Double, T2 As Double)
+            Call Me.New(data)
+
+            Me.T1 = T1
+            Me.T2 = T2
+        End Sub
+
+        Private Sub MeasureThreahold()
+            T2 = AverageDistance(points)
+            T1 = T2 * 2
+        End Sub
+
+        ''' <summary>
+        ''' 得到平均距离
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <returns></returns>
+        Private Shared Function AverageDistance(points As List(Of ClusterEntity)) As Double
+            Dim sum As Double = 0
+            Dim pointSize As Integer = points.Count
+
+            For i As Integer = 0 To pointSize - 1
+                For j As Integer = 0 To pointSize - 1
+                    If i = j Then
+                        Continue For
+                    End If
+
+                    sum += points(i).DistanceTo(points(j)) ^ 2
+                Next
+            Next
+
+            Dim distanceNumber As Integer = pointSize * (pointSize + 1) / 2
+            ' 平均距离的1/8
+            Dim T2 As Double = sum / distanceNumber / 32
+
+            Return T2
+        End Function
+
         Public Function Solve() As Canopy()
             If Not canopies.IsNullOrEmpty Then
                 Return canopies.ToArray
             Else
+                Call MeasureThreahold()
+
                 While points.Count > 0
                     Dim poll = IterateSingle() _
                         .OrderByDescending(Function(i) i) _
@@ -92,7 +146,13 @@ Namespace Clustering
     End Class
 
     Public Enum Mark As Integer
-        MARK_WEAK
-        MARK_STRONG
+        ''' <summary>
+        ''' &lt; T1
+        ''' </summary>
+        MARK_WEAK = 1
+        ''' <summary>
+        ''' &lt; T2
+        ''' </summary>
+        MARK_STRONG = 2
     End Enum
 End Namespace
