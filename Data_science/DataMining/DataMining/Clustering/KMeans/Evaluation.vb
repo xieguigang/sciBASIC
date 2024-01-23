@@ -191,43 +191,57 @@ Namespace KMeans
         End Function
 
         <Extension>
-        Public Function calcularSquaredDistance(clusters As Bisecting.Cluster()) As Double
-            Dim squaredDistance As Double = 0
+        Public Function SquaredDistance(clusters As Bisecting.Cluster()) As Double
+            Dim squaredDist As Double = 0
             Dim aux As Double
             Dim cont As Double = 0
 
             For Each cluster In clusters
-                For Each punto In cluster
-                    For Each punto2 In cluster
-                        If Not punto Is punto2 Then
-                            aux = punto.DistanceTo(punto2)
-                            squaredDistance += aux * aux
-                            cont += 1
-                        End If
-                    Next
-                Next
+                Dim runPart = cluster _
+                    .AsParallel _
+                    .Select(Function(punto)
+                                Dim auxi As Double = 0
+                                Dim squared As Double = 0
+                                Dim count As Double = 0
+
+                                For Each punto2 As ClusterEntity In cluster
+                                    If Not punto Is punto2 Then
+                                        auxi = punto.DistanceTo(punto2)
+                                        squared += aux ^ 2
+                                        count += 1
+                                    End If
+                                Next
+
+                                Return (squared, count)
+                            End Function) _
+                    .ToArray
+
+                squaredDist += Aggregate pt In runPart Into Sum(pt.squared)
+                cont += Aggregate pt In runPart Into Sum(pt.count)
             Next
 
-            Return squaredDistance / cont
+            Return squaredDist / cont
         End Function
 
         Public Function calcularCalinskiHarabasz(clusters As Bisecting.Cluster()) As Double
-            Dim calinski = 0.0
+            Dim calinski As Double = 0.0
             Dim squaredInterCluter As Double = 0
             Dim aux As Double
             Dim cont As Double = 0
 
             For Each cluster In clusters
                 For Each cluster2 In clusters
-                    If Not cluster Is cluster2 Then
-                        aux = cluster.DistanceTo(cluster2)
-                        squaredInterCluter += aux * aux
-                        cont += 1
+                    If cluster Is cluster2 Then
+                        Continue For
                     End If
+
+                    aux = cluster.DistanceTo(cluster2)
+                    squaredInterCluter += aux ^ 2
+                    cont += 1
                 Next
             Next
 
-            calinski = calcularSquaredDistance(clusters) / (squaredInterCluter / cont)
+            calinski = SquaredDistance(clusters) / (squaredInterCluter / cont)
 
             Return calinski
         End Function
