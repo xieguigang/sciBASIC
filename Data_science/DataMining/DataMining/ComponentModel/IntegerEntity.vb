@@ -62,9 +62,10 @@ Namespace ComponentModel
     ''' </summary>
     ''' <remarks></remarks>
     Public Class IntegerEntity : Inherits EntityBase(Of Integer)
+        Implements IClusterPoint
 
         <XmlAttribute>
-        Public Property [Class] As Integer
+        Public Property [Class] As Integer Implements IClusterPoint.Cluster
 
         Default Public Overloads ReadOnly Property ItemValue(Index As Integer) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
