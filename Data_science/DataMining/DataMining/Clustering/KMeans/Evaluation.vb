@@ -73,14 +73,15 @@ Namespace KMeans
             For Each cluster In clusters
                 For Each punto In cluster
                     For Each cluster2 In clusters
-                        If Not cluster Is cluster2 Then
-                            For Each punto2 In cluster
-                                If Not punto Is punto2 Then
-                                    distA += punto.DistanceTo(punto2)
-                                    cont += 1
-                                End If
-                            Next
+                        If cluster Is cluster2 Then
+                            Continue For
                         End If
+                        For Each punto2 In cluster
+                            If Not punto Is punto2 Then
+                                distA += punto.DistanceTo(punto2)
+                                cont += 1
+                            End If
+                        Next
                     Next
                 Next
             Next
@@ -101,20 +102,21 @@ Namespace KMeans
             For Each cluster In clusters
                 For Each punto In cluster
                     For Each cluster2 In clusters
-                        If Not cluster Is cluster2 Then
-                            For Each punto2 In cluster
-                                If Not punto Is punto2 Then
-                                    If minimumDistance = -1 Then
-                                        minimumDistance = punto.DistanceTo(punto2)
-                                    Else
-                                        aux = punto.DistanceTo(punto2)
-                                        If aux < minimumDistance Then
-                                            minimumDistance = aux
-                                        End If
+                        If cluster Is cluster2 Then
+                            Continue For
+                        End If
+                        For Each punto2 In cluster
+                            If Not punto Is punto2 Then
+                                If minimumDistance = -1 Then
+                                    minimumDistance = punto.DistanceTo(punto2)
+                                Else
+                                    aux = punto.DistanceTo(punto2)
+                                    If aux < minimumDistance Then
+                                        minimumDistance = aux
                                     End If
                                 End If
-                            Next
-                        End If
+                            End If
+                        Next
                     Next
                 Next
             Next
@@ -144,7 +146,7 @@ Namespace KMeans
 
         Public Function calcularDavidBouldin(clusters As Bisecting.Cluster()) As Double
             Dim numberOfClusters = clusters.Length
-            Dim david = 0.0
+            Dim david As Double = 0.0
 
             If numberOfClusters = 1 Then
                 Call "Impossible to evaluate Davies-Bouldin index over a single cluster".Warning
@@ -216,17 +218,13 @@ Namespace KMeans
             Dim cont As Double = 0
 
             For Each cluster In clusters
-                If cluster.centroid IsNot Nothing Then
-                    For Each cluster2 In clusters
-                        If cluster2.centroid IsNot Nothing Then
-                            If Not cluster Is cluster2 Then
-                                aux = cluster.DistanceTo(cluster2)
-                                squaredInterCluter += aux * aux
-                                cont += 1
-                            End If
-                        End If
-                    Next
-                End If
+                For Each cluster2 In clusters
+                    If Not cluster Is cluster2 Then
+                        aux = cluster.DistanceTo(cluster2)
+                        squaredInterCluter += aux * aux
+                        cont += 1
+                    End If
+                Next
             Next
 
             calinski = calcularSquaredDistance(clusters) / (squaredInterCluter / cont)
