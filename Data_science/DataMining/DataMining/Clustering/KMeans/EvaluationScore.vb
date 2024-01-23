@@ -22,7 +22,7 @@ Namespace KMeans
 
             Return New EvaluationScore With {
                 .clusters = class_groups _
-                    .ToDictionary(Function(c) c.First.cluster.ToString,
+                    .ToDictionary(Function(c) c.Cluster.ToString,
                                   Function(c)
                                       Return c.Keys.ToArray
                                   End Function),
