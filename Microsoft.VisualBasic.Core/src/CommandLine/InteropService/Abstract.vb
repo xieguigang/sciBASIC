@@ -120,7 +120,10 @@ Namespace CommandLine.InteropService
         ''' <summary>
         ''' 通过应用程序的可执行文件路径来构建命令行的交互对象
         ''' </summary>
-        ''' <param name="app"></param>
+        ''' <param name="app">the target exe file path</param>
+        ''' <remarks>
+        ''' this module build dotnet call for clr on unix system automatically.
+        ''' </remarks>
         Sub New(app As String)
             _executableAssembly = app
             _executableDll = app.ChangeSuffix("dll")
