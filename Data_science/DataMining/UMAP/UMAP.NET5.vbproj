@@ -84,7 +84,7 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	
+    <OutputPath>../../../../../R-sharp/App/</OutputPath>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 

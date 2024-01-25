@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::7da47dd6cbc0e806cf99b694e0c33f86, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\deps.json.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 160
-    '    Code Lines: 104
-    ' Comment Lines: 37
-    '   Blank Lines: 19
-    '     File Size: 6.91 KB
+' Summaries:
 
 
-    '     Class deps
-    ' 
-    '         Properties: compilationOptions, libraries, runtimeTarget, targets
-    ' 
-    '         Function: GetReferenceProject, LoadAssemblyOrCache, LoadDependencies, RetriveLoadedAssembly
-    ' 
-    '         Sub: (+2 Overloads) TryHandleNetCore5AssemblyBugs
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 160
+'    Code Lines: 104
+' Comment Lines: 37
+'   Blank Lines: 19
+'     File Size: 6.91 KB
+
+
+'     Class deps
+' 
+'         Properties: compilationOptions, libraries, runtimeTarget, targets
+' 
+'         Function: GetReferenceProject, LoadAssemblyOrCache, LoadDependencies, RetriveLoadedAssembly
+' 
+'         Sub: (+2 Overloads) TryHandleNetCore5AssemblyBugs
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,7 +77,7 @@ Namespace ApplicationServices.Development.NetCoreApp
         Public Property targets As Dictionary(Of String, Dictionary(Of String, target))
         Public Property libraries As Dictionary(Of String, library)
 
-        Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of Runtime))
+        Public Iterator Function LoadDependencies(package As Assembly) As IEnumerable(Of NamedValue(Of runtime))
             Dim info As AssemblyInfo = package.FromAssembly
             Dim assemblyKey As String = $"{info.Name}/{info.AssemblyInformationalVersion}"
             Dim assemblyKey2 As String = $"{info.Name}/{info.AssemblyVersion}"
@@ -106,7 +106,7 @@ Namespace ApplicationServices.Development.NetCoreApp
                 dllFile = packageTarget.LibraryFile
 
                 If Not dllFile.StringEmpty Then
-                    Yield New NamedValue(Of Runtime) With {
+                    Yield New NamedValue(Of runtime) With {
                         .Name = assemblyKey,
                         .Value = packageTarget.runtime(dllFile),
                         .Description = dllFile
@@ -199,15 +199,26 @@ Namespace ApplicationServices.Development.NetCoreApp
             Call TryHandleNetCore5AssemblyBugs(package.Assembly)
         End Sub
 
+        Private Shared Function GetDepsJsonfile(package As Assembly, moduleName As String) As String
+            Dim home As String = package.Location.ParentPath
+            Dim depsJson As String = $"{home}/{moduleName}.deps.json"
+
+            If depsJson.FileLength > 0 Then
+                Return depsJson
+            Else
+                ' find for external package of R# packages
+                Return $"{App.HOME}/{moduleName}.deps.json"
+            End If
+        End Function
+
         ''' <summary>
         ''' handling of the bugs on .NET 5 runtime
         ''' missing assembly when load reference type module
         ''' </summary>
         ''' <param name="package"></param>
         Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Assembly)
-            Dim home As String = package.Location.ParentPath
             Dim moduleName As String = package.GetName.Name
-            Dim depsJson As String = $"{home}/{moduleName}.deps.json"
+            Dim depsJson As String = GetDepsJsonfile(package, moduleName)
             Dim deps As deps = If(depsJson.FileExists, depsJson.LoadJsonFile(Of deps), Nothing)
 
             If deps Is Nothing Then
@@ -229,7 +240,7 @@ Namespace ApplicationServices.Development.NetCoreApp
                 Else
                     ' 由于.net5环境下没有办法将dll自动生成在library文件夹之中
                     ' 所以在这里就直接在应用程序文件夹之中查找了
-                    Dim dllName As String = $"{home}/{dllFileName.Description}"
+                    Dim dllName As String = $"{HOME}/{dllFileName.Description}"
 
                     If dllName.FileExists Then
                         Call LoadAssemblyOrCache(dllName)

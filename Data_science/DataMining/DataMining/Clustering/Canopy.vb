@@ -97,6 +97,12 @@ Namespace Clustering
             Return AverageDistance(pointSize, parts)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pointSize"></param>
+        ''' <param name="parts">sum(parts)</param>
+        ''' <returns></returns>
         Public Shared Function AverageDistance(pointSize As Double, parts As Double()) As Double
             Dim sum As Double = parts.Sum
             Dim distanceNumber As Double = pointSize * (pointSize + 1) / 2
