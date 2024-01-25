@@ -59,36 +59,45 @@ Namespace Clustering
         Private Sub MeasureThreahold()
             If T1.IsNaNImaginary OrElse T2.IsNaNImaginary Then
                 ' T1 > T2
-                T2 = AverageDistance(points)
+                T2 = AverageDistance(points.ToArray)
                 T1 = T2 * 2
             End If
         End Sub
+
+        Public Shared Function TotalDistance(i As ClusterEntity, points As ClusterEntity()) As Double
+            Dim sum_i As Double = 0
+
+            For Each j As ClusterEntity In points
+                If i Is j OrElse i.uid = j.uid Then
+                    Continue For
+                End If
+
+                sum_i += SquareDist(i, j)
+            Next
+
+            Return sum_i
+        End Function
 
         ''' <summary>
         ''' 得到平均距离
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
-        Private Shared Function AverageDistance(points As List(Of ClusterEntity)) As Double
-            Dim pointSize As Integer = points.Count
+        Private Shared Function AverageDistance(points As ClusterEntity()) As Double
+            Dim pointSize As Integer = points.Length
             Dim parts As Double() = points _
                 .AsParallel _
                 .Select(Function(i)
-                            Dim sum_i As Double = 0
-
-                            For Each j As ClusterEntity In points
-                                If i Is j Then
-                                    Continue For
-                                End If
-
-                                sum_i += SquareDist(i, j)
-                            Next
-
-                            Return sum_i
+                            Return TotalDistance(i, points)
                         End Function) _
                 .ToArray
+
+            Return AverageDistance(pointSize, parts)
+        End Function
+
+        Public Shared Function AverageDistance(pointSize As Double, parts As Double()) As Double
             Dim sum As Double = parts.Sum
-            Dim distanceNumber As Integer = pointSize * (pointSize + 1) / 2
+            Dim distanceNumber As Double = pointSize * (pointSize + 1) / 2
             ' 平均距离的1/8
             Dim T2 As Double = sum / distanceNumber / 32
 
@@ -96,7 +105,7 @@ Namespace Clustering
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function SquareDist(i As Double(), j As Double()) As Double
+        Public Shared Function SquareDist(i As Double(), j As Double()) As Double
             Return Exponent.f64_op_exponent_f64_scalar(
                 v1:=Subtract.f64_op_subtract_f64(i, j),
                 v2:=2
