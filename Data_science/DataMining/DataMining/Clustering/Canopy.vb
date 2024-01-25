@@ -1,7 +1,9 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.ComponentModel.Design
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SIMD
+Imports Microsoft.VisualBasic.Parallel
 Imports Canopy = Microsoft.VisualBasic.DataMining.KMeans.Bisecting.Cluster
 
 Namespace Clustering
@@ -59,8 +61,12 @@ Namespace Clustering
         Private Sub MeasureThreahold()
             If T1.IsNaNImaginary OrElse T2.IsNaNImaginary Then
                 ' T1 > T2
-                T2 = AverageDistance(points.ToArray)
+                T2 = AverageDistance(points.ToArray()) * 3
                 T1 = T2 * 2
+
+                Call VBDebugger.EchoLine($"measure T2 threashold via the average distance: {T2}")
+            Else
+                Call VBDebugger.EchoLine($"T2 threshold from user specific input: {T2}")
             End If
         End Sub
 
@@ -85,12 +91,8 @@ Namespace Clustering
         ''' <returns></returns>
         Private Shared Function AverageDistance(points As ClusterEntity()) As Double
             Dim pointSize As Integer = points.Length
-            Dim parts As Double() = points _
-                .AsParallel _
-                .Select(Function(i)
-                            Return TotalDistance(i, points)
-                        End Function) _
-                .ToArray
+            Dim task As AverageDistanceTask = New AverageDistanceTask(points).Run
+            Dim parts As Double() = task.sum_i
 
             Return AverageDistance(pointSize, parts)
         End Function
@@ -103,6 +105,29 @@ Namespace Clustering
 
             Return T2
         End Function
+
+        Private Class AverageDistanceTask : Inherits VectorTask
+
+            Public ReadOnly points As ClusterEntity()
+            Public ReadOnly sum_i As Double()
+
+            Sub New(points As ClusterEntity())
+                Call MyBase.New(points.Length)
+
+                Me.points = points
+                Me.sum_i = Allocate(Of Double)(all:=False)
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim sum_i As Double = 0
+
+                For offset As Integer = start To ends
+                    sum_i += TotalDistance(points(offset), points)
+                Next
+
+                Me.sum_i(cpu_id) = sum_i
+            End Sub
+        End Class
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SquareDist(i As Double(), j As Double()) As Double
@@ -139,6 +164,8 @@ Namespace Clustering
 
                     If poll.Length = 0 Then
                         Exit While
+                    Else
+                        Call VBDebugger.EchoLine($"removes {poll.Length} points, and get {canopies.Count} canopy candidates!")
                     End If
 
                     For Each i As Integer In poll
