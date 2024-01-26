@@ -51,6 +51,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -63,7 +64,8 @@ Public Module Utils
     ''' <typeparam name="T"></typeparam>
     ''' <param name="tree"></param>
     ''' <returns></returns>
-    <Extension> Public Function Build(Of T, K)(tree As Tree(Of T, K)) As String
+    <Extension>
+    Public Function Build(Of T, K)(tree As Tree(Of T, K)) As String
         If tree Is Nothing Then
             Return "()"
         End If
@@ -88,7 +90,7 @@ Public Module Utils
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Summary(Of T, K)(tree As Tree(Of T, K), Optional schema As PropertyInfo() = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))
+    Public Iterator Function Summary(Of T, K, V As {New, INamedValue, DynamicPropertyBase(Of String)})(tree As Tree(Of T, K), Optional schema As PropertyInfo() = Nothing) As IEnumerable(Of V)
         If schema.IsNullOrEmpty Then
             schema = DataFramework _
                 .Schema(Of T)(PropertyAccess.Readable, nonIndex:=True, primitive:=True) _
@@ -96,10 +98,10 @@ Public Module Utils
                 .ToArray
         End If
 
-        Yield tree.SummaryMe(schema)
+        Yield tree.SummaryMe(Of V)(schema)
 
         For Each c As Tree(Of T, K) In tree.EnumerateChilds.SafeQuery
-            For Each value In c.Summary(schema)
+            For Each value In c.Summary(Of V)(schema)
                 Yield value
             Next
         Next
@@ -113,22 +115,22 @@ Public Module Utils
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function SummaryMe(Of T, K)(this As Tree(Of T, K), schema As PropertyInfo()) As NamedValue(Of Dictionary(Of String, String))
-        Dim name$ = this.Label
-        Dim values = schema.ToDictionary(
-            Function(key) key.Name,
-            Function(read)
-                Return CStrSafe(read.GetValue(this.Data))
-            End Function)
+    Private Function SummaryMe(Of T, K, V As {New, INamedValue, DynamicPropertyBase(Of String)})(this As Tree(Of T, K), schema As PropertyInfo()) As V
+        Dim name$ = this.label
+        Dim values As Dictionary(Of String, String) = schema _
+            .ToDictionary(Function(key) key.Name,
+                          Function(read)
+                              Return CStrSafe(read.GetValue(this.Data))
+                          End Function)
 
         With values
             Call .Add("tree.ID", this.ID)
-            Call .Add("tree.Label", this.Label)
+            Call .Add("tree.Label", this.label)
         End With
 
-        Return New NamedValue(Of Dictionary(Of String, String)) With {
-            .Name = name,
-            .Value = values
+        Return New V With {
+            .Key = name,
+            .Properties = values
         }
     End Function
 End Module

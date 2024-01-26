@@ -254,6 +254,10 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(rows.Select(Function(v) v.ToArray).ToArray)
         End Sub
 
+        ''' <summary>
+        ''' create a new numeric matrix based on a given collection of the row data vectors
+        ''' </summary>
+        ''' <param name="rows"></param>
         Sub New(rows As IEnumerable(Of Double()))
             Call Me.New(rows.ToArray)
         End Sub
