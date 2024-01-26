@@ -30,6 +30,15 @@ Namespace KdTree.ApproximateNearNeighbor
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(index As Integer, tag As String, vector As Double())
+            _index = index
+            _tag = tag
+            _vector = vector
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"[{index}] {vector.Take(6).JoinBy(", ")}..."
         End Function
