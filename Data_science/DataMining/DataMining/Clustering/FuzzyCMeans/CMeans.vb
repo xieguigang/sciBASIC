@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -222,7 +223,7 @@ Namespace FuzzyCMeans
                 Dim jIndex As Integer = j
                 Dim sumAll As Double = Aggregate x As Integer
                                        In Enumerable.Range(0, classCount)
-                                       Let a As Double = std.Sqrt(Dist(entity, centers(jIndex))) / std.Sqrt(Dist(entity, centers(x)))
+                                       Let a As Double = std.Sqrt(entity.SquareDistance(centers(jIndex))) / std.Sqrt(entity.SquareDistance(centers(x)))
                                        Let val As Double = a ^ (2 / (m - 1))
                                        Into Sum(val)
                 ui(j) = 1 / sumAll
@@ -246,8 +247,8 @@ Namespace FuzzyCMeans
                     Dim jIndex As Integer = j
                     Dim sumAll As Double = Aggregate x As Integer
                                            In classIndex
-                                           Let d1 As Double = std.Sqrt(Dist(entities(index), centers(jIndex)))
-                                           Let d2 As Double = std.Sqrt(Dist(entities(index), centers(x)))
+                                           Let d1 As Double = std.Sqrt(entities(index).SquareDistance(centers(jIndex)))
+                                           Let d2 As Double = std.Sqrt(entities(index).SquareDistance(centers(x)))
                                            Let a As Double = d1 / d2
                                            Let val As Double = a ^ (2 / (m - 1))
                                            Into Sum(val)
@@ -322,23 +323,11 @@ Namespace FuzzyCMeans
                 .Select(Function(x, i)
                             Return entities _
                                 .Select(Function(y, j1)
-                                            Return (u(j1)(i) ^ m) * Dist(y, x)
+                                            Return (u(j1)(i) ^ m) * y.SquareDistance(x)
                                         End Function) _
                                 .Sum()
                         End Function) _
                 .Sum()
-        End Function
-
-        ''' <summary>
-        ''' 在这里面只会计算结果值，并不会修改数据
-        ''' </summary>
-        ''' <param name="obj"></param>
-        ''' <param name="center"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function Dist(obj As ClusterEntity, center As Double()) As Double
-            Return obj.entityVector.Select(Function(x, i) (x - center(i)) ^ 2).Sum()
         End Function
     End Module
 End Namespace
