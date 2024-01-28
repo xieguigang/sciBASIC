@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace FuzzyCMeans
 
@@ -162,7 +162,7 @@ Namespace FuzzyCMeans
             While True
                 centers = GetCenters(classCount, fuzzification, u, entities, width).ToArray
                 j_new = J(fuzzification, u, centers, entities)
-                membership_diff = stdNum.Abs(j_new - j_old)
+                membership_diff = std.Abs(j_new - j_old)
 
                 If j_old <> -1 AndAlso membership_diff < threshold Then
                     Exit While
@@ -206,6 +206,14 @@ Namespace FuzzyCMeans
                 .ToArray
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="centers">centers for each cluster</param>
+        ''' <param name="entity">a object entity data vector</param>
+        ''' <param name="classCount">number of the cluster to evaluates</param>
+        ''' <param name="m">fuzzification</param>
+        ''' <returns>cluster membership vector of current <paramref name="entity"/> object.</returns>
         <Extension>
         Private Function scanRow(centers As Double()(), entity As ClusterEntity, classCount As Integer, m As Double) As Double()
             Dim ui As Double() = New Double(classCount - 1) {}
@@ -214,7 +222,7 @@ Namespace FuzzyCMeans
                 Dim jIndex As Integer = j
                 Dim sumAll As Double = Aggregate x As Integer
                                        In Enumerable.Range(0, classCount)
-                                       Let a As Double = stdNum.Sqrt(Dist(entity, centers(jIndex))) / stdNum.Sqrt(Dist(entity, centers(x)))
+                                       Let a As Double = std.Sqrt(Dist(entity, centers(jIndex))) / std.Sqrt(Dist(entity, centers(x)))
                                        Let val As Double = a ^ (2 / (m - 1))
                                        Into Sum(val)
                 ui(j) = 1 / sumAll
@@ -238,8 +246,8 @@ Namespace FuzzyCMeans
                     Dim jIndex As Integer = j
                     Dim sumAll As Double = Aggregate x As Integer
                                            In classIndex
-                                           Let d1 As Double = stdNum.Sqrt(Dist(entities(index), centers(jIndex)))
-                                           Let d2 As Double = stdNum.Sqrt(Dist(entities(index), centers(x)))
+                                           Let d1 As Double = std.Sqrt(Dist(entities(index), centers(jIndex)))
+                                           Let d2 As Double = std.Sqrt(Dist(entities(index), centers(x)))
                                            Let a As Double = d1 / d2
                                            Let val As Double = a ^ (2 / (m - 1))
                                            Into Sum(val)
