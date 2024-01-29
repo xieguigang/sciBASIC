@@ -77,7 +77,7 @@ Namespace SVG
         ''' <summary>
         ''' <see cref="Filter.id"/>为字典的键名
         ''' </summary>
-        Protected Friend filters As Dictionary(Of String, Filter)
+        Protected Friend filters As New Dictionary(Of String, Filter)
 
         Public ReadOnly Property styles As New List(Of String)
 
