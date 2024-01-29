@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee39e2541a900622895ded4fbdbb174, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
+#Region "Microsoft.VisualBasic::dee39e2541a900622895ded4fbdbb174, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
 
 ' Author:
 ' 

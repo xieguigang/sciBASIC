@@ -159,6 +159,11 @@ Namespace Language.CSS
             }
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="style">the style text inside an element node selector</param>
+        ''' <returns></returns>
         Public Function ParseStyle(style As String) As Selector
             Dim properties = Strings.Trim(style) _
                 .GetProperty() _

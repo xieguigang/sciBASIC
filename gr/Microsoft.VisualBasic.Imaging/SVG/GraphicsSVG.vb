@@ -94,26 +94,14 @@ Namespace SVG
         ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
 
-        ''' <summary>
-        ''' Get the last graphic layer
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property GetLastLayer As g
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return __svgData.GetLastLayer
-            End Get
-        End Property
-
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
             Call MyBase.New(size, dpiX, dpiY)
-            Me.__svgData = New SVGDataLayers With {
-                .Size = size
-            }
+
+            Me.__svgData = New SVGDataLayers(size)
         End Sub
 
         Friend Sub New(svg As SVGDataLayers, dpiX As Integer, dpiY As Integer)
-            Call Me.New(svg.Size, dpiX, dpiY)
+            Call Me.New(svg.size, dpiX, dpiY)
             Me.__svgData = svg
         End Sub
 
@@ -124,7 +112,7 @@ Namespace SVG
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __svgData.Size
+                Return __svgData.size
             End Get
         End Property
 
@@ -319,44 +307,6 @@ Namespace SVG
 
 #End Region
 
-#Region "Add svg shape element"
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(text As XML.text) As Integer
-            Return __svgData.Add(text)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(rect As rect) As Integer
-            Return __svgData.Add(rect)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(line As line) As Integer
-            Return __svgData.Add(line)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(circle As circle) As Integer
-            Return __svgData.Add(circle)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(path As path) As Integer
-            Return __svgData.Add(path)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(polygon As polygon, Optional layerComment$ = Nothing) As Integer
-            Return __svgData.Add(polygon, layerComment)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Add(image As XML.Image) As Integer
-            Return __svgData.Add(image)
-        End Function
-#End Region
-
 #Region "向SVG之中嵌入图片图像数据"
 
         Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
@@ -391,13 +341,12 @@ Namespace SVG
             DrawImage(image, New RectangleF(point, image.Size))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, rect As RectangleF)
+        Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
             Dim point As PointF = rect.Location
-            Dim img As New XML.Image(image, rect.Size) With {
-                .x = point.X,
-                .y = point.Y
-            }
-            Call __svgData.Add(img)
+            Dim img As SvgImage = __svgData.svg.AddImage
+
+            Call img.SetImage(image)
+            Call img.SetRectangle(rect)
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer)
@@ -637,19 +586,14 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-            Dim line As New line With {
-                .x1 = x1,
-                .x2 = x2,
-                .y1 = y1,
-                .y2 = y2,
-                .style = New Stroke(pen).CSSValue
-            }
+            Dim line As SvgLine = __svgData.svg.AddLine
 
-            If Not pen.DashStyle = DashStyle.Solid Then
-                line.strokeDashArray = New Integer() {8, 4}
+            line.SetPoint(x1, y1, x2, y2)
+            line.Style = New Stroke(pen).CSSValue
+
+            If pen.DashStyle <> DashStyle.Solid Then
+                line.StrokeDashArray = New Double() {8, 4}
             End If
-
-            Call __svgData.Add(line)
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
@@ -675,10 +619,10 @@ Namespace SVG
         ''' transparent填充底色来解决这个填充色为黑色默认值的问题
         ''' </remarks>
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
-            Dim pathData As New path(path) With {
-                .style = $"fill: transparent; {New Stroke(pen).CSSValue}"
-            }
-            Call __svgData.Add(pathData)
+            Dim pathData As SvgPath = __svgData.svg.AddPath
+
+            pathData.D = path.SVGPathData
+            pathData.Style = $"fill: transparent; {New Stroke(pen).CSSValue}"
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -699,17 +643,18 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
-            path.style = New Stroke(pen).CSSValue
-            Call __svgData.Add(path)
+            Dim path As String = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            Dim data As SvgPath = __svgData.svg.AddPath
+
+            data.D = path
+            data.Style = New Stroke(pen).CSSValue
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-            Dim polygon As New polygon(points) With {
-                .style = New Stroke(pen).CSSValue,
-                .XmlCommentValue = ""
-            }
-            Call __svgData.Add(polygon, $"DrawPolygon({polygon.style}, points({points.Length}))")
+            Dim polygon As SvgPolygon = __svgData.svg.AddPolygon
+
+            polygon.SetPolygonPath(points)
+            polygon.Style = New Stroke(pen).CSSValue
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -718,36 +663,31 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
-            Dim rectangle As New rect(rect) With {
-                .style = New Stroke(pen).CSSValue
-            }
-            Call __svgData.Add(rectangle)
+            Dim rectangle As SvgRect = __svgData.svg.AddRect
+
+            rectangle.Style = New Stroke(pen).CSSValue
+            rectangle.SetRectangle(rect)
         End Sub
 
         Public Overloads Sub DrawRectangle(pen As Pen, rect As Rectangle, fill As Color)
-            Dim rectangle As New rect(rect) With {
-                .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
-            }
-            Call __svgData.Add(rectangle)
+            Dim rectangle As SvgRect = __svgData.svg.AddRect
+
+            rectangle.SetRectangle(rect)
+            rectangle.Style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
         End Sub
 
         Public Overloads Sub DrawRectangle(pen As Pen, rect As RectangleF, fill As Color)
-            Dim rectangle As New rect(rect) With {
-                .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
-            }
-            Call __svgData.Add(rectangle)
+            Dim rectangle As SvgRect = __svgData.svg.AddRect
+
+            rectangle.SetRectangle(rect)
+            rectangle.Style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Dim rectangle As New rect() With {
-                .x = x,
-                .y = y,
-                .width = width,
-                .height = height,
-                .style = New Stroke(pen).CSSValue & "; fill: transparent;",
-                .XmlCommentValue = $"DrawRectangle({ .style}, x:={x}, y:={y}, width:={width}, height:={height})"
-            }
-            Call __svgData.Add(rectangle)
+            Dim rectangle As SvgRect = __svgData.svg.AddRect
+
+            rectangle.SetRectangle(New PointF(x, y), New SizeF(width, height))
+            rectangle.Style = New Stroke(pen).CSSValue & "; fill: transparent;"
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -775,12 +715,12 @@ Namespace SVG
             ' 在这里尝试使用font size来修正
             Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
             Dim size As SizeF = gdi.MeasureString(s, font)
-            Dim text As New XML.text With {
-                .value = s,
-                .x = x, '- FontFace.SVGPointSize(size.Width, Dpi) / 8,
-                .y = y, '+ FontFace.SVGPointSize(size.Height, Dpi) / 8,
-                .style = css.CSSValue
-            }
+            Dim text As SvgText = __svgData.svg.AddText
+
+            text.Text = s
+            text.X = x '- FontFace.SVGPointSize(size.Width, Dpi) / 8,
+            text.Y = y '+ FontFace.SVGPointSize(size.Height, Dpi) / 8,
+            text.Style = css.CSSValue
 
             If TypeOf brush Is SolidBrush Then
                 Dim color$ = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
@@ -790,10 +730,6 @@ Namespace SVG
             If angle <> 0.0 Then
                 text.transform = $"rotate({angle} {x} {y})"
             End If
-
-            text.XmlCommentValue = $"DrawString({s}, font:={css.ToString}, brush:={text.style}, x:={x}, y:={y}, angle:={text.transform})"
-
-            Call __svgData.Add(text)
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
@@ -822,17 +758,17 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
-            Dim path As New path(points.GraphicsPath) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
-            }
-            Call __svgData.Add(path)
+            Dim path As SvgPath = __svgData.svg.AddPath
+
+            path.D = points.GraphicsPath.SVGPathData
+            path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
-            Dim path As New path(points.GraphicsPath) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
-            }
-            Call __svgData.Add(path)
+            Dim path As SvgPath = __svgData.svg.AddPath
+
+            path.D = points.GraphicsPath.SVGPathData
+            path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
@@ -868,10 +804,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
-            Dim pathData As New path(path) With {
-                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
-            }
-            Call __svgData.Add(pathData)
+            Dim pathData As SvgPath = __svgData.svg.AddPath
+
+            pathData.D = path.SVGPathData
+            pathData.Fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
@@ -886,9 +822,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Dim path As path = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
-            path.style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
-            Call __svgData.Add(path)
+            Dim path As SvgPath = __svgData.svg.AddPath
+
+            path.D = ModelBuilder.PiePath(x, y, width, height, startAngle, sweepAngle)
+            path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -897,11 +834,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
-            Dim polygon As New polygon(points) With {
-                .fill = brush.SVGColorHelper,
-                .XmlCommentValue = ""
-            }
-            Call __svgData.Add(polygon, $"FillPolygon({polygon.fill}, points({points.Length}))")
+            Dim polygon As SvgPolygon = __svgData.svg.AddPolygon
+
+            polygon.SetPolygonPath(points)
+            polygon.Fill = brush.SVGColorHelper
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
@@ -930,14 +866,10 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-            Dim rect As New rect With {
-                .x = x,
-                .y = y,
-                .width = width,
-                .height = height,
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
-            }
-            Call __svgData.Add(rect)
+            Dim rect As SvgRect = __svgData.svg.AddRect
+
+            rect.SetRectangle(New PointF(x, y), New SizeF(width, height))
+            rect.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
@@ -1115,15 +1047,13 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
-            Dim circle As New circle With {
-                .r = radius,
-                .cx = center.X,
-                .cy = center.Y,
-                .fill = fill.ToHtmlColor,
-                .stroke = New Stroke(stroke).CSSValue,
-                .style = .stroke
-            }
-            Call __svgData.Add(circle)
+            Dim circle As SvgCircle = __svgData.svg.AddCircle
+
+            circle.R = radius
+            circle.CX = center.X
+            circle.CY = center.Y
+            circle.Fill = fill.ToHtmlColor
+            circle.Stroke = New Stroke(stroke).CSSValue
         End Sub
 
         Public Overrides Sub Dispose()
