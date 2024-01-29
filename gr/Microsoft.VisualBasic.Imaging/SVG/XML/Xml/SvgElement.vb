@@ -4,6 +4,9 @@ Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
+    ''' <summary>
+    ''' The basically SVG XML document node, it can be tweaks on the style by using CSS
+    ''' </summary>
     Public MustInherit Class SvgElement
 
         Protected ReadOnly Element As XmlElement
@@ -16,6 +19,10 @@ Namespace SVG.XML
             End If
         End Sub
 
+        ''' <summary>
+        ''' html element node id liked identifer 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Id As String
             Get
                 Return Element.GetAttribute("id")
@@ -54,6 +61,10 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' the stroke color, value of this property should be html color code
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Stroke As String
             Get
                 Return Element.GetAttribute("stroke", Attributes.FillAndStroke.Stroke)
