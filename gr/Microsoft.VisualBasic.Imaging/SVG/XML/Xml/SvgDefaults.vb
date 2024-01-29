@@ -1,4 +1,4 @@
-﻿Namespace SvgLib
+﻿Namespace SVG.XML
     Public Module SvgDefaults
         Public NotInheritable Class Attributes
             Public NotInheritable Class FillAndStroke

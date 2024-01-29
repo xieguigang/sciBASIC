@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Namespace SvgLib
+Namespace SVG.XML
     Public NotInheritable Class SvgGroup
         Inherits SvgContainer
         Private Sub New(element As XmlElement)

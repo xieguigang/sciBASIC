@@ -3,7 +3,7 @@ Imports System.Globalization
 Imports System.Xml
 Imports System.Runtime.CompilerServices
 
-Namespace SvgLib
+Namespace SVG.XML
     Friend Module XmlElementExtensions
 
         <Extension()>

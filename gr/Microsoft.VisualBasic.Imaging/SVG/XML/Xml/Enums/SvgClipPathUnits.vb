@@ -1,4 +1,4 @@
-﻿Namespace SvgLib
+﻿Namespace SVG.XML
     Public Class SvgClipPathUnits
         Inherits SvgEnum
         Private Sub New(value As String)

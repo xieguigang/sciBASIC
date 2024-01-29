@@ -1,7 +1,7 @@
 Imports System.IO
 Imports System.Xml
 
-Namespace SvgLib
+Namespace SVG.XML
     Public NotInheritable Class SvgDocument
         Inherits SvgContainer
 

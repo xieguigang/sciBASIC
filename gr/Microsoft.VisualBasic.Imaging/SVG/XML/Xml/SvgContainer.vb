@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Namespace SvgLib
+Namespace SVG.XML
     Public MustInherit Class SvgContainer
         Inherits SvgElement
         Protected Sub New(element As XmlElement)

@@ -1,6 +1,6 @@
 ﻿Imports System.Globalization
 
-Namespace SvgLib
+Namespace SVG.XML
     Public Structure SvgViewBox
         Public Property Left As Double
         Public Property Top As Double

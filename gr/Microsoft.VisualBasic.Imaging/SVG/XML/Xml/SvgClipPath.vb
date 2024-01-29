@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Namespace SvgLib
+Namespace SVG.XML
     Public NotInheritable Class SvgClipPath
         Inherits SvgContainer
         Private Sub New(element As XmlElement)

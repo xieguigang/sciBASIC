@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace SvgLib
+Namespace SVG.XML
     Public MustInherit Class SvgEnum
         Private ReadOnly _value As String
 

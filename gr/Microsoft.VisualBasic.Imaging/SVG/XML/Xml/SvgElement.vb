@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Xml
 
-Namespace SvgLib
+Namespace SVG.XML
 
     Public MustInherit Class SvgElement
 
