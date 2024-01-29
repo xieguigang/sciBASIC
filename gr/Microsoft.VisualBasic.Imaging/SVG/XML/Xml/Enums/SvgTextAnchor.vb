@@ -1,6 +1,8 @@
 ﻿Namespace SVG.XML.Enums
+
     Public Class SvgTextAnchor
         Inherits SvgEnum
+
         Private Sub New(value As String)
             MyBase.New(value)
         End Sub
