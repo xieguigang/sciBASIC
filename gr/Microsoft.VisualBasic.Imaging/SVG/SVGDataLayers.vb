@@ -81,7 +81,7 @@ Namespace SVG
 
         Public ReadOnly Property styles As New List(Of String)
 
-        Sub New(size As Size, bg As String)
+        Sub New(size As Size, Optional bg As String = "white")
             Me.svg = SvgDocument.Create.Size(size)
             Me.bg = bg
             Me.size = size

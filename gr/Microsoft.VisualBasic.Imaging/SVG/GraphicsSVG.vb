@@ -96,9 +96,8 @@ Namespace SVG
 
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
             Call MyBase.New(size, dpiX, dpiY)
-            Me.__svgData = New SVGDataLayers With {
-                .Size = size
-            }
+
+            Me.__svgData = New SVGDataLayers(size)
         End Sub
 
         Friend Sub New(svg As SVGDataLayers, dpiX As Integer, dpiY As Integer)
@@ -380,11 +379,12 @@ Namespace SVG
             DrawImage(image, New RectangleF(point, image.Size))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, rect As RectangleF)
+        Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
             Dim point As PointF = rect.Location
+            Dim img As SvgImage = __svgData.svg.AddImage
             Dim img As New XML.Image(image, rect.Size) With {
-                .x = point.X,
-                .y = point.Y
+                .X = point.X,
+                .Y = point.Y
             }
             Call __svgData.Add(img)
         End Sub

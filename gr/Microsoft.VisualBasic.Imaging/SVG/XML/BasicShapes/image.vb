@@ -71,6 +71,11 @@ Namespace SVG.XML
             MyBase.New(element)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetImage(img As Image)
+            HRef = New DataURI(img).ToString
+        End Sub
+
         ''' <summary>
         ''' create a new empty image node
         ''' </summary>
@@ -84,10 +89,10 @@ Namespace SVG.XML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Create(parent As XmlElement, image As Bitmap, Optional size As SizeF = Nothing) As SvgImage
-            Return Create(parent, CType(image, Drawing.Image), size)
+            Return Create(parent, CType(image, Image), size)
         End Function
 
-        Public Overloads Shared Function Create(parent As XmlElement, image As Drawing.Image, Optional size As SizeF = Nothing) As SvgImage
+        Public Overloads Shared Function Create(parent As XmlElement, image As Image, Optional size As SizeF = Nothing) As SvgImage
             Dim element = parent.OwnerDocument.CreateElement("image")
             parent.AppendChild(element)
             Dim img As New SvgImage(element)
