@@ -1,3 +1,4 @@
+Imports System.Drawing
 Imports System.IO
 Imports System.Xml
 Imports Microsoft.VisualBasic.Text.Xml
@@ -80,6 +81,13 @@ Namespace SVG.XML
             MyBase.New(element)
             _document = document
         End Sub
+
+        Public Function Size(sz As Size) As SvgDocument
+            Width = sz.Width
+            Height = sz.Height
+            ViewBox = {0, 0, sz.Width, sz.Height}
+            Return Me
+        End Function
 
         Public Shared Function Create() As SvgDocument
             Dim document = New XmlDocument()
