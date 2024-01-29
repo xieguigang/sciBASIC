@@ -1,22 +1,45 @@
-﻿Imports System.Drawing
-Imports System.Xml.Serialization
+﻿Imports System.Xml
 
 Namespace SVG.XML
 
-    Public Class circle : Inherits node
 
-        <XmlAttribute> Public Property cy As Single
-        <XmlAttribute> Public Property cx As Single
-        <XmlAttribute> Public Property r As Single
+    Public NotInheritable Class SvgCircle
+        Inherits SvgBasicShape
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
+        End Sub
 
-        Public Property title As title
+        Friend Shared Function Create(parent As XmlElement) As SvgCircle
+            Dim element = parent.OwnerDocument.CreateElement("circle")
+            parent.AppendChild(element)
+            Return New SvgCircle(element)
+        End Function
 
+        Public Property CX As Double
+            Get
+                Return Element.GetAttribute("cx", Attributes.Position.CX)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("cx", value)
+            End Set
+        End Property
 
-        Public Shared Operator +(c As circle, offset As PointF) As circle
-            c = DirectCast(c.MemberwiseClone, circle)
-            c.cx += offset.X
-            c.cy += offset.Y
-            Return c
-        End Operator
+        Public Property CY As Double
+            Get
+                Return Element.GetAttribute("cy", Attributes.Position.CY)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("cy", value)
+            End Set
+        End Property
+
+        Public Property R As Double
+            Get
+                Return Element.GetAttribute("r", Attributes.Radius.R)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("r", value)
+            End Set
+        End Property
     End Class
 End Namespace

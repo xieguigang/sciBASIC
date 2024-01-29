@@ -3,6 +3,29 @@ Imports System.Xml
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
+
+    ''' <summary>
+    ''' SVG: Scalable Vector Graphics
+    ''' 
+    ''' Scalable Vector Graphics (SVG) is an XML-based markup language for describing 
+    ''' two-dimensional based vector graphics.
+    '''
+    ''' As such, it's a text-based, open Web standard for describing images that can 
+    ''' be rendered cleanly at any size and are designed specifically to work well with 
+    ''' other web standards including CSS, DOM, JavaScript, and SMIL. SVG is, 
+    ''' essentially, to graphics what HTML is to text.
+    '''
+    ''' SVG images And their related behaviors are defined In XML text files, which means
+    ''' they can be searched, indexed, scripted, And compressed. Additionally, this means 
+    ''' they can be created And edited With any text editor Or With drawing software.
+    '''
+    ''' Compared to classic bitmapped image formats such as JPEG Or PNG, SVG-format vector 
+    ''' images can be rendered at any size without loss of quality And can be easily 
+    ''' localized by updating the text within them, without the need of a graphical editor
+    ''' to do so. With proper libraries, SVG files can even be localized on-the-fly.
+    '''
+    ''' SVG has been developed by the World Wide Web Consortium (W3C) since 1999.
+    ''' </summary>
     Public NotInheritable Class SvgDocument
         Inherits SvgContainer
 
