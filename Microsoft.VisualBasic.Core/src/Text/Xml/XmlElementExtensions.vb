@@ -1,10 +1,10 @@
-Imports System
 Imports System.Globalization
-Imports System.Xml
 Imports System.Runtime.CompilerServices
+Imports System.Xml
 
-Namespace SVG.XML
-    Friend Module XmlElementExtensions
+Namespace Text.Xml
+
+    Public Module XmlElementExtensions
 
         <Extension()>
         Public Sub SetAttribute(element As XmlElement, name As String, value As Double)
