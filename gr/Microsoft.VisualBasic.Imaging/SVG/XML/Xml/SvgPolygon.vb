@@ -1,8 +1,7 @@
-﻿Imports System
-Imports System.Globalization
-Imports System.Linq
+﻿Imports System.Globalization
 Imports System.Xml
 Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
     Public NotInheritable Class SvgPolygon

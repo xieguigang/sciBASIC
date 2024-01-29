@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Xml
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
     Public NotInheritable Class SvgDocument

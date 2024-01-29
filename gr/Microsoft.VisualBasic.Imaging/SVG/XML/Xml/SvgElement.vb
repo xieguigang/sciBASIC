@@ -1,8 +1,6 @@
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Xml
 Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
