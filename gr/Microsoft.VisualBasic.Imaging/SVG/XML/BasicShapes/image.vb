@@ -1,4 +1,8 @@
-﻿Imports System.Xml
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports System.Xml
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -50,6 +54,10 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' the image data, usually be a base64 encoded uri string value.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property HRef As String
             Get
                 Return Element.GetAttribute(Of String)("xlink:href", "")
@@ -63,10 +71,42 @@ Namespace SVG.XML
             MyBase.New(element)
         End Sub
 
+        ''' <summary>
+        ''' create a new empty image node
+        ''' </summary>
+        ''' <param name="parent"></param>
+        ''' <returns></returns>
         Friend Shared Function Create(parent As XmlElement) As SvgImage
             Dim element = parent.OwnerDocument.CreateElement("image")
             parent.AppendChild(element)
             Return New SvgImage(element)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Create(parent As XmlElement, image As Bitmap, Optional size As SizeF = Nothing) As SvgImage
+            Return Create(parent, CType(image, Drawing.Image), size)
+        End Function
+
+        Public Shared Function Create(parent As XmlElement, image As Drawing.Image, Optional size As SizeF = Nothing) As SvgImage
+            Dim element = parent.OwnerDocument.CreateElement("image")
+            parent.AppendChild(element)
+            Dim img As New SvgImage(element)
+            img.HRef = New DataURI(image).ToString
+            With size Or image.Size.SizeF.AsDefault(Function() size.IsEmpty)
+                img.Width = .Width
+                img.Height = .Height
+            End With
+            Return img
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetGDIObject() As Bitmap
+            Return Base64Codec.GetImage(DataURI.URIParser(HRef).base64)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function SaveAs(fileName$, Optional format As ImageFormats = ImageFormats.Png) As Boolean
+            Return GetGDIObject.SaveAs(fileName, format)
         End Function
     End Class
 End Namespace
