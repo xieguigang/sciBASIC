@@ -1,31 +1,74 @@
-﻿
-Imports System.Drawing
-Imports System.Xml.Serialization
+﻿Imports System.Xml
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
     ''' <summary>
-    ''' 一个线段对象
+    ''' The &lt;line> element takes the positions of two points as 
+    ''' parameters and draws a straight line between them.
     ''' </summary>
-    Public Class line : Inherits node
+    Public NotInheritable Class SvgLine : Inherits SvgBasicShape
 
-        <XmlAttribute> Public Property y2 As Single
-        <XmlAttribute> Public Property x2 As Single
-        <XmlAttribute> Public Property y1 As Single
-        <XmlAttribute> Public Property x1 As Single
+        ''' <summary>
+        ''' The x position of point 1.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X1 As Double
+            Get
+                Return Element.GetAttribute("x1", Attributes.Position.X)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("x1", value)
+            End Set
+        End Property
 
-        Public Shared Operator +(line As line, offset As PointF) As line
-            line = DirectCast(line.MemberwiseClone, line)
+        ''' <summary>
+        ''' The y position of point 1.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Y1 As Double
+            Get
+                Return Element.GetAttribute("y1", Attributes.Position.Y)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("y1", value)
+            End Set
+        End Property
 
-            With line
-                .x1 += offset.X
-                .x2 += offset.X
-                .y1 += offset.Y
-                .y2 += offset.Y
+        ''' <summary>
+        ''' The x position of point 2.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property X2 As Double
+            Get
+                Return Element.GetAttribute("x2", Attributes.Position.X)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("x2", value)
+            End Set
+        End Property
 
-                Return line
-            End With
-        End Operator
+        ''' <summary>
+        ''' The y position of point 2.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Y2 As Double
+            Get
+                Return Element.GetAttribute("y2", Attributes.Position.Y)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("y2", value)
+            End Set
+        End Property
+
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
+        End Sub
+
+        Friend Shared Function Create(parent As XmlElement) As SvgLine
+            Dim element = parent.OwnerDocument.CreateElement("line")
+            parent.AppendChild(element)
+            Return New SvgLine(element)
+        End Function
     End Class
-
 End Namespace
