@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Debugging.Logging
 
-    Module ErrorLog
+    Public Module ErrorLog
 
         <Extension>
         Private Function GetErrorLines(ex As Exception) As String()

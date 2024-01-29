@@ -61,6 +61,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace FileIO
 
@@ -97,8 +98,21 @@ Namespace FileIO
             Me.folder = FileSystem.GetDirectoryInfo(directory).FullName
         End Sub
 
+        ''' <summary>
+        ''' Create a directory object
+        ''' </summary>
+        ''' <param name="dir"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function will create target <paramref name="dir"/> if it is not exists 
+        ''' on your filesystem
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromLocalFileSystem(dir As String) As Directory
+            If Not dir.DirectoryExists Then
+                Call dir.MakeDir
+            End If
+
             Return New Directory(dir)
         End Function
 
@@ -115,8 +129,23 @@ Namespace FileIO
         ''' also compatible with absolute file path.
         ''' (相对路径)</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the given input <paramref name="file"/> should be inside current 
+        ''' directory location, the file path start with prefix / will also
+        ''' be treated as the relative path inside current directory on unix
+        ''' platform, due to the reason of path string combine operation:
+        ''' 
+        ''' ```
+        ''' dir/file
+        ''' ```
+        ''' </remarks>
         Public Function GetFullPath(file As String) As String
-            If Not IsAbsolutePath(file) Then
+            ' 20231017 due to the reason of the platform compatibility between
+            ' the local filesystem(win/unix) and the http filesystem, the file
+            ' path may start with / prefix, then check on unix environment will
+            ' always be treated as absolute path, this may cased the problem on
+            ' linux environment, so disable for check unix environment at here
+            If Not IsAbsolutePath(file, checkUnix:=False) Then
                 file = $"{folder}/{file}"
             End If
 
@@ -129,10 +158,10 @@ Namespace FileIO
         ''' </summary>
         ''' <param name="file"></param>
         ''' <returns></returns>
-        Public Shared Function IsAbsolutePath(file As String) As Boolean
+        Public Shared Function IsAbsolutePath(file As String, Optional checkUnix As Boolean = True) As Boolean
             If InStr(file, ":\") > 0 OrElse InStr(file, ":/") > 0 Then
                 Return True
-            ElseIf file.First = "/" AndAlso
+            ElseIf checkUnix AndAlso file.First = "/" AndAlso
                 (Environment.OSVersion.Platform = PlatformID.Unix OrElse
                  Environment.OSVersion.Platform = PlatformID.MacOSX) Then
                 Return True
@@ -229,11 +258,16 @@ Namespace FileIO
             Return fullPath.DeleteFile
         End Function
 
-        Public Function FileExists(path As String) As Boolean Implements IFileSystemEnvironment.FileExists
+        Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
             Dim fullPath As String = $"{folder}/{path}"
-            Return fullPath.FileExists(ZERO_Nonexists:=True)
+            Dim check = fullPath.FileExists(ZERO_Nonexists:=ZERO_Nonexists)
+
+            Return check
         End Function
 
+        ''' <summary>
+        ''' Just do nothing for local filesystem
+        ''' </summary>
         Public Sub Close() Implements IFileSystemEnvironment.Close
             ' do nothing
         End Sub
@@ -256,5 +290,10 @@ Namespace FileIO
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
             ' do nothing
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            Return ls - l - r - "*.*" <= folder
+        End Function
     End Class
 End Namespace

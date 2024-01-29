@@ -91,17 +91,13 @@ Public Module HttpGet
 
         Dim isFileUrl As String = (InStr(url, "http://", CompareMethod.Text) <> 1) AndAlso (InStr(url, "https://", CompareMethod.Text) <> 1)
 
-        If echo Then
-            Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
-        End If
-
         ' do status indicator reset
         is404 = False
 
         ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
         If File.Exists(url) Then
             If echo Then
-                Call "[Job DONE!]".__DEBUG_ECHO
+                Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
             End If
 
             Return url.ReadAllText
@@ -147,7 +143,13 @@ Public Module HttpGet
         Try
 Re0:
             Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo).html
-        Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso doNotRetry404
+
+            ' 20230620 the http error message at here could be various
+            ' just check for the http status code 404 at here
+            ' default message for 404: (404) Not Found
+            ' but it also could be a custom error text, example like the ncbi web server response: (404) PUGREST.NotFound 
+            ' so just check for the http error code 404 at here
+        Catch ex As Exception When InStr(ex.Message, "(404)") > 0 AndAlso doNotRetry404
             is404 = True
             Return LogException(url, New Exception(url, ex))
 
@@ -159,6 +161,7 @@ Re0:
             GoTo Re0
 
         Catch ex As Exception
+            is404 = InStr(ex.Message, "(404)") > 0
             ex = New Exception(url, ex)
             ex.PrintException
 

@@ -73,6 +73,21 @@ Namespace Imaging
     ''' </summary>
     Public Module GDIColors
 
+        <Extension>
+        Public Function Red(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.R))
+        End Function
+
+        <Extension>
+        Public Function Green(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.G))
+        End Function
+
+        <Extension>
+        Public Function Blue(colors As IEnumerable(Of Color)) As IEnumerable(Of Integer)
+            Return colors.Select(Function(c) CInt(c.B))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function HTMLColors(colors As IEnumerable(Of Color)) As IEnumerable(Of String)
@@ -520,6 +535,12 @@ Namespace Imaging
             Return True
         End Function
 
+        ''' <summary>
+        ''' Evaluate the color distance via euclidean distance
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function EuclideanDistance(a As Color, b As Color) As Double
             Return DistanceMethods.EuclideanDistance({a.R, a.G, a.B}, {b.R, b.G, b.B})

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{70DD1DBE-6F3F-467A-BE71-E78300CF1B0E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.Program</StartupObject>
+    <StartupObject>test.demo_data1</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -115,6 +115,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSeriesFactory.vb" />
+    <Compile Include="demo_data1.vb" />
+    <Compile Include="MultivariateDataSeriesRepository.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -153,21 +156,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{653efd9c-de41-4f9a-8553-bb6c88853616}</Project>
+      <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{d41c39b2-8f2d-472a-91ac-009d8dfc08fb}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\Math\DataFittings\linear-netcore5.vbproj">
+      <Project>{660aa958-ab0a-427a-853d-f53cf0d75678}</Project>
+      <Name>linear-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SignalProcessing.vbproj">
-      <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
-      <Name>SignalProcessing</Name>
+    <ProjectReference Include="..\..\..\Math\Math\Math.NET5.vbproj">
+      <Project>{662e885c-a888-45a6-9504-f0b49e6a0e52}</Project>
+      <Name>Math.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\signalprocessing-netcore5.vbproj">
+      <Project>{08833fcb-e57a-4e02-9209-5f1e7c0b0c22}</Project>
+      <Name>signalprocessing-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

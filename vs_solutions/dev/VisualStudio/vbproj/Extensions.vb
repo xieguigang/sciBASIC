@@ -155,17 +155,53 @@ Namespace vbproj
                        End Function)
         End Function
 
+        ''' <summary>
+        ''' try to extract the assembly information from the vbproject file
+        ''' </summary>
+        ''' <param name="vbproj"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AssemblyInfo(vbproj As Project) As AssemblyInfo
-            With DirectCast(vbproj, IFileReference)
-                If Not .FilePath.FileExists Then
-                    Return New AssemblyInfo With {
-                        .BuiltTime = Now
-                    }
-                Else
-                    Return GetAssemblyInfo(.FilePath)
-                End If
-            End With
+            If vbproj.IsDotNetCoreSDK Then
+                Return vbproj.ExtractNuGetAssemblyInfo
+            Else
+                With DirectCast(vbproj, IFileReference)
+                    If Not .FilePath.FileExists Then
+                        Return New AssemblyInfo With {
+                            .BuiltTime = Now
+                        }
+                    Else
+                        Return GetAssemblyInfo(.FilePath)
+                    End If
+                End With
+            End If
+        End Function
+
+        <Extension>
+        Public Function ExtractNuGetAssemblyInfo(netcore As Project) As AssemblyInfo
+            Dim main As PropertyGroup = netcore.MainGroup
+
+            If main Is Nothing Then
+                Return Nothing
+            End If
+
+            Return New AssemblyInfo With {
+                .AssemblyCompany = main.Company,
+                .AssemblyCopyright = main.Copyright,
+                .AssemblyDescription = main.Description,
+                .AssemblyFileVersion = main.AssemblyVersion,
+                .AssemblyVersion = main.AssemblyVersion,
+                .AssemblyInformationalVersion = main.Version,
+                .AssemblyFullName = main.AssemblyName,
+                .AssemblyProduct = main.AssemblyName,
+                .AssemblyTitle = main.Description,
+                .AssemblyTrademark = main.Company,
+                .ComVisible = False,
+                .Guid = Guid.NewGuid.ToString,
+                .Name = main.AssemblyName,
+                .TargetFramework = "netcoreapp",
+                .BuiltTime = Nothing
+            }
         End Function
 
         <Extension>

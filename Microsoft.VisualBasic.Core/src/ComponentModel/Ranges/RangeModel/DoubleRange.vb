@@ -92,10 +92,20 @@ Namespace ComponentModel.Ranges.Model
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
         ''' 
-        Public ReadOnly Property Length() As Double
+        Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Max - Min
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' A vector with 2 elements: [min, max]
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property MinMax As Double()
+            Get
+                Return New Double() {Min, Max}
             End Get
         End Property
 
@@ -259,30 +269,44 @@ Namespace ComponentModel.Ranges.Model
             End With
         End Operator
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min!, max!)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
 #End If
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
-            Return New DoubleRange(vector.Min, vector.Max)
+            If vector.Length = 0 Then
+                Return New DoubleRange(0, 0)
+            Else
+                Return New DoubleRange(vector.Min, vector.Max)
+            End If
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange
             Return data _
                 .Select(Function(s) CDbl(s)) _
                 .ToArray
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(data As Single()) As DoubleRange
+            Return New DoubleRange(data.Min, data.Max)
         End Operator
 
         ''' <summary>
@@ -361,7 +385,7 @@ Namespace ComponentModel.Ranges.Model
         ''' <returns></returns>
         Public Function ScaleMapping(x As Double, valueRange As IntRange) As Integer
             Dim percent# = (x - Min) / Length
-            Dim value# = percent * valueRange.Length + valueRange.Min
+            Dim value# = percent * valueRange.Interval + valueRange.Min
             Return CInt(value)
         End Function
 

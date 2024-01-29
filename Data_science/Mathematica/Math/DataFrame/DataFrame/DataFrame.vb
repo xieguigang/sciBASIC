@@ -53,25 +53,50 @@
 
 Imports System.Data
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class DataFrame
+''' <summary>
+''' R language liked dataframe object
+''' </summary>
+Public Class DataFrame : Implements INumericMatrix
 
+    ''' <summary>
+    ''' the dataframe columns
+    ''' </summary>
+    ''' <returns></returns>
     Public Property features As New Dictionary(Of String, FeatureVector)
     Public Property rownames As String()
 
+    ''' <summary>
+    ''' the dimension size of current dataframe object, with data axis dimension 
+    ''' mapping of:
+    ''' 
+    ''' 1. width: feature size, column size
+    ''' 2. height: sample size, row size
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property dims As Size
         Get
             Return New Size(width:=features.Count, height:=rownames.Length)
         End Get
     End Property
 
+    ''' <summary>
+    ''' the column field names
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property featureNames As String()
         Get
             Return features.Keys.ToArray
         End Get
     End Property
 
+    ''' <summary>
+    ''' the n rows of the matrix
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property nsamples As Integer
         Get
             Return rownames.Length
@@ -87,9 +112,19 @@ Public Class DataFrame
         End Set
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function delete(featureName As String) As Boolean
         Return features.Remove(featureName)
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub add(featureName As String, v As IEnumerable(Of Double))
+        Call features.Add(featureName, New FeatureVector(featureName, v))
+    End Sub
+
+    Public Sub add(featureName As String, v As IEnumerable(Of Integer))
+        Call features.Add(featureName, New FeatureVector(featureName, v))
+    End Sub
 
     ''' <summary>
     ''' current dataframe object append the additional data 
@@ -124,5 +159,23 @@ Public Class DataFrame
             .GetJson
 
         Return $"[{size.Width}x{size.Height}] {featureSet}"
+    End Function
+
+    Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+        Dim m As Double()() = New Double(nsamples - 1)() {}
+        Dim colnames As String() = featureNames
+        Dim getters As Func(Of Integer, Double)() = colnames _
+            .Select(Function(name) features(name).NumericGetter) _
+            .ToArray
+        Dim offset As Integer
+
+        For i As Integer = 0 To m.Length - 1
+            offset = i
+            m(i) = getters _
+                .Select(Function(v) v(offset)) _
+                .ToArray
+        Next
+
+        Return m
     End Function
 End Class

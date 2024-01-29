@@ -239,7 +239,9 @@ Public Class CDFWriter : Implements IDisposable
     End Sub
 
     ''' <summary>
-    ''' 在这里向文件中添加一些额外的标记信息, 用来解释数据集
+    ''' Add a collection of new global attributes to the cdf file
+    ''' 
+    ''' (在这里向文件中添加一些额外的标记信息, 用来解释数据集)
     ''' </summary>
     ''' <param name="attrs"></param>
     ''' <returns></returns>
@@ -315,6 +317,7 @@ Public Class CDFWriter : Implements IDisposable
         End Using
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Flush()
         Call output.Flush()
     End Sub
@@ -425,7 +428,7 @@ Public Class CDFWriter : Implements IDisposable
                 Case CDFDataTypes.SHORT
                     Call output.Write(1)
                     Call output.Write(Short.Parse(attr.value))
-                Case CDFDataTypes.LONG
+                Case CDFDataTypes.INT64
                     Call output.Write(1)
                     Call output.Write(Long.Parse(attr.value))
                 Case CDFDataTypes.BOOLEAN
@@ -467,6 +470,7 @@ Public Class CDFWriter : Implements IDisposable
         }
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getDimension(name As String) As Dimension
         Return dimensionList.TryGetValue(name).value
     End Function
@@ -482,6 +486,18 @@ Public Class CDFWriter : Implements IDisposable
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' Add a numeric vector into target cdf file
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <param name="vec"></param>
+    ''' <param name="[dim]"></param>
+    ''' <param name="attrs"></param>
+    ''' <remarks>
+    ''' A wrapper of the <see cref="AddVariable(String, ICDFDataVector, Dimension(), attribute())"/> function
+    ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
     End Sub
@@ -493,6 +509,8 @@ Public Class CDFWriter : Implements IDisposable
     ''' <param name="data"></param>
     ''' <param name="dim">the data dimension will be added into cdf header automatically if the dimension name is missing</param>
     ''' <param name="attrs"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddVariable(name$, data As ICDFDataVector, [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, data, {[dim]}, attrs)
     End Sub
@@ -553,6 +571,10 @@ Public Class CDFWriter : Implements IDisposable
     'End Sub
 
     ' This code added by Visual Basic to correctly implement the disposable pattern.
+
+    ''' <summary>
+    ''' Save and close the underlying file
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
         Dispose(True)

@@ -108,6 +108,8 @@ Namespace Graphic.Axis
             With range
                 If .Min.IsNaNImaginary AndAlso .Max.IsNaNImaginary Then
                     Return {0, 1}
+                ElseIf range.Min = 0 AndAlso range.Max = 0 Then
+                    Return {0, 1}
                 ElseIf smallNumber.IsInside(.Min) AndAlso smallNumber.IsInside(.Max) Then
                     Dim v As New Vector({ .Min, .Max})
                     Dim factor As Double = 1 / v.Min
@@ -387,7 +389,7 @@ Namespace Graphic.Axis
             '    End If
             'End If
 
-            Dim p% = stdNum.Round(stdNum.Log10(stdNum.Abs(n)), 0) ' Fix(Math.Log10(Math.Abs(n))) ' stdNum.Round(Math.Log10(Math.Abs(n)), 0)
+            Dim p% = stdNum.Round(stdNum.Log10(stdNum.Abs(n)), 0) ' Fix(Math.Log10(std.Abs(n))) ' stdNum.Round(Math.Log10(std.Abs(n)), 0)
             Dim d = 10 ^ (p - 1)
             Dim v#
             Dim s = stdNum.Sign(n)

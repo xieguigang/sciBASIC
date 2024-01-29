@@ -82,7 +82,7 @@ for (var i=0; i<candidate_steps.length; i++) {
 
     // starting value depends on whether or not 0 is in the array
     if( zero_flag == 1 ) {
-        min_steps  = Math.ceil(Math.abs(mindata)/steps);
+        min_steps  = Math.ceil(std.Abs(mindata)/steps);
         step_array = [-min_steps*steps];
     } else {
         step_array = [Math.floor(mindata/steps)*steps];

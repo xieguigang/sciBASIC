@@ -60,6 +60,9 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.StoreProcedure
 
+    ''' <summary>
+    ''' the <see cref="Sample"/> collection
+    ''' </summary>
     Public Class SampleList : Inherits ListOf(Of Sample)
 
         ''' <summary>
@@ -74,6 +77,13 @@ Namespace ComponentModel.StoreProcedure
                 Return items(index)
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(samples As IEnumerable(Of Sample))
+            items = samples.SafeQuery.ToArray
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function getSize() As Integer
@@ -122,7 +132,7 @@ Namespace ComponentModel.StoreProcedure
                     .ToArray
             End If
 
-            Dim normalize As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(items, namesOfInput)
+            Dim normalize As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples:=items, namesOfInput)
 
             Return New DataSet With {
                 .DataSamples = Me,

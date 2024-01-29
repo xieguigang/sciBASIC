@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::52cfd0a3aa09e27e45d05d7bbf938c41, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 85
-    '    Code Lines: 62
-    ' Comment Lines: 11
-    '   Blank Lines: 12
-    '     File Size: 2.85 KB
+' Summaries:
 
 
-    ' Module StringFormats
-    ' 
-    '     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 85
+'    Code Lines: 62
+' Comment Lines: 11
+'   Blank Lines: 12
+'     File Size: 2.85 KB
+
+
+' Module StringFormats
+' 
+'     Function: FormatTime, (+2 Overloads) Lanudry, ReadableElapsedTime
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language.C
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module StringFormats
 
@@ -71,9 +71,9 @@ Public Module StringFormats
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}
-        Dim exp = stdNum.Floor(stdNum.Log(bytes) / stdNum.Log(1000))
+        Dim exp = std.Floor(std.Log(bytes) / std.Log(1000))
         Dim symbol = symbols(exp)
-        Dim val = (bytes / (1000 ^ stdNum.Floor(exp)))
+        Dim val = (bytes / (1000 ^ std.Floor(exp)))
 
         Return sprintf($"%.2f %s", val, symbol)
     End Function
@@ -86,9 +86,17 @@ Public Module StringFormats
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FormatTime(t As TimeSpan, Optional showMs As Boolean = True) As String
+    Public Function FormatTime(t As TimeSpan,
+                               Optional showMs As Boolean = True,
+                               Optional showDays As Boolean = False) As String
         With t
-            Dim dhms As String = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Dim dhms As String
+
+            If showDays Then
+                dhms = $"{ZeroFill(.Days, 2)} days, {ZeroFill(.Hours, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            Else
+                dhms = $"{ZeroFill(std.Ceiling(.TotalHours) - 1, 2)}:{ZeroFill(.Minutes, 2)}:{ZeroFill(.Seconds, 2)}"
+            End If
 
             If showMs Then
                 Return $"{dhms}.{ZeroFill(.Milliseconds, 3)}"
@@ -100,7 +108,9 @@ Public Module StringFormats
 
     <Extension>
     Public Function Lanudry(timespan As TimeSpan, Optional showMs As Boolean = True) As String
-        If timespan < TimeSpan.FromMinutes(1) Then
+        If timespan < TimeSpan.FromSeconds(1) Then
+            Return $"{timespan.TotalMilliseconds} ms"
+        ElseIf timespan < TimeSpan.FromMinutes(1) Then
             Return $"{timespan.TotalSeconds.ToString("F1")} seconds"
         ElseIf timespan < TimeSpan.FromHours(1) Then
             Return $"{timespan.TotalMinutes.ToString("F2")} min"
@@ -111,17 +121,47 @@ Public Module StringFormats
         End If
     End Function
 
+    ''' <summary>
+    ''' convert the ms value to human readable string
+    ''' </summary>
+    ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="format"></param>
+    ''' <param name="round"></param>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
+    ''' 
+    <Extension>
+    Public Function ReadableElapsedTime(span As TimeSpan, Optional format$ = "%.3f%s", Optional round% = 3) As String
+        Return ReadableElapsedTime(span.TotalMilliseconds, format, round)
+    End Function
+
+    ''' <summary>
+    ''' convert the ms value to human readable string
+    ''' </summary>
+    ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="format"></param>
+    ''' <param name="round"></param>
+    ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
     Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
         Dim unit$
         Dim time!
 
         If microtime >= 1000 Then
             unit = "s"
-            time = stdNum.Round(microtime / 1000, round)
+            time = std.Round(microtime / 1000, round)
 
             If time >= 60 Then
                 unit = "min"
-                time = stdNum.Round(time / 60, round)
+                time = std.Round(time / 60, round)
+
+                If time >= 60 Then
+                    unit = "h"
+                    time = std.Round(time / 60, round)
+
+                    If time >= 24 Then
+                        unit = "days"
+                        time = std.Round(time / 24, round)
+                    End If
+                End If
             End If
 
             format = sprintf(format, time, unit)

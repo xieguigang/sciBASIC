@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
-    ''' 进行所输入的样本数据的归一化的矩阵
+    ''' A matrix for make the sample input normalized.(进行所输入的样本数据的归一化的矩阵)
     ''' </summary>
     Public Class NormalizeMatrix : Inherits XmlDataModel
 
@@ -101,7 +101,7 @@ Namespace ComponentModel.StoreProcedure
         End Function
 
         ''' <summary>
-        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.label"/> to value range ``[0, 1]``
         ''' </summary>
         ''' <param name="sample"></param>
         ''' <returns></returns>
@@ -111,7 +111,7 @@ Namespace ComponentModel.StoreProcedure
         End Function
 
         ''' <summary>
-        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.label"/> to value range ``[0, 1]``
         ''' </summary>
         ''' <param name="sample"></param>
         ''' <returns></returns>
@@ -122,6 +122,14 @@ Namespace ComponentModel.StoreProcedure
                             Return doNormalInternal(matrix(i), x, method)
                         End Function) _
                 .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CreateFromSamples(sampleList As SampleList,
+                                                 names As IEnumerable(Of String),
+                                                 Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+
+            Return CreateFromSamples(sampleList.AsEnumerable, names, estimateQuantile)
         End Function
 
         ''' <summary>
@@ -135,6 +143,7 @@ Namespace ComponentModel.StoreProcedure
         Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample),
                                                  names As IEnumerable(Of String),
                                                  Optional estimateQuantile As Boolean = True) As NormalizeMatrix
+
             With samples.Select(Function(sample) sample.vector).ToArray
                 Dim len% = .First.Length
                 Dim matrix As SampleDistribution() = len _

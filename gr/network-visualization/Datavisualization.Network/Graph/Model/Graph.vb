@@ -101,11 +101,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -130,6 +128,7 @@ Namespace Graph
         ''' 包括当前的这个<see cref="connectedNodes"/>和孤立点的总集合
         ''' </remarks>
         Public ReadOnly Property connectedNodes() As Node()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return graphEdges _
                     .Select(Function(d) d.Iterate2Nodes) _
@@ -139,9 +138,17 @@ Namespace Graph
             End Get
         End Property
 
+        Public ReadOnly Property pinnedNodes As Node()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return vertex _
+                    .Where(Function(v) v.pinned) _
+                    .ToArray
+            End Get
+        End Property
+
         Dim _nextNodeId As Integer = 0
         Dim _nextEdgeId As Integer = 0
-        Dim _eventListeners As List(Of IGraphEventListener)
         Dim _index As GraphIndex(Of Node, Edge)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -152,7 +159,6 @@ Namespace Graph
         Sub New(nodes As IEnumerable(Of Node), edges As IEnumerable(Of Edge), Optional ignoresBrokenLinks As Boolean = False)
             Call MyBase.New({}, {})
 
-            _eventListeners = New List(Of IGraphEventListener)
             _index = New GraphIndex(Of Node, Edge)
 
             For Each node As Node In nodes
@@ -191,24 +197,30 @@ Namespace Graph
         ''' 则会自动更新<see cref="Node.ID"/>之后添加进入图之中
         ''' </summary>
         ''' <param name="node"></param>
+        ''' <param name="assignId">
+        ''' make update and assign the <see cref="Node.ID"/> hashcode value?
+        ''' </param>
         ''' <returns></returns>
         Public Function AddNode(node As Node, Optional assignId As Boolean = True) As Node
             If Not vertices.ContainsKey(node.label) Then
                 If assignId Then
                     ' 20201223 ID必须要在哈希表添加之前进行赋值
                     ' 编号必须从零开始
-                    node.ID = buffer.GetAvailablePos
+                    If buffer.Count = 0 Then
+                        node.ID = 1
+                    Else
+                        ' the buffer dictionary key is the node ID collection
+                        node.ID = buffer.Keys.Max + 1
+                    End If
                 End If
 
-                buffer.Add(node)
+                buffer.Add(node.ID, node)
                 vertices.Add(node)
             End If
 
             _index(node.label) = node
             _index(node.label).directedVertex = New DirectedVertex(node.label)
             _index(node.label).adjacencies = _index.CreateNodeAdjacencySet(node)
-
-            Call notify()
 
             Return node
         End Function
@@ -248,12 +260,20 @@ Namespace Graph
             Return GetElementByID(id, dataLabel:=False)
         End Function
 
-        Public Function GetElementsByClassName(classname As String) As Node() Implements IStyleSelector(Of Node).GetElementsByClassName
-            Return vertex _
-                .Where(Function(node)
-                           Return classname = node.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE)
-                       End Function) _
-                .ToArray
+        ''' <summary>
+        ''' get node of given node type
+        ''' </summary>
+        ''' <param name="classname">the node type</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function check of the property with name <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/>
+        ''' </remarks>
+        Public Iterator Function GetElementsByClassName(classname As String) As IEnumerable(Of Node) Implements IStyleSelector(Of Node).GetElementsByClassName
+            For Each v As Node In vertex
+                If classname = v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) Then
+                    Yield v
+                End If
+            Next
         End Function
 
         Public Function GetElementsByName(name As String) As Node() Implements IStyleSelector(Of Node).GetElementsByName
@@ -292,8 +312,6 @@ Namespace Graph
             edge.V.adjacencies = tuple.V
             edge.U.directedVertex.addEdge(edge)
             edge.V.directedVertex.addEdge(edge)
-
-            Call notify()
 
             Return edge
         End Function
@@ -345,9 +363,9 @@ Namespace Graph
         End Sub
 
         Public Function CreateNode(data As NodeData) As Node
-            Dim tNewNode As New Node(_nextNodeId.ToString(), data)
+            Dim tNewNode As New Node(_nextNodeId.ToString(), data) With {.ID = _nextNodeId}
             _nextNodeId += 1
-            AddNode(tNewNode)
+            AddNode(tNewNode, assignId:=False)
             Return tNewNode
         End Function
 
@@ -368,7 +386,11 @@ Namespace Graph
                 .ID = _nextNodeId
             }
             _nextNodeId += 1
-            AddNode(tNewNode)
+
+            ' the id of the new node already been assigned
+            ' via the nextNodeId, no needs for assign it again
+            Call AddNode(tNewNode, assignId:=False)
+
             Return tNewNode
         End Function
 
@@ -483,8 +505,15 @@ Namespace Graph
         ''' </remarks>
         ''' <param name="node"></param>
         Public Sub RemoveNode(node As Node)
+            If node Is Nothing Then
+                ' node not found when call GetElementByID from
+                ' removeNode(label string) function
+                Return
+            End If
+
             Call _index.Delete(node)
             Call vertices.Remove(node)
+            Call buffer.Remove(CUInt(node.ID))
             Call DetachNode(node)
         End Sub
 
@@ -498,18 +527,19 @@ Namespace Graph
                     Call RemoveEdge(e)
                 End If
             Next
-
-            Call notify()
         End Sub
 
         ''' <summary>
         ''' Delete a graph edge connection from current network graph model
         ''' </summary>
         ''' <param name="edge"></param>
+        ''' <remarks>
+        ''' this method just break the edge connection, the edge node 
+        ''' will be keeps in the graph.
+        ''' </remarks>
         Public Sub RemoveEdge(edge As Edge)
             Call _index.RemoveEdge(edge)
             Call Delete(edge)
-            Call notify()
         End Sub
 
         ''' <summary>
@@ -522,13 +552,17 @@ Namespace Graph
             Return retEdge
         End Function
 
+        ''' <summary>
+        ''' merge another graph into current graph object
+        ''' </summary>
+        ''' <param name="another"></param>
         Public Sub Merge(another As NetworkGraph)
             Dim mergeNode As Node
             Dim fromNode, toNode As Node
 
             For Each n As Node In another.vertex
-                mergeNode = New Node(_nextNodeId.ToString(), n.data)
-                AddNode(mergeNode)
+                mergeNode = New Node(_nextNodeId.ToString(), n.data) With {.ID = _nextNodeId}
+                AddNode(mergeNode, assignId:=False)
                 _nextNodeId += 1
                 mergeNode.data.origID = n.label
             Next
@@ -543,6 +577,43 @@ Namespace Graph
             Next
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="another"></param>
+        ''' <param name="assignId">
+        ''' assign the new node id to the union graph vertex when
+        ''' insert target node into the union graph object.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function Union(another As NetworkGraph, Optional assignId As Boolean = True) As NetworkGraph
+            Dim g As New NetworkGraph
+
+            For Each v As Node In vertex
+                Call g.AddNode(v.Clone, assignId:=assignId)
+            Next
+            For Each v As Node In another.vertex
+                If g.GetElementByID(v.label) Is Nothing Then
+                    Call g.AddNode(v.Clone, assignId:=assignId)
+                Else
+                    ' union the node data?
+                    ' just do nothing, currently
+                End If
+            Next
+
+            For Each edge As Edge In graphEdges.JoinIterates(another.graphEdges)
+                If Not g.GetEdges(g.GetElementByID(edge.U.label), g.GetElementByID(edge.V.label)).Any Then
+                    Call g.AddEdge(edge.Clone)
+                End If
+            Next
+
+            Return g
+        End Function
+
+        ''' <summary>
+        ''' removes the nodes which is not matched with the given condition <paramref name="match"/>.
+        ''' </summary>
+        ''' <param name="match"></param>
         Public Sub FilterNodes(match As Predicate(Of Node))
             For Each n As Node In vertex
                 If Not match(n) Then
@@ -551,22 +622,15 @@ Namespace Graph
             Next
         End Sub
 
+        ''' <summary>
+        ''' removes the edges which is not matched with the given condition <paramref name="match"/>.
+        ''' </summary>
+        ''' <param name="match"></param>
         Public Sub FilterEdges(match As Predicate(Of Edge))
             For Each e As Edge In graphEdges
                 If Not match(e) Then
                     RemoveEdge(e)
                 End If
-            Next
-        End Sub
-
-        Public Sub AddGraphListener(iListener As IGraphEventListener)
-            _eventListeners.Add(iListener)
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub notify(<CallerMemberName> Optional event$ = Nothing)
-            For Each listener As IGraphEventListener In _eventListeners
-                Call listener.GraphChanged(Me, [event])
             Next
         End Sub
 
@@ -582,27 +646,6 @@ Namespace Graph
             Else
                 Return $"Network graph [{vertices.Count} nodes, {graphEdges.Count} edges] has {communities.Length} community class ({communities.JoinBy(", ")})."
             End If
-        End Function
-
-        ''' <summary>
-        ''' 应用于网络之中的节点对象的克隆
-        ''' </summary>
-        ''' <param name="vertices"></param>
-        ''' <param name="U"></param>
-        ''' <returns></returns>
-        Private Shared Function ComputeIfNotExists(vertices As Dictionary(Of Node), U As Node) As Node
-            If Not vertices.Have(U) Then
-                U = New Node With {
-                    .data = New NodeData(U.data),
-                    .degree = U.degree,
-                    .ID = U.ID,
-                    .label = U.label,
-                    .pinned = U.pinned
-                }
-                vertices.Add(U)
-            End If
-
-            Return vertices(DirectCast(U, INamedValue).Key)
         End Function
 
         ''' <summary>
@@ -654,5 +697,18 @@ Namespace Graph
         Public Function Copy() As NetworkGraph
             Return DirectCast(Clone(), NetworkGraph)
         End Function
+
+        ''' <summary>
+        ''' The degress data of each node should be computed at first, 
+        ''' before calling this method for make the graph object 
+        ''' cleanup.
+        ''' </summary>
+        Public Sub RemovesIsolatedNodes()
+            For Each v As Node In vertex
+                If v.degree.In = 0 AndAlso v.degree.Out = 0 Then
+                    Call RemoveNode(v)
+                End If
+            Next
+        End Sub
     End Class
 End Namespace

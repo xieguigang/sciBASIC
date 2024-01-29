@@ -112,7 +112,7 @@ Namespace Protocols.Reflection
                           Let method As DataRequestHandler = GetMethod(target, entryPoint, debug:=debug)
                           Where Not (Protocol Is Nothing) AndAlso
                               Not method Is Nothing
-                          Select Protocol, entryPoint, method)
+                          Select Protocol, entryPoint, method).ToArray
 
             Me.Protocols = LQuery.ToDictionary(Function(element)
                                                    Return element.Protocol.EntryPoint

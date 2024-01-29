@@ -92,6 +92,11 @@ Public Class BufferRegion
         Me.size = size
     End Sub
 
+    Sub New(copy As BufferRegion)
+        Me.size = copy.size
+        Me.position = copy.position
+    End Sub
+
     Public Overrides Function ToString() As String
         Return $"&{position} [{size} bytes]"
     End Function

@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.[Default]
 
 Namespace Language
 
@@ -84,6 +85,56 @@ Namespace Language
                 Return ""
             Else
                 Return str.Value.Trim(c)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Returns a zero-based, one-dimensional array containing a specified number of
+        ''' substrings.
+        ''' </summary>
+        ''' <param name="str">Required. String expression containing substrings And delimiters.</param>
+        ''' <param name="deli">
+        ''' Optional. Any single character used to identify substring limits. If Delimiter
+        ''' Is omitted, the space character (" ") Is assumed to be the delimiter.
+        ''' </param>
+        ''' <param name="ignoreCase"></param>
+        ''' <param name="regexp"></param>
+        ''' <returns>
+        ''' String array. If Expression Is a zero-length string (""), 
+        ''' Split returns a single-element array containing a zero-length 
+        ''' string. If Delimiter Is a zero-length string, Or if it does 
+        ''' Not appear anywhere in Expression, Split returns a single-element
+        ''' array containing the entire Expression string.
+        ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String),
+                              Optional deli$ = " ",
+                              Optional ignoreCase As Boolean = False,
+                              Optional regexp As Boolean = False) As String()
+
+            Return New DefaultString(str.Value).Split(deli, ignoreCase, regexp)
+        End Function
+
+        ''' <summary>
+        ''' Splits a string into substrings based on a specified delimiting character and,
+        ''' optionally, options.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="deli">A character that delimits the substrings in this string.</param>
+        ''' <param name="options">
+        ''' A bitwise combination of the enumeration values that specifies whether to trim
+        ''' substrings and include empty substrings.
+        ''' </param>
+        ''' <returns>An array whose elements contain the substrings from this instance that are delimited
+        ''' by separator.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Split(str As Value(Of String), deli As Char, Optional options As StringSplitOptions = StringSplitOptions.None) As String()
+            If str.Value Is Nothing Then
+                Return {}
+            Else
+                Return str.Value.Split(deli)
             End If
         End Function
 

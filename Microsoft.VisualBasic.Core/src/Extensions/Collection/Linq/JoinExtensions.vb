@@ -66,7 +66,10 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' this function is a safe function, the null collection value in the given
+        ''' <paramref name="source"/> will be ignored
+        ''' </remarks>
         <DebuggerStepThrough>
         <Extension>
         Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)

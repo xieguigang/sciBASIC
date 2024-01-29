@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::c271b9b4b4c7fb31780adb63794df723, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 134
-    '    Code Lines: 76
-    ' Comment Lines: 40
-    '   Blank Lines: 18
-    '     File Size: 5.44 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module HelperExtensions
-    ' 
-    '         Function: AsMatrix, IsNaNImaginary, jaccard_coeff, jaccard_coeff_parallel, jaccard_row
-    '                   PrimitiveLinearEquation, Tangent
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 134
+'    Code Lines: 76
+' Comment Lines: 40
+'   Blank Lines: 18
+'     File Size: 5.44 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module HelperExtensions
+' 
+'         Function: AsMatrix, IsNaNImaginary, jaccard_coeff, jaccard_coeff_parallel, jaccard_row
+'                   PrimitiveLinearEquation, Tangent
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace LinearAlgebra
 
@@ -156,15 +157,59 @@ Namespace LinearAlgebra
         End Function
 
         Public Function jaccard_coeff_parallel(idx As Integer()(), Optional symmetrize As Boolean = True) As GeneralMatrix
-            Dim nrow As Integer = idx.Length
+            ' Dim nrow As Integer = idx.Length
             Dim div As Double = If(symmetrize, 2, 1)
-            Dim weightMatrixFold = (From i As Integer
-                                    In Enumerable.Range(0, nrow).AsParallel
-                                    Let node = idx(i).ToArray
-                                    Select node.jaccard_row(i, idx, div).ToArray).ToArray
+            'Dim weightMatrixFold = (From i As Integer
+            '                        In Enumerable.Range(0, nrow).AsParallel
+            '                        Let node = idx(i).ToArray
+            '                        Select node.jaccard_row(i, idx, div).ToArray).ToArray
+            Dim par As JaccardTask = New JaccardTask(idx, div).Run
+            Dim weightMatrixFold = par.weightMatrixFold
 
             Return New NumericMatrix(weightMatrixFold.IteratesALL.ToArray)
         End Function
+
+        ''' <summary>
+        ''' Evaluate the jaccard coeff between two dataset
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="symmetrize"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function jaccard_coeff(a As String(), b As String(), Optional symmetrize As Boolean = True) As Double
+            Dim u As Double = a.Intersect(b).Count
+            Dim size As Double = a.Length
+            Dim div As Double = If(symmetrize, 2, 1)
+            Dim j As Double = u / (2.0 * size - u) / div
+
+            Return j
+        End Function
+
+        Private Class JaccardTask : Inherits VectorTask
+
+            Friend ReadOnly idx As Integer()()
+            Friend ReadOnly weightMatrixFold As Double()()()
+            Friend ReadOnly div As Double
+
+            Sub New(idx As Integer()(), div As Double)
+                Call MyBase.New(idx.Length)
+
+                Me.idx = idx
+                Me.weightMatrixFold = New Double(idx.Length - 1)()() {}
+                Me.div = div
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                For i As Integer = start To ends
+                    Dim node = idx(i).ToArray
+                    Dim weights = node.jaccard_row(i, idx, div).ToArray
+
+                    weightMatrixFold(i) = weights
+                Next
+            End Sub
+        End Class
 
         <Extension>
         Private Iterator Function jaccard_row(nodei As Integer(), i As Integer, idx As Integer()(), div As Double) As IEnumerable(Of Double())

@@ -75,7 +75,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Source
 
@@ -91,7 +91,7 @@ Namespace Source
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(freq As Double, phase As Double) As Double
-            Return stdNum.Sign(stdNum.Sin(freq + phase))
+            Return std.Sign(std.Sin(freq + phase))
         End Function
     End Class
 
@@ -99,7 +99,7 @@ Namespace Source
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(freq As Double, phase As Double) As Double
-            Return 2 * ((freq + phase) / (2 * stdNum.PI) - stdNum.Floor(0.5 + (freq + phase) / (2 * stdNum.PI)))
+            Return 2 * ((freq + phase) / (2 * std.PI) - std.Floor(0.5 + (freq + phase) / (2 * std.PI)))
         End Function
     End Class
 
@@ -107,7 +107,7 @@ Namespace Source
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(freq As Double, phase As Double) As Double
-            Return stdNum.Sin(freq + phase)
+            Return std.Sin(freq + phase)
         End Function
     End Class
 
@@ -115,7 +115,7 @@ Namespace Source
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(freq As Double, phase As Double) As Double
-            Return stdNum.Sin(2 * stdNum.PI * (freq - phase)) / (2 * stdNum.PI * (freq - phase))
+            Return std.Sin(2 * std.PI * (freq - phase)) / (2 * std.PI * (freq - phase))
         End Function
     End Class
 
@@ -123,7 +123,7 @@ Namespace Source
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(freq As Double, phase As Double) As Double
-            Return 2 * stdNum.Abs(2 * ((freq + phase) / (2 * stdNum.PI) - stdNum.Floor((freq + phase) / (2 * stdNum.PI) + 0.5))) - 1
+            Return 2 * std.Abs(2 * ((freq + phase) / (2 * std.PI) - std.Floor((freq + phase) / (2 * std.PI) + 0.5))) - 1
         End Function
     End Class
 

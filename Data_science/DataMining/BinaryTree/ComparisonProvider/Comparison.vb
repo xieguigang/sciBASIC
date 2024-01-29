@@ -53,6 +53,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.DataFrame
 
+''' <summary>
+''' Data adapter for get comparision score from a pre-computed distance matrix
+''' </summary>
 Public Class Comparison : Inherits ComparisonProvider
 
     ReadOnly d As DistanceMatrix
@@ -61,6 +64,11 @@ Public Class Comparison : Inherits ComparisonProvider
         MyBase.New(equals, gt)
         Me.d = d
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function GetObject(id As String) As Object
+        Return d.GetVector(name:=id)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetSimilarity(x As String, y As String) As Double

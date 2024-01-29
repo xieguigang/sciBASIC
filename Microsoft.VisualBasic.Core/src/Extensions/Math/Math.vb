@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::dd94312966b591733bcb90904e663a53, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 678
-    '    Code Lines: 392
-    ' Comment Lines: 212
-    '   Blank Lines: 74
-    '     File Size: 23.73 KB
+' Summaries:
 
 
-    '     Module VBMath
-    ' 
-    '         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
-    '                   Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN, Max
-    '                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
-    '                   RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq
-    '                   (+5 Overloads) Sum, WeighedAverage
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 678
+'    Code Lines: 392
+' Comment Lines: 212
+'   Blank Lines: 74
+'     File Size: 23.73 KB
+
+
+'     Module VBMath
+' 
+'         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
+'                   Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN, Max
+'                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
+'                   RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq
+'                   (+5 Overloads) Sum, WeighedAverage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -72,6 +72,48 @@ Namespace Math
     ''' </summary>
     <Package("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMath
+
+        ''' <summary>
+        ''' Standard clamping of a value into a fixed range
+        ''' </summary>
+        Public Function Clip(x As Double, clipValue As Double) As Double
+            If x > clipValue Then
+                Return clipValue
+            ElseIf x < -clipValue Then
+                Return -clipValue
+            Else
+                Return x
+            End If
+        End Function
+
+#If NET48 Then
+
+        ' Clamp function is missing in .NET 4.8 
+
+        ''' <summary>
+        ''' 返回范围内的一个数值。可以使用 clamp 函数将不断增加、减小或随机变化的数值限制在一系列的值中。
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="min"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 最小数值和最大数值指定返回值的范围。
+        ''' 参数是值要钳制在范围内的属性或变量。
+        ''' 如果参数位于最小数值和最大数值之间的数值范围内，则该函数将返回参数值。
+        ''' 如果参数大于范围，该函数将返回最大数值。
+        ''' 如果参数小于范围，该函数将返回最小数值。
+        ''' </remarks>
+        Public Function Clamp(x As Single, min As Single, max As Single) As Single
+            If x < min Then
+                Return min
+            ElseIf x > max Then
+                Return max
+            Else
+                Return x
+            End If
+        End Function
+#End If
 
         Public Function Permut(k As Integer, n As Integer) As Long
             Dim nfactors As Integer() = (n - 1).SeqIterator(offset:=1).ToArray
@@ -111,7 +153,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Log2(x#) As Double
-            Return stdNum.Log(x, newBase:=2)
+            Return std.Log(x, newBase:=2)
         End Function
 
         <Extension>
@@ -236,7 +278,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
-            Return stdNum.Log(x) / stdNum.Log(N)
+            Return std.Log(x) / std.Log(N)
         End Function
 
         ''' <summary>
@@ -248,7 +290,7 @@ Namespace Math
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
-            Return stdNum.Max(a, stdNum.Max(b, c))
+            Return std.Max(a, std.Max(b, c))
         End Function
 
         ''' <summary>
@@ -261,12 +303,12 @@ Namespace Math
         Public Function Hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If stdNum.Abs(a) > stdNum.Abs(b) Then
+            If std.Abs(a) > std.Abs(b) Then
                 r = b / a
-                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(a) * std.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(b) * std.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
@@ -555,9 +597,9 @@ Namespace Math
             Dim var As Double = x.Variance
 
             If isSample Then
-                Return stdNum.Sqrt(var / (n - 1))
+                Return std.Sqrt(var / (n - 1))
             Else
-                Return stdNum.Sqrt(var / n)
+                Return std.Sqrt(var / n)
             End If
         End Function
 
@@ -624,7 +666,7 @@ Namespace Math
         <Extension>
         Public Function RMS(data As IEnumerable(Of Double)) As Double
             With (From n In data Select n ^ 2).ToArray
-                Return stdNum.Sqrt(.Sum / .Length)
+                Return std.Sqrt(.Sum / .Length)
             End With
         End Function
 
@@ -636,7 +678,7 @@ Namespace Math
                 sum += (a(i) - b(i)) ^ 2
             Next
 
-            Return stdNum.Sqrt(sum)
+            Return std.Sqrt(sum)
         End Function
 
         ''' <summary>
@@ -712,9 +754,8 @@ Namespace Math
         ''' Poisson distribution.
         ''' </summary>
         ''' 
-        <ExportAPI("Poisson.PDF")>
         Public Function PoissonPDF(x As Integer, lambda As Double) As Double
-            Dim result As Double = stdNum.Exp(-lambda)
+            Dim result As Double = std.Exp(-lambda)
             Dim k As Integer = x
 
             While k >= 1
@@ -723,12 +764,6 @@ Namespace Math
             End While
 
             Return result
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FormatNumeric(v As IEnumerable(Of Double), Optional digitals% = 2) As String()
-            Return v.Select(Function(x) x.ToString("F" & digitals)).ToArray
         End Function
     End Module
 End Namespace

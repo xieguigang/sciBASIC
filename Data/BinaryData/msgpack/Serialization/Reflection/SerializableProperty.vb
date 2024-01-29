@@ -56,6 +56,7 @@
 
 Imports System.IO
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 
 Namespace Serialization.Reflection
 
@@ -88,6 +89,7 @@ Namespace Serialization.Reflection
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub Serialize(o As Object, writer As BinaryWriter, serializationMethod As SerializationMethod)
             Call SerializeValue(propInfo.GetValue(o, EmptyObjArgs), writer, serializationMethod)
         End Sub
@@ -100,7 +102,7 @@ Namespace Serialization.Reflection
         End Sub
 
         Public Overrides Function ToString() As String
-            Return String.Format("[SerializableProperty: Name:{0} ValueType:{1}]", name, valueType)
+            Return String.Format("[SerializableProperty: [{0}] as {1}]", name, valueType)
         End Function
     End Class
 End Namespace

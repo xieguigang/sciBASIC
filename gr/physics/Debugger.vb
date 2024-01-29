@@ -65,7 +65,8 @@ Public Module Debugger
         Return New PointF(v(X), v(Y))
     End Function
 
-    <Extension> Public Sub ShowForce(m As MassPoint, ByRef canvas As Graphics2D, F As IEnumerable(Of Force), Optional offset As PointF = Nothing)
+    <Extension>
+    Public Sub ShowForce(m As MassPoint, ByRef canvas As Graphics2D, F As IEnumerable(Of Force), Optional offset As PointF = Nothing)
         Dim font As New Font(FontFace.MicrosoftYaHei, 12, FontStyle.Bold)
         Dim a = m.Point.Vector2D.OffSet2D(offset)
 

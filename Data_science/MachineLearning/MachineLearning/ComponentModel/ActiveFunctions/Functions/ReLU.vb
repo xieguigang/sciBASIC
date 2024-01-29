@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ComponentModel.Activations
@@ -91,6 +92,29 @@ Namespace ComponentModel.Activations
             Else
                 Return x
             End If
+        End Function
+
+        Public Shared Function ReLU(x As Double) As Double
+            If x < 0 Then
+                Return 0
+            Else
+                Return x
+            End If
+        End Function
+
+        Public Shared Function ReLU(x As Vector) As Vector
+            x(x < 0.0) = Vector.Zero
+            Return x
+        End Function
+
+        Public Shared Function ReLU(x As Double()) As Double()
+            For i As Integer = 0 To x.Length - 1
+                If x(i) < 0 Then
+                    x(i) = 0
+                End If
+            Next
+
+            Return x
         End Function
 
         Public Overrides Function CalculateDerivative(x As Double) As Double

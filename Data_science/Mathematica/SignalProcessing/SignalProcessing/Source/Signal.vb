@@ -56,12 +56,11 @@ Imports System.Runtime.CompilerServices
 
 Namespace Source
 
-    '
-    ' * Basic Signal class for providing all kinds of signal-data to the GUI.
-    ' * Extend this class and implement the calculate method which is used by all the other methods.
-    '
-
     ''' <summary>
+    ''' Basic Signal class for providing all kinds of signal-data to the GUI.
+    ''' Extend this class and implement the calculate method which is used 
+    ''' by all the other methods.
+    ''' 
     ''' > https://github.com/dks-rub/signalgenerator
     ''' </summary>
     Public MustInherit Class Signal

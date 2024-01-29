@@ -58,6 +58,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Text
 
@@ -85,17 +86,29 @@ Namespace vbproj.Xml
         <XmlElement("Target")>
         Public Property Targets As Target()
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns>
+        ''' returns false means current project object is a legacy .net framework project
+        ''' </returns>
         Public ReadOnly Property IsDotNetCoreSDK As Boolean
             Get
                 Return Sdk = "Microsoft.NET.Sdk" AndAlso ToolsVersion.StringEmpty
             End Get
         End Property
 
-        Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+        Private ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
             Get
                 Return {
                     New ContentType With {.Details = "VisualStudio Project", .FileExt = ".vbproj", .MIMEType = "visualstudio/xml-project", .Name = "Project"}
                 }
+            End Get
+        End Property
+
+        Public ReadOnly Property MainGroup As PropertyGroup
+            Get
+                Return PropertyGroups.Where(Function(p) p.Condition.StringEmpty).DefaultFirst
             End Get
         End Property
 
@@ -137,8 +150,9 @@ Namespace vbproj.Xml
                 vbproj = file _
                     .ReadAllText _
                     .CreateObjectFromXmlFragment(Of Project)(
-                        preprocess:=AddressOf ProcessDotNetCoreSDK
-                     )
+                        preprocess:=AddressOf ProcessDotNetCoreSDK,
+                        ignoreXmlNs:=False
+                    )
             End If
 
             vbproj.FilePath = file

@@ -358,7 +358,7 @@ Public Class MsgPackSerializer
                 writer.Write(data)
             End If
 
-            For Each prop In props
+            For Each prop As SerializableProperty In props
                 prop.Serialize(o, writer, DefaultContext.SerializationMethod)
             Next
         End If

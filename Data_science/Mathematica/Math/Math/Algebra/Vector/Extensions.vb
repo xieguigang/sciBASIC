@@ -121,12 +121,12 @@ Namespace LinearAlgebra
             Return New Vector(v.Takes(indices.ToArray))
         End Function
 
-        ReadOnly normalRange As New [Default](Of DoubleRange)({0, 1})
+        ReadOnly normalRange As New [Default](Of DoubleRange)(New DoubleRange(0, 1))
 
         ''' <summary>
         ''' 默认返回目标长度的``[0-1]``之间的随机数向量
         ''' </summary>
-        ''' <param name="size%"></param>
+        ''' <param name="size">the length of the result vector, or n lements</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' this method can be affected by the <see cref="randf2.SetSeed(Integer)"/> method.

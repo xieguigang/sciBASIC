@@ -268,34 +268,37 @@ Namespace Text
         ''' <summary>
         ''' 双引号``"``
         ''' </summary>
-        Public Const Quot As Char = Strings.Chr(34)
+        Public Const Quot As Char = """"c ' Strings.Chr(34)
         Public Shared ReadOnly QuotBegin_ZHCN As Char = Convert.ToChar(8220)
         Public Shared ReadOnly QuotEnds_ZHCN As Char = Convert.ToChar(8221)
         Public Const QuotUnknown As Char = "″"c
 
-        Public Const A As Integer = Asc("A"c)
-        Public Const Z As Integer = Asc("Z"c)
-        Public Const al% = Asc("a"c)
-        Public Const zl% = Asc("z"c)
+        Public Const A As Integer = 65 ' Asc("A"c)
+        Public Const Z As Integer = 90 ' Asc("Z"c)
+        Public Const al% = 97 'Asc("a"c)
+        Public Const zl% = 122 'Asc("z"c)
 
-        Public Const N As Integer = Asc("N"c)
+        Public Const N As Integer = 78 'Asc("N"c)
 
         ''' <summary>
         ''' ASCII code for number ``0``
         ''' </summary>
-        Public Const n0% = Asc("0"c)
+        Public Const n0% = 48 ' Asc("0"c)
         ''' <summary>
         ''' ASCII code for number ``9``
         ''' </summary>
-        Public Const n9% = Asc("9"c)
+        Public Const n9% = 57 ' Asc("9"c)
 
         ''' <summary>
         ''' 单引号
         ''' </summary>
         Public Const Mark As Char = "'"c
 
+        Shared ReadOnly asciiEncoding As Encoding = Encoding.ASCII
         Shared ReadOnly nonPrintingBytes As Index(Of Byte) = Nonprintings _
-            .Select(Function(c) CByte(Asc(c))) _
+            .Select(Function(c)
+                        Return asciiEncoding.GetBytes(c)(Scan0)
+                    End Function) _
             .ToArray
 
         Public Shared Function TrimNonPrintings(s$) As String

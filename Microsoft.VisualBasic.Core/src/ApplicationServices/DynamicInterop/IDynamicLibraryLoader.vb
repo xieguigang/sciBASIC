@@ -84,6 +84,9 @@ Namespace ApplicationServices.DynamicInterop
         ''' <param name="hModule">Handle of the module(library)</param>
         ''' <param name="lpProcName">The name of the function sought</param>
         ''' <returns>Handle to the native function</returns>
+        ''' <remarks>
+        ''' GetProcAddress
+        ''' </remarks>
         Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr
     End Interface
 End Namespace

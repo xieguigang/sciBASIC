@@ -72,7 +72,7 @@ Namespace ComponentModel.Normalizer
             Return methodTable.TryGetValue(Strings.LCase(name), [default]:=Methods.NormalScaler)
         End Function
 
-        ReadOnly normalRange As DoubleRange = {0, 1}
+        ReadOnly normalRange As New DoubleRange(0, 1)
 
         ''' <summary>
         ''' z-score
@@ -83,6 +83,8 @@ Namespace ComponentModel.Normalizer
         ''' </param>
         ''' <param name="x#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ZScoreNormalize(samples As SampleDistribution, x#) As Double
             Return pnorm.Z(x, samples.average, samples.stdErr)
         End Function

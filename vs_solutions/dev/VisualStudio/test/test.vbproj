@@ -109,13 +109,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{f8c0a2fd-01f6-4a64-817d-119b91c9923b}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualStudio.vbproj">
-      <Project>{3a65d811-fc5c-4ad9-8456-8f720ff14c16}</Project>
-      <Name>VisualStudio</Name>
+    <ProjectReference Include="..\..\ApplicationServices\ApplicationServices.vbproj">
+      <Project>{afc6d861-8063-4549-8dce-746206e852b4}</Project>
+      <Name>ApplicationServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualStudio.NET5.vbproj">
+      <Project>{f6fc69c4-94c8-4b26-a12d-b740dc40c458}</Project>
+      <Name>VisualStudio.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

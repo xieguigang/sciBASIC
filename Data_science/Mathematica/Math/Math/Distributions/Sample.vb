@@ -123,10 +123,20 @@ Namespace Distributions
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Construct a feature data based on a specific dataframe column data
+        ''' </summary>
+        ''' <param name="data">the raw data matrix column data</param>
+        ''' <param name="estimateQuantile"></param>
         Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
             Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
         End Sub
 
+        ''' <summary>
+        ''' Construct a feature data based on a specific dataframe column data
+        ''' </summary>
+        ''' <param name="v">the raw data matrix column data</param>
+        ''' <param name="estimateQuantile"></param>
         Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
             If v.Length = 0 Then
                 min = Double.NaN

@@ -74,7 +74,7 @@ Namespace Data
                 Case CDFDataTypes.DOUBLE : Return New Double(size - 1) {}
                 Case CDFDataTypes.FLOAT : Return New Single(size - 1) {}
                 Case CDFDataTypes.INT : Return New Integer(size - 1) {}
-                Case CDFDataTypes.LONG : Return New Long(size - 1) {}
+                Case CDFDataTypes.INT64 : Return New Long(size - 1) {}
                 Case CDFDataTypes.SHORT : Return New Short(size - 1) {}
                 Case Else
                     Throw New InvalidDataException("invalid data type!")
@@ -128,7 +128,7 @@ Namespace Data
             Dim chunkSize As Long = [step] * size
             Dim mem As Byte() = New Byte(chunkSize - 1) {}
             Dim i As i32 = Scan0
-            Dim parallel As Boolean = size >= 100000
+            Dim parallel As Boolean = False ' size >= 100000
 
             ' 20220630
             ' why needs offset of 4 bytes?

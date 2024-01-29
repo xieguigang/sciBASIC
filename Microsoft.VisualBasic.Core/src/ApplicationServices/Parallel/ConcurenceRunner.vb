@@ -1,0 +1,156 @@
+﻿Imports System.Runtime.CompilerServices
+
+Namespace Parallel
+
+    ''' <summary>
+    ''' the parallel task helper
+    ''' </summary>
+    Public MustInherit Class VectorTask
+
+        Protected workLen As Integer
+        ''' <summary>
+        ''' set this flag value to value TRUE for run algorithm debug
+        ''' </summary>
+        Protected sequenceMode As Boolean = False
+
+        ''' <summary>
+        ''' <see cref="n_threads"/>
+        ''' </summary>
+        Protected ReadOnly cpu_count As Integer = n_threads
+
+        Dim opt As ParallelOptions
+        Dim is_verbose As Boolean = False
+
+        Public Shared n_threads As Integer = 4
+
+        ''' <summary>
+        ''' construct a new parallel task executator
+        ''' </summary>
+        ''' <param name="nsize"></param>
+        ''' <remarks>
+        ''' the thread count for run the parallel task is configed
+        ''' via the <see cref="n_threads"/> by default.
+        ''' </remarks>
+        Sub New(nsize As Integer, Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
+            workLen = nsize
+            cpu_count = If(workers, n_threads)
+            opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
+            is_verbose = verbose
+        End Sub
+
+        ''' <summary>
+        ''' solve a sub task
+        ''' </summary>
+        ''' <param name="start"></param>
+        ''' <param name="ends"></param>
+        Protected MustOverride Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+
+        ''' <summary>
+        ''' Run in sequence
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Solve() As VectorTask
+            If is_verbose Then
+                VBDebugger.EchoLine("solve problem in sequence mode.")
+            End If
+
+            sequenceMode = True
+            Solve(0, workLen - 1, 0)
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' Run in parallel
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Run() As VectorTask
+            Dim span_size As Integer = workLen / cpu_count
+
+            If sequenceMode OrElse span_size < 1 Then
+                ' run in sequence
+                Call Solve()
+            Else
+                If is_verbose Then
+                    Call VBDebugger.EchoLine($"solve problem in parallel mode with {cpu_count} cpu threads!")
+                    Call VBDebugger.EchoLine($"each task span size: {span_size}.")
+                End If
+
+                System.Threading.Tasks.Parallel.For(
+                    fromInclusive:=0,
+                    toExclusive:=cpu_count + 3,
+                    parallelOptions:=opt,
+                    body:=Sub(i) ParallelFor(i, span_size)
+                )
+            End If
+
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' allocate a block of result output memory data for one thread task
+        ''' </summary>
+        ''' <typeparam name="TOut"></typeparam>
+        ''' <param name="all">
+        ''' allocate all result(len=<see cref="workLen"/>) or 
+        ''' just for cpu worker thread(len=<see cref="cpu_count"/>)?
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' element count problem see the dev comments about the 
+        ''' parameter ``thread_id`` from function 
+        ''' <see cref="ParallelFor"/>
+        ''' </remarks>
+        Protected Function Allocate(Of TOut)(all As Boolean) As TOut()
+            If all Then
+                Return New TOut(workLen - 1) {}
+            Else
+                Return New TOut(cpu_count) {}
+            End If
+        End Function
+
+        ''' <summary>
+        ''' implements the parallel for use the thread pool
+        ''' </summary>
+        ''' <param name="span_size"></param>
+        ''' <param name="thread_id">
+        ''' the thread id is start from based ZERO, but the upper index of 
+        ''' the thread id is equals to the <see cref="cpu_count"/>, so 
+        ''' group result vector should has value with ``<see cref="cpu_count"/> + 1`` elements.
+        ''' </param>
+        Private Sub ParallelFor(thread_id As Integer, span_size As Integer)
+            Dim start As Integer = thread_id * span_size
+            Dim ends As Integer = start + span_size - 1
+
+            If start >= workLen Then
+                Return
+            End If
+            If ends >= workLen Then
+                ends = workLen - 1
+            End If
+
+            If is_verbose Then
+                Call VBDebugger.EchoLine($"[{Me.GetType.Name}$t_{thread_id}] {start}...{ends}@total={workLen}")
+            End If
+
+            Call Solve(start, ends, cpu_id:=thread_id)
+        End Sub
+
+        Public Shared Function CopyMemory(Of T)(v As T(), start As Integer, ends As Integer) As T()
+            Dim copy As T() = New T(start - ends - 1) {}
+            Array.ConstrainedCopy(v, start, copy, Scan0, copy.Length)
+            Return copy
+        End Function
+
+        ''' <summary>
+        ''' copy all data of <paramref name="span"/> to the target region inside <paramref name="v"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="v"></param>
+        ''' <param name="span">may be a part of region inside <paramref name="v"/></param>
+        ''' <param name="start"></param>
+        Public Shared Sub CopyMemory(Of T)(v As T(), span As T(), start As Integer)
+            Array.ConstrainedCopy(span, Scan0, v, start, span.Length)
+        End Sub
+    End Class
+End Namespace

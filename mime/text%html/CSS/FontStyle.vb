@@ -190,6 +190,10 @@ Namespace CSS
             End Get
         End Property
 
+        ''' <summary>
+        ''' Css string for set font style
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides ReadOnly Property CSSValue As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

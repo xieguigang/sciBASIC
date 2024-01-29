@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::32f622bc40d333f476b1570343b5090b, sciBASIC#\Data_science\NLP\LDA\LdaGibbsSampler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 443
-    '    Code Lines: 193
-    ' Comment Lines: 189
-    '   Blank Lines: 61
-    '     File Size: 16.29 KB
+' Summaries:
 
 
-    '     Class LdaGibbsSampler
-    ' 
-    '         Properties: Phi, Theta
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: configure, SampleFullConditional, Sampling
-    ' 
-    '         Sub: (+2 Overloads) gibbs, initialState, UpdateParams
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 443
+'    Code Lines: 193
+' Comment Lines: 189
+'   Blank Lines: 61
+'     File Size: 16.29 KB
+
+
+'     Class LdaGibbsSampler
+' 
+'         Properties: Phi, Theta
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: configure, SampleFullConditional, Sampling
+' 
+'         Sub: (+2 Overloads) gibbs, initialState, UpdateParams
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Parallel
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 '  (C) Copyright 2005, Gregor Heinrich (gregor :: arbylon : net) (This file is
@@ -111,7 +112,7 @@ Namespace LDA
         ''' number of topics
         ''' 主题数目
         ''' </summary> 
-        Friend K As Integer
+        Public ReadOnly Property K As Integer
 
         ''' <summary>
         ''' Dirichlet parameter (document--topic associations)
@@ -196,9 +197,65 @@ Namespace LDA
         ''' 最后的模型个数（取收敛后的n个迭代的参数做平均可以使得模型质量更高）
         ''' </summary>
         Private Shared SAMPLE_LAG As Integer = 10
-        Private Shared dispcol As Integer = 0
 
         ReadOnly println As Action(Of Object)
+        ReadOnly counter As New ApplicationServices.PerformanceCounter
+
+        ''' <summary>
+        ''' Retrieve estimated document--topic associations. If sample lag > 0 then
+        ''' the mean value of all sampled statistics for theta[][] is taken.
+        ''' 获取文档——主题矩阵
+        ''' </summary>
+        ''' <returns> theta multinomial mixture of document topics (M x K) </returns>
+        Public Overridable ReadOnly Property Theta As Double()()
+            Get
+                Dim lTheta = RectangularArray.Matrix(Of Double)(documents.Length, K)
+
+                If SAMPLE_LAG > 0 Then
+                    For m = 0 To documents.Length - 1
+                        For K As Integer = 0 To Me.K - 1
+                            lTheta(m)(K) = thetasum(m)(K) / numstats
+                        Next
+                    Next
+                Else
+                    For m = 0 To documents.Length - 1
+                        For K As Integer = 0 To Me.K - 1
+                            lTheta(m)(K) = (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
+                        Next
+                    Next
+                End If
+
+                Return lTheta
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Retrieve estimated topic--word associations. If sample lag > 0 then the
+        ''' mean value of all sampled statistics for phi[][] is taken.
+        ''' 获取主题——词语矩阵
+        ''' </summary>
+        ''' <returns> phi multinomial mixture of topic words (K x V) </returns>
+        Public Overridable ReadOnly Property Phi As Double()()
+            Get
+                Dim lPhi = RectangularArray.Matrix(Of Double)(K, V)
+
+                If SAMPLE_LAG > 0 Then
+                    For K As Integer = 0 To Me.K - 1
+                        For w = 0 To V - 1
+                            lPhi(K)(w) = phisum(K)(w) / numstats
+                        Next
+                    Next
+                Else
+                    For K As Integer = 0 To Me.K - 1
+                        For w = 0 To V - 1
+                            lPhi(K)(w) = (nw(w)(K) + beta) / (nwsum(K) + V * beta)
+                        Next
+                    Next
+                End If
+
+                Return lPhi
+            End Get
+        End Property
 
         ''' <summary>
         ''' Initialise the Gibbs sampler with data.
@@ -212,7 +269,7 @@ Namespace LDA
             Me.println = log
 
             If log Is Nothing Then
-                Me.println = AddressOf Console.WriteLine
+                Me.println = AddressOf VBDebugger.EchoLine
             End If
         End Sub
 
@@ -270,7 +327,7 @@ Namespace LDA
         ''' <param name="K"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub gibbs(K As Integer)
-            gibbs(K, 2.0, 0.5)
+            Call gibbs(K, 2.0, 0.5)
         End Sub
 
         ''' <summary>
@@ -278,18 +335,12 @@ Namespace LDA
         ''' do chain data sampling
         ''' </summary>
         ''' <param name="zi"></param>
-        ''' <returns></returns>
-        Private Function Sampling(zi As Integer) As Integer
-            ' For m As Integer = 0 To z.Length - 1
-            For n As Integer = 0 To z(zi).Length - 1
-                ' (z_i = z[m][n])
-                ' sample from p(z_i|z_-i, w)
-                z(zi)(n) = SampleFullConditional(zi, n)
-            Next
-            ' Next
+        Private Sub sampling(zi As Integer)
+            Dim v As Integer() = z(zi)
+            Dim gibbs As New GibbsSamplingTask(v, zi, Me)
 
-            Return zi
-        End Function
+            Call gibbs.Solve()
+        End Sub
 
         ''' <summary>
         ''' Main method: Select initial state ? Repeat a large number of times: 1.
@@ -301,7 +352,7 @@ Namespace LDA
         ''' <param name="alpha"> symmetric prior parameter on document--topic associations 对称文档——主题先验概率？ </param>
         ''' <param name="beta">  symmetric prior parameter on topic--term associations 对称主题——词语先验概率？ </param> 
         Public Sub gibbs(K As Integer, alpha As Double, beta As Double)
-            Me.K = K
+            Me._K = K
             Me.alpha = alpha
             Me.beta = beta
 
@@ -314,99 +365,48 @@ Namespace LDA
 
             ' initial state of the Markov chain:
             Call initialState(K)
-            Call println("Sampling " & ITERATIONS & " iterations with burn-in of " & BURN_IN & " unique temp var.")
+            Call println($"Sampling {ITERATIONS} iterations with burn-in of {BURN_IN} unique temp var.")
+            Call println($"gibbs run with {VectorTask.n_threads} CPU threads!")
+            Call println($"z_index size={z.Length}")
 
             ' z is initialized after initialState is called
             Dim zIndex As Integer() = z.Sequence.ToArray
+            Dim t0 As Date = Now
+            Dim t1 As Date = Now
 
             For i As Integer = 0 To ITERATIONS - 1
+                Call counter.Set()
+
                 ' for all z_i
-                Call (From m As Integer
-                      In zIndex
-                      Select Sampling(zi:=m)).ToArray
+                For Each m As Integer In zIndex '.AsParallel
+                    Call sampling(zi:=m)
+                Next
+
+                Call counter.Mark("sampling")
 
                 If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                    dispcol += 1
-                    println($"[{i}/{ITERATIONS}] BURN_IN")
+                    t1 = Now
+                    println($"[{i}/{ITERATIONS}] BURN_IN ...... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
                 ' display progress
                 If i > BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                    dispcol += 1
-                    println($"[{i}/{ITERATIONS}] ...")
+                    println($"[{i}/{ITERATIONS}] ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
                 ' get statistics after burn-in
                 If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
-                    Call UpdateParams()
-                    Call println($"[{i}/{ITERATIONS}] get statistics after burn-in!")
-
-                    If i Mod THIN_INTERVAL <> 0 Then
-                        dispcol += 1
-                    End If
-                End If
-
-                If dispcol >= 100 Then
-                    dispcol = 0
+                    Call counter.Mark("...")
+                    Call update_params()
+                    Call counter.Mark("update_pars")
+                    Call println($"[{i}/{ITERATIONS}] get statistics after burn-in! {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
             Next
         End Sub
 
         ''' <summary>
-        ''' Sample a topic z_i from the full conditional distribution: p(z_i = j |
-        ''' z_-i, w) = (n_-i,j(w_i) + beta)/(n_-i,j(.) + W * beta) * (n_-i,j(d_i) +
-        ''' alpha)/(n_-i,.(d_i) + K * alpha) 
-        ''' 根据上述公式计算文档m中第n个词语的主题的完全条件分布，输出最可能的主题
-        ''' </summary>
-        ''' <param name="m"> document </param>
-        ''' <param name="n"> word </param> 
-        Private Function SampleFullConditional(m As Integer, n As Integer) As Integer
-            ' remove z_i from the count variables
-            ' 先将这个词从计数器中抹掉
-            Dim topic As Integer = z(m)(n)
-
-            nw(documents(m)(n))(topic) -= 1
-            nd(m)(topic) -= 1
-            nwsum(topic) -= 1
-            ndsum(m) -= 1
-
-            ' do multinomial sampling via cumulative method: 通过多项式方法采样多项式分布
-            Dim p = New Double(K - 1) {}
-
-            For K As Integer = 0 To Me.K - 1
-                p(K) = (nw(documents(m)(n))(K) + beta) / (nwsum(K) + V * beta) * (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
-            Next
-            ' cumulate multinomial parameters
-            ' 累加多项式分布的参数
-            For K As Integer = 1 To p.Length - 1
-                p(K) += p(K - 1)
-            Next
-            ' scaled sample because of unnormalised p[] 正则化
-            Dim u = randf.NextDouble * p(K - 1)
-
-            topic = 0
-
-            Do While topic < p.Length - 1
-                If u < p(topic) Then
-                    Exit Do
-                Else
-                    topic += 1
-                End If
-            Loop
-
-            ' add newly estimated z_i to count variables
-            ' 将重新估计的该词语加入计数器
-            nw(documents(m)(n))(topic) += 1
-            nd(m)(topic) += 1
-            nwsum(topic) += 1
-            ndsum(m) += 1
-
-            Return topic
-        End Function
-
-        ''' <summary>
         ''' Add to the statistics the values of theta and phi for the current state.
         ''' 更新参数
         ''' </summary>
-        Private Sub UpdateParams()
+        Private Sub update_params()
             Dim t0 = Now
 
             For m As Integer = 0 To documents.Length - 1
@@ -424,62 +424,6 @@ Namespace LDA
             numstats += 1
             println($"update_params[{(Now - t0).FormatTime}]")
         End Sub
-
-        ''' <summary>
-        ''' Retrieve estimated document--topic associations. If sample lag > 0 then
-        ''' the mean value of all sampled statistics for theta[][] is taken.
-        ''' 获取文档——主题矩阵
-        ''' </summary>
-        ''' <returns> theta multinomial mixture of document topics (M x K) </returns>
-        Public Overridable ReadOnly Property Theta As Double()()
-            Get
-                Dim lTheta = RectangularArray.Matrix(Of Double)(documents.Length, K)
-
-                If SAMPLE_LAG > 0 Then
-                    For m = 0 To documents.Length - 1
-                        For K As Integer = 0 To Me.K - 1
-                            lTheta(m)(K) = thetasum(m)(K) / numstats
-                        Next
-                    Next
-                Else
-                    For m = 0 To documents.Length - 1
-                        For K As Integer = 0 To Me.K - 1
-                            lTheta(m)(K) = (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
-                        Next
-                    Next
-                End If
-
-                Return lTheta
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Retrieve estimated topic--word associations. If sample lag > 0 then the
-        ''' mean value of all sampled statistics for phi[][] is taken.
-        ''' 获取主题——词语矩阵
-        ''' </summary>
-        ''' <returns> phi multinomial mixture of topic words (K x V) </returns>
-        Public Overridable ReadOnly Property Phi As Double()()
-            Get
-                Dim lPhi = RectangularArray.Matrix(Of Double)(K, V)
-
-                If SAMPLE_LAG > 0 Then
-                    For K As Integer = 0 To Me.K - 1
-                        For w = 0 To V - 1
-                            lPhi(K)(w) = phisum(K)(w) / numstats
-                        Next
-                    Next
-                Else
-                    For K As Integer = 0 To Me.K - 1
-                        For w = 0 To V - 1
-                            lPhi(K)(w) = (nw(w)(K) + beta) / (nwsum(K) + V * beta)
-                        Next
-                    Next
-                End If
-
-                Return lPhi
-            End Get
-        End Property
 
         ''' <summary>
         ''' Configure the gibbs sampler

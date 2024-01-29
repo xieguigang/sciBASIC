@@ -68,7 +68,15 @@ Namespace My.FrameworkInternal
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
             Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
+            Dim max_stack_size As String = args.Tokens _
+                .SafeQuery _
+                .Where(Function(t) Strings.LCase(t).StartsWith("/stack:")) _
+                .FirstOrDefault
             Dim name$
+
+            If Not max_stack_size.StringEmpty Then
+                Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
+            End If
 
             ' load config from config file.
             For Each config In configuration.environment.SafeQuery

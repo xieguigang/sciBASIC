@@ -72,6 +72,7 @@ Namespace IO
     ''' </summary>
     Public Class DataSet : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
+        Implements IReadOnlyId
 
         ''' <summary>
         ''' 当前的这条数据记录在整个数据集之中的唯一标记符
@@ -81,7 +82,7 @@ Namespace IO
         ''' 20191031
         ''' 重写这个属性会造成<see cref="FileFormat.SolveDataSetIDMapping(String, String, Boolean?, Encoding)"/>失效
         ''' </remarks>
-        Public Overridable Property ID As String Implements INamedValue.Key
+        Public Overridable Property ID As String Implements INamedValue.Key, IReadOnlyId.Identity
 
         Protected Overrides ReadOnly Property MyHashCode As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -266,6 +267,19 @@ Namespace IO
                     }
                 Loop
             End Using
+        End Function
+
+        Public Shared Function JoinVector(id As String, name As String(), val As Double()) As DataSet
+            Dim data As New Dictionary(Of String, Double)
+
+            For i As Integer = 0 To name.Length - 1
+                data(name(i)) = val(i)
+            Next
+
+            Return New DataSet With {
+                .ID = id,
+                .propertyTable = data
+            }
         End Function
     End Class
 End Namespace

@@ -1,76 +1,76 @@
 ﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 795
-    '    Code Lines: 510
-    ' Comment Lines: 199
-    '   Blank Lines: 86
-    '     File Size: 29.30 KB
+' Summaries:
 
 
-    '     Structure ColorBrewer
-    ' 
-    '         Properties: Accent, Blues, BrBG, BuGn, BuPu
-    '                     c10, c11, c12, c3, c4
-    '                     c5, c6, c7, c8, c9
-    '                     Dark2, GnBu, Greens, Greys, Oranges
-    '                     OrRd, Paired, Pastel1, Pastel2, PiYG
-    '                     PRGn, PuBu, PuBuGn, PuOr, PuRd
-    '                     Purples, RdBu, RdGy, RdPu, RdYlBu
-    '                     RdYlGn, Reds, Set1, Set2, Set3
-    '                     Spectral, type, YlGn, YlGnBu, YlOrBr
-    '                     YlOrRd
-    ' 
-    '         Function: GetColors, ParseName, ToString
-    '         Class DivergingSchemes
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Class QualitativeSchemes
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Class SequentialSchemes
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 795
+'    Code Lines: 510
+' Comment Lines: 199
+'   Blank Lines: 86
+'     File Size: 29.30 KB
+
+
+'     Structure ColorBrewer
+' 
+'         Properties: Accent, Blues, BrBG, BuGn, BuPu
+'                     c10, c11, c12, c3, c4
+'                     c5, c6, c7, c8, c9
+'                     Dark2, GnBu, Greens, Greys, Oranges
+'                     OrRd, Paired, Pastel1, Pastel2, PiYG
+'                     PRGn, PuBu, PuBuGn, PuOr, PuRd
+'                     Purples, RdBu, RdGy, RdPu, RdYlBu
+'                     RdYlGn, Reds, Set1, Set2, Set3
+'                     Spectral, type, YlGn, YlGnBu, YlOrBr
+'                     YlOrRd
+' 
+'         Function: GetColors, ParseName, ToString
+'         Class DivergingSchemes
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+'         Class QualitativeSchemes
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+'         Class SequentialSchemes
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -136,35 +136,59 @@ Namespace Drawing2D.Colors
 
         Public Property type As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function
 
-        Public Function GetColors(name$) As Color()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetColors(name As String) As Color()
+            Return GetColorHtml(name).Select(Function(si) si.ToColor).ToArray
+        End Function
+
+        Private Function GetColorHtml(name As String) As String()
+            If name Is Nothing Then
+                Return GetMaxColors()
+            End If
+
             Select Case LCase(name)
-                Case NameOf(c3)
-                    Return c3.Select(AddressOf ToColor).ToArray
-                Case NameOf(c4)
-                    Return c4.Select(AddressOf ToColor).ToArray
-                Case NameOf(c5)
-                    Return c5.Select(AddressOf ToColor).ToArray
-                Case NameOf(c6)
-                    Return c6.Select(AddressOf ToColor).ToArray
-                Case NameOf(c7)
-                    Return c7.Select(AddressOf ToColor).ToArray
-                Case NameOf(c8)
-                    Return c8.Select(AddressOf ToColor).ToArray
-                Case NameOf(c9)
-                    Return c9.Select(AddressOf ToColor).ToArray
-                Case NameOf(c10)
-                    Return c10.Select(AddressOf ToColor).ToArray
-                Case NameOf(c11)
-                    Return c11.Select(AddressOf ToColor).ToArray
-                Case NameOf(c12)
-                    Return c12.Select(AddressOf ToColor).ToArray
+                Case NameOf(c3) : Return c3
+                Case NameOf(c4) : Return c4
+                Case NameOf(c5) : Return c5
+                Case NameOf(c6) : Return c6
+                Case NameOf(c7) : Return c7
+                Case NameOf(c8) : Return c8
+                Case NameOf(c9) : Return c9
+                Case NameOf(c10) : Return c10
+                Case NameOf(c11) : Return c11
+                Case NameOf(c12) : Return c12
                 Case Else
-                    Return c3.Select(AddressOf ToColor).ToArray
+                    Return GetMaxColors()
             End Select
+        End Function
+
+        Private Function GetMaxColors() As String()
+            If Not c12.IsNullOrEmpty Then
+                Return c12
+            ElseIf Not c11.IsNullOrEmpty Then
+                Return c11
+            ElseIf Not c10.IsNullOrEmpty Then
+                Return c10
+            ElseIf Not c9.IsNullOrEmpty Then
+                Return c9
+            ElseIf Not c8.IsNullOrEmpty Then
+                Return c8
+            ElseIf Not c7.IsNullOrEmpty Then
+                Return c7
+            ElseIf Not c6.IsNullOrEmpty Then
+                Return c6
+            ElseIf Not c5.IsNullOrEmpty Then
+                Return c5
+            ElseIf Not c4.IsNullOrEmpty Then
+                Return c4
+            Else
+                Return c3
+            End If
         End Function
 
         ''' <summary>

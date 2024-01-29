@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::056e4196849c8d7eb98c182bbf02b084, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 557
-    '    Code Lines: 280
-    ' Comment Lines: 219
-    '   Blank Lines: 58
-    '     File Size: 31.15 KB
+' Summaries:
 
 
-    '     Module Designer
-    ' 
-    '         Properties: AvailableInterpolates, Category31, ColorBrewer, ConsoleColors, MaterialPalette
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
-    '                   IsColorNameList, rangeConstraint, SplitColorList
-    ' 
-    '         Sub: Register
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 557
+'    Code Lines: 280
+' Comment Lines: 219
+'   Blank Lines: 58
+'     File Size: 31.15 KB
+
+
+'     Module Designer
+' 
+'         Properties: AvailableInterpolates, Category31, ColorBrewer, ConsoleColors, MaterialPalette
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
+'                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
+'                   IsColorNameList, rangeConstraint, SplitColorList
+' 
+'         Sub: Register
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -289,6 +289,12 @@ Namespace Drawing2D.Colors
             "#988ED5", "#027093", "#73945A", "#8C564B", "#9467BD", "#D62829", "#2CA02C"
         }.AsColor()
 
+        Public ReadOnly Property Typhoon As Color() = {
+            "#FFFFFF", "#AAAAD4", "#5F59A0", "#3B277F", "#31277F",
+            "#355C83", "#539144", "#72AC3E", "#8CB73A", "#BACB2D",
+            "#FAEB3A", "#E4A726", "#CE5C18", "#C42917"
+        }.AsColor
+
         Const rgbPattern$ = "rgb\(\d+\s*(,\s*\d+\s*)+\)"
         Const rgbListPattern$ = rgbPattern & "(\s*,\s*" & rgbPattern & ")+"
 
@@ -379,6 +385,11 @@ Namespace Drawing2D.Colors
 
         ReadOnly colorRegistry As New Dictionary(Of String, Color())
 
+        ''' <summary>
+        ''' register a custom color palette
+        ''' </summary>
+        ''' <param name="colorName"></param>
+        ''' <param name="colors"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Register(colorName As String, ParamArray colors As Color())
             colorRegistry(colorName) = colors
@@ -398,10 +409,13 @@ Namespace Drawing2D.Colors
 
             If ColorBrewer.ContainsKey(key.Name) Then
                 Return ColorBrewer(key.Name).GetColors(key.Value)
+            ElseIf key.Name = "" AndAlso ColorBrewer.ContainsKey(key.Value) Then
+                Return ColorBrewer(key.Value).GetColors(Nothing)
             End If
 
             Select Case Strings.LCase(term).Trim
                 Case "material" : Return MaterialPalette
+                Case "typhoon" : Return Typhoon
                 Case "console.colors", "console" : Return ConsoleColors
                 Case "tsf" : Return CustomDesigns.TSF
                 Case "halloween" : Return CustomDesigns.Halloween
@@ -428,13 +442,13 @@ Namespace Drawing2D.Colors
 
                     ' viridis
                 Case "viridis" : Return Viridis.viridis.ToArray
-                Case "viridis:magma" : Return Viridis.magma.ToArray
-                Case "viridis:inferno" : Return Viridis.inferno.ToArray
-                Case "viridis:plasma" : Return Viridis.plasma.ToArray
-                Case "viridis:cividis" : Return Viridis.cividis.ToArray
-                Case "viridis:mako" : Return Viridis.mako.ToArray
-                Case "viridis:rocket" : Return Viridis.rocket.ToArray
-                Case "viridis:turbo" : Return Viridis.turbo.ToArray
+                Case "viridis:magma", "magma" : Return Viridis.magma.ToArray
+                Case "viridis:inferno", "inferno" : Return Viridis.inferno.ToArray
+                Case "viridis:plasma", "plasma" : Return Viridis.plasma.ToArray
+                Case "viridis:cividis", "cividis" : Return Viridis.cividis.ToArray
+                Case "viridis:mako", "mako" : Return Viridis.mako.ToArray
+                Case "viridis:rocket", "rocket" : Return Viridis.rocket.ToArray
+                Case "viridis:turbo", "turbo" : Return Viridis.turbo.ToArray
 
                 Case Else
 
@@ -455,7 +469,10 @@ Namespace Drawing2D.Colors
         ''' 这个函数是获取得到一个连续的颜色谱
         ''' </summary>
         ''' <param name="term$"></param>
-        ''' <param name="n%"></param>
+        ''' <param name="n">negative or zero value means no interoplation, 
+        ''' just returns the raw color list which is mapping by the 
+        ''' <paramref name="term"/>
+        ''' </param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
         ''' 
@@ -555,6 +572,11 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="colors"></param>
         ''' <param name="n">所期望的颜色的数量</param>
+        ''' <param name="interpolate">
+        ''' set the interpolate parameter to value TRUE if apply the function 
+        ''' for the scalar palette, otherwise keeps the default value FALSE
+        ''' for deal with the category color palette.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' if the <paramref name="n"/> value less than the 
@@ -563,7 +585,11 @@ Namespace Drawing2D.Colors
         ''' color.
         ''' </remarks>
         <Extension>
-        Public Function CubicSpline(colors As IEnumerable(Of Color), Optional n% = 256, Optional alpha% = 255) As Color()
+        Public Function CubicSpline(colors As IEnumerable(Of Color),
+                                    Optional n% = 256,
+                                    Optional alpha% = 255,
+                                    Optional interpolate As Boolean = False) As Color()
+
             Dim source As Color() = colors.ToArray
 
             If source.Length = 1 Then
@@ -573,7 +599,10 @@ Namespace Drawing2D.Colors
                     .Alpha(alpha) _
                     .Replicate(n) _
                     .ToArray
-            ElseIf n <= source.Length Then
+            ElseIf n <= 0 Then
+                ' return raw color list if n is negative or zero
+                Return source
+            ElseIf n <= source.Length AndAlso Not interpolate Then
                 Return source.Take(n).ToArray
             End If
 

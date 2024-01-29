@@ -95,7 +95,7 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        Function FileExists(path As String) As Boolean
+        Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean
         ''' <summary>
         ''' get file size
         ''' </summary>
@@ -110,6 +110,15 @@ Namespace ApplicationServices
         ''' <returns></returns>
         Function WriteText(text As String, path As String) As Boolean
         Function ReadAllText(path As String) As String
+
+        ''' <summary>
+        ''' get all files inside current filesystem object
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' be careful when running this on local filesystem object!
+        ''' </remarks>
+        Function GetFiles() As IEnumerable(Of String)
 
         ''' <summary>
         ''' close current filesystem session

@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::a43f9f4268d3699fda1e78a07983473d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 179
-    '    Code Lines: 113
-    ' Comment Lines: 42
-    '   Blank Lines: 24
-    '     File Size: 6.56 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
-    ' 
-    '         Sub: Parser
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 179
+'    Code Lines: 113
+' Comment Lines: 42
+'   Blank Lines: 24
+'     File Size: 6.56 KB
+
+
+'     Module Extensions
+' 
+'         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
+' 
+'         Sub: Parser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,22 @@ Imports stdNum = System.Math
 Namespace ComponentModel.Ranges
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' get min and max element value from the given numeric vector
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns>[min,max]</returns>
+        <Extension>
+        Public Function MinMax(v As IEnumerable(Of Double)) As Double()
+            With v.ToArray
+                If .Length = 0 Then
+                    Return New Double() {0, 0}
+                Else
+                    Return New Double() { .Min, .Max}
+                End If
+            End With
+        End Function
 
         ''' <summary>
         ''' 对称的的范围，假若X为正数，那么其为max，而-x为min。假若x为负数，那么-x为max

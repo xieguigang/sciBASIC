@@ -102,6 +102,10 @@ Namespace Text.Xml.Models
             Me.text = value
         End Sub
 
+        ''' <summary>
+        ''' get name and value from the given tuple
+        ''' </summary>
+        ''' <param name="namedValue"></param>
         Sub New(namedValue As NamedValue(Of String))
             Me.name = namedValue.Name
             Me.text = namedValue.Value

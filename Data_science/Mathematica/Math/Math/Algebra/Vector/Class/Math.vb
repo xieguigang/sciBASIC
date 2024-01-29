@@ -107,7 +107,13 @@ Namespace LinearAlgebra
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Exp() As Vector
-            Return New Vector(From n As Double In Array Select sys.Exp(n))
+            Dim vexp As Double() = New Double([Dim] - 1) {}
+
+            For i As Integer = 0 To vexp.Length - 1
+                vexp(i) = sys.Exp(buffer(i))
+            Next
+
+            Return New Vector(vexp)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -250,35 +256,6 @@ Namespace LinearAlgebra
         <ExportAPI("pchisq")>
         Public Shared Function pchisq(q As Vector, df As Vector, Optional ncp As Integer = 0, Optional lowertail As Boolean = True, Optional logp As Boolean = False) As Vector
             Throw New NotImplementedException
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Sum")>
-        Public Shared Function Sum(x As Vector, Optional NaRM As Boolean = False) As Vector
-            Return New Vector({x.Sum})
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Sum")>
-        Public Shared Function Sum(x As BooleanVector, Optional NaRM As Boolean = False) As Vector
-            Dim data = (From b As Boolean In x Select If(b, 1, 0)).ToArray
-            Return New Vector(integers:={data.Sum})
-        End Function
-
-        ''' <summary>
-        ''' Sorting or Ordering Vectors
-        ''' Sort (or order) a vector or factor (partially) into ascending or descending order. For ordering along more than one variable, e.g., for sorting data frames, see order.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Sort")>
-        Public Shared Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
-            If decreasing Then
-                Return New Vector(x.OrderByDescending(Function(n) n))
-            Else
-                Return New Vector(x.OrderBy(Function(n) n))
-            End If
         End Function
 
         ''' <summary>

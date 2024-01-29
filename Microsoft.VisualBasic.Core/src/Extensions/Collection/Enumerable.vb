@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::1dd37d36153684f17defa3b71c50f41e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 240
-    '    Code Lines: 157
-    ' Comment Lines: 51
-    '   Blank Lines: 32
-    '     File Size: 10.15 KB
+' Summaries:
 
 
-    ' Module IEnumerations
-    ' 
-    '     Function: [Next], CreateDictionary, (+2 Overloads) Differ, ExceptType, (+2 Overloads) FindByItemKey
-    '               FindByItemValue, (+2 Overloads) GetItem, GetItems, OfType, Take
-    '               (+2 Overloads) Takes, ToDictionary, ToEntryDictionary
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 240
+'    Code Lines: 157
+' Comment Lines: 51
+'   Blank Lines: 32
+'     File Size: 10.15 KB
+
+
+' Module IEnumerations
+' 
+'     Function: [Next], CreateDictionary, (+2 Overloads) Differ, ExceptType, (+2 Overloads) FindByItemKey
+'               FindByItemValue, (+2 Overloads) GetItem, GetItems, OfType, Take
+'               (+2 Overloads) Takes, ToDictionary, ToEntryDictionary
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -99,7 +99,7 @@ Public Module IEnumerations
 
         Dim targetIndex As String() = (From item As T In source Select item.Key).ToArray
         Dim LQuery$() = LinqAPI.Exec(Of String) _
- _
+                                                _
             () <= From item As T2
                   In toDiffer
                   Let strId As String = getId(item)
@@ -194,7 +194,7 @@ Public Module IEnumerations
             End If
         Else
             Return LinqAPI.Exec(Of T) _
- _
+                                      _
                 () <= From x As T
                       In source
                       Where String.Equals(x.Key, uniqueId, StringComparison.OrdinalIgnoreCase)
@@ -213,7 +213,7 @@ Public Module IEnumerations
     <Extension> Public Function Takes(Of T As INamedValue)(list As IEnumerable(Of String), source As IEnumerable(Of T)) As T()
         Dim table As Dictionary(Of T) = source.ToDictionary
         Dim LQuery As T() = LinqAPI.Exec(Of T) _
- _
+                                               _
             () <= From sId As String
                   In list
                   Where table.ContainsKey(sId)
@@ -234,7 +234,7 @@ Public Module IEnumerations
     <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T
         Dim level As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
         Dim LQuery As T = LinqAPI.DefaultFirst(Of T) _
- _
+                                                     _
             () <= From o As T
                   In source
                   Where String.Equals(uniqueId, o.Key, comparisonType:=level)
@@ -250,7 +250,7 @@ Public Module IEnumerations
     <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(caseSensitive)
         Dim LQuery = LinqAPI.DefaultFirst(Of T) _
- _
+                                                _
             () <= From itemObj As T
                   In source
                   Where String.Equals(itemObj.Identity, uniqueId, method)
@@ -289,5 +289,65 @@ Public Module IEnumerations
         End If
 
         Return table
+    End Function
+
+    Public Function Permutations(Of T)(collection As IReadOnlyList(Of T)) As IEnumerable(Of T())
+        Dim n = collection.Count
+        Dim used = New Boolean(n - 1) {}
+        Dim result = New T(n - 1) {}
+        Dim memo = New Dictionary(Of T, Integer)()
+        Dim recurse As Func(Of Integer, IEnumerable(Of T())) =
+            Iterator Function(m As Integer) As IEnumerable(Of T())
+                If m = n Then
+                    Yield result.ToArray()
+                Else
+                    Dim j As Integer = Nothing
+
+                    If (Not memo.TryGetValue(collection(m), j)) Then
+                        j = 0
+                    End If
+
+                    For i As Integer = j To n - 1
+                        If used(i) Then
+                            Continue For
+                        End If
+
+                        used(i) = True
+                        result(i) = collection(m)
+                        memo(collection(m)) = i + 1
+
+                        For Each res In recurse(m + 1)
+                            Yield res
+                        Next
+
+                        used(i) = False
+                        memo(collection(m)) = j
+                    Next
+                End If
+            End Function
+
+        Return recurse(0)
+    End Function
+
+
+    Public Function CartesianProduct(Of T)(collections As IReadOnlyList(Of IReadOnlyList(Of T))) As IEnumerable(Of T())
+        Dim [set] = New T(collections.Count - 1) {}
+        Dim rec As Func(Of Integer, IEnumerable(Of T())) =
+            Iterator Function(i As Integer) As IEnumerable(Of T())
+                If i = collections.Count Then
+                    Yield [set].ToArray()
+                Else
+                    Dim collection = collections(i)
+
+                    For Each item In collection
+                        [set](i) = item
+                        For Each res In rec(i + 1)
+                            Yield res
+                        Next
+                    Next
+                End If
+            End Function
+
+        Return rec(0)
     End Function
 End Module

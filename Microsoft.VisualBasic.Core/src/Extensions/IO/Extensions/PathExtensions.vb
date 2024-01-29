@@ -698,12 +698,14 @@ Public Module PathExtensions
     ''' Determine that the target directory is exists on the file system or not?(判断文件夹是否存在)
     ''' </summary>
     ''' <param name="DIR"></param>
-    ''' <returns></returns>
-    <ExportAPI("DIR.Exists")>
+    ''' <returns>
+    ''' 1. for directory parameter <paramref name="DIR"/> is nothing or empty string: return false
+    ''' 2. for directory not exists: return false
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DirectoryExists(DIR As String) As Boolean
-        Return Not String.IsNullOrEmpty(DIR) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
+        Return (Not String.IsNullOrEmpty(DIR)) AndAlso FileIO.FileSystem.DirectoryExists(DIR)
     End Function
 
     ''' <summary>
@@ -806,24 +808,33 @@ Public Module PathExtensions
     ''' 因为系统的底层API对于过长的文件名会出错)
     ''' </summary>
     ''' <param name="file"></param>
+    ''' <param name="full">
+    ''' http url should turn this parameter to false?
+    ''' </param>
     ''' <returns></returns>
-    ''' <remarks>这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
+    ''' <remarks>this function also could be used for handling of the http url location.
+    ''' 这个函数不依赖于系统的底层API，因为系统的底层API对于过长的文件名会出错</remarks>
     <ExportAPI(NameOf(ParentPath))>
     <Extension>
     Public Function ParentPath(file$, Optional full As Boolean = True) As String
         Dim UNCprefix As String = file.Match("\\\\\d+(\.\d+)+")
         Dim isUNCpath As Boolean = (Not String.IsNullOrEmpty(UNCprefix)) AndAlso file.StartsWith(UNCprefix)
+        Dim isHttpUrl As Boolean = file.IsURLPattern
 
         ' Console.WriteLine(UNCprefix)
 
-        file = file _
-            .Replace("\", "/") _
-            .StringReplace("/{2,}", "/")
+        file = file.Replace("\", "/")
+
+        If Not isHttpUrl Then
+            ' keeps the http url 
+            file = file.StringReplace("/{2,}", "/")
+        End If
 
         Dim parent As String = ""
         Dim t As String() = file.TrimEnd("/"c).Split("/"c)
 
         If full Then
+            ' generates the full path
             If InStr(file, "../") = 1 Then
                 parent = FileIO.FileSystem.GetParentPath(App.CurrentDirectory)
                 t = t.Skip(1).ToArray

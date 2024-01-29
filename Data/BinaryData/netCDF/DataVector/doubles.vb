@@ -54,7 +54,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
-Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace DataVector
 
@@ -69,8 +68,8 @@ Namespace DataVector
         Sub New()
         End Sub
 
-        Sub New(data As IEnumerable(Of Double))
-            buffer = data.ToArray
+        Sub New(f64 As IEnumerable(Of Double))
+            buffer = f64.ToArray
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

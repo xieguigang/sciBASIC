@@ -86,6 +86,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' <returns></returns>
         Public Property [Declare] As String
 
+        ''' <summary>
+        ''' example code for use this method
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property example As String
+        Public Property author As String
+        Public Property version As String
+
         Public ReadOnly Property Type() As ProjectType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -141,6 +149,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
             If remarksNode IsNot Nothing Then
                 Me.Remarks = remarksNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
+            End If
+
+            Dim exampleNode As XmlNode = xn.SelectSingleNode("example")
+
+            If Not exampleNode Is Nothing Then
+                Me.example = exampleNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             Dim ns = xn.SelectNodes("param")

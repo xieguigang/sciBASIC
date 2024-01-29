@@ -248,7 +248,10 @@ Namespace Text.Xml.Linq
         ''' <param name="xmlNode$">文件之中的节点名称</param>
         ''' <returns></returns>
         <Extension>
-        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$, ignoreError As Boolean) As IEnumerable(Of T)
+        Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$,
+                                                                     ignoreError As Boolean,
+                                                                     Optional variants As Type() = Nothing) As IEnumerable(Of T)
+
             Dim handle As New DeserializeHandler(Of T)(xmlNode) With {
                 .ReplaceXmlns = replaceXmlns
             }
@@ -256,7 +259,7 @@ Namespace Text.Xml.Linq
 
             For Each xml As String In nodes
                 Try
-                    element = handle.LoadXml(xml)
+                    element = handle.LoadXml(xml, variants)
                 Catch ex As Exception
                     If ignoreError Then
                         Call $"find invalid xml text content! [{Mid(xml, 1, 32).TrimNewLine}...]".Warning
@@ -301,7 +304,8 @@ Namespace Text.Xml.Linq
                                                                 Optional xmlns$ = Nothing,
                                                                 Optional selector As Func(Of XElement, Boolean) = Nothing,
                                                                 Optional preprocess As Func(Of String, String) = Nothing,
-                                                                Optional ignoreError As Boolean = False) As IEnumerable(Of T)
+                                                                Optional ignoreError As Boolean = False,
+                                                                Optional variants As Type() = Nothing) As IEnumerable(Of T)
             With GetType(T).GetTypeName([default]:=typeName)
                 Return .UltraLargeXmlNodesIterator(path, selector) _
                     .Select(Function(node)
@@ -311,7 +315,12 @@ Namespace Text.Xml.Linq
                                     Return node.ToString
                                 End If
                             End Function) _
-                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef, ignoreError:=ignoreError)
+                    .NodeInstanceBuilder(Of T)(
+                        replaceXmlns:=xmlns,
+                        xmlNode:= .ByRef,
+                        ignoreError:=ignoreError,
+                        variants:=variants
+                    )
             End With
         End Function
 
@@ -347,7 +356,7 @@ Namespace Text.Xml.Linq
 
         <Extension>
         Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$, selector As Func(Of XElement, Boolean)) As IEnumerable(Of XElement)
-            Using file As Stream = path.Open(FileMode.Open)
+            Using file As Stream = path.Open(FileMode.Open, [readOnly]:=True)
                 For Each node In UltraLargeXmlNodesIterator(nodeName, file, selector)
                     ' 因为在这里打开了一个文件,假若不使用iterator迭代的话
                     ' 文件会被直接关闭,导致无法读取

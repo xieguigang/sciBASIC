@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::8b015b2797e8f9081a703495b8248c9b, sciBASIC#\Data_science\Graph\Analysis\Louvain\Louvain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 364
-    '    Code Lines: 218
-    ' Comment Lines: 78
-    '   Blank Lines: 68
-    '     File Size: 11.63 KB
+' Summaries:
 
 
-    '     Class LouvainCommunity
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetCommunity, SolveClusters, TryMoveNode
-    ' 
-    '         Sub: addNewEdge, rebuildGraph, setCluster0
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 364
+'    Code Lines: 218
+' Comment Lines: 78
+'   Blank Lines: 68
+'     File Size: 11.63 KB
+
+
+'     Class LouvainCommunity
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetCommunity, SolveClusters, TryMoveNode
+' 
+'         Sub: addNewEdge, rebuildGraph, setCluster0
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Analysis.Louvain
 
@@ -138,8 +139,17 @@ Namespace Analysis.Louvain
             Me.maxIterations = maxIterations
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetCommunity() As String()
             Return global_cluster.Select(Function(cl) cl.ToString).ToArray
+        End Function
+
+        ''' <summary>
+        ''' get the number of the cluster class the graph it has currently.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetClusterCount() As Integer
+            Return global_cluster.Distinct.Count
         End Function
 
         Friend Overridable Sub addNewEdge(u As Integer, v As Integer, weight As Double)
@@ -150,7 +160,7 @@ Namespace Analysis.Louvain
             new_edge(new_top).v = v
             new_edge(new_top).weight = weight
             new_edge(new_top).next = new_head(u)
-            new_head(u) = stdNum.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
+            new_head(u) = std.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
         End Sub
 
         Friend Overridable Sub setCluster0()
@@ -240,7 +250,7 @@ Namespace Analysis.Louvain
                 End If
 
                 vis(cluster(i)) = True
-                change(stdNum.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
+                change(std.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
             Next
 
             ' index[i]代表 i号簇在新图中的结点编号
@@ -335,7 +345,14 @@ Namespace Analysis.Louvain
             n = new_n
         End Sub
 
-        Public Function SolveClusters() As LouvainCommunity
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max_clusters">
+        ''' set the limits of the max number of the node class we finally have.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function SolveClusters(Optional max_clusters As Integer = Integer.MaxValue) As LouvainCommunity
             Dim count As Integer = 0   ' 迭代次数
             Dim update_flag As Boolean ' 标记是否发生过更新
             Dim enum_time As Integer
@@ -348,7 +365,7 @@ Namespace Analysis.Louvain
                 count += 1
                 cluster_weight = New Double(n - 1) {}
 
-                For j = 0 To n - 1
+                For j As Integer = 0 To n - 1
                     ' 生成簇的权值
                     cluster_weight(cluster(j)) += node_weight(j)
                 Next
@@ -377,8 +394,8 @@ Namespace Analysis.Louvain
                 Dim deltaP As Integer = maxLoop / 25
                 Dim p As Integer = Scan0
 
-                Call Console.WriteLine()
-                Call Console.Write($" [loop_{count}] Progress: ")
+                Call VBDebugger.EchoLine("")
+                Call VBDebugger.EchoLine($" [loop_{count}] Progress: ")
 
                 Do
                     Dim i As Integer = order(point)
@@ -401,12 +418,14 @@ Namespace Analysis.Louvain
                         If p = deltaP Then
                             p = 0
 
-                            Console.Write(vbTab & $"{CInt(100 * (max - maxLoop) / max)}%")
+                            VBDebugger.EchoLine(vbTab & $"{CInt(100 * (max - maxLoop) / max)}%")
                         End If
                     End If
                 Loop While enum_time < n
 
                 If count > maxIterations OrElse Not update_flag Then
+                    Exit Do
+                ElseIf GetClusterCount >= max_clusters Then
                     Exit Do
                 End If
 

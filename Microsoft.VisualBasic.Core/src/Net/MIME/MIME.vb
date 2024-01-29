@@ -103,24 +103,37 @@ Namespace Net.Protocols.ContentTypes
         }
 
         Sub New()
-            SuffixTable = My.Resources _
+            SuffixTable = fetchUniqueContents() _
+                .ToDictionary(Function(x) x.FileExt.ToLower,
+                              Function(x)
+                                  Return x
+                              End Function)
+            ContentTypes = SuffixTable.Values _
+                .GroupBy(Function(f) f.MIMEType.ToLower) _
+                .ToDictionary(Function(x)
+                                  Return x.Key
+                              End Function,
+                              Function(x)
+                                  Return x.First
+                              End Function)
+        End Sub
+
+        Private Iterator Function fetchUniqueContents() As IEnumerable(Of ContentType)
+            Dim uniqs = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .LineTokens _
                 .loadContents _
                 .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _
-                .ToDictionary(Function(x) x.Key,
-                              Function(x)
-                                  Return x.First
-                              End Function)
-            ContentTypes = SuffixTable _
-                .Values _
-                .ToDictionary(Function(x)
-                                  Return x.MIMEType.ToLower
-                              End Function)
+                .ToArray
 
-            Call DirectCast(SuffixTable, Dictionary(Of String, ContentType)).Add(".dzi", New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"})
-        End Sub
+            For Each group In uniqs
+                Yield group.First
+            Next
+
+            Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
+            Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
+        End Function
 
         <Extension>
         Private Iterator Function loadContents(lines As IEnumerable(Of String)) As IEnumerable(Of ContentType)

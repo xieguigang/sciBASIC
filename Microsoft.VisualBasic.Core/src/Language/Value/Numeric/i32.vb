@@ -363,5 +363,9 @@ Namespace Language
         Public Shared Operator And(p As i32, i As Integer) As Integer
             Return p.Value And i
         End Operator
+
+        Public Shared Operator Mod(i As i32, n As Integer) As Integer
+            Return i.Value Mod n
+        End Operator
     End Class
 End Namespace

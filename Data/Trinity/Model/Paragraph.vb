@@ -57,6 +57,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Model
 
+    ''' <summary>
+    ''' a collection of the text <see cref="Sentence"/>.
+    ''' </summary>
     Public Class Paragraph
 
         Public Property sentences As Sentence()
@@ -65,20 +68,30 @@ Namespace Model
             Return sentences.JoinBy(". ")
         End Function
 
-        Public Shared Iterator Function Segmentation(text As String) As IEnumerable(Of Paragraph)
-            Dim p As New Value(Of Paragraph)
-
+        Public Shared Iterator Function SplitParagraph(text As String) As IEnumerable(Of String)
             For Each block As String() In text.LineTokens.Split(Function(str) str.Trim = "")
-                If block.All(Function(str) str.Trim.StringEmpty) Then
+                Dim trim As String() = block _
+                    .Select(AddressOf Strings.Trim) _
+                    .ToArray
+
+                If trim.All(Function(str) str = "") Then
                     Continue For
                 End If
 
-                If Not p = block _
-                    .Select(AddressOf Strings.Trim) _
+                Yield trim.Where(Function(si) si <> "") _
                     .JoinBy(" ") _
-                    .Trim _
-                    .DoCall(AddressOf GetParagraph) Is Nothing Then
+                    .Trim
+            Next
+        End Function
 
+        Public Shared Iterator Function Segmentation(text As String,
+                                                     Optional delimiter As String = ".?!",
+                                                     Optional chemicalNameRule As Boolean = False) As IEnumerable(Of Paragraph)
+            Dim p As New Value(Of Paragraph)
+            Dim del As Char() = delimiter.ToArray
+
+            For Each par As String In SplitParagraph(text)
+                If Not p = GetParagraph(par, del, chemicalNameRule) Is Nothing Then
                     Yield p
                 End If
             Next
@@ -100,10 +113,18 @@ Namespace Model
             }
         End Function
 
-        Private Shared Function GetParagraph(text As String) As Paragraph
-            Dim sentences As String() = text.Split("."c, "?"c, "!"c)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <param name="delimiter">
+        ''' the delimiter of the sentences, usually be delimiter symbol ./?/! to end a sentence.
+        ''' </param>
+        ''' <returns></returns>
+        Private Shared Function GetParagraph(text As String, delimiter As Char(), chemicalNameRule As Boolean) As Paragraph
+            Dim sentences As String() = text.Split(delimiter)
             Dim sentenceList As Sentence() = sentences _
-                .Select(AddressOf Sentence.Parse) _
+                .Select(Function(si) Sentence.Parse(si, chemicalNameRule)) _
                 .ToArray
             Dim p As New Paragraph With {
                 .sentences = sentenceList

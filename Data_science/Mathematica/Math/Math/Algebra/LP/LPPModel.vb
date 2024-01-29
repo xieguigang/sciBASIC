@@ -88,6 +88,9 @@ Namespace LinearAlgebra.LinearProgramming
 
     End Class
 
+    ''' <summary>
+    ''' Linear Programming Model
+    ''' </summary>
     Public Class LPPModel : Inherits XmlDataModel
 
         Public Property objectiveFunctionType As String

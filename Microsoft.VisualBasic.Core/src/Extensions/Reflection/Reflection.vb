@@ -237,9 +237,15 @@ Public Module EmitReflection
     ''' 得到集合类型的对象之中的元素类型
     ''' </summary>
     ''' <param name="type"></param>
-    ''' <param name="strict"></param>
+    ''' <param name="strict">
+    ''' if the given clr <paramref name="type"/> object is not a collection
+    ''' type, then this function will returns nothing if set this strict 
+    ''' parameter value to TRUE, otherwise returns the <paramref name="type"/>
+    ''' object itself is this strict parameter is set to value TRUE.
+    ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function GetTypeElement(type As Type, strict As Boolean) As Type
+    <Extension>
+    Public Function GetTypeElement(type As Type, strict As Boolean) As Type
         If type.IsInheritsFrom(GetType(Array)) Then
             Return type.GetElementType
         End If
@@ -251,6 +257,7 @@ Public Module EmitReflection
             Return GetType(KeyValuePair(Of ,)).MakeGenericType(keyValue)
         End If
         If type.ImplementInterface(GetType(IEnumerable)) Then
+            ' convert to interface type
             type = type.GetInterfaces.Where(Function(i) InStr(i.Name, "IEnumerable") = 1).First
             Return type.GenericTypeArguments.First
         End If
@@ -258,7 +265,11 @@ Public Module EmitReflection
         If strict Then
             Return Nothing
         Else
-            Throw New NotImplementedException
+            ' 20240103
+            ' the given type is not a collection type
+            ' returns itself as the element type
+            ' this is usefull for check element type in R# language runtime
+            Return type
         End If
     End Function
 
@@ -358,8 +369,11 @@ Public Module EmitReflection
     ''' <param name="depth">类型继承的距离值，当这个值越大的时候，说明二者的继承越远，当进行函数重载判断的时候，选择这个距离值越小的越好</param>
     ''' <returns></returns>
     ''' <remarks>假若两个类型是来自于不同的assembly文件的话，即使这两个类型是相同的对象，也会无法判断出来</remarks>
-    <ExportAPI("Is.InheritsFrom")>
-    <Extension> Public Function IsInheritsFrom(a As Type, base As Type, Optional strict As Boolean = True, Optional ByRef depth% = -1) As Boolean
+    <Extension>
+    Public Function IsInheritsFrom(a As Type, base As Type,
+                                   Optional strict As Boolean = True,
+                                   Optional ByRef depth% = -1) As Boolean
+
         Dim baseType As Type = a.BaseType
 
         If Not strict Then
@@ -415,7 +429,8 @@ Public Module EmitReflection
     ''' <returns></returns>
     '''
     <ExportAPI("Get.Description")>
-    <Extension> Public Function Description(type As Type) As String
+    <Extension>
+    Public Function Description(type As Type) As String
         Dim customAttrs As Object() = type.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then
@@ -460,7 +475,8 @@ Public Module EmitReflection
     ''' <remarks></remarks>
     '''
     <ExportAPI("Collection2GenericIEnumerable")>
-    <Extension> Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
+    <Extension>
+    Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
         If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
 EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
             Return type

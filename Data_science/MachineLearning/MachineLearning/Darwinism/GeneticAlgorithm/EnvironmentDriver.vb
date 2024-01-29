@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::4b42f9d82c258d6ae599c1b1bf3b9ae7, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 165
-    '    Code Lines: 105
-    ' Comment Lines: 35
-    '   Blank Lines: 25
-    '     File Size: 6.51 KB
+' Summaries:
 
 
-    '     Class EnvironmentDriver
-    ' 
-    '         Properties: Iterations, Threshold
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateReport
-    ' 
-    '         Sub: reset, Terminate, Train
-    ' 
-    '     Structure outPrint
-    ' 
-    '         Properties: chromosome, fit, iter, MutationRate
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: PrintTitle
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 165
+'    Code Lines: 105
+' Comment Lines: 35
+'   Blank Lines: 25
+'     File Size: 6.51 KB
+
+
+'     Class EnvironmentDriver
+' 
+'         Properties: Iterations, Threshold
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateReport
+' 
+'         Sub: reset, Terminate, Train
+' 
+'     Structure outPrint
+' 
+'         Properties: chromosome, fit, iter, MutationRate
+' 
+'         Function: ToString
+' 
+'         Sub: PrintTitle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,8 +68,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Population
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Darwinism.GAF
 
@@ -81,7 +82,6 @@ Namespace Darwinism.GAF
 
         Dim core As GeneticAlgorithm(Of Chr)
         Dim terminated As Boolean = False
-        Dim takeBestSnapshot As Action(Of Chr, Double)
 
         ''' <summary>
         ''' 需要运行的总的迭代次数
@@ -91,13 +91,34 @@ Namespace Darwinism.GAF
         Public Property Threshold As Double
 
         ''' <summary>
+        ''' get the <see cref="GeneticAlgorithm(Of Chr).Best"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property BestModel As Chr
+            Get
+                Return core.Best
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 创建一个新的环境压力驱动程序,用来驱动模型的进化学习
         ''' </summary>
         ''' <param name="ga"></param>
-        Sub New(ga As GeneticAlgorithm(Of Chr), takeBestSnapshot As Action(Of Chr, Double), Optional iterations% = 500000)
+        Sub New(ga As GeneticAlgorithm(Of Chr), Optional takeBestSnapshot As Action(Of Chr, Double) = Nothing, Optional iterations% = 500000)
             Me.core = ga
-            Me.takeBestSnapshot = takeBestSnapshot
             Me.Iterations = iterations
+
+            If Not takeBestSnapshot Is Nothing Then
+                Call AttachReporter(
+                    Sub(iteration%, error#, model As GeneticAlgorithm(Of Chr))
+                        Call takeBestSnapshot(model.Best, error#)
+                    End Sub)
+            Else
+                Call AttachReporter(
+                    Sub(i, err, model)
+                        Call VBDebugger.EchoLine($"[{i}/{iterations}] {(i / iterations * 100).ToString("F2")}% ...... {err}")
+                    End Sub)
+            End If
         End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
@@ -122,11 +143,7 @@ Namespace Darwinism.GAF
                 End If
 
                 With core.GetFitness(core.Best)
-                    If Not reporter Is Nothing Then
-                        Call reporter(i, .ByRef, core)
-                    Else
-                        Call .DoCall(core.Best.PipeOf(takeBestSnapshot))
-                    End If
+                    Call reporter(i, .ByRef, core)
 
                     ' NaN的结果值与阈值相比较也是小于零的
                     ' 在这里跳过NaN值的测试
@@ -138,7 +155,7 @@ Namespace Darwinism.GAF
 
                         Dim firstError# = errors.First
 
-                        If stdNum.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
+                        If std.Abs(firstError - Threshold) > 0.01 AndAlso errors.All(Function(e) e = firstError) Then
                             Call .DoCall(AddressOf reset)
 
                             ' 如果在这里不替换一下的话
@@ -180,7 +197,7 @@ Namespace Darwinism.GAF
             core = newCore
 
             Call "GA module do RE-seeding as local optimal solution was found...".Warning
-            Call takeBestSnapshot(bestSeed, fitness)
+            Call reporter(0, fitness, newCore)
         End Sub
 
         ''' <summary>

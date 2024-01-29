@@ -147,9 +147,9 @@ none:               Dim out As Double() = New Double(v1.Length - 1) {}
                     GoTo legacy
 #Else
                     If Avx2.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx2.Add)
+                        Return SIMDIntrinsics.VectorAddAvx2(v1, v2)
                     ElseIf Avx.IsSupported Then
-                        Return SIMDIntrinsics.Vector2(v1, v2, AddressOf Avx.Add)
+                        Return SIMDIntrinsics.VectorAddAvx(v1, v2)
                     Else
                         GoTo legacy
                     End If

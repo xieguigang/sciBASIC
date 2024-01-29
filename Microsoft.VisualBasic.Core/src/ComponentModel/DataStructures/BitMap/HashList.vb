@@ -113,21 +113,18 @@ Namespace ComponentModel
         End Property
 
         Public Function GetAvailablePos() As Integer
-            With list _
-                .SeqIterator _
-                .Where(Function(x) isNothing(x.value)) _
-                .FirstOrDefault
-
-                If list.Count > 0 And .i = 0 Then
-                    If list(0) Is Nothing Then
-                        Return 0
-                    Else
-                        Return list.Count
-                    End If
-                Else
-                    Return .i
+            For i As Integer = 0 To list.Count - 1
+                If isNothing(list(i)) Then
+                    Return i
                 End If
-            End With
+            Next
+
+            If list.Count = 0 OrElse isNothing(list(0)) Then
+                Return 0
+            Else
+                ' append to last
+                Return list.Count
+            End If
         End Function
 
         ''' <summary>

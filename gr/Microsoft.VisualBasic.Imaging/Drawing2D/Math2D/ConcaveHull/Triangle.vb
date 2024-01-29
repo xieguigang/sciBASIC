@@ -2,7 +2,11 @@
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
+    ''' <summary>
+    ''' the 3d point index
+    ''' </summary>
     Public Structure TriangleIndex
+
         Public vv0 As Long
         Public vv1 As Long
         Public vv2 As Long
@@ -20,8 +24,17 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
     Public Structure Triangle
 
+        ''' <summary>
+        ''' A
+        ''' </summary>
         Public P0Index As Integer
+        ''' <summary>
+        ''' B
+        ''' </summary>
         Public P1Index As Integer
+        ''' <summary>
+        ''' C
+        ''' </summary>
         Public P2Index As Integer
         Public Index As Integer
 

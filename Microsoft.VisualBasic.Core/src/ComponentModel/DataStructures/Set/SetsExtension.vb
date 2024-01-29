@@ -145,6 +145,12 @@ Public Module SetsExtension
     End Function
 #End Region
 
+    ''' <summary>
+    ''' get the last element in the <paramref name="set"/>, and then removes the last element
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="[set]"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function PollLast(Of T)([set] As SortedSet(Of T)) As T
         Dim last = [set].Last
@@ -152,6 +158,12 @@ Public Module SetsExtension
         Return last
     End Function
 
+    ''' <summary>
+    ''' get the first element in the <paramref name="set"/>, and then removes the first element
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="[set]"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function PollFirst(Of T)([set] As SortedSet(Of T)) As T
         Dim first = [set].First

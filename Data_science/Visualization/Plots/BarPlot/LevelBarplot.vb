@@ -121,7 +121,7 @@ Namespace BarPlot
                 .GetColors(levelColorSchema, colorLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
-            Dim colorIndex As DoubleRange = {0, colors.Length - 1}
+            Dim colorIndex As DoubleRange = {0.0, colors.Length - 1}
             Dim indexScaler As DoubleRange = data.Select(Function(i) i.Value).ToArray
             Dim pen As Pen = Stroke.TryParse(chartBoxStroke).GDIObject
 

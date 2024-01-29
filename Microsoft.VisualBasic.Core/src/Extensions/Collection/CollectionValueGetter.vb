@@ -52,9 +52,11 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+
+#If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
+#End If
 
 Public Module CollectionValueGetter
 
@@ -106,7 +108,7 @@ Public Module CollectionValueGetter
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="index"></param>
-    ''' <param name="[default]">Default value for invalid index is nothing.</param>
+    ''' <param name="default">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
     <Extension>
     Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
@@ -131,7 +133,7 @@ Public Module CollectionValueGetter
     ''' <param name="array"></param>
     ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
     ''' get.</param>
-    ''' <param name="[default]">
+    ''' <param name="default">
     ''' Default value for return when the array object is nothing or index outside of the boundary.
     ''' </param>
     ''' <returns>
@@ -168,7 +170,7 @@ Public Module CollectionValueGetter
     ''' <param name="array"></param>
     ''' <param name="index">A 32-bit integer that represents the position of the System.Array element to
     ''' get.</param>
-    ''' <param name="[default]">
+    ''' <param name="default">
     ''' The default value if index is outside the range of valid indexes for the current System.Array.
     ''' </param>
     ''' <returns>
@@ -198,13 +200,8 @@ Public Module CollectionValueGetter
     ''' <param name="source"></param>
     ''' <param name="index"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Item")>
     <Extension>
     Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#Else
-    <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
-#End If
         If source Is Nothing Then
             Return Nothing
         Else
@@ -227,7 +224,7 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="key"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     <Extension>
     Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), key As TKey, Optional [default] As TValue = Nothing) As TValue
@@ -242,6 +239,23 @@ Public Module CollectionValueGetter
         End If
     End Function
 
+    <Extension>
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), synonyms As IEnumerable(Of TKey), Optional [default] As TValue = Nothing) As TValue
+        If table Is Nothing Then
+            Return [default]
+        End If
+
+        For Each key As TKey In synonyms
+            If table.ContainsKey(key) Then
+                Dim val As TValue = table(key)
+                table.Remove(key)
+                Return val
+            End If
+        Next
+
+        Return [default]
+    End Function
+
     ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
@@ -249,7 +263,7 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="keys"></param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     <Extension>
     Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
@@ -294,12 +308,12 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
     ''' <param name="index">这个函数会自动处理空键名的情况</param>
-    ''' <param name="[default]"></param>
+    ''' <param name="default"></param>
     ''' <returns></returns>
     ''' 
     <DebuggerStepThrough>
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+    Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue),
                                                  index As TKey,
                                                  Optional [default] As TValue = Nothing,
                                                  Optional mute As Boolean = False,
@@ -330,16 +344,16 @@ Public Module CollectionValueGetter
     End Function
 
     <Extension>
-    Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
-        If hash Is Nothing Then
+    Public Function TryGetValue(Of TKey, TValue, TProp)(dict As Dictionary(Of TKey, TValue), index As TKey, prop As String) As TProp
+        If dict Is Nothing Then
             Return Nothing
         End If
 
-        If Not hash.ContainsKey(Index) Then
+        If Not dict.ContainsKey(index) Then
             Return Nothing
         End If
 
-        Dim obj As TValue = hash(Index)
+        Dim obj As TValue = dict(index)
         Dim propertyInfo As PropertyInfo = obj.GetType.GetProperty(prop)
 
         If propertyInfo Is Nothing Then

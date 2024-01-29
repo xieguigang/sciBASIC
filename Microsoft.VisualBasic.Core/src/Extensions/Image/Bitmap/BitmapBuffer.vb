@@ -103,13 +103,28 @@ Namespace Imaging.BitmapImage
             Me.channels = channel
         End Sub
 
+        ''' <summary>
+        ''' The dimension width of the current bitmap buffer object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Width As Integer
+        ''' <summary>
+        ''' The dimension height of the current bitmap buffer object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Integer
+        ''' <summary>
+        ''' the dimension size of current bitmap buffer object, 
+        ''' it is constructed via the <see cref="Width"/> and 
+        ''' <see cref="Height"/> data.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
         Public ReadOnly Property Stride As Integer
 
         ''' <summary>
-        ''' Gets a copy of the original raw image value that which constructed this bitmap object class
+        ''' Gets a copy of the original raw image value that which constructed 
+        ''' this bitmap object class
         ''' </summary>
         ''' <returns></returns>
         ''' 
@@ -322,18 +337,21 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
-        ''' Sets the color of the specified pixel in this System.Drawing.Bitmap.(这个函数线程不安全)
+        ''' Sets the color of the specified pixel in this <see cref="Bitmap"/>.(这个函数线程不安全)
         ''' </summary>
         ''' <param name="x">The x-coordinate of the pixel to set. [0, width-1]</param>
         ''' <param name="y">The y-coordinate of the pixel to set. [0, height-1]</param>
         ''' <param name="color">
-        ''' A System.Drawing.Color structure that represents the color to assign to the specified
+        ''' A <see cref="Color"/> structure that represents the color to assign to the specified
         ''' pixel.</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
+            If i < 0 Then
+                Return
+            End If
             If channels = 4 Then
                 buffer(i + 3) = color.A
             End If

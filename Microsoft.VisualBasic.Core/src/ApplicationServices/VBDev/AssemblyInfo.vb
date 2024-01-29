@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::e6a929b5c8c3773280f44496b75bc3d2, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\AssemblyInfo.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 75
-    '    Code Lines: 28
-    ' Comment Lines: 31
-    '   Blank Lines: 16
-    '     File Size: 2.65 KB
+' Summaries:
 
 
-    '     Class AssemblyInfo
-    ' 
-    '         Properties: AssemblyCompany, AssemblyCopyright, AssemblyDescription, AssemblyFileVersion, AssemblyFullName
-    '                     AssemblyInformationalVersion, AssemblyProduct, AssemblyTitle, AssemblyTrademark, AssemblyVersion
-    '                     BuiltTime, ComVisible, Guid, Name, TargetFramework
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 75
+'    Code Lines: 28
+' Comment Lines: 31
+'   Blank Lines: 16
+'     File Size: 2.65 KB
+
+
+'     Class AssemblyInfo
+' 
+'         Properties: AssemblyCompany, AssemblyCopyright, AssemblyDescription, AssemblyFileVersion, AssemblyFullName
+'                     AssemblyInformationalVersion, AssemblyProduct, AssemblyTitle, AssemblyTrademark, AssemblyVersion
+'                     BuiltTime, ComVisible, Guid, Name, TargetFramework
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
@@ -127,6 +128,32 @@ Namespace ApplicationServices.Development
 
         Public Overrides Function ToString() As String
             Return AssemblyTitle
+        End Function
+
+        ''' <summary>
+        ''' Gets the <see cref="Type"/> object with the specified name in the assembly instance.
+        ''' </summary>
+        ''' <param name="fullName">The full name of the type.</param>
+        ''' <returns>An object that represents the specified class, or null if the class is not found.</returns>
+        Public Overloads Shared Function [GetType](fullName As String) As Type
+            Static cache As New Dictionary(Of String, Type)
+
+            SyncLock cache
+                If Not cache.ContainsKey(fullName) Then
+                    Dim t As Type
+
+                    For Each a As Assembly In AppDomain.CurrentDomain.GetAssemblies
+                        t = a.GetType(fullName)
+
+                        If Not t Is Nothing Then
+                            cache(fullName) = t
+                            Return t
+                        End If
+                    Next
+                Else
+                    Return cache(fullName)
+                End If
+            End SyncLock
         End Function
     End Class
 End Namespace

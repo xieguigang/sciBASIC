@@ -139,6 +139,11 @@ Namespace CommandLine.InteropService.Pipeline
             Return Process
         End Function
 
+        ''' <summary>
+        ''' get commandline of current background task, in string format like 
+        ''' example as: /path/to/exe cli_arguments
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return CommandLine

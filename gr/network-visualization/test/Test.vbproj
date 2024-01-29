@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1458A1A1-110C-4587-A763-BA88CB808671}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.drawTest</StartupObject>
+    <StartupObject>Test.FormCanvas</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -61,7 +61,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>./bin</OutputPath>
+    <OutputPath>bin\x64\</OutputPath>
     <DocumentationFile>Test.xml</DocumentationFile>
     <Optimize>false</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -182,57 +182,61 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{f5c166f9-3059-4ad0-9178-63e51fff763a}</Project>
+      <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Graph\GraphTheory.vbproj">
-      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
-      <Name>GraphTheory</Name>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{7aed1268-252b-44ad-9fcb-f190ab8c5a79}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math-Core.vbproj">
-      <Project>{E3367B88-5D0C-495A-8273-331656D4B5AA}</Project>
-      <Name>Math-Core</Name>
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{080613bf-6240-4023-b7d9-fc71f3527b76}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Visualization\Plots\Plots.vbproj">
-      <Project>{17f8e821-0a01-4975-9caa-ac95251226d5}</Project>
-      <Name>Plots</Name>
+    <ProjectReference Include="..\..\..\Data_science\Visualization\Plots\plots-netcore5.vbproj">
+      <Project>{a3499cde-8fe7-4b44-bfcc-a10845ab34c5}</Project>
+      <Name>plots-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{71ee1973-4663-4286-b1e7-ef8e32cefff9}</Project>
+      <Project>{a4186185-b775-46fa-9582-087624d05c7a}</Project>
       <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\mime\text%25html\MIME-htmls.vbproj">
-      <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>MIME-htmls</Name>
+    <ProjectReference Include="..\..\..\mime\text%25html\html_netcore5.vbproj">
+      <Project>{26a7e3a9-a1b6-41ee-b79d-8d2b7a7d97b0}</Project>
+      <Name>html_netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\avi\avi.vbproj">
-      <Project>{5D35E122-11C0-4B18-BE08-E658A3F20323}</Project>
-      <Name>avi</Name>
+    <ProjectReference Include="..\..\avi\AVI.NET5.vbproj">
+      <Project>{7d676b15-f894-4d3b-ace2-0e1927f7bb0a}</Project>
+      <Name>AVI.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
-      <Project>{85E71B4B-9276-4EC8-AADC-C849205F1EA8}</Project>
-      <Name>Microsoft.VisualBasic.Imaging</Name>
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{8cdb2729-f4d2-4cbd-a2fb-faf4906170e7}</Project>
+      <Name>imaging.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\physics\physics.vbproj">
-      <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
-      <Name>physics</Name>
+    <ProjectReference Include="..\..\physics\physics-netcore5.vbproj">
+      <Project>{8dcbee07-ab8a-4a93-a2a2-e5253267e5eb}</Project>
+      <Name>physics-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Datavisualization.Network\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Network.GraphTheory</Name>
+    <ProjectReference Include="..\Datavisualization.Network\network_graph-netcore5.vbproj">
+      <Project>{1a37c3d2-98a2-49ff-8f4b-b2c8c09fb9a6}</Project>
+      <Name>network_graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Network.IO.Extensions\Network.IO.Extensions.vbproj">
-      <Project>{78CB32E6-2904-41E7-ACCA-F1E2757BFA8E}</Project>
-      <Name>Network.IO.Extensions</Name>
+    <ProjectReference Include="..\Network.IO.Extensions\network_io-netcore5.vbproj">
+      <Project>{619b7a84-b6ea-453e-89bc-db2fcb84c9b4}</Project>
+      <Name>network_io-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetworkCanvas\NetworkCanvas.vbproj">
-      <Project>{ef70bed6-8795-4523-a260-c1abed9405aa}</Project>
-      <Name>NetworkCanvas</Name>
+    <ProjectReference Include="..\NetworkCanvas\NetworkCanvas.NET5.vbproj">
+      <Project>{2e0946ae-b1ab-4c94-8306-1dd3d0971731}</Project>
+      <Name>NetworkCanvas.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Visualizer\Visualizer.vbproj">
-      <Project>{45B726AC-D3B8-476D-89EA-1FF7243A4FA5}</Project>
-      <Name>Visualizer</Name>
+    <ProjectReference Include="..\network_layout\network_layout.vbproj">
+      <Project>{a9d2b967-d4a5-418b-8d72-daccb18aaccc}</Project>
+      <Name>network_layout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Visualizer\networkVisualizer.NET5.vbproj">
+      <Project>{8e5f302e-4d81-4c79-a18f-fa85466afd67}</Project>
+      <Name>networkVisualizer.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

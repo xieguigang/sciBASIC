@@ -228,6 +228,10 @@ Namespace Parallel
             Call Me.New(data.Serialize)
         End Sub
 
+        ''' <summary>
+        ''' extract all bytes data from the input <see cref="MemoryStream"/> for construct a new data package
+        ''' </summary>
+        ''' <param name="data"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Sub New(data As MemoryStream)

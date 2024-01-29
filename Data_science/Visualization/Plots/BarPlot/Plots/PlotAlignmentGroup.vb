@@ -369,6 +369,7 @@ Namespace BarPlot
             Dim xsz As SizeF
             Dim xpos As PointF
             Dim xlabel$
+            Dim round As Integer = 0
 
             For Each part As Signal In query
                 For Each o As (x#, value#) In part.signals
@@ -385,25 +386,32 @@ Namespace BarPlot
                         xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
                         text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
                         move = False
+                        round = 0
 
-                        Call textCloud.add_label(text)
+                        'Call textCloud.add_label(text)
 
-                        Do While textCloud.get_conflicts > 0
-                            Dim conflict = textCloud.conflicts_with(text)
+                        'Do While textCloud.get_conflicts > 0
+                        '    Dim conflict = textCloud.conflicts_with(text)
 
-                            If conflict Is Nothing Then
-                                Dim text_rect As RectangleF = text.rect
-                                xpos = New PointF(text_rect.Left, text_rect.Top)
-                                move = True
-                                Exit Do
-                            Else
-                                Call textCloud.remove_label(text)
-                                nextPos = New PointF(xpos.X, xpos.Y - xsz.Height)
-                                text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
-                                xpos = nextPos
-                                Call textCloud.add_label(text)
-                            End If
-                        Loop
+                        '    If conflict Is Nothing Then
+                        '        Dim text_rect As RectangleF = text.rect
+                        '        xpos = New PointF(text_rect.Left, text_rect.Top)
+                        '        move = True
+                        '        Exit Do
+                        '    Else
+                        '        Call textCloud.remove_label(text)
+                        '        nextPos = New PointF(xpos.X, xpos.Y - xsz.Height)
+                        '        text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                        '        xpos = nextPos
+                        '        Call textCloud.add_label(text)
+                        '    End If
+
+                        '    If round > 100 Then
+                        '        Exit Do
+                        '    Else
+                        '        round += 1
+                        '    End If
+                        'Loop
 
                         If move Then
                             ' draw connection link
@@ -435,25 +443,32 @@ Namespace BarPlot
                         xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                         text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
                         move = False
+                        round = 0
 
-                        Call textCloud.add_label(text)
+                        'Call textCloud.add_label(text)
 
-                        Do While textCloud.get_conflicts > 0
-                            Dim conflict = textCloud.conflicts_with(text)
+                        'Do While textCloud.get_conflicts > 0
+                        '    Dim conflict = textCloud.conflicts_with(text)
 
-                            If conflict Is Nothing Then
-                                Dim text_rect As RectangleF = text.rect
-                                xpos = New PointF(text_rect.Left, text_rect.Top)
-                                move = True
-                                Exit Do
-                            Else
-                                Call textCloud.remove_label(text)
-                                nextPos = New PointF(xpos.X, xpos.Y + xsz.Height)
-                                text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
-                                xpos = nextPos
-                                Call textCloud.add_label(text)
-                            End If
-                        Loop
+                        '    If conflict Is Nothing Then
+                        '        Dim text_rect As RectangleF = text.rect
+                        '        xpos = New PointF(text_rect.Left, text_rect.Top)
+                        '        move = True
+                        '        Exit Do
+                        '    Else
+                        '        Call textCloud.remove_label(text)
+                        '        nextPos = New PointF(xpos.X, xpos.Y + xsz.Height)
+                        '        text = New TextRectangle(xlabel, New RectangleF(nextPos, xsz))
+                        '        xpos = nextPos
+                        '        Call textCloud.add_label(text)
+                        '    End If
+
+                        '    If round > 100 Then
+                        '        Exit Do
+                        '    Else
+                        '        round += 1
+                        '    End If
+                        'Loop
 
                         If move Then
                             ' draw connection link

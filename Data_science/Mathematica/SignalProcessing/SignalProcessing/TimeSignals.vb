@@ -62,9 +62,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' a single scatter point in a time signal
+''' </summary>
 Public Structure TimeSignal : Implements ITimeSignal
 
     Dim time As Double
@@ -82,6 +84,21 @@ Public Structure TimeSignal : Implements ITimeSignal
         End Get
     End Property
 
+    Sub New(t As Double, intensity As Double)
+        Me.time = t
+        Me.intensity = intensity
+    End Sub
+
+    ''' <summary>
+    ''' make signal tick data copy
+    ''' </summary>
+    ''' <param name="tick"></param>
+    Sub New(tick As ITimeSignal)
+        Me.time = tick.time
+        Me.intensity = tick.intensity
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"[{time}, {intensity}]"
     End Function
@@ -95,15 +112,3 @@ Public Structure TimeSignal : Implements ITimeSignal
         Next
     End Function
 End Structure
-
-Public Class Signal : Inherits Vector(Of TimeSignal)
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Sub New(data As IEnumerable(Of TimeSignal))
-        Call MyBase.New(data)
-    End Sub
-
-    Public Shared Operator +(a As Signal, b As Signal) As Signal
-        Throw New NotImplementedException
-    End Operator
-End Class

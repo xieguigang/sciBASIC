@@ -57,7 +57,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing3D.Math3D
 
@@ -140,9 +140,9 @@ Namespace Drawing3D.Math3D
         Public Function RotateX(angle As Single) As Vector3D
             Dim rad As Single, cosa As Single, sina As Single, yn As Vector, zn As Vector
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             yn = Me.Y * cosa - Me.Z * sina
             zn = Me.Y * sina + Me.Z * cosa
             Return New Vector3D(New Vector(Me.X), yn, zn)
@@ -151,9 +151,9 @@ Namespace Drawing3D.Math3D
         Public Function RotateY(angle As Single) As Vector3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Vector, Zn As Vector
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Zn = Me.Z * cosa - Me.X * sina
             Xn = Me.Z * sina + Me.X * cosa
 
@@ -163,9 +163,9 @@ Namespace Drawing3D.Math3D
         Public Function RotateZ(angle As Single) As Vector3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Vector, Yn As Vector
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Xn = Me.X * cosa - Me.Y * sina
             Yn = Me.X * sina + Me.Y * cosa
             Return New Vector3D(Xn, Yn, New Vector(Me.Z))

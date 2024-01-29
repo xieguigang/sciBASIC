@@ -57,18 +57,171 @@
 #End Region
 
 Imports System.IO
+Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace ComponentModel.StoreProcedure
 
     ''' <summary>
-    ''' The training dataset
+    ''' the in-memory sample data object
+    ''' </summary>
+    Public Class SampleData : Implements INamedValue
+
+        ''' <summary>
+        ''' the unique id
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property id As String Implements INamedValue.Key
+        Public Property features As Double()
+        Public Property labels As Double()
+
+        Sub New()
+        End Sub
+
+        Sub New(sample As Sample)
+            id = sample.ID
+            features = sample.vector
+            labels = sample.target
+        End Sub
+
+        ''' <summary>
+        ''' create the dataset for predictions, so no label data
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As Double())
+            Me.features = data
+        End Sub
+
+        Sub New(features As Double(), label As Double)
+            Me.features = features
+            Me.labels = {label}
+        End Sub
+
+        Sub New(features As Double(), labels As Double())
+            Me.features = features
+            Me.labels = labels
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return id
+        End Function
+
+        Public Shared Function CreateDataSet(ds As IEnumerable(Of SampleData)) As DataSet
+            Dim samples As New SampleList With {
+                .items = ds _
+                    .Select(Function(si) New Sample(si.features, si.labels, si.id)) _
+                    .ToArray
+            }
+            Dim featureNames As String() = samples(0).vector _
+                .Select(Function(di, i) $"x{i + 1}") _
+                .ToArray
+            Dim norm As NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples, featureNames, estimateQuantile:=False)
+
+            Return New DataSet With {
+                .DataSamples = samples,
+                .output = samples(0).target _
+                    .Select(Function(di, i) $"y{i + 1}") _
+                    .ToArray,
+                .NormalizeMatrix = norm
+            }
+        End Function
+
+        Public Shared Iterator Function TransformDataset(trainset As SampleData(), is_generative As Boolean, is_training As Boolean) As IEnumerable(Of SampleData)
+            Dim featureMax As Double() = New Double(trainset(0).features.Length - 1) {}
+            Dim labelMax As Double() = Nothing
+
+            If is_training Then
+                labelMax = New Double(trainset(0).labels.Length - 1) {}
+            End If
+
+            For i As Integer = 0 To trainset.Length - 1
+                Dim d As SampleData = trainset(i)
+
+                For j As Integer = 0 To d.features.Length - 1
+                    If d.features(j) > featureMax(j) Then
+                        featureMax(j) = d.features(j)
+                    End If
+                Next
+
+                If is_training Then
+                    For j As Integer = 0 To d.labels.Length - 1
+                        If d.labels(j) > labelMax(j) Then
+                            labelMax(j) = d.labels(j)
+                        End If
+                    Next
+                End If
+            Next
+
+            For i As Integer = 0 To trainset.Length - 1
+                Dim label As Double() = trainset(i).labels
+
+                If is_training AndAlso is_generative Then
+                    label = SIMD.Divide.f64_op_divide_f64(label, labelMax)
+                End If
+
+                Yield New SampleData With {
+                    .features = SIMD.Divide.f64_op_divide_f64(trainset(i).features, featureMax),
+                    .labels = label,
+                    .id = trainset(i).id
+                }
+            Next
+        End Function
+
+        Public Shared Sub Save(data As IEnumerable(Of SampleData), file As Stream)
+            Dim wr As New BinaryWriter(file)
+            Dim encode As New NetworkByteOrderBuffer
+            Dim feature_size As Integer = -1
+            Dim label_size As Integer = -1
+
+            For Each sample As SampleData In data
+                If feature_size = -1 Then
+                    feature_size = sample.features.Length
+                    label_size = sample.labels.Length
+
+                    Call wr.Write(BitConverter.GetBytes(feature_size))
+                    Call wr.Write(BitConverter.GetBytes(label_size))
+                End If
+
+                Call wr.Write(New Buffer(Encoding.ASCII.GetBytes(sample.id)).Serialize)
+                Call wr.Write(encode.encode(sample.features))
+                Call wr.Write(encode.encode(sample.labels))
+            Next
+
+            Call wr.Flush()
+        End Sub
+
+        Public Shared Iterator Function Load(file As Stream) As IEnumerable(Of SampleData)
+            Dim rd As New BinaryReader(file)
+            Dim decode As New NetworkByteOrderBuffer
+            Dim feature_size As Integer = BitConverter.ToInt32(rd.ReadBytes(RawStream.INT32), Scan0)
+            Dim label_size As Integer = BitConverter.ToInt32(rd.ReadBytes(RawStream.INT32), Scan0)
+
+            Do While file.Position < file.Length
+                Dim sbuf As Buffer = Buffer.Parse(rd)
+                Dim id As String = Encoding.ASCII.GetString(sbuf.buffer)
+                Dim features As Double() = decode.decode(rd.ReadBytes(feature_size * RawStream.DblFloat))
+                Dim labels As Double() = decode.decode(rd.ReadBytes(label_size * RawStream.DblFloat))
+
+                Yield New SampleData With {
+                    .id = id,
+                    .features = features,
+                    .labels = labels
+                }
+            Loop
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' The training dataset, a data point with known label
     ''' </summary>
     Public Class Sample : Implements INamedValue
 
@@ -92,7 +245,7 @@ Namespace ComponentModel.StoreProcedure
         ''' array.
         ''' </remarks>
         <XmlElement>
-        Public Property status As String
+        Public Property label As String
 
         ''' <summary>
         ''' The network expected output values
@@ -101,6 +254,10 @@ Namespace ComponentModel.StoreProcedure
         <XmlAttribute>
         Public Property target As Double()
 
+        ''' <summary>
+        ''' sample features data
+        ''' </summary>
+        ''' <returns></returns>
         <XmlIgnore>
         Public ReadOnly Property vector As Double()
             Get
@@ -130,7 +287,7 @@ Namespace ComponentModel.StoreProcedure
         End Sub
 
         Private Iterator Function decodeVector() As IEnumerable(Of Double)
-            Using buffer = status.Base64RawBytes.UnGzipStream
+            Using buffer = label.Base64RawBytes.UnGzipStream
                 For Each block As Byte() In buffer.ToArray.Split(8)
                     Yield BitConverter.ToDouble(block, Scan0)
                 Next
@@ -143,7 +300,7 @@ Namespace ComponentModel.StoreProcedure
                     buffer.Write(BitConverter.GetBytes(x), Scan0, 8)
                 Next
 
-                status = buffer _
+                label = buffer _
                     .GZipStream _
                     .ToArray _
                     .ToBase64String

@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Parser
@@ -129,12 +130,54 @@ Namespace Text.Parser
         End Property
 
         ''' <summary>
+        ''' test if current char buffer is starts with a specific prefix string
+        ''' </summary>
+        ''' <param name="prefix"></param>
+        ''' <returns></returns>
+        Public Function StartsWith(prefix As String) As Boolean
+            If Me.Size < prefix Then
+                Return False
+            Else
+                For i As Integer = 0 To prefix.Length - 1
+                    If buffer(i) <> prefix(i) Then
+                        Return False
+                    End If
+                Next
+
+                Return True
+            End If
+        End Function
+
+        Public Function StartsWith(r As Regex) As Boolean
+            Dim s As New String(buffer.ToArray)
+            Dim m As String = r.Match(s).Value
+
+            If m.StringEmpty Then
+                Return False
+            ElseIf s.StartsWith(m) Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
+        ''' <summary>
         ''' add a char into current buffer data list
         ''' </summary>
         ''' <param name="c"></param>
         ''' <returns></returns>
         Public Function Add(c As Char) As CharBuffer
             Call buffer.Add(c)
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' add a collection of char into current buffer data list
+        ''' </summary>
+        ''' <param name="chars"></param>
+        ''' <returns></returns>
+        Public Function Add(chars As String) As CharBuffer
+            Call buffer.AddRange(chars)
             Return Me
         End Function
 

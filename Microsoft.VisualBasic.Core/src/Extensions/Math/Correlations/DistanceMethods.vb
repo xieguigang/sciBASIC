@@ -52,8 +52,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Namespace Math.Correlations
 
@@ -73,7 +75,7 @@ Namespace Math.Correlations
         Public Function chebyshev_distance(p As Double(), q As Double()) As Double
             Return Aggregate xi As Double
                    In SIMD.Subtract.f64_op_subtract_f64(p, q)
-                   Into Max(stdNum.Abs(xi))
+                   Into Max(std.Abs(xi))
         End Function
 
         ''' <summary>
@@ -91,7 +93,7 @@ Namespace Math.Correlations
             Return 1 - (
                 Aggregate xi As Double
                 In SIMD.Multiply.f64_op_multiply_f64(p, q)
-                Into Sum(stdNum.Sqrt(xi))
+                Into Sum(std.Sqrt(xi))
             )
         End Function
 
@@ -144,13 +146,13 @@ Namespace Math.Correlations
         <Extension>
         Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
-            Return stdNum.Sqrt((From n In vector Select n ^ 2).Sum)
+            Return std.Sqrt((From n In vector Select n ^ 2).Sum)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function EuclideanDistance(Vector As IEnumerable(Of Integer)) As Double
-            Return stdNum.Sqrt((From n In Vector Select n ^ 2).Sum)
+            Return std.Sqrt((From n In Vector Select n ^ 2).Sum)
         End Function
 
         <Extension>
@@ -158,7 +160,7 @@ Namespace Math.Correlations
             If a.Count <> b.Count Then
                 Return -1
             Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
+                Return std.Sqrt((From i As Integer In a.Sequence Select (a(i) - b(i)) ^ 2).Sum)
             End If
         End Function
 
@@ -179,7 +181,13 @@ Namespace Math.Correlations
             If a.Length <> b.Length Then
                 Return -1.0R
             Else
-                Return stdNum.Sqrt((From i As Integer In a.Sequence Select (CInt(a(i)) - CInt(b(i))) ^ 2).Sum)
+                Dim sum As Double = 0
+
+                For i As Integer = 0 To a.Length - 1
+                    sum += (a(i) - b(i)) ^ 2
+                Next
+
+                Return std.Sqrt(sum)
             End If
         End Function
 
@@ -194,18 +202,13 @@ Namespace Math.Correlations
         Public Function EuclideanDistance(X As Double(), Y As Double()) As Double
             If X.Length <> Y.Length Then
                 Throw New ArgumentException(DimNotAgree)
+            Else
+                Dim v = SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(X, Y), 2)
+                Dim sum As Double = v.Sum
+                Dim distance As Double = std.Sqrt(sum)
+
+                Return distance
             End If
-
-            Dim count As Integer = X.Length
-            Dim sum As Double = 0.0
-
-            For i As Integer = 0 To count - 1
-                sum += stdNum.Pow(stdNum.Abs(X(i) - Y(i)), 2)
-            Next
-
-            Dim distance As Double = stdNum.Sqrt(sum)
-
-            Return distance
         End Function
 
         Const DimNotAgree As String = "The number of elements in X must match the number of elements in Y!"
@@ -225,7 +228,22 @@ Namespace Math.Correlations
             Return MinkowskiDistance(X, Y, 1)
         End Function
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+        ''' <summary>
+        ''' Calculates the Manhattan Distance Measure between two data points
+        ''' </summary>
+        ''' <param name="X">An array with the values of an object or datapoint</param>
+        ''' <param name="Y">An array with the values of an object or datapoint</param>
+        ''' <returns>Returns the Manhattan Distance Measure Between Points X and Points Y</returns>
+        ''' <remarks>
+        ''' Manhattan 距离：是Minkowski, q=1时的特例
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ManhattanDistance(x As IVector, y As IVector) As Double
+            Return MinkowskiDistance(x.Data, y.Data, 1)
+        End Function
+
+#If NET_48 = 1 Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -234,5 +252,56 @@ Namespace Math.Correlations
         End Function
 
 #End If
+
+        ''' <summary>
+        ''' implements via <see cref="EuclideanDistance"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DistanceTo(a As IVector, b As IVector) As Double
+            Return EuclideanDistance(a.Data, b.Data)
+        End Function
+
+        ''' <summary>
+        ''' implements via <see cref="EuclideanDistance"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DistanceTo(a As IVector, v As Double()) As Double
+            Return EuclideanDistance(a.Data, v)
+        End Function
+
+        ''' <summary>
+        ''' SUM((a - v) ^ 2)
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SquareDistance(a As IVector, v As Double()) As Double
+            Return SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(a.Data, v), 2).Sum
+        End Function
+
+        ''' <summary>
+        ''' Reduced Euclidean distance
+        ''' </summary>
+        Public Function RDist(x As Span(Of Double), y As Span(Of Double)) As Double
+            Dim distSquared As Double = 0
+            Dim d As Double
+
+            For i As Integer = 0 To x.Length - 1
+                d = x(i) - y(i)
+                distSquared += d * d
+            Next
+
+            Return distSquared
+        End Function
     End Module
 End Namespace

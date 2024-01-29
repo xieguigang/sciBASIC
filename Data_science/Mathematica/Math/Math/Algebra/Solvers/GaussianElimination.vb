@@ -54,15 +54,62 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace LinearAlgebra.Solvers
 
+    ''' <summary>
+    ''' ### Gaussian elimination
+    ''' 
+    ''' In mathematics, Gaussian elimination, also known as row reduction, is an algorithm 
+    ''' for solving systems of linear equations. It consists of a sequence of row-wise 
+    ''' operations performed on the corresponding matrix of coefficients. This method can 
+    ''' also be used to compute the rank of a matrix, the determinant of a square matrix, 
+    ''' and the inverse of an invertible matrix. The method is named after Carl Friedrich 
+    ''' Gauss (1777–1855). To perform row reduction on a matrix, one uses a sequence of
+    ''' elementary row operations to modify the matrix until the lower left-hand corner of 
+    ''' the matrix is filled with zeros, as much as possible. There are three types of 
+    ''' elementary row operations:
+    ''' 
+    ''' + Swapping two rows,
+    ''' + Multiplying a row by a nonzero number,
+    ''' + Adding a multiple Of one row To another row.
+    ''' 
+    ''' Using these operations, a matrix can always be transformed into an upper triangular
+    ''' matrix, And In fact one that Is In row echelon form. Once all Of the leading coefficients 
+    ''' (the leftmost nonzero entry In Each row) are 1, And every column containing a leading
+    ''' coefficient has zeros elsewhere, the matrix Is said To be In reduced row echelon form.
+    ''' This final form Is unique; In other words, it Is independent Of the sequence Of row
+    ''' operations used. For example, In the following sequence Of row operations (where two 
+    ''' elementary operations On different rows are done at the first And third steps), the 
+    ''' third And fourth matrices are the ones In row echelon form, And the final matrix Is 
+    ''' the unique reduced row echelon form.
+    ''' </summary>
     Public Module GaussianElimination
 
         ''' <summary>
-        ''' a*b=0 -> x
+        ''' solve a system of equation
+        ''' 
+        ''' ```
+        ''' x * A = b
+        ''' ```
         ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns>x</returns>
         ''' <remarks></remarks>
+        ''' <example>
+        ''' Dim a As New NumericMatrix({
+        '''     { 2,  1, -1},
+        '''     {-3, -1,  2},
+        '''     {-2,  1,  2}
+        ''' })
+        ''' Dim b As Vector = {8, -11, -3}
+        ''' Dim x As Vector = GaussianElimination.Solve(a, b)
+        ''' 
+        '''  2x + y -  z =  8
+        ''' -3x - y + 2z = -11
+        ''' -2x + y + 2z = -3
+        ''' 
+        ''' ' &lt;dims: 3> [2, 3, -1...]
+        ''' Console.WriteLine(x)
+        ''' </example>
         Public Function Solve(A As GeneralMatrix, b As Vector) As Vector
             Dim n As Integer = b.Dim
             Dim TMP As Double
@@ -75,17 +122,18 @@ Namespace LinearAlgebra.Solvers
                 Ab(i, n) = b(i)
             Next
 
-            For k As Integer = 0 To n - 2 'Gaussian Elimination Core
-                For i = k + 1 To n - 1
+            ' Gaussian Elimination Core
+            For k As Integer = 0 To n - 2
+                For i As Integer = k + 1 To n - 1
                     TMP = Ab(i, k) / Ab(k, k)
-                    For j = 0 To n
+                    For j As Integer = 0 To n
                         Ab(i, j) = Ab(i, j) - TMP * Ab(k, j)
                     Next
                 Next
             Next
 
-            For i = 0 To n - 1
-                For j = 0 To n - 1
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To n - 1
                     A(i, j) = Ab(i, j)
                 Next
                 b(i) = Ab(i, n)
@@ -101,7 +149,7 @@ Namespace LinearAlgebra.Solvers
         ''' <param name="b"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function UpTri(A As GeneralMatrix, b As Vector) As Vector
+        Private Function UpTri(A As GeneralMatrix, b As Vector) As Vector
             Dim N As Integer = A.ColumnDimension
             Dim x As New Vector(N)
 
@@ -114,6 +162,7 @@ Namespace LinearAlgebra.Solvers
                 Next
                 x(i) /= A(i, i)
             Next
+
             Return x
         End Function
     End Module

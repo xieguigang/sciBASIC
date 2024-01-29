@@ -278,6 +278,10 @@ Namespace Serialization.JSON
         ''' 从文本文件或者文本内容之中进行JSON反序列化
         ''' </summary>
         ''' <param name="json">This string value can be json text or json file path.</param>
+        ''' <remarks>
+        ''' null or empty string will be parsed as nothing if the optional
+        ''' parameter <paramref name="throwEx"/> option value is set to false
+        ''' </remarks>
         <Extension>
         Public Function LoadJSON(Of T)(json$,
                                        Optional simpleDict As Boolean = True,

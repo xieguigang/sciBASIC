@@ -87,26 +87,51 @@ Namespace LinearAlgebra
             Return vector.Select(Function(x) CInt(x)).ToArray
         End Function
 
+        ''' <summary>
+        ''' A helper function for cast current <see cref="Vector"/> as a numeric array in <see cref="Long"/> type.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsLong(vector As Vector) As Long()
             Return vector.Select(Function(x) CLng(x)).ToArray
         End Function
 
+        ''' <summary>
+        ''' A helper function for cast current <see cref="Vector"/> as a numeric array in <see cref="Single"/> type.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsSingle(vector As Vector) As Single()
             Return vector.Select(Function(x) CSng(x)).ToArray
         End Function
 
+        ''' <summary>
+        ''' A helper function for cast current <see cref="Vector"/> as a numeric array in <see cref="UInteger"/> type.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsUInteger(vector As Vector) As UInteger()
             Return vector.Select(Function(x) CUInt(x)).ToArray
         End Function
 
+        ''' <summary>
+        ''' A helper function for cast current <see cref="Vector"/> as a numeric array in <see cref="ULong"/> type.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsULong(vector As Vector) As ULong()
             Return vector.Select(Function(x) CULng(x)).ToArray
         End Function
 
+        ''' <summary>
+        ''' A helper function for cast current <see cref="Vector"/> as a numeric array in <see cref="UShort"/> type.
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function AsUShort(vector As Vector) As UShort()
             Return vector.Select(Function(x) CUShort(x)).ToArray

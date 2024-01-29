@@ -130,7 +130,7 @@ Namespace DataVector
                 Case CDFDataTypes.FLOAT : stringify = DirectCast(genericValue, Single()).Select(Function(d) d.ToString("G3")).JoinBy(",")
                 Case CDFDataTypes.INT : stringify = DirectCast(genericValue, Integer()).JoinBy(",")
                 Case CDFDataTypes.SHORT : stringify = DirectCast(genericValue, Short()).JoinBy(",")
-                Case CDFDataTypes.LONG : stringify = DirectCast(genericValue, Long()).JoinBy(",")
+                Case CDFDataTypes.INT64 : stringify = DirectCast(genericValue, Long()).JoinBy(",")
                 Case CDFDataTypes.BOOLEAN : stringify = DirectCast(genericValue, Boolean()).Select(Function(b) If(b, 1, 0)).JoinBy(",")
                 Case Else
                     Return "invalid!"
@@ -142,7 +142,7 @@ Namespace DataVector
                 Case CDFDataTypes.FLOAT : range = DirectCast(genericValue, Single()).Select(Function(d) CDbl(d)).ToArray
                 Case CDFDataTypes.INT : range = DirectCast(genericValue, Integer()).Select(Function(i) CDbl(i)).ToArray
                 Case CDFDataTypes.SHORT : range = DirectCast(genericValue, Short()).Select(Function(s) CDbl(s)).ToArray
-                Case CDFDataTypes.LONG : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
+                Case CDFDataTypes.INT64 : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
                 Case Else
                     ' do nothing
             End Select
@@ -185,7 +185,7 @@ Namespace DataVector
                     chunks = DirectCast(CObj(Me), shorts).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
-                Case CDFDataTypes.LONG
+                Case CDFDataTypes.INT64
                     chunks = DirectCast(CObj(Me), longs).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray

@@ -114,6 +114,11 @@ Namespace Data.Repository
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetHashCode(str As String) As UInteger
+            Return FNV1a.GetHashCode({str})
+        End Function
+
         Public Function GetHashCode(targets As IEnumerable(Of String)) As UInteger
             Const offset As UInteger = 2166136261
             Const prime As Long = 16777619

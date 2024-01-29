@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 ''' <summary>
 ''' 一条曲线的绘图数据模型
 ''' </summary>
+''' <remarks>
+''' [x, y]
+''' </remarks>
 Public Class SerialData : Implements INamedValue
     ' Implements IEnumerable(Of PointData)
 
@@ -91,6 +94,14 @@ Public Class SerialData : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public Property DataAnnotations As Annotation()
+
+    ''' <summary>
+    ''' get x axis data 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function x() As Double()
+        Return pts.Select(Function(pi) CDbl(pi.pt.X)).ToArray
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetPen() As Pen

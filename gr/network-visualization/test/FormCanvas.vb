@@ -54,7 +54,6 @@ Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Data.visualize.Network.Canvas
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Cytoscape
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 
 Public Class FormCanvas
@@ -67,8 +66,8 @@ Public Class FormCanvas
         Call Me.Controls.Add(canvas)
 
         canvas.Graph(True) = CytoscapeTableLoader.CytoscapeExportAsGraph(
-            App.HOME & "/../../Data\xcb-main-Edges.csv",
-            App.HOME & "/../../Data\xcb-main-Nodes.csv")
+            App.HOME & "/../../../Data\xcb-main-Edges.csv",
+            App.HOME & "/../../../Data\xcb-main-Nodes.csv")
 
         TrackBar1.Minimum = 0
         TrackBar1.Maximum = Math.PI * 2 * 1000

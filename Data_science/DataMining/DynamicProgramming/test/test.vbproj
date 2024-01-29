@@ -131,13 +131,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{829ee980-ee82-4287-a72a-7651d9eb0f3b}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DynamicProgramming.vbproj">
-      <Project>{a903b744-c08d-4869-bc35-3dd25e36aa16}</Project>
-      <Name>DynamicProgramming</Name>
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{b0cbbb46-6f5c-4b94-bb33-a7aa6b323a93}</Project>
+      <Name>Math.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DynamicProgramming.NET5.vbproj">
+      <Project>{abb0f996-3f45-4b79-8c77-33181f959f99}</Project>
+      <Name>DynamicProgramming.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

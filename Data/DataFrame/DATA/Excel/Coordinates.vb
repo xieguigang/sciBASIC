@@ -74,7 +74,7 @@ Namespace Excel
         ReadOnly AZ As New Index(Of Char)("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         ReadOnly ZERO% = Asc("A"c) - 1
 
-        Public Function Index(c$) As Point
+        Public Function Index(c As String) As Point
             Dim Y As New List(Of Char)
             Dim X%
 
@@ -124,12 +124,19 @@ Namespace Excel
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        <Extension> Public Function YValue(x As IEnumerable(Of Char)) As Integer
+        <Extension>
+        Public Function YValue(x As IEnumerable(Of Char)) As Integer
             Dim value#
             Dim power% = 0
+            Dim offset As Integer = 0
 
-            For Each c In x.Reverse
-                value += (Asc(c) - ZERO) * (26 ^ power)
+            ' power = 0, offset = 0
+            ' power > 0, offset = 1
+
+            For Each c As Char In x.Reverse
+                value += (Asc(c) - ZERO) + (26 * power - offset)
+                power += 1
+                offset = 1
             Next
 
             Return CInt(value)

@@ -57,8 +57,9 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.HeatMap
 
@@ -139,12 +140,13 @@ Namespace Drawing2D.HeatMap
 
         Private Sub gaussiankernel()
             Dim y = -r, i = 0
+            Dim sigma_2 As Double = gSigma ^ 2
 
             While i < gSize
                 Dim x = -r, j = 0
 
                 While j < gSize
-                    m_kernelField(i, j) = stdNum.Exp((x * x + y * y) / (-2 * gSigma * gSigma)) / (2 * stdNum.PI * gSigma * gSigma)
+                    m_kernelField(i, j) = std.Exp((x * x + y * y) / (-2 * sigma_2)) / (2 * std.PI * sigma_2)
                     x += 1
                     j += 1
                 End While
@@ -156,14 +158,15 @@ Namespace Drawing2D.HeatMap
 
         Private Function MultiplyKernel(weight As Double) As Double(,)
             Dim wKernel As Double(,) = CType(m_kernelField.Clone(), Double(,))
-            For i = 0 To gSize - 1
-                For j = 0 To gSize - 1
+            For i As Integer = 0 To gSize - 1
+                For j As Integer = 0 To gSize - 1
                     wKernel(i, j) *= weight
                 Next
             Next
             Return wKernel
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SetDatas(datas As IEnumerable(Of T)) As HeatMapRaster(Of T)
             Return SetDataInternal(datas.ToArray)
         End Function
@@ -180,7 +183,7 @@ Namespace Drawing2D.HeatMap
             ' 初始化高斯累加图
             m_heatMatrix = New Double(hField - 1, wField - 1) {}
 
-            For Each data As Pixel In PopulateDenseRasterMatrix(datas, wField, hField)
+            For Each data As Pixel In RasterMatrix.PopulateDenseRasterMatrix(datas, wField, hField)
                 Dim i, j, tx, ty, ir, jr As Integer
                 Dim radius = gSize >> 1
                 Dim x = data.X
@@ -221,39 +224,13 @@ Namespace Drawing2D.HeatMap
             Return Me
         End Function
 
-        Public Shared Iterator Function PopulateDenseRasterMatrix(datas As IEnumerable(Of T), w As Integer, h As Integer) As IEnumerable(Of Pixel)
-            Dim matrix = datas _
-                .GroupBy(Function(a) a.X) _
-                .ToDictionary(Function(x) x.Key,
-                              Function(a)
-                                  Return a _
-                                      .GroupBy(Function(b) b.Y) _
-                                      .ToDictionary(Function(y) y.Key,
-                                                    Function(g)
-                                                        If g.Count = 1 Then
-                                                            Return g.First.Scale
-                                                        Else
-                                                            Return g.Average(Function(p) p.Scale)
-                                                        End If
-                                                    End Function)
-                              End Function)
-            Dim data As Double
-
-            For i As Integer = 0 To w - 1
-                For j As Integer = 0 To h - 1
-                    data = 0
-
-                    If matrix.ContainsKey(i) Then
-                        If matrix(key:=i).ContainsKey(j) Then
-                            data = matrix(key:=i)(key:=j)
-                        End If
-                    End If
-
-                    Yield New PixelData With {.X = i, .Y = j, .Scale = data}
-                Next
-            Next
-        End Function
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="activator">
+        ''' a delegate function for create the pixel spot data object
+        ''' </param>
+        ''' <returns></returns>
         Public Iterator Function GetRasterPixels(activator As Func(Of Integer, Integer, Double, T)) As IEnumerable(Of T)
             For i = 0 To m_heatMatrix.GetLength(0) - 1
                 For j = 0 To m_heatMatrix.GetLength(1) - 1
@@ -262,6 +239,10 @@ Namespace Drawing2D.HeatMap
             Next
         End Function
 
+        ''' <summary>
+        ''' populate out the default internal <see cref="PixelData"/> model
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetRasterPixels() As IEnumerable(Of Pixel) Implements IRasterGrayscaleHeatmap.GetRasterPixels
             For i = 0 To m_heatMatrix.GetLength(0) - 1
                 For j = 0 To m_heatMatrix.GetLength(1) - 1

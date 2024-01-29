@@ -170,6 +170,14 @@ Namespace FileSystem
             Return VisitBlock(filepath, checkExists:=False)
         End Function
 
+        ''' <summary>
+        ''' Create a new file block on the fs tree
+        ''' </summary>
+        ''' <param name="filepath"></param>
+        ''' <returns>
+        ''' A file block object with blank allocation data, no postion and no data size, just
+        ''' with the file path reference data
+        ''' </returns>
         Public Function AddDataBlock(filepath As FilePath) As StreamBlock
             Dim createNew As New StreamBlock(filepath)
             ' then add current file block to the tree
@@ -181,6 +189,7 @@ Namespace FileSystem
                 dirBlock = AddDataGroup(dir)
             End If
 
+            ' just add current file to fs tree
             Call dirBlock.tree.Add(filepath.FileName, createNew)
 
             Return createNew

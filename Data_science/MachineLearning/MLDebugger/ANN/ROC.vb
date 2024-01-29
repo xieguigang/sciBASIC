@@ -92,7 +92,7 @@ Public Module ROC
         Dim result As Validate() = network.CreateValidateResult(training.TrainingSet).ToArray
         Dim attributes As Double() = result(Scan0).actuals
         Dim evalAUC = Function(null As Double, i As Integer) As Double
-                          Dim validations = result.ROC({0, 1}, attribute:=i)
+                          Dim validations = result.ROC(New Double() {0, 1}, attribute:=i)
                           Dim AUCValue = Validation.AUC(validations)
 
                           Return AUCValue

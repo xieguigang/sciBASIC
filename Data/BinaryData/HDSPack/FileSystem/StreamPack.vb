@@ -61,6 +61,7 @@
 
 Imports System.Data
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -82,6 +83,9 @@ Namespace FileSystem
         Public ReadOnly Property globalAttributes As New LazyAttribute
         Public ReadOnly Property is_readonly As Boolean Implements IFileSystemEnvironment.readonly
 
+        ''' <summary>
+        ''' usually be the underlying local file stream for read/write pack data
+        ''' </summary>
         ReadOnly buffer As Stream
         ReadOnly init_size As Integer
 
@@ -101,6 +105,7 @@ Namespace FileSystem
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property files As StreamBlock()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return superBlock _
                     .ListFiles _
@@ -161,7 +166,7 @@ Namespace FileSystem
         End Sub
 
         Public Function Delete(path As String) As Boolean Implements IFileSystemEnvironment.DeleteFile
-            Dim dir As String = path.ParentPath & "/"
+            Dim dir As String = path.ParentPath(full:=False) & "/"
             Dim name As String = path.FileName
             Dim folder = GetObject(dir)
 
@@ -262,6 +267,7 @@ Namespace FileSystem
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function TestMagic(magic As Byte()) As Boolean
             Return Encoding.ASCII.GetString(magic) = StreamPack.Magic
         End Function
@@ -325,25 +331,44 @@ Namespace FileSystem
         ''' <returns>
         ''' returns nothing if object is not found!
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetObject(fileName As String) As StreamObject
             Return superBlock.GetObject(New FilePath(fileName))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenBlock(block As StreamBlock) As Stream
             Return New SubStream(buffer, block.offset, block.size)
         End Function
 
-        Public Function FileExists(path As String) As Boolean Implements IFileSystemEnvironment.FileExists
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="ZERO_Nonexists">
+        ''' this parameter is not working at here
+        ''' </param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
             Return superBlock.BlockExists(FilePath.Parse(path))
         End Function
 
         ''' <summary>
-        ''' a more advanced wrapper for <see cref="OpenBlock(String)"/> function
+        ''' a more advanced wrapper for <see cref="OpenBlock(String, Integer)"/> function
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="mode">this parameter is no use in streampack</param>
         ''' <param name="access"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the parameter <paramref name="access"/> only supports data mode:
+        ''' 
+        ''' 1. <see cref="FileAccess.Read"/>
+        ''' 2. <see cref="FileAccess.Write"/>
+        ''' 
+        ''' </remarks>
         Public Function OpenFile(path As String,
                                  Optional mode As FileMode = FileMode.OpenOrCreate,
                                  Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
@@ -372,15 +397,16 @@ Namespace FileSystem
         ''' <param name="fileName">
         ''' the dir object its file name must be ends with the symbol '\' or '/'
         ''' </param>
+        ''' <param name="buffer_size">options for write data only</param>
         ''' <returns>
         ''' this function returns two type of the stream:
         ''' 
-        ''' 1. <see cref="SubStream"/> for readonly
-        ''' 2. <see cref="StreamBuffer"/> for writeonly
+        ''' 1. <see cref="SubStream"/> for readonly, this kind of stream should not call the dispose method, or the based file stream will be closed too!
+        ''' 2. <see cref="StreamBuffer"/> for writeonly, this kind of stream must be use the dispose method for commit data to based file stream
         ''' 
         ''' based on the target file object is existsed or not
         ''' </returns>
-        Public Function OpenBlock(fileName As String) As Stream
+        Public Function OpenBlock(fileName As String, Optional buffer_size As Integer = -1) As Stream
             Dim path As New FilePath("/" & fileName)
             Dim block As StreamBlock
 
@@ -408,13 +434,81 @@ Namespace FileSystem
             ElseIf is_readonly Then
                 Throw New ReadOnlyException($"can not create data block for the missing file '{path.ToString}' due to the reason of target stream is set readonly!")
             Else
-                ' create a new data object
-                block = superBlock.AddDataBlock(path)
+                ' create file block with pre-allocated location region 
+                ' if the buffer size is already known
+                If buffer_size > 0 Then
+                    With Allocate(buffer_size)
+                        ' create a new empty data object
+                        '
+                        ' 20230625 IMPORTANT NOTE: the duplicated code show below is 
+                        ' necessary!
+                        ' do not add new data block before the allocate function
+                        ' or the invalid offset will be produce!
+                        block = superBlock.AddDataBlock(path)
+                        block.offset = .position
+                        block.size = .size
+                    End With
+                Else
+                    ' just create a new data object
+                    block = superBlock.AddDataBlock(path)
+                End If
 
                 Return New StreamBuffer(buffer, block, init_size)
             End If
         End Function
 
+        ''' <summary>
+        ''' try allocate a free block inside the file, not append to it
+        ''' </summary>
+        ''' <param name="buffer_size"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function may be too slow if too much file to process
+        ''' </remarks>
+        Public Function Allocate(buffer_size As Integer) As BufferRegion
+            Dim files As StreamBlock() = superBlock _
+                .ListFiles _
+                .OfType(Of StreamBlock) _
+                .OrderBy(Function(f) f.offset) _
+                .ToArray
+
+            If files.Length = 0 Then
+                Return New BufferRegion(Me.buffer.Length, buffer_size)
+            ElseIf files.Length = 1 Then
+                Return AllocateNext(files(Scan0).GetRegion, buffer_size)
+            End If
+
+            For i As Integer = 0 To files.Length - 2
+                Dim p0 As BufferRegion = files(i).GetRegion
+                Dim p1 As BufferRegion = files(i + 1).GetRegion
+
+                If p1.position - p0.nextBlock > buffer_size Then
+                    Return AllocateNext(p0, buffer_size)
+                End If
+            Next
+
+            Return AllocateNext(files.Last.GetRegion, buffer_size)
+        End Function
+
+        Private Shared Function AllocateNext(scan0 As BufferRegion, buffer_size As Integer) As BufferRegion
+            Dim pNext As Long = scan0.nextBlock
+
+            ' 20230625 do not do ofset padding at here
+            ' otherwise the offset position after padding + buffer size will
+            ' exceded the start position of the next block!
+            ' pNext += 1
+            ' pNext += pNext Mod 8
+
+            ' raw
+            ' --+---------+-----
+            '             |
+            ' -----+------|---+-
+            ' result after offset padding may corrupt the data of next block
+
+            Return New BufferRegion(pNext, buffer_size)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateNewStream(filepath As String,
                                                Optional init_size As Integer = 1024,
                                                Optional meta_size As Integer = 4096 * 1024) As StreamPack
@@ -423,6 +517,12 @@ Namespace FileSystem
                 init_size:=init_size,
                 meta_size:=meta_size
             )
+        End Function
+
+        Public Shared Function OpenReadOnly(filepath As String) As StreamPack
+            Dim stream As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Dim pack As New StreamPack(stream, [readonly]:=True)
+            Return pack
         End Function
 
         ''' <summary>
@@ -481,6 +581,10 @@ Namespace FileSystem
             GC.SuppressFinalize(Me)
         End Sub
 
+        ''' <summary>
+        ''' Save the file tree and close the file stream
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Close() Implements IFileSystemEnvironment.Close
             Call Me.Dispose()
         End Sub
@@ -510,12 +614,47 @@ Namespace FileSystem
             Return Extensions.WriteText(Me, text, path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText
             Return Extensions.ReadText(Me, path)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
             Call flushStreamPack()
         End Sub
+
+        ''' <summary>
+        ''' Get all files inside the given folder path
+        ''' </summary>
+        ''' <param name="dir"></param>
+        ''' <returns>
+        ''' this function returns an empty collection of the file 
+        ''' path string if the given <paramref name="dir"/> is not 
+        ''' exists in the archive file tree or its value is 
+        ''' nothing
+        ''' </returns>
+        Public Function GetFiles(dir As String) As IEnumerable(Of String)
+            Dim ls = Me.GetObject(dir & "/")
+
+            If ls Is Nothing Then
+                Return New String() {}
+            End If
+
+            Return From obj As StreamObject
+                   In DirectCast(ls, StreamGroup).ListFiles()
+                   Where TypeOf obj Is StreamBlock
+                   Let filepath As String = obj.referencePath.ToString
+                   Select filepath
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            Return Me.ListFiles _
+                .Where(Function(b) TypeOf b Is StreamBlock) _
+                .Select(Function(f)
+                            Return f.referencePath.ToString
+                        End Function)
+        End Function
     End Class
 End Namespace

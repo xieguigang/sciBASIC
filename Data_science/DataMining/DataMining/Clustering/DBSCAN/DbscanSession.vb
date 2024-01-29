@@ -55,13 +55,15 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.DataMining.Clustering
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Parallel
+Imports std = System.Math
 
 Namespace DBSCAN
 
-    Public Class DbscanSession(Of T)
+    Public Class DbscanSession(Of T As IReadOnlyId)
 
         ReadOnly dbscan As DbscanAlgorithm(Of T)
         ''' <summary>
@@ -90,7 +92,7 @@ Namespace DBSCAN
                 epsilon As Double,
                 minPts As Integer)
 
-            Me.maxStackSize = stdNum.Min(allPoints.Length / 2, 1024)
+            Me.maxStackSize = std.Min(allPoints.Length / 2, 1024)
             Me.allPoints = allPoints
             Me.epsilon = epsilon
             Me.minPts = minPts
@@ -138,9 +140,14 @@ Namespace DBSCAN
             Return Me
         End Function
 
+        ''' <summary>
+        ''' this function was called by a parallel linq
+        ''' </summary>
+        ''' <param name="pn"></param>
+        ''' <returns></returns>
         Private Function CheckNeighborPts(pn As DbscanPoint(Of T)) As DbscanPoint(Of T)()
             If dbscan._full OrElse Not pn.IsVisited Then
-                Dim neighborPts2 = RegionQuerySingle(pn.ClusterPoint).ToArray
+                Dim neighborPts2 = RegionQuery(pn.ClusterPoint, parallel:=False).ToArray
 
                 SyncLock pn
                     pn.IsVisited = True
@@ -206,7 +213,7 @@ Namespace DBSCAN
                     Exit Do
                 ElseIf dbscan._full OrElse Not pn.IsVisited Then
                     pn.IsVisited = True
-                    neighborPts2 = RegionQuery(pn.ClusterPoint)
+                    neighborPts2 = RegionQuery(pn.ClusterPoint, parallel:=True)
 
                     If densityCut > 0 AndAlso densityList(pn.ID) < densityCut Then
                         pn.ClusterId = ClusterIDs.Noise
@@ -216,6 +223,7 @@ Namespace DBSCAN
                             .ToArray()
 
                         If stackDepth < maxStackSize Then
+                            ' call in recursive
                             Call ExpandCluster(neighborPts2, clusterId, stackDepth + 1)
                         End If
                     End If
@@ -228,18 +236,9 @@ Namespace DBSCAN
         End Sub
 
         ''' <summary>
-        ''' Checks and searchs neighbor points for given point
+        ''' the point set index
         ''' </summary>
-        ''' <param name="point">centered point to be searched neighbors</param>
-        ''' <returns>result neighbors</returns>
-        ''' 
-        Private Function RegionQuerySingle(point As T) As IEnumerable(Of DbscanPoint(Of T))
-            Return From x As DbscanPoint(Of T)
-                   In allPoints
-                   Where dbscan._metricFunc(point, x.ClusterPoint) <= epsilon
-        End Function
-
-        ReadOnly queryCache As New Dictionary(Of T, DbscanPoint(Of T)())
+        ReadOnly queryCache As New Dictionary(Of String, DbscanPoint(Of T)())
 
         ''' <summary>
         ''' Checks and searchs neighbor points for given point
@@ -248,18 +247,62 @@ Namespace DBSCAN
         ''' <returns>result neighbors</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RegionQuery(point As T) As DbscanPoint(Of T)()
-            If Not queryCache.ContainsKey(point) Then
-                queryCache(point) = allPoints _
-                    .Split(allPoints.Length / 8) _
-                    .AsParallel _
-                    .SelectMany(Function(block)
-                                    Return From x As DbscanPoint(Of T) In block Where dbscan._metricFunc(point, x.ClusterPoint) <= epsilon
-                                End Function) _
-                    .ToArray()
+        Public Function RegionQuery(point As T, parallel As Boolean) As DbscanPoint(Of T)()
+            Dim key As String = point.Identity
+
+            If Not queryCache.ContainsKey(key) Then
+                Dim q As New QueryTask(Me, target:=point)
+
+                ' run multiple dimension spatial query
+                ' of the nearby points
+                If parallel Then
+                    Call q.Run()
+                Else
+                    Call q.Solve()
+                End If
+
+                SyncLock queryCache
+                    queryCache(key) = q.out.ToArray
+                End SyncLock
             End If
 
-            Return queryCache(point)
+            Return queryCache(key)
         End Function
+
+        Private Class QueryTask : Inherits VectorTask
+
+            ReadOnly allPoints As DbscanPoint(Of T)(), target As T
+            ReadOnly eval As Func(Of T, T, Double)
+            ReadOnly epsilon As Double
+
+            Friend out As New List(Of DbscanPoint(Of T))
+
+            Sub New(session As DbscanSession(Of T), target As T)
+                Call MyBase.New(session.allPoints.Length, workers:=std.Min(App.CPUCoreNumbers, 12))
+
+                Me.allPoints = session.allPoints
+                Me.target = target
+                Me.epsilon = session.epsilon
+                Me.eval = session.dbscan._metricFunc
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim out As New List(Of DbscanPoint(Of T))
+
+                For i As Integer = start To ends
+                    Dim x As DbscanPoint(Of T) = allPoints(i)
+
+                    If eval(target, x.ClusterPoint) <= epsilon Then
+                        Call out.Add(x)
+                    End If
+                Next
+
+                If out.Count > 0 Then
+                    SyncLock Me.out
+                        Call Me.out.AddRange(out)
+                    End SyncLock
+                End If
+            End Sub
+        End Class
     End Class
 End Namespace

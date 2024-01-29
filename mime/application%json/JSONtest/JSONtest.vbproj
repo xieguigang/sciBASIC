@@ -6,12 +6,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{543652E7-B3F6-4CA3-9707-C4C7924ED82B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>JSONtest.bsontest</StartupObject>
+    <StartupObject>JSONtest.big_jsonTest</StartupObject>
     <RootNamespace>JSONtest</RootNamespace>
     <AssemblyName>JSONtest</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -24,6 +24,7 @@
     <OutputPath>./bin</OutputPath>
     <DocumentationFile>JSONtest.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,10 +95,12 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="bsontest.vb" />
+    <Compile Include="big_jsonTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -131,13 +134,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>+Microsoft.VisualBasic.Architecture.Framework</Name>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{88bda32f-bcef-477a-bd3c-7e0383487590}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\application.json.vbproj">
-      <Project>{32228818-26f1-44df-8d40-347136c743cd}</Project>
-      <Name>JSON</Name>
+    <ProjectReference Include="..\JSON-netcore5.vbproj">
+      <Project>{c8e0ff1b-30a6-49e9-bee8-6b7e44688ba4}</Project>
+      <Name>JSON-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

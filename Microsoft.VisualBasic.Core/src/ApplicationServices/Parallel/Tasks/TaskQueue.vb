@@ -218,7 +218,7 @@ Namespace Parallel.Tasks
                     Call __calls()
                 Else
                     ' 当前的线程处于空闲的状态
-                    Call Thread.Sleep(1)
+                    Call Thread.Sleep(3)
                 End If
             Loop
         End Sub

@@ -189,17 +189,26 @@ Namespace Analysis
         ''' <param name="g">
         ''' 请注意，这个必须要要求节点的编号是连续的``0:n``序列中的值，不可以存在重复编号
         ''' </param>
+        ''' <param name="slotName">
+        ''' the graph class community information will be save at the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> by default.
+        ''' </param>
+        ''' <param name="max_class">
+        ''' controls the max number of the node class we have, default value 
+        ''' means no limits: get as more number of node class we can get.
+        ''' </param>
         ''' <returns>
         ''' a network model with the <see cref="NamesOf.REFLECTION_ID_MAPPING_NODETYPE"/> 
-        ''' property data has been assigned as the community tags.
+        ''' property data has been assigned as the community tags by default.
         ''' </returns>
         Public Shared Function Analysis(ByRef g As NetworkGraph,
                                         Optional eps As Double = 0.00001,
-                                        Optional prefix As String = Nothing) As NetworkGraph
+                                        Optional prefix As String = Nothing,
+                                        Optional max_class As Integer = Integer.MaxValue,
+                                        Optional slotName As String = NamesOf.REFLECTION_ID_MAPPING_NODETYPE) As NetworkGraph
 
             Dim clusters As String() = Louvain.Builder _
                 .Load(g, eps:=eps) _
-                .SolveClusters _
+                .SolveClusters(max_class) _
                 .GetCommunity
 
             If Not prefix.StringEmpty Then
@@ -209,7 +218,7 @@ Namespace Analysis
             End If
 
             For Each v As Node In g.vertex
-                v.data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = clusters(v.ID)
+                v.data(slotName) = clusters(v.ID)
             Next
 
             Return g

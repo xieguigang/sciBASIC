@@ -57,12 +57,43 @@
 Namespace Imaging
 
     ''' <summary>
+    ''' [x,y,z]
+    ''' 
     ''' 这个接口是为了实现Imaging模块的Point3D对象和数学函数模块的3D插值模块的兼容
     ''' </summary>
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
     Public Interface PointF3D : Inherits Layout2D
+
         Property Z As Double
+
     End Interface
 
+    Public Interface IPoint3D : Inherits RasterPixel
+
+        Property Z As Integer
+
+    End Interface
+
+    ''' <summary>
+    ''' a index point in 3d spatial geometry space
+    ''' </summary>
+    Public Structure SpatialIndex3D : Implements IPoint3D
+
+        Public Property X As Integer Implements IPoint3D.X
+        Public Property Y As Integer Implements IPoint3D.Y
+        ''' <summary>
+        ''' the z axis index data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Z As Integer Implements IPoint3D.Z
+
+    End Structure
+
+    ''' <summary>
+    ''' a float 2d point
+    ''' </summary>
     Public Interface Layout2D
 
         ''' <summary>
@@ -93,6 +124,22 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Property Y As Integer
+
+    End Interface
+
+    ''' <summary>
+    ''' a generic data model for HeatMap raster: [x,y,scale]
+    ''' </summary>
+    ''' <remarks>
+    ''' the layout information comes from the base <see cref="RasterPixel"/> model
+    ''' </remarks>
+    Public Interface Pixel : Inherits Imaging.RasterPixel
+
+        ''' <summary>
+        ''' the color scale data
+        ''' </summary>
+        ''' <returns></returns>
+        Property Scale As Double
 
     End Interface
 End Namespace

@@ -67,7 +67,7 @@ Namespace Styling.FillBrushes
         Dim patternName$
         Dim n%
         Dim colors As Brush()
-        Dim range As DoubleRange = {0, n - 1}
+        Dim range As DoubleRange = New Double() {0, n - 1}
         Dim selector As Func(Of Node, Object)
         Dim getValue As Func(Of Node, Double)
 

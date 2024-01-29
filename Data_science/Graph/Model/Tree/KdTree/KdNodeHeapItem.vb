@@ -55,9 +55,22 @@
 
 Namespace KdTree
 
+    ''' <summary>
+    ''' A KD-tree node bind with the distance with the target query point.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class KdNodeHeapItem(Of T)
 
+        ''' <summary>
+        ''' the node KNN query result
+        ''' </summary>
+        ''' <returns></returns>
         Public Property node As KdTreeNode(Of T)
+
+        ''' <summary>
+        ''' the distance value to the query point
+        ''' </summary>
+        ''' <returns></returns>
         Public Property distance As Double
 
         Sub New(node As KdTreeNode(Of T), dist As Double)

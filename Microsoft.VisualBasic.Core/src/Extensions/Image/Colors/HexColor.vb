@@ -112,7 +112,7 @@ Namespace Imaging
         Public Function OLE(c As String) As Color
             c = Strings.Replace(c, "#", "")
             c = "&H" & c
-            ColorTranslator.FromOle(c)
+            Return ColorTranslator.FromOle(c)
         End Function
     End Module
 End Namespace

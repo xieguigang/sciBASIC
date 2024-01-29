@@ -57,9 +57,21 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Namespace LinearAlgebra.Matrix
 
     ''' <summary>
+    ''' an abstract model of the numeric matrix object
+    ''' </summary>
+    Public Interface INumericMatrix
+
+        ''' <summary>Copy the internal two-dimensional array.</summary>
+        ''' <returns>Two-dimensional array copy of matrix elements.
+        ''' </returns>
+        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
+
+    End Interface
+
+    ''' <summary>
     ''' [m,n]
     ''' </summary>
-    Public Interface GeneralMatrix
+    Public Interface GeneralMatrix : Inherits INumericMatrix
 
         ''' <summary>
         ''' get/set cell element value
@@ -93,7 +105,6 @@ Namespace LinearAlgebra.Matrix
         ReadOnly Property ColumnDimension As Integer
 
         Function Transpose() As GeneralMatrix
-        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
         Function Resize(m As Integer, n As Integer) As GeneralMatrix
         Function RowVectors() As IEnumerable(Of Vector)
 
@@ -109,6 +120,12 @@ Namespace LinearAlgebra.Matrix
         ''' <exception cref="System.IndexOutOfRangeException">   Submatrix indices
         ''' </exception>
         Function GetMatrix(r As Integer(), j0 As Integer, j1 As Integer) As GeneralMatrix
+        ''' <summary>
+        ''' matrix dot product
+        ''' </summary>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
+        Function Dot(m2 As GeneralMatrix) As GeneralMatrix
 
     End Interface
 End Namespace

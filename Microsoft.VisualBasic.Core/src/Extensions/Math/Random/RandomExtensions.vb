@@ -102,6 +102,26 @@ Namespace Math
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As ISet(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function [Next](Of T)(list As IList(Of T)) As T
+            Return list(seeds.Next(0, list.Count))
+        End Function
+
+        ''' <summary>
+        ''' Returns a non-negative random integer that is less than the specified maximum.
+        ''' </summary>
+        ''' <param name="upbound">The exclusive upper bound of the random number to be generated. maxValue must
+        ''' be greater than or equal to 0.</param>
+        ''' <returns>A 32-bit signed integer that is greater than or equal to 0, and less than maxValue;
+        ''' that is, the range of return values ordinarily includes 0 but not maxValue. However,
+        ''' if maxValue equals 0, maxValue is returned.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
         Public Function [Next](upbound As Integer) As Integer
             Return seeds.Next(upbound)
         End Function
@@ -208,9 +228,22 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function NextInteger(upper As Integer) As Integer
-            SyncLock seeds
-                Return seeds.Next(upper)
-            End SyncLock
+            Return seeds.Next(upper)
+        End Function
+
+        ''' <summary>
+        ''' Returns a random integer that is within a specified range.
+        ''' </summary>
+        ''' <param name="min">The inclusive lower bound of the random number returned.</param>
+        ''' <param name="max">The exclusive upper bound of the random number returned. maxValue must be greater
+        ''' than or equal to minValue.</param>
+        ''' <returns>A 32-bit signed integer greater than or equal to minValue and less than maxValue;
+        ''' that is, the range of return values includes minValue but not maxValue. If minValue
+        ''' equals maxValue, minValue is returned.</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <DebuggerStepThrough>
+        Public Function NextInteger(min As Integer, max As Integer) As Integer
+            Return seeds.Next(min, max)
         End Function
 
         ''' <summary>
@@ -281,7 +314,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * seeds.NextDouble + rng.Min
+            Return rng.Interval * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>
@@ -295,8 +328,8 @@ Namespace Math
         ''' <param name = "sigma">Standard deviation</param>
         ''' <returns></returns>
         ''' 
-        <ExportAPI("NextGaussian")>
-        <Extension> Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+        <Extension>
+        Public Function NextGaussian(r As Random, Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
@@ -307,7 +340,6 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("NextGaussian")>
         Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
             Return seeds.NextGaussian(mu, sigma)
         End Function
@@ -371,6 +403,11 @@ Namespace Math
             Next
         End Sub
 
+        ''' <summary>
+        ''' makes the element inside the input list random orders
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))

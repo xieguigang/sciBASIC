@@ -89,7 +89,7 @@ Public Module Alignment
                          Optional steps# = 0.25,
                          Optional maxgenerality As Boolean = False) As GeneralSignal
 
-        Dim resampling As Resampler() = signals.Select(AddressOf Resampler.CreateSampler).ToArray
+        Dim resampling As Resampler() = signals.Select(Function(sig) Resampler.CreateSampler(sig, max_dx:=steps * 5)).ToArray
         Dim measures As Double() = resampling _
             .Select(Function(sample) sample.enumerateMeasures) _
             .IteratesALL _

@@ -78,7 +78,11 @@ Namespace Analysis.Louvain
             global_head(u) = stdNum.Min(Threading.Interlocked.Increment(global_top), global_top - 1)
         End Sub
 
-        Friend Overridable Sub addEdge(ByRef louvain As LouvainCommunity, u As Integer, v As Integer, weight As Double)
+        Friend Overridable Sub addEdge(ByRef louvain As LouvainCommunity,
+                                       u As Integer,
+                                       v As Integer,
+                                       weight As Double)
+
             If louvain.edge(louvain.top) Is Nothing Then
                 louvain.edge(louvain.top) = New Edge()
             End If
@@ -89,7 +93,9 @@ Namespace Analysis.Louvain
             louvain.head(u) = stdNum.Min(Threading.Interlocked.Increment(louvain.top), louvain.top - 1)
         End Sub
 
-        Public Shared Function Load(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional eps As Double = 0.00000001) As LouvainCommunity
+        Public Shared Function Load(Of Node As {New, Network.Node},
+                                        Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge),
+                                                                              Optional eps As Double = 0.00000001) As LouvainCommunity
             Dim louvain As New LouvainCommunity(eps:=eps) With {
                 .n = g.size.vertex,
                 .global_n = .n,
@@ -107,13 +113,13 @@ Namespace Analysis.Louvain
             builder.global_edge = New Louvain.Edge(louvain.m - 1) {}
             builder.global_head = New Integer(louvain.n - 1) {}
 
-            For i = 0 To louvain.n - 1
+            For i As Integer = 0 To louvain.n - 1
                 builder.global_head(i) = -1
             Next
 
             louvain.global_cluster = New Integer(louvain.n - 1) {}
 
-            For i = 0 To louvain.global_n - 1
+            For i As Integer = 0 To louvain.global_n - 1
                 louvain.global_cluster(i) = i
             Next
 
@@ -125,7 +131,10 @@ Namespace Analysis.Louvain
             Return louvain
         End Function
 
-        Private Shared Sub loadGraphMatrix(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity, builder As Builder, g As NetworkGraph(Of Node, Edge))
+        Private Shared Sub loadGraphMatrix(Of Node As {New, Network.Node},
+                                               Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity,
+                                                                                     builder As Builder,
+                                                                                     g As NetworkGraph(Of Node, Edge))
             Dim hasWeight As Boolean = g.graphEdges.Any(Function(l) l.weight <> 0.0)
 
             For Each link As Edge In g.graphEdges

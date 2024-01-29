@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports stdNum = System.Math
 
 Namespace Drawing2D
@@ -131,7 +132,7 @@ Namespace Drawing2D
                 New Point(left + width / 5 * 2, top),    ' top 2/5
                 New Point(left + width / 5 * 3, top),    ' top 3/5
                 New Point(left + width / 5 * 4, top),    ' top 4/5
- _
+                                                         _
                 New Point(left + width / 2, bottom),     ' bottom,                'New Point(left, bottom),                 ' bottom_left,                'New Point(left + width, bottom),         ' bottom_right,
                 New Point(left + width / 3, bottom),     ' bottom 1/3,
                 New Point(left + width / 3 * 2, bottom), ' bottom 2/3,
@@ -141,7 +142,7 @@ Namespace Drawing2D
                 New Point(left + width / 5 * 2, bottom), ' bottom 2/5,
                 New Point(left + width / 5 * 3, bottom), ' bottom 3/5,
                 New Point(left + width / 5 * 4, bottom), ' bottom 4/5,
- _
+                                                         _
                 New Point(left, top + height / 2),       ' left,
                 New Point(right, top + height / 2)       ' right
             }
@@ -259,20 +260,34 @@ Namespace Drawing2D
         ' theta * stdNum.PI / 180
 
         ''' <summary>
-        ''' 
+        ''' The required alpha angle data should be in data unit of radians
         ''' </summary>
         ''' <param name="shape"></param>
         ''' <param name="center"></param>
-        ''' <param name="alpha">the angle in radius</param>
+        ''' <param name="alpha">the angle in radius, could be translate from angle via function <see cref="ToRadians"/></param>
         ''' <returns></returns>
         ''' 
         <Extension>
         Public Function Rotate(shape As IEnumerable(Of PointF), center As PointF, alpha#) As PointF()
-            Dim vector = shape.ToArray
-            Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
-            Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
-            Dim x1 As Vector = center.X + (x0 - center.X) * stdNum.Cos(alpha) - (y0 - center.Y) * stdNum.Sin(alpha)
-            Dim y1 As Vector = center.Y + (x0 - center.X) * stdNum.Sin(alpha) + (y0 - center.Y) * stdNum.Cos(alpha)
+            Dim sin = stdNum.Sin(alpha)
+            Dim cos = stdNum.Cos(alpha)
+            Dim matrix As New NumericMatrix(
+                {
+                    {cos, -sin},
+                    {sin, cos}
+                }
+            )
+
+            'Dim vector = shape.ToArray
+            'Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
+            'Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
+            'Dim x1 As Vector = center.X + (x0 - center.X) * stdNum.Cos(alpha) - (y0 - center.Y) * stdNum.Sin(alpha)
+            'Dim y1 As Vector = center.Y + (x0 - center.X) * stdNum.Sin(alpha) + (y0 - center.Y) * stdNum.Cos(alpha)
+            Dim vector = shape.Select(Function(v) matrix.DotMultiply({v.X, v.Y})).ToArray
+            Dim x0 As New Vector(From v In vector Select v(0))
+            Dim y0 As New Vector(From v In vector Select v(1))
+            Dim x1 As Vector = x0 - center.X
+            Dim y1 As Vector = y0 - center.Y
 
             Return (x1, y1).Point2D.ToArray
         End Function

@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -68,8 +69,11 @@ Namespace Language.Java
         ''' <typeparam name="T"></typeparam>
         ''' <param name="a"></param>
         ''' <param name="val"></param>
+        ''' <remarks>
+        ''' this function will not break the given vector its class reference
+        ''' </remarks>
         <Extension>
-        Public Sub fill(Of T)(ByRef a As T(), val As T)
+        Public Sub fill(Of T)(<Out> ByRef a As T(), val As T)
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next
@@ -101,7 +105,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function subList(Of T)(list As System.Collections.Generic.List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function subList(Of T)(list As IList(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 

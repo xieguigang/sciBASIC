@@ -54,7 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -93,7 +93,7 @@ Namespace Math
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Overloads Function Equals(x As Double, y As Double) As Boolean Implements IEqualityComparer(Of Double).Equals
-            Return stdNum.Abs(x - y) <= _DeltaTolerance
+            Return std.Abs(x - y) <= _DeltaTolerance
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

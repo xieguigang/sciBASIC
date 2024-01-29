@@ -70,10 +70,10 @@ Namespace LinearAlgebra.Matrix
             Dim C As Double()() = X.Array
             Dim buffer As Double()() = m.ArrayPack
 
-            For i As Integer = 0 To X.ColumnDimension - 1
+            For i As Integer = 0 To X.RowDimension - 1
                 Dim vi As Double = v(i)
 
-                For j As Integer = 0 To X.RowDimension - 1
+                For j As Integer = 0 To X.ColumnDimension - 1
                     C(i)(j) = vi * buffer(i)(j)
                 Next
             Next

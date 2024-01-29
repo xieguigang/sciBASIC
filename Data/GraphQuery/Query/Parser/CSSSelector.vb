@@ -202,7 +202,9 @@ Public Class CSSSelector : Inherits Parser
     End Function
 
     Private Function selectByClass(document As InnerPlantText, selector As Selector) As InnerPlantText
-        Dim list As HtmlElement() = DirectCast(document, HtmlElement).getElementsByClassName(selector.query.Substring(1))
+        Dim list As HtmlElement() = DirectCast(document, HtmlElement) _
+            .getElementsByClassName(selector.query.Substring(1)) _
+            .ToArray
         Dim query As InnerPlantText = getElementQueryOutput(document, list, selector)
 
         Return query

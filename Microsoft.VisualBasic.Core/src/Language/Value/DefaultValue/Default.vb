@@ -89,7 +89,13 @@ Namespace Language.Default
     ''' Apply on the structure type that assert the object is null or not.
     ''' </summary>
     Public Interface IsEmpty
+
+        ''' <summary>
+        ''' Does current object has any value inside?
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property IsEmpty As Boolean
+
     End Interface
 
     ''' <summary>

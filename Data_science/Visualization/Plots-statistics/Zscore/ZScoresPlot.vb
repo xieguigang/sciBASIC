@@ -105,7 +105,7 @@ Public Class ZScoresPlot : Inherits Plot
                                  - maxLegendLabelSize.Height _
                                  - 30
         Dim plotHeight = canvas.PlotRegion.Height - titleFont.Height - tickFont.Height - 20
-        Dim plotWidthRange As DoubleRange = {0, plotWidth}
+        Dim plotWidthRange As DoubleRange = New Double() {0, plotWidth}
         Dim X = Function(Z#)
                     Return canvas.Padding.Left _
                                    + maxSerialLabelSize.Width _

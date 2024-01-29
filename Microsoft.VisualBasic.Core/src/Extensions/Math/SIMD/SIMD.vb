@@ -70,8 +70,17 @@ Imports System.Runtime.Intrinsics.X86
 Namespace Math.SIMD
 
     Public Enum SIMDConfiguration
+        ''' <summary>
+        ''' no SIMD
+        ''' </summary>
         disable
+        ''' <summary>
+        ''' use the new .netcore SIMD supports from ``System.Runtime.Intrinsics.X86``
+        ''' </summary>
         enable
+        ''' <summary>
+        ''' use the legacy supports of the SIMD from ``System.Numerics``
+        ''' </summary>
         legacy
 
         ''' <summary>
@@ -101,6 +110,9 @@ Namespace Math.SIMD
         ''' Vector(Of <see cref="Double"/>).Count
         ''' </summary>
         Public Shared ReadOnly countDouble As Integer = Vector(Of Double).Count
+        ''' <summary>
+        ''' Vector(Of <see cref="Single"/>).Count
+        ''' </summary>
         Public Shared ReadOnly countFloat As Integer = Vector(Of Single).Count
         ''' <summary>
         ''' Vector(Of <see cref="Integer"/>).Count

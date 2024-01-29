@@ -62,13 +62,10 @@ Namespace ComponentModel
     ''' </summary>
     ''' <remarks></remarks>
     Public Class IntegerEntity : Inherits EntityBase(Of Integer)
+        Implements IClusterPoint
 
         <XmlAttribute>
-        Public Property [Class] As Integer
-
-        Public Overrides Function ToString() As String
-            Return $"<{String.Join("; ", entityVector)}> --> {[Class]}"
-        End Function
+        Public Property [Class] As Integer Implements IClusterPoint.Cluster
 
         Default Public Overloads ReadOnly Property ItemValue(Index As Integer) As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -76,6 +73,10 @@ Namespace ComponentModel
                 Return entityVector(Index)
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"<{String.Join("; ", entityVector)}> --> {[Class]}"
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(properties As Double()) As IntegerEntity

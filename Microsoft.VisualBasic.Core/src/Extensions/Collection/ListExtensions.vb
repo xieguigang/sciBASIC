@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -70,19 +69,19 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Module ListExtensions
 
     ''' <summary>
-    ''' 将<paramref name="join"/>加入到<paramref name="list"/>序列后面
+    ''' append the <paramref name="list"/> after the collection <paramref name="first"/>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="join"></param>
+    ''' <param name="first"></param>
     ''' <param name="list"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function AppendAfter(Of T)(join As IEnumerable(Of T), list As IEnumerable(Of T)) As IEnumerable(Of T)
-        For Each x In list.SafeQuery
-            Yield x
+    Public Iterator Function AppendAfter(Of T)(first As IEnumerable(Of T), ParamArray list As T()) As IEnumerable(Of T)
+        For Each xi As T In first.SafeQuery
+            Yield xi
         Next
-        For Each x In join.SafeQuery
-            Yield x
+        For Each xi As T In list
+            Yield xi
         Next
     End Function
 
@@ -98,6 +97,19 @@ Public Module ListExtensions
 
         Return i
     End Function
+
+    ' this count method has already been defined in the .netcore base framework
+    '''' <summary>
+    '''' Get the element count which matched with the given <paramref name="predicate"/> expression
+    '''' </summary>
+    '''' <typeparam name="T"></typeparam>
+    '''' <param name="list"></param>
+    '''' <param name="predicate"></param>
+    '''' <returns></returns>
+    '<Extension>
+    'Public Function Count(Of T)(list As IEnumerable(Of T), predicate As Predicate(Of T)) As Integer
+    '    Return list.Where(AddressOf predicate.Invoke).Count
+    'End Function
 
     '<Extension>
     'Public Function Count(Of T As IComparable(Of T))(list As IEnumerable(Of T), item As T) As Integer

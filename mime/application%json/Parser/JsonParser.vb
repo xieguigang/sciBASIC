@@ -120,7 +120,12 @@ Public Class JsonParser
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function OpenJSON(jsonStr As String) As JsonElement
-        _JSONvalue = _parse(jsonStr)
+        If jsonStr.TextEquals("null") Then
+            Return Nothing
+        Else
+            _JSONvalue = _parse(jsonStr)
+        End If
+
         Return JSONvalue
     End Function
 

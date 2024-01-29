@@ -64,7 +64,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports fs = Microsoft.VisualBasic.FileIO.FileSystem
 
-<Package("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
 
     ''' <summary>
@@ -251,7 +250,8 @@ Public Module TextDoc
     ''' Parameter value is set to <see cref="DefaultEncoding"/> if this parameter is not specific.
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
+    <Extension>
+    Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
         If path.FileLength <= 0 Then
             Return ""
         End If
@@ -394,13 +394,13 @@ Public Module TextDoc
     ''' default text encoding: utf-8
     ''' </remarks>
     '''
-    <ExportAPI("Write.Text")>
-    <Extension> Public Function SaveTo(<Parameter("Text")> text As String,
-                                       <Parameter("Path")> path As String,
-                                       <Parameter("Text.Encoding")>
-                                       Optional encoding As Encoding = Nothing,
-                                       Optional append As Boolean = False,
-                                       Optional throwEx As Boolean = True) As Boolean
+    <Extension>
+    Public Function SaveTo(<Parameter("Text")> text As String,
+                           <Parameter("Path")> path As String,
+                           <Parameter("Text.Encoding")>
+                           Optional encoding As Encoding = Nothing,
+                           Optional append As Boolean = False,
+                           Optional throwEx As Boolean = True) As Boolean
 
         If String.IsNullOrEmpty(path) Then
             Return False
@@ -452,7 +452,8 @@ Public Module TextDoc
     ''' <returns></returns>
     <ExportAPI("Write.Text")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension>
+    Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return value.Value.SaveTo(path, encoding)
     End Function
 
@@ -472,7 +473,8 @@ Public Module TextDoc
     ''' <remarks>2012年12月5日</remarks>
     '''
     <ExportAPI("IsTextFile")>
-    <Extension> Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
+    <Extension>
+    Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read)
             Dim byteData(1) As Byte
             Dim i%
@@ -533,9 +535,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
-    <ExportAPI("Write.Text")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function SaveTo(sb As StringBuilder, path$, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension>
+    Public Function SaveTo(sb As StringBuilder, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return sb.ToString.SaveTo(path, encoding)
     End Function
 End Module

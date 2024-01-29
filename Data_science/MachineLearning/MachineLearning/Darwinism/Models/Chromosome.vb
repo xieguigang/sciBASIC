@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::0d1750998cc4f929e18fe7da79cae4fd, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\Models\Chromosome.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 8
-    ' Comment Lines: 95
-    '   Blank Lines: 5
-    '     File Size: 6.64 KB
+' Summaries:
 
 
-    '     Interface Chromosome
-    ' 
-    '         Properties: MutationRate, UniqueHashKey
-    ' 
-    '         Function: Crossover, Mutate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 8
+' Comment Lines: 95
+'   Blank Lines: 5
+'     File Size: 6.64 KB
+
+
+'     Interface Chromosome
+' 
+'         Properties: MutationRate, UniqueHashKey
+' 
+'         Function: Crossover, Mutate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,8 @@
 ' See the License for the specific language governing permissions and
 ' limitations under the License.
 ' *****************************************************************************
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Darwinism.Models
 
@@ -112,14 +114,13 @@ Namespace Darwinism.Models
     ''' free-form And evolving genetic representations.
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Interface Chromosome(Of Chr As {Class, Chromosome(Of Chr)})
+    Public Interface Chromosome(Of Chr As {Class, Chromosome(Of Chr)}) : Inherits IReadOnlyId
 
         ''' <summary>
         ''' 突变的变异程度，这个值应该是位于(0, 1)闭区间内的
         ''' </summary>
         ''' <returns></returns>
         Property MutationRate As Double
-        ReadOnly Property UniqueHashKey As String
 
         ''' <summary>
         ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 

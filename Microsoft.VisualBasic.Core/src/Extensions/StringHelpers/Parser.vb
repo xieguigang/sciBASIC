@@ -113,7 +113,7 @@ Public Module PrimitiveParser
     ''' 这个函数相较于<see cref="PrimitiveParser.IsNumeric"/>，仅仅做简单的数值格式判断
     ''' </summary>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>is regex pattern of <see cref="SimpleNumberPattern"/></remarks>
     <Extension>
     Public Function IsSimpleNumber(num As String) As Boolean
         Return num.IsPattern(SimpleNumberPattern)
@@ -347,17 +347,35 @@ Public Module PrimitiveParser
     ''' 目标字符串是否可以被解析为一个逻辑值
     ''' </summary>
     ''' <param name="token"></param>
-    ''' <returns></returns>
-    Public Function IsBooleanFactor(token As String) As Boolean
+    ''' <param name="extendedLiteral">
+    ''' something other string factor example like ``yes`` or ``no``
+    ''' will also be interpreted as a valid logical factor string 
+    ''' if this parameter value is set to TRUE. default value of 
+    ''' this parameter is TRUE. 
+    ''' </param>
+    ''' <returns>
+    ''' A boolean logical factor value indicates that the given 
+    ''' string <paramref name="token"/> could be parsed as a boolean
+    ''' value literal or not.
+    ''' </returns>
+    Public Function IsBooleanFactor(token As String, Optional extendedLiteral As Boolean = True) As Boolean
         If String.IsNullOrEmpty(token) Then
             Return False
         Else
-            Return booleans.ContainsKey(token.ToLower)
+            token = token.ToLower
+        End If
+
+        If extendedLiteral Then
+            Return booleans.ContainsKey(token)
+        Else
+            ' just test for true or false literal
+            Return token = "true" OrElse token = "false"
         End If
     End Function
 
     ''' <summary>
-    ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
+    ''' Convert the string value into the boolean value, this is useful 
+    ''' to the text format configuration file into data model.
     ''' (请注意，空值字符串为False，如果字符串不存在与单词表之中，则也是False)
     ''' </summary>
     ''' <param name="str">

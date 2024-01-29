@@ -61,6 +61,11 @@ Namespace Imaging
 
     ''' <summary>
     ''' Describes a RGB color in Hue, Saturation, and Luminance values.
+    ''' 
+    ''' HSL (hue, saturation, lightness)
+    ''' SL (hue, saturation, lightness) and HSV (hue, saturation, value) 
+    ''' are alternative representations of the RGB color model
+    ''' https://en.wikipedia.org/wiki/HSL_and_HSV
     ''' </summary>
     ''' <remarks></remarks>
     Public Structure HSLColor

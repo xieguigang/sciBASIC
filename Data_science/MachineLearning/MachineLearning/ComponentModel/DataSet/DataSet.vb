@@ -72,11 +72,15 @@ Namespace ComponentModel.StoreProcedure
     ''' </remarks>
     Public Class DataSet : Inherits XmlDataModel
 
+        ''' <summary>
+        ''' the training data samples
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("sample")>
         Public Property DataSamples As SampleList
 
         ''' <summary>
-        ''' 主要是对<see cref="Sample.status"/>输入向量进行``[0, 1]``区间内的归一化操作
+        ''' 主要是对<see cref="Sample.label"/>输入向量进行``[0, 1]``区间内的归一化操作
         ''' </summary>
         ''' <returns></returns>
         <XmlElement("normalization")>
@@ -134,7 +138,8 @@ Namespace ComponentModel.StoreProcedure
         ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
         ''' </param>
         ''' <returns></returns>
-        Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler, Optional dummyExtends% = 0) As IEnumerable(Of Sample)
+        Public Iterator Function PopulateNormalizedSamples(Optional method As Normalizer.Methods = Normalizer.Methods.NormalScaler,
+                                                           Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
             Dim normSample As Sample
 
@@ -189,7 +194,7 @@ Namespace ComponentModel.StoreProcedure
                 .DataSamples = New SampleList With {
                     .items = union
                 },
-                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(union, inputNames, estimateQuantile),
+                .NormalizeMatrix = NormalizeMatrix.CreateFromSamples(samples:=union, inputNames, estimateQuantile),
                 .output = outputNames
             }
         End Function

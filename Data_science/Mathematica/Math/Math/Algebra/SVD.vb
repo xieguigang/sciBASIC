@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::4234f7b02b0ab99b14aa98775806333f, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\SVD.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 359
-    '    Code Lines: 274
-    ' Comment Lines: 28
-    '   Blank Lines: 57
-    '     File Size: 12.44 KB
+' Summaries:
 
 
-    '     Module SVD
-    ' 
-    '         Function: Pythag, Sign
-    ' 
-    '         Sub: SVDecomposition
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 359
+'    Code Lines: 274
+' Comment Lines: 28
+'   Blank Lines: 57
+'     File Size: 12.44 KB
+
+
+'     Module SVD
+' 
+'         Function: Pythag, Sign
+' 
+'         Sub: SVDecomposition
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@
 ' Copyright © AForge.NET, 2007-2014
 ' aforge.net@gmail.com
 '
+Imports std = System.Math
 
 Namespace LinearAlgebra
 
@@ -108,7 +109,7 @@ Namespace LinearAlgebra
 
                 If i < m Then
                     For k = i To m - 1
-                        scale += System.Math.Abs(a(k, i))
+                        scale += std.Abs(a(k, i))
                     Next
 
                     If scale <> 0.0 Then
@@ -152,7 +153,7 @@ Namespace LinearAlgebra
 
                 If (i < m) AndAlso (i <> n - 1) Then
                     For k = l To n - 1
-                        scale += System.Math.Abs(a(i, k))
+                        scale += std.Abs(a(i, k))
                     Next
 
                     If scale <> 0.0 Then
@@ -189,7 +190,7 @@ Namespace LinearAlgebra
                         Next
                     End If
                 End If
-                anorm = System.Math.Max(anorm, (System.Math.Abs(w(i)) + System.Math.Abs(rv1(i))))
+                anorm = System.Math.Max(anorm, (std.Abs(w(i)) + std.Abs(rv1(i))))
             Next
 
             ' accumulation of right-hand transformations
@@ -274,12 +275,12 @@ Namespace LinearAlgebra
                         ' test for splitting
                         nm = l - 1
 
-                        If System.Math.Abs(rv1(l)) + anorm = anorm Then
+                        If std.Abs(rv1(l)) + anorm = anorm Then
                             flag = 0
                             Exit For
                         End If
 
-                        If System.Math.Abs(w(nm)) + anorm = anorm Then
+                        If std.Abs(w(nm)) + anorm = anorm Then
                             Exit For
                         End If
                     Next
@@ -290,7 +291,7 @@ Namespace LinearAlgebra
                         For i = l To k
                             f = s * rv1(i)
 
-                            If System.Math.Abs(f) + anorm <> anorm Then
+                            If std.Abs(f) + anorm <> anorm Then
                                 g = w(i)
                                 h = Pythag(f, g)
                                 w(i) = h
@@ -391,11 +392,11 @@ Namespace LinearAlgebra
         End Sub
 
         Private Function Sign(a As Double, b As Double) As Double
-            Return If((b >= 0.0), System.Math.Abs(a), -System.Math.Abs(a))
+            Return If((b >= 0.0), std.Abs(a), -std.Abs(a))
         End Function
 
         Private Function Pythag(a As Double, b As Double) As Double
-            Dim at As Double = System.Math.Abs(a), bt As Double = System.Math.Abs(b), ct As Double, result As Double
+            Dim at As Double = std.Abs(a), bt As Double = std.Abs(b), ct As Double, result As Double
 
             If at > bt Then
                 ct = bt / at

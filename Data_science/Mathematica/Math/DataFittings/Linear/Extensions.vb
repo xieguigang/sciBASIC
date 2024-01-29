@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName>
 Public Module Extensions
@@ -131,7 +131,7 @@ Public Module Extensions
 
     <Extension>
     Public Function CorrelationCoefficient(lm As IFitted) As Double
-        Return stdNum.Sqrt(lm.R2)
+        Return std.Sqrt(lm.R2)
     End Function
 
 End Module

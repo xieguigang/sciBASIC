@@ -65,6 +65,10 @@ Namespace Language
             chars.Add(c)
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return New String(chars.ToArray)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(chars As CharStream) As SByte()
             Return chars.Select(Function(c) CSByte(AscW(c))).ToArray

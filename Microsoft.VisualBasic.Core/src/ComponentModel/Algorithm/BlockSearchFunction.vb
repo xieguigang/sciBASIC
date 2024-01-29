@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::ce38d213a771b10a6babea9fae11cc3f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 181
-    '    Code Lines: 130
-    ' Comment Lines: 24
-    '   Blank Lines: 27
-    '     File Size: 5.99 KB
+' Summaries:
 
 
-    '     Structure Block
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetComparision, ToString
-    ' 
-    '     Structure SequenceTag
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class BlockSearchFunction
-    ' 
-    '         Properties: Keys
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: getOrderSeq, Search
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 181
+'    Code Lines: 130
+' Comment Lines: 24
+'   Blank Lines: 27
+'     File Size: 5.99 KB
+
+
+'     Structure Block
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetComparision, ToString
+' 
+'     Structure SequenceTag
+' 
+'         Function: ToString
+' 
+'     Class BlockSearchFunction
+' 
+'         Properties: Keys
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: getOrderSeq, Search
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -121,6 +121,18 @@ Namespace ComponentModel.Algorithm
         Dim tolerance As Double
 
         ''' <summary>
+        ''' the input element pool count
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+
+        ''' <summary>
+        ''' the raw input sequence data, element order keeps the same with the input sequence.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property raw As T()
+
+        ''' <summary>
         ''' get all keys which are evaluated from the input object
         ''' </summary>
         ''' <returns></returns>
@@ -152,6 +164,24 @@ Namespace ComponentModel.Algorithm
                 Optional fuzzy As Boolean = False)
 
             Dim input = getOrderSeq(data, eval).ToArray
+
+            Me.raw = input.Select(Function(i) i.data).ToArray
+            Me.tolerance = tolerance
+            Me.eval = eval
+            Me.size = input.Length
+
+            If size = 0 Then
+                Return
+            Else
+                Me.binary = BuildIndex(input, tolerance, factor, fuzzy)
+            End If
+        End Sub
+
+        Private Shared Function BuildIndex(input As SequenceTag(Of T)(),
+                                           tolerance As Double,
+                                           factor As Double,
+                                           fuzzy As Boolean) As BinarySearchFunction(Of Block(Of T), Block(Of T))
+
             Dim blocks As New List(Of Block(Of T))
             Dim block As Block(Of T)
             Dim tmp As New List(Of SequenceTag(Of T))
@@ -176,15 +206,13 @@ Namespace ComponentModel.Algorithm
                 blocks.Add(block)
             End If
 
-            Me.tolerance = tolerance
-            Me.eval = eval
-            Me.binary = New BinarySearchFunction(Of Block(Of T), Block(Of T))(
+            Return New BinarySearchFunction(Of Block(Of T), Block(Of T))(
                 source:=blocks,
                 key:=Function(any) any,
                 compares:=compares,
                 allowFuzzy:=fuzzy
             )
-        End Sub
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function getOrderSeq(data As IEnumerable(Of T), eval As Func(Of T, Double)) As IEnumerable(Of SequenceTag(Of T))
@@ -205,10 +233,19 @@ Namespace ComponentModel.Algorithm
         ''' query data with a given tolerance value
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns an empty collection if no hits result
+        ''' </returns>
         Public Iterator Function Search(x As T, Optional tolerance As Double? = Nothing) As IEnumerable(Of T)
             Dim wrap As New Block(Of T) With {.min = eval(x)}
-            Dim i As Integer = binary.BinarySearch(target:=wrap)
+            Dim i As Integer = -1
+
+            ' has no data to query
+            If size = 0 Then
+                Return
+            Else
+                i = binary.BinarySearch(target:=wrap)
+            End If
 
             If i = -1 Then
                 Return
@@ -221,7 +258,10 @@ Namespace ComponentModel.Algorithm
             If i = 0 Then
                 ' 0+1
                 joint.AddRange(binary(0).block)
-                joint.AddRange(binary(1).block)
+
+                If binary.size > 1 Then
+                    Call joint.AddRange(binary(1).block)
+                End If
             ElseIf i = binary.size - 1 Then
                 ' -2 | -1
                 joint.AddRange(binary(-1).block)

@@ -115,11 +115,11 @@ Namespace Data
         ''' 
         ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
         ''' </summary>
-        <Description("long")> [LONG] = 10
+        <Description("long")> INT64 = 10
         ''' <summary>
         ''' unsigned 8-byte int 
         ''' </summary>
-        [ULONG] = 11
+        UINT64 = 11
 
         ''' <summary>
         ''' string

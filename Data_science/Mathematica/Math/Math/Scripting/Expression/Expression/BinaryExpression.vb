@@ -55,12 +55,27 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' left op right
+    ''' </summary>
     Public Class BinaryExpression : Inherits Expression
 
         Public ReadOnly Property left As Expression
         Public ReadOnly Property right As Expression
         Public ReadOnly Property [operator] As Char
 
+        ''' <summary>
+        ''' construct a new binary expression of:
+        ''' 
+        ''' ```
+        ''' <paramref name="left"/> <paramref name="op"/> <paramref name="right"/>
+        ''' ```
+        ''' </summary>
+        ''' <param name="left"></param>
+        ''' <param name="right"></param>
+        ''' <param name="op">
+        ''' the binary math operator
+        ''' </param>
         Sub New(left As Expression, right As Expression, op As Char)
             Me.left = left
             Me.right = right

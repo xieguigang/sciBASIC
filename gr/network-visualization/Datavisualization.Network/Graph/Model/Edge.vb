@@ -102,6 +102,9 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Graph
 
+    ''' <summary>
+    ''' the network graph edge.
+    ''' </summary>
     Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
         Implements INetworkEdge
@@ -132,6 +135,10 @@ Namespace Graph
 
 #Region "Implements IInteraction"
 
+        ''' <summary>
+        ''' <see cref="U"/>
+        ''' </summary>
+        ''' <returns></returns>
         Private Property m_source As String Implements IInteraction.source
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -142,6 +149,10 @@ Namespace Graph
             End Set
         End Property
 
+        ''' <summary>
+        ''' <see cref="V"/>
+        ''' </summary>
+        ''' <returns></returns>
         Private Property m_target As String Implements IInteraction.target
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -152,6 +163,10 @@ Namespace Graph
             End Set
         End Property
 
+        ''' <summary>
+        ''' get/set data via edge data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+        ''' </summary>
+        ''' <returns></returns>
         Private Property m_interationtype As String Implements INetworkEdge.Interaction
             Get
                 Return data(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
@@ -222,14 +237,20 @@ Namespace Graph
             End If
         End Function
 
+        ''' <summary>
+        ''' check of the edge equivalent via the <see cref="Edge.ID"/> equivalent.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator =(a As Edge, b As Edge) As Boolean
             ' If both are null, or both are same instance, return true.
-            If Object.ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             End If
 
             ' If one is null, but not both, return false.
-            If (DirectCast(a, Object) Is Nothing) OrElse (DirectCast(b, Object) Is Nothing) Then
+            If a Is Nothing OrElse b Is Nothing Then
                 Return False
             End If
 
@@ -237,16 +258,28 @@ Namespace Graph
             Return a.ID = b.ID
         End Operator
 
+        ''' <summary>
+        ''' check of the edge un-equivalent via the <see cref="Edge.ID"/> un-equivalent.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As Edge, b As Edge) As Boolean
             Return Not (a = b)
         End Operator
 
+        ''' <summary>
+        ''' populate out the from node and to node of 
+        ''' current graph edge object 
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function Iterate2Nodes() As IEnumerable(Of Node)
             Yield U
             Yield V
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Edge Implements ICloneable(Of Edge).Clone
             Return New Edge With {
                 .ID = ID,

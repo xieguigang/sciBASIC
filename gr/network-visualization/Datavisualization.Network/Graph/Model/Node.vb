@@ -206,6 +206,12 @@ Namespace Graph
             End If
         End Function
 
+        ''' <summary>
+        ''' check vertex node equivalent via the <see cref="Node.label"/> equivalent.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Shared Operator =(a As Node, b As Node) As Boolean
             ' If one is null, but not both, return false.
             If a Is Nothing OrElse b Is Nothing Then
@@ -213,18 +219,30 @@ Namespace Graph
             End If
 
             ' If both are null, or both are same instance, return true.
-            If Object.ReferenceEquals(a, b) Then
+            If a Is b Then
                 Return True
             Else
                 Return a.Equals(p:=b)
             End If
         End Operator
 
+        ''' <summary>
+        ''' check vertex node un-equivalent via the <see cref="Node.label"/> un-equivalent
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(a As Node, b As Node) As Boolean
             Return Not (a = b)
         End Operator
 
+        ''' <summary>
+        ''' make data clone of current graph vertex node
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Node Implements ICloneable(Of Node).Clone
             Return New Node With {
                 .ID = ID,
@@ -244,7 +262,8 @@ Namespace Graph
                     .origID = data.origID,
                     .size = data.size.SafeQuery.ToArray,
                     .weights = data.weights.SafeQuery.ToArray,
-                    .Properties = New Dictionary(Of String, String)(data.Properties)
+                    .Properties = New Dictionary(Of String, String)(data.Properties),
+                    .betweennessCentrality = data.betweennessCentrality
                 }
             }
         End Function

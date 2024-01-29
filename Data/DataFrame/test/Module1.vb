@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Module Module1
 
     Sub mAIN()
-        Dim data = DataSet.LoadDataSet("P:\Resources\RABV_24h.csv").ToDictionary(replaceOnDuplicate:=True)
+        Dim data = DataSet.LoadDataSet("P:\Resources\RABV_24h.csv").ToDictionary(distinct:=True)
 
         For Each item In DataSet.LoadDataSet("P:\Resources\RABV_48h.csv")
             If Not data.ContainsKey(item.ID) Then

@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+    <AssemblyName>Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming</RootNamespace>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Regression Problem: Use Genetic Programming (GP) to find a function that fits to the training data as best as possible.</Title>
+    <Configurations>Debug;Release;Rsharp_app_release</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\..\mime\application%xml\xml-netcore5.vbproj" />
+    <ProjectReference Include="..\DataFittings\linear-netcore5.vbproj" />
+    <ProjectReference Include="..\MathLambda\symbolic-netcore5.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+  </ItemGroup>
+</Project>

@@ -56,15 +56,17 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.DataMining.KMeans.CompleteLinkage
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.SIMD
+Imports std = System.Math
 
 Namespace KMeans
 
     ''' <summary>
     ''' A class containing a group of data with similar characteristics (cluster), KMeans Cluster
     ''' </summary>
-    <Serializable> Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits CompleteLinkage.Cluster(Of T)
+    <Serializable>
+    Public Class KMeansCluster(Of T As EntityBase(Of Double)) : Inherits Cluster(Of T)
         Implements IEnumerable(Of T)
 
         ''' <summary>
@@ -72,12 +74,10 @@ Namespace KMeans
         ''' </summary>
         Public ReadOnly Property ClusterSum() As Double()
 
-        Dim _clusterMean As Double()
-
         Public ReadOnly Property NumOfEntity As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _innerList.Count
+                Return m_innerList.Count
             End Get
         End Property
 
@@ -86,11 +86,10 @@ Namespace KMeans
         ''' </summary>
         Public ReadOnly Property ClusterMean() As Double()
             Get
-                For count As Integer = 0 To _clusterMean.Length - 1
-                    _clusterMean(count) = (_ClusterSum(count) / _innerList.Count)
-                Next
+                Dim size As Integer = m_innerList.Count
+                Dim mean As Double() = Divide.f64_op_divide_f64_scalar(_ClusterSum, size)
 
-                Return _clusterMean
+                Return mean
             End Get
         End Property
 
@@ -102,37 +101,18 @@ Namespace KMeans
         Default Public Overridable ReadOnly Property Item(Index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _innerList(Index)
+                Return m_innerList(Index)
             End Get
         End Property
 
         Public Function CalculateKMeansCost() As Double
             Dim kMeansCost As Double = 0
             Dim distanceBetweenPoints As Double = 0
-            For pointIndex As Integer = 0 To _innerList.Count - 1
-                distanceBetweenPoints = _innerList(pointIndex).DistanceBetweenPoints(Center)
-                kMeansCost += stdNum.Pow(distanceBetweenPoints, 2)
-            Next pointIndex
+            For pointIndex As Integer = 0 To m_innerList.Count - 1
+                distanceBetweenPoints = m_innerList(pointIndex).entityVector.EuclideanDistance(Center.entityVector)
+                kMeansCost += std.Pow(distanceBetweenPoints, 2)
+            Next
             Return kMeansCost
-        End Function
-
-        Public Function CalculateCenter() As T
-            ' If cluster is empty, the center will remain unchanged
-            If _innerList.Count = 0 Then
-                Return Center
-            End If
-
-            Dim dimension As Integer = _innerList(Scan0).Length
-            Dim newCenterCoordinate As Double() = New Double(dimension - 1) {}
-            For i As Integer = 0 To dimension - 1
-                For pointIndex As Integer = 0 To _innerList.Count - 1
-                    newCenterCoordinate(i) += _innerList(pointIndex).entityVector(i)
-                Next pointIndex
-                newCenterCoordinate(i) /= _innerList.Count
-            Next i
-            Dim ___center As T = Activator.CreateInstance(Of T)
-            ___center.entityVector = newCenterCoordinate
-            Return ___center
         End Function
 
         ''' <summary>
@@ -141,16 +121,15 @@ Namespace KMeans
         ''' </summary>
         ''' <param name="data">A 1-dimensional array containing data that will be added to the cluster</param>
         Public Overrides Sub Add(data As T)
-            Call _innerList.Add(data)
+            Call m_innerList.Add(data)
 
-            If _innerList.Count = 1 Then
-                _ClusterSum = New Double(data.Length - 1) {}
-                _clusterMean = New Double(data.Length - 1) {}
+            If m_innerList.Count = 1 Then
+                _ClusterSum = data.entityVector.ToArray
+            Else
+                For offset As Integer = 0 To data.Length - 1
+                    _ClusterSum(offset) = _ClusterSum(offset) + data(offset)
+                Next
             End If
-
-            For count As Integer = 0 To data.Length - 1
-                _ClusterSum(count) = _ClusterSum(count) + data.entityVector(count)
-            Next
         End Sub
 
         ''' <summary>
@@ -158,8 +137,8 @@ Namespace KMeans
         ''' within the cluster.
         ''' </summary>
         Public Sub refresh()
-            If _innerList.Count > 0 Then
-                Call _innerList.Clear()
+            If m_innerList.Count > 0 Then
+                Call m_innerList.Clear()
             End If
         End Sub
 
@@ -168,7 +147,7 @@ Namespace KMeans
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In _innerList
+            For Each x As T In m_innerList
                 Yield x
             Next
         End Function

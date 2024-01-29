@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Calculus.Dynamics.Data
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName> Public Module Extensions
 
@@ -82,7 +82,7 @@ Imports stdNum = System.Math
     ''' Generates datafram and then can makes the result save data into a csv file.
     ''' </summary>
     ''' <param name="xDisp"></param>
-    ''' <param name="fix%">Formats output by using <see cref="stdNum.Round"/></param>
+    ''' <param name="fix%">Formats output by using <see cref="std.Round"/></param>
     ''' <returns></returns>
     ''' 
     <Extension>
@@ -95,7 +95,7 @@ Imports stdNum = System.Math
         If fix <= 0 Then
             round = Function(n) CStr(n)
         Else
-            round = Function(n) CStr(stdNum.Round(n, fix))
+            round = Function(n) CStr(std.Round(n, fix))
         End If
 
         file += head

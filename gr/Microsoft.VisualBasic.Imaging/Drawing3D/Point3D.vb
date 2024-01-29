@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::af051cf3aa4606a0cbc1fe3cea3856ef, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 172
-    '    Code Lines: 102
-    ' Comment Lines: 45
-    '   Blank Lines: 25
-    '     File Size: 6.67 KB
+' Summaries:
 
 
-    '     Structure Point3D
-    ' 
-    '         Properties: Depth, X, Y, Z
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Project, RotateX, RotateY, RotateZ, ToString
-    ' 
-    '         Sub: Project
-    ' 
-    '         Operators: -, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 172
+'    Code Lines: 102
+' Comment Lines: 45
+'   Blank Lines: 25
+'     File Size: 6.67 KB
+
+
+'     Structure Point3D
+' 
+'         Properties: Depth, X, Y, Z
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Project, RotateX, RotateY, RotateZ, ToString
+' 
+'         Sub: Project
+' 
+'         Operators: -, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,9 +62,9 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
+Imports vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 
 Namespace Drawing3D
 
@@ -76,8 +76,7 @@ Namespace Drawing3D
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
     ''' 
-    <XmlType("vertex")> Public Structure Point3D
-        Implements PointF3D
+    <XmlType("vertex")> Public Structure Point3D : Implements PointF3D
 
         ''' <summary>
         ''' The depth of a point in the isometric plane
@@ -91,6 +90,10 @@ Namespace Drawing3D
             End Get
         End Property
 
+        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
+        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
+        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
+
         Public Sub New(x!, y!, Optional z! = 0)
             Me.X = x
             Me.Y = y
@@ -102,6 +105,10 @@ Namespace Drawing3D
             Me.X = p.X
             Me.Y = p.Y
             Me.Z = z
+        End Sub
+
+        Sub New(p As PointF3D)
+            Call Me.New(p.X, p.Y, p.Z)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -119,12 +126,18 @@ Namespace Drawing3D
             Call Me.New(xyz(0), xyz(1), xyz.ElementAtOrDefault(2))
         End Sub
 
-        <XmlAttribute("x")> Public Property X As Double Implements PointF3D.X
-        <XmlAttribute("y")> Public Property Y As Double Implements PointF3D.Y
-        <XmlAttribute("z")> Public Property Z As Double Implements PointF3D.Z
-
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Dot(a As Point3D, b As Point3D) As Double
+            Return a.DotProduct(b)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Cross(v1 As Point3D, v2 As Point3D) As Point3D
+            Return v1.CrossProduct(v2)
         End Function
 
         ''' <summary>
@@ -135,9 +148,9 @@ Namespace Drawing3D
         Public Function RotateX(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, yn As Single, zn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             yn = Me.Y * cosa - Me.Z * sina
             zn = Me.Y * sina + Me.Z * cosa
             Return New Point3D(Me.X, yn, zn)
@@ -146,9 +159,9 @@ Namespace Drawing3D
         Public Function RotateY(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Zn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Zn = Me.Z * cosa - Me.X * sina
             Xn = Me.Z * sina + Me.X * cosa
 
@@ -158,9 +171,9 @@ Namespace Drawing3D
         Public Function RotateZ(angle As Single) As Point3D
             Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Yn As Single
 
-            rad = angle * stdNum.PI / 180
-            cosa = stdNum.Cos(rad)
-            sina = stdNum.Sin(rad)
+            rad = angle * std.PI / 180
+            cosa = std.Cos(rad)
+            sina = std.Sin(rad)
             Xn = Me.X * cosa - Me.Y * sina
             Yn = Me.X * sina + Me.Y * cosa
             Return New Point3D(Xn, Yn, Me.Z)
@@ -248,7 +261,7 @@ Namespace Drawing3D
         End Operator
 
         Public Shared Widening Operator CType(expr As String) As Point3D
-            With CType(expr, Vector)
+            With CType(expr, vec)
                 Return New Point3D(.Item(0), .Item(1), .ElementAtOrDefault(2))
             End With
         End Operator

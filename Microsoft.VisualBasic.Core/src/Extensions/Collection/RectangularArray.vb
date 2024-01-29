@@ -100,5 +100,25 @@ Namespace ComponentModel.Collection
 
             Return newMatrix
         End Function
+
+        Public Shared Function CubicMatrix(Of T)(size1 As Integer, size2 As Integer, size3 As Integer, size4 As Integer) As T()()()()
+            Dim cm = New T(size1 - 1)()()() {}
+
+            For array1 = 0 To size1 - 1
+                cm(array1) = New T(size2 - 1)()() {}
+                If size3 > -1 Then
+                    For array2 = 0 To size2 - 1
+                        cm(array1)(array2) = New T(size3 - 1)() {}
+                        If size4 > -1 Then
+                            For array3 = 0 To size3 - 1
+                                cm(array1)(array2)(array3) = New T(size4 - 1) {}
+                            Next
+                        End If
+                    Next
+                End If
+            Next
+
+            Return cm
+        End Function
     End Class
 End Namespace

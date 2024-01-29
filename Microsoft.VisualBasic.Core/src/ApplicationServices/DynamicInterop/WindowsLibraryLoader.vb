@@ -63,8 +63,7 @@ Imports System.Text
 Namespace ApplicationServices.DynamicInterop
 
     <SecurityPermission(SecurityAction.Demand, Flags:=SecurityPermissionFlag.UnmanagedCode)>
-    Friend Class WindowsLibraryLoader
-        Implements IDynamicLibraryLoader
+    Public Class WindowsLibraryLoader : Implements IDynamicLibraryLoader
 
         Public Function LoadLibrary(filename As String) As IntPtr Implements IDynamicLibraryLoader.LoadLibrary
             'new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
@@ -96,6 +95,12 @@ Namespace ApplicationServices.DynamicInterop
             Return Win32.FreeLibrary(handle)
         End Function
 
+        ''' <summary>
+        ''' GetProcAddress
+        ''' </summary>
+        ''' <param name="hModule"></param>
+        ''' <param name="lpProcName"></param>
+        ''' <returns></returns>
         Public Function GetFunctionAddress(hModule As IntPtr, lpProcName As String) As IntPtr Implements IDynamicLibraryLoader.GetFunctionAddress
             Return GetProcAddress(hModule, lpProcName)
         End Function

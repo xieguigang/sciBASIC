@@ -66,7 +66,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
     Public Delegate Sub DuplicatedKeyHandler(Of K, V)(keyNode As BinaryTree(Of K, V), newValue As V)
 
     ''' <summary>
-    ''' The AVL binary tree operator.
+    ''' The AVL binary tree operator. the binbox key is <typeparamref name="K"/> and 
+    ''' value data type is <typeparamref name="V"/>.
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>
@@ -88,6 +89,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' + -1, means a is smaller than b.
         ''' </param>
         ''' <param name="views">Display the key as string</param>
+        ''' <remarks>
+        ''' the binbox key is <typeparamref name="K"/> and 
+        ''' value data type is <typeparamref name="V"/>.
+        ''' </remarks>
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
         End Sub
@@ -96,6 +101,15 @@ Namespace ComponentModel.Algorithm.BinaryTree
             MyBase.New(AddressOf compares.Compare, views)
         End Sub
 
+        ''' <summary>
+        ''' add key related value into current tree
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <param name="value"></param>
+        ''' <param name="valueReplace"></param>
+        ''' <remarks>
+        ''' get cluster value collection via the tree node ``values`` data
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
             _root = Add(key, value, _root, Sub(node, newValue)

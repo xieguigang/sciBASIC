@@ -89,6 +89,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="A"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="A"/>
+        ''' </remarks>
         Public ReadOnly Property VA As A
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -104,6 +107,9 @@ Namespace Language
         ''' TryCast to <typeparamref name="B"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' direct cast of <see cref="Value"/> to <typeparamref name="B"/>
+        ''' </remarks>
         Public ReadOnly Property VB As B
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -228,6 +234,9 @@ Namespace Language
         ''' </param>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this operator deal with the null reference error safely
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overloads Shared Operator Like(var As [Variant](Of A, B), type As Type) As Boolean

@@ -66,6 +66,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -103,6 +104,10 @@ Public Class BinaryDataReader : Inherits BinaryReader
         Call Me.New(New MemoryStream(data.ToArray))
     End Sub
 
+    Sub New(data As RequestStream)
+        Call Me.New(New MemoryStream(data.ChunkBuffer))
+    End Sub
+
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream, UTF-8
     ''' encoding and optionally leaves the stream open.
@@ -132,6 +137,17 @@ Public Class BinaryDataReader : Inherits BinaryReader
 
     Public Sub New(input As Stream, Optional encoding As Encodings = Encodings.UTF8)
         Me.New(input, encoding.CodePage)
+    End Sub
+
+    ''' <summary>
+    ''' the constructor works for the numeric stream
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="byteOrder"></param>
+    Sub New(input As Stream, byteOrder As ByteOrder)
+        Call Me.New(input, Encodings.UTF8)
+        ' works for the numeric data
+        Me.ByteOrder = byteOrder
     End Sub
 
     ''' <summary>
@@ -210,6 +226,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' <summary>
     ''' Mark current stream buffer position
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Mark()
         _markedPos = Position
     End Sub
@@ -217,6 +235,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' <summary>
     ''' Move the buffer back to the position that marked by <see cref="Mark"/> method.
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Reset()
         Position = _markedPos
     End Sub
@@ -225,9 +245,38 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' Aligns the reader to the next given byte multiple.
     ''' </summary>
     ''' <param name="alignment">The byte multiple.</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Align(alignment As Integer)
         Seek((-Position Mod alignment + alignment) Mod alignment)
     End Sub
+
+#Region "Bind Base"
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Boolean)>
+    Public Overrides Function ReadBoolean() As Boolean
+        Return MyBase.ReadBoolean()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Char)>
+    Public Overrides Function ReadChar() As Char
+        Return MyBase.ReadChar()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.Byte)>
+    Public Overrides Function ReadByte() As Byte
+        Return MyBase.ReadByte()
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Bind(TypeCode.SByte)>
+    Public Overrides Function ReadSByte() As SByte
+        Return MyBase.ReadSByte()
+    End Function
+#End Region
 
     ''' <summary>
     ''' Reads a <see cref="DateTime"/> from the current stream. The <see cref="DateTime"/> is available in the
@@ -235,6 +284,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' </summary>
     ''' <param name="format">The binary format, in which the <see cref="DateTime"/> will be read.</param>
     ''' <returns>The <see cref="DateTime"/> read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.DateTime, BinaryDateTimeFormat.CTime)>
     Public Function ReadDateTime(format As BinaryDateTimeFormat) As DateTime
         Select Case format
             Case BinaryDateTimeFormat.CTime
@@ -256,6 +307,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' stream by sixteen bytes.
     ''' </summary>
     ''' <returns>The 16-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Decimal)>
     Public Overrides Function ReadDecimal() As Decimal
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(Marshal.SizeOf(GetType(Decimal)))
@@ -283,6 +336,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' by eight bytes.
     ''' </summary>
     ''' <returns>The 8-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Double)>
     Public Overrides Function ReadDouble() As Double
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
@@ -310,6 +365,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 2-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int16)>
     Public Overrides Function ReadInt16() As Int16
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(2)
@@ -337,6 +394,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' four bytes.
     ''' </summary>
     ''' <returns>The 4-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int32)>
     Public Overrides Function ReadInt32() As Int32
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -364,6 +423,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' eight bytes.
     ''' </summary>
     ''' <returns>The 8-byte signed integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Int64)>
     Public Overrides Function ReadInt64() As Int64
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)
@@ -403,6 +464,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' by four bytes.
     ''' </summary>
     ''' <returns>The 4-byte floating point value read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.Single)>
     Public Overrides Function ReadSingle() As Single
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -430,6 +493,7 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' </summary>
     ''' <param name="format">The binary format, in which the string will be read.</param>
     ''' <returns>The string read from the current stream.</returns>
+    ''' 
     Public Overloads Function ReadString(format As BinaryStringFormat) As String
         Return ReadString(format, Encoding)
     End Function
@@ -492,6 +556,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' position of the stream by two bytes.
     ''' </summary>
     ''' <returns>The 2-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt16)>
     Public Overrides Function ReadUInt16() As UInt16
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(2)
@@ -521,6 +587,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 4-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt32)>
     Public Overrides Function ReadUInt32() As UInt32
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -550,6 +618,8 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' bytes.
     ''' </summary>
     ''' <returns>The 8-byte unsigned integer read from the current stream.</returns>
+    ''' 
+    <Bind(TypeCode.UInt64)>
     Public Overrides Function ReadUInt64() As UInt64
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(8)

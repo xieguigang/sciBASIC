@@ -70,7 +70,7 @@ Namespace NeuralNetwork.DarwinismHybrid
 
         Public Property MutationRate As Double Implements Chromosome(Of NetworkIndividual).MutationRate
 
-        Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of NetworkIndividual).UniqueHashKey
+        Public ReadOnly Property UniqueHashKey As String Implements Chromosome(Of NetworkIndividual).Identity
             Get
                 If guid Is Nothing Then
                     guid = (target.GetHashCode.ToString & Now.ToString).MD5

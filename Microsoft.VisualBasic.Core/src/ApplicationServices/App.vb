@@ -801,6 +801,12 @@ Public Module App
         End Get
     End Property
 
+    Public ReadOnly Property CurrentUnixTimeMillis() As Long
+        Get
+            Return DateTimeHelper.UnixTimeStampMillis(Now)
+        End Get
+    End Property
+
     ''' <summary>
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
@@ -1199,13 +1205,14 @@ Public Module App
     '''
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
-                                       executeEmpty As ExecuteEmptyCLI,
-                                       executeFile As ExecuteFile,
-                                       executeNotFound As ExecuteNotFound,
-                                       executeQuery As ExecuteQuery,
-                                       <CallerMemberName>
-                                       Optional caller$ = Nothing) As Integer
+    <Extension>
+    Public Function RunCLI(Interpreter As Type, args As CommandLineArgs,
+                           executeEmpty As ExecuteEmptyCLI,
+                           executeFile As ExecuteFile,
+                           executeNotFound As ExecuteNotFound,
+                           executeQuery As ExecuteQuery,
+                           <CallerMemberName>
+                           Optional caller$ = Nothing) As Integer
 
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, executeFile, executeQuery)
     End Function

@@ -55,6 +55,9 @@
 
 Namespace Scripting.MathExpression.Impl
 
+    ''' <summary>
+    ''' f(x)
+    ''' </summary>
     Public Class FunctionInvoke : Inherits Expression
 
         Public Property funcName As String

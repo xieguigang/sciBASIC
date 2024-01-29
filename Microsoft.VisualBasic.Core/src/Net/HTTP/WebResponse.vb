@@ -86,9 +86,16 @@ Namespace Net.Http
 
         Public Property headers As New Dictionary(Of HttpHeaderName, String)
         Public Property customHeaders As New Dictionary(Of String, String)
+
         Public ReadOnly Property httpCode As HTTP_RFC
             Get
                 Return code
+            End Get
+        End Property
+
+        Public ReadOnly Property contentType As String
+            Get
+                Return headers.TryGetValue(HttpHeaderName.ContentType, [default]:="text/html")
             End Get
         End Property
 

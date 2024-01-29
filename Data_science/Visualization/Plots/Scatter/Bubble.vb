@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::32120f9fe6e76aa6f0a74659e7fbb8b2, sciBASIC#\Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 313
-    '    Code Lines: 259
-    ' Comment Lines: 16
-    '   Blank Lines: 38
-    '     File Size: 12.89 KB
+' Summaries:
 
 
-    ' Class Bubble
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: logRadius, Plot
-    ' 
-    '     Sub: drawLegend, PlotInternal
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 313
+'    Code Lines: 259
+' Comment Lines: 16
+'   Blank Lines: 38
+'     File Size: 12.89 KB
+
+
+' Class Bubble
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: logRadius, Plot
+' 
+'     Sub: drawLegend, PlotInternal
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -154,6 +154,88 @@ Public Class Bubble : Inherits Plot
         }.Plot(size, driver:=driver)
     End Function
 
+    ''' <summary>
+    ''' Just plot the scatter bubble
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <param name="s"></param>
+    Public Overloads Shared Sub Plot(g As IGraphics, s As SerialData, scaler As DataScaler,
+                                     Optional tagLabelFont As Font = Nothing,
+                                     Optional labels As List(Of Label) = Nothing,
+                                     Optional ByRef anchors As List(Of Anchor) = Nothing,
+                                     Optional bubblePen As Pen = Nothing,
+                                     Optional scale As Func(Of Double, Double) = Nothing)
+
+        Dim b As SolidBrush = Nothing
+        Dim labelSize As SizeF
+
+        If scale Is Nothing Then
+            scale = Function(r) r
+        End If
+
+        Dim getRadius = Function(pt As PointData)
+                            Dim r# = scale(pt.value)
+
+                            If r = 0R Then
+                                Return s.pointSize
+                            Else
+                                Return r
+                            End If
+                        End Function
+        Dim device As IGraphics = g
+
+        If Not (s.color.IsEmpty) Then
+            b = New SolidBrush(s.color)
+        End If
+
+        For Each pt As PointData In s.pts
+            Dim r As Double = getRadius(pt)
+            Dim p As PointF = scaler.Translate(pt.pt.X, pt.pt.Y)
+            Dim rect As New RectangleF(New PointF(p.X - r, p.Y - r), New Size(r * 2, r * 2))
+
+            If r.IsNaNImaginary Then
+                Call $"invalid radius value of {pt}".Warning
+                Continue For
+            End If
+
+            With pt.color
+                If .StringEmpty Then
+                    Call g.FillPie(b, rect, 0, 360)
+                Else
+                    Call g.FillPie(New SolidBrush(.TranslateColor), rect, 0, 360)
+                End If
+            End With
+
+            If pt.stroke.StringEmpty Then
+                If Not bubblePen Is Nothing Then
+                    Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
+                End If
+            Else
+                Call Stroke.TryParse(pt.stroke).GDIObject _
+                    .DoCall(Sub(pen)
+                                Call device.DrawCircle(pt.pt, r, pen, fill:=False)
+                            End Sub)
+
+            End If
+
+            If (labels IsNot Nothing AndAlso anchors IsNot Nothing) AndAlso Not pt.tag.StringEmpty Then
+                labelSize = g.MeasureString(pt.tag, tagLabelFont)
+                labels += New Label With {
+                    .text = pt.tag,
+                    .X = rect.Right,
+                    .Y = rect.Top,
+                    .width = labelSize.Width,
+                    .height = labelSize.Height
+                }
+                anchors += New Anchor With {
+                    .r = r,
+                    .x = rect.Right - r,
+                    .y = rect.Top + r
+                }
+            End If
+        Next
+    End Sub
+
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim mapper As Mapper
         Dim rangeData As New Scaling(data, False)
@@ -179,7 +261,6 @@ Public Class Bubble : Inherits Plot
         Dim yTicks = mapper.yAxis.CreateAxisTicks(, decimalDigits:=If(mapper.xAxis.Max > 0.01, 2, -1))
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)
-        Dim labelSize As SizeF
         Dim plotrect As Rectangle = canvas.PlotRegion
 
         If positiveRangeY Then
@@ -218,69 +299,8 @@ Public Class Bubble : Inherits Plot
             bubblePen = bubbleBorder.GDIObject
         End If
 
-        For Each s As SerialData In mapper.ForEach(canvas.Size, canvas.Padding)
-            Dim b As SolidBrush = Nothing
-            Dim getRadius = Function(pt As PointData)
-                                Dim r# = scale(pt.value)
-
-                                If r = 0R Then
-                                    Return s.pointSize
-                                Else
-                                    Return r
-                                End If
-                            End Function
-
-            If Not (s.color.IsEmpty) Then
-                b = New SolidBrush(s.color)
-            End If
-
-            For Each pt As PointData In s.pts
-                Dim r As Double = getRadius(pt)
-                Dim p As New Point(CInt(pt.pt.X - r), CInt(pt.pt.Y - r))
-                Dim rect As New Rectangle(p, New Size(r * 2, r * 2))
-
-                If r.IsNaNImaginary Then
-                    Call $"invalid radius value of {pt}".Warning
-                    Continue For
-                End If
-
-                With pt.color
-                    If .StringEmpty Then
-                        Call g.FillPie(b, rect, 0, 360)
-                    Else
-                        Call g.FillPie(New SolidBrush(.TranslateColor), rect, 0, 360)
-                    End If
-                End With
-
-                If pt.stroke.StringEmpty Then
-                    If Not bubblePen Is Nothing Then
-                        Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
-                    End If
-                Else
-                    Call Stroke.TryParse(pt.stroke) _
-                        .GDIObject _
-                        .DoCall(Sub(pen)
-                                    Call device.DrawCircle(pt.pt, r, pen, fill:=False)
-                                End Sub)
-
-                End If
-
-                If Not pt.tag.StringEmpty Then
-                    labelSize = g.MeasureString(pt.tag, tagLabelFont)
-                    labels += New Label With {
-                        .text = pt.tag,
-                        .X = rect.Right,
-                        .Y = rect.Top,
-                        .width = labelSize.Width,
-                        .height = labelSize.Height
-                    }
-                    anchors += New Anchor With {
-                        .r = r,
-                        .x = rect.Right - r,
-                        .y = rect.Top + r
-                    }
-                End If
-            Next
+        For Each s As SerialData In data
+            Call Bubble.Plot(g, s, scaler, tagLabelFont, labels, anchors, bubblePen, scale)
         Next
 
         Call d3js.labeler(30, 1) _

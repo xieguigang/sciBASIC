@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::400dfdb43c1c8fd55f6eba1ecb0455fa, sciBASIC#\Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 358
-    '    Code Lines: 248
-    ' Comment Lines: 52
-    '   Blank Lines: 58
-    '     File Size: 14.37 KB
+' Summaries:
 
 
-    '     Module LegendPlotExtensions
-    ' 
-    '         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
-    ' 
-    '         Sub: DrawLegends, DrawLegendShape
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 358
+'    Code Lines: 248
+' Comment Lines: 52
+'   Blank Lines: 58
+'     File Size: 14.37 KB
+
+
+'     Module LegendPlotExtensions
+' 
+'         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
+' 
+'         Sub: DrawLegends, DrawLegendShape
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,35 +57,48 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Graphic.Legend
 
     <HideModuleName>
     Public Module LegendPlotExtensions
 
-        Private ReadOnly legendExpressions As Dictionary(Of String, LegendStyles) =
-            Enums(Of LegendStyles).ToDictionary(
-                Function(l)
-                    Return l.ToString.ToLower
-                End Function)
+        ReadOnly legendExpressions As Dictionary(Of String, LegendStyles)
+
+        Sub New()
+            ' parse the shape enums and the corresponding element description text
+            ' used the shape symbol name and the description key as the text parser 
+            ' key inputs
+            legendExpressions = Enums(Of LegendStyles) _
+                .Select(Iterator Function(f) As IEnumerable(Of (key As String, flag As LegendStyles))
+                            Yield (f.ToString.ToLower, f)
+                            Yield (f.Description.ToLower, f)
+                        End Function) _
+                .IteratesALL _
+                .GroupBy(Function(f) f.key) _
+                .ToDictionary(Function(f) f.Key,
+                              Function(f)
+                                  Return f.First.flag
+                              End Function)
+        End Sub
 
         ''' <summary>
         ''' 从字符串表达式之中解析出<see cref="LegendStyles"/>
         ''' </summary>
-        ''' <param name="str$"></param>
+        ''' <param name="str"></param>
         ''' <param name="defaultStyle"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
         Public Function ParseLegendStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
             With LCase(str)
-                If legendExpressions.ContainsKey(.ByRef) Then
-                    Return legendExpressions(.ByRef)
+                If legendExpressions.ContainsKey(.ToString) Then
+                    Return legendExpressions(.ToString)
                 Else
                     Return defaultStyle
                 End If
@@ -129,14 +142,14 @@ Namespace Graphic.Legend
             Select Case style
 
                 Case LegendStyles.Circle
-                    Dim r As Single = stdNum.Min(gSize.Height, gSize.Width) / 2
+                    Dim r As Single = std.Min(gSize.Height, gSize.Width) / 2
                     Dim c As New Point With {
                         .X = pos.X + gSize.Height,
                         .Y = pos.Y + gSize.Height / 2
                     }
 
                     labelPos = New PointF With {
-                        .X = stdNum.Max(c.X + r, labelPos.X),
+                        .X = std.Max(c.X + r, labelPos.X),
                         .Y = labelPos.Y
                     }
 
@@ -155,7 +168,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Diamond
 
-                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = std.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -165,7 +178,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Hexagon
 
-                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = std.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -204,7 +217,7 @@ Namespace Graphic.Legend
                         color, border)
 
                 Case LegendStyles.Square
-                    Dim r As Single = stdNum.Min(gSize.Height, gSize.Width)
+                    Dim r As Single = std.Min(gSize.Height, gSize.Width)
                     Dim location As New Point With {
                         .X = pos.X + gSize.Width - r,
                         .Y = pos.Y + gSize.Height - r
@@ -228,7 +241,7 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Triangle
 
-                    Dim d As Integer = stdNum.Min(gSize.Height, gSize.Width)
+                    Dim d As Integer = std.Min(gSize.Height, gSize.Width)
                     Dim topLeft As New Point With {
                         .X = pos.X + (gSize.Width - d) / 2,
                         .Y = pos.Y + (gSize.Height - d) / 2
@@ -348,7 +361,7 @@ Namespace Graphic.Legend
                 With graphicSize
 
                     Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
-                    Dim height! = (stdNum.Max(.Height, maxTitleSize.Height) + d + 1.25) * legendList.Length
+                    Dim height! = (std.Max(.Height, maxTitleSize.Height) + d + 1.25) * legendList.Length
                     Dim background As Brush = Nothing
 
                     If Not fillBg.StringEmpty Then

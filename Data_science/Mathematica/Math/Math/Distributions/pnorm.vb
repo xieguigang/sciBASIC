@@ -1,62 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::3793cdb693b3e3e62d1e62f8aae30cb9, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 287
-    '    Code Lines: 138
-    ' Comment Lines: 118
-    '   Blank Lines: 31
-    '     File Size: 12.66 KB
+' Summaries:
 
 
-    '     Module pnorm
-    ' 
-    '         Function: AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, DeviationStandardization, (+2 Overloads) Eval
-    '                   Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity, StandardDistribution, TrapezodialRule
-    '                   TruncNDist, (+2 Overloads) Z
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 287
+'    Code Lines: 138
+' Comment Lines: 118
+'   Blank Lines: 31
+'     File Size: 12.66 KB
+
+
+'     Module pnorm
+' 
+'         Function: AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, DeviationStandardization, (+2 Overloads) Eval
+'                   Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity, StandardDistribution, TrapezodialRule
+'                   TruncNDist, (+2 Overloads) Z
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Scripting.Rscript.MathExtension
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Distributions
 
@@ -121,7 +120,7 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Logistic(L#, x#, x0#, k#) As Double
-            Return L / (1 + stdNum.E ^ (-k * (x - x0)))
+            Return L / (1 + std.E ^ (-k * (x - x0)))
         End Function
 
         ''' <summary>
@@ -136,7 +135,8 @@ Namespace Distributions
         ''' 将其转化为无量纲的纯数值，便于不同单位或量级的指标能够进行比较和加权。
         ''' 其中最典型的就是0-1标准化和Z标准化
         ''' </remarks>
-        <Extension> Public Function DeviationStandardization(x As Vector) As Vector
+        <Extension>
+        Public Function DeviationStandardization(x As Vector) As Vector
             Dim max# = x.Max
             Dim min# = x.Min
             Dim x1 As Vector = (x - min) / (max - min)
@@ -167,7 +167,8 @@ Namespace Distributions
             Dim z As New List(Of Double)()
 
             While z.Count < len
-                eps = Normal.rnorm(len, 1.0, sd)
+                eps = Gaussian.rnorm(len, 1.0, sd)
+
                 For Each it As Double In eps
                     If it >= 0.0 AndAlso it <= 2.0 Then
                         z.Add(it)
@@ -185,9 +186,9 @@ Namespace Distributions
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function StandardDistribution(x As Double) As Double
-            Dim answer As Double = 1 / ((stdNum.Sqrt(2 * stdNum.PI)))
-            Dim exp1 As Double = stdNum.Pow(x, 2) / 2
-            Dim exp As Double = stdNum.Pow(stdNum.E, -(exp1))
+            Dim answer As Double = 1 / ((std.Sqrt(2 * std.PI)))
+            Dim exp1 As Double = std.Pow(x, 2) / 2
+            Dim exp As Double = std.Pow(std.E, -(exp1))
             answer = answer * exp
             Return answer
         End Function
@@ -204,7 +205,10 @@ Namespace Distributions
         ''' <param name="lower_tail">logical; if TRUE (default), probabilities are ``P[X ≤ x]`` otherwise, ``P[X > x]``.</param>
         ''' <param name="logP">logical; if TRUE, probabilities p are given as log(p).</param>
         ''' <returns></returns>
-        Public Function Eval(q#,
+        ''' <remarks>
+        ''' implements of the R language ``pnorm`` function
+        ''' </remarks>
+        Public Function eval(q#,
                              Optional mean# = 0,
                              Optional sd# = 1,
                              Optional lower_tail As Boolean = True,
@@ -219,7 +223,7 @@ Namespace Distributions
             End If
 
             If logP Then
-                Return stdNum.Log10(p)
+                Return std.Log10(p)
             Else
                 Return p
             End If
@@ -235,7 +239,10 @@ Namespace Distributions
         ''' <param name="lower_tail">logical; if TRUE (default), probabilities are ``P[X ≤ x]`` otherwise, ``P[X > x]``.</param>
         ''' <param name="logP">logical; if TRUE, probabilities p are given as log(p).</param>
         ''' <returns></returns>
-        Public Function Eval(q As Vector,
+        ''' <remarks>
+        ''' implements of the R language ``pnorm`` function
+        ''' </remarks>
+        Public Function eval(q As Vector,
                              Optional mean# = 0,
                              Optional sd# = 1,
                              Optional lower_tail As Boolean = True,
@@ -262,28 +269,63 @@ Namespace Distributions
             End If
         End Function
 
+        ' exp((x-mu)^2/(2*sd^2))/(sd * sqrt(2*PI)) 
+        ' mu = exp(mu)
+        ' sd = 2*sd^(-4)
+
+        ReadOnly sqrt_2PI As Double = std.Sqrt(2 * std.PI)
+        ReadOnly PI2 As Double = 2 * std.PI
+
+        '''' <summary>
+        '''' #### normal-pdf
+        '''' 
+        '''' Get normal distribution density value at a point.
+        '''' </summary>
+        '''' <param name="x"></param>
+        '''' <param name="u"></param>
+        '''' <param name="v"></param>
+        '''' <returns></returns>
+        'Public Function normal_pdf(x As Double, Optional u As Double = 0, Optional v As Double = 1) As Double
+        '    If v = 0 Then
+        '        Return If(x = u, Double.PositiveInfinity, 0)
+        '    End If
+
+        '    Return std.Exp(-0.5 * ((x - u) ^ 2) / v) / std.Sqrt(PI2 * v)
+        'End Function
+
         ''' <summary>
+        ''' #### normal-pdf
+        ''' 
         ''' Normal Distribution.(正态分布)
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="m">Mean</param>
         ''' <param name="sd"></param>
-        ''' <returns></returns>
+        ''' <returns>Get normal distribution density value at a point.</returns>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
-            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
+            ' 1 / (sd * sqrt(2 * PI)) * exp(-(x - u)^2 / (2* sd ^ 2))
+
+            Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp As Double = (x - m) ^ 2
             Dim expP2 As Double = 2 * (sd ^ 2)
-            Dim expP3 As Double = stdNum.E ^ (-(exp / expP2))
+            Dim expP3 As Double = std.Exp(-(exp / expP2))
             answer = answer * expP3
             Return answer
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="m"></param>
+        ''' <param name="sd"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
-            Dim answer As Double = 1 / (sd * (stdNum.Sqrt(2 * stdNum.PI)))
+            Dim answer As Double = 1 / (sd * sqrt_2PI)
             Dim exp = (x - m) ^ 2.0
-            Dim expP2 As Double = 2 * stdNum.Pow(sd, 2.0)
-            Dim expP3 = stdNum.E ^ -(exp / expP2)
+            Dim expP2 As Double = 2 * std.Pow(sd, 2.0)
+            Dim expP3 = Vector.Exp(-(exp / expP2))
             Dim y As Vector = answer * expP3
 
             Return y
@@ -323,7 +365,7 @@ Namespace Distributions
         ''' <param name="m#"></param>
         ''' <param name="sd#"></param>
         ''' <returns></returns>
-        Public Function TrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
+        Private Function TrapezodialRule(a#, b#, resolution%, m#, sd#) As Double
             Dim dx As Double = (b - a) / resolution
             Dim a1 As Double = ProbabilityDensity(a, m, sd)
             Dim b1 As Double = ProbabilityDensity(b, m, sd)

@@ -1,74 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::b810442024d29c996e35ab3b00996009, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Buffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 84
-    '    Code Lines: 59
-    ' Comment Lines: 10
-    '   Blank Lines: 15
-    '     File Size: 3.11 KB
+' Summaries:
 
 
-    '     Structure Buffer
-    ' 
-    '         Properties: TotalBytes
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Serialize, ToString
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module BufferAPI
-    ' 
-    '         Function: CreateBuffer, GetBuffer
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 84
+'    Code Lines: 59
+' Comment Lines: 10
+'   Blank Lines: 15
+'     File Size: 3.11 KB
+
+
+'     Structure Buffer
+' 
+'         Properties: TotalBytes
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Serialize, ToString
+' 
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Module BufferAPI
+' 
+'         Function: CreateBuffer, GetBuffer
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Serialization.BinaryDumping
 
@@ -81,7 +81,10 @@ Namespace Serialization.BinaryDumping
     ''' </remarks>
     Public Structure Buffer : Implements ISerializable
 
-        Dim Length As Long
+        ''' <summary>
+        ''' the length of <see cref="buffer"/> array
+        ''' </summary>
+        Dim Length As Integer
         Dim buffer As Byte()
 
         Sub New(buf As Byte())
@@ -89,21 +92,36 @@ Namespace Serialization.BinaryDumping
             buffer = buf
         End Sub
 
-        Public ReadOnly Property TotalBytes As Long
+        Public ReadOnly Property TotalBytes As Integer
             Get
-                Return Length + RawStream.INT64
+                Return Length + RawStream.INT32
             End Get
         End Property
 
         Public Overrides Function ToString() As String
-            Return $"{Length} bytes..."
+            Return StringFormats.Lanudry(bytes:=TotalBytes)
         End Function
 
         Public Function Serialize() As Byte() Implements ISerializable.Serialize
             Dim buffer As Byte() = New Byte(TotalBytes - 1) {}
-            Call Array.ConstrainedCopy(BitConverter.GetBytes(Length), Scan0, buffer, Scan0, RawStream.INT64)
-            Call Array.ConstrainedCopy(Me.buffer, Scan0, buffer, RawStream.INT64, Me.buffer.Length)
+            Call Array.ConstrainedCopy(BitConverter.GetBytes(Length), Scan0, buffer, Scan0, RawStream.INT32)
+            Call Array.ConstrainedCopy(Me.buffer, Scan0, buffer, RawStream.INT32, Length)
             Return buffer
+        End Function
+
+        Public Shared Function Parse(s As Stream) As Buffer
+            Dim bytes As Byte() = New Byte(RawStream.INT32 - 1) {}
+            Call s.Read(bytes, Scan0, RawStream.INT32)
+            Dim nlen As Integer = BitConverter.ToInt32(bytes, Scan0)
+            bytes = New Byte(nlen - 1) {}
+            Call s.Read(bytes, Scan0, nlen)
+            Return New Buffer(bytes)
+        End Function
+
+        Public Shared Function Parse(rd As BinaryReader) As Buffer
+            Dim nlen As Integer = rd.ReadInt32
+            Dim bytes As Byte() = rd.ReadBytes(nlen)
+            Return New Buffer(bytes)
         End Function
     End Structure
 
