@@ -104,8 +104,7 @@ Namespace SVG
             ' draw layer components, order by CSS zindex asc
             For Each element As SvgElement In layer.GetElements
                 Select Case element.GetType
-                    Case GetType(g)
-
+                    Case GetType(SvgContainer)
                         ' recursively draw svg document tree
                         Call g.drawLayer(element)
 

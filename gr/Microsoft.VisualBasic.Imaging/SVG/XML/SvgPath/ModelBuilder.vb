@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::f08b6278bebba993bdafbed1ddf6690b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 241
-    '    Code Lines: 157
-    ' Comment Lines: 52
-    '   Blank Lines: 32
-    '     File Size: 8.79 KB
+' Summaries:
 
 
-    '     Module ModelBuilder
-    ' 
-    '         Function: ParseSVGPathData, PiePath, (+2 Overloads) SVGPath, SVGPathData
-    ' 
-    '         Sub: [Call]
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 241
+'    Code Lines: 157
+' Comment Lines: 52
+'   Blank Lines: 32
+'     File Size: 8.79 KB
+
+
+'     Module ModelBuilder
+' 
+'         Function: ParseSVGPathData, PiePath, (+2 Overloads) SVGPath, SVGPathData
+' 
+'         Sub: [Call]
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports std = System.Math
 
@@ -79,18 +80,6 @@ Namespace SVG.PathHelper
             Dim d As String = $"M {x},{y} a {rX} {rY} 0 1 1 0 1 z"
 
             Return d
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function SVGPath(path As GraphicsPath) As path
-            Return New path(path)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function SVGPath(path As Path2D) As path
-            Return SVGPath(path.Path)
         End Function
 
         ''' <summary>
@@ -148,8 +137,8 @@ Namespace SVG.PathHelper
         ''' ```
         ''' </remarks>
         <Extension>
-        Public Function ParseSVGPathData(path As path) As GraphicsPath
-            Dim scanner As New Pointer(Of Char)(path.d)
+        Public Function ParseSVGPathData(path As SvgPath) As GraphicsPath
+            Dim scanner As New Pointer(Of Char)(path.D)
             Dim c As Char
             Dim parameters As New List(Of Double)
             Dim buffer As New List(Of Char)
@@ -181,7 +170,7 @@ Namespace SVG.PathHelper
                 ElseIf Char.IsDigit(c) Then
                     buffer += c
                 Else
-                    Throw New NotImplementedException($"Unknown ""{c}""@{path.d}")
+                    Throw New NotImplementedException($"Unknown ""{c}""@{path.D}")
                 End If
             Loop
 
@@ -196,7 +185,7 @@ Namespace SVG.PathHelper
         ''' <param name="parameters"></param>
         ''' <param name="path"></param>
         <Extension>
-        Private Sub [Call](gdiPath As Path2D, action As Char, parameters As List(Of Double), path As path)
+        Private Sub [Call](gdiPath As Path2D, action As Char, parameters As List(Of Double), path As SvgPath)
             Select Case action
                 Case "M"c
                     Call gdiPath.MoveTo(parameters(0), parameters(1))
@@ -287,7 +276,7 @@ Namespace SVG.PathHelper
                 Case "Z"c, "z"c
                     Call gdiPath.CloseAllFigures()
                 Case Else
-                    Throw New NotImplementedException($"Action ""{action}""@{path.d}")
+                    Throw New NotImplementedException($"Action ""{action}""@{path.D}")
             End Select
         End Sub
     End Module
