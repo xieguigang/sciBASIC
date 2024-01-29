@@ -63,7 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Graphic.Axis
 
@@ -163,7 +163,21 @@ Namespace Graphic.Axis
             x1 = TranslateX(x1)
             x2 = TranslateX(x2)
 
-            Return stdNum.Max(x1, x2) - stdNum.Min(x1, x2)
+            Return std.Max(x1, x2) - std.Min(x1, x2)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TranslateSize(size As SizeF) As SizeF
+            Return TranslateSize(size.Width, size.Height)
+        End Function
+
+        Public Function TranslateSize(w As Double, h As Double) As SizeF
+            Dim x1 = TranslateX(0)
+            Dim x2 = TranslateX(w)
+            Dim y1 = TranslateY(0)
+            Dim y2 = TranslateY(h)
+
+            Return New SizeF(std.Abs(x1 - x2), std.Abs(y1 - y2))
         End Function
     End Class
 
