@@ -489,7 +489,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim current = embeddingSpan.Slice(current_start, _optimizationState.Dim)
         Dim other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
 
-        Dim distSquared As Double = DistanceMethods.RDist(current, other)
+        Dim distSquared As Double = DistanceMethods.SquareDistance(current, other)
         Dim gradCoeff = 0F
         Dim gradD As Double
 
@@ -518,7 +518,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
             k = _random.Next(0, _optimizationState.NVertices)
             other_start = k * _optimizationState.Dim
             other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
-            distSquared = DistanceMethods.RDist(current, other)
+            distSquared = DistanceMethods.SquareDistance(current, other)
             gradCoeff = 0F
 
             If (distSquared > 0) Then
