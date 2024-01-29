@@ -1,8 +1,12 @@
 ﻿Imports System.Xml
 
 Namespace SVG.XML
-    Public MustInherit Class SvgContainer
-        Inherits SvgElement
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public MustInherit Class SvgContainer : Inherits SvgElement
+
         Protected Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub

@@ -29,25 +29,7 @@ Namespace SVG.XML
     Public NotInheritable Class SvgDocument
         Inherits SvgContainer
 
-        Private ReadOnly _document As XmlDocument
-
-        Private Sub New(document As XmlDocument, element As XmlElement)
-            MyBase.New(element)
-            _document = document
-        End Sub
-
-        Public Shared Function Create() As SvgDocument
-            Dim document = New XmlDocument()
-            Dim rootElement = document.CreateElement("svg")
-            document.AppendChild(rootElement)
-            rootElement.SetAttribute("xmlns", "http://www.w3.org/2000/svg")
-            Return New SvgDocument(document, rootElement)
-        End Function
-
-        Public Sub Save(stream As Stream)
-            Call _document.Save(stream)
-            Call stream.Flush()
-        End Sub
+        ReadOnly _document As XmlDocument
 
         Public Property X As Double
             Get
@@ -93,5 +75,23 @@ Namespace SVG.XML
                 Element.SetAttribute("viewBox", value.ToString())
             End Set
         End Property
+
+        Private Sub New(document As XmlDocument, element As XmlElement)
+            MyBase.New(element)
+            _document = document
+        End Sub
+
+        Public Shared Function Create() As SvgDocument
+            Dim document = New XmlDocument()
+            Dim rootElement = document.CreateElement("svg")
+            document.AppendChild(rootElement)
+            rootElement.SetAttribute("xmlns", "http://www.w3.org/2000/svg")
+            Return New SvgDocument(document, rootElement)
+        End Function
+
+        Public Sub Save(stream As Stream)
+            Call _document.Save(stream)
+            Call stream.Flush()
+        End Sub
     End Class
 End Namespace

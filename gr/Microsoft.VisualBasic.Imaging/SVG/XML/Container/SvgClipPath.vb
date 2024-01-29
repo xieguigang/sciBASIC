@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
+
     Public NotInheritable Class SvgClipPath
         Inherits SvgContainer
         Private Sub New(element As XmlElement)

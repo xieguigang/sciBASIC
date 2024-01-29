@@ -1,8 +1,15 @@
 ﻿Imports System.Xml
 
 Namespace SVG.XML
-    Public NotInheritable Class SvgGroup
-        Inherits SvgContainer
+
+    ''' <summary>
+    ''' The &lt;g> SVG element is a container used to group other SVG elements.
+    '''
+    ''' Transformations applied To the &lt;g> element are performed On its child elements, 
+    ''' And its attributes are inherited by its children. It can also group multiple 
+    ''' elements To be referenced later With the &lt;use> element.
+    ''' </summary>
+    Public NotInheritable Class SvgGroup : Inherits SvgContainer
 
         Private Sub New(element As XmlElement)
             MyBase.New(element)
