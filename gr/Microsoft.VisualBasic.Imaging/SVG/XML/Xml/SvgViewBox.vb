@@ -3,6 +3,7 @@
 Namespace SVG.XML
 
     Public Structure SvgViewBox
+
         Public Property Left As Double
         Public Property Top As Double
         Public Property Width As Double

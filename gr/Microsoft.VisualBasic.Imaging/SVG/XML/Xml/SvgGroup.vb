@@ -3,6 +3,7 @@
 Namespace SVG.XML
     Public NotInheritable Class SvgGroup
         Inherits SvgContainer
+
         Private Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
