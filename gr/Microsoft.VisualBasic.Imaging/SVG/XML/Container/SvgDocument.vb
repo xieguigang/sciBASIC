@@ -1,6 +1,10 @@
 Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -27,8 +31,8 @@ Namespace SVG.XML
     '''
     ''' SVG has been developed by the World Wide Web Consortium (W3C) since 1999.
     ''' </summary>
-    Public NotInheritable Class SvgDocument
-        Inherits SvgContainer
+    Public NotInheritable Class SvgDocument : Inherits SvgContainer
+        Implements ISaveHandle
 
         ReadOnly _document As XmlDocument
 
@@ -94,6 +98,7 @@ Namespace SVG.XML
             Dim rootElement = document.CreateElement("svg")
             document.AppendChild(rootElement)
             rootElement.SetAttribute("xmlns", "http://www.w3.org/2000/svg")
+            rootElement.SetAttribute("preserveAspectRatio", "xMaxYMax")
             Return New SvgDocument(document, rootElement)
         End Function
 
@@ -101,5 +106,48 @@ Namespace SVG.XML
             Call _document.Save(stream)
             Call stream.Flush()
         End Sub
+
+        Public Sub SetCommentText(text As String)
+            Call _document.CreateComment(text)
+        End Sub
+
+        ''' <summary>
+        ''' Save this svg document object into the file system.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function SaveAsXml(path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Dim s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+            Call Save(s)
+            Call s.Dispose()
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 将当前的这个SVG对象序列化为XML字符串文本
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSVGXml() As String
+            Dim s As New MemoryStream
+            Call Save(s)
+            Return Encoding.UTF8.GetString(s.ToArray)
+        End Function
+
+        ''' <summary>
+        ''' Save this svg document object into the file system.
+        ''' </summary>
+        ''' <param name="Path"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function SaveAsXml(path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return SaveAsXml(path, encoding.CodePage)
+        End Function
     End Class
 End Namespace
