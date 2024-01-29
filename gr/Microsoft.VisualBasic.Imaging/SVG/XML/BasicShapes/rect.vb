@@ -1,75 +1,53 @@
-﻿
-Imports System.Drawing
-Imports System.Xml.Serialization
+﻿Imports System.Xml
 
 Namespace SVG.XML
+    Public NotInheritable Class SvgRect
+        Inherits SvgBasicShape
 
-    ''' <summary>
-    ''' 矩形对象
-    ''' </summary>
-    Public Class rect : Inherits node
+        Public Property X As Double
+            Get
+                Return Element.GetAttribute("x", Attributes.Position.X)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("x", value)
+            End Set
+        End Property
 
-        <XmlAttribute> Public Property height As String
-        <XmlAttribute> Public Property width As String
-        <XmlAttribute> Public Property y As String
-        <XmlAttribute> Public Property x As String
+        Public Property Y As Double
+            Get
+                Return Element.GetAttribute("y", Attributes.Position.Y)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("y", value)
+            End Set
+        End Property
 
-#Region "圆角矩形"
-        Public Property rx As String
-        Public Property ry As String
-#End Region
+        Public Property Width As Double
+            Get
+                Return Element.GetAttribute("width", Attributes.Size.Width)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("width", value)
+            End Set
+        End Property
 
-        Sub New()
+        Public Property Height As Double
+            Get
+                Return Element.GetAttribute("height", Attributes.Size.Height)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("height", value)
+            End Set
+        End Property
+
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
         End Sub
 
-        Sub New(rect As RectangleF)
-            With Me
-                .width = rect.Width
-                .height = rect.Height
-                .x = rect.X
-                .y = rect.Y
-            End With
-        End Sub
-
-        Sub New(rect As Rectangle)
-            With Me
-                .width = rect.Width
-                .height = rect.Height
-                .x = rect.X
-                .y = rect.Y
-            End With
-        End Sub
-
-        ''' <summary>
-        ''' Contructs a rectangle with the specified width and height.
-        ''' </summary>
-        ''' <param name="width">rectangle width</param>
-        ''' <param name="height">rectangle height</param>
-        Public Sub New(width As Double, height As Double)
-            Me.width = width
-            Me.height = height
-        End Sub
-
-        ''' <summary>
-        ''' Contructs a rectangle with the specified width and height at the given position.
-        ''' </summary>
-        ''' <param name="x">left top corner X-coordinate</param>
-        ''' <param name="y">left top corner Y-coordinate</param>
-        ''' <param name="width">rectangle width</param>
-        ''' <param name="height">rectangle height</param>
-        Public Sub New(x As Double, y As Double, width As Double, height As Double)
-            Me.x = x
-            Me.y = y
-            Me.width = width
-            Me.height = height
-        End Sub
-
-        Public Shared Operator +(rect As rect, offset As PointF) As rect
-            rect = DirectCast(rect.MemberwiseClone(), rect)
-            rect.x += offset.X
-            rect.y += offset.Y
-            Return rect
-        End Operator
+        Friend Shared Function Create(parent As XmlElement) As SvgRect
+            Dim element = parent.OwnerDocument.CreateElement("rect")
+            parent.AppendChild(element)
+            Return New SvgRect(element)
+        End Function
     End Class
-
 End Namespace
