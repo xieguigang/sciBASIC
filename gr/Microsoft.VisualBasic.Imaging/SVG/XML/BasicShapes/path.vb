@@ -1,16 +1,22 @@
-﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
+﻿Imports System.Xml
+Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
     ''' <summary>
-    ''' ``&lt;path>`` 标签用来定义路径。
+    ''' A &lt;path> is the most general shape that can be used in SVG. Using a path element, 
+    ''' you can draw rectangles (with or without rounded corners), circles, ellipses, 
+    ''' polylines, and polygons. Basically any of the other types of shapes, bezier curves, 
+    ''' quadratic curves, and many more.
     ''' </summary>
-    Public Class path : Inherits node
+    Public NotInheritable Class SvgPath
+        Inherits SvgElement
 
         ''' <summary>
+        ''' A list of points and other information about how to draw the path. 
+        ''' </summary>
+        ''' <remarks>
         ''' 下面的命令可用于路径数据：
         ''' 
         ''' M = moveto
@@ -25,25 +31,43 @@ Namespace SVG.XML
         ''' Z = closepath
         ''' 
         ''' 注释：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
-        ''' </summary>
+        ''' </remarks>
         ''' <returns></returns>
-        <XmlAttribute> Public Property d As String
+        Public Property D As String
+            Get
+                Return Element.GetAttribute("d")
+            End Get
+            Set(value As String)
+                Element.SetAttribute("d", value)
+            End Set
+        End Property
 
-        Sub New()
+        Public Property Length As Double
+            Get
+                Return Element.GetAttribute("pathLength", 0.0)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("pathLength", value)
+            End Set
+        End Property
+
+        Public Property FillRule As SvgFillRule
+            Get
+                Return Element.GetAttribute(Of SvgFillRule)("fill-rule", Attributes.FillAndStroke.FillRule)
+            End Get
+            Set(value As SvgFillRule)
+                Element.SetAttribute("fill-rule", value)
+            End Set
+        End Property
+
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
         End Sub
 
-        Sub New(path As GraphicsPath)
-            d = path.SVGPathData
-        End Sub
-
-        Public Shared Operator +(path As path, offset As PointF) As path
-            Dim data = path.d.Split
-            path = DirectCast(path.MemberwiseClone, path)
-
-            ' 这里该如何进行偏移？
-
-            Return path
-        End Operator
+        Friend Shared Function Create(parent As XmlElement) As SvgPath
+            Dim element = parent.OwnerDocument.CreateElement("path")
+            parent.AppendChild(element)
+            Return New SvgPath(element)
+        End Function
     End Class
-
 End Namespace
