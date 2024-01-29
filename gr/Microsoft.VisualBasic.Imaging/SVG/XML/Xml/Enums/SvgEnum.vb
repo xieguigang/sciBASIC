@@ -1,8 +1,13 @@
 ﻿Imports System.Collections.Generic
 
 Namespace SVG.XML.Enums
+
+    ''' <summary>
+    ''' a string constant value
+    ''' </summary>
     Public MustInherit Class SvgEnum
-        Private ReadOnly _value As String
+
+        ReadOnly _value As String
 
         Protected Sub New(value As String)
             _value = value
@@ -18,10 +23,15 @@ Namespace SVG.XML.Enums
 
         Public Overrides Function Equals(obj As Object) As Boolean
             If obj Is Nothing Then Return False
-            If [GetType]() IsNot obj.GetType() Then Return False
-            Return Equals(_value, CType(obj, SvgEnum)._value)
+            If Me.GetType() IsNot obj.GetType() Then Return False
+
+            Return _value = DirectCast(obj, SvgEnum)._value
         End Function
 
+        ''' <summary>
+        ''' the hashcode is related to the constant string value
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function GetHashCode() As Integer
             Dim hashCode = -862051595
             hashCode = hashCode * -1521134295 + EqualityComparer(Of String).Default.GetHashCode(_value)

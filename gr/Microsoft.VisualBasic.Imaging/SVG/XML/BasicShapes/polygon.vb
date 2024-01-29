@@ -1,55 +1,54 @@
-﻿
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Scripting.Runtime
+﻿Imports System.Globalization
+Imports System.Xml
+Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
     ''' <summary>
-    ''' 不规则的多边形对象
+    ''' A &lt;polygon> is similar to a &lt;polyline>, in that it is composed of straight
+    ''' line segments connecting a list of points. For polygons though, the path 
+    ''' automatically connects the last point with the first, creating a closed shape.
     ''' </summary>
-    ''' 
-    <XmlRoot("polygon")>
-    Public Class polygon : Inherits polyline
+    Public NotInheritable Class SvgPolygon
+        Inherits SvgElement
 
-        Sub New()
+        ''' <summary>
+        ''' A list of points, each number separated by a space, comma, EOL, or a line
+        ''' feed character with additional whitespace permitted. Each point must contain 
+        ''' two numbers: an x coordinate and a y coordinate. So, the list (0,0), (1,1), 
+        ''' and (2,2) could be written as 0, 0 1, 1 2, 2. The drawing then closes the 
+        ''' path, so a final straight line would be drawn from (2,2) to (0,0).
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Points As Double()
+            Get
+                Dim stringArray = Element.GetAttribute("points")
+                Return stringArray.Split(New String() {", "}, StringSplitOptions.RemoveEmptyEntries).[Select](Function(value) Double.Parse(value, CultureInfo.InvariantCulture)).ToArray()
+            End Get
+            Set(value As Double())
+                Dim lPoints = String.Join(", ", value.Select(Function(x) x.ToString("G", CultureInfo.InvariantCulture)))
+                Element.SetAttribute("points", lPoints)
+            End Set
+        End Property
+
+        Public Property FillRule As SvgFillRule
+            Get
+                Return Element.GetAttribute(Of SvgFillRule)("fill-rule", Attributes.FillAndStroke.FillRule)
+            End Get
+            Set(value As SvgFillRule)
+                Element.SetAttribute("fill-rule", value)
+            End Set
+        End Property
+
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(pts As IEnumerable(Of PointF))
-            points = pts _
-                .Select(Function(pt) $"{pt.X},{pt.Y}") _
-                .ToArray
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ParsePoints() As PointF()
-            Return points _
-                .Select(AddressOf FloatPointParser) _
-                .ToArray
+        Friend Shared Function Create(parent As XmlElement) As SvgPolygon
+            Dim element = parent.OwnerDocument.CreateElement("polygon")
+            parent.AppendChild(element)
+            Return New SvgPolygon(element)
         End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Offset2D(offset As PointF) As PointF()
-            Return ParsePoints _
-                .Select(Function(pt)
-                            Return New PointF With {
-                                .X = pt.X + offset.X,
-                                .Y = pt.Y + offset.Y
-                            }
-                        End Function) _
-                .ToArray
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator +(polygon As polygon, offset As PointF) As polygon
-            Return New polygon(polygon.Offset2D(offset)) With {
-                .style = polygon.style,
-                .id = polygon.id,
-                .class = polygon.class
-            }
-        End Operator
     End Class
-
 End Namespace
