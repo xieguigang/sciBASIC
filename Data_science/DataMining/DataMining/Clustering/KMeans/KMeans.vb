@@ -214,7 +214,6 @@ Namespace KMeans
                     Dim y As KMeansCluster(Of T) = clusters(clusterIndex)  ' 上一次迭代的结果
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
-
 #If DEBUG Then
                         Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
 #End If

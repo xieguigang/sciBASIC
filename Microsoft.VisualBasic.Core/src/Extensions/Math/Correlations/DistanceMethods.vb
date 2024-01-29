@@ -266,6 +266,30 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
+        ''' implements via <see cref="EuclideanDistance"/>
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DistanceTo(a As IVector, v As Double()) As Double
+            Return EuclideanDistance(a.Data, v)
+        End Function
+
+        ''' <summary>
+        ''' SUM((a - v) ^ 2)
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SquareDistance(a As IVector, v As Double()) As Double
+            Return SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(a.Data, v), 2).Sum
+        End Function
+
+        ''' <summary>
         ''' Reduced Euclidean distance
         ''' </summary>
         Public Function RDist(x As Span(Of Double), y As Span(Of Double)) As Double
