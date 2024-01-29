@@ -82,11 +82,11 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgRect
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgRect
             Dim element = parent.OwnerDocument.CreateElement("rect")
             parent.AppendChild(element)
             Return New SvgRect(element)

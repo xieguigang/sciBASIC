@@ -192,6 +192,8 @@ Namespace SVG.XML
         Public Shared Function Create(Of T As SvgElement)(e As XmlElement) As SvgElement
             Select Case GetType(T)
                 Case GetType(SvgCircle) : Return New SvgCircle(e)
+                Case GetType(SvgRect) : Return New SvgRect(e)
+                Case GetType(SvgLine) : Return New SvgLine(e)
                 Case Else
                     Throw New NotImplementedException(GetType(T).FullName)
             End Select
@@ -200,6 +202,11 @@ Namespace SVG.XML
         Public Shared Function Create(e As XmlElement) As SvgElement
             Select Case Strings.LCase(e.Name)
                 Case "circle" : Return New SvgCircle(e)
+                Case "rect" : Return New SvgRect(e)
+                Case "line" : Return New SvgLine(e)
+
+                Case "g" : Return New SvgGroup(e)
+
                 Case Else
                     Throw New NotImplementedException(e.Name)
             End Select

@@ -61,11 +61,11 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgLine
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgLine
             Dim element = parent.OwnerDocument.CreateElement("line")
             parent.AppendChild(element)
             Return New SvgLine(element)
