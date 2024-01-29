@@ -659,20 +659,20 @@ Namespace Imaging
                                         Optional trace$ = "",
                                         Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
+            Dim dpi_sz As Size = dpi.SizeParser
 
-            If width = 0 OrElse height = 0 Then
+            If width <= 0 OrElse height <= 0 Then
                 Throw New Exception(InvalidSize)
+            ElseIf dpi_sz.Width <= 0 OrElse dpi_sz.Height <= 0 Then
+                Throw New Exception("dpi size should be a tuple of the positive integers!")
             End If
 
             Try
                 bitmap = New Bitmap(width, height)
 
-                With dpi.SizeParser
+                With dpi_sz
                     Call bitmap.SetResolution(.Width, .Height)
                 End With
-
-                ' Call $"Bitmap size: [{bitmap.Width}, {bitmap.Height}]".__DEBUG_ECHO
-                ' Call $"Bitmap dpi: [{bitmap.HorizontalResolution}, {bitmap.VerticalResolution}]".__DEBUG_ECHO
             Catch ex As Exception
                 ex = New Exception(New Size(width, height).ToString, ex)
                 ex = New Exception(trace, ex)
