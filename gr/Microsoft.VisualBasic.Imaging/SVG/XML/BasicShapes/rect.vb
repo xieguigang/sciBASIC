@@ -1,4 +1,5 @@
-﻿Imports System.Xml
+﻿Imports System.Drawing
+Imports System.Xml
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -84,6 +85,20 @@ Namespace SVG.XML
 
         Friend Sub New(element As XmlElement)
             MyBase.New(element)
+        End Sub
+
+        Public Sub SetRectangle(rect As RectangleF)
+            X = rect.Left
+            Y = rect.Top
+            Width = rect.Width
+            Height = rect.Height
+        End Sub
+
+        Public Sub SetRectangle(location As PointF, size As SizeF)
+            X = location.X
+            Y = location.Y
+            Width = size.Width
+            Height = size.Height
         End Sub
 
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgRect

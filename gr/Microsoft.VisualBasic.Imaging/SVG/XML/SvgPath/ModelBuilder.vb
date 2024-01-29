@@ -57,9 +57,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVG.PathHelper
 
@@ -68,20 +67,18 @@ Namespace SVG.PathHelper
     ''' </summary>
     Public Module ModelBuilder
 
-        Public Function PiePath(x!, y!, width!, height!, startAngle!, sweepAngle!) As path
+        Public Function PiePath(x!, y!, width!, height!, startAngle!, sweepAngle!) As String
             Dim endAngle! = startAngle + sweepAngle
             Dim rX = width / 2
             Dim rY = height / 2
-            Dim x1 = x + rX * stdNum.Cos(stdNum.PI * startAngle / 180)
-            Dim y1 = y + rY * stdNum.Sin(stdNum.PI * startAngle / 180)
-            Dim x2 = x + rX * stdNum.Cos(stdNum.PI * endAngle / 180)
-            Dim y2 = y + rY * stdNum.Sin(stdNum.PI * endAngle / 180)
+            Dim x1 = x + rX * std.Cos(std.PI * startAngle / 180)
+            Dim y1 = y + rY * std.Sin(std.PI * startAngle / 180)
+            Dim x2 = x + rX * std.Cos(std.PI * endAngle / 180)
+            Dim y2 = y + rY * std.Sin(std.PI * endAngle / 180)
             ' Dim d = $"M{x},{y}  L{x1},{y1}  A{rX},{rY} 0 0,1 {x2},{y2} z" ' 1 means clockwise
             Dim d As String = $"M {x},{y} a {rX} {rY} 0 1 1 0 1 z"
 
-            Return New path With {
-                .d = d
-            }
+            Return d
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

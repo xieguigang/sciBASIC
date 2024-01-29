@@ -95,6 +95,20 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' The stroke-dasharray attribute is a presentation attribute defining the pattern of 
+        ''' dashes and gaps used to paint the outline of the shape;
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property StrokeDashArray() As Double()
+            Get
+                Return Element.GetAttribute("stroke-dasharray", Attributes.FillAndStroke.StrokeDashArray)
+            End Get
+            Set(value As Double())
+                Element.SetAttribute("stroke-dasharray", value.JoinBy(" "))
+            End Set
+        End Property
+
         Public Property Transform As String
             Get
                 Return Element.GetAttribute("transform")
@@ -110,6 +124,19 @@ Namespace SVG.XML
             End Get
             Set(value As Boolean)
                 SetStyle("display", If(value, String.Empty, "none"))
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' current element node css style
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Style As String
+            Get
+                Return Element.GetAttribute("style")
+            End Get
+            Set(value As String)
+                Element.SetAttribute("style", value)
             End Set
         End Property
 

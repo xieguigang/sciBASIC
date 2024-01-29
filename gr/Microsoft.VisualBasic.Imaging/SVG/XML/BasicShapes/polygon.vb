@@ -1,6 +1,9 @@
-﻿Imports System.Globalization
+﻿Imports System.Drawing
+Imports System.Globalization
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -24,11 +27,16 @@ Namespace SVG.XML
         Public Property Points As Double()
             Get
                 Dim stringArray = Element.GetAttribute("points")
-                Return stringArray.Split(New String() {", "}, StringSplitOptions.RemoveEmptyEntries).[Select](Function(value) Double.Parse(value, CultureInfo.InvariantCulture)).ToArray()
+                Dim d = stringArray.StringSplit("\s*,\s*")
+
+                Return d _
+                    .Select(Function(value)
+                                Return Double.Parse(value, CultureInfo.InvariantCulture)
+                            End Function) _
+                    .ToArray()
             End Get
             Set(value As Double())
-                Dim lPoints = String.Join(", ", value.Select(Function(x) x.ToString("G", CultureInfo.InvariantCulture)))
-                Element.SetAttribute("points", lPoints)
+                Element.SetAttribute("points", value.Select(Function(x) x.ToString("G", CultureInfo.InvariantCulture)).JoinBy(","))
             End Set
         End Property
 
@@ -43,6 +51,23 @@ Namespace SVG.XML
 
         Friend Sub New(element As XmlElement)
             MyBase.New(element)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetPolygonPath(points As IEnumerable(Of PointF))
+            Call Element.SetAttribute(
+                name:="points",
+                value:=points _
+                    .SafeQuery _
+                    .Select(Iterator Function(pt) As IEnumerable(Of Double)
+                                Yield pt.X
+                                Yield pt.Y
+                            End Function) _
+                    .IteratesALL _
+                    .Select(Function(d)
+                                Return d.ToString("G", CultureInfo.InvariantCulture)
+                            End Function) _
+                    .JoinBy(","))
         End Sub
 
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgPolygon

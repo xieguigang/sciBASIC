@@ -1,4 +1,5 @@
-﻿Imports System.Xml
+﻿Imports System.Drawing
+Imports System.Xml
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -63,6 +64,20 @@ Namespace SVG.XML
 
         Friend Sub New(element As XmlElement)
             MyBase.New(element)
+        End Sub
+
+        Public Sub SetPoint(a As PointF, b As PointF)
+            X1 = a.X
+            Y1 = a.Y
+            X2 = b.X
+            Y2 = b.Y
+        End Sub
+
+        Public Sub SetPoint(x1 As Double, y1 As Double, x2 As Double, y2 As Double)
+            Me.X1 = x1
+            Me.X2 = x2
+            Me.Y1 = y1
+            Me.Y2 = y2
         End Sub
 
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgLine

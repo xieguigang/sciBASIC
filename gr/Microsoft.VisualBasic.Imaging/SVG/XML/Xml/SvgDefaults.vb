@@ -9,6 +9,7 @@ Namespace SVG.XML
                 Public Shared ReadOnly StrokeWidth As Double = 0
                 Public Shared ReadOnly StrokeLineJoin As LineJoin = LineJoin.Miter
                 Public Shared ReadOnly StrokeLineCap As SvgStrokeLineCap = SvgStrokeLineCap.Butt
+                Public Shared ReadOnly StrokeDashArray As Double() = Nothing
                 Public Shared ReadOnly Fill As String = "#000000"
                 Public Shared ReadOnly Stroke As String = "#000000"
                 Public Shared ReadOnly Opacity As Double = 1
