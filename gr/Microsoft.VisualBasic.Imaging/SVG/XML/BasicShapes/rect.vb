@@ -1,9 +1,20 @@
 ﻿Imports System.Xml
 
 Namespace SVG.XML
+
+    ''' <summary>
+    ''' The &lt;rect> element draws a rectangle on the screen. There are six basic attributes
+    ''' that control the position and shape of the rectangles on screen. The one on the right
+    ''' has its rx and ry parameters set, giving it rounded corners. If they're not set, they 
+    ''' default to 0.
+    ''' </summary>
     Public NotInheritable Class SvgRect
         Inherits SvgBasicShape
 
+        ''' <summary>
+        ''' The x position of the top left corner of the rectangle.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property X As Double
             Get
                 Return Element.GetAttribute("x", Attributes.Position.X)
@@ -13,6 +24,10 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' The y position of the top left corner of the rectangle.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Y As Double
             Get
                 Return Element.GetAttribute("y", Attributes.Position.Y)
@@ -22,6 +37,10 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' The width of the rectangle.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Width As Double
             Get
                 Return Element.GetAttribute("width", Attributes.Size.Width)
@@ -31,12 +50,34 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' The height of the rectangle.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Height As Double
             Get
                 Return Element.GetAttribute("height", Attributes.Size.Height)
             End Get
             Set(value As Double)
                 Element.SetAttribute("height", value)
+            End Set
+        End Property
+
+        Public Property rx As Double
+            Get
+                Return Element.GetAttribute("rx", Attributes.Radius.RX)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("rx", value)
+            End Set
+        End Property
+
+        Public Property ry As Double
+            Get
+                Return Element.GetAttribute("ry", Attributes.Radius.RY)
+            End Get
+            Set(value As Double)
+                Element.SetAttribute("ry", value)
             End Set
         End Property
 
