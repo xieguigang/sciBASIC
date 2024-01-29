@@ -3,7 +3,7 @@
 Namespace SVG.XML
 
     ''' <summary>
-    ''' 
+    ''' SVG之中的画布对象
     ''' </summary>
     Public MustInherit Class SvgContainer : Inherits SvgElement
 

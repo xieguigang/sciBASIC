@@ -85,7 +85,7 @@ Namespace SVG.XML
         Public Function Size(sz As Size) As SvgDocument
             Width = sz.Width
             Height = sz.Height
-            ViewBox = {0, 0, sz.Width, sz.Height}
+            ViewBox = New Double() {0, 0, sz.Width, sz.Height}
             Return Me
         End Function
 
