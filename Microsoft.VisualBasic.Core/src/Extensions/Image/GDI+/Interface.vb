@@ -1038,22 +1038,14 @@ Namespace Imaging
         ''' <param name="point"><see cref="Drawing.PointF"/> structure that represents the upper-left corner of the
         ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, point As PointF)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">Image to draw.</param>
+        ''' <param name="rect">RectangleF structure that specifies the location and size of the
+        ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, rect As RectangleF)
         '
         ' Summary:
