@@ -76,6 +76,13 @@ Namespace SVG.XML
             HRef = New DataURI(img).ToString
         End Sub
 
+        Public Sub SetRectangle(rect As RectangleF)
+            Width = rect.Width
+            Height = rect.Height
+            X = rect.Left
+            Y = rect.Top
+        End Sub
+
         ''' <summary>
         ''' create a new empty image node
         ''' </summary>

@@ -382,11 +382,9 @@ Namespace SVG
         Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
             Dim point As PointF = rect.Location
             Dim img As SvgImage = __svgData.svg.AddImage
-            Dim img As New XML.Image(image, rect.Size) With {
-                .X = point.X,
-                .Y = point.Y
-            }
-            Call __svgData.Add(img)
+
+            Call img.SetImage(image)
+            Call img.SetRectangle(rect)
         End Sub
 
         Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer)
