@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Globalization
-Imports System.Linq
+﻿Imports System.Globalization
 Imports System.Xml
 
 Namespace SVG.XML

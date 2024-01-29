@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
 
