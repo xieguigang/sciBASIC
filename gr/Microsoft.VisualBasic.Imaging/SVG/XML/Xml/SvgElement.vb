@@ -1,5 +1,7 @@
+Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace SVG.XML
@@ -172,8 +174,9 @@ Namespace SVG.XML
             Element.SetAttribute("class", value)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function ParseStyleAttribute() As Dictionary(Of String, String)
-            Return Element.GetAttribute("style").Split({";"c}, StringSplitOptions.RemoveEmptyEntries).[Select](Function(x) x.Split({":"c})).Where(Function(x) x.Length = 2).ToDictionary(Function(x) x(0).Trim(), Function(x) x(1).Trim(), StringComparer.OrdinalIgnoreCase)
+            Return CssParser.ParseStyle(Element.GetAttribute("style")).Properties
         End Function
 
         Private Sub SetStyleAttribute(styles As IReadOnlyDictionary(Of String, String))
