@@ -70,7 +70,7 @@ Namespace SVG
     Public Class SVGDataLayers
 
         Protected Friend bg$
-        Protected Friend Size As Size
+        Protected Friend size As Size
         Protected Friend svg As SvgDocument
         Protected Friend layers As New List(Of SvgContainer)
 
@@ -80,6 +80,12 @@ Namespace SVG
         Protected Friend filters As Dictionary(Of String, Filter)
 
         Public ReadOnly Property styles As New List(Of String)
+
+        Sub New(size As Size, bg As String)
+            Me.svg = SvgDocument.Create.Size(size)
+            Me.bg = bg
+            Me.size = size
+        End Sub
 
         ''' <summary>
         ''' reset

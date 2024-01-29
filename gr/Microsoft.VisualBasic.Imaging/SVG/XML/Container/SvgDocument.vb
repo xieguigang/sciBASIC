@@ -98,6 +98,11 @@ Namespace SVG.XML
             Return Me
         End Function
 
+        Public Function Background(bg As String) As SvgDocument
+            Call SetStyle("background", bg)
+            Return Me
+        End Function
+
         Public Shared Function Create() As SvgDocument
             Dim document = New XmlDocument()
             Dim rootElement = document.CreateElement("svg")
