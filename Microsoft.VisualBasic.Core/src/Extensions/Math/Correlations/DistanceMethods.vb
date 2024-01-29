@@ -52,7 +52,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
 Namespace Math.Correlations
@@ -261,6 +263,21 @@ Namespace Math.Correlations
         <Extension>
         Public Function DistanceTo(a As IVector, b As IVector) As Double
             Return EuclideanDistance(a.Data, b.Data)
+        End Function
+
+        ''' <summary>
+        ''' Reduced Euclidean distance
+        ''' </summary>
+        Public Function RDist(x As Span(Of Double), y As Span(Of Double)) As Double
+            Dim distSquared As Double = 0
+            Dim d As Double
+
+            For i As Integer = 0 To x.Length - 1
+                d = x(i) - y(i)
+                distSquared += d * d
+            Next
+
+            Return distSquared
         End Function
     End Module
 End Namespace

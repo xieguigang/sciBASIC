@@ -64,7 +64,8 @@ Imports Microsoft.VisualBasic.DataMining.UMAP.KNN.KDTreeMethod
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.Math.Correlations
+Imports std = System.Math
 
 ''' <summary>
 ''' UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction
@@ -462,8 +463,8 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' </summary>
     Private Sub OptimizeLayoutStep(n As Integer)
         ' 在这里可以进行并行化？
-        For i = 0 To _optimizationState.EpochsPerSample.Length - 1
-            RunIterate(i, n)
+        For i As Integer = 0 To _optimizationState.EpochsPerSample.Length - 1
+            Call RunIterate(i, n)
         Next
 
         ' Preparation for future work for interpolating the table before optimizing
@@ -488,19 +489,19 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         Dim current = embeddingSpan.Slice(current_start, _optimizationState.Dim)
         Dim other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
 
-        Dim distSquared = Umap.RDist(current, other)
+        Dim distSquared As Double = DistanceMethods.RDist(current, other)
         Dim gradCoeff = 0F
         Dim gradD As Double
 
         If (distSquared > 0) Then
-            gradCoeff = -2 * _optimizationState.A * _optimizationState.B * stdNum.Pow(distSquared, _optimizationState.B - 1)
-            gradCoeff /= _optimizationState.A * stdNum.Pow(distSquared, _optimizationState.B) + 1
+            gradCoeff = -2 * _optimizationState.A * _optimizationState.B * std.Pow(distSquared, _optimizationState.B - 1)
+            gradCoeff /= _optimizationState.A * std.Pow(distSquared, _optimizationState.B) + 1
         End If
 
         Const clipValue = 4.0F
 
         For d As Integer = 0 To _optimizationState.Dim - 1
-            gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
+            gradD = Math.Clip(gradCoeff * (current(d) - other(d)), clipValue)
             current(d) += gradD * _optimizationState.Alpha
 
             If (_optimizationState.MoveOther) Then
@@ -510,14 +511,14 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
         _optimizationState.EpochOfNextSample(i) += _optimizationState.EpochsPerSample(i)
 
-        Dim nNegSamples As Integer = stdNum.Floor((n - _optimizationState.EpochOfNextNegativeSample(i)) / _optimizationState.EpochsPerNegativeSample(i))
+        Dim nNegSamples As Integer = std.Floor((n - _optimizationState.EpochOfNextNegativeSample(i)) / _optimizationState.EpochsPerNegativeSample(i))
 
         For p = 0 To nNegSamples - 1
 
             k = _random.Next(0, _optimizationState.NVertices)
             other_start = k * _optimizationState.Dim
             other = embeddingSpan.Slice(other_start, _optimizationState.Dim)
-            distSquared = Umap.RDist(current, other)
+            distSquared = DistanceMethods.RDist(current, other)
             gradCoeff = 0F
 
             If (distSquared > 0) Then
@@ -532,7 +533,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                 gradD = 4.0F
 
                 If (gradCoeff > 0) Then
-                    gradD = Umap.Clip(gradCoeff * (current(d) - other(d)), clipValue)
+                    gradD = Math.Clip(gradCoeff * (current(d) - other(d)), clipValue)
                 End If
 
                 current(d) += gradD * _optimizationState.Alpha
@@ -541,34 +542,4 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
         _optimizationState.EpochOfNextNegativeSample(i) += nNegSamples * _optimizationState.EpochsPerNegativeSample(i)
     End Sub
-
-#Disable Warning
-    ''' <summary>
-    ''' Reduced Euclidean distance
-    ''' </summary>
-    Private Shared Function RDist(x As Span(Of Double), y As Span(Of Double)) As Double
-        Dim distSquared = 0F
-        Dim d As Double
-
-        For i = 0 To x.Length - 1
-            d = x(i) - y(i)
-            distSquared += d * d
-        Next
-
-        Return distSquared
-    End Function
-#Enable Warning
-
-    ''' <summary>
-    ''' Standard clamping of a value into a fixed range
-    ''' </summary>
-    Private Shared Function Clip(x As Double, clipValue As Double) As Double
-        If x > clipValue Then
-            Return clipValue
-        ElseIf x < -clipValue Then
-            Return -clipValue
-        Else
-            Return x
-        End If
-    End Function
 End Class

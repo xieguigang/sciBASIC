@@ -73,6 +73,19 @@ Namespace Math
     <Package("VBMath", Publisher:="xie.guigang@gmail.com")>
     Public Module VBMath
 
+        ''' <summary>
+        ''' Standard clamping of a value into a fixed range
+        ''' </summary>
+        Public Function Clip(x As Double, clipValue As Double) As Double
+            If x > clipValue Then
+                Return clipValue
+            ElseIf x < -clipValue Then
+                Return -clipValue
+            Else
+                Return x
+            End If
+        End Function
+
 #If NET48 Then
 
         ' Clamp function is missing in .NET 4.8 
