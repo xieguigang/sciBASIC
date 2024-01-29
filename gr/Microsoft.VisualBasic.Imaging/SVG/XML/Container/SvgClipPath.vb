@@ -6,15 +6,6 @@ Namespace SVG.XML
 
     Public NotInheritable Class SvgClipPath
         Inherits SvgContainer
-        Private Sub New(element As XmlElement)
-            MyBase.New(element)
-        End Sub
-
-        Friend Shared Function Create(parent As XmlElement) As SvgClipPath
-            Dim element = parent.OwnerDocument.CreateElement("clipPath")
-            parent.AppendChild(element)
-            Return New SvgClipPath(element)
-        End Function
 
         Public Property ClipPathUnits As SvgClipPathUnits
             Get
@@ -24,5 +15,15 @@ Namespace SVG.XML
                 Element.SetAttribute("clipPathUnits", value)
             End Set
         End Property
+
+        Friend Sub New(element As XmlElement)
+            MyBase.New(element)
+        End Sub
+
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgClipPath
+            Dim element = parent.OwnerDocument.CreateElement("clipPath")
+            parent.AppendChild(element)
+            Return New SvgClipPath(element)
+        End Function
     End Class
 End Namespace

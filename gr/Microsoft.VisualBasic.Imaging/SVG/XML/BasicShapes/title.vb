@@ -13,11 +13,11 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgTitle
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgTitle
             Dim element = parent.OwnerDocument.CreateElement("title")
             parent.AppendChild(element)
             Return New SvgTitle(element)

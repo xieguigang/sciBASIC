@@ -83,11 +83,11 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgMarker
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgMarker
             Dim element = parent.OwnerDocument.CreateElement("marker")
             parent.AppendChild(element)
             Return New SvgMarker(element)

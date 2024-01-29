@@ -41,11 +41,11 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgPolygon
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgPolygon
             Dim element = parent.OwnerDocument.CreateElement("polygon")
             parent.AppendChild(element)
             Return New SvgPolygon(element)

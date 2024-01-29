@@ -194,18 +194,44 @@ Namespace SVG.XML
                 Case GetType(SvgCircle) : Return New SvgCircle(e)
                 Case GetType(SvgRect) : Return New SvgRect(e)
                 Case GetType(SvgLine) : Return New SvgLine(e)
+                Case GetType(SvgEllipse) : Return New SvgEllipse(e)
+                Case GetType(SvgImage) : Return New SvgImage(e)
+                Case GetType(SvgPath) : Return New SvgPath(e)
+                Case GetType(SvgPolygon) : Return New SvgPolygon(e)
+                Case GetType(SvgPolyLine) : Return New SvgPolyLine(e)
+                Case GetType(SvgText) : Return New SvgText(e)
+                Case GetType(SvgTitle) : Return New SvgTitle(e)
+
+                Case GetType(SvgGroup) : Return New SvgGroup(e)
+                Case GetType(SvgClipPath) : Return New SvgClipPath(e)
+                Case GetType(SvgMarker) : Return New SvgMarker(e)
+
                 Case Else
                     Throw New NotImplementedException(GetType(T).FullName)
             End Select
         End Function
 
+        ''' <summary>
+        ''' create svg element based on the given <see cref="XmlElement.Name"/>
+        ''' </summary>
+        ''' <param name="e"></param>
+        ''' <returns></returns>
         Public Shared Function Create(e As XmlElement) As SvgElement
             Select Case Strings.LCase(e.Name)
                 Case "circle" : Return New SvgCircle(e)
                 Case "rect" : Return New SvgRect(e)
                 Case "line" : Return New SvgLine(e)
+                Case "ellipse" : Return New SvgEllipse(e)
+                Case "image" : Return New SvgImage(e)
+                Case "path" : Return New SvgPath(e)
+                Case "polygon" : Return New SvgPolygon(e)
+                Case "polyline" : Return New SvgPolyLine(e)
+                Case "text" : Return New SvgText(e)
+                Case "title" : Return New SvgTitle(e)
 
                 Case "g" : Return New SvgGroup(e)
+                Case "clipPath" : Return New SvgClipPath(e)
+                Case "marker" : Return New SvgMarker(e)
 
                 Case Else
                     Throw New NotImplementedException(e.Name)

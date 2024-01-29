@@ -67,7 +67,7 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Private Sub New(element As XmlElement)
+        Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub
 
@@ -76,18 +76,18 @@ Namespace SVG.XML
         ''' </summary>
         ''' <param name="parent"></param>
         ''' <returns></returns>
-        Friend Shared Function Create(parent As XmlElement) As SvgImage
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgImage
             Dim element = parent.OwnerDocument.CreateElement("image")
             parent.AppendChild(element)
             Return New SvgImage(element)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Create(parent As XmlElement, image As Bitmap, Optional size As SizeF = Nothing) As SvgImage
+        Public Overloads Shared Function Create(parent As XmlElement, image As Bitmap, Optional size As SizeF = Nothing) As SvgImage
             Return Create(parent, CType(image, Drawing.Image), size)
         End Function
 
-        Public Shared Function Create(parent As XmlElement, image As Drawing.Image, Optional size As SizeF = Nothing) As SvgImage
+        Public Overloads Shared Function Create(parent As XmlElement, image As Drawing.Image, Optional size As SizeF = Nothing) As SvgImage
             Dim element = parent.OwnerDocument.CreateElement("image")
             parent.AppendChild(element)
             Dim img As New SvgImage(element)
