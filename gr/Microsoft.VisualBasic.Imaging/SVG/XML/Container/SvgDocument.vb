@@ -103,7 +103,7 @@ Namespace SVG.XML
             Return Me
         End Function
 
-        Public Shared Function Create() As SvgDocument
+        Public Overloads Shared Function Create() As SvgDocument
             Dim document = New XmlDocument()
             Dim rootElement = document.CreateElement("svg")
             document.AppendChild(rootElement)

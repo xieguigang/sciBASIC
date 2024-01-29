@@ -54,7 +54,7 @@ Namespace SVG.XML
             MyBase.New(element)
         End Sub
 
-        Friend Shared Function Create(parent As XmlElement) As SvgCircle
+        Friend Overloads Shared Function Create(parent As XmlElement) As SvgCircle
             Dim element = parent.OwnerDocument.CreateElement("circle")
             parent.AppendChild(element)
             Return New SvgCircle(element)
