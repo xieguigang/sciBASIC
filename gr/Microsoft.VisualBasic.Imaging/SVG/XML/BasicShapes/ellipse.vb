@@ -3,15 +3,6 @@
 Namespace SVG.XML
     Public NotInheritable Class SvgEllipse
         Inherits SvgBasicShape
-        Private Sub New(element As XmlElement)
-            MyBase.New(element)
-        End Sub
-
-        Friend Shared Function Create(parent As XmlElement) As SvgEllipse
-            Dim element = parent.OwnerDocument.CreateElement("ellipse")
-            parent.AppendChild(element)
-            Return New SvgEllipse(element)
-        End Function
 
         Public Property CX As Double
             Get
@@ -48,5 +39,15 @@ Namespace SVG.XML
                 Element.SetAttribute("ry", value)
             End Set
         End Property
+
+        Private Sub New(element As XmlElement)
+            MyBase.New(element)
+        End Sub
+
+        Friend Shared Function Create(parent As XmlElement) As SvgEllipse
+            Dim element = parent.OwnerDocument.CreateElement("ellipse")
+            parent.AppendChild(element)
+            Return New SvgEllipse(element)
+        End Function
     End Class
 End Namespace
