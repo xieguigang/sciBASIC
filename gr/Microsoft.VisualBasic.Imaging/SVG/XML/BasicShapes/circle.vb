@@ -6,12 +6,7 @@ Namespace SVG.XML
     ''' <summary>
     ''' The &lt;circle> SVG element is an SVG basic shape, used to draw circles based on a center point and a radius.
     ''' </summary>
-    Public NotInheritable Class SvgCircle
-        Inherits SvgBasicShape
-
-        Private Sub New(element As XmlElement)
-            MyBase.New(element)
-        End Sub
+    Public NotInheritable Class SvgCircle : Inherits SvgBasicShape
 
         ''' <summary>
         ''' The x-axis coordinate of the center of the circle. Value type: &lt;length>|&lt;percentage>; 
@@ -54,6 +49,10 @@ Namespace SVG.XML
                 Element.SetAttribute("r", value)
             End Set
         End Property
+
+        Friend Sub New(element As XmlElement)
+            MyBase.New(element)
+        End Sub
 
         Friend Shared Function Create(parent As XmlElement) As SvgCircle
             Dim element = parent.OwnerDocument.CreateElement("circle")

@@ -13,14 +13,6 @@ Namespace SVG.XML
 
         Protected ReadOnly Element As XmlElement
 
-        Protected Sub New(element As XmlElement)
-            If element Is Nothing Then
-                Throw New ArgumentNullException(NameOf(element))
-            Else
-                Me.Element = element
-            End If
-        End Sub
-
         ''' <summary>
         ''' html element node id liked identifer 
         ''' </summary>
@@ -121,6 +113,14 @@ Namespace SVG.XML
             End Set
         End Property
 
+        Protected Friend Sub New(element As XmlElement)
+            If element Is Nothing Then
+                Throw New ArgumentNullException(NameOf(element))
+            Else
+                Me.Element = element
+            End If
+        End Sub
+
         Public Function GetClasses() As IEnumerable(Of String)
             Return ParseClassAttribute()
         End Function
@@ -188,5 +188,21 @@ Namespace SVG.XML
             Dim value = String.Join(";", styles.[Select](Function(kvp) $"{kvp.Key}: {kvp.Value}"))
             Element.SetAttribute("style", value)
         End Sub
+
+        Public Shared Function Create(Of T As SvgElement)(e As XmlElement) As SvgElement
+            Select Case GetType(T)
+                Case GetType(SvgCircle) : Return New SvgCircle(e)
+                Case Else
+                    Throw New NotImplementedException(GetType(T).FullName)
+            End Select
+        End Function
+
+        Public Shared Function Create(e As XmlElement) As SvgElement
+            Select Case Strings.LCase(e.Name)
+                Case "circle" : Return New SvgCircle(e)
+                Case Else
+                    Throw New NotImplementedException(e.Name)
+            End Select
+        End Function
     End Class
 End Namespace

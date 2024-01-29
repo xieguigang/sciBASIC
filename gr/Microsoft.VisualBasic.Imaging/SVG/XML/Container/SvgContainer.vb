@@ -67,5 +67,11 @@ Namespace SVG.XML
         Public Function AddText() As SvgText
             Return SvgText.Create(Element)
         End Function
+
+        Public Iterator Function GetElements() As IEnumerable(Of SvgElement)
+            For i As Integer = 0 To Element.ChildNodes.Count - 1
+                Yield SvgElement.Create(DirectCast(Element.ChildNodes(i), XmlElement))
+            Next
+        End Function
     End Class
 End Namespace
