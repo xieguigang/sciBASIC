@@ -94,17 +94,6 @@ Namespace SVG
         ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
 
-        ''' <summary>
-        ''' Get the last graphic layer
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property GetLastLayer As g
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return __svgData.GetLastLayer
-            End Get
-        End Property
-
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
             Call MyBase.New(size, dpiX, dpiY)
             Me.__svgData = New SVGDataLayers With {

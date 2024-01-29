@@ -7,6 +7,15 @@ Namespace SVG.XML
     ''' </summary>
     Public MustInherit Class SvgContainer : Inherits SvgElement
 
+        Public Property filter As String
+            Get
+                Return Element.GetAttribute("filter")
+            End Get
+            Set(value As String)
+                Element.SetAttribute("filter", value)
+            End Set
+        End Property
+
         Protected Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub

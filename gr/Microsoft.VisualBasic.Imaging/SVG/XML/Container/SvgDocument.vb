@@ -86,6 +86,11 @@ Namespace SVG.XML
             _document = document
         End Sub
 
+        ''' <summary>
+        ''' set svg canvas size and viewbox size
+        ''' </summary>
+        ''' <param name="sz"></param>
+        ''' <returns></returns>
         Public Function Size(sz As Size) As SvgDocument
             Width = sz.Width
             Height = sz.Height
