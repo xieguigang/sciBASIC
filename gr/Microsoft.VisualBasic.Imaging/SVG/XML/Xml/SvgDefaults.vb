@@ -1,4 +1,6 @@
-﻿Namespace SVG.XML
+﻿Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+
+Namespace SVG.XML
     Public Module SvgDefaults
         Public NotInheritable Class Attributes
             Public NotInheritable Class FillAndStroke

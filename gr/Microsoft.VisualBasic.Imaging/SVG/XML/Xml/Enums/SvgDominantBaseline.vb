@@ -1,4 +1,4 @@
-﻿Namespace SVG.XML
+﻿Namespace SVG.XML.Enums
     Public Class SvgDominantBaseline
         Inherits SvgEnum
         Private Sub New(value As String)

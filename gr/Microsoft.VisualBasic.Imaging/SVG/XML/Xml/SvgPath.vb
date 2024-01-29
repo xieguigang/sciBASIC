@@ -1,4 +1,5 @@
 ﻿Imports System.Xml
+Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
 
 Namespace SVG.XML
     Public NotInheritable Class SvgPath
