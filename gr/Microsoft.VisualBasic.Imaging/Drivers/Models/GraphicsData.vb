@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Namespace Driver
 
     ''' <summary>
-    ''' gdi+ images: <see cref="Drawing.Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGXml"/>
+    ''' gdi+ images: <see cref="Drawing.Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGDocument"/>
     ''' </summary>
     Public MustInherit Class GraphicsData
         Implements IDisposable
@@ -73,7 +73,7 @@ Namespace Driver
         ''' The graphics engine driver type indicator, 
         ''' 
         ''' + for <see cref="Drivers.GDI"/> -> <see cref="ImageData"/>(<see cref="Drawing.Image"/>, <see cref="Bitmap"/>)
-        ''' + for <see cref="Drivers.SVG"/> -> <see cref="SVGData"/>(<see cref="SVGXml"/>)
+        ''' + for <see cref="Drivers.SVG"/> -> <see cref="SVGData"/>(<see cref="SVGDocument"/>)
         ''' 
         ''' (驱动程序的类型)
         ''' </summary>
