@@ -69,7 +69,7 @@ Namespace Driver
         ''' <summary>
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
-        Friend ReadOnly gdi As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+        Friend ReadOnly gdi As Graphics
 
         Public Overrides ReadOnly Property Size As Size
         Public Overrides ReadOnly Property DpiX As Single
@@ -178,15 +178,24 @@ Namespace Driver
             End Set
         End Property
 
+        Sub New(dpiX As Integer, dpiY As Integer)
+            Dim null As New Bitmap(10, 10)
+
+            Me.DpiX = dpiX
+            Me.DpiY = dpiY
+            null.SetResolution(dpiX, dpiY)
+            gdi = Graphics.FromImage(null)
+        End Sub
+
         Sub New(size As Size, dpi As Size)
-            Me.DpiX = dpi.Width
-            Me.DpiY = dpi.Height
+            Call Me.New(dpi.Width, dpi.Height)
+
             Me.Size = size
         End Sub
 
         Sub New(size As Size, dpiX As Single, dpiY As Single)
-            Me.DpiX = dpiX
-            Me.DpiY = dpiY
+            Call Me.New(dpiX, dpiY)
+
             Me.Size = size
         End Sub
 

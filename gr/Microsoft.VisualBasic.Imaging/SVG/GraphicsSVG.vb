@@ -94,6 +94,13 @@ Namespace SVG
         ''' </summary>
         Friend ReadOnly __svgData As SVGDataLayers
 
+        Public Overrides ReadOnly Property Size As Size
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return __svgData.size
+            End Get
+        End Property
+
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
             Call MyBase.New(size, dpiX, dpiY)
 
@@ -108,13 +115,6 @@ Namespace SVG
         Public Sub New(width%, height%, dpiX As Integer, dpiY As Integer)
             Me.New(New Size(width, height), dpiX, dpiY)
         End Sub
-
-        Public Overrides ReadOnly Property Size As Size
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return __svgData.size
-            End Get
-        End Property
 
         Public Overrides Sub AddMetafileComment(data() As Byte)
             Dim meta As String = data.ToBase64String
