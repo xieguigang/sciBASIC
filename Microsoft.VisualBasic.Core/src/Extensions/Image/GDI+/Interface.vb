@@ -63,7 +63,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports Interpolation2D = System.Drawing.Drawing2D.InterpolationMode
 
 Namespace Imaging
@@ -141,7 +141,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
-                Return stdNum.Max(DpiX, DpiY)
+                Return std.Max(DpiX, DpiY)
             End Get
         End Property
 

@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -447,6 +448,8 @@ Namespace Graphic.Axis
                         With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
                             Call .DrawString(label, font, labelColor, location, -90)
                         End With
+                    ElseIf TypeOf g Is GraphicsSVG Then
+                        Call DirectCast(g, GraphicsSVG).DrawString(label, font, labelColor, location.X, location.Y, -90)
                     Else
                         Call g.DrawString(label, font, labelColor, location)
                     End If

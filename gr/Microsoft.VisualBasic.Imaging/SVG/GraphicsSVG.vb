@@ -113,9 +113,13 @@ Namespace SVG
         End Sub
 
         Public Sub New(width%, height%, dpiX As Integer, dpiY As Integer)
-            Me.New(New Size(width, height), dpiX, dpiY)
+            Call Me.New(New Size(width, height), dpiX, dpiY)
         End Sub
 
+        ''' <summary>
+        ''' add comment to svg xml document
+        ''' </summary>
+        ''' <param name="data"></param>
         Public Overrides Sub AddMetafileComment(data() As Byte)
             Dim meta As String = data.ToBase64String
 
@@ -718,17 +722,17 @@ Namespace SVG
             Dim text As SvgText = __svgData.svg.AddText
 
             text.Text = s
-            text.X = x '- FontFace.SVGPointSize(size.Width, Dpi) / 8,
-            text.Y = y '+ FontFace.SVGPointSize(size.Height, Dpi) / 8,
+            text.X = x + FontFace.SVGPointSize(size.Width, Dpi) / 6
+            text.Y = y + FontFace.SVGPointSize(size.Height, Dpi) / 1.5
             text.Style = css.CSSValue
 
             If TypeOf brush Is SolidBrush Then
-                Dim color$ = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
-                text.style &= color
+                text.Style &= $"fill: {DirectCast(brush, SolidBrush).Color.ToHtmlColor};"
             End If
 
             If angle <> 0.0 Then
-                text.transform = $"rotate({angle} {x} {y})"
+                text.Style &= $"transform-origin: {x}px {y}px;"
+                text.Transform = $"rotate({angle})"
             End If
         End Sub
 

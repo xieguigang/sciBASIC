@@ -183,7 +183,7 @@ Namespace Driver
 
             Me.DpiX = dpiX
             Me.DpiY = dpiY
-            null.SetResolution(dpiX, dpiY)
+            ' null.SetResolution(dpiX, dpiY)
             gdi = Graphics.FromImage(null)
         End Sub
 
@@ -199,10 +199,10 @@ Namespace Driver
             Me.Size = size
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Overridable Function FontScale(font As Font) As Font
-            Return New Font(font, FontFace.SVGPointSize(font.Size, Dpi))
-        End Function
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        'Protected Overridable Function FontScale(font As Font) As Font
+        '    Return New Font(font, FontFace.SVGPointSize(font.Size, Dpi))
+        'End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FontMetrics(font As Font) As FontMetrics
@@ -216,32 +216,38 @@ Namespace Driver
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Return gdi.MeasureString(text, FontScale(font))
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font)), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Return gdi.MeasureString(text, FontScale(font), width)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), width), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, width), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Return gdi.MeasureString(text, FontScale(font), layoutArea)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), layoutArea), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, layoutArea), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Return gdi.MeasureString(text, FontScale(font), width, format)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), width, format), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, width, format), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Return gdi.MeasureString(text, FontScale(font), origin, stringFormat)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), origin, stringFormat), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, origin, stringFormat), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Return gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, layoutArea, stringFormat), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -251,8 +257,8 @@ Namespace Driver
                                                 stringFormat As StringFormat,
                                                 ByRef charactersFitted As Integer,
                                                 ByRef linesFilled As Integer) As SizeF
-
-            Return gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled)
+            'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat, charactersFitted, linesFilled), Dpi)
+            Return FontFace.SVGPointSize(gdi.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled), Dpi)
         End Function
     End Class
 End Namespace
