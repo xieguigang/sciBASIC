@@ -267,6 +267,7 @@ Namespace Drawing2D.Colors
             g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
             g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
 
+            y -= tickFont.Height
             x += ruleOffset + 5
             point = New PointF(x, y - tickFont.Height / 2)
             g.DrawString(ticks.Max.ToString(format), tickFont, fontColor, point)
@@ -280,7 +281,7 @@ Namespace Drawing2D.Colors
                 .OrderByDescending(Function(n) n) _
                 .ToArray
 
-            Dim delta As Single = legendHeight / (ticks.Length + 1)
+            Dim delta As Single = legendHeight / If(ticks.Length = 0, 1, ticks.Length + 1)
             Dim tickStr As String
 
             y += delta
@@ -297,7 +298,7 @@ Namespace Drawing2D.Colors
 
                 point = New PointF With {
                     .X = x + 2,
-                    .Y = y - tickFont.Height / 2
+                    .Y = y - tickFont.Height
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
                 g.DrawString(tickStr, tickFont, fontColor, point)
