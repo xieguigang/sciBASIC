@@ -101,17 +101,22 @@ Namespace SVG
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(size As SizeF, dpiX As Integer, dpiY As Integer)
+            Call Me.New(size.Width, size.Height, dpiX, dpiY)
+        End Sub
+
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
             Call MyBase.New(size, dpiX, dpiY)
-
-            Me.__svgData = New SVGDataLayers(size)
+            __svgData = New SVGDataLayers(size)
         End Sub
 
         Friend Sub New(svg As SVGDataLayers, dpiX As Integer, dpiY As Integer)
             Call Me.New(svg.size, dpiX, dpiY)
-            Me.__svgData = svg
+            __svgData = svg
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(width%, height%, dpiX As Integer, dpiY As Integer)
             Call Me.New(New Size(width, height), dpiX, dpiY)
         End Sub
