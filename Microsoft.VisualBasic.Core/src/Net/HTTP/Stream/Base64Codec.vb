@@ -246,7 +246,10 @@ Namespace Net.Http
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
-            Return Convert.ToBase64String(image.ToStream(format).ToArray)
+            Dim s = image.ToStream(format)
+            Dim buffer = s.ToArray
+
+            Return Convert.ToBase64String(buffer)
         End Function
 #End Region
     End Module
