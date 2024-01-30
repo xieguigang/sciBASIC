@@ -124,7 +124,7 @@ Public Module StringFormats
     ''' <summary>
     ''' convert the ms value to human readable string
     ''' </summary>
-    ''' <param name="microtime"><see cref="TimeSpan.TotalMilliseconds"/></param>
+    ''' <param name="span"><see cref="TimeSpan.TotalMilliseconds"/></param>
     ''' <param name="format"></param>
     ''' <param name="round"></param>
     ''' <returns>human readable time string, example as: 3.6s, 45min or 1.99h</returns>
