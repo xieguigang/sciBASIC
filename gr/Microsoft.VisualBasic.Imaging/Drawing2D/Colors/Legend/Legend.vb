@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -230,6 +231,12 @@ Namespace Drawing2D.Colors
             ' 绘制出颜色谱
             y = legendOffsetTop + layout.Top
             legendOffsetLeft += layout.Left
+
+            If TypeOf g Is GraphicsSVG Then
+                If legendOffsetLeft < point.X Then
+                    legendOffsetLeft = point.X
+                End If
+            End If
 
             For i As Integer = designer.Length - 1 To 0 Step -1
                 rect = New RectangleF With {

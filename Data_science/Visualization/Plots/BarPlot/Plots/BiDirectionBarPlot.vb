@@ -105,7 +105,7 @@ Namespace BarPlot
             ' draw main title
             Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
             Dim labelSize As SizeF = g.MeasureString(main, titleFont)
-            Dim labelPos As New Point With {
+            Dim labelPos As New PointF With {
                 .X = rect.Left + (rect.Width - labelSize.Width) / 2,
                 .Y = (canvas.Padding.Top - labelSize.Height) / 2
             }

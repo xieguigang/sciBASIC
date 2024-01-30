@@ -2208,7 +2208,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
         '
         ' Summary:
         '     Draws the specified text string in the specified rectangle with the specified

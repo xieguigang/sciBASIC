@@ -245,7 +245,7 @@ Namespace BarPlot
                 Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS, [default]:=New Font(FontFace.MicrosoftYaHei, 12.0!)).GDIObject(g.Dpi)
                 Dim drawlabel = Sub(c As IGraphics, label$)
                                     Dim tsize = c.MeasureString(label, tickFont)
-                                    Dim pos As New Point(.Left - dt - tsize.Width, y - tsize.Height / 2)
+                                    Dim pos As New PointF(.Left - dt - tsize.Width, y - tsize.Height / 2)
 
                                     Call c.DrawString(label, tickFont, Brushes.Black, pos)
                                 End Sub
@@ -344,7 +344,7 @@ Namespace BarPlot
 
                     ' 绘制右下角的编号标签
                     Dim titleSize = g.MeasureString(idTag, titleFont)
-                    Dim tl As New Point With {
+                    Dim tl As New PointF With {
                         .X = rect.Right - titleSize.Width - 20,
                         .Y = rect.Bottom - titleSize.Height - 20
                     }

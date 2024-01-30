@@ -327,7 +327,7 @@ Public Class Bubble : Inherits Plot
             End If
 
             Call g.DrawLine(labelPointer, anchor, label.GetTextAnchor(anchor))
-            Call g.DrawString(label.text, tagLabelFont, Brushes.Black, label)
+            Call g.DrawString(label.text, tagLabelFont, Brushes.Black, label.location)
         Next
 
         If theme.drawLegend Then

@@ -539,7 +539,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
             Throw New NotImplementedException()
         End Sub
 

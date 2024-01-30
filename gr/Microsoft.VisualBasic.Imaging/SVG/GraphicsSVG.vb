@@ -718,7 +718,7 @@ Namespace SVG
             Next
         End Sub
 
-        Public Overloads Sub DrawString(s As String, font As Font, brush As Brush, x!, y!, angle!)
+        Public Overloads Sub DrawString(s As String, font As Font, brush As Brush, ByRef x!, ByRef y!, angle!)
             ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
@@ -726,9 +726,12 @@ Namespace SVG
             Dim size As SizeF = gdi.MeasureString(s, font)
             Dim text As SvgText = __svgData.svg.AddText
 
+            x = x + FontFace.SVGPointSize(size.Width, Dpi) / 6
+            y = y + FontFace.SVGPointSize(size.Height, Dpi) / 1.5
+
             text.Text = s
-            text.X = x + FontFace.SVGPointSize(size.Width, Dpi) / 6
-            text.Y = y + FontFace.SVGPointSize(size.Height, Dpi) / 1.5
+            text.X = x
+            text.Y = y
             text.Style = css.CSSValue
 
             If TypeOf brush Is SolidBrush Then
@@ -741,8 +744,13 @@ Namespace SVG
             End If
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
-            Call DrawString(s, font, brush, point.X, point.Y, angle:=0)
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
+            Dim x = point.X
+            Dim y = point.Y
+
+            Call DrawString(s, font, brush, x, y, angle:=0)
+
+            point = New PointF(x, y)
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)

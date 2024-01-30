@@ -574,7 +574,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Next
     End Sub
 
-    Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+    Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
         Call DrawString(s, font, brush, point.X, point.Y)
     End Sub
 
