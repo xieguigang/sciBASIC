@@ -31,6 +31,12 @@ Namespace LDA
             Dim nwsum As Integer()
             Dim ndsum As Integer()
             Dim topic As Integer
+            Dim pars As New gibbs_pars With {
+                .alpha = alpha,
+                .beta = beta,
+                .K = K,
+                .voca_size = voca_size
+            }
 
             If sequenceMode Then
                 'nw = gibbs.nw
@@ -65,7 +71,7 @@ Namespace LDA
 
                 ' (z_i = z[m][n])
                 ' sample from p(z_i|z_-i, w)
-                topic = sample_fullConditional(topic, zi, n, nw, nd, nwsum, ndsum)
+                topic = gibbs_sampling(topic, zi, nw, nd, nwsum, ndsum, pars)
                 v(n) = topic
 
                 ' add newly estimated z_i to count variables
@@ -84,13 +90,14 @@ Namespace LDA
         ''' 根据上述公式计算文档m中第n个词语的主题的完全条件分布，输出最可能的主题
         ''' </summary>
         ''' <param name="m"> document </param>
-        ''' <param name="n"> word </param> 
         ''' <returns>
         ''' sampling and assign new topic index
         ''' </returns>
-        Private Function sample_fullConditional(topic As Integer, m As Integer, n As Integer,
-                                                nw As Integer(), nd As Integer(),
-                                                nwsum As Integer(), ndsum As Integer()) As Integer
+        Private Shared Function gibbs_sampling(topic As Integer, m As Integer,
+                                               nw As Integer(), nd As Integer(),
+                                               nwsum As Integer(), ndsum As Integer(),
+                                               gibbs_pars As gibbs_pars) As Integer
+
             ' remove z_i from the count variables
             ' 先将这个词从计数器中抹掉
             nw(topic) -= 1
@@ -99,10 +106,12 @@ Namespace LDA
             ndsum(m) -= 1
 
             ' do multinomial sampling via cumulative method: 通过多项式方法采样多项式分布
-            Dim p = New Double(K - 1) {}
+            Dim p = New Double(gibbs_pars.K - 1) {}
 
-            For K As Integer = 0 To Me.K - 1
-                p(K) = (nw(K) + beta) / (nwsum(K) + voca_size * beta) * (nd(K) + alpha) / (ndsum(m) + Me.K * alpha)
+            For K As Integer = 0 To gibbs_pars.K - 1
+                p(K) = (nw(K) + gibbs_pars.beta) / (nwsum(K) +
+                    gibbs_pars.voca_size * gibbs_pars.beta) * (nd(K) + gibbs_pars.alpha) /
+                    (ndsum(m) + gibbs_pars.K * gibbs_pars.alpha)
             Next
 
             ' cumulate multinomial parameters
@@ -112,7 +121,7 @@ Namespace LDA
             Next
 
             ' scaled sample because of unnormalised p[] 正则化
-            Dim u As Double = randf.NextDouble * p(K - 1)
+            Dim u As Double = randf.NextDouble * p(gibbs_pars.K - 1)
 
             topic = 0
 
@@ -127,5 +136,11 @@ Namespace LDA
             Return topic
         End Function
 
+        Private Structure gibbs_pars
+            Dim K As Integer
+            Dim beta As Double
+            Dim voca_size As Integer
+            Dim alpha As Double
+        End Structure
     End Class
 End Namespace

@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices.Development.NetCoreApp
 Imports Microsoft.VisualBasic.Language
@@ -143,7 +144,25 @@ Namespace Scripting.MetaData
         ''' <returns>
         ''' nothing for dll not found
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadAssembly(searchPath As String()) As Assembly
+            Return LoadAssembly(assembly, searchPath)
+        End Function
+
+        ''' <summary>
+        ''' Loads the assembly file which contains this type. 
+        ''' </summary>
+        ''' <param name="searchPath">
+        ''' SetDllDirectory
+        ''' </param>
+        ''' <param name="assembly">
+        ''' should be the file name of the assembly dll module file, example as: ``library.dll``
+        ''' </param>
+        ''' <returns>
+        ''' nothing for dll not found
+        ''' </returns>
+        Public Shared Function LoadAssembly(assembly As String, ParamArray searchPath As String()) As Assembly
             Dim path As Value(Of String) = ""
             Dim assm As Assembly = Nothing
 
@@ -155,7 +174,7 @@ Namespace Scripting.MetaData
                 If filepath.FileLength > 0 Then
                     assm = System.Reflection.Assembly.LoadFile(filepath)
                     Exit For
-                ElseIf (path = $"{filepath}/{Me.assembly}").FileExists Then
+                ElseIf (path = $"{filepath}/{assembly}").FileExists Then
                     assm = System.Reflection.Assembly.LoadFile(path)
                     Exit For
                 End If

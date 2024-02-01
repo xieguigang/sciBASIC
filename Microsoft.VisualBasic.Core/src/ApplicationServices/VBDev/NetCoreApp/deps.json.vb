@@ -157,7 +157,8 @@ Namespace ApplicationServices.Development.NetCoreApp
         ''' load assembly from a given file path
         ''' </summary>
         ''' <param name="dllFile">full path</param>
-        ''' <returns></returns>
+        ''' <returns>this function maybe returns nothing if the error happends
+        ''' andalso parameter value of <paramref name="strict"/> set to FALSE.</returns>
         Public Shared Function LoadAssemblyOrCache(dllFile As String, Optional strict As Boolean = True) As Assembly
             Dim dllFullName As String = dllFile.FileName
             Dim result As New Value(Of Assembly)
@@ -220,6 +221,7 @@ Namespace ApplicationServices.Development.NetCoreApp
             Dim moduleName As String = package.GetName.Name
             Dim depsJson As String = GetDepsJsonfile(package, moduleName)
             Dim deps As deps = If(depsJson.FileExists, depsJson.LoadJsonFile(Of deps), Nothing)
+            Dim libdir As String = package.Location.ParentPath
 
             If deps Is Nothing Then
                 Call $"{depsJson} is missing or format incorrect!".Warning
@@ -230,24 +232,42 @@ Namespace ApplicationServices.Development.NetCoreApp
                 .GetReferenceProject _
                 .Where(Function(pkg) pkg.Name <> moduleName) _
                 .ToArray
-            Dim dependencies = deps.LoadDependencies(package).ToDictionary(Function(d) d.Name)
+            Dim dependencies As Dictionary(Of String, NamedValue(Of runtime)) = deps _
+                .LoadDependencies(package) _
+                .ToDictionary(Function(d)
+                                  Return d.Name
+                              End Function)
 
             For Each project As NamedValue(Of String) In referenceList
                 Dim dllFileName As NamedValue(Of runtime) = GetDllFileAuto(dependencies, project)
+                Dim dllName As String
 
                 If dllFileName.Description.StringEmpty Then
-                    Call $"no dll file module of: {project.Description}?".Warning
+                    dllName = Strings.Trim(project.Name).Split("/"c).First & ".dll"
+
+                    ' not found in deps.json?
+                    Call $"no dll runtime module was found: {project.Description}?".Warning
                 Else
                     ' 由于.net5环境下没有办法将dll自动生成在library文件夹之中
                     ' 所以在这里就直接在应用程序文件夹之中查找了
-                    Dim dllName As String = $"{HOME}/{dllFileName.Description}"
-
-                    If dllName.FileExists Then
-                        Call LoadAssemblyOrCache(dllName)
-                    Else
-                        Call $"missing assembly file: {dllName}...".Warning
-                    End If
+                    dllName = dllFileName.Description
                 End If
+
+                Dim dllfile As String
+
+                For Each libpath As String In New String() {App.HOME, libdir}
+                    dllfile = $"{libpath}/{dllName}"
+
+                    If dllfile.FileExists Then
+                        If Not LoadAssemblyOrCache(dllfile, strict:=False) Is Nothing Then
+                            ' exit current loop for load next
+                            ' project dependency module
+                            Exit For
+                        End If
+                    End If
+                Next
+
+                Call $"missing assembly file: {dllName}...".Warning
             Next
         End Sub
 
