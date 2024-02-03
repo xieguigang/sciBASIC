@@ -79,8 +79,8 @@ Namespace Drawing3D.Math3D
 
         ''' <summary>
         ''' Find a list of edgest from the given vertex list that will possibly intesect with the
-        ''' given rectangle, defined by it's vertical position (<paramrefname="layerPos"/>), and
-        ''' minimum and maximum X and Z bounds (<paramrefname="min"/> and <paramrefname="max"/>).
+        ''' given rectangle, defined by it's vertical position (<paramref name="layerPos"/>), and
+        ''' minimum and maximum X and Z bounds (<paramref name="min"/> and <paramref name="max"/>).
         ''' </summary>
         ''' <param name="path">List of vertices to search through/</param>
         ''' <param name="layerPos">Vertical position of the rectangle to find edges near to.</param>

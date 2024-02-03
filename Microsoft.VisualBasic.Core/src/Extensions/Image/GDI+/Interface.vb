@@ -63,7 +63,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports Interpolation2D = System.Drawing.Drawing2D.InterpolationMode
 
 Namespace Imaging
@@ -141,7 +141,7 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
             Get
-                Return stdNum.Max(DpiX, DpiY)
+                Return std.Max(DpiX, DpiY)
             End Get
         End Property
 
@@ -1038,22 +1038,14 @@ Namespace Imaging
         ''' <param name="point"><see cref="Drawing.PointF"/> structure that represents the upper-left corner of the
         ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, point As PointF)
-        '
-        ' Summary:
-        '     Draws the specified System.Drawing.Image at the specified location and with the
-        '     specified size.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that specifies the location and size of the
-        '     drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     image is null.
+
+        ''' <summary>
+        ''' Draws the specified System.Drawing.Image at the specified location and with the
+        ''' specified size.
+        ''' </summary>
+        ''' <param name="image">Image to draw.</param>
+        ''' <param name="rect">RectangleF structure that specifies the location and size of the
+        ''' drawn image.</param>
         Public MustOverride Sub DrawImage(image As Image, rect As RectangleF)
         '
         ' Summary:
@@ -2216,7 +2208,7 @@ Namespace Imaging
         ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
         ''' <param name="point">System.Drawing.PointF structure that specifies the upper-left corner of the drawn
         ''' text.</param>
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
         '
         ' Summary:
         '     Draws the specified text string in the specified rectangle with the specified

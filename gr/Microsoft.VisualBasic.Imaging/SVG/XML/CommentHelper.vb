@@ -52,7 +52,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Xml
 
 Namespace SVG.XML
 
@@ -61,7 +60,7 @@ Namespace SVG.XML
         Const declare$ = "SVG document was created by sciBASIC svg image driver:"
 
         <Extension>
-        Public Function CreateComment(xmlComment As String) As XmlComment
+        Public Function CreateComment(xmlComment As String) As String
             Dim comment As New StringBuilder
             Dim indent As New String(" "c, 6)
 
@@ -83,7 +82,7 @@ Namespace SVG.XML
             comment.AppendLine _
                    .Append("  ")
 
-            Return New XmlDocument().CreateComment(comment.ToString)
+            Return comment.ToString
         End Function
     End Module
 End Namespace

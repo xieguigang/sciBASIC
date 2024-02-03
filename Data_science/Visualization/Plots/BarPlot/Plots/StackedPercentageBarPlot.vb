@@ -120,9 +120,9 @@ Namespace BarPlot
             ' 绘制y轴
             For Each tick# In {0.00, 0.25, 0.5, 0.75, 1.0}
                 Dim y# = rect.Height - canvas.Padding.Bottom - bottomPart - barRegionHeight * tick
-                Dim location As New Point(x0 - tickSize.Width - 20, y - tickSize.Height / 2)
+                Dim location As New PointF(x0 - tickSize.Width - 20, y - tickSize.Height / 2)
 
-                g.DrawLine(Pens.Black, New Point(x0 - 10, y), New Point(x0 - 20, y))
+                g.DrawLine(Pens.Black, New PointF(x0 - 10, y), New PointF(x0 - 20, y))
                 g.DrawString(tick.ToString("F2"), tickFont, Brushes.Black, location)
             Next
 

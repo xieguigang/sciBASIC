@@ -56,7 +56,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
-Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace SVG
 
@@ -93,7 +92,7 @@ Namespace SVG
             Using g As Graphics2D = svg.Layout.Size.CreateGDIDevice
                 With g
                     Call .Clear(svg.SVG.bg.GetBrush)
-                    Call .drawLayer(svg)
+                    Call .drawLayer(svg.SVG.svg)
 
                     Return .ImageResource
                 End With
@@ -101,43 +100,27 @@ Namespace SVG
         End Function
 
         <Extension>
-        Private Sub drawLayer(g As Graphics2D, layer As ICanvas)
+        Private Sub drawLayer(g As Graphics2D, layer As SvgContainer)
             ' draw layer components, order by CSS zindex asc
-            For Each element As CSSLayer In layer.PopulateLayers.OrderBy(Function(l) l.zIndex)
+            For Each element As SvgElement In layer.GetElements
                 Select Case element.GetType
-                    Case GetType(g)
-
+                    Case GetType(SvgContainer)
                         ' recursively draw svg document tree
                         Call g.drawLayer(element)
 
-                    Case GetType(XML.circle)
-                    Case GetType(XML.Image)
-                    Case GetType(XML.line)
-                    Case GetType(XML.node)
-                    Case GetType(XML.path)
-                    Case GetType(XML.polygon)
-                    Case GetType(XML.polyline)
-                    Case GetType(XML.rect)
-                    Case GetType(XML.text)
-                    Case GetType(XML.title)
+                    Case GetType(SvgCircle)
+                    Case GetType(SvgImage)
+                    Case GetType(SvgLine)
+                    Case GetType(SvgPath)
+                    Case GetType(SvgPolygon)
+                    Case GetType(SvgPolyLine)
+                    Case GetType(SvgRect)
+                    Case GetType(SvgText)
+                    Case GetType(SvgTitle)
                     Case Else
                         Throw New NotImplementedException(element.GetType.FullName)
                 End Select
             Next
         End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function PopulateLayers(obj As ICanvas) As IEnumerable(Of CSSLayer)
-            Return obj.circles.Select(Function(e) DirectCast(e, CSSLayer)).AsList _
-                 + obj.images _
-                 + obj.lines _
-                 + obj.path _
-                 + obj.polygon _
-                 + obj.polyline _
-                 + obj.rect _
-                 + obj.texts _
-                 + obj.Layers
-        End Function
     End Module
 End Namespace

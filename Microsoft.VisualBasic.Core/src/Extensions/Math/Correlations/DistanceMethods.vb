@@ -52,7 +52,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
 Namespace Math.Correlations
@@ -285,6 +287,25 @@ Namespace Math.Correlations
         <Extension>
         Public Function SquareDistance(a As IVector, v As Double()) As Double
             Return SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(a.Data, v), 2).Sum
+        End Function
+
+        ''' <summary>
+        ''' Reduced Euclidean distance
+        ''' </summary>
+        ''' <remarks>
+        ''' SUM((x - y) ^ 2)
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SquareDistance(x As Span(Of Double), y As Span(Of Double)) As Double
+            Dim len As Integer = x.Length
+            Dim v As Double() = New Double(len - 1) {}
+
+            For i As Integer = 0 To len - 1
+                v(i) = x(i) - y(i)
+            Next
+
+            Return SIMD.Exponent.f64_op_exponent_f64_scalar(v, 2).Sum
         End Function
     End Module
 End Namespace

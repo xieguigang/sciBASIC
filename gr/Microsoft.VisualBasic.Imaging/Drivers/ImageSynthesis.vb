@@ -91,7 +91,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point)
 
         End Sub
         '
@@ -141,24 +142,22 @@ Namespace Driver
                 Dim svg As GraphicsSVG = DirectCast(g, GraphicsSVG)
 
                 If image.Driver = Drivers.GDI Then
-                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
-                    Dim img As New XML.Image(gdi) With {
-                        .x = point.X,
-                        .y = point.Y
-                    }
-                    Call svg.__svgData.Add(img)
+                    Dim gdi As Image = DirectCast(image, ImageData).Image
+                    Dim rect As New Rectangle(point.X, point.Y, gdi.Width, gdi.Height)
+
+                    Call svg.DrawImageUnscaled(gdi, rect)
                 Else
                     ' 直接合并SVG的节点
                     Dim imageData As SVGDataLayers = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
-                    Call svg.__svgData.Add(imageData + point)
+                    Throw New NotImplementedException
                 End If
             Else
                 ' gdi+ engine只允许gdi+图像合并
                 If image.Driver = Drivers.SVG Then
                     Throw New NotImplementedException
                 Else
-                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
+                    Dim gdi As Image = DirectCast(image, ImageData).Image
                     Call DirectCast(g, Graphics2D).DrawImage(gdi, point)
                 End If
             End If
@@ -179,18 +178,13 @@ Namespace Driver
                 Dim point As PointF = rect.Location
 
                 If image.Driver = Drivers.GDI Then
-                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
-                    Dim img As New XML.Image(gdi, rect.Size) With {
-                        .x = point.X,
-                        .y = point.Y
-                    }
-                    Call svg.__svgData.Add(img)
+                    Call svg.DrawImage(DirectCast(image, ImageData).Image, rect)
                 Else
                     ' 直接合并SVG的节点
                     ' 还需要根据原始的大小与现在的rect参数之中的大小进行缩放合成
                     Dim imageData As SVGDataLayers = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
-                    Call svg.__svgData.Add(imageData + point)
+                    Throw New NotImplementedException
                 End If
             Else
                 If image.Driver = Drivers.SVG Then
@@ -232,7 +226,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single)
             Call g.DrawImage(image, New PointF(x, y))
         End Sub
         '
@@ -259,7 +254,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -286,7 +282,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -312,7 +309,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -338,7 +336,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -365,7 +364,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single, width As Single, height As Single)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single, width As Single, height As Single)
             Call g.DrawImage(image, New RectangleF(New PointF(x, y), New SizeF(width, height)))
         End Sub
         '
@@ -395,7 +395,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -422,7 +423,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer, width As Integer, height As Integer)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer, width As Integer, height As Integer)
             Call g.DrawImage(image, New RectangleF(New PointF(x, y), New SizeF(width, height)))
         End Sub
         '
@@ -450,7 +452,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -480,7 +483,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
 
         End Sub
         '
@@ -508,7 +512,8 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -544,7 +549,11 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point,
+                             srcRect As Rectangle, srcUnit As GraphicsUnit,
+                             imageAttr As ImageAttributes,
+                             callback As DrawImageAbort)
 
         End Sub
         '
@@ -580,7 +589,9 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As PointF,
+                             srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort)
 
         End Sub
         '
@@ -617,7 +628,9 @@ Namespace Driver
         '     Value specifying additional data for the System.Drawing.Graphics.DrawImageAbort
         '     delegate to use when checking whether to stop execution of the System.Drawing.Graphics.DrawImage(System.Drawing.Image,System.Drawing.Point[],System.Drawing.Rectangle,System.Drawing.GraphicsUnit,System.Drawing.Imaging.ImageAttributes,System.Drawing.Graphics.DrawImageAbort,System.Int32)
         '     method.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destPoints() As Point,
+                             srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As DrawImageAbort, callbackData As Integer)
 
         End Sub
         '
@@ -654,7 +667,9 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle,
+                             srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
 
         End Sub
         '
@@ -691,7 +706,9 @@ Namespace Driver
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
-        <Extension> Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
+        <Extension>
+        Public Sub DrawImage(g As IGraphics, image As GraphicsData, destRect As Rectangle,
+                             srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
 
         End Sub
         '

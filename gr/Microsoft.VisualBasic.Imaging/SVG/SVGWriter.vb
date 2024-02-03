@@ -76,11 +76,14 @@ Namespace SVG
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function SVG(g As GraphicsSVG,
-                            Optional size$ = Nothing,
-                            Optional comment$ = Nothing,
-                            Optional desc$ = Nothing) As SVGXml
-            Return g.__svgData.GetSVG(size.SizeParser, xmlComment:=comment, desc:=desc)
+        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing) As SvgDocument
+            Dim svgDoc As SvgDocument = g.__svgData.svg
+
+            If Not size.StringEmpty Then
+                svgDoc.Size(size.SizeParser)
+            End If
+
+            Return svgDoc
         End Function
 
         ''' <summary>
@@ -115,17 +118,17 @@ Namespace SVG
             End Using
         End Function
 
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream,
-                                             Optional size$ = "1440,900",
-                                             Optional comments$ = Nothing,
-                                             Optional desc$ = Nothing,
-                                             Optional title$ = Nothing) As Boolean
-            Dim sz As Size = size.SizeParser
-            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments, desc, title)
-            Dim XML$ = svg.GetSVGXml
-            Dim bytes As Byte() = TextEncodings.UTF8WithoutBOM.GetBytes(XML)
+        <Extension>
+        Public Function WriteSVG(g As GraphicsSVG, out As Stream,
+                                 Optional size$ = "1440,900",
+                                 Optional comments$ = Nothing,
+                                 Optional desc$ = Nothing,
+                                 Optional title$ = Nothing) As Boolean
 
-            Call out.Write(bytes, Scan0, bytes.Length)
+            Dim sz As Size = size.SizeParser
+            Dim svg As SvgDocument = g.SVG(size:=size)
+
+            Call svg.Save(out)
             Call out.Flush()
 
             Return True

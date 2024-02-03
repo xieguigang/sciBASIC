@@ -18,7 +18,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <OutputPath>../../.nuget/</OutputPath>
+    <OutputPath>../../../../.nuget/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />

@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports std = System.Math
 
@@ -347,6 +348,8 @@ Namespace ApplicationServices.Terminal.ProgressBar
         ''' <param name="printsPerSecond">The update frequency of the progress bar.</param>
         ''' <param name="useColor">Indicates whether to use colored output for the progress bar.</param>
         ''' <returns>An enumerable that iterates over the collection with progress tracking.</returns>
+        ''' 
+        <Extension>
         Public Function Wrap(Of T)(collection As ICollection(Of T), <Out> ByRef bar As ProgressBar,
                                    Optional width As Integer = 40,
                                    Optional printsPerSecond As Integer = 10,
@@ -383,6 +386,30 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 Yield item
             Next
             bar.Finish()
+        End Function
+
+        ''' <summary>
+        ''' Generates a sequence of integral numbers within a specified range.
+        ''' </summary>
+        ''' <param name="start">The value of the first integer in the sequence.</param>
+        ''' <param name="count">The number of sequential integers to generate.</param>
+        ''' <param name="bar"></param>
+        ''' <param name="width"></param>
+        ''' <param name="printsPerSecond"></param>
+        ''' <param name="useColor"></param>
+        ''' <returns>a range of sequential integral numbers.</returns>
+        Public Function Range(start As Integer, count As Integer,
+                              <Out>
+                              Optional ByRef bar As ProgressBar = Nothing,
+                              Optional width As Integer = 40,
+                              Optional printsPerSecond As Integer = 10,
+                              Optional useColor As Boolean = False) As IEnumerable(Of Integer)
+
+            Return Enumerable.Range(start, count).ToArray.Wrap(bar,
+                width:=width,
+                printsPerSecond:=printsPerSecond,
+                useColor:=useColor
+            )
         End Function
     End Module
 End Namespace

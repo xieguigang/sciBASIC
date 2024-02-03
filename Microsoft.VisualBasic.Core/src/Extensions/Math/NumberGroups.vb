@@ -93,6 +93,9 @@ Namespace Math
         ''' for input vector element size is zero or else only one element inside, 
         ''' a empty diff vector will be generated from this function
         ''' </returns>
+        ''' <remarks>
+        ''' x1 - x0
+        ''' </remarks>
         Public Function diff(x As Double()) As Double()
             If x.TryCount <= 1 Then
                 Return New Double() {}

@@ -137,7 +137,12 @@ Namespace Text.Xml
             End Select
         End Function
 
-        <ExportAPI("Xml.GetAttribute")>
+        ''' <summary>
+        ''' get xml attribute value via regexp matches
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="Name"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GetXmlAttrValue(str As String, Name As String) As String
             Dim m As Match = r.Match(str, Name & "\s*=\s*(("".+?"")|[^ ]*)")

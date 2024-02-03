@@ -63,6 +63,10 @@ Namespace Language.CSS
     ''' </summary>
     Public Class CSSFile
 
+        ''' <summary>
+        ''' a collection of the html element node selector expression
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Selectors As Dictionary(Of Selector)
 
         ''' <summary>

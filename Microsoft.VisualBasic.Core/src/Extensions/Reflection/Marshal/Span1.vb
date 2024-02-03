@@ -1,59 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::853134c9b8f16567c71f1478ebe03ad9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 76
-    '    Code Lines: 51
-    ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.24 KB
+' Summaries:
 
 
-    '     Class Span
-    ' 
-    '         Properties: ArrayLength, Length, SpanView
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Slice, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 76
+'    Code Lines: 51
+' Comment Lines: 12
+'   Blank Lines: 13
+'     File Size: 2.24 KB
+
+
+'     Class Span
+' 
+'         Properties: ArrayLength, Length, SpanView
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Slice, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Language.Python
 
 Namespace Emit.Marshal
 
@@ -79,7 +77,7 @@ Namespace Emit.Marshal
 
         Public ReadOnly Property SpanView As T()
             Get
-                Return buffer.SpanSlice(start, span_size)
+                Return SpanCopy()
             End Get
         End Property
 
@@ -111,6 +109,12 @@ Namespace Emit.Marshal
             Me.start = start
             Me.span_size = length
         End Sub
+
+        Public Function SpanCopy() As T()
+            Dim v As T() = New T(span_size - 1) {}
+            Call Array.ConstrainedCopy(buffer, start, v, Scan0, span_size)
+            Return v
+        End Function
 
         Public Function Slice(start As Integer, length As Integer) As Span(Of T)
             Return New Span(Of T)(buffer, start, length)
