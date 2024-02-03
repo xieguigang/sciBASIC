@@ -54,8 +54,10 @@ Namespace PCA
             Dim yData = data.ypoints
             Dim yDataDev = yData.StandardDeviation ^ 2
             Dim yMean = yData.Average
-            Dim cor As Double = Correlations.GetPearson(xData, yData)
-            Dim cov As Double = cor * xDataDev * yDataDev
+            Dim cov As Double = Math.Covariance(xData, yData)
+            Dim pearson = Correlations.GetPearson(xData, yData)
+            Dim rx = std.Sqrt(1 + pearson)
+            Dim ry = std.Sqrt(1 - pearson)
             Dim covmat = {
                 {xDataDev ^ 2, cov}, {cov, yDataDev ^ 2}
             }
@@ -65,12 +67,12 @@ Namespace PCA
             Dim eigLambdaX As Double() = eig.RealEigenvalues
             Dim maxLambdaI As Integer = which.Max(eigLambdaX)
             Dim minLambdaI As Integer = which.Min(eigLambdaX)
-            Dim rx As Double = If(xDataDev > yDataDev,
-                std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
-                std.Sqrt(eigLambdaX(minLambdaI)) * scale)
-            Dim ry As Double = If(yDataDev > xDataDev,
-                std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
-                std.Sqrt(eigLambdaX(minLambdaI)) * scale)
+            'Dim rx As Double = If(xDataDev > yDataDev,
+            '    std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
+            '    std.Sqrt(eigLambdaX(minLambdaI)) * scale)
+            'Dim ry As Double = If(yDataDev > xDataDev,
+            '    std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
+            '    std.Sqrt(eigLambdaX(minLambdaI)) * scale)
             Dim v1 As Double() = eig.V.X(maxLambdaI)
             Dim theta = std.Atan2(v1(1), v1(0))
 
