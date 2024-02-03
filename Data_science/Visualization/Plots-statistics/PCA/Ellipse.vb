@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Math.Statistics.Distributions
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
@@ -17,6 +18,10 @@ Namespace PCA
         Public Property rx As Double
         Public Property ry As Double
         Public Property orient As Double
+        ''' <summary>
+        ''' angle
+        ''' </summary>
+        ''' <returns></returns>
         Public Property theta As Double
 
         Public Function BuildPath(Optional k As Double = 0.5522848) As GraphicsPath
@@ -38,6 +43,17 @@ Namespace PCA
             Return ctx.Path
         End Function
 
+        Private Shared Function cov(x As Double(), y As Double()) As Double(,)
+            Dim xDataDev = x.StandardDeviation
+            Dim yDataDev = y.StandardDeviation
+            Dim cor = Correlations.GetPearson(x, y)
+            Dim covx = cor * xDataDev * yDataDev
+
+            Return {
+                {xDataDev ^ 2, covx}, {covx, yDataDev ^ 2}
+            }
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -48,31 +64,15 @@ Namespace PCA
         ''' https://github.com/DoAutumn/confidence-ellipse/blob/main/src/helper.ts
         ''' </remarks>
         Public Shared Function ConfidenceEllipse(data As Polygon2D, Optional level As Double = 0.95) As Ellipse
-            Dim xData = data.xpoints
-            Dim xDataDev = xData.StandardDeviation
-            Dim xMean = xData.Average
-            Dim yData = data.ypoints
-            Dim yDataDev = yData.StandardDeviation
-            Dim yMean = yData.Average
-            Dim cor = Correlations.GetPearson(xData, yData)
-            Dim cov = cor * xDataDev * yDataDev
-            Dim covmat = {
-                {xDataDev ^ 2, cov}, {cov, yDataDev ^ 2}
-            }
-            Dim eig = New NumericMatrix(covmat).Eigen
+            Dim cov = Ellipse.cov(data.xpoints, data.ypoints)
+            Dim eig = New NumericMatrix(cov).Eigen
             Dim scale = Distribution.ChiSquareInverse(level, 2)
             ' return { lambda:R.getDiag(), E:E };
-            Dim eigLambdaX As Double() = eig.RealEigenvalues
-            Dim maxLambdaI As Integer = which.Max(eigLambdaX)
-            Dim minLambdaI As Integer = which.Min(eigLambdaX)
-            Dim rx As Double = If(xDataDev > yDataDev,
-                std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
-                std.Sqrt(eigLambdaX(minLambdaI)) * scale)
-            Dim ry As Double = If(yDataDev > xDataDev,
-                std.Sqrt(eigLambdaX(maxLambdaI)) * scale,
-                std.Sqrt(eigLambdaX(minLambdaI)) * scale)
-            Dim v1 As Double() = eig.V.X(maxLambdaI)
-            Dim theta = std.Atan2(v1(1), v1(0))
+            Dim lambda As Double() = Vector.Sqrt(eig.RealEigenvalues)
+            Dim rx As Double = lambda(0) * scale
+            Dim ry As Double = lambda(1) * scale
+            Dim v = eig.V
+            Dim theta = std.Acos(v(0, 0))
 
             If theta < 0 Then
                 theta += 2 * std.PI
@@ -80,7 +80,8 @@ Namespace PCA
 
             Return New Ellipse With {
                 .rx = rx, .ry = ry,
-                .cx = xMean, .cy = yMean,
+                .cx = data.xpoints.Average,
+                .cy = data.ypoints.Average,
                 .orient = -(theta * 180 / std.PI),
                 .theta = theta
             }
