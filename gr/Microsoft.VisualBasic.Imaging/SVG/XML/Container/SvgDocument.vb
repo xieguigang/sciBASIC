@@ -98,6 +98,11 @@ Namespace SVG.XML
             Return Me
         End Function
 
+        Public Overloads Function SetStyle(css As String) As SvgDocument
+            Style = css
+            Return Me
+        End Function
+
         Public Function Background(bg As String) As SvgDocument
             Call SetStyle("background", bg)
             Return Me
@@ -137,7 +142,7 @@ Namespace SVG.XML
         End Function
 
         ''' <summary>
-        ''' 将当前的这个SVG对象序列化为XML字符串文本
+        ''' get xml document string of current svg object
         ''' </summary>
         ''' <returns></returns>
         ''' 

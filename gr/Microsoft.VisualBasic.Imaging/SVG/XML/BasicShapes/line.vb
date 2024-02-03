@@ -73,12 +73,14 @@ Namespace SVG.XML
             Y2 = b.Y
         End Sub
 
-        Public Sub SetPoint(x1 As Double, y1 As Double, x2 As Double, y2 As Double)
+        Public Function SetPoint(x1 As Double, y1 As Double, x2 As Double, y2 As Double) As SvgLine
             Me.X1 = x1
             Me.X2 = x2
             Me.Y1 = y1
             Me.Y2 = y2
-        End Sub
+
+            Return Me
+        End Function
 
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgLine
             Dim element = parent.OwnerDocument.CreateElement("line")

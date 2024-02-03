@@ -156,11 +156,12 @@ Namespace SVG.XML
             Return GetClasses().Contains(name)
         End Function
 
-        Public Sub AddClass(name As String)
+        Public Function AddClass(name As String) As SvgElement
             Dim classes = ParseClassAttribute()
             classes.Add(name)
             SetClassAttribute(classes)
-        End Sub
+            Return Me
+        End Function
 
         Public Sub RemoveClass(name As String)
             Dim classes = ParseClassAttribute()
@@ -181,7 +182,7 @@ Namespace SVG.XML
             Return styles(name)
         End Function
 
-        Protected Sub SetStyle(name As String, value As String)
+        Public Sub SetStyle(name As String, value As String)
             Dim styles = ParseStyleAttribute()
             styles(name) = value
             SetStyleAttribute(styles)

@@ -143,6 +143,17 @@ Namespace SVG.XML
             MyBase.New(element)
         End Sub
 
+        Public Function SetPosition(x As Double, y As Double) As SvgText
+            Me.X = x
+            Me.Y = y
+            Return Me
+        End Function
+
+        Public Function SetText(text As String) As SvgText
+            Me.Text = text
+            Return Me
+        End Function
+
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgText
             Dim element = parent.OwnerDocument.CreateElement("text")
             parent.AppendChild(element)
