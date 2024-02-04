@@ -66,7 +66,7 @@ Namespace DataVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.CHAR
+                Return CDFDataTypes.NC_CHAR
             End Get
         End Property
 

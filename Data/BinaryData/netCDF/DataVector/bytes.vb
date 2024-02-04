@@ -59,7 +59,7 @@ Namespace DataVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.BYTE
+                Return CDFDataTypes.NC_BYTE
             End Get
         End Property
 

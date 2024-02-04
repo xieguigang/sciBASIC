@@ -409,26 +409,26 @@ Public Class CDFWriter : Implements IDisposable
 
             ' 在attributes里面，除了字符串，其他类型的数据都是只有一个元素
             Select Case attr.type
-                Case CDFDataTypes.BYTE
+                Case CDFDataTypes.NC_BYTE
                     Call output.Write(1)
                     Call output.Write(Byte.Parse(attr.value))
-                Case CDFDataTypes.CHAR
+                Case CDFDataTypes.NC_CHAR
                     Dim stringBuffer = output.Encoding.GetBytes(attr.value)
                     Call output.Write(attr.value.Length)
                     Call output.Write(stringBuffer)
-                Case CDFDataTypes.DOUBLE
+                Case CDFDataTypes.NC_DOUBLE
                     Call output.Write(1)
                     Call output.Write(Double.Parse(attr.value))
-                Case CDFDataTypes.FLOAT
+                Case CDFDataTypes.NC_FLOAT
                     Call output.Write(1)
                     Call output.Write(Single.Parse(attr.value))
-                Case CDFDataTypes.INT
+                Case CDFDataTypes.NC_INT
                     Call output.Write(1)
                     Call output.Write(UInteger.Parse(attr.value))
-                Case CDFDataTypes.SHORT
+                Case CDFDataTypes.NC_SHORT
                     Call output.Write(1)
                     Call output.Write(Short.Parse(attr.value))
-                Case CDFDataTypes.INT64
+                Case CDFDataTypes.NC_INT64
                     Call output.Write(1)
                     Call output.Write(Long.Parse(attr.value))
                 Case CDFDataTypes.BOOLEAN

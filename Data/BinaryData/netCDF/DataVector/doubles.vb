@@ -61,7 +61,7 @@ Namespace DataVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.DOUBLE
+                Return CDFDataTypes.NC_DOUBLE
             End Get
         End Property
 

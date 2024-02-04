@@ -69,13 +69,13 @@ Namespace Data
         Private Function CreateArray(x As variable, size As Integer) As Array
             Select Case x.type
                 Case CDFDataTypes.BOOLEAN : Return New Boolean(size - 1) {}
-                Case CDFDataTypes.BYTE : Return New Byte(size - 1) {}
-                Case CDFDataTypes.CHAR : Return New Char(size - 1) {}
-                Case CDFDataTypes.DOUBLE : Return New Double(size - 1) {}
-                Case CDFDataTypes.FLOAT : Return New Single(size - 1) {}
-                Case CDFDataTypes.INT : Return New Integer(size - 1) {}
-                Case CDFDataTypes.INT64 : Return New Long(size - 1) {}
-                Case CDFDataTypes.SHORT : Return New Short(size - 1) {}
+                Case CDFDataTypes.NC_BYTE : Return New Byte(size - 1) {}
+                Case CDFDataTypes.NC_CHAR : Return New Char(size - 1) {}
+                Case CDFDataTypes.NC_DOUBLE : Return New Double(size - 1) {}
+                Case CDFDataTypes.NC_FLOAT : Return New Single(size - 1) {}
+                Case CDFDataTypes.NC_INT : Return New Integer(size - 1) {}
+                Case CDFDataTypes.NC_INT64 : Return New Long(size - 1) {}
+                Case CDFDataTypes.NC_SHORT : Return New Short(size - 1) {}
                 Case Else
                     Throw New InvalidDataException("invalid data type!")
             End Select

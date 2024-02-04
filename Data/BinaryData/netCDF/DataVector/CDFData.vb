@@ -124,25 +124,25 @@ Namespace DataVector
             Dim rangeStr$
 
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : stringify = DirectCast(genericValue, Byte()).ToBase64String
-                Case CDFDataTypes.CHAR : stringify = DirectCast(genericValue, Char()).CharString
-                Case CDFDataTypes.DOUBLE : stringify = DirectCast(genericValue, Double()).Select(Function(d) d.ToString("G3")).JoinBy(",")
-                Case CDFDataTypes.FLOAT : stringify = DirectCast(genericValue, Single()).Select(Function(d) d.ToString("G3")).JoinBy(",")
-                Case CDFDataTypes.INT : stringify = DirectCast(genericValue, Integer()).JoinBy(",")
-                Case CDFDataTypes.SHORT : stringify = DirectCast(genericValue, Short()).JoinBy(",")
-                Case CDFDataTypes.INT64 : stringify = DirectCast(genericValue, Long()).JoinBy(",")
+                Case CDFDataTypes.NC_BYTE : stringify = DirectCast(genericValue, Byte()).ToBase64String
+                Case CDFDataTypes.NC_CHAR : stringify = DirectCast(genericValue, Char()).CharString
+                Case CDFDataTypes.NC_DOUBLE : stringify = DirectCast(genericValue, Double()).Select(Function(d) d.ToString("G3")).JoinBy(",")
+                Case CDFDataTypes.NC_FLOAT : stringify = DirectCast(genericValue, Single()).Select(Function(d) d.ToString("G3")).JoinBy(",")
+                Case CDFDataTypes.NC_INT : stringify = DirectCast(genericValue, Integer()).JoinBy(",")
+                Case CDFDataTypes.NC_SHORT : stringify = DirectCast(genericValue, Short()).JoinBy(",")
+                Case CDFDataTypes.NC_INT64 : stringify = DirectCast(genericValue, Long()).JoinBy(",")
                 Case CDFDataTypes.BOOLEAN : stringify = DirectCast(genericValue, Boolean()).Select(Function(b) If(b, 1, 0)).JoinBy(",")
                 Case Else
                     Return "invalid!"
             End Select
 
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : range = DirectCast(genericValue, Byte()).Select(Function(b) CDbl(b)).ToArray
-                Case CDFDataTypes.DOUBLE : range = DirectCast(genericValue, Double()).ToArray
-                Case CDFDataTypes.FLOAT : range = DirectCast(genericValue, Single()).Select(Function(d) CDbl(d)).ToArray
-                Case CDFDataTypes.INT : range = DirectCast(genericValue, Integer()).Select(Function(i) CDbl(i)).ToArray
-                Case CDFDataTypes.SHORT : range = DirectCast(genericValue, Short()).Select(Function(s) CDbl(s)).ToArray
-                Case CDFDataTypes.INT64 : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
+                Case CDFDataTypes.NC_BYTE : range = DirectCast(genericValue, Byte()).Select(Function(b) CDbl(b)).ToArray
+                Case CDFDataTypes.NC_DOUBLE : range = DirectCast(genericValue, Double()).ToArray
+                Case CDFDataTypes.NC_FLOAT : range = DirectCast(genericValue, Single()).Select(Function(d) CDbl(d)).ToArray
+                Case CDFDataTypes.NC_INT : range = DirectCast(genericValue, Integer()).Select(Function(i) CDbl(i)).ToArray
+                Case CDFDataTypes.NC_SHORT : range = DirectCast(genericValue, Short()).Select(Function(s) CDbl(s)).ToArray
+                Case CDFDataTypes.NC_INT64 : range = DirectCast(genericValue, Long()).Select(Function(l) CDbl(l)).ToArray
                 Case Else
                     ' do nothing
             End Select
@@ -166,26 +166,26 @@ Namespace DataVector
             Dim chunks As Byte()()
 
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : Return DirectCast(CObj(Me), bytes).Array
+                Case CDFDataTypes.NC_BYTE : Return DirectCast(CObj(Me), bytes).Array
                 Case CDFDataTypes.BOOLEAN : Return DirectCast(CObj(Me), flags).Array.Select(Function(b) CByte(If(b, 1, 0))).ToArray
-                Case CDFDataTypes.CHAR : Return encoding.GetBytes(DirectCast(CObj(Me), chars).CharString)
-                Case CDFDataTypes.DOUBLE
+                Case CDFDataTypes.NC_CHAR : Return encoding.GetBytes(DirectCast(CObj(Me), chars).CharString)
+                Case CDFDataTypes.NC_DOUBLE
                     chunks = DirectCast(CObj(Me), doubles).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
-                Case CDFDataTypes.FLOAT
+                Case CDFDataTypes.NC_FLOAT
                     chunks = DirectCast(CObj(Me), floats).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
-                Case CDFDataTypes.INT
+                Case CDFDataTypes.NC_INT
                     chunks = DirectCast(CObj(Me), integers).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
-                Case CDFDataTypes.SHORT
+                Case CDFDataTypes.NC_SHORT
                     chunks = DirectCast(CObj(Me), shorts).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
-                Case CDFDataTypes.INT64
+                Case CDFDataTypes.NC_INT64
                     chunks = DirectCast(CObj(Me), longs).Array _
                         .Select(AddressOf BitConverter.GetBytes) _
                         .ToArray
