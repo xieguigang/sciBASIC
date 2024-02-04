@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::eb065e625b7649b46bf1f9cc3efcac56, sciBASIC#\Data\BinaryData\netCDF\DataVector\CDFData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 155
-    '    Code Lines: 127
-    ' Comment Lines: 10
-    '   Blank Lines: 18
-    '     File Size: 6.94 KB
+' Summaries:
 
 
-    '     Class CDFData
-    ' 
-    '         Properties: genericValue, ICDFDataVector_length
-    ' 
-    '         Function: GetBuffer, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 155
+'    Code Lines: 127
+' Comment Lines: 10
+'   Blank Lines: 18
+'     File Size: 6.94 KB
+
+
+'     Class CDFData
+' 
+'         Properties: genericValue, ICDFDataVector_length
+' 
+'         Function: GetBuffer, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace DataVector
 
@@ -68,6 +69,7 @@ Namespace DataVector
     ''' </summary>
     Public MustInherit Class CDFData(Of T) : Inherits Vector(Of T)
         Implements ICDFDataVector
+        Implements ICTypeVector
 
         Public MustOverride ReadOnly Property cdfDataType As CDFDataTypes Implements ICDFDataVector.cdfDataType
 
@@ -205,5 +207,12 @@ Namespace DataVector
                 Return chunks.IteratesALL.ToArray
             End If
         End Function
+
+        Public MustOverride Function ToNumeric() As Double() Implements ICTypeVector.ToNumeric
+        Public MustOverride Function ToFloat() As Single() Implements ICTypeVector.ToFloat
+        Public MustOverride Function ToFactors() As String() Implements ICTypeVector.ToFactors
+        Public MustOverride Function ToInteger() As Integer() Implements ICTypeVector.ToInteger
+        Public MustOverride Function ToLong() As Long() Implements ICTypeVector.ToLong
+
     End Class
 End Namespace
