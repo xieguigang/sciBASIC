@@ -52,10 +52,12 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace DataVector
 
     Public Class floats : Inherits CDFData(Of Single)
+        Implements ICTypeVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
