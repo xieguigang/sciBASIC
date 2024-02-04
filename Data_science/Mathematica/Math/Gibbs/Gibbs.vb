@@ -28,12 +28,12 @@ Public Class Score
 End Class
 
 ''' <summary>
-''' Gibb's Sampling Steps:<br>
+''' Gibb's Sampling Steps:<br/>
 ''' 
-''' 1. Set every variable to a random value.<br>
-''' 2. Choose a variable to update. <br>
+''' 1. Set every variable to a random value.<br/>
+''' 2. Choose a variable to update. <br/>
 ''' 3. Randomly Select (aka "Sample") a new value for the variable based on the
-'''    current conditions. <br>
+'''    current conditions. <br/>
 ''' 4. Repeat from Step 2.
 ''' </summary>  
 Public Class Gibbs
@@ -44,9 +44,9 @@ Public Class Gibbs
     ''' <summary>
     ''' Constructs and performs Gibb's Sampling in order to find repeated motifs.
     ''' </summary>
-    ''' <paramname="seq">
+    ''' <param name="seqArray">
     '''            A String array of the sequences that will be used. </param>
-    ''' <paramname="motifLength">
+    ''' <param name="motifLength">
     '''            An Integer that shows the length of the motif or pattern we
     '''            are trying to find, this value is given. </param>
     Public Sub New(seqArray As String(), motifLength As Integer)
@@ -57,9 +57,6 @@ Public Class Gibbs
     ''' <summary>
     ''' This method is repeated 2000 times.
     ''' </summary>
-    ''' <paramname="start">
-    '''            A HashTable containing the sequence as a key, and the random
-    '''            integer to be used as the value. </param>
     Public Function sample(Optional MAXIT As Integer = 1999) As Score()
         Dim rand As Random = randf2.seeds
         Dim start = generateRandomValue()
@@ -108,9 +105,9 @@ Public Class Gibbs
     ''' <summary>
     ''' Calculates the probability of a letter in this position.
     ''' </summary>
-    ''' <paramname="tempMotif">
+    ''' <param name="tempMotif">
     '''            The motif being used for this calculation. </param>
-    ''' <paramname="chosenSeqIndex">
+    ''' <param name="chosenSeqIndex">
     '''            The index of the sequence being used for this calculation,
     '''            useful for skipping all of this sequences calculations and
     '''            focusing on the other ones. </param>
@@ -159,9 +156,9 @@ Public Class Gibbs
     ''' value P is a product of every result, each result being the amount of
     ''' letters of the same kind over the total amount of letters.
     ''' </summary>
-    ''' <paramname="tempMotif">
+    ''' <param name="tempMotif">
     '''            The motif being used for this calculation. </param>
-    ''' <paramname="chosenSeqIndex">
+    ''' <param name="chosenSeqIndex">
     '''            The index of the sequence being used for this calculation,
     '''            useful for skipping all of this sequences calculations and
     '''            focusing on the other ones. </param>
