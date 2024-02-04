@@ -82,12 +82,12 @@ Public Module SignalsWriter
         ' in R script code when the signal data count is large
 
         Using cdffile As New CDFWriter(file)
-            Call cdffile.GlobalAttributes(New attribute With {.name = "time", .type = CDFDataTypes.CHAR, .value = Now.ToString})
-            Call cdffile.GlobalAttributes(New attribute With {.name = "filename", .type = CDFDataTypes.CHAR, .value = file.FileName})
-            Call cdffile.GlobalAttributes(New attribute With {.name = "github", .type = CDFDataTypes.CHAR, .value = LICENSE.githubURL})
+            Call cdffile.GlobalAttributes(New attribute With {.name = "time", .type = CDFDataTypes.NC_CHAR, .value = Now.ToString})
+            Call cdffile.GlobalAttributes(New attribute With {.name = "filename", .type = CDFDataTypes.NC_CHAR, .value = file.FileName})
+            Call cdffile.GlobalAttributes(New attribute With {.name = "github", .type = CDFDataTypes.NC_CHAR, .value = LICENSE.githubURL})
 
             If Not description.StringEmpty Then
-                Call cdffile.GlobalAttributes(New attribute With {.name = NameOf(description), .type = CDFDataTypes.CHAR, .value = description})
+                Call cdffile.GlobalAttributes(New attribute With {.name = NameOf(description), .type = CDFDataTypes.NC_CHAR, .value = description})
             End If
 
             Dim package As GeneralSignal() = signals.ToArray
@@ -99,7 +99,7 @@ Public Module SignalsWriter
             Dim signalDatas As New List(Of Double)
             Dim annotation As attribute
 
-            Call cdffile.GlobalAttributes(New attribute With {.name = "signals", .type = CDFDataTypes.INT, .value = package.Length})
+            Call cdffile.GlobalAttributes(New attribute With {.name = "signals", .type = CDFDataTypes.NC_INT, .value = package.Length})
 
             For Each attr As NamedValue(Of ICDFDataVector) In package.createAttributes(enableCDFExtension)
                 dataDimension = New Dimension With {
@@ -108,7 +108,7 @@ Public Module SignalsWriter
                 }
                 annotation = New attribute With {
                     .name = "type",
-                    .type = CDFDataTypes.CHAR,
+                    .type = CDFDataTypes.NC_CHAR,
                     .value = attr.Description
                 }
 
@@ -116,7 +116,7 @@ Public Module SignalsWriter
                 Call attrNames.Add(attr.Name)
             Next
 
-            Call cdffile.GlobalAttributes(New attribute With {.name = "metadata", .type = CDFDataTypes.CHAR, .value = attrNames.AsEnumerable.GetJson})
+            Call cdffile.GlobalAttributes(New attribute With {.name = "metadata", .type = CDFDataTypes.NC_CHAR, .value = attrNames.AsEnumerable.GetJson})
 
             Dim bufferOffset As Long = Scan0
             Dim signal_guid As ICDFDataVector = CType(signals.Select(Function(sig) sig.reference).GetJson, chars)
