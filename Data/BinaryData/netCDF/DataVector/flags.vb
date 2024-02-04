@@ -63,6 +63,26 @@ Namespace DataVector
             End Get
         End Property
 
+        Public Overrides Function ToNumeric() As Double()
+            Return (From i In buffer Select If(i, 1.0, 0.0)).ToArray
+        End Function
+
+        Public Overrides Function ToFloat() As Single()
+            Return (From i In buffer Select If(i, 1.0F, 0.0F)).ToArray
+        End Function
+
+        Public Overrides Function ToFactors() As String()
+            Return (From i In buffer Select CStr(i)).ToArray
+        End Function
+
+        Public Overrides Function ToInteger() As Integer()
+            Return (From i In buffer Select If(i, 1, 0)).ToArray
+        End Function
+
+        Public Overrides Function ToLong() As Long()
+            Return (From i In buffer Select If(i, 1L, 0L)).ToArray
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(data As Boolean()) As flags
             Return New flags With {.buffer = data}

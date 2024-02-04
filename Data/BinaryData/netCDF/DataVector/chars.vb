@@ -89,6 +89,26 @@ Namespace DataVector
                 .ToArray
         End Sub
 
+        Public Overrides Function ToNumeric() As Double()
+            Return (From i In buffer Select Double.Parse(i.ToString)).ToArray
+        End Function
+
+        Public Overrides Function ToFloat() As Single()
+            Return (From i In buffer Select Single.Parse(i.ToString)).ToArray
+        End Function
+
+        Public Overrides Function ToFactors() As String()
+            Return (From i In buffer Select CStr(i)).ToArray
+        End Function
+
+        Public Overrides Function ToInteger() As Integer()
+            Return (From i In buffer Select Integer.Parse(i.ToString)).ToArray
+        End Function
+
+        Public Overrides Function ToLong() As Long()
+            Return (From i In buffer Select Long.Parse(i.ToString)).ToArray
+        End Function
+
         ''' <summary>
         ''' treat the char data in this vector as the json string, and the load string vector from the json string
         ''' </summary>
