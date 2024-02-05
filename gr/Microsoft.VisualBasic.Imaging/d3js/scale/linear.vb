@@ -55,6 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace d3js.scale
 
@@ -146,6 +147,16 @@ Namespace d3js.scale
 
         Public Overrides Function ToString() As String
             Return $"[{_domain.Min}, {_domain.Max}] --> [{_range.Min}, {_range.Max}]"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function range(min As Double, max As Double) As LinearScale
+            Return MyBase.range({min, max})
+        End Function
+
+        Public Overloads Function domain(values As Vector) As LinearScale
+            _domain = values.ToArray
+            Return Me
         End Function
 
         ''' <summary>
