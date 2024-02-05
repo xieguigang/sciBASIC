@@ -114,9 +114,10 @@ Namespace Drawing2D.HeatMap
         ''' <remarks>
         ''' do heatmap rendering based on the <see cref="HeatMapRaster"/>
         ''' </remarks>
-        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T),
-                                                         size As Size,
-                                                         Optional fillRect As Boolean = True) As Bitmap
+        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size,
+                                                         Optional fillRect As Boolean = True,
+                                                         Optional cw As Double = 1,
+                                                         Optional ch As Double = 1) As Bitmap
 
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
@@ -135,8 +136,8 @@ Namespace Drawing2D.HeatMap
                 Call FillRectangles(
                     g:=g,
                     raster:=raster,
-                    cw:=1,
-                    ch:=1,
+                    cw:=cw,
+                    ch:=ch,
                     colors:=colors,
                     defaultColor:=defaultColor
                 )
