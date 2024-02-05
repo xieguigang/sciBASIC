@@ -175,6 +175,16 @@ Namespace Drawing2D.HeatMap
             Dim solids As SolidBrush() = colors _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
+
+            Call FillRectangles(g, raster, colors, defaultColor, cw, ch)
+        End Sub
+
+        Public Shared Sub FillRectangles(Of T As Pixel)(g As IGraphics,
+                                                        raster As T(),
+                                                        solids As SolidBrush(),
+                                                        defaultColor As Color,
+                                                        cw As Double,
+                                                        ch As Double)
             Dim paint As SolidBrush
             Dim defaultPaint As New SolidBrush(defaultColor)
             Dim indexRange As New DoubleRange(0, solids.Length - 1)
