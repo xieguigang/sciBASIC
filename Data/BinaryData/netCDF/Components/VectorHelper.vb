@@ -63,7 +63,7 @@ Namespace Components
 
         Public Function FromAny(data As Array, type As CDFDataTypes) As ICDFDataVector
             Select Case type
-                Case CDFDataTypes.BYTE
+                Case CDFDataTypes.NC_BYTE
                     Dim bytes As Byte()
 
                     If TypeOf data Is Byte() Then
@@ -81,17 +81,17 @@ Namespace Components
                     Return CType(bytes, bytes)
                 Case CDFDataTypes.BOOLEAN
                     Return CType(data.vectorAuto(Of Boolean), flags)
-                Case CDFDataTypes.CHAR
+                Case CDFDataTypes.NC_CHAR
                     Return CType(data.vectorAuto(Of Char), chars)
-                Case CDFDataTypes.DOUBLE
+                Case CDFDataTypes.NC_DOUBLE
                     Return CType(data.vectorAuto(Of Double), doubles)
-                Case CDFDataTypes.FLOAT
+                Case CDFDataTypes.NC_FLOAT
                     Return CType(data.vectorAuto(Of Single), floats)
-                Case CDFDataTypes.INT
+                Case CDFDataTypes.NC_INT
                     Return CType(data.vectorAuto(Of Integer), integers)
-                Case CDFDataTypes.SHORT
+                Case CDFDataTypes.NC_SHORT
                     Return CType(data.vectorAuto(Of Short), shorts)
-                Case CDFDataTypes.INT64
+                Case CDFDataTypes.NC_INT64
                     Return CType(data.vectorAuto(Of Long), longs)
                 Case Else
                     Throw New NotImplementedException(type.Description)

@@ -78,7 +78,7 @@ Namespace Components
         ''' <summary>
         ''' A number or string with the value of the attribute.
         ''' (如果是bytes数组, 则应该编码为base64字符串之后赋值到这个属性, 
-        ''' 并且类型应该设置为<see cref="CDFDataTypes.CHAR"/>, 因为在
+        ''' 并且类型应该设置为<see cref="CDFDataTypes.NC_CHAR"/>, 因为在
         ''' 属性这里不接受数组类型)
         ''' </summary>
         ''' <returns></returns>
@@ -95,18 +95,18 @@ Namespace Components
         End Sub
 
         Sub New(name As String, chars As String)
-            Call Me.New(name, chars, type:=CDFDataTypes.CHAR)
+            Call Me.New(name, chars, type:=CDFDataTypes.NC_CHAR)
         End Sub
 
         Public Function getObjectValue() As Object
             Select Case type
-                Case CDFDataTypes.BYTE : Return Byte.Parse(value)
-                Case CDFDataTypes.CHAR : Return value
-                Case CDFDataTypes.DOUBLE : Return Double.Parse(value)
-                Case CDFDataTypes.FLOAT : Return Single.Parse(value)
-                Case CDFDataTypes.INT : Return Integer.Parse(value)
-                Case CDFDataTypes.SHORT : Return Short.Parse(value)
-                Case CDFDataTypes.INT64 : Return Long.Parse(value)
+                Case CDFDataTypes.NC_BYTE : Return Byte.Parse(value)
+                Case CDFDataTypes.NC_CHAR : Return value
+                Case CDFDataTypes.NC_DOUBLE : Return Double.Parse(value)
+                Case CDFDataTypes.NC_FLOAT : Return Single.Parse(value)
+                Case CDFDataTypes.NC_INT : Return Integer.Parse(value)
+                Case CDFDataTypes.NC_SHORT : Return Short.Parse(value)
+                Case CDFDataTypes.NC_INT64 : Return Long.Parse(value)
                 Case CDFDataTypes.BOOLEAN
 
                     If value.IsPattern("\d+") Then
@@ -122,18 +122,18 @@ Namespace Components
 
         Public Function getBytes(Optional base64Bytes As Boolean = False) As Byte()
             Select Case type
-                Case CDFDataTypes.BYTE : Return {Byte.Parse(value)}
-                Case CDFDataTypes.CHAR
+                Case CDFDataTypes.NC_BYTE : Return {Byte.Parse(value)}
+                Case CDFDataTypes.NC_CHAR
                     If base64Bytes Then
                         Return value.Base64RawBytes
                     Else
                         Return UTF8WithoutBOM.GetBytes(value)
                     End If
-                Case CDFDataTypes.DOUBLE : Return BitConverter.GetBytes(Double.Parse(value))
-                Case CDFDataTypes.FLOAT : Return BitConverter.GetBytes(Single.Parse(value))
-                Case CDFDataTypes.INT : Return BitConverter.GetBytes(Integer.Parse(value))
-                Case CDFDataTypes.SHORT : Return BitConverter.GetBytes(Short.Parse(value))
-                Case CDFDataTypes.INT64 : Return BitConverter.GetBytes(Long.Parse(value))
+                Case CDFDataTypes.NC_DOUBLE : Return BitConverter.GetBytes(Double.Parse(value))
+                Case CDFDataTypes.NC_FLOAT : Return BitConverter.GetBytes(Single.Parse(value))
+                Case CDFDataTypes.NC_INT : Return BitConverter.GetBytes(Integer.Parse(value))
+                Case CDFDataTypes.NC_SHORT : Return BitConverter.GetBytes(Short.Parse(value))
+                Case CDFDataTypes.NC_INT64 : Return BitConverter.GetBytes(Long.Parse(value))
 
                 Case Else
                     Throw New NotSupportedException

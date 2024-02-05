@@ -117,6 +117,13 @@ Namespace Graphic.Axis
             Call MyBase.New(reversed:=rev)
         End Sub
 
+        Sub New(x As Scaler, y As Scaler, Optional rev As Boolean = False)
+            Call Me.New(rev)
+
+            Me.X = x
+            Me.Y = y
+        End Sub
+
         ''' <summary>
         ''' translate the realworld data into the view model world point 2D 
         ''' </summary>

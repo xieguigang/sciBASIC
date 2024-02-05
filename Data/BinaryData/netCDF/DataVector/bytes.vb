@@ -59,9 +59,29 @@ Namespace DataVector
 
         Public Overrides ReadOnly Property cdfDataType As CDFDataTypes
             Get
-                Return CDFDataTypes.BYTE
+                Return CDFDataTypes.NC_BYTE
             End Get
         End Property
+
+        Public Overrides Function ToNumeric() As Double()
+            Return (From i In buffer Select CDbl(i)).ToArray
+        End Function
+
+        Public Overrides Function ToFloat() As Single()
+            Return (From i In buffer Select CSng(i)).ToArray
+        End Function
+
+        Public Overrides Function ToFactors() As String()
+            Return (From i In buffer Select CStr(i)).ToArray
+        End Function
+
+        Public Overrides Function ToInteger() As Integer()
+            Return (From i In buffer Select CInt(i)).ToArray
+        End Function
+
+        Public Overrides Function ToLong() As Long()
+            Return (From i In buffer Select CLng(i)).ToArray
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(data As Byte()) As bytes

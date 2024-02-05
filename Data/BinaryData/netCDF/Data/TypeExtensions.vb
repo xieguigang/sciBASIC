@@ -70,13 +70,13 @@ Namespace Data
         <Extension>
         Public Function GetCDFTypeCode(type As Type) As CDFDataTypes
             Select Case type
-                Case GetType(Double) : Return CDFDataTypes.DOUBLE
-                Case GetType(Single) : Return CDFDataTypes.FLOAT
-                Case GetType(Integer) : Return CDFDataTypes.INT
-                Case GetType(Short) : Return CDFDataTypes.SHORT
-                Case GetType(String) : Return CDFDataTypes.CHAR
-                Case GetType(Byte) : Return CDFDataTypes.BYTE
-                Case GetType(Long) : Return CDFDataTypes.INT64
+                Case GetType(Double) : Return CDFDataTypes.NC_DOUBLE
+                Case GetType(Single) : Return CDFDataTypes.NC_FLOAT
+                Case GetType(Integer) : Return CDFDataTypes.NC_INT
+                Case GetType(Short) : Return CDFDataTypes.NC_SHORT
+                Case GetType(String) : Return CDFDataTypes.NC_CHAR
+                Case GetType(Byte) : Return CDFDataTypes.NC_BYTE
+                Case GetType(Long) : Return CDFDataTypes.NC_INT64
                 Case GetType(Boolean) : Return CDFDataTypes.BOOLEAN
                 Case Else
                     Return CDFDataTypes.undefined
@@ -102,17 +102,17 @@ Namespace Data
         ''' <returns>size of the type</returns>
         Public Function sizeof(type As CDFDataTypes) As Integer
             Select Case type
-                Case CDFDataTypes.BYTE, CDFDataTypes.BOOLEAN
+                Case CDFDataTypes.NC_BYTE, CDFDataTypes.BOOLEAN
                     Return 1
-                Case CDFDataTypes.CHAR
+                Case CDFDataTypes.NC_CHAR
                     Return 1
-                Case CDFDataTypes.SHORT
+                Case CDFDataTypes.NC_SHORT
                     Return 2
-                Case CDFDataTypes.INT
+                Case CDFDataTypes.NC_INT
                     Return 4
-                Case CDFDataTypes.FLOAT
+                Case CDFDataTypes.NC_FLOAT
                     Return 4
-                Case CDFDataTypes.DOUBLE, CDFDataTypes.INT64
+                Case CDFDataTypes.NC_DOUBLE, CDFDataTypes.NC_INT64
                     Return 8
                 Case Else
                     ' istanbul ignore next 
@@ -134,16 +134,16 @@ Namespace Data
         <Extension>
         Public Function ToType(type As CDFDataTypes) As Type
             Select Case type
-                Case CDFDataTypes.BYTE : Return GetType(Byte)
-                Case CDFDataTypes.CHAR : Return GetType(Char)
+                Case CDFDataTypes.NC_BYTE : Return GetType(Byte)
+                Case CDFDataTypes.NC_CHAR : Return GetType(Char)
                 Case CDFDataTypes.BOOLEAN
                     ' 20210212 bytes flags for maps boolean
                     Return GetType(Boolean)
-                Case CDFDataTypes.DOUBLE : Return GetType(Double)
-                Case CDFDataTypes.FLOAT : Return GetType(Single)
-                Case CDFDataTypes.INT : Return GetType(Integer)
-                Case CDFDataTypes.INT64 : Return GetType(Long)
-                Case CDFDataTypes.SHORT : Return GetType(Short)
+                Case CDFDataTypes.NC_DOUBLE : Return GetType(Double)
+                Case CDFDataTypes.NC_FLOAT : Return GetType(Single)
+                Case CDFDataTypes.NC_INT : Return GetType(Integer)
+                Case CDFDataTypes.NC_INT64 : Return GetType(Long)
+                Case CDFDataTypes.NC_SHORT : Return GetType(Short)
                 Case Else
                     ' istanbul ignore next
                     Return Utils.notNetcdf(True, $"non valid type {type}")

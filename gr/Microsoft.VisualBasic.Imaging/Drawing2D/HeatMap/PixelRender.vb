@@ -114,17 +114,27 @@ Namespace Drawing2D.HeatMap
         ''' <remarks>
         ''' do heatmap rendering based on the <see cref="HeatMapRaster"/>
         ''' </remarks>
-        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T),
-                                                         size As Size,
-                                                         Optional fillRect As Boolean = True) As Bitmap
+        Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size,
+                                                         Optional fillRect As Boolean = True,
+                                                         Optional cw As Double = 1,
+                                                         Optional ch As Double = 1,
+                                                         Optional gauss As Boolean = False) As Bitmap
 
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
-            Dim raster As Pixel() = New HeatMapRaster(Of T)() _
-                .SetDatas(pixels) _
-                .GetRasterPixels _
-                .ToArray
+            Dim raster As Pixel()
+
+            If gauss Then
+                raster = New HeatMapRaster(Of T)() _
+                    .SetDatas(pixels) _
+                    .GetRasterPixels _
+                    .ToArray
+            Else
+                raster = pixels _
+                    .Select(Function(i) DirectCast(i, Pixel)) _
+                    .ToArray
+            End If
 
             Call g.Clear(defaultColor)
 
@@ -135,8 +145,8 @@ Namespace Drawing2D.HeatMap
                 Call FillRectangles(
                     g:=g,
                     raster:=raster,
-                    cw:=1,
-                    ch:=1,
+                    cw:=cw,
+                    ch:=ch,
                     colors:=colors,
                     defaultColor:=defaultColor
                 )
@@ -175,6 +185,16 @@ Namespace Drawing2D.HeatMap
             Dim solids As SolidBrush() = colors _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
+
+            Call FillRectangles(g, raster, solids, defaultColor, cw, ch)
+        End Sub
+
+        Public Shared Sub FillRectangles(Of T As Pixel)(g As IGraphics,
+                                                        raster As T(),
+                                                        solids As SolidBrush(),
+                                                        defaultColor As Color,
+                                                        cw As Double,
+                                                        ch As Double)
             Dim paint As SolidBrush
             Dim defaultPaint As New SolidBrush(defaultColor)
             Dim indexRange As New DoubleRange(0, solids.Length - 1)

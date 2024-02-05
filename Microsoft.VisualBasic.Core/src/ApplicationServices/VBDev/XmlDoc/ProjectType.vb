@@ -71,8 +71,25 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     Public MustInherit Class XmlDocs
 
+        ''' <summary>
+        ''' the member name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
+
+        ''' <summary>
+        ''' Specifies the summary of the member. Use the &lt;summary> tag to describe a type or 
+        ''' a type member. Use &lt;remarks> to add supplemental information to a type description.
+        ''' 
+        ''' The text For the &lt;summary> tag Is the only source Of information about the type 
+        ''' In IntelliSense, And Is also displayed In the Object Browser. 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Summary As String
+        ''' <summary>
+        ''' Use the &lt;remarks> tag to add information about a type, supplementing the information specified with &lt;summary>.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Remarks As String
 
     End Class

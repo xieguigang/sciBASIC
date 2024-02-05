@@ -159,18 +159,18 @@ Module Utils
         End If
 
         Select Case type
-            Case CDFDataTypes.BYTE : Return buffer.ReadBytes(size)
-            Case CDFDataTypes.CHAR : Return buffer.ReadChars(size)
+            Case CDFDataTypes.NC_BYTE : Return buffer.ReadBytes(size)
+            Case CDFDataTypes.NC_CHAR : Return buffer.ReadChars(size)
             Case CDFDataTypes.BOOLEAN
                 ' 20210212 bytes flags for maps boolean
                 Return buffer.ReadBytes(size) _
                     .Select(Function(b) b <> 0) _
                     .ToArray
-            Case CDFDataTypes.DOUBLE : Return buffer.ReadDoubles(size)
-            Case CDFDataTypes.FLOAT : Return buffer.ReadSingles(size)
-            Case CDFDataTypes.INT : Return buffer.ReadInt32s(size)
-            Case CDFDataTypes.INT64 : Return buffer.ReadInt64s(size)
-            Case CDFDataTypes.SHORT : Return buffer.ReadInt16s(size)
+            Case CDFDataTypes.NC_DOUBLE : Return buffer.ReadDoubles(size)
+            Case CDFDataTypes.NC_FLOAT : Return buffer.ReadSingles(size)
+            Case CDFDataTypes.NC_INT : Return buffer.ReadInt32s(size)
+            Case CDFDataTypes.NC_INT64 : Return buffer.ReadInt64s(size)
+            Case CDFDataTypes.NC_SHORT : Return buffer.ReadInt16s(size)
             Case Else
                 ' istanbul ignore next
                 Return Utils.notNetcdf(True, $"non valid type {type}")
@@ -189,18 +189,18 @@ Module Utils
         End If
 
         Select Case type
-            Case CDFDataTypes.BYTE : Return Function(buffer) buffer(Scan0)
-            Case CDFDataTypes.CHAR : Return Function(buffer) Encoding.UTF8.GetString(buffer)
+            Case CDFDataTypes.NC_BYTE : Return Function(buffer) buffer(Scan0)
+            Case CDFDataTypes.NC_CHAR : Return Function(buffer) Encoding.UTF8.GetString(buffer)
 
             Case CDFDataTypes.BOOLEAN
                 ' 20210212 bytes flags for maps boolean
                 Return Function(buffer) buffer(Scan0) <> 0
 
-            Case CDFDataTypes.DOUBLE : Return CastNumber(Of Double)(reversed, AddressOf BitConverter.ToDouble)
-            Case CDFDataTypes.FLOAT : Return CastNumber(Of Single)(reversed, AddressOf BitConverter.ToSingle)
-            Case CDFDataTypes.INT : Return CastNumber(Of Integer)(reversed, AddressOf BitConverter.ToInt32)
-            Case CDFDataTypes.INT64 : Return CastNumber(Of Long)(reversed, AddressOf BitConverter.ToInt64)
-            Case CDFDataTypes.SHORT : Return CastNumber(Of Short)(reversed, AddressOf BitConverter.ToInt16)
+            Case CDFDataTypes.NC_DOUBLE : Return CastNumber(Of Double)(reversed, AddressOf BitConverter.ToDouble)
+            Case CDFDataTypes.NC_FLOAT : Return CastNumber(Of Single)(reversed, AddressOf BitConverter.ToSingle)
+            Case CDFDataTypes.NC_INT : Return CastNumber(Of Integer)(reversed, AddressOf BitConverter.ToInt32)
+            Case CDFDataTypes.NC_INT64 : Return CastNumber(Of Long)(reversed, AddressOf BitConverter.ToInt64)
+            Case CDFDataTypes.NC_SHORT : Return CastNumber(Of Short)(reversed, AddressOf BitConverter.ToInt16)
 
             Case Else
                 ' istanbul ignore next
@@ -238,19 +238,19 @@ Module Utils
         End If
 
         Select Case type
-            Case CDFDataTypes.BYTE
+            Case CDFDataTypes.NC_BYTE
                 Return buffer.ReadBytes(size)
-            Case CDFDataTypes.CHAR
+            Case CDFDataTypes.NC_CHAR
                 Return New String(buffer.ReadChars(size)).TrimNull
-            Case CDFDataTypes.SHORT
+            Case CDFDataTypes.NC_SHORT
                 Return readNumber(size, AddressOf buffer.ReadInt16)
-            Case CDFDataTypes.INT
+            Case CDFDataTypes.NC_INT
                 Return readNumber(size, AddressOf buffer.ReadInt32)
-            Case CDFDataTypes.FLOAT
+            Case CDFDataTypes.NC_FLOAT
                 Return readNumber(size, AddressOf buffer.ReadSingle)
-            Case CDFDataTypes.DOUBLE
+            Case CDFDataTypes.NC_DOUBLE
                 Return readNumber(size, AddressOf buffer.ReadDouble)
-            Case CDFDataTypes.INT64
+            Case CDFDataTypes.NC_INT64
                 Return readNumber(size, AddressOf buffer.ReadInt64)
             Case CDFDataTypes.BOOLEAN
 

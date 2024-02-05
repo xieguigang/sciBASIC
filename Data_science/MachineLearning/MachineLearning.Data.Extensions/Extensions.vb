@@ -84,11 +84,11 @@ Public Module Extensions
         Using cdf As New CDFWriter(file)
             Dim attrs As New List(Of attribute)
 
-            attrs.Add(New attribute With {.name = NameOf(Q.ActionRange), .type = CDFDataTypes.INT, .value = Q.ActionRange})
-            attrs.Add(New attribute With {.name = NameOf(Q.ExplorationChance), .type = CDFDataTypes.FLOAT, .value = Q.ExplorationChance})
-            attrs.Add(New attribute With {.name = NameOf(Q.GammaValue), .type = CDFDataTypes.FLOAT, .value = Q.GammaValue})
-            attrs.Add(New attribute With {.name = NameOf(Q.LearningRate), .type = CDFDataTypes.FLOAT, .value = Q.LearningRate})
-            attrs.Add(New attribute With {.name = "QTable_size", .type = CDFDataTypes.INT, .value = Q.Table.Count})
+            attrs.Add(New attribute With {.name = NameOf(Q.ActionRange), .type = CDFDataTypes.NC_INT, .value = Q.ActionRange})
+            attrs.Add(New attribute With {.name = NameOf(Q.ExplorationChance), .type = CDFDataTypes.NC_FLOAT, .value = Q.ExplorationChance})
+            attrs.Add(New attribute With {.name = NameOf(Q.GammaValue), .type = CDFDataTypes.NC_FLOAT, .value = Q.GammaValue})
+            attrs.Add(New attribute With {.name = NameOf(Q.LearningRate), .type = CDFDataTypes.NC_FLOAT, .value = Q.LearningRate})
+            attrs.Add(New attribute With {.name = "QTable_size", .type = CDFDataTypes.NC_INT, .value = Q.Table.Count})
 
             cdf.GlobalAttributes(attrs.ToArray)
 

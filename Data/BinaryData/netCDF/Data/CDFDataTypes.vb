@@ -60,6 +60,9 @@ Namespace Data
     ''' <summary>
     ''' The enum values of the CDF data types.
     ''' 
+    ''' nc_type
+    ''' The netcdf external data types
+    ''' 
     ''' > https://github.com/Unidata/netcdf-java/blob/a2bfa6b5e817d06ee317d223f9834ca9362b5da0/netcdf4/src/main/java/ucar/nc2/jni/netcdf/Nc4prototypes.java#L67
     ''' </summary>
     ''' <remarks>
@@ -82,31 +85,31 @@ Namespace Data
         ''' <summary>
         ''' 8-bit signed integers, signed 1 byte integer 
         ''' </summary>
-        <Description("byte")> [BYTE] = 1
+        <Description("byte")> NC_BYTE = 1
         ''' <summary>
         ''' text characters, ISO/ASCII character
         ''' </summary>
-        <Description("char")> [CHAR] = 2
+        <Description("char")> NC_CHAR = 2
         ''' <summary>
         ''' 16-bit signed integers
         ''' </summary>
-        <Description("short")> [SHORT] = 3
+        <Description("short")> NC_SHORT = 3
         ''' <summary>
         ''' 32-bit signed integers
         ''' </summary>
-        <Description("int")> [INT] = 4
+        <Description("int")> NC_INT = 4
         ''' <summary>
         ''' IEEE single precision floats
         ''' </summary>
-        <Description("float")> [FLOAT] = 5
+        <Description("float")> NC_FLOAT = 5
         ''' <summary>
         ''' IEEE double precision floats
         ''' </summary>
-        <Description("double")> [DOUBLE] = 6
+        <Description("double")> NC_DOUBLE = 6
 
-        [UBYTE] = 7
-        [USHORT] = 8
-        [UINT] = 9
+        NC_UBYTE = 7
+        NC_USHORT = 8
+        NC_UINT = 9
 
         ' 下面是拓展类型
 
@@ -115,16 +118,16 @@ Namespace Data
         ''' 
         ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
         ''' </summary>
-        <Description("long")> INT64 = 10
+        <Description("long")> NC_INT64 = 10
         ''' <summary>
         ''' unsigned 8-byte int 
         ''' </summary>
-        UINT64 = 11
+        NC_UINT64 = 11
 
         ''' <summary>
         ''' string
         ''' </summary>
-        [STRING] = 12
+        NC_STRING = 12
 
         ' /*
         '  * The following are use internally in support of user-defines
@@ -134,19 +137,19 @@ Namespace Data
         ''' <summary>
         ''' used internally for vlen types
         ''' </summary>
-        VLEN = 13
+        NC_VLEN = 13
         ''' <summary>
         ''' used internally for opaque types
         ''' </summary>
-        OPAQUE = 14
+        NC_OPAQUE = 14
         ''' <summary>
         ''' used internally for enum types
         ''' </summary>
-        [ENUM] = 15
+        NC_ENUM = 15
         ''' <summary>
         ''' used internally for compound types
         ''' </summary>
-        COMPOUND = 16
+        NC_COMPOUND = 16
 
         ''' <summary>
         ''' probably not supports by the standard netCDF4 library on linux and NASA Panoply software...
