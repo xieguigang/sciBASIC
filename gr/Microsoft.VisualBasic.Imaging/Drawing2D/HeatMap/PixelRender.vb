@@ -117,15 +117,24 @@ Namespace Drawing2D.HeatMap
         Public Function RenderRasterImage(Of T As Pixel)(pixels As IEnumerable(Of T), size As Size,
                                                          Optional fillRect As Boolean = True,
                                                          Optional cw As Double = 1,
-                                                         Optional ch As Double = 1) As Bitmap
+                                                         Optional ch As Double = 1,
+                                                         Optional gauss As Boolean = False) As Bitmap
 
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
             Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
-            Dim raster As Pixel() = New HeatMapRaster(Of T)() _
-                .SetDatas(pixels) _
-                .GetRasterPixels _
-                .ToArray
+            Dim raster As Pixel()
+
+            If gauss Then
+                raster = New HeatMapRaster(Of T)() _
+                    .SetDatas(pixels) _
+                    .GetRasterPixels _
+                    .ToArray
+            Else
+                raster = pixels _
+                    .Select(Function(i) DirectCast(i, Pixel)) _
+                    .ToArray
+            End If
 
             Call g.Clear(defaultColor)
 
