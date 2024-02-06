@@ -69,14 +69,20 @@ Public Module PLSData
         Dim vips As Double() = mvar.Vips.ToArray
         Dim cors As Double() = mvar.Coefficients.ToArray
 
-        For i = 0 To mvar.OptimizedFactor - 1
+        For i = 0 To If(opls, mvar.OptimizedOrthoFactor, mvar.OptimizedFactor) - 1
             Call Ploads.Add(New Double(features.Length - 1) {})
         Next
 
         For i As Integer = 0 To metSize - 1
-            For j As Integer = 0 To mvar.PPreds.Count - 1
-                Ploads(j)(i) = mvar.PPreds(j)(i)
-            Next
+            If opls Then
+                For j As Integer = 0 To mvar.PoPreds.Count - 1
+                    Ploads(j)(i) = mvar.PoPreds(j)(i)
+                Next
+            Else
+                For j As Integer = 0 To mvar.PPreds.Count - 1
+                    Ploads(j)(i) = mvar.PPreds(j)(i)
+                Next
+            End If
         Next
 
         Dim df As New df With {.rownames = features}
