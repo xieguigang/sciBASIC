@@ -63,6 +63,14 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
+#If NET48 Then
+
+    <Extension>
+    Public Iterator Function Zip(Of T1, T2)(s1 As IEnumerable(Of T1), s2 As IEnumerable(Of T2)) As IEnumerable(Of (First As T1, Second As T2))
+
+    End Function
+#End If
+
     <Extension>
     Public Function OfType(Of A, B, T)(source As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
         Return source _
