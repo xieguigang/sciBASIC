@@ -22,22 +22,28 @@ Public Module PLSData
     End Function
 
     <Extension>
-    Public Function GetPLSScore(mvar As MultivariateAnalysisResult) As df
+    Public Function GetPLSScore(mvar As MultivariateAnalysisResult, opls As Boolean) As df
         Dim [class] As String() = mvar.StatisticsObject.YLabels.ToArray
         Dim Tscore As New List(Of Double())
         Dim fileSize = mvar.StatisticsObject.YIndexes.Count
         Dim yexp As Double() = mvar.StatisticsObject.YVariables
         Dim ypre As Double() = New Double([class].Length - 1) {}
 
-        For i As Integer = 0 To mvar.OptimizedFactor - 1
+        For i As Integer = 0 To If(opls, mvar.OptimizedOrthoFactor, mvar.OptimizedFactor) - 1
             Tscore.Add(New Double([class].Length - 1) {})
         Next
 
         ' scores
         For i As Integer = 0 To fileSize - 1
-            For j = 0 To mvar.TPreds.Count - 1
-                Tscore(j)(i) = mvar.TPreds(j)(i)
-            Next
+            If opls Then
+                For j = 0 To mvar.ToPreds.Count - 1
+                    Tscore(j)(i) = mvar.ToPreds(j)(i)
+                Next
+            Else
+                For j = 0 To mvar.TPreds.Count - 1
+                    Tscore(j)(i) = mvar.TPreds(j)(i)
+                Next
+            End If
 
             ypre(i) = mvar.PredictedYs(i)
         Next
@@ -56,7 +62,7 @@ Public Module PLSData
     End Function
 
     <Extension>
-    Public Function GetPLSLoading(mvar As MultivariateAnalysisResult) As df
+    Public Function GetPLSLoading(mvar As MultivariateAnalysisResult, opls As Boolean) As df
         Dim features As String() = mvar.StatisticsObject.XLabels.ToArray
         Dim Ploads As New List(Of Double())
         Dim metSize = mvar.StatisticsObject.XIndexes.Count
