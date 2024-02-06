@@ -67,7 +67,12 @@ Public Module IEnumerations
 
     <Extension>
     Public Iterator Function Zip(Of T1, T2)(s1 As IEnumerable(Of T1), s2 As IEnumerable(Of T2)) As IEnumerable(Of (First As T1, Second As T2))
+        Dim pull1 = s1.GetEnumerator
+        Dim pull2 = s2.GetEnumerator
 
+        Do While pull1.MoveNext AndAlso pull2.MoveNext
+            Yield (pull1.Current, pull2.Current)
+        Loop
     End Function
 #End If
 
