@@ -136,6 +136,13 @@ Namespace Net.Http
             Return New DataURI(file)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="svg">
+        ''' the svg xml document text
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SVGImage(svg As String) As DataURI
             Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mime:="image/svg+xml")
