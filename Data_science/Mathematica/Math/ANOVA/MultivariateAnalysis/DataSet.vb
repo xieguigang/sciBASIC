@@ -61,6 +61,10 @@ Public Module DataSetHelper
             End If
         End If
 
+        If yfactors Is Nothing Then
+            yfactors = New Index(Of String)
+        End If
+
         Dim ds As New StatisticsObject(xm, yval) With {
             .decoder = yfactors
         }
