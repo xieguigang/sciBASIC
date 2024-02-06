@@ -54,6 +54,7 @@
 Imports System.Data
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -111,6 +112,25 @@ Public Class DataFrame : Implements INumericMatrix
             features(featureName) = Value
         End Set
     End Property
+
+    Sub New()
+    End Sub
+
+    Sub New(list As Dictionary(Of String, Double()))
+        features = New Dictionary(Of String, FeatureVector)
+
+        For Each col In list.SafeQuery
+            Call features.Add(col.Key, New FeatureVector(col.Key, col.Value))
+        Next
+    End Sub
+
+    Sub New(ParamArray cols As (name As String, col As Array)())
+        features = New Dictionary(Of String, FeatureVector)
+
+        For Each col In cols
+            Call features.Add(col.name, FeatureVector.FromGeneral(col.name, col.col))
+        Next
+    End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function delete(featureName As String) As Boolean
