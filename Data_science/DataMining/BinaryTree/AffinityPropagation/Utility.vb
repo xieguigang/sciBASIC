@@ -1,4 +1,9 @@
-﻿Namespace AffinityPropagation
+﻿Imports Microsoft.VisualBasic.DataMining.Evaluation
+Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
+Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.Correlations
+
+Namespace AffinityPropagation
 
     Public Class Edge : Implements IComparable(Of Edge)
         Public Property Source As Integer
@@ -55,28 +60,6 @@
 
     End Class
 
-
-    Public Module Distance
-
-        ''' <summary>
-        ''' checking for dim x == dim y will hurt performance this should be done at init
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <param name="y"></param>
-        ''' <returns></returns>
-        Public Function NegEuclidienDistance(x As Point, y As Point) As Single
-            Dim f = 0.0F
-            Dim i = 0
-
-            While i < x.Dimension
-                f += (y.Coordinates(i) - x.Coordinates(i)) * (y.Coordinates(i) - x.Coordinates(i))
-                i += 1
-            End While
-
-            Return -1 * f
-
-        End Function
-    End Module
     Public Module SimilarityMatrix
 
         ''' <summary>
@@ -85,7 +68,7 @@
         ''' <param name="ptr"></param>
         ''' <param name="distance"></param>
         ''' <returns></returns>
-        Public Function SparseSimilarityMatrix(ptr As Point(), distance As Func(Of Point, Point, Single)) As Edge()
+        Public Function SparseSimilarityMatrix(ptr As ClusterEntity(), distance As IMetric) As Edge()
             Dim items = New Edge(ptr.Length * ptr.Length - 1) {}
             Dim p = 0
             For i = 0 To ptr.Length - 1 - 1
@@ -97,72 +80,18 @@
             Next
             Return items
         End Function
-        Public Function SparseSimilarityMatrix(ptr As Point()) As Edge()
+        Public Function SparseSimilarityMatrix(ptr As ClusterEntity()) As Edge()
             Dim items = New Edge(ptr.Length * ptr.Length - 1) {}
             Dim p = 0
             For i = 0 To ptr.Length - 1 - 1
                 For j = i + 1 To ptr.Length - 1
-                    items(p) = New Edge(i, j, NegEuclidienDistance(ptr(i), ptr(j)))
-                    items(p + 1) = New Edge(j, i, NegEuclidienDistance(ptr(i), ptr(j)))
+                    items(p) = New Edge(i, j, -ptr(i).DistanceTo(ptr(j)))
+                    items(p + 1) = New Edge(j, i, -ptr(i).DistanceTo(ptr(j)))
                     p += 2
                 Next
             Next
             Return items
         End Function
     End Module
-
-    Public Class ClusterUtility
-        Public Shared Function GroupClusters(points As Point(), centers As Integer(), CentersIndecies As Integer()) As List(Of Point)()
-            ''' Create an array of list that contains clusters
-            ''' ie: The points are grouped together given their clusters
-
-            Dim tmp = New List(Of Point)(CentersIndecies.Length - 1) {}
-
-            Dim i = 0
-
-            While i < tmp.Length
-                tmp(i) = New List(Of Point)(points.Length / CentersIndecies.Length)
-                i += 1
-            End While
-
-            i = 0
-
-            While i < points.Length
-                Dim j = 0
-
-                While j < CentersIndecies.Length
-                    If points(i).Center Is Nothing AndAlso points(i).Equals(points(CentersIndecies(j))) Then
-                        tmp(j).Add(points(i))
-                    ElseIf points(i).Center IsNot Nothing AndAlso points(i).Center.Equals(points(CentersIndecies(j))) Then
-                        tmp(j).Add(points(i))
-                    End If
-
-                    j += 1
-                End While
-
-                i += 1
-            End While
-            Return tmp
-
-        End Function
-        Public Shared Sub AssignClusterCenters(input As Point(), result As Integer())
-            ' assign the center for each point
-            ' if the point itself is the center of the cluster then
-            ' assign null for its center value
-
-            Dim i = 0
-
-            While i < result.Length
-                If Not input(i).Equals(input(result(i))) Then
-                    input(i).Center = input(result(i))
-                Else
-                    input(i).Center = Nothing
-                End If
-
-                i += 1
-            End While
-        End Sub
-    End Class
-
 
 End Namespace
