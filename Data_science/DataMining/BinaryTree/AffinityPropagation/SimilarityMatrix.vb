@@ -1,5 +1,9 @@
 ﻿
+Imports Microsoft.VisualBasic.DataMining.Evaluation
+Imports Microsoft.VisualBasic.DataMining.KMeans
+
 Namespace AffinityPropagation
+
     Public Module SimilarityMatrix
 
         ''' <summary>
@@ -20,6 +24,7 @@ Namespace AffinityPropagation
             Next
             Return items
         End Function
+
         Public Function SparseSimilarityMatrix(ptr As ClusterEntity()) As Edge()
             Dim items = New Edge(ptr.Length * ptr.Length - 1) {}
             Dim p = 0

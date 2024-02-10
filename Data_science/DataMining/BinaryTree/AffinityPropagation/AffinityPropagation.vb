@@ -1,4 +1,5 @@
 ﻿Imports std = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace AffinityPropagation
     Public Class AffinityPropagation
@@ -24,7 +25,7 @@ Namespace AffinityPropagation
             _convergence = convergence
             Centers = New HashSet(Of Integer)(number_of_points)
         End Sub
-        Private Function __preference() As Single
+        Private Function Preference() As Single
 
             Dim m = _graph.SimMatrixElementsCount - _graph.VerticesCount - 1
             'get the middle element of the array with quickselect without sorting the array 
@@ -32,10 +33,10 @@ Namespace AffinityPropagation
             Return Convert.ToSingle(If(m Mod 2 = 0, (s(0) + s(1)) / 2, s(0)))
 
         End Function
-        Private Sub __build_graph(points As Edge())
-            Dim rand As Random = New Random()
+
+        Private Sub BuildGraph(points As Edge())
             _graph.Edges = points
-            Dim _preference As Single = __preference()
+            Dim _preference As Single = Preference()
 
             Dim i = 0
 
@@ -52,7 +53,7 @@ Namespace AffinityPropagation
             While i < _graph.Edges.Length
                 Dim p = _graph.Edges(i)
                 'Add noise to avoid degeneracies
-                p.Similarity += Convert.ToSingle((0.0000000000000001 * p.Similarity + 1.0E-300) * (rand.Next() / (Integer.MaxValue + 1.0)))
+                p.Similarity += Convert.ToSingle((0.0000000000000001 * p.Similarity + 1.0E-300) * (randf.NextNumber / (Integer.MaxValue + 1.0)))
 
                 'add out/in edges to vertices
                 _graph.outEdges(p.Source)(indexes_source(p.Source)) = p
@@ -63,10 +64,12 @@ Namespace AffinityPropagation
             End While
             Console.WriteLine("Graph Constructed")
         End Sub
-        Private Sub __update(ByRef variable As Single, newValue As Single)
+
+        Private Sub Update(ByRef variable As Single, newValue As Single)
             variable = Convert.ToSingle(_damping * variable + (1.0 - _damping) * newValue)
         End Sub
-        Private Sub __update_responsabilities()
+
+        Private Sub UpdateResponsabilities()
             Dim edges As Edge()
             Dim max1, max2, argmax1 As Single
             Dim Similarity = 0.0F
@@ -96,11 +99,11 @@ Namespace AffinityPropagation
                 While k < edges.Length
                     If k <> argmax1 Then
                         temp = edges(k).Responsability
-                        __update(temp, edges(k).Similarity - max1)
+                        Update(temp, edges(k).Similarity - max1)
                         edges(k).Responsability = temp
                     Else
                         temp = edges(k).Responsability
-                        __update(temp, edges(k).Similarity - max2)
+                        Update(temp, edges(k).Similarity - max2)
                         edges(k).Responsability = temp
                     End If
 
@@ -110,7 +113,8 @@ Namespace AffinityPropagation
                 i += 1
             End While
         End Sub
-        Private Sub __update_availabilities()
+
+        Private Sub UpdateAvailabilities()
             Dim edges As Edge()
             Dim sum As Double = 0.0, temp = 0.0F, temp1 = 0.0F, last = 0.0F
             Dim k = 0
@@ -132,20 +136,20 @@ Namespace AffinityPropagation
 
                 While i < edges.Length - 1
                     temp1 = edges(i).Availability
-                    __update(temp1, std.Min(0.0F, last + sum - std.Max(0.0F, edges(i).Responsability)))
+                    Update(temp1, std.Min(0.0F, last + sum - std.Max(0.0F, edges(i).Responsability)))
 
                     edges(i).Availability = temp1
                     i += 1
                 End While
                 'calculate self-Availability
                 temp = edges(edges.Length - 1).Availability
-                __update(temp, sum)
+                Update(temp, sum)
                 edges(edges.Length - 1).Availability = temp
                 k += 1
             End While
         End Sub
 
-        Private Function __update_examplars(examplar As Integer()) As Boolean
+        Private Function UpdateExamplars(examplar As Integer()) As Boolean
             Dim changed = False
             Dim edges As Edge()
             Dim Similarity = 0.0F, maxValue = 0.0F
@@ -179,12 +183,13 @@ Namespace AffinityPropagation
             End While
             Return changed
         End Function
+
         Public Function Fit(input As Edge()) As Integer()
             If input.Length <> _graph.SimMatrixElementsCount Then
                 Throw New Exception($"The provided array size mismatch with the size given in the constructor  ({input.Length}!={_graph.SimMatrixElementsCount})")
             End If
 
-            __build_graph(input)
+            BuildGraph(input)
             Dim examplar = New Integer(_graph.VerticesCount - 1) {}
             Dim i = 0
             Dim nochange = 0
@@ -197,9 +202,9 @@ Namespace AffinityPropagation
             i = 0
 
             While i < _max_iteration AndAlso nochange < _convergence
-                __update_responsabilities()
-                __update_availabilities()
-                If __update_examplars(examplar) Then nochange = 0
+                UpdateResponsabilities()
+                UpdateAvailabilities()
+                If UpdateExamplars(examplar) Then nochange = 0
                 i += 1
                 nochange += 1
             End While
