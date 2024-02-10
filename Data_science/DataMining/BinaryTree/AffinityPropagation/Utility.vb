@@ -37,8 +37,7 @@
 
 
     End Class
-    Public Class Edge
-        Implements IComparable(Of Edge)
+    Public Class Edge : Implements IComparable(Of Edge)
         Public Property Source As Integer
         Public Property Destination As Integer
         Public Property Similarity As Single

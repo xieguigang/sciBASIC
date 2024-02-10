@@ -1,6 +1,4 @@
-﻿Imports Affinity_Propagation_Clustering.Utility
-
-Namespace AffinityPropagation
+﻿Namespace AffinityPropagation
 
     Friend Interface ITestDataSet
         Function DataSet() As Point()

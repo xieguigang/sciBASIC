@@ -1,6 +1,4 @@
-﻿Imports Affinity_Propagation_Clustering.Utility
-
-Namespace AffinityPropagation
+﻿Namespace AffinityPropagation
     Public Class AffinityPropagation
 
         Private _max_iteration, _convergence As Integer

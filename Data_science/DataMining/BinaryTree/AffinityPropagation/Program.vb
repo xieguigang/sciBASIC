@@ -1,8 +1,4 @@
-﻿Imports Affinity_Propagation_Clustering.Cluster
-Imports Affinity_Propagation_Clustering.DataSet
-Imports Affinity_Propagation_Clustering.Utility
-
-Namespace AffinityPropagation
+﻿Namespace AffinityPropagation
     Friend Class Program
 
         Public Shared Sub Main()
