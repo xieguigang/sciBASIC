@@ -1,42 +1,5 @@
 ﻿Namespace AffinityPropagation
-    Public Class Point
-        Protected _coordinates As Single()
-        Public Property Center As Point
-        Public Sub New(ParamArray coordinates As Single())
-            _coordinates = New Single(coordinates.Length - 1) {}
-            Dim i = 0
 
-            While i < coordinates.Length
-                _coordinates(i) = coordinates(i)
-                i += 1
-            End While
-
-            Center = Nothing
-        End Sub
-        Public ReadOnly Property Dimension As Integer
-            Get
-                Return _coordinates.Length
-            End Get
-        End Property
-        Public Function Coordinates(index As Integer) As Single
-            Return _coordinates(index)
-        End Function
-
-        Public Overloads Function Equals(obj As Point) As Boolean
-            ' Perform an equality check on two rectangles (Point object pairs).
-            If obj Is Nothing OrElse [GetType]() IsNot obj.GetType() OrElse obj.Dimension <> Dimension Then Return False
-
-            Dim i = 0
-
-            While i < Dimension
-                If _coordinates(i) <> obj._coordinates(i) Then Return False
-                i += 1
-            End While
-            Return True
-        End Function
-
-
-    End Class
     Public Class Edge : Implements IComparable(Of Edge)
         Public Property Source As Integer
         Public Property Destination As Integer
