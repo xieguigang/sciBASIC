@@ -1,6 +1,6 @@
 ﻿Namespace AffinityPropagation
 
-    Public Module Algorithms
+    Public Module QuickSelect
 
         Private Function qpartition(arr As Edge(), low As Integer, high As Integer) As Integer
             Dim temp As Edge
