@@ -361,4 +361,8 @@
     <ProjectReference Include="..\DataMining\DataMining.NET5.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AffinityPropagation\" />
+  </ItemGroup>
+
 </Project>
