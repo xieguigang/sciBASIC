@@ -4,7 +4,7 @@
         Public Property Source As Integer
         Public Property Destination As Integer
         Public Property Similarity As Single
-        Public Property Responsability As Single
+        Public Property Responsability As Double
         Public Property Availability As Single
 
         Public Sub New()

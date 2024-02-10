@@ -1,4 +1,6 @@
-﻿Namespace AffinityPropagation
+﻿Imports std = System.Math
+
+Namespace AffinityPropagation
     Public Class AffinityPropagation
 
         Private _max_iteration, _convergence As Integer
@@ -7,8 +9,14 @@
 
         Public ReadOnly Property Centers As HashSet(Of Integer)
 
-        Public Sub New(number_of_points As Integer, Optional damping As Single = 0.9F, Optional max_iteration As Integer = 1000, Optional convergence As Integer = 200)
-            If number_of_points < 1 Then Throw New ArgumentOutOfRangeException("Number of points can't be 0 or a negative value")
+        Public Sub New(number_of_points As Integer,
+                       Optional damping As Single = 0.9F,
+                       Optional max_iteration As Integer = 1000,
+                       Optional convergence As Integer = 200)
+
+            If number_of_points < 1 Then
+                Throw New ArgumentOutOfRangeException("Number of points can't be 0 or a negative value")
+            End If
 
             _graph = New Graph(number_of_points)
             _damping = damping
@@ -104,8 +112,7 @@
         End Sub
         Private Sub __update_availabilities()
             Dim edges As Edge()
-            Dim sum = 0.0F, temp = 0.0F, temp1 = 0.0F, last = 0.0F
-
+            Dim sum As Double = 0.0, temp = 0.0F, temp1 = 0.0F, last = 0.0F
             Dim k = 0
 
             While k < _graph.VerticesCount
@@ -115,7 +122,7 @@
                 Dim i = 0
 
                 While i < edges.Length - 1
-                    sum += MathF.Max(0.0F, edges(i).Responsability)
+                    sum += std.Max(0.0F, edges(i).Responsability)
                     i += 1
                 End While
 
@@ -125,7 +132,7 @@
 
                 While i < edges.Length - 1
                     temp1 = edges(i).Availability
-                    __update(temp1, MathF.Min(0.0F, last + sum - MathF.Max(0.0F, edges(i).Responsability)))
+                    __update(temp1, std.Min(0.0F, last + sum - std.Max(0.0F, edges(i).Responsability)))
 
                     edges(i).Availability = temp1
                     i += 1
@@ -173,7 +180,9 @@
             Return changed
         End Function
         Public Function Fit(input As Edge()) As Integer()
-            If input.Length <> _graph.SimMatrixElementsCount Then Throw New Exception($"The provided array size mismatch with the size given in the constructor  ({input.Length}!={_graph.SimMatrixElementsCount})")
+            If input.Length <> _graph.SimMatrixElementsCount Then
+                Throw New Exception($"The provided array size mismatch with the size given in the constructor  ({input.Length}!={_graph.SimMatrixElementsCount})")
+            End If
 
             __build_graph(input)
             Dim examplar = New Integer(_graph.VerticesCount - 1) {}
