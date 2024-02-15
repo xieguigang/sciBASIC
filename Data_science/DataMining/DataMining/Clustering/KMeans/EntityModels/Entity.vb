@@ -76,12 +76,13 @@ Namespace KMeans
         Implements INamedValue
         Implements IVector
         Implements IClusterPoint
+        Implements IReadOnlyId
 
         ''' <summary>
         ''' the unique reference id of current entity object
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property uid As String Implements INamedValue.Key
+        <XmlAttribute> Public Property uid As String Implements INamedValue.Key, IReadOnlyId.Identity
         ''' <summary>
         ''' the cluster class label
         ''' </summary>
