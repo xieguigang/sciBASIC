@@ -419,7 +419,10 @@ Namespace ApplicationServices.Terminal.LineEdit
 
                 Dim unix_reset_colors_str = TryCast((terminfo_driver?.GetType()?.GetField("origPair", BindingFlags.Instance Or BindingFlags.NonPublic))?.GetValue(terminfo_driver), String)
 
-                If Not Equals(unix_reset_colors_str, Nothing) Then unix_reset_colors = Encoding.UTF8.GetBytes(unix_reset_colors_str)
+                If Not unix_reset_colors_str Is Nothing Then
+                    unix_reset_colors = Encoding.UTF8.GetBytes(unix_reset_colors_str)
+                End If
+
                 unix_raw_output = Console.OpenStandardOutput()
             Catch e As Exception
                 Console.WriteLine("Error: " & e.ToString())
