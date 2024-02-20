@@ -55,7 +55,8 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
 
-    ReadOnly autoCompleteCandidates As String() = {"file.copy", "file.delete", "file.cache", "file.rename", "append", "ls", "cat", "make.dir", "copy"}
+    ReadOnly autoCompleteCandidates As String() = {
+        "file.copy", "file.delete", "file.cache", "file.rename", "append", "ls", "cat", "make.dir", "copy", "require", "imports", "save", "write.csv", "write.xlsx"}
 
     Sub Main1()
         Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine, dev:=mainEditor)
