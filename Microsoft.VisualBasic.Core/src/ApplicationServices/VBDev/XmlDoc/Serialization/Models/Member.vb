@@ -156,7 +156,17 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Public Class param : Implements IMember
 
-        <XmlAttribute> Public Property name As String Implements IMember.name
+        ''' <summary>
+        ''' the parameter name
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property name As String Implements IMember.name
+
+        ''' <summary>
+        ''' the parameter description text
+        ''' </summary>
+        ''' <returns></returns>
         <XmlText> Public Property text As String
 
         Public Overrides Function ToString() As String
