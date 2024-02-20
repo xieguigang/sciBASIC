@@ -44,12 +44,11 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Text
 Imports std = System.Math
 
-Namespace ApplicationServices.Terminal
+Namespace ApplicationServices.Terminal.LineEdit
 
     ''' <summary>
     ''' Interactive line editor.
@@ -1188,7 +1187,7 @@ mismatch:
             history.CursorToEnd()
             max_rendered = 0
 
-            Me.Prompt = prompt
+            Me.prompt = prompt
             shown_prompt = prompt
             InitText(initial)
             history.Append(initial)

@@ -1,4 +1,4 @@
-﻿Namespace ApplicationServices.Terminal
+﻿Namespace ApplicationServices.Terminal.LineEdit
 
     Friend Class CompletionState
 

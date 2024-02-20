@@ -1,9 +1,9 @@
-﻿Namespace ApplicationServices.Terminal
+﻿Namespace ApplicationServices.Terminal.LineEdit
 
-    '
-    ' Emulates the bash-like behavior, where edits done to the
-    ' history are recorded
-    '
+    ''' <summary>
+    ''' Emulates the bash-like behavior, where edits done to the
+    ''' history are recorded
+    ''' </summary>
     Friend Class HistoryType
         Private history As String()
         Private head, tail As Integer

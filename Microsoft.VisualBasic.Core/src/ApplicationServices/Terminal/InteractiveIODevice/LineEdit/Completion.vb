@@ -1,4 +1,4 @@
-﻿Namespace ApplicationServices.Terminal
+﻿Namespace ApplicationServices.Terminal.LineEdit
 
     ''' <summary>
     ''' Completion results returned by the completion handler.
