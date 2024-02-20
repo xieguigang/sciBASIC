@@ -66,12 +66,11 @@ Namespace ApplicationServices.Terminal
     Public Class Shell
 
         Public ReadOnly Property ps1 As PS1
-        Public ReadOnly Property shell As Action(Of String)
         ''' <summary>
-        ''' a candidate list for implements auto-complete for console input.
+        ''' engine for execute the command, example as execute script text in ``R#``.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property autoCompleteCandidates As New List(Of String)
+        Public ReadOnly Property shell As Action(Of String)
         Public ReadOnly Property ttyDev As IConsole
             Get
                 Return dev
@@ -100,6 +99,10 @@ Namespace ApplicationServices.Terminal
             Me.dev = If(dev, New Terminal)
         End Sub
 
+        Public Function SetAutoComplete(handle As AutoCompleteHandler)
+
+        End Function
+
         ''' <summary>
         ''' 执行一个配置好的命令行模型, 代码会被一直阻塞在这里
         ''' </summary>
@@ -121,14 +124,6 @@ Namespace ApplicationServices.Terminal
                     Call _shell(cli)
                 End If
             Loop
-        End Sub
-
-        Private Sub dev_Tab() Handles dev.Tab
-            If autoCompleteCandidates.Count = 0 Then
-                Return
-            End If
-
-
         End Sub
     End Class
 End Namespace
