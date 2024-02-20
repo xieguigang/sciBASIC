@@ -944,34 +944,24 @@ Public Module App
     ''' Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.checkIsMicrosoftPlatform
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.CheckIsMicrosoftPlatform
 
     ''' <summary>
     ''' 这个主要是判断一个和具体的操作系统平台相关的Win32 API是否能够正常的工作？
     ''' </summary>
     ''' <returns></returns>
-    Private Function checkIsMicrosoftPlatform() As Boolean
-#If NET5_0_OR_GREATER Then
-        Return False
-#End If
-#If NET48 Then
-        Return True
-#Else
-#If UNIX Then
-#If DEBUG Then
-        Return True
-#Else
-        Return False
-#End If
-#Else
-#If NET_48 Then
-        Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-#Else
-        Return True
-#End If
-#End If
-#End If
-        ' Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+    Private Function CheckIsMicrosoftPlatform() As Boolean
+        Select Case App.Platform
+            Case PlatformID.Win32NT,
+                 PlatformID.Win32S,
+                 PlatformID.Win32Windows,
+                 PlatformID.WinCE,
+                 PlatformID.Xbox
+
+                Return True
+            Case Else
+                Return False
+        End Select
     End Function
 
     ''' <summary>
@@ -1378,7 +1368,8 @@ Public Module App
     ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
     ''' platform.
     ''' </summary>
-    ''' <remarks>One of the System.PlatformID values.</remarks>
+    ''' <remarks>One of the <see cref="PlatformID"/> values. this property value may affected 
+    ''' by the ``--unix`` commandline debug options when do application startup.</remarks>
     Public ReadOnly Property Platform As PlatformID = My.FrameworkInternal.InternalPlatformID
 
     ''' <summary>

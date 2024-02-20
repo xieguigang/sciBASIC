@@ -390,11 +390,10 @@ Namespace ApplicationServices.Terminal.LineEdit
 
             rendered_text = New StringBuilder()
             text = New StringBuilder()
-
             history = New HistoryType(name, histsize)
+            isWindows = App.IsMicrosoftPlatform
 
-            isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            GetUnixConsoleReset()
+            Call GetUnixConsoleReset()
             'if (File.Exists ("log"))File.Delete ("log");
             'log = File.CreateText ("log"); 
         End Sub
