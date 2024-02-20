@@ -51,6 +51,7 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
 
@@ -68,6 +69,7 @@ Module terminalTest
     Sub main2()
         Dim shell As New LineEditor("foo") With {.HeuristicsMode = True, .TabAtStartCompletes = True}
         Dim s As Value(Of String) = ""
+        Dim ps1 As PS1 = PS1.Fedora12
 
         shell.AutoCompleteEvent =
             Function(a, pos)
@@ -83,7 +85,7 @@ Module terminalTest
                 Return New Completion(prefix, ls)
             End Function
 
-        Do While s = shell.Edit("> ", "") IsNot Nothing
+        Do While s = shell.Edit(ps1) IsNot Nothing
             Console.WriteLine(s.Value)
         Loop
     End Sub

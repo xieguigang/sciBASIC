@@ -45,6 +45,8 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Text
 Imports std = System.Math
 
 Namespace ApplicationServices.Terminal
@@ -411,7 +413,7 @@ Namespace ApplicationServices.Terminal
 
             Dim max = std.Max(rendered_text.Length + shown_prompt.Length, max_rendered)
 
-            For i = rendered_text.Length + shown_prompt.Length To max_rendered - 1
+            For i As Integer = rendered_text.Length + shown_prompt.Length To max_rendered - 1
                 Console.Write(" "c)
             Next
             max_rendered = shown_prompt.Length + rendered_text.Length
@@ -453,17 +455,17 @@ Namespace ApplicationServices.Terminal
         Private Sub ComputeRendered()
             rendered_text.Length = 0
 
-            For i = 0 To text.Length - 1
-                Dim c As Integer = Microsoft.VisualBasic.AscW(text(i))
+            For i As Integer = 0 To text.Length - 1
+                Dim c As Integer = AscW(text(i))
                 If c < 26 Then
                     If c = 9 Then
                         rendered_text.Append("    ")
                     Else
                         rendered_text.Append("^"c)
-                        rendered_text.Append(Microsoft.VisualBasic.ChrW(c + Microsoft.VisualBasic.AscW("A"c) - 1))
+                        rendered_text.Append(ChrW(c + ASCII.A - 1))
                     End If
                 Else
-                    rendered_text.Append(Microsoft.VisualBasic.ChrW(c))
+                    rendered_text.Append(ChrW(c))
                 End If
             Next
         End Sub
@@ -471,10 +473,10 @@ Namespace ApplicationServices.Terminal
         Private Function TextToRenderPos(pos As Integer) As Integer
             Dim p = 0
 
-            For i = 0 To pos - 1
+            For i As Integer = 0 To pos - 1
                 Dim c As Integer
 
-                c = Microsoft.VisualBasic.AscW(text(i))
+                c = AscW(text(i))
 
                 If c < 26 Then
                     If c = 9 Then
@@ -553,7 +555,7 @@ Namespace ApplicationServices.Terminal
                 Dim delta = Console.CursorTop - target_line
                 Console.CursorLeft = 0
                 Console.CursorTop = Console.WindowHeight - 1
-                For i = 0 To delta + 1 - 1
+                For i As Integer = 0 To delta + 1 - 1
                     For c As Integer = Console.WindowWidth To 1 Step -1
                         Console.Write(" ")
                     Next ' To debug use ("{0}", i%10);
@@ -623,7 +625,7 @@ Namespace ApplicationServices.Terminal
                     Dim c = completions(0)(p)
 
 
-                    For i = 1 To ncompletions - 1
+                    For i As Integer = 1 To ncompletions - 1
                         If completions(i).Length < p Then
                             GoTo mismatch
                         End If
@@ -641,7 +643,7 @@ mismatch:
 
                     ' Adjust the completions to skip the common prefix
                     prefix += completions(0).Substring(0, last + 1)
-                    For i = 0 To completions.Length - 1
+                    For i As Integer = 0 To completions.Length - 1
                         completions(i) = completions(i).Substring(last + 1)
                     Next
                 End If
@@ -691,7 +693,7 @@ mismatch:
                 If TabAtStartCompletes Then
                     complete = True
                 Else
-                    For i = 0 To cursor - 1
+                    For i As Integer = 0 To cursor - 1
                         If Not Char.IsWhiteSpace(text(i)) Then
                             complete = True
                             Exit For
@@ -1145,6 +1147,10 @@ mismatch:
             Render()
             ForceCursor(cursor)
         End Sub
+
+        Public Function Edit(ps1 As PS1, Optional initial As String = Nothing) As String
+            Return Edit(ps1.ToString, initial)
+        End Function
 
         ''' <summary>
         ''' Edit a line, and provides both a prompt and the initial contents to edit
