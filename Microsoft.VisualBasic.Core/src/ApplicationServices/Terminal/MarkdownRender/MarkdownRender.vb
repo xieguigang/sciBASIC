@@ -94,12 +94,20 @@ Namespace ApplicationServices.Terminal
 
         Dim initialGlobal As ConsoleFormat
 
-        Sub New(theme As MarkdownTheme)
+        Sub New(theme As MarkdownTheme, Optional defaultBack As ConsoleColor? = Nothing, Optional defaultFore As ConsoleColor? = Nothing)
             Me.theme = theme
-            Me.initialGlobal = New ConsoleFormat With {
-                .Background = Console.BackgroundColor,
-                .Foreground = Console.ForegroundColor
-            }
+
+            If defaultBack Is Nothing OrElse defaultFore Is Nothing Then
+                Me.initialGlobal = New ConsoleFormat With {
+                    .Background = Console.BackgroundColor,
+                    .Foreground = Console.ForegroundColor
+                }
+            Else
+                Me.initialGlobal = New ConsoleFormat With {
+                    .Background = defaultBack,
+                    .Foreground = defaultFore
+                }
+            End If
         End Sub
 
         Sub New()
@@ -194,7 +202,6 @@ Namespace ApplicationServices.Terminal
             Else
                 Call styleStack.Peek.SetConfig(Me)
             End If
-
         End Sub
 
         Private Sub applyGlobal()
@@ -409,20 +416,20 @@ Namespace ApplicationServices.Terminal
         ''' <param name="indent">the prefix space indent number.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Print(markdown As String, Optional theme As MarkdownTheme = Nothing, Optional indent% = 0)
-#If NET_48 Or NETCOREAPP Then
-            Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
-#Else
-            Throw New NotImplementedException
-#End If
+            If App.Platform <> PlatformID.Win32NT Then
+                Call New MarkdownRender(theme Or defaultTheme, ConsoleColor.Black, ConsoleColor.White).DoPrint(markdown, indent)
+            Else
+                Call New MarkdownRender(theme Or defaultTheme).DoPrint(markdown, indent)
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function DefaultStyleRender() As MarkdownRender
-#If NET_48 Or NETCOREAPP Then
-            Return New MarkdownRender(defaultTheme)
-#Else
-            Throw New NotImplementedException
-#End If
+            If App.Platform <> PlatformID.Win32NT Then
+                Return New MarkdownRender(defaultTheme, ConsoleColor.Black, ConsoleColor.White)
+            Else
+                Return New MarkdownRender(defaultTheme)
+            End If
         End Function
     End Class
 End Namespace
