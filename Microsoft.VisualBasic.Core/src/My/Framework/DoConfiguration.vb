@@ -76,6 +76,21 @@ Namespace My.FrameworkInternal
             End Get
         End Property
 
+        ''' <summary>
+        ''' should be vanilla code
+        ''' </summary>
+        Sub New()
+            Dim args As String() = Environment.GetCommandLineArgs
+
+            If Not args Is Nothing Then
+                For Each s As String In args.Select(Function(si) si.ToLower)
+                    If s = "--unix" Then
+                        unix_debug_flag = True
+                    End If
+                Next
+            End If
+        End Sub
+
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
@@ -87,9 +102,9 @@ Namespace My.FrameworkInternal
             Dim name$
 
             ' initial before call app module
-            If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
-                unix_debug_flag = True
-            End If
+            'If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
+            '    unix_debug_flag = True
+            'End If
 
             ' call app module later
             If Not max_stack_size.StringEmpty Then

@@ -1373,7 +1373,11 @@ Public Module App
     ''' </summary>
     ''' <remarks>One of the <see cref="PlatformID"/> values. this property value may affected 
     ''' by the ``--unix`` commandline debug options when do application startup.</remarks>
-    Public ReadOnly Property Platform As PlatformID = My.FrameworkInternal.InternalPlatformID
+    Public ReadOnly Property Platform As PlatformID
+        Get
+            Return My.FrameworkInternal.InternalPlatformID
+        End Get
+    End Property
 
     ''' <summary>
     ''' Self call this program itself for batch parallel task calculation.
