@@ -281,7 +281,9 @@ Namespace ApplicationServices.Terminal.LineEdit
         ' The row where we started displaying data.
         Private home_row As Integer
 
-        ' The maximum length that has been displayed on the screen
+        ''' <summary>
+        ''' The maximum length that has been displayed on the screen
+        ''' </summary>
         Private max_rendered As Integer
 
         ' If we are done editing, this breaks the interactive loop
@@ -457,9 +459,11 @@ Namespace ApplicationServices.Terminal.LineEdit
             Dim lines As Integer = 1 + screenpos / Console.WindowWidth
 
             home_row = Console.CursorTop - (lines - 1)
-            If home_row < 0 Then home_row = 0
-        End Sub
 
+            If home_row < 0 Then
+                home_row = 0
+            End If
+        End Sub
 
         Private Sub RenderFrom(pos As Integer)
             Dim rpos = TextToRenderPos(pos)
