@@ -119,7 +119,7 @@ Namespace ApplicationServices.Terminal
                 End If
 
                 If resizeHandles.Count = 0 Then
-#If netcore5 = 0 Then
+#If NET48 Then
                     eventThread.Abort()
                     eventThread = Nothing
 #End If
