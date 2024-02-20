@@ -52,6 +52,10 @@ Namespace Mono.Terminal
     ''' Interactive line editor.
     ''' </summary>
     ''' <remarks>
+    ''' Interactive line editor.
+    ''' 
+    ''' > https://github.com/mono/LineEditor
+    ''' 
     '''   <para>
     '''     LineEditor is an interative line editor for .NET applications that provides
     '''     editing capabilities for an input line with common editing capabilities and
