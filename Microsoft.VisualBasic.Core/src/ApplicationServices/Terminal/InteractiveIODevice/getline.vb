@@ -45,6 +45,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
 
 Namespace Mono.Terminal
 
@@ -486,7 +487,7 @@ Namespace Mono.Terminal
             Console.Write(shown_prompt)
             Console.Write(rendered_text)
 
-            Dim max = Math.Max(rendered_text.Length + shown_prompt.Length, max_rendered)
+            Dim max = std.Max(rendered_text.Length + shown_prompt.Length, max_rendered)
 
             For i = rendered_text.Length + shown_prompt.Length To max_rendered - 1
                 Console.Write(" "c)
@@ -722,7 +723,7 @@ Namespace Mono.Terminal
 
         Private Sub ShowCompletions(prefix As String, completions As String())
             ' Ensure we have space, determine window size
-            Dim window_height As Integer = Math.Min(completions.Length, Console.WindowHeight / 5)
+            Dim window_height As Integer = std.Min(completions.Length, Console.WindowHeight / 5)
             Dim target_line = Console.WindowHeight - window_height - 1
             If Not isWindows AndAlso Console.CursorTop > target_line Then
                 Dim delta = Console.CursorTop - target_line
@@ -741,10 +742,10 @@ Namespace Mono.Terminal
             Const MaxWidth = 50
             Dim window_width = 12
             Dim plen = prefix.Length
-            For Each s In completions
-                window_width = Math.Max(plen + s.Length, window_width)
+            For Each s As String In completions
+                window_width = std.Max(plen + s.Length, window_width)
             Next
-            window_width = Math.Min(window_width, MaxWidth)
+            window_width = std.Min(window_width, MaxWidth)
 
             If current_completion Is Nothing Then
                 Dim left = Console.CursorLeft - prefix.Length
