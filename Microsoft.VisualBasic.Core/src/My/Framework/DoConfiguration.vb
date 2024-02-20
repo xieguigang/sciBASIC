@@ -64,7 +64,17 @@ Namespace My.FrameworkInternal
     ''' </summary>
     Public Module DoConfiguration
 
+        Dim unix_debug_flag As Boolean
+
         Friend ReadOnly Property InternalPlatformID As PlatformID
+            Get
+                If unix_debug_flag Then
+                    Return PlatformID.Unix
+                Else
+                    Return Environment.OSVersion.Platform
+                End If
+            End Get
+        End Property
 
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
@@ -76,13 +86,14 @@ Namespace My.FrameworkInternal
                 .FirstOrDefault
             Dim name$
 
+            ' initial before call app module
+            If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
+                unix_debug_flag = True
+            End If
+
+            ' call app module later
             If Not max_stack_size.StringEmpty Then
                 Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
-            End If
-            If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
-                _InternalPlatformID = PlatformID.Unix
-            Else
-                _InternalPlatformID = Environment.OSVersion.Platform
             End If
 
             ' load config from config file.
