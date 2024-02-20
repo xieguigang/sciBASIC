@@ -941,9 +941,12 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
+    ''' Is this application running on a Microsoft OS platform.
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (是否是运行于微软的操作系统平台？)
+    ''' </remarks>
     Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.CheckIsMicrosoftPlatform
 
     ''' <summary>
