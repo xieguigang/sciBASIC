@@ -50,14 +50,42 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
 
-    Sub Main1()
-        Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
+    ReadOnly autoCompleteCandidates As String() = {"file.copy", "file.delete", "file.cache", "file.rename"}
 
-        shell.autoCompleteCandidates.Add("file.copy", "file.delete", "file.cache", "file.rename")
-        shell.Run()
+    Sub Main1()
+        'Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
+
+        'shell.autoCompleteCandidates.Add("file.copy", "file.delete", "file.cache", "file.rename")
+        'shell.Run()
+
+        Call main2()
+    End Sub
+
+    Sub main2()
+        Dim shell As New LineEditor("foo") With {.HeuristicsMode = "vb"}
+        Dim s As Value(Of String) = ""
+
+        shell.AutoCompleteEvent =
+            Function(a, pos)
+                Dim prefix = a.Substring(0, pos)
+                Dim ls As String()
+
+                If prefix.StringEmpty Then
+                    ls = autoCompleteCandidates
+                Else
+                    ls = autoCompleteCandidates.Where(Function(c) c.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)).Select(Function(c) c.Substring(pos)).ToArray
+                End If
+
+                Return New Completion(prefix, ls)
+            End Function
+
+        Do While s = shell.Edit("> ", "") IsNot Nothing
+            Console.WriteLine(s.Value)
+        Loop
     End Sub
 End Module
