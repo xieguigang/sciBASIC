@@ -79,7 +79,7 @@ Namespace My.FrameworkInternal
             If Not max_stack_size.StringEmpty Then
                 Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
             End If
-            If args.GetBoolean("--unix") Then
+            If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
                 _InternalPlatformID = PlatformID.Unix
             Else
                 _InternalPlatformID = Environment.OSVersion.Platform
