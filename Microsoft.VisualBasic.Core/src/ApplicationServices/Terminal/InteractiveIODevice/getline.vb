@@ -310,10 +310,10 @@ Namespace ApplicationServices.Terminal
         Private current_completion As CompletionState
 
         ' If this is set, it contains an escape sequence to reset the Unix colors to the ones that were used on startup
-        Private Shared unix_reset_colors As Byte()
+        Friend Shared unix_reset_colors As Byte()
 
         ' This contains a raw stream pointing to stdout, used to bypass the TermInfoDriver
-        Private Shared unix_raw_output As Stream
+        Friend Shared unix_raw_output As Stream
 
         ''' <summary>
         '''   Invoked when the user requests auto-completion using the tab character
@@ -542,24 +542,6 @@ Namespace ApplicationServices.Terminal
                 RenderFrom(cursor)
                 ForceCursor(Interlocked.Increment(cursor))
                 UpdateHomeRow(TextToScreenPos(cursor))
-            End If
-        End Sub
-
-        Private Shared Sub SaveExcursion(code As Action)
-            Dim saved_col = Console.CursorLeft
-            Dim saved_row = Console.CursorTop
-            Dim saved_fore = Console.ForegroundColor
-            Dim saved_back = Console.BackgroundColor
-
-            code()
-
-            Console.CursorLeft = saved_col
-            Console.CursorTop = saved_row
-            If unix_reset_colors IsNot Nothing Then
-                unix_raw_output.Write(unix_reset_colors, 0, unix_reset_colors.Length)
-            Else
-                Console.ForegroundColor = saved_fore
-                Console.BackgroundColor = saved_back
             End If
         End Sub
 

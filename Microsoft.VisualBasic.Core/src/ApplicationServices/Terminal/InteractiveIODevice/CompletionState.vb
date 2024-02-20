@@ -46,6 +46,24 @@
             End Get
         End Property
 
+        Private Shared Sub SaveExcursion(code As Action)
+            Dim saved_col = Console.CursorLeft
+            Dim saved_row = Console.CursorTop
+            Dim saved_fore = Console.ForegroundColor
+            Dim saved_back = Console.BackgroundColor
+
+            code()
+
+            Console.CursorLeft = saved_col
+            Console.CursorTop = saved_row
+            If LineEditor.unix_reset_colors IsNot Nothing Then
+                LineEditor.unix_raw_output.Write(LineEditor.unix_reset_colors, 0, LineEditor.unix_reset_colors.Length)
+            Else
+                Console.ForegroundColor = saved_fore
+                Console.BackgroundColor = saved_back
+            End If
+        End Sub
+
         Public Sub Show()
             Call SaveExcursion(New Action(AddressOf DrawSelection))
         End Sub
