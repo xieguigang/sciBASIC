@@ -64,7 +64,15 @@ Namespace My.FrameworkInternal
     ''' </summary>
     Public Module DoConfiguration
 
-        Dim unix_debug_flag As Boolean
+        ''' <summary>
+        ''' --unix
+        ''' </summary>
+        Public ReadOnly unix_debug_flag As Boolean
+
+        ''' <summary>
+        ''' --verbose
+        ''' </summary>
+        Public ReadOnly verbose_flag As Boolean
 
         ''' <summary>
         ''' should be vanilla code
@@ -74,9 +82,10 @@ Namespace My.FrameworkInternal
 
             If Not args Is Nothing Then
                 For Each s As String In args.Select(Function(si) si.ToLower)
-                    If s = "--unix" Then
-                        unix_debug_flag = True
-                    End If
+                    Select Case s
+                        Case "--unix" : unix_debug_flag = True
+                        Case "--verbose" : verbose_flag = True
+                    End Select
                 Next
             End If
         End Sub
