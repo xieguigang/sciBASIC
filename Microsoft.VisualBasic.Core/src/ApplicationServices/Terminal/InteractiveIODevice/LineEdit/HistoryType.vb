@@ -15,7 +15,7 @@
 
             If Not app Is Nothing Then
                 Dim dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                histfile = $"{dir}/{app}.history"
+                histfile = $"{dir}/{app}-history.sh"
             End If
 
             history = New String(size - 1) {}
@@ -23,7 +23,7 @@
             tail = 0
             head = 0
 
-            For Each line As String In histfile.IterateAllLines
+            For Each line As String In histfile.IterateAllLines(verbose:=False, unsafe:=False)
                 If Not line.StringEmpty Then
                     Call Append(line)
                 End If

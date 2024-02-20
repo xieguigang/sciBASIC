@@ -206,8 +206,12 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
-    Public Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
-        Return path.IterateAllLines(encoding.CodePage)
+    Public Function IterateAllLines(path$,
+                                    Optional encoding As Encodings = Encodings.Default,
+                                    Optional verbose As Boolean = True,
+                                    Optional unsafe As Boolean = False) As IEnumerable(Of String)
+
+        Return path.IterateAllLines(encoding.CodePage, verbose:=verbose, unsafe:=unsafe)
     End Function
 
     ''' <summary>
@@ -217,18 +221,37 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
-    Public Iterator Function IterateAllLines(path$, encoding As Encoding) As IEnumerable(Of String)
+    Public Iterator Function IterateAllLines(path$, encoding As Encoding,
+                                             Optional verbose As Boolean = True,
+                                             Optional unsafe As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
+            ' get request a html page
             For Each line As String In path.GET.LineTokens
                 Yield line
             Next
         ElseIf Not path.FileExists Then
-            If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) OrElse path.Length > 60 Then
-                path = Mid(path, 1, 63) & "..."
+            Dim display_str As String
+
+            If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) Then
+                If unsafe Then
+                    Throw New InvalidProgramException($"in-valid! ({path})")
+                Else
+                    If verbose Then
+                        Call $"the given path is a text paragraph? ({path})".Warning
+                    End If
+
+                    ' returns an empty string collection
+                    Return
+                End If
+            ElseIf path.Length > 60 Then
+                display_str = Mid(path, 1, 63) & "..."
             End If
 
-            Call $"the given path ({path}) is not exists on your file system!".Warning
+            If verbose Then
+                Call $"the given path ({display_str}) is not exists on your file system!".Warning
+            End If
 
+            ' returns an empty string collection
             Return
         End If
 
