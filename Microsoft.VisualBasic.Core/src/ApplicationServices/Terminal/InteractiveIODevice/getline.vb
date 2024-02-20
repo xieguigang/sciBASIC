@@ -269,8 +269,10 @@ Namespace ApplicationServices.Terminal
         ' The text as it is rendered (replaces (char)1 with ^A on display for example).
         Private rendered_text As StringBuilder
 
-        ' The prompt specified, and the prompt shown to the user.
-        Private promptField As String
+        ''' <summary>
+        ''' The prompt specified, and the prompt shown to the user.
+        ''' </summary>
+        Private prompt As String
         Private shown_prompt As String
 
         ' The current cursor position, indexes into "text", for an index
@@ -351,16 +353,41 @@ Namespace ApplicationServices.Terminal
         ''' <param name="name">Prefix for storing the editing history.</param>
         ''' <param name="histsize">Number of entries to store in the history file.</param>
         Public Sub New(name As String, histsize As Integer)
-
             ' Emacs keys
-            handlers = New Handler() {New Handler(ConsoleKey.Home, AddressOf CmdHome), New Handler(ConsoleKey.End, AddressOf CmdEnd), New Handler(ConsoleKey.LeftArrow, AddressOf CmdLeft), New Handler(ConsoleKey.RightArrow, AddressOf CmdRight), New Handler(ConsoleKey.UpArrow, AddressOf CmdUp, resetCompletion:=False), New Handler(ConsoleKey.DownArrow, AddressOf CmdDown, resetCompletion:=False), New Handler(ConsoleKey.Enter, AddressOf CmdDone, resetCompletion:=False), New Handler(ConsoleKey.Backspace, AddressOf CmdBackspace, resetCompletion:=False), New Handler(ConsoleKey.Delete, AddressOf CmdDeleteChar), New Handler(ConsoleKey.Tab, AddressOf CmdTabOrComplete, resetCompletion:=False), Handler.Control("A"c, New KeyHandler(AddressOf CmdHome)), Handler.Control("E"c, New KeyHandler(AddressOf CmdEnd)), Handler.Control("B"c, New KeyHandler(AddressOf CmdLeft)), Handler.Control("F"c, New KeyHandler(AddressOf CmdRight)), Handler.Control("P"c, New KeyHandler(AddressOf CmdUp), resetCompletion:=False), Handler.Control("N"c, New KeyHandler(AddressOf CmdDown), resetCompletion:=False), Handler.Control("K"c, New KeyHandler(AddressOf CmdKillToEOF)), Handler.Control("Y"c, New KeyHandler(AddressOf CmdYank)), Handler.Control("D"c, New KeyHandler(AddressOf CmdDeleteChar)), Handler.Control("L"c, New KeyHandler(AddressOf CmdRefresh)), Handler.Control("R"c, New KeyHandler(AddressOf CmdReverseSearch)), Handler.Control("G"c, Sub()
+            handlers = New Handler() {
+                New Handler(ConsoleKey.Home, AddressOf CmdHome),
+                New Handler(ConsoleKey.End, AddressOf CmdEnd),
+                New Handler(ConsoleKey.LeftArrow, AddressOf CmdLeft),
+                New Handler(ConsoleKey.RightArrow, AddressOf CmdRight),
+                New Handler(ConsoleKey.UpArrow, AddressOf CmdUp, resetCompletion:=False),
+                New Handler(ConsoleKey.DownArrow, AddressOf CmdDown, resetCompletion:=False),
+                New Handler(ConsoleKey.Enter, AddressOf CmdDone, resetCompletion:=False),
+                New Handler(ConsoleKey.Backspace, AddressOf CmdBackspace, resetCompletion:=False),
+                New Handler(ConsoleKey.Delete, AddressOf CmdDeleteChar),
+                New Handler(ConsoleKey.Tab, AddressOf CmdTabOrComplete, resetCompletion:=False),
+                Handler.Control("A"c, New KeyHandler(AddressOf CmdHome)),
+                Handler.Control("E"c, New KeyHandler(AddressOf CmdEnd)),
+                Handler.Control("B"c, New KeyHandler(AddressOf CmdLeft)),
+                Handler.Control("F"c, New KeyHandler(AddressOf CmdRight)),
+                Handler.Control("P"c, New KeyHandler(AddressOf CmdUp), resetCompletion:=False),
+                Handler.Control("N"c, New KeyHandler(AddressOf CmdDown), resetCompletion:=False),
+                Handler.Control("K"c, New KeyHandler(AddressOf CmdKillToEOF)),
+                Handler.Control("Y"c, New KeyHandler(AddressOf CmdYank)),
+                Handler.Control("D"c, New KeyHandler(AddressOf CmdDeleteChar)),
+                Handler.Control("L"c, New KeyHandler(AddressOf CmdRefresh)),
+                Handler.Control("R"c, New KeyHandler(AddressOf CmdReverseSearch)),
+                Handler.Control("G"c, Sub()
+                                          ' DEBUG
+                                          'Handler.Control ('T', CmdDebug),
 
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' DEBUG
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                'Handler.Control ('T', CmdDebug),
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ' quote
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            End Sub), Handler.Alt("B"c, ConsoleKey.B, New KeyHandler(AddressOf CmdBackwardWord)), Handler.Alt("F"c, ConsoleKey.F, New KeyHandler(AddressOf CmdForwardWord)), Handler.Alt("D"c, ConsoleKey.D, New KeyHandler(AddressOf CmdDeleteWord)), Handler.Alt(Microsoft.VisualBasic.ChrW(8), ConsoleKey.Backspace, New KeyHandler(AddressOf CmdDeleteBackword)), Handler.Control("Q"c, Sub() HandleChar(Console.ReadKey(True).KeyChar))}
+                                          ' quote
+                                      End Sub),
+                Handler.Alt("B"c, ConsoleKey.B, New KeyHandler(AddressOf CmdBackwardWord)),
+                Handler.Alt("F"c, ConsoleKey.F, New KeyHandler(AddressOf CmdForwardWord)),
+                Handler.Alt("D"c, ConsoleKey.D, New KeyHandler(AddressOf CmdDeleteWord)),
+                Handler.Alt(ASCII.BS, ConsoleKey.Backspace, New KeyHandler(AddressOf CmdDeleteBackword)),
+                Handler.Control("Q"c, Sub() HandleChar(Console.ReadKey(True).KeyChar))
+            }
 
             rendered_text = New StringBuilder()
             text = New StringBuilder()
@@ -496,15 +523,6 @@ Namespace ApplicationServices.Terminal
             Return shown_prompt.Length + TextToRenderPos(pos)
         End Function
 
-        Private Property Prompt As String
-            Get
-                Return promptField
-            End Get
-            Set(value As String)
-                promptField = value
-            End Set
-        End Property
-
         Private ReadOnly Property LineCount As Integer
             Get
                 Return (shown_prompt.Length + rendered_text.Length) / Console.WindowWidth
@@ -518,7 +536,10 @@ Namespace ApplicationServices.Terminal
             Dim row As Integer = home_row + actual_pos / Console.WindowWidth
             Dim col = actual_pos Mod Console.WindowWidth
 
-            If row >= Console.BufferHeight Then row = Console.BufferHeight - 1
+            If row >= Console.BufferHeight Then
+                row = Console.BufferHeight - 1
+            End If
+
             Console.SetCursorPosition(col, row)
 
             'log.WriteLine ("Going to cursor={0} row={1} col={2} actual={3} prompt={4} ttr={5} old={6}", newpos, row, col, actual_pos, prompt.Length, TextToRenderPos (cursor), cursor);
@@ -704,7 +725,7 @@ mismatch:
                 If complete Then
                     Me.Complete()
                 Else
-                    Me.HandleChar(Microsoft.VisualBasic.Strings.ChrW(9))
+                    Me.HandleChar(ASCII.HT)
                 End If
             Else
                 HandleChar("t"c)
@@ -1116,13 +1137,13 @@ mismatch:
                     If searching <> 0 Then
                         If last_handler IsNot _cmdReverseSearch Then
                             searching = 0
-                            SetPrompt(promptField)
+                            SetPrompt(prompt)
                         End If
                     End If
                     Continue While
                 End If
 
-                If cki.KeyChar <> Microsoft.VisualBasic.ChrW(0) Then
+                If cki.KeyChar <> ASCII.NUL Then
                     HandleChar(cki.KeyChar)
                 End If
             End While
