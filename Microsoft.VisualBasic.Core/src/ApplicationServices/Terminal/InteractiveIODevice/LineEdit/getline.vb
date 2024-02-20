@@ -41,7 +41,6 @@
 '
 Imports System.IO
 Imports System.Reflection
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -333,6 +332,7 @@ Namespace ApplicationServices.Terminal.LineEdit
         '''    text
         ''' </remarks>
         Public AutoCompleteEvent As AutoCompleteHandler
+        Public MaxWidth As Integer = 50
 
         Private Shared handlers As Handler()
 
@@ -591,9 +591,9 @@ Namespace ApplicationServices.Terminal.LineEdit
                 Render()
             End If
 
-            Const MaxWidth = 50
             Dim window_width = 12
             Dim plen = prefix.Length
+
             For Each s As String In completions
                 window_width = std.Max(plen + s.Length, window_width)
             Next
