@@ -241,16 +241,6 @@ Namespace ApplicationServices.Terminal
     Public Class LineEditor
 
         ''' <summary>
-        ''' Method signature for auto completion handlers.
-        ''' </summary>
-        ''' <remarks>
-        ''' The completion handler receives the text as it is being edited as
-        ''' well as the position of the cursor in that line.   The method
-        ''' must return an instance of Completion with the possible completions.
-        ''' </remarks>
-        Public Delegate Function AutoCompleteHandler(text As String, pos As Integer) As Completion
-
-        ''' <summary>
         ''' The heuristics mode used by code completion.
         ''' </summary>
         ''' <remarks>
@@ -324,8 +314,6 @@ Namespace ApplicationServices.Terminal
 
         ' This contains a raw stream pointing to stdout, used to bypass the TermInfoDriver
         Private Shared unix_raw_output As Stream
-
-        Friend Delegate Sub KeyHandler()
 
         ''' <summary>
         '''   Invoked when the user requests auto-completion using the tab character

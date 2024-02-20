@@ -68,6 +68,18 @@ Namespace ApplicationServices.Terminal
     Public Module TerminalEvents
 
         Public Delegate Sub ResizeEventHandle(size As Size, oldSize As Size)
+        Public Delegate Sub KeyHandler()
+
+        ''' <summary>
+        ''' Method signature for auto completion handlers.
+        ''' </summary>
+        ''' <remarks>
+        ''' The completion handler receives the text as it is being edited as
+        ''' well as the position of the cursor in that line.   The method
+        ''' must return an instance of Completion with the possible completions.
+        ''' </remarks>
+        Public Delegate Function AutoCompleteHandler(text As String, pos As Integer) As Completion
+
 
         Dim resizeHandles As New List(Of ResizeEventHandle)
         Dim oldSize As Size
