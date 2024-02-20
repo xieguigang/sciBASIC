@@ -257,7 +257,7 @@ Namespace ApplicationServices.Terminal
         '''      "." is entered.
         '''    </para>
         ''' </remarks>
-        Public HeuristicsMode As String
+        Public Property HeuristicsMode As Boolean
 
         'static StreamWriter log;
 
@@ -1031,7 +1031,7 @@ mismatch:
         ' Implements heuristics to show the completion window based on the mode
         '
         Private Function HeuristicAutoComplete(wasCompleting As Boolean, insertedChar As Char) As Boolean
-            If Equals(HeuristicsMode, "csharp") Then
+            If HeuristicsMode Then
                 ' csharp heuristics
                 If wasCompleting Then
                     If insertedChar = " "c Then
@@ -1054,6 +1054,7 @@ mismatch:
                     Return True
                 End If
             End If
+
             Return False
         End Function
 

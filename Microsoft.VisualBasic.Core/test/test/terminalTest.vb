@@ -51,11 +51,10 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
 
-    ReadOnly autoCompleteCandidates As String() = {"file.copy", "file.delete", "file.cache", "file.rename"}
+    ReadOnly autoCompleteCandidates As String() = {"file.copy", "file.delete", "file.cache", "file.rename", "append", "ls", "cat", "make.dir", "copy"}
 
     Sub Main1()
         'Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
@@ -67,7 +66,7 @@ Module terminalTest
     End Sub
 
     Sub main2()
-        Dim shell As New LineEditor("foo") With {.HeuristicsMode = "vb"}
+        Dim shell As New LineEditor("foo") With {.HeuristicsMode = True, .TabAtStartCompletes = True}
         Dim s As Value(Of String) = ""
 
         shell.AutoCompleteEvent =
