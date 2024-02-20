@@ -49,8 +49,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module terminalTest
@@ -58,35 +58,30 @@ Module terminalTest
     ReadOnly autoCompleteCandidates As String() = {"file.copy", "file.delete", "file.cache", "file.rename", "append", "ls", "cat", "make.dir", "copy"}
 
     Sub Main1()
-        'Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine)
+        Dim shell As New Shell(PS1.Fedora12, AddressOf Console.WriteLine, dev:=mainEditor)
 
-        'shell.autoCompleteCandidates.Add("file.copy", "file.delete", "file.cache", "file.rename")
-        'shell.Run()
+        shell.Run()
 
-        Call main2()
+        ' Call main2()
     End Sub
 
-    Sub main2()
-        Dim shell As New LineEditor("foo") With {.HeuristicsMode = True, .TabAtStartCompletes = True}
-        Dim s As Value(Of String) = ""
-        Dim ps1 As PS1 = PS1.Fedora12
+    Private Function autoComplete(a As String, pos As Integer) As Completion
+        Dim prefix = a.Substring(0, pos)
+        Dim ls As String()
 
-        shell.AutoCompleteEvent =
-            Function(a, pos)
-                Dim prefix = a.Substring(0, pos)
-                Dim ls As String()
+        If prefix.StringEmpty Then
+            ls = autoCompleteCandidates
+        Else
+            ls = autoCompleteCandidates.Where(Function(c) c.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)).Select(Function(c) c.Substring(pos)).ToArray
+        End If
 
-                If prefix.StringEmpty Then
-                    ls = autoCompleteCandidates
-                Else
-                    ls = autoCompleteCandidates.Where(Function(c) c.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)).Select(Function(c) c.Substring(pos)).ToArray
-                End If
+        Return New Completion(prefix, ls)
+    End Function
 
-                Return New Completion(prefix, ls)
-            End Function
+    Function mainEditor() As LineReader
+        Dim shell As New LineEditor("foo") With {.HeuristicsMode = True, .TabAtStartCompletes = True, .AutoCompleteEvent = AddressOf autoComplete}
+        Dim edit As New LineReader(shell)
 
-        Do While s = shell.Edit(ps1) IsNot Nothing
-            Console.WriteLine(s.Value)
-        Loop
-    End Sub
+        Return edit
+    End Function
 End Module

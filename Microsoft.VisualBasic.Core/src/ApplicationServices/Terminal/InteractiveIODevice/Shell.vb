@@ -109,10 +109,6 @@ Namespace ApplicationServices.Terminal
             Me.dev = If(dev, New Terminal)
         End Sub
 
-        Public Function SetAutoComplete(handle As AutoCompleteHandler)
-
-        End Function
-
         ''' <summary>
         ''' 执行一个配置好的命令行模型, 代码会被一直阻塞在这里
         ''' </summary>

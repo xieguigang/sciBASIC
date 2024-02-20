@@ -54,7 +54,7 @@ Imports System
 Module Program
     Sub Main(args As String())
 
-        Call terminalTest.main2()
+        Call terminalTest.Main1()
 
         Console.WriteLine("Hello World!")
 
