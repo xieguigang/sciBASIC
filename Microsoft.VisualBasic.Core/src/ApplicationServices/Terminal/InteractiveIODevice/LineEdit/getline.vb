@@ -332,6 +332,10 @@ Namespace ApplicationServices.Terminal.LineEdit
         '''    text
         ''' </remarks>
         Public AutoCompleteEvent As AutoCompleteHandler
+
+        ''' <summary>
+        ''' max width of the auto-complete form window width in chars
+        ''' </summary>
         Public MaxWidth As Integer = 50
 
         Private Shared handlers As Handler()
