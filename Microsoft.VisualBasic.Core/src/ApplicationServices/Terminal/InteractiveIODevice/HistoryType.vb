@@ -13,17 +13,9 @@
         Public Sub New(app As String, size As Integer)
             If size < 1 Then Throw New ArgumentException("size")
 
-            If Not Equals(app, Nothing) Then
+            If Not app Is Nothing Then
                 Dim dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
-                'Console.WriteLine (dir);
-                If Not Directory.Exists(dir) Then
-                    Try
-                        Directory.CreateDirectory(dir)
-                    Catch
-                        app = Nothing
-                    End Try
-                End If
-                If Not Equals(app, Nothing) Then histfile = Path.Combine(dir, app) & ".history"
+                histfile = $"{dir}/{app}.history"
             End If
 
             history = New String(size - 1) {}
@@ -31,22 +23,18 @@
             tail = 0
             head = 0
 
-            If File.Exists(histfile) Then
-                Using sr = File.OpenText(histfile)
-                    Dim line As Value(Of String) = ""
-
-                    While Not (line = sr.ReadLine) Is Nothing
-                        If Not Equals(line, "") Then Append(line)
-                    End While
-                End Using
-            End If
+            For Each line As String In histfile.IterateAllLines
+                If Not line.StringEmpty Then
+                    Call Append(line)
+                End If
+            Next
         End Sub
 
         Public Sub Close()
-            If Equals(histfile, Nothing) Then Return
+            If histfile Is Nothing Then Return
 
             Try
-                Using sw = File.CreateText(histfile)
+                Using sw = histfile.OpenWriter
                     Dim start = If(count = history.Length, head, tail)
                     For i = start To start + count - 1
                         Dim p = i Mod history.Length
