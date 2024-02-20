@@ -64,6 +64,8 @@ Namespace My.FrameworkInternal
     ''' </summary>
     Public Module DoConfiguration
 
+        Friend ReadOnly Property InternalPlatformID As PlatformID
+
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
@@ -76,6 +78,11 @@ Namespace My.FrameworkInternal
 
             If Not max_stack_size.StringEmpty Then
                 Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
+            End If
+            If args.GetBoolean("--unix") Then
+                _InternalPlatformID = PlatformID.Unix
+            Else
+                _InternalPlatformID = Environment.OSVersion.Platform
             End If
 
             ' load config from config file.
