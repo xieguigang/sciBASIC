@@ -63,7 +63,6 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -78,6 +77,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
@@ -278,6 +278,31 @@ Public Module Extensions
         Loop
 
         Return DataFrame.CreateObject(csv)
+    End Function
+
+    <Extension>
+    Public Function DataFrame(table As DataTable) As DataFrame
+        Dim headers As New List(Of String)
+        Dim rows As New List(Of RowObject)
+        Dim rowObj As DataRow
+        Dim rowData As New List(Of String)
+
+        For i As Integer = 0 To table.Columns.Count - 1
+            headers.Add(table.Columns(i).ColumnName)
+        Next
+
+        For i As Integer = 0 To table.Rows.Count - 1
+            rowObj = table.Rows.Item(i)
+            rowData = New List(Of String)
+
+            For Each c As Object In rowObj.ItemArray
+                rowData.Add(any.ToString(c))
+            Next
+
+            rows.Add(New RowObject(rowData))
+        Next
+
+        Return DataFrame.CreateObject(headers, rows)
     End Function
 
     ''' <summary>

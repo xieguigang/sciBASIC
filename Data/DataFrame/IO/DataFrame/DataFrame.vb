@@ -369,6 +369,11 @@ Namespace IO
             Return File.Parse(content).AsDataSource(Of T)
         End Function
 
+        ''' <summary>
+        ''' use the first row as the column names
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <returns></returns>
         Private Shared Function getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
             Return LinqAPI.MakeList(Of String) _
                                                _
@@ -426,7 +431,26 @@ Namespace IO
             Return createObjectInternal(file)
         End Function
 
-        Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="headers"></param>
+        ''' <param name="rows">the table data that exlcudes the first header row.</param>
+        ''' <returns></returns>
+        Public Overloads Shared Function CreateObject(headers As IEnumerable(Of String), rows As IEnumerable(Of RowObject)) As DataFrame
+            Dim df As New DataFrame With {
+                ._innerTable = rows.AsList,
+                .columnList = New HeaderSchema(headers)
+            }
+            Return df
+        End Function
+
+        ''' <summary>
+        ''' just needs to assign the table value and the column names
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <param name="dataframe"></param>
+        Private Shared Sub Initialize(table As List(Of RowObject), ByRef dataframe As DataFrame)
             dataframe._innerTable = table.Skip(1).AsList
             dataframe.columnList = New HeaderSchema(getColumnList(table))
         End Sub

@@ -239,8 +239,20 @@ Public Module CollectionValueGetter
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="synonyms"></param>
+    ''' <param name="default"></param>
+    ''' <returns>the default value will be returns if all synonym key is missing
+    ''' from the given table object.</returns>
     <Extension>
-    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), synonyms As IEnumerable(Of TKey), Optional [default] As TValue = Nothing) As TValue
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+                                               synonyms As IEnumerable(Of TKey),
+                                               Optional [default] As TValue = Nothing) As TValue
         If table Is Nothing Then
             Return [default]
         End If

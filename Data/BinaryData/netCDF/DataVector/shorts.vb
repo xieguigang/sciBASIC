@@ -87,5 +87,10 @@ Namespace DataVector
         Public Overloads Shared Widening Operator CType(data As Short()) As shorts
             Return New shorts With {.buffer = data}
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(shorts As shorts) As Single()
+            Return If(shorts Is Nothing, Nothing, shorts.ToFloat)
+        End Operator
     End Class
 End Namespace

@@ -7,6 +7,10 @@ Namespace DATA
     ''' </summary>
     Public Interface MatrixProvider
 
+        ''' <summary>
+        ''' populate the matrix data in row by row
+        ''' </summary>
+        ''' <returns></returns>
         Function GetMatrix() As IEnumerable(Of DataSet)
 
     End Interface
