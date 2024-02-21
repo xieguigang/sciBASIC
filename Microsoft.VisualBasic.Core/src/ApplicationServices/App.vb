@@ -1,73 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::7dc8fd6230e54e12a2c52dab2c7f910c, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1512
-    '    Code Lines: 732
-    ' Comment Lines: 608
-    '   Blank Lines: 172
-    '     File Size: 65.61 KB
+' Summaries:
 
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
-    '                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
-    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-    '                 LocalDataTemp, LogErrDIR, MemoryLoad, n_threads, NanoTime
-    '                 NextTempName, OutFile, PID, Platform, PreviousDirectory
-    '                 Process, ProductName, ProductProgramData, ProductSharedDIR, ProductSharedTemp
-    '                 Running, RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory
-    '                 StdErr, StdInput, StdOut, SysTemp, UnixTimeStamp
-    '                 UserHOME, Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
-    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
-    '               (+12 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
-    '               TemporaryEnvironment, TraceBugs
-    ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, FlushMemory
-    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-    '          SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1512
+'    Code Lines: 732
+' Comment Lines: 608
+'   Blank Lines: 172
+'     File Size: 65.61 KB
+
+
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, DoNothing
+'                 ExceptionLogFile, ExecutablePath, GetLastError, Github, HOME
+'                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+'                 LocalDataTemp, LogErrDIR, MemoryLoad, n_threads, NanoTime
+'                 NextTempName, OutFile, PID, Platform, PreviousDirectory
+'                 Process, ProductName, ProductProgramData, ProductSharedDIR, ProductSharedTemp
+'                 Running, RunningInGitBash, RunTimeDirectory, StartTime, StartupDirectory
+'                 StdErr, StdInput, StdOut, SysTemp, UnixTimeStamp
+'                 UserHOME, Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __listFiles, (+2 Overloads) Argument, checkIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+'               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+'               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+'               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
+'               (+12 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
+'               TemporaryEnvironment, TraceBugs
+' 
+'     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, FlushMemory
+'          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
+'          SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -533,7 +533,7 @@ Public Module App
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetAppLocalData(app$, assemblyName$, <CallerMemberName> Optional track$ = Nothing) As String
-#If netcore5 = 0 Then
+#If NET48 Then
         ' XDG_DATA_HOME make be empty on unix
         Dim localAppData As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
 #Else
@@ -707,9 +707,9 @@ Public Module App
     Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
 
     ''' <summary>
-    ''' Rabbish collection to free the junk memory.(垃圾回收)
+    ''' Rabbish collection to free the junk memory.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>(垃圾回收)</remarks>
     '''
     <ExportAPI("FlushMemory")>
     Public Sub FlushMemory()
@@ -722,11 +722,11 @@ Public Module App
     End Sub
 
     ''' <summary>
-    ''' Free this variable pointer in the memory.(销毁本对象类型在内存之中的指针)
+    ''' Free this variable pointer in the memory.
     ''' </summary>
     ''' <typeparam name="T">假若该对象类型实现了<see cref="System.IDisposable"></see>接口，则函数还会在销毁前调用该接口的销毁函数</typeparam>
     ''' <param name="obj"></param>
-    ''' <remarks></remarks>
+    ''' <remarks>(销毁本对象类型在内存之中的指针)</remarks>
     <Extension>
     Public Sub Free(Of T As Class)(ByRef obj As T)
         If Not obj Is Nothing Then
@@ -941,37 +941,30 @@ Public Module App
     End Function
 
     ''' <summary>
-    ''' Is this application running on a Microsoft OS platform.(是否是运行于微软的操作系统平台？)
+    ''' Is this application running on a Microsoft OS platform.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.checkIsMicrosoftPlatform
+    ''' <remarks>
+    ''' (是否是运行于微软的操作系统平台？)
+    ''' </remarks>
+    Public ReadOnly Property IsMicrosoftPlatform As Boolean = App.CheckIsMicrosoftPlatform
 
     ''' <summary>
     ''' 这个主要是判断一个和具体的操作系统平台相关的Win32 API是否能够正常的工作？
     ''' </summary>
     ''' <returns></returns>
-    Private Function checkIsMicrosoftPlatform() As Boolean
-#If NET5_0_OR_GREATER Then
-        Return False
-#End If
-#If NET48 Then
-        Return True
-#Else
-#If UNIX Then
-#If DEBUG Then
+    Private Function CheckIsMicrosoftPlatform() As Boolean
+        Select Case App.Platform
+            Case PlatformID.Win32NT,
+                 PlatformID.Win32S,
+                 PlatformID.Win32Windows,
+                 PlatformID.WinCE,
+                 PlatformID.Xbox
+
                 Return True
-#Else
-        Return False
-#End If
-#Else
-        #If NET_48 Or netcore5 = 1 Then
-                Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-        #Else
-                Return True
-        #End If
-#End If
-#End If
-        ' Return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            Case Else
+                Return False
+        End Select
     End Function
 
     ''' <summary>
@@ -1378,8 +1371,13 @@ Public Module App
     ''' Gets a <see cref="System.PlatformID"/> enumeration value that identifies the operating system
     ''' platform.
     ''' </summary>
-    ''' <remarks>One of the System.PlatformID values.</remarks>
-    Public ReadOnly Property Platform As PlatformID = Environment.OSVersion.Platform
+    ''' <remarks>One of the <see cref="PlatformID"/> values. this property value may affected 
+    ''' by the ``--unix`` commandline debug options when do application startup.</remarks>
+    Public ReadOnly Property Platform As PlatformID
+        Get
+            Return My.FrameworkInternal.InternalPlatformID
+        End Get
+    End Property
 
     ''' <summary>
     ''' Self call this program itself for batch parallel task calculation.
@@ -1524,7 +1522,7 @@ Public Module App
             ' 在这里调试模式下结束之前自动暂停是为了
             ' 方便查看程序的命令行终端上面的输出信息
             '
-#If netcore5 = 0 Then
+#If NET48 Then
             Call Pause()
 #End If
         End If

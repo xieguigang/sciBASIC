@@ -41,7 +41,6 @@
 '
 Imports System.IO
 Imports System.Reflection
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -281,7 +280,9 @@ Namespace ApplicationServices.Terminal.LineEdit
         ' The row where we started displaying data.
         Private home_row As Integer
 
-        ' The maximum length that has been displayed on the screen
+        ''' <summary>
+        ''' The maximum length that has been displayed on the screen
+        ''' </summary>
         Private max_rendered As Integer
 
         ' If we are done editing, this breaks the interactive loop
@@ -331,6 +332,11 @@ Namespace ApplicationServices.Terminal.LineEdit
         '''    text
         ''' </remarks>
         Public AutoCompleteEvent As AutoCompleteHandler
+
+        ''' <summary>
+        ''' max width of the auto-complete form window width in chars
+        ''' </summary>
+        Public MaxWidth As Integer = 50
 
         Private Shared handlers As Handler()
 
@@ -390,11 +396,10 @@ Namespace ApplicationServices.Terminal.LineEdit
 
             rendered_text = New StringBuilder()
             text = New StringBuilder()
-
             history = New HistoryType(name, histsize)
+            isWindows = App.IsMicrosoftPlatform
 
-            isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
-            GetUnixConsoleReset()
+            Call GetUnixConsoleReset()
             'if (File.Exists ("log"))File.Delete ("log");
             'log = File.CreateText ("log"); 
         End Sub
@@ -458,9 +463,11 @@ Namespace ApplicationServices.Terminal.LineEdit
             Dim lines As Integer = 1 + screenpos / Console.WindowWidth
 
             home_row = Console.CursorTop - (lines - 1)
-            If home_row < 0 Then home_row = 0
-        End Sub
 
+            If home_row < 0 Then
+                home_row = 0
+            End If
+        End Sub
 
         Private Sub RenderFrom(pos As Integer)
             Dim rpos = TextToRenderPos(pos)
@@ -588,9 +595,9 @@ Namespace ApplicationServices.Terminal.LineEdit
                 Render()
             End If
 
-            Const MaxWidth = 50
             Dim window_width = 12
             Dim plen = prefix.Length
+
             For Each s As String In completions
                 window_width = std.Max(plen + s.Length, window_width)
             Next
