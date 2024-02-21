@@ -138,6 +138,8 @@ Namespace SVG
         Protected Overrides Sub ClearCanvas(color As Color)
             __svgData.bg$ = color.ToHtmlColor
             __svgData.Clear()
+
+            Call FillRectangle(New SolidBrush(color), New Rectangle(New Point, Size))
         End Sub
 
 #Region "NotSupportedException"
