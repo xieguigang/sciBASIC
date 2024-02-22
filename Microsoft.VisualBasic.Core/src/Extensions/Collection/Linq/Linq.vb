@@ -498,6 +498,9 @@ Namespace Linq
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function ensures that the array is not nothing
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToVector(source As IEnumerable) As Object()
@@ -514,6 +517,9 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function ensures that the returns array is not nothing
+        ''' </remarks>
         <Extension>
         Public Function ToArray(Of T)(source As IEnumerable) As T()
             Return ToVector(source) _
