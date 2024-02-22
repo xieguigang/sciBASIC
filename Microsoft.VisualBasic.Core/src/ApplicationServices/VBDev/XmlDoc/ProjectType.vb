@@ -211,6 +211,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Public Function GetField(fieldName As String) As ProjectMember
+            If Me.fields Is Nothing Then
+                Me.fields = New Dictionary(Of String, ProjectMember)
+            End If
+
             If Me.fields.ContainsKey(fieldName.ToLower()) Then
                 Return Me.fields(fieldName.ToLower())
             End If

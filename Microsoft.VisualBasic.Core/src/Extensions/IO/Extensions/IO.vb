@@ -196,6 +196,8 @@ Public Module IOExtensions
         End If
     End Function
 
+    Public Const size_2GB As Long = 1024& * 1024& * 1024& * 2&
+
     ''' <summary>
     ''' Safe open a local file handle. Warning: this function is set to write mode by default, 
     ''' if want using for read file, set <paramref name="doClear"/> to false!
@@ -252,7 +254,7 @@ Public Module IOExtensions
             App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
 
             ' should reads all data into memory!
-            If path.FileLength < 1024& * 1024& * 1024& * 2& Then
+            If path.FileLength < size_2GB Then
                 If verbose Then
                     Call VBDebugger.EchoLine($"read all binary data into memory for max performance! (size={StringFormats.Lanudry(path.FileLength)}) {path}")
                 End If
@@ -321,8 +323,14 @@ Public Module IOExtensions
             '
             ' Return IO.File.ReadAllBytes(path)
             Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, App.BufferSize)
-                Dim buffer_size As Integer = file.Length
-                Dim buffer As Byte() = New Byte(buffer_size - 1) {}
+                Dim buffer_size As Long = file.Length
+                Dim buffer As Byte()
+
+                If buffer_size >= size_2GB Then
+                    Throw New InvalidProgramException($"can not read all binary into memory: the file size({StringFormats.Lanudry(buffer_size)}) of target file '{path}' is greater than 2GB!")
+                Else
+                    buffer = New Byte(buffer_size - 1) {}
+                End If
 
                 Call file.Read(buffer, Scan0, buffer_size)
 
