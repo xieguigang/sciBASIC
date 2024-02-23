@@ -166,10 +166,10 @@ Namespace FileSystem
                 Call buffer.CopyTo(ms)
                 Call buffer.Dispose()
 
-                buffer = ms
+                Me.buffer = ms
             End If
 
-            If buffer.Length > 128 Then
+            If Me.buffer.Length > 128 Then
                 superBlock = ParseTree()
             Else
                 Call Clear(meta_size)
