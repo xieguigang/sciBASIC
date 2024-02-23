@@ -346,7 +346,7 @@ Namespace FileSystem
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetObject(fileName As String) As StreamObject
-            Return superBlock.GetObject(New FilePath(fileName))
+            Return superBlock.GetObject(New FilePath(fileName), throw_err:=False)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

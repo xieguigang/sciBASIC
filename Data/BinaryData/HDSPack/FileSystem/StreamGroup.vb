@@ -166,8 +166,8 @@ Namespace FileSystem
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetObject(filepath As FilePath) As StreamObject
-            Return VisitBlock(filepath, checkExists:=False)
+        Public Function GetObject(filepath As FilePath, Optional throw_err As Boolean = True) As StreamObject
+            Return VisitBlock(filepath, checkExists:=Not throw_err)
         End Function
 
         ''' <summary>
