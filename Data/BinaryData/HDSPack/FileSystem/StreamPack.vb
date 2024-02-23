@@ -165,6 +165,7 @@ Namespace FileSystem
 
                 Call buffer.CopyTo(ms)
                 Call buffer.Dispose()
+                Call ms.Seek(Scan0, SeekOrigin.Begin)
 
                 Me.buffer = ms
             End If
