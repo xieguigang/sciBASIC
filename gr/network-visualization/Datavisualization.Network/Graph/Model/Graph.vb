@@ -704,7 +704,7 @@ Namespace Graph
         ''' cleanup.
         ''' </summary>
         Public Sub RemovesIsolatedNodes()
-            For Each v As Node In vertex
+            For Each v As Node In vertex.ToArray
                 If v.degree.In = 0 AndAlso v.degree.Out = 0 Then
                     Call RemoveNode(v)
                 End If
