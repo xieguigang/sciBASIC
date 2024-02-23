@@ -158,6 +158,17 @@ Namespace FileSystem
             Me.buffer = buffer
             Me.init_size = init_size
 
+            If Not buffer.CanSeek AndAlso [readonly] Then
+                ' zip stream, probably...
+                ' convert to memory stream
+                Dim ms As New MemoryStream
+
+                Call buffer.CopyTo(ms)
+                Call buffer.Dispose()
+
+                buffer = ms
+            End If
+
             If buffer.Length > 128 Then
                 superBlock = ParseTree()
             Else
