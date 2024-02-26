@@ -151,5 +151,13 @@ Namespace Javascript
         Public Overrides Function ToString() As String
             Return GetStripString(decodeMetachar:=True)
         End Function
+
+        Public Overloads Shared Narrowing Operator CType(value As JsonValue) As String
+            If value Is Nothing Then
+                Return Nothing
+            Else
+                Return value.GetStripString(decodeMetachar:=True)
+            End If
+        End Operator
     End Class
 End Namespace
