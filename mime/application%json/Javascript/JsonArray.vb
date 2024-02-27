@@ -57,8 +57,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports i32 = Microsoft.VisualBasic.Language.i32
 
 Namespace Javascript
 
