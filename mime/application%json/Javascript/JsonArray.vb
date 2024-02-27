@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Javascript
@@ -168,5 +169,26 @@ Namespace Javascript
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Overloads Shared Narrowing Operator CType(array As JsonArray) As String()
+            If array Is Nothing Then
+                Return {}
+            End If
+
+            Dim list As String() = New String(array.Length - 1) {}
+            Dim i As i32 = 0
+
+            For Each el As JsonElement In array.list
+                If TypeOf el Is JsonValue Then
+                    list(++i) = DirectCast(el, JsonValue)
+                ElseIf el Is Nothing Then
+                    list(++i) = Nothing
+                Else
+                    list(++i) = el.ToString
+                End If
+            Next
+
+            Return list
+        End Operator
     End Class
 End Namespace
