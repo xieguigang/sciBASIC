@@ -67,6 +67,11 @@ Namespace JSONLogic
                 Case "is" : Return is2(checkBinary(val))
                 Case "or else", "orelse", "||" : Return orelse2(checkBinary(val))
                 Case "and also", "andalso", "&&" : Return andalso2(checkBinary(val))
+                Case "+", "add"
+                Case "-", "sub"
+                Case "*"
+                Case "/"
+                Case "%", "mod"
             End Select
 
             Throw New NotImplementedException(key)
