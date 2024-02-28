@@ -55,9 +55,22 @@ Namespace JSONLogic
             Select Case key.ToLower
                 Case "var", "let", "dim" : Return symbolReference(val)
                 Case "if" : Return tripleIif(val)
+                Case "<" : Return lessThan(val)
             End Select
 
             Throw New NotImplementedException
+        End Function
+
+        Private Function lessThan(val As JsonElement) As Expression
+            If Not TypeOf val Is JsonArray Then
+                Throw New InvalidCastException
+            End If
+
+            Dim list As JsonArray = val
+            Dim left As Expression = ParserInternal(list(0))
+            Dim right As Expression = ParserInternal(list(1))
+
+            Return Expression.LessThan(left, right)
         End Function
 
         ''' <summary>
@@ -69,11 +82,36 @@ Namespace JSONLogic
                 Throw New InvalidCastException
             Else
                 Dim triple As JsonArray = val
-                Dim test As Expression = ParserInternal(triple(0))
-                Dim true1 As Expression = ParserInternal(triple(1))
-                Dim false1 As Expression = ParserInternal(triple(2))
 
-                Return Expression.Condition(test, true1, false1)
+                If triple.Length = 3 Then
+                    ' if(test,a,b)
+                    Dim test As Expression = ParserInternal(triple(0))
+                    Dim true1 As Expression = ParserInternal(triple(1))
+                    Dim false1 As Expression = ParserInternal(triple(2))
+
+                    Return Expression.Condition(test, true1, false1)
+                ElseIf triple.Length = 2 Then
+                    ' if(a,b)
+                    ' -> if(a isnot nothing, a, b)
+                    Dim true1 As Expression = ParserInternal(triple(0))
+                    Dim false1 As Expression = ParserInternal(triple(1))
+
+                    Return Expression.Condition(Expression.ReferenceEqual(true1, Expression.Constant(Nothing)), false1, true1)
+                ElseIf triple.Length > 3 Then
+                    ' [a,b,c,d,e]
+                    ' if (a,b, if (c,d,e))
+                    Dim exps As Expression() = triple.Select(Function(a) ParserInternal(a)).ToArray
+                    Dim pairs = exps.Split(2)
+                    Dim false2 As Expression = pairs.Last()(0)
+
+                    For Each part As Expression() In pairs.Reverse
+                        false2 = Expression.Condition(part(0), part(1), false2)
+                    Next
+
+                    Return false2
+                Else
+                    Throw New InvalidCastException
+                End If
             End If
         End Function
 
