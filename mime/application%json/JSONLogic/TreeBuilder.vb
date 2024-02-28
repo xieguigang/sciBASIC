@@ -55,22 +55,50 @@ Namespace JSONLogic
             Select Case key.ToLower
                 Case "var", "let", "dim" : Return symbolReference(val)
                 Case "if" : Return tripleIif(val)
-                Case "<" : Return lessThan(val)
+                Case "<" : Return lessThan(checkBinary(val))
+                Case ">" : Return greaterThan(checkBinary(val))
+                Case "==" : Return equalsTo(checkBinary(val))
+                Case "!=", "<>" : Return Expression.Not(equalsTo(checkBinary(val)))
+                Case "<=" : Return lessThanOrEquals(checkBinary(val))
+                Case ">=" : Return greaterThanOrEquals(checkBinary(val))
+                Case "!" : Return Expression.Not(ParserInternal(val))
             End Select
 
-            Throw New NotImplementedException
+            Throw New NotImplementedException(key)
         End Function
 
-        Private Function lessThan(val As JsonElement) As Expression
+        Private Function checkBinary(val As JsonElement) As (Expression, Expression)
             If Not TypeOf val Is JsonArray Then
                 Throw New InvalidCastException
+            Else
+                Dim binary As JsonArray = val
+
+                If binary.Length <> 2 Then
+                    Throw New InvalidCastException
+                Else
+                    Return (ParserInternal(binary(0)), ParserInternal(binary(1)))
+                End If
             End If
+        End Function
 
-            Dim list As JsonArray = val
-            Dim left As Expression = ParserInternal(list(0))
-            Dim right As Expression = ParserInternal(list(1))
+        Private Function greaterThanOrEquals(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.GreaterThanOrEqual(binary.left, binary.right)
+        End Function
 
-            Return Expression.LessThan(left, right)
+        Private Function lessThanOrEquals(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.LessThanOrEqual(binary.left, binary.right)
+        End Function
+
+        Private Function equalsTo(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.Equal(binary.left, binary.right)
+        End Function
+
+        Private Function greaterThan(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.GreaterThan(binary.left, binary.right)
+        End Function
+
+        Private Function lessThan(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.LessThan(binary.left, binary.right)
         End Function
 
         ''' <summary>
