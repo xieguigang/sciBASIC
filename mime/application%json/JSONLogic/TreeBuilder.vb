@@ -108,6 +108,8 @@ Namespace JSONLogic
         Private Function ParseLiteral(val As JsonValue) As Expression
             If val.value Is Nothing Then
                 Return Expression.Constant(Nothing)
+            ElseIf val.UnderlyingType Is GetType(String) Then
+                Return Expression.Constant(CStr(val))
             Else
                 Return Expression.Constant(val.value)
             End If
