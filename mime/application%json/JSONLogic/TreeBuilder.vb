@@ -51,26 +51,47 @@ Namespace JSONLogic
 
         Private Function workSingle(key As String, val As JsonElement) As Expression
             Select Case key.ToLower
-                Case "var", "let", "dim"
-                    Dim names As String()
-
-                    ' symbol reference
-                    If TypeOf val Is JsonValue Then
-                        names = {CStr(DirectCast(val, JsonValue))}
-                    ElseIf TypeOf val Is JsonArray Then
-                        names = DirectCast(val, JsonArray).Select(Function(r) CStr(DirectCast(r, JsonValue))).ToArray
-                    Else
-                        Throw New InvalidCastException("the json object can not be used for variable name!")
-                    End If
-
-                    If names.Length = 1 Then
-                        Return symbols(names(0))
-                    Else
-                        Return Expression.RuntimeVariables(names.Select(Function(r) symbols(r)))
-                    End If
+                Case "var", "let", "dim" : Return symbolReference(val)
+                Case "if" : Return tripleIif(val)
             End Select
 
             Throw New NotImplementedException
+        End Function
+
+        ''' <summary>
+        ''' If(test, true, false)
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function tripleIif(val As JsonElement) As Expression
+            If Not TypeOf val Is JsonArray Then
+                Throw New InvalidCastException
+            Else
+                Dim triple As JsonArray = val
+                Dim test As Expression = ParserInternal(triple(0))
+                Dim true1 As Expression = ParserInternal(triple(1))
+                Dim false1 As Expression = ParserInternal(triple(2))
+
+                Return Expression.IfThenElse(test, true1, false1)
+            End If
+        End Function
+
+        Private Function symbolReference(val As JsonElement) As Expression
+            Dim names As String()
+
+            ' symbol reference
+            If TypeOf val Is JsonValue Then
+                names = {CStr(DirectCast(val, JsonValue))}
+            ElseIf TypeOf val Is JsonArray Then
+                names = DirectCast(val, JsonArray).Select(Function(r) CStr(DirectCast(r, JsonValue))).ToArray
+            Else
+                Throw New InvalidCastException("the json object can not be used for variable name!")
+            End If
+
+            If names.Length = 1 Then
+                Return symbols(names(0))
+            Else
+                Return Expression.RuntimeVariables(names.Select(Function(r) symbols(r)))
+            End If
         End Function
 
         Private Function ParseExpression(exp As JsonObject) As Expression
