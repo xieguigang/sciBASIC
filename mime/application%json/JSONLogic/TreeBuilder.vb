@@ -1,4 +1,5 @@
 ﻿Imports System.Linq.Expressions
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
@@ -8,7 +9,13 @@ Namespace JSONLogic
 
         ReadOnly symbols As Dictionary(Of String, ParameterExpression)
 
-        Private Sub New(symbols As IEnumerable(Of (name As String, type As Type)))
+        Public ReadOnly Property Parameters As IEnumerable(Of ParameterExpression)
+            Get
+                Return symbols.Values
+            End Get
+        End Property
+
+        Sub New(symbols As IEnumerable(Of (name As String, type As Type)))
             Me.symbols = symbols _
                 .ToDictionary(Function(i) i.name,
                               Function(n)
@@ -23,6 +30,11 @@ Namespace JSONLogic
         ''' <returns></returns>
         Public Shared Function Parse(logic As JsonElement, ParamArray symbols As (name As String, type As Type)()) As Expression
             Return New TreeBuilder(symbols).ParserInternal(logic)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Parse(exp As JsonElement) As Expression
+            Return ParserInternal(exp)
         End Function
 
         Private Function ParserInternal(exp As JsonElement) As Expression

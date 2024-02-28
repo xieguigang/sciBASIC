@@ -61,8 +61,9 @@ Namespace JSONLogic
                 End If
             End If
 
-            Dim code As Expression = TreeBuilder.Parse(logic, pars.ToArray)
-            Dim lambda As LambdaExpression
+            Dim env As New TreeBuilder(pars)
+            Dim code As Expression = env.Parse(logic)
+            Dim lambda As LambdaExpression = Expression.Lambda(code, env.Parameters.ToArray)
             Dim func = lambda.Compile
         End Function
 
