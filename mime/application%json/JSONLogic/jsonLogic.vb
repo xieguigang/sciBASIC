@@ -64,7 +64,23 @@ Namespace JSONLogic
             Dim env As New TreeBuilder(pars)
             Dim code As Expression = env.Parse(logic)
             Dim lambda As LambdaExpression = Expression.Lambda(code, env.Parameters.ToArray)
-            Dim func = lambda.Compile
+            Dim func_del = lambda.Compile
+            Dim args As Object() = input.ToArray
+            Dim output As Object = func_del.DynamicInvoke(args)
+
+            If output Is Nothing Then
+                Return Nothing
+            ElseIf output.GetType.IsArray Then
+                Dim array As New JsonArray
+
+                For Each item As Object In DirectCast(output, Array)
+                    array.Add(New JsonValue(item))
+                Next
+
+                Return array
+            Else
+                Return New JsonValue(output)
+            End If
         End Function
 
         Public Function apply(logic As String, Optional data As String = Nothing) As Object
