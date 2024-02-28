@@ -61,10 +61,35 @@ Namespace JSONLogic
                 Case "!=", "<>" : Return Expression.Not(equalsTo(checkBinary(val)))
                 Case "<=" : Return lessThanOrEquals(checkBinary(val))
                 Case ">=" : Return greaterThanOrEquals(checkBinary(val))
-                Case "!" : Return Expression.Not(ParserInternal(val))
+                Case "!", "not" : Return Expression.Not(ParserInternal(val))
+                Case "or", "|" : Return or2(checkBinary(val))
+                Case "and", "&" : Return and2(checkBinary(val))
+                Case "is" : Return is2(checkBinary(val))
+                Case "or else", "orelse", "||" : Return orelse2(checkBinary(val))
+                Case "and also", "andalso", "&&" : Return andalso2(checkBinary(val))
             End Select
 
             Throw New NotImplementedException(key)
+        End Function
+
+        Private Function and2(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.And(binary.left, binary.right)
+        End Function
+
+        Private Function or2(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.Or(binary.left, binary.right)
+        End Function
+
+        Private Function is2(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.ReferenceEqual(binary.left, binary.right)
+        End Function
+
+        Private Function andalso2(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.AndAlso(binary.left, binary.right)
+        End Function
+
+        Private Function orelse2(binary As (left As Expression, right As Expression)) As Expression
+            Return Expression.OrElse(binary.left, binary.right)
         End Function
 
         Private Function checkBinary(val As JsonElement) As (Expression, Expression)
