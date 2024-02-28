@@ -63,7 +63,11 @@ Namespace JSONLogic
                         Throw New InvalidCastException("the json object can not be used for variable name!")
                     End If
 
-                    Return Expression.RuntimeVariables(names.Select(Function(r) symbols(r)))
+                    If names.Length = 1 Then
+                        Return symbols(names(0))
+                    Else
+                        Return Expression.RuntimeVariables(names.Select(Function(r) symbols(r)))
+                    End If
             End Select
 
             Throw New NotImplementedException
