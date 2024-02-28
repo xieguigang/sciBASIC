@@ -8,8 +8,12 @@ Namespace JSONLogic
 
         ReadOnly symbols As Dictionary(Of String, ParameterExpression)
 
-        Private Sub New(symbols As IEnumerable(Of String))
-            Me.symbols = symbols.ToDictionary(Function(name) name, Function(name) Expression.Parameter(GetType(Object), name))
+        Private Sub New(symbols As IEnumerable(Of (name As String, type As Type)))
+            Me.symbols = symbols _
+                .ToDictionary(Function(i) i.name,
+                              Function(n)
+                                  Return Expression.Parameter(n.type, n.name)
+                              End Function)
         End Sub
 
         ''' <summary>
@@ -17,7 +21,7 @@ Namespace JSONLogic
         ''' </summary>
         ''' <param name="logic"></param>
         ''' <returns></returns>
-        Public Shared Function Parse(logic As JsonElement, ParamArray symbols As String()) As Expression
+        Public Shared Function Parse(logic As JsonElement, ParamArray symbols As (name As String, type As Type)()) As Expression
             Return New TreeBuilder(symbols).ParserInternal(logic)
         End Function
 
