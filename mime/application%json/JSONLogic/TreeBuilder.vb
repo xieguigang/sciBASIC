@@ -1,6 +1,7 @@
 ﻿Imports System.Linq.Expressions
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Namespace JSONLogic
@@ -17,6 +18,7 @@ Namespace JSONLogic
 
         Sub New(symbols As IEnumerable(Of (name As String, type As Type)))
             Me.symbols = symbols _
+                .SafeQuery _
                 .ToDictionary(Function(i) i.name,
                               Function(n)
                                   Return Expression.Parameter(n.type, n.name)
@@ -71,7 +73,7 @@ Namespace JSONLogic
                 Dim true1 As Expression = ParserInternal(triple(1))
                 Dim false1 As Expression = ParserInternal(triple(2))
 
-                Return Expression.IfThenElse(test, true1, false1)
+                Return Expression.Condition(test, true1, false1)
             End If
         End Function
 
