@@ -104,7 +104,8 @@ Namespace JSONLogic
                     Dim pairs = exps.Split(2)
                     Dim false2 As Expression = pairs.Last()(0)
 
-                    For Each part As Expression() In pairs.Reverse
+                    ' skip the last
+                    For Each part As Expression() In pairs.Reverse.Skip(1)
                         false2 = Expression.Condition(part(0), part(1), false2)
                     Next
 
