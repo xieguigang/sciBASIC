@@ -3,6 +3,23 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Namespace JSONLogic
 
+    ''' <summary>
+    ''' Build complex rules, serialize them as JSON, share them between front-end and back-end
+    ''' </summary>
+    ''' <remarks>
+    ''' If you’re looking for a way to share logic between front-end and back-end code, and even
+    ''' store it in a database, JsonLogic might be a fit for you.
+    '''
+    ''' JsonLogic isn't a full programming language. It’s a small, safe way to delegate one decision. 
+    ''' You could store a rule in a database to decide later. You could send that rule from back-end
+    ''' to front-end so the decision is made immediately from user input. Because the rule is data,
+    ''' you can even build it dynamically from user actions or GUI input.
+    '''
+    ''' JsonLogic has no setters, no loops, no functions Or gotos. One rule leads To one decision, 
+    ''' With no side effects And deterministic computation time.
+    ''' 
+    ''' > https://jsonlogic.com/
+    ''' </remarks>
     Public Module jsonLogic
 
         Private Function GetValueType(val As JsonElement, ByRef input As Object) As Type
