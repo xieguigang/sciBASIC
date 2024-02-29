@@ -336,6 +336,19 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    <Extension>
+    Public Function GetColumnValues(csv As IO.File, synonyms As String()) As IEnumerable(Of String)
+        For Each name As String In synonyms.SafeQuery
+            Dim values As IEnumerable(Of String) = csv.GetColumnValues(name)
+
+            If Not values Is Nothing Then
+                Return values
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
     ''' <summary>
     ''' get a specific column value by name
     ''' </summary>
