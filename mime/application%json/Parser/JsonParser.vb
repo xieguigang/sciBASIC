@@ -209,8 +209,15 @@ Public Class JsonParser
 
             'add key/value pair
             sKey = parseKey(str, index)
-            sKey = sKey.Trim(sKey.First)
-            ret.Add(sKey, parseValue(str, index))
+
+            If Not sKey.StringEmpty Then
+                If sKey.First = """"c OrElse sKey.First = "'"c Then
+                    sKey = sKey.Trim(sKey.First)
+                End If
+            End If
+
+            Call ret.Add(sKey, parseValue(str, index))
+
             If Err.Number <> 0 Then
                 psErrors &= Err.Description & ": " & sKey & vbCrLf
                 Exit Do
