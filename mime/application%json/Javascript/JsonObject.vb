@@ -122,6 +122,12 @@ Namespace Javascript
             End Get
         End Property
 
+        Public ReadOnly Property size As Integer
+            Get
+                Return array.TryCount
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As String, element As JsonElement)
             Call array.Add(key, element)

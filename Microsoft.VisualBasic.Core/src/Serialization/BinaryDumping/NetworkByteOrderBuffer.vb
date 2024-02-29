@@ -1,60 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::4268f7e4958e1e091b5d6d7499c73f70, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 51
-    ' Comment Lines: 2
-    '   Blank Lines: 19
-    '     File Size: 2.39 KB
+' Summaries:
 
 
-    '     Class NetworkByteOrderBuffer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: defaultDecoder, defaultEncoder, networkByteOrderDecoder, networkByteOrderEncoder
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 51
+' Comment Lines: 2
+'   Blank Lines: 19
+'     File Size: 2.39 KB
+
+
+'     Class NetworkByteOrderBuffer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: defaultDecoder, defaultEncoder, networkByteOrderDecoder, networkByteOrderEncoder
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Serialization.BinaryDumping
 
+    ''' <summary>
+    ''' ensure that the number is converted as bytes always in network byte order outputs.
+    ''' </summary>
     Public Class NetworkByteOrderBuffer
 
         Public ReadOnly encode As Func(Of Double(), Byte())
@@ -80,6 +85,11 @@ Namespace Serialization.BinaryDumping
                 decode32 = AddressOf defaultDecoder32
             End If
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetBytes(d As IEnumerable(Of Double)) As Byte()
+            Return encode(d.SafeQuery.ToArray)
+        End Function
 
         Public Function GetBytes(f As Single) As Byte()
             If BitConverter.IsLittleEndian Then
