@@ -847,11 +847,7 @@ Public Module PathExtensions
 
             End If
 
-            If file.Last = "/"c Then ' 是一个文件夹
-                parent &= String.Join("/", t.Take(t.Length - 2).ToArray)
-            Else
-                parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
-            End If
+            parent &= String.Join("/", t.Take(t.Length - 1).ToArray)
 
             If parent.StringEmpty Then
                 ' 用户直接输入了一个文件名，没有包含文件夹部分，则默认是当前的文件夹
