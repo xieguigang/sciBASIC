@@ -11,12 +11,12 @@ Public Class StockPredict
     Private M As Integer = 5
     Private alpha As Double = 0.005
     Private beta As Double = 11.1
-    Private t()() As Double
+    Private t() As Double
 
     Public ReadOnly Property predicted As Double
     Public ReadOnly Property variance As Double
 
-    Public Sub New(t As Double()(), Optional n As Integer = 10)
+    Public Sub New(t As Double(), Optional n As Integer = 10)
         Me.t = t
         Me.n = n
 
@@ -78,7 +78,7 @@ Public Class StockPredict
 
         For i = 0 To n - 1
             For j = 0 To M
-                lt(j)(0) += (x(i) ^ j) * t(i)(0)
+                lt(j)(0) += (x(i) ^ j) * t(i)
             Next j
         Next i
 
