@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 ''' <summary>
 ''' Bayesian Curve Fitting
@@ -42,7 +43,7 @@ Public Class StockPredict
 
         For i = 0 To n - 1
             For j = 0 To M
-                a(j)(0) += Math.Pow(x(i), j)
+                a(j)(0) += x(i) ^ j
             Next j
         Next i
 
@@ -51,7 +52,7 @@ Public Class StockPredict
         '-----------------initialize φ(x)T------------------
 
         For i = 0 To M
-            b(0)(i) = Math.Pow(x(n), i)
+            b(0)(i) = x(n) ^ i
         Next i
 
         Dim B_Conflict As New NumericMatrix(b)
@@ -77,7 +78,7 @@ Public Class StockPredict
 
         For i = 0 To n - 1
             For j = 0 To M
-                lt(j)(0) += Math.Pow(x(i), j) * t(i)(0)
+                lt(j)(0) += (x(i) ^ j) * t(i)(0)
             Next j
         Next i
 
@@ -93,11 +94,8 @@ Public Class StockPredict
         Dim PP As NumericMatrix = FT * LT_Conflict * beta
         predictprice = PP.Array
 
-        Dim variance As Double = 1 / beta + (B_Conflict * S_Conflict * B_Conflict.Transpose())(0, 0)
-
-        variance = Math.Sqrt(variance)
-
-        _predicted = predictprice(0)(0)
-        _variance = variance
+        variance = 1 / beta + (B_Conflict * S_Conflict * B_Conflict.Transpose())(0, 0)
+        variance = std.Sqrt(variance)
+        predicted = predictprice(0)(0)
     End Sub
 End Class
