@@ -59,7 +59,7 @@ Public Class StockPredict
 
         '------------calculate the matrix S-------------
 
-        Dim S_Conflict As NumericMatrix = A_Conflict * B_Conflict * beta
+        Dim S_Conflict As NumericMatrix = DirectCast(A_Conflict.DotProduct(B_Conflict), NumericMatrix) * beta
         s = S_Conflict.Array
 
         For i = 0 To M
