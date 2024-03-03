@@ -29,10 +29,12 @@ Namespace IO
                     If lastOpen Then
                         ' continute
                         If row > 0 Then
-                            line = row.Last & ASCII.LF & .First
-                            row.Pop()
-                            row.Add(line)
-                            row.AddRange(.Skip(1))
+                            If .Length > 0 Then
+                                line = row.Last & ASCII.LF & .First
+                                row.Pop()
+                                row.Add(line)
+                                row.AddRange(.Skip(1))
+                            End If
                         Else
                             row.AddRange(.ByRef)
                         End If

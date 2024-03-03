@@ -336,7 +336,7 @@ Namespace IO
             If fast Then
                 file = FileLoader.FastLoad(path, True, encoding, skipWhile)
             Else
-                file = File.Load(path, encoding, , skipWhile)
+                file = File.Load(path, encoding, , skipWhile, simpleRowIterator:=simpleRowIterators)
             End If
 
             Return CreateObject(file)
