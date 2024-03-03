@@ -320,12 +320,12 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Try loading a excel csv data file as a dynamics data frame object.(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)
+        ''' Try loading a excel csv data file as a dynamics data frame object.
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)</remarks>
         Public Overloads Shared Function Load(path As String,
                                               Optional encoding As Encoding = Nothing,
                                               Optional fast As Boolean = False,
