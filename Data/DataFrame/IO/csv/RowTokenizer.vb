@@ -75,6 +75,10 @@ Namespace IO
             rowStr = ptr
         End Sub
 
+        Public Function GetStackOpenStatus() As Boolean
+            Return openStack
+        End Function
+
         Public Overrides Function ToString() As String
             Return rowStr.ToString
         End Function
