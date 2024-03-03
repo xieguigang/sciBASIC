@@ -141,21 +141,12 @@ Public Module DocumentExtensions
         Return row
     End Function
 
-    Private Class GenericTable
-
-        Public Property data As Dictionary(Of String, String)
-
-        Public Overrides Function ToString() As String
-            Return data.GetJson
-        End Function
-    End Class
-
     <Extension>
     Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
-        Dim table As GenericTable() = d _
+        Dim table As IO.Table() = d _
             .Select(Function(x)
-                        Return New GenericTable With {
-                            .data = x
+                        Return New IO.Table With {
+                            .Properties = x
                         }
                     End Function) _
             .ToArray
@@ -185,17 +176,17 @@ Public Module DocumentExtensions
                                   Optional encoding As Encodings = Encodings.UTF8WithoutBOM,
                                   Optional orderBy As Func(Of Dictionary(Of String, String), Double) = Nothing) As Boolean
 
-        Dim data As New List(Of GenericTable)
-        Dim table As IEnumerable(Of GenericTable)
+        Dim data As New List(Of IO.Table)
+        Dim table As IEnumerable(Of IO.Table)
 
         For Each path$ In files
             ' List(Of T) 对象的 + 语法有冲突，所以在这里需要先进行转换
-            table = path.LoadCsv(Of GenericTable)
+            table = path.LoadCsv(Of IO.Table)
             data += table
         Next
 
         If Not orderBy Is Nothing Then
-            data = data.OrderBy(Function(r) orderBy(r.data)).AsList
+            data = data.OrderBy(Function(r) orderBy(r.Properties)).AsList
         End If
 
         Return data.SaveTo(EXPORT, encoding:=encoding.CodePage)

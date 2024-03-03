@@ -713,18 +713,8 @@ Public Module Extensions
     Public Sub Cable(Of T)(method As LoadObject(Of T))
         Dim type As Type = GetType(T)
         Dim name As String = type.FullName
-        Dim helper As New __loadHelper(Of T) With {
-            .handle = method
-        }
+        Dim helper As LoadObject = AddressOf method.Invoke
 
-        Call CapabilityPromise(name, type, AddressOf helper.LoadObject)
+        Call CapabilityPromise(name, type, helper)
     End Sub
-
-    Private Structure __loadHelper(Of T)
-        Public handle As LoadObject(Of T)
-
-        Public Function LoadObject(s$) As T
-            Return handle(s)
-        End Function
-    End Structure
 End Module
