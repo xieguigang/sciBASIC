@@ -34,6 +34,8 @@ Namespace IO
                                 row.Pop()
                                 row.Add(line)
                                 row.AddRange(.Skip(1))
+                            Else
+                                ' do nothing?
                             End If
                         Else
                             row.AddRange(.ByRef)
@@ -41,9 +43,11 @@ Namespace IO
                     Else
                         row.AddRange(.ByRef)
                     End If
-                End With
 
-                lastOpen = parser.GetStackOpenStatus
+                    If .Length > 0 Then
+                        lastOpen = parser.GetStackOpenStatus
+                    End If
+                End With
 
                 If Not lastOpen Then
                     Yield New RowObject(row.PopAll)
