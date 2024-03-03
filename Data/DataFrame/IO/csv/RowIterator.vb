@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO
@@ -46,6 +47,22 @@ Namespace IO
                     Yield New RowObject(row.PopAll)
                 End If
             Loop
+        End Function
+
+        Public Shared Function RowSolver(file As Stream, simple As Boolean) As IEnumerable(Of RowObject)
+            If simple Then
+                Return New StreamReader(file) _
+                    .IteratesStream _
+                    .SeqIterator _
+                    .AsParallel _
+                    .Select(Function(line)
+                                Return (line.i, New RowObject(New RowTokenizer(line.value).GetTokens))
+                            End Function) _
+                    .OrderBy(Function(r) r.i) _
+                    .Select(Function(r) r.Item2)
+            Else
+                Return New RowIterator(file).GetRows
+            End If
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
