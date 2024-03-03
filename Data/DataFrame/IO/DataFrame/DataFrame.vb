@@ -329,7 +329,8 @@ Namespace IO
         Public Overloads Shared Function Load(path As String,
                                               Optional encoding As Encoding = Nothing,
                                               Optional fast As Boolean = False,
-                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As DataFrame
+                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                              Optional simpleRowIterators As Boolean = True) As DataFrame
             Dim file As File
 
             If fast Then

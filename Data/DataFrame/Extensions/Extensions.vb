@@ -548,6 +548,7 @@ Public Module Extensions
                                            Optional maps As NameMapping = Nothing,
                                            Optional mute As Boolean = False,
                                            Optional metaBlank As String = "",
+                                           Optional simpleRowIterators As Boolean = True,
                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
@@ -561,7 +562,8 @@ Public Module Extensions
                 maps:=maps,
                 mute:=mute,
                 metaBlank:=metaBlank,
-                skipWhile:=skipWhile
+                skipWhile:=skipWhile,
+                simpleRowIterators:=simpleRowIterators
             ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")

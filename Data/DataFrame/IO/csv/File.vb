@@ -725,14 +725,16 @@ B21,B22,B23,...
                                     Optional encoding As Encoding = Nothing,
                                     Optional trimBlanks As Boolean = False,
                                     Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
-                                    Optional isTsv As Boolean = False) As File
+                                    Optional isTsv As Boolean = False,
+                                    Optional simpleRowIterator As Boolean = True) As File
 
             Dim buf As List(Of RowObject) = loads(
                 path:=path,
                 encoding:=encoding Or TextEncodings.DefaultEncoding,
                 trimBlanks:=trimBlanks,
                 isTsv:=isTsv,
-                skipWhile:=skipWhile
+                skipWhile:=skipWhile,
+                simpleRowIterator:=simpleRowIterator
             )
             Dim csv As New File With {
                 ._innerTable = buf
@@ -774,12 +776,19 @@ B21,B22,B23,...
                                       encoding As Encoding,
                                       trimBlanks As Boolean,
                                       isTsv As Boolean,
-                                      skipWhile As NamedValue(Of Func(Of String, Boolean))) As List(Of RowObject)
+                                      skipWhile As NamedValue(Of Func(Of String, Boolean)),
+                                      simpleRowIterator As Boolean) As List(Of RowObject)
 
-            Dim buf As String() = path.MapNetFile.ReadAllLines(encoding)
-            Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
+            If simpleRowIterator Then
+                Dim buf As String() = path.MapNetFile.ReadAllLines(encoding)
+                Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
 
-            Return result
+                Return result
+            Else
+                Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                    Return New RowIterator(s).GetRows.AsList
+                End Using
+            End If
         End Function
 
         Protected Shared Function loads(file As Stream, encoding As Encoding,
