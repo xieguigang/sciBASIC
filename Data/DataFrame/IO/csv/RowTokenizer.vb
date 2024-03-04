@@ -75,12 +75,21 @@ Namespace IO
             rowStr = ptr
         End Sub
 
+        Public Function GetStackOpenStatus() As Boolean
+            Return openStack
+        End Function
+
         Public Overrides Function ToString() As String
             Return rowStr.ToString
         End Function
 
         Public Iterator Function GetTokens(Optional delimiter As Char = ","c, Optional quot As Char = ASCII.Quot) As IEnumerable(Of String)
             Dim doubleQuot$ = quot & quot
+
+            ' empty row
+            If rowStr.Length = 0 Then
+                Return
+            End If
 
             buf *= 0
 

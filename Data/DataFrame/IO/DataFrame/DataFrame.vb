@@ -77,7 +77,6 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Scripting
 
 Namespace IO
 
@@ -321,22 +320,23 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Try loading a excel csv data file as a dynamics data frame object.(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)
+        ''' Try loading a excel csv data file as a dynamics data frame object.
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)</remarks>
         Public Overloads Shared Function Load(path As String,
                                               Optional encoding As Encoding = Nothing,
                                               Optional fast As Boolean = False,
-                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As DataFrame
+                                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                              Optional simpleRowIterators As Boolean = True) As DataFrame
             Dim file As File
 
             If fast Then
                 file = FileLoader.FastLoad(path, True, encoding, skipWhile)
             Else
-                file = File.Load(path, encoding, , skipWhile)
+                file = File.Load(path, encoding, , skipWhile, simpleRowIterator:=simpleRowIterators)
             End If
 
             Return CreateObject(file)

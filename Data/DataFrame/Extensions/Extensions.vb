@@ -548,6 +548,7 @@ Public Module Extensions
                                            Optional maps As NameMapping = Nothing,
                                            Optional mute As Boolean = False,
                                            Optional metaBlank As String = "",
+                                           Optional simpleRowIterators As Boolean = True,
                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
@@ -561,7 +562,8 @@ Public Module Extensions
                 maps:=maps,
                 mute:=mute,
                 metaBlank:=metaBlank,
-                skipWhile:=skipWhile
+                skipWhile:=skipWhile,
+                simpleRowIterators:=simpleRowIterators
             ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
@@ -711,18 +713,8 @@ Public Module Extensions
     Public Sub Cable(Of T)(method As LoadObject(Of T))
         Dim type As Type = GetType(T)
         Dim name As String = type.FullName
-        Dim helper As New __loadHelper(Of T) With {
-            .handle = method
-        }
+        Dim helper As LoadObject = AddressOf method.Invoke
 
-        Call CapabilityPromise(name, type, AddressOf helper.LoadObject)
+        Call CapabilityPromise(name, type, helper)
     End Sub
-
-    Private Structure __loadHelper(Of T)
-        Public handle As LoadObject(Of T)
-
-        Public Function LoadObject(s$) As T
-            Return handle(s)
-        End Function
-    End Structure
 End Module
