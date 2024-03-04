@@ -22,27 +22,18 @@ Namespace IO
             Dim lastOpen As Boolean = False
 
             Do While (line = s.ReadLine) IsNot Nothing
-                Dim parser As New RowTokenizer(line, row.LastOrDefault)
+                Dim parser As New RowTokenizer(line, If(row > 0, row.LastOrDefault & vbCrLf, Nothing))
 
                 ' continute
                 With parser.GetTokens.ToArray
                     If lastOpen Then
                         ' continute
                         If row > 0 Then
-                            If .Length > 0 Then
-                                line = row.Last & ASCII.LF & .First
-                                row.Pop()
-                                row.Add(line)
-                                row.AddRange(.Skip(1))
-                            Else
-                                ' do nothing?
-                            End If
-                        Else
-                            row.AddRange(.ByRef)
+                            Call row.Pop()
                         End If
-                    Else
-                        row.AddRange(.ByRef)
                     End If
+
+                    row.AddRange(.ByRef)
 
                     If .Length > 0 Then
                         lastOpen = parser.GetStackOpenStatus
