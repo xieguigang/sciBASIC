@@ -135,6 +135,16 @@ Namespace IO
             End Get
         End Property
 
+        ''' <summary>
+        ''' get number of the row data
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Nrows As Integer
+            Get
+                Return table.Count
+            End Get
+        End Property
+
         Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
 
         ''' <summary>
