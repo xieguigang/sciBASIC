@@ -251,13 +251,13 @@ Namespace IO
             End Get
         End Property
 
-        Public ReadOnly Property RecordsAffected As Integer Implements IDataReader.RecordsAffected
+        Private ReadOnly Property RecordsAffected As Integer Implements IDataReader.RecordsAffected
             Get
                 Return 0
             End Get
         End Property
 
-        Public ReadOnly Property FieldCount As Integer Implements IDataRecord.FieldCount
+        Private ReadOnly Property FieldCount As Integer Implements IDataRecord.FieldCount
             Get
                 Return columnList.Count
             End Get
@@ -308,6 +308,11 @@ Namespace IO
 
         Public Function GetColumnVectors() As IEnumerable(Of String())
             Return table.GetColumns
+        End Function
+
+        Public Function AppendLine(row As IEnumerable(Of String)) As DataFrame
+            Call table.Add(New RowObject(row))
+            Return Me
         End Function
 
         Private Shared Iterator Function ColumnRows(columns As ArgumentReference()) As IEnumerable(Of RowObject)
