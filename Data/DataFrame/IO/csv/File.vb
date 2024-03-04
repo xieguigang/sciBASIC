@@ -270,18 +270,9 @@ B21,B22,B23,...
         ''' 对于<see cref="DataFrame"/>类型而言，由于在创建对象的时候，第一行数据由于需要被用作为header，
         ''' 所以这个内部表对象之中是不包含有header行的，即这个属性所输出的结果只中是不包含有header行的
         ''' </remarks>
-        Public ReadOnly Iterator Property Columns As IEnumerable(Of String())
+        Public ReadOnly Property Columns As IEnumerable(Of String())
             Get
-                If _innerTable.Count = 0 Then
-                    Return
-                End If
-                For Each column As IEnumerable(Of String) In
-                    From col As Integer
-                    In Width.Sequence
-                    Select Me.Column(col)
-
-                    Yield column.ToArray
-                Next
+                Return _innerTable.GetColumns
             End Get
         End Property
 
@@ -792,10 +783,10 @@ B21,B22,B23,...
             End If
         End Function
 
-        Protected Shared Function loads(file As Stream, encoding As Encoding,
-                                        trimBlanks As Boolean,
-                                        skipWhile As NamedValue(Of Func(Of String, Boolean)),
-                                        isTsv As Boolean) As List(Of RowObject)
+        Protected Friend Shared Function loads(file As Stream, encoding As Encoding,
+                                               trimBlanks As Boolean,
+                                               skipWhile As NamedValue(Of Func(Of String, Boolean)),
+                                               isTsv As Boolean) As List(Of RowObject)
 
             Using reader As New StreamReader(file, encoding)
                 Dim allLines As String() = reader.IteratesStream.ToArray
