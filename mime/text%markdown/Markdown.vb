@@ -153,12 +153,13 @@ Public Class MarkdownHTML
 #Region "Constructors"
 
     ''' <summary>
-    ''' Create a new Markdown instance and set the options from the MarkdownOptions object.
+    ''' Create a new Markdown instance and set the options from the <see cref="MarkdownOptions"/> object.
     ''' </summary>
     Public Sub New(options As MarkdownOptions)
         If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
             _EmptyElementSuffix = options.EmptyElementSuffix
         End If
+
         _AllowEmptyLinkText = options.AllowEmptyLinkText
         _DisableHr = options.DisableHr
         _DisableHeaders = options.DisableHeaders
@@ -171,6 +172,9 @@ Public Class MarkdownHTML
         _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
     End Sub
 
+    ''' <summary>
+    ''' using <see cref="MarkdownOptions.DefaultOption"/> options
+    ''' </summary>
     Sub New()
         Call Me.New(MarkdownOptions.DefaultOption.DefaultValue)
     End Sub
@@ -179,10 +183,9 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' Transforms the provided Markdown-formatted text to HTML;  
     ''' see http://en.wikipedia.org/wiki/Markdown
-    ''' (好像这个并不支持代码高亮的格式化)
     ''' </summary>
     ''' <param name="text">
-    ''' Markdown文本
+    ''' Markdown text
     ''' </param>
     ''' <remarks>
     ''' The order in which other subs are called here is
@@ -216,7 +219,9 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' Perform transformations that form block-level tags like paragraphs, headers, and list items.
     ''' </summary>
-    Private Function RunBlockGamut(text As String, Optional unhash As Boolean = True, Optional createParagraphs As Boolean = True) As String
+    Private Function RunBlockGamut(text As String,
+                                   Optional unhash As Boolean = True,
+                                   Optional createParagraphs As Boolean = True) As String
         ' Apply extensions
         For Each extension As ExtensionTransform In _inlineExtensions
             text = extension(text)
