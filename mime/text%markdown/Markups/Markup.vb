@@ -56,8 +56,7 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' The markup document(*.html, *.md) its document syntax structure object. 
 ''' </summary>
-Public Class Markup
-    Implements IEnumerable(Of PlantText)
+Public Class Markup : Implements IEnumerable(Of PlantText)
 
     Public Property nodes As List(Of PlantText)
 
