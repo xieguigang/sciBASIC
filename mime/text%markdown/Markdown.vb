@@ -177,6 +177,10 @@ Public Class MarkdownHTML
         _AsteriskIntraWordEmphasis = options.AsteriskIntraWordEmphasis
     End Sub
 
+    Sub New(render As Render)
+        Call Me.New(MarkdownOptions.DefaultOption.DefaultValue, render)
+    End Sub
+
     ''' <summary>
     ''' using <see cref="MarkdownOptions.DefaultOption"/> options
     ''' </summary>
@@ -218,7 +222,7 @@ Public Class MarkdownHTML
 
         Call Cleanup()
 
-        Return text
+        Return _render.Document(text)
     End Function
 
     ''' <summary>
