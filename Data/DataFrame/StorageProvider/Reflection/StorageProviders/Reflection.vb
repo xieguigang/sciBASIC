@@ -140,7 +140,7 @@ Namespace StorageProvider.Reflection
             parallel = False
 #End If
 
-            Dim sequence = csv._innerTable _
+            Dim sequence = csv.table _
                 .SeqIterator _
                 .Populate(parallel)
             Dim buf = From line As SeqValue(Of RowObject)
@@ -210,7 +210,7 @@ Namespace StorageProvider.Reflection
             End If
 
             ' read csv data
-            Dim reader As DataFrame = IO.DataFrame.CreateObject(IO.DataFrame.Load(path, encoding, fast, skipWhile, simpleRowIterator:=simpleRowIterators))
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile, simpleRowIterators:=simpleRowIterators)
             Dim buffer As IEnumerable(Of T)
 
             If Not maps Is Nothing Then

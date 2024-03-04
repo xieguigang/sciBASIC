@@ -101,7 +101,7 @@ Namespace IO
         ''' <summary>
         ''' table data that contains no header row
         ''' </summary>
-        Dim table As ICollection(Of RowObject)
+        Friend table As ICollection(Of RowObject)
 
         ''' <summary>
         ''' Using the first line of the csv row as the column headers in this csv file.

@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::0abc24998b5b4bf8d5426037ee29a335, sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 437
-    '    Code Lines: 268
-    ' Comment Lines: 107
-    '   Blank Lines: 62
-    '     File Size: 16.30 KB
+' Summaries:
 
 
-    ' Module DocumentExtensions
-    ' 
-    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
-    '               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
-    '               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
-    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
-    '     Class GenericTable
-    ' 
-    '         Properties: data
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 437
+'    Code Lines: 268
+' Comment Lines: 107
+'   Blank Lines: 62
+'     File Size: 16.30 KB
+
+
+' Module DocumentExtensions
+' 
+'     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
+'               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
+'               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
+'               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
+'     Class GenericTable
+' 
+'         Properties: data
+' 
+'         Function: ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -236,7 +236,7 @@ Public Module DocumentExtensions
         End If
 
         Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) _
- _
+                                                           _
             () <= From column As String()
                   In source
                   Let name As String = column(Scan0)
@@ -359,12 +359,34 @@ Public Module DocumentExtensions
             Return Nothing
         End If
 
-        ' 20221127 the dataframe object is already skip the title row
-        If TypeOf csv Is DataFrame Then
-            offset = 0
+        For Each r As RowObject In csv.Skip(offset)
+            Call out.Add(r(index))
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' get a specific column value by name
+    ''' </summary>
+    ''' <param name="csv">
+    ''' 20221127 the dataframe object is already skip the title row
+    ''' </param>
+    ''' <param name="column">the column name that will be find in the table header row</param>
+    ''' <returns>
+    ''' this function will returns nothing if the speicifc <paramref name="column"/> 
+    ''' is not exists in the table headers
+    ''' </returns>
+    <Extension>
+    Public Function GetColumnValues(csv As DataFrame, column$) As IEnumerable(Of String)
+        Dim index As Integer = csv.Headers.IndexOf(column)
+        Dim out As New List(Of String)
+
+        If index = -1 Then
+            Return Nothing
         End If
 
-        For Each r As RowObject In csv.Skip(offset)
+        For Each r As RowObject In csv.table
             Call out.Add(r(index))
         Next
 
