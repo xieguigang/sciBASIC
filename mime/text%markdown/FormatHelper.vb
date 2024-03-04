@@ -51,7 +51,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Module FormatHelper
 
@@ -106,7 +106,7 @@ Module FormatHelper
 
     Public Function GetHashKey(s As String, isHtmlBlock As Boolean) As String
         Dim delim = If(isHtmlBlock, "H"c, "E"c)
-        Return ChrW(26) & delim & stdNum.Abs(s.GetHashCode()).ToString() & delim
+        Return ChrW(26) & delim & std.Abs(s.GetHashCode()).ToString() & delim
     End Function
 
     Public Function AttributeEncode(s As String) As String
