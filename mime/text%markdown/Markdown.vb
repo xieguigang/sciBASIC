@@ -85,6 +85,10 @@ Public Class MarkdownHTML
     ReadOnly _titles As New Dictionary(Of String, String)()
     ReadOnly _htmlBlocks As New Dictionary(Of String, String)()
 
+    ''' <summary>
+    ''' default is rendering markdown to html
+    ''' </summary>
+    Dim _render As Render = New HtmlRender
     Dim _listLevel As Integer
 
     Shared ReadOnly AutoLinkPreventionMarker As String = ChrW(26) & "P"
@@ -155,11 +159,12 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' Create a new Markdown instance and set the options from the <see cref="MarkdownOptions"/> object.
     ''' </summary>
-    Public Sub New(options As MarkdownOptions)
+    Public Sub New(options As MarkdownOptions, Optional render As Render = Nothing)
         If Not String.IsNullOrEmpty(options.EmptyElementSuffix) Then
             _EmptyElementSuffix = options.EmptyElementSuffix
         End If
 
+        _render = If(render, New HtmlRender)
         _AllowEmptyLinkText = options.AllowEmptyLinkText
         _DisableHr = options.DisableHr
         _DisableHeaders = options.DisableHeaders
@@ -208,7 +213,7 @@ Public Class MarkdownHTML
 
         text = HashHTMLBlocks(text)
         text = StripLinkDefinitions(text)
-        text = RunBlockGamut(text)
+        text = RunBlockGamut(text, loose:=True)
         text = Unescape(text)
 
         Call Cleanup()
@@ -219,9 +224,7 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' Perform transformations that form block-level tags like paragraphs, headers, and list items.
     ''' </summary>
-    Private Function RunBlockGamut(text As String,
-                                   Optional unhash As Boolean = True,
-                                   Optional createParagraphs As Boolean = True) As String
+    Private Function RunBlockGamut(text As String, loose As Boolean, Optional unhash As Boolean = True) As String
         ' Apply extensions
         For Each extension As ExtensionTransform In _inlineExtensions
             text = extension(text)
@@ -249,8 +252,7 @@ Public Class MarkdownHTML
         ' we're escaping the markup we've just created, so that we don't wrap
         ' <p> tags around block-level tags.
         text = HashHTMLBlocks(text)
-
-        text = FormParagraphs(text, unhash:=unhash, createParagraphs:=createParagraphs)
+        text = FormParagraphs(text, loose, unhash:=unhash)
 
         Return text
     End Function
@@ -382,7 +384,6 @@ Public Class MarkdownHTML
 
     Private Shared _newlinesLeadingTrailing As New Regex("^\n+|\n+\z", RegexOptions.Compiled)
     Private Shared _newlinesMultiple As New Regex("\n{2,}", RegexOptions.Compiled)
-    Private Shared _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Compiled)
 
     Private Shared _htmlBlockHash As New Regex(ChrW(26) & "H\d+H", RegexOptions.Compiled)
 
@@ -390,12 +391,14 @@ Public Class MarkdownHTML
     ''' splits on two or more newlines, to form "paragraphs";    
     ''' each paragraph is then unhashed (if it is a hash and unhashing isn't turned off) or wrapped in HTML p tag
     ''' </summary>
-    Private Function FormParagraphs(text As String, Optional unhash As Boolean = True, Optional createParagraphs As Boolean = True) As String
+    Private Function FormParagraphs(text As String, loose As Boolean, Optional unhash As Boolean = True) As String
         ' split on two or more newlines
         Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
 
+        Const GrafsHash As String = ChrW(26) & "H"
+
         For i As Integer = 0 To grafs.Length - 1
-            If grafs(i).Contains(ChrW(26) & "H") Then
+            If grafs(i).Contains(GrafsHash) Then
                 ' unhashify HTML blocks
                 If unhash Then
                     Dim sanityCheck As Integer = 50
@@ -421,7 +424,8 @@ Public Class MarkdownHTML
                 End If
             Else
                 ' do span level processing inside the block, then wrap result in <p> tags
-                grafs(i) = _leadingWhitespace.Replace(RunSpanGamut(grafs(i)), If(createParagraphs, "<p>", "")) & (If(createParagraphs, "</p>", ""))
+                grafs(i) = RunSpanGamut(grafs(i))
+                grafs(i) = _render.Paragraph(grafs(i), loose)
             End If
         Next
 
@@ -1180,10 +1184,10 @@ Public Class MarkdownHTML
                 Dim containsDoubleNewline As Boolean = endsWithDoubleNewline OrElse item.Contains(vbLf & vbLf)
 
                 Dim loose = containsDoubleNewline OrElse lastItemHadADoubleNewline
-                    ' we could correct any bad indentation here..
-                    item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, createParagraphs:=loose)
-
+                ' we could correct any bad indentation here..
+                item = RunBlockGamut(Outdent(item) & vbLf, unhash:=False, loose:=loose)
                 lastItemHadADoubleNewline = endsWithDoubleNewline
+
                 Return String.Format("<li>{0}</li>" & vbLf, item)
             End Function
 
@@ -1403,7 +1407,7 @@ Public Class MarkdownHTML
         ' trim one level of quoting
         bq = Regex.Replace(bq, "^[ ]+$", "", RegexOptions.Multiline)
         ' trim whitespace-only lines
-        bq = RunBlockGamut(bq)
+        bq = RunBlockGamut(bq, loose:=True)
         ' recurse
         bq = Regex.Replace(bq, "^", "  ", RegexOptions.Multiline)
 
