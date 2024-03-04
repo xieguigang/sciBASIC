@@ -9,6 +9,9 @@
     ''' </param>
     ''' <returns></returns>
     Public Overrides Function Paragraph(text As String, CreateParagraphs As Boolean) As String
-        Return _leadingWhitespace.Replace(text, If(CreateParagraphs, "<p>", "")) & (If(CreateParagraphs, "</p>", ""))
+        Dim p As String = _leadingWhitespace.Replace(text, If(CreateParagraphs, "<p>", ""))
+        Dim html As String = p & (If(CreateParagraphs, "</p>", ""))
+
+        Return html
     End Function
 End Class
