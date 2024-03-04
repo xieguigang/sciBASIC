@@ -22,7 +22,7 @@ Namespace IO
             Dim lastOpen As Boolean = False
 
             Do While (line = s.ReadLine) IsNot Nothing
-                Dim parser As New RowTokenizer(line)
+                Dim parser As New RowTokenizer(line, row.LastOrDefault)
 
                 ' continute
                 With parser.GetTokens.ToArray

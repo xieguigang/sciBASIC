@@ -365,6 +365,9 @@ Namespace IO
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="simpleRowIterators">
+        ''' set this parameter to False will enable the multiple line row parser feature.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)</remarks>
         Public Overloads Shared Function Load(path As String,
