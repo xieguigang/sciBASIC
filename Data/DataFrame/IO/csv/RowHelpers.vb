@@ -140,7 +140,7 @@ Namespace IO
         End Function
 
         <Extension>
-        Friend Iterator Function GetColumns(table As ICollection(Of RowObject)) As IEnumerable(Of String())
+        Public Iterator Function GetColumns(table As ICollection(Of RowObject)) As IEnumerable(Of String())
             Dim width As Integer = Aggregate row As RowObject
                                    In table
                                    Into Max(row.NumbersOfColumn)

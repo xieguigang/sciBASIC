@@ -117,6 +117,12 @@ Namespace IO
             End Get
         End Property
 
+        Public ReadOnly Property Rows As IEnumerable(Of RowObject)
+            Get
+                Return table
+            End Get
+        End Property
+
         Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
 
         ''' <summary>
@@ -287,6 +293,10 @@ Namespace IO
         Sub New(ParamArray columns As ArgumentReference())
             Call Initialize(ColumnRows(columns).AsList, Me)
         End Sub
+
+        Public Function GetColumnVectors() As IEnumerable(Of String())
+            Return table.GetColumns
+        End Function
 
         Private Shared Iterator Function ColumnRows(columns As ArgumentReference()) As IEnumerable(Of RowObject)
             Dim collectionType As Type() = {GetType(Array), GetType(IEnumerable), GetType(IList)}

@@ -65,7 +65,7 @@ Namespace csv
         Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As ChartPlots.SerialData
             With DataFrame.CreateObject(csv)
                 Dim index As (X%, y%) = (.GetOrdinal(fieldX), .GetOrdinal(fieldY))
-                Dim columns = .Columns.ToArray
+                Dim columns = .GetColumnVectors.ToArray
                 Dim X = columns(index.X)
                 Dim Y = columns(index.y)
                 Dim pts As PointF() = X _
