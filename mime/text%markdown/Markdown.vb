@@ -530,7 +530,7 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' compiling this monster regex results in worse performance. trust me.
     ''' </summary>
-    Private Shared _blocksHtml As New Regex(GetBlockPattern(), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
+    Shared ReadOnly _blocksHtml As New Regex(GetBlockPattern(), RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
 
     ''' <summary>
     ''' First, look for nested blocks, e.g.:
@@ -630,11 +630,37 @@ Public Class MarkdownHTML
         Dim blockTagsB As String = "p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|address|script|noscript|form|fieldset|iframe|math"
 
         ' Regular expression for the content of a block tag.
-        Dim attr As String = vbCr & vbLf & "            (?>" & vbTab & vbTab & vbTab & vbTab & "            # optional tag attributes" & vbCr & vbLf & "              \s" & vbTab & vbTab & vbTab & "            # starts with whitespace" & vbCr & vbLf & "              (?>" & vbCr & vbLf & "                [^>""/]+" & vbTab & "            # text outside quotes" & vbCr & vbLf & "              |" & vbCr & vbLf & "                /+(?!>)" & vbTab & vbTab & "            # slash not followed by >" & vbCr & vbLf & "              |" & vbCr & vbLf & "                ""[^""]*""" & vbTab & vbTab & "        # text inside double quotes (tolerate >)" & vbCr & vbLf & "              |" & vbCr & vbLf & "                '[^']*'" & vbTab & "                # text inside single quotes (tolerate >)" & vbCr & vbLf & "              )*" & vbCr & vbLf & "            )?" & vbTab & vbCr & vbLf & "            "
+        Dim attr As String = "
+(?>" & vbTab & vbTab & vbTab & vbTab & "            # optional tag attributes
+\s" & vbTab & vbTab & vbTab & "            # starts with whitespace
+(?>
+[^>""/]+" & vbTab & "            # text outside quotes
+|
+/+(?!>)" & vbTab & vbTab & "            # slash not followed by >
+|
+""[^""]*""" & vbTab & vbTab & "        # text inside double quotes (tolerate >)
+|
+'[^']*'" & vbTab & "                # text inside single quotes (tolerate >)
+)*
+)?" & vbTab & vbCr & vbLf & "            "
 
         ' end of opening tag
         ' last level nested tag content
-        Dim content As String = RepeatString(vbCr & vbLf & "                (?>" & vbCr & vbLf & "                  [^<]+" & vbTab & vbTab & vbTab & "        # content without tag" & vbCr & vbLf & "                |" & vbCr & vbLf & "                  <\2" & vbTab & vbTab & vbTab & "        # nested opening tag" & vbCr & vbLf & "                    " & attr & "       # attributes" & vbCr & vbLf & "                  (?>" & vbCr & vbLf & "                      />" & vbCr & vbLf & "                  |" & vbCr & vbLf & "                      >", _nestDepth) & ".*?" & RepeatString(vbCr & vbLf & "                      </\2\s*>" & vbTab & "        # closing nested tag" & vbCr & vbLf & "                  )" & vbCr & vbLf & "                  |" & vbTab & vbTab & vbTab & vbTab & vbCr & vbLf & "                  <(?!/\2\s*>           # other tags with a different name" & vbCr & vbLf & "                  )" & vbCr & vbLf & "                )*", _nestDepth)
+        Dim content As String = RepeatString("
+(?>
+[^<]+" & vbTab & vbTab & vbTab & "        # content without tag
+|
+<\2" & vbTab & vbTab & vbTab & "        # nested opening tag
+" & attr & "       # attributes
+(?>
+/>
+|
+>", _nestDepth) & ".*?" & RepeatString("
+</\2\s*>" & vbTab & "        # closing nested tag
+)
+|" & vbTab & vbTab & vbTab & vbTab & vbCr & vbLf & "                  <(?!/\2\s*>           # other tags with a different name
+)
+)*", _nestDepth)
 
         Dim content2 As String = content.Replace("\2", "\3")
         Dim pattern$ = MarkdownHTML.pattern
