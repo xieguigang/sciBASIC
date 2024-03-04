@@ -123,6 +123,18 @@ Namespace IO
             End Get
         End Property
 
+        Default Public ReadOnly Property Column(name As String) As String()
+            Get
+                Dim offset As Integer = GetOrdinal(name)
+
+                If offset < 0 Then
+                    Return Nothing
+                Else
+                    Return table.GetColumn(offset)
+                End If
+            End Get
+        End Property
+
         Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
 
         ''' <summary>
@@ -487,6 +499,8 @@ Namespace IO
         ''' <param name="Column"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(Column As String) As Integer Implements IDataRecord.GetOrdinal, ISchema.GetOrdinal
             Return columnList.GetOrdinal(Column)
         End Function

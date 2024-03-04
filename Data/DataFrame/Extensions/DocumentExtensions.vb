@@ -340,6 +340,21 @@ Public Module DocumentExtensions
         Return Nothing
     End Function
 
+    <Extension>
+    Public Function GetColumnValues(csv As DataFrame, synonyms As String()) As IEnumerable(Of String)
+        For Each name As String In synonyms.SafeQuery
+            Dim offset As Integer = csv.GetOrdinal(name)
+
+            If offset < 0 Then
+                Continue For
+            Else
+                Return csv.table.GetColumn(offset)
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
     ''' <summary>
     ''' get a specific column value by name
     ''' </summary>

@@ -154,5 +154,10 @@ Namespace IO
                 Yield col.ToArray
             Next
         End Function
+
+        <Extension>
+        Public Function GetColumn(table As ICollection(Of RowObject), offset As Integer) As String()
+            Return table.Select(Function(r) r(offset)).ToArray
+        End Function
     End Module
 End Namespace
