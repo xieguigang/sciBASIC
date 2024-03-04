@@ -4,7 +4,7 @@ Module fileParser2
 
     Sub Main()
 
-        Call multipleLineRowtest1()
+        ' Call multipleLineRowtest1()
 
         Dim df As DataFrame = DataFrame.Load("E:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\test\Food.csv", simpleRowIterators:=False)
 
