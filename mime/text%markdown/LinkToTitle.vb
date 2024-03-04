@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::1c50331d812e3a259c8474d97699cfc9, sciBASIC#\mime\text%markdown\LinkToTitle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 141
-    '    Code Lines: 82
-    ' Comment Lines: 37
-    '   Blank Lines: 22
-    '     File Size: 5.03 KB
+' Summaries:
 
 
-    ' Class LinkToTitle
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetExtension, LinkEvaluator, RequestToGoogleApi, Transform, videoIdAlreadyExist
-    ' 
-    '     Sub: ParseApiResponse
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 141
+'    Code Lines: 82
+' Comment Lines: 37
+'   Blank Lines: 22
+'     File Size: 5.03 KB
+
+
+' Class LinkToTitle
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetExtension, LinkEvaluator, RequestToGoogleApi, Transform, videoIdAlreadyExist
+' 
+'     Sub: ParseApiResponse
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,9 +59,6 @@
 ' * view the LICENSE file that was distributed with this source code.
 ' 
 
-
-Imports System.Net
-Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -81,7 +78,13 @@ Public Class LinkToTitle
     Private _apiKey As String
     Private _maxLinks As Integer
 
-    Private Shared _youtubeLink As New Regex(vbCr & vbLf & "                    (?:https?\:\/\/)" & vbCr & vbLf & "                    (?:www\.)?" & vbCr & vbLf & "                    (?:youtu\.be|youtube\.com)\/" & vbCr & vbLf & "                    (?:embed\/|v\/|watch\?v=)?" & vbCr & vbLf & "                    ([\w\-]{10,12})", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
+    Shared ReadOnly _youtubeLink As New Regex("
+        (?:https?\:\/\/)
+        (?:www\.)?
+        (?:youtu\.be|youtube\.com)\/
+        (?:embed\/|v\/|watch\?v=)?
+        ([\w\-]{10,12})
+    ", RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
 
     ''' <summary>
     ''' FiXME: max ids?
@@ -137,13 +140,13 @@ Public Class LinkToTitle
         Return _youtubeLink.Replace(text, New MatchEvaluator(AddressOf LinkEvaluator))
     End Function
 
-
     Private Function videoIdAlreadyExist(id As String) As Boolean
         For i As Integer = 0 To _maxLinks - 1
             If _links(i, 0) = id Then
                 Return True
             End If
         Next
+
         Return False
     End Function
 
@@ -155,14 +158,13 @@ Public Class LinkToTitle
     ''' <param name="ids"></param>
     ''' <returns>Return null string if request failed</returns>
     Private Function RequestToGoogleApi(ids As String) As String
+        Dim url As String = String.Format("https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}" & "&part=snippet&fields=items(id,snippet(title))", ids, _apiKey)
+
         Try
-            Using client As New WebClient()
-                client.Encoding = Encoding.UTF8
-                Return client.DownloadString(String.Format("https://www.googleapis.com/youtube/v3/videos?id={0}&key={1}" & "&part=snippet&fields=items(id,snippet(title))", ids, _apiKey))
-            End Using
+            Return url.GET
         Catch
+            Return Nothing
         End Try
-        Return Nothing
     End Function
 
 
