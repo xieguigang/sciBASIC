@@ -463,7 +463,13 @@ Public Class MarkdownHTML
         ' in other words [this] and [this[also]] and [this[also[too]]]
         ' up to _nestDepth
         If _nestedBracketsPattern Is Nothing Then
-            _nestedBracketsPattern = RepeatString(vbCr & vbLf & "                    (?>              # Atomic matching" & vbCr & vbLf & "                       [^\[\]]+      # Anything other than brackets" & vbCr & vbLf & "                     |" & vbCr & vbLf & "                       \[" & vbCr & vbLf & "                           ", _nestDepth) & RepeatString(" \]" & vbCr & vbLf & "                    )*", _nestDepth)
+            _nestedBracketsPattern = RepeatString("
+(?>              # Atomic matching
+[^\[\]]+      # Anything other than brackets
+|
+\[
+", _nestDepth) & RepeatString(" \]
+)*", _nestDepth)
         End If
         Return _nestedBracketsPattern
     End Function
@@ -1129,6 +1135,7 @@ Public Class MarkdownHTML
         Dim listType As String = If(Regex.IsMatch(marker, MarkerUL), "ul", "ol")
         Dim result As String
         Dim start As String = ""
+
         If listType = "ol" Then
             Dim firstNumber = Integer.Parse(marker.Substring(0, marker.Length - 1))
             If firstNumber <> 1 AndAlso firstNumber <> 0 Then
@@ -1266,7 +1273,7 @@ Public Class MarkdownHTML
         codeBlock = EncodeCode(Outdent(codeBlock))
         codeBlock = _newlinesLeadingTrailing.Replace(codeBlock, "")
 
-        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{language}"">", codeBlock, vbLf & "</code></pre>" & vbLf & vbLf)
+        Return _render.CodeBlock(code, language)
     End Function
 
     Private Function CodeBlockEvaluator(match As Match) As String
@@ -1370,9 +1377,9 @@ Public Class MarkdownHTML
     ''' </summary>
     Private Function DoHardBreaks(text As String) As String
         If _AutoNewLines Then
-            text = Regex.Replace(text, "\n", String.Format("<br{0}" & vbLf, _EmptyElementSuffix))
+            text = Regex.Replace(text, "\n", _render.NewLine)
         Else
-            text = Regex.Replace(text, " {2,}\n", String.Format("<br{0}" & vbLf, _EmptyElementSuffix))
+            text = Regex.Replace(text, " {2,}\n", _render.NewLine)
         End If
         Return text
     End Function

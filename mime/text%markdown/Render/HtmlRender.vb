@@ -35,4 +35,12 @@
     Public Overrides Function HorizontalLine() As String
         Return "<hr" & markdown.EmptyElementSuffix & vbLf
     End Function
+
+    Public Overrides Function NewLine() As String
+        Return String.Format("<br{0}" & vbLf, markdown.EmptyElementSuffix)
+    End Function
+
+    Public Overrides Function CodeBlock(code As String, lang As String) As String
+        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">", code, vbLf & "</code></pre>" & vbLf & vbLf)
+    End Function
 End Class

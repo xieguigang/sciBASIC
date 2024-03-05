@@ -13,7 +13,9 @@ Public MustInherit Class Render
     Public MustOverride Function Paragraph(text As String, CreateParagraphs As Boolean) As String
     Public MustOverride Function Header(text As String, level As Integer) As String
     Public MustOverride Function CodeSpan(text As String) As String
+    Public MustOverride Function CodeBlock(code As String, lang As String) As String
     Public MustOverride Function Document(text As String) As String
     Public MustOverride Function HorizontalLine() As String
+    Public MustOverride Function NewLine() As String
 
 End Class
