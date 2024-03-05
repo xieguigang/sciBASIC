@@ -1033,13 +1033,17 @@ Public Class MarkdownHTML
     Private Function SetextHeaderEvaluator(match As Match) As String
         Dim header As String = match.Groups(1).Value
         Dim level As Integer = If(match.Groups(2).Value.StartsWith("="), 1, 2)
-        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, RunSpanGamut(header), level)
+        Dim text As String = RunSpanGamut(header)
+
+        Return _render.Header(text, level)
     End Function
 
     Private Function AtxHeaderEvaluator(match As Match) As String
         Dim header As String = match.Groups(2).Value
         Dim level As Integer = match.Groups(1).Value.Length
-        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, RunSpanGamut(header), level)
+        Dim text As String = RunSpanGamut(header)
+
+        Return _render.Header(text, level)
     End Function
 
     Const regex_horizontalRules$ = "

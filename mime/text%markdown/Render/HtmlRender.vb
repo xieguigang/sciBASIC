@@ -21,7 +21,7 @@
     End Function
 
     Public Overrides Function Header(text As String, level As Integer) As String
-        Throw New NotImplementedException()
+        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, text, level)
     End Function
 
     Public Overrides Function CodeSpan(text As String) As String
