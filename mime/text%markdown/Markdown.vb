@@ -165,6 +165,7 @@ Public Class MarkdownHTML
         End If
 
         _render = If(render, New HtmlRender)
+        _render.SetEngine(Me)
         _AllowEmptyLinkText = options.AllowEmptyLinkText
         _DisableHr = options.DisableHr
         _DisableHeaders = options.DisableHeaders
@@ -1063,7 +1064,7 @@ Public Class MarkdownHTML
     ''' - - -
     ''' </remarks>
     Private Function DoHorizontalRules(text As String) As String
-        Return _horizontalRules.Replace(text, "<hr" & _EmptyElementSuffix & vbLf)
+        Return _horizontalRules.Replace(text, _render.HorizontalLine)
     End Function
 
     Const regex_wholeList$ = "
@@ -1323,7 +1324,7 @@ Public Class MarkdownHTML
         span = EncodeCode(span)
         span = SaveFromAutoLinking(span)
         ' to prevent auto-linking. Not necessary in code *blocks*, but in code spans.
-        Return String.Concat("<code>", span, "</code>")
+        Return _render.CodeSpan(span)
     End Function
 #End Region
 

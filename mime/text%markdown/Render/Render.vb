@@ -6,8 +6,14 @@ Public MustInherit Class Render
 
     Protected Shared ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Compiled)
 
+    Friend Sub SetEngine(markdown As MarkdownHTML)
+        Me.markdown = markdown
+    End Sub
+
     Public MustOverride Function Paragraph(text As String, CreateParagraphs As Boolean) As String
-    Public MustOverride Function Header(text As String) As String
+    Public MustOverride Function Header(text As String, level As Integer) As String
+    Public MustOverride Function CodeSpan(text As String) As String
     Public MustOverride Function Document(text As String) As String
+    Public MustOverride Function HorizontalLine() As String
 
 End Class

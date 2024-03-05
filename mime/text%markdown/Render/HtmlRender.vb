@@ -19,4 +19,20 @@
     Public Overrides Function Document(text As String) As String
         Return text
     End Function
+
+    Public Overrides Function Header(text As String, level As Integer) As String
+        Throw New NotImplementedException()
+    End Function
+
+    Public Overrides Function CodeSpan(text As String) As String
+        Return {"<code>", text, "</code>"}.JoinBy("")
+    End Function
+
+    ''' <summary>
+    ''' &lt;hr />
+    ''' </summary>
+    ''' <returns></returns>
+    Public Overrides Function HorizontalLine() As String
+        Return "<hr" & markdown.EmptyElementSuffix & vbLf
+    End Function
 End Class
