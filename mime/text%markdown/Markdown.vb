@@ -320,9 +320,13 @@ Public Class MarkdownHTML
             Return text
         End If
 
-        For Each line In lines
+        For Each line As String In lines
+            If line.StringEmpty Then
+                Return text
+            End If
+            ' 不是table格式的，则直接返回原始文本
             If line.First <> "|"c Then
-                Return text  ' 不是table格式的，则直接返回原始文本
+                Return text
             End If
         Next
 
