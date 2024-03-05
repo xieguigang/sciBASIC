@@ -942,7 +942,7 @@ Public Class MarkdownHTML
     ' This prevents the creation of horribly broken HTML when some syntax ambiguities
     ' collide. It likely still doesn't do what the user meant, but at least we're not
     ' outputting garbage.
-    Private Function EscapeImageAltText(s As String) As String
+    Friend Function EscapeImageAltText(s As String) As String
         s = EscapeBoldItalic(s)
         s = Regex.Replace(s, "[\[\]()]", Function(m) _escapeTable(m.ToString()))
         Return s
@@ -966,7 +966,7 @@ Public Class MarkdownHTML
                 title = _titles(linkID)
             End If
 
-            Return ImageTag(url, altText, title)
+            Return _render.Image(url, altText, title)
         Else
             ' If there's no such link ID, leave intact:
             Return wholeMatch
@@ -985,19 +985,7 @@ Public Class MarkdownHTML
             url = url.Substring(1, url.Length - 2)
         End If
         ' Remove <>'s surrounding URL, if present
-        Return ImageTag(url, alt, title)
-    End Function
-
-    Private Function ImageTag(url As String, altText As String, title As String) As String
-        altText = EscapeImageAltText(AttributeEncode(altText))
-        url = AttributeSafeUrl(url)
-        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
-        If Not String.IsNullOrEmpty(title) Then
-            title = AttributeEncode(EscapeBoldItalic(title))
-            result += String.Format(" title=""{0}""", title)
-        End If
-        result += _EmptyElementSuffix
-        Return result
+        Return _render.Image(url, alt, title)
     End Function
 
     Const regex_headerSetext$ = "
@@ -1615,7 +1603,7 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' escapes Bold [ * ] and Italic [ _ ] characters
     ''' </summary>
-    Private Function EscapeBoldItalic(s As String) As String
+    Friend Function EscapeBoldItalic(s As String) As String
         s = s.Replace("*", _escapeTable("*"))
         s = s.Replace("_", _escapeTable("_"))
         Return s

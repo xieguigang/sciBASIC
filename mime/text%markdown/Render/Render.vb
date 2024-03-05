@@ -17,5 +17,6 @@ Public MustInherit Class Render
     Public MustOverride Function Document(text As String) As String
     Public MustOverride Function HorizontalLine() As String
     Public MustOverride Function NewLine() As String
+    Public MustOverride Function Image(url As String, altText As String, title As String) As String
 
 End Class
