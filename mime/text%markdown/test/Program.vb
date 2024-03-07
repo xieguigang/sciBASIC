@@ -10,6 +10,14 @@ Module Program
 
 this has a ``code`` span. **yes it** is!
 
+```
+not a **bold** word
+
+``aaa``
+
+```
+
+
 > a **fox**
 >
 > a ![image](aa/bb.png) [url](aaa.txt)
@@ -18,5 +26,7 @@ this has a ``code`` span. **yes it** is!
 
     Sub Main(args As String())
         Console.WriteLine(New MakrdownRender().Render(markdown_demo))
+
+        Call New MakrdownRender().Render(markdown_demo).SaveTo("./test_demo.html")
     End Sub
 End Module
