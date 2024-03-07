@@ -7,15 +7,7 @@ Namespace Language
 
         Dim buf As CharBuffer
         Dim s As CharPtr
-        Dim escape As New escapes
-
-        Private Class escapes
-
-            Public code_span As Boolean
-            Public code_block As Boolean
-            Public quot_block As Boolean
-
-        End Class
+        Dim styles As Styles
 
         Sub New(text As String)
             s = text
@@ -26,15 +18,26 @@ Namespace Language
 
             Do While (tokens = WalkChar(++s).ToArray).Length > 0
                 For Each t As Token In tokens.AsEnumerable
-                    Yield t
+                    If Not t Is Nothing Then
+                        Yield t
+                    End If
                 Next
             Loop
         End Function
 
         Private Iterator Function WalkChar(c As Char) As IEnumerable(Of Token)
             If c = "#"c Then
+                If buf > 0 AndAlso buf.Last <> "#"c Then
+                    Yield measure()
+                End If
+
+                buf += c
 
             End If
+        End Function
+
+        Private Function measure() As Token
+
         End Function
     End Class
 End Namespace

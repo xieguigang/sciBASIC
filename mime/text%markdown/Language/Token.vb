@@ -9,5 +9,7 @@ Namespace Language
 
     Public Class Token : Inherits CodeToken(Of TokenTypes)
 
+        Public styles As Styles
+
     End Class
 End Namespace
