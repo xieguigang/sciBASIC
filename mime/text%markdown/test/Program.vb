@@ -1,5 +1,4 @@
-Imports System
-Imports Microsoft.VisualBasic.MIME.text.markdown.Language
+Imports Microsoft.VisualBasic.MIME.text.markdown
 
 Module Program
 
@@ -17,16 +16,7 @@ this has a ``code`` span. **yes it** is!
 
 "
 
-    Sub token_test()
-        Dim t As New Tokenlizer(markdown_demo)
-        Dim parts = t.GetTokens.ToArray
-
-        Pause()
-    End Sub
-
     Sub Main(args As String())
-        Call token_test()
-
-        Console.WriteLine("Hello World!")
+        Console.WriteLine(New MakrdownRender().Render(markdown_demo))
     End Sub
 End Module
