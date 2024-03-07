@@ -12,14 +12,17 @@ Namespace Language
         Dim startNewLine As Boolean = True
 
         Sub New(text As String)
-            s = text
+            ' normalized newline token
+            s = text.LineTokens.JoinBy(ASCII.LF)
         End Sub
 
         Public Iterator Function GetTokens() As IEnumerable(Of Token)
-            Dim tokens As Value(Of Token()) = {}
+            Do While True
+                If s.EndRead Then
+                    Exit Do
+                End If
 
-            Do While (tokens = WalkChar(++s).ToArray).Length > 0
-                For Each t As Token In tokens.AsEnumerable
+                For Each t As Token In WalkChar(++s)
                     If Not t Is Nothing Then
                         Yield t
                     End If
@@ -36,7 +39,9 @@ Namespace Language
                 buf += c
             ElseIf c = "*"c Then
                 If buf > 0 AndAlso buf.Last <> "*" Then
-                    Yield measure()
+                    If styles.bold Then
+
+                    End If
                 End If
 
                 buf += c
@@ -47,9 +52,11 @@ Namespace Language
                     styles.quote = True
                 End If
             Else
-                If c = ASCII.CR OrElse c = ASCII.LF Then
+                If c = ASCII.LF Then
                     startNewLine = True
                     Yield measure()
+                Else
+                    buf += c
                 End If
             End If
         End Function
