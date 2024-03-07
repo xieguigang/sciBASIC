@@ -6,9 +6,9 @@ Namespace Language
 
     Public Class Tokenlizer
 
-        Dim buf As CharBuffer
+        Dim buf As New CharBuffer
         Dim s As CharPtr
-        Dim styles As Styles
+        Dim styles As New Styles
         Dim startNewLine As Boolean = True
 
         Sub New(text As String)
@@ -41,6 +41,11 @@ Namespace Language
 
                 buf += c
             ElseIf c = ">"c Then
+                Yield measure()
+
+                If startNewLine Then
+                    styles.quote = True
+                End If
             Else
                 If c = ASCII.CR OrElse c = ASCII.LF Then
                     startNewLine = True
