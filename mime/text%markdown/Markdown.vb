@@ -165,6 +165,7 @@ Public Class MarkdownHTML
         End If
 
         _render = If(render, New HtmlRender)
+        _render.SetEngine(Me)
         _AllowEmptyLinkText = options.AllowEmptyLinkText
         _DisableHr = options.DisableHr
         _DisableHeaders = options.DisableHeaders
@@ -319,9 +320,13 @@ Public Class MarkdownHTML
             Return text
         End If
 
-        For Each line In lines
+        For Each line As String In lines
+            If line.StringEmpty Then
+                Return text
+            End If
+            ' 不是table格式的，则直接返回原始文本
             If line.First <> "|"c Then
-                Return text  ' 不是table格式的，则直接返回原始文本
+                Return text
             End If
         Next
 
@@ -462,7 +467,13 @@ Public Class MarkdownHTML
         ' in other words [this] and [this[also]] and [this[also[too]]]
         ' up to _nestDepth
         If _nestedBracketsPattern Is Nothing Then
-            _nestedBracketsPattern = RepeatString(vbCr & vbLf & "                    (?>              # Atomic matching" & vbCr & vbLf & "                       [^\[\]]+      # Anything other than brackets" & vbCr & vbLf & "                     |" & vbCr & vbLf & "                       \[" & vbCr & vbLf & "                           ", _nestDepth) & RepeatString(" \]" & vbCr & vbLf & "                    )*", _nestDepth)
+            _nestedBracketsPattern = RepeatString("
+(?>              # Atomic matching
+[^\[\]]+      # Anything other than brackets
+|
+\[
+", _nestDepth) & RepeatString(" \]
+)*", _nestDepth)
         End If
         Return _nestedBracketsPattern
     End Function
@@ -931,7 +942,7 @@ Public Class MarkdownHTML
     ' This prevents the creation of horribly broken HTML when some syntax ambiguities
     ' collide. It likely still doesn't do what the user meant, but at least we're not
     ' outputting garbage.
-    Private Function EscapeImageAltText(s As String) As String
+    Friend Function EscapeImageAltText(s As String) As String
         s = EscapeBoldItalic(s)
         s = Regex.Replace(s, "[\[\]()]", Function(m) _escapeTable(m.ToString()))
         Return s
@@ -955,7 +966,7 @@ Public Class MarkdownHTML
                 title = _titles(linkID)
             End If
 
-            Return ImageTag(url, altText, title)
+            Return _render.Image(url, altText, title)
         Else
             ' If there's no such link ID, leave intact:
             Return wholeMatch
@@ -974,19 +985,7 @@ Public Class MarkdownHTML
             url = url.Substring(1, url.Length - 2)
         End If
         ' Remove <>'s surrounding URL, if present
-        Return ImageTag(url, alt, title)
-    End Function
-
-    Private Function ImageTag(url As String, altText As String, title As String) As String
-        altText = EscapeImageAltText(AttributeEncode(altText))
-        url = AttributeSafeUrl(url)
-        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
-        If Not String.IsNullOrEmpty(title) Then
-            title = AttributeEncode(EscapeBoldItalic(title))
-            result += String.Format(" title=""{0}""", title)
-        End If
-        result += _EmptyElementSuffix
-        Return result
+        Return _render.Image(url, alt, title)
     End Function
 
     Const regex_headerSetext$ = "
@@ -1032,13 +1031,17 @@ Public Class MarkdownHTML
     Private Function SetextHeaderEvaluator(match As Match) As String
         Dim header As String = match.Groups(1).Value
         Dim level As Integer = If(match.Groups(2).Value.StartsWith("="), 1, 2)
-        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, RunSpanGamut(header), level)
+        Dim text As String = RunSpanGamut(header)
+
+        Return _render.Header(text, level)
     End Function
 
     Private Function AtxHeaderEvaluator(match As Match) As String
         Dim header As String = match.Groups(2).Value
         Dim level As Integer = match.Groups(1).Value.Length
-        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, RunSpanGamut(header), level)
+        Dim text As String = RunSpanGamut(header)
+
+        Return _render.Header(text, level)
     End Function
 
     Const regex_horizontalRules$ = "
@@ -1063,7 +1066,7 @@ Public Class MarkdownHTML
     ''' - - -
     ''' </remarks>
     Private Function DoHorizontalRules(text As String) As String
-        Return _horizontalRules.Replace(text, "<hr" & _EmptyElementSuffix & vbLf)
+        Return _horizontalRules.Replace(text, _render.HorizontalLine)
     End Function
 
     Const regex_wholeList$ = "
@@ -1124,6 +1127,7 @@ Public Class MarkdownHTML
         Dim listType As String = If(Regex.IsMatch(marker, MarkerUL), "ul", "ol")
         Dim result As String
         Dim start As String = ""
+
         If listType = "ol" Then
             Dim firstNumber = Integer.Parse(marker.Substring(0, marker.Length - 1))
             If firstNumber <> 1 AndAlso firstNumber <> 0 Then
@@ -1261,7 +1265,7 @@ Public Class MarkdownHTML
         codeBlock = EncodeCode(Outdent(codeBlock))
         codeBlock = _newlinesLeadingTrailing.Replace(codeBlock, "")
 
-        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{language}"">", codeBlock, vbLf & "</code></pre>" & vbLf & vbLf)
+        Return _render.CodeBlock(code, language)
     End Function
 
     Private Function CodeBlockEvaluator(match As Match) As String
@@ -1323,7 +1327,7 @@ Public Class MarkdownHTML
         span = EncodeCode(span)
         span = SaveFromAutoLinking(span)
         ' to prevent auto-linking. Not necessary in code *blocks*, but in code spans.
-        Return String.Concat("<code>", span, "</code>")
+        Return _render.CodeSpan(span)
     End Function
 #End Region
 
@@ -1365,9 +1369,9 @@ Public Class MarkdownHTML
     ''' </summary>
     Private Function DoHardBreaks(text As String) As String
         If _AutoNewLines Then
-            text = Regex.Replace(text, "\n", String.Format("<br{0}" & vbLf, _EmptyElementSuffix))
+            text = Regex.Replace(text, "\n", _render.NewLine)
         Else
-            text = Regex.Replace(text, " {2,}\n", String.Format("<br{0}" & vbLf, _EmptyElementSuffix))
+            text = Regex.Replace(text, " {2,}\n", _render.NewLine)
         End If
         Return text
     End Function
@@ -1599,7 +1603,7 @@ Public Class MarkdownHTML
     ''' <summary>
     ''' escapes Bold [ * ] and Italic [ _ ] characters
     ''' </summary>
-    Private Function EscapeBoldItalic(s As String) As String
+    Friend Function EscapeBoldItalic(s As String) As String
         s = s.Replace("*", _escapeTable("*"))
         s = s.Replace("_", _escapeTable("_"))
         Return s

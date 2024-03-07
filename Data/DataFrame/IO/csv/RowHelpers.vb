@@ -141,11 +141,19 @@ Namespace IO
 
         <Extension>
         Public Iterator Function GetColumns(table As ICollection(Of RowObject)) As IEnumerable(Of String())
-            Dim width As Integer = Aggregate row As RowObject
-                                   In table
-                                   Into Max(row.NumbersOfColumn)
+            Dim width As Integer = 0
             Dim index As Integer
             Dim col As IEnumerable(Of String)
+
+            ' 20240306
+            ' deal with the possible empty table data
+            If table Is Nothing OrElse table.Count = 0 Then
+                Return
+            Else
+                width = Aggregate row As RowObject
+                        In table
+                        Into Max(row.NumbersOfColumn)
+            End If
 
             For offset As Integer = 0 To width - 1
                 index = offset

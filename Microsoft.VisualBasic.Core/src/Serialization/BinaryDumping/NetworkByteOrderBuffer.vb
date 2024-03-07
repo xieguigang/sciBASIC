@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Serialization.BinaryDumping
 
@@ -85,6 +86,12 @@ Namespace Serialization.BinaryDumping
                 decode32 = AddressOf defaultDecoder32
             End If
         End Sub
+
+        Public Function ParseDouble(base64 As String) As Double()
+            Dim raw As Byte() = Base64Codec.Base64RawBytes(base64)
+            Dim vals As Double() = decode(raw)
+            Return vals
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBytes(d As IEnumerable(Of Double)) As Byte()
