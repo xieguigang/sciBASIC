@@ -15,6 +15,7 @@ Public Class MakrdownRender
         Call RunBold()
         Call RunItalic()
         Call RunQuoteBlock()
+        Call RunList()
 
         Call RunCodeSpan()
         Call RunCodeBlock()
@@ -117,6 +118,18 @@ Public Class MakrdownRender
         Dim lines = s.LineTokens
         lines = lines.Select(Function(si) If(si = "", "", si.Substring(1).Trim)).ToArray
         Return lines.JoinBy("<br />")
+    End Function
+
+    ReadOnly list As New Regex("\n([+].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+
+    Private Sub RunList()
+        text = list.Replace(text, Function(m) $"<ul>{TrimListItems(m.Value)}</ul>")
+    End Sub
+
+    Private Shared Function TrimListItems(s As String) As String
+        Dim lines = s.LineTokens
+        lines = lines.Select(Function(si) If(si = "", "", $"<li>{si.Substring(1).Trim}</li>")).ToArray
+        Return lines.JoinBy(vbLf)
     End Function
 
 End Class
