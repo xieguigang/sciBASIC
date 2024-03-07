@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Language
@@ -8,6 +9,7 @@ Namespace Language
         Dim buf As CharBuffer
         Dim s As CharPtr
         Dim styles As Styles
+        Dim startNewLine As Boolean = True
 
         Sub New(text As String)
             s = text
@@ -39,12 +41,27 @@ Namespace Language
 
                 buf += c
             ElseIf c = ">"c Then
-
+            Else
+                If c = ASCII.CR OrElse c = ASCII.LF Then
+                    startNewLine = True
+                    Yield measure()
+                End If
             End If
         End Function
 
         Private Function measure() As Token
+            If buf = 0 Then
+                Return Nothing
+            End If
 
+            If buf.StartsWith("#"c) Then
+                Dim levels As Integer = buf.AsEnumerable.TakeWhile(Function(c) c = "#"c).Count
+                Dim title As String = New String(buf.PopAllChars).Trim(" "c, ASCII.TAB, "#"c)
+
+                Return New Token(TokenTypes.Header, title, styles) With {.level = levels}
+            End If
+
+            Return Nothing
         End Function
     End Class
 End Namespace

@@ -129,6 +129,14 @@ Namespace Text.Parser
             End Get
         End Property
 
+        Public Function StartsWith(c As Char) As Boolean
+            If Size = 0 Then
+                Return False
+            Else
+                Return buffer(Scan0) = c
+            End If
+        End Function
+
         ''' <summary>
         ''' test if current char buffer is starts with a specific prefix string
         ''' </summary>
@@ -222,6 +230,10 @@ Namespace Text.Parser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function PopAllChars() As Char()
             Return buffer.PopAll
+        End Function
+
+        Public Function AsEnumerable() As IEnumerable(Of Char)
+            Return buffer
         End Function
 
         ''' <summary>

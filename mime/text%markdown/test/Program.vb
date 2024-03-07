@@ -25,6 +25,8 @@ this has a ``code`` span. **yes it** is!
     End Sub
 
     Sub Main(args As String())
+        Call token_test()
+
         Console.WriteLine("Hello World!")
     End Sub
 End Module
