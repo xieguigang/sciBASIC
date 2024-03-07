@@ -53,12 +53,32 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Language
 
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
 #End If
 
 Public Module CollectionValueGetter
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="value"></param>
+    ''' <returns>
+    ''' this function returns empty collection if the given <paramref name="value"/> is nothing
+    ''' </returns>
+    <Extension>
+    Public Iterator Function AsEnumerable(Of T)(value As Value(Of T())) As IEnumerable(Of T)
+        If value Is Nothing OrElse value.IsNothing Then
+            Return
+        End If
+
+        For Each item As T In CType(value, T())
+            Yield item
+        Next
+    End Function
 
     ''' <summary>
     ''' Returns the first not nothing object.
