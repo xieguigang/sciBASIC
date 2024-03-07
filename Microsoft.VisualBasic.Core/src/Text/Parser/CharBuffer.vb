@@ -332,7 +332,11 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count = size
+            If buf Is Nothing Then
+                Return 0 = size
+            Else
+                Return buf.buffer.Count = size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
