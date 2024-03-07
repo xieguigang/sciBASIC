@@ -32,6 +32,13 @@ Namespace Language
                 End If
 
                 buf += c
+            ElseIf c = "*"c Then
+                If buf > 0 AndAlso buf.Last <> "*" Then
+                    Yield measure()
+                End If
+
+                buf += c
+            ElseIf c = ">"c Then
 
             End If
         End Function
