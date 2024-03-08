@@ -20,9 +20,9 @@ not a **bold** word
 
 |a|b|c|
 |--|--|--|
-|*1*|2|3|
+|*1*|2|<span style='color: red;'>3</span>|
 |4|*5*|6|
-|7|8|*9*|
+|7|**8**|*9*|
 
 + item1
 + item2
