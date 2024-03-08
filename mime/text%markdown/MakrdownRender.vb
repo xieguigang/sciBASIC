@@ -61,7 +61,7 @@ Public Class MakrdownRender
         Next
     End Sub
 
-    ReadOnly codeblock As New Regex("```.+```", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly codeblock As New Regex("[`]{3,}.+[`]{3,}", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub hideCodeBlock()
         Dim hash As Integer = 1
@@ -77,7 +77,7 @@ Public Class MakrdownRender
         Next
     End Sub
 
-    ReadOnly hr As New Regex("([*]{3,})|([-]{3,})|([_]{3,})", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly hr As New Regex("^\s*([*]{3,})|([-]{3,})|([_]{3,})\s*$", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHr()
         text = hr.Replace(text, Function(m) render.HorizontalLine)
@@ -211,16 +211,20 @@ Public Class MakrdownRender
         Return lines.JoinBy("<br />")
     End Function
 
-    ReadOnly list As New Regex("\n([+].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list1 As New Regex("\n([\+].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ' ReadOnly list2 As New Regex("\n([\-].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ' ReadOnly list3 As New Regex("\n([\*].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunList()
-        text = list.Replace(text, Function(m) $"<ul>{TrimListItems(m.Value)}</ul>")
+        text = list1.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
+        'text = list2.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
+        'text = list3.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
     End Sub
 
-    Private Shared Function TrimListItems(s As String) As String
-        Dim lines = s.LineTokens
-        lines = lines.Select(Function(si) If(si = "", "", $"<li>{si.Substring(1).Trim}</li>")).ToArray
-        Return lines.JoinBy(vbLf)
+    Private Shared Iterator Function TrimListItems(s As String) As IEnumerable(Of String)
+        For Each si As String In s.LineTokens
+            Yield If(si = "", "", si.Substring(1).Trim)
+        Next
     End Function
 
 End Class

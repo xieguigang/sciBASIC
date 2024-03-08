@@ -33,11 +33,11 @@
     ''' </summary>
     ''' <returns></returns>
     Public Overrides Function HorizontalLine() As String
-        Return "<hr />"
+        Return vbCrLf & vbCrLf & "<hr />" & vbCrLf & vbCrLf
     End Function
 
     Public Overrides Function NewLine() As String
-        Return "<br />"
+        Return vbCrLf & "<br />" & vbCrLf
     End Function
 
     Public Overrides Function CodeBlock(code As String, lang As String) As String
@@ -65,6 +65,16 @@
     End Function
 
     Public Overrides Function BlockQuote(text As String) As String
-        Return $"<blockquote>{text}</blockquote>"
+        Return vbCrLf & vbCrLf & $"<blockquote>{text}</blockquote>" & vbCrLf & vbCrLf
+    End Function
+
+    Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String
+        Dim listSet As String() = items.Select(Function(s) $"<li>{s}</li>").ToArray
+
+        If orderList Then
+            Return $"<ol>{listSet.JoinBy("")}</ol>"
+        Else
+            Return $"<ul>{listSet.JoinBy("")}</ul>"
+        End If
     End Function
 End Class

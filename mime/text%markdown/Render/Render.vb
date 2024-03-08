@@ -15,5 +15,6 @@ Public MustInherit Class Render
     Public MustOverride Function Bold(text As String) As String
     Public MustOverride Function Italic(text As String) As String
     Public MustOverride Function BlockQuote(text As String) As String
+    Public MustOverride Function List(items As IEnumerable(Of String), orderList As Boolean) As String
 
 End Class
