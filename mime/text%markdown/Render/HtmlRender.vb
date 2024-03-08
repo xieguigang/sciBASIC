@@ -33,11 +33,11 @@
     ''' </summary>
     ''' <returns></returns>
     Public Overrides Function HorizontalLine() As String
-        Return "<hr" & markdown.EmptyElementSuffix & vbLf
+        Return "<hr />"
     End Function
 
     Public Overrides Function NewLine() As String
-        Return String.Format("<br{0}" & vbLf, markdown.EmptyElementSuffix)
+        Return "<br />"
     End Function
 
     Public Overrides Function CodeBlock(code As String, lang As String) As String
@@ -45,14 +45,13 @@
     End Function
 
     Public Overrides Function Image(url As String, altText As String, title As String) As String
-        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", AttributeSafeUrl(url), markdown.EscapeImageAltText(AttributeEncode(altText)))
+        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
 
         If Not String.IsNullOrEmpty(title) Then
-            title = AttributeEncode(markdown.EscapeBoldItalic(title))
             result &= String.Format(" title=""{0}""", title)
         End If
 
-        result &= markdown.EmptyElementSuffix
+        result &= " />"
 
         Return result
     End Function
