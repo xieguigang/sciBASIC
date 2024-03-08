@@ -12,15 +12,22 @@ this has a ``code`` span. **yes it** is!
 
 ```
 not a **bold** word
-
+---------------------------
 ``aaa``
 
 ```
 
+-------------------------------
+
 ### head*er3*
+
+***
 
 this is *alt* __bold__ style
 this is _alt italic_ style
+
+_________
+_________
 
 
 |a|b|c|

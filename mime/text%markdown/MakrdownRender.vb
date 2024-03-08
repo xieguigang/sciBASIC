@@ -12,13 +12,14 @@ Public Class MakrdownRender
         Call hideCodeSpan()
 
         Call RunHeader()
-        Call RunBold()
-        Call RunItalic()
         Call RunQuoteBlock()
         Call RunList()
         Call RunImage()
         Call RunUrl()
         Call RunTable()
+        Call RunHr()
+        Call RunBold()
+        Call RunItalic()
 
         Call RunCodeSpan()
         Call RunCodeBlock()
@@ -57,6 +58,12 @@ Public Class MakrdownRender
             hash += 1
             text = text.Replace(m.Value, key)
         Next
+    End Sub
+
+    ReadOnly hr As New Regex("([*]{3,})|([-]{3,})|([_]{3,})", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    Private Sub RunHr()
+        text = hr.Replace(text, Function(m) "<hr />")
     End Sub
 
     ReadOnly table As New Regex("([|].+[|]\n)+", RegexOptions.Compiled Or RegexOptions.Singleline)
