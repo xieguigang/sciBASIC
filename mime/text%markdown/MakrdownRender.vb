@@ -121,6 +121,7 @@ Public Class MakrdownRender
         Return $"<img src='{url}' alt='{alt}' />"
     End Function
 
+    ReadOnly h6 As New Regex("[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly h5 As New Regex("[#]{5}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly h4 As New Regex("[#]{4}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly h3 As New Regex("[#]{3}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
@@ -128,6 +129,7 @@ Public Class MakrdownRender
     ReadOnly h1 As New Regex("[#]{1}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHeader()
+        text = h6.Replace(text, Function(m) $"<h6>{TrimHeader(m.Value)}</h6>")
         text = h5.Replace(text, Function(m) $"<h5>{TrimHeader(m.Value)}</h5>")
         text = h4.Replace(text, Function(m) $"<h4>{TrimHeader(m.Value)}</h4>")
         text = h3.Replace(text, Function(m) $"<h3>{TrimHeader(m.Value)}</h3>")
