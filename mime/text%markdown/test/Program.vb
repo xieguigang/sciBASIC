@@ -17,6 +17,8 @@ not a **bold** word
 
 ```
 
+### head*er3*
+
 
 |a|b|c|
 |--|--|--|
@@ -24,10 +26,12 @@ not a **bold** word
 |4|*5*|6|
 |7|**8**|*9*|
 
+#### head``e``r4
+
 + item1
 + item2
 + item2
-+ item3
++ item3: ``a+b=c``
 + item4
 
 > a **fox**
