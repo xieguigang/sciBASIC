@@ -17,6 +17,7 @@ Public Class MakrdownRender
         Call RunQuoteBlock()
         Call RunList()
         Call RunImage()
+        Call RunUrl()
 
         Call RunCodeSpan()
         Call RunCodeBlock()
@@ -56,6 +57,22 @@ Public Class MakrdownRender
             text = text.Replace(m.Value, key)
         Next
     End Sub
+
+    ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    Private Sub RunUrl()
+        text = url.Replace(text, Function(m) AnchorTag(m.Value))
+    End Sub
+
+    Private Shared Function AnchorTag(s As String) As String
+        Static alt_r As New Regex("\[.*?\]", RegexOptions.Compiled Or RegexOptions.Multiline)
+        Static url_r As New Regex("\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+        Dim alt As String = alt_r.Match(s).Value.GetStackValue("[", "]")
+        Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")")
+
+        Return $"<a href='{url}' title='{alt}'>{alt}</a>"
+    End Function
 
     ReadOnly image As New Regex("[!]\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
