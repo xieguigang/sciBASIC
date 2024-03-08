@@ -19,6 +19,8 @@ not a **bold** word
 
 ### head*er3*
 
+this is *alt* __bold__ style
+
 
 |a|b|c|
 |--|--|--|

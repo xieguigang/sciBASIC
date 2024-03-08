@@ -159,14 +159,14 @@ Public Class MakrdownRender
         Return Strings.Trim(s).Trim("`")
     End Function
 
-    ReadOnly bold As New Regex("[*]{2}.+[*]{2}", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly bold As New Regex("([*]{2}.+[*]{2})|([_]{2}.+[_]{2})", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunBold()
         text = bold.Replace(text, Function(m) $"<strong>{TrimBold(m.Value)}</strong>")
     End Sub
 
     Private Shared Function TrimBold(s As String) As String
-        Return Strings.Trim(s).Trim("*"c)
+        Return Strings.Trim(s).Trim("*"c, "_"c)
     End Function
 
     ReadOnly italic As New Regex("[*].+[*]", RegexOptions.Compiled Or RegexOptions.Multiline)
