@@ -20,6 +20,7 @@ not a **bold** word
 ### head*er3*
 
 this is *alt* __bold__ style
+this is _alt italic_ style
 
 
 |a|b|c|

@@ -36,7 +36,7 @@ Public Class MakrdownRender
         Call codespans.Clear()
 
         For Each m As Match In codespan.Matches(text)
-            key = $";__codespan_{hash}"
+            key = $";;;codespan;;{hash}"
             codespans(key) = m.Value
             hash += 1
             text = text.Replace(m.Value, key)
@@ -52,7 +52,7 @@ Public Class MakrdownRender
         Call codeblocks.Clear()
 
         For Each m As Match In codeblock.Matches(text)
-            key = $";__codeblock_{hash}"
+            key = $";;;codeblock;;{hash}"
             codeblocks(key) = m.Value
             hash += 1
             text = text.Replace(m.Value, key)
@@ -169,10 +169,10 @@ Public Class MakrdownRender
         Return Strings.Trim(s).Trim("*"c, "_"c)
     End Function
 
-    ReadOnly italic As New Regex("[*].+[*]", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly italic As New Regex("([*].+[*])|([_].+[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunItalic()
-        text = italic.Replace(text, Function(m) $"<i>{TrimBold(m.Value)}</i>")
+        text = italic.Replace(text, Function(m) $"<em>{TrimBold(m.Value)}</em>")
     End Sub
 
     ReadOnly quote As New Regex("\n([>].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
