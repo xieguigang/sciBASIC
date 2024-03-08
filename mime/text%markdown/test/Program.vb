@@ -50,6 +50,40 @@ _________
 >
 > a ![image](aa/bb.png) [url](aaa.txt)
 
+
+--------
+
+Valid links:
+
+ [this is a link]()
+ [this is a link](<http://something.example.com/foo/bar>)
+ [this is a link](http://something.example.com/foo/bar 'test')
+ ![this is an image]()
+ ![this is an image](<http://something.example.com/foo/bar>)
+ ![this is an image](http://something.example.com/foo/bar 'test')
+ 
+ [escape test](<\>\>\>\>\>\>\>\>\>\>\>\>\>\>> '\'\'\'\'\'\'\'\'\'\'\'\'\'\'')
+ [escape test \]\]\]\]\]\]\]\]\]\]\]\]\]\]\]\]](\)\)\)\)\)\)\)\)\)\)\)\)\)\))
+
+Invalid links:
+
+ [this is not a link
+
+ [this is not a link](
+
+ [this is not a link](http://something.example.com/foo/bar 'test'
+ 
+ [this is not a link](((((((((((((((((((((((((((((((((((((((((((((((
+ 
+ [this is not a link]((((((((((()))))))))) (((((((((()))))))))))
+
+
+*this* *is* *your* *basic* *boring* *emphasis*
+
+_this_ _is_ _your_ _basic_ _boring_ _emphasis_
+
+**this** **is** **your** **basic** **boring** **emphasis**
+
 "
 
     Sub Main(args As String())
