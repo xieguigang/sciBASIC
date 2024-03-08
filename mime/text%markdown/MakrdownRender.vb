@@ -4,8 +4,25 @@ Imports Microsoft.VisualBasic.Text
 Public Class MakrdownRender
 
     Dim text As String
+    Dim render As Render
 
-    Public Function Render(markdown As String) As String
+    ''' <summary>
+    ''' default rendering to html by <see cref="HtmlRender"/>
+    ''' </summary>
+    Sub New()
+        Call Me.New(New HtmlRender)
+    End Sub
+
+    Sub New(render As Render)
+        Me.render = render
+    End Sub
+
+    ''' <summary>
+    ''' transform markdown document text to another document format
+    ''' </summary>
+    ''' <param name="markdown"></param>
+    ''' <returns></returns>
+    Public Function Transform(markdown As String) As String
         text = markdown.LineTokens.JoinBy(ASCII.LF)
 
         Call hideCodeBlock()
