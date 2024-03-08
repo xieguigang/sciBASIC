@@ -80,7 +80,7 @@ Public Class MakrdownRender
     ReadOnly hr As New Regex("([*]{3,})|([-]{3,})|([_]{3,})", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHr()
-        text = hr.Replace(text, Function(m) "<hr />")
+        text = hr.Replace(text, Function(m) render.HorizontalLine)
     End Sub
 
     ReadOnly table As New Regex("([|].+[|]\n)+", RegexOptions.Compiled Or RegexOptions.Singleline)
@@ -135,14 +135,14 @@ Public Class MakrdownRender
         text = image.Replace(text, Function(m) ImageTag(m.Value))
     End Sub
 
-    Private Shared Function ImageTag(s As String) As String
+    Private Function ImageTag(s As String) As String
         Static alt_r As New Regex("[!]\[.*?\]", RegexOptions.Compiled Or RegexOptions.Multiline)
         Static url_r As New Regex("\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
         Dim alt As String = alt_r.Match(s).Value.GetStackValue("[", "]")
         Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")")
 
-        Return $"<img src='{url}' alt='{alt}' />"
+        Return render.Image(url, alt, alt)
     End Function
 
     ReadOnly h6 As New Regex("[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
@@ -153,12 +153,12 @@ Public Class MakrdownRender
     ReadOnly h1 As New Regex("[#]{1}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHeader()
-        text = h6.Replace(text, Function(m) $"<h6>{TrimHeader(m.Value)}</h6>")
-        text = h5.Replace(text, Function(m) $"<h5>{TrimHeader(m.Value)}</h5>")
-        text = h4.Replace(text, Function(m) $"<h4>{TrimHeader(m.Value)}</h4>")
-        text = h3.Replace(text, Function(m) $"<h3>{TrimHeader(m.Value)}</h3>")
-        text = h2.Replace(text, Function(m) $"<h2>{TrimHeader(m.Value)}</h2>")
-        text = h1.Replace(text, Function(m) $"<h1>{TrimHeader(m.Value)}</h1>")
+        text = h6.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 6))
+        text = h5.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 5))
+        text = h4.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 4))
+        text = h3.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 3))
+        text = h2.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 2))
+        text = h1.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 1))
     End Sub
 
     Private Shared Function TrimHeader(s As String) As String
@@ -169,13 +169,13 @@ Public Class MakrdownRender
 
     Private Sub RunCodeSpan()
         For Each hashVal In codespans
-            text = text.Replace(hashVal.Key, $"<code>{TrimCodeSpan(hashVal.Value)}</code>")
+            text = text.Replace(hashVal.Key, render.CodeSpan(TrimCodeSpan(hashVal.Value)))
         Next
     End Sub
 
     Private Sub RunCodeBlock()
         For Each hashVal In codeblocks
-            text = text.Replace(hashVal.Key, $"<pre><code>{TrimCodeSpan(hashVal.Value)}</code></pre>")
+            text = text.Replace(hashVal.Key, render.CodeBlock(TrimCodeSpan(hashVal.Value), ""))
         Next
     End Sub
 
@@ -186,7 +186,7 @@ Public Class MakrdownRender
     ReadOnly bold As New Regex("([*]{2}.+[*]{2})|([_]{2}.+[_]{2})", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunBold()
-        text = bold.Replace(text, Function(m) $"<strong>{TrimBold(m.Value)}</strong>")
+        text = bold.Replace(text, Function(m) render.Bold(TrimBold(m.Value)))
     End Sub
 
     Private Shared Function TrimBold(s As String) As String
@@ -196,13 +196,13 @@ Public Class MakrdownRender
     ReadOnly italic As New Regex("([*].+[*])|([_].+[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunItalic()
-        text = italic.Replace(text, Function(m) $"<em>{TrimBold(m.Value)}</em>")
+        text = italic.Replace(text, Function(m) render.Italic(TrimBold(m.Value)))
     End Sub
 
     ReadOnly quote As New Regex("\n([>].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunQuoteBlock()
-        text = quote.Replace(text, Function(m) $"<blockquote>{TrimBlockquote(m.Value)}</blockquote>")
+        text = quote.Replace(text, Function(m) render.BlockQuote(TrimBlockquote(m.Value)))
     End Sub
 
     Private Shared Function TrimBlockquote(s As String) As String

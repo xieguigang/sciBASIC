@@ -53,8 +53,8 @@ _________
 "
 
     Sub Main(args As String())
-        Console.WriteLine(New MakrdownRender().Render(markdown_demo))
+        Console.WriteLine(New MakrdownRender().Transform(markdown_demo))
 
-        Call New MakrdownRender().Render(markdown_demo).SaveTo("./test_demo.html")
+        Call New MakrdownRender().Transform(markdown_demo).SaveTo("./test_demo.html")
     End Sub
 End Module

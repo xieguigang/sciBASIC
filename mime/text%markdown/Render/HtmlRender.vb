@@ -55,4 +55,16 @@
 
         Return result
     End Function
+
+    Public Overrides Function Bold(text As String) As String
+        Return $"<strong>{text}</strong>"
+    End Function
+
+    Public Overrides Function Italic(text As String) As String
+        Return $"<em>{text}</em>"
+    End Function
+
+    Public Overrides Function BlockQuote(text As String) As String
+        Return $"<blockquote>{text}</blockquote>"
+    End Function
 End Class
