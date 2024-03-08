@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>test</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\markdown.NET5.vbproj" />
+  </ItemGroup>
+
+</Project>

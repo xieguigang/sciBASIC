@@ -11,8 +11,9 @@
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,6 +97,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -129,10 +131,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\text.yaml.vbproj">
       <Project>{fb637de6-6beb-4722-968a-f76deb851dfc}</Project>
       <Name>text.yaml</Name>
