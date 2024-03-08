@@ -18,6 +18,7 @@ Public Class MakrdownRender
         Call RunList()
         Call RunImage()
         Call RunUrl()
+        Call RunTable()
 
         Call RunCodeSpan()
         Call RunCodeBlock()
@@ -57,6 +58,36 @@ Public Class MakrdownRender
             text = text.Replace(m.Value, key)
         Next
     End Sub
+
+    ReadOnly table As New Regex("([|].+[|]\n)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+
+    Private Sub RunTable()
+        text = table.Replace(text, Function(m) TableBlock(m.Value))
+    End Sub
+
+    Private Shared Function TableBlock(s As String) As String
+        Dim lines = s.LineTokens
+        Dim headers = lines(0).Split("|"c).Select(AddressOf Strings.Trim).ToArray
+        Dim bodyRows = lines.Skip(2) _
+            .Select(Function(line)
+                        Return line.Split("|"c).Select(AddressOf Strings.Trim).ToArray
+                    End Function) _
+            .Select(Function(r)
+                        Return $"<tr>{r.Select(Function(d) $"<td>{d}</td>").JoinBy("")}</tr>"
+                    End Function) _
+            .ToArray
+
+        Return $"<table>
+
+<thead>
+<tr>{headers.Select(Function(h) $"<th>{h}</th>").JoinBy("")}</tr>
+</thead>
+<tbody>
+{bodyRows.JoinBy(vbCrLf)}
+</tbody>
+
+</table>"
+    End Function
 
     ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
