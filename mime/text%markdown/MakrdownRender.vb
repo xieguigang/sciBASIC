@@ -1,5 +1,6 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Math
 
 Public Class MakrdownRender
 
@@ -211,20 +212,22 @@ Public Class MakrdownRender
         Return lines.JoinBy("<br />")
     End Function
 
-    ReadOnly list1 As New Regex("\n([\+].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ' ReadOnly list2 As New Regex("\n([\-].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ' ReadOnly list3 As New Regex("\n([\*].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
-
     Private Sub RunList()
-        text = list1.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
-        'text = list2.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
-        'text = list3.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
-    End Sub
+        Dim lines As String() = text.LineTokens
+        Dim items As New List(Of Integer)
 
-    Private Shared Iterator Function TrimListItems(s As String) As IEnumerable(Of String)
-        For Each si As String In s.LineTokens
-            Yield If(si = "", "", si.Substring(1).Trim)
+        For Each prefix As String In {"+", "-", "*"}
+            For i As Integer = 0 To lines.Length - 1
+                If lines(i).Trim.StartsWith(prefix) Then
+                    Call items.Add(i)
+                End If
+            Next
+
+            Dim list_groups = items.GroupBy(offsets:=1).ToArray
+
+            For Each group In list_groups
+
+            Next
         Next
-    End Function
-
+    End Sub
 End Class
