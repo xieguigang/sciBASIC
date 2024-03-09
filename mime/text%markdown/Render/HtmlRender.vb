@@ -1,4 +1,6 @@
-﻿Public Class HtmlRender : Inherits Render
+﻿Imports System.Net.Http
+
+Public Class HtmlRender : Inherits Render
 
     ''' <summary>
     ''' 
@@ -76,5 +78,24 @@
         Else
             Return $"<ul>{listSet.JoinBy("")}</ul>"
         End If
+    End Function
+
+    Public Overrides Function Table(head() As String, rows As IEnumerable(Of String())) As String
+        Dim bodyRows = rows _
+            .Select(Function(r)
+                        Return $"<tr>{r.Select(Function(d) $"<td>{d}</td>").JoinBy("")}</tr>"
+                    End Function) _
+            .ToArray
+
+        Return $"<table>
+
+<thead>
+<tr>{head.Select(Function(h) $"<th>{h}</th>").JoinBy("")}</tr>
+</thead>
+<tbody>
+{bodyRows.JoinBy(vbCrLf)}
+</tbody>
+
+</table>"
     End Function
 End Class

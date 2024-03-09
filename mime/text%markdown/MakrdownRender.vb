@@ -90,28 +90,15 @@ Public Class MakrdownRender
         text = table.Replace(text, Function(m) TableBlock(m.Value))
     End Sub
 
-    Private Shared Function TableBlock(s As String) As String
+    Private Function TableBlock(s As String) As String
         Dim lines = s.LineTokens
         Dim headers = lines(0).Split("|"c).Select(AddressOf Strings.Trim).ToArray
         Dim bodyRows = lines.Skip(2) _
             .Select(Function(line)
                         Return line.Split("|"c).Select(AddressOf Strings.Trim).ToArray
-                    End Function) _
-            .Select(Function(r)
-                        Return $"<tr>{r.Select(Function(d) $"<td>{d}</td>").JoinBy("")}</tr>"
-                    End Function) _
-            .ToArray
+                    End Function)
 
-        Return $"<table>
-
-<thead>
-<tr>{headers.Select(Function(h) $"<th>{h}</th>").JoinBy("")}</tr>
-</thead>
-<tbody>
-{bodyRows.JoinBy(vbCrLf)}
-</tbody>
-
-</table>"
+        Return render.Table(headers, bodyRows)
     End Function
 
     ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
@@ -212,19 +199,21 @@ Public Class MakrdownRender
         Return lines.JoinBy("<br />")
     End Function
 
-    ReadOnly list1 As New Regex("\n([\+].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ' ReadOnly list2 As New Regex("\n([\-].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ' ReadOnly list3 As New Regex("\n([\*].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list1 As New Regex("(\n[\+][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list2 As New Regex("(\n[\-][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list3 As New Regex("(\n[\*][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunList()
         text = list1.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
-        'text = list2.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
-        'text = list3.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
+        text = list2.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
+        text = list3.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))
     End Sub
 
     Private Shared Iterator Function TrimListItems(s As String) As IEnumerable(Of String)
+        s = s.Trim(ASCII.LF, ASCII.CR, " "c)
+
         For Each si As String In s.LineTokens
-            Yield If(si = "", "", si.Substring(1).Trim)
+            Yield si.Trim.Substring(1).Trim
         Next
     End Function
 End Class
