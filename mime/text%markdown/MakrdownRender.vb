@@ -1,6 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Math
 
 Public Class MakrdownRender
 
@@ -107,14 +106,14 @@ Public Class MakrdownRender
         text = url.Replace(text, Function(m) AnchorTag(m.Value))
     End Sub
 
-    Private Shared Function AnchorTag(s As String) As String
+    Private Function AnchorTag(s As String) As String
         Static alt_r As New Regex("\[.*?\]", RegexOptions.Compiled Or RegexOptions.Multiline)
         Static url_r As New Regex("\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
         Dim alt As String = alt_r.Match(s).Value.GetStackValue("[", "]")
         Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")")
 
-        Return $"<a href='{url}' title='{alt}'>{alt}</a>"
+        Return render.AnchorLink(url, alt, alt)
     End Function
 
     ReadOnly image As New Regex("[!]\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
@@ -187,7 +186,7 @@ Public Class MakrdownRender
         text = italic.Replace(text, Function(m) render.Italic(TrimBold(m.Value)))
     End Sub
 
-    ReadOnly quote As New Regex("\n([>].+)+\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly quote As New Regex("(\n[>][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunQuoteBlock()
         text = quote.Replace(text, Function(m) render.BlockQuote(TrimBlockquote(m.Value)))

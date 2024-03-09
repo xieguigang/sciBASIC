@@ -98,4 +98,8 @@ Public Class HtmlRender : Inherits Render
 
 </table>"
     End Function
+
+    Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
+        Return $"<a href='{url}' title='{title}'>{text}</a>"
+    End Function
 End Class
