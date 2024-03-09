@@ -32,6 +32,7 @@ Public Class MakrdownRender
         Call RunHr()
         Call RunQuoteBlock()
         Call RunList()
+        Call RunOrderList()
         Call RunImage()
         Call RunUrl()
         Call RunTable()
@@ -216,6 +217,21 @@ Public Class MakrdownRender
 
         For Each si As String In s.LineTokens
             Yield si.Trim.Substring(1).Trim
+        Next
+    End Function
+
+    ReadOnly orderList As New Regex("(\n\d+\.\s[^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly orderPrefix As New Regex("^\d+\.", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    Private Sub RunOrderList()
+        text = orderList.Replace(text, Function(m) render.List(TrimOrderListItems(m.Value), True))
+    End Sub
+
+    Private Iterator Function TrimOrderListItems(s As String) As IEnumerable(Of String)
+        s = s.Trim(ASCII.LF, ASCII.CR, " "c)
+
+        For Each si As String In s.LineTokens
+            Yield orderPrefix.Replace(si.Trim, "")
         Next
     End Function
 End Class
