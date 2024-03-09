@@ -29,12 +29,13 @@ Public Class MakrdownRender
         Call hideCodeSpan()
 
         Call RunHeader()
+        Call RunHr()
         Call RunQuoteBlock()
         Call RunList()
         Call RunImage()
         Call RunUrl()
         Call RunTable()
-        Call RunHr()
+
         Call RunBold()
         Call RunItalic()
 
@@ -200,9 +201,9 @@ Public Class MakrdownRender
         Return lines.JoinBy(vbLf)
     End Function
 
-    ReadOnly list1 As New Regex("(\n[\+][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly list2 As New Regex("(\n[\-][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly list3 As New Regex("(\n[\*][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list1 As New Regex("(\n[\+]\s([^\n])+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list2 As New Regex("(\n[\-]\s([^\n])+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly list3 As New Regex("(\n[\*]\s([^\n])+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunList()
         text = list1.Replace(text, Function(m) render.List(TrimListItems(m.Value), False))

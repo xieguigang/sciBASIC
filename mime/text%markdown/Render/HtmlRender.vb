@@ -1,6 +1,4 @@
-﻿Imports System.Net.Http
-
-Public Class HtmlRender : Inherits Render
+﻿Public Class HtmlRender : Inherits Render
 
     ''' <summary>
     ''' 
