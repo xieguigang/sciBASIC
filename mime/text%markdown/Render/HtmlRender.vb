@@ -67,7 +67,7 @@ Public Class HtmlRender : Inherits Render
     End Function
 
     Public Overrides Function BlockQuote(text As String) As String
-        Return vbCrLf & vbCrLf & $"<blockquote>{text}</blockquote>" & vbCrLf & vbCrLf
+        Return vbLf & vbLf & $"<blockquote>{text.LineTokens.JoinBy("<br />" & vbLf)}</blockquote>" & vbLf & vbLf
     End Function
 
     Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String

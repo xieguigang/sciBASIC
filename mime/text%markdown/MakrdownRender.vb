@@ -186,16 +186,18 @@ Public Class MakrdownRender
         text = italic.Replace(text, Function(m) render.Italic(TrimBold(m.Value)))
     End Sub
 
-    ReadOnly quote As New Regex("(\n[>][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly quote As New Regex("(\n[>][^\n]*)+", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub RunQuoteBlock()
         text = quote.Replace(text, Function(m) render.BlockQuote(TrimBlockquote(m.Value)))
     End Sub
 
     Private Shared Function TrimBlockquote(s As String) As String
-        Dim lines = s.LineTokens
-        lines = lines.Select(Function(si) If(si = "", "", si.Substring(1).Trim)).ToArray
-        Return lines.JoinBy("<br />")
+        Dim lines = s.Trim(ASCII.LF, ASCII.CR, " "c).LineTokens
+        lines = lines _
+            .Select(Function(si) si.Substring(1).Trim) _
+            .ToArray
+        Return lines.JoinBy(vbLf)
     End Function
 
     ReadOnly list1 As New Regex("(\n[\+][^\n]+)+", RegexOptions.Compiled Or RegexOptions.Singleline)
