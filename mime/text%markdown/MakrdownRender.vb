@@ -174,7 +174,15 @@ Public Class MakrdownRender
 
     Private Sub RunCodeBlock()
         For Each hashVal In codeblocks
-            text = text.Replace(hashVal.Key, render.CodeBlock(TrimCodeSpan(hashVal.Value), ""))
+            Dim code_block As String() = hashVal.Value.Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c).LineTokens
+            Dim first = code_block.First
+            Dim code_text As String = code_block _
+                .Skip(1) _
+                .Take(code_block.Length - 2) _
+                .JoinBy(vbLf)
+            Dim lang As String = first.Trim(" "c, "`"c)
+
+            text = text.Replace(hashVal.Key, render.CodeBlock(code_text, lang))
         Next
     End Sub
 
