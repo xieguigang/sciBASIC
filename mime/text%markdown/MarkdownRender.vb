@@ -28,6 +28,7 @@ Public Class MarkdownRender
         Call hideCodeBlock()
         Call hideCodeSpan()
 
+        Call RunAutoLink()
         Call RunHeader()
         Call RunHr()
         Call RunQuoteBlock()
@@ -103,10 +104,20 @@ Public Class MarkdownRender
     End Function
 
     ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly auto_link As New Regex("[<][^>^\s]{2,}[>]", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunUrl()
         text = url.Replace(text, Function(m) AnchorTag(m.Value))
     End Sub
+
+    Private Sub RunAutoLink()
+        text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
+    End Sub
+
+    Private Function AutoLink(s As String) As String
+        Dim url As String = s.GetStackValue("<", ">")
+        Return render.AnchorLink(url, url, url)
+    End Function
 
     Private Function AnchorTag(s As String) As String
         Static alt_r As New Regex("\[.*?\]", RegexOptions.Compiled Or RegexOptions.Multiline)
