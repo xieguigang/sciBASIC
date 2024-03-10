@@ -63,7 +63,7 @@ Public Class MakrdownRender
         Next
     End Sub
 
-    ReadOnly codeblock As New Regex("[`]{3,}.+[`]{3,}", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly codeblock As New Regex("\n\s*[`]{3,}.*?\n\s*[`]{3,}", RegexOptions.Compiled Or RegexOptions.Singleline)
 
     Private Sub hideCodeBlock()
         Dim hash As Integer = 1
@@ -113,9 +113,14 @@ Public Class MakrdownRender
         Static url_r As New Regex("\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
         Dim alt As String = alt_r.Match(s).Value.GetStackValue("[", "]")
-        Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")")
+        Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")").GetStackValue("<", ">")
+        Dim title_value = url.GetTagValue
 
-        Return render.AnchorLink(url, alt, alt)
+        If title_value.Name.StringEmpty Then
+            Return render.AnchorLink(url, alt, alt)
+        Else
+            Return render.AnchorLink(title_value.Name, alt, title_value.Value.Trim("'"c, """"c, " "c))
+        End If
     End Function
 
     ReadOnly image As New Regex("[!]\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
@@ -129,9 +134,14 @@ Public Class MakrdownRender
         Static url_r As New Regex("\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
         Dim alt As String = alt_r.Match(s).Value.GetStackValue("[", "]")
-        Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")")
+        Dim url As String = url_r.Match(s).Value.GetStackValue("(", ")").GetStackValue("<", ">")
+        Dim title_value = url.GetTagValue
 
-        Return render.Image(url, alt, alt)
+        If title_value.Name.StringEmpty Then
+            Return render.Image(url, alt, alt)
+        Else
+            Return render.Image(title_value.Name, alt, title_value.Value.Trim("'"c, """"c, " "c))
+        End If
     End Function
 
     ReadOnly h6 As New Regex("[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)

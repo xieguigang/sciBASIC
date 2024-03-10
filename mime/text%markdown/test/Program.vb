@@ -10,7 +10,7 @@ Module Program
 
 this has a ``code`` span. **yes it** is!
 
-```
+```md
 not a **bold** word
 ---------------------------
 ``aaa``
