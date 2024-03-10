@@ -1,7 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
 
-Public Class MakrdownRender
+Public Class MarkdownRender
 
     Dim text As String
     Dim render As Render

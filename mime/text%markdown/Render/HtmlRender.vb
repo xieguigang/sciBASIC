@@ -100,4 +100,8 @@
     Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
         Return $"<a href='{url}' title='{title}'>{text}</a>"
     End Function
+
+    Public Overrides Function Underline(text As String) As String
+        Return $"<u>{text}</u>"
+    End Function
 End Class

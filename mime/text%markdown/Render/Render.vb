@@ -15,6 +15,7 @@ Public MustInherit Class Render
     Public MustOverride Function AnchorLink(url As String, text As String, title As String) As String
     Public MustOverride Function Bold(text As String) As String
     Public MustOverride Function Italic(text As String) As String
+    Public MustOverride Function Underline(text As String) As String
     Public MustOverride Function BlockQuote(text As String) As String
     Public MustOverride Function List(items As IEnumerable(Of String), orderList As Boolean) As String
     Public MustOverride Function Table(head As String(), rows As IEnumerable(Of String())) As String
