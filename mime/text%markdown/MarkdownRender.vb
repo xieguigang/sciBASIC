@@ -44,7 +44,7 @@ Public Class MarkdownRender
         Call RunCodeSpan()
         Call RunCodeBlock()
 
-        Return text
+        Return render.Document(text)
     End Function
 
     Dim codespans As New Dictionary(Of String, String)
