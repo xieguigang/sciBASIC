@@ -53,6 +53,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language.Default
 
@@ -156,15 +157,26 @@ Namespace Serialization.Bencoding
                 Next
 
                 Return table
-            ElseIf type Is GetType(String) OrElse type Is GetType(Double) OrElse type Is GetType(Boolean) OrElse type Is GetType(Date) Then
-                Return New BString(obj.ToString)
-            ElseIf type Is GetType(Integer) OrElse type Is GetType(Long) OrElse type Is GetType(Short) OrElse type Is GetType(Byte) Then
-                Return New BInteger(obj)
             ElseIf type.ImplementInterface(GetType(IList)) Then
                 Return DirectCast(obj, IList).encodeList(digest)
+            ElseIf DataFramework.IsPrimitive(type) Then
+                Return encodePrimitive(obj, type)
             Else
                 Return encodeObject(obj, digest)
             End If
+        End Function
+
+        Private Function encodePrimitive(value As Object, type As Type) As BElement
+            Select Case type
+                Case GetType(String), GetType(Double), GetType(Boolean), GetType(Date), GetType(Single)
+                    Return New BString(value.ToString)
+                Case GetType(Integer), GetType(Short), GetType(UShort), GetType(Byte), GetType(SByte)
+                    Return New BInteger(CInt(value))
+                Case GetType(Long), GetType(UInteger), GetType(ULong)
+                    Return New BInteger(CLng(value))
+                Case Else
+                    Throw New NotImplementedException(type.FullName & ": " & value.ToString)
+            End Select
         End Function
 
         Private Function encodeObject(obj As Object, digest As Func(Of Object, Object)) As BElement

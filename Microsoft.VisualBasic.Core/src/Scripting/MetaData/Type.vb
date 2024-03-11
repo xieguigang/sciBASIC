@@ -70,27 +70,31 @@ Imports any = Microsoft.VisualBasic.Scripting
 Namespace Scripting.MetaData
 
     ''' <summary>
-    ''' The type reference information.(类型信息)
+    ''' The clr type reference information.
     ''' </summary>
+    ''' <remarks>(类型信息)</remarks>
     Public Class TypeInfo
 
         ''' <summary>
-        ''' The assembly file which contains this type definition.(模块文件)
+        ''' The assembly file which contains this type definition.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(模块文件)</remarks>
         <XmlAttribute> Public Property assembly As String
         <XmlAttribute> Public Property reference As String
 
         ''' <summary>
-        ''' <see cref="Type.FullName"/>.(类型源)
+        ''' <see cref="Type.FullName"/>.
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(类型源)</remarks>
         <XmlText> Public Property fullName As String
 
         ''' <summary>
-        ''' Is this type object is a known system type?(是否是已知的类型？)
+        ''' Is this type object is a known system type?
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>(是否是已知的类型？)</remarks>
         Public ReadOnly Property isSystemKnownType As Boolean
             Get
                 Return Not any.GetType(fullName) Is Nothing
