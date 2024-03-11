@@ -408,6 +408,16 @@ Public Module StringHelpers
                     End Function)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetTagValue(m As Match,
+                                Optional delimiter$ = " ",
+                                Optional trim As Boolean = False,
+                                Optional failureNoName As Boolean = True) As NamedValue(Of String)
+
+        Return GetTagValue(m.Value, delimiter, trim, failureNoName)
+    End Function
+
     ''' <summary>
     ''' Text parser for the format: ``tagName{<paramref name="delimiter"/>}value``
     ''' </summary>
