@@ -132,5 +132,33 @@ Namespace Serialization.Bencoding
         Public Overloads Shared Widening Operator CType(s As String) As BString
             Return New BString(value:=s)
         End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As String
+            If s Is Nothing Then
+                Return Nothing
+            Else
+                Return s.Value
+            End If
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As UInteger
+            Dim str As String = s
+
+            If str Is Nothing Then
+                Return 0
+            Else
+                Return UInteger.Parse(str)
+            End If
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(s As BString) As Integer
+            Dim str As String = s
+
+            If str Is Nothing Then
+                Return 0
+            Else
+                Return Integer.Parse(str)
+            End If
+        End Operator
     End Class
 End Namespace
