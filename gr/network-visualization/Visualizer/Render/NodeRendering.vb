@@ -123,7 +123,8 @@ Friend Class NodeRendering
             ' draw circle by default
             Return DrawDefaultCircle(center, g, radius, brush, Nothing)
         Else
-            Call drawShape(g, center, size, shape, brush, Nothing, radius.Average, Nothing, 1)
+            center = New PointF(center.X - size.Width / 2, center.Y - size.Height / 2)
+            drawShape(g, center, size, shape, brush, Nothing, radius.Average, Nothing, 1)
         End If
 
         Return New RectangleF(center, size)
