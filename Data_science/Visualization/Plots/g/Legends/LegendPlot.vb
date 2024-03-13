@@ -119,6 +119,10 @@ Namespace Graphic.Legend
                 .ToArray
         End Function
 
+        Public Sub DrawShape(g As IGraphics, pos As PointF, gSize As SizeF, shape As String, color As Brush, border As Stroke, radius%, ByRef labelPos As PointF, lineWidth!)
+            Call g.DrawLegendShape(pos, gSize, ParseLegendStyle(shape), color, border, radius, labelPos, lineWidth)
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
