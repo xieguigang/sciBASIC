@@ -52,32 +52,15 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Development
-Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.d3js.Layout
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 使用退火算法计算出节点标签文本的位置
@@ -154,7 +137,7 @@ Friend Class LabelRendering
             ly = .label.Y
 
             If iteration > 0 Then
-                If label.offsetDistance >= stdNum.Max(g.Size.Width, g.Size.Height) * 0.01 Then
+                If label.offsetDistance >= std.Max(g.Size.Width, g.Size.Height) * 0.01 Then
                     Try
                         Call g.DrawLine(New Pen(Brushes.Gray, 2) With {.DashStyle = DashStyle.Dash}, label.anchor, label.GetTextAnchor)
                     Catch ex As Exception
