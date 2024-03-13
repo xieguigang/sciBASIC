@@ -69,10 +69,11 @@ Friend Class NodeRendering
         scalePos As Dictionary(Of String, PointF),
         throwEx As Boolean,
         getDisplayLabel As Func(Of Node, String),
-        drawNodeShape As DrawNodeShape,
         getLabelPosition As GetLabelPosition,
         labelWordWrapWidth As Integer,
         nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF)
+
+    Dim drawNodeShape As DrawNodeShape
 
     Sub New(radiusValue As Func(Of Node, Single()),
             fontSizeValue As Func(Of Node, Single),
@@ -101,7 +102,17 @@ Friend Class NodeRendering
         Me.nodeWidget = nodeWidget
     End Sub
 
+    Private Function DefaultDrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF) As RectangleF
+
+    End Function
+
     Public Iterator Function RenderingVertexNodes(g As IGraphics, drawPoints As Node()) As IEnumerable(Of LayoutLabel)
+        If drawNodeShape Is Nothing Then
+            If drawPoints.Any(Function(v) v.data.HasProperty("shape")) Then
+                drawNodeShape = AddressOf DefaultDrawNodeShape
+            End If
+        End If
+
         Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints
