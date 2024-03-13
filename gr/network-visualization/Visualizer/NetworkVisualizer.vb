@@ -102,8 +102,9 @@ Public Module NetworkVisualizer
 
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
-    Public Delegate Function DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single, center As PointF) As RectangleF
+    Public Delegate Function DrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single(), center As PointF) As RectangleF
     Public Delegate Function GetLabelPosition(node As Node, label$, shapeLayout As RectangleF, labelSize As SizeF) As PointF
+    Public Delegate Sub DrawShape(g As IGraphics, pos As PointF, gSize As SizeF, shape As String, color As Brush, border As Stroke, radius%, ByRef labelPos As PointF, lineWidth!)
 
     ''' <summary>
     ''' Rendering png or svg image from a given network graph model.
@@ -172,6 +173,7 @@ Public Module NetworkVisualizer
                               Optional edgeShadowDistance As Single = 0,
                               Optional drawNodeShape As DrawNodeShape = Nothing,
                               Optional nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF) = Nothing,
+                              Optional shapeRender As DrawShape = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional getLabelPosition As GetLabelPosition = Nothing,
                               Optional getLabelColor As Func(Of Node, Color) = Nothing,
@@ -315,18 +317,20 @@ Public Module NetworkVisualizer
 
         Dim renderEdge As New EdgeRendering(linkWidth, edgeDashTypes, scalePos, throwEx, edgeShadowDistance, defaultEdgeColor.TranslateColor, drawEdgeBends, drawEdgeDirection)
         Dim renderNode As New NodeRendering(
-                    radiusValue:=nodeRadiusMapper,
-                    fontSizeValue:=fontSizeMapper,
-                    defaultColor:=defaultColor.TranslateColor,
-                    stroke:=stroke,
-                    baseFont:=baseFont,
-                    scalePos:=scalePos,
-                    throwEx:=throwEx,
-                    getDisplayLabel:=getNodeLabel,
-                    drawNodeShape:=drawNodeShape,
-                    getLabelPosition:=getLabelPosition,
-                    labelWordWrapWidth:=labelWordWrapWidth,
-                    nodeWidget:=nodeWidget)
+            graph:=net,
+            radiusValue:=nodeRadiusMapper,
+            fontSizeValue:=fontSizeMapper,
+            defaultColor:=defaultColor.TranslateColor,
+            stroke:=stroke,
+            baseFont:=baseFont,
+            scalePos:=scalePos,
+            throwEx:=throwEx,
+            getDisplayLabel:=getNodeLabel,
+            drawShape:=shapeRender,
+            drawNodeShape:=drawNodeShape,
+            getLabelPosition:=getLabelPosition,
+            labelWordWrapWidth:=labelWordWrapWidth,
+            nodeWidget:=nodeWidget)
         Dim renderLabel As New LabelRendering(
                         labelColorAsNodeColor:=labelColorAsNodeColor,
                         iteration:=labelerIterations,
