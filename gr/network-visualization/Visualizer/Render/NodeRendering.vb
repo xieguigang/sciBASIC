@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Friend Class NodeRendering
 
-    ReadOnly radiusValue As Func(Of Node, Single),
+    ReadOnly radiusValue As Func(Of Node, Single()),
         fontSizeValue As Func(Of Node, Single),
         defaultColor As Color,
         stroke As Pen,
@@ -74,7 +74,7 @@ Friend Class NodeRendering
         labelWordWrapWidth As Integer,
         nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF)
 
-    Sub New(radiusValue As Func(Of Node, Single),
+    Sub New(radiusValue As Func(Of Node, Single()),
             fontSizeValue As Func(Of Node, Single),
             defaultColor As Color,
             stroke As Pen,
@@ -112,7 +112,7 @@ Friend Class NodeRendering
     End Function
 
     Private Iterator Function renderNode(n As Node, g As IGraphics) As IEnumerable(Of LayoutLabel)
-        Dim r# = radiusValue(n)
+        Dim r As Single() = radiusValue(n)
         Dim center As PointF = scalePos(n.label)
         Dim invalidRegion As Boolean = False
         Dim pt As Point
@@ -125,10 +125,10 @@ Friend Class NodeRendering
 
         If drawNodeShape Is Nothing Then
             With center
-                pt = New Point(.X - r / 2, .Y - r / 2)
+                pt = New Point(.X - r(0) / 2, .Y - r(0) / 2)
             End With
 
-            rect = New RectangleF(pt, New Size(r, r))
+            rect = New RectangleF(pt, New Size(r(0), r(0)))
 
             ' 绘制节点，目前还是圆形
             If TypeOf g Is Graphics2D Then
@@ -148,14 +148,14 @@ Friend Class NodeRendering
                     invalidRegion = True
                 End Try
             Else
-                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r(0))
             End If
         Else
-            rect = drawNodeShape(n.label, g, br, r, center)
+            rect = drawNodeShape(n.label, g, br, r(0), center)
         End If
 
         If Not nodeWidget Is Nothing Then
-            Dim rectLayout As RectangleF = nodeWidget(g, center, r, n)
+            Dim rectLayout As RectangleF = nodeWidget(g, center, r(0), n)
 
             If Not rectLayout.IsEmpty Then
                 Yield New LayoutLabel With {

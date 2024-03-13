@@ -84,7 +84,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <Assembly: InternalsVisibleTo("ggraph")>
 
@@ -267,7 +267,7 @@ Public Module NetworkVisualizer
         ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
         Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
         Dim fontSizeMapper As Func(Of Node, Single)
-        Dim nodeRadiusMapper As Func(Of Node, Single)
+        Dim nodeRadiusMapper As Func(Of Node, Single())
 
         If fontSize Is Nothing Then
             fontSizeMapper = Function() 16.0!
@@ -279,13 +279,24 @@ Public Module NetworkVisualizer
         End If
 
         If nodeRadius Is Nothing Then
-            Dim min = stdNum.Min(frameSize.Width, frameSize.Height) / 25
-            nodeRadiusMapper = Function() min
+            ' check for node size data
+            If net.vertex.All(Function(v) v.data.size.IsNullOrEmpty) Then
+                ' all nodes has unify size
+                Dim min = std.Min(frameSize.Width, frameSize.Height) / 100
+                nodeRadiusMapper = Function() {min}
+            Else
+                ' use the node size
+                nodeRadiusMapper = Function(v)
+                                       Return v.data.size _
+                                          .Select(Function(d) CSng(d)) _
+                                          .ToArray
+                                   End Function
+            End If
         ElseIf nodeRadius Like GetType(Single) Then
             Dim radius As Single = nodeRadius
-            nodeRadiusMapper = Function() radius
+            nodeRadiusMapper = Function() {radius}
         Else
-            nodeRadiusMapper = nodeRadius
+            nodeRadiusMapper = Function(n) {nodeRadius(n)}
         End If
 
         ' if required hide disconnected nodes, then only the connected node in the network 
