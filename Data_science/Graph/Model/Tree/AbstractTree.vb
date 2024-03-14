@@ -55,7 +55,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
-Imports System.Text.Json.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -79,7 +78,6 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     <XmlIgnore>
     <DataIgnored>
     <IgnoreDataMember>
-    <JsonIgnore>
     Public Property Parent As T
 
     Dim qualDeli$ = "."
@@ -124,7 +122,6 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     <XmlIgnore>
     <DataIgnored>
     <IgnoreDataMember>
-    <JsonIgnore>
     Public Overridable ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
@@ -138,7 +135,6 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     <XmlIgnore>
     <DataIgnored>
     <IgnoreDataMember>
-    <JsonIgnore>
     Public ReadOnly Property IsRoot As Boolean
         Get
             Return Parent Is Nothing
@@ -148,7 +144,6 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     <XmlIgnore>
     <DataIgnored>
     <IgnoreDataMember>
-    <JsonIgnore>
     Public ReadOnly Property IsLeaf As Boolean
         Get
             Return Childs.IsNullOrEmpty
