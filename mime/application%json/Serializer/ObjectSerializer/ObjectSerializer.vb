@@ -51,6 +51,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
 Imports Microsoft.VisualBasic.Language
@@ -99,7 +100,12 @@ Public Module ObjectSerializer
                            Return False
                        End If
 
-                       Return p.Value.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
+                       Dim reader = p.Value
+                       Dim ignores1 = reader.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
+                       Dim ignores2 = reader.GetAttribute(Of DataIgnoredAttribute) Is Nothing
+                       Dim ignores3 = reader.GetAttribute(Of IgnoreDataMemberAttribute) Is Nothing
+
+                       Return ignores1 AndAlso ignores2 AndAlso ignores3
                    End Function) _
             .ToArray
         Dim [property] As PropertyInfo
