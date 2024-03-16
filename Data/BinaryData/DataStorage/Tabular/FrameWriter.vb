@@ -2,7 +2,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Math.DataFrame
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ValueTypes
 
@@ -34,6 +33,8 @@ Public Module FrameWriter
 
             If v.isScalar Then
                 Call WriteScalar(wr, v.GetScalarValue, metadata(name).type)
+            Else
+                Call WriteVector(wr, v, metadata(name).type)
             End If
         Next
 
@@ -49,6 +50,17 @@ Public Module FrameWriter
 
         Return True
     End Function
+
+    Private Sub WriteVector(wr As BinaryDataWriter, v As FeatureVector, code As TypeCode)
+        Call wr.Write(v.size)
+
+        Select Case code
+            Case TypeCode.Boolean : wr.Write(v.TryCast(Of Boolean).Select(Function(f) CByte(f)).ToArray)
+
+            Case Else
+                Throw New NotImplementedException(code.ToString)
+        End Select
+    End Sub
 
     Private Sub WriteScalar(wr As BinaryDataWriter, obj As Object, code As TypeCode)
         If obj Is Nothing OrElse code = TypeCode.DBNull OrElse code = TypeCode.Empty Then
