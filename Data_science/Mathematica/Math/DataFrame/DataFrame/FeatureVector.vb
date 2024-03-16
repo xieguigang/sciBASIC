@@ -186,6 +186,14 @@ Public Class FeatureVector : Implements IReadOnlyId
         type = GetType(TimeSpan)
     End Sub
 
+    Public Function GetScalarValue() As Object
+        If vector Is Nothing OrElse vector.Length = 0 Then
+            Return Nothing
+        Else
+            Return vector(0)
+        End If
+    End Function
+
     Public Function [TryCast](Of T)() As T()
         If GetType(T) Is type Then
             Return DirectCast(vector, T())

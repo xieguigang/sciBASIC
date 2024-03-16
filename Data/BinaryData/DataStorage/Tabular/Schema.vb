@@ -7,6 +7,15 @@ Public Class Schema
     Public Property cols As Dictionary(Of String, VectorSchema)
     Public Property dims As Integer()
 
+    ''' <summary>
+    ''' the orders of the feature names(keys of the <see cref="cols"/>)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ordinals As String()
+
+    Sub New()
+    End Sub
+
     Sub New(df As DataFrame)
         rownames = df.rownames
         dims = {df.dims.Height, df.dims.Width}
@@ -15,6 +24,7 @@ Public Class Schema
                           Function(f)
                               Return New VectorSchema(f.Value)
                           End Function)
+        ordinals = df.featureNames
     End Sub
 
 End Class
@@ -27,6 +37,9 @@ Public Class VectorSchema
     Sub New(feature As FeatureVector)
         type = feature.type.PrimitiveTypeCode
         isScalar = feature.isScalar
+    End Sub
+
+    Sub New()
     End Sub
 
 End Class
