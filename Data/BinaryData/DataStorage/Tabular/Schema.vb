@@ -13,6 +13,12 @@ Public Class Schema
     ''' <returns></returns>
     Public Property ordinals As String()
 
+    Default Public ReadOnly Property field(name As String) As VectorSchema
+        Get
+            Return cols(name)
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
@@ -33,6 +39,7 @@ Public Class VectorSchema
 
     Public Property type As TypeCode
     Public Property isScalar As Boolean
+    Public Property offset As Long
 
     Sub New(feature As FeatureVector)
         type = feature.type.PrimitiveTypeCode
