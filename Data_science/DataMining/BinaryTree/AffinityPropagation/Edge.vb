@@ -1,4 +1,7 @@
 ﻿
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
+
 Namespace AffinityPropagation
 
     Public Class Edge : Implements IComparable(Of Edge)
@@ -16,6 +19,15 @@ Namespace AffinityPropagation
             Responsability = 0
             Availability = 0
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function ToString() As String
+            Return $"[{Source} -> {Destination}] {New Dictionary(Of String, Double) From {
+                {"similarity", Similarity},
+                {"responsability", Responsability},
+                {"availability", Availability}
+            }.GetJson }"
+        End Function
 
         Public Function CompareTo(obj As Edge) As Integer Implements IComparable(Of Edge).CompareTo
             Return Similarity.CompareTo(obj.Similarity)

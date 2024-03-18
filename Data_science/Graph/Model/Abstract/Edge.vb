@@ -75,6 +75,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public Property V As Vertex
+
     Public Overridable Property weight As Double
 
     ''' <summary>
