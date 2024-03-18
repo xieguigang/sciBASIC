@@ -137,11 +137,7 @@ Public Class JsonParser
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function OpenJSON() As JsonElement
-        If json_str Is Nothing OrElse json_str.RawBuffer _
-            .CharString _
-            .Trim _
-            .TextEquals("null") Then
-
+        If json_str Is Nothing OrElse json_str Like "null" Then
             Return Nothing
         Else
             _JSONvalue = _parse()
