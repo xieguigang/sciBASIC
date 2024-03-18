@@ -16,7 +16,7 @@ Module simple_jsonParserTest
         ' Dim empty_array As JsonArray = JsonParser.Parse("[]")
         ' Dim empty_obj As JsonObject = JsonParser.Parse("{}")
         ' Dim escape_str As JsonValue = JsonParser.Parse("'this is \'string\', another ""string block"".'")
-        Dim escpae_strVal As JsonArray = JsonParser.Parse("['this is \'string\', another ""string block"".']")
+        Dim escpae_strVal As JsonArray = JsonParser.Parse("['this is \'string\', \nanother ""string block"".']")
         Dim obj_no_comment = JsonParser.Parse("
         {
             'a': true,
