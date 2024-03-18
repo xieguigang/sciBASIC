@@ -64,6 +64,7 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -186,6 +187,16 @@ Public Class JsonParser
             ' hjson comment will be skiped
             Call tokens.AddRange(walkChar(++json_str))
         Loop
+
+        If tokens.Count = 0 Then
+            Return Nothing
+        ElseIf tokens.First.IsJsonValue Then
+            If tokens.Count = 1 Then
+                Return tokens.First.GetValue
+            Else
+                Throw New InvalidExpressionException("invalid syntax of the json document: the json literal token should be a single token value!")
+            End If
+        End If
 
 
     End Function
