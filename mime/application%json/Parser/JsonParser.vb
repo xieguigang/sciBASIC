@@ -180,7 +180,14 @@ Public Class JsonParser
     ''' </summary>
     ''' <returns></returns>
     Private Function _parse() As JsonElement
-        Dim tokens As IEnumerator(Of Token) = GetTokenSequence().GetEnumerator
+        Dim tokens As IEnumerator(Of Token) = GetTokenSequence() _
+            .ToArray _
+            .GetEnumerator
+
+        If Not tokens.MoveNext Then
+            ' empty collection 
+            Return Nothing
+        End If
 
         If tokens.Current.IsJsonValue Then
             If tokens.MoveNext Then
