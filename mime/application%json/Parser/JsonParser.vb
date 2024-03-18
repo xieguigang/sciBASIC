@@ -290,9 +290,11 @@ Public Class JsonParser
     Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
         Dim array As New JsonArray
         Dim t As Token
+        Dim back As Boolean = False
 
-        Do While pull.MoveNext()
+        Do While If(back, True, pull.MoveNext())
             t = pull.Current
+            back = False
 
             If t Is Nothing Then
                 Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
@@ -319,6 +321,9 @@ Public Class JsonParser
                     '
                     ' do nothing at here
                     Dim message As String = $"possible json syntax error on parse json array at line {t.span.line}."
+
+                    ' stop iterator move to next in next loop
+                    back = True
 
                     Call message.Warning
                     Call Debug.WriteLine(message)
