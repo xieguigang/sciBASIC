@@ -122,6 +122,9 @@ Namespace Text.Parser
         ''' test if current chars is like the integer string pattern
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the negative value not works here, just test for the integer chars pattern
+        ''' </remarks>
         Public ReadOnly Property isInteger As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -234,6 +237,10 @@ Namespace Text.Parser
 
         Public Function AsEnumerable() As IEnumerable(Of Char)
             Return buffer
+        End Function
+
+        Public Function ToArray() As Char()
+            Return buffer.ToArray
         End Function
 
         ''' <summary>

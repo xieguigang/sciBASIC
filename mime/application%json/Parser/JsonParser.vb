@@ -99,6 +99,10 @@ Public Class JsonParser
     ''' single line comment
     ''' </summary>
     Dim comment_escape As Boolean
+    Dim comments As New Dictionary(Of String, String)
+    Dim comment_key As String
+
+    Dim lastToken As Token
 
     ''' <summary>
     ''' The root node in json file
@@ -294,6 +298,7 @@ Public Class JsonParser
         Do While Not json_str.EndRead
             For Each t As Token In walkChar(++json_str)
                 If Not t Is Nothing Then
+                    lastToken = t
                     Yield t
                 End If
             Next
@@ -304,6 +309,8 @@ Public Class JsonParser
         If comment_escape Then
             If c = ASCII.CR OrElse c = ASCII.LF Then
                 comment_escape = False
+                comments(comment_key) = New String(buffer.PopAllChars)
+                comment_key = ""
             End If
         ElseIf escape <> ASCII.NUL Then
             ' is string escape
@@ -322,7 +329,15 @@ Public Class JsonParser
         ElseIf c = "/"c Then
             ' check hjson single comment line
             If buffer > 0 Then
-
+                If buffer = "/" Then
+                    ' is single comment line
+                    buffer.Pop()
+                    comment_escape = True
+                Else
+                    Yield MeasureToken()
+                End If
+            Else
+                buffer.Add(c)
             End If
         ElseIf c = "'"c OrElse c = """"c Then
             escape = c
