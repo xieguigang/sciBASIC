@@ -64,7 +64,6 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
-Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -242,5 +241,68 @@ Public Class JsonParser
         Else
             Return New Token(Token.JSONElements.String, str)
         End If
+    End Function
+
+    ''' <summary>
+    ''' do string unescape
+    ''' </summary>
+    ''' <param name="str"></param>
+    ''' <param name="decodeMetaChar"></param>
+    ''' <returns></returns>
+    Public Shared Function StripString(ByRef str$, decodeMetaChar As Boolean) As String
+        Dim index% = 0
+        Dim chr As Char, code$
+        Dim sb As New StringBuilder
+        Dim str_len As Integer = Len(str)
+
+        If str Is Nothing OrElse str = "" Then
+            Return str
+        End If
+
+        While index < str_len
+            chr = str(index)
+
+            Select Case chr
+                Case "\"c
+                    index += 1
+
+                    If decodeMetaChar Then
+                        chr = str(index)
+
+                        Select Case chr
+                            Case """", "\", "/", """"
+                                sb.Append(chr)
+                                index += 1
+                            Case "b"
+                                sb.Append(vbBack)
+                                index += 1
+                            Case "f"
+                                sb.Append(vbFormFeed)
+                                index += 1
+                            Case "n"
+                                sb.Append(vbLf)
+                                index += 1
+                            Case "r"
+                                sb.Append(vbCr)
+                                index += 1
+                            Case "t"
+                                sb.Append(vbTab)
+                                index += 1
+                            Case "u"
+                                index += 1
+                                code = Mid(str, index, 4)
+                                sb.Append(ChrW(Val("&h" & code)))
+                                index += 4
+                        End Select
+                    Else
+                        sb.Append(chr)
+                    End If
+                Case Else
+                    sb.Append(chr)
+                    index += 1
+            End Select
+        End While
+
+        Return sb.ToString
     End Function
 End Class
