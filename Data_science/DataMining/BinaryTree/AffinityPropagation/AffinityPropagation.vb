@@ -43,9 +43,10 @@ Namespace AffinityPropagation
                        Optional max_iteration As Integer = 1000,
                        Optional convergence As Integer = 200)
 
-            Dim input As Edge() = ds.ToArray.SparseSimilarityMatrix
+            Dim matrix As ClusterEntity() = ds.ToArray
+            Dim input As Edge() = matrix.SparseSimilarityMatrix
 
-            _graph = New Graph(input.Length)
+            _graph = New Graph(matrix.Length)
             _graph.Edges = input
             _damping = damping
             _max_iteration = max_iteration

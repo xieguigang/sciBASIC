@@ -14,6 +14,8 @@ Module AffinityPropagationDemo
     End Sub
 
     Private Iterator Function demo() As IEnumerable(Of Double())
+        ' [0,0,0,3,3,3]
+
         Yield {1, 2}
         Yield {1, 4}
         Yield {1, 0}
