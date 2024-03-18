@@ -318,6 +318,10 @@ Public Class JsonParser
                     ' try to parse next element
                     '
                     ' do nothing at here
+                    Dim message As String = $"possible json syntax error on parse json array at line {t.span.line}."
+
+                    Call message.Warning
+                    Call Debug.WriteLine(message)
                 End If
             End If
         Loop
