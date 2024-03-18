@@ -186,6 +186,8 @@ Public Class JsonParser
             ' hjson comment will be skiped
             Call tokens.AddRange(walkChar(++json_str))
         Loop
+
+
     End Function
 
     Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
@@ -207,6 +209,9 @@ Public Class JsonParser
             Else
                 buffer += c
             End If
+        ElseIf c = "'"c OrElse c = """"c Then
+            escape = c
+            Return
         ElseIf c = ":"c Then
             ' end previous token
             ' key: value
