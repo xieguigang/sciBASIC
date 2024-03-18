@@ -28,6 +28,7 @@ Namespace AffinityPropagation
                     p += 2
                 Next
             Next
+
             Return items
         End Function
 
