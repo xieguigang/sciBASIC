@@ -71,7 +71,7 @@ Namespace ApplicationServices.Terminal
     ''' (交互式的命令行终端)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class Terminal : Implements STDIO__.IConsole
+    Public Class Terminal : Implements STDIO__.IConsole, IShellDevice
 
 #Region "Console Member Inherits Details"
 
@@ -330,7 +330,7 @@ Namespace ApplicationServices.Terminal
         ''' <param name="value">The value to write.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub Write(value As String) Implements STDIO__.IConsole.Write
+        Public Sub Write(value As String) Implements STDIO__.IConsole.Write, IShellDevice.SetPrompt
             Call Console.Write(value)
         End Sub
 
@@ -706,7 +706,7 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         ''' <exception cref="System.OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string.</exception>
         ''' <exception cref="System.ArgumentOutOfRangeException">The number of characters in the next line of characters is greater than System.Int32.MaxValue.</exception>
-        Public Overridable Function ReadLine() As String Implements STDIO__.IConsole.ReadLine
+        Public Overridable Function ReadLine() As String Implements STDIO__.IConsole.ReadLine, IShellDevice.ReadLine
             Return Console.ReadLine
         End Function
 #End Region

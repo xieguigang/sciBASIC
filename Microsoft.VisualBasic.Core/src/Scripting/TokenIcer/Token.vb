@@ -118,6 +118,16 @@ Namespace Scripting.TokenIcer
         Sub New()
         End Sub
 
+        Public Function SetLine(line As Integer) As CodeToken(Of Tokens)
+            If span Is Nothing Then
+                span = New CodeSpan() With {.line = line}
+            Else
+                span.line = line
+            End If
+
+            Return Me
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Trim(ParamArray chars As Char()) As String
             Return text.Trim(chars)

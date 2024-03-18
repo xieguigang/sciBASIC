@@ -209,7 +209,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' Is the value is nothing.
+        ''' Is the <see cref="Value"/> is nothing.
         ''' </summary>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

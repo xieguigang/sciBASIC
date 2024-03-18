@@ -54,14 +54,13 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
 
 Namespace IO
 
@@ -78,15 +77,18 @@ Namespace IO
                 names = (a.Properties.Keys.AsList + b.Properties.Keys).Distinct.ToArray
             End If
 
-            Dim d# = Aggregate key As String
-                     In names
-                     Let x = a(key)
-                     Let y = b(key)
-                     Into Sum((x - y) ^ 2) '
+            Dim x As Double() = a(names)
+            Dim y As Double() = b(names)
 
-            Return stdNum.Sqrt(d)
+            Return x.EuclideanDistance(y)
         End Function
 
+        ''' <summary>
+        ''' take a column from the given matrix
+        ''' </summary>
+        ''' <param name="matrix">matrix object that consist with multiple rows</param>
+        ''' <param name="propertyName">the column name</param>
+        ''' <returns>column data with mapping of row id to value.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NamedValues(matrix As IEnumerable(Of DataSet), propertyName$) As Dictionary(Of String, Double)
@@ -149,18 +151,17 @@ Namespace IO
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Project(data As IEnumerable(Of DataSet), keys$()) As IEnumerable(Of DataSet)
-            Return data _
-                .Select(Function(x)
-                            Return New DataSet With {
-                                .ID = x.ID,
-                                .Properties = keys.ToDictionary(
-                                    Function(k) k,
-                                    Function(k)
-                                        Return x.ItemValue(k)
-                                    End Function)
-                            }
+        Iterator Public Function Project(data As IEnumerable(Of DataSet), keys$()) As IEnumerable(Of DataSet)
+            For Each x As DataSet In data.SafeQuery
+                Yield New DataSet With {
+                    .ID = x.ID,
+                    .Properties = keys.ToDictionary(
+                        Function(k) k,
+                        Function(k)
+                            Return x.ItemValue(k)
                         End Function)
+                }
+            Next
         End Function
 
         ''' <summary>

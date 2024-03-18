@@ -77,11 +77,13 @@ Namespace Scripting.TokenIcer
         End Function
 
         ''' <summary>
-        ''' 当前的token对象之中是否是转义的起始，即当前的token之中的最后一个符号是否是转移符<paramref name="escape"/>?
+        ''' 当前的token对象之中是否是转义的起始，即当前的token之中的最后一个符号是否是转义符<paramref name="escape"/>?
         ''' </summary>
         ''' <param name="buffer"></param>
         ''' <param name="escape"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function deal with the empty collection: returns false if the given buffer is empty
+        ''' </returns>
         <Extension>
         Public Function StartEscaping(buffer As CharBuffer, Optional escape As Char = "\"c) As Boolean
             If buffer.Size = 0 Then

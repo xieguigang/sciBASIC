@@ -130,13 +130,42 @@ Namespace IO
 
             ' all of the cell value which is empty string is also count as empty
             Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
- _
+                                                          _
                 () <= From colum As String
                       In row.buffer
                       Where Len(Strings.Trim(colum)) > 0
                       Select 100
 
             Return Not LQuery > 50
+        End Function
+
+        <Extension>
+        Public Iterator Function GetColumns(table As ICollection(Of RowObject)) As IEnumerable(Of String())
+            Dim width As Integer = 0
+            Dim index As Integer
+            Dim col As IEnumerable(Of String)
+
+            ' 20240306
+            ' deal with the possible empty table data
+            If table Is Nothing OrElse table.Count = 0 Then
+                Return
+            Else
+                width = Aggregate row As RowObject
+                        In table
+                        Into Max(row.NumbersOfColumn)
+            End If
+
+            For offset As Integer = 0 To width - 1
+                index = offset
+                col = table.Select(Function(r) r(index))
+
+                Yield col.ToArray
+            Next
+        End Function
+
+        <Extension>
+        Public Function GetColumn(table As ICollection(Of RowObject), offset As Integer) As String()
+            Return table.Select(Function(r) r(offset)).ToArray
         End Function
     End Module
 End Namespace

@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::43d91a17e98f66766b91d1e098b525ea, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 85
-    '    Code Lines: 65
-    ' Comment Lines: 6
-    '   Blank Lines: 14
-    '     File Size: 3.01 KB
+' Summaries:
 
 
-    '     Module TerminalEvents
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Properties: ConsoleHandleInvalid, CurrentSize
-    ' 
-    '             Sub: doEvents
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 85
+'    Code Lines: 65
+' Comment Lines: 6
+'   Blank Lines: 14
+'     File Size: 3.01 KB
+
+
+'     Module TerminalEvents
+' 
+' 
+'         Delegate Sub
+' 
+'             Properties: ConsoleHandleInvalid, CurrentSize
+' 
+'             Sub: doEvents
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
 Imports Microsoft.VisualBasic.Language
 
 Namespace ApplicationServices.Terminal
@@ -68,6 +69,18 @@ Namespace ApplicationServices.Terminal
     Public Module TerminalEvents
 
         Public Delegate Sub ResizeEventHandle(size As Size, oldSize As Size)
+        Public Delegate Sub KeyHandler()
+
+        ''' <summary>
+        ''' Method signature for auto completion handlers.
+        ''' </summary>
+        ''' <remarks>
+        ''' The completion handler receives the text as it is being edited as
+        ''' well as the position of the cursor in that line.   The method
+        ''' must return an instance of Completion with the possible completions.
+        ''' </remarks>
+        Public Delegate Function AutoCompleteHandler(text As String, pos As Integer) As Completion
+
 
         Dim resizeHandles As New List(Of ResizeEventHandle)
         Dim oldSize As Size
@@ -119,7 +132,7 @@ Namespace ApplicationServices.Terminal
                 End If
 
                 If resizeHandles.Count = 0 Then
-#If netcore5 = 0 Then
+#If NET48 Then
                     eventThread.Abort()
                     eventThread = Nothing
 #End If

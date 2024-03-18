@@ -122,12 +122,23 @@ Namespace Text.Parser
         ''' test if current chars is like the integer string pattern
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the negative value not works here, just test for the integer chars pattern
+        ''' </remarks>
         Public ReadOnly Property isInteger As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.All(Function(c) Char.IsDigit(c))
             End Get
         End Property
+
+        Public Function StartsWith(c As Char) As Boolean
+            If Size = 0 Then
+                Return False
+            Else
+                Return buffer(Scan0) = c
+            End If
+        End Function
 
         ''' <summary>
         ''' test if current char buffer is starts with a specific prefix string
@@ -224,6 +235,14 @@ Namespace Text.Parser
             Return buffer.PopAll
         End Function
 
+        Public Function AsEnumerable() As IEnumerable(Of Char)
+            Return buffer
+        End Function
+
+        Public Function ToArray() As Char()
+            Return buffer.ToArray
+        End Function
+
         ''' <summary>
         ''' text
         ''' </summary>
@@ -237,6 +256,23 @@ Namespace Text.Parser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(c As Char) As CharBuffer
             Return New CharBuffer + c
+        End Operator
+
+        ''' <summary>
+        ''' Convert a string object to a char buffer
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        Public Shared Widening Operator CType(str As String) As CharBuffer
+            Dim buf As New CharBuffer
+
+            If Not str Is Nothing Then
+                For Each c As Char In str
+                    Call buf.buffer.Add(c)
+                Next
+            End If
+
+            Return buf
         End Operator
 
         Public Shared Operator +(buf As CharBuffer, c As Char) As CharBuffer
@@ -320,22 +356,38 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator =(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count = size
+            If buf Is Nothing Then
+                Return 0 = size
+            Else
+                Return buf.buffer.Count = size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count <> size
+            If buf Is Nothing Then
+                Return 0 = size
+            Else
+                Return buf.buffer.Count <> size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count > size
+            If buf Is Nothing Then
+                Return 0 > size
+            Else
+                Return buf.buffer.Count > size
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <(buf As CharBuffer, size As Integer) As Boolean
-            Return buf.buffer.Count < size
+            If buf Is Nothing Then
+                Return 0 < size
+            Else
+                Return buf.buffer.Count < size
+            End If
         End Operator
 
         Public Shared Operator Like(buf As CharBuffer, any As String()) As Boolean

@@ -63,7 +63,6 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
@@ -78,6 +77,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
+Imports any = Microsoft.VisualBasic.Scripting
 Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
@@ -278,6 +278,31 @@ Public Module Extensions
         Loop
 
         Return DataFrame.CreateObject(csv)
+    End Function
+
+    <Extension>
+    Public Function DataFrame(table As DataTable) As DataFrame
+        Dim headers As New List(Of String)
+        Dim rows As New List(Of RowObject)
+        Dim rowObj As DataRow
+        Dim rowData As New List(Of String)
+
+        For i As Integer = 0 To table.Columns.Count - 1
+            headers.Add(table.Columns(i).ColumnName)
+        Next
+
+        For i As Integer = 0 To table.Rows.Count - 1
+            rowObj = table.Rows.Item(i)
+            rowData = New List(Of String)
+
+            For Each c As Object In rowObj.ItemArray
+                rowData.Add(any.ToString(c))
+            Next
+
+            rows.Add(New RowObject(rowData))
+        Next
+
+        Return DataFrame.CreateObject(headers, rows)
     End Function
 
     ''' <summary>
@@ -523,6 +548,7 @@ Public Module Extensions
                                            Optional maps As NameMapping = Nothing,
                                            Optional mute As Boolean = False,
                                            Optional metaBlank As String = "",
+                                           Optional simpleRowIterators As Boolean = True,
                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As List(Of T)
         Dim buffer As List(Of T)
         Dim fs$, ms&
@@ -536,7 +562,8 @@ Public Module Extensions
                 maps:=maps,
                 mute:=mute,
                 metaBlank:=metaBlank,
-                skipWhile:=skipWhile
+                skipWhile:=skipWhile,
+                simpleRowIterators:=simpleRowIterators
             ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
@@ -686,18 +713,8 @@ Public Module Extensions
     Public Sub Cable(Of T)(method As LoadObject(Of T))
         Dim type As Type = GetType(T)
         Dim name As String = type.FullName
-        Dim helper As New __loadHelper(Of T) With {
-            .handle = method
-        }
+        Dim helper As LoadObject = AddressOf method.Invoke
 
-        Call CapabilityPromise(name, type, AddressOf helper.LoadObject)
+        Call CapabilityPromise(name, type, helper)
     End Sub
-
-    Private Structure __loadHelper(Of T)
-        Public handle As LoadObject(Of T)
-
-        Public Function LoadObject(s$) As T
-            Return handle(s)
-        End Function
-    End Structure
 End Module

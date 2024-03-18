@@ -196,6 +196,9 @@ Public Module PrimitiveParser
     ''' this function will returns true if all of the char in 
     ''' the <paramref name="num"/> string is number.
     ''' </returns>
+    ''' <remarks>
+    ''' this function also checks for the negative integer/long value
+    ''' </remarks>
     <Extension>
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
         Dim c As Char

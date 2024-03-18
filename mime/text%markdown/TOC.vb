@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::5416955ed7eaabf498305d2a93be5aba, sciBASIC#\mime\text%markdown\TOC.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 100
-    '    Code Lines: 66
-    ' Comment Lines: 15
-    '   Blank Lines: 19
-    '     File Size: 3.07 KB
+' Summaries:
 
 
-    ' Module TOC
-    ' 
-    '     Function: AddToc, GetHeaders, ReplaceHeaders
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 100
+'    Code Lines: 66
+' Comment Lines: 15
+'   Blank Lines: 19
+'     File Size: 3.07 KB
+
+
+' Module TOC
+' 
+'     Function: AddToc, GetHeaders, ReplaceHeaders
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -107,6 +108,24 @@ Public Module TOC
         Throw New NotImplementedException
     End Function
 
+    Const regex_headerSetext$ = "
+              ^(.+?)
+              [ ]*
+              \n
+              (=+|-+)     # $1 = string of ='s or -'s
+              [ ]*
+              \n+"
+    Const regex_headerAtx$ = "
+              ^(\#{1,6})  # $1 = string of #'s
+              [ ]*
+              (.+?)       # $2 = Header text
+              [ ]*
+              \#*         # optional closing #'s (not counted)
+              \n+"
+
+    ReadOnly _headerSetext As New Regex(regex_headerSetext, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+    ReadOnly _headerAtx As New Regex(regex_headerAtx, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+
     ''' <summary>
     ''' 按header在markdown文档之中出现的顺序进行返回
     ''' </summary>
@@ -115,8 +134,8 @@ Public Module TOC
     Public Function GetHeaders(md$) As String()
         Dim headers As New List(Of String)
 
-        headers += MarkdownHTML._headerSetext.Matches(md).ToArray
-        headers += MarkdownHTML._headerAtx _
+        headers += _headerSetext.Matches(md).ToArray
+        headers += _headerAtx _
             .Matches(md) _
             .ToArray(Function(s) s.TrimNewLine.Trim)
 

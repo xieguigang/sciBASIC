@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{97185C5C-BF97-4672-8244-88D855C72CBE}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.parserTest</StartupObject>
+    <StartupObject>test.fileParser2</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="fileParser2.vb" />
     <Compile Include="Outlining\Class1.vb" />
     <Compile Include="Outlining\OutliningTest.vb" />
     <Compile Include="parserTest.vb" />
@@ -138,15 +139,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{5e97bf00-0c20-4be8-8d09-ddaf189bd47c}</Project>
+      <Project>{7e972ad0-1325-4d95-ab31-ebb6e3ab3bcc}</Project>
       <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj">
-      <Project>{b5f82b82-541a-477b-bb6e-a471a62b5e23}</Project>
+      <Project>{af948def-931a-437c-afcf-79f9c91cfd8c}</Project>
       <Name>DataFramework.Extensions-netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\dataframework-netcore5.vbproj">
-      <Project>{71f2f29e-f55a-4377-acc1-abb29d610b27}</Project>
+      <Project>{6c476f53-877a-4621-996e-9073ce6a4dc7}</Project>
       <Name>dataframework-netcore5</Name>
     </ProjectReference>
   </ItemGroup>

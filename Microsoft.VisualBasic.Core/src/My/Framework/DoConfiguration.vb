@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::355521fa366a3970b84bce97f90be7c7, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 48
-    ' Comment Lines: 16
-    '   Blank Lines: 10
-    '     File Size: 3.18 KB
+' Summaries:
 
 
-    '     Module DoConfiguration
-    ' 
-    '         Function: ConfigMemory
-    ' 
-    '         Sub: ConfigFrameworkRuntime
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 48
+' Comment Lines: 16
+'   Blank Lines: 10
+'     File Size: 3.18 KB
+
+
+'     Module DoConfiguration
+' 
+'         Function: ConfigMemory
+' 
+'         Sub: ConfigFrameworkRuntime
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,40 @@ Namespace My.FrameworkInternal
     ''' </summary>
     Public Module DoConfiguration
 
+        ''' <summary>
+        ''' --unix
+        ''' </summary>
+        Public ReadOnly unix_debug_flag As Boolean
+
+        ''' <summary>
+        ''' --verbose
+        ''' </summary>
+        Public ReadOnly verbose_flag As Boolean
+
+        ''' <summary>
+        ''' should be vanilla code
+        ''' </summary>
+        Sub New()
+            Dim args As String() = Environment.GetCommandLineArgs
+
+            If Not args Is Nothing Then
+                For Each s As String In args.Select(Function(si) si.ToLower)
+                    Select Case s
+                        Case "--unix" : unix_debug_flag = True
+                        Case "--verbose" : verbose_flag = True
+                    End Select
+                Next
+            End If
+        End Sub
+
+        Friend Function InternalPlatformID() As PlatformID
+            If unix_debug_flag Then
+                Return PlatformID.Unix
+            Else
+                Return Environment.OSVersion.Platform
+            End If
+        End Function
+
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
@@ -74,6 +108,12 @@ Namespace My.FrameworkInternal
                 .FirstOrDefault
             Dim name$
 
+            ' initial before call app module
+            'If args.GetBoolean("--unix") OrElse args.Name.TextEquals("--unix") Then
+            '    unix_debug_flag = True
+            'End If
+
+            ' call app module later
             If Not max_stack_size.StringEmpty Then
                 Call App.JoinVariable("max_stack_size", max_stack_size.Split(":"c).Last)
             End If

@@ -68,12 +68,28 @@ Namespace IO
         Dim openStack As Boolean = False
 
         Sub New(chars As String)
-            rowStr = chars.Replace("""""", ASCII.SI)
+            Call Me.New(CType(chars.Replace("""""", ASCII.SI), CharPtr))
+        End Sub
+
+        Sub New(chars As String, lastCell As String)
+            Call Me.New(chars)
+
+            If Not String.IsNullOrEmpty(lastCell) Then
+                buf = lastCell
+                openStack = True
+            End If
+        End Sub
+
+        Sub New()
         End Sub
 
         Sub New(ptr As CharPtr)
             rowStr = ptr
         End Sub
+
+        Public Function GetStackOpenStatus() As Boolean
+            Return openStack
+        End Function
 
         Public Overrides Function ToString() As String
             Return rowStr.ToString
@@ -81,6 +97,11 @@ Namespace IO
 
         Public Iterator Function GetTokens(Optional delimiter As Char = ","c, Optional quot As Char = ASCII.Quot) As IEnumerable(Of String)
             Dim doubleQuot$ = quot & quot
+
+            ' empty row
+            If rowStr.Length = 0 Then
+                Return
+            End If
 
             buf *= 0
 

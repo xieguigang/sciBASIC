@@ -449,6 +449,12 @@ Namespace Math
             Return source.GroupBy(evaluate, equals:=Function(a, b) std.Abs(a - b) <= offsets)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GroupBy(source As IEnumerable(Of Integer), offsets As Integer) As IEnumerable(Of NamedCollection(Of Integer))
+            Return source.GroupBy(Function(i) CDbl(i), equals:=Function(a, b) std.Abs(a - b) <= offsets)
+        End Function
+
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>

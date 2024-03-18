@@ -56,13 +56,16 @@
 
 Namespace My.FrameworkInternal
 
+    ''' <summary>
+    ''' config memory usage by the framework
+    ''' </summary>
     Public Enum MemoryLoads As Byte
         ''' <summary>
         ''' lazy load
         ''' </summary>
         Light
         ''' <summary>
-        ''' less than 2GB
+        ''' load all file data into memory when file size less than 2GB
         ''' </summary>
         Heavy
         ''' <summary>

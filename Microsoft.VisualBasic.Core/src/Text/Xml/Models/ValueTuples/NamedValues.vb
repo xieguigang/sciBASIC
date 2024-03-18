@@ -78,8 +78,11 @@ Imports Microsoft.VisualBasic.Language
 Namespace Text.Xml.Models
 
     ''' <summary>
-    ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
+    ''' A key-value pair data for xml
     ''' </summary>
+    ''' <remarks>
+    ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
+    ''' </remarks>
     <XmlType("data")> Public Class NamedValue
         Implements INamedValue
         Implements Value(Of String).IValueOf
@@ -132,8 +135,10 @@ Namespace Text.Xml.Models
 
     ''' <summary>
     ''' Property Info (Property Name and Property Value).
-    ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
+    ''' <remarks>
+    ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
+    ''' </remarks>
     <XmlType("property")> Public Class [Property] : Implements INamedValue
 
         ''' <summary>

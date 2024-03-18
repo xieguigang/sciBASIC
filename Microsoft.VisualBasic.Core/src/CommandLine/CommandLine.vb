@@ -531,11 +531,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Gets the value Of the specified column As a Boolean.
-        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)
         ''' </summary>
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBoolean(parameter As String) As Boolean
             Return Me.IsTrue(parameter)

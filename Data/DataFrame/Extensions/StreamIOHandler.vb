@@ -87,7 +87,7 @@ Module StreamIOHandler
         If TypeOf source Is File Then
             Return DirectCast(source, File).Save(path, encoding)
         Else
-            Return DirectCast(source, DataFrame).Save(path, encoding)
+            Return DirectCast(source, DataFrame).csv.Save(path, encoding)
         End If
     End Function
 

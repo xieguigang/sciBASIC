@@ -54,6 +54,8 @@ Imports System
 Module Program
     Sub Main(args As String())
 
+        Call terminalTest.Main1()
+
         Console.WriteLine("Hello World!")
 
         Call markdownDisplayTest.Main1()

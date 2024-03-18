@@ -51,6 +51,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
@@ -76,13 +77,26 @@ Public Module Deserializer
     ''' 进行反序列化
     ''' </summary>
     ''' <param name="json"></param>
-    ''' <param name="schema"></param>
+    ''' <param name="schema">add know types for object by using the <see cref="KnownTypeAttribute"/>.</param>
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CreateObject(json As JsonElement, schema As Type, decodeMetachar As Boolean) As Object
         Return json.CreateObject(Nothing, schema, decodeMetachar)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T">add know types for object by using the <see cref="KnownTypeAttribute"/>.</typeparam>
+    ''' <param name="json"></param>
+    ''' <param name="decodeMetachar"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As Object
+        Return json.CreateObject(Nothing, GetType(T), decodeMetachar)
     End Function
 
     <Extension>
@@ -95,7 +109,21 @@ Public Module Deserializer
         ElseIf TypeOf json Is JsonArray Then
             If Not schema.IsArray Then
                 ' the schema require an object but gives an array
-                Return Nothing
+                If schema Is GetType(Object) Then
+                    ' property value type is object, could be cast to any
+                    Dim anyArray As JsonArray = json
+
+                    If anyArray.All(Function(e) TypeOf e Is JsonValue) Then
+                        Return anyArray _
+                            .Select(Function(a) DirectCast(a, JsonValue).Literal) _
+                            .ToArray
+                    Else
+                        Return Nothing
+                    End If
+                Else
+                    ' type mis-matched
+                    Return Nothing
+                End If
             Else
                 Return DirectCast(json, JsonArray).createArray(parent, schema.GetElementType, decodeMetachar)
             End If
@@ -109,7 +137,11 @@ Public Module Deserializer
                 Return Nothing
             End If
         ElseIf TypeOf json Is JsonValue Then
-            Return DirectCast(json, JsonValue).Literal(schema, decodeMetachar)
+            If schema Is GetType(Object) Then
+                Return DirectCast(json, JsonValue).Literal
+            Else
+                Return DirectCast(json, JsonValue).Literal(schema, decodeMetachar)
+            End If
         Else
             Throw New InvalidCastException
         End If

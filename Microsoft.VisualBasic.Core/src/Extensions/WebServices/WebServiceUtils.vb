@@ -854,6 +854,7 @@ Public Module WebServiceUtils
                                  Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
                                  Optional refer$ = Nothing,
                                  Optional timeout As Integer = 1000 * 60 * 30,
+                                 Optional silent As Boolean = True,
                                  <CallerMemberName>
                                  Optional trace$ = Nothing) As Boolean
 RE0:
@@ -872,7 +873,11 @@ RE0:
                 strUrl = NetFile.MapGithubRawUrl(strUrl)
 
                 Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
-                Call $"{strUrl} --> {save}".__DEBUG_ECHO
+
+                If Not silent Then
+                    Call $"{strUrl} --> {save}".__DEBUG_ECHO
+                End If
+
                 Call save.ParentPath.MakeDir
                 Call browser.DownloadFile(strUrl, save)
             End Using
@@ -891,10 +896,12 @@ RE0:
 
             Return False
         Finally
-            If save.FileExists Then
-                Call $"[{FileIO.FileSystem.GetFileInfo(save).Length} Bytes]".__DEBUG_ECHO
-            Else
-                Call $"Download failure!".__DEBUG_ECHO
+            If Not silent Then
+                If save.FileExists Then
+                    Call $"[{FileIO.FileSystem.GetFileInfo(save).Length} Bytes]".__DEBUG_ECHO
+                Else
+                    Call $"Download failure!".__DEBUG_ECHO
+                End If
             End If
         End Try
     End Function

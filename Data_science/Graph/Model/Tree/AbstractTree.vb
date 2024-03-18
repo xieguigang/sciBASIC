@@ -56,6 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 
 <DataContract>
@@ -75,6 +76,8 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' 在序列化之中会需要忽略掉这个属性，否则会产生无限递归
     ''' </remarks>
     <XmlIgnore>
+    <DataIgnored>
+    <IgnoreDataMember>
     Public Property Parent As T
 
     Dim qualDeli$ = "."
@@ -93,6 +96,10 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' 请注意，这个属性并不是返回的<see cref="Childs"/>的元素数量，
     ''' 而是返回当前树节点下的所有的子节点的数量
     ''' </remarks>
+    ''' 
+    <XmlIgnore>
+    <DataIgnored>
+    <IgnoreDataMember>
     Public ReadOnly Property Count As Integer
         Get
             Dim childs = Me.EnumerateChilds _
@@ -116,6 +123,9 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
         End Get
     End Property
 
+    <XmlIgnore>
+    <DataIgnored>
+    <IgnoreDataMember>
     Public Overridable ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
@@ -126,12 +136,18 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
         End Get
     End Property
 
+    <XmlIgnore>
+    <DataIgnored>
+    <IgnoreDataMember>
     Public ReadOnly Property IsRoot As Boolean
         Get
             Return Parent Is Nothing
         End Get
     End Property
 
+    <XmlIgnore>
+    <DataIgnored>
+    <IgnoreDataMember>
     Public ReadOnly Property IsLeaf As Boolean
         Get
             Return Childs.IsNullOrEmpty

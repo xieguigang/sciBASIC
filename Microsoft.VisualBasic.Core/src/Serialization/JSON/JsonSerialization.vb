@@ -194,12 +194,13 @@ Namespace Serialization.JSON
         ''' <summary>
         ''' Gets the json text value of the target object, the attribute <see cref="ScriptIgnoreAttribute"/> 
         ''' can be used for block the property which is will not serialize to the text.
-        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="obj"></param>
         ''' <returns></returns>
         ''' <remarks>
+        ''' (使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性)
+        ''' 
         ''' 2016-11-9 对字典进行序列化的时候，假若对象类型是从字典类型继承而来的，则新的附加属性并不会被序列化，只会序列化字典本身
         ''' 2018-10-5 不可以序列化匿名类型
         ''' </remarks>
@@ -211,6 +212,10 @@ Namespace Serialization.JSON
                                       Optional simpleDict As Boolean = True,
                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
             Dim schema As Type
+
+            If obj Is Nothing Then
+                Return "null"
+            End If
 
             If GetType(T) Is GetType(Array) AndAlso Not obj Is Nothing Then
                 schema = obj.GetType

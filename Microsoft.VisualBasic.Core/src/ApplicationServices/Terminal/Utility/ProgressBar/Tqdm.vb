@@ -355,8 +355,11 @@ Namespace ApplicationServices.Terminal.ProgressBar
                                    Optional printsPerSecond As Integer = 10,
                                    Optional useColor As Boolean = False) As IEnumerable(Of T)
 
-            Dim total = collection.Count
-            Return Wrap(collection, total, bar, width, printsPerSecond, useColor)
+            If collection Is Nothing Then
+                Return New T() {}
+            Else
+                Return Wrap(collection, collection.Count, bar, width, printsPerSecond, useColor)
+            End If
         End Function
 
         ''' <summary>

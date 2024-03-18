@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Friend Class NodeRendering
 
-    ReadOnly radiusValue As Func(Of Node, Single),
+    ReadOnly radiusValue As Func(Of Node, Single()),
         fontSizeValue As Func(Of Node, Single),
         defaultColor As Color,
         stroke As Pen,
@@ -69,12 +69,16 @@ Friend Class NodeRendering
         scalePos As Dictionary(Of String, PointF),
         throwEx As Boolean,
         getDisplayLabel As Func(Of Node, String),
-        drawNodeShape As DrawNodeShape,
         getLabelPosition As GetLabelPosition,
         labelWordWrapWidth As Integer,
         nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF)
 
-    Sub New(radiusValue As Func(Of Node, Single),
+    Dim drawNodeShape As DrawNodeShape
+    Dim drawShape As DrawShape
+    Dim graph As NetworkGraph
+
+    Sub New(graph As NetworkGraph,
+            radiusValue As Func(Of Node, Single()),
             fontSizeValue As Func(Of Node, Single),
             defaultColor As Color,
             stroke As Pen,
@@ -83,6 +87,7 @@ Friend Class NodeRendering
             throwEx As Boolean,
             getDisplayLabel As Func(Of Node, String),
             drawNodeShape As DrawNodeShape,
+            drawShape As DrawShape,
             getLabelPosition As GetLabelPosition,
             labelWordWrapWidth As Integer,
             nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF))
@@ -91,8 +96,10 @@ Friend Class NodeRendering
         Me.fontSizeValue = fontSizeValue
         Me.defaultColor = defaultColor
         Me.stroke = stroke
+        Me.graph = graph
         Me.baseFont = baseFont
         Me.scalePos = scalePos
+        Me.drawShape = drawShape
         Me.throwEx = throwEx
         Me.getDisplayLabel = getDisplayLabel
         Me.drawNodeShape = drawNodeShape
@@ -101,7 +108,35 @@ Friend Class NodeRendering
         Me.nodeWidget = nodeWidget
     End Sub
 
+    Private Function DefaultDrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single(), center As PointF) As RectangleF
+        Dim v As Node = graph.GetElementByID(id)
+        Dim shape As String = If(v.data("shape"), "circle")
+        Dim size As SizeF
+
+        If radius.Length = 1 Then
+            size = New SizeF(radius(0), radius(0))
+        Else
+            size = New SizeF(radius(0), radius(1))
+        End If
+
+        If drawShape Is Nothing Then
+            ' draw circle by default
+            Return DrawDefaultCircle(center, g, radius, brush, Nothing)
+        Else
+            center = New PointF(center.X - size.Width / 2, center.Y - size.Height / 2)
+            drawShape(g, center, size, shape, brush, Nothing, radius.Average, Nothing, 1)
+        End If
+
+        Return New RectangleF(center, size)
+    End Function
+
     Public Iterator Function RenderingVertexNodes(g As IGraphics, drawPoints As Node()) As IEnumerable(Of LayoutLabel)
+        If drawNodeShape Is Nothing Then
+            If drawPoints.Any(Function(v) v.data.HasProperty("shape")) Then
+                drawNodeShape = AddressOf DefaultDrawNodeShape
+            End If
+        End If
+
         Call "Rendering nodes...".__DEBUG_ECHO
 
         For Each n As Node In drawPoints
@@ -111,11 +146,43 @@ Friend Class NodeRendering
         Next
     End Function
 
+    Private Function DrawDefaultCircle(center As PointF, g As IGraphics, r As Single(), br As Brush, ByRef invalidRegion As Boolean) As RectangleF
+        Dim pt As Point
+
+        With center
+            pt = New Point(.X - r(0) / 2, .Y - r(0) / 2)
+        End With
+
+        Dim rect As New RectangleF(pt, New Size(r(0), r(0)))
+
+        ' 绘制节点，目前还是圆形
+        If TypeOf g Is Graphics2D Then
+            Try
+                Call g.FillPie(br, rect, 0, 360)
+
+                If Not stroke Is Nothing Then
+                    Call g.DrawEllipse(stroke, rect)
+                End If
+            Catch ex As Exception
+                If throwEx Then
+                    Throw New Exception(rect.GetJson, ex)
+                Else
+                    Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
+                End If
+
+                invalidRegion = True
+            End Try
+        Else
+            Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r(0))
+        End If
+
+        Return rect
+    End Function
+
     Private Iterator Function renderNode(n As Node, g As IGraphics) As IEnumerable(Of LayoutLabel)
-        Dim r# = radiusValue(n)
+        Dim r As Single() = radiusValue(n)
         Dim center As PointF = scalePos(n.label)
         Dim invalidRegion As Boolean = False
-        Dim pt As Point
         Dim br As Brush
         Dim rect As RectangleF
 
@@ -124,38 +191,13 @@ Friend Class NodeRendering
         End With
 
         If drawNodeShape Is Nothing Then
-            With center
-                pt = New Point(.X - r / 2, .Y - r / 2)
-            End With
-
-            rect = New RectangleF(pt, New Size(r, r))
-
-            ' 绘制节点，目前还是圆形
-            If TypeOf g Is Graphics2D Then
-                Try
-                    Call g.FillPie(br, rect, 0, 360)
-
-                    If Not stroke Is Nothing Then
-                        Call g.DrawEllipse(stroke, rect)
-                    End If
-                Catch ex As Exception
-                    If throwEx Then
-                        Throw New Exception(rect.GetJson, ex)
-                    Else
-                        Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
-                    End If
-
-                    invalidRegion = True
-                End Try
-            Else
-                Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
-            End If
+            rect = DrawDefaultCircle(center, g, r, br, invalidRegion)
         Else
             rect = drawNodeShape(n.label, g, br, r, center)
         End If
 
         If Not nodeWidget Is Nothing Then
-            Dim rectLayout As RectangleF = nodeWidget(g, center, r, n)
+            Dim rectLayout As RectangleF = nodeWidget(g, center, r(0), n)
 
             If Not rectLayout.IsEmpty Then
                 Yield New LayoutLabel With {

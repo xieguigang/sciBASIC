@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::3df71a28b8cdee7d29d829209ce92fbb, sciBASIC#\mime\application%json\JSONtest\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 37
-    '    Code Lines: 29
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 1.37 KB
+' Summaries:
 
 
-    ' Class TestDynamicsObject
-    ' 
-    '     Properties: str, Tarray, Tarray2
-    ' 
-    ' Module Module1
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 37
+'    Code Lines: 29
+' Comment Lines: 0
+'   Blank Lines: 8
+'     File Size: 1.37 KB
+
+
+' Class TestDynamicsObject
+' 
+'     Properties: str, Tarray, Tarray2
+' 
+' Module Module1
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -66,6 +67,10 @@ End Class
 Module Module1
 
     Sub Main()
+        Call deserializeObjectTest()
+    End Sub
+
+    Sub test1()
         Dim aaa = ParseJson("[{a:[1,2,3,4,5,6,7,[{xxoo:[""233333""]}]], b: ""xxxxxooooo""}]")
 
         Dim t As New TestDynamicsObject With {
@@ -89,4 +94,26 @@ Module Module1
         Pause()
     End Sub
 
+    Sub deserializeObjectTest()
+        Dim test1 As String = "{name: 'string_value', data: 'string_value'}"
+        Dim test2 As String = "{name: 'string_array', data: ['value1', 'value2', 'value3']}"
+        Dim test3 As String = "{name: 'any', data: {name:'nest', data:false}}"
+        Dim test4 As String = "{name: 'any', data: {name:'nest', data:{name:'nest_true', data:true}}}"
+
+        Dim o1 = JsonParser.Parse(test1, False).CreateObject(Of anyObject)
+        Dim o2 = JsonParser.Parse(test2, False).CreateObject(Of anyObject)
+        Dim o3 = JsonParser.Parse(test3, False).CreateObject(Of anyObject)
+        Dim o4 = JsonParser.Parse(test4, False).CreateObject(Of anyObject)
+
+        Pause()
+    End Sub
+
 End Module
+
+<KnownType(GetType(anyObject))>
+Public Class anyObject
+
+    Public Property name As String
+    Public Property data As Object
+
+End Class

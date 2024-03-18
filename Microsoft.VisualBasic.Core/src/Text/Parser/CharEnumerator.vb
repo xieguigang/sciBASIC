@@ -118,12 +118,36 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As String) As CharPtr
+            If str Is Nothing Then
+                Return Nothing
+            End If
+
             Return New CharPtr(str)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As StringBuilder) As CharPtr
             Return New CharPtr(str.ToString)
+        End Operator
+
+        Public Shared Operator =(str As CharPtr, text As String) As Boolean
+            If str Is Nothing Then
+                Return text Is Nothing
+            Else
+                Return New String(str.buffer) = text
+            End If
+        End Operator
+
+        Public Shared Operator <>(str As CharPtr, text As String) As Boolean
+            Return Not str = text
+        End Operator
+
+        Public Shared Operator Like(str As CharPtr, text As String) As Boolean
+            If str Is Nothing Then
+                Return text Is Nothing
+            Else
+                Return New String(str.buffer).TextEquals(text)
+            End If
         End Operator
     End Class
 End Namespace

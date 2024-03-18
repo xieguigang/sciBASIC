@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::0abc24998b5b4bf8d5426037ee29a335, sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 437
-    '    Code Lines: 268
-    ' Comment Lines: 107
-    '   Blank Lines: 62
-    '     File Size: 16.30 KB
+' Summaries:
 
 
-    ' Module DocumentExtensions
-    ' 
-    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
-    '               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
-    '               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
-    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
-    '     Class GenericTable
-    ' 
-    '         Properties: data
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 437
+'    Code Lines: 268
+' Comment Lines: 107
+'   Blank Lines: 62
+'     File Size: 16.30 KB
+
+
+' Module DocumentExtensions
+' 
+'     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
+'               GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
+'               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
+'               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
+'     Class GenericTable
+' 
+'         Properties: data
+' 
+'         Function: ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -141,21 +141,12 @@ Public Module DocumentExtensions
         Return row
     End Function
 
-    Private Class GenericTable
-
-        Public Property data As Dictionary(Of String, String)
-
-        Public Overrides Function ToString() As String
-            Return data.GetJson
-        End Function
-    End Class
-
     <Extension>
     Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, String)), path$) As Boolean
-        Dim table As GenericTable() = d _
+        Dim table As IO.Table() = d _
             .Select(Function(x)
-                        Return New GenericTable With {
-                            .data = x
+                        Return New IO.Table With {
+                            .Properties = x
                         }
                     End Function) _
             .ToArray
@@ -185,17 +176,17 @@ Public Module DocumentExtensions
                                   Optional encoding As Encodings = Encodings.UTF8WithoutBOM,
                                   Optional orderBy As Func(Of Dictionary(Of String, String), Double) = Nothing) As Boolean
 
-        Dim data As New List(Of GenericTable)
-        Dim table As IEnumerable(Of GenericTable)
+        Dim data As New List(Of IO.Table)
+        Dim table As IEnumerable(Of IO.Table)
 
         For Each path$ In files
             ' List(Of T) 对象的 + 语法有冲突，所以在这里需要先进行转换
-            table = path.LoadCsv(Of GenericTable)
+            table = path.LoadCsv(Of IO.Table)
             data += table
         Next
 
         If Not orderBy Is Nothing Then
-            data = data.OrderBy(Function(r) orderBy(r.data)).AsList
+            data = data.OrderBy(Function(r) orderBy(r.Properties)).AsList
         End If
 
         Return data.SaveTo(EXPORT, encoding:=encoding.CodePage)
@@ -245,7 +236,7 @@ Public Module DocumentExtensions
         End If
 
         Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) _
- _
+                                                           _
             () <= From column As String()
                   In source
                   Let name As String = column(Scan0)
@@ -336,6 +327,34 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    <Extension>
+    Public Function GetColumnValues(csv As IO.File, synonyms As String()) As IEnumerable(Of String)
+        For Each name As String In synonyms.SafeQuery
+            Dim values As IEnumerable(Of String) = csv.GetColumnValues(name)
+
+            If Not values Is Nothing Then
+                Return values
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
+    <Extension>
+    Public Function GetColumnValues(csv As DataFrame, synonyms As String()) As IEnumerable(Of String)
+        For Each name As String In synonyms.SafeQuery
+            Dim offset As Integer = csv.GetOrdinal(name)
+
+            If offset < 0 Then
+                Continue For
+            Else
+                Return csv.table.GetColumn(offset)
+            End If
+        Next
+
+        Return Nothing
+    End Function
+
     ''' <summary>
     ''' get a specific column value by name
     ''' </summary>
@@ -355,12 +374,34 @@ Public Module DocumentExtensions
             Return Nothing
         End If
 
-        ' 20221127 the dataframe object is already skip the title row
-        If TypeOf csv Is DataFrame Then
-            offset = 0
+        For Each r As RowObject In csv.Skip(offset)
+            Call out.Add(r(index))
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' get a specific column value by name
+    ''' </summary>
+    ''' <param name="csv">
+    ''' 20221127 the dataframe object is already skip the title row
+    ''' </param>
+    ''' <param name="column">the column name that will be find in the table header row</param>
+    ''' <returns>
+    ''' this function will returns nothing if the speicifc <paramref name="column"/> 
+    ''' is not exists in the table headers
+    ''' </returns>
+    <Extension>
+    Public Function GetColumnValues(csv As DataFrame, column$) As IEnumerable(Of String)
+        Dim index As Integer = csv.Headers.IndexOf(column)
+        Dim out As New List(Of String)
+
+        If index = -1 Then
+            Return Nothing
         End If
 
-        For Each r As RowObject In csv.Skip(offset)
+        For Each r As RowObject In csv.table
             Call out.Add(r(index))
         Next
 

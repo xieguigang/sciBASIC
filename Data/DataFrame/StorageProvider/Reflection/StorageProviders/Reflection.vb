@@ -140,7 +140,7 @@ Namespace StorageProvider.Reflection
             parallel = False
 #End If
 
-            Dim sequence = csv._innerTable _
+            Dim sequence = csv.table _
                 .SeqIterator _
                 .Populate(parallel)
             Dim buf = From line As SeqValue(Of RowObject)
@@ -199,7 +199,8 @@ Namespace StorageProvider.Reflection
                                             Optional maps As Dictionary(Of String, String) = Nothing,
                                             Optional mute As Boolean = False,
                                             Optional metaBlank As String = "",
-                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As IEnumerable(Of T)
+                                            Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                            Optional simpleRowIterators As Boolean = True) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
@@ -209,7 +210,7 @@ Namespace StorageProvider.Reflection
             End If
 
             ' read csv data
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile)
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile, simpleRowIterators:=simpleRowIterators)
             Dim buffer As IEnumerable(Of T)
 
             If Not maps Is Nothing Then

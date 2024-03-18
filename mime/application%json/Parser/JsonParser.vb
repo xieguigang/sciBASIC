@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::180411b12eaddeb1a5d4a195281c225b, sciBASIC#\mime\application%json\Parser\JsonParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 516
-    '    Code Lines: 338
-    ' Comment Lines: 114
-    '   Blank Lines: 64
-    '     File Size: 16.14 KB
+' Summaries:
 
 
-    ' Class JsonParser
-    ' 
-    '     Properties: JSONvalue
-    ' 
-    '     Function: _parse, GetParserErrors, Open, OpenJSON, Parse
-    '               parseArray, parseBoolean, parseKey, parseNull, parseNumber
-    '               parseObject, parseString, parseValue, StripString
-    ' 
-    '     Sub: ClearParserError, skipChar
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 516
+'    Code Lines: 338
+' Comment Lines: 114
+'   Blank Lines: 64
+'     File Size: 16.14 KB
+
+
+' Class JsonParser
+' 
+'     Properties: JSONvalue
+' 
+'     Function: _parse, GetParserErrors, Open, OpenJSON, Parse
+'               parseArray, parseBoolean, parseKey, parseNull, parseNumber
+'               parseObject, parseString, parseValue, StripString
+' 
+'     Sub: ClearParserError, skipChar
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,13 +64,19 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Scripting.TokenIcer
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 ''' <summary>
-''' https://github.com/qhgz2013/VBUtil/blob/master/VBUtil/JsonParser.vb
+''' A json text parser module
 ''' </summary>
 Public Class JsonParser
 
@@ -83,12 +89,48 @@ Public Class JsonParser
     'Const INVALID_RPC_CALL As Integer = 7
 
     Dim psErrors As String
+    ''' <summary>
+    ''' a clean json string
+    ''' </summary>
+    Dim json_str As CharPtr
+    Dim buffer As CharBuffer
+    Dim escape As Char = ASCII.NUL
+    ''' <summary>
+    ''' single line comment
+    ''' </summary>
+    Dim comment_escape As Boolean
+    Dim comments As New Dictionary(Of String, String)
+    Dim comment_key As String = ""
+
+    Dim lastToken As Token
+    Dim line As Integer = 0
+    Dim lineText As String()
+
+    ''' <summary>
+    ''' set this option to value false will enable syntax of array like: [1 2 3], 
+    ''' without comma symbol as the element value delimiter!
+    ''' </summary>
+    Dim strictVectorSyntax As Boolean = True
 
     ''' <summary>
     ''' The root node in json file
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property JSONvalue As JsonElement
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="json_str">the json text content</param>
+    Sub New(json_str As String, Optional strictVectorSyntax As Boolean = True)
+        Me.strictVectorSyntax = strictVectorSyntax
+        Me.buffer = ""
+        Me.lineText = Strings _
+            .Trim(json_str) _
+            .Trim(ASCII.TAB, ASCII.CR, ASCII.LF, " "c) _
+            .LineTokens
+        Me.json_str = lineText.JoinBy(vbLf)
+    End Sub
 
     Public Function GetParserErrors() As String
         Return psErrors
@@ -105,25 +147,28 @@ Public Class JsonParser
     ''' a file path of the json data file
     ''' </param>
     ''' <returns></returns>
-    Public Function Open(file As String) As JsonElement
+    Public Shared Function Open(file As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
         Using sr As New StreamReader(file)
-            Return OpenJSON(sr.ReadToEnd)
+            Return New JsonParser(sr.ReadToEnd, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
         End Using
     End Function
 
     ''' <summary>
     ''' parse json text content
     ''' </summary>
-    ''' <param name="jsonStr">
-    ''' the json text content
-    ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns nothing if the given json string is empty string or "null" literal.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function OpenJSON(jsonStr As String) As JsonElement
-        If jsonStr.TextEquals("null") Then
+    Public Function OpenJSON() As JsonElement
+        If json_str Is Nothing Then
+            Return Nothing
+        ElseIf json_str Like "null" Then
+            Return Nothing
+        ElseIf json_str = "" Then
             Return Nothing
         Else
-            _JSONvalue = _parse(jsonStr)
+            _JSONvalue = _parse()
         End If
 
         Return JSONvalue
@@ -135,178 +180,299 @@ Public Class JsonParser
     ''' <param name="json">
     ''' text data in json string format
     ''' </param>
-    ''' <returns></returns>
-    Public Shared Function Parse(json As String) As JsonElement
-        Dim parser As New JsonParser
-        Return parser.OpenJSON(json)
+    ''' <returns>
+    ''' this function will returns nothing if the given json string is empty string or "null" literal.
+    ''' </returns>
+    Public Shared Function Parse(json As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
+        If json.StringEmpty Then
+            Return Nothing
+        Else
+            Return New JsonParser(json, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
+        End If
     End Function
 
     ''' <summary>
     ''' parse string and create JSON object
     ''' </summary>
-    ''' <param name="str"></param>
     ''' <returns></returns>
-    Private Function _parse(ByRef str As String) As JsonElement
-        Dim index As Long = 1
+    Private Function _parse() As JsonElement
+        Dim tokens As IEnumerator(Of Token) = GetTokenSequence() _
+            .ToArray _
+            .AsEnumerable _
+            .GetEnumerator
 
-        psErrors = "*"
-        skipChar(str, index)
+        If Not tokens.MoveNext Then
+            ' empty collection 
+            Return Nothing
+        End If
 
-        Select Case Mid(str, index, 1)
-            Case "{"
-                Return parseObject(str, index)
-            Case "["
-                Return parseArray(str, index)
+        If tokens.Current.IsJsonValue Then
+            Dim scalar As JsonValue = tokens.Current.GetValue
+
+            If tokens.MoveNext Then
+                Throw New InvalidExpressionException("the json literal value should be a scalar token value!")
+            Else
+                Return scalar
+            End If
+        Else
+            Return PullJson(tokens)
+        End If
+    End Function
+
+    Private Function PullJson(pull As IEnumerator(Of Token)) As JsonElement
+        Dim t As Token = pull.Current
+
+        If t Is Nothing Then
+            Return Nothing
+        End If
+
+        Select Case t.name
+            Case Token.JSONElements.Open
+                If t.text = "{" Then
+                    Return PullObject(pull)
+                Else
+                    Return PullArray(pull)
+                End If
             Case Else
-                psErrors = "Invalid JSON"
-                Return Nothing
+                If t.IsJsonValue Then
+                    Return t.GetValue
+                Else
+                    Throw New InvalidProgramException($"invalid json syntax: the required token should be literal, object open or array open! (json_document_line: {t.span.line})")
+                End If
         End Select
     End Function
 
-    ''' <summary>
-    ''' parse collections of key/value
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseObject(ByRef str As String, ByRef index As Long) As JsonObject
-        Dim ret As New JsonObject
-        Dim sKey As String
+    Private Function PullObject(pull As IEnumerator(Of Token)) As JsonObject
+        Dim obj As New JsonObject
+        Dim t As Token
+        Dim key As String
+        Dim val As JsonElement
 
-        '"{"
-        skipChar(str, index)
-        If Mid(str, index, 1) <> "{" Then
-            psErrors &= "Invalid Object at position " & index & ":" & Mid(str, index) & vbCrLf
-            Return ret
-        End If
+        Do While pull.MoveNext
+            ' get key
+            t = pull.Current
 
-        index += 1
-
-        Dim c As String
-
-        Do
-            skipChar(str, index)
-
-            c = Mid(str, index, 1)
-
-            If c = "}" Then
-                index += 1
+            If t Is Nothing Then
+                Throw New InvalidDataException("key should not be nothing")
+            ElseIf t = (Token.JSONElements.Close, "}") Then
+                ' empty json object {}
                 Exit Do
-            ElseIf c = "," Then
-                index += 1
-                skipChar(str, index)
-            ElseIf index > Len(str) Then
-                psErrors &= "Missing '}': " & Right(str, 20) & vbCrLf
-                Exit Do
+            Else
+                key = t.text
             End If
 
-            'add key/value pair
-            sKey = parseKey(str, index)
-            ret.Add(sKey, parseValue(str, index))
-            If Err.Number <> 0 Then
-                psErrors &= Err.Description & ": " & sKey & vbCrLf
-                Exit Do
-            End If
-        Loop
-eh:
-        Return ret
-    End Function
+            t = pull.Next
 
-    ''' <summary>
-    ''' parse list
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseArray(ByRef str As String, ByRef index As Long) As JsonArray
-        Dim ret As New JsonArray
-
-        '"{"
-        skipChar(str, index)
-
-        If Mid(str, index, 1) <> "[" Then
-            psErrors &= "Invalid Object at position " & index & ":" & Mid(str, index) & vbCrLf
-            Return ret
-        End If
-
-        index += 1
-
-        Dim c As String
-
-        Do
-            skipChar(str, index)
-
-            c = Mid(str, index, 1)
-
-            If c = "]" Then
-                index += 1
-                Exit Do
-            ElseIf c = "," Then
-                index += 1
-                skipChar(str, index)
-            ElseIf index > Len(str) Then
-                psErrors &= "Missing '}': " & Right(str, 20) & vbCrLf
-                Exit Do
+            If t Is Nothing Then
+                Throw New InvalidDataException($"in-complete json object document! (json_document_line: {t.span.line})")
+            ElseIf t.name <> Token.JSONElements.Colon Then
+                Throw New InvalidDataException($"missing colon symbol for key:value pair in json object document! (json_document_line: {t.span.line})")
+            Else
+                pull.MoveNext()
             End If
 
-            'add value
-            ret.Add(parseValue(str, index))
+            val = PullJson(pull)
+            obj.Add(key, val)
+            t = pull.Next
 
-            If Err.Number <> 0 Then
-                psErrors = psErrors & Err.Description & ": " & Mid(str, index, 20) & vbCrLf
-                Exit Do
+            If t.name <> Token.JSONElements.Delimiter Then
+                If t = (Token.JSONElements.Close, "}") Then
+                    Exit Do
+                Else
+                    Throw New InvalidDataException($"a comma delimiter or json object close symbol should be follow the end of key:value tuple! (json_document_line: {t.span.line})")
+                End If
             End If
         Loop
 
-        Return ret
+        Return obj
+    End Function
+
+    Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
+        Dim array As New JsonArray
+        Dim t As Token
+        Dim back As Boolean = False
+
+        Do While If(back, True, pull.MoveNext())
+            t = pull.Current
+            back = False
+
+            If t Is Nothing Then
+                Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
+            ElseIf t = (Token.JSONElements.Close, "]") Then
+                ' empty json array []
+                Exit Do
+            End If
+
+            array.Add(PullJson(pull))
+            pull.MoveNext()
+            t = pull.Current
+
+            If t Is Nothing Then
+                Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
+            ElseIf t.name <> Token.JSONElements.Delimiter Then
+                If t = (Token.JSONElements.Close, "]") Then
+                    ' end of current vector
+                    Exit Do
+                ElseIf strictVectorSyntax Then
+                    Throw New SyntaxErrorException($"the json element value should be follow a comma delimiter or close symbol of the array! (json_document_line: {t.span.line})")
+                ElseIf t.name = Token.JSONElements.Open OrElse t.IsJsonValue Then
+                    ' strict off mode will continute
+                    ' try to parse next element
+                    '
+                    ' do nothing at here
+                    Dim message As String = $"possible json syntax error on parse json array at line {t.span.line}."
+
+                    ' stop iterator move to next in next loop
+                    back = True
+
+                    Call message.Warning
+                    Call Debug.WriteLine(message)
+                End If
+            End If
+        Loop
+
+        Return array
+    End Function
+
+    Private Iterator Function GetTokenSequence() As IEnumerable(Of Token)
+        Do While Not json_str.EndRead
+            For Each t As Token In walkChar(++json_str)
+                If Not t Is Nothing Then
+                    lastToken = t.SetLine(line)
+                    Yield t
+                End If
+            Next
+        Loop
+
+        If buffer > 0 Then
+            If comment_escape Then
+                comments(comment_key) = New String(buffer.PopAllChars)
+            Else
+                Throw New Exception("unknow parser error at the end of the json document stream!")
+            End If
+        End If
+    End Function
+
+    Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
+        If c = ASCII.LF Then
+            line += 1
+        End If
+
+        If comment_escape Then
+            If c = ASCII.LF Then
+                comment_escape = False
+                comments(comment_key) = New String(buffer.PopAllChars)
+                comment_key = ""
+            Else
+                Call buffer.Add(c)
+            End If
+        ElseIf escape <> ASCII.NUL Then
+            ' is string escape
+            If c = escape Then
+                If buffer.StartEscaping Then
+                    ' continute
+                    buffer += c
+                Else
+                    ' end of the string escape
+                    escape = ASCII.NUL
+                    Yield New Token(Token.JSONElements.String, buffer.PopAllChars)
+                End If
+            Else
+                buffer += c
+            End If
+        ElseIf c = "/"c Then
+            ' check hjson single comment line
+            If buffer > 0 Then
+                If buffer = "/" Then
+                    ' is single comment line
+                    buffer.Pop()
+                    comment_escape = True
+                Else
+                    Yield MeasureToken()
+                    buffer.Add("/"c)
+                End If
+            Else
+                buffer.Add(c)
+            End If
+        ElseIf c = "'"c OrElse c = """"c Then
+            escape = c
+            Return
+        ElseIf c = ":"c Then
+            ' end previous token
+            ' key: value
+            If buffer > 0 Then
+                Yield New Token(Token.JSONElements.Key, buffer.PopAllChars)
+            End If
+
+            Yield New Token(Token.JSONElements.Colon, ":")
+        ElseIf c = "," Then
+            ' end previous token
+            Yield MeasureToken()
+            Yield New Token(Token.JSONElements.Delimiter, ",")
+        ElseIf c = " "c OrElse c = ASCII.TAB OrElse c = ASCII.LF Then
+            Yield MeasureToken()
+        ElseIf c = "{"c OrElse c = "["c Then
+            ' end previous token
+            Yield MeasureToken()
+            Yield New Token(Token.JSONElements.Open, CStr(c))
+        ElseIf c = "}"c OrElse c = "]"c Then
+            ' end previous token
+            Yield MeasureToken()
+            Yield New Token(Token.JSONElements.Close, CStr(c))
+        Else
+            buffer += c
+        End If
     End Function
 
     ''' <summary>
-    ''' parse string/number/object/array/boolean/null
+    ''' the entire <see cref="buffer"/> will be clear in this function
     ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
     ''' <returns></returns>
-    Private Function parseValue(ByRef str As String, ByRef index As Long) As JsonElement
-        Call skipChar(str, index)
+    Private Function MeasureToken() As Token
+        If buffer = 0 Then
+            Return Nothing
+        End If
 
-        Dim c As String = Mid(str, index, 1)
+        Dim str As New String(buffer.PopAllChars)
 
-        Select Case c
-            Case "{"
-                Return parseObject(str, index)
-            Case "["
-                Return parseArray(str, index)
-            Case """", "'"
-                Return parseString(str, index)
-            Case "t", "f"
-                Return parseBoolean(str, index)
-            Case "n"
-                Return parseNull(str, index)
-            Case Else
-                Return parseNumber(str, index)
-        End Select
+        Static [boolean] As Index(Of String) = {"true", "false"}
+
+        If str.IsInteger Then
+            Return New Token(Token.JSONElements.Integer, str)
+        ElseIf str.IsNumeric Then
+            Return New Token(Token.JSONElements.Double, str)
+        ElseIf str.ToLower Like [boolean] Then
+            Return New Token(Token.JSONElements.Boolean, str)
+        Else
+            Return New Token(Token.JSONElements.String, str)
+        End If
     End Function
 
     ''' <summary>
     ''' do string unescape
     ''' </summary>
-    ''' <param name="str$"></param>
+    ''' <param name="str"></param>
     ''' <param name="decodeMetaChar"></param>
     ''' <returns></returns>
-    Public Shared Function StripString(str$, decodeMetaChar As Boolean) As String
-        Dim index% = 1
-        Dim chr$, code$
+    Public Shared Function StripString(ByRef str$, decodeMetaChar As Boolean) As String
+        Dim index% = 0
+        Dim chr As Char, code$
         Dim sb As New StringBuilder
+        Dim str_len As Integer = Len(str)
 
-        While index > 0 AndAlso index <= Len(str)
-            chr = Mid(str, index, 1)
+        If str Is Nothing OrElse str = "" Then
+            Return str
+        End If
+
+        While index < str_len
+            chr = str(index)
+
             Select Case chr
-                Case "\"
+                Case "\"c
                     index += 1
 
                     If decodeMetaChar Then
-                        chr = Mid(str, index, 1)
+                        chr = str(index)
 
                         Select Case chr
                             Case """", "\", "/", """"
@@ -344,241 +510,4 @@ eh:
 
         Return sb.ToString
     End Function
-
-    ''' <summary>
-    ''' parse string
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseString(ByRef str As String, ByRef index As Long) As JsonValue
-        Dim quote, chr, code As String
-        Dim sb As New StringBuilder
-
-        skipChar(str, index)
-        quote = Mid(str, index, 1)
-        index += 1
-
-        While index > 0 AndAlso index <= Len(str)
-            chr = Mid(str, index, 1)
-            Select Case chr
-                Case "\"
-                    index += 1
-                    chr = Mid(str, index, 1)
-
-                    sb.Append("\") ' !!!!!
-
-                    Select Case chr
-                        Case """", "\", "/", """"
-                            sb.Append(chr)
-                            index += 1
-                        Case "b"
-                            ' sb.Append(vbBack)
-                            sb.Append(chr)
-                            index += 1
-                        Case "f"
-                            ' sb.Append(vbFormFeed)
-                            sb.Append(chr)
-                            index += 1
-                        Case "n"
-                            ' sb.Append(vbLf)
-                            sb.Append(chr)
-                            index += 1
-                        Case "r"
-                            ' sb.Append(vbCr)
-                            sb.Append(chr)
-                            index += 1
-                        Case "t"
-                            ' sb.Append(vbTab)
-                            sb.Append(chr)
-                            index += 1
-                        Case "u"
-                            index += 1
-                            code = Mid(str, index, 4)
-                            ' sb.Append(ChrW(Val("&h" & code)))
-                            sb.Append(chr)
-                            sb.Append(code)
-                            index += 4
-                    End Select
-                Case quote
-                    index += 1
-
-                    Return New JsonValue($"""{sb.ToString}""")
-                Case Else
-                    sb.Append(chr)
-                    index += 1
-            End Select
-        End While
-
-        Return New JsonValue($"""{sb.ToString}""")
-    End Function
-
-    ''' <summary>
-    ''' parse number
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseNumber(ByRef str As String, ByRef index As Long) As JsonValue
-        Dim value As String = ""
-        Dim chr As String
-
-        Call skipChar(str, index)
-
-        While index > 0 AndAlso index <= Len(str)
-            chr = Mid(str, index, 1)
-
-            If InStr("+-0123456789.eE", chr) Then
-                value &= chr
-                index += 1
-            ElseIf value = "" Then
-                Dim textAround As String = Mid(str, index - 5, 10)
-                Dim msg$ = $"unsure empty string for parse numeric value, text around the current pointer is: ""{textAround}""."
-
-                Throw New InvalidCastException(msg)
-            Else
-                Return New JsonValue(CDbl(value))
-            End If
-        End While
-
-        Return New JsonValue(CDbl(value))
-    End Function
-
-    ''' <summary>
-    ''' parse true/false
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseBoolean(ByRef str As String, ByRef index As Long) As JsonValue
-
-        skipChar(str, index)
-        If Mid(str, index, 4) = "true" Then
-            index += 4
-            Return New JsonValue(True)
-        ElseIf Mid(str, index, 5) = "false" Then
-            index += 5
-            Return New JsonValue(False)
-        Else
-            psErrors *= "Invalid Boolean at position " & index & " : " & Mid(str, index) & vbCrLf
-        End If
-        Return New JsonValue(False)
-    End Function
-
-    ''' <summary>
-    ''' parse null
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    ''' <returns></returns>
-    Private Function parseNull(ByRef str As String, ByRef index As Long) As JsonValue
-        Call skipChar(str, index)
-
-        If Mid(str, index, 4) = "null" Then
-            index += 4
-            Return New JsonValue(Nothing)
-        Else
-            psErrors &= "Invalid null value at position " & index & " : " & Mid(str, index) & vbCrLf
-        End If
-
-        Return New JsonValue(Nothing)
-    End Function
-
-    Private Function parseKey(ByRef str As String, ByRef index As Long) As String
-        Dim dquote, squote As Boolean
-        Dim ret As String = ""
-        Dim chr As String
-        skipChar(str, index)
-        While index > 0 AndAlso index <= Len(str)
-            chr = Mid(str, index, 1)
-            Select Case chr
-                Case """"
-                    dquote = Not dquote
-                    index += 1
-                    If Not dquote Then
-                        skipChar(str, index)
-                        If Mid(str, index, 1) <> ":" Then
-                            psErrors &= "Invalid Key at position " & index & " : " & ret & vbCrLf
-                            Exit While
-                        End If
-                    End If
-                'Case "'"
-                '    squote = Not squote
-                '    index += 1
-                '    If Not squote Then
-                '        skipChar(str, index)
-                '        If Mid(str, index, 1) <> ":" Then
-                '            psErrors &= "Invalid Key at position " & index & " : " & ret & vbCrLf
-                '            Exit While
-                '        End If
-                '    End If
-                Case ":"
-                    index += 1
-                    If Not dquote AndAlso Not squote Then
-                        Exit While
-                    Else
-                        ret &= chr
-                    End If
-                Case Else
-                    If InStr(vbCrLf & vbCr & vbLf & vbTab & "", chr) Then
-                    Else
-                        ret &= chr
-                    End If
-                    index += 1
-            End Select
-        End While
-        Return ret
-    End Function
-
-    ''' <summary>
-    ''' skip special character
-    ''' </summary>
-    ''' <param name="str"></param>
-    ''' <param name="index"></param>
-    Private Sub skipChar(ByRef str As String, ByRef index As Long)
-        Dim bComment, bStartComment, bLongComment As Boolean
-        While index > 0 AndAlso index <= Len(str)
-            Select Case Mid(str, index, 1)
-                Case vbCr, vbLf
-                    If Not bLongComment Then
-                        bStartComment = False
-                        bComment = False
-                    End If
-                Case vbTab, " ", "(", ")"
-
-                Case "/"
-                    If Not bLongComment Then
-                        If bStartComment Then
-                            bStartComment = False
-                            bComment = True
-                        Else
-                            bStartComment = True
-                            bComment = False
-                            bLongComment = False
-                        End If
-                    Else
-                        If bStartComment Then
-                            bLongComment = False
-                            bStartComment = False
-                            bComment = False
-                        End If
-                    End If
-                Case "*"
-                    If bStartComment Then
-                        bStartComment = False
-                        bComment = True
-                        bLongComment = True
-                    Else
-                        bStartComment = True
-                    End If
-
-                Case Else
-                    If Not bComment Then
-                        Exit While
-                    End If
-            End Select
-
-            index += 1
-        End While
-    End Sub
 End Class

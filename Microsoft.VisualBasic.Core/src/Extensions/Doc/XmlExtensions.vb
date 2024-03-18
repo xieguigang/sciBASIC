@@ -65,13 +65,11 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Linq
 
-<Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 <HideModuleName>
 Public Module XmlExtensions
 
@@ -89,7 +87,7 @@ Public Module XmlExtensions
     End Function
 
     ''' <summary>
-    ''' Load class object from the exists Xml document.(从文件之中加载XML之中的数据至一个对象类型之中)
+    ''' Load class object from the exists Xml document.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="xmlFile">The path of the xml document.(XML文件的文件路径)</param>
@@ -102,7 +100,7 @@ Public Module XmlExtensions
     ''' </param>
     ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(从文件之中加载XML之中的数据至一个对象类型之中)</remarks>
     <Extension>
     Public Function LoadXml(Of T)(xmlFile$,
                                   Optional encoding As Encoding = Nothing,
@@ -204,14 +202,14 @@ Public Module XmlExtensions
 
 
     ''' <summary>
-    ''' Serialization the target object type into a XML document.(将一个类对象序列化为XML文档)
+    ''' Serialization the target object type into a XML document.
     ''' </summary>
     ''' <typeparam name="T">
     ''' The type of the target object data should be a class object.(目标对象类型必须为一个Class)
     ''' </typeparam>
     ''' <param name="obj"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(将一个类对象序列化为XML文档)</remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -346,7 +344,6 @@ Public Module XmlExtensions
 
     ''' <summary>
     ''' Generate a specific type object from a xml document stream.
-    ''' (使用一个XML文本内容创建一个XML映射对象)
     ''' </summary>
     ''' <param name="Xml">
     ''' This parameter value is the document text of the xml file, 
@@ -359,7 +356,9 @@ Public Module XmlExtensions
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)
     ''' </param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (使用一个XML文本内容创建一个XML映射对象)
+    ''' </remarks>
     ''' 
     <Extension>
     Public Function LoadFromXml(xml$, schema As Type,
@@ -414,7 +413,6 @@ Public Module XmlExtensions
         End Try
     End Function
 
-    <ExportAPI("Xml.CreateObject")>
     <Extension>
     Public Function CreateObjectFromXml(Xml As StringBuilder, typeInfo As Type) As Object
         Dim doc As String = Xml.ToString

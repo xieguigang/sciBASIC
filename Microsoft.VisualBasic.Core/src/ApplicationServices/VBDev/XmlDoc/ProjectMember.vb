@@ -78,6 +78,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Dim projectType As ProjectType
 
         Public Property Returns() As String
+
+        ''' <summary>
+        ''' the xml document text for the function/property parameters
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Params As param()
 
         ''' <summary>

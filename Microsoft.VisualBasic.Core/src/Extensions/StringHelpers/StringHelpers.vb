@@ -294,10 +294,16 @@ Public Module StringHelpers
     ''' 将一个任意的目标字符集合转换为字符串对象
     ''' </summary>
     ''' <param name="chs"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns empty string if the given <paramref name="chs"/> collection data is nothing.
+    ''' </returns>
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
-        Return New String(chs.ToArray)
+        If chs Is Nothing Then
+            Return ""
+        Else
+            Return New String(chs.ToArray)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -406,6 +412,16 @@ Public Module StringHelpers
             .DoCall(Function(strs)
                         Return String.Join(delimiter, strs.ToArray)
                     End Function)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetTagValue(m As Match,
+                                Optional delimiter$ = " ",
+                                Optional trim As Boolean = False,
+                                Optional failureNoName As Boolean = True) As NamedValue(Of String)
+
+        Return GetTagValue(m.Value, delimiter, trim, failureNoName)
     End Function
 
     ''' <summary>
