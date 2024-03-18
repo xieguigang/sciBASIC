@@ -62,10 +62,11 @@ Namespace Javascript
 
     ''' <summary>
     ''' The primitive value type in javascript.
-    ''' 
+    ''' </summary>
+    ''' <remarks>
     ''' (请注意，假若是字符串的话，值是未经过处理的原始字符串，可能会含有转义字符，
     ''' 则这个时候还需要使用<see cref="GetStripString"/>得到最终的字符串)
-    ''' </summary>
+    ''' </remarks>
     Public Class JsonValue : Inherits JsonElement
 
         Public Overloads Property value As Object
@@ -115,6 +116,26 @@ Namespace Javascript
             value = obj
         End Sub
 
+        ''' <summary>
+        ''' get literal value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Literal() As Object
+            If value Is Nothing Then
+                Return Nothing
+            ElseIf TypeOf value Is String Then
+                Return GetStripString(True)
+            Else
+                Return value
+            End If
+        End Function
+
+        ''' <summary>
+        ''' get literal value with type try cast action.
+        ''' </summary>
+        ''' <param name="typeOfT"></param>
+        ''' <param name="decodeMetachar"></param>
+        ''' <returns></returns>
         Public Function Literal(typeOfT As Type, decodeMetachar As Boolean) As Object
             Dim str As String = GetStripString(decodeMetachar)
 
