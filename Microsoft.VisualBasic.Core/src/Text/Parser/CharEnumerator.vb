@@ -118,6 +118,10 @@ Namespace Text.Parser
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As String) As CharPtr
+            If str Is Nothing Then
+                Return Nothing
+            End If
+
             Return New CharPtr(str)
         End Operator
 

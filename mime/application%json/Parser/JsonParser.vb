@@ -68,9 +68,11 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 ''' <summary>
-''' https://github.com/qhgz2013/VBUtil/blob/master/VBUtil/JsonParser.vb
+''' A json text parser module
 ''' </summary>
 Public Class JsonParser
 
@@ -83,12 +85,28 @@ Public Class JsonParser
     'Const INVALID_RPC_CALL As Integer = 7
 
     Dim psErrors As String
+    ''' <summary>
+    ''' a clean json string
+    ''' </summary>
+    Dim json_str As CharPtr
+    Dim buffer As CharBuffer
 
     ''' <summary>
     ''' The root node in json file
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property JSONvalue As JsonElement
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="json_str">the json text content</param>
+    Sub New(json_str As String)
+        Me.buffer = ""
+        Me.json_str = Strings _
+            .Trim(json_str) _
+            .Trim(ASCII.TAB, ASCII.CR, ASCII.LF, " "c)
+    End Sub
 
     Public Function GetParserErrors() As String
         Return psErrors
@@ -105,27 +123,28 @@ Public Class JsonParser
     ''' a file path of the json data file
     ''' </param>
     ''' <returns></returns>
-    Public Function Open(file As String) As JsonElement
+    Public Shared Function Open(file As String) As JsonElement
         Using sr As New StreamReader(file)
-            Return OpenJSON(sr.ReadToEnd)
+            Return New JsonParser(sr.ReadToEnd).OpenJSON()
         End Using
     End Function
 
     ''' <summary>
     ''' parse json text content
     ''' </summary>
-    ''' <param name="jsonStr">
-    ''' the json text content
-    ''' </param>
     ''' <returns>
     ''' this function will returns nothing if the given json string is empty string or "null" literal.
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function OpenJSON(jsonStr As String) As JsonElement
-        If jsonStr.TextEquals("null") Then
+    Public Function OpenJSON() As JsonElement
+        If json_str Is Nothing OrElse json_str.RawBuffer _
+            .CharString _
+            .Trim _
+            .TextEquals("null") Then
+
             Return Nothing
         Else
-            _JSONvalue = _parse(jsonStr)
+            _JSONvalue = _parse()
         End If
 
         Return JSONvalue
@@ -144,30 +163,16 @@ Public Class JsonParser
         If json.StringEmpty Then
             Return Nothing
         Else
-            Return New JsonParser().OpenJSON(json)
+            Return New JsonParser(json).OpenJSON()
         End If
     End Function
 
     ''' <summary>
     ''' parse string and create JSON object
     ''' </summary>
-    ''' <param name="str"></param>
     ''' <returns></returns>
-    Private Function _parse(ByRef str As String) As JsonElement
-        Dim index As Long = 1
+    Private Function _parse() As JsonElement
 
-        psErrors = "*"
-        skipChar(str, index)
-
-        Select Case Mid(str, index, 1)
-            Case "{"
-                Return parseObject(str, index)
-            Case "["
-                Return parseArray(str, index)
-            Case Else
-                psErrors = "Invalid JSON"
-                Return Nothing
-        End Select
     End Function
 
     ''' <summary>

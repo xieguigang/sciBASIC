@@ -251,6 +251,23 @@ Namespace Text.Parser
             Return New CharBuffer + c
         End Operator
 
+        ''' <summary>
+        ''' Convert a string object to a char buffer
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        Public Shared Widening Operator CType(str As String) As CharBuffer
+            Dim buf As New CharBuffer
+
+            If Not str Is Nothing Then
+                For Each c As Char In str
+                    Call buf.buffer.Add(c)
+                Next
+            End If
+
+            Return buf
+        End Operator
+
         Public Shared Operator +(buf As CharBuffer, c As Char) As CharBuffer
             buf.buffer.Add(c)
             Return buf
