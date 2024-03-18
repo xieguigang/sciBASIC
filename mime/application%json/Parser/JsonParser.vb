@@ -306,7 +306,10 @@ Public Class JsonParser
         ElseIf c = ":"c Then
             ' end previous token
             ' key: value
-            Yield New Token(Token.JSONElements.Key, buffer.PopAllChars)
+            If buffer > 0 Then
+                Yield New Token(Token.JSONElements.Key, buffer.PopAllChars)
+            End If
+
             Yield New Token(Token.JSONElements.Colon, ":")
         ElseIf c = "," Then
             ' end previous token
