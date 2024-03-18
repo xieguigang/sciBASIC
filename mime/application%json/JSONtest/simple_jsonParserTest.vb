@@ -12,9 +12,10 @@ Module simple_jsonParserTest
         ' Dim null As JsonValue = JsonParser.Parse("null")
         ' Dim vec1 As JsonArray = JsonParser.Parse("[-1,1,2,3,4,5]")
         ' Dim obj As JsonObject = JsonParser.Parse("{'a': true, b: [3,3,4]}")
-        Dim literal As JsonValue = JsonParser.Parse("false//a scalar boolean value")
+        ' Dim literal As JsonValue = JsonParser.Parse("false//a scalar boolean value")
         ' Dim empty_array As JsonArray = JsonParser.Parse("[]")
         ' Dim empty_obj As JsonObject = JsonParser.Parse("{}")
+        Dim escape_str As JsonValue = JsonParser.Parse("'this is \'string\', another ""string block"".'")
         Dim obj_no_comment = JsonParser.Parse("
         {
             'a': true,
