@@ -182,6 +182,7 @@ Public Class JsonParser
     Private Function _parse() As JsonElement
         Dim tokens As IEnumerator(Of Token) = GetTokenSequence() _
             .ToArray _
+            .AsEnumerable _
             .GetEnumerator
 
         If Not tokens.MoveNext Then
@@ -224,7 +225,19 @@ Public Class JsonParser
     End Function
 
     Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
+        Dim array As New JsonArray
+        Dim t As Token
 
+        Do While pull.MoveNext()
+            array.Add(PullJson(pull))
+            t = pull.Current
+
+            If t.name <> Token.JSONElements.Delimiter AndAlso t <> (Token.JSONElements.Close, "]") Then
+                Throw New SyntaxErrorException("the json element value should be follow a comma delimiter or close symbol of the array!")
+            End If
+        Loop
+
+        Return array
     End Function
 
     Private Iterator Function GetTokenSequence() As IEnumerable(Of Token)
