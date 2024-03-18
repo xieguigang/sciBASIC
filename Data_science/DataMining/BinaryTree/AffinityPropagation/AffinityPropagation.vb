@@ -38,6 +38,13 @@ Namespace AffinityPropagation
                 convergence:=convergence)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ds"></param>
+        ''' <param name="damping">[0.5,1]</param>
+        ''' <param name="max_iteration"></param>
+        ''' <param name="convergence"></param>
         Public Sub New(ds As IEnumerable(Of ClusterEntity),
                        Optional damping As Single = 0.9F,
                        Optional max_iteration As Integer = 1000,
