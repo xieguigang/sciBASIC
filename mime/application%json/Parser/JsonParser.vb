@@ -230,9 +230,12 @@ Public Class JsonParser
 
         Do While pull.MoveNext()
             array.Add(PullJson(pull))
+            pull.MoveNext()
             t = pull.Current
 
-            If t.name <> Token.JSONElements.Delimiter AndAlso t <> (Token.JSONElements.Close, "]") Then
+            If t Is Nothing Then
+                Throw New InvalidDataException("in-complete json array!")
+            ElseIf t.name <> Token.JSONElements.Delimiter AndAlso t <> (Token.JSONElements.Close, "]") Then
                 Throw New SyntaxErrorException("the json element value should be follow a comma delimiter or close symbol of the array!")
             End If
         Loop
