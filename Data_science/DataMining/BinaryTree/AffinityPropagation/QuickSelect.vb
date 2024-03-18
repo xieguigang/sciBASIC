@@ -6,7 +6,8 @@
             Dim temp As Edge
             Dim pivot = arr(high)
             Dim i = low - 1
-            For j = low To high - 1
+
+            For j As Integer = low To high - 1
                 If arr(j).Similarity <= pivot.Similarity Then
                     i += 1
                     temp = arr(i)
@@ -30,10 +31,10 @@
         ''' <param name="right"></param>
         ''' <param name="k"></param>
         ''' <returns></returns>
-        Public Function k2thSmallest(ByRef a As Edge(), left As Integer, right As Integer, k As Integer) As Single()
-
-            Dim s = New Single(1) {}
+        Public Function k2thSmallest(ByRef a As Edge(), left As Integer, right As Integer, k As Integer) As Double()
             Dim temp = 0
+            Dim s As Double() = {0, 0}
+
             While left <= right
 
                 ' Partition a[left..right] around a pivot
