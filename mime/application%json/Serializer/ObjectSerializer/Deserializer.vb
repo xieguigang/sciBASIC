@@ -85,6 +85,12 @@ Public Module Deserializer
         Return json.CreateObject(Nothing, schema, decodeMetachar)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As Object
+        Return json.CreateObject(Nothing, GetType(T), decodeMetachar)
+    End Function
+
     <Extension>
     Private Function CreateObject(json As JsonElement,
                                   parent As SoapGraph,

@@ -66,6 +66,10 @@ End Class
 Module Module1
 
     Sub Main()
+        Call deserializeObjectTest()
+    End Sub
+
+    Sub test1()
         Dim aaa = ParseJson("[{a:[1,2,3,4,5,6,7,[{xxoo:[""233333""]}]], b: ""xxxxxooooo""}]")
 
         Dim t As New TestDynamicsObject With {
@@ -89,4 +93,23 @@ Module Module1
         Pause()
     End Sub
 
+    Sub deserializeObjectTest()
+        Dim test1 As String = "{name: 'string_value', data: 'string_value'}"
+        Dim test2 As String = "{name: 'string_array', data: ['value1', 'value2', 'value3']}"
+        Dim test3 As String = "{name: 'any', data: {name:'nest', data:false}}"
+
+        Dim o1 = JsonParser.Parse(test1, False).CreateObject(Of anyObject)
+        Dim o2 = JsonParser.Parse(test2, False).CreateObject(Of anyObject)
+        Dim o3 = JsonParser.Parse(test3, False).CreateObject(Of anyObject)
+
+        Pause()
+    End Sub
+
 End Module
+
+Public Class anyObject
+
+    Public Property name As String
+    Public Property data As Object
+
+End Class
