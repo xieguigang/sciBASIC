@@ -180,25 +180,54 @@ Public Class JsonParser
     ''' </summary>
     ''' <returns></returns>
     Private Function _parse() As JsonElement
-        Dim tokens As New List(Of Token)
+        Dim tokens As IEnumerator(Of Token) = GetTokenSequence().GetEnumerator
 
-        Do While Not json_str.EndRead
-            ' no hjson comment
-            ' hjson comment will be skiped
-            Call tokens.AddRange(walkChar(++json_str))
-        Loop
-
-        If tokens.Count = 0 Then
-            Return Nothing
-        ElseIf tokens.First.IsJsonValue Then
-            If tokens.Count = 1 Then
-                Return tokens.First.GetValue
+        If tokens.Current.IsJsonValue Then
+            If tokens.MoveNext Then
+                Throw New InvalidExpressionException("the json literal value should be a scalar token value!")
             Else
-                Throw New InvalidExpressionException("invalid syntax of the json document: the json literal token should be a single token value!")
+                Return tokens.Current.GetValue
             End If
+        Else
+            Return PullJson(tokens)
         End If
+    End Function
 
+    Private Function PullJson(pull As IEnumerator(Of Token)) As JsonElement
+        Dim t As Token = pull.Current
 
+        Select Case t.name
+            Case Token.JSONElements.Open
+                If t.text = "{" Then
+                    Return PullObject(pull)
+                Else
+                    Return PullArray(pull)
+                End If
+            Case Else
+                If t.IsJsonValue Then
+                    Return t.GetValue
+                Else
+                    Throw New InvalidProgramException("invalid json syntax: the required token should be literal, object open or array open!")
+                End If
+        End Select
+    End Function
+
+    Private Function PullObject(pull As IEnumerator(Of Token)) As JsonObject
+
+    End Function
+
+    Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
+
+    End Function
+
+    Private Iterator Function GetTokenSequence() As IEnumerable(Of Token)
+        Do While Not json_str.EndRead
+            For Each t As Token In walkChar(++json_str)
+                If Not t Is Nothing Then
+                    Yield t
+                End If
+            Next
+        Loop
     End Function
 
     Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
@@ -234,6 +263,14 @@ Public Class JsonParser
             Yield New Token(Token.JSONElements.Delimiter, ",")
         ElseIf c = " "c OrElse c = ASCII.TAB OrElse c = ASCII.CR OrElse c = ASCII.LF Then
             Yield MeasureToken()
+        ElseIf c = "{"c OrElse c = "["c Then
+            ' end previous token
+            Yield MeasureToken()
+            Yield New Token(Token.JSONElements.Open, CStr(c))
+        ElseIf c = "}"c OrElse c = "]"c Then
+            ' end previous token
+            Yield MeasureToken()
+            Yield New Token(Token.JSONElements.Close, CStr(c))
         Else
             buffer += c
         End If
