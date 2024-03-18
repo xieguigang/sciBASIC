@@ -24,4 +24,8 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
         Call MyBase.New(type, text)
     End Sub
 
+    Public Function IsJsonValue() As Boolean
+        Return name = JSONElements.Literal OrElse name = JSONElements.String
+    End Function
+
 End Class

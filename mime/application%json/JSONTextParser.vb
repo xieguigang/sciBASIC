@@ -67,12 +67,12 @@ Imports Microsoft.VisualBasic.My.JavaScript
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseJson(JsonStr As String) As JsonElement
-        Return New JsonParser().OpenJSON(JsonStr)
+        Return New JsonParser(JsonStr).OpenJSON()
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ParseJsonFile(JsonFile As String) As JsonElement
-        Return New JsonParser().Open(JsonFile)
+        Return JsonParser.Open(JsonFile)
     End Function
 
     ''' <summary>
