@@ -103,6 +103,14 @@ Public Class JsonParser
     Dim comment_key As String = ""
 
     Dim lastToken As Token
+    Dim line As Integer = 0
+    Dim lineText As String()
+
+    ''' <summary>
+    ''' set this option to value false will enable syntax of array like: [1 2 3], 
+    ''' without comma symbol as the element value delimiter!
+    ''' </summary>
+    Dim strictVectorSyntax As Boolean = True
 
     ''' <summary>
     ''' The root node in json file
@@ -114,11 +122,14 @@ Public Class JsonParser
     ''' 
     ''' </summary>
     ''' <param name="json_str">the json text content</param>
-    Sub New(json_str As String)
+    Sub New(json_str As String, Optional strictVectorSyntax As Boolean = True)
+        Me.strictVectorSyntax = strictVectorSyntax
         Me.buffer = ""
-        Me.json_str = Strings _
+        Me.lineText = Strings _
             .Trim(json_str) _
-            .Trim(ASCII.TAB, ASCII.CR, ASCII.LF, " "c)
+            .Trim(ASCII.TAB, ASCII.CR, ASCII.LF, " "c) _
+            .LineTokens
+        Me.json_str = lineText.JoinBy(vbLf)
     End Sub
 
     Public Function GetParserErrors() As String
@@ -136,9 +147,9 @@ Public Class JsonParser
     ''' a file path of the json data file
     ''' </param>
     ''' <returns></returns>
-    Public Shared Function Open(file As String) As JsonElement
+    Public Shared Function Open(file As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
         Using sr As New StreamReader(file)
-            Return New JsonParser(sr.ReadToEnd).OpenJSON()
+            Return New JsonParser(sr.ReadToEnd, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
         End Using
     End Function
 
@@ -172,11 +183,11 @@ Public Class JsonParser
     ''' <returns>
     ''' this function will returns nothing if the given json string is empty string or "null" literal.
     ''' </returns>
-    Public Shared Function Parse(json As String) As JsonElement
+    Public Shared Function Parse(json As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
         If json.StringEmpty Then
             Return Nothing
         Else
-            Return New JsonParser(json).OpenJSON()
+            Return New JsonParser(json, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
         End If
     End Function
 
@@ -226,7 +237,7 @@ Public Class JsonParser
                 If t.IsJsonValue Then
                     Return t.GetValue
                 Else
-                    Throw New InvalidProgramException("invalid json syntax: the required token should be literal, object open or array open!")
+                    Throw New InvalidProgramException($"invalid json syntax: the required token should be literal, object open or array open! (json_document_line: {t.span.line})")
                 End If
         End Select
     End Function
@@ -253,9 +264,9 @@ Public Class JsonParser
             t = pull.Next
 
             If t Is Nothing Then
-                Throw New InvalidDataException("in-complete json object document!")
+                Throw New InvalidDataException($"in-complete json object document! (json_document_line: {t.span.line})")
             ElseIf t.name <> Token.JSONElements.Colon Then
-                Throw New InvalidDataException("missing colon symbol for key:value pair in json object document!")
+                Throw New InvalidDataException($"missing colon symbol for key:value pair in json object document! (json_document_line: {t.span.line})")
             Else
                 pull.MoveNext()
             End If
@@ -268,7 +279,7 @@ Public Class JsonParser
                 If t = (Token.JSONElements.Close, "}") Then
                     Exit Do
                 Else
-                    Throw New InvalidDataException("a comma delimiter or json object close symbol should be follow the end of key:value tuple!")
+                    Throw New InvalidDataException($"a comma delimiter or json object close symbol should be follow the end of key:value tuple! (json_document_line: {t.span.line})")
                 End If
             End If
         Loop
@@ -284,7 +295,7 @@ Public Class JsonParser
             t = pull.Current
 
             If t Is Nothing Then
-                Throw New InvalidDataException("in-complete json array!")
+                Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
             ElseIf t = (Token.JSONElements.Close, "]") Then
                 ' empty json array []
                 Exit Do
@@ -295,12 +306,18 @@ Public Class JsonParser
             t = pull.Current
 
             If t Is Nothing Then
-                Throw New InvalidDataException("in-complete json array!")
+                Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
             ElseIf t.name <> Token.JSONElements.Delimiter Then
                 If t = (Token.JSONElements.Close, "]") Then
+                    ' end of current vector
                     Exit Do
-                Else
-                    Throw New SyntaxErrorException("the json element value should be follow a comma delimiter or close symbol of the array!")
+                ElseIf strictVectorSyntax Then
+                    Throw New SyntaxErrorException($"the json element value should be follow a comma delimiter or close symbol of the array! (json_document_line: {t.span.line})")
+                ElseIf t.name = Token.JSONElements.Open OrElse t.IsJsonValue Then
+                    ' strict off mode will continute
+                    ' try to parse next element
+                    '
+                    ' do nothing at here
                 End If
             End If
         Loop
@@ -312,7 +329,7 @@ Public Class JsonParser
         Do While Not json_str.EndRead
             For Each t As Token In walkChar(++json_str)
                 If Not t Is Nothing Then
-                    lastToken = t
+                    lastToken = t.SetLine(line)
                     Yield t
                 End If
             Next
@@ -322,14 +339,18 @@ Public Class JsonParser
             If comment_escape Then
                 comments(comment_key) = New String(buffer.PopAllChars)
             Else
-                Throw New Exception("unknow parser error!")
+                Throw New Exception("unknow parser error at the end of the json document stream!")
             End If
         End If
     End Function
 
     Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
+        If c = ASCII.LF Then
+            line += 1
+        End If
+
         If comment_escape Then
-            If c = ASCII.CR OrElse c = ASCII.LF Then
+            If c = ASCII.LF Then
                 comment_escape = False
                 comments(comment_key) = New String(buffer.PopAllChars)
                 comment_key = ""
@@ -379,7 +400,7 @@ Public Class JsonParser
             ' end previous token
             Yield MeasureToken()
             Yield New Token(Token.JSONElements.Delimiter, ",")
-        ElseIf c = " "c OrElse c = ASCII.TAB OrElse c = ASCII.CR OrElse c = ASCII.LF Then
+        ElseIf c = " "c OrElse c = ASCII.TAB OrElse c = ASCII.LF Then
             Yield MeasureToken()
         ElseIf c = "{"c OrElse c = "["c Then
             ' end previous token
