@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.DataMining.KMeans
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -21,7 +23,20 @@ Namespace AffinityPropagation
         Dim _damping As Single
         Dim _graph As Graph
 
-        Public ReadOnly Property Centers As New HashSet(Of Integer)
+        Public ReadOnly Property centers As New HashSet(Of Integer)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(ds As IEnumerable(Of Double()),
+                Optional damping As Single = 0.9F,
+                Optional max_iteration As Integer = 1000,
+                Optional convergence As Integer = 200)
+
+            Call Me.New(
+                ds:=ds.SafeQuery.Select(Function(d, i) New ClusterEntity(i + 1, d)),
+                damping:=damping,
+                max_iteration:=max_iteration,
+                convergence:=convergence)
+        End Sub
 
         Public Sub New(ds As IEnumerable(Of ClusterEntity),
                        Optional damping As Single = 0.9F,
@@ -77,6 +92,11 @@ Namespace AffinityPropagation
             variable = _damping * variable + (1.0 - _damping) * newValue
         End Sub
 
+        ''' <summary>
+        ''' The "responsibility" matrix R has values r(i, k) that quantify how well
+        ''' -suited xk is to serve as the exemplar for xi, relative to other 
+        ''' candidate exemplars for xi.
+        ''' </summary>
         Private Sub UpdateResponsabilities()
             Dim edges As Edge()
             Dim max1, max2, argmax1 As Double
@@ -124,6 +144,11 @@ Namespace AffinityPropagation
             End While
         End Sub
 
+        ''' <summary>
+        ''' The "availability" matrix A contains values a(i, k) that represent how 
+        ''' "appropriate" it would be for xi to pick xk as its exemplar, taking into
+        ''' account other points' preference for xk as an exemplar.
+        ''' </summary>
         Private Sub UpdateAvailabilities()
             Dim edges As Edge()
             Dim sum As Double = 0.0
@@ -161,6 +186,18 @@ Namespace AffinityPropagation
             End While
         End Sub
 
+        ''' <summary>
+        ''' The diagonal of s (i.e.{\displaystyle s(i,i)}) Is particularly important, 
+        ''' as it represents the instance preference, meaning how likely a particular 
+        ''' instance Is to become an exemplar. When it Is set to the same value for 
+        ''' all inputs, it controls how many classes the algorithm produces. A value 
+        ''' close to the minimum possible similarity produces fewer classes, while a
+        ''' value close to Or larger than the maximum possible similarity produces 
+        ''' many classes. It Is typically initialized to the median similarity of all
+        ''' pairs of inputs.
+        ''' </summary>
+        ''' <param name="examplar"></param>
+        ''' <returns></returns>
         Private Function UpdateExamplars(examplar As Integer()) As Boolean
             Dim changed = False
             Dim edges As Edge()
@@ -189,10 +226,10 @@ Namespace AffinityPropagation
                 If examplar(i) <> argmax Then
                     examplar(i) = argmax
                     changed = True
-                    Centers.Clear()
+                    centers.Clear()
                 End If
 
-                Centers.Add(argmax)
+                centers.Add(argmax)
                 i += 1
             End While
 

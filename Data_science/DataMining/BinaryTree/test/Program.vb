@@ -10,6 +10,7 @@ Module Program
         '        Dim knn As New KNNGraph(data)
         '        Dim test = knn.BuildClusterGraph(k:=16)
 
+        Call AffinityPropagationDemo.Main2()
 
         '        Pause()
     End Sub
