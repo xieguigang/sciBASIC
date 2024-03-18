@@ -100,7 +100,7 @@ Public Class JsonParser
     ''' </summary>
     Dim comment_escape As Boolean
     Dim comments As New Dictionary(Of String, String)
-    Dim comment_key As String
+    Dim comment_key As String = ""
 
     Dim lastToken As Token
 
@@ -241,6 +241,9 @@ Public Class JsonParser
 
             If t Is Nothing Then
                 Throw New InvalidDataException("key should not be nothing")
+            ElseIf t = (Token.JSONElements.Close, "}") Then
+                ' empty json object {}
+                Exit Do
             Else
                 key = t.text
             End If

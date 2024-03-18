@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module simple_jsonParserTest
 
@@ -11,6 +12,7 @@ Module simple_jsonParserTest
         ' Dim null As JsonValue = JsonParser.Parse("null")
         ' Dim vec1 As JsonArray = JsonParser.Parse("[-1,1,2,3,4,5]")
         ' Dim obj As JsonObject = JsonParser.Parse("{'a': true, b: [3,3,4]}")
+        Dim empty_obj As JsonObject = JsonParser.Parse("{}")
         Dim obj_no_comment = JsonParser.Parse("
         {
             'a': true,
