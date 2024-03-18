@@ -132,6 +132,9 @@ Namespace Math
         ''' <returns>
         ''' A 32-bit signed integer that is greater than or equal to 0 and less than <see cref="Int32.MaxValue"/>.
         ''' </returns>
+        ''' <remarks>
+        ''' <see cref="System.Random.Next()"/>
+        ''' </remarks>
         Public Function NextNumber() As Integer
             If seeds Is Nothing Then
                 Call SetSeed(Seed)

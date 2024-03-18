@@ -138,6 +138,15 @@ Namespace KMeans
         End Function
 
         ''' <summary>
+        ''' check all vector elements equals to another
+        ''' </summary>
+        ''' <param name="another"></param>
+        ''' <returns></returns>
+        Public Overloads Function Equals(another As ClusterEntity) As Boolean
+            Return VectorEqualityComparer.VectorEqualsToAnother(entityVector, another.entityVector)
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="maps">名称字符串向量应该是和<see cref="entityVector"/>属性向量等长的</param>
