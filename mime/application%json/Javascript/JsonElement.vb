@@ -76,7 +76,7 @@ Namespace Javascript
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseJSON(jsonStr As String) As JsonElement
-            Return New JsonParser().OpenJSON(jsonStr)
+            Return New JsonParser(jsonStr).OpenJSON()
         End Function
 
         Public Shared Function Parse(json_str As String) As Task(Of JsonElement)
