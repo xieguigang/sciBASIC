@@ -90,6 +90,7 @@ Public Class JsonParser
     ''' </summary>
     Dim json_str As CharPtr
     Dim buffer As CharBuffer
+    Dim escape As Char
 
     ''' <summary>
     ''' The root node in json file
@@ -137,7 +138,11 @@ Public Class JsonParser
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function OpenJSON() As JsonElement
-        If json_str Is Nothing OrElse json_str Like "null" Then
+        If json_str Is Nothing Then
+            Return Nothing
+        ElseIf json_str Like "null" Then
+            Return Nothing
+        ElseIf json_str = "" Then
             Return Nothing
         Else
             _JSONvalue = _parse()
@@ -168,6 +173,17 @@ Public Class JsonParser
     ''' </summary>
     ''' <returns></returns>
     Private Function _parse() As JsonElement
+        Dim tokens As New List(Of Token)
+
+        Do While Not json_str.EndRead
+            tokens.AddRange(walkChar(++json_str))
+        Loop
+
+        ' build json based on the tokens sequence
+
+    End Function
+
+    Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
 
     End Function
 
