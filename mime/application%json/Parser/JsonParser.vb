@@ -69,6 +69,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Text
@@ -221,7 +222,34 @@ Public Class JsonParser
     End Function
 
     Private Function PullObject(pull As IEnumerator(Of Token)) As JsonObject
+        Dim obj As New JsonObject
+        Dim t As Token
+        Dim key As String
+        Dim val As JsonElement
 
+        Do While pull.MoveNext
+            ' get key
+            t = pull.Current
+
+            If t Is Nothing Then
+                Throw New InvalidDataException("key should not be nothing")
+            Else
+                key = t.text
+            End If
+
+            t = pull.Next
+
+            If t Is Nothing Then
+                Throw New InvalidDataException("in-complete json object document!")
+            ElseIf t.name <> Token.JSONElements.Colon Then
+                Throw New InvalidDataException("missing colon symbol for key:value pair in json object document!")
+            End If
+
+            val = PullJson(pull)
+            obj.Add(key, val)
+        Loop
+
+        Return obj
     End Function
 
     Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
