@@ -4,9 +4,9 @@ Namespace AffinityPropagation
     Public Class Edge : Implements IComparable(Of Edge)
         Public Property Source As Integer
         Public Property Destination As Integer
-        Public Property Similarity As Single
+        Public Property Similarity As Double
         Public Property Responsability As Double
-        Public Property Availability As Single
+        Public Property Availability As Double
 
         Public Sub New()
             Destination = 0
