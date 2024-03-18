@@ -1,6 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Math.Correlations
 
 Namespace AffinityPropagation
 
