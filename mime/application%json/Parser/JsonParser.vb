@@ -319,6 +319,11 @@ Public Class JsonParser
             Else
                 buffer += c
             End If
+        ElseIf c = "/"c Then
+            ' check hjson single comment line
+            If buffer > 0 Then
+
+            End If
         ElseIf c = "'"c OrElse c = """"c Then
             escape = c
             Return

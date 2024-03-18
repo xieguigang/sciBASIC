@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module simple_jsonParserTest
 
@@ -24,7 +23,12 @@ Module simple_jsonParserTest
                 line1
                 line2
                 line3
-            '
+            ',
+            'nest_object': {
+                'empty': {},
+                scalar: false
+            },
+            'flag': false// is a single comment line
         }
 
         ")
