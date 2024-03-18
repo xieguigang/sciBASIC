@@ -78,6 +78,20 @@ Namespace Javascript
         End Property
 
         ''' <summary>
+        ''' get a tuple of array data which is the first element and last element value in this array seperatelly
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FirstAndLast As (first As JsonElement, last As JsonElement)
+            Get
+                If list.IsNullOrEmpty Then
+                    Return Nothing
+                Else
+                    Return (list.First, list.Last)
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
         ''' the array base element type
         ''' </summary>
         ''' <returns></returns>
