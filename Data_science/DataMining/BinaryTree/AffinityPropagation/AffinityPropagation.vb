@@ -1,5 +1,6 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace AffinityPropagation
 
@@ -22,10 +23,12 @@ Namespace AffinityPropagation
 
         Public ReadOnly Property Centers As New HashSet(Of Integer)
 
-        Public Sub New(input As Edge(),
+        Public Sub New(ds As IEnumerable(Of ClusterEntity),
                        Optional damping As Single = 0.9F,
                        Optional max_iteration As Integer = 1000,
                        Optional convergence As Integer = 200)
+
+            Dim input As Edge() = ds.ToArray.SparseSimilarityMatrix
 
             _graph = New Graph(input.Length)
             _graph.Edges = input
