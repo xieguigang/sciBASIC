@@ -279,6 +279,15 @@ Public Class JsonParser
         Dim t As Token
 
         Do While pull.MoveNext()
+            t = pull.Current
+
+            If t Is Nothing Then
+                Throw New InvalidDataException("in-complete json array!")
+            ElseIf t = (Token.JSONElements.Close, "]") Then
+                ' empty json array []
+                Exit Do
+            End If
+
             array.Add(PullJson(pull))
             pull.MoveNext()
             t = pull.Current
