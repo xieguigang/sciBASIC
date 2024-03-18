@@ -205,6 +205,10 @@ Public Class JsonParser
     Private Function PullJson(pull As IEnumerator(Of Token)) As JsonElement
         Dim t As Token = pull.Current
 
+        If t Is Nothing Then
+            Return Nothing
+        End If
+
         Select Case t.name
             Case Token.JSONElements.Open
                 If t.text = "{" Then
@@ -243,10 +247,21 @@ Public Class JsonParser
                 Throw New InvalidDataException("in-complete json object document!")
             ElseIf t.name <> Token.JSONElements.Colon Then
                 Throw New InvalidDataException("missing colon symbol for key:value pair in json object document!")
+            Else
+                pull.MoveNext()
             End If
 
             val = PullJson(pull)
             obj.Add(key, val)
+            t = pull.Next
+
+            If t.name <> Token.JSONElements.Delimiter Then
+                If t = (Token.JSONElements.Close, "}") Then
+                    Exit Do
+                Else
+                    Throw New InvalidDataException("a comma delimiter or json object close symbol should be follow the end of key:value tuple!")
+                End If
+            End If
         Loop
 
         Return obj
@@ -263,8 +278,12 @@ Public Class JsonParser
 
             If t Is Nothing Then
                 Throw New InvalidDataException("in-complete json array!")
-            ElseIf t.name <> Token.JSONElements.Delimiter AndAlso t <> (Token.JSONElements.Close, "]") Then
-                Throw New SyntaxErrorException("the json element value should be follow a comma delimiter or close symbol of the array!")
+            ElseIf t.name <> Token.JSONElements.Delimiter Then
+                If t = (Token.JSONElements.Close, "]") Then
+                    Exit Do
+                Else
+                    Throw New SyntaxErrorException("the json element value should be follow a comma delimiter or close symbol of the array!")
+                End If
             End If
         Loop
 
