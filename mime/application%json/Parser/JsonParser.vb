@@ -196,10 +196,12 @@ Public Class JsonParser
         End If
 
         If tokens.Current.IsJsonValue Then
+            Dim scalar As JsonValue = tokens.Current.GetValue
+
             If tokens.MoveNext Then
                 Throw New InvalidExpressionException("the json literal value should be a scalar token value!")
             Else
-                Return tokens.Current.GetValue
+                Return scalar
             End If
         Else
             Return PullJson(tokens)
@@ -315,6 +317,14 @@ Public Class JsonParser
                 End If
             Next
         Loop
+
+        If buffer > 0 Then
+            If comment_escape Then
+                comments(comment_key) = New String(buffer.PopAllChars)
+            Else
+                Throw New Exception("unknow parser error!")
+            End If
+        End If
     End Function
 
     Private Iterator Function walkChar(c As Char) As IEnumerable(Of Token)
@@ -323,6 +333,8 @@ Public Class JsonParser
                 comment_escape = False
                 comments(comment_key) = New String(buffer.PopAllChars)
                 comment_key = ""
+            Else
+                Call buffer.Add(c)
             End If
         ElseIf escape <> ASCII.NUL Then
             ' is string escape
@@ -347,6 +359,7 @@ Public Class JsonParser
                     comment_escape = True
                 Else
                     Yield MeasureToken()
+                    buffer.Add("/"c)
                 End If
             Else
                 buffer.Add(c)
@@ -381,6 +394,10 @@ Public Class JsonParser
         End If
     End Function
 
+    ''' <summary>
+    ''' the entire <see cref="buffer"/> will be clear in this function
+    ''' </summary>
+    ''' <returns></returns>
     Private Function MeasureToken() As Token
         If buffer = 0 Then
             Return Nothing
