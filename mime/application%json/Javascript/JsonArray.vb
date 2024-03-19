@@ -114,6 +114,20 @@ Namespace Javascript
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets/Set elements by index
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(index As Integer) As JsonElement
+            Get
+                Return list(index)
+            End Get
+            Set(value As JsonElement)
+                list(index) = value
+            End Set
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
         End Sub
@@ -148,20 +162,6 @@ Namespace Javascript
             Call list.Insert(index, element)
         End Sub
 
-        ''' <summary>
-        ''' Gets/Set elements by index
-        ''' </summary>
-        ''' <param name="index"></param>
-        ''' <returns></returns>
-        Default Public Overloads Property Item(index As Integer) As JsonElement
-            Get
-                Return list(index)
-            End Get
-            Set(value As JsonElement)
-                list(index) = value
-            End Set
-        End Property
-
         Public Sub Remove(index As Integer)
             list.RemoveAt(index)
         End Sub
@@ -170,13 +170,23 @@ Namespace Javascript
             Return list.Contains(element)
         End Function
 
+        Public Iterator Function AsObjects() As IEnumerable(Of JsonObject)
+            If list.IsNullOrEmpty Then
+                Return
+            End If
+
+            For Each eli As JsonElement In list
+                Yield DirectCast(eli, JsonObject)
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return "JsonArray: {count: " & list.Count & "}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of JsonElement) Implements IEnumerable(Of JsonElement).GetEnumerator
-            For Each x As JsonElement In list
-                Yield x
+            For Each eli As JsonElement In list
+                Yield eli
             Next
         End Function
 

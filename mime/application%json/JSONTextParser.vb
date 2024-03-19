@@ -66,13 +66,13 @@ Imports Microsoft.VisualBasic.My.JavaScript
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ParseJson(JsonStr As String) As JsonElement
-        Return New JsonParser(JsonStr).OpenJSON()
+    Public Function ParseJson(JsonStr As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
+        Return New JsonParser(JsonStr, strictVectorSyntax).OpenJSON()
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ParseJsonFile(JsonFile As String) As JsonElement
-        Return JsonParser.Open(JsonFile)
+    Public Function ParseJsonFile(JsonFile As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
+        Return JsonParser.Open(JsonFile, strictVectorSyntax)
     End Function
 
     ''' <summary>

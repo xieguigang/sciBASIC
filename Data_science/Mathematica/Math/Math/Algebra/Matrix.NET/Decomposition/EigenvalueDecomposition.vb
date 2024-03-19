@@ -74,8 +74,7 @@ Namespace LinearAlgebra.Matrix
     ''' A = V*D*Inverse(V) depends upon V.cond().
     ''' 
     ''' </summary>
-    <Serializable> Public Class EigenvalueDecomposition
-        Implements ISerializable
+    Public Class EigenvalueDecomposition
 
 #Region "Class variables"
 
@@ -113,8 +112,9 @@ Namespace LinearAlgebra.Matrix
 
 #Region "Private Methods"
 
-        ' Symmetric Householder reduction to tridiagonal form.
-
+        ''' <summary>
+        ''' Symmetric Householder reduction to tridiagonal form.
+        ''' </summary>
         Private Sub tred2()
             '  This is derived from the Algol procedures tred2 by
             '  Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
@@ -440,11 +440,14 @@ Namespace LinearAlgebra.Matrix
             Next
         End Sub
 
-
-        ' Complex scalar division.
-
-        <NonSerialized>
-        Private cdivr As Double, cdivi As Double
+        ''' <summary>
+        ''' Complex scalar division.
+        ''' </summary>
+        Dim cdivr As Double
+        ''' <summary>
+        ''' Complex scalar division.
+        ''' </summary>
+        Dim cdivi As Double
 
         Private Sub cdiv(xr As Double, xi As Double, yr As Double, yi As Double)
             Dim r As Double, d As Double
@@ -462,8 +465,9 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
 
-        ' Nonsymmetric reduction from Hessenberg to real Schur form.
-
+        ''' <summary>
+        ''' Nonsymmetric reduction from Hessenberg to real Schur form.
+        ''' </summary>
         Private Sub hqr2()
             '  This is derived from the Algol procedure hqr2,
             '  by Martin and Wilkinson, Handbook for Auto. Comp.,
@@ -996,7 +1000,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Return the block diagonal eigenvalue matrix</summary>
         ''' <returns>     D
         ''' </returns>
-        Public Overridable ReadOnly Property D() As GeneralMatrix
+        Public Overridable ReadOnly Property D() As NumericMatrix
             Get
                 Dim X As New NumericMatrix(n, n)
                 Dim Da As Double()() = X.Array
@@ -1021,15 +1025,12 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>Return the eigenvector matrix</summary>
         ''' <returns>     V
         ''' </returns>
-        Public ReadOnly Property V() As GeneralMatrix
+        Public ReadOnly Property V() As NumericMatrix
             Get
                 Return New NumericMatrix(_V, n, n)
             End Get
         End Property
 #End Region
 
-        ' A method called when serializing this class.
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
     End Class
 End Namespace

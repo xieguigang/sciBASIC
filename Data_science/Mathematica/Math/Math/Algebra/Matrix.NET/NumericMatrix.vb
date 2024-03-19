@@ -69,6 +69,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -77,7 +78,6 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -446,6 +446,27 @@ Namespace LinearAlgebra.Matrix
 #Region "Public Methods"
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="i">the start location, col, x</param>
+        ''' <param name="j">the start location, row, y</param>
+        ''' <param name="p">the size of the block, nrows</param>
+        ''' <param name="q">the size of the block, ncols</param>
+        ''' <returns></returns>
+        Public Function Block(i As Integer, j As Integer, p As Integer, q As Integer) As NumericMatrix
+            Dim subrows As New List(Of Double())
+            Dim v As Double()
+
+            For row As Integer = j To j + p - 1
+                v = New Double(q - 1) {}
+                System.Array.ConstrainedCopy(buffer(row), i, v, 0, q)
+                subrows.Add(v)
+            Next
+
+            Return New NumericMatrix(subrows)
+        End Function
+
+        ''' <summary>
         ''' 获取仅包含有一个元素的矩阵对象
         ''' </summary>
         ''' <returns></returns>
@@ -482,13 +503,13 @@ Namespace LinearAlgebra.Matrix
             Return New NumericMatrix(nrow, ncol)
         End Function
 
-        Public Function Abs() As GeneralMatrix
+        Public Function Abs() As NumericMatrix
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = stdNum.Abs(buffer(i)(j))
+                    C(i)(j) = System.Math.Abs(buffer(i)(j))
                 Next
             Next
 
@@ -570,6 +591,12 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
+        ''' <summary>
+        ''' get/set data vector by row or by column
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="byRow"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(i As Integer, Optional byRow As Boolean = True) As Vector Implements GeneralMatrix.X
             Get
                 If byRow Then
@@ -852,9 +879,9 @@ Namespace LinearAlgebra.Matrix
             For j As Integer = 0 To n - 1
                 Dim s As Double = 0
                 For i As Integer = 0 To m - 1
-                    s += stdNum.Abs(buffer(i)(j))
+                    s += System.Math.Abs(buffer(i)(j))
                 Next
-                f = stdNum.Max(f, s)
+                f = System.Math.Max(f, s)
             Next
             Return f
         End Function
@@ -880,10 +907,10 @@ Namespace LinearAlgebra.Matrix
                 Dim s As Double = 0
 
                 For j As Integer = 0 To n - 1
-                    s += stdNum.Abs(buffer(i)(j))
+                    s += System.Math.Abs(buffer(i)(j))
                 Next
 
-                f = stdNum.Max(f, s)
+                f = System.Math.Max(f, s)
             Next
             Return f
         End Function
@@ -1014,13 +1041,13 @@ Namespace LinearAlgebra.Matrix
             Return X
         End Function
 
-        Public Overridable Function Log(Optional newBase As Double = stdNum.E) As NumericMatrix
+        Public Overridable Function Log(Optional newBase As Double = System.Math.E) As NumericMatrix
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
 
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    C(i)(j) = stdNum.Log(buffer(i)(j), newBase)
+                    C(i)(j) = System.Math.Log(buffer(i)(j), newBase)
                 Next
             Next
 
@@ -1217,8 +1244,58 @@ Namespace LinearAlgebra.Matrix
             End If
         End Function
 
-        Public Function max() As Double
-            Return buffer.Select(Function(r) r.Max).Max
+        ''' <summary>
+        ''' maxCoeff, get max value in current matrix
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Max(<Out> Optional ByRef row As Integer = Nothing, <Out> Optional ByRef col As Integer = Nothing) As Double
+            Dim maxVal As Double = Double.MinValue
+
+            For i As Integer = 0 To buffer.Length - 1
+                Dim r = buffer(i)
+
+                For j As Integer = 0 To r.Length - 1
+                    If r(j) > maxVal Then
+                        row = i
+                        col = j
+                        maxVal = r(j)
+                    End If
+                Next
+            Next
+
+            Return maxVal
+        End Function
+
+        ''' <summary>
+        ''' minCoeff, get min value in current matrix
+        ''' </summary>
+        ''' <param name="row"></param>
+        ''' <param name="col"></param>
+        ''' <returns></returns>
+        Public Function Min(<Out> Optional ByRef row As Integer = Nothing, <Out> Optional ByRef col As Integer = Nothing) As Double
+            Dim minVal As Double = Double.MaxValue
+
+            For i As Integer = 0 To buffer.Length - 1
+                Dim r = buffer(i)
+
+                For j As Integer = 0 To r.Length - 1
+                    If r(j) < minVal Then
+                        row = i
+                        col = j
+                        minVal = r(j)
+                    End If
+                Next
+            Next
+
+            Return minVal
+        End Function
+
+        Public Function RowWise() As WiseOperation
+            Return WiseOperation.RowWise(Me)
+        End Function
+
+        Public Function ColWise() As WiseOperation
+            Return WiseOperation.ColWise(Me)
         End Function
 
         ''' <summary>Multiply a matrix by a scalar in place, A = s*A</summary>
@@ -1621,7 +1698,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     An m-by-n matrix with ones on the diagonal and zeros elsewhere.
         ''' </returns>
 
-        Public Shared Function Identity(m As Integer, n As Integer) As GeneralMatrix
+        Public Shared Function Identity(m As Integer, n As Integer) As NumericMatrix
             Dim A As New NumericMatrix(m, n)
             Dim X As Double()() = A.Array
             For i As Integer = 0 To m - 1
@@ -1633,7 +1710,7 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Identity(m As Integer) As GeneralMatrix
+        Public Shared Function Identity(m As Integer) As NumericMatrix
             Return Identity(m, m)
         End Function
 

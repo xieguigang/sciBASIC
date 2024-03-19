@@ -166,7 +166,9 @@ Namespace LinearAlgebra
         ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' SquaredNorm 平方绝对值的总和
+        ''' </remarks>
         Public ReadOnly Property [Mod] As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -345,6 +347,20 @@ Namespace LinearAlgebra
         Sub New(values As Double(), index As Integer, Optional count As Integer = 8)
             Call Me.New(values.Skip(index).Take(count))
         End Sub
+
+        Public Function AsDiagonal() As NumericMatrix
+            Dim rows As New List(Of Double())
+            Dim r As Double()
+            Dim size As Integer = buffer.Length
+
+            For i As Integer = 0 To size - 1
+                r = New Double(size - 1) {}
+                r(i) = buffer(i)
+                rows.Add(r)
+            Next
+
+            Return New NumericMatrix(rows)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AsSparse() As SparseVector

@@ -228,7 +228,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
 
                 ' Count what percentage of the bar we are printing. 
                 ' Keep both a double and an int so we can calculate the relative remainder. 
-                Dim fills = current / _total * _width
+                Dim fills = If(current = 0, 0, current / _total * _width)
                 Dim ifills As Integer = fills
 
                 ' Store the beginning of the line, so we can move back there for the next print
