@@ -73,25 +73,25 @@ Namespace KMeans
         ''' <summary>
         ''' the max iteration loop number
         ''' </summary>
-        ReadOnly stop% = -1
+        ReadOnly max_iters% = -1
         ReadOnly n_threads As Integer = 16
         ReadOnly auto_parallel As Boolean = True
 
         ''' <param name="n_threads">
         ''' 默认是使用并行化的计算代码以通过牺牲内存空间的代价来获取高性能的计算，非并行化的代码比较适合低内存的设备上面运行
         ''' </param>
-        ''' <param name="stop">
+        ''' <param name="max_iters">
         ''' the max iteration loop number
         ''' </param>
         Sub New(Optional debug As Boolean = False,
-                Optional stop% = -1,
+                Optional max_iters% = -1,
                 Optional n_threads As Integer = 16,
                 Optional auto_parallel As Boolean = True,
                 Optional traceback As Boolean = False)
 
             Me.auto_parallel = auto_parallel
             Me.debug = debug
-            Me.stop = [stop]
+            Me.max_iters = max_iters
             Me.n_threads = n_threads
 
             If traceback Then
@@ -157,7 +157,7 @@ Namespace KMeans
             Dim data As T() = source.ToArray
             Dim rowCount As Integer = data.Length
             Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(data, k)
-            Dim [stop] = Me.stop
+            Dim [stop] = Me.max_iters
 
             If k >= rowCount Then
                 Throw New Exception($"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!")
@@ -177,7 +177,7 @@ Namespace KMeans
             Dim rowCount As Integer = data.Length
             Dim k As Integer = canopy.k
             Dim clusters As ClusterCollection(Of T) = CreateInitialCenters(canopy, activator)
-            Dim [stop] = Me.stop
+            Dim [stop] = Me.max_iters
 
             If k >= rowCount Then
                 Throw New Exception($"[cluster.count:={k}] >= [source.length:={rowCount}], this will caused a dead loop!")
@@ -214,9 +214,6 @@ Namespace KMeans
                     Dim y As KMeansCluster(Of T) = clusters(clusterIndex)  ' 上一次迭代的结果
 
                     If x.NumOfEntity = 0 OrElse y.NumOfEntity = 0 Then
-#If DEBUG Then
-                        Call "If (x.NumOfEntity = 0 OrElse y.NumOfEntity = 0) Is True".__DEBUG_ECHO
-#End If
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
