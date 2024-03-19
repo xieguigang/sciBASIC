@@ -162,7 +162,7 @@ Namespace Clustering
             ' 		
 
             ' Select top K eigenvectors where K = centers
-            eigenvectors = New NumericMatrix(eigenvectors).Block(0, 0, eigenvectors.RowDimension, centers)
+            eigenvectors = DirectCast(eigenvectors.Transpose, NumericMatrix).Block(0, 0, eigenvectors.RowDimension, centers)
         End Sub
 
 
