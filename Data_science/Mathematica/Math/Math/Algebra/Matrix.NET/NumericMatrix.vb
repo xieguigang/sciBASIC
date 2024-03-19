@@ -450,16 +450,16 @@ Namespace LinearAlgebra.Matrix
         ''' </summary>
         ''' <param name="i">the start location, col, x</param>
         ''' <param name="j">the start location, row, y</param>
-        ''' <param name="p">the size of the block, ncols</param>
-        ''' <param name="q">the size of the block, nrows</param>
+        ''' <param name="p">the size of the block, nrows</param>
+        ''' <param name="q">the size of the block, ncols</param>
         ''' <returns></returns>
         Public Function Block(i As Integer, j As Integer, p As Integer, q As Integer) As NumericMatrix
             Dim subrows As New List(Of Double())
             Dim v As Double()
 
-            For row As Integer = j To j + q - 1
-                v = New Double(p - 1) {}
-                System.Array.ConstrainedCopy(buffer(row), i, v, 0, p)
+            For row As Integer = j To j + p - 1
+                v = New Double(q - 1) {}
+                System.Array.ConstrainedCopy(buffer(row), i, v, 0, q)
                 subrows.Add(v)
             Next
 
