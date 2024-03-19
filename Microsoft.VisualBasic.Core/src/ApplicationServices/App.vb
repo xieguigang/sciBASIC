@@ -916,11 +916,20 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("TraceBugs")>
-    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.FormatTime("-")}_{App.tempCode}"
-        Dim log$ = $"{App.LogErrDIR}/{entry}.log"
-        Call App.LogException(ex, trace:=trace, fileName:=log)
-        Return log
+    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = Nothing) As String
+        If ExceptionLogFile Is Nothing Then
+            ExceptionLogFile = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
+            ExceptionLogFile.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
+        End If
+        If trace.StringEmpty Then
+            trace = "trace_bug"
+        End If
+
+        SyncLock ExceptionLogFile
+            Call ExceptionLogFile.LogException(ex, trace)
+        End SyncLock
+
+        Return Nothing
     End Function
 
     ''' <summary>
@@ -1002,10 +1011,15 @@ Public Module App
     End Property
 
     ''' <summary>
-    ''' Error default log fie location from function <see cref="App.LogException(Exception, ByRef String)"/>.(存放自动存储的错误日志的文件夹)
+    ''' Error default log fie location from function <see cref="App.LogException(Exception, ByRef String)"/>.
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (存放自动存储的错误日志的文件夹)
+    ''' </remarks>
     Public ReadOnly Property LogErrDIR As String
+
+    Dim ExceptionLogFile As LogFile
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.
@@ -1035,17 +1049,6 @@ Public Module App
     Public Function LogException(exMsg$, <CallerMemberName> Optional trace$ = "") As Object
         Return App.LogException(New Exception(exMsg), trace)
     End Function
-
-    ''' <summary>
-    ''' <see cref="App.LocalData"/>/error.log
-    ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property ExceptionLogFile As String
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return App.LocalData & "/error.log"
-        End Get
-    End Property
 
 #Region "CLI interpreter"
 
@@ -1495,6 +1498,11 @@ Public Module App
         Next
 
         Call My.InnerQueue.WaitQueue()
+
+        If Not ExceptionLogFile Is Nothing Then
+            Call ExceptionLogFile.Save()
+            Call ExceptionLogFile.Dispose()
+        End If
 
         If Not internalPipelineMode.TextEquals("TRUE") Then
             Try

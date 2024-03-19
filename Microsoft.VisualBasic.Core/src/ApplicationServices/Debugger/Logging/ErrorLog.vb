@@ -69,6 +69,18 @@ Namespace ApplicationServices.Debugging.Logging
             End If
         End Function
 
+        Public Function EnvironmentInfo() As String
+            Return New StringBuilder() _
+                .AppendLine(New String("=", 120)) _
+                .Append(LogFile.SystemInfo) _
+                .AppendLine(New String("=", 120)) _
+                .AppendLine() _
+                .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
+                .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
+                .AppendLine(New String("=", 120)) _
+                .ToString
+        End Function
+
         ''' <summary>
         ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
         ''' </summary>
@@ -97,13 +109,7 @@ Namespace ApplicationServices.Debugging.Logging
             Return New StringBuilder() _
                 .AppendLine("TIME:  " & Now.ToString) _
                 .AppendLine("TRACE: " & trace) _
-                .AppendLine(New String("=", 120)) _
-                .Append(LogFile.SystemInfo) _
-                .AppendLine(New String("=", 120)) _
-                .AppendLine() _
-                .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
-                .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
-                .AppendLine(New String("=", 120)) _
+                .AppendLine(EnvironmentInfo) _
                 .AppendLine() _
                 .AppendLine(errorName & ":") _
                 .AppendLine() _
