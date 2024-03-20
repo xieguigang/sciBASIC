@@ -45,7 +45,13 @@
     End Function
 
     Public Overrides Function Image(url As String, altText As String, title As String) As String
-        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
+        Dim result As String
+
+        If Not image_url_router Is Nothing Then
+            url = image_url_router(url)
+        End If
+
+        result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
 
         If Not String.IsNullOrEmpty(title) Then
             result &= String.Format(" title=""{0}""", title)
