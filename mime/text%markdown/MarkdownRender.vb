@@ -34,7 +34,7 @@ Public Class MarkdownRender
         Call hideImage()
         Call hideUrl()
 
-        Call RunAutoLink()
+        ' Call RunAutoLink()
         Call RunHeader()
         Call RunHr()
         Call RunQuoteBlock()
