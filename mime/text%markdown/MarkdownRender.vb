@@ -153,7 +153,7 @@ Public Class MarkdownRender
     ReadOnly auto_link As New Regex("[<][^>^\s]{2,}[>]", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunUrl()
-        For Each link In urls
+        For Each link In urls.Reverse
             text = text.Replace(link.Key, AnchorTag(link.Value))
         Next
     End Sub
@@ -185,7 +185,7 @@ Public Class MarkdownRender
     ReadOnly image As New Regex("[!]\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunImage()
-        For Each img In images
+        For Each img In images.Reverse
             text = text.Replace(img.Key, ImageTag(img.Value))
         Next
     End Sub
@@ -228,13 +228,13 @@ Public Class MarkdownRender
     ReadOnly codespan As New Regex("``.*?``", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunCodeSpan()
-        For Each hashVal In codespans
+        For Each hashVal In codespans.Reverse
             text = text.Replace(hashVal.Key, render.CodeSpan(TrimCodeSpan(hashVal.Value)))
         Next
     End Sub
 
     Private Sub RunCodeBlock()
-        For Each hashVal In codeblocks
+        For Each hashVal In codeblocks.Reverse
             Dim code_block As String() = hashVal.Value.Trim(ASCII.CR, ASCII.LF, ASCII.TAB, " "c).LineTokens
             Dim first = code_block.First
             Dim code_text As String = code_block _
@@ -310,7 +310,7 @@ Public Class MarkdownRender
         s = s.Trim(ASCII.LF, ASCII.CR, " "c)
 
         For Each si As String In s.LineTokens
-            Yield orderPrefix.Replace(si.Trim, "")
+            Yield orderPrefix.Replace(si.Trim, "").Trim
         Next
     End Function
 End Class
