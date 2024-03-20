@@ -1,5 +1,7 @@
 ﻿Public Class HtmlRender : Inherits Render
 
+    Public Property image_class As String
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -45,10 +47,19 @@
     End Function
 
     Public Overrides Function Image(url As String, altText As String, title As String) As String
-        Dim result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
+        Dim result As String
 
+        If Not image_url_router Is Nothing Then
+            url = image_url_router(url)
+        End If
+
+        result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
+
+        If Not image_class.StringEmpty Then
+            result &= $" class=""{image_class}"""
+        End If
         If Not String.IsNullOrEmpty(title) Then
-            result &= String.Format(" title=""{0}""", title)
+            result &= $" title=""{title}"""
         End If
 
         result &= " />"
@@ -72,9 +83,17 @@
         Dim listSet As String() = items.Select(Function(s) $"<li>{s}</li>").ToArray
 
         If orderList Then
-            Return $"<ol>{listSet.JoinBy("")}</ol>"
+            Return $"
+<ol>
+{listSet.JoinBy(vbLf)}
+</ol>
+"
         Else
-            Return $"<ul>{listSet.JoinBy("")}</ul>"
+            Return $"
+<ul>
+{listSet.JoinBy(vbLf)}
+</ul>
+"
         End If
     End Function
 
