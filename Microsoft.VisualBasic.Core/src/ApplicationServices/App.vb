@@ -917,16 +917,16 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = Nothing) As String
-        If ExceptionLogFile Is Nothing Then
-            ExceptionLogFile = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
-            ExceptionLogFile.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
+        If LogFile Is Nothing Then
+            _LogFile = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
+            _LogFile.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
         End If
         If trace.StringEmpty Then
             trace = "trace_bug"
         End If
 
-        SyncLock ExceptionLogFile
-            Call ExceptionLogFile.LogException(ex, trace)
+        SyncLock LogFile
+            Call LogFile.LogException(ex, trace)
         End SyncLock
 
         Return Nothing
@@ -1019,7 +1019,7 @@ Public Module App
     ''' </remarks>
     Public ReadOnly Property LogErrDIR As String
 
-    Dim ExceptionLogFile As LogFile
+    Public ReadOnly Property LogFile As LogFile
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.
@@ -1499,9 +1499,9 @@ Public Module App
 
         Call My.InnerQueue.WaitQueue()
 
-        If Not ExceptionLogFile Is Nothing Then
-            Call ExceptionLogFile.Save()
-            Call ExceptionLogFile.Dispose()
+        If Not LogFile Is Nothing Then
+            Call LogFile.Save()
+            Call LogFile.Dispose()
         End If
 
         If Not internalPipelineMode.TextEquals("TRUE") Then
