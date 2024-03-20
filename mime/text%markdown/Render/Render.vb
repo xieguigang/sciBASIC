@@ -3,6 +3,12 @@
 Public MustInherit Class Render
 
     Protected Shared ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Compiled)
+    Protected image_url_router As Func(Of String, String)
+
+    Public Function SetImageUrlRouter(router As Func(Of String, String)) As Render
+        image_url_router = router
+        Return Me
+    End Function
 
     Public MustOverride Function Paragraph(text As String, CreateParagraphs As Boolean) As String
     Public MustOverride Function Header(text As String, level As Integer) As String

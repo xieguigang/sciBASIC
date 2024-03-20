@@ -17,6 +17,10 @@ Public Class MarkdownRender
         Me.render = render
     End Sub
 
+    Public Sub SetImageUrlRouter(router As Func(Of String, String))
+        render.SetImageUrlRouter(router)
+    End Sub
+
     ''' <summary>
     ''' transform markdown document text to another document format
     ''' </summary>
