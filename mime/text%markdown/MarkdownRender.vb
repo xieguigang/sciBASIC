@@ -35,12 +35,16 @@ Public Class MarkdownRender
         Call hideUrl()
 
         ' Call RunAutoLink()
+
+        ' markdown table contains a line of ------ between the thead and tbody
+        ' this syntax may confused with the <hr/> syntax. so markdown table rendering
+        ' should before the <hr/> line rendering.
+        Call RunTable()
         Call RunHeader()
         Call RunHr()
         Call RunQuoteBlock()
         Call RunList()
         Call RunOrderList()
-        Call RunTable()
 
         Call RunBold()
         Call RunItalic()
