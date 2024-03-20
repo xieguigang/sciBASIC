@@ -917,10 +917,6 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = Nothing) As String
-        If LogFile Is Nothing Then
-            _LogFile = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
-            _LogFile.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
-        End If
         If trace.StringEmpty Then
             trace = "trace_bug"
         End If
@@ -1020,6 +1016,17 @@ Public Module App
     Public ReadOnly Property LogErrDIR As String
 
     Public ReadOnly Property LogFile As LogFile
+        Get
+            Static log As LogFile
+
+            If log Is Nothing Then
+                log = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
+                log.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
+            End If
+
+            Return log
+        End Get
+    End Property
 
     ''' <summary>
     ''' Simply log application exception data into a log file which saves at a user defined location parameter: <paramref name="FileName"/>.
