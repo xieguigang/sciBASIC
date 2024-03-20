@@ -31,6 +31,8 @@ Public Class MarkdownRender
 
         Call hideCodeBlock()
         Call hideCodeSpan()
+        Call hideImage()
+        Call hideUrl()
 
         Call RunAutoLink()
         Call RunHeader()
@@ -38,8 +40,6 @@ Public Class MarkdownRender
         Call RunQuoteBlock()
         Call RunList()
         Call RunOrderList()
-        Call RunImage()
-        Call RunUrl()
         Call RunTable()
 
         Call RunBold()
@@ -47,12 +47,50 @@ Public Class MarkdownRender
 
         Call RunCodeSpan()
         Call RunCodeBlock()
+        Call RunImage()
+        Call RunUrl()
 
         Return render.Document(text)
     End Function
 
     Dim codespans As New Dictionary(Of String, String)
     Dim codeblocks As New Dictionary(Of String, String)
+    Dim images As New Dictionary(Of String, String)
+    Dim urls As New Dictionary(Of String, String)
+
+    ''' <summary>
+    ''' due to the reason of some image file name pattern may be mis-interpretered as
+    ''' the markdown syntax, this will case the in-correct url, example as: 
+    ''' ``/images/file_name_data.png`` may be interpreted as ``/images/file&lt;em>name&lt;/em>data.png``. 
+    ''' so we needs hide the image span at first.
+    ''' </summary>
+    Private Sub hideImage()
+        Dim hash As Integer = 1
+        Dim key As String
+
+        Call images.Clear()
+
+        For Each m As Match In image.Matches(text)
+            key = $";;;image;;{hash}"
+            images(key) = m.Value
+            hash += 1
+            text = text.Replace(m.Value, key)
+        Next
+    End Sub
+
+    Private Sub hideUrl()
+        Dim hash As Integer = 1
+        Dim key As String
+
+        Call urls.Clear()
+
+        For Each m As Match In url.Matches(text)
+            key = $";;;url;;{hash}"
+            urls(key) = m.Value
+            hash += 1
+            text = text.Replace(m.Value, key)
+        Next
+    End Sub
 
     Private Sub hideCodeSpan()
         Dim hash As Integer = 1
@@ -111,7 +149,9 @@ Public Class MarkdownRender
     ReadOnly auto_link As New Regex("[<][^>^\s]{2,}[>]", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunUrl()
-        text = url.Replace(text, Function(m) AnchorTag(m.Value))
+        For Each link In urls
+            text = text.Replace(link.Key, AnchorTag(link.Value))
+        Next
     End Sub
 
     Private Sub RunAutoLink()
@@ -141,7 +181,9 @@ Public Class MarkdownRender
     ReadOnly image As New Regex("[!]\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunImage()
-        text = image.Replace(text, Function(m) ImageTag(m.Value))
+        For Each img In images
+            text = text.Replace(img.Key, ImageTag(img.Value))
+        Next
     End Sub
 
     Private Function ImageTag(s As String) As String
