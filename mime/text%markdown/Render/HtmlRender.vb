@@ -78,9 +78,17 @@
         Dim listSet As String() = items.Select(Function(s) $"<li>{s}</li>").ToArray
 
         If orderList Then
-            Return $"<ol>{listSet.JoinBy("")}</ol>"
+            Return $"
+<ol>
+{listSet.JoinBy(vbLf)}
+</ol>
+"
         Else
-            Return $"<ul>{listSet.JoinBy("")}</ul>"
+            Return $"
+<ul>
+{listSet.JoinBy(vbLf)}
+</ul>
+"
         End If
     End Function
 
