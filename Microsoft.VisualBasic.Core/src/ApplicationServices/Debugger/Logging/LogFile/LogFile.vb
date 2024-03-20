@@ -224,6 +224,7 @@ Namespace ApplicationServices.Debugging.Logging
 
             buffer.WriteLine(log.ToString)
             counts += 1
+            saved = False
         End Sub
 
         Public Overrides Function ToString() As String
@@ -276,8 +277,14 @@ Namespace ApplicationServices.Debugging.Logging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Save()
-            Call SaveLog()
+            If saved Then
+                Call buffer.Flush()
+            Else
+                Call SaveLog()
+            End If
         End Sub
+
+        Dim saved As Boolean = False
 
         ''' <summary>
         ''' 会自动拓展已经存在的日志数据
@@ -287,6 +294,8 @@ Namespace ApplicationServices.Debugging.Logging
             Call buffer.WriteLine(vbCrLf & $"//{vbTab}{New String("=", 25)}  END OF LOG FILE  {New String("=", 25)}")
             Call buffer.WriteLine(vbCrLf)
             Call buffer.Flush()
+
+            saved = True
 
             Return True
         End Function
