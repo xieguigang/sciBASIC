@@ -1,5 +1,7 @@
 ﻿Public Class HtmlRender : Inherits Render
 
+    Public Property image_class As String
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -53,8 +55,11 @@
 
         result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
 
+        If Not image_class.StringEmpty Then
+            result &= $" class=""{image_class}"""
+        End If
         If Not String.IsNullOrEmpty(title) Then
-            result &= String.Format(" title=""{0}""", title)
+            result &= $" title=""{title}"""
         End If
 
         result &= " />"
