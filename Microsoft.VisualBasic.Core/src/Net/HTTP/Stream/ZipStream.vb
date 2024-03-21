@@ -57,6 +57,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Net.Http
 
+    ''' <summary>
+    ''' zip magic header: 120, 218
+    ''' </summary>
     Public Module ZipStreamExtensions
 
         ''' <summary>
