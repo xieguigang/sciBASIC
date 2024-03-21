@@ -64,6 +64,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports TcpEndPoint = System.Net.IPEndPoint
@@ -207,12 +208,19 @@ Namespace Tcp
         ''' <returns></returns>
         Public Function SendMessage(message As RequestStream) As RequestStream
             Dim byteData As Byte() = SendMessage(message.Serialize)
+            Dim stream As RequestStream
 
             If RequestStream.IsAvaliableStream(byteData) Then
-                Return New RequestStream(byteData)
+                stream = New RequestStream(byteData)
             Else
-                Return New RequestStream(0, 0, byteData)
+                stream = New RequestStream(0, 0, byteData)
             End If
+
+            If stream.ChunkBuffer.TestZipMagic Then
+                stream.ChunkBuffer = ZipDataPipe.UncompressBuffer(stream.ChunkBuffer)
+            End If
+
+            Return stream
         End Function
 
         Public Sub RequestToStream(message As RequestStream, stream As Stream)

@@ -63,6 +63,20 @@ Namespace Net.Http
     Public Module ZipStreamExtensions
 
         ''' <summary>
+        ''' test the zip magic header
+        ''' </summary>
+        ''' <param name="buffer"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function TestZipMagic(buffer As Byte()) As Boolean
+            If buffer.IsNullOrEmpty OrElse buffer.Length < 2 Then
+                Return False
+            Else
+                Return buffer(0) = 120 AndAlso buffer(1) = 218
+            End If
+        End Function
+
+        ''' <summary>
         ''' zip stream compression
         ''' </summary>
         ''' <param name="stream"></param>
