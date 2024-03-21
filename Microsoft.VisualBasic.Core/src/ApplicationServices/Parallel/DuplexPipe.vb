@@ -238,6 +238,10 @@ Namespace Parallel
             Call Me.New(data.ToArray)
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"buffer_data({StringFormats.Lanudry(bytes:=data.Length)})"
+        End Function
+
         <DebuggerStepThrough>
         Public Overrides Iterator Function GetBlocks() As IEnumerable(Of Byte())
             Yield data
