@@ -66,8 +66,8 @@ Namespace CommandLine.Reflection
         ''' rundll namespace::api
         ''' </summary>
         ''' <param name="Name"></param>
-        Sub New(Name As String)
-            Call MyBase.New(Name, "")
+        Sub New(Optional name As String = "")
+            Call MyBase.New(name, "")
         End Sub
 
         ''' <summary>
