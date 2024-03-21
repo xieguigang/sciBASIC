@@ -216,7 +216,7 @@ Namespace Tcp
                 stream = New RequestStream(0, 0, byteData)
             End If
 
-            If stream.ChunkBuffer.TestZipMagic Then
+            If ZipDataPipe.TestBufferMagic(stream.ChunkBuffer) Then
                 stream.ChunkBuffer = ZipDataPipe.UncompressBuffer(stream.ChunkBuffer)
             End If
 
