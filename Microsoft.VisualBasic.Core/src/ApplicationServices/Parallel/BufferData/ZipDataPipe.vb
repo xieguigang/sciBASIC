@@ -70,7 +70,7 @@ Namespace Parallel
         Public Overrides Function Read() As Byte()
             Using s As New MemoryStream(data)
                 Dim zip As Byte() = ZipStreamExtensions.Zip(s).ToArray
-                Dim wrap As Byte() = New Byte(zip.Length + 6) {}
+                Dim wrap As Byte() = New Byte(zip.Length + 6 - 1) {}
 
                 ' needs wrapping around additional magic bytes for
                 ' avoid confused the stream with the normal zip stream
@@ -108,7 +108,7 @@ Namespace Parallel
         ''' <param name="zip">the zip data should has the magic header</param>
         ''' <returns></returns>
         Public Shared Function UncompressBuffer(wrap As Byte()) As Byte()
-            Dim zip As Byte() = New Byte(wrap.Length - 6) {}
+            Dim zip As Byte() = New Byte(wrap.Length - 6 - 1) {}
             Call Array.ConstrainedCopy(wrap, 6, zip, Scan0, zip.Length)
             Return ZipStreamExtensions _
                 .UnZipStream(zip, noMagic:=False) _
