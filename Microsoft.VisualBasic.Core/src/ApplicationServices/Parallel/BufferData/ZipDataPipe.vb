@@ -1,10 +1,14 @@
 ﻿
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Serialization
 
 Namespace Parallel
 
+    ''' <summary>
+    ''' compress the in-memory buffer data
+    ''' </summary>
     Public Class ZipDataPipe : Inherits DataPipe
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -40,6 +44,38 @@ Namespace Parallel
         Sub New(data As MemoryStream)
             Call MyBase.New(data.ToArray)
         End Sub
+
+        ''' <summary>
+        ''' get data in zip-compressed stream
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' just returns one block of the data, this function works based on the <see cref="Read"/> function.
+        ''' </remarks>
+        Public Overrides Iterator Function GetBlocks() As IEnumerable(Of Byte())
+            Yield Read()
+        End Function
+
+        ''' <summary>
+        ''' get data in zip-compressed stream
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function Read() As Byte()
+            Using s As New MemoryStream(data)
+                Return ZipStreamExtensions.Zip(s).ToArray
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="zip">the zip data should has the magic header</param>
+        ''' <returns></returns>
+        Public Shared Function UncompressBuffer(zip As Byte()) As Byte()
+            Return ZipStreamExtensions _
+                .UnZipStream(zip, noMagic:=False) _
+                .ToArray
+        End Function
 
     End Class
 End Namespace
