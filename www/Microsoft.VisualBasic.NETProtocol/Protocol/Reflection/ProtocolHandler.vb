@@ -76,6 +76,11 @@ Namespace Protocols.Reflection
         Protected debug As Boolean
 
         ''' <summary>
+        ''' target object that current handler hooks on
+        ''' </summary>
+        Protected ReadOnly host As Object
+
+        ''' <summary>
         ''' 这个类型建议一般为某种枚举类型
         ''' </summary>
         ''' <returns></returns>
@@ -83,7 +88,7 @@ Namespace Protocols.Reflection
         Public Overrides ReadOnly Property ProtocolEntry As Long
 
         Public Overrides Function ToString() As String
-            Return $"*{ProtocolEntry}   ---> {DeclaringType.FullName}  //{Protocols.Count} Protocols."
+            Return $"*{ProtocolEntry}   ---> {DeclaringType.FullName}  //{Protocols.Count} TCP Protocols."
         End Function
 
         Const AllInstanceMethod As BindingFlags =
@@ -103,6 +108,7 @@ Namespace Protocols.Reflection
             Me.DeclaringType = entry?.DeclaringType
             Me.ProtocolEntry = entry?.EntryPoint
             Me.debug = debug
+            Me.host = target
 
             ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
             Dim Methods = type.GetMethods(bindingAttr:=AllInstanceMethod)
