@@ -6,10 +6,17 @@ Imports Microsoft.VisualBasic.Serialization
 
 Namespace Parallel
 
+    ''' <summary>
+    ''' a <see cref="MemoryStream"/> liked in-memory data
+    ''' </summary>
     Public Class DataPipe : Inherits BufferPipe
         Implements IDisposable
 
-        Dim data As Byte()
+        ''' <summary>
+        ''' the in-memory data
+        ''' </summary>
+        Protected data As Byte()
+
         Dim disposedValue As Boolean
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
