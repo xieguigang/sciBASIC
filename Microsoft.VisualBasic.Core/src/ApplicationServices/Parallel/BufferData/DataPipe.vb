@@ -60,11 +60,19 @@ Namespace Parallel
             Return $"buffer_data({StringFormats.Lanudry(bytes:=data.Length)})"
         End Function
 
+        ''' <summary>
+        ''' get data in block formats
+        ''' </summary>
+        ''' <returns></returns>
         <DebuggerStepThrough>
         Public Overrides Iterator Function GetBlocks() As IEnumerable(Of Byte())
             Yield data
         End Function
 
+        ''' <summary>
+        ''' get all data
+        ''' </summary>
+        ''' <returns></returns>
         <DebuggerStepThrough>
         Public Overrides Function Read() As Byte()
             Return data
