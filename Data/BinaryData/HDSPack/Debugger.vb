@@ -65,6 +65,19 @@ Public Module Debugger
         Return New StreamObject() {hds.superBlock}.JoinIterates(hds.superBlock.ListFiles(recursive:=recursive))
     End Function
 
+    <Extension>
+    Public Function ListFiles(hds As StreamPack, dir As String, Optional recursive As Boolean = True) As IEnumerable(Of StreamObject)
+        Dim folder = hds.GetObject(dir & "/")
+
+        If folder Is Nothing Then
+            Return {}
+        ElseIf TypeOf folder Is StreamBlock Then
+            Return New StreamObject() {folder}
+        Else
+            Return DirectCast(folder, StreamGroup).ListFiles(safe:=True, recursive)
+        End If
+    End Function
+
     ''' <summary>
     ''' enumerate all data file object inside current group dir
     ''' </summary>
