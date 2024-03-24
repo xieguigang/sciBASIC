@@ -275,6 +275,19 @@ Public Class JsonParser
             obj.Add(key, val)
             t = pull.Next
 
+            If t Is Nothing Then
+                ' InvalidOperationException: Enumeration already finished.
+                Dim message As String = "in-complete json object at the end of the document stream!"
+
+                If strictVectorSyntax Then
+                    Throw New Exception(message)
+                Else
+                    Call message.Warning
+                    Call VBDebugger.EchoLine(message)
+                End If
+
+                Exit Do
+            End If
             If t.name <> Token.JSONElements.Delimiter Then
                 If t = (Token.JSONElements.Close, "}") Then
                     Exit Do
@@ -303,12 +316,26 @@ Public Class JsonParser
                 Exit Do
             End If
 
-            array.Add(PullJson(pull))
-            pull.MoveNext()
-            t = pull.Current
+            Call array.Add(PullJson(pull))
+
+            If pull.MoveNext() Then
+                t = pull.Current
+            Else
+                ' InvalidOperationException: Enumeration already finished.
+                t = Nothing
+            End If
 
             If t Is Nothing Then
-                Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
+                If strictVectorSyntax Then
+                    Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
+                Else
+                    Dim message As String = $"in-complete json array: possible json syntax error on parse json array at line {t.span.line}."
+
+                    Call message.Warning
+                    Call Debug.WriteLine(message)
+
+                    Exit Do
+                End If
             ElseIf t.name <> Token.JSONElements.Delimiter Then
                 If t = (Token.JSONElements.Close, "]") Then
                     ' end of current vector
