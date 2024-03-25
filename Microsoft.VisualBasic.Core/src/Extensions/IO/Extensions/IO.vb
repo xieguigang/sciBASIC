@@ -162,6 +162,13 @@ Public Module IOExtensions
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' <see cref="Open"/> file with readonly parameter set to TRUE
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <param name="retryOpen"></param>
+    ''' <param name="verbose"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function OpenReadonly(path As String,
