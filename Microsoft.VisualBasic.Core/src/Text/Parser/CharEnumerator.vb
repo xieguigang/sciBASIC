@@ -130,7 +130,7 @@ Namespace Text.Parser
             Return New CharPtr(str.ToString)
         End Operator
 
-        Public Shared Operator =(str As CharPtr, text As String) As Boolean
+        Public Overloads Shared Operator =(str As CharPtr, text As String) As Boolean
             If str Is Nothing Then
                 Return text Is Nothing
             Else
@@ -138,7 +138,7 @@ Namespace Text.Parser
             End If
         End Operator
 
-        Public Shared Operator <>(str As CharPtr, text As String) As Boolean
+        Public Overloads Shared Operator <>(str As CharPtr, text As String) As Boolean
             Return Not str = text
         End Operator
 

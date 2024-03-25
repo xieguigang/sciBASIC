@@ -395,10 +395,6 @@ Namespace ComponentModel.Ranges.Model
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GetEnumerator()
-        End Function
-
         Public Shared Operator =(range As DoubleRange, value#) As Boolean
             If range Is Nothing AndAlso value = 0 Then
                 ' 假若将doublerange看作为double类型的数值的话，则数值类型的Nothing值为0，

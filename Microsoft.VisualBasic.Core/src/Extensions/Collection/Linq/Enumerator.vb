@@ -64,8 +64,8 @@ Namespace Linq
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return Enumeration.GetEnumerator
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

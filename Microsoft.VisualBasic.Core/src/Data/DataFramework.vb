@@ -314,6 +314,11 @@ Namespace ComponentModel.DataSourceModel
             Return StringBuilders.ContainsKey(type)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetPrimitiveTypes() As IEnumerable(Of Type)
+            Return StringBuilders.Keys
+        End Function
+
         Public Function IsNullable(type As Type) As Boolean
             Return False
         End Function

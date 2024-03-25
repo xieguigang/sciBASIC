@@ -494,6 +494,13 @@ Namespace ComponentModel.Collection
             Return source.AsEnumerable.Keys
         End Function
 
+        ''' <summary>
+        ''' get group keys
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Keys(Of K, V)(source As IEnumerable(Of IGrouping(Of K, V))) As K()

@@ -447,10 +447,6 @@ Namespace Imaging.Math2D
             Next
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of PointF).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
-
         Public Shared Widening Operator CType(points As PointF()) As Polygon2D
             Dim x As Double() = points.Select(Function(p) CDbl(p.X)).ToArray
             Dim y As Double() = points.Select(Function(p) CDbl(p.Y)).ToArray

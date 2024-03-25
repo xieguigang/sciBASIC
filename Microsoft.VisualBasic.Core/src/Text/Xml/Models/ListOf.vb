@@ -115,10 +115,6 @@ Namespace Text.Xml.Models
             Next
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of T).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
-
         Protected MustOverride Function getSize() As Integer
         Protected MustOverride Function getCollection() As IEnumerable(Of T)
 
