@@ -131,6 +131,14 @@ Namespace ComponentModel.TagData
     ''' <typeparam name="T"></typeparam>
     Public Class IntegerTagged(Of T) : Inherits TagData(Of Integer, T)
 
+        Sub New()
+        End Sub
+
+        Sub New(i As Integer, val As T)
+            Tag = i
+            Value = val
+        End Sub
+
     End Class
 
     ''' <summary>
