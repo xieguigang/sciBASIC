@@ -71,7 +71,7 @@ Namespace NeedlemanWunsch
         Public ReadOnly Property Length As Integer
             Get
                 If query.Length <> subject.Length Then
-                    Throw New InvalidExpressionException("")
+                    Throw New InvalidConstraintException($"the size of query sequence({query.Length}) should be equals to the subject sequence({subject.Length})!")
                 Else
                     Return query.Length
                 End If
