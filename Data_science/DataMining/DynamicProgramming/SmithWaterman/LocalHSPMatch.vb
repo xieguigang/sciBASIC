@@ -56,7 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SmithWaterman
 
@@ -92,7 +92,7 @@ Namespace SmithWaterman
         ''' <returns></returns>
         Public ReadOnly Property LengthQuery As Integer
             Get
-                Return stdNum.Abs(toA - fromA)
+                Return std.Abs(toA - fromA)
             End Get
         End Property
 
@@ -102,7 +102,7 @@ Namespace SmithWaterman
         ''' <returns></returns>
         Public ReadOnly Property LengthHit As Integer
             Get
-                Return stdNum.Abs(toB - fromB)
+                Return std.Abs(toB - fromB)
             End Get
         End Property
 
