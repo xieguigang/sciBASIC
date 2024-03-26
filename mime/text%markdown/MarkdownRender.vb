@@ -205,12 +205,12 @@ Public Class MarkdownRender
         End If
     End Function
 
-    ReadOnly h6 As New Regex("[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h5 As New Regex("[#]{5}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h4 As New Regex("[#]{4}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h3 As New Regex("[#]{3}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h2 As New Regex("[#]{2}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h1 As New Regex("[#]{1}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h6 As New Regex("^[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h5 As New Regex("^[#]{5}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h4 As New Regex("^[#]{4}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h3 As New Regex("^[#]{3}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h2 As New Regex("^[#]{2}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h1 As New Regex("^[#]{1}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHeader()
         text = h6.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 6))
