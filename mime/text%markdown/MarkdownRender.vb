@@ -205,24 +205,24 @@ Public Class MarkdownRender
         End If
     End Function
 
-    ReadOnly h6 As New Regex("[#]{6}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h5 As New Regex("[#]{5}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h4 As New Regex("[#]{4}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h3 As New Regex("[#]{3}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h2 As New Regex("[#]{2}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
-    ReadOnly h1 As New Regex("[#]{1}.+", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h6 As New Regex("^[#]{6}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h5 As New Regex("^[#]{5}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h4 As New Regex("^[#]{4}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h3 As New Regex("^[#]{3}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h2 As New Regex("^[#]{2}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h1 As New Regex("^[#]{1}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHeader()
-        text = h6.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 6))
-        text = h5.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 5))
-        text = h4.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 4))
-        text = h3.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 3))
-        text = h2.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 2))
-        text = h1.Replace(text, Function(m) render.Header(TrimHeader(m.Value), 1))
+        text = h6.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 6) & vbLf)
+        text = h5.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 5) & vbLf)
+        text = h4.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 4) & vbLf)
+        text = h3.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 3) & vbLf)
+        text = h2.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 2) & vbLf)
+        text = h1.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 1) & vbLf)
     End Sub
 
     Private Shared Function TrimHeader(s As String) As String
-        Return Strings.Trim(s).Trim("#"c, " "c, ASCII.TAB)
+        Return Strings.Trim(s).Trim(ASCII.CR, ASCII.LF, "#"c, " "c, ASCII.TAB)
     End Function
 
     ReadOnly codespan As New Regex("``.*?``", RegexOptions.Compiled Or RegexOptions.Multiline)

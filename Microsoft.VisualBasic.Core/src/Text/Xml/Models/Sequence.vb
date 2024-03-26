@@ -113,9 +113,5 @@ Namespace Text.Xml.Models
                 Yield value
             Next
         End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
     End Class
 End Namespace

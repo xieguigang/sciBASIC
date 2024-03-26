@@ -285,9 +285,5 @@ Namespace ComponentModel.DataSourceModel
                 Yield New NamedValue(Of T)([property].Key, [property].Value)
             Next
         End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements Enumeration(Of NamedValue(Of T)).GetEnumerator
-            Yield GetEnumerator()
-        End Function
     End Class
 End Namespace

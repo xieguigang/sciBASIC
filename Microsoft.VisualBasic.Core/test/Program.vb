@@ -53,7 +53,7 @@ Imports System
 
 Module Program
     Sub Main(args As String())
-
+        Call enumeratorTestProgram.Mai2n()
         Call terminalTest.Main1()
 
         Console.WriteLine("Hello World!")

@@ -230,7 +230,7 @@ Public Module TextDoc
                 Yield line
             Next
         ElseIf Not path.FileExists Then
-            Dim display_str As String
+            Dim display_str As String = path
 
             If path.Contains(ASCII.CR) OrElse path.Contains(ASCII.LF) Then
                 If unsafe Then

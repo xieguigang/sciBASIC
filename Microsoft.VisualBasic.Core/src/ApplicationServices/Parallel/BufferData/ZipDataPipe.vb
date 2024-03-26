@@ -105,7 +105,7 @@ Namespace Parallel
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="zip">the zip data should has the magic header</param>
+        ''' <param name="wrap">the zip data should has the magic header</param>
         ''' <returns></returns>
         Public Shared Function UncompressBuffer(wrap As Byte()) As Byte()
             Dim zip As Byte() = New Byte(wrap.Length - 6 - 1) {}

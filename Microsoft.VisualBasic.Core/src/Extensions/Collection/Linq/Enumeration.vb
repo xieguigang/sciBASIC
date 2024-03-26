@@ -58,14 +58,16 @@ Namespace Linq
     ''' Exposes the enumerator, which supports a simple iteration over a collection of
     ''' a specified type.To browse the .NET Framework source code for this type, see
     ''' the Reference Source.
-    ''' (使用这个的原因是系统自带的<see cref="IEnumerable(Of T)"/>在Xml序列化之中的支持不太友好，
-    ''' 实现这个接口之后可以通过<see cref="EnumerationExtensions.AsEnumerable(Of T)(Enumeration(Of T))"/>
-    ''' 拓展来转换为查询操作的数据源)
     ''' </summary>
     ''' <typeparam name="T">The type of objects to enumerate.This type parameter is covariant. That is, you
     ''' can use either the type you specified or any type that is more derived. For more
     ''' information about covariance and contravariance, see Covariance and Contravariance
     ''' in Generics.</typeparam>
+    ''' <remarks>
+    ''' (使用这个的原因是系统自带的<see cref="IEnumerable(Of T)"/>在Xml序列化之中的支持不太友好，
+    ''' 实现这个接口之后可以通过<see cref="EnumerationExtensions.AsEnumerable(Of T)(Enumeration(Of T))"/>
+    ''' 拓展来转换为查询操作的数据源)
+    ''' </remarks>
     Public Interface Enumeration(Of T)
 
         ''' <summary>
@@ -73,13 +75,6 @@ Namespace Linq
         ''' </summary>
         ''' <returns>An enumerator that can be used to iterate through the collection.</returns>
         Function GenericEnumerator() As IEnumerator(Of T)
-
-        ''' <summary>
-        ''' Returns an enumerator that iterates through a collection.
-        ''' </summary>
-        ''' <returns>An System.Collections.IEnumerator object that can be used to iterate through
-        ''' the collection.</returns>
-        Function GetEnumerator() As IEnumerator
 
     End Interface
 End Namespace

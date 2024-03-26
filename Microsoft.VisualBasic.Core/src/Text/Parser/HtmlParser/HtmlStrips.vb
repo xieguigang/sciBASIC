@@ -296,7 +296,7 @@ Namespace Text.Parser.HtmlParser
         ''' <summary>
         ''' The line break html tag in the html document. 
         ''' </summary>
-        Const LineFeed$ = "(<br>)|(<br\s*/>)"
+        Const LineFeed$ = "(<br>)|(<br\s*/>)|(<br\s+>)"
 
         ''' <summary>
         ''' Split the html text into lines by tags: ``&lt;br>`` or ``&lt;br/>``

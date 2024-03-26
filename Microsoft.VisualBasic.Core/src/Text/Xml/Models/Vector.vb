@@ -148,10 +148,6 @@ Namespace Text.Xml.Models
         Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
             Return vector.AsEnumerable.GetEnumerator
         End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GenericEnumerator()
-        End Function
     End Class
 
     Public Class TermsVector : Implements Enumeration(Of Double)
@@ -165,10 +161,6 @@ Namespace Text.Xml.Models
 
         Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
             Return terms.AsEnumerable.GetEnumerator
-        End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Double).GetEnumerator
-            Yield GenericEnumerator()
         End Function
     End Class
 End Namespace

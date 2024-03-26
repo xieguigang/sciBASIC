@@ -118,10 +118,6 @@ Public Class DataSubChunk : Inherits SampleDataChunk
             Yield sample
         Next
     End Function
-
-    Public Iterator Function GetEnumerator() As IEnumerator Implements Enumeration(Of Sample).GetEnumerator
-        Yield GetEnumerator()
-    End Function
 End Class
 
 Public MustInherit Class SampleDataChunk : Inherits SubChunk

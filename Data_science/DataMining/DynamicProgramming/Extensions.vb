@@ -51,6 +51,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
+Imports Microsoft.VisualBasic.Text
 
 <HideModuleName>
 Public Module Extensions
@@ -70,5 +71,14 @@ Public Module Extensions
                 .subject = nw.getAligned2(i)
             }
         Next
+    End Function
+
+    Public Function GetGeneralCharSymbol() As GenericSymbol(Of Char)
+        Return New GenericSymbol(Of Char)(
+            equals:=Function(a, b) a = b,
+            similarity:=Function(a, b) If(a = b, 1, 0),
+            toChar:=Function(c) c,
+            empty:=Function() ASCII.NUL
+        )
     End Function
 End Module

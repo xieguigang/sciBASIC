@@ -294,6 +294,18 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' return the maximum of a, b and c </summary>
+        ''' <param name="a"> </param>
+        ''' <param name="b"> </param>
+        ''' <param name="c">
+        ''' @return </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Max(a As Double, b As Double, c As Double) As Double
+            Return std.Max(a, std.Max(b, c))
+        End Function
+
+        ''' <summary>
         '''  sqrt(a^2 + b^2) without under/overflow.
         ''' </summary>
         ''' <param name="a"></param>
