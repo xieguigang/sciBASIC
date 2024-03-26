@@ -192,19 +192,21 @@ Namespace NeedlemanWunsch
 
             tracebackMatrix(0)(0) = 0
 
+            Dim a, b, c As Double
+            Dim max As Double
+
             ' Fill matrix and traceback matrix
             For i As Integer = 1 To rows - 1
                 For j As Integer = 1 To columns - 1
-                    Dim a As Integer = matrix(i - 1)(j - 1) + scoreMatrix.getMatchScore(seq1(j - 1), seq2(i - 1))
-                    Dim b As Integer = matrix(i)(j - 1) - scoreMatrix.GapPenalty
-                    Dim c As Integer = matrix(i - 1)(j) - scoreMatrix.GapPenalty
-                    Dim max As Integer = Math.Max(a, b, c)
+                    a = matrix(i - 1)(j - 1) + scoreMatrix.getMatchScore(seq1(j - 1), seq2(i - 1))
+                    b = matrix(i)(j - 1) - scoreMatrix.GapPenalty
+                    c = matrix(i - 1)(j) - scoreMatrix.GapPenalty
+                    max = Math.Max(a, b, c)
 
                     ' fill cell of the scoring matrix
                     matrix(i)(j) = max
-
                     ' fill cell of the traceback matrix
-                    tracebackMatrix(i)(j) = Me.fillTracebackMatrix(a, b, c)
+                    tracebackMatrix(i)(j) = MaximizingCell(a, b, c)
                 Next
             Next
 
@@ -230,7 +232,7 @@ Namespace NeedlemanWunsch
         ''' <param name="left"> </param>
         ''' <param name="upper"> </param>
         ''' <returns> code for the maximizing cell(s) </returns>
-        Private Function fillTracebackMatrix(upperLeft As Integer, left As Integer, upper As Integer) As Integer
+        Private Function MaximizingCell(upperLeft As Integer, left As Integer, upper As Integer) As Integer
             Dim max As Integer = Math.Max(upperLeft, left, upper)
 
             If upperLeft = left AndAlso left = upper Then
