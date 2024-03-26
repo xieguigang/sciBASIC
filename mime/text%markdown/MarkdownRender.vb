@@ -205,12 +205,12 @@ Public Class MarkdownRender
         End If
     End Function
 
-    ReadOnly h6 As New Regex("\n[#]{6}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly h5 As New Regex("\n[#]{5}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly h4 As New Regex("\n[#]{4}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly h3 As New Regex("\n[#]{3}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly h2 As New Regex("\n[#]{2}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
-    ReadOnly h1 As New Regex("\n[#]{1}[^\n]+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly h6 As New Regex("^[#]{6}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h5 As New Regex("^[#]{5}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h4 As New Regex("^[#]{4}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h3 As New Regex("^[#]{3}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h2 As New Regex("^[#]{2}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly h1 As New Regex("^[#]{1}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunHeader()
         text = h6.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 6) & vbLf)
@@ -222,7 +222,7 @@ Public Class MarkdownRender
     End Sub
 
     Private Shared Function TrimHeader(s As String) As String
-        Return Strings.Trim(s).Trim("#"c, " "c, ASCII.TAB)
+        Return Strings.Trim(s).Trim(ASCII.CR, ASCII.LF, "#"c, " "c, ASCII.TAB)
     End Function
 
     ReadOnly codespan As New Regex("``.*?``", RegexOptions.Compiled Or RegexOptions.Multiline)
