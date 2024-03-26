@@ -88,8 +88,6 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <Extension>
         Public Iterator Function TakeRange(Of K, V)(tree As BinaryTree(Of K, V), min As K, max As K, compares As Comparison(Of K)) As IEnumerable(Of Map(Of K, V))
-#If NET_48 Or netcore5 = 1 Then
-
             Do While Not tree Is Nothing
                 Dim compare = (
                     min:=compares(min, tree.Key),
@@ -112,9 +110,6 @@ Namespace ComponentModel.Algorithm.BinaryTree
                     tree = tree.Right
                 End If
             Loop
-#Else
-            Throw New NotImplementedException
-#End If
         End Function
 
         <Extension>
