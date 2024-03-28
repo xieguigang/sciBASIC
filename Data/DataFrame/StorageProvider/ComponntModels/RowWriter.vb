@@ -166,6 +166,30 @@ Namespace StorageProvider.ComponentModels
             End If
         End Sub
 
+        Public Function GetColumnType(name As String, Optional maps As Dictionary(Of String, String) = Nothing) As Type
+            Dim field As StorageProvider
+
+            If Not maps Is Nothing Then
+                For Each tuple As KeyValuePair(Of String, String) In maps
+                    If tuple.Value = name Then
+                        name = tuple.Key
+                        Exit For
+                    End If
+                Next
+            End If
+
+            field = columns.Where(Function(c) c.Name = name).FirstOrDefault
+
+            If Not field Is Nothing Then
+                Return field.BindProperty.PropertyType
+            ElseIf Not metaRow Is Nothing Then
+                ' probabily is the metadata field
+                Return metaRow.Dictionary
+            Else
+                Return GetType(Object)
+            End If
+        End Function
+
         Public Function GetRowNames(Optional maps As Dictionary(Of String, String) = Nothing) As RowObject
             If maps Is Nothing Then
                 Return New RowObject(columns.Select(Function(field) field.Name))

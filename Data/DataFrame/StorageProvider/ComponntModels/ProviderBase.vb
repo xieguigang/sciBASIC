@@ -66,8 +66,10 @@ Namespace StorageProvider.ComponentModels
 
     ''' <summary>
     ''' The base type of the data I/O object schema.
-    ''' (数据读写对象的基本类型)
     ''' </summary>
+    ''' <remarks>
+    ''' (数据读写对象的基本类型)
+    ''' </remarks>
     Public MustInherit Class StorageProvider
 
         ''' <summary>

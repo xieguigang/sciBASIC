@@ -452,7 +452,7 @@ Namespace StorageProvider.ComponentModels
         ''' <remarks>
         ''' 因为在这里使用了缓存,所以为了防止外部使用的时候意外修改缓存,在这里将这个函数的访问权限修改为仅内部使用
         ''' </remarks>
-        Friend Shared Function CreateObjectInternal(type As Type, Optional strict As Boolean = False) As SchemaProvider
+        Public Shared Function CreateObjectInternal(type As Type, Optional strict As Boolean = False) As SchemaProvider
             Dim staticCache = SingletonHolder(Of Dictionary(Of Type, SchemaProvider)).Instance
 
             If Not staticCache.ContainsKey(type) Then

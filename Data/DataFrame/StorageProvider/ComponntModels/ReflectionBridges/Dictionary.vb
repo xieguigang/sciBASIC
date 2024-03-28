@@ -68,6 +68,10 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
+        ''' <summary>
+        ''' the metadata dictionary value type
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Dictionary As Type
 
         Public Overrides ReadOnly Property ProviderId As ProviderIds
