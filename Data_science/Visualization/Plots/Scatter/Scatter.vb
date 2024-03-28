@@ -366,7 +366,8 @@ Public Module Scatter
                          Optional axisStroke$ = Stroke.AxisStroke,
                          Optional axisLabelCSS$ = CSSFont.Win10Normal,
                          Optional scatterReorder As Boolean = False,
-                         Optional dpi As Integer = 100) As GraphicsData
+                         Optional dpi As Integer = 100,
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, layout As GraphicsRegion)
@@ -422,7 +423,8 @@ Public Module Scatter
             padding:=padding,
             bg:=bg,
             plotAPI:=plotInternal,
-            dpi:=$"{dpi},{dpi}"
+            dpi:=$"{dpi},{dpi}",
+            driver:=driver
         )
     End Function
 
