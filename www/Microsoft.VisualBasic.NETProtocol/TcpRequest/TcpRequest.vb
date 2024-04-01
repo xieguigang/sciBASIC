@@ -310,7 +310,10 @@ Namespace Tcp
             Call Receive(client, buffer)
 
             If Not doWait(receiveDone) Then
-                Return New RequestStream(-1, 500, "receive message timeout").Serialize
+                ' get part of the data package?
+                If buffer.Length = 0 Then
+                    Return New RequestStream(-1, 500, "receive message timeout").Serialize
+                End If
             End If
 
             On Error Resume Next
