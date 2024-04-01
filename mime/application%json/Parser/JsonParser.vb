@@ -521,8 +521,9 @@ Public Class JsonParser
                                 sb.Append(vbTab)
                                 index += 1
                             Case "u"
+                                ' unescape the unicode characters
                                 index += 1
-                                code = Mid(str, index, 4)
+                                code = Mid(str, index + 1, 4)
                                 sb.Append(ChrW(Val("&h" & code)))
                                 index += 4
                         End Select

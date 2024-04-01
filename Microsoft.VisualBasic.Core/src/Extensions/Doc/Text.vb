@@ -429,36 +429,42 @@ Public Module TextDoc
             Return False
         End If
 
-        Dim DIR As String
+        Dim dir As String
 
-#If UNIX Then
-        DIR = System.IO.Directory.GetParent(path).FullName
-#Else
         Try
+#If UNIX Then
+            dir = System.IO.Directory.GetParent(path).FullName
+#Else
             path = PathExtensions.Long2Short(path)
-            DIR = fs.GetParentPath(path)
+            dir = fs.GetParentPath(path)
+#End If
         Catch ex As Exception
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
-            Throw New Exception(msg, ex)
-        End Try
-#End If
+            ex = New Exception(msg, ex)
+            App.LogException(ex)
 
-        If String.IsNullOrEmpty(DIR) Then
-            DIR = App.CurrentDirectory
+            If throwEx Then
+                Throw ex
+            End If
+        End Try
+
+        If String.IsNullOrEmpty(dir) Then
+            dir = App.CurrentDirectory
         Else
-            DIR.MakeDir(throwEx:=False)
+            dir.MakeDir(throwEx:=False)
         End If
 
         Try
             Call fs.WriteAllText(path, text Or EmptyString, append, encoding Or UTF8)
         Catch ex As Exception
-            ex = New Exception("[DIR]  " & DIR, ex)
+            ex = New Exception("[DIR]  " & dir, ex)
             ex = New Exception("[Path]  " & path, ex)
+
+            Call App.LogException(ex)
 
             If throwEx Then
                 Throw ex
             Else
-                Call App.LogException(ex)
                 Return False
             End If
         End Try

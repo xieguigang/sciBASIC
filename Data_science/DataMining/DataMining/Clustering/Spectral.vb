@@ -167,7 +167,7 @@ Namespace Clustering
 
 
         ''' <summary>
-        ''' kmeans on <seecref="eigenvectors"/> with required n <seecref="centers"/>.
+        ''' kmeans on <see cref="eigenvectors"/> with required n <see cref="centers"/>.
         ''' </summary>
         Private Sub kmeans()
             Dim m As ClusterEntity() = eigenvectors.RowVectors().[Select](Function(r, i) New ClusterEntity((i + 1).ToString(), r)).ToArray()
