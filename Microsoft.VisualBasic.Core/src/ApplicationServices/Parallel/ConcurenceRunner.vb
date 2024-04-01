@@ -7,6 +7,9 @@ Namespace Parallel
     ''' </summary>
     Public MustInherit Class VectorTask
 
+        ''' <summary>
+        ''' the input pending task sequence size
+        ''' </summary>
         Protected workLen As Integer
         ''' <summary>
         ''' set this flag value to value TRUE for run algorithm debug
@@ -92,8 +95,9 @@ Namespace Parallel
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="all">
-        ''' allocate all result(len=<see cref="workLen"/>) or 
-        ''' just for cpu worker thread(len=<see cref="cpu_count"/>)?
+        ''' allocate all result(len=<see cref="workLen"/>) when set this parameter value TRUE or 
+        ''' just for cpu worker thread(len=<see cref="cpu_count"/>) if set this parameter value 
+        ''' FALSE?
         ''' </param>
         ''' <returns></returns>
         ''' <remarks>
