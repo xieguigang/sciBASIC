@@ -157,6 +157,10 @@ Namespace LinearAlgebra
             Return Log(x, base:=10)
         End Function
 
+        Public Function Log10() As Vector
+            Return Log(Me, base:=10)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Max")>
         Public Shared Function Max(x As Vector) As Double

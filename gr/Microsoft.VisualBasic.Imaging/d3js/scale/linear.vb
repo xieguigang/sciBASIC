@@ -154,6 +154,10 @@ Namespace d3js.scale
             Return MyBase.range({min, max})
         End Function
 
+        Public Overloads Function range(r As DoubleRange) As LinearScale
+            Return MyBase.range({r.Min, r.Max})
+        End Function
+
         Public Overloads Function domain(v As Vector) As LinearScale
             _domain = v.ToArray
             Return Me
