@@ -97,8 +97,8 @@ Namespace Plot3D.Device
                 .IteratesALL _
                 .Select(Function(pt) pt.PointXY(plotRect.Size)) _
                 .ToArray
-            Dim scaleX = d3js.scale.linear.domain(polygon.Select(Function(a) a.X)).range(New Double() {plotRect.Left, plotRect.Right})
-            Dim scaleY = d3js.scale.linear.domain(polygon.Select(Function(a) a.Y)).range(New Double() {plotRect.Top, plotRect.Bottom})
+            Dim scaleX = d3js.scale.linear.domain(polygon.Select(Function(a) a.X)).range(values:=New Double() {plotRect.Left, plotRect.Right})
+            Dim scaleY = d3js.scale.linear.domain(polygon.Select(Function(a) a.Y)).range(values:=New Double() {plotRect.Top, plotRect.Bottom})
             Dim orders = PainterAlgorithm _
                 .OrderProvider(models, Function(e) e.Location.Z) _
                 .ToArray

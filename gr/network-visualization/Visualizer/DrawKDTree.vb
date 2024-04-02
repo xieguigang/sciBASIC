@@ -88,8 +88,8 @@ Public Class DrawKDTree : Inherits Plot
         Dim xTicks As Double() = allPoints.Select(Function(p) p.X).CreateAxisTicks
         Dim yTicks As Double() = allPoints.Select(Function(p) p.Y).CreateAxisTicks
         Dim rect As Rectangle = canvas.PlotRegion
-        Dim xscale = d3js.scale.linear.domain(values:=xTicks).range(New Double() {rect.Left, rect.Right})
-        Dim yscale = d3js.scale.linear.domain(values:=yTicks).range(New Double() {rect.Top, rect.Bottom})
+        Dim xscale = d3js.scale.linear.domain(values:=xTicks).range(values:=New Double() {rect.Left, rect.Right})
+        Dim yscale = d3js.scale.linear.domain(values:=yTicks).range(values:=New Double() {rect.Top, rect.Bottom})
         Dim scaler As New DataScaler() With {
             .AxisTicks = (xTicks.AsVector, yTicks.AsVector),
             .region = rect,

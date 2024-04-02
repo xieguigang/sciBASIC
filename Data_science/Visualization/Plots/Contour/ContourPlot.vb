@@ -135,8 +135,8 @@ Namespace Contour
             End If
 
             If dims.Width * dims.Height > 0 Then
-                Dim scaleX = d3js.scale.linear.domain(values:=New Double() {0, dims.Width}).range(New Double() {rect.Left, rect.Right})
-                Dim scaleY = d3js.scale.linear.domain(values:=New Double() {0, dims.Height}).range(New Double() {rect.Top, rect.Bottom})
+                Dim scaleX = d3js.scale.linear.domain(values:=New Double() {0, dims.Width}).range(values:=New Double() {rect.Left, rect.Right})
+                Dim scaleY = d3js.scale.linear.domain(values:=New Double() {0, dims.Height}).range(values:=New Double() {rect.Top, rect.Bottom})
 
                 For Each polygon As GeneralPath In contours
                     Dim color As SolidBrush = colors(++i)
