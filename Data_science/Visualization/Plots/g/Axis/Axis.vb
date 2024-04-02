@@ -70,7 +70,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Graphic.Axis
 
@@ -401,7 +401,7 @@ Namespace Graphic.Axis
                         End If
                     End If
 
-                    Dim labelText As String = If(stdNum.Abs(tick) < 0.000001, "0", tick.ToString(tickFormat))
+                    Dim labelText As String = If(std.Abs(tick) < 0.000001, "0", tick.ToString(tickFormat))
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     If layout = YAxisLayoutStyles.Right Then

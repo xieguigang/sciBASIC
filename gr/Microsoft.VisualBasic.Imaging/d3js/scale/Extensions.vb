@@ -100,6 +100,10 @@ Namespace d3js.scale
             Return New OrdinalScale
         End Function
 
+        Public Function constant(val As Double) As ConstantScale
+            Return New ConstantScale(val)
+        End Function
+
         ''' <summary>
         ''' > Quantitative scales have a continuous domain, such as the set of real numbers, or dates.
         ''' 
