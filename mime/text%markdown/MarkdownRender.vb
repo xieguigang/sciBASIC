@@ -59,10 +59,18 @@ Public Class MarkdownRender
         Return render.Document(text)
     End Function
 
-    ReadOnly par As New Regex("\n\n(.*?)+\n\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+    Shared ReadOnly _newlinesLeadingTrailing As New Regex("^\n+|\n+\z", RegexOptions.Compiled)
+    Shared ReadOnly _newlinesMultiple As New Regex("\n{2,}", RegexOptions.Compiled)
 
     Private Sub AutoParagraph()
-        text = par.Replace(text, Function(m) Paragraph(m.Value))
+        ' split on two or more newlines
+        Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
+
+        For i As Integer = 0 To grafs.Length - 1
+            grafs(i) = Paragraph(grafs(i))
+        Next
+
+        text = grafs.JoinBy(vbLf & vbLf)
     End Sub
 
     Private Function Paragraph(text As String) As String
@@ -70,6 +78,14 @@ Public Class MarkdownRender
 
         If (lines.Length = 0) OrElse lines.All(Function(s) s.Trim.StringEmpty) Then
             Return text
+        End If
+
+        If lines.Length = 1 Then
+            Static html_tag As New Regex("^[<]((h\d+)|(div)|(li)|([uo]l)|(table)|(p))", RegexOptions.IgnoreCase Or RegexOptions.Compiled Or RegexOptions.Multiline)
+
+            If html_tag.Match(lines(0)).Success Then
+                Return text
+            End If
         End If
 
         text = lines.JoinBy(vbLf)
