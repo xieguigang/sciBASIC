@@ -81,7 +81,7 @@ Public Class MarkdownRender
         End If
 
         If lines.Length = 1 Then
-            Static html_tag As New Regex("^[<]((h\d+)|(div)|(li)|([uo]l)|(table)|(p))", RegexOptions.IgnoreCase Or RegexOptions.Compiled Or RegexOptions.Multiline)
+            Static html_tag As New Regex("^[<]((h\d+)|(div)|(li)|([uo]l)|(table)|(p)|(pre)|(code))", RegexOptions.IgnoreCase Or RegexOptions.Compiled Or RegexOptions.Multiline)
 
             If html_tag.Match(lines(0)).Success Then
                 Return text
