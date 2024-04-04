@@ -27,7 +27,11 @@
     End Function
 
     Public Overrides Function CodeSpan(text As String) As String
-        Return {"<code>", text, "</code>"}.JoinBy("")
+        Return {"<code>", escapeHtml(text), "</code>"}.JoinBy("")
+    End Function
+
+    Private Shared Function escapeHtml(text As String) As String
+        Return If(text, "").Replace("<", "&lt;")
     End Function
 
     ''' <summary>
@@ -43,7 +47,7 @@
     End Function
 
     Public Overrides Function CodeBlock(code As String, lang As String) As String
-        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">", code, vbLf & "</code></pre>" & vbLf & vbLf)
+        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">", escapeHtml(code), vbLf & "</code></pre>" & vbLf & vbLf)
     End Function
 
     Public Overrides Function Image(url As String, altText As String, title As String) As String
