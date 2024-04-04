@@ -49,12 +49,32 @@ Public Class MarkdownRender
         Call RunBold()
         Call RunItalic()
 
+        Call AutoParagraph()
+
         Call RunCodeSpan()
         Call RunCodeBlock()
         Call RunImage()
         Call RunUrl()
 
         Return render.Document(text)
+    End Function
+
+    ReadOnly par As New Regex("\n\n(.*?)+\n\n", RegexOptions.Compiled Or RegexOptions.Singleline)
+
+    Private Sub AutoParagraph()
+        text = par.Replace(text, Function(m) Paragraph(m.Value))
+    End Sub
+
+    Private Function Paragraph(text As String) As String
+        Dim lines = text.Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB).LineTokens
+
+        If (lines.Length = 0) OrElse lines.All(Function(s) s.Trim.StringEmpty) Then
+            Return text
+        End If
+
+        text = lines.JoinBy(vbLf)
+
+        Return render.Paragraph(text, True)
     End Function
 
     Dim codespans As New Dictionary(Of String, String)
