@@ -49,12 +49,48 @@ Public Class MarkdownRender
         Call RunBold()
         Call RunItalic()
 
+        Call AutoParagraph()
+
         Call RunCodeSpan()
         Call RunCodeBlock()
         Call RunImage()
         Call RunUrl()
 
         Return render.Document(text)
+    End Function
+
+    Shared ReadOnly _newlinesLeadingTrailing As New Regex("^\n+|\n+\z", RegexOptions.Compiled)
+    Shared ReadOnly _newlinesMultiple As New Regex("\n{2,}", RegexOptions.Compiled)
+
+    Private Sub AutoParagraph()
+        ' split on two or more newlines
+        Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
+
+        For i As Integer = 0 To grafs.Length - 1
+            grafs(i) = Paragraph(grafs(i))
+        Next
+
+        text = grafs.JoinBy(vbLf & vbLf)
+    End Sub
+
+    Private Function Paragraph(text As String) As String
+        Dim lines = text.Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB).LineTokens
+
+        If (lines.Length = 0) OrElse lines.All(Function(s) s.Trim.StringEmpty) Then
+            Return text
+        End If
+
+        If lines.Length = 1 Then
+            Static html_tag As New Regex("^[<]((h\d+)|(div)|(li)|([uo]l)|(table)|(p)|(pre)|(code))", RegexOptions.IgnoreCase Or RegexOptions.Compiled Or RegexOptions.Multiline)
+
+            If html_tag.Match(lines(0)).Success Then
+                Return text
+            End If
+        End If
+
+        text = lines.JoinBy(vbLf)
+
+        Return render.Paragraph(text, True)
     End Function
 
     Dim codespans As New Dictionary(Of String, String)
