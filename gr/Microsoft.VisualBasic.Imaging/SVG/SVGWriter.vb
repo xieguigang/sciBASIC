@@ -55,7 +55,6 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
@@ -76,11 +75,17 @@ Namespace SVG
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing) As SvgDocument
+        Public Function SVG(g As GraphicsSVG,
+                            Optional size$ = Nothing,
+                            Optional comment As String = Nothing) As SvgDocument
+
             Dim svgDoc As SvgDocument = g.__svgData.svg
 
             If Not size.StringEmpty Then
-                svgDoc.Size(size.SizeParser)
+                Call svgDoc.Size(size.SizeParser)
+            End If
+            If Not comment.StringEmpty Then
+                Call svgDoc.SetCommentText(comment)
             End If
 
             Return svgDoc
