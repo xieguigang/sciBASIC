@@ -81,7 +81,7 @@ Namespace Parallel
 
                 System.Threading.Tasks.Parallel.For(
                     fromInclusive:=0,
-                    toExclusive:=cpu_count + 3,
+                    toExclusive:=cpu_count + cpu_worker_overflow,
                     parallelOptions:=opt,
                     body:=Sub(i) ParallelFor(i, span_size)
                 )
@@ -89,6 +89,8 @@ Namespace Parallel
 
             Return Me
         End Function
+
+        Const cpu_worker_overflow As Integer = 3
 
         ''' <summary>
         ''' allocate a block of result output memory data for one thread task
@@ -109,7 +111,7 @@ Namespace Parallel
             If all Then
                 Return New TOut(workLen - 1) {}
             Else
-                Return New TOut(cpu_count) {}
+                Return New TOut(cpu_count + cpu_worker_overflow) {}
             End If
         End Function
 

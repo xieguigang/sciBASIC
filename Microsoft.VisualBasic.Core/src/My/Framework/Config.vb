@@ -153,7 +153,8 @@ Namespace My.FrameworkInternal
             Dim configNames As FrameworkConfigAttribute()
 
 #If NETCOREAPP Then
-            Call deps.TryHandleNetCore5AssemblyBugs(package:=assembly)
+            Call deps.TryHandleNetCore5AssemblyBugs(
+                package:=assembly, external_libloc:=Nothing)
 #End If
 
             Try

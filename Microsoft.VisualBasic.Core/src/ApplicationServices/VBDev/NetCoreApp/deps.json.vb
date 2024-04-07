@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Development.NetCoreApp
@@ -196,8 +197,8 @@ Namespace ApplicationServices.Development.NetCoreApp
         ''' <param name="package"></param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Type)
-            Call TryHandleNetCore5AssemblyBugs(package.Assembly)
+        Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Type, external_libloc As String())
+            Call TryHandleNetCore5AssemblyBugs(package.Assembly, external_libloc)
         End Sub
 
         Private Shared Function GetDepsJsonfile(package As Assembly, moduleName As String) As String
@@ -217,7 +218,7 @@ Namespace ApplicationServices.Development.NetCoreApp
         ''' missing assembly when load reference type module
         ''' </summary>
         ''' <param name="package"></param>
-        Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Assembly)
+        Public Shared Sub TryHandleNetCore5AssemblyBugs(package As Assembly, external_libloc As String())
             Dim moduleName As String = package.GetName.Name
             Dim depsJson As String = GetDepsJsonfile(package, moduleName)
             Dim deps As deps = If(depsJson.FileExists, depsJson.LoadJsonFile(Of deps), Nothing)
@@ -254,20 +255,28 @@ Namespace ApplicationServices.Development.NetCoreApp
                 End If
 
                 Dim dllfile As String
+                Dim hit As Boolean = False
 
-                For Each libpath As String In New String() {App.HOME, libdir}
+                For Each libpath As String In external_libloc.JoinIterates(New String() {App.HOME, libdir})
                     dllfile = $"{libpath}/{dllName}"
 
                     If dllfile.FileExists Then
-                        If Not LoadAssemblyOrCache(dllfile, strict:=False) Is Nothing Then
-                            ' exit current loop for load next
-                            ' project dependency module
+                        hit = Not LoadAssemblyOrCache(dllfile, strict:=False) Is Nothing
+
+                        ' 20240403
+                        '
+                        ' exit current loop for load next 
+                        ' project dependency module
+                        ' on hit context
+                        If hit Then
                             Exit For
                         End If
                     End If
                 Next
 
-                Call $"missing assembly file: {dllName}...".Warning
+                If Not hit Then
+                    Call $"missing assembly file: {dllName}...".Warning
+                End If
             Next
         End Sub
 

@@ -259,7 +259,7 @@ Namespace Scripting.MetaData
                     End If
                 Else
 #If NETCOREAPP Then
-                    Call deps.TryHandleNetCore5AssemblyBugs(package:=assm)
+                    Call deps.TryHandleNetCore5AssemblyBugs(package:=assm, external_libloc:=searchPath)
 #End If
                 End If
 
