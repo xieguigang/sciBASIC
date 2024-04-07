@@ -76,11 +76,16 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
-        ''' 专门为任意字符串集合所创建的json序列化方法，在这个函数之中会自动调用ToArray后再进行json序列化
+        ''' get string array json
         ''' </summary>
-        ''' <param name="array"></param>
+        ''' <param name="array">a string collection, this function will convert this
+        ''' enumerable collection object as array and then serialize as json.
+        ''' </param>
         ''' <param name="indent"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 专门为任意字符串集合所创建的json序列化方法，在这个函数之中会自动调用ToArray后再进行json序列化
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetJson(array As IEnumerable(Of String), Optional indent As Boolean = False) As String
