@@ -5,8 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
-    <AssemblyName>Microsoft.VisualBasic.Data.Bootstrapping</AssemblyName>
-    <RootNamespace>Microsoft.VisualBasic.Data.Bootstrapping</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MachineLearning.Bootstrapping</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MachineLearning.Bootstrapping</RootNamespace>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Raw data processing for MachineLearning</Title>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
@@ -14,5 +18,6 @@
     <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\ODE\odes-netcore5.vbproj" />
+    <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
   </ItemGroup>
 </Project>
