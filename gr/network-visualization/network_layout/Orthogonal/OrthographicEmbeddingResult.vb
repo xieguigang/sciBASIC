@@ -404,6 +404,19 @@ Namespace Orthogonal
             gridAlign(1.0)
         End Sub
 
+        Public Function find(x As Double, y As Double) As Boolean
+            For i As Integer = 0 To nodeIndexes.Length - 1
+                For j As Integer = 0 To nodeIndexes.Length - 1
+                    If edges(i)(j) Then
+                        If std.Abs(Me.x(i) - x) < 0.01 AndAlso std.Abs(Me.y(i) - y) < 0.01 Then
+                            Return True
+                        End If
+                    End If
+                Next
+            Next
+
+            Return False
+        End Function
 
         Public Overridable Sub fixNonOrthogonalEdges()
             Dim repeat = True

@@ -75,49 +75,23 @@ Namespace Orthogonal
                 End If
             Next
 
-            Dim minx = layout.x.Min
-            Dim miny = layout.y.Min
-            Dim maxx = layout.x.Max
-            Dim maxy = layout.y.Max
-            Dim edgeBends As New Dictionary(Of String, List(Of XYMetaHandle))
-
-            For i = 0 To layout.nodeIndexes.Length - 1
-                For j = 0 To layout.nodeIndexes.Length - 1
-                    If layout.edges(i)(j) Then
-                        Dim x0 = std.Min(layout.x(i), layout.x(j)) - minx
-                        Dim y0 = std.Min(layout.y(i), layout.y(j)) - miny
-
-                        u = vlist(layout.nodeIndexes(i))
-                        v = vlist(layout.nodeIndexes(j))
-
-                        Dim key As String = {u.ID, v.ID}.OrderBy(Function(vi) vi).JoinBy(" -> ")
-                        Dim ps As PointF = layout(i)
-                        Dim pt As PointF = layout(j)
-
-                        If Not edgeBends.ContainsKey(key) Then
-                            edgeBends.Add(key, New List(Of XYMetaHandle))
-                        End If
-
-                        edgeBends(key).Add(XYMetaHandle.CreateVector(ps, pt, x0, y0))
-                    End If
-                Next
-            Next
-
             For Each edge As Edge In g.graphEdges
-                Dim key As String = {edge.U.ID, edge.V.ID}.OrderBy(Function(vi) vi).JoinBy(" -> ")
+                Dim pu = edge.U.data.initialPostion.Point2D
+                Dim pv = edge.V.data.initialPostion.Point2D
 
-                If Not edgeBends.ContainsKey(key) Then
-                    Continue For
+                If std.Abs(pu.X - pv.X) < 0.01 OrElse std.Abs(pu.Y - pv.Y) < 0.01 Then
+                    ' u - v on a line
+                    ' no bends
+                Else
+                    ' needs a middle point in route
+                    If layout.find(pu.X, pv.Y) Then
+                        edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, pu.X, pv.Y)}
+                    ElseIf layout.find(pv.X, pu.Y) Then
+                        edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, pv.X, pu.Y)}
+                    Else
+                        ' no bends?
+                    End If
                 End If
-
-                Dim ps As PointF = edge.U.data.initialPostion.Point2D
-                Dim bends As XYMetaHandle() = edgeBends(key) _
-                    .OrderBy(Function(e)
-                                 Return e.GetPoint(edge.U, edge.V).Distance(ps)
-                             End Function) _
-                    .ToArray
-
-                edge.data.bends = bends
             Next
 
             Return g

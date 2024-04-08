@@ -51,6 +51,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
@@ -62,8 +63,8 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
-        ' Call test1()
-        Call test2()
+        Call test1()
+        ' Call test2()
     End Sub
 
     Sub test1()
@@ -90,7 +91,7 @@ Module OrthogonalLayoutTest
         Call g.AddEdge("0", "9")
 
         ' Call Orthogonal.DoLayout(g)
-        ' Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
+
         Dim graph = g.AsGraphMatrix
 
         For Each line As Integer() In graph
@@ -107,6 +108,8 @@ Module OrthogonalLayoutTest
 
 
         g = g.DoLayout
+
+        Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
 
         Pause()
     End Sub
