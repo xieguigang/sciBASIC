@@ -78,7 +78,7 @@ Module OrthogonalLayoutTest
         Call g.AddEdge("B", "F")
         Call g.AddEdge("G", "K")
 
-        Call Orthogonal.Algorithm.DoLayout(g, New Size(100, 60), 10)
+        Call Orthogonal.DoLayout(g)
         Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
 
         Pause()
