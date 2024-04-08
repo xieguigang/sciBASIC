@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.ListExtensions
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -17,7 +18,7 @@ Namespace Orthogonal.optimization
     Public Class OrthographicEmbeddingOptimizer
 
         Public Shared DEBUG As Integer = 0
-
+        Public Shared maxNodes As Integer = 5
 
         Public Shared Function optimize(o As OrthographicEmbeddingResult, graph As Integer()()) As OrthographicEmbeddingResult
             Return optimize(o, graph, New SegmentLengthEmbeddingComparator())
@@ -400,7 +401,7 @@ Namespace Orthogonal.optimization
                 current = open.PopAt(0)
 
                 Dim cx = current Mod dx ' current
-                Dim cy As Integer = current / dx
+                Dim cy As Integer = std.Floor(current / dx)
                 Dim currentParents As IList(Of Integer) = parents(cx)(cy)
                 ' 
                 ' 				int parentx = cx;
@@ -419,7 +420,7 @@ Namespace Orthogonal.optimization
                         Dim ny = cy + offy(i)
                         For Each parent In currentParents
                             Dim parentx = parent Mod dx
-                            Dim parenty As Integer = parent / dx
+                            Dim parenty As Integer = std.Floor(parent / dx)
                             ' there is one parent from where we don't have to change direction:
                             If parentx = cx - offx(i) AndAlso parenty = cy - offy(i) Then
                                 nextbends = bends(cx)(cy)
@@ -450,26 +451,41 @@ Namespace Orthogonal.optimization
             current = x2 + y2 * dx
             Dim start = x1 + y1 * dx
             Dim offs = 0
+            Dim index As Integer
+
             While current <> start
                 Dim [next] = current
-                path.Insert(0, New Pair(Of Integer, Integer)(current Mod dx, current / dx))
+                index = std.Floor(current / dx)
+                path.Insert(0, New Pair(Of Integer, Integer)(current Mod dx, index))
                 If offs = 0 Then
-                    [next] = parents(current Mod dx)(current / dx)(0)
+                    index = std.Floor(current / dx)
+                    [next] = parents(current Mod dx)(index)(0)
                 Else
                     ' try to find a parent that goes in the same direction:
-                    For Each p In parents(current Mod dx)(current / dx)
+                    index = std.Floor(current / dx)
+                    For Each p In parents(current Mod dx)(index)
                         If p - current = offs Then
                             [next] = p
                         End If
                     Next
                     If [next] = current Then
-                        [next] = parents(current Mod dx)(current / dx)(0)
+                        index = std.Floor(current / dx)
+                        [next] = parents(current Mod dx)(index)(0)
                     End If
                 End If
                 offs = [next] - current
                 current = [next]
+
+                If path.Count > maxNodes + 1 Then
+                    Dim last = path.Last
+
+                    If path.Skip(path.Count - maxNodes).All(Function(a) a.Equals(last)) Then
+                        Exit While
+                    End If
+                End If
             End While
-            path.Insert(0, New Pair(Of Integer, Integer)(current Mod dx, current / dx))
+            index = std.Floor(current / dx)
+            path.Insert(0, New Pair(Of Integer, Integer)(current Mod dx, index))
             If DEBUG >= 1 Then
                 Console.WriteLine("full path to (" & x2.ToString() & "," & y2.ToString() & ") cost " & cost(x2)(y2).ToString() & "," & bends(x2)(y2).ToString() & ": " & path.ToString())
             End If

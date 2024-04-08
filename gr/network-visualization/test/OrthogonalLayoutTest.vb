@@ -93,7 +93,7 @@ Module OrthogonalLayoutTest
     End Sub
 
     Private Sub saveEmbedding(oe As OrthographicEmbeddingResult)
-        Dim fw As StreamWriter = Console.Out
+        Dim fw As New StreamWriter(Console.OpenStandardOutput)
 
         For i = 0 To oe.nodeIndexes.Length - 1
             For j = 0 To oe.nodeIndexes.Length - 1
@@ -117,7 +117,7 @@ Module OrthogonalLayoutTest
             .ReadAllLines _
             .Select(Function(l) l.Split(","c).AsInteger) _
             .ToArray
-        Dim numberOfAttempts As Integer = 1
+        Dim numberOfAttempts As Integer = 10
         Dim optimize As Boolean = True
         Dim simplify As Boolean = True
         Dim fixNonOrthogonal As Boolean = True
