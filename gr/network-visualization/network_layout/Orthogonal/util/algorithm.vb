@@ -66,6 +66,10 @@ Namespace Orthogonal
             Dim index As Integer
             Dim u, v As Node
 
+            If layout Is Nothing Then
+                Throw New InvalidProgramException("run layout failure...")
+            End If
+
             For i As Integer = 0 To layout.nodeIndexes.Length - 1
                 index = layout.nodeIndexes(i)
 
