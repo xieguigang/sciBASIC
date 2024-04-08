@@ -9,12 +9,7 @@ Namespace Orthogonal
     Public Module algorithm
 
         <Extension>
-        Public Function DoLayout(<Out> ByRef g As NetworkGraph,
-                                 Optional numberOfAttempts As Integer = 10,
-                                 Optional optimize As Boolean = True,
-                                 Optional simplify As Boolean = True,
-                                 Optional fixNonOrthogonal As Boolean = True) As NetworkGraph
-
+        Public Function AsGraphMatrix(g As NetworkGraph) As Integer()()
             Dim vlist As Node() = g.vertex.ToArray
             Dim graph As Integer()() = RectangularArray.Matrix(Of Integer)(vlist.Length, vlist.Length)
 
@@ -36,11 +31,23 @@ Namespace Orthogonal
                 Next
             Next
 
-            Dim layout = graph.RunLayoutMatrix(
-                numberOfAttempts:=numberOfAttempts,
-                optimize:=optimize,
-                simplify:=simplify,
-                fixNonOrthogonal:=fixNonOrthogonal)
+            Return graph
+        End Function
+
+        <Extension>
+        Public Function DoLayout(<Out> ByRef g As NetworkGraph,
+                                 Optional numberOfAttempts As Integer = 10,
+                                 Optional optimize As Boolean = True,
+                                 Optional simplify As Boolean = True,
+                                 Optional fixNonOrthogonal As Boolean = True) As NetworkGraph
+
+            Dim layout As OrthographicEmbeddingResult = g _
+                .AsGraphMatrix _
+                .RunLayoutMatrix(
+                    numberOfAttempts:=numberOfAttempts,
+                    optimize:=optimize,
+                    simplify:=simplify,
+                    fixNonOrthogonal:=fixNonOrthogonal)
 
             Return g
         End Function
