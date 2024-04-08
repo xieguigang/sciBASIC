@@ -36,15 +36,8 @@ Namespace GraphEmbedding.complex_R
         Public m_MatrixE_prefix As String = ""
         Public m_MatrixR_prefix As String = ""
 
-        Public m_NumFactor As Integer = 50
-        Public m_Lambda As Double = 0.001
-        Public m_Gamma As Double = 0.1
         Public m_Mu As Double = 0.1
         Public m_pca As Double = 0.8
-        Public m_NumNegative As Integer = 10
-        Public m_NumBatch As Integer = 100
-        Public m_NumIteration As Integer = 1000
-        Public m_OutputIterSkip As Integer = 50
 
 
         Public Sub New()
