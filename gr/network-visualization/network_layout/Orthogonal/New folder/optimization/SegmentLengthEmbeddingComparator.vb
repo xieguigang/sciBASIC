@@ -6,7 +6,7 @@
 Imports OrthographicEmbeddingResult = orthographicembedding.OrthographicEmbeddingResult
 Imports util
 
-Namespace optimization
+Namespace Orthogonal.optimization
 
     ''' 
     ''' <summary>

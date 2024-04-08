@@ -11,7 +11,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 '  To change this template file, choose Tools | Templates
 '  and open the template in the editor.
 ' 
-Namespace optimization
+Namespace Orthogonal.optimization
 
     ''' 
     ''' <summary>
@@ -82,16 +82,16 @@ Namespace optimization
                 Dim current = open.PopAt(0)
                 pathIndexes.Add(current)
                 Dim neighbors As IList(Of Integer) = New List(Of Integer)()
-                For [next] = 0 To o.edges.Length - 1
-                    If o.edges(current)([next]) OrElse o.edges([next])(current) Then
-                        neighbors.Add([next])
+                For [Next] = 0 To o.edges.Length - 1
+                    If o.edges(current)([Next]) OrElse o.edges([Next])(current) Then
+                        neighbors.Add([Next])
                     End If
                 Next
 
                 If neighbors.Count = 2 Then
-                    For Each [next] In neighbors
-                        If Not open.Contains([next]) AndAlso Not pathIndexes.Contains([next]) Then
-                            open.Add([next])
+                    For Each [Next] In neighbors
+                        If Not open.Contains([Next]) AndAlso Not pathIndexes.Contains([Next]) Then
+                            open.Add([Next])
                         End If
                     Next
                 ElseIf neighbors.Count > 2 Then

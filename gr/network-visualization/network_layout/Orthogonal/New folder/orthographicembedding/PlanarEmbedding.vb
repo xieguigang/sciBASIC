@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic.ListExtensions
 '  and open the template in the editor.
 ' 
 
-Namespace orthographicembedding
+Namespace Orthogonal.orthographicembedding
 
     ''' 
     ''' <summary>
@@ -19,14 +19,14 @@ Namespace orthographicembedding
 
         ' This function assumes that the given graph is 2-connected
         Public Shared Function planarEmbedding2Connected(graph As Integer()(), r As Random) As IList(Of Integer)()
-            Dim stNumbering As Integer() = orthographicembedding.STNumbering.stNumbering(graph, r)
+            Dim stNumbering As Integer() = OrthographicEmbedding.STNumbering.stNumbering(graph, r)
 
-            Return orthographicembedding.PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
+            Return OrthographicEmbedding.PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
         End Function
 
         Public Shared Function planarEmbedding2Connected(graph As Integer()(), stNumbering As Integer()) As IList(Of Integer)()
-            Dim upwardEmbedding As IList(Of Integer)() = orthographicembedding.PlanarEmbedding.planarUpwardEmbedding(graph, stNumbering)
-            Return orthographicembedding.PlanarEmbedding.translateEmbeddingToNodeIndexes(orthographicembedding.PlanarEmbedding.extendUpwardEmbedding(upwardEmbedding), stNumbering)
+            Dim upwardEmbedding As IList(Of Integer)() = OrthographicEmbedding.PlanarEmbedding.planarUpwardEmbedding(graph, stNumbering)
+            Return OrthographicEmbedding.PlanarEmbedding.translateEmbeddingToNodeIndexes(OrthographicEmbedding.PlanarEmbedding.extendUpwardEmbedding(upwardEmbedding), stNumbering)
         End Function
 
         ' This function assumes that the given graph is 2-connected
@@ -34,7 +34,7 @@ Namespace orthographicembedding
         Public Shared Function planarUpwardEmbedding(graph As Integer()(), stNumbering As Integer()) As IList(Of Integer)()
             Dim n = graph.Length
             Dim embedding As IList(Of Integer)() = New List(Of Integer)(n - 1) {}
-            Dim nodeParent As Dictionary(Of orthographicembedding.PQTree, Integer) = New Dictionary(Of orthographicembedding.PQTree, Integer)()
+            Dim nodeParent As Dictionary(Of OrthographicEmbedding.PQTree, Integer) = New Dictionary(Of OrthographicEmbedding.PQTree, Integer)()
             Dim nodeWithNumber = New Integer(n - 1) {}
             Dim s = -1
             Dim t = -1
@@ -49,15 +49,15 @@ Namespace orthographicembedding
             Next
 
             ' Create the initial PQ-tree as a P node (representing "s") with all the connections of "s" as leaves:
-            Dim pqTree As orthographicembedding.PQTree = New orthographicembedding.PQTree(stNumbering(s), orthographicembedding.PQTree.P_NODE, Nothing)
+            Dim pqTree As OrthographicEmbedding.PQTree = New OrthographicEmbedding.PQTree(stNumbering(s), OrthographicEmbedding.PQTree.P_NODE, Nothing)
             For i = 0 To graph.Length - 1
                 If graph(s)(i) = 1 AndAlso stNumbering(i) > stNumbering(s) Then
-                    Dim leaf As orthographicembedding.PQTree = New orthographicembedding.PQTree(stNumbering(i), orthographicembedding.PQTree.LEAF_NODE, pqTree)
+                    Dim leaf As OrthographicEmbedding.PQTree = New OrthographicEmbedding.PQTree(stNumbering(i), OrthographicEmbedding.PQTree.LEAF_NODE, pqTree)
                     nodeParent(leaf) = stNumbering(s)
                 End If
             Next
 
-            If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+            If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                 Console.WriteLine("PQ-tree at the beggining:" & vbLf & pqTree.toString(2, nodeParent))
             End If
 
@@ -65,7 +65,7 @@ Namespace orthographicembedding
                 Dim vNumber = i + 1
                 Dim vNode = nodeWithNumber(i)
 
-                If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine(vbLf & "- Next is node " & vNode.ToString() & " with st-number " & vNumber.ToString())
                 End If
 
@@ -75,54 +75,54 @@ Namespace orthographicembedding
                 '    appear consecutively as leaves in the PQ-tree)
                 '   (if the set of nodes with "vNumber" is "S", this operation corresponds to REDUCE(T,S))
                 If Not pqTree.reduce(vNumber) Then
-                    If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Cannot reduce the PQ-tree!!!")
                     End If
-                    If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine(pqTree.toString(nodeParent))
                     End If
                     Return Nothing
                 End If
 
-                If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  PQ-tree after reduction:" & vbLf & pqTree.toString(2, nodeParent))
                 End If
 
                 ' Vertex addition step:
                 ' - get the pertiment root (what I used to call the "fullParent"
                 ' - get all the "pertinent leaves" (full leaves) + direction indicators: l1, ..., lk
-                Dim fullNodes As IList(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
-                Dim pertinentLeaves As IList(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
-                Dim directionIndicators As List(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
-                Dim fullParent As orthographicembedding.PQTree = Nothing
-                Dim pertinentRoot As orthographicembedding.PQTree = Nothing
+                Dim fullNodes As IList(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
+                Dim pertinentLeaves As IList(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
+                Dim directionIndicators As List(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
+                Dim fullParent As OrthographicEmbedding.PQTree = Nothing
+                Dim pertinentRoot As OrthographicEmbedding.PQTree = Nothing
                 If True Then
-                    Dim stack As List(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
+                    Dim stack As List(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
                     stack.Add(pqTree)
                     While stack.Count > 0
-                        Dim current As orthographicembedding.PQTree = stack.PopAt(0)
-                        If current.nodeType <> orthographicembedding.PQTree.DIRECTION_INDICATOR AndAlso pertinentRoot Is Nothing AndAlso (current.label = orthographicembedding.PQTree.LABEL_FULL OrElse current.label = orthographicembedding.PQTree.LABEL_PARTIAL) Then
+                        Dim current As OrthographicEmbedding.PQTree = stack.PopAt(0)
+                        If current.nodeType <> OrthographicEmbedding.PQTree.DIRECTION_INDICATOR AndAlso pertinentRoot Is Nothing AndAlso (current.label = OrthographicEmbedding.PQTree.LABEL_FULL OrElse current.label = OrthographicEmbedding.PQTree.LABEL_PARTIAL) Then
                             pertinentRoot = current
                         End If
-                        If current.label = orthographicembedding.PQTree.LABEL_FULL Then
-                            If current.nodeType <> orthographicembedding.PQTree.DIRECTION_INDICATOR AndAlso fullParent Is Nothing Then
+                        If current.label = OrthographicEmbedding.PQTree.LABEL_FULL Then
+                            If current.nodeType <> OrthographicEmbedding.PQTree.DIRECTION_INDICATOR AndAlso fullParent Is Nothing Then
                                 fullParent = current.parent
-                                While fullParent IsNot Nothing AndAlso fullParent.label = orthographicembedding.PQTree.LABEL_FULL
+                                While fullParent IsNot Nothing AndAlso fullParent.label = OrthographicEmbedding.PQTree.LABEL_FULL
                                     fullParent = fullParent.parent
                                 End While
                             End If
-                            If current.nodeType <> orthographicembedding.PQTree.DIRECTION_INDICATOR Then
+                            If current.nodeType <> OrthographicEmbedding.PQTree.DIRECTION_INDICATOR Then
                                 fullNodes.Add(current)
                             End If
-                            If current.nodeType = orthographicembedding.PQTree.LEAF_NODE Then
+                            If current.nodeType = OrthographicEmbedding.PQTree.LEAF_NODE Then
                                 pertinentLeaves.Add(current)
-                            ElseIf current.nodeType = orthographicembedding.PQTree.DIRECTION_INDICATOR Then
+                            ElseIf current.nodeType = OrthographicEmbedding.PQTree.DIRECTION_INDICATOR Then
                                 directionIndicators.Add(current)
                             End If
                         End If
                         If current.children IsNot Nothing Then
                             Dim insertPoint = 0
-                            For Each child As orthographicembedding.PQTree In current.children
+                            For Each child As OrthographicEmbedding.PQTree In current.children
                                 stack.Insert(insertPoint, child)
                                 insertPoint += 1
                             Next
@@ -135,13 +135,13 @@ Namespace orthographicembedding
                     Dim repeat As Boolean
                     Do
                         repeat = False
-                        Dim nonEmptyChild As orthographicembedding.PQTree = Nothing
+                        Dim nonEmptyChild As OrthographicEmbedding.PQTree = Nothing
                         If pertinentRoot.children IsNot Nothing Then
-                            For Each child As orthographicembedding.PQTree In pertinentRoot.children
-                                If child.nodeType = orthographicembedding.PQTree.DIRECTION_INDICATOR Then
+                            For Each child As OrthographicEmbedding.PQTree In pertinentRoot.children
+                                If child.nodeType = OrthographicEmbedding.PQTree.DIRECTION_INDICATOR Then
                                     Continue For
                                 End If
-                                If child.label <> orthographicembedding.PQTree.LABEL_EMPTY Then
+                                If child.label <> OrthographicEmbedding.PQTree.LABEL_EMPTY Then
                                     If nonEmptyChild Is Nothing Then
                                         nonEmptyChild = child
                                     Else
@@ -156,8 +156,8 @@ Namespace orthographicembedding
                             End If
                         End If
                     Loop While repeat
-                    Dim toDelete As IList(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
-                    For Each indicator As orthographicembedding.PQTree In directionIndicators
+                    Dim toDelete As IList(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
+                    For Each indicator As OrthographicEmbedding.PQTree In directionIndicators
                         If Not pertinentRoot.contains(indicator) Then
                             toDelete.Add(indicator)
                         End If
@@ -165,7 +165,7 @@ Namespace orthographicembedding
 
                     directionIndicators.RemoveAll(toDelete)
                 End If
-                If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  full parent: " & fullParent.ToString())
                     Console.WriteLine("  full nodes: " & fullNodes.ToString())
                     Console.WriteLine("  pertinentRoot: " & pertinentRoot.ToString())
@@ -175,7 +175,7 @@ Namespace orthographicembedding
 
                 ' - add l1, ..., lk to the upward embedding
                 embedding(vNumber - 1) = New List(Of Integer)()
-                For Each leaf As orthographicembedding.PQTree In pertinentLeaves
+                For Each leaf As OrthographicEmbedding.PQTree In pertinentLeaves
                     If leaf.nodeIndex = vNumber Then
                         embedding(CInt(vNumber - 1)).Add(nodeParent(leaf))
                     End If
@@ -188,22 +188,22 @@ Namespace orthographicembedding
                 ' - add all the virtual vertices to the vNumber vertices
                 ' Create the new P-node:
                 ' - add all the virtual vertices to the vNumber vertices
-                Dim PNode As orthographicembedding.PQTree = New orthographicembedding.PQTree(vNumber, orthographicembedding.PQTree.P_NODE, Nothing)
+                Dim PNode As OrthographicEmbedding.PQTree = New OrthographicEmbedding.PQTree(vNumber, OrthographicEmbedding.PQTree.P_NODE, Nothing)
                 For j = 0 To graph.Length - 1
                     If graph(vNode)(j) = 1 AndAlso stNumbering(j) > stNumbering(vNode) Then
-                        Dim leaf As orthographicembedding.PQTree = New orthographicembedding.PQTree(stNumbering(j), orthographicembedding.PQTree.LEAF_NODE, PNode)
+                        Dim leaf As OrthographicEmbedding.PQTree = New OrthographicEmbedding.PQTree(stNumbering(j), OrthographicEmbedding.PQTree.LEAF_NODE, PNode)
                         nodeParent(leaf) = stNumbering(vNode)
                     End If
                 Next
-                If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  new P-node will have " & PNode.children.Count.ToString() & " children.")
                 End If
                 If fullParent Is Nothing Then
                     pqTree = PNode
-                    For Each di2 As orthographicembedding.PQTree In directionIndicators
-                        If di2.direction = orthographicembedding.PQTree.DIRECTION_INDICATOR_RIGHT Then
+                    For Each di2 As OrthographicEmbedding.PQTree In directionIndicators
+                        If di2.direction = OrthographicEmbedding.PQTree.DIRECTION_INDICATOR_RIGHT Then
                             '                        if (di2.direction == PQTree.DIRECTION_INDICATOR_LEFT) {
-                            If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                            If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                                 Console.WriteLine("reversing the upward embedding because of: " & di2.ToString())
                             End If
                             ' reverse the upward embedding:
@@ -218,8 +218,8 @@ Namespace orthographicembedding
                 Else
                     Dim insertionIndex = -1
                     ' fullParent.children.removeAll(directionIndicators);
-                    Dim removedIndicators As IList(Of orthographicembedding.PQTree) = New List(Of orthographicembedding.PQTree)()
-                    For Each tmp As orthographicembedding.PQTree In directionIndicators
+                    Dim removedIndicators As IList(Of OrthographicEmbedding.PQTree) = New List(Of OrthographicEmbedding.PQTree)()
+                    For Each tmp As OrthographicEmbedding.PQTree In directionIndicators
                         If fullParent.recursivelyRemoveLeafNotThroughQNodes(tmp) Then
                             removedIndicators.Add(tmp)
                         Else
@@ -228,16 +228,16 @@ Namespace orthographicembedding
                             End If
                         End If
                     Next
-                    If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Removed direction indicators: " & removedIndicators.ToString())
                     End If
-                    For Each node As orthographicembedding.PQTree In fullNodes
+                    For Each node As OrthographicEmbedding.PQTree In fullNodes
                         Dim idx As Integer = fullParent.children.IndexOf(node)
                         If idx <> -1 AndAlso (insertionIndex = -1 OrElse idx < insertionIndex) Then
                             insertionIndex = idx
                         End If
                     Next
-                    If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Insertion index of new P node is: " & insertionIndex.ToString())
                     End If
 
@@ -249,29 +249,29 @@ Namespace orthographicembedding
                         fullParent.children.Insert(insertionIndex, PNode)
                         PNode.parent = fullParent
                     End If
-                    If pertinentRoot.label <> orthographicembedding.PQTree.LABEL_FULL Then
+                    If pertinentRoot.label <> OrthographicEmbedding.PQTree.LABEL_FULL Then
                         If pertinentRoot IsNot fullParent Then
                             Throw New Exception("pertinentRoot is partial, but doesn't match with fullParent!!!")
                         End If
 
                         ' - add a direction indicator with label 'vNumber' directed from lj to l1 to perinent root
-                        Dim di As orthographicembedding.PQTree = New orthographicembedding.PQTree(vNumber, orthographicembedding.PQTree.DIRECTION_INDICATOR, fullParent)
-                        di.direction = orthographicembedding.PQTree.DIRECTION_INDICATOR_LEFT
-                        If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                        Dim di As OrthographicEmbedding.PQTree = New OrthographicEmbedding.PQTree(vNumber, OrthographicEmbedding.PQTree.DIRECTION_INDICATOR, fullParent)
+                        di.direction = OrthographicEmbedding.PQTree.DIRECTION_INDICATOR_LEFT
+                        If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                             Console.WriteLine("*** direction indicator added ***")
                         End If
 
                         ' - add the rest of direction indicators:
-                        For Each di2 As orthographicembedding.PQTree In removedIndicators
+                        For Each di2 As OrthographicEmbedding.PQTree In removedIndicators
                             di2.parent = fullParent
                             fullParent.children.Add(di2)
                         Next
                     Else
-                        For Each di2 As orthographicembedding.PQTree In directionIndicators
+                        For Each di2 As OrthographicEmbedding.PQTree In directionIndicators
                             If pertinentRoot.contains(di2) Then
-                                If di2.direction = orthographicembedding.PQTree.DIRECTION_INDICATOR_RIGHT Then
+                                If di2.direction = OrthographicEmbedding.PQTree.DIRECTION_INDICATOR_RIGHT Then
                                     '                        if (di2.direction == PQTree.DIRECTION_INDICATOR_LEFT) {
-                                    If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                                         Console.WriteLine("reversing the upward embedding because of: " & di2.ToString())
                                     End If
                                     ' reverse the upward embedding:
@@ -294,7 +294,7 @@ Namespace orthographicembedding
 
                 End If
 
-                If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("PQ-tree after insertion of the new P-node:" & vbLf & pqTree.toString(2, nodeParent))
                 End If
             Next
@@ -320,7 +320,7 @@ Namespace orthographicembedding
                 translated(v) = New List(Of Integer)()
                 If embedding(i) IsNot Nothing Then
                     For Each stNumber In embedding(i)
-                        If orthographicembedding.PlanarEmbedding.DEBUG >= 1 Then
+                        If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
                             Console.WriteLine("translateEmbeddingToNodeIndexes: " & stNumber.ToString() & " -> " & nodeWithNumber(stNumber - 1).ToString())
                         End If
                         translated(v).Add(nodeWithNumber(stNumber - 1))
@@ -351,7 +351,7 @@ Namespace orthographicembedding
             Next
 
             ' since nodes are indexed by st-numbering, passing 'n' means starting with t:
-            orthographicembedding.PlanarEmbedding.DFS(upwardEmbedding, embedding, newNode, n)
+            OrthographicEmbedding.PlanarEmbedding.DFS(upwardEmbedding, embedding, newNode, n)
             '        DFS(embedding, newNode, n);
 
             Return embedding
@@ -365,7 +365,7 @@ Namespace orthographicembedding
                     A(v.Value - 1).Insert(0, y)
                     '                A[v-1].add(y);
                     If newNode(v.Value - 1) Then
-                        orthographicembedding.PlanarEmbedding.DFS(Au, A, newNode, v.Value)
+                        OrthographicEmbedding.PlanarEmbedding.DFS(Au, A, newNode, v.Value)
                     End If
                 Next
             End If
@@ -384,7 +384,7 @@ Namespace orthographicembedding
                     Dim face As List(Of Integer) = New List(Of Integer)()
                     face.Add(v1)
                     face.Add(v2)
-                    orthographicembedding.PlanarEmbedding.getFace(embedding, face)
+                    OrthographicEmbedding.PlanarEmbedding.getFace(embedding, face)
                     ' rotate the face until we have the smallest element first:
                     Dim smallest = -1
                     For Each v As Integer? In face
@@ -425,7 +425,7 @@ Namespace orthographicembedding
             End If
             face.Add(v_next)
             '        getFace(embedding, face, !clockwise);
-            orthographicembedding.PlanarEmbedding.getFace(embedding, face)
+            OrthographicEmbedding.PlanarEmbedding.getFace(embedding, face)
         End Sub
     End Class
 

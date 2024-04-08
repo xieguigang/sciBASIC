@@ -1,4 +1,4 @@
-﻿Namespace util
+﻿Namespace Orthogonal.util
     Public Class Pair(Of T1, T2)
         Public m_a As T1
         Public m_b As T2

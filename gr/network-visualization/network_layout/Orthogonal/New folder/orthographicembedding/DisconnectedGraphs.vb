@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ListExtensions
 
-Namespace orthographicembedding
+Namespace Orthogonal.orthographicembedding
 
 
     ' 

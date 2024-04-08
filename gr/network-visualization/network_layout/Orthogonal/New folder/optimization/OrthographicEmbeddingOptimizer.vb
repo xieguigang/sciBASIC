@@ -11,7 +11,7 @@ Imports util
 '  and open the template in the editor.
 ' 
 
-Namespace optimization
+Namespace Orthogonal.optimization
 
     ''' 
     ''' <summary>
@@ -254,18 +254,18 @@ Namespace optimization
                     If om(x1)(y1) <> 1 Then
                         om(x1)(y1) = idx
                     End If
-                    For Each [next] In path
-                        While x1 <> [next].m_a OrElse y1 <> [next].m_b
-                            If x1 < [next].m_a Then
+                    For Each [Next] In path
+                        While x1 <> [Next].m_a OrElse y1 <> [Next].m_b
+                            If x1 < [Next].m_a Then
                                 x1 += 1
                             End If
-                            If x1 > [next].m_a Then
+                            If x1 > [Next].m_a Then
                                 x1 -= 1
                             End If
-                            If y1 < [next].m_b Then
+                            If y1 < [Next].m_b Then
                                 y1 += 1
                             End If
-                            If y1 > [next].m_b Then
+                            If y1 > [Next].m_b Then
                                 y1 -= 1
                             End If
                             If om(x1)(y1) <> 1 Then

@@ -9,7 +9,7 @@ Imports util
 '  and open the template in the editor.
 ' 
 
-Namespace orthographicembedding
+Namespace Orthogonal.orthographicembedding
 
     ''' 
     ''' <summary>

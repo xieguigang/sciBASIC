@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 '  To change this template file, choose Tools | Templates
 '  and open the template in the editor.
 ' 
-Namespace optimization
+Namespace Orthogonal.optimization
 
     ''' 
     ''' <summary>
