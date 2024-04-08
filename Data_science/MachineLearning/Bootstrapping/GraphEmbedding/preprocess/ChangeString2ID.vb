@@ -1,6 +1,6 @@
-﻿Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 
 Namespace preprocess
 
@@ -19,12 +19,12 @@ Namespace preprocess
 
             Dim line = ""
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, ent.ReadLine())), Nothing)
-                Dim tokens = line.Split(vbTab, True)
+                Dim tokens = line.Split(ascii.Tab)
                 Dim iID As Integer? = Integer.Parse(tokens(0))
                 m_EntityIDMap(tokens(1)) = iID.Value
             End While
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, rel.ReadLine())), Nothing)
-                Dim tokens = line.Split(vbTab, True)
+                Dim tokens = line.Split(ASCII.TAB)
                 Dim iID As Integer? = Integer.Parse(tokens(0))
                 m_RelationIDMap(tokens(1)) = iID.Value
             End While
@@ -38,7 +38,7 @@ Namespace preprocess
 
             Dim line = ""
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, sr.ReadLine())), Nothing)
-                Dim tokens = line.Split(vbTab, True)
+                Dim tokens = line.Split(ASCII.TAB)
                 Dim iHead = m_EntityIDMap(tokens(0))
                 Dim iTail = m_EntityIDMap(tokens(2))
                 Dim iRelation = m_RelationIDMap(tokens(1))

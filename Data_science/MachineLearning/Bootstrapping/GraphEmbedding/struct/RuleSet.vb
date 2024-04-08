@@ -1,5 +1,5 @@
-﻿Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Text
 
 Namespace struct
 
@@ -12,11 +12,11 @@ Namespace struct
             lstRules = New List(Of Rule)()
             Dim line = ""
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
-                Dim tokens = line.Split(vbTab, True)
+                Dim tokens = line.Split(ASCII.TAB)
                 Dim rule As Rule = New Rule()
                 Dim ruleString = tokens(0)
                 rule.conf = Double.Parse(tokens(1))
-                Dim ruleStrings = ruleString.Split(",", True)
+                Dim ruleStrings = ruleString.Split(","c)
                 rule.add(New Relation(Integer.Parse(ruleStrings(ruleStrings.Length - 1)), 1))
                 For i = 0 To ruleStrings.Length - 1 - 1
                     Dim rel = Integer.Parse(ruleStrings(i))

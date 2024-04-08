@@ -1,5 +1,5 @@
-﻿Imports System
-Imports ClassLibrary1.struct
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
+Imports std = System.Math
 
 Namespace complex_NNE
 
@@ -39,7 +39,7 @@ Namespace complex_NNE
             ElseIf x < -10.0 Then
                 y = 0.0
             Else
-                y = 1.0 / (1.0 + Math.Exp(-x))
+                y = 1.0 / (1.0 + std.Exp(-x))
             End If
             Return y
         End Function

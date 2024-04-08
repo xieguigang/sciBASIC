@@ -1,9 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
-Imports ClassLibrary1.struct
-Imports ClassLibrary1.util
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
 
 Namespace complex_NNE_AER
 

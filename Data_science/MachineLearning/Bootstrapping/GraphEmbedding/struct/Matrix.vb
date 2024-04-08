@@ -1,10 +1,8 @@
-﻿Imports ClassLibrary1.util
-Imports Microsoft.VisualBasic.Math
-Imports System
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
-
-
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
+Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Namespace struct
 
@@ -88,7 +86,7 @@ Namespace struct
 
         Public Overridable Sub initializeNunif()
             Dim rd As Random = New Random(123)
-            Dim dBnd = Math.Sqrt(6.0) / Math.Sqrt(iNumberOfRows + iNumberOfColumns)
+            Dim dBnd = std.Sqrt(6.0) / std.Sqrt(iNumberOfRows + iNumberOfColumns)
             For i = 0 To iNumberOfRows - 1
                 For j = 0 To iNumberOfColumns - 1
                     Dim dValue As Double = rd.NextDouble()
@@ -113,10 +111,10 @@ Namespace struct
                 For j = 0 To iNumberOfColumns - 1
                     dNorm += pData(i)(j) * pData(i)(j)
                 Next
-                dNorm = Math.Sqrt(dNorm)
+                dNorm = std.Sqrt(dNorm)
                 If dNorm <> 0.0 Then
                     For j = 0 To iNumberOfColumns - 1
-                        pData(i)(j) *= Math.Min(1.0, 1.0 / dNorm)
+                        pData(i)(j) *= std.Min(1.0, 1.0 / dNorm)
                     Next
                 End If
             Next

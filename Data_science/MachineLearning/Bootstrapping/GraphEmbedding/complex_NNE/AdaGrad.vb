@@ -1,6 +1,5 @@
-﻿
-
-Imports ClassLibrary1.struct
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
+Imports std = System.Math
 
 Namespace complex_NNE
 
@@ -81,7 +80,7 @@ Namespace complex_NNE
                 For j = 0 To Real_MatrixE.columns() - 1
                     Dim dG = Real_MatrixEGradient.get(i, j)
                     Real_MatrixEGSquare.add(i, j, dG * dG)
-                    Dim dH = Math.Sqrt(Real_MatrixEGSquare.get(i, j)) + 0.00000001
+                    Dim dH = std.Sqrt(Real_MatrixEGSquare.get(i, j)) + 0.00000001
                     Real_MatrixE.add(i, j, -1.0 * dGamma * dG / dH)
                 Next
             Next
@@ -90,7 +89,7 @@ Namespace complex_NNE
                 For j = 0 To Real_MatrixR.columns() - 1
                     Dim dG = Real_MatrixRGradient.get(i, j)
                     Real_MatrixRGSquare.add(i, j, dG * dG)
-                    Dim dH = Math.Sqrt(Real_MatrixRGSquare.get(i, j)) + 0.00000001
+                    Dim dH = std.Sqrt(Real_MatrixRGSquare.get(i, j)) + 0.00000001
                     Real_MatrixR.add(i, j, -1.0 * dGamma * dG / dH)
                 Next
             Next
@@ -99,7 +98,7 @@ Namespace complex_NNE
                 For j = 0 To Imag_MatrixE.columns() - 1
                     Dim dG = Imag_MatrixEGradient.get(i, j)
                     Imag_MatrixEGSquare.add(i, j, dG * dG)
-                    Dim dH = Math.Sqrt(Imag_MatrixEGSquare.get(i, j)) + 0.00000001
+                    Dim dH = std.Sqrt(Imag_MatrixEGSquare.get(i, j)) + 0.00000001
                     Imag_MatrixE.add(i, j, -1.0 * dGamma * dG / dH)
 
                 Next
@@ -109,7 +108,7 @@ Namespace complex_NNE
                 For j = 0 To Imag_MatrixR.columns() - 1
                     Dim dG = Imag_MatrixRGradient.get(i, j)
                     Imag_MatrixRGSquare.add(i, j, dG * dG)
-                    Dim dH = Math.Sqrt(Imag_MatrixRGSquare.get(i, j)) + 0.00000001
+                    Dim dH = std.Sqrt(Imag_MatrixRGSquare.get(i, j)) + 0.00000001
                     Imag_MatrixR.add(i, j, -1.0 * dGamma * dG / dH)
                 Next
             Next

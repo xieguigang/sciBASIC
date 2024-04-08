@@ -1,8 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
-Imports ClassLibrary1.util
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace struct
 
@@ -78,7 +77,7 @@ Namespace struct
                 Dim i As Integer = pTriple(iID).head()
                 Dim j As Integer = pTriple(iID).tail()
                 Dim k As Integer = pTriple(iID).relation()
-                tmpMap(NextDouble) = New Triple(i, j, k)
+                tmpMap(randf.NextDouble) = New Triple(i, j, k)
             Next
 
             pTriple = New List(Of Triple)()

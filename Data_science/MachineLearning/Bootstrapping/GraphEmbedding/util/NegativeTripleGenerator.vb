@@ -1,6 +1,5 @@
-﻿Imports System.Collections.Generic
-Imports ClassLibrary1.struct
-
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace util
 
@@ -26,7 +25,7 @@ Namespace util
                 Dim iNegHead = iPosHead
                 Dim NegativeTriple As Triple = New Triple(iNegHead, iPosTail, iPosRelation)
                 While iNegHead = iPosHead
-                    iNegHead = CInt(NextDouble * iNumberOfEntities)
+                    iNegHead = CInt(randf.NextDouble * iNumberOfEntities)
                     NegativeTriple = New Triple(iNegHead, iPosTail, iPosRelation)
                 End While
                 NegativeTripleSet.Add(NegativeTriple)
@@ -46,7 +45,7 @@ Namespace util
                 Dim iNegTail = iPosTail
                 Dim NegativeTriple As Triple = New Triple(iPosHead, iNegTail, iPosRelation)
                 While iNegTail = iPosTail
-                    iNegTail = CInt(NextDouble * iNumberOfEntities)
+                    iNegTail = CInt(randf.NextDouble * iNumberOfEntities)
                     NegativeTriple = New Triple(iPosHead, iNegTail, iPosRelation)
                 End While
                 NegativeTripleSet.Add(NegativeTriple)
@@ -63,7 +62,7 @@ Namespace util
             Dim iNegRelation = iPosRelation
             Dim NegativeTriple As Triple = New Triple(iPosHead, iPosTail, iNegRelation)
             While iNegRelation = iPosRelation
-                iNegRelation = CInt(NextDouble * iNumberOfRelation)
+                iNegRelation = CInt(randf.NextDouble * iNumberOfRelation)
                 NegativeTriple = New Triple(iPosHead, iPosTail, iNegRelation)
             End While
             Return NegativeTriple

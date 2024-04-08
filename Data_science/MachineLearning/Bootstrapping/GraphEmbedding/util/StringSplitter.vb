@@ -13,7 +13,7 @@ Namespace util
                 original = original.Replace(separator_char(i), separator_char(0))
             Next
             original = r.Replace(original, "")
-            Return original.Split(separator.Substring(0, 1), True)
+            Return original.Split(CChar(separator.Substring(0, 1)))
         End Function
 
         Public Shared Function RemoveEmptyEntries(original As String()) As String()

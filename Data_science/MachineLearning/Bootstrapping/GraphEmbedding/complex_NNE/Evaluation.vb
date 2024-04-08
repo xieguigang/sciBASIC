@@ -1,5 +1,4 @@
-﻿Imports System.Collections.Generic
-Imports ClassLibrary1.struct
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 
 Namespace complex_NNE
 

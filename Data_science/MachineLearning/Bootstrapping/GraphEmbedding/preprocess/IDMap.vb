@@ -1,6 +1,6 @@
-﻿Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Text
 
 Namespace preprocess
 
@@ -15,7 +15,7 @@ Namespace preprocess
 
             Dim line = ""
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, sr.ReadLine())), Nothing)
-                Dim tokens = line.Split(vbTab, True)
+                Dim tokens = line.Split(ASCII.TAB)
                 Dim strHead = tokens(0)
                 Dim strRelation = tokens(1)
                 Dim strTail = tokens(2)

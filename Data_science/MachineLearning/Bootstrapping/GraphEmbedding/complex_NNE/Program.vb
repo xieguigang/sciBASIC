@@ -1,5 +1,4 @@
-﻿Imports System
-Imports ClassLibrary1.util
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
 
 Namespace complex_NNE
 
