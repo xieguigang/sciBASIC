@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 
-Namespace complex_NNE
+Namespace GraphEmbedding.complex_NNE
 
     Public Class Evaluation
         Public lstTestTriples As TripleSet

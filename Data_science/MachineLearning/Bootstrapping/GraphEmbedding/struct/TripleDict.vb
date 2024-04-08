@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 
-Namespace struct
+Namespace GraphEmbedding.struct
 
     Public Class TripleDict
         Public pTripleDict As Dictionary(Of String, Boolean) = Nothing

@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 Imports std = System.Math
 
-Namespace complex_R
+Namespace GraphEmbedding.complex_R
 
     Public Class Gradients
         Public curTriple As Triple

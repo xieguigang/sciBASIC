@@ -1,6 +1,6 @@
 ﻿Imports System.Collections.Generic
 
-Namespace struct
+Namespace GraphEmbedding.struct
 
     Public Class Rule
         Private lstRelations As List(Of Relation)

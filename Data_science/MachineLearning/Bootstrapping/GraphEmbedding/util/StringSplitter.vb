@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Text.RegularExpressions
 
-Namespace util
+Namespace GraphEmbedding.util
 
     Public Class StringSplitter
         Private Shared ReadOnly r As Regex = New Regex("(\(x,y\))|(\(y,x\))|(\(y,z\))|(\(x,z\))|(\(z,x\))")

@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Text
 
-Namespace struct
+Namespace GraphEmbedding.struct
 
 
     Public Class RuleSet

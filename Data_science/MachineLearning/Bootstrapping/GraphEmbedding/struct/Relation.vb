@@ -1,4 +1,4 @@
-﻿Namespace struct
+﻿Namespace GraphEmbedding.struct
     Public Class Relation
 
         Private rid_Conflict As Integer

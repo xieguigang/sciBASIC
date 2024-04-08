@@ -2,7 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Text
 
-Namespace preprocess
+Namespace GraphEmbedding.preprocess
 
     Public Class IDMap
         Public m_lstEntities As Dictionary(Of String, Boolean) = Nothing

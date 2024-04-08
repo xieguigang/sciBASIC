@@ -1,4 +1,4 @@
-﻿Namespace struct
+﻿Namespace GraphEmbedding.struct
     Public Class Triple
         Private iHeadEntity As Integer
         Private iTailEntity As Integer

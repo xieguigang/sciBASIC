@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 
-Namespace complex_R
+Namespace GraphEmbedding.complex_R
 
     Public Class RGradients
         Public dRule As Rule

@@ -2,7 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Text
 
-Namespace preprocess
+Namespace GraphEmbedding.preprocess
 
     Public Class ChangeString2ID
         Public m_EntityIDMap As Dictionary(Of String, Integer) = Nothing
@@ -19,7 +19,7 @@ Namespace preprocess
 
             Dim line = ""
             While Not String.ReferenceEquals((CSharpImpl.__Assign(line, ent.ReadLine())), Nothing)
-                Dim tokens = line.Split(ascii.Tab)
+                Dim tokens = line.Split(ASCII.TAB)
                 Dim iID As Integer? = Integer.Parse(tokens(0))
                 m_EntityIDMap(tokens(1)) = iID.Value
             End While

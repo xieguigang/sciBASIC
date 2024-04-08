@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace util
+Namespace GraphEmbedding.util
 
     Public Class NegativeTripleGenerator
         Public PositiveTriple As Triple

@@ -1,7 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 Imports std = System.Math
 
-Namespace complex
+Namespace GraphEmbedding.complex
 
     Public Class AdaGrad
         Public lstPosTriples As List(Of Triple)

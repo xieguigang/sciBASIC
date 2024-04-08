@@ -3,7 +3,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
-Namespace struct
+Namespace GraphEmbedding.struct
 
     Public Class TripleSet
         Private iNumberOfEntities As Integer

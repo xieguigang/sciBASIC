@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
 
 
-Namespace complex_NNE
+Namespace GraphEmbedding.complex_NNE
 
     Public Class ComplEx
         Public m_TrainTriples As TripleSet

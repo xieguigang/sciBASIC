@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
-Namespace struct
+Namespace GraphEmbedding.struct
 
     Public Class Matrix
         Private pData As Double()() = Nothing
