@@ -17,7 +17,7 @@ Namespace Orthogonal
 
         ' This function assumes that the given graph is 2-connected
         Public Shared Function planarEmbedding2Connected(graph As Integer()(), r As Random) As IList(Of Integer)()
-            Dim stNumbering As Integer() = Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, r)
+            Dim stNumbering As Integer() = Orthogonal.STNumbering.stNumbering(graph, r)
 
             Return PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
         End Function

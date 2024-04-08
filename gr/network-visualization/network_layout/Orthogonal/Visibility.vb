@@ -209,7 +209,7 @@ Namespace Orthogonal
             If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Blocks and cutnodes (for a graph with " & graph.Length.ToString() & " nodes)")
             End If
-            Dim tmp As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer))) = Orthogonal.orthographicembedding.Blocks.blocks(graph)
+            Dim tmp As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer))) = Orthogonal.Blocks.blocks(graph)
             Dim blocks = tmp.m_a
             Dim cutNodes = tmp.m_b
             If Visibility.DEBUG >= 1 Then
@@ -435,7 +435,7 @@ Namespace Orthogonal
         Public Overridable Function WVisibility2Connected() As Boolean
             ' 1,2: select (s,t) and generate an st-order. 
             '      Generate the graph D induced by the st-ordering
-            Dim stNumbering As Integer() = Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, r)
+            Dim stNumbering As Integer() = Orthogonal.STNumbering.stNumbering(graph, r)
             If Visibility.DEBUG >= 1 Then
                 ' verify the STNumbering:
                 For i = 0 To stNumbering.Length - 1
@@ -470,9 +470,9 @@ Namespace Orthogonal
 
         Public Overridable Function allPossibleWVisibility2Connected() As IList(Of Visibility)
             Dim l As New List(Of Visibility)()
-            Dim stNumberings As IList(Of Integer()) = Orthogonal.orthographicembedding.STNumbering.allSTNumberings(graph)
+            Dim stNumberings As IList(Of Integer()) = Orthogonal.STNumbering.allSTNumberings(graph)
             For Each stNumbering In stNumberings
-                If Not Orthogonal.orthographicembedding.STNumbering.verifySTNumbering(graph, stNumbering) Then
+                If Not Orthogonal.STNumbering.verifySTNumbering(graph, stNumbering) Then
                     Throw New Exception($"Wrong STNumbering! {stNumbering.GetJson()}")
                 End If
                 Dim v As New Visibility(Me)
