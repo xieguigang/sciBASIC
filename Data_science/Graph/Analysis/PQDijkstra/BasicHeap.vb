@@ -1,66 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::1426d0576106690256e975422c591c9d, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\BasicHeap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 57
-    ' Comment Lines: 2
-    '   Blank Lines: 13
-    '     File Size: 2.15 KB
+' Summaries:
 
 
-    '     Class BasicHeap
-    ' 
-    '         Properties: Count
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Pop
-    ' 
-    '         Sub: Push
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 57
+' Comment Lines: 2
+'   Blank Lines: 13
+'     File Size: 2.15 KB
+
+
+'     Class BasicHeap
+' 
+'         Properties: Count
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Pop
+' 
+'         Sub: Push
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 'by Tolga Birdal
-
-Imports System.Collections
-Imports System.Collections.Generic
-Imports System.Text
 
 Namespace Dijkstra.PQDijkstra
 
