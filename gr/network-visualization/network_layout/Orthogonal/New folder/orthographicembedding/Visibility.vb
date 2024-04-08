@@ -343,7 +343,8 @@ Namespace Orthogonal.orthographicembedding
                                 Dim miny As Double = 0, maxy As Double = 0
                                 For j As Integer = 0 To bv.horizontal_y.Length - 1
                                     If j = 0 Then
-                                        miny = CSharpImpl.__Assign(maxy, bv.horizontal_y(j))
+                                        maxy = bv.horizontal_y(j)
+                                        miny = bv.horizontal_y(j)
                                         minx = bv.horizontal_x1(j)
                                         maxx = bv.horizontal_x2(j)
                                     Else
@@ -676,7 +677,8 @@ Namespace Orthogonal.orthographicembedding
                         ' System.out.println(v + " considering edge " + edge);
                         If first Then
                             first = False
-                            horizontal_x1(v) = CSharpImpl.__Assign(horizontal_x2(v), vertical_x(edge))
+                            horizontal_x2(v) = vertical_x(edge)
+                            horizontal_x1(v) = vertical_x(edge)
                         Else
                             If vertical_x(edge) < horizontal_x1(v) Then
                                 horizontal_x1(v) = vertical_x(edge)
@@ -1028,15 +1030,6 @@ Namespace Orthogonal.orthographicembedding
 
             Return True
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
-
     End Class
 
 End Namespace
