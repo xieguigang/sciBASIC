@@ -13,12 +13,22 @@ Namespace Orthogonal
     ''' 
     ''' Orthographic Graph Embedder (OGE) v1.1 by Santiago Ontañón (2016-2017)  
     '''
-    ''' This tool computes an orthographic embedding of a plannar input graph. Although the tool was originally designed to be part of a procedural-content generation (PCG) module for a game, it is designed to be usable to find orthographic embeddings for any planar input graphs.
+    ''' This tool computes an orthographic embedding of a plannar input graph. 
+    ''' Although the tool was originally designed to be part of a procedural-content 
+    ''' generation (PCG) module for a game, it is designed to be usable to find 
+    ''' orthographic embeddings for any planar input graphs.
     '''
-    ''' OGE uses an algorithm that uses st-numberings to construct a weak-visibility representation, and then PQ-trees to generate the orthographic embeddings. If the input graph is plannar, this procedure guarantees that an orthographic embedding without any edges crossing over any other vertices will be found. The algorihtms implemented in this package were adapted from the following papers:  
+    ''' OGE uses an algorithm that uses st-numberings to construct a weak-visibility
+    ''' representation, and then PQ-trees to generate the orthographic embeddings. 
+    ''' If the input graph is plannar, this procedure guarantees that an orthographic
+    ''' embedding without any edges crossing over any other vertices will be found. 
+    ''' The algorihtms implemented in this package were adapted from the following 
+    ''' papers:  
+    ''' 
     ''' - S. Even and R. E. Tarjan, "Computing an st-numbering", Theoret. Comput. Sci. 2, (1976), 339-344.  
     ''' - Tamassia, Roberto, and Ioannis G. Tollis. "Planar Grid Embedding in Linear Time"  
-    ''' - Tamassia, Roberto, and Ioannis G. Tollis. "A unified approach to visibility representations of planar graphs." Discrete &amp; Computational Geometry 1.4 (1986): 321-341.  
+    ''' - Tamassia, Roberto, and Ioannis G. Tollis. "A unified approach to visibility representations 
+    '''   of planar graphs." Discrete &amp; Computational Geometry 1.4 (1986): 321-341.  
     '''
     ''' Example usage: java -classpath OGE.jar Main data/graph1 oe1.txt -png:oe1.png  
     '''
@@ -27,14 +37,17 @@ Namespace Orthogonal
     ''' - output-file: the desired output filename  
     ''' - Options:  
     '''   - -output:[type] : the type of output desired, which can be:  
-    '''     - txt (default): a text file with the connectivity matrix, and then a list of vertices, with their mapping to the original vertices, and their coordinates in the orthographic embedding. 
-    '''     (more output types might be added in the future)  
+    '''     - txt (default): a text file with the connectivity matrix, and then a list of vertices,
+    '''       with their mapping to the original vertices, and their coordinates in the orthographic embedding. 
+    '''      (more output types might be added in the future)  
     '''   - -png:filename : saves a graphical version of the output as a .png file  
     '''   - -simplify:true/false : defaults to true, applies a filter to try to reduce unnecessary auxiliary vertices.  
     '''   - -optimize:true/false : defaults to true, postprocesses the output to try to make it more compact.  
     '''   - -rs:XXX : specifies the random seed for the random number generator.
     '''
-    ''' For example, providing this input graph (included as an example in the "examples" folder as "graph2.txt"), where a graph is represented as the adjacency matrix between each pair of vertices ("0" is no edge and "1" is edge):  
+    ''' For example, providing this input graph (included as an example in the "examples"
+    ''' folder as "graph2.txt"), where a graph is represented as the adjacency matrix between 
+    ''' each pair of vertices ("0" is no edge and "1" is edge):  
     '''
     ''' ```
     ''' 0,1,0,0,0,0,0,0,0,1,1  
@@ -50,13 +63,19 @@ Namespace Orthogonal
     ''' 1,0,0,0,0,0,0,0,0,1,0  
     ''' ```
     ''' 
-    ''' The program generates an orthographic embedding that looks like this (where the large vertices with numbers in them represent the original vertices of the input graph, and the smaller vertices are auxiliary vertices that had to be added in order to generate the projection, assuming that edges cannot have "elbows"):  
+    ''' The program generates an orthographic embedding that looks like this (where the large 
+    ''' vertices with numbers in them represent the original vertices of the input graph, 
+    ''' and the smaller vertices are auxiliary vertices that had to be added in order to 
+    ''' generate the projection, assuming that edges cannot have "elbows"):  
     '''
     ''' ![graph2 png output](examples/oe2.png)
     '''
     ''' The output embedding is saved in a text file that contains:
-    ''' - First the adjacency matrix of the graph (including any auxiliary vertices that might have had to be added)
-    ''' - Second a list of vertices of the new (projected) graph, with the index of the original node in the input graph they correspond to (or -1 if the vertex is a new auxiliary vertex), and the x, y coordinates of the vertex in the orthographic embedding.
+    ''' - First the adjacency matrix of the graph (including any auxiliary vertices that might
+    '''   have had to be added)
+    ''' - Second a list of vertices of the new (projected) graph, with the index of the original 
+    '''   node in the input graph they correspond to (or -1 if the vertex is a new auxiliary 
+    '''   vertex), and the x, y coordinates of the vertex in the orthographic embedding.
     ''' 
     ''' @author santi
     ''' </summary>
@@ -64,8 +83,6 @@ Namespace Orthogonal
     ''' https://github.com/santiontanon/OGE
     ''' </remarks>
     Public Class OrthographicEmbedding
-        Public Shared DEBUG As Integer = 0
-
 
         Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean) As OrthographicEmbeddingResult
             Dim n = graph.Length
@@ -114,9 +131,6 @@ Namespace Orthogonal
                     Dim oew As OEElement = sym(oev, embedding)
                     ' Apply T1:
                     If oev.bends >= 1 AndAlso oew.bends >= 1 Then
-                        If DEBUG >= 1 Then
-                            Console.WriteLine("T1: " & v.ToString() & "->" & w.ToString())
-                        End If
                         Dim x As Integer = oev.bends
                         Dim y As Integer = oew.bends
                         Dim buffer1 As Integer = oev.bends
@@ -144,9 +158,6 @@ Namespace Orthogonal
                     End If
                 Next
                 If min > 0 Then
-                    If DEBUG >= 1 Then
-                        Console.WriteLine("T2(1): " & v.ToString())
-                    End If
                     For Each oev As OEElement In embedding(v).embedding
                         oev.bends -= min
                         Dim oew As OEElement = sym(oev, embedding)
@@ -176,9 +187,6 @@ Namespace Orthogonal
                     End If
                 Next
                 If min > 0 Then
-                    If DEBUG >= 1 Then
-                        Console.WriteLine("T2(2): " & v.ToString())
-                    End If
                     For Each oev As OEElement In embedding(v).embedding
                         Dim oew As OEElement = sym(oev, embedding)
                         oew.bends -= min
@@ -221,14 +229,7 @@ Namespace Orthogonal
                                 e2_angle += 4
                             End If
                             If e_angle >= 2 AndAlso oev2.bends >= 1 Then
-                                If DEBUG >= 1 Then
-                                    Console.WriteLine("T3(1): " & v.ToString() & "->" & oev2.dest.ToString())
-                                End If
-                                If DEBUG >= 1 Then
-                                    Console.WriteLine("e: " & v.ToString() & "->" & oev.dest.ToString() & ", e': " & oev2.v.ToString() & "->" & oev2.dest.ToString() & ", angle(e) = " & e_angle.ToString() & ", bends(e') = " & oev2.bends.ToString())
-                                End If
                                 Dim m As Integer = std.Min(e_angle - 1, oev2.bends)
-
                                 Dim buffer1 As Integer = oev2.angle
                                 Dim buffer2 As Integer = oev2.bends
                                 oev2.angle -= m
@@ -236,12 +237,6 @@ Namespace Orthogonal
                                     oev2.angle += 4
                                 End If
                                 oev2.bends = oev2.bends - m
-                                If DEBUG >= 1 Then
-                                    Console.WriteLine("  result (e'): " & oev2.ToString())
-                                End If
-                                If DEBUG >= 1 Then
-                                    Console.WriteLine("  result (sym(e')): " & sym(oev2, embedding).ToString())
-                                End If
                                 current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                                 If current.sanityCheck(True) Then
                                     tryagain = True
@@ -255,13 +250,8 @@ Namespace Orthogonal
                             If Not tryagain Then
                                 ' Apply T3: (case 2)
                                 Dim oew2 As OEElement = sym(oev2, embedding)
+
                                 If e2_angle >= 2 AndAlso oew2.bends >= 1 Then
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("T3(2): " & v.ToString() & "->" & oev2.dest.ToString())
-                                    End If
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("e: " & v.ToString() & "->" & oev.dest.ToString() & ", e': " & oev2.v.ToString() & "->" & oev2.dest.ToString() & ", angle(e') = " & e2_angle.ToString() & ", bends(e') = " & oev2.bends.ToString())
-                                    End If
                                     Dim m As Integer = std.Min(e2_angle - 1, oew2.bends)
 
                                     Dim buffer1 As Integer = oev2.angle
@@ -271,12 +261,6 @@ Namespace Orthogonal
                                         oev2.angle -= 4
                                     End If
                                     oew2.bends = oew2.bends - m
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  result (e'): " & oev2.ToString())
-                                    End If
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  result (sym(e')): " & oew2.ToString())
-                                    End If
                                     current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                                     If current.sanityCheck(True) Then
                                         tryagain = True
@@ -314,10 +298,6 @@ Namespace Orthogonal
             Dim x As Double = -1, y As Double = -1
             Dim n = graph.Length
             Dim tolerance = 0.1
-
-            If DEBUG >= 1 Then
-                Console.WriteLine("Generating ortographic embedding for node " & v.ToString() & ":")
-            End If
             Dim edgesOnTop As IList(Of Integer) = New List(Of Integer)()
             Dim edgesBelow As IList(Of Integer) = New List(Of Integer)()
             Dim vertexY As Double = Gamma.horizontal_y(v)
@@ -364,9 +344,7 @@ Namespace Orthogonal
                 x = Gamma.vertical_x(Gamma.edgeIndexes(v)(w))
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (a).1: " & x.ToString() & "," & y.ToString())
-                End If
+
             ElseIf ntop = 0 AndAlso nbelow = 1 Then ' (a)
                 Dim w = edgesBelow(0)
                 Dim e As OEElement = New OEElement(v, w, OEElement.DOWN, 0)
@@ -374,9 +352,7 @@ Namespace Orthogonal
                 x = Gamma.vertical_x(Gamma.edgeIndexes(v)(w))
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (a).2: " & x.ToString() & "," & y.ToString())
-                End If
+
             ElseIf ntop = 2 AndAlso nbelow = 0 Then ' (b)
                 Dim w = edgesOnTop(0)
                 Dim e As OEElement = New OEElement(v, w, OEElement.UP, 0)
@@ -389,13 +365,9 @@ Namespace Orthogonal
                 e = New OEElement(v, w, OEElement.RIGHT, 1)
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (b).1: " & x.ToString() & "," & y.ToString())
-                End If
+
             ElseIf ntop = 1 AndAlso nbelow = 1 Then ' (c)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (c).1")
-                End If
+
                 Dim xtop As Double = Gamma.vertical_x(Gamma.edgeIndexes(v)(edgesOnTop(0)))
                 Dim xbot As Double = Gamma.vertical_x(Gamma.edgeIndexes(v)(edgesBelow(0)))
                 Dim w = edgesOnTop(0)
@@ -443,13 +415,9 @@ Namespace Orthogonal
                 e = New OEElement(v, w, OEElement.LEFT, 1)
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (b).2: " & x.ToString() & "," & y.ToString())
-                End If
+
             ElseIf ntop = 3 AndAlso nbelow = 0 Then ' (d)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (d).1")
-                End If
+
                 Dim w = edgesOnTop(0)
                 Dim e As OEElement = New OEElement(v, w, OEElement.LEFT, 0)
                 e.bendsToAddToSymmetric = 1
@@ -468,9 +436,7 @@ Namespace Orthogonal
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
             ElseIf ntop = 2 AndAlso nbelow = 1 Then ' (e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (e).1")
-                End If
+
                 Dim w0 = edgesOnTop(0)
                 Dim w1 = edgesOnTop(1)
                 Dim w2 = edgesBelow(0)
@@ -495,9 +461,7 @@ Namespace Orthogonal
                     vertexEmbedding.Add(e)
                 End If
             ElseIf ntop = 1 AndAlso nbelow = 2 Then ' (e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (e).2")
-                End If
+
                 Dim w0 = edgesBelow(0)
                 Dim w1 = edgesBelow(1)
                 Dim w2 = edgesOnTop(0)
@@ -524,9 +488,7 @@ Namespace Orthogonal
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
             ElseIf ntop = 0 AndAlso nbelow = 3 Then ' (d)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (d).2")
-                End If
+
                 Dim w = edgesBelow(2)
                 Dim e As OEElement = New OEElement(v, w, OEElement.RIGHT, 0)
                 e.bendsToAddToSymmetric = 1
@@ -545,47 +507,29 @@ Namespace Orthogonal
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
             ElseIf ntop = 4 AndAlso nbelow = 0 Then ' (f)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (f).1")
-                End If
+
                 Dim w = edgesOnTop(0)
                 Dim e As OEElement = New OEElement(v, w, OEElement.LEFT, 0)
                 e.bendsToAddToSymmetric = 1
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("   left:" & w.ToString())
-                End If
-
                 w = edgesOnTop(1)
                 e = New OEElement(v, w, OEElement.UP, 0)
                 y = Gamma.horizontal_y(v)
                 x = Gamma.vertical_x(Gamma.edgeIndexes(v)(w))
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("   up:" & w.ToString())
-                End If
-
                 w = edgesOnTop(2)
                 e = New OEElement(v, w, OEElement.RIGHT, 1)
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("   right:" & w.ToString())
-                End If
 
                 w = edgesOnTop(3)
                 e = New OEElement(v, w, OEElement.DOWN, 2)
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("   down:" & w.ToString())
-                End If
+
             ElseIf ntop = 3 AndAlso nbelow = 1 Then ' (g)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (g).1")
-                End If
                 Dim w = edgesOnTop(0)
                 Dim e As OEElement = New OEElement(v, w, OEElement.LEFT, 0)
                 e.bendsToAddToSymmetric = 1
@@ -610,10 +554,6 @@ Namespace Orthogonal
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
             ElseIf ntop = 2 AndAlso nbelow = 2 Then ' (h) or (i)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (h/i).1")
-                End If
-
                 If Gamma.vertical_x(Gamma.edgeIndexes(v)(edgesOnTop(1))) > Gamma.vertical_x(Gamma.edgeIndexes(v)(edgesBelow(0))) Then
                     Dim w = edgesOnTop(0)
                     Dim e As OEElement = New OEElement(v, w, OEElement.UP, 1)
@@ -669,9 +609,6 @@ Namespace Orthogonal
 
                 End If
             ElseIf ntop = 1 AndAlso nbelow = 3 Then ' (g)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (g).2")
-                End If
                 Dim w = edgesBelow(2)
                 Dim e As OEElement = New OEElement(v, w, OEElement.RIGHT, 0)
                 e.bendsToAddToSymmetric = 1
@@ -696,9 +633,6 @@ Namespace Orthogonal
                 findSymmetric(e, embedding)
                 vertexEmbedding.Add(e)
             ElseIf ntop = 0 AndAlso nbelow = 4 Then ' (f)
-                If DEBUG >= 1 Then
-                    Console.WriteLine("Node " & v.ToString() & " processed with pattern (f).2")
-                End If
                 Dim w = edgesBelow(3)
                 Dim e As OEElement = New OEElement(v, w, OEElement.RIGHT, 0)
                 e.bendsToAddToSymmetric = 1
