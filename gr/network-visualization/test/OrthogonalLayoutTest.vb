@@ -63,7 +63,7 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
-        Call test1()
+        ' Call test1()
         Call test2()
     End Sub
 
