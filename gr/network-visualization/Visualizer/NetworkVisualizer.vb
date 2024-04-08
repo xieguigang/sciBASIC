@@ -298,7 +298,8 @@ Public Module NetworkVisualizer
             Dim radius As Single = nodeRadius
             nodeRadiusMapper = Function() {radius}
         Else
-            nodeRadiusMapper = Function(n) {nodeRadius(n)}
+            Dim func As Func(Of Node, Single) = nodeRadius
+            nodeRadiusMapper = Function(n) {func(n)}
         End If
 
         ' if required hide disconnected nodes, then only the connected node in the network 
