@@ -462,7 +462,7 @@ Namespace Graph
         ''' </summary>
         ''' <param name="u"></param>
         ''' <param name="v"></param>
-        ''' <returns></returns>
+        ''' <returns>get a set of the directed edges</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)

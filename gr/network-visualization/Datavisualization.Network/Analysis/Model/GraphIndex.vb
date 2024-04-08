@@ -133,7 +133,7 @@ Namespace Analysis.Model
         ''' </summary>
         ''' <param name="u"></param>
         ''' <param name="v"></param>
-        ''' <returns></returns>
+        ''' <returns>get a set of the directed edges</returns>
         Public Function GetEdges(u As Node, v As Node) As IEnumerable(Of Edge)
             If u Is Nothing OrElse v Is Nothing OrElse u.Key Is Nothing OrElse v.Key Is Nothing Then
                 Return Nothing

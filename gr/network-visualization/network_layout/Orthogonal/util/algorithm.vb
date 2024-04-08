@@ -25,7 +25,11 @@ Namespace Orthogonal
                         Continue For
                     End If
 
-                    If g.GetEdges(v, node).Any Then
+                    ' 20240408 the graph matrix needs to be a un-directed graph
+                    ' the getEdges function is a kind of function for get directed edges set
+                    ' so we needs a tuple and reverse tuple combine for create a un-directed
+                    ' edge set
+                    If g.GetEdges(v, node).Any OrElse g.GetEdges(node, v).Any Then
                         vr(j) = 1
                     End If
                 Next
