@@ -15,8 +15,6 @@ Namespace Orthogonal
     ''' </summary>
     Public Class OrthographicEmbeddingResult
 
-        Public Shared DEBUG As Integer = 0
-
         Public embedding As OEVertex()
         Public nodeIndexes As Integer()
         Public x As Double()
@@ -33,25 +31,6 @@ Namespace Orthogonal
 
             edges = RectangularArray.Matrix(Of Boolean)(n, n)
         End Sub
-
-        ' 
-        ' 		@Override
-        ' 		public OrthographicEmbeddingResult clone() {
-        ' 		    int n = embedding.length;
-        ' 		    OrthographicEmbeddingResult r = new OrthographicEmbeddingResult(n);
-        ' 		    r.embedding = embedding;    // this part does not need to be cloned
-        ' 		    for(int i = 0;i<n;i++) {
-        ' 		        r.nodeIndexes[i] = nodeIndexes[i];
-        ' 		        r.x[i] = x[i];
-        ' 		        r.y[i] = y[i];
-        ' 		        for(int j = 0;j<n;j++) {
-        ' 		            r.edges[i][j] = edges[i][j];
-        ' 		        }
-        ' 		    }
-        ' 		    
-        ' 		    return r;
-        ' 		}
-        ' 		 
 
         Public Sub New(a_embedding As OEVertex(), visibility As Visibility, fixNonOrthogonal As Boolean)
             embedding = a_embedding
@@ -96,9 +75,7 @@ Namespace Orthogonal
                                 Exit For
                             End If
                         Next
-                        If DEBUG >= 1 Then
-                            Console.WriteLine("Creating conector " & v.ToString() & " -> " & w.ToString() & " with bends " & oev.bends.ToString() & ", " & oew.bends.ToString() & " (" & OEElement.directionNames(oev.angle) & " - " & OEElement.directionNames(oew.angle) & ")")
-                        End If
+
                         If oev.bends = 0 AndAlso oew.bends = 0 Then
                             '                        System.out.println("  edge.");
                             edges(v)(w) = True
@@ -162,9 +139,6 @@ Namespace Orthogonal
                                 nodeIndexes(idx) = -1
                                 nodeIndexes(idx + 1) = -1
                                 If oev.angle = OEElement.LEFT Then
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  connector " & v.ToString() & " to " & w.ToString() & " with 2 bends (LEFT)")
-                                    End If
                                     If intermediate_x > startx Then
                                         x(idx) = startx - separation
                                         y(idx) = starty
@@ -189,26 +163,17 @@ Namespace Orthogonal
                                     idx += 2
                                 ElseIf oev.angle = OEElement.RIGHT Then
                                     If intermediate_x < startx Then
-                                        If DEBUG >= 1 Then
-                                            Console.WriteLine("  connector with 2 bends (RIGHT), case 1")
-                                        End If
                                         x(idx) = startx + separation
                                         y(idx) = starty
                                         x(idx + 1) = startx + separation
                                         y(idx + 1) = endy
                                     Else
                                         If oew.angle = OEElement.RIGHT AndAlso intermediate_x < endx Then
-                                            If DEBUG >= 1 Then
-                                                Console.WriteLine("  connector with 2 bends (RIGHT), case 2")
-                                            End If
                                             x(idx) = endx + separation
                                             y(idx) = starty
                                             x(idx + 1) = endx + separation
                                             y(idx + 1) = endy
                                         Else
-                                            If DEBUG >= 1 Then
-                                                Console.WriteLine("  connector with 2 bends (RIGHT), case 3")
-                                            End If
                                             x(idx) = intermediate_x
                                             y(idx) = starty
                                             x(idx + 1) = intermediate_x
@@ -268,9 +233,6 @@ Namespace Orthogonal
                                 edges(idx + 2)(w) = True
                                 Dim nnewvertices = 3
                                 If oev.angle = OEElement.LEFT Then
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  connector with 3 bends (LEFT)")
-                                    End If
                                     Dim tmpx = intermediate_x
                                     If intermediate_x > startx Then
                                         tmpx = startx - separation
@@ -289,9 +251,6 @@ Namespace Orthogonal
                                         y(idx + 2) = endy - separation
                                     End If
                                 ElseIf oev.angle = OEElement.RIGHT Then
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  connector with 3 bends (RIGHT)")
-                                    End If
                                     Dim tmpx = intermediate_x
                                     If intermediate_x < startx Then
                                         tmpx = startx + separation
@@ -326,9 +285,6 @@ Namespace Orthogonal
                                         End If
                                     End If
                                 Else
-                                    If DEBUG >= 1 Then
-                                        Console.WriteLine("  connector with 3 bends (UP/DOWN)")
-                                    End If
                                     Dim tmpx = intermediate_x
                                     If oew.angle = OEElement.LEFT Then
                                         If intermediate_x > endx Then
@@ -468,7 +424,6 @@ Namespace Orthogonal
         Public Overridable Function fixNonOrthogonalEdge(edge As Pair(Of Integer, Integer), desperate As Boolean) As Boolean
             gridAlign(1.0)
 
-
             Dim v As OEVertex = If(edge.m_a < embedding.Length, embedding(edge.m_a), Nothing)
             Dim w As OEVertex = If(edge.m_b < embedding.Length, embedding(edge.m_b), Nothing)
             Dim oev As OEElement = Nothing
@@ -491,9 +446,6 @@ Namespace Orthogonal
                         Next
                     End While
                 End If
-                If DEBUG >= 1 Then
-                    Console.WriteLine("  looking for " & v.v.ToString() & " -> " & target.ToString())
-                End If
                 If v.v = target Then
                     Throw New Exception("fixNonOrthogonalEdges: looking for " & v.v.ToString() & " -> " & target.ToString())
                 End If
@@ -513,9 +465,6 @@ Namespace Orthogonal
                     visited.Add(w.v)
                     target = edge.m_a
                     While target >= embedding.Length
-                        If DEBUG >= 1 Then
-                            Console.WriteLine("target: " & target.ToString())
-                        End If
                         For i = 0 To edges.Length - 1
                             If (edges(target)(i) OrElse edges(i)(target)) AndAlso Not visited.Contains(i) Then
                                 visited.Add(i)
@@ -524,9 +473,6 @@ Namespace Orthogonal
                             End If
                         Next
                     End While
-                End If
-                If DEBUG >= 1 Then
-                    Console.WriteLine("  looking for " & w.v.ToString() & " -> " & target.ToString())
                 End If
                 If w.v = target Then
                     Throw New Exception("fixNonOrthogonalEdges: looking for " & w.v.ToString() & " -> " & target.ToString())
@@ -537,13 +483,6 @@ Namespace Orthogonal
                         Exit For
                     End If
                 Next
-            End If
-
-            If DEBUG >= 1 Then
-                Console.WriteLine("  v: " & oev.ToString())
-            End If
-            If DEBUG >= 1 Then
-                Console.WriteLine("  w: " & oew.ToString())
             End If
 
             If (oev Is Nothing OrElse (oev.angle = OEElement.LEFT OrElse oev.angle = OEElement.RIGHT)) AndAlso (oew Is Nothing OrElse (oew.angle = OEElement.LEFT OrElse oew.angle = OEElement.RIGHT)) Then
@@ -603,16 +542,10 @@ Namespace Orthogonal
                         For Each tmp In group_w
                             y(tmp) = new_y
                         Next
-                        If DEBUG >= 1 Then
-                            Console.WriteLine("Fixed Y to " & new_y.ToString())
-                        End If
                         Return True
                     End If
                 End If
                 If desperate Then
-                    If DEBUG >= 1 Then
-                        Console.WriteLine("Edge does not fit!")
-                    End If
                     ' restore a bent connector:
                     edges(edge.m_a)(edge.m_b) = False
                     edges(edge.m_b)(edge.m_a) = False
@@ -712,16 +645,11 @@ Namespace Orthogonal
                         For Each tmp In group_w
                             x(tmp) = new_x
                         Next
-                        If DEBUG >= 1 Then
-                            Console.WriteLine("Fixed X to " & new_x.ToString())
-                        End If
+
                         Return True
                     End If
                 End If
                 If desperate Then
-                    If DEBUG >= 1 Then
-                        Console.WriteLine("Edge does not fit!")
-                    End If
                     ' restore a bent connector:
                     edges(edge.m_a)(edge.m_b) = False
                     edges(edge.m_b)(edge.m_a) = False
