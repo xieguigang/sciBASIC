@@ -160,7 +160,7 @@ Module OrthogonalLayoutTest
 
         ' save image:
         'If Not ReferenceEquals(outputPNGName, Nothing) Then
-        savePNG("./demo_layout.png", oe, 10, 10, True)
+        savePNG("./demo_layout.png", oe, 100, 100, True)
         'End If
         Pause()
     End Sub
