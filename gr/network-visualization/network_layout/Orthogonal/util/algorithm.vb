@@ -10,7 +10,11 @@ Namespace Orthogonal
 
         <Extension>
         Public Function AsGraphMatrix(g As NetworkGraph) As Integer()()
-            Dim vlist As Node() = g.vertex.ToArray
+            Return g.AsGraphMatrix(vlist:=g.vertex.ToArray)
+        End Function
+
+        <Extension>
+        Private Function AsGraphMatrix(g As NetworkGraph, vlist As Node()) As Integer()()
             Dim graph As Integer()() = RectangularArray.Matrix(Of Integer)(vlist.Length, vlist.Length)
 
             For i As Integer = 0 To vlist.Length - 1
@@ -45,13 +49,25 @@ Namespace Orthogonal
                                  Optional simplify As Boolean = True,
                                  Optional fixNonOrthogonal As Boolean = True) As NetworkGraph
 
+            Dim vlist As Node() = g.vertex.ToArray
             Dim layout As OrthographicEmbeddingResult = g _
-                .AsGraphMatrix _
+                .AsGraphMatrix(vlist) _
                 .RunLayoutMatrix(
                     numberOfAttempts:=numberOfAttempts,
                     optimize:=optimize,
                     simplify:=simplify,
                     fixNonOrthogonal:=fixNonOrthogonal)
+            Dim index As Integer
+            Dim v As Node
+
+            For i As Integer = 0 To layout.nodeIndexes.Length - 1
+                index = layout.nodeIndexes(i)
+
+                If index > -1 Then
+                    v = vlist(index)
+                    v.data.initialPostion = New FDGVector2(layout(i))
+                End If
+            Next
 
             Return g
         End Function

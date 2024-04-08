@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 ' 
@@ -22,6 +23,12 @@ Namespace Orthogonal
         Public edges As Boolean()()
 
         Public Shared separation As Double = 0.25
+
+        Default Public ReadOnly Property GetLayout(i As Integer) As Vector2D
+            Get
+                Return New Vector2D(x(i), y(i))
+            End Get
+        End Property
 
         Public Sub New(n As Integer)
             embedding = New OEVertex(n - 1) {}

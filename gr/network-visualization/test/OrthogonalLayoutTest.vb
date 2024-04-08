@@ -69,7 +69,7 @@ Module OrthogonalLayoutTest
     Sub test1()
         Dim g As New NetworkGraph
 
-        For Each label As String In {"0", "1", "2", "3", "4", "5"}
+        For Each label As String In {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
             Call g.AddNode(New inode With {.label = label, .data = New NodeData With {.initialPostion = New FDGVector2, .size = {5, 5}}})
         Next
 
@@ -80,6 +80,14 @@ Module OrthogonalLayoutTest
         Call g.AddEdge("3", "4")
         Call g.AddEdge("3", "5")
         Call g.AddEdge("5", "4")
+
+        Call g.AddEdge("2", "6")
+        Call g.AddEdge("6", "7")
+        Call g.AddEdge("7", "8")
+        Call g.AddEdge("8", "9")
+        Call g.AddEdge("9", "5")
+
+        Call g.AddEdge("0", "9")
 
         ' Call Orthogonal.DoLayout(g)
         ' Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
@@ -96,6 +104,9 @@ Module OrthogonalLayoutTest
         ' save image:
         'If Not ReferenceEquals(outputPNGName, Nothing) Then
         savePNG("./demo_layout222.png", oe, 100, 100, True)
+
+
+        g = g.DoLayout
 
         Pause()
     End Sub
