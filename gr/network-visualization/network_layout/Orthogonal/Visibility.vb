@@ -429,41 +429,13 @@ Namespace Orthogonal
             Return subgraph
         End Function
 
-
+        ''' <summary>
+        ''' 1,2: select (s,t) and generate an st-order. 
+        '''   Generate the graph D induced by the st-ordering
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function WVisibility2Connected() As Boolean
-            ' 1,2: select (s,t) and generate an st-order. 
-            '      Generate the graph D induced by the st-ordering
-            Dim stNumbering As Integer() = Orthogonal.STNumbering.stNumbering(graph)
-            If Visibility.DEBUG >= 1 Then
-                ' verify the STNumbering:
-                For i = 0 To stNumbering.Length - 1
-                    Console.Write("Node " & i.ToString() & " -> " & stNumbering(i).ToString() & ": has neighbors")
-                    Dim smaller = False
-                    Dim larger = False
-                    If stNumbering(i) = 1 Then
-                        smaller = True
-                    End If
-                    If stNumbering(i) = stNumbering.Length Then
-                        larger = True
-                    End If
-                    For j = 0 To stNumbering.Length - 1
-                        If graph(i)(j) = 1 OrElse graph(j)(i) = 1 Then
-                            Console.Write(" " & j.ToString())
-                            If stNumbering(j) < stNumbering(i) Then
-                                smaller = True
-                            End If
-                            If stNumbering(j) > stNumbering(i) Then
-                                larger = True
-                            End If
-                        End If
-                    Next
-                    Console.WriteLine("")
-                    If Not smaller OrElse Not larger Then
-                        Throw New Exception("stNumbering is not correct!")
-                    End If
-                Next
-            End If
-            Return WVisibility2Connected(stNumbering)
+            Return WVisibility2Connected(Orthogonal.STNumbering.stNumbering(graph))
         End Function
 
         Public Overridable Function allPossibleWVisibility2Connected() As IList(Of Visibility)
@@ -484,6 +456,11 @@ Namespace Orthogonal
             Dim n = graph.Length
             Dim s = -1
             Dim t = -1
+
+            If stNumbering.IsNullOrEmpty Then
+                Return False
+            End If
+
             For i = 0 To n - 1
                 If stNumbering(i) = 1 Then
                     s = i
@@ -621,7 +598,10 @@ Namespace Orthogonal
 
                 ' 5.2: Set the x-coordinate of arc [s, t] equal to -1.
                 Dim st_index = edgeIndexes(s)(t)
-                vertical_x(st_index) = -1
+
+                If st_index > -1 Then
+                    vertical_x(st_index) = -1
+                End If
 
                 For i = 0 To n - 1
                     For j = 0 To n - 1
@@ -666,10 +646,16 @@ Namespace Orthogonal
                 Next
 
                 ' 5.5: 
-                For v = 0 To n - 1
+                For v As Integer = 0 To n - 1
+                    Dim first As Boolean = True
+
                     horizontal_x1(v) = 0
                     horizontal_x2(v) = 0
-                    Dim first = True
+
+                    If vertexEdges(v) Is Nothing Then
+                        Continue For
+                    End If
+
                     For Each edge In vertexEdges(v)
                         ' System.out.println(v + " considering edge " + edge);
                         If first Then

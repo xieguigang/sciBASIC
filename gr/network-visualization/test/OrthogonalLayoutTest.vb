@@ -88,8 +88,15 @@ Module OrthogonalLayoutTest
         Call g.AddEdge("B", "F")
         Call g.AddEdge("G", "K")
 
-        Call Orthogonal.DoLayout(g)
-        Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
+        ' Call Orthogonal.DoLayout(g)
+        ' Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
+        Dim oe = g.AsGraphMatrix.RunLayoutMatrix
+
+        saveEmbedding(oe)
+
+        ' save image:
+        'If Not ReferenceEquals(outputPNGName, Nothing) Then
+        savePNG("./demo_layout222.png", oe, 100, 100, True)
 
         Pause()
     End Sub

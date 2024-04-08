@@ -66,8 +66,9 @@ Namespace Orthogonal
             Return graph2
         End Function
 
-
-        Public Shared Function mergeDisconnectedEmbeddingsSideBySide(disconnectedEmbeddings As IList(Of OrthographicEmbeddingResult), vertexIndexes As IList(Of IList(Of Integer)), separation As Double) As OrthographicEmbeddingResult
+        Public Shared Function mergeDisconnectedEmbeddingsSideBySide(disconnectedEmbeddings As IList(Of OrthographicEmbeddingResult),
+                                                                     vertexIndexes As IList(Of IList(Of Integer)),
+                                                                     separation As Double) As OrthographicEmbeddingResult
             If disconnectedEmbeddings.Count = 1 Then
                 Return disconnectedEmbeddings(0)
             Else
@@ -75,8 +76,10 @@ Namespace Orthogonal
                 Dim n = 0
 
                 For i = 0 To disconnectedEmbeddings.Count - 1
-                    embeddingSizes(i) = disconnectedEmbeddings(i).nodeIndexes.Length
-                    n += embeddingSizes(i)
+                    If Not disconnectedEmbeddings(i) Is Nothing Then
+                        embeddingSizes(i) = disconnectedEmbeddings(i).nodeIndexes.Length
+                        n += embeddingSizes(i)
+                    End If
                 Next
 
                 Dim aggregated As OrthographicEmbeddingResult = New OrthographicEmbeddingResult(n)

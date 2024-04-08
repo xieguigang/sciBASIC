@@ -423,6 +423,9 @@ Namespace Orthogonal
             Next
             For v = 0 To n - 1
                 If T(v) <> v Then
+                    If T(v) < 0 Then
+                        Continue For
+                    End If
                     treeGraph(T(v))(v) = 1
                 End If
                 ancestors(v)(v) = 1
