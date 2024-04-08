@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.ListExtensions
 Imports util
-
+Imports std = System.Math
 ' 
 '  To change this license header, choose License Headers in Project Properties.
 '  To change this template file, choose Tools | Templates
@@ -105,7 +105,7 @@ Namespace Orthogonal.orthographicembedding
                             If q > 0 Then
                                 A(q) = True
                             End If
-                            lL = Math.Max(lL, d(v) - d(p(z)))
+                            lL = std.Max(lL, d(v) - d(p(z)))
                             If DEBUG >= 2 Then
                                 Console.WriteLine("  L = " & lL.ToString())
                             End If
@@ -165,7 +165,7 @@ Namespace Orthogonal.orthographicembedding
                 End If
             Next
             For Each i In trivialBlocks
-                b(i) = Math.Min(Threading.Interlocked.Increment(nextBlock), nextBlock - 1)
+                b(i) = std.Min(Threading.Interlocked.Increment(nextBlock), nextBlock - 1)
                 ' System.out.println("trivial block!!!");
             Next
 

@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -219,11 +220,11 @@ Namespace Orthogonal.orthographicembedding
                                     edges(idx + 1)(w) = True
                                     idx += 2
                                 Else
-                                    If Math.Abs(startx - endx) < 0.001 Then
+                                    If std.Abs(startx - endx) < 0.001 Then
                                         edges(v)(w) = True
                                     Else
                                         '                                System.out.println(v + " -> " + w + " startx: " + startx + ", endx: " + endx);
-                                        If Math.Abs(intermediate_x - startx) < 0.001 Then
+                                        If std.Abs(intermediate_x - startx) < 0.001 Then
                                             If oew.angle = OEElement.UP Then ' up from the end
                                                 '                                        System.out.println("up from the end");
                                                 x(idx) = startx
@@ -300,7 +301,7 @@ Namespace Orthogonal.orthographicembedding
                                     If oew.angle = OEElement.DOWN Then
                                         x(idx + 1) = tmpx
                                         y(idx + 1) = endy + separation
-                                        If Math.Abs(tmpx - endx) > 0.001 Then
+                                        If std.Abs(tmpx - endx) > 0.001 Then
                                             x(idx + 2) = endx
                                             y(idx + 2) = endy + separation
                                         Else
@@ -313,7 +314,7 @@ Namespace Orthogonal.orthographicembedding
                                     Else
                                         x(idx + 1) = tmpx
                                         y(idx + 1) = endy - separation
-                                        If Math.Abs(tmpx - endx) > 0.001 Then
+                                        If std.Abs(tmpx - endx) > 0.001 Then
                                             x(idx + 2) = endx
                                             y(idx + 2) = endy - separation
                                         Else
@@ -339,7 +340,7 @@ Namespace Orthogonal.orthographicembedding
                                             tmpx = endx + separation
                                         End If
                                     End If
-                                    If Math.Abs(startx - tmpx) > 0.001 Then
+                                    If std.Abs(startx - tmpx) > 0.001 Then
                                         If oev.angle = OEElement.DOWN Then
                                             x(idx) = startx
                                             y(idx) = starty + separation
@@ -554,8 +555,8 @@ Namespace Orthogonal.orthographicembedding
 
                 ' if the ranges overlap, then move them to the center of the overlap:
                 If range_v.m_a <= range_w.m_b AndAlso range_w.m_a <= range_w.m_b Then
-                    Dim overlap_y1 = Math.Max(range_v.m_a, range_w.m_a)
-                    Dim overlap_y2 = Math.Min(range_v.m_b, range_w.m_b)
+                    Dim overlap_y1 = std.Max(range_v.m_a, range_w.m_a)
+                    Dim overlap_y2 = std.Min(range_v.m_b, range_w.m_b)
                     Dim new_y = (overlap_y1 + overlap_y2) / 2
 
                     ' check if the edge would work:
@@ -660,8 +661,8 @@ Namespace Orthogonal.orthographicembedding
 
                 ' if the ranges overlap, then move them to the center of the overlap:
                 If range_v.m_a <= range_w.m_b AndAlso range_w.m_a <= range_w.m_b Then
-                    Dim overlap_x1 = Math.Max(range_v.m_a, range_w.m_a)
-                    Dim overlap_x2 = Math.Min(range_v.m_b, range_w.m_b)
+                    Dim overlap_x1 = std.Max(range_v.m_a, range_w.m_a)
+                    Dim overlap_x2 = std.Min(range_v.m_b, range_w.m_b)
                     Dim new_x = (overlap_x1 + overlap_x2) / 2
 
                     ' check if the edge would work:
@@ -781,7 +782,7 @@ Namespace Orthogonal.orthographicembedding
                 ' find neighbors:
                 For w = 0 To x.Length - 1
                     If edges(v)(w) OrElse edges(w)(v) Then
-                        If Math.Abs(x(w) - x(v)) < 0.01 AndAlso Not nodeGroup.Contains(w) AndAlso Not open.Contains(w) Then
+                        If std.Abs(x(w) - x(v)) < 0.01 AndAlso Not nodeGroup.Contains(w) AndAlso Not open.Contains(w) Then
                             open.Add(w)
                         End If
                     End If
@@ -799,8 +800,8 @@ Namespace Orthogonal.orthographicembedding
             Dim result = wiggleRooms.PopAt(0)
             While wiggleRooms.Count > 0
                 Dim tmp = wiggleRooms.PopAt(0)
-                result.m_a = Math.Max(result.m_a, tmp.m_a)
-                result.m_b = Math.Min(result.m_b, tmp.m_b)
+                result.m_a = std.Max(result.m_a, tmp.m_a)
+                result.m_b = std.Min(result.m_b, tmp.m_b)
             End While
             result.m_a += separation
             result.m_b -= separation
@@ -822,7 +823,7 @@ Namespace Orthogonal.orthographicembedding
                 ' find neighbors:
                 For w = 0 To x.Length - 1
                     If edges(v)(w) OrElse edges(w)(v) Then
-                        If Math.Abs(y(w) - y(v)) < 0.01 AndAlso Not nodeGroup.Contains(w) AndAlso Not open.Contains(w) Then
+                        If std.Abs(y(w) - y(v)) < 0.01 AndAlso Not nodeGroup.Contains(w) AndAlso Not open.Contains(w) Then
                             open.Add(w)
                         End If
                     End If
@@ -842,8 +843,8 @@ Namespace Orthogonal.orthographicembedding
             While wiggleRooms.Count > 0
                 Dim tmp = wiggleRooms.PopAt(0)
 
-                result.m_a = Math.Max(result.m_a, tmp.m_a)
-                result.m_b = Math.Min(result.m_b, tmp.m_b)
+                result.m_a = std.Max(result.m_a, tmp.m_a)
+                result.m_b = std.Min(result.m_b, tmp.m_b)
             End While
             result.m_a += separation
             result.m_b -= separation
@@ -864,7 +865,7 @@ Namespace Orthogonal.orthographicembedding
             Next
             For w = 0 To x.Length - 1
                 If edges(vertex)(w) OrElse edges(w)(vertex) Then
-                    If Math.Abs(y(w) - y(vertex)) < 0.01 Then
+                    If std.Abs(y(w) - y(vertex)) < 0.01 Then
                         If x(w) < x(vertex) - 0.01 Then
                             If x(w) > min Then
                                 min = x(w)
@@ -913,7 +914,7 @@ Namespace Orthogonal.orthographicembedding
 
             For w = 0 To y.Length - 1
                 If edges(vertex)(w) OrElse edges(w)(vertex) Then
-                    If Math.Abs(x(w) - x(vertex)) < 0.01 Then
+                    If std.Abs(x(w) - x(vertex)) < 0.01 Then
                         If y(w) < y(vertex) - 0.01 Then
                             If y(w) > min Then
                                 min = y(w)
@@ -951,7 +952,7 @@ Namespace Orthogonal.orthographicembedding
         Public Overridable Function findFirstNonOrthogonalEdge() As Pair(Of Integer, Integer)
             For i = 0 To edges.Length - 1
                 For j = 0 To edges.Length - 1
-                    If edges(i)(j) AndAlso Math.Abs(x(i) - x(j)) > 0.01 AndAlso Math.Abs(y(i) - y(j)) > 0.01 Then
+                    If edges(i)(j) AndAlso std.Abs(x(i) - x(j)) > 0.01 AndAlso std.Abs(y(i) - y(j)) > 0.01 Then
                         Return New Pair(Of Integer, Integer)(i, j)
                     End If
                 Next
@@ -963,7 +964,7 @@ Namespace Orthogonal.orthographicembedding
             Dim l As IList(Of Pair(Of Integer, Integer)) = New List(Of Pair(Of Integer, Integer))()
             For i = 0 To edges.Length - 1
                 For j = 0 To edges.Length - 1
-                    If edges(i)(j) AndAlso Math.Abs(x(i) - x(j)) > 0.01 AndAlso Math.Abs(y(i) - y(j)) > 0.01 Then
+                    If edges(i)(j) AndAlso std.Abs(x(i) - x(j)) > 0.01 AndAlso std.Abs(y(i) - y(j)) > 0.01 Then
                         l.Add(New Pair(Of Integer, Integer)(i, j))
                     End If
                 Next
@@ -993,7 +994,7 @@ Namespace Orthogonal.orthographicembedding
             Dim threshold = 0.01
             Dim toDelete As IList(Of Double) = New List(Of Double)()
             For i = 0 To xvalues.Count - 1 - 1
-                If Math.Abs(xvalues(i) - xvalues(i + 1)) < threshold Then
+                If std.Abs(xvalues(i) - xvalues(i + 1)) < threshold Then
                     toDelete.Add(xvalues(i + 1))
                 End If
             Next
@@ -1001,7 +1002,7 @@ Namespace Orthogonal.orthographicembedding
             xvalues.RemoveAll(toDelete)
             toDelete.Clear()
             For i = 0 To yvalues.Count - 1 - 1
-                If Math.Abs(yvalues(i) - yvalues(i + 1)) < threshold Then
+                If std.Abs(yvalues(i) - yvalues(i + 1)) < threshold Then
                     toDelete.Add(yvalues(i + 1))
                 End If
             Next
@@ -1023,7 +1024,7 @@ Namespace Orthogonal.orthographicembedding
             Dim best_diff As Double = 0
             Dim i = 0
             For Each d As Double? In l
-                Dim diff = Math.Abs(v - d.Value)
+                Dim diff = std.Abs(v - d.Value)
                 If best = -1 OrElse diff < best_diff Then
                     best = i
                     best_diff = diff
@@ -1036,19 +1037,19 @@ Namespace Orthogonal.orthographicembedding
         Public Overridable Function edgeFits(x1 As Double, y1 As Double, x2 As Double, y2 As Double) As Boolean
             Dim tolerance = 0.01
             Dim tolerance2 = 0.005
-            Dim minx1 = Math.Min(x1, x2) + tolerance
-            Dim maxx1 = Math.Max(x1, x2) - tolerance
-            Dim miny1 = Math.Min(y1, y2) + tolerance
-            Dim maxy1 = Math.Max(y1, y2) - tolerance
+            Dim minx1 = std.Min(x1, x2) + tolerance
+            Dim maxx1 = std.Max(x1, x2) - tolerance
+            Dim miny1 = std.Min(y1, y2) + tolerance
+            Dim maxy1 = std.Max(y1, y2) - tolerance
             Dim isPoint = 0
-            If Math.Abs(x1 - x2) < tolerance Then
-                minx1 = Math.Min(x1, x2) - tolerance2
-                maxx1 = Math.Max(x1, x2) + tolerance2
+            If std.Abs(x1 - x2) < tolerance Then
+                minx1 = std.Min(x1, x2) - tolerance2
+                maxx1 = std.Max(x1, x2) + tolerance2
                 isPoint += 1
             End If
-            If Math.Abs(y1 - y2) < tolerance Then
-                miny1 = Math.Min(y1, y2) - tolerance2
-                maxy1 = Math.Max(y1, y2) + tolerance2
+            If std.Abs(y1 - y2) < tolerance Then
+                miny1 = std.Min(y1, y2) - tolerance2
+                maxy1 = std.Max(y1, y2) + tolerance2
                 isPoint += 1
             End If
             If isPoint >= 2 Then
@@ -1059,19 +1060,19 @@ Namespace Orthogonal.orthographicembedding
                 For j2 = i2 + 1 To edges.Length - 1
                     If edges(i2)(j2) OrElse edges(j2)(i2) Then
                         ' test for intersection:
-                        Dim minx2 = Math.Min(x(i2), x(j2)) + tolerance
-                        Dim maxx2 = Math.Max(x(i2), x(j2)) - tolerance
-                        Dim miny2 = Math.Min(y(i2), y(j2)) + tolerance
-                        Dim maxy2 = Math.Max(y(i2), y(j2)) - tolerance
+                        Dim minx2 = std.Min(x(i2), x(j2)) + tolerance
+                        Dim maxx2 = std.Max(x(i2), x(j2)) - tolerance
+                        Dim miny2 = std.Min(y(i2), y(j2)) + tolerance
+                        Dim maxy2 = std.Max(y(i2), y(j2)) - tolerance
                         Dim isPoint2 = 0
-                        If Math.Abs(x(i2) - x(j2)) < tolerance Then
-                            minx2 = Math.Min(x(i2), x(j2)) - tolerance2
-                            maxx2 = Math.Max(x(i2), x(j2)) + tolerance2
+                        If std.Abs(x(i2) - x(j2)) < tolerance Then
+                            minx2 = std.Min(x(i2), x(j2)) - tolerance2
+                            maxx2 = std.Max(x(i2), x(j2)) + tolerance2
                             isPoint2 += 1
                         End If
-                        If Math.Abs(y(i2) - y(j2)) < tolerance Then
-                            miny2 = Math.Min(y(i2), y(j2)) - tolerance2
-                            maxy2 = Math.Max(y(i2), y(j2)) + tolerance2
+                        If std.Abs(y(i2) - y(j2)) < tolerance Then
+                            miny2 = std.Min(y(i2), y(j2)) - tolerance2
+                            maxy2 = std.Max(y(i2), y(j2)) + tolerance2
                             isPoint2 += 1
                         End If
                         If isPoint2 >= 2 Then
@@ -1091,19 +1092,19 @@ Namespace Orthogonal.orthographicembedding
         Public Overridable Function edgeFitsIgnoring(x1 As Double, y1 As Double, x2 As Double, y2 As Double, l As IList(Of Integer)) As Boolean
             Dim tolerance = 0.01
             Dim tolerance2 = 0.005
-            Dim minx1 = Math.Min(x1, x2) + tolerance
-            Dim maxx1 = Math.Max(x1, x2) - tolerance
-            Dim miny1 = Math.Min(y1, y2) + tolerance
-            Dim maxy1 = Math.Max(y1, y2) - tolerance
+            Dim minx1 = std.Min(x1, x2) + tolerance
+            Dim maxx1 = std.Max(x1, x2) - tolerance
+            Dim miny1 = std.Min(y1, y2) + tolerance
+            Dim maxy1 = std.Max(y1, y2) - tolerance
             Dim isPoint = 0
-            If Math.Abs(x1 - x2) < tolerance Then
-                minx1 = Math.Min(x1, x2) - tolerance2
-                maxx1 = Math.Max(x1, x2) + tolerance2
+            If std.Abs(x1 - x2) < tolerance Then
+                minx1 = std.Min(x1, x2) - tolerance2
+                maxx1 = std.Max(x1, x2) + tolerance2
                 isPoint += 1
             End If
-            If Math.Abs(y1 - y2) < tolerance Then
-                miny1 = Math.Min(y1, y2) - tolerance2
-                maxy1 = Math.Max(y1, y2) + tolerance2
+            If std.Abs(y1 - y2) < tolerance Then
+                miny1 = std.Min(y1, y2) - tolerance2
+                maxy1 = std.Max(y1, y2) + tolerance2
                 isPoint += 1
             End If
             If isPoint >= 2 Then
@@ -1114,19 +1115,19 @@ Namespace Orthogonal.orthographicembedding
                     If edges(i2)(j2) OrElse edges(j2)(i2) Then
                         If Not l.Contains(i2) AndAlso Not l.Contains(j2) Then
                             ' test for intersection:
-                            Dim minx2 = Math.Min(x(i2), x(j2)) + tolerance
-                            Dim maxx2 = Math.Max(x(i2), x(j2)) - tolerance
-                            Dim miny2 = Math.Min(y(i2), y(j2)) + tolerance
-                            Dim maxy2 = Math.Max(y(i2), y(j2)) - tolerance
+                            Dim minx2 = std.Min(x(i2), x(j2)) + tolerance
+                            Dim maxx2 = std.Max(x(i2), x(j2)) - tolerance
+                            Dim miny2 = std.Min(y(i2), y(j2)) + tolerance
+                            Dim maxy2 = std.Max(y(i2), y(j2)) - tolerance
                             Dim isPoint2 = 0
-                            If Math.Abs(x(i2) - x(j2)) < tolerance Then
-                                minx2 = Math.Min(x(i2), x(j2)) - tolerance2
-                                maxx2 = Math.Max(x(i2), x(j2)) + tolerance2
+                            If std.Abs(x(i2) - x(j2)) < tolerance Then
+                                minx2 = std.Min(x(i2), x(j2)) - tolerance2
+                                maxx2 = std.Max(x(i2), x(j2)) + tolerance2
                                 isPoint2 += 1
                             End If
-                            If Math.Abs(y(i2) - y(j2)) < tolerance Then
-                                miny2 = Math.Min(y(i2), y(j2)) - tolerance2
-                                maxy2 = Math.Max(y(i2), y(j2)) + tolerance2
+                            If std.Abs(y(i2) - y(j2)) < tolerance Then
+                                miny2 = std.Min(y(i2), y(j2)) - tolerance2
+                                maxy2 = std.Max(y(i2), y(j2)) + tolerance2
                                 isPoint2 += 1
                             End If
                             If isPoint2 >= 2 Then
@@ -1178,19 +1179,19 @@ Namespace Orthogonal.orthographicembedding
             For i1 = 0 To edges.Length - 1
                 For j1 = i1 + 1 To edges.Length - 1
                     If edges(i1)(j1) OrElse edges(j1)(i1) Then
-                        Dim minx1 = Math.Min(x(i1), x(j1)) + toleranceEdge1
-                        Dim maxx1 = Math.Max(x(i1), x(j1)) - toleranceEdge1
-                        Dim miny1 = Math.Min(y(i1), y(j1)) + toleranceEdge1
-                        Dim maxy1 = Math.Max(y(i1), y(j1)) - toleranceEdge1
+                        Dim minx1 = std.Min(x(i1), x(j1)) + toleranceEdge1
+                        Dim maxx1 = std.Max(x(i1), x(j1)) - toleranceEdge1
+                        Dim miny1 = std.Min(y(i1), y(j1)) + toleranceEdge1
+                        Dim maxy1 = std.Max(y(i1), y(j1)) - toleranceEdge1
                         Dim isPoint = 0
-                        If Math.Abs(x(i1) - x(j1)) < toleranceEdge1 Then
-                            minx1 = Math.Min(x(i1), x(j1)) - toleranceEdge2
-                            maxx1 = Math.Max(x(i1), x(j1)) + toleranceEdge2
+                        If std.Abs(x(i1) - x(j1)) < toleranceEdge1 Then
+                            minx1 = std.Min(x(i1), x(j1)) - toleranceEdge2
+                            maxx1 = std.Max(x(i1), x(j1)) + toleranceEdge2
                             isPoint += 1
                         End If
-                        If Math.Abs(y(i1) - y(j1)) < toleranceEdge1 Then
-                            miny1 = Math.Min(y(i1), y(j1)) - toleranceEdge2
-                            maxy1 = Math.Max(y(i1), y(j1)) + toleranceEdge2
+                        If std.Abs(y(i1) - y(j1)) < toleranceEdge1 Then
+                            miny1 = std.Min(y(i1), y(j1)) - toleranceEdge2
+                            maxy1 = std.Max(y(i1), y(j1)) + toleranceEdge2
                             isPoint += 1
                         End If
                         If isPoint >= 2 Then
@@ -1201,19 +1202,19 @@ Namespace Orthogonal.orthographicembedding
                             For j2 = If(i2 = i1, j1 + 1, i2 + 1) To edges.Length - 1
                                 If edges(i2)(j2) OrElse edges(j2)(i2) Then
                                     ' test for intersection:
-                                    Dim minx2 = Math.Min(x(i2), x(j2)) + toleranceEdge1
-                                    Dim maxx2 = Math.Max(x(i2), x(j2)) - toleranceEdge1
-                                    Dim miny2 = Math.Min(y(i2), y(j2)) + toleranceEdge1
-                                    Dim maxy2 = Math.Max(y(i2), y(j2)) - toleranceEdge1
+                                    Dim minx2 = std.Min(x(i2), x(j2)) + toleranceEdge1
+                                    Dim maxx2 = std.Max(x(i2), x(j2)) - toleranceEdge1
+                                    Dim miny2 = std.Min(y(i2), y(j2)) + toleranceEdge1
+                                    Dim maxy2 = std.Max(y(i2), y(j2)) - toleranceEdge1
                                     Dim isPoint2 = 0
-                                    If Math.Abs(x(i2) - x(j2)) < toleranceEdge1 Then
-                                        minx2 = Math.Min(x(i2), x(j2)) - toleranceEdge2
-                                        maxx2 = Math.Max(x(i2), x(j2)) + toleranceEdge2
+                                    If std.Abs(x(i2) - x(j2)) < toleranceEdge1 Then
+                                        minx2 = std.Min(x(i2), x(j2)) - toleranceEdge2
+                                        maxx2 = std.Max(x(i2), x(j2)) + toleranceEdge2
                                         isPoint2 += 1
                                     End If
-                                    If Math.Abs(y(i2) - y(j2)) < toleranceEdge1 Then
-                                        miny2 = Math.Min(y(i2), y(j2)) - toleranceEdge2
-                                        maxy2 = Math.Max(y(i2), y(j2)) + toleranceEdge2
+                                    If std.Abs(y(i2) - y(j2)) < toleranceEdge1 Then
+                                        miny2 = std.Min(y(i2), y(j2)) - toleranceEdge2
+                                        maxy2 = std.Max(y(i2), y(j2)) + toleranceEdge2
                                         isPoint2 += 1
                                     End If
                                     If isPoint2 >= 2 Then

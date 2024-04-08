@@ -950,7 +950,7 @@ Namespace Orthogonal.orthographicembedding
             Return toString(0, Nothing)
         End Function
 
-        Public Overridable Function toString(nodeParent As Dictionary(Of PQTree, Integer)) As String
+        Public Overloads Function toString(nodeParent As Dictionary(Of PQTree, Integer)) As String
             Return toString(0, nodeParent)
         End Function
 
@@ -963,7 +963,7 @@ Namespace Orthogonal.orthographicembedding
         End Function
 
 
-        Public Overridable Function toString(indents As Integer, nodeParent As Dictionary(Of PQTree, Integer)) As String
+        Public Overloads Function toString(indents As Integer, nodeParent As Dictionary(Of PQTree, Integer)) As String
             If nodeType = PQTree.DIRECTION_INDICATOR Then
                 If direction = PQTree.DIRECTION_INDICATOR_LEFT Then
                     Return indentString(indents) & "direction-indicator-left(" & nodeIndex.ToString() & ")"

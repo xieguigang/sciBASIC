@@ -19,14 +19,14 @@ Namespace Orthogonal.orthographicembedding
 
         ' This function assumes that the given graph is 2-connected
         Public Shared Function planarEmbedding2Connected(graph As Integer()(), r As Random) As IList(Of Integer)()
-            Dim stNumbering As Integer() = OrthographicEmbedding.STNumbering.stNumbering(graph, r)
+            Dim stNumbering As Integer() = Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, r)
 
-            Return OrthographicEmbedding.PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
+            Return PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
         End Function
 
         Public Shared Function planarEmbedding2Connected(graph As Integer()(), stNumbering As Integer()) As IList(Of Integer)()
-            Dim upwardEmbedding As IList(Of Integer)() = OrthographicEmbedding.PlanarEmbedding.planarUpwardEmbedding(graph, stNumbering)
-            Return OrthographicEmbedding.PlanarEmbedding.translateEmbeddingToNodeIndexes(OrthographicEmbedding.PlanarEmbedding.extendUpwardEmbedding(upwardEmbedding), stNumbering)
+            Dim upwardEmbedding As IList(Of Integer)() = PlanarEmbedding.planarUpwardEmbedding(graph, stNumbering)
+            Return PlanarEmbedding.translateEmbeddingToNodeIndexes(PlanarEmbedding.extendUpwardEmbedding(upwardEmbedding), stNumbering)
         End Function
 
         ' This function assumes that the given graph is 2-connected
@@ -57,7 +57,7 @@ Namespace Orthogonal.orthographicembedding
                 End If
             Next
 
-            If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+            If PlanarEmbedding.DEBUG >= 1 Then
                 Console.WriteLine("PQ-tree at the beggining:" & vbLf & pqTree.toString(2, nodeParent))
             End If
 
@@ -65,7 +65,7 @@ Namespace Orthogonal.orthographicembedding
                 Dim vNumber = i + 1
                 Dim vNode = nodeWithNumber(i)
 
-                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                If PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine(vbLf & "- Next is node " & vNode.ToString() & " with st-number " & vNumber.ToString())
                 End If
 
@@ -75,16 +75,16 @@ Namespace Orthogonal.orthographicembedding
                 '    appear consecutively as leaves in the PQ-tree)
                 '   (if the set of nodes with "vNumber" is "S", this operation corresponds to REDUCE(T,S))
                 If Not pqTree.reduce(vNumber) Then
-                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Cannot reduce the PQ-tree!!!")
                     End If
-                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine(pqTree.toString(nodeParent))
                     End If
                     Return Nothing
                 End If
 
-                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                If PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  PQ-tree after reduction:" & vbLf & pqTree.toString(2, nodeParent))
                 End If
 
@@ -165,7 +165,7 @@ Namespace Orthogonal.orthographicembedding
 
                     directionIndicators.RemoveAll(toDelete)
                 End If
-                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                If PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  full parent: " & fullParent.ToString())
                     Console.WriteLine("  full nodes: " & fullNodes.ToString())
                     Console.WriteLine("  pertinentRoot: " & pertinentRoot.ToString())
@@ -195,7 +195,7 @@ Namespace Orthogonal.orthographicembedding
                         nodeParent(leaf) = stNumbering(vNode)
                     End If
                 Next
-                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                If PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("  new P-node will have " & PNode.children.Count.ToString() & " children.")
                 End If
                 If fullParent Is Nothing Then
@@ -203,7 +203,7 @@ Namespace Orthogonal.orthographicembedding
                     For Each di2 As PQTree In directionIndicators
                         If di2.direction = PQTree.DIRECTION_INDICATOR_RIGHT Then
                             '                        if (di2.direction == PQTree.DIRECTION_INDICATOR_LEFT) {
-                            If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                            If PlanarEmbedding.DEBUG >= 1 Then
                                 Console.WriteLine("reversing the upward embedding because of: " & di2.ToString())
                             End If
                             ' reverse the upward embedding:
@@ -228,7 +228,7 @@ Namespace Orthogonal.orthographicembedding
                             End If
                         End If
                     Next
-                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Removed direction indicators: " & removedIndicators.ToString())
                     End If
                     For Each node As PQTree In fullNodes
@@ -237,7 +237,7 @@ Namespace Orthogonal.orthographicembedding
                             insertionIndex = idx
                         End If
                     Next
-                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                    If PlanarEmbedding.DEBUG >= 1 Then
                         Console.WriteLine("Insertion index of new P node is: " & insertionIndex.ToString())
                     End If
 
@@ -257,7 +257,7 @@ Namespace Orthogonal.orthographicembedding
                         ' - add a direction indicator with label 'vNumber' directed from lj to l1 to perinent root
                         Dim di As PQTree = New PQTree(vNumber, PQTree.DIRECTION_INDICATOR, fullParent)
                         di.direction = PQTree.DIRECTION_INDICATOR_LEFT
-                        If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                        If PlanarEmbedding.DEBUG >= 1 Then
                             Console.WriteLine("*** direction indicator added ***")
                         End If
 
@@ -271,7 +271,7 @@ Namespace Orthogonal.orthographicembedding
                             If pertinentRoot.contains(di2) Then
                                 If di2.direction = PQTree.DIRECTION_INDICATOR_RIGHT Then
                                     '                        if (di2.direction == PQTree.DIRECTION_INDICATOR_LEFT) {
-                                    If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                                    If PlanarEmbedding.DEBUG >= 1 Then
                                         Console.WriteLine("reversing the upward embedding because of: " & di2.ToString())
                                     End If
                                     ' reverse the upward embedding:
@@ -294,7 +294,7 @@ Namespace Orthogonal.orthographicembedding
 
                 End If
 
-                If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                If PlanarEmbedding.DEBUG >= 1 Then
                     Console.WriteLine("PQ-tree after insertion of the new P-node:" & vbLf & pqTree.toString(2, nodeParent))
                 End If
             Next
@@ -320,7 +320,7 @@ Namespace Orthogonal.orthographicembedding
                 translated(v) = New List(Of Integer)()
                 If embedding(i) IsNot Nothing Then
                     For Each stNumber In embedding(i)
-                        If OrthographicEmbedding.PlanarEmbedding.DEBUG >= 1 Then
+                        If PlanarEmbedding.DEBUG >= 1 Then
                             Console.WriteLine("translateEmbeddingToNodeIndexes: " & stNumber.ToString() & " -> " & nodeWithNumber(stNumber - 1).ToString())
                         End If
                         translated(v).Add(nodeWithNumber(stNumber - 1))
@@ -351,7 +351,7 @@ Namespace Orthogonal.orthographicembedding
             Next
 
             ' since nodes are indexed by st-numbering, passing 'n' means starting with t:
-            OrthographicEmbedding.PlanarEmbedding.DFS(upwardEmbedding, embedding, newNode, n)
+            PlanarEmbedding.DFS(upwardEmbedding, embedding, newNode, n)
             '        DFS(embedding, newNode, n);
 
             Return embedding
@@ -365,7 +365,7 @@ Namespace Orthogonal.orthographicembedding
                     A(v.Value - 1).Insert(0, y)
                     '                A[v-1].add(y);
                     If newNode(v.Value - 1) Then
-                        OrthographicEmbedding.PlanarEmbedding.DFS(Au, A, newNode, v.Value)
+                        PlanarEmbedding.DFS(Au, A, newNode, v.Value)
                     End If
                 Next
             End If
@@ -384,7 +384,7 @@ Namespace Orthogonal.orthographicembedding
                     Dim face As List(Of Integer) = New List(Of Integer)()
                     face.Add(v1)
                     face.Add(v2)
-                    OrthographicEmbedding.PlanarEmbedding.getFace(embedding, face)
+                    PlanarEmbedding.getFace(embedding, face)
                     ' rotate the face until we have the smallest element first:
                     Dim smallest = -1
                     For Each v As Integer? In face
@@ -425,7 +425,7 @@ Namespace Orthogonal.orthographicembedding
             End If
             face.Add(v_next)
             '        getFace(embedding, face, !clockwise);
-            OrthographicEmbedding.PlanarEmbedding.getFace(embedding, face)
+            PlanarEmbedding.getFace(embedding, face)
         End Sub
     End Class
 

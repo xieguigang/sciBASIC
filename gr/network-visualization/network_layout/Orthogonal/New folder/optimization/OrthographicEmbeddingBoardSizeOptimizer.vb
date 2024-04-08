@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -109,7 +110,7 @@ Namespace Orthogonal.optimization
                         ' found one from last0 -> i-1:
                         Dim path = findPathToTheRight(map, last0, i - 1, x + 1)
                         If path IsNot Nothing Then
-                            path.m_a = Math.Min(path.m_a, i - 1 - last0 + 1)
+                            path.m_a = std.Min(path.m_a, i - 1 - last0 + 1)
                             path.m_b.Insert(0, last0)
                             Return path
                         End If
@@ -125,7 +126,7 @@ Namespace Orthogonal.optimization
                 ' found one from last0 -> i-1:
                 Dim path = findPathToTheRight(map, last0, y2, x + 1)
                 If path IsNot Nothing Then
-                    path.m_a = Math.Min(path.m_a, y2 - last0 + 1)
+                    path.m_a = std.Min(path.m_a, y2 - last0 + 1)
                     path.m_b.Insert(0, last0)
                     Return path
                 End If

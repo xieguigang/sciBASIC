@@ -5,6 +5,7 @@
 ' 
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -209,7 +210,7 @@ Namespace Orthogonal.orthographicembedding
             If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Blocks and cutnodes (for a graph with " & graph.Length.ToString() & " nodes)")
             End If
-            Dim tmp As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer))) = blocks(graph)
+            Dim tmp As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer))) = Orthogonal.orthographicembedding.Blocks.blocks(graph)
             Dim blocks = tmp.m_a
             Dim cutNodes = tmp.m_b
             If Visibility.DEBUG >= 1 Then

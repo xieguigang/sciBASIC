@@ -23,6 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Orthogonal\New folder\Main.vb" />
+    <Compile Remove="Orthogonal\New folder\util\SavePNG.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj" />

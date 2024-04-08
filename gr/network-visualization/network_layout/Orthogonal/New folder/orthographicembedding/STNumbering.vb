@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ListExtensions
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -21,7 +22,7 @@ Namespace Orthogonal.orthographicembedding
 
         Public Shared Function stNumbering(graph As Integer()(), r As Random) As Integer()
             '        int n = graph.length;
-            Return OrthographicEmbedding.STNumbering.stNumbering(graph, r.Next(graph.Length), r)
+            Return Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, r.Next(graph.Length), r)
             ' 
             ' 	        if (DEBUG>=1) {
             ' 	            System.out.println("Computing stNumebring of graph:");
@@ -73,7 +74,7 @@ Namespace Orthogonal.orthographicembedding
         Public Shared Function allSTNumberings(graph As Integer()()) As IList(Of Integer())
             Dim l As IList(Of Integer()) = New List(Of Integer())()
             For s = 0 To graph.Length - 1
-                CType(l, List(Of Integer())).AddRange(OrthographicEmbedding.STNumbering.allSTNumberings(graph, s))
+                CType(l, List(Of Integer())).AddRange(Orthogonal.orthographicembedding.STNumbering.allSTNumberings(graph, s))
             Next
             Return l
         End Function
@@ -90,7 +91,7 @@ Namespace Orthogonal.orthographicembedding
                 Return Nothing
             End If
             t = candidates(r.Next(candidates.Count))
-            Return OrthographicEmbedding.STNumbering.stNumbering(graph, s, t)
+            Return Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, s, t)
         End Function
 
         Public Shared Function allSTNumberings(graph As Integer()(), s As Integer) As IList(Of Integer())
@@ -102,7 +103,7 @@ Namespace Orthogonal.orthographicembedding
             Next
             Dim l As IList(Of Integer()) = New List(Of Integer())()
             For Each t In candidates
-                l.Add(OrthographicEmbedding.STNumbering.stNumbering(graph, s, t))
+                l.Add(Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, s, t))
             Next
             Return l
         End Function
@@ -110,7 +111,7 @@ Namespace Orthogonal.orthographicembedding
         Public Shared Function stNumbering(graph As Integer()(), s As Integer, t As Integer) As Integer()
             Dim n = graph.Length
 
-            If OrthographicEmbedding.STNumbering.DEBUG >= 1 Then
+            If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 1 Then
                 Console.WriteLine("Computing stNumebring of graph: (s,t) = (" & s.ToString() & "," & t.ToString() & ")")
                 For i = 0 To graph.Length - 1
                     For j = 0 To graph.Length - 1
@@ -127,16 +128,16 @@ Namespace Orthogonal.orthographicembedding
             Dim lT = New Integer(n - 1) {}
             Dim preorder = New Integer(n - 1) {}
             Dim L = New Integer(n - 1) {}
-            OrthographicEmbedding.STNumbering.depthFirstSpanningTree(graph, treeGraph, ancestors, lT, preorder, L, s, t)
-            If OrthographicEmbedding.STNumbering.DEBUG >= 1 Then
+            Orthogonal.orthographicembedding.STNumbering.depthFirstSpanningTree(graph, treeGraph, ancestors, lT, preorder, L, s, t)
+            If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 1 Then
                 Console.WriteLine("forced (s,t) = (" & s.ToString() & "," & t.ToString() & ")")
             End If
 
             ' Part 3: run the STNUMBER algorithm (part 2 is inside of STNUMBER)
-            Dim stnumbers As Integer() = OrthographicEmbedding.STNumbering.STNUMBER(s, t, graph, treeGraph, ancestors, preorder, L)
+            Dim stnumbers As Integer() = Orthogonal.orthographicembedding.STNumbering.STNUMBER(s, t, graph, treeGraph, ancestors, preorder, L)
 
-            If OrthographicEmbedding.STNumbering.DEBUG >= 1 Then
-                If OrthographicEmbedding.STNumbering.verifySTNumbering(graph, stnumbers) Then
+            If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 1 Then
+                If Orthogonal.orthographicembedding.STNumbering.verifySTNumbering(graph, stnumbers) Then
                     Console.WriteLine("STNumbering: st-numbering is correct!")
                 Else
                     Console.WriteLine("STNumbering: st-numbering has errors!")
@@ -214,13 +215,13 @@ Namespace Orthogonal.orthographicembedding
             While stack.Count > 0
 
                 Dim v = stack.PopAt(stack.Count - 1)
-                If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                     Console.WriteLine("STNUMBER: popped " & v.ToString())
                 End If
 
-                Dim path As IList(Of Integer) = OrthographicEmbedding.STNumbering.PATHFINDER(v, graph, treeGraph, oldEdges, oldNodes, ancestors, preorder, L)
+                Dim path As IList(Of Integer) = Orthogonal.orthographicembedding.STNumbering.PATHFINDER(v, graph, treeGraph, oldEdges, oldNodes, ancestors, preorder, L)
 
-                If OrthographicEmbedding.STNumbering.DEBUG >= 1 AndAlso path IsNot Nothing Then
+                If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 1 AndAlso path IsNot Nothing Then
                     ' verify this is a "simple path" (no repeated vertices):
                     For j = 0 To path.Count - 1
                         For k = j + 1 To path.Count - 1
@@ -233,7 +234,7 @@ Namespace Orthogonal.orthographicembedding
                 If path Is Nothing Then
                     i += 1
                     lStnumber(v) = i
-                    If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                    If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                         Console.WriteLine("STNUMBER: stNumber(" & v.ToString() & ") = " & i.ToString())
                     End If
                 Else
@@ -242,7 +243,7 @@ Namespace Orthogonal.orthographicembedding
                         stack.Add(path(j))
                     Next
                 End If
-                If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                     Console.WriteLine()
                 End If
             End While
@@ -262,7 +263,7 @@ Namespace Orthogonal.orthographicembedding
                 ' 				                       (ancestors[w][v]==1 ? (w + "-*->" + "v"):""));
                 ' 				
                 If Not oldEdges(v)(w) AndAlso graph(v)(w) = 1 AndAlso ancestors(w)(v) = 1 Then
-                    If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                    If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                         Console.WriteLine("* PATHFINDER a)")
                     End If
                     oldEdges(v)(w) = True
@@ -275,7 +276,7 @@ Namespace Orthogonal.orthographicembedding
             ' if there is a new tree edge v->w:
             For w = 0 To n - 1
                 If Not oldEdges(v)(w) AndAlso treeGraph(v)(w) = 1 Then
-                    If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                    If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                         Console.WriteLine("* PATHFINDER b)")
                     End If
                     oldEdges(v)(w) = True
@@ -317,7 +318,7 @@ Namespace Orthogonal.orthographicembedding
             ' if there is a new cycle edge {v,w} with v -*-> w:
             For w = 0 To n - 1
                 If Not oldEdges(v)(w) AndAlso graph(v)(w) = 1 AndAlso treeGraph(v)(w) = 0 AndAlso ancestors(v)(w) = 1 Then
-                    If OrthographicEmbedding.STNumbering.DEBUG >= 2 Then
+                    If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 2 Then
                         Console.WriteLine("* PATHFINDER c)")
                     End If
                     oldEdges(v)(w) = True
@@ -399,10 +400,10 @@ Namespace Orthogonal.orthographicembedding
             stack.Add(pT)
             While stack.Count > 0
                 Dim current = stack.PopAt(0)
-                If OrthographicEmbedding.STNumbering.DEBUG >= 1 Then
+                If Orthogonal.orthographicembedding.STNumbering.DEBUG >= 1 Then
                     Console.WriteLine("  computing preorder: " & current.ToString())
                 End If
-                preorder(current) = Math.Min(Threading.Interlocked.Increment(counter), counter - 1)
+                preorder(current) = std.Min(Threading.Interlocked.Increment(counter), counter - 1)
                 Dim tmp = 0
                 For i = 0 To n - 1
                     If T(i) = current AndAlso i <> current Then

@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -71,8 +70,8 @@ Namespace Orthogonal.orthographicembedding
                         Dim y As Integer = oew.bends
                         Dim buffer1 As Integer = oev.bends
                         Dim buffer2 As Integer = oew.bends
-                        oev.bends = Math.Max(0, x - y)
-                        oew.bends = Math.Max(0, y - x)
+                        oev.bends = std.Max(0, x - y)
+                        oew.bends = std.Max(0, y - x)
                         current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                         If current.sanityCheck(True) Then
                             best = current
@@ -177,7 +176,7 @@ Namespace Orthogonal.orthographicembedding
                                 If DEBUG >= 1 Then
                                     Console.WriteLine("e: " & v.ToString() & "->" & oev.dest.ToString() & ", e': " & oev2.v.ToString() & "->" & oev2.dest.ToString() & ", angle(e) = " & e_angle.ToString() & ", bends(e') = " & oev2.bends.ToString())
                                 End If
-                                Dim m As Integer = Math.Min(e_angle - 1, oev2.bends)
+                                Dim m As Integer = std.Min(e_angle - 1, oev2.bends)
 
                                 Dim buffer1 As Integer = oev2.angle
                                 Dim buffer2 As Integer = oev2.bends
@@ -212,7 +211,7 @@ Namespace Orthogonal.orthographicembedding
                                     If DEBUG >= 1 Then
                                         Console.WriteLine("e: " & v.ToString() & "->" & oev.dest.ToString() & ", e': " & oev2.v.ToString() & "->" & oev2.dest.ToString() & ", angle(e') = " & e2_angle.ToString() & ", bends(e') = " & oev2.bends.ToString())
                                     End If
-                                    Dim m As Integer = Math.Min(e2_angle - 1, oew2.bends)
+                                    Dim m As Integer = std.Min(e2_angle - 1, oew2.bends)
 
                                     Dim buffer1 As Integer = oev2.angle
                                     Dim buffer2 As Integer = oew2.bends
@@ -351,7 +350,7 @@ Namespace Orthogonal.orthographicembedding
                 Dim w = edgesOnTop(0)
                 y = Gamma.horizontal_y(v)
                 x = (xtop + xbot) / 2
-                If Math.Abs(xtop - xbot) < tolerance Then
+                If std.Abs(xtop - xbot) < tolerance Then
                     Dim e As OEElement = New OEElement(v, w, OEElement.UP, 0)
                     findSymmetric(e, embedding)
                     vertexEmbedding.Add(e)

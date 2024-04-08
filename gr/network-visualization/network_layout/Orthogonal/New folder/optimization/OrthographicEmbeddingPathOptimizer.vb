@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -25,15 +26,6 @@ Namespace Orthogonal.optimization
             Dim n = graph.Length
             Dim change As Boolean
 
-            If DEBUG = 1 Then
-                Try
-                    SavePNG.savePNG("embedding-beforeoptimization.png", o, 32, 32, True)
-                Catch e As Exception
-                    Console.WriteLine(e.ToString())
-                    Console.Write(e.StackTrace)
-                End Try
-            End If
-
             Do
                 change = False
                 '            System.out.println("New optimization round...");
@@ -56,18 +48,6 @@ Namespace Orthogonal.optimization
         End Function
 
         Private Shared Function optimizeVertex(v As Integer, o As OrthographicEmbeddingResult, graph As Integer()(), comparator As EmbeddingComparator, verticesAlreadyConsidered As IList(Of Integer)) As OrthographicEmbeddingResult
-            If Not o.sanityCheck(False) Then
-                Console.WriteLine("Sanity check failed...")
-                Console.WriteLine("Saving image file:")
-                Try
-                    SavePNG.savePNG("befpreOptimizeVertex.png", o, 32, 32, True)
-                Catch e As Exception
-                    Console.WriteLine(e.ToString())
-                    Console.Write(e.StackTrace)
-                End Try
-                Throw New Exception("sanityCheck failed!")
-            End If
-
             ' 1) find the whole path of the vertex 
             '        System.out.println("1) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim pathIndexes As List(Of Integer) = New List(Of Integer)()
@@ -157,7 +137,7 @@ Namespace Orthogonal.optimization
             End If
             For i = 0 To pathIndexes.Count - 1
                 If i > 0 Then
-                    pathLength += CInt(Math.Abs(o.x(pathIndexes(i)) - o.x(pathIndexes(i - 1))) + Math.Abs(o.y(pathIndexes(i)) - o.y(pathIndexes(i - 1))))
+                    pathLength += CInt(std.Abs(o.x(pathIndexes(i)) - o.x(pathIndexes(i - 1))) + std.Abs(o.y(pathIndexes(i)) - o.y(pathIndexes(i - 1))))
                 End If
                 Dim v2 = pathIndexes(i)
                 If i <> 0 AndAlso i <> pathIndexes.Count - 1 AndAlso o.nodeIndexes(v2) <> -1 Then
@@ -198,7 +178,7 @@ Namespace Orthogonal.optimization
                 End If
                 For j = 0 To o.x.Length - 1
                     If o.edges(i)(j) OrElse o.edges(j)(i) Then
-                        If pathIndexes.Contains(i) AndAlso pathIndexes.Contains(j) AndAlso Math.Abs(pathIndexes.IndexOf(i) - pathIndexes.IndexOf(j)) = 1 Then
+                        If pathIndexes.Contains(i) AndAlso pathIndexes.Contains(j) AndAlso std.Abs(pathIndexes.IndexOf(i) - pathIndexes.IndexOf(j)) = 1 Then
                             Continue For
                         End If
                         ' draw path:
