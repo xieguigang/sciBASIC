@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.ListExtensions
-Imports util
 Imports std = System.Math
 ' 
 '  To change this license header, choose License Headers in Project Properties.

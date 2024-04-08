@@ -1,11 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.ListExtensions
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports orthographicembedding
-Imports util
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports Microsoft.VisualBasic.ListExtensions
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
