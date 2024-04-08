@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports OrthographicEmbeddingResult = orthographicembedding.OrthographicEmbeddingResult
-Imports util
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.

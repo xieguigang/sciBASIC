@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.ListExtensions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports orthographicembedding
 Imports util
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -254,7 +256,7 @@ Namespace Orthogonal.optimization
                     If om(x1)(y1) <> 1 Then
                         om(x1)(y1) = idx
                     End If
-                    For Each [Next] In path
+                    For Each [Next] As Pair(Of Integer, Integer) In path
                         While x1 <> [Next].m_a OrElse y1 <> [Next].m_b
                             If x1 < [Next].m_a Then
                                 x1 += 1

@@ -17,13 +17,13 @@ Namespace Orthogonal.orthographicembedding
         Public Shared DEBUG As Integer = 0
 
 
-        Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean, r As Random) As OrthographicEmbedding.OrthographicEmbeddingResult
+        Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean, r As Random) As OrthographicEmbeddingResult
             Dim n = graph.Length
             Dim embedding = New OEVertex(n - 1) {}
 
             ' Algorithm from: "Planar Grid Embedding in Linear Time" Tamasia and Tollis
             ' Step 1: Construct a visibility representation Gamma for the graph
-            Dim Gamma As OrthographicEmbedding.Visibility = New OrthographicEmbedding.Visibility(graph, r)
+            Dim Gamma As New Visibility(graph, r)
             If Not Gamma.WVisibility() Then
                 Return Nothing
             End If
@@ -43,7 +43,7 @@ Namespace Orthogonal.orthographicembedding
                 ' Step 4: Let H' be the orthogonal representation so obtained. 
                 '         Construct from H' a grid embedding for G using the compaction algorithm of Lemma 1        
                 ' (I ignore that, and just provide my own algorihtm for it)
-                Return New OrthographicEmbedding.OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+                Return New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
             End If
         End Function
 
@@ -51,10 +51,10 @@ Namespace Orthogonal.orthographicembedding
         ' Makes simplifications one by one, trying to generate an actual 2d representation, and only consider those for which my simple
         ' 2d algorithm generates graphs that are correct:
 
-        Public Shared Function cautiousSimplification(embedding As OEVertex(), Gamma As OrthographicEmbedding.Visibility, fixNonOrthogonal As Boolean) As OrthographicEmbedding.OrthographicEmbeddingResult
+        Public Shared Function cautiousSimplification(embedding As OEVertex(), Gamma As Visibility, fixNonOrthogonal As Boolean) As OrthographicEmbeddingResult
             Dim n = embedding.Length
-            Dim best As OrthographicEmbedding.OrthographicEmbeddingResult = New OrthographicEmbedding.OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
-            Dim current As OrthographicEmbedding.OrthographicEmbeddingResult = Nothing
+            Dim best As New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+            Dim current As OrthographicEmbeddingResult = Nothing
 
             ' Step 3: Let H be the orthogonal representation of G'. 
             '         Simplify H by means of the bend-stretching transformations
@@ -73,7 +73,7 @@ Namespace Orthogonal.orthographicembedding
                         Dim buffer2 As Integer = oew.bends
                         oev.bends = Math.Max(0, x - y)
                         oew.bends = Math.Max(0, y - x)
-                        current = New OrthographicEmbedding.OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+                        current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                         If current.sanityCheck(True) Then
                             best = current
                         Else
@@ -104,7 +104,7 @@ Namespace Orthogonal.orthographicembedding
                         ' but it's necessary, since I store absolute angles, instead of relative ones
                         oew.angle = (oew.angle + min) Mod 4
                     Next
-                    current = New OrthographicEmbedding.OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+                    current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                     If current.sanityCheck(True) Then
                         best = current
                     Else
@@ -136,7 +136,7 @@ Namespace Orthogonal.orthographicembedding
                         ' but it's necessary, since I store absolute angles, instead of relative ones
                         oev.angle = (oev.angle + min) Mod 4
                     Next
-                    current = New OrthographicEmbedding.OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+                    current = New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
                     If current.sanityCheck(True) Then
                         best = current
                     Else

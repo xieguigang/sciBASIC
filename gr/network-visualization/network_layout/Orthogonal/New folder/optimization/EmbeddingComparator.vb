@@ -3,7 +3,8 @@
 '  To change this template file, choose Tools | Templates
 '  and open the template in the editor.
 ' 
-Imports OrthographicEmbeddingResult = orthographicembedding.OrthographicEmbeddingResult
+
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 
 Namespace Orthogonal.optimization
 

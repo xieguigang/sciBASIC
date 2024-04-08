@@ -1,5 +1,6 @@
 ﻿Imports System
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.ListExtensions
 Imports util
 
@@ -19,7 +20,7 @@ Namespace Orthogonal.orthographicembedding
         Public Shared DEBUG As Integer = 0
 
         Private Shared Function single_node(graph As Integer()()) As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer)))
-            If orthographicembedding.Blocks.DEBUG >= 2 Then
+            If DEBUG >= 2 Then
                 Console.WriteLine("Blocks: special case of a graph with a single node.")
             End If
             ' special case:
@@ -33,7 +34,7 @@ Namespace Orthogonal.orthographicembedding
 
         Public Shared Function blocks(graph As Integer()()) As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer)))
             If graph.Length = 1 Then
-                Return orthographicembedding.Blocks.single_node(graph)
+                Return single_node(graph)
             End If
 
             ' the following code assumes that nodes are numbered 1,2,... (i.e. they start at 1 not at 0!)
@@ -67,7 +68,7 @@ Namespace Orthogonal.orthographicembedding
                 Dim toAddInU As IList(Of Integer) = New List(Of Integer)()
 
                 Dim v = U.PopAt(U.Count - 1) ' get the last element of U
-                If orthographicembedding.Blocks.DEBUG >= 2 Then
+                If DEBUG >= 2 Then
                     Console.WriteLine("  v = " & v.ToString())
                 End If
                 Dim lL = 0
@@ -80,10 +81,10 @@ Namespace Orthogonal.orthographicembedding
                             p(z) = v
                             d(z) = d(v) + 1
                             b(z) = -z
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  p[" & z.ToString() & "] = " & v.ToString())
                             End If
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  (" & z.ToString() & "," & p(z).ToString() & ") = " & b(z).ToString())
                             End If
                         End If
@@ -93,39 +94,39 @@ Namespace Orthogonal.orthographicembedding
                     If graph(v - 1)(z - 1) = 1 Then ' we have to subtract 1, since in 'graph' nodes start from 0
                         If U.Contains(z) Then
                             ' fundamental cycle detected:
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  Cycle: " & v.ToString() & " -> " & z.ToString() & " -> " & p(z).ToString() & " + Q")
                             End If
                             Dim q = b(z)
                             b(z) = v
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  (" & z.ToString() & "," & p(z).ToString() & ") = " & b(z).ToString())
                             End If
                             If q > 0 Then
                                 A(q) = True
                             End If
                             lL = Math.Max(lL, d(v) - d(p(z)))
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  L = " & lL.ToString())
                             End If
                         End If
                     End If
                 Next
                 If lL > 0 Then
-                    If orthographicembedding.Blocks.DEBUG >= 2 Then
+                    If DEBUG >= 2 Then
                         Console.WriteLine("  Consolidating...")
                     End If
                     Dim k = v
                     Dim l = 0
                     While k <> treeroot AndAlso l < lL
-                        If orthographicembedding.Blocks.DEBUG >= 2 Then
+                        If DEBUG >= 2 Then
                             Console.WriteLine("  edge: (" & k.ToString() & "," & p(k).ToString() & ") with b[" & k.ToString() & "]=" & b(k).ToString())
                         End If
                         If b(k) > 0 Then
                             A(b(k)) = True
                         End If
                         b(k) = v
-                        If orthographicembedding.Blocks.DEBUG >= 2 Then
+                        If DEBUG >= 2 Then
                             Console.WriteLine("  (" & k.ToString() & "," & p(k).ToString() & ") = " & b(k).ToString())
                         End If
                         k = p(k)
@@ -134,7 +135,7 @@ Namespace Orthogonal.orthographicembedding
                     For t = 1 To n
                         If b(t) > 0 AndAlso A(b(t)) Then
                             b(t) = v
-                            If orthographicembedding.Blocks.DEBUG >= 2 Then
+                            If DEBUG >= 2 Then
                                 Console.WriteLine("  (" & t.ToString() & "," & p(t).ToString() & ") = " & b(t).ToString())
                             End If
                         End If

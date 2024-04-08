@@ -373,10 +373,10 @@ Namespace Orthogonal.orthographicembedding
                 ' System.out.println("DFST: " + current + " -> " + parent);
                 If T(current) = -1 Then
                     T(current) = parent
-                    For [Next] = graph.Length - 1 To 0 Step -1
+                    For [Next] As Integer = graph.Length - 1 To 0 Step -1
                         If graph(current)([Next]) = 1 Then
                             ' wait, to add it at the end (and make sure it's taken the first)
-                            If [Next]() = s AndAlso current = pT Then
+                            If [Next] = s AndAlso current = pT Then
                             Else
                                 If T([Next]) = -1 Then
                                     stack.Add([Next])

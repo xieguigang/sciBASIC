@@ -1,10 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.ListExtensions
-Imports OrthographicEmbeddingResult = orthographicembedding.OrthographicEmbeddingResult
-Imports util
-Imports SavePNG = util.SavePNG
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -82,14 +78,14 @@ Namespace Orthogonal.optimization
                 Dim current = open.PopAt(0)
                 pathIndexes.Add(current)
                 Dim neighbors As IList(Of Integer) = New List(Of Integer)()
-                For [Next] = 0 To o.edges.Length - 1
+                For [Next] As Integer = 0 To o.edges.Length - 1
                     If o.edges(current)([Next]) OrElse o.edges([Next])(current) Then
                         neighbors.Add([Next])
                     End If
                 Next
 
                 If neighbors.Count = 2 Then
-                    For Each [Next] In neighbors
+                    For Each [Next] As Integer In neighbors
                         If Not open.Contains([Next]) AndAlso Not pathIndexes.Contains([Next]) Then
                             open.Add([Next])
                         End If

@@ -1,4 +1,6 @@
-﻿Imports OrthographicEmbeddingResult = orthographicembedding.OrthographicEmbeddingResult
+﻿
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 
 Namespace Orthogonal.util
 
@@ -48,9 +50,9 @@ Namespace Orthogonal.util
             Dim width As Integer = width_in_cells * cell_width
             Dim height As Integer = height_in_cells * cell_height
 
-            Dim img As Dynamic = Nothing ' new Image(width, height);
+            Dim img As New Bitmap(width, height)
+            Dim g As Graphics
 
-            Dim g As Dynamic = img.Graphics
             ' g.Font = new Font("TimesRoman", Font.PLAIN, fontSize);
             For i = 0 To oe.nodeIndexes.Length - 1
                 For j = 0 To oe.nodeIndexes.Length - 1
