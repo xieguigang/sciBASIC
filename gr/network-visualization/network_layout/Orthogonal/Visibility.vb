@@ -403,7 +403,8 @@ Namespace Orthogonal
                     Next
                 End While
 
-                gridAlign(1.0)
+                Call gridAlign(1.0)
+
                 If Not sanityCheck() Then
                     For i = 0 To n - 1
                         Console.Error.Write("{")

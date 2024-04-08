@@ -68,7 +68,7 @@ Namespace Orthogonal
                 Dim g As Integer()() = DisconnectedGraphs.subgraph(graph, nodeSubset)
                 Dim comparator As New SegmentLengthEmbeddingComparator()
 
-                For attempt = 0 To numberOfAttempts - 1
+                For attempt As Integer = 0 To numberOfAttempts - 1
                     Dim g_oe As OrthographicEmbeddingResult = OrthographicEmbedding.orthographicEmbedding(g, simplify, fixNonOrthogonal)
 
                     If g_oe Is Nothing Then
