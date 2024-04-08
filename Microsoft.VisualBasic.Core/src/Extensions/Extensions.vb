@@ -87,6 +87,8 @@ Imports Microsoft.VisualBasic.Text.Similarity
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports any = Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports System.ComponentModel
+
 
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -117,6 +119,21 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    <Extension>
+    Public Function Description(Of T As Class)(obj As T) As String
+        If Not obj Is Nothing Then
+            Dim desc = obj.GetType.GetCustomAttribute(Of DescriptionAttribute)
+
+            If desc Is Nothing Then
+                Return Nothing
+            Else
+                Return desc.Description
+            End If
+        End If
+
+        Return Nothing
+    End Function
 
     <Extension>
     Public Function Sum(Of T)(v As IEnumerable(Of T), aggregate As Func(Of T, Integer, Double)) As Double

@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
@@ -6,7 +7,12 @@ Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 
 Namespace GraphEmbedding.complex_R
 
-    Public Class ComplEx
+    ''' <summary>
+    ''' ComplEx (R)
+    ''' </summary>
+    <Description("ComplEx (R)")>
+    Public Class ComplEx : Inherits Algorithm
+
         Public m_TrainTriples As TripleSet
         Public m_ValidTriples As TripleSet
         Public m_TestTriples As TripleSet
@@ -44,7 +50,9 @@ Namespace GraphEmbedding.complex_R
         Public Sub New()
         End Sub
 
-        Public Overridable Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriples As String, fnAllTriples As String, fnRules As String)
+        Public Overrides Sub initialization(strNumRelation As String, strNumEntity As String, fnTrainTriples As String, fnValidTriples As String, fnTestTriples As String, fnAllTriples As String, other As Dictionary(Of String, String))
+            Dim fnRules As String = other!rules
+
             m_NumRelation = Integer.Parse(strNumRelation)
             m_NumEntity = Integer.Parse(strNumEntity)
             m_MatrixE_prefix = "model/MatrixE-k" & m_NumFactor.ToString() & "-lmbda" & m_Lambda.ToString("F5") & "-gamma" & m_Gamma.ToString("F5") & "-mu" & m_Mu.ToString("F5") & "-neg" & m_NumNegative.ToString() & "-min_pca" & m_pca.ToString("F5")
@@ -95,7 +103,7 @@ Namespace GraphEmbedding.complex_R
 
         End Sub
 
-        Public Overridable Sub learn()
+        Public Overrides Sub learn()
             Dim PATHLOG As String = "log/log-k" & m_NumFactor.ToString() & "-lmbda" & m_Lambda.ToString("F5") & "-gamma" & m_Gamma.ToString("F5") & "-neg" & m_NumNegative.ToString() & "-mu" & m_Mu.ToString("F5") & "-min_pca" & m_pca.ToString("F5") & ".txt"
             Dim writer As StreamWriter = New StreamWriter(New FileStream(PATHLOG, FileMode.Create, FileAccess.Write), Encoding.UTF8)
 
