@@ -7,7 +7,7 @@ Imports std = System.Math
 '  To change this template file, choose Tools | Templates
 '  and open the template in the editor.
 ' 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
     ''' 
     ''' <summary>

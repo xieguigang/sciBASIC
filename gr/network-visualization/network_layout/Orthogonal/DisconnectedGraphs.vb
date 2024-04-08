@@ -1,8 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.ListExtensions
 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
 
     ' 

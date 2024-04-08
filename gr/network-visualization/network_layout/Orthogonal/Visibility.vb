@@ -5,12 +5,11 @@
 ' 
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
     ''' 
     ''' <summary>

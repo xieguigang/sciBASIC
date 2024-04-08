@@ -8,7 +8,7 @@ Imports std = System.Math
 '  and open the template in the editor.
 ' 
 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
     ''' 
     ''' <summary>

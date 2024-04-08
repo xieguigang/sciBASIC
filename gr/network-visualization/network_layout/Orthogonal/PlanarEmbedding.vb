@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.ListExtensions
+﻿Imports Microsoft.VisualBasic.ListExtensions
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -8,7 +6,7 @@ Imports Microsoft.VisualBasic.ListExtensions
 '  and open the template in the editor.
 ' 
 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
     ''' 
     ''' <summary>

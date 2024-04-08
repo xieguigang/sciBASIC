@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.ListExtensions
 

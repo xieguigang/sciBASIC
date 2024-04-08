@@ -4,8 +4,6 @@
 '  and open the template in the editor.
 ' 
 
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
-
 Namespace Orthogonal.optimization
 
     ''' 

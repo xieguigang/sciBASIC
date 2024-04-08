@@ -1,7 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.ListExtensions
-Imports Microsoft.VisualBasic.IEnumerations
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -9,7 +7,7 @@ Imports Microsoft.VisualBasic.IEnumerations
 '  and open the template in the editor.
 ' 
 
-Namespace Orthogonal.orthographicembedding
+Namespace Orthogonal
 
     ''' 
     ''' <summary>

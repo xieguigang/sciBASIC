@@ -5,7 +5,6 @@
 ' 
 
 
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.orthographicembedding
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 
 Namespace Orthogonal.optimization

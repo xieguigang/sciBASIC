@@ -22,6 +22,7 @@
     <OutputPath>../../../.nuget/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Orthogonal\Main.vb" />
     <Compile Remove="Orthogonal\util\SavePNG.vb" />
   </ItemGroup>
   <ItemGroup>
