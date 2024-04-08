@@ -4,11 +4,10 @@
 '  and open the template in the editor.
 ' 
 
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports util
 
 Namespace Orthogonal.orthographicembedding
 
@@ -63,7 +62,7 @@ Namespace Orthogonal.orthographicembedding
                     End If
                 Next
             Next
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Visibility calculator created for graph with adjacency matrix (n_edges = " & nEdges.ToString() & "):")
                 For i = 0 To graph.Length - 1
                     For j = 0 To graph.Length - 1
@@ -75,12 +74,12 @@ Namespace Orthogonal.orthographicembedding
         End Sub
 
 
-        Public Sub New(v As OrthographicEmbedding.Visibility)
+        Public Sub New(v As Visibility)
             Me.copy(v)
         End Sub
 
 
-        Public Overridable Sub copy(v As OrthographicEmbedding.Visibility)
+        Public Overridable Sub copy(v As Visibility)
             r = v.r
             graph = v.graph
             '        graph = new int[v.graph.length][v.graph[0].length];
@@ -124,32 +123,32 @@ Namespace Orthogonal.orthographicembedding
             Dim xvalues As List(Of Double) = New List(Of Double)()
             Dim yvalues As List(Of Double) = New List(Of Double)()
 
-            For Each Y In horizontal_y
+            For Each Y As Double In horizontal_y
                 If Not yvalues.Contains(Y) Then
                     yvalues.Add(Y)
                 End If
             Next
-            For Each Y In vertical_y1
+            For Each Y As Double In vertical_y1
                 If Not yvalues.Contains(Y) Then
                     yvalues.Add(Y)
                 End If
             Next
-            For Each Y In vertical_y2
+            For Each Y As Double In vertical_y2
                 If Not yvalues.Contains(Y) Then
                     yvalues.Add(Y)
                 End If
             Next
-            For Each X In vertical_x
+            For Each X As Double In vertical_x
                 If Not xvalues.Contains(X) Then
                     xvalues.Add(X)
                 End If
             Next
-            For Each X In horizontal_x1
+            For Each X As Double In horizontal_x1
                 If Not xvalues.Contains(X) Then
                     xvalues.Add(X)
                 End If
             Next
-            For Each X In horizontal_x2
+            For Each X As Double In horizontal_x2
                 If Not xvalues.Contains(X) Then
                     xvalues.Add(X)
                 End If
@@ -207,13 +206,13 @@ Namespace Orthogonal.orthographicembedding
 
         ' W-Visibility algorithm (reference)
         Public Overridable Function WVisibility() As Boolean
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Blocks and cutnodes (for a graph with " & graph.Length.ToString() & " nodes)")
             End If
             Dim tmp As Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer))) = OrthographicEmbedding.Blocks.blocks(graph)
             Dim blocks = tmp.m_a
             Dim cutNodes = tmp.m_b
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 For Each blockID In blocks.Keys
                     Console.WriteLine("block " & blockID.ToString() & ": " & blocks(blockID).ToString())
                 Next
@@ -240,7 +239,7 @@ Namespace Orthogonal.orthographicembedding
                 Dim block1 = blocks(blockID1)
                 Dim blockgraph1 = blockSubgraph(block1)
 
-                Dim block1Visibility As OrthographicEmbedding.Visibility = New OrthographicEmbedding.Visibility(blockgraph1, r)
+                Dim block1Visibility As New Visibility(blockgraph1, r)
                 If Not block1Visibility.WVisibility2Connected() Then
                     Return False
                 End If
@@ -320,9 +319,9 @@ Namespace Orthogonal.orthographicembedding
 
                                 Dim block = blocks(blockID)
                                 Dim blockgraph = blockSubgraph(block)
-                                Dim bv As OrthographicEmbedding.Visibility = New OrthographicEmbedding.Visibility(blockgraph, r)
+                                Dim bv As New Visibility(blockgraph, r)
                                 ' get an st-numbering where s is the cutnode:
-                                Dim blockSTNumbering As Integer() = OrthographicEmbedding.STNumbering.stNumbering(blockgraph, blocks(blockID).IndexOf(c), r)
+                                Dim blockSTNumbering As Integer() = STNumbering.stNumbering(blockgraph, blocks(blockID).IndexOf(c), r)
                                 ' compute the visibility:
                                 If Not bv.WVisibility2Connected(blockSTNumbering) Then
                                     Return False
@@ -334,7 +333,7 @@ Namespace Orthogonal.orthographicembedding
                                 Dim block_leftx = leftx + offset_step * offset
                                 Dim block_rightx = leftx + offset_step * (offset + 0.9)
 
-                                If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                                If Visibility.DEBUG >= 1 Then
                                     Console.WriteLine("W-VISIBILITY2: adding new block at  " & block_leftx.ToString() & " - " & block_rightx.ToString() & " , " & topy.ToString() & " - " & bottomy.ToString())
                                 End If
 
@@ -370,7 +369,7 @@ Namespace Orthogonal.orthographicembedding
                                         End If
                                         horizontal_x1(block(i)) = (bv.horizontal_x1(i) - minx) / (maxx - minx) * (block_rightx - block_leftx) + block_leftx
                                         horizontal_x2(block(i)) = (bv.horizontal_x2(i) - minx) / (maxx - minx) * (block_rightx - block_leftx) + block_leftx
-                                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                                        If Visibility.DEBUG >= 1 Then
                                             Console.WriteLine("W-VISIBILITY2: adding new node " & block(i).ToString())
                                             Console.WriteLine("  " & horizontal_x1(block(i)).ToString() & " - " & horizontal_x2(block(i)).ToString() & "," & horizontal_y(block(i)).ToString())
                                         End If
@@ -388,7 +387,7 @@ Namespace Orthogonal.orthographicembedding
                                         vertical_y1(idx) = bottomy - (bv.vertical_y1(i) - miny) / (maxy - miny) * (bottomy - topy)
                                         vertical_y2(idx) = bottomy - (bv.vertical_y2(i) - miny) / (maxy - miny) * (bottomy - topy)
                                     End If
-                                    If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                                    If Visibility.DEBUG >= 1 Then
                                         Console.WriteLine("W-VISIBILITY2: adding new edge " & block(v1).ToString() & " - " & block(v2).ToString())
                                         Console.WriteLine("  " & vertical_x(idx).ToString() & "," & vertical_y1(idx).ToString() & " - " & vertical_y2(idx).ToString())
                                     End If
@@ -435,8 +434,8 @@ Namespace Orthogonal.orthographicembedding
         Public Overridable Function WVisibility2Connected() As Boolean
             ' 1,2: select (s,t) and generate an st-order. 
             '      Generate the graph D induced by the st-ordering
-            Dim stNumbering As Integer() = OrthographicEmbedding.STNumbering.stNumbering(graph, r)
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            Dim stNumbering As Integer() = Orthogonal.orthographicembedding.STNumbering.stNumbering(graph, r)
+            If Visibility.DEBUG >= 1 Then
                 ' verify the STNumbering:
                 For i = 0 To stNumbering.Length - 1
                     Console.Write("Node " & i.ToString() & " -> " & stNumbering(i).ToString() & ": has neighbors")
@@ -468,14 +467,14 @@ Namespace Orthogonal.orthographicembedding
             Return WVisibility2Connected(stNumbering)
         End Function
 
-        Public Overridable Function allPossibleWVisibility2Connected() As IList(Of OrthographicEmbedding.Visibility)
-            Dim l As IList(Of OrthographicEmbedding.Visibility) = New List(Of OrthographicEmbedding.Visibility)()
-            Dim stNumberings As IList(Of Integer()) = OrthographicEmbedding.STNumbering.allSTNumberings(graph)
+        Public Overridable Function allPossibleWVisibility2Connected() As IList(Of Visibility)
+            Dim l As New List(Of Visibility)()
+            Dim stNumberings As IList(Of Integer()) = Orthogonal.orthographicembedding.STNumbering.allSTNumberings(graph)
             For Each stNumbering In stNumberings
-                If Not OrthographicEmbedding.STNumbering.verifySTNumbering(graph, stNumbering) Then
+                If Not Orthogonal.orthographicembedding.STNumbering.verifySTNumbering(graph, stNumbering) Then
                     Throw New Exception($"Wrong STNumbering! {stNumbering.GetJson()}")
                 End If
-                Dim v As OrthographicEmbedding.Visibility = New OrthographicEmbedding.Visibility(Me)
+                Dim v As New Visibility(Me)
                 v.WVisibility2Connected(stNumbering)
                 l.Add(v)
             Next
@@ -495,11 +494,11 @@ Namespace Orthogonal.orthographicembedding
                 End If
             Next
 
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("WVisibility2Connected: (s,t) = (" & s.ToString() & "," & t.ToString() & ")")
             End If
 
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Graph indexed by stNumbers:")
                 For i = 0 To n - 1
                     Dim v = -1
@@ -525,12 +524,12 @@ Namespace Orthogonal.orthographicembedding
             ' 3: Find a planar representation of D such that the arc [s,t] is on the external face
             '    Use the planar representation to construct a new digraph DStar:
             Dim D_star As Integer()()
-            Dim embedding As IList(Of Integer)() = OrthographicEmbedding.PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
+            Dim embedding As IList(Of Integer)() = PlanarEmbedding.planarEmbedding2Connected(graph, stNumbering)
             If embedding Is Nothing Then
                 Return False
             End If
 
-            Dim faces As IList(Of IList(Of Integer)) = OrthographicEmbedding.PlanarEmbedding.faces(embedding)
+            Dim faces As IList(Of IList(Of Integer)) = PlanarEmbedding.faces(embedding)
             Dim nFaces = faces.Count
 
             If faces.Count = 1 AndAlso n = 2 Then
@@ -575,7 +574,7 @@ Namespace Orthogonal.orthographicembedding
                     End If
                 End If
                 For face2 = face1 + 1 To nFaces - 1
-                    Dim edge As Pair(Of Integer, Integer) = OrthographicEmbedding.Visibility.adjacentFaces(faces(face1), faces(face2))
+                    Dim edge As Pair(Of Integer, Integer) = Visibility.adjacentFaces(faces(face1), faces(face2))
                     If edge IsNot Nothing Then
 
                         If stNumbering(edge.m_a) > stNumbering(edge.m_b) Then
@@ -589,7 +588,7 @@ Namespace Orthogonal.orthographicembedding
             D_star(s_star)(t_star) = 0
             D_star(t_star)(s_star) = 0
 
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("D*: (s*,t*) = (" & s_star.ToString() & "," & t_star.ToString() & ")")
                 For i = 0 To D_star.Length - 1
                     For j = 0 To D_star.Length - 1
@@ -600,7 +599,7 @@ Namespace Orthogonal.orthographicembedding
             End If
             ' 4: Apply the critical path medhod to D* with all arc-lengths equal to 2. 
             '    This gives the function alpha(f) for each vertex f of D*.
-            Dim alpha As Integer() = OrthographicEmbedding.Visibility.criticalPathCosts(D_star)
+            Dim alpha As Integer() = Visibility.criticalPathCosts(D_star)
 
 
             If True Then
@@ -647,7 +646,7 @@ Namespace Orthogonal.orthographicembedding
                                 Next
                                 ' 5.3: ...
                                 vertical_x(idx) = (alpha(face1) + alpha(face2)) / 2
-                                If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                                If Visibility.DEBUG >= 1 Then
                                     Console.WriteLine("Visibility, faces for v segment (" & idx.ToString() & ": " & i.ToString() & "->" & j.ToString() & "): " & face1.ToString() & " , " & face2.ToString() & " -> " & vertical_x(idx).ToString())
                                 End If
                             End If
@@ -733,7 +732,7 @@ Namespace Orthogonal.orthographicembedding
 
             While Q.Count > 0
                 Dim v = Q.PopAt(0)
-                If OrthographicEmbedding.Visibility.DEBUG >= 2 Then
+                If Visibility.DEBUG >= 2 Then
                     Console.WriteLine("criticalPathCosts: " & v.ToString())
                 End If
                 For u = 0 To n - 1
@@ -859,7 +858,7 @@ Namespace Orthogonal.orthographicembedding
 
 
                 If allContacts.Count > System.Math.Max(upContacts.Count, downContacts.Count) Then
-                    If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                    If Visibility.DEBUG >= 1 Then
                         Console.WriteLine("Vertex " & i.ToString() & " might require reorganizing.")
                     End If
 
@@ -867,7 +866,7 @@ Namespace Orthogonal.orthographicembedding
                     If Not alreadyMoved(leftMostUp) AndAlso CInt(vertical_x(leftMostUp)) > CInt(vertical_x(leftMostDown)) Then
                         Dim upx As Integer = vertical_x(leftMostUp)
                         Dim downx As Integer = vertical_x(leftMostDown)
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("  Trying to fix it by moving the leftMostUp over the leftMostDown edge " & leftMostUp.ToString() & " (x = " & upx.ToString() & ")")
                         End If
                         If moveSegment(leftMostUp, upx, downx) Then
@@ -879,7 +878,7 @@ Namespace Orthogonal.orthographicembedding
                     If Not alreadyMoved(leftMostDown) AndAlso CInt(vertical_x(leftMostUp)) < CInt(vertical_x(leftMostDown)) Then
                         Dim upx As Integer = vertical_x(leftMostUp)
                         Dim downx As Integer = vertical_x(leftMostDown)
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("  Trying to fix it by moving the leftMostDown over the leftMostUp edge " & leftMostDown.ToString() & " (x = " & downx.ToString() & ")")
                         End If
                         If moveSegment(leftMostDown, downx, upx) Then
@@ -892,7 +891,7 @@ Namespace Orthogonal.orthographicembedding
                     If Not alreadyMoved(rightMostUp) AndAlso CInt(vertical_x(rightMostUp)) < CInt(vertical_x(rightMostDown)) Then
                         Dim upx As Integer = vertical_x(rightMostUp)
                         Dim downx As Integer = vertical_x(rightMostDown)
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("  Trying to fix it by moving the rightMostUp over the rightMostDown edge " & rightMostUp.ToString() & " (x = " & upx.ToString() & ")")
                         End If
                         If moveSegment(rightMostUp, upx, downx) Then
@@ -904,7 +903,7 @@ Namespace Orthogonal.orthographicembedding
                     If Not alreadyMoved(rightMostDown) AndAlso CInt(vertical_x(rightMostUp)) > CInt(vertical_x(rightMostDown)) Then
                         Dim upx As Integer = vertical_x(rightMostUp)
                         Dim downx As Integer = vertical_x(rightMostDown)
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("  Trying to fix it by moving the rightMostDown over the rightMostUp edge " & rightMostDown.ToString() & " (x = " & downx.ToString() & ")")
                         End If
                         If moveSegment(rightMostDown, downx, upx) Then
@@ -927,7 +926,7 @@ Namespace Orthogonal.orthographicembedding
                 If j <> segIdx Then
                     If vertical_x(j) >= newx - tolerance AndAlso vertical_x(j) <= oldx + tolerance OrElse vertical_x(j) >= oldx - tolerance AndAlso vertical_x(j) <= newx + tolerance Then
                         If vertical_y1(j) + tolerance < vertical_y2(segIdx) AndAlso vertical_y2(j) - tolerance > vertical_y1(segIdx) Then
-                            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                            If Visibility.DEBUG >= 1 Then
                                 Console.WriteLine("Can't because of vertical segment " & j.ToString())
                             End If
                             Return False
@@ -942,7 +941,7 @@ Namespace Orthogonal.orthographicembedding
                 End If
                 If System.Math.Abs(horizontal_y(i) - horizontal_y(edge_n1(segIdx))) < tolerance Then
                     If horizontal_x1(i) + tolerance < horizontal_x2(edge_n1(segIdx)) AndAlso horizontal_x2(i) - tolerance > horizontal_x1(edge_n1(segIdx)) Then
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("Can't because of horizontal segment " & i.ToString())
                         End If
                         Return False
@@ -950,7 +949,7 @@ Namespace Orthogonal.orthographicembedding
                 End If
                 If System.Math.Abs(horizontal_y(i) - horizontal_y(edge_n2(segIdx))) < tolerance Then
                     If horizontal_x1(i) + tolerance < horizontal_x2(edge_n2(segIdx)) AndAlso horizontal_x2(i) - tolerance > horizontal_x1(edge_n2(segIdx)) Then
-                        If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+                        If Visibility.DEBUG >= 1 Then
                             Console.WriteLine("Can't because of horizontal segment " & i.ToString())
                         End If
                         Return False
@@ -963,7 +962,7 @@ Namespace Orthogonal.orthographicembedding
             horizontal_x2(edge_n1(segIdx)) = System.Math.Max(horizontal_x2(edge_n1(segIdx)), newx)
             horizontal_x1(edge_n2(segIdx)) = System.Math.Min(horizontal_x1(edge_n2(segIdx)), newx)
             horizontal_x2(edge_n2(segIdx)) = System.Math.Max(horizontal_x2(edge_n2(segIdx)), newx)
-            If OrthographicEmbedding.Visibility.DEBUG >= 1 Then
+            If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("  Edge " & segIdx.ToString() & " moved from " & oldx.ToString() & " to " & newx.ToString())
             End If
             Return True

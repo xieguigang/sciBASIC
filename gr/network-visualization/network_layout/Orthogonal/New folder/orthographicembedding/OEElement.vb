@@ -28,7 +28,7 @@ Namespace Orthogonal.orthographicembedding
         Public dest As Integer ' the target node
         Public angle As Integer ' 0 : right, 1: up, 2: left, 3: down
         Public bends As Integer ' number of left bends
-        Public sym As orthographicembedding.OEElement ' the symmetric element in the target node
+        Public sym As OEElement ' the symmetric element in the target node
 
         Public bendsToAddToSymmetric As Integer
 
@@ -42,7 +42,7 @@ Namespace Orthogonal.orthographicembedding
             bendsToAddToSymmetric = 0
         End Sub
 
-        Public Sub New(a_v As Integer, a_dest As Integer, a_angle As Integer, a_bends As Integer, a_sym As orthographicembedding.OEElement)
+        Public Sub New(a_v As Integer, a_dest As Integer, a_angle As Integer, a_bends As Integer, a_sym As OEElement)
             v = a_v
             dest = a_dest
             angle = a_angle

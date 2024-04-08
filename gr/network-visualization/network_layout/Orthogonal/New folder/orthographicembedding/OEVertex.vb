@@ -13,11 +13,11 @@ Namespace Orthogonal.orthographicembedding
     ''' </summary>
     Public Class OEVertex
 
-        Public embedding As IList(Of orthographicembedding.OEElement)
+        Public embedding As IList(Of OEElement)
         Public v As Integer
         Public x, y As Double
 
-        Public Sub New(a_embedding As IList(Of orthographicembedding.OEElement), a_v As Integer, a_x As Double, a_y As Double)
+        Public Sub New(a_embedding As IList(Of OEElement), a_v As Integer, a_x As Double, a_y As Double)
             embedding = a_embedding
             v = a_v
             x = a_x
@@ -26,7 +26,7 @@ Namespace Orthogonal.orthographicembedding
 
         Public Overrides Function ToString() As String
             Dim tmp As String = "v(" & x.ToString() & "," & y.ToString() & "):"
-            For Each e As orthographicembedding.OEElement In embedding
+            For Each e As OEElement In embedding
                 tmp += " " & e.ToString()
             Next
             Return tmp

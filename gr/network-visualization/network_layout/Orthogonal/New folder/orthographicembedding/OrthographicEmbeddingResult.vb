@@ -20,7 +20,7 @@ Namespace Orthogonal.orthographicembedding
 
         Public Shared DEBUG As Integer = 0
 
-        Public embedding As OrthographicEmbedding.OEVertex()
+        Public embedding As OEVertex()
         Public nodeIndexes As Integer()
         Public x As Double()
         Public y As Double()
@@ -29,7 +29,7 @@ Namespace Orthogonal.orthographicembedding
         Public Shared separation As Double = 0.25
 
         Public Sub New(n As Integer)
-            embedding = New OrthographicEmbedding.OEVertex(n - 1) {}
+            embedding = New OEVertex(n - 1) {}
             nodeIndexes = New Integer(n - 1) {}
             x = New Double(n - 1) {}
             y = New Double(n - 1) {}
@@ -56,13 +56,13 @@ Namespace Orthogonal.orthographicembedding
         ' 		}
         ' 		 
 
-        Public Sub New(a_embedding As OrthographicEmbedding.OEVertex(), visibility As OrthographicEmbedding.Visibility, fixNonOrthogonal As Boolean)
+        Public Sub New(a_embedding As OEVertex(), visibility As OrthographicEmbedding.Visibility, fixNonOrthogonal As Boolean)
             embedding = a_embedding
 
             ' count the number of nodes in the embedding:
             Dim n = a_embedding.Length
             For v = 0 To embedding.Length - 1
-                For Each e As OrthographicEmbedding.OEElement In embedding(v).embedding
+                For Each e As OEElement In embedding(v).embedding
                     n += e.bends
                 Next
             Next
@@ -87,20 +87,20 @@ Namespace Orthogonal.orthographicembedding
             ' add the nodes + edges resulting from the "bends"
             For v = 0 To embedding.Length - 1
                 ' process all the bends:
-                Dim ev As OrthographicEmbedding.OEVertex = embedding(v)
-                For Each oev As OrthographicEmbedding.OEElement In ev.embedding
+                Dim ev As OEVertex = embedding(v)
+                For Each oev As OEElement In ev.embedding
                     Dim w As Integer = oev.dest
                     If w > v Then
-                        Dim ew As OrthographicEmbedding.OEVertex = embedding(w)
-                        Dim oew As OrthographicEmbedding.OEElement = Nothing
-                        For Each tmp As OrthographicEmbedding.OEElement In ew.embedding
+                        Dim ew As OEVertex = embedding(w)
+                        Dim oew As OEElement = Nothing
+                        For Each tmp As OEElement In ew.embedding
                             If tmp.dest = v Then
                                 oew = tmp
                                 Exit For
                             End If
                         Next
                         If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
-                            Console.WriteLine("Creating conector " & v.ToString() & " -> " & w.ToString() & " with bends " & oev.bends.ToString() & ", " & oew.bends.ToString() & " (" & OrthographicEmbedding.OEElement.directionNames(oev.angle) & " - " & OrthographicEmbedding.OEElement.directionNames(oew.angle) & ")")
+                            Console.WriteLine("Creating conector " & v.ToString() & " -> " & w.ToString() & " with bends " & oev.bends.ToString() & ", " & oew.bends.ToString() & " (" & OEElement.directionNames(oev.angle) & " - " & OEElement.directionNames(oew.angle) & ")")
                         End If
                         If oev.bends = 0 AndAlso oew.bends = 0 Then
                             '                        System.out.println("  edge.");
@@ -124,10 +124,10 @@ Namespace Orthogonal.orthographicembedding
 
                             If oev.bends + oew.bends = 1 Then
                                 nodeIndexes(idx) = -1
-                                If oev.angle = OrthographicEmbedding.OEElement.LEFT OrElse oev.angle = OrthographicEmbedding.OEElement.RIGHT Then
+                                If oev.angle = OEElement.LEFT OrElse oev.angle = OEElement.RIGHT Then
                                     '                                System.out.println("midpoints assigned to " + oev.v + " -> " + oew.v + " by method 1a");
                                     x(idx) = endx
-                                    If oew.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                    If oew.angle = OEElement.DOWN Then
                                         If starty > endy + 0.01 Then
                                             y(idx) = starty
                                         Else
@@ -144,7 +144,7 @@ Namespace Orthogonal.orthographicembedding
                                 Else
                                     '                                System.out.println("midpoints assigned to " + oev.v + " -> " + oew.v + " by method 1b");
                                     x(idx) = startx
-                                    If oev.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                    If oev.angle = OEElement.DOWN Then
                                         If endy > starty + 0.01 Then
                                             y(idx) = endy
                                         Else
@@ -164,7 +164,7 @@ Namespace Orthogonal.orthographicembedding
                             ElseIf oev.bends + oew.bends = 2 Then
                                 nodeIndexes(idx) = -1
                                 nodeIndexes(idx + 1) = -1
-                                If oev.angle = OrthographicEmbedding.OEElement.LEFT Then
+                                If oev.angle = OEElement.LEFT Then
                                     If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
                                         Console.WriteLine("  connector " & v.ToString() & " to " & w.ToString() & " with 2 bends (LEFT)")
                                     End If
@@ -174,7 +174,7 @@ Namespace Orthogonal.orthographicembedding
                                         x(idx + 1) = startx - OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         y(idx + 1) = endy
                                     Else
-                                        If oew.angle = OrthographicEmbedding.OEElement.LEFT AndAlso intermediate_x > endx Then
+                                        If oew.angle = OEElement.LEFT AndAlso intermediate_x > endx Then
                                             x(idx) = endx - OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                             y(idx) = starty
                                             x(idx + 1) = endx - OrthographicEmbedding.OrthographicEmbeddingResult.separation
@@ -190,7 +190,7 @@ Namespace Orthogonal.orthographicembedding
                                     edges(idx)(idx + 1) = True
                                     edges(idx + 1)(w) = True
                                     idx += 2
-                                ElseIf oev.angle = OrthographicEmbedding.OEElement.RIGHT Then
+                                ElseIf oev.angle = OEElement.RIGHT Then
                                     If intermediate_x < startx Then
                                         If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
                                             Console.WriteLine("  connector with 2 bends (RIGHT), case 1")
@@ -200,7 +200,7 @@ Namespace Orthogonal.orthographicembedding
                                         x(idx + 1) = startx + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         y(idx + 1) = endy
                                     Else
-                                        If oew.angle = OrthographicEmbedding.OEElement.RIGHT AndAlso intermediate_x < endx Then
+                                        If oew.angle = OEElement.RIGHT AndAlso intermediate_x < endx Then
                                             If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
                                                 Console.WriteLine("  connector with 2 bends (RIGHT), case 2")
                                             End If
@@ -228,7 +228,7 @@ Namespace Orthogonal.orthographicembedding
                                     Else
                                         '                                System.out.println(v + " -> " + w + " startx: " + startx + ", endx: " + endx);
                                         If Math.Abs(intermediate_x - startx) < 0.001 Then
-                                            If oew.angle = OrthographicEmbedding.OEElement.UP Then ' up from the end
+                                            If oew.angle = OEElement.UP Then ' up from the end
                                                 '                                        System.out.println("up from the end");
                                                 x(idx) = startx
                                                 y(idx) = endy - OrthographicEmbedding.OrthographicEmbeddingResult.separation
@@ -241,7 +241,7 @@ Namespace Orthogonal.orthographicembedding
                                                 y(idx + 1) = endy + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                             End If
                                         Else
-                                            If oev.angle = OrthographicEmbedding.OEElement.UP Then ' up from the start
+                                            If oev.angle = OEElement.UP Then ' up from the start
                                                 '                                        System.out.println("up from the start");
                                                 x(idx) = startx
                                                 y(idx) = starty - OrthographicEmbedding.OrthographicEmbeddingResult.separation
@@ -270,7 +270,7 @@ Namespace Orthogonal.orthographicembedding
                                 edges(idx + 1)(idx + 2) = True
                                 edges(idx + 2)(w) = True
                                 Dim nnewvertices = 3
-                                If oev.angle = OrthographicEmbedding.OEElement.LEFT Then
+                                If oev.angle = OEElement.LEFT Then
                                     If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
                                         Console.WriteLine("  connector with 3 bends (LEFT)")
                                     End If
@@ -280,7 +280,7 @@ Namespace Orthogonal.orthographicembedding
                                     End If
                                     x(idx) = tmpx
                                     y(idx) = starty
-                                    If oew.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                    If oew.angle = OEElement.DOWN Then
                                         x(idx + 1) = tmpx
                                         y(idx + 1) = endy + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         x(idx + 2) = endx
@@ -291,7 +291,7 @@ Namespace Orthogonal.orthographicembedding
                                         x(idx + 2) = endx
                                         y(idx + 2) = endy - OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                     End If
-                                ElseIf oev.angle = OrthographicEmbedding.OEElement.RIGHT Then
+                                ElseIf oev.angle = OEElement.RIGHT Then
                                     If OrthographicEmbedding.OrthographicEmbeddingResult.DEBUG >= 1 Then
                                         Console.WriteLine("  connector with 3 bends (RIGHT)")
                                     End If
@@ -301,7 +301,7 @@ Namespace Orthogonal.orthographicembedding
                                     End If
                                     x(idx) = tmpx
                                     y(idx) = starty
-                                    If oew.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                    If oew.angle = OEElement.DOWN Then
                                         x(idx + 1) = tmpx
                                         y(idx + 1) = endy + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         If Math.Abs(tmpx - endx) > 0.001 Then
@@ -333,18 +333,18 @@ Namespace Orthogonal.orthographicembedding
                                         Console.WriteLine("  connector with 3 bends (UP/DOWN)")
                                     End If
                                     Dim tmpx = intermediate_x
-                                    If oew.angle = OrthographicEmbedding.OEElement.LEFT Then
+                                    If oew.angle = OEElement.LEFT Then
                                         If intermediate_x > endx Then
                                             tmpx = endx - OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         End If
                                     End If
-                                    If oew.angle = OrthographicEmbedding.OEElement.RIGHT Then
+                                    If oew.angle = OEElement.RIGHT Then
                                         If intermediate_x < endx Then
                                             tmpx = endx + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         End If
                                     End If
                                     If Math.Abs(startx - tmpx) > 0.001 Then
-                                        If oev.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                        If oev.angle = OEElement.DOWN Then
                                             x(idx) = startx
                                             y(idx) = starty + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                             x(idx + 1) = tmpx
@@ -363,7 +363,7 @@ Namespace Orthogonal.orthographicembedding
                                         edges(idx + 1)(idx + 2) = False
                                         edges(idx + 2)(w) = False
                                         edges(idx + 1)(w) = True
-                                        If oev.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                        If oev.angle = OEElement.DOWN Then
                                             x(idx) = startx
                                             y(idx) = starty + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                         Else
@@ -381,7 +381,7 @@ Namespace Orthogonal.orthographicembedding
                                 nodeIndexes(idx + 1) = -1
                                 nodeIndexes(idx + 2) = -1
                                 nodeIndexes(idx + 3) = -1
-                                If oev.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                If oev.angle = OEElement.DOWN Then
                                     x(idx) = startx
                                     y(idx) = starty + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                     x(idx + 1) = intermediate_x
@@ -392,7 +392,7 @@ Namespace Orthogonal.orthographicembedding
                                     x(idx + 1) = intermediate_x
                                     y(idx + 1) = starty - OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                 End If
-                                If oew.angle = OrthographicEmbedding.OEElement.DOWN Then
+                                If oew.angle = OEElement.DOWN Then
                                     x(idx + 2) = intermediate_x
                                     y(idx + 2) = endy + OrthographicEmbedding.OrthographicEmbeddingResult.separation
                                     x(idx + 3) = endx
@@ -472,10 +472,10 @@ Namespace Orthogonal.orthographicembedding
             gridAlign(1.0)
 
 
-            Dim v As OrthographicEmbedding.OEVertex = If(edge.m_a < embedding.Length, embedding(edge.m_a), Nothing)
-            Dim w As OrthographicEmbedding.OEVertex = If(edge.m_b < embedding.Length, embedding(edge.m_b), Nothing)
-            Dim oev As OrthographicEmbedding.OEElement = Nothing
-            Dim oew As OrthographicEmbedding.OEElement = Nothing
+            Dim v As OEVertex = If(edge.m_a < embedding.Length, embedding(edge.m_a), Nothing)
+            Dim w As OEVertex = If(edge.m_b < embedding.Length, embedding(edge.m_b), Nothing)
+            Dim oev As OEElement = Nothing
+            Dim oew As OEElement = Nothing
             If v IsNot Nothing Then
                 Dim target = -1
                 If w IsNot Nothing Then
@@ -500,7 +500,7 @@ Namespace Orthogonal.orthographicembedding
                 If v.v = target Then
                     Throw New Exception("fixNonOrthogonalEdges: looking for " & v.v.ToString() & " -> " & target.ToString())
                 End If
-                For Each tmp As OrthographicEmbedding.OEElement In v.embedding
+                For Each tmp As OEElement In v.embedding
                     If tmp.dest = target Then
                         oev = tmp
                         Exit For
@@ -534,7 +534,7 @@ Namespace Orthogonal.orthographicembedding
                 If w.v = target Then
                     Throw New Exception("fixNonOrthogonalEdges: looking for " & w.v.ToString() & " -> " & target.ToString())
                 End If
-                For Each tmp As OrthographicEmbedding.OEElement In w.embedding
+                For Each tmp As OEElement In w.embedding
                     If tmp.dest = target Then
                         oew = tmp
                         Exit For
@@ -549,7 +549,7 @@ Namespace Orthogonal.orthographicembedding
                 Console.WriteLine("  w: " & oew.ToString())
             End If
 
-            If (oev Is Nothing OrElse (oev.angle = OrthographicEmbedding.OEElement.LEFT OrElse oev.angle = OrthographicEmbedding.OEElement.RIGHT)) AndAlso (oew Is Nothing OrElse (oew.angle = OrthographicEmbedding.OEElement.LEFT OrElse oew.angle = OrthographicEmbedding.OEElement.RIGHT)) Then
+            If (oev Is Nothing OrElse (oev.angle = OEElement.LEFT OrElse oev.angle = OEElement.RIGHT)) AndAlso (oew Is Nothing OrElse (oew.angle = OEElement.LEFT OrElse oew.angle = OEElement.RIGHT)) Then
                 ' Find the vertical ranges of movement of each vertex:
                 Dim group_v As IList(Of Integer) = New List(Of Integer)()
                 Dim group_w As IList(Of Integer) = New List(Of Integer)()
@@ -655,7 +655,7 @@ Namespace Orthogonal.orthographicembedding
                 End If
             End If
 
-            If (oev Is Nothing OrElse (oev.angle = OrthographicEmbedding.OEElement.UP OrElse oev.angle = OrthographicEmbedding.OEElement.DOWN)) AndAlso (oew Is Nothing OrElse (oew.angle = OrthographicEmbedding.OEElement.UP OrElse oew.angle = OrthographicEmbedding.OEElement.DOWN)) Then
+            If (oev Is Nothing OrElse (oev.angle = OEElement.UP OrElse oev.angle = OEElement.DOWN)) AndAlso (oew Is Nothing OrElse (oew.angle = OEElement.UP OrElse oew.angle = OEElement.DOWN)) Then
                 ' Find the horizontal ranges of movement of each vertex:
                 Dim group_v As IList(Of Integer) = New List(Of Integer)()
                 Dim group_w As IList(Of Integer) = New List(Of Integer)()
@@ -885,8 +885,8 @@ Namespace Orthogonal.orthographicembedding
             Next
 
             If nodeIndexes(vertex) >= 0 Then
-                For Each e As OrthographicEmbedding.OEElement In embedding(vertex).embedding
-                    If e.angle = OrthographicEmbedding.OEElement.LEFT OrElse e.angle = OrthographicEmbedding.OEElement.RIGHT Then
+                For Each e As OEElement In embedding(vertex).embedding
+                    If e.angle = OEElement.LEFT OrElse e.angle = OEElement.RIGHT Then
                         Dim w As Integer = e.dest
                         If edges(vertex)(w) OrElse edges(w)(vertex) Then
                             If x(w) < x(vertex) - 0.01 AndAlso x(w) > min Then
@@ -934,8 +934,8 @@ Namespace Orthogonal.orthographicembedding
             Next
 
             If nodeIndexes(vertex) >= 0 Then
-                For Each e As OrthographicEmbedding.OEElement In embedding(vertex).embedding
-                    If e.angle = OrthographicEmbedding.OEElement.UP OrElse e.angle = OrthographicEmbedding.OEElement.DOWN Then
+                For Each e As OEElement In embedding(vertex).embedding
+                    If e.angle = OEElement.UP OrElse e.angle = OEElement.DOWN Then
                         Dim w As Integer = e.dest
                         If edges(vertex)(w) OrElse edges(w)(vertex) Then
                             If y(w) < y(vertex) - 0.01 AndAlso y(w) > min Then
