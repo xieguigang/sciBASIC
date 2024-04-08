@@ -149,18 +149,12 @@ Public Class PQTree
             ' Template P1: (Figure 7, right)
             If counts(PQTree.LABEL_EMPTY) = 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 0 AndAlso counts(PQTree.LABEL_FULL) > 0 Then
                 label = PQTree.LABEL_FULL
-                If PQTree.DEBUG >= 1 Then
-                    Console.WriteLine("P1")
-                End If
                 Return True
             End If
 
             If isPertinentTree(S) Then
                 ' Template P2: (Figure 8)
                 If counts(PQTree.LABEL_EMPTY) > 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 0 AndAlso counts(PQTree.LABEL_FULL) > 0 Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("P2")
-                    End If
                     Dim P1 As PQTree = New PQTree(PQTree.NO_INDEX, PQTree.P_NODE, Nothing)
                     P1.label = PQTree.LABEL_FULL
                     For Each child As PQTree In children
@@ -178,9 +172,6 @@ Public Class PQTree
 
                 ' Template P4: (Figure 11)
                 If counts(PQTree.LABEL_EMPTY) >= 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 1 AndAlso counts(PQTree.LABEL_FULL) >= 0 Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("P4")
-                    End If
                     Dim partialChild As PQTree = Nothing
                     For Each child As PQTree In children
                         If child.label = PQTree.LABEL_PARTIAL Then
@@ -231,9 +222,6 @@ Public Class PQTree
 
                 ' Template P6: (Figure 13)
                 If counts(PQTree.LABEL_EMPTY) >= 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 2 AndAlso counts(PQTree.LABEL_FULL) >= 0 Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("P6")
-                    End If
                     Dim partial1 As PQTree = Nothing
                     Dim partial2 As PQTree = Nothing
                     Dim P1 As PQTree = New PQTree(PQTree.NO_INDEX, PQTree.P_NODE, Nothing)
@@ -309,9 +297,6 @@ Public Class PQTree
             Else
                 ' Template P3:  (Figures 9, 10)
                 If counts(PQTree.LABEL_EMPTY) > 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 0 AndAlso counts(PQTree.LABEL_FULL) > 0 Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("P3")
-                    End If
                     If counts(PQTree.LABEL_EMPTY) > 1 Then
                         If counts(PQTree.LABEL_FULL) > 1 Then
                             Dim Pnode1 As PQTree = New PQTree(PQTree.NO_INDEX, PQTree.P_NODE, Nothing)
@@ -376,9 +361,6 @@ Public Class PQTree
 
                 ' Template P5: (Figure 12)
                 If counts(PQTree.LABEL_EMPTY) >= 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 1 AndAlso counts(PQTree.LABEL_FULL) >= 0 Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("P5")
-                    End If
                     Dim P1 As PQTree = New PQTree(PQTree.NO_INDEX, PQTree.P_NODE, Nothing)
                     Dim P2 As PQTree = New PQTree(PQTree.NO_INDEX, PQTree.P_NODE, Nothing)
                     P1.label = PQTree.LABEL_EMPTY
@@ -450,17 +432,11 @@ Public Class PQTree
 
             ' Template Q0: 
             If counts(PQTree.LABEL_EMPTY) > 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 0 AndAlso counts(PQTree.LABEL_FULL) = 0 Then
-                If PQTree.DEBUG >= 1 Then
-                    Console.WriteLine("Q0")
-                End If
                 label = PQTree.LABEL_EMPTY
                 Return True
             End If
             ' Template Q1: 
             If counts(PQTree.LABEL_EMPTY) = 0 AndAlso counts(PQTree.LABEL_PARTIAL) = 0 AndAlso counts(PQTree.LABEL_FULL) > 0 Then
-                If PQTree.DEBUG >= 1 Then
-                    Console.WriteLine("Q1")
-                End If
                 label = PQTree.LABEL_FULL
                 Return True
             End If
@@ -471,13 +447,7 @@ Public Class PQTree
             ' Template Q3: (Figure 15):
             ' If all the full leaves ate groupped together in the middle, and empty ones are on the right AND left
             If counts(PQTree.LABEL_PARTIAL) <= 2 Then
-                If PQTree.DEBUG >= 1 Then
-                    Console.WriteLine("Q2/Q3")
-                End If
                 If counts(PQTree.LABEL_PARTIAL) = 0 AndAlso (counts(PQTree.LABEL_EMPTY) > 0 OrElse counts(PQTree.LABEL_FULL) > 0) Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("Q2/Q3: 0 partials")
-                    End If
                     ' check whether the chilren are in the right order
                     Dim goodEF = True ' Empty -> Full order
                     Dim goodFE = True ' Full -> Empty order
@@ -502,9 +472,6 @@ Public Class PQTree
                     End If
                     Return False
                 ElseIf counts(PQTree.LABEL_PARTIAL) = 1 AndAlso (counts(PQTree.LABEL_EMPTY) > 0 OrElse counts(PQTree.LABEL_FULL) > 0) Then
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("Q2/Q3: 1 partials")
-                    End If
                     ' 1 partial Q-node:
                     Dim newChildrenEF As IList(Of PQTree) = New List(Of PQTree)()
                     Dim newChildrenFE As IList(Of PQTree) = New List(Of PQTree)()
@@ -609,9 +576,6 @@ Public Class PQTree
                     Return False
                 Else
                     ' 2 partial Q-nodes:
-                    If PQTree.DEBUG >= 1 Then
-                        Console.WriteLine("Q2/Q3: 2 partials")
-                    End If
                     Dim newChildren As IList(Of PQTree) = New List(Of PQTree)()
                     Dim status = 0 ' 0 = empty, 1 = full, 2 = empty again, 3: error
                     For Each child As PQTree In children
@@ -717,40 +681,17 @@ Public Class PQTree
 
         ' add all the leaves of the tree to the queue
         getLeaves(queue)
-
-        If PQTree.DEBUG >= 2 Then
-            Console.WriteLine("PQTree.reduce: T = " & ToString())
-        End If
-        If PQTree.DEBUG >= 2 Then
-            Console.WriteLine("PQTree.reduce: S = " & S.ToString())
-        End If
-
         clearLabels()
 
         While queue.Count > 0
             Dim X As PQTree = queue.PopAt(0)
-            If PQTree.DEBUG >= 2 Then
-                Console.WriteLine("PQTree.reduce: processing " & X.ToString())
-            End If
             If Not X.applyTemplate(S) Then
-                If PQTree.DEBUG >= 2 Then
-                    Console.WriteLine("PQTree.reduce: no pattern mattched! FAILURE!")
-                End If
                 Return False
             End If
             processed.Add(X)
-            If PQTree.DEBUG >= 2 Then
-                Console.WriteLine("PQTree.reduce: processed " & X.ToString())
-            End If
-            If PQTree.DEBUG >= 1 Then
-                sanityTest()
-            End If
 
             ' If all the nodes in "S" are in node descendants of X, then we are done:
             If X.isPertinentTree(S) Then
-                If PQTree.DEBUG >= 2 Then
-                    Console.WriteLine("PQTree.reduce: the last node contained all of S, SUCCESS!")
-                End If
                 Return True
             End If
 
@@ -827,9 +768,6 @@ Public Class PQTree
             Next
         ElseIf nodeType = PQTree.DIRECTION_INDICATOR Then
             If nodeType = PQTree.DIRECTION_INDICATOR Then
-                If PQTree.DEBUG >= 1 Then
-                    Console.WriteLine("Reversing direction indicator: " & ToString())
-                End If
                 If direction = PQTree.DIRECTION_INDICATOR_LEFT Then
                     direction = PQTree.DIRECTION_INDICATOR_RIGHT
                 Else
