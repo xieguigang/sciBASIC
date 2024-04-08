@@ -50,6 +50,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
@@ -89,6 +90,26 @@ Module OrthogonalLayoutTest
         Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
 
         Pause()
+    End Sub
+
+    Private Sub saveEmbedding(oe As OrthographicEmbeddingResult)
+        Dim fw As StreamWriter = Console.Out
+
+        For i = 0 To oe.nodeIndexes.Length - 1
+            For j = 0 To oe.nodeIndexes.Length - 1
+                If oe.edges(i)(j) OrElse oe.edges(j)(i) Then
+                    fw.Write("1" & ", ")
+                Else
+                    fw.Write("0" & ", ")
+                End If
+            Next
+            fw.Write(vbLf)
+        Next
+        For i = 0 To oe.nodeIndexes.Length - 1
+            fw.Write(i.ToString() & ", " & oe.nodeIndexes(i).ToString() & ", " & oe.x(i).ToString() & ", " & oe.y(i).ToString() & vbLf)
+        Next
+
+        fw.Flush()
     End Sub
 
     Sub test2()
@@ -134,7 +155,7 @@ Module OrthogonalLayoutTest
         Dim oe As OrthographicEmbeddingResult = DisconnectedGraphs.mergeDisconnectedEmbeddingsSideBySide(disconnectedEmbeddings, disconnectedGraphSet, 1.0)
 
         ' save the results:
-        ' saveEmbedding(outputFileName, oe)
+        saveEmbedding(oe)
 
         ' save image:
         'If Not ReferenceEquals(outputPNGName, Nothing) Then
