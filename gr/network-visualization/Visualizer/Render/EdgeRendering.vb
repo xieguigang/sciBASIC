@@ -157,6 +157,16 @@ Friend Class EdgeRendering
         End Try
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="edge"></param>
+    ''' <param name="edgeShadowColor"></param>
+    ''' <param name="lineColor"></param>
+    ''' <param name="g"></param>
+    ''' <param name="a">location of the node a</param>
+    ''' <param name="b">location of the node b</param>
+    ''' <returns></returns>
     Private Iterator Function rendering(edge As Edge,
                                         edgeShadowColor As Pen,
                                         lineColor As Pen,

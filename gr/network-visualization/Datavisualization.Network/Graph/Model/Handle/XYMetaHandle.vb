@@ -82,11 +82,15 @@ Namespace Graph.EdgeBundling
         ''' <summary>
         ''' 将当前的这个矢量描述转换为实际的点位置
         ''' </summary>
-        ''' <param name="sx#"></param>
-        ''' <param name="sy#"></param>
-        ''' <param name="tx#"></param>
-        ''' <param name="ty#"></param>
+        ''' <param name="sx"></param>
+        ''' <param name="sy"></param>
+        ''' <param name="tx"></param>
+        ''' <param name="ty"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' location of source node [<paramref name="sx"/>, <paramref name="sy"/>]
+        ''' location of target node [<paramref name="tx"/>, <paramref name="ty"/>]
+        ''' </remarks>
         Public Function GetPoint(sx#, sy#, tx#, ty#) As PointF
             Dim dx = (tx - sx) * xoffsetscale
             Dim dy = (ty - sy) * yoffsetscale
@@ -94,6 +98,21 @@ Namespace Graph.EdgeBundling
             Return New PointF(sx + dx, sy + dy)
         End Function
 
+        Public Function GetPoint(vs As Node, vt As Node) As PointF
+            Dim ps = vs.data.initialPostion
+            Dim pt = vt.data.initialPostion
+
+            Return GetPoint(ps.x, ps.y, pt.x, pt.y)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ps">location of the source node</param>
+        ''' <param name="pt">location of the target node</param>
+        ''' <param name="hx"></param>
+        ''' <param name="hy"></param>
+        ''' <returns></returns>
         Public Shared Function CreateVector(ps As PointF, pt As PointF, hx!, hy!) As XYMetaHandle
             Dim dx = pt.X - ps.X
             Dim dy = pt.Y - ps.Y

@@ -62,8 +62,8 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
-        Call test1()
-        ' Call test2()
+        ' Call test1()
+        Call test2()
     End Sub
 
     Sub test1()
@@ -132,7 +132,7 @@ Module OrthogonalLayoutTest
     End Sub
 
     Sub test2()
-        Dim graph As Integer()() = "G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\network_layout\Orthogonal\examples\graph5.txt" _
+        Dim graph As Integer()() = "G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\network_layout\Orthogonal\examples\graph4.txt" _
             .ReadAllLines _
             .Select(Function(l) l.Split(","c).AsInteger) _
             .ToArray

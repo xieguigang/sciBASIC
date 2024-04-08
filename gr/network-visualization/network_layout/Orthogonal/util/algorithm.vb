@@ -1,8 +1,13 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.optimization
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Linq
+Imports std = System.Math
 
 Namespace Orthogonal
 
@@ -56,9 +61,10 @@ Namespace Orthogonal
                     numberOfAttempts:=numberOfAttempts,
                     optimize:=optimize,
                     simplify:=simplify,
-                    fixNonOrthogonal:=fixNonOrthogonal)
+                    fixNonOrthogonal:=fixNonOrthogonal
+                )
             Dim index As Integer
-            Dim v As Node
+            Dim u, v As Node
 
             For i As Integer = 0 To layout.nodeIndexes.Length - 1
                 index = layout.nodeIndexes(i)
@@ -67,6 +73,51 @@ Namespace Orthogonal
                     v = vlist(index)
                     v.data.initialPostion = New FDGVector2(layout(i))
                 End If
+            Next
+
+            Dim minx = layout.x.Min
+            Dim miny = layout.y.Min
+            Dim maxx = layout.x.Max
+            Dim maxy = layout.y.Max
+            Dim edgeBends As New Dictionary(Of String, List(Of XYMetaHandle))
+
+            For i = 0 To layout.nodeIndexes.Length - 1
+                For j = 0 To layout.nodeIndexes.Length - 1
+                    If layout.edges(i)(j) Then
+                        Dim x0 = std.Min(layout.x(i), layout.x(j)) - minx
+                        Dim y0 = std.Min(layout.y(i), layout.y(j)) - miny
+
+                        u = vlist(layout.nodeIndexes(i))
+                        v = vlist(layout.nodeIndexes(j))
+
+                        Dim key As String = {u.ID, v.ID}.OrderBy(Function(vi) vi).JoinBy(" -> ")
+                        Dim ps As PointF = layout(i)
+                        Dim pt As PointF = layout(j)
+
+                        If Not edgeBends.ContainsKey(key) Then
+                            edgeBends.Add(key, New List(Of XYMetaHandle))
+                        End If
+
+                        edgeBends(key).Add(XYMetaHandle.CreateVector(ps, pt, x0, y0))
+                    End If
+                Next
+            Next
+
+            For Each edge As Edge In g.graphEdges
+                Dim key As String = {edge.U.ID, edge.V.ID}.OrderBy(Function(vi) vi).JoinBy(" -> ")
+
+                If Not edgeBends.ContainsKey(key) Then
+                    Continue For
+                End If
+
+                Dim ps As PointF = edge.U.data.initialPostion.Point2D
+                Dim bends As XYMetaHandle() = edgeBends(key) _
+                    .OrderBy(Function(e)
+                                 Return e.GetPoint(edge.U, edge.V).Distance(ps)
+                             End Function) _
+                    .ToArray
+
+                edge.data.bends = bends
             Next
 
             Return g

@@ -63,6 +63,9 @@ Namespace Imaging.Math2D
     ''' <summary>
     ''' <see cref="Drawing.PointF"/>, basic model for physical simulator
     ''' </summary>
+    ''' <remarks>
+    ''' this vector model could be cast to gdi+ <see cref="Drawing.PointF"/> object directly.
+    ''' </remarks>
     Public Class Vector2D : Implements Layout2D
 
         ''' <summary>
