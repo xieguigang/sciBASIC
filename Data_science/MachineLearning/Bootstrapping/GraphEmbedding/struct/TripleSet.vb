@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace GraphEmbedding.struct

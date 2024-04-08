@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
+﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 Imports std = System.Math
 
 Namespace GraphEmbedding.complex

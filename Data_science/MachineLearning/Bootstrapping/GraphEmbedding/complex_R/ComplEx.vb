@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.struct
-Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.util
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
+Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 
 
 Namespace GraphEmbedding.complex_R
