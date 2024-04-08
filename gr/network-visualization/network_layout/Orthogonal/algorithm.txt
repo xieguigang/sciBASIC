@@ -1,0 +1,26 @@
+Although rendering a planar graph to a 2d surface seems to be a simple task, when I started reading about how to accomplish the task, I was very surprised about its complexity! So, after implementing the large sequence of individual algorithms required to solve the task, I had to write this little piece of text to remind my self of how all the pieces fit together. If anyone wants to re-implement or follow the source code, I hope this will be useful.
+
+The required algorithms were adapted from the following papers:
+- S. Even and R. E. Tarjan, "Computing an st-numbering", Theoret. Comput. Sci. 2, (1976), 339-344.
+- Tamassia, Roberto, and Ioannis G. Tollis. "Planar Grid Embedding in Linear Time"
+- Tamassia, Roberto, and Ioannis G. Tollis. "A unified approach to visibility representations of planar graphs." Discrete & Computational Geometry 1.4 (1986): 321-341.
+
+- The specific algorithm used can be summarized as follows (for each connected component of the graph):
+1.- Construct a w-visibility representation (Gamma) for the graph (g)
+	1.1.- Find the "blocks" and "cutnodes" of the graph (blocks are 2-connected components of the graph, and cutnodes are the nodes that separate the blocks)
+	1.2.- Select 1 block and construct the w-visibility representation for it (a w-visibility is a planar diagram where horizontal lines represent vertices, and vertical lines represent edges):
+		1.2.1.- select two vertices to be s, t
+		1.2.2.- generate a st-order, which induces graph D
+		1.2.3.- find a planar representation of D such that the edge (s,t) is on the external face using a PQ-tree
+		1.2.4.- planar representation induces a digraph D*
+		1.2.5.- Apply the "critical path method" to D* with all edge-lengths = 2, giving a function alpha for each vertex of D*
+		1.2.6.- Infer the y coordinates of each vertex, and the x coordinates of each edge using all the information above.
+	1.3.- Iteratively construct the w-visibility representation of the other blocks, and merge them one by one into a single w-visibility representation for the whole graph g.
+2.- Transform Gamma into an orthogonal embedding G', by substituting each vertex segment (horizontal lines) with a certain structure using a pattern-matching approach (9 possible patterns)
+2.- Generate specific coordinates for all the vertices and edges in G', using a pattern-based approach. This results in an initial orthographic embedding H
+3.- Simplify H by means of a collection of bend-stretching transformations
+4.- Use a greedy-search method to reduce the number of "bends" in the edges of the graph.
+
+Whenever the input graph has disconnected components, the previous algorithm is run for each component, and then the result is just each of the individual embeddings drawn side by side.
+
+Santiago Ontanon

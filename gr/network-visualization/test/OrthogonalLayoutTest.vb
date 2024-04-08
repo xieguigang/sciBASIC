@@ -58,6 +58,10 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
+        Call test2()
+    End Sub
+
+    Sub test1()
         Dim g As New NetworkGraph
 
         For Each label As String In {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "single"}
@@ -82,5 +86,9 @@ Module OrthogonalLayoutTest
         Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
 
         Pause()
+    End Sub
+
+    Sub test2()
+
     End Sub
 End Module

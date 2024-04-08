@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1458A1A1-110C-4587-A763-BA88CB808671}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.FormCanvas</StartupObject>
+    <StartupObject>Test.OrthogonalLayoutTest</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
