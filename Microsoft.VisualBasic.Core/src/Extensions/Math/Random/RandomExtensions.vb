@@ -69,7 +69,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -152,7 +152,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function Seed() As Integer
-            Return stdNum.Abs(CInt(stdNum.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
+            Return std.Abs(CInt(std.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
         ''' <summary>
@@ -336,7 +336,7 @@ Namespace Math
             Dim u1 As Double = r.NextDouble()
             Dim u2 As Double = r.NextDouble()
 
-            Dim rand_std_normal = stdNum.Sqrt(-2.0 * stdNum.Log(u1)) * stdNum.Sin(2.0 * stdNum.PI * u2)
+            Dim rand_std_normal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
             Dim rand_normal = mu + sigma * rand_std_normal
 
             Return rand_normal
@@ -363,7 +363,7 @@ Namespace Math
         <ExportAPI("NextTriangular")>
         <Extension> Public Function NextTriangular(r As Random, a As Double, b As Double, c As Double) As Double
             Dim u As Double = r.NextDouble()
-            Return If(u < (c - a) / (b - a), a + stdNum.Sqrt(u * (b - a) * (c - a)), b - stdNum.Sqrt((1 - u) * (b - a) * (b - c)))
+            Return If(u < (c - a) / (b - a), a + std.Sqrt(u * (b - a) * (c - a)), b - std.Sqrt((1 - u) * (b - a) * (b - c)))
         End Function
 
         ''' <summary>
@@ -425,7 +425,6 @@ Namespace Math
         ''' <param name="r"></param>
         ''' <param name = "list"></param>
         ''' 
-        <ExportAPI("Shuffle")>
         Public Sub Shuffle(r As Random, ByRef list As IList)
             Dim j As Integer
             Dim temp As Object

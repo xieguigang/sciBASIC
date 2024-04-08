@@ -346,4 +346,20 @@ Public Module ListExtensions
     <Extension> Public Function ToList(Of T)(linq As ParallelQuery(Of T)) As List(Of T)
         Return New List(Of T)(linq)
     End Function
+
+    <Extension>
+    Public Function PopAt(Of T)(list As System.Collections.Generic.List(Of T), index As Integer) As T
+        Dim getAt As T = list(index)
+        list.RemoveAt(index)
+        Return getAt
+    End Function
+
+    <Extension>
+    Public Sub RemoveAll(Of T)(list As System.Collections.Generic.List(Of T), all As IEnumerable(Of T))
+        If Not all Is Nothing Then
+            For Each item As T In all
+                Call list.Remove(item)
+            Next
+        End If
+    End Sub
 End Module

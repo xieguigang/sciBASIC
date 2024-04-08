@@ -363,4 +363,17 @@ Public Module IEnumerations
 
         Return rec(0)
     End Function
+
+    <Extension>
+    Public Function ContainsAll(Of T)([set] As ISet(Of T), all As IEnumerable(Of T)) As Boolean
+        If Not all Is Nothing Then
+            For Each item As T In all
+                If Not [set].Contains(item) Then
+                    Return False
+                End If
+            Next
+        End If
+
+        Return True
+    End Function
 End Module
