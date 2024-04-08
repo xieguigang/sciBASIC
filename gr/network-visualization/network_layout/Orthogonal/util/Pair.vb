@@ -1,5 +1,7 @@
 ﻿Namespace Orthogonal.util
+
     Public Class Pair(Of T1, T2)
+
         Public m_a As T1
         Public m_b As T2
 
@@ -28,7 +30,7 @@
         End Function
 
         Public Overrides Function ToString() As String
-            Return "<" & m_a.ToString() & "," & m_b.ToString() & ">"
+            Return "<" & m_a.ToString() & ", " & m_b.ToString() & ">"
         End Function
 
         Public Overrides Function GetHashCode() As Integer
