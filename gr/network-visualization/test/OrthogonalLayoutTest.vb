@@ -120,7 +120,7 @@ Module OrthogonalLayoutTest
     End Sub
 
     Sub test2()
-        Dim graph As Integer()() = "E:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\network_layout\Orthogonal\examples\graph4.txt" _
+        Dim graph As Integer()() = "E:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\network_layout\Orthogonal\examples\graph3.txt" _
             .ReadAllLines _
             .Select(Function(l) l.Split(","c).AsInteger) _
             .ToArray
