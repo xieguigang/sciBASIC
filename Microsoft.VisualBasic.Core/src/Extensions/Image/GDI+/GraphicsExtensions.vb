@@ -64,6 +64,7 @@ Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
@@ -84,6 +85,15 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     <HideModuleName>
     Public Module GraphicsExtensions
+
+        <Extension>
+        Public Sub FillPolygon(g As IGraphics, color As Brush, x As Double(), y As Double())
+            If x.TryCount <> y.TryCount Then
+                Throw New SafeArrayRankMismatchException("dimension of axis x and axis y is mis-matched!")
+            Else
+                Call g.FillPolygon(color, x.Select(Function(xi, i) New PointF(xi, y(i))).ToArray)
+            End If
+        End Sub
 
         ''' <summary>
         ''' Internal create gdi device helper.(这个函数不会克隆原来的图像对象<paramref name="res"/>)

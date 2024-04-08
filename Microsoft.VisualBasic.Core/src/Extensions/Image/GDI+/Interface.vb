@@ -3609,22 +3609,14 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public MustOverride Sub FillPolygon(brush As Brush, points() As Point)
-        '
-        ' Summary:
-        '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the vertices of the
-        '     polygon to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
+
+        ''' <summary>
+        ''' Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
+        ''' structures.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="points">Array of System.Drawing.PointF structures that represent the vertices of the
+        ''' polygon to fill.</param>
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF)
         '
         ' Summary:
