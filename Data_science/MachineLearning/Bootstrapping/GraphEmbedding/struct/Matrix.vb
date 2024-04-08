@@ -1,0 +1,215 @@
+﻿Imports ClassLibrary1.util
+Imports Microsoft.VisualBasic.Math
+Imports System
+Imports System.IO
+Imports System.Text
+
+
+
+Namespace struct
+
+    Public Class Matrix
+        Private pData As Double()() = Nothing
+        Private iNumberOfRows As Integer
+        Private iNumberOfColumns As Integer
+
+        Public Sub New()
+        End Sub
+
+        Public Sub New(iRows As Integer, iColumns As Integer)
+            pData = New Double(iRows - 1)() {}
+            For i = 0 To iRows - 1
+                pData(i) = New Double(iColumns - 1) {}
+                For j = 0 To iColumns - 1
+                    pData(i)(j) = 0.0
+                Next
+            Next
+            iNumberOfRows = iRows
+            iNumberOfColumns = iColumns
+        End Sub
+
+        Public Overridable Function rows() As Integer
+            Return iNumberOfRows
+        End Function
+
+        Public Overridable Function columns() As Integer
+            Return iNumberOfColumns
+        End Function
+
+        Public Overridable Function [get](i As Integer, j As Integer) As Double
+            If i < 0 OrElse i >= iNumberOfRows Then
+                Throw New Exception("get error in Matrix: RowID out of range")
+            End If
+            If j < 0 OrElse j >= iNumberOfColumns Then
+                Throw New Exception("get error in Matrix: ColumnID out of range")
+            End If
+            Return pData(i)(j)
+        End Function
+
+        Public Overridable Sub [set](i As Integer, j As Integer, dValue As Double)
+            If i < 0 OrElse i >= iNumberOfRows Then
+                Throw New Exception("set error in Matrix: RowID out of range")
+            End If
+            If j < 0 OrElse j >= iNumberOfColumns Then
+                Throw New Exception("set error in Matrix: ColumnID out of range")
+            End If
+            pData(i)(j) = dValue
+        End Sub
+
+        Public Overridable WriteOnly Property ToValue As Double
+            Set(value As Double)
+                For i = 0 To iNumberOfRows - 1
+                    For j = 0 To iNumberOfColumns - 1
+                        pData(i)(j) = value
+                    Next
+                Next
+            End Set
+        End Property
+
+        Public Overridable Sub add(i As Integer, j As Integer, dValue As Double)
+            If i < 0 OrElse i >= iNumberOfRows Then
+                Throw New Exception("add error in Matrix: RowID out of range")
+            End If
+            If j < 0 OrElse j >= iNumberOfColumns Then
+                Throw New Exception("add error in Matrix: ColumnID out of range")
+            End If
+            pData(i)(j) += dValue
+        End Sub
+
+        Public Overridable Sub initializeUnif()
+            Dim rd As Random = New Random(123)
+            For i = 0 To iNumberOfRows - 1
+                For j = 0 To iNumberOfColumns - 1
+                    Dim dValue As Double = rd.NextDouble()
+                    pData(i)(j) = 2.0 * dValue - 1.0
+                Next
+            Next
+        End Sub
+
+        Public Overridable Sub initializeNunif()
+            Dim rd As Random = New Random(123)
+            Dim dBnd = Math.Sqrt(6.0) / Math.Sqrt(iNumberOfRows + iNumberOfColumns)
+            For i = 0 To iNumberOfRows - 1
+                For j = 0 To iNumberOfColumns - 1
+                    Dim dValue As Double = rd.NextDouble()
+                    pData(i)(j) = (2.0 * dValue - 1.0) * dBnd
+                Next
+            Next
+        End Sub
+
+        Public Overridable Sub initializeGaussian()
+            Dim rd As Random = New Random(123)
+            For i = 0 To iNumberOfRows - 1
+                For j = 0 To iNumberOfColumns - 1
+                    Dim dValue As Double = rd.NextGaussian()
+                    pData(i)(j) = dValue
+                Next
+            Next
+        End Sub
+
+        Public Overridable Sub rescaleByRow()
+            For i = 0 To iNumberOfRows - 1
+                Dim dNorm = 0.0
+                For j = 0 To iNumberOfColumns - 1
+                    dNorm += pData(i)(j) * pData(i)(j)
+                Next
+                dNorm = Math.Sqrt(dNorm)
+                If dNorm <> 0.0 Then
+                    For j = 0 To iNumberOfColumns - 1
+                        pData(i)(j) *= Math.Min(1.0, 1.0 / dNorm)
+                    Next
+                End If
+            Next
+        End Sub
+
+        Public Overridable Sub truncate(dLower As Double, dUpper As Double)
+            For i = 0 To iNumberOfRows - 1
+                For j = 0 To iNumberOfColumns - 1
+                    Dim dValue = pData(i)(j)
+                    If pData(i)(j) < dLower Then
+                        dValue = dLower
+                    End If
+                    If pData(i)(j) > dUpper Then
+                        dValue = dUpper
+                    End If
+                    pData(i)(j) = dValue
+                Next
+            Next
+        End Sub
+
+        Public Overridable Sub truncate_row(dLower As Double, dUpper As Double, i As Integer)
+            For j = 0 To iNumberOfColumns - 1
+                Dim dValue = pData(i)(j)
+                If pData(i)(j) < dLower Then
+                    dValue = dLower
+                End If
+                If pData(i)(j) > dUpper Then
+                    dValue = dUpper
+                End If
+                pData(i)(j) = dValue
+            Next
+        End Sub
+
+        Public Overridable Function load(fnInput As String) As Boolean
+            Dim reader As StreamReader = New StreamReader(New FileStream(fnInput, FileMode.Open, FileAccess.Read), Encoding.UTF8)
+
+            Dim line = ""
+            line = reader.ReadLine()
+            Dim first_line = StringSplitter.RemoveEmptyEntries(StringSplitter.split(":; ", line))
+            If iNumberOfRows <> Integer.Parse(first_line(1)) OrElse iNumberOfColumns <> Integer.Parse(first_line(3)) Then
+                Throw New Exception("load error in Matrix: row/column number incorrect")
+            End If
+
+            Dim iRowID = 0
+            While Not String.ReferenceEquals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
+                Dim tokens = StringSplitter.RemoveEmptyEntries(StringSplitter.split(vbTab & " ", line))
+                If iRowID < 0 OrElse iRowID >= iNumberOfRows Then
+                    Throw New Exception("load error in Matrix: RowID out of range")
+                End If
+                If tokens.Length <> iNumberOfColumns Then
+                    Throw New Exception("load error in Matrix: ColumnID out of range")
+                End If
+                For iColumnID = 0 To tokens.Length - 1
+                    pData(iRowID)(iColumnID) = Double.Parse(tokens(iColumnID))
+                Next
+                iRowID += 1
+            End While
+
+            reader.Close()
+            Return True
+        End Function
+
+        Public Overridable Sub output(fnOutput As String)
+            Dim writer As StreamWriter = New StreamWriter(New FileStream(fnOutput, FileMode.Create, FileAccess.Write), Encoding.UTF8)
+
+            writer.Write("iNumberOfRows: " & iNumberOfRows.ToString() & "; iNumberOfColumns: " & iNumberOfColumns.ToString() & vbLf)
+            For i = 0 To iNumberOfRows - 1
+                writer.Write((pData(i)(0).ToString() & " ").Trim())
+                For j = 1 To iNumberOfColumns - 1
+                    writer.Write(vbTab & (pData(i)(j).ToString() & " ").Trim())
+                Next
+                writer.Write(vbLf)
+            Next
+
+            writer.Close()
+        End Sub
+
+        Public Overridable Sub releaseMemory()
+            For i = 0 To iNumberOfRows - 1
+                pData(i) = Nothing
+            Next
+            pData = Nothing
+            iNumberOfRows = 0
+            iNumberOfColumns = 0
+        End Sub
+
+        Private Class CSharpImpl
+            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
+            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
+                target = value
+                Return value
+            End Function
+        End Class
+    End Class
+
+End Namespace
