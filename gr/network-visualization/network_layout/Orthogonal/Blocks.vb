@@ -186,7 +186,7 @@ Namespace Orthogonal
                 End If
 
                 For Each blockID In nodeBlocks
-                    Dim block = lBlocks(blockID)
+                    Dim block = lBlocks.TryGetValue(blockID)
                     If block Is Nothing Then
                         block = New List(Of Integer)()
                         lBlocks(blockID) = block

@@ -115,7 +115,7 @@ Module OrthogonalLayoutTest
     Sub test2()
         Dim graph As Integer()() = "E:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\network_layout\Orthogonal\examples\graph4.txt" _
             .ReadAllLines _
-            .Select(Function(l) l.Split.AsInteger) _
+            .Select(Function(l) l.Split(","c).AsInteger) _
             .ToArray
         Dim numberOfAttempts As Integer = 1
         Dim optimize As Boolean = True
