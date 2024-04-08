@@ -154,6 +154,7 @@
 	  <Compile Remove="Test\**" />
 	  <EmbeddedResource Remove="Test\**" />
 	  <None Remove="Test\**" />
+	 
 	  <None Include="..\..\..\..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>

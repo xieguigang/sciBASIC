@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports std = System.Math
 
 Public Class BayesianCurveFitting
@@ -11,6 +12,17 @@ Public Class BayesianCurveFitting
     Private S As NumericMatrix
     Private I As NumericMatrix
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(t As Double(), m As Integer)
+        Call Me.New(t.Sequence(offSet:=1).Select(Function(i) CDbl(i)).ToArray, t, m)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="t"></param>
+    ''' <param name="m">order of curve fitting</param>
     Public Sub New(x As Double(), t As Double(), m As Integer)
         Me.M = m
         N = x.Length
@@ -25,7 +37,10 @@ Public Class BayesianCurveFitting
         Dim sum As NumericMatrix = New NumericMatrix(M + 1, M + 1)
         For i As Integer = 0 To N - 1
             Dim phi = getPhiX(x(i))
-            sum = sum + (phi * phi.Transpose())
+            Dim t_phi = phi.Transpose()
+            Dim a = phi.DotProduct(t_phi)
+
+            sum = sum + a
         Next
         sum = CType(sum * beta, NumericMatrix)
         S = CType(CType(I * alpha, NumericMatrix) + sum, NumericMatrix)

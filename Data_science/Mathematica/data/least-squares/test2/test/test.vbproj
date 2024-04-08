@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A79FCAF6-2D50-4E9E-B4F1-87B8C42BFAEA}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.testoutlier</StartupObject>
+    <StartupObject>Testing.fit_test2</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module1.vb" />
+    <Compile Include="fit_test2.vb" />
     <Compile Include="testoutlier.vb" />
     <Compile Include="weightedFit.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
