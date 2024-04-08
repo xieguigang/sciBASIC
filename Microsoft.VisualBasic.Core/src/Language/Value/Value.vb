@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::c4a9c220d62541c3a561a0ffc99dcc23, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 289
-    '    Code Lines: 146
-    ' Comment Lines: 110
-    '   Blank Lines: 33
-    '     File Size: 11.38 KB
+' Summaries:
 
 
-    '     Class Value
-    ' 
-    '         Properties: HasValue, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
-    '                   IsNothing, ToString
-    '         Operators: -, (+3 Overloads) +, <=, (+2 Overloads) <>, (+2 Overloads) =
-    '                    >=, (+4 Overloads) Like
-    '         Interface IValueOf
-    ' 
-    '             Properties: Value
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 289
+'    Code Lines: 146
+' Comment Lines: 110
+'   Blank Lines: 33
+'     File Size: 11.38 KB
+
+
+'     Class Value
+' 
+'         Properties: HasValue, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
+'                   IsNothing, ToString
+'         Operators: -, (+3 Overloads) +, <=, (+2 Overloads) <>, (+2 Overloads) =
+'                    >=, (+4 Overloads) Like
+'         Interface IValueOf
+' 
+'             Properties: Value
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting
@@ -99,6 +100,8 @@ Namespace Language
             End Get
         End Property
 
+        Shared ReadOnly defaultItem As PropertyInfo
+
         ''' <summary>
         ''' Get data from <see cref="Value"/> through its index method
         ''' </summary>
@@ -106,10 +109,18 @@ Namespace Language
         ''' <returns></returns>
         Default Public Overridable Property Index(key As Object) As Object
             Get
-                Return CObj(Value)(key)
+                If defaultItem Is Nothing Then
+                    Throw New MissingMemberException($"target clr type '{GetType(T)}' has no default property, could not get data through its index method!")
+                End If
+
+                Return defaultItem.GetValue(Value, index:={key})
             End Get
             Set(value As Object)
-                CObj(Me.Value)(key) = value
+                If defaultItem Is Nothing Then
+                    Throw New MissingMemberException($"target clr type '{GetType(T)}' has no default property, could not set data through its index method!")
+                End If
+
+                Call defaultItem.SetValue(Me.Value, value, index:={key})
             End Set
         End Property
 
@@ -197,6 +208,16 @@ Namespace Language
         Sub New()
             Call MyBase.New
             Value = Nothing
+        End Sub
+
+        Shared Sub New()
+            Dim type As Type = GetType(T)
+            Dim properties = type.GetProperties
+
+            defaultItem = properties _
+                .Where(Function(pi) pi.GetIndexParameters.Length = 1) _
+                .Where(Function(pi) pi.Attributes.HasFlag(PropertyAttributes.HasDefault)) _
+                .FirstOrDefault
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
