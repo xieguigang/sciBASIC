@@ -18,7 +18,7 @@ Namespace Orthogonal
     ''' OGE uses an algorithm that uses st-numberings to construct a weak-visibility representation, and then PQ-trees to generate the orthographic embeddings. If the input graph is plannar, this procedure guarantees that an orthographic embedding without any edges crossing over any other vertices will be found. The algorihtms implemented in this package were adapted from the following papers:  
     ''' - S. Even and R. E. Tarjan, "Computing an st-numbering", Theoret. Comput. Sci. 2, (1976), 339-344.  
     ''' - Tamassia, Roberto, and Ioannis G. Tollis. "Planar Grid Embedding in Linear Time"  
-    ''' - Tamassia, Roberto, and Ioannis G. Tollis. "A unified approach to visibility representations of planar graphs." Discrete & Computational Geometry 1.4 (1986): 321-341.  
+    ''' - Tamassia, Roberto, and Ioannis G. Tollis. "A unified approach to visibility representations of planar graphs." Discrete &amp; Computational Geometry 1.4 (1986): 321-341.  
     '''
     ''' Example usage: java -classpath OGE.jar Main data/graph1 oe1.txt -png:oe1.png  
     '''
@@ -67,13 +67,13 @@ Namespace Orthogonal
         Public Shared DEBUG As Integer = 0
 
 
-        Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean, r As Random) As OrthographicEmbeddingResult
+        Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean) As OrthographicEmbeddingResult
             Dim n = graph.Length
             Dim embedding = New OEVertex(n - 1) {}
 
             ' Algorithm from: "Planar Grid Embedding in Linear Time" Tamasia and Tollis
             ' Step 1: Construct a visibility representation Gamma for the graph
-            Dim Gamma As New Visibility(graph, r)
+            Dim Gamma As New Visibility(graph)
             If Not Gamma.WVisibility() Then
                 Return Nothing
             End If

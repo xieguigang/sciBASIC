@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ListExtensions
 Imports std = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -20,9 +21,9 @@ Namespace Orthogonal
         ' Implementation of the algorithm in:
         ' S. Even and R. E. Tarjan, Computing an st-numbering, Theoret. Comput. Sci. 2, (1976), 339-344.
 
-        Public Shared Function stNumbering(graph As Integer()(), r As Random) As Integer()
+        Public Shared Function stNumbering(graph As Integer()()) As Integer()
             '        int n = graph.length;
-            Return Orthogonal.STNumbering.stNumbering(graph, r.Next(graph.Length), r)
+            Return Orthogonal.STNumbering.stNumbering(graph, randf.Next(graph.Length))
             ' 
             ' 	        if (DEBUG>=1) {
             ' 	            System.out.println("Computing stNumebring of graph:");
@@ -79,7 +80,7 @@ Namespace Orthogonal
             Return l
         End Function
 
-        Public Shared Function stNumbering(graph As Integer()(), s As Integer, r As Random) As Integer()
+        Public Shared Function stNumbering(graph As Integer()(), s As Integer) As Integer()
             Dim t = -1
             Dim candidates As IList(Of Integer) = New List(Of Integer)()
             For i = 0 To graph.Length - 1
@@ -90,7 +91,7 @@ Namespace Orthogonal
             If candidates.Count = 0 Then
                 Return Nothing
             End If
-            t = candidates(r.Next(candidates.Count))
+            t = candidates(randf.Next(candidates.Count))
             Return Orthogonal.STNumbering.stNumbering(graph, s, t)
         End Function
 

@@ -4,6 +4,7 @@
 '  and open the template in the editor.
 ' 
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.Math
@@ -17,8 +18,6 @@ Namespace Orthogonal
     ''' </summary>
     Public Class Visibility
         Public Shared DEBUG As Integer = 0
-
-        Public r As Random = Nothing
 
         Public graph As Integer()()
         Public nEdges As Integer
@@ -34,12 +33,12 @@ Namespace Orthogonal
         Public vertical_y1 As Double()
         Public vertical_y2 As Double()
 
-        Public Sub New(a_graph As Integer()(), a_r As Random)
+        Public Sub New(a_graph As Integer()())
             Dim n = a_graph.Length
-            r = a_r
             graph = a_graph
             nEdges = 0
             edgeIndexes = RectangularArray.Matrix(Of Integer)(n, n)
+
             For i = 0 To n - 1
                 For j = i + 1 To n - 1
                     If graph(i)(j) = 0 Then
@@ -73,14 +72,13 @@ Namespace Orthogonal
             End If
         End Sub
 
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(v As Visibility)
-            Me.copy(v)
+            Call copy(v)
         End Sub
 
 
         Public Overridable Sub copy(v As Visibility)
-            r = v.r
             graph = v.graph
             '        graph = new int[v.graph.length][v.graph[0].length];
             '        for(int i = 0;i<v.graph.length;i++) {
@@ -239,7 +237,7 @@ Namespace Orthogonal
                 Dim block1 = blocks(blockID1)
                 Dim blockgraph1 = blockSubgraph(block1)
 
-                Dim block1Visibility As New Visibility(blockgraph1, r)
+                Dim block1Visibility As New Visibility(blockgraph1)
                 If Not block1Visibility.WVisibility2Connected() Then
                     Return False
                 End If
@@ -319,9 +317,9 @@ Namespace Orthogonal
 
                                 Dim block = blocks(blockID)
                                 Dim blockgraph = blockSubgraph(block)
-                                Dim bv As New Visibility(blockgraph, r)
+                                Dim bv As New Visibility(blockgraph)
                                 ' get an st-numbering where s is the cutnode:
-                                Dim blockSTNumbering As Integer() = STNumbering.stNumbering(blockgraph, blocks(blockID).IndexOf(c), r)
+                                Dim blockSTNumbering As Integer() = STNumbering.stNumbering(blockgraph, blocks(blockID).IndexOf(c))
                                 ' compute the visibility:
                                 If Not bv.WVisibility2Connected(blockSTNumbering) Then
                                     Return False
@@ -435,7 +433,7 @@ Namespace Orthogonal
         Public Overridable Function WVisibility2Connected() As Boolean
             ' 1,2: select (s,t) and generate an st-order. 
             '      Generate the graph D induced by the st-ordering
-            Dim stNumbering As Integer() = Orthogonal.STNumbering.stNumbering(graph, r)
+            Dim stNumbering As Integer() = Orthogonal.STNumbering.stNumbering(graph)
             If Visibility.DEBUG >= 1 Then
                 ' verify the STNumbering:
                 For i = 0 To stNumbering.Length - 1
