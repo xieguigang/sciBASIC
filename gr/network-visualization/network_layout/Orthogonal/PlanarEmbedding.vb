@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ListExtensions
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.ListExtensions
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
