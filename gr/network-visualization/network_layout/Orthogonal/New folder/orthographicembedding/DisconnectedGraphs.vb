@@ -68,7 +68,7 @@ Namespace Orthogonal.orthographicembedding
         End Function
 
 
-        Public Shared Function mergeDisconnectedEmbeddingsSideBySide(disconnectedEmbeddings As IList(Of orthographicembedding.OrthographicEmbeddingResult), vertexIndexes As IList(Of IList(Of Integer)), separation As Double) As orthographicembedding.OrthographicEmbeddingResult
+        Public Shared Function mergeDisconnectedEmbeddingsSideBySide(disconnectedEmbeddings As IList(Of OrthographicEmbeddingResult), vertexIndexes As IList(Of IList(Of Integer)), separation As Double) As OrthographicEmbeddingResult
             If disconnectedEmbeddings.Count = 1 Then
                 Return disconnectedEmbeddings(0)
             Else
@@ -80,13 +80,13 @@ Namespace Orthogonal.orthographicembedding
                     n += embeddingSizes(i)
                 Next
 
-                Dim aggregated As orthographicembedding.OrthographicEmbeddingResult = New orthographicembedding.OrthographicEmbeddingResult(n)
+                Dim aggregated As OrthographicEmbeddingResult = New OrthographicEmbeddingResult(n)
 
                 Dim startIndex = 0
                 Dim startX As Double = 0
                 Dim nextStartX As Double = 0
                 For i = 0 To disconnectedEmbeddings.Count - 1
-                    Dim er As orthographicembedding.OrthographicEmbeddingResult = disconnectedEmbeddings(i)
+                    Dim er As OrthographicEmbeddingResult = disconnectedEmbeddings(i)
                     Dim vi = vertexIndexes(i)
                     For j = 0 To embeddingSizes(i) - 1
                         ' node indexes:

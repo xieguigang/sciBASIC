@@ -1257,9 +1257,9 @@ Namespace Orthogonal.orthographicembedding
             Return True
         End Function
 
-        Public Overridable Function removeVertex(v As Integer) As OrthographicEmbedding.OrthographicEmbeddingResult
+        Public Overridable Function removeVertex(v As Integer) As OrthographicEmbeddingResult
             Dim n = nodeIndexes.Length - 1
-            Dim o As OrthographicEmbedding.OrthographicEmbeddingResult = New OrthographicEmbedding.OrthographicEmbeddingResult(n)
+            Dim o As OrthographicEmbeddingResult = New OrthographicEmbeddingResult(n)
             If embedding Is Nothing Then
                 o.embedding = Nothing
             End If
@@ -1313,9 +1313,9 @@ Namespace Orthogonal.orthographicembedding
             Return o
         End Function
 
-        Public Overridable Function addVertices(nv As Integer) As OrthographicEmbedding.OrthographicEmbeddingResult
+        Public Overridable Function addVertices(nv As Integer) As OrthographicEmbeddingResult
             Dim n = nodeIndexes.Length + nv
-            Dim o As OrthographicEmbedding.OrthographicEmbeddingResult = New OrthographicEmbedding.OrthographicEmbeddingResult(n)
+            Dim o As New OrthographicEmbeddingResult(n)
             If embedding Is Nothing Then
                 o.embedding = Nothing
             End If
