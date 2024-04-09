@@ -8,6 +8,15 @@ Namespace node2vec
     ''' </summary>
     Public Module Solver
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="graph"></param>
+        ''' <param name="numWalks"></param>
+        ''' <param name="walkLength"></param>
+        ''' <param name="dimensions"></param>
+        ''' <param name="windowSize"></param>
+        ''' <returns>node mapping to a vector</returns>
         <Extension>
         Public Function CreateEmbedding(graph As Graph,
                                         Optional numWalks As Integer = 10,
@@ -15,29 +24,18 @@ Namespace node2vec
                                         Optional dimensions As Integer = 20,
                                         Optional windowSize As Integer = 10) As VectorModel
 
-            Dim pathList As IList(Of IList) = graph.simulateWalks(numWalks, walkLength)
-
-            Console.WriteLine("Learning Embedding...")
-
-            ' convert path list to string
-            Dim sentList = ""
-            For Each path As IList(Of Graph.Node) In pathList
-                Dim sent = ""
-                For Each node In path
-                    sent += node.Id.ToString() & " "
-                Next
-                sentList += sent & vbLf
-            Next
-
+            Dim pathList As IList(Of IList(Of Graph.Node)) = graph.simulateWalks(numWalks, walkLength)
             ' use word2vec to do word embedding
             Dim model As New Word2VecFactory
             model.setMethod(TrainMethod.Skip_Gram).setWindow(windowSize).setVectorSize(dimensions)
             Dim engine As Word2Vec = model.build()
 
             For Each path As IList(Of Graph.Node) In pathList
+                ' convert path list to string
                 engine.readTokens(path.Select(Function(v) v.Id.ToString).ToArray)
             Next
 
+            Console.WriteLine("Learning Embedding...")
             engine.training()
 
             Dim vectors = engine.outputVector

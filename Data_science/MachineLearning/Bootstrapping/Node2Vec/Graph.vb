@@ -73,7 +73,7 @@ Namespace node2vec
                     weightSum += weight
                 Next
                 Dim norm = weightSum
-                probs = probs.[Select](Function(aDouble, i) aDouble / norm).ToList()
+                probs = probs.[Select](Function(aDouble, i) aDouble / norm).AsList()
                 aliasNodes(node) = New AliasMethod(probs)
             Next
             For Each edge In edgeSet
@@ -102,7 +102,7 @@ Namespace node2vec
                 probs.Add(weight)
             Next
             Dim norm = weightSum
-            probs = probs.[Select](Function(aDouble, i) aDouble / norm).ToList()
+            probs = probs.[Select](Function(aDouble, i) aDouble / norm).AsList()
             Return New AliasMethod(probs)
         End Function
 
@@ -165,7 +165,7 @@ Namespace node2vec
                     neighborList.Add(n) ' only node-->n
                 End If
             Next
-            neighborList = neighborList.Sort(Function(n) n.idField).ToList()
+            neighborList = neighborList.Sort(Function(n) n.idField).AsList()
             Return neighborList
         End Function
 
