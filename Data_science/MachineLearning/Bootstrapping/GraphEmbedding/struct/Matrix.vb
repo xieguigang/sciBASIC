@@ -34,6 +34,10 @@ Namespace GraphEmbedding.struct
             Return iNumberOfColumns
         End Function
 
+        Public Overrides Function ToString() As String
+            Return $"[rows:{rows()}, columns:{columns()}]"
+        End Function
+
         Public Overridable Function [get](i As Integer, j As Integer) As Double
             If i < 0 OrElse i >= iNumberOfRows Then
                 Throw New Exception("get error in Matrix: RowID out of range")

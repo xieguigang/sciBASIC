@@ -24,6 +24,10 @@
         Public Overridable Function relation() As Integer
             Return iRelation
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"[head:{head()} -> tail:{tail()}] relationship:{relation()}"
+        End Function
     End Class
 
 End Namespace
