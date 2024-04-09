@@ -82,6 +82,14 @@ Public Class Vertex : Implements INamedValue
         ID = address
     End Sub
 
+    Public Overrides Function Equals(obj As Object) As Boolean
+        If TypeOf obj IsNot Vertex Then
+            Return False
+        End If
+
+        Return DirectCast(obj, Vertex).ID = ID
+    End Function
+
     Public Overrides Function ToString() As String
         Return $"({ID}) {label}"
     End Function

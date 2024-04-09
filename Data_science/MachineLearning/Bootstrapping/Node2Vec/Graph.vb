@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 
 Namespace node2vec
@@ -31,14 +32,15 @@ Namespace node2vec
 
         ''' <summary>
         ''' load graph data from file
-        ''' input format: node1_id_int node2_id_int <weight_float> </summary>
+        ''' input format: node1_id_int node2_id_int &lt;weight_float> </summary>
         ''' <param name="file"> path of the input file </param>
         Private Sub loadGraphFrom(file As String)
             ' read graph info from file
             ' StreamReader fr = new StreamReader(file);
             Dim br As StreamReader = New StreamReader(file)
-            Dim lineTxt As String
-            While Not String.ReferenceEquals((CSharpImpl.__Assign(lineTxt, br.ReadLine())), Nothing)
+            Dim lineTxt As Value(Of String) = ""
+
+            While (lineTxt = br.ReadLine()) IsNot Nothing
                 ' parse the line text to get the edge info
                 Dim strList = lineTxt.Split(" "c)
                 Dim node1ID = Integer.Parse(strList(0))
@@ -71,7 +73,7 @@ Namespace node2vec
                     weightSum += weight
                 Next
                 Dim norm = weightSum
-                probs = probs.[Select](Function(aDouble, i) CSharpImpl.__Assign(aDouble, norm)).ToList()
+                probs = probs.[Select](Function(aDouble, i) aDouble / norm).ToList()
                 aliasNodes(node) = New AliasMethod(probs)
             Next
             For Each edge In edgeSet
@@ -100,7 +102,7 @@ Namespace node2vec
                 probs.Add(weight)
             Next
             Dim norm = weightSum
-            probs = probs.[Select](Function(aDouble, i) CSharpImpl.__Assign(aDouble, norm)).ToList()
+            probs = probs.[Select](Function(aDouble, i) aDouble / norm).ToList()
             Return New AliasMethod(probs)
         End Function
 
@@ -110,8 +112,7 @@ Namespace node2vec
         ''' <param name="startNode"> the start node of this walk </param>
         ''' <returns> the path that we pass, expressed as a Node List </returns>
         Private Function walk(walkLength As Integer, startNode As Node) As IList(Of Node)
-            Dim path As IList(Of Node) = New List(Of Node)()
-            path.Add(startNode)
+            Dim path As New List(Of Node)() From {startNode}
 
             While path.Count < walkLength
                 Dim current = path(path.Count - 1) ' the last node on the path
@@ -310,14 +311,6 @@ Namespace node2vec
             ''' <returns> true if two are equal </returns>
             Friend Overridable Function Equals(that As Edge) As Boolean
                 Return src.Equals(that.src) AndAlso dst.Equals(that.dst)
-            End Function
-        End Class
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
             End Function
         End Class
 

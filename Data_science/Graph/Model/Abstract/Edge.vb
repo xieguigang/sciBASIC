@@ -104,6 +104,16 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     '    Return ID.GetHashCode
     'End Function
 
+    Public Overrides Function Equals(obj As Object) As Boolean
+        If Not TypeOf obj Is Edge(Of Vertex) Then
+            Return False
+        Else
+            With DirectCast(obj, Edge(Of Vertex))
+                Return .U.Equals(U) AndAlso .V.Equals(V)
+            End With
+        End If
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return $"({GetHashCode()}) {U} => {V}"
