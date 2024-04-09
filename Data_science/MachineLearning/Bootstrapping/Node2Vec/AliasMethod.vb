@@ -21,8 +21,8 @@ Namespace node2vec
     Public NotInheritable Class AliasMethod
 
         ' The probability and alias tables. 
-        Private ReadOnly [alias] As Integer()
-        Private ReadOnly probability As Double()
+        ReadOnly [alias] As Integer()
+        ReadOnly probability As Double()
 
         ''' <summary>
         ''' Constructs a new node2vec.AliasMethod to sample from a discrete distribution and
@@ -117,6 +117,7 @@ Namespace node2vec
             While small.Count > 0
                 probability(small.Pop()) = 1.0
             End While
+
             While large.Count > 0
                 probability(large.Pop()) = 1.0
             End While
@@ -129,7 +130,6 @@ Namespace node2vec
         Public Function [next]() As Integer
             ' Generate a fair die roll to determine which column to inspect. 
             Dim column = randf.Next(probability.Length)
-
             ' Generate a biased coin toss to determine which option to pick. 
             Dim coinToss As Boolean = randf.NextDouble() < probability(column)
 

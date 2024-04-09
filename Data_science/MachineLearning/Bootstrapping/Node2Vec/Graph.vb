@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory
+﻿Imports Microsoft.VisualBasic.Data
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
@@ -22,6 +23,20 @@ Namespace node2vec
             Me.directed = directed
             Me.p = p
             Me.q = q
+        End Sub
+
+        Sub New(graph As GraphTheory.Graph, Optional directed As Boolean = False, Optional p As Double = 1, Optional q As Double = 1)
+            Call Me.New(directed, p, q)
+
+            For Each edge As Edge In graph.graphEdges
+                Call addEdge(
+                    src:=addNode(edge.U.ID, edge.U.label),
+                    dst:=addNode(edge.V.ID, edge.V.label),
+                    weight:=If(edge.weight <= 0, 1, edge.weight)
+                )
+            Next
+
+            Call preprocess()
         End Sub
 
         ''' <summary>
