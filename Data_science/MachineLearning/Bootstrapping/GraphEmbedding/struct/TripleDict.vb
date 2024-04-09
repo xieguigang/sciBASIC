@@ -4,6 +4,7 @@ Imports System.Text
 Namespace GraphEmbedding.struct
 
     Public Class TripleDict
+
         Public pTripleDict As Dictionary(Of String, Boolean) = Nothing
 
         Public Sub New()

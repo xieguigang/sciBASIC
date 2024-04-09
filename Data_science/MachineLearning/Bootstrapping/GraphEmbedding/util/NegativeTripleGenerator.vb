@@ -20,17 +20,20 @@ Namespace GraphEmbedding.util
             Dim iPosHead As Integer = positiveTriple.head()
             Dim iPosTail As Integer = positiveTriple.tail()
             Dim iPosRelation As Integer = positiveTriple.relation()
-            Dim NegativeTripleSet As HashSet(Of Triple) = New HashSet(Of Triple)()
+            Dim NegativeTripleSet As New HashSet(Of Triple)()
 
             While NegativeTripleSet.Count < m_NumNeg
                 Dim iNegHead = iPosHead
-                Dim NegativeTriple As Triple = New Triple(iNegHead, iPosTail, iPosRelation)
+                Dim NegativeTriple As New Triple(iNegHead, iPosTail, iPosRelation)
+
                 While iNegHead = iPosHead
                     iNegHead = std.Floor(randf.NextDouble * numOfEntities)
                     NegativeTriple = New Triple(iNegHead, iPosTail, iPosRelation)
                 End While
+
                 NegativeTripleSet.Add(NegativeTriple)
             End While
+
             Return NegativeTripleSet
         End Function
 
@@ -38,17 +41,17 @@ Namespace GraphEmbedding.util
             Dim iPosHead As Integer = positiveTriple.head()
             Dim iPosTail As Integer = positiveTriple.tail()
             Dim iPosRelation As Integer = positiveTriple.relation()
-
-
-            Dim NegativeTripleSet As HashSet(Of Triple) = New HashSet(Of Triple)()
+            Dim NegativeTripleSet As New HashSet(Of Triple)()
 
             While NegativeTripleSet.Count < m_NumNeg
                 Dim iNegTail = iPosTail
-                Dim NegativeTriple As Triple = New Triple(iPosHead, iNegTail, iPosRelation)
+                Dim NegativeTriple As New Triple(iPosHead, iNegTail, iPosRelation)
+
                 While iNegTail = iPosTail
                     iNegTail = std.Floor(randf.NextDouble * numOfEntities)
                     NegativeTriple = New Triple(iPosHead, iNegTail, iPosRelation)
                 End While
+
                 NegativeTripleSet.Add(NegativeTriple)
             End While
 
@@ -59,13 +62,14 @@ Namespace GraphEmbedding.util
             Dim iPosHead As Integer = positiveTriple.head()
             Dim iPosTail As Integer = positiveTriple.tail()
             Dim iPosRelation As Integer = positiveTriple.relation()
-
             Dim iNegRelation = iPosRelation
-            Dim NegativeTriple As Triple = New Triple(iPosHead, iPosTail, iNegRelation)
+            Dim NegativeTriple As New Triple(iPosHead, iPosTail, iNegRelation)
+
             While iNegRelation = iPosRelation
                 iNegRelation = std.Floor(randf.NextDouble * numOfRelation)
                 NegativeTriple = New Triple(iPosHead, iPosTail, iNegRelation)
             End While
+
             Return NegativeTriple
         End Function
     End Class

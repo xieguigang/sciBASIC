@@ -6,6 +6,7 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Namespace GraphEmbedding.struct
 
     Public Class TripleSet
+
         Private iNumberOfEntities As Integer
         Private iNumberOfRelations As Integer
         Private iNumberOfTriples As Integer

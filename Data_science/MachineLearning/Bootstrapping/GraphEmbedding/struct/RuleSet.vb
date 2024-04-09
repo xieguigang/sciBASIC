@@ -15,7 +15,7 @@ Namespace GraphEmbedding.struct
                 Dim tokens = line.Split(ASCII.TAB)
                 Dim rule As Rule = New Rule()
                 Dim ruleString = tokens(0)
-                rule.conf = Double.Parse(tokens(1))
+                rule.confidence = Double.Parse(tokens(1))
                 Dim ruleStrings = ruleString.Split(","c)
                 rule.add(New Relation(Integer.Parse(ruleStrings(ruleStrings.Length - 1)), 1))
                 For i = 0 To ruleStrings.Length - 1 - 1

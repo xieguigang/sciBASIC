@@ -2,6 +2,7 @@
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 
@@ -85,11 +86,11 @@ Namespace GraphEmbedding.complex
 
         Public Overrides Sub learn()
             Dim PATHLOG As String = "log/log-k" & m_NumFactor.ToString() & "-lmbda" & m_Lambda.ToString("F5") & "-gamma" & m_Gamma.ToString("F5") & "-neg" & m_NumNegative.ToString() & ".txt"
-            Dim writer As StreamWriter = New StreamWriter(PATHLOG.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), Encoding.UTF8)
+            Dim writer As New StreamWriter(PATHLOG.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), Encoding.UTF8)
 
-            Dim lstPosTriples As Dictionary(Of Integer, List(Of Triple)) = New Dictionary(Of Integer, List(Of Triple))()
-            Dim lstHeadNegTriples As Dictionary(Of Integer, List(Of Triple)) = New Dictionary(Of Integer, List(Of Triple))()
-            Dim lstTailNegTriples As Dictionary(Of Integer, List(Of Triple)) = New Dictionary(Of Integer, List(Of Triple))()
+            Dim lstPosTriples As New Dictionary(Of Integer, List(Of Triple))()
+            Dim lstHeadNegTriples As New Dictionary(Of Integer, List(Of Triple))()
+            Dim lstTailNegTriples As New Dictionary(Of Integer, List(Of Triple))()
 
             Dim iCurIter = 0
             Dim dCurMRR = 0.0
@@ -121,8 +122,23 @@ Namespace GraphEmbedding.complex
                     End If
                 Next
 
-                For iID = 0 To m_NumBatch - 1
-                    Dim adagrad As AdaGrad = New AdaGrad(lstPosTriples(iID), lstHeadNegTriples(iID), lstTailNegTriples(iID), m_Real_MatrixE, m_Real_MatrixR, m_Imag_MatrixE, m_Imag_MatrixR, m_Real_MatrixEGradient, m_Real_MatrixRGradient, m_Imag_MatrixEGradient, m_Imag_MatrixRGradient, m_Real_MatrixEGSquare, m_Real_MatrixRGSquare, m_Imag_MatrixEGSquare, m_Imag_MatrixRGSquare, m_Gamma, m_Lambda)
+                For Each iID As Integer In Tqdm.Range(0, m_NumBatch)
+                    Dim adagrad As New AdaGrad(
+                        lstPosTriples(iID), lstHeadNegTriples(iID), lstTailNegTriples(iID),
+                        m_Real_MatrixE,
+                        m_Real_MatrixR,
+                        m_Imag_MatrixE,
+                        m_Imag_MatrixR,
+                        m_Real_MatrixEGradient,
+                        m_Real_MatrixRGradient,
+                        m_Imag_MatrixEGradient,
+                        m_Imag_MatrixRGradient,
+                        m_Real_MatrixEGSquare,
+                        m_Real_MatrixRGSquare,
+                        m_Imag_MatrixEGSquare,
+                        m_Imag_MatrixRGSquare,
+                        m_Gamma, m_Lambda)
+
                     adagrad.gradientDescent()
                 Next
                 lstPosTriples = New Dictionary(Of Integer, List(Of Triple))()

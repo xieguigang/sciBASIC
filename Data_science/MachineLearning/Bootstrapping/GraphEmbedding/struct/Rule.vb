@@ -1,21 +1,21 @@
-﻿Imports System.Collections.Generic
-
-Namespace GraphEmbedding.struct
+﻿Namespace GraphEmbedding.struct
 
     Public Class Rule
-        Private lstRelations As List(Of Relation)
-        Public conf As Double
+
+        ReadOnly m_relations As List(Of Relation)
+
+        Public Property confidence() As Double
+
         Public Sub New()
-            lstRelations = New List(Of Relation)()
+            m_relations = New List(Of Relation)()
         End Sub
-        Public Overridable Function confidence() As Double
-            Return conf
-        End Function
+
         Public Overridable Function relations() As List(Of Relation)
-            Return lstRelations
+            Return m_relations
         End Function
+
         Public Overridable Sub add(r As Relation)
-            lstRelations.Add(r)
+            m_relations.Add(r)
         End Sub
     End Class
 
