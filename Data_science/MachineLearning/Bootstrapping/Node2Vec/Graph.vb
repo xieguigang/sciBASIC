@@ -11,15 +11,12 @@ Namespace node2vec
     ''' </summary>
     Public Class Graph
 
-        Private nodeSet As ISet(Of Node) = New HashSet(Of Node)()
-        Private edgeSet As ISet(Of Edge) = New HashSet(Of Edge)()
-
-        Private directed As Boolean
-
-        Private p, q As Double
-
-        Private aliasNodes As IDictionary(Of Node, AliasMethod) = New Dictionary(Of Node, AliasMethod)()
-        Private aliasEdges As IDictionary(Of Edge, AliasMethod) = New Dictionary(Of Edge, AliasMethod)()
+        ReadOnly nodeSet As New HashSet(Of Node)()
+        ReadOnly edgeSet As New HashSet(Of Edge)()
+        ReadOnly directed As Boolean
+        ReadOnly p, q As Double
+        ReadOnly aliasNodes As New Dictionary(Of Node, AliasMethod)()
+        ReadOnly aliasEdges As New Dictionary(Of Edge, AliasMethod)()
 
         Sub New(Optional directed As Boolean = False, Optional p As Double = 1, Optional q As Double = 1)
             Me.directed = directed
@@ -108,7 +105,7 @@ Namespace node2vec
         ''' <param name="walkLength"> steps of every walk </param>
         ''' <returns> the list of paths that we've walked </returns>
         Public Overridable Iterator Function simulateWalks(numWalks As Integer, walkLength As Integer) As IEnumerable(Of IList(Of Node))
-            Dim nodeList As List(Of Node) = New List(Of Node)(nodeSet)
+            Dim nodeList As New List(Of Node)(nodeSet)
             Console.WriteLine("Walk iteration:")
             For i As Integer = 0 To numWalks - 1
                 Console.WriteLine(i + 1.ToString() & "/" & numWalks.ToString())
@@ -126,7 +123,7 @@ Namespace node2vec
         ''' <param name="node"> the node </param>
         ''' <returns> a sorted list of nodes </returns>
         Private Function sortedNeighborList(node As Node) As IList(Of Node)
-            Dim neighborList As List(Of Node) = New List(Of Node)()
+            Dim neighborList As New List(Of Node)()
             For Each n In nodeSet
                 If hasEdge(node, n) Then
                     neighborList.Add(n) ' only node-->n
