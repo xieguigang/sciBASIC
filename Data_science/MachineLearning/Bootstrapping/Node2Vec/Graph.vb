@@ -1,6 +1,9 @@
 ﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
+Imports Node = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
 Namespace node2vec
 
@@ -62,7 +65,7 @@ Namespace node2vec
         ''' pre-processing of transition probabilities for guiding the random walks
         ''' </summary>
         Private Sub preprocess()
-            For Each node In nodeSet
+            For Each node As Vertex In nodeSet
                 Dim neighbors = sortedNeighborList(node)
                 Dim probs As IList(Of Double) = New List(Of Double)()
                 Dim weightSum As Double = 0
@@ -76,7 +79,7 @@ Namespace node2vec
                 probs = probs.[Select](Function(aDouble, i) aDouble / norm).AsList()
                 aliasNodes(node) = New AliasMethod(probs)
             Next
-            For Each edge In edgeSet
+            For Each edge As Edge In edgeSet
                 aliasEdges(edge) = computeAliasEdge(edge)
             Next
         End Sub
@@ -86,14 +89,14 @@ Namespace node2vec
         ''' <param name="edge"> the edge to compute </param>
         ''' <returns> the node2vec.AliasMethod object that store distribution information </returns>
         Private Function computeAliasEdge(edge As Edge) As AliasMethod
-            Dim neighbors = sortedNeighborList(edge.dst)
+            Dim neighbors = sortedNeighborList(edge.V)
             Dim probs As List(Of Double) = New List(Of Double)()
             Dim weightSum As Double = 0
             For Each neighbor In neighbors
                 Dim weight As Double
-                If neighbor Is edge.src Then
+                If neighbor Is edge.U Then
                     weight = edge.weight / p
-                ElseIf hasEdge(neighbor, edge.src) Then
+                ElseIf hasEdge(neighbor, edge.U) Then
                     weight = edge.weight
                 Else
                     weight = edge.weight / q
@@ -163,7 +166,7 @@ Namespace node2vec
                     neighborList.Add(n) ' only node-->n
                 End If
             Next
-            neighborList = neighborList.Sort(Function(n) n.idField).AsList()
+            neighborList = neighborList.Sort(Function(n) n.ID).AsList()
             Return neighborList
         End Function
 
@@ -174,8 +177,10 @@ Namespace node2vec
         ''' <param name="dst"> node2 </param>
         ''' <returns> true is there is an edge </returns>
         Private Function hasEdge(src As Node, dst As Node) As Boolean
-            For Each edge In edgeSet
-                If edge.Equals(New Edge(Me, src, dst)) Then
+            Dim find As New Edge(src, dst)
+
+            For Each edge As Edge In edgeSet
+                If edge.Equals(find) Then
                     Return True
                 End If
             Next
@@ -188,12 +193,14 @@ Namespace node2vec
         ''' <param name="dst"> node2 </param>
         ''' <returns> the edge, null is not exist such an edge </returns>
         Private Function getEdge(src As Node, dst As Node) As Edge
-            For Each edge In edgeSet
-                If edge.Equals(New Edge(Me, src, dst)) Then
+            Dim find As New Edge(src, dst)
+
+            For Each edge As Edge In edgeSet
+                If edge.Equals(find) Then
                     Return edge
                 End If
             Next
-            Throw New Exception()
+            Throw New MissingMemberException(find.ToString)
         End Function
 
         ''' <summary>
@@ -213,7 +220,7 @@ Namespace node2vec
                     edge = getEdge(src, dst)
                     edge.weight = weight ' update the weight of the edge
                 Else
-                    edge = New Edge(Me, src, dst, weight)
+                    edge = New Edge(src, dst, weight)
                     edgeSet.Add(edge) ' add it to edge set
                 End If
             Else
@@ -226,8 +233,8 @@ Namespace node2vec
                     edge1.weight = weight
                     edge2.weight = weight
                 Else
-                    edge1 = New Edge(Me, src, dst, weight)
-                    edge2 = New Edge(Me, dst, src, weight)
+                    edge1 = New Edge(src, dst, weight)
+                    edge2 = New Edge(dst, src, weight)
                     ' add it to edge set
                     edgeSet.Add(edge1)
                     edgeSet.Add(edge2)
@@ -243,75 +250,16 @@ Namespace node2vec
         ''' <returns> the node found </returns>
         Private Function addNode(id As Integer) As Node
             For Each v In nodeSet
-                If v.idField = id Then
+                If v.ID = id Then
                     Return v
                 End If
             Next
             ' not exists, create a new node with the id
-            Dim node As Node = New Node(Me, id)
+            Dim node As New Node(id)
             ' add it to the nodeSet
             nodeSet.Add(node)
             Return node
         End Function
-
-        Public Class Node
-            Private ReadOnly outerInstance As Graph
-
-
-            Friend idField As Integer
-
-            Friend Sub New(outerInstance As Graph, id As Integer)
-                Me.outerInstance = outerInstance
-                idField = id
-            End Sub
-
-            Friend Overridable Function Equals(that As Node) As Boolean
-                Return idField = that.idField
-            End Function
-
-            Public Overridable ReadOnly Property Id As Integer
-                Get
-                    Return idField
-                End Get
-            End Property
-        End Class
-
-        Friend Class Edge
-            Private ReadOnly outerInstance As Graph
-
-
-            Friend src, dst As Node
-            Friend weight As Double
-
-            Friend Sub New(outerInstance As Graph, src As Node, dst As Node)
-                Me.outerInstance = outerInstance
-                If src Is Nothing OrElse dst Is Nothing Then
-                    Throw New ArgumentException()
-                End If
-                Me.src = src
-                Me.dst = dst
-            End Sub
-
-            Friend Sub New(outerInstance As Graph, src As Node, dst As Node, weight As Double)
-                Me.outerInstance = outerInstance
-                If src Is Nothing OrElse dst Is Nothing Then
-                    Throw New ArgumentException()
-                End If
-                Me.src = src
-                Me.dst = dst
-                Me.weight = weight
-            End Sub
-
-            ''' <summary>
-            ''' two edges are equal if and only if they start at the same node
-            ''' and end at the same node </summary>
-            ''' <param name="that"> the node to compare </param>
-            ''' <returns> true if two are equal </returns>
-            Friend Overridable Function Equals(that As Edge) As Boolean
-                Return src.Equals(that.src) AndAlso dst.Equals(that.dst)
-            End Function
-        End Class
-
     End Class
 
 

@@ -57,6 +57,15 @@ Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
 Public Class VertexEdge : Inherits Edge(Of TV)
 
+    Sub New()
+    End Sub
+
+    Sub New(u As TV, v As TV, Optional w As Double = 1)
+        Me.U = u
+        Me.V = v
+        Me.weight = w
+    End Sub
+
 End Class
 
 ''' <summary>

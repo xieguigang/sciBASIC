@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 
 Namespace node2vec
@@ -26,11 +27,15 @@ Namespace node2vec
 
             ' use word2vec to do word embedding
             Dim model As New Word2VecFactory
-            Dim engine As Word2Vec = model.setMethod(TrainMethod.Skip_Gram).setWindow(windowSize).setVectorSize(dimensions).build()
+            Dim engine As Word2Vec = model _
+                .setMethod(TrainMethod.Skip_Gram) _
+                .setWindow(windowSize) _
+                .setVectorSize(dimensions) _
+                .build()
 
-            For Each path As IList(Of Graph.Node) In graph.simulateWalks(numWalks, walkLength)
+            For Each path As IList(Of Vertex) In graph.simulateWalks(numWalks, walkLength)
                 ' convert path list to string
-                engine.readTokens(path.Select(Function(v) v.Id.ToString).ToArray)
+                engine.readTokens(path.Select(Function(v) v.ID.ToString).ToArray)
             Next
 
             Console.WriteLine("Learning Embedding...")
