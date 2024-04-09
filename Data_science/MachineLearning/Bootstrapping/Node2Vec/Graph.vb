@@ -21,7 +21,7 @@ Namespace node2vec
         Private aliasNodes As IDictionary(Of Node, AliasMethod) = New Dictionary(Of Node, AliasMethod)()
         Private aliasEdges As IDictionary(Of Edge, AliasMethod) = New Dictionary(Of Edge, AliasMethod)()
 
-        Public Sub New(file As String, directed As Boolean, p As Double, q As Double)
+        Public Sub New(file As String, directed As Boolean, Optional p As Double = 1, Optional q As Double = 1)
             Me.directed = directed
             Me.p = p
             Me.q = q
