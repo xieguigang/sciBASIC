@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace GraphEmbedding.util
 
@@ -25,7 +26,7 @@ Namespace GraphEmbedding.util
                 Dim iNegHead = iPosHead
                 Dim NegativeTriple As Triple = New Triple(iNegHead, iPosTail, iPosRelation)
                 While iNegHead = iPosHead
-                    iNegHead = CInt(randf.NextDouble * iNumberOfEntities)
+                    iNegHead = std.Floor(randf.NextDouble * iNumberOfEntities)
                     NegativeTriple = New Triple(iNegHead, iPosTail, iPosRelation)
                 End While
                 NegativeTripleSet.Add(NegativeTriple)
@@ -45,7 +46,7 @@ Namespace GraphEmbedding.util
                 Dim iNegTail = iPosTail
                 Dim NegativeTriple As Triple = New Triple(iPosHead, iNegTail, iPosRelation)
                 While iNegTail = iPosTail
-                    iNegTail = CInt(randf.NextDouble * iNumberOfEntities)
+                    iNegTail = std.Floor(randf.NextDouble * iNumberOfEntities)
                     NegativeTriple = New Triple(iPosHead, iNegTail, iPosRelation)
                 End While
                 NegativeTripleSet.Add(NegativeTriple)
@@ -62,7 +63,7 @@ Namespace GraphEmbedding.util
             Dim iNegRelation = iPosRelation
             Dim NegativeTriple As Triple = New Triple(iPosHead, iPosTail, iNegRelation)
             While iNegRelation = iPosRelation
-                iNegRelation = CInt(randf.NextDouble * iNumberOfRelation)
+                iNegRelation = std.Floor(randf.NextDouble * iNumberOfRelation)
                 NegativeTriple = New Triple(iPosHead, iPosTail, iNegRelation)
             End While
             Return NegativeTriple

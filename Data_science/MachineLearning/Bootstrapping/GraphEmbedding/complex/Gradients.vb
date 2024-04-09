@@ -51,7 +51,18 @@ Namespace GraphEmbedding.complex
             Dim iRelation As Integer = curTriple.relation()
             Dim dEta = 0.0
             For p = 0 To iNumberOfFactors - 1
-                dEta += Real_MatrixE.get(iHead, p) * Real_MatrixR.get(iRelation, p) * Real_MatrixE.get(iTail, p) - Imag_MatrixE.get(iHead, p) * Imag_MatrixR.get(iRelation, p) * Real_MatrixE.get(iTail, p) + Real_MatrixE.get(iHead, p) * Imag_MatrixR.get(iRelation, p) * Imag_MatrixE.get(iTail, p) + Imag_MatrixE.get(iHead, p) * Real_MatrixR.get(iRelation, p) * Imag_MatrixE.get(iTail, p)
+                dEta += Real_MatrixE.get(iHead, p) *
+                    Real_MatrixR.get(iRelation, p) *
+                    Real_MatrixE.get(iTail, p) -
+                    Imag_MatrixE.get(iHead, p) *
+                    Imag_MatrixR.get(iRelation, p) *
+                    Real_MatrixE.get(iTail, p) +
+                    Real_MatrixE.get(iHead, p) *
+                    Imag_MatrixR.get(iRelation, p) *
+                    Imag_MatrixE.get(iTail, p) +
+                    Imag_MatrixE.get(iHead, p) *
+                    Real_MatrixR.get(iRelation, p) *
+                    Imag_MatrixE.get(iTail, p)
             Next
             Dim dPartial = -dLabel * sigmoid(-dLabel * dEta)
 
