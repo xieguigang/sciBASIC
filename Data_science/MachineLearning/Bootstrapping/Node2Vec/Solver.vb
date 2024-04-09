@@ -10,6 +10,38 @@ Namespace node2vec
     Public Module Solver
 
         ''' <summary>
+        ''' create graph from a dataframe?
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <param name="w"></param>
+        ''' <returns></returns>
+        Public Function CreateGraph(u As String(), v As String(), Optional w As Double() = Nothing) As Graph
+            Dim graph As New Graph
+
+            If u.TryCount <> v.TryCount Then
+                Throw New InvalidProgramException("the dimension size of the source node is mis-matched with the target nodes!")
+            End If
+            If w Is Nothing Then
+                w = 1.0.Replicate(u.Length).ToArray
+            End If
+
+            For i As Integer = 0 To w.Length - 1
+                ' add the nodes to the graph
+                Dim node1 = graph.addNode(u(i))
+                Dim node2 = graph.addNode(v(i))
+                Dim weight As Double = w(i)
+
+                ' add the edge to the graph
+                Call graph.addEdge(node1, node2, weight)
+            Next
+
+            Call graph.preprocess()
+
+            Return graph
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="graph"></param>

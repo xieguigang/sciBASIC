@@ -24,47 +24,16 @@ Namespace node2vec
         Private aliasNodes As IDictionary(Of Node, AliasMethod) = New Dictionary(Of Node, AliasMethod)()
         Private aliasEdges As IDictionary(Of Edge, AliasMethod) = New Dictionary(Of Edge, AliasMethod)()
 
-        Public Sub New(file As String, directed As Boolean, Optional p As Double = 1, Optional q As Double = 1)
+        Sub New(Optional directed As Boolean = False, Optional p As Double = 1, Optional q As Double = 1)
             Me.directed = directed
             Me.p = p
             Me.q = q
-
-            loadGraphFrom(file)
-            preprocess()
-        End Sub
-
-        ''' <summary>
-        ''' load graph data from file
-        ''' input format: node1_id_int node2_id_int &lt;weight_float> </summary>
-        ''' <param name="file"> path of the input file </param>
-        Private Sub loadGraphFrom(file As String)
-            ' read graph info from file
-            ' StreamReader fr = new StreamReader(file);
-            Dim br As StreamReader = New StreamReader(file)
-            Dim lineTxt As Value(Of String) = ""
-
-            While (lineTxt = br.ReadLine()) IsNot Nothing
-                ' parse the line text to get the edge info
-                Dim strList = lineTxt.Split(" "c)
-                Dim node1ID = Integer.Parse(strList(0))
-                Dim node2ID = Integer.Parse(strList(1))
-                ' add the nodes to the graph
-                Dim node1 = addNode(node1ID)
-                Dim node2 = addNode(node2ID)
-                ' add the edge to the graph
-                If strList.Length > 2 Then
-                    Dim weight = Double.Parse(strList(2))
-                    addEdge(node1, node2, weight)
-                Else
-                    addEdge(node1, node2, DEFAULT_WEIGHT)
-                End If
-            End While
         End Sub
 
         ''' <summary>
         ''' pre-processing of transition probabilities for guiding the random walks
         ''' </summary>
-        Private Sub preprocess()
+        Friend Sub preprocess()
             For Each node As Vertex In nodeSet
                 Dim neighbors = sortedNeighborList(node)
                 Dim probs As IList(Of Double) = New List(Of Double)()
@@ -213,7 +182,7 @@ Namespace node2vec
         ''' <param name="src"> first node of the edge </param>
         ''' <param name="dst"> second node of the edge </param>
         ''' <param name="weight"> of the edge </param>
-        Private Sub addEdge(src As Node, dst As Node, weight As Double)
+        Friend Sub addEdge(src As Node, dst As Node, weight As Double)
             If directed Then
                 Dim edge As Edge
                 If hasEdge(src, dst) Then
@@ -248,7 +217,7 @@ Namespace node2vec
         ''' if not, create a new node, add it to the graph and return it </summary>
         ''' <param name="id"> the id of the node </param>
         ''' <returns> the node found </returns>
-        Private Function addNode(id As Integer) As Node
+        Friend Function addNode(id As Integer) As Node
             For Each v In nodeSet
                 If v.ID = id Then
                     Return v
