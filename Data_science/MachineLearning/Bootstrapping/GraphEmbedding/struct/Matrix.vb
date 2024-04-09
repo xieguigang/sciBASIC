@@ -68,7 +68,7 @@ Namespace GraphEmbedding.struct
             End Set
         End Property
 
-        Public Overridable Sub add(i As Integer, j As Integer, dValue As Double)
+        Public Function add(i As Integer, j As Integer, dValue As Double) As Double
             If i < 0 OrElse i >= iNumberOfRows Then
                 Throw New Exception("add error in Matrix: RowID out of range")
             End If
@@ -76,7 +76,8 @@ Namespace GraphEmbedding.struct
                 Throw New Exception("add error in Matrix: ColumnID out of range")
             End If
             pData(i)(j) += dValue
-        End Sub
+            Return pData(i)(j)
+        End Function
 
         Public Overridable Sub initializeUnif()
             Dim rd As Random = New Random(123)
