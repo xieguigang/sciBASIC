@@ -1,5 +1,4 @@
-﻿Imports System.IO
-Imports Microsoft.VisualBasic.Data.GraphTheory
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Edge = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
@@ -11,8 +10,6 @@ Namespace node2vec
     ''' Created by freemso on 17-3-14.
     ''' </summary>
     Public Class Graph
-
-        Private Const DEFAULT_WEIGHT As Double = 1
 
         Private nodeSet As ISet(Of Node) = New HashSet(Of Node)()
         Private edgeSet As ISet(Of Edge) = New HashSet(Of Edge)()
@@ -217,20 +214,18 @@ Namespace node2vec
         ''' if not, create a new node, add it to the graph and return it </summary>
         ''' <param name="id"> the id of the node </param>
         ''' <returns> the node found </returns>
-        Friend Function addNode(id As Integer) As Node
+        Friend Function addNode(id As Integer, Optional label As String = Nothing) As Node
             For Each v In nodeSet
                 If v.ID = id Then
                     Return v
                 End If
             Next
             ' not exists, create a new node with the id
-            Dim node As New Node(id)
+            Dim node As New Node(id) With {.label = If(label, id.ToString)}
             ' add it to the nodeSet
             nodeSet.Add(node)
             Return node
         End Function
     End Class
-
-
 
 End Namespace

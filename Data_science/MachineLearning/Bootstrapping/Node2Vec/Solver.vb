@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
+Imports Microsoft.VisualBasic.Linq
 
 Namespace node2vec
 
@@ -26,10 +28,12 @@ Namespace node2vec
                 w = 1.0.Replicate(u.Length).ToArray
             End If
 
+            Dim idencoder As Index(Of String) = u.JoinIterates(v).Distinct.Indexing
+
             For i As Integer = 0 To w.Length - 1
                 ' add the nodes to the graph
-                Dim node1 = graph.addNode(u(i))
-                Dim node2 = graph.addNode(v(i))
+                Dim node1 = graph.addNode(idencoder(u(i)), u(i))
+                Dim node2 = graph.addNode(idencoder(v(i)), v(i))
                 Dim weight As Double = w(i)
 
                 ' add the edge to the graph
