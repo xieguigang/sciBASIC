@@ -138,18 +138,16 @@ Namespace node2vec
         ''' <param name="numWalks"> iteration times </param>
         ''' <param name="walkLength"> steps of every walk </param>
         ''' <returns> the list of paths that we've walked </returns>
-        Public Overridable Function simulateWalks(numWalks As Integer, walkLength As Integer) As List(Of IList(Of Node))
-            Dim pathList As List(Of IList(Of Node)) = New List(Of IList(Of Node))()
-            Console.WriteLine("Walk iteration:")
+        Public Overridable Iterator Function simulateWalks(numWalks As Integer, walkLength As Integer) As IEnumerable(Of IList(Of Node))
             Dim nodeList As List(Of Node) = New List(Of Node)(nodeSet)
-            For i = 0 To numWalks - 1
+            Console.WriteLine("Walk iteration:")
+            For i As Integer = 0 To numWalks - 1
                 Console.WriteLine(i + 1.ToString() & "/" & numWalks.ToString())
                 nodeList.Shuffle()
-                For Each node In nodeList
-                    pathList.Add(walk(walkLength, node))
+                For Each node As Node In nodeList
+                    Yield walk(walkLength, node)
                 Next
             Next
-            Return pathList
         End Function
 
         ''' <summary>

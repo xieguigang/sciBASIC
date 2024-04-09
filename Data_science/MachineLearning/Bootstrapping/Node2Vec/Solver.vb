@@ -24,13 +24,11 @@ Namespace node2vec
                                         Optional dimensions As Integer = 20,
                                         Optional windowSize As Integer = 10) As VectorModel
 
-            Dim pathList As IList(Of IList(Of Graph.Node)) = graph.simulateWalks(numWalks, walkLength)
             ' use word2vec to do word embedding
             Dim model As New Word2VecFactory
-            model.setMethod(TrainMethod.Skip_Gram).setWindow(windowSize).setVectorSize(dimensions)
-            Dim engine As Word2Vec = model.build()
+            Dim engine As Word2Vec = model.setMethod(TrainMethod.Skip_Gram).setWindow(windowSize).setVectorSize(dimensions).build()
 
-            For Each path As IList(Of Graph.Node) In pathList
+            For Each path As IList(Of Graph.Node) In graph.simulateWalks(numWalks, walkLength)
                 ' convert path list to string
                 engine.readTokens(path.Select(Function(v) v.Id.ToString).ToArray)
             Next
