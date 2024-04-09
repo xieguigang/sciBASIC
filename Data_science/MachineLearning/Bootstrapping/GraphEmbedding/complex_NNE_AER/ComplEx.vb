@@ -1,6 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.struct
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 
@@ -64,7 +65,7 @@ Namespace GraphEmbedding.complex_NNE_AER
             Console.WriteLine("# valid triples: " & m_ValidTriples.triples().ToString())
             Console.WriteLine("# test triples: " & m_TestTriples.triples().ToString())
             Console.WriteLine("# all triples: " & m_AllTriples.tripleDict().Count.ToString())
-            Console.WriteLine("# all rules: " & m_lstRules.rules().Count.ToString())
+            Console.WriteLine("# all rules: " & m_lstRules.size.ToString())
             Console.WriteLine("Success.")
 
 
@@ -133,7 +134,7 @@ Namespace GraphEmbedding.complex_NNE_AER
                 Next
 
                 For iID = 0 To m_NumBatch - 1
-                    Dim adagrad As AdaGrad = New AdaGrad(lstPosTriples(iID), lstHeadNegTriples(iID), lstTailNegTriples(iID), m_lstRules.rules(), m_Real_MatrixE, m_Real_MatrixR, m_Imag_MatrixE, m_Imag_MatrixR, m_Real_MatrixEGradient, m_Real_MatrixRGradient, m_Imag_MatrixEGradient, m_Imag_MatrixRGradient, m_Real_MatrixEGSquare, m_Real_MatrixRGSquare, m_Imag_MatrixEGSquare, m_Imag_MatrixRGSquare, m_Gamma, m_Lambda, m_Mu)
+                    Dim adagrad As AdaGrad = New AdaGrad(lstPosTriples(iID), lstHeadNegTriples(iID), lstTailNegTriples(iID), m_lstRules.AsEnumerable.AsList, m_Real_MatrixE, m_Real_MatrixR, m_Imag_MatrixE, m_Imag_MatrixR, m_Real_MatrixEGradient, m_Real_MatrixRGradient, m_Imag_MatrixEGradient, m_Imag_MatrixRGradient, m_Real_MatrixEGSquare, m_Real_MatrixRGSquare, m_Imag_MatrixEGSquare, m_Imag_MatrixRGSquare, m_Gamma, m_Lambda, m_Mu)
                     adagrad.gradientDescent()
                 Next
 
