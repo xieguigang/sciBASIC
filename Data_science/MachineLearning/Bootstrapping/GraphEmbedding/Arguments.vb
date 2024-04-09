@@ -20,7 +20,8 @@
         Public Property skip As Integer = 50
 
         Public fnTrainTriples As String, fnValidTriples As String, fnTestTriples As String, fnAllTriples As String
-        Public strNumRelation As String, strNumEntity As String
+        Public strNumRelation As String = 470
+        Public strNumEntity As String = 99604
 
         Public other As Dictionary(Of String, String)
 

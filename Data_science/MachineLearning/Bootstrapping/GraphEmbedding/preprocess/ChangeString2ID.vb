@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Text
 Namespace GraphEmbedding.preprocess
 
     Public Class ChangeString2ID
+
         Public m_EntityIDMap As Dictionary(Of String, Integer) = Nothing
         Public m_RelationIDMap As Dictionary(Of String, Integer) = Nothing
 
