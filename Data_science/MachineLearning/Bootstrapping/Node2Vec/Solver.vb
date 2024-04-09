@@ -71,7 +71,7 @@ Namespace node2vec
 
             For Each path As IList(Of Vertex) In graph.simulateWalks(numWalks, walkLength)
                 ' convert path list to string
-                engine.readTokens(path.Select(Function(v) v.ID.ToString).ToArray)
+                engine.readTokens(path.Select(Function(v) v.label).ToArray)
             Next
 
             Console.WriteLine("Learning Embedding...")

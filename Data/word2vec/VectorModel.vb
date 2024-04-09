@@ -57,12 +57,14 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' the word embedding vector set
 ''' </summary>
-Public Class VectorModel
+Public Class VectorModel : Implements Enumeration(Of NamedCollection(Of Single))
 
     ''' <summary>
     ''' the word embedding vector set
@@ -245,4 +247,9 @@ Public Class VectorModel
         Return wordMap.GetJson
     End Function
 
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedCollection(Of Single)) Implements Enumeration(Of NamedCollection(Of Single)).GenericEnumerator
+        For Each word In wordMap
+            Yield New NamedCollection(Of Single)(word.Key, word.Value)
+        Next
+    End Function
 End Class
