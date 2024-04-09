@@ -1,33 +1,26 @@
 ﻿Namespace GraphEmbedding.struct
-    Public Class Triple
-        Private iHeadEntity As Integer
-        Private iTailEntity As Integer
-        Private iRelation As Integer
 
-        Public Sub New()
+    Public Structure Triple
+
+        Public ReadOnly Property head() As Integer
+        Public ReadOnly Property tail() As Integer
+        Public ReadOnly Property relation() As Integer
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="head"></param>
+        ''' <param name="tail"></param>
+        ''' <param name="relation"></param>
+        Public Sub New(head As Integer, tail As Integer, relation As Integer)
+            Me.head = head
+            Me.tail = tail
+            Me.relation = relation
         End Sub
-
-        Public Sub New(i As Integer, j As Integer, k As Integer)
-            iHeadEntity = i
-            iTailEntity = j
-            iRelation = k
-        End Sub
-
-        Public Overridable Function head() As Integer
-            Return iHeadEntity
-        End Function
-
-        Public Overridable Function tail() As Integer
-            Return iTailEntity
-        End Function
-
-        Public Overridable Function relation() As Integer
-            Return iRelation
-        End Function
 
         Public Overrides Function ToString() As String
             Return $"[head:{head()} -> tail:{tail()}] relationship:{relation()}"
         End Function
-    End Class
+    End Structure
 
 End Namespace
