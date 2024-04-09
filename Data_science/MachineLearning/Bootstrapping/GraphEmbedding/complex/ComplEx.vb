@@ -85,7 +85,7 @@ Namespace GraphEmbedding.complex
 
         Public Overrides Sub learn()
             Dim PATHLOG As String = "log/log-k" & m_NumFactor.ToString() & "-lmbda" & m_Lambda.ToString("F5") & "-gamma" & m_Gamma.ToString("F5") & "-neg" & m_NumNegative.ToString() & ".txt"
-            Dim writer As StreamWriter = New StreamWriter(New FileStream(PATHLOG, FileMode.Create, FileAccess.Write), Encoding.UTF8)
+            Dim writer As StreamWriter = New StreamWriter(PATHLOG.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False), Encoding.UTF8)
 
             Dim lstPosTriples As Dictionary(Of Integer, List(Of Triple)) = New Dictionary(Of Integer, List(Of Triple))()
             Dim lstHeadNegTriples As Dictionary(Of Integer, List(Of Triple)) = New Dictionary(Of Integer, List(Of Triple))()
