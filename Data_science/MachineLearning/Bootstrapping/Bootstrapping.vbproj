@@ -71,8 +71,10 @@
     <DefineTrace>True</DefineTrace>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data\word2vec\word2vec.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
   </ItemGroup>
