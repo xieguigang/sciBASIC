@@ -51,7 +51,7 @@
             Return learn(Of complex.ComplEx)(args)
         End Function
 
-        Private Shared Function learn(Of alg As {New, Algorithm})(args As Arguments)
+        Public Shared Function learn(Of alg As {New, Algorithm})(args As Arguments)
             Dim model As New alg With {
                 .m_Gamma = args.gamma,
                 .m_Lambda = args.lmbda,

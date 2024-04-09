@@ -19,7 +19,8 @@
         Public Property iterations As Integer = 1000
         Public Property skip As Integer = 50
 
-        Public fnTrainTriples As String, fnValidTriples As String, fnTestTriples As String, fnAllTriples As String, strNumRelation As String, strNumEntity As String
+        Public fnTrainTriples As String, fnValidTriples As String, fnTestTriples As String, fnAllTriples As String
+        Public strNumRelation As String, strNumEntity As String
 
         Public other As Dictionary(Of String, String)
 
