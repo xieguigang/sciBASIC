@@ -183,7 +183,7 @@ Namespace GraphEmbedding.struct
         End Function
 
         Public Overridable Sub output(fnOutput As String)
-            Dim writer As StreamWriter = New StreamWriter(New FileStream(fnOutput, FileMode.Create, FileAccess.Write), Encoding.UTF8)
+            Dim writer As StreamWriter = New StreamWriter(fnOutput.Open(FileMode.OpenOrCreate, doClear:=True), Encoding.UTF8)
 
             writer.Write("iNumberOfRows: " & iNumberOfRows.ToString() & "; iNumberOfColumns: " & iNumberOfColumns.ToString() & vbLf)
             For i = 0 To iNumberOfRows - 1

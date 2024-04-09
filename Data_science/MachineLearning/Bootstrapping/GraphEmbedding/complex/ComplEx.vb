@@ -149,10 +149,11 @@ Namespace GraphEmbedding.complex
 
                 If iCurIter Mod m_OutputIterSkip = 0 Then
                     writer.Write("Complete iteration #" & iCurIter.ToString() & ":" & vbLf)
-                    Dim eval As Evaluation = New Evaluation(m_ValidTriples, m_AllTriples.tripleDict(), m_Real_MatrixE, m_Real_MatrixR, m_Imag_MatrixE, m_Imag_MatrixR)
-                    eval.calculateMetrics()
-                    dCurMRR = eval.dMRR
-                    writer.Write("------Current iteration #" & iCurIter.ToString() & vbTab & dCurMRR.ToString() & vbTab & eval.dHits10.ToString() & vbLf)
+                    'Dim eval As Evaluation = New Evaluation(m_ValidTriples, m_AllTriples.tripleDict(), m_Real_MatrixE, m_Real_MatrixR, m_Imag_MatrixE, m_Imag_MatrixR)
+                    'Eval.calculateMetrics()
+                    'dCurMRR = eval.dMRR
+                    dCurMRR = 1
+                    ' writer.Write("------Current iteration #" & iCurIter.ToString() & vbTab & dCurMRR.ToString() & vbTab & Eval.dHits10.ToString() & vbLf)
                     If dCurMRR > dBestMRR Then
                         m_Real_MatrixE.output(m_MatrixE_prefix & ".real")
                         m_Real_MatrixR.output(m_MatrixR_prefix & ".real")
