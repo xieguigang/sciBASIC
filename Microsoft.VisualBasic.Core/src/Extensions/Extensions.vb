@@ -1542,11 +1542,14 @@ Public Module Extensions
 #Region "Removes Last Element"
 
     ''' <summary>
-    ''' Removes the last element in the List object.(这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
+    ''' Removes the last element in the List object.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
+    ''' </remarks>
     <Extension>
     Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
         If dotNETlist.IsNullOrEmpty Then

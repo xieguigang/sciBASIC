@@ -354,6 +354,23 @@ Public Module ListExtensions
         Return getAt
     End Function
 
+    ''' <summary>
+    ''' removes the last element inside the list and then returns it
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Pop(Of T)(list As System.Collections.Generic.List(Of T)) As T
+        If list.Count > 0 Then
+            Dim last As T = list.Last
+            list.RemoveAt(list.Count - 1)
+            Return last
+        Else
+            Return Nothing
+        End If
+    End Function
+
     <Extension>
     Public Sub RemoveAll(Of T)(list As System.Collections.Generic.List(Of T), all As IEnumerable(Of T))
         If Not all Is Nothing Then
