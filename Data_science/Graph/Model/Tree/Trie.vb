@@ -175,7 +175,7 @@ Public Class Trie(Of T)
 
             Dim nextPrefix As New List(Of Char)(prefix.JoinIterates([next].Character))
 
-            For Each pop In Populate([next], nextPrefix)
+            For Each pop As IEnumerable(Of Char) In Populate([next], nextPrefix)
                 Yield pop
             Next
         Next

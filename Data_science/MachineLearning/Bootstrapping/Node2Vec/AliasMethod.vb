@@ -36,7 +36,6 @@ Namespace node2vec
         ''' </para>
         ''' </summary>
         ''' <param name="probabilities"> The list of probabilities. </param>
-        ''' <param name="random"> The random number generator </param>
         Public Sub New(probabilities As IList(Of Double))
             ' Begin by doing basic structural checks on the inputs. 
             If probabilities Is Nothing Then

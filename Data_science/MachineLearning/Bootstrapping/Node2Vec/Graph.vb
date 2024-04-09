@@ -40,7 +40,7 @@ Namespace node2vec
             Dim lineTxt As String
             While Not String.ReferenceEquals((CSharpImpl.__Assign(lineTxt, br.ReadLine())), Nothing)
                 ' parse the line text to get the edge info
-                Dim strList = lineTxt.Split(" ")
+                Dim strList = lineTxt.Split(" "c)
                 Dim node1ID = Integer.Parse(strList(0))
                 Dim node2ID = Integer.Parse(strList(1))
                 ' add the nodes to the graph
