@@ -9,10 +9,23 @@ Public Class Graph2Vec
     ReadOnly vocabulary As New Dictionary(Of String, Char)
     ReadOnly getVocabulary As Func(Of Vertex, String)
 
+    Const offset As Integer = 33
+
     Dim sgt As SequenceGraphTransform
 
     Public Function Setup(terms As IEnumerable(Of String)) As Graph2Vec
+        For Each term As String In terms
+            Call vocabulary.Add(term, Chr(offset + vocabulary.Count))
+        Next
 
+        If vocabulary.Count >= (127 - offset) Then
+            Call VBDebugger.EchoLine("alphabet set too much chars, the embedding vector will be very very long!")
+        End If
+
+        sgt = New SequenceGraphTransform
+        sgt.set_alphabets(vocabulary.Values.Select(Function(c) c.ToString).ToArray)
+
+        Return Me
     End Function
 
     Public Function GraphVector(g As Graph) As Double()
@@ -27,8 +40,9 @@ Public Class Graph2Vec
             .Select(Function(lb) getVocabulary(vertexSet(lb.name))) _
             .Select(Function(key) vocabulary(key)) _
             .ToArray
+        Dim vector As Double() = sgt.fitVector(New String(chars))
 
-
+        Return vector
     End Function
 
 End Class
