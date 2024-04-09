@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.SequenceGraphTransform
 Imports Microsoft.VisualBasic.Data.NLP.Word2Vec
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -22,7 +23,7 @@ Public Class Graph2Vec
             Call VBDebugger.EchoLine("alphabet set too much chars, the embedding vector will be very very long!")
         End If
 
-        sgt = New SequenceGraphTransform
+        sgt = New SequenceGraphTransform(mode:=Modes.Fast)
         sgt.set_alphabets(vocabulary.Values.Select(Function(c) c.ToString).ToArray)
 
         Return Me
