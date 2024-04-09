@@ -74,7 +74,7 @@ Namespace node2vec
                 engine.readTokens(path.Select(Function(v) v.label).ToArray)
             Next
 
-            Console.WriteLine("Learning Embedding...")
+            VBDebugger.EchoLine("Learning Embedding...")
             engine.training()
 
             Dim vectors = engine.outputVector

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -121,10 +122,10 @@ Namespace node2vec
         ''' <returns> the list of paths that we've walked </returns>
         Public Overridable Iterator Function simulateWalks(numWalks As Integer, walkLength As Integer) As IEnumerable(Of IList(Of Node))
             Dim nodeList As New List(Of Node)(nodeSet)
-            Console.WriteLine("Walk iteration:")
-            For i As Integer = 0 To numWalks - 1
-                Console.WriteLine(i + 1.ToString() & "/" & numWalks.ToString())
-                nodeList.Shuffle()
+
+            For Each i As Integer In Tqdm.Range(0, numWalks)
+                Call nodeList.Shuffle()
+
                 For Each node As Node In nodeList
                     Yield walk(walkLength, node)
                 Next
