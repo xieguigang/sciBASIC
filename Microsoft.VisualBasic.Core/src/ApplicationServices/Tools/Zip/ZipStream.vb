@@ -26,6 +26,10 @@ Namespace ApplicationServices.Zip
             virtual_fs = FileSystemTree.BuildTree(GetFiles)
         End Sub
 
+        Sub New(filepath As String, Optional is_readonly As Boolean = False)
+            Call Me.New(filepath.Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=is_readonly), is_readonly)
+        End Sub
+
         Public Sub Close() Implements IFileSystemEnvironment.Close
             Call zip.Dispose()
         End Sub
