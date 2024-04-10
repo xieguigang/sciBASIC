@@ -139,7 +139,7 @@ Namespace FileIO
         ''' dir/file
         ''' ```
         ''' </remarks>
-        Public Function GetFullPath(file As String) As String
+        Public Function GetFullPath(file As String) As String Implements IFileSystemEnvironment.GetFullPath
             ' 20231017 due to the reason of the platform compatibility between
             ' the local filesystem(win/unix) and the http filesystem, the file
             ' path may start with / prefix, then check on unix environment will
