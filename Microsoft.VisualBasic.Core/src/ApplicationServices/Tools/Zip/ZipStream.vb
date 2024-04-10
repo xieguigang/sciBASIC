@@ -28,6 +28,21 @@ Namespace ApplicationServices.Zip
             ' do nothing
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns>
+        ''' return nothing if the required archive entry could not be found
+        ''' </returns>
+        Public Function GetFileEntry(path As String) As ZipArchiveEntry
+            If [readonly] Then
+                Return zip.GetEntry(path)
+            Else
+
+            End If
+        End Function
+
         Public Function OpenFile(path As String, Optional mode As FileMode = FileMode.OpenOrCreate, Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
             Throw New NotImplementedException()
         End Function
