@@ -29,8 +29,12 @@ Public Class Graph2Vec
             Call VBDebugger.EchoLine("alphabet set too much chars, the embedding vector will be very very long!")
         End If
 
+        Dim char_corpus As String() = vocabulary.Values _
+            .Select(Function(c) c.ToString) _
+            .ToArray
+
         sgt = New SequenceGraphTransform(mode:=Modes.Fast)
-        sgt.set_alphabets(vocabulary.Values.Select(Function(c) c.ToString).ToArray)
+        sgt.set_alphabets(char_corpus)
 
         Return Me
     End Function
