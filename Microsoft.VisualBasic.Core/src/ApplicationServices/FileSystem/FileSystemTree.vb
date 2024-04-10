@@ -1,4 +1,6 @@
-﻿Namespace ApplicationServices
+﻿Imports Microsoft.VisualBasic.FileIO.Path
+
+Namespace ApplicationServices
 
     ''' <summary>
     ''' A virtual filesystem tree
@@ -8,6 +10,7 @@
         Public Property Name As String
         Public Property Files As Dictionary(Of String, FileSystemTree)
         Public Property Parent As FileSystemTree
+        Public Property data As Object
 
         Public ReadOnly Property FullName As String
             Get
@@ -60,7 +63,7 @@
             Dim node As FileSystemTree
 
             For Each path As String In files
-                tokens = path.Replace("\", "/").Trim("/"c).StringSplit("[/]+")
+                tokens = FilePath.ParseTokens(path)
                 dir = root
 
                 For Each name As String In tokens
@@ -72,9 +75,37 @@
                         dir = node
                     End If
                 Next
+
+                dir.data = path
             Next
 
             Return root
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fs"></param>
+        ''' <param name="path"></param>
+        ''' <returns>
+        ''' this function returns nothing if the <paramref name="path"/> not found.
+        ''' </returns>
+        Public Shared Function GetFile(fs As FileSystemTree, path As String) As FileSystemTree
+            Dim tokens As String() = FilePath.ParseTokens(path)
+            Dim dir As FileSystemTree = fs
+            Dim node As FileSystemTree
+
+            For Each name As String In tokens
+                node = dir.GetFile(name)
+
+                If node Is Nothing Then
+                    Return Nothing
+                Else
+                    dir = node
+                End If
+            Next
+
+            Return dir
         End Function
 
     End Class

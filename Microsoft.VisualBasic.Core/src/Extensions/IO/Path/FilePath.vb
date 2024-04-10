@@ -118,12 +118,16 @@ Namespace FileIO.Path
                 IsAbsolutePath = True
             End If
 
-            Components = filepath _
+            Components = ParseTokens(filepath)
+        End Sub
+
+        Public Shared Function ParseTokens(filepath As String) As String()
+            Return filepath _
                 .Replace("\", "/") _
                 .Split("/"c) _
                 .Where(Function(t) Not t.StringEmpty) _
                 .ToArray
-        End Sub
+        End Function
 
         Public Function ExtensionSuffix(ParamArray suffix As String()) As Boolean
             Dim ext As String = FileName.ExtensionSuffix

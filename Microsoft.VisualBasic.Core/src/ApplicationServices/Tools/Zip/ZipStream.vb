@@ -72,7 +72,7 @@ Namespace ApplicationServices.Zip
         End Function
 
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
-            Throw New NotImplementedException()
+            Return zip.Entries.Select(Function(f) f.FullName)
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
