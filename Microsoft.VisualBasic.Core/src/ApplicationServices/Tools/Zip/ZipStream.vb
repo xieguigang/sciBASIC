@@ -60,13 +60,33 @@ Namespace ApplicationServices.Zip
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="mode"></param>
+        ''' <param name="access"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' due to the reason of zip deflate stream object does not supports the seek operation,
+        ''' so this function convert the zip deflate stream to a memory stream at first in this
+        ''' function for avoid the downstream operation error when call the stream seek method.
+        ''' </remarks>
         Public Function OpenFile(path As String, Optional mode As FileMode = FileMode.OpenOrCreate, Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
             Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=mode = FileMode.OpenOrCreate OrElse mode = FileMode.CreateNew)
 
             If file Is Nothing Then
                 Return Nothing
             Else
-                Return file.Open
+                Dim ms As New MemoryStream
+                Dim zip_buf = file.Open
+
+                ' 20240410 convert zip stream to memory stream 
+                ' for avoid the seek error
+                Call zip_buf.CopyTo(ms)
+                Call ms.Seek(Scan0, SeekOrigin.Begin)
+
+                Return ms
             End If
         End Function
 
