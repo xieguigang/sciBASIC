@@ -58,8 +58,6 @@ Imports System.Runtime.CompilerServices
 ''' </summary>
 Public Module LICENSE
 
-#If FRAMEWORD_CORE Then
-
     '''<summary>
     '''  Looks up a localized string similar to                     GNU GENERAL PUBLIC LICENSE
     '''                       Version 3, 29 June 2007
@@ -82,7 +80,6 @@ Public Module LICENSE
             Return My.Resources.gpl
         End Get
     End Property
-#End If
 
     Public Const githubURL$ = "https://github.com/xieguigang/sciBASIC"
 
