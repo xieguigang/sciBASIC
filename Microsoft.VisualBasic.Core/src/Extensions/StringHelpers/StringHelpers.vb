@@ -702,13 +702,15 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Counts the specific char that appeared in the input string.
-    ''' (计数在字符串之中所出现的指定的字符的出现的次数)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <param name="ch"></param>
-    ''' <returns></returns>
-    '''
-    <Extension> Public Function Count(str$, ch As Char) As Integer
+    ''' <returns>this functions returns zero if the given <paramref name="str"/> is null or empty.</returns>
+    ''' <remarks>
+    ''' (计数在字符串之中所出现的指定的字符的出现的次数)
+    ''' </remarks>
+    <Extension>
+    Public Function Count(str$, ch As Char) As Integer
         If String.IsNullOrEmpty(str) Then
             Return 0
         Else
