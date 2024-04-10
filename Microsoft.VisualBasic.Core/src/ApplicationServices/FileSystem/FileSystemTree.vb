@@ -108,5 +108,27 @@ Namespace ApplicationServices
             Return dir
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fs"></param>
+        ''' <param name="path"></param>
+        ''' <returns>
+        ''' this function returns nothing if the required node has not been found, and returns the node which has been deleted.
+        ''' </returns>
+        Public Shared Function DeleteFile(fs As FileSystemTree, path As String) As FileSystemTree
+            Dim parent_dir As String = path.ParentPath
+            Dim dir_node = GetFile(fs, parent_dir)
+
+            If dir_node Is Nothing Then
+                Return Nothing
+            End If
+
+            Dim node_name As String = path.FileName
+            Dim node As FileSystemTree = dir_node.Files.TryGetValue(node_name)
+            dir_node.Files.Remove(node_name)
+            Return node
+        End Function
+
     End Class
 End Namespace

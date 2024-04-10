@@ -6,6 +6,7 @@ Namespace ApplicationServices.Zip
     Public Class ZipStream : Implements IFileSystemEnvironment, IDisposable
 
         Dim disposedValue As Boolean
+        Dim virtual_fs As FileSystemTree
 
         Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
         Public ReadOnly Property zip As ZipArchive
@@ -18,6 +19,8 @@ Namespace ApplicationServices.Zip
             Else
                 zip = New ZipArchive(file, ZipArchiveMode.Update)
             End If
+
+            virtual_fs = FileSystemTree.BuildTree(GetFiles)
         End Sub
 
         Public Sub Close() Implements IFileSystemEnvironment.Close
@@ -35,24 +38,44 @@ Namespace ApplicationServices.Zip
         ''' <returns>
         ''' return nothing if the required archive entry could not be found
         ''' </returns>
-        Public Function GetFileEntry(path As String) As ZipArchiveEntry
-            If [readonly] Then
-                Return zip.GetEntry(path)
-            Else
+        Public Function GetFileEntry(path As String, allow_new As Boolean) As ZipArchiveEntry
+            Dim ref As FileSystemTree = FileSystemTree.GetFile(virtual_fs, path)
 
+            If Not ref Is Nothing Then
+                Return zip.GetEntry(CStr(ref.data))
+            End If
+
+            If [readonly] Then
+                Return Nothing
+            Else
+                ' create new?
+                Throw New NotImplementedException
             End If
         End Function
 
         Public Function OpenFile(path As String, Optional mode As FileMode = FileMode.OpenOrCreate, Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
-            Throw New NotImplementedException()
+            Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=mode = FileMode.OpenOrCreate OrElse mode = FileMode.CreateNew)
+
+            If file Is Nothing Then
+                Return Nothing
+            Else
+                Return file.Open
+            End If
         End Function
 
         Public Function DeleteFile(path As String) As Boolean Implements IFileSystemEnvironment.DeleteFile
-            Throw New NotImplementedException()
+            Dim node = FileSystemTree.DeleteFile(virtual_fs, path)
+
+            If Not node Is Nothing Then
+                Call zip.GetEntry(CStr(node.data)).Delete()
+            End If
+
+            Return True
         End Function
 
         Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
-            Throw New NotImplementedException()
+            Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=False)
+
         End Function
 
         Public Function FileSize(path As String) As Long Implements IFileSystemEnvironment.FileSize
