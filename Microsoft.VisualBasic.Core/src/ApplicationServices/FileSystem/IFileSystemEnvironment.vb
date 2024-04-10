@@ -102,6 +102,14 @@ Namespace ApplicationServices
         ''' <param name="path"></param>
         ''' <returns>-1 means file is not exists on the filesystem</returns>
         Function FileSize(path As String) As Long
+
+        ''' <summary>
+        ''' get the full path of the given file name in current directory model
+        ''' </summary>
+        ''' <param name="filename"></param>
+        ''' <returns></returns>
+        Function GetFullPath(filename As String) As String
+
         ''' <summary>
         ''' write text content to a specific file
         ''' </summary>
