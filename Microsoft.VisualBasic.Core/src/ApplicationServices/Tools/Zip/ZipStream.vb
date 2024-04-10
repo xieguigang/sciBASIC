@@ -3,6 +3,9 @@ Imports System.IO.Compression
 
 Namespace ApplicationServices.Zip
 
+    ''' <summary>
+    ''' using a zip archive file as a virtual filesystem
+    ''' </summary>
     Public Class ZipStream : Implements IFileSystemEnvironment, IDisposable
 
         Dim disposedValue As Boolean
@@ -76,22 +79,54 @@ Namespace ApplicationServices.Zip
         Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
             Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=False)
 
+            If file Is Nothing Then
+                Return False
+            ElseIf file.Length = 0 Then
+                Return ZERO_Nonexists
+            Else
+                Return True
+            End If
         End Function
 
         Public Function FileSize(path As String) As Long Implements IFileSystemEnvironment.FileSize
-            Throw New NotImplementedException()
+            Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=False)
+
+            If file Is Nothing Then
+                Return -1
+            Else
+                Return file.Length
+            End If
         End Function
 
         Public Function GetFullPath(filename As String) As String Implements IFileSystemEnvironment.GetFullPath
-            Throw New NotImplementedException()
+            Return "/" & filename
         End Function
 
         Public Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
-            Throw New NotImplementedException()
+            Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=True)
+
+            If file Is Nothing Then
+                Throw New NotImplementedException
+            End If
+
+            Using s As New StreamWriter(file.Open)
+                Call s.WriteLine(text)
+                Call s.Flush()
+            End Using
+
+            Return True
         End Function
 
         Public Function ReadAllText(path As String) As String Implements IFileSystemEnvironment.ReadAllText
-            Throw New NotImplementedException()
+            Dim file As ZipArchiveEntry = GetFileEntry(path, allow_new:=False)
+
+            If file Is Nothing Then
+                Return Nothing
+            Else
+                Using s As New StreamReader(file.Open)
+                    Return s.ReadToEnd
+                End Using
+            End If
         End Function
 
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
