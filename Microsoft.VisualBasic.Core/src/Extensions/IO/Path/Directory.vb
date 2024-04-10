@@ -77,6 +77,9 @@ Namespace FileIO
         ''' 当前的这个文件夹对象的文件路径
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' it is the full name via the function <see cref="FileSystem.GetDirectoryInfo"/>
+        ''' </remarks>
         Public ReadOnly Property folder As String
         Public ReadOnly Property strict As Boolean = False
 
