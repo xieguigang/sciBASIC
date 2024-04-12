@@ -70,7 +70,7 @@ Namespace Parallel
         Public Function Run() As VectorTask
             Dim span_size As Integer = workLen / cpu_count
 
-            If sequenceMode OrElse span_size < 1 Then
+            If sequenceMode OrElse cpu_count = 1 OrElse span_size < 1 Then
                 ' run in sequence
                 Call Solve()
             Else
