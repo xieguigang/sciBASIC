@@ -390,10 +390,13 @@ Namespace LDA
                 End If
                 ' display progress
                 If i > BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
+                    t1 = Now
                     println($"[{i}/{ITERATIONS}] ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
                 ' get statistics after burn-in
                 If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
+                    t1 = Now
+
                     Call counter.Mark("...")
                     Call update_params()
                     Call counter.Mark("update_pars")
