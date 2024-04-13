@@ -93,22 +93,27 @@ Namespace LDA
 
         Private Sub initial()
             Dim lM = documents.Length
+            Dim N As Integer
+            Dim topic As Integer
+
             z = New Integer(lM - 1)() {}
             nd = RectangularArray.Matrix(Of Integer)(lM, K)
             ndsum = New Integer(lM - 1) {}
             nw = RectangularArray.Matrix(Of Integer)(V, K)
             nwsum = New Integer(K - 1) {}
 
-            For m = 0 To lM - 1
-                Dim N = documents(m).Length
+            For m As Integer = 0 To lM - 1
+                N = documents(m).Length
                 z(m) = New Integer(N - 1) {}
-                For i = 0 To N - 1
-                    Dim topic = randf.Next(K)
+
+                For i As Integer = 0 To N - 1
+                    topic = randf.Next(K)
                     z(m)(i) = topic
                     nd(m)(topic) += 1
                     nw(documents(m)(i))(topic) += 1
                     nwsum(topic) += 1
                 Next
+
                 ndsum(m) = N
             Next
         End Sub
