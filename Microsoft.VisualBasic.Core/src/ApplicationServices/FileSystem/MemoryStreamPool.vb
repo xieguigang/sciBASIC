@@ -58,7 +58,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices
 
@@ -188,7 +188,7 @@ Namespace ApplicationServices
                     ' from scan0, no transform
             End Select
 
-            block = stdNum.Floor(offset / buffer_size)
+            block = std.Floor(offset / buffer_size)
             p = offset
             offset = offset - buffer_size * block
 

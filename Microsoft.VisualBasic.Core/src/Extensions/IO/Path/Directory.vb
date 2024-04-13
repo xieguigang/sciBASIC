@@ -77,6 +77,9 @@ Namespace FileIO
         ''' 当前的这个文件夹对象的文件路径
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' it is the full name via the function <see cref="FileSystem.GetDirectoryInfo"/>
+        ''' </remarks>
         Public ReadOnly Property folder As String
         Public ReadOnly Property strict As Boolean = False
 
@@ -139,7 +142,7 @@ Namespace FileIO
         ''' dir/file
         ''' ```
         ''' </remarks>
-        Public Function GetFullPath(file As String) As String
+        Public Function GetFullPath(file As String) As String Implements IFileSystemEnvironment.GetFullPath
             ' 20231017 due to the reason of the platform compatibility between
             ' the local filesystem(win/unix) and the http filesystem, the file
             ' path may start with / prefix, then check on unix environment will

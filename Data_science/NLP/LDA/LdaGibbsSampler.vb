@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Parallel
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
@@ -339,7 +340,7 @@ Namespace LDA
             Dim v As Integer() = z(zi)
             Dim gibbs As New GibbsSamplingTask(v, zi, Me)
 
-            Call gibbs.Solve()
+            Call gibbs.Run()
         End Sub
 
         ''' <summary>
@@ -373,8 +374,9 @@ Namespace LDA
             Dim zIndex As Integer() = z.Sequence.ToArray
             Dim t0 As Date = Now
             Dim t1 As Date = Now
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For i As Integer = 0 To ITERATIONS - 1
+            For Each i As Integer In Tqdm.Range(0, ITERATIONS, bar:=bar)
                 Call counter.Set()
 
                 ' for all z_i
@@ -386,18 +388,21 @@ Namespace LDA
 
                 If i < BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
                     t1 = Now
-                    println($"[{i}/{ITERATIONS}] BURN_IN ...... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                    bar.SetLabel($"BURN_IN ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
                 ' display progress
                 If i > BURN_IN AndAlso i Mod THIN_INTERVAL = 0 Then
-                    println($"[{i}/{ITERATIONS}] ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                    t1 = Now
+                    bar.SetLabel($" ... {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
                 ' get statistics after burn-in
                 If i > BURN_IN AndAlso SAMPLE_LAG > 0 AndAlso i Mod SAMPLE_LAG = 0 Then
+                    t1 = Now
+
                     Call counter.Mark("...")
                     Call update_params()
                     Call counter.Mark("update_pars")
-                    Call println($"[{i}/{ITERATIONS}] get statistics after burn-in! {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
+                    Call bar.SetLabel($"get statistics after burn-in! {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)}")
                 End If
             Next
         End Sub
@@ -407,8 +412,6 @@ Namespace LDA
         ''' 更新参数
         ''' </summary>
         Private Sub update_params()
-            Dim t0 = Now
-
             For m As Integer = 0 To documents.Length - 1
                 For K As Integer = 0 To Me.K - 1
                     thetasum(m)(K) += (nd(m)(K) + alpha) / (ndsum(m) + Me.K * alpha)
@@ -422,7 +425,6 @@ Namespace LDA
             Next
 
             numstats += 1
-            println($"update_params[{(Now - t0).FormatTime}]")
         End Sub
 
         ''' <summary>
