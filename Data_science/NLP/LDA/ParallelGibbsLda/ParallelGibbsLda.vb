@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -130,16 +131,14 @@ Namespace LDA
                     pieceSize = documents.Length - offset
                 End If
 
-                Console.WriteLine("Thread " & i.ToString() & ", start: " & offset.ToString() & ", end: " & (offset + pieceSize - 1).ToString())
                 gibbsWorks(i) = New GibbsWorker(Me, offset, offset + pieceSize - 1)
                 offset += pieceSize
                 i += 1
             End While
 
-            Dim it As Integer = 0
             Dim executor As New ExecutorService(gibbsWorks, workers:=threads)
 
-            While it < iter
+            For Each it As Integer In Tqdm.Range(0, iter)
                 Call executor.Run()
 
                 ' reduce result of each thread and update global nw, nwsum array
@@ -155,15 +154,7 @@ Namespace LDA
                     Next
                     nwsum(topic) = wordCount
                 Next
-
-                If it Mod 10 = 0 Then
-                    Console.WriteLine("gibbs iterating [" & it.ToString() & "/" & iter.ToString() & "] ...")
-                End If
-
-                it += 1
-            End While
-
-            Console.WriteLine("Gibbs sampling off")
+            Next
 
             ' store theta and phi matrix after estimation
             _theta = calcThetaMatrix()

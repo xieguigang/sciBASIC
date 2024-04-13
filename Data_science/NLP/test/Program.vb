@@ -56,8 +56,8 @@ Module Program
         ' 1. Load corpus from disk
         Dim corpus As Corpus = Corpus.load("\GCModeller\src\R-sharp\test\demo\machineLearning\NLP\data\mini")
 
-        Call test1(corpus)
         Call test2(corpus)
+        Call test1(corpus)
 
         Pause()
     End Sub
