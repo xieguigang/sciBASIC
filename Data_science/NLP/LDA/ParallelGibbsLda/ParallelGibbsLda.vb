@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Namespace LDA
@@ -8,9 +9,10 @@ Namespace LDA
     ''' Created by chenjianfeng on 2018/1/17.
     ''' </summary>
     ''' <remarks>
-    ''' 
+    ''' https://github.com/fishermanff/ParallelGibbsLda
     ''' </remarks>
     Public Class ParallelGibbsLda
+
         ''' <summary>
         ''' document-word matrix
         ''' </summary>
@@ -40,11 +42,6 @@ Namespace LDA
         ''' max iteration
         ''' </summary>
         Friend iter As Integer
-
-        ''' <summary>
-        ''' initial with seed for result reproduction
-        ''' </summary>
-        Friend random As Random
 
         ''' <summary>
         ''' nd[m][k]: number of words in document m assigned to topic k; size M * K
@@ -84,7 +81,7 @@ Namespace LDA
         ''' <summary>
         ''' store perplexity
         ''' </summary>
-        Private perplexity_Conflict As Double = -1
+        Private m_perplexity As Double = -1
 
         Public Sub New(documents As Integer()(), V As Integer)
             Me.documents = documents
@@ -103,7 +100,7 @@ Namespace LDA
                 Dim N = documents(m).Length
                 z(m) = New Integer(N - 1) {}
                 For i = 0 To N - 1
-                    Dim topic = random.Next(K)
+                    Dim topic = randf.Next(K)
                     z(m)(i) = topic
                     nd(m)(topic) += 1
                     nw(documents(m)(i))(topic) += 1
@@ -122,23 +119,24 @@ Namespace LDA
             Me.alpha = alpha
             Me.beta = beta
             Me.iter = iter
-            random = New Random(seed)
-
-            initial()
             Dim gibbsWorks = New GibbsWorker(threads - 1) {}
             Dim pieceSize As Integer = documents.Length / threads
             Dim i = 0, offset = 0
+
+            Call initial()
 
             While i < threads
                 If i = threads - 1 Then
                     pieceSize = documents.Length - offset
                 End If
+
                 Console.WriteLine("Thread " & i.ToString() & ", start: " & offset.ToString() & ", end: " & (offset + pieceSize - 1).ToString())
                 gibbsWorks(i) = New GibbsWorker(Me, offset, offset + pieceSize - 1)
                 offset += pieceSize
                 i += 1
             End While
-            Dim it = 0
+
+            Dim it As Integer = 0
             Dim executor As New ExecutorService(gibbsWorks, workers:=threads)
 
             While it < iter
@@ -164,7 +162,6 @@ Namespace LDA
 
                 it += 1
             End While
-
 
             Console.WriteLine("Gibbs sampling off")
 
@@ -196,8 +193,8 @@ Namespace LDA
         End Function
 
         Public Overridable Function perplexity() As Double
-            If perplexity_Conflict <> -1 Then
-                Return perplexity_Conflict
+            If m_perplexity <> -1 Then
+                Return m_perplexity
             End If
             Dim num As Double = 0
             Dim den As Double = 0
@@ -210,15 +207,8 @@ Namespace LDA
                 Next
                 den += N
             Next
-            perplexity_Conflict = std.Exp(num / den)
-            Return perplexity_Conflict
-        End Function
-
-        Public Overridable Function infer(document As Integer()) As Double()
-            ' todo
-            Dim theta = New Double(document.Length - 1) {}
-            Return theta
+            m_perplexity = std.Exp(num / den)
+            Return m_perplexity
         End Function
     End Class
-
 End Namespace
