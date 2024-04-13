@@ -156,7 +156,7 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET48_OR_GREATER Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
