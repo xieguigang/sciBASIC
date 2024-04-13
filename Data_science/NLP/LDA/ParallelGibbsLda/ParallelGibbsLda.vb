@@ -71,12 +71,12 @@ Namespace LDA
         ''' <summary>
         ''' store estimated theta matrix
         ''' </summary>
-        Private theta As Double()()
+        Public ReadOnly Property theta As Double()()
 
         ''' <summary>
         ''' store estimated phi matrix
         ''' </summary>
-        Private phi As Double()()
+        Public ReadOnly Property phi As Double()()
 
         ''' <summary>
         ''' store perplexity
@@ -166,8 +166,8 @@ Namespace LDA
             Console.WriteLine("Gibbs sampling off")
 
             ' store theta and phi matrix after estimation
-            theta = calcThetaMatrix()
-            phi = calcPhiMatrix()
+            _theta = calcThetaMatrix()
+            _phi = calcPhiMatrix()
         End Sub
 
         Private Function calcThetaMatrix() As Double()()

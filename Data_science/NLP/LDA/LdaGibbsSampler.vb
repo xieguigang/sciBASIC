@@ -263,7 +263,7 @@ Namespace LDA
         ''' 用数据初始化采样器
         ''' </summary>
         ''' <param name="documents"> 文档 </param>
-        ''' <param name="V">         vocabulary size 词表大小 </param> 
+        ''' <param name="V">vocabulary size 词表大小 </param> 
         Public Sub New(documents As Integer()(), V As Integer, Optional log As Action(Of Object) = Nothing)
             Me.documents = documents
             Me.V = V
@@ -340,7 +340,7 @@ Namespace LDA
             Dim v As Integer() = z(zi)
             Dim gibbs As New GibbsSamplingTask(v, zi, Me)
 
-            Call gibbs.Run()
+            Call gibbs.Solve()
         End Sub
 
         ''' <summary>
