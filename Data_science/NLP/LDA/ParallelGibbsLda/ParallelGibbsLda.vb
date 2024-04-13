@@ -85,8 +85,10 @@ Namespace LDA
         Private m_perplexity As Double = -1
 
         Public Sub New(documents As Integer()(), V As Integer)
-            Me.documents = documents
             Me.V = V
+            Me.documents = documents _
+                .Select(Function(page) page.ToArray) _
+                .ToArray
         End Sub
 
         Private Sub initial()
@@ -137,21 +139,27 @@ Namespace LDA
             End While
 
             Dim executor As New ExecutorService(gibbsWorks, workers:=threads)
+            Dim nwDelta As Integer
+            Dim wordCount As Integer
 
             For Each it As Integer In Tqdm.Range(0, iter)
                 Call executor.Run()
 
                 ' reduce result of each thread and update global nw, nwsum array
-                For topic = 0 To K - 1
-                    Dim wordCount = 0
-                    For word = 0 To V - 1
-                        Dim nwDelta = 0
-                        For i = 0 To threads - 1
-                            nwDelta += gibbsWorks(i).nw(word)(topic) - nw(word)(topic)
+                For topic As Integer = 0 To K - 1
+                    wordCount = 0
+
+                    For word As Integer = 0 To V - 1
+                        nwDelta = 0
+
+                        For cpu_id As Integer = 0 To threads - 1
+                            nwDelta += gibbsWorks(cpu_id).nw(word)(topic) - nw(word)(topic)
                         Next
+
                         nw(word)(topic) += nwDelta
                         wordCount += nw(word)(topic)
                     Next
+
                     nwsum(topic) = wordCount
                 Next
             Next
