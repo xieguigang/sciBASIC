@@ -29,9 +29,10 @@ Namespace LDA
         Public Overridable Sub gibbsSampling()
             Dim N As Integer
 
+            Array.ConstrainedCopy(pGL.nwsum, 0, nwsum, 0, nwsum.Length)
+
             ' copy global nw, nwsum array
             For topic As Integer = 0 To pGL.K - 1
-                nwsum(topic) = pGL.nwsum(topic)
                 For word As Integer = 0 To pGL.V - 1
                     nw(word)(topic) = pGL.nw(word)(topic)
                 Next
