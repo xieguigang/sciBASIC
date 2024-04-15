@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::97a8ba1406ac068eed28744e54a57846, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 440
-    '    Code Lines: 252
-    ' Comment Lines: 143
-    '   Blank Lines: 45
-    '     File Size: 18.32 KB
+' Summaries:
 
 
-    ' Module VBDebugger
-    ' 
-    '     Properties: debugMode
-    ' 
-    '     Function: die, LinqProc
-    '     Delegate Sub
-    ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
-    ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
-    ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
-    '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 440
+'    Code Lines: 252
+' Comment Lines: 143
+'   Blank Lines: 45
+'     File Size: 18.32 KB
+
+
+' Module VBDebugger
+' 
+'     Properties: debugMode
+' 
+'     Function: die, LinqProc
+'     Delegate Sub
+' 
+'         Properties: ForceSTDError, Mute, UsingxConsole
+' 
+'         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
+' 
+'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
+'              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -74,6 +75,7 @@ Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 <Assembly: InternalsVisibleTo("REnv")>
 <Assembly: InternalsVisibleTo("R#")>
@@ -498,6 +500,19 @@ Public Module VBDebugger
             Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call WriteLine(s, ConsoleColor.White)
+                End Sub)
+        End If
+    End Sub
+
+    Public Sub Echo(str As String)
+        If Not Mute Then
+            Call My.InnerQueue.AddToQueue(
+                Sub()
+                    If Not My.redirectInfo Is Nothing Then
+                        My.Log4VB.redirectInfo(Now.ToString, str & vbBack, MSG_TYPES.INF)
+                    Else
+                        My.Log4VB.Print(str, ConsoleColor.White)
+                    End If
                 End Sub)
         End If
     End Sub

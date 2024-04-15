@@ -136,7 +136,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' Sets the progress bar theme to Python-style characters.
             ''' </summary>
             Public Sub SetThemePython()
-                _themeBars = Enumerable.Range(&H2587, &H258F - &H2587).Reverse().[Select](Function(i) Microsoft.VisualBasic.ChrW(i)).Prepend(" "c).ToArray()
+                _themeBars = Enumerable.Range(&H2587, &H258F - &H2587).Reverse().Select(Function(i) ChrW(i)).Prepend(" "c).ToArray()
             End Sub
 
             ''' <summary>
@@ -144,8 +144,11 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' </summary>
             ''' <param name="bars">An array of characters to use in the progress bar. Must be exactly 9 characters.</param>
             Public Sub SetTheme(bars As Char())
-                If bars.Length <> 9 Then Throw New ArgumentException("Must contain exactly 9 characters.", NameOf(bars))
-                _themeBars = bars
+                If bars.Length <> 9 Then
+                    Throw New ArgumentException("Must contain exactly 9 characters.", NameOf(bars))
+                Else
+                    _themeBars = bars
+                End If
             End Sub
 
             ''' <summary>
@@ -153,7 +156,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' </summary>
             Public Sub Finish()
                 Progress(_total, _total)
-                Console.WriteLine()
+                VBDebugger.EchoLine("")
             End Sub
 
             ''' <summary>
@@ -265,8 +268,11 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 ' Finally, if there is one, print the label
                 sb.Append(_label)
                 sb.Append(" "c)
-                If _useColor Then sb.Append(ChrW(27) & "[0m" & ChrW(27) & "[32m" & ChrW(27) & "[0m ")
-                Console.Write(sb.ToString() & New String(" "c, std.Max(0, _prevLength - sb.Length)))
+                If _useColor Then
+                    sb.Append(ChrW(27) & "[0m" & ChrW(27) & "[32m" & ChrW(27) & "[0m ")
+                End If
+
+                VBDebugger.Echo(sb.ToString() & New String(" "c, std.Max(0, _prevLength - sb.Length)))
 
                 Try
                     ' if (curCursorTop > 0) {

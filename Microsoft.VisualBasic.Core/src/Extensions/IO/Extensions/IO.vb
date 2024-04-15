@@ -66,8 +66,11 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
-''' The extension API for system file io.(IO函数拓展)
+''' The extension API for system file io.
 ''' </summary>
+''' <remarks>
+''' (IO函数拓展)
+''' </remarks>
 <Package("IO")>
 Public Module IOExtensions
 
