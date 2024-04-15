@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' plain text document
@@ -58,11 +59,11 @@ Public Class TextRender : Inherits Render
     End Function
 
     Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String
-        Dim i As Integer = 1
+        Dim i As i32 = 1
         Dim sb As New StringBuilder
 
         For Each line As String In items
-            Call sb.AppendLine($"[{i}] {line}")
+            Call sb.AppendLine($"[{++i}] {line}")
         Next
 
         Return sb.ToString
