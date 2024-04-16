@@ -1,9 +1,14 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' plain text document
 ''' </summary>
+''' <remarks>
+''' not only the markdown format tag will be removed from this render, and also 
+''' the additional html tag inside the given markdown document will be removed.
+''' </remarks>
 Public Class TextRender : Inherits Render
 
     Public Overrides Function Paragraph(text As String, CreateParagraphs As Boolean) As String
@@ -22,8 +27,13 @@ Public Class TextRender : Inherits Render
         Return code
     End Function
 
+    ''' <summary>
+    ''' additional html tag inside the document will be removed
+    ''' </summary>
+    ''' <param name="text"></param>
+    ''' <returns></returns>
     Public Overrides Function Document(text As String) As String
-        Return text
+        Return text.StripHTMLTags
     End Function
 
     Public Overrides Function HorizontalLine() As String

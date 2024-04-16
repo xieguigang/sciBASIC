@@ -59,6 +59,12 @@ Imports Microsoft.VisualBasic.Text
 
 Public Module Debugger
 
+    ''' <summary>
+    ''' this function returns all sub folder and files inside the <see cref="StreamPack.superBlock"/>
+    ''' </summary>
+    ''' <param name="hds"></param>
+    ''' <param name="recursive"></param>
+    ''' <returns>a collection of <see cref="StreamObject"/>: <see cref="StreamGroup"/> mixed with <see cref="StreamBlock"/></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ListFiles(hds As StreamPack, Optional recursive As Boolean = True) As IEnumerable(Of StreamObject)

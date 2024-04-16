@@ -63,6 +63,9 @@ Imports Microsoft.VisualBasic.FileIO.Path
 
 Namespace FileSystem
 
+    ''' <summary>
+    ''' a data folder
+    ''' </summary>
     Public Class StreamGroup : Inherits StreamObject
 
         ''' <summary>
