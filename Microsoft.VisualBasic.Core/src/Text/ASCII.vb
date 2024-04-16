@@ -338,7 +338,7 @@ Namespace Text
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsASCIIString(str As String) As Boolean
-            Return Not str.Any(Function(c) Asc(c) > 128)
+            Return Not str.Any(Function(c) AscW(c) > 128)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -355,7 +355,7 @@ Namespace Text
         ''' Symbols without white space.(可以印刷的ASCII符号列表)
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Strings.Chr).ToArray
+        Public Shared ReadOnly Property Symbols As Char() = ASCII.Byte.GetASCIISymbols().Select(AddressOf Strings.ChrW).ToArray
         Public Shared ReadOnly Property AlphaNumericTable As New Dictionary(Of Char, Integer)() From {
             {"0"c, 0}, {"1"c, 1}, {"2"c, 2}, {"3"c, 3}, {"4"c, 4},
             {"5"c, 5}, {"6"c, 6}, {"7"c, 7}, {"8"c, 8}, {"9"c, 9},
@@ -525,9 +525,9 @@ Namespace Text
             ''' <summary>
             ''' <see cref="vbTab"/>
             ''' </summary>
-            Public Const TAB As Integer = Asc(vbTab)
+            Public Const TAB As Integer = AscW(vbTab)
 
-            Public Const Hyphen As Integer = Asc("-"c)
+            Public Const Hyphen As Integer = AscW("-"c)
         End Class
     End Class
 End Namespace

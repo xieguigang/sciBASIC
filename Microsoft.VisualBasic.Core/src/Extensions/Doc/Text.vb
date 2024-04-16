@@ -192,7 +192,7 @@ Public Module TextDoc
     <Extension>
     Public Function OpenWriter(path$,
                                Optional encoding As Encodings = Encodings.UTF8,
-                               Optional newLine$ = ASCII.LF,
+                               Optional newLine As String = vbLf,
                                Optional append As Boolean = False,
                                Optional bufferSize As Integer = -1) As StreamWriter
 
@@ -244,7 +244,7 @@ Public Module TextDoc
                     Return
                 End If
             ElseIf path.Length > 60 Then
-                display_str = Mid(path, 1, 63) & "..."
+                display_str = path.Substring(0, 63) & "..."
             End If
 
             If verbose Then
@@ -345,7 +345,9 @@ Public Module TextDoc
                                 Optional throwEx As Boolean = True,
                                 Optional suppress As Boolean = False) As String
         Try
-            Return fs.ReadAllText(path, encoding:=encoding Or UTF8)
+            Using s As Stream = path.OpenReadonly
+                Return New StreamReader(s, encoding:=encoding Or UTF8).ReadToEnd
+            End Using
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
 
