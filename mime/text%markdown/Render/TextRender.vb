@@ -69,14 +69,7 @@ Public Class TextRender : Inherits Render
     End Function
 
     Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String
-        Dim i As i32 = 1
-        Dim sb As New StringBuilder
-
-        For Each line As String In items
-            Call sb.AppendLine($"[{++i}] {line}")
-        Next
-
-        Return sb.ToString
+        Return items.JoinBy(vbLf)
     End Function
 
     Public Overrides Function Table(head() As String, rows As IEnumerable(Of String())) As String
