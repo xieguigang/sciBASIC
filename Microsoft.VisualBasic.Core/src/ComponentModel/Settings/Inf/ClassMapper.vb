@@ -166,7 +166,9 @@ Namespace ComponentModel.Settings.Inf
         <Extension>
         Public Function WriteClass(Of T As Class)(x As T, ini As String) As Boolean
             Try
-                Call x.ClassDumper(New IniFile(ini))
+                Using inf As New IniFile(ini)
+                    Call x.ClassDumper(inf)
+                End Using
             Catch ex As Exception
                 ex = New Exception(ini, ex)
                 ex = New Exception(GetType(T).FullName, ex)
