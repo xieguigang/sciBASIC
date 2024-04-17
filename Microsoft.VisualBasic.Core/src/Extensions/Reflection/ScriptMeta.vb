@@ -99,7 +99,7 @@ NULL:       If Not strict Then
     ''' <param name="default$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Description(m As MemberInfo, Optional default$ = Nothing) As String
+    Public Function Description(Of T As MemberInfo)(m As T, Optional default$ = Nothing) As String
         Dim customAttrs() = m.GetCustomAttributes(GetType(DescriptionAttribute), inherit:=False)
 
         If Not customAttrs.IsNullOrEmpty Then

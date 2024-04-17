@@ -1255,8 +1255,7 @@ Public Module App
 
         If args.Name.TextEquals("/i") Then
             ' 交互式终端模式
-            Dim console As New InteractiveConsole(App)
-            Return finalizeCLI(console.RunApp)
+            Return finalizeCLI(New InteractiveConsole(App).RunApp)
         Else
             Dim program As New Interpreter(App, caller:=caller) With {
                 .ExecuteEmptyCli = executeEmpty,
