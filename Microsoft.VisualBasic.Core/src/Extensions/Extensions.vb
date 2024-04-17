@@ -126,8 +126,18 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="obj"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function is used for get the description text value from the GetType value <see cref="Type"/> of 
+    ''' the given <paramref name="obj"/>. this function may not working for the reflection result value, 
+    ''' example as when <paramref name="obj"/> is <see cref="PropertyInfo"/>, <see cref="MethodInfo"/> or 
+    ''' something, due to the reason of gettype of these reflection object contains no description data in 
+    ''' .net framework.
+    ''' 
+    ''' 20240414 change the function name from ``Description`` to ``DescriptionValue`` due to the reason of
+    ''' the function name of Description will always overloads other extension method which is named Description.
+    ''' </remarks>
     <Extension>
-    Public Function Description(Of T As Class)(obj As T) As String
+    Public Function DescriptionValue(Of T As Class)(obj As T) As String
         If Not obj Is Nothing Then
             Dim desc As DescriptionAttribute = obj.GetType.GetCustomAttribute(GetType(DescriptionAttribute))
 
