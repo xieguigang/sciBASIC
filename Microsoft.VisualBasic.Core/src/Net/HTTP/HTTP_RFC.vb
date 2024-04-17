@@ -404,15 +404,14 @@ Namespace Net.Http
         ''' 420 Method Failure (Spring Framework) |
         ''' Not part of the HTTP standard, but defined by Spring in the HttpStatus class to be used when a method failed. This status code Is deprecated by Spring.
         ''' </summary>
-        <Description("")>
-        RFC_METHOD_FAILURE = 420
-        ''' <summary>
+        ''' <remarks>
         ''' 420 Enhance Your Calm (Twitter) |
         ''' Not part of the HTTP standard, but returned by version 1 of the Twitter Search And Trends API when the client Is being rate limited.[17] 
         ''' Other services may wish to implement the 429 Too Many Requests response code instead.
-        ''' </summary>
+        ''' </remarks>
         <Description("")>
-        RFC_ENHANCE_YOUR_CALM = 420
+        RFC_METHOD_FAILURE = 420
+
         ''' <summary>
         ''' 421 Misdirected Request (HTTP/2) |
         ''' The request was directed at a server that Is Not able To produce a response (For example because a connection reuse).[18]

@@ -160,7 +160,7 @@ Namespace Parallel.Threads
         End Sub
 
         Sub New(Optional exceptionCallback As Action(Of String, Exception) = Nothing)
-            Me.New(LQuerySchedule.Recommended_NUM_THREADS, exceptionCallback:=exceptionCallback)
+            Me.New(LQuerySchedule.CPU_NUMBER, exceptionCallback:=exceptionCallback)
         End Sub
 
         ''' <summary>

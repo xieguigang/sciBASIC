@@ -78,11 +78,11 @@ Namespace Parallel.Linq
     Public Module LQuerySchedule
 
         ''' <summary>
-        ''' Get the number of processors on the current machine.(获取当前的系统主机的CPU核心数)
+        ''' Get the number of processors on the current machine.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(获取当前的系统主机的CPU核心数)</remarks>
         Public ReadOnly Property CPU_NUMBER As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -108,18 +108,6 @@ Namespace Parallel.Linq
                 Return n
             End If
         End Function
-
-        ''' <summary>
-        ''' The possible recommended threads of the linq based on you machine processors number, i'm not sure...
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property Recommended_NUM_THREADS As Integer
-            Get
-                Return Environment.ProcessorCount * 10
-            End Get
-        End Property
 
         ''' <summary>
         ''' 将大量的短时间的任务进行分区，合并，然后再执行并行化，请注意，<paramref name="task"/>参数不能够使lambda表达式，否则会出现EntryNotFound的错误
