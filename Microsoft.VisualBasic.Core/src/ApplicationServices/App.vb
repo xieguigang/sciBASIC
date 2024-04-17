@@ -1104,6 +1104,16 @@ Public Module App
         Return Interpreter.RunCLIInternal(Parsers.TryParse(args), caller, Nothing, Nothing, Nothing, Nothing)
     End Function
 
+    <Extension>
+    Public Function RunCLI(Interpreter As Type, args As String(),
+                           Optional executeEmpty As ExecuteEmptyCLI = Nothing,
+                           Optional executeNotFound As ExecuteNotFound = Nothing,
+                           Optional executeFile As ExecuteFile = Nothing,
+                           Optional executeQuery As ExecuteQuery = Nothing) As Integer
+
+        Return Interpreter.RunCLIInternal(CommandLineArgs.BuildFromArguments(args), "Main", executeEmpty, executeNotFound, executeFile, executeQuery)
+    End Function
+
     ''' <summary>
     ''' Running the string as a cli command line, Running the string as cli command line and the specific type define as a interpreter.
     ''' (请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。

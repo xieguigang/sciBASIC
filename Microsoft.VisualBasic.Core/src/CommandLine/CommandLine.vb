@@ -68,6 +68,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Parsers
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -1029,6 +1030,10 @@ Namespace CommandLine
 
         Public Shared Function ParseTokens(commandlineStr As String) As String()
             Return commandlineStr.GetTokens
+        End Function
+
+        Public Shared Function BuildFromArguments(args As String()) As CommandLine
+            Return Parsers.TryParse(args, False, rawInput:=args.Select(Function(s) s.CLIToken).JoinBy(" "))
         End Function
     End Class
 End Namespace
