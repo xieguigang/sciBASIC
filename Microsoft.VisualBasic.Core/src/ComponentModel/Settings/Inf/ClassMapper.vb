@@ -85,7 +85,7 @@ Namespace ComponentModel.Settings.Inf
                 name = nameCLS.Name
             End If
 
-            Dim source = DataFrameColumnAttribute.LoadMapping(type)
+            Dim source = DataFrameColumnAttribute.LoadMapping(type, mapsAll:=True)
             Dim binds = source.Values.ToArray
 
             Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
@@ -133,11 +133,12 @@ Namespace ComponentModel.Settings.Inf
             For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
                 Dim key As String = map.field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
+                Dim comment As String = map.member.Description
 
                 If value.StringEmpty Then
                     Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
                 Else
-                    Call ini.WriteValue(maps.Name, key, value)
+                    Call ini.WriteValue(maps.Name, key, value, comment)
                 End If
             Next
         End Sub
