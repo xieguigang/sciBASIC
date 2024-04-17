@@ -64,6 +64,9 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Net.Http
 
+    ''' <summary>
+    ''' Parse the url components inside a given url string as clr object 
+    ''' </summary>
     Public Class URL
 
         ''' <summary>
