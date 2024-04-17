@@ -218,7 +218,7 @@ Vladimir I",
             Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
 
-        Const a As Integer = Asc("a"c)
+        Const a As Integer = AscW("a"c)
 
         Public Function Similarity(Of T)(query As T(), subject As T(), Optional penalty As Double = 0.75) As Double
             If query.IsNullOrEmpty OrElse subject.IsNullOrEmpty Then
