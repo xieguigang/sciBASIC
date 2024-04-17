@@ -528,7 +528,14 @@ Namespace CommandLine
                 cmdAttr.Info = methodInfo.Description([default]:="")
             End If
             If cmdAttr.Usage.StringEmpty Then
-                cmdAttr.Usage = methodInfo.Usage
+                ' 20240417
+                '
+                ' trim multiple line of the commandline usage text
+                ' into one line. this is convient for copy to terminal 
+                ' and modify value to use.
+                cmdAttr.Usage = methodInfo.Usage _
+                    .TrimNewLine _
+                    .StringReplace("\s{2,}", " ")
             End If
             If cmdAttr.Example.StringEmpty Then
                 cmdAttr.Example = methodInfo.ExampleInfo
