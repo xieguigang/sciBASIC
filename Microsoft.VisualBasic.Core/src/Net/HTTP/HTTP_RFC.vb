@@ -68,6 +68,12 @@ Namespace Net.Http
     '''
     ''' Microsoft IIS sometimes uses additional Decimal Sub-codes To provide more specific information, but these are Not listed here.
     ''' </summary>
+    ''' <remarks>
+    ''' 20240410 
+    ''' 
+    ''' some duplicated value http status code has been removed due to the reason of http server module use this 
+    ''' enum value for build a http status text dictionary will crashed due to the existed duplicated value.
+    ''' </remarks>
     Public Enum HTTP_RFC As Long
 
 #Region "1xx Informational"
@@ -239,14 +245,14 @@ Namespace Net.Http
         ''' The request, and all future requests should be repeated Using another URI. 307 And 308 (As proposed) parallel the behaviours 
         ''' Of 302 And 301, but Do Not allow the HTTP method To change. So, For example, submitting a form To a permanently redirected resource may Continue smoothly.[13]
         ''' </summary>
-        <Description("")>
-        RFC_PERMANENT_REDIRECT = 308
-        ''' <summary>
+        ''' <remarks>
+        ''' 20240417 andalso alias for
+        ''' 
         ''' 308 Resume Incomplete (Google) |
         ''' This code Is used In the Resumable HTTP Requests Proposal To Resume aborted PUT Or POST requests.[14]
-        ''' </summary>
+        ''' </remarks>
         <Description("")>
-        RFC_RESUME_INCOMPLETE = 308
+        RFC_PERMANENT_REDIRECT = 308
 #End Region
 
 #Region "4xx Client Error"
@@ -487,15 +493,14 @@ Namespace Net.Http
         ''' Intended to be used when resource access Is denied for legal reasons, e.g. censorship Or government-mandated blocked access. 
         ''' A reference to the 1953 dystopian novel Fahrenheit 451, where books are outlawed.[24]
         ''' </summary>
-        <Description("")>
-        RFC_LEGAL_UNAVAILABLE = 451
-        ''' <summary>
+        ''' <remarks>
         ''' 451 Redirect (Microsoft) |
         ''' Used in Exchange ActiveSync if there either Is a more efficient server to use Or the server cannot access the users' mailbox.[25]
         ''' The client Is supposed To re-run the HTTP Autodiscovery protocol To find a better suited server.[26]
-        ''' </summary>
+        ''' </remarks>
         <Description("")>
-        RFC_REDIRECT = 451
+        RFC_LEGAL_UNAVAILABLE = 451
+
         ''' <summary>
         ''' 494 Request Header Too Large (Nginx) |
         ''' Nginx internal code similar To 431 but it was introduced earlier In version 0.9.4 (On January 21, 2011).[27][original research?]
@@ -534,14 +539,12 @@ Namespace Net.Http
         ''' 499 Client Closed Request (Nginx) |
         ''' Used in Nginx logs to indicate when the connection has been closed by client while the server Is still processing its request, making server unable to send a status code back.[29]
         ''' </summary>
-        <Description("")>
-        RFC_CLOSED_REQUEST = 499
-        ''' <summary>
+        ''' <remarks>
         ''' 499 Token required (Esri) |
         ''' Returned by ArcGIS For Server. A code Of 499 indicates that a token Is required (If no token was submitted).[28]
-        ''' </summary>
+        ''' </remarks>
         <Description("")>
-        RFC_TOKEN_REQUIRED = 499
+        RFC_CLOSED_REQUEST = 499
 
 #End Region
 
