@@ -91,6 +91,7 @@ Namespace CommandLine.ManView
             Call Console.WriteLine()
             Call Console.Write("   ")
             Call My.Log4VB.Println($"'{api.Name}' - {infoLines.FirstOrDefault}", ConsoleColor.Yellow, ConsoleColor.DarkBlue)
+            Call VBDebugger.WaitOutput()
 
             If infoLines.Length > 1 Then
                 blank = New String(
