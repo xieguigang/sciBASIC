@@ -74,7 +74,7 @@ Namespace Driver
         ''' </summary>
         GDI
         ''' <summary>
-        ''' <see cref="GraphicsSVG"/>
+        ''' <see cref="GraphicsSVG"/>, mime type: image/svg+xml
         ''' </summary>
         SVG
         ''' <summary>
