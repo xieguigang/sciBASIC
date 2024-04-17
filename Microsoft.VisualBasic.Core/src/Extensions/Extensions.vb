@@ -120,10 +120,16 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module Extensions
 #End If
 
+    ''' <summary>
+    ''' get description text value from <see cref="DescriptionAttribute"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Description(Of T As Class)(obj As T) As String
         If Not obj Is Nothing Then
-            Dim desc = obj.GetType.GetCustomAttribute(Of DescriptionAttribute)
+            Dim desc As DescriptionAttribute = obj.GetType.GetCustomAttribute(GetType(DescriptionAttribute))
 
             If desc Is Nothing Then
                 Return Nothing
