@@ -1,5 +1,5 @@
-﻿Imports std = System.Math
-Imports Microsoft.VisualBasic.Math
+﻿Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 '
 '
@@ -55,7 +55,7 @@ Namespace layout
             Return CSng(Hypot(n1.X() - n2.X(), n1.Y() - n2.Y()))
         End Function
 
-        Public Shared Sub fcBiRepulsor(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcBiRepulsor(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
@@ -74,7 +74,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_y(N1 As Layout2D, N2 As Layout2D, c As Double, verticalization As Double)
+        Public Shared Sub fcBiRepulsor_y(N1 As Node, N2 As Node, c As Double, verticalization As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
@@ -93,7 +93,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_noCollide(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcBiRepulsor_noCollide(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
@@ -123,7 +123,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcUniRepulsor(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcUniRepulsor(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
@@ -138,7 +138,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcBiAttractor(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
@@ -157,7 +157,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor_noCollide(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcBiAttractor_noCollide(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
@@ -176,7 +176,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiFlatAttractor(N1 As Layout2D, N2 As Layout2D, c As Double)
+        Public Shared Sub fcBiFlatAttractor(N1 As Node, N2 As Node, c As Double)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
@@ -195,7 +195,7 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcUniAttractor(N1 As Layout2D, N2 As Layout2D, c As Single)
+        Public Shared Sub fcUniAttractor(N1 As Node, N2 As Node, c As Single)
             Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
             Dim yDist As Double = N1.Y() - N2.Y()
             Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court

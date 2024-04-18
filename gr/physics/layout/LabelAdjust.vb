@@ -44,6 +44,18 @@
 Namespace layout
 
     ''' <summary>
+    ''' the layout data model
+    ''' </summary>
+    Public Class Node : Implements Layout2D
+
+        Public Property X As Double Implements Layout2D.X
+        Public Property Y As Double Implements Layout2D.Y
+        Public Property LayoutData As ForceVectorNodeLayoutData
+        Public Property size As Double
+
+    End Class
+
+    ''' <summary>
     ''' @author Mathieu Jacomy
     ''' </summary>
     Public Class LabelAdjust
