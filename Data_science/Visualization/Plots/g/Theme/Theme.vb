@@ -116,7 +116,11 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property legendLabelCSS As String = CSSFont.Win7LargerNormal
-        Public Property legendSplitSize As Integer
+        ''' <summary>
+        ''' divided the legend elements into multiple block group by this element number value.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property legendSplitSize As Integer = 16
         ''' <summary>
         ''' 图例的布局位置
         ''' </summary>
