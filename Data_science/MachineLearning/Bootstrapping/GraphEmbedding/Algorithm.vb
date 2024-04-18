@@ -61,7 +61,7 @@
                 .m_OutputIterSkip = args.skip
             }
             model.initialization(args.strNumRelation, args.strNumEntity, args.fnTrainTriples, args.fnValidTriples, args.fnTestTriples, args.fnAllTriples, args.other)
-            Console.WriteLine($"Start learning {model.Description} (triple only) model")
+            Console.WriteLine($"Start learning {model.DescriptionValue} (triple only) model")
             model.learn()
         End Function
 
