@@ -169,7 +169,13 @@ Namespace layout
             Dim someCollision = False
 
             'Add all nodes in the quadtree
-            Dim quadTree As New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
+            Dim quadTree As New QuadTree(correctNodes.Count, (xmax - xmin) / (ymax - ymin)) With {
+                .xmax = Me.xmax,
+                .xmin = Me.xmin,
+                .ymax = Me.ymax,
+                .ymin = Me.ymin
+            }
+
             For Each n As Node In correctNodes
                 quadTree.add(n, labels)
             Next
@@ -322,15 +328,14 @@ Namespace layout
         End Class
 
         Private Class QuadTree
-            Private ReadOnly outerInstance As LabelAdjust
-
 
             Friend ReadOnly quads As QuadNode()
             Friend ReadOnly COLUMNS As Integer
             Friend ReadOnly ROWS As Integer
 
-            Public Sub New(outerInstance As LabelAdjust, numberNodes As Integer, aspectRatio As Single)
-                Me.outerInstance = outerInstance
+            Public xmin, xmax, ymin, ymax As Double
+
+            Public Sub New(numberNodes As Integer, aspectRatio As Single)
                 If aspectRatio > 0 Then
                     COLUMNS = CInt(std.Ceiling(numberNodes / 50.0F))
                     ROWS = CInt(std.Ceiling(COLUMNS / aspectRatio))
@@ -361,10 +366,10 @@ Namespace layout
                 Dim nymax = std.Max(y + h / 2, y + radius)
 
                 ' Get the rectangle as boxes
-                Dim minXbox As Integer = std.Floor((COLUMNS - 1) * (nxmin - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim maxXbox As Integer = std.Floor((COLUMNS - 1) * (nxmax - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim minYbox As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymax - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
-                Dim maxYbox As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymin - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
+                Dim minXbox As Integer = std.Floor((COLUMNS - 1) * (nxmin - xmin) / (xmax - xmin))
+                Dim maxXbox As Integer = std.Floor((COLUMNS - 1) * (nxmax - xmin) / (xmax - xmin))
+                Dim minYbox As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (nymax - ymin)) / (ymax - ymin)))
+                Dim maxYbox As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (nymin - ymin)) / (ymax - ymin)))
                 Dim col = minXbox
 
                 While col <= maxXbox AndAlso col < COLUMNS AndAlso col >= 0
@@ -379,8 +384,8 @@ Namespace layout
                 End While
 
                 'Get the node center
-                Dim centerX As Integer = std.Floor((COLUMNS - 1) * (x - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim centerY As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (y - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
+                Dim centerX As Integer = std.Floor((COLUMNS - 1) * (x - xmin) / (xmax - xmin))
+                Dim centerY As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (y - ymin)) / (ymax - ymin)))
                 Dim layoutData As LabelAdjustLayoutData = node.LayoutData
                 layoutData.labelAdjustQuadNode = quads(centerY * COLUMNS + centerX).index
             End Sub
