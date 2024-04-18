@@ -198,8 +198,12 @@ Namespace CommandLine
 
             If apiTable.ContainsKey(command) Then
                 Return apiTable(command).Execute(args)
+            Else
+                Return invokeSpecial(command, args, help_argvs)
             End If
+        End Function
 
+        Private Function invokeSpecial(command As String, args As CommandLine, help_argvs As String()) As Integer
             Select Case command
                 Case "??vars"
                     Call ExecuteImpl.PrintVariables()
