@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics.layout
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -15,15 +17,40 @@ Module label_layout_test
         Dim r As New DoubleRange(0, 1)
 
         For i As Integer = 0 To nodes.Length - 1
-            nodes(i) = New Node() With {.X = w * randf.NextDouble, .Y = h * randf.NextDouble, .fixed = False, .size = 1}
+            nodes(i) = New Node() With {.X = w * randf.NextDouble, .Y = h * randf.NextDouble, .fixed = False, .size = 60}
             labels.Add(nodes(i), New TextProperties With {.Width = r.ScaleMapping(randf.NextDouble, label_w), .Height = r.ScaleMapping(randf.NextDouble, label_h)})
         Next
 
         Dim algo As New LabelAdjust
 
-        Call algo.initAlgo()
-        Call algo.goAlgo(nodes, labels)
+        Using g As Graphics2D = New Size(w, h).CreateGDIDevice
 
+            For i As Integer = 0 To nodes.Length - 1
+                Dim n As Node = nodes(i)
+                Dim size = labels(n)
+
+                Call g.DrawRectangle(Pens.Red, New RectangleF(n.X, n.Y, size.Width, size.Height))
+            Next
+
+            Call g.Flush()
+            Call g.ImageResource.SaveAs("./before.png")
+        End Using
+
+        Call algo.Solve(nodes, labels)
+
+
+        Using g As Graphics2D = New Size(w, h).CreateGDIDevice
+
+            For i As Integer = 0 To nodes.Length - 1
+                Dim n As Node = nodes(i)
+                Dim size = labels(n)
+
+                Call g.DrawRectangle(Pens.Red, New RectangleF(n.X, n.Y, size.Width, size.Height))
+            Next
+
+            Call g.Flush()
+            Call g.ImageResource.SaveAs("./after-layout.png")
+        End Using
 
         Pause()
     End Sub

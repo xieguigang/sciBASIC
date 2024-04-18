@@ -58,6 +58,11 @@ Namespace layout
         Public old_dx As Single = 0
         Public old_dy As Single = 0
         Public freeze As Single = 0F
+
+        Public Overrides Function ToString() As String
+            Return $"[{dx}, {dy}]"
+        End Function
+
     End Class
 
 End Namespace

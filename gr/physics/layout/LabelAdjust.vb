@@ -56,6 +56,10 @@ Namespace layout
         Public Property size As Double
         Public Property fixed As Boolean
 
+        Public Overrides Function ToString() As String
+            Return $"({X.ToString("F2")},{Y.ToString("F2")}) {If(LayoutData Is Nothing, "", LayoutData.ToString)}"
+        End Function
+
     End Class
 
     ''' <summary>
@@ -72,8 +76,6 @@ Namespace layout
     Public Class LabelAdjust
 
         'Settings
-        Private speedField As Double = 1
-        Private adjustBySizeField As Boolean = True
         Private radiusScale As Single = 1.1F
         'Graph size
         Private xmin As Single
@@ -82,18 +84,15 @@ Namespace layout
         Private ymax As Single
 
         Dim Converged As Boolean
+        Dim max_iterations As Integer = 10000
 
         Public Sub resetPropertiesValues()
-            speedField = 1
+            Speed = 1
             radiusScale = 1.1F
-            adjustBySizeField = True
+            AdjustBySize = True
         End Sub
 
-        Public Sub initAlgo()
-            Converged = False
-        End Sub
-
-        Public Sub goAlgo(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
+        Public Sub Solve(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
             'Reset Layout Data
             For Each n As Node In nodes
                 If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
@@ -105,6 +104,27 @@ Namespace layout
                 layoutData.dy = 0
             Next
 
+            Converged = False
+
+            Dim i As Integer = 0
+
+            Do While Not Converged
+                Call goAlgo(nodes, labels)
+
+                If i > max_iterations Then
+                    Exit Do
+                Else
+                    i += 1
+                End If
+            Loop
+        End Sub
+
+        ''' <summary>
+        ''' one iteration
+        ''' </summary>
+        ''' <param name="nodes"></param>
+        ''' <param name="labels"></param>
+        Private Sub goAlgo(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
             ' Get xmin, xmax, ymin, ymax
             xmin = Single.MaxValue
             xmax = Single.Epsilon
@@ -138,6 +158,7 @@ Namespace layout
             Next
 
             If correctNodes.Count = 0 OrElse xmin = xmax OrElse ymin = ymax Then
+                Converged = True
                 Return
             End If
 
@@ -174,8 +195,8 @@ Namespace layout
                 For Each n As Node In correctNodes
                     Dim layoutData As LabelAdjustLayoutData = n.LayoutData
                     If Not n.fixed Then
-                        layoutData.dx *= speedField
-                        layoutData.dy *= speedField
+                        layoutData.dx *= Speed
+                        layoutData.dy *= Speed
                         Dim x As Single = n.X() + layoutData.dx
                         Dim y As Single = n.Y() + layoutData.dy
 
@@ -210,7 +231,7 @@ Namespace layout
             Dim n2ymax = n2y + 0.5 * n2h
 
             'Sphere repulsion
-            If adjustBySizeField Then
+            If AdjustBySize Then
                 Dim xDist As Double = n2x - n1x
                 Dim yDist As Double = n2y - n1y
                 Dim dist = std.Sqrt(xDist * xDist + yDist * yDist)
@@ -259,25 +280,9 @@ Namespace layout
             Return collision
         End Function
 
-        Public Overridable Property Speed As Double?
-            Get
-                Return speedField
-            End Get
-            Set(value As Double?)
-                speedField = value.Value
-            End Set
-        End Property
+        Public Overridable Property Speed As Double = 1
 
-
-        Public Overridable Property AdjustBySize As Boolean?
-            Get
-                Return adjustBySizeField
-            End Get
-            Set(value As Boolean?)
-                adjustBySizeField = value.Value
-            End Set
-        End Property
-
+        Public Overridable Property AdjustBySize As Boolean = True
 
         Private Class QuadNode
 
