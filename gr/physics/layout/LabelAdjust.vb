@@ -1,4 +1,6 @@
-﻿
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
+
 ' 
 ' Copyright 2008-2010 Gephi
 ' Authors : Mathieu Jacomy
@@ -82,11 +84,9 @@ Namespace layout
             Converged = False
         End Sub
 
-        Public Sub goAlgo()
-            Dim nodes As org.gephi.graph.api.Node() = graph.Nodes.toArray()
-
+        Public Sub goAlgo(nodes As Node())
             'Reset Layout Data
-            For Each n As gephi.graph.api.Node In nodes
+            For Each n As Node In nodes
                 If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
                     n.LayoutData = New LabelAdjustLayoutData()
                 End If
@@ -102,10 +102,10 @@ Namespace layout
             ymin = Single.MaxValue
             ymax = Single.Epsilon
 
-            Dim correctNodes As IList(Of org.gephi.graph.api.Node) = New List(Of org.gephi.graph.api.Node)()
-            For Each n As gephi.graph.api.Node In nodes
-                Dim x As Single = n.x()
-                Dim y As Single = n.y()
+            Dim correctNodes As New List(Of Node)()
+            For Each n As Node In nodes
+                Dim x As Single = n.X()
+                Dim y As Single = n.Y()
                 Dim t As gephi.graph.api.TextProperties = n.TextProperties
                 Dim w As Single = t.Width
                 Dim h As Single = t.Height
@@ -113,16 +113,16 @@ Namespace layout
 
                 If w > 0 AndAlso h > 0 Then
                     ' Get the rectangle occupied by the node (size + label)
-                    Dim nxmin = Math.Min(x - w / 2, x - radius)
-                    Dim nxmax = Math.Max(x + w / 2, x + radius)
-                    Dim nymin = Math.Min(y - h / 2, y - radius)
-                    Dim nymax = Math.Max(y + h / 2, y + radius)
+                    Dim nxmin = std.Min(x - w / 2, x - radius)
+                    Dim nxmax = std.Max(x + w / 2, x + radius)
+                    Dim nymin = std.Min(y - h / 2, y - radius)
+                    Dim nymax = std.Max(y + h / 2, y + radius)
 
                     ' Update global boundaries
-                    xmin = Math.Min(xmin, nxmin)
-                    xmax = Math.Max(xmax, nxmax)
-                    ymin = Math.Min(ymin, nymin)
-                    ymax = Math.Max(ymax, nymax)
+                    xmin = std.Min(xmin, nxmin)
+                    xmax = std.Max(xmax, nxmax)
+                    ymin = std.Min(ymin, nymin)
+                    ymax = std.Max(ymax, nymax)
 
                     correctNodes.Add(n)
                 End If
@@ -204,7 +204,7 @@ Namespace layout
             If adjustBySizeField Then
                 Dim xDist As Double = n2x - n1x
                 Dim yDist As Double = n2y - n1y
-                Dim dist = Math.Sqrt(xDist * xDist + yDist * yDist)
+                Dim dist = std.Sqrt(xDist * xDist + yDist * yDist)
                 Dim sphereCollision As Boolean = dist < radiusScale * (n1.size() + n2.size())
                 If sphereCollision Then
                     Dim f As Double = 0.1 * n1.size() / dist
@@ -212,8 +212,8 @@ Namespace layout
                         n2Data.dx = CSng(n2Data.dx + xDist / dist * f)
                         n2Data.dy = CSng(n2Data.dy + yDist / dist * f)
                     Else
-                        n2Data.dx = CSng(n2Data.dx + 0.01 * (0.5 - GlobalRandom.NextDouble))
-                        n2Data.dy = CSng(n2Data.dy + 0.01 * (0.5 - GlobalRandom.NextDouble))
+                        n2Data.dx = CSng(n2Data.dx + 0.01 * (0.5 - randf.NextDouble))
+                        n2Data.dy = CSng(n2Data.dy + 0.01 * (0.5 - randf.NextDouble))
                     End If
                     collision = True
                 End If
@@ -228,20 +228,20 @@ Namespace layout
                 If labelCollisionXleft > 0 AndAlso labelCollisionXright > 0 Then ' Collision
                     If upDifferential > downDifferential Then
                         ' N1 pushes N2 up
-                        n2Data.dy = CSng(n2Data.dy - 0.02 * n1h * (0.8 + 0.4 * GlobalRandom.NextDouble))
+                        n2Data.dy = CSng(n2Data.dy - 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     Else
                         ' N1 pushes N2 down
-                        n2Data.dy = CSng(n2Data.dy + 0.02 * n1h * (0.8 + 0.4 * GlobalRandom.NextDouble))
+                        n2Data.dy = CSng(n2Data.dy + 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     End If
                     If labelCollisionXleft > labelCollisionXright Then
                         ' N1 pushes N2 right
-                        n2Data.dx = CSng(n2Data.dx + 0.01 * (n1h * 2) * (0.8 + 0.4 * GlobalRandom.NextDouble))
+                        n2Data.dx = CSng(n2Data.dx + 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     Else
                         ' N1 pushes N2 left
-                        n2Data.dx = CSng(n2Data.dx - 0.01 * (n1h * 2) * (0.8 + 0.4 * GlobalRandom.NextDouble))
+                        n2Data.dx = CSng(n2Data.dx - 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     End If
                 End If
@@ -249,26 +249,6 @@ Namespace layout
 
             Return collision
         End Function
-
-        Public Overrides Sub endAlgo()
-            For Each n As gephi.graph.api.Node In graph.Nodes
-                n.LayoutData = Nothing
-            Next
-        End Sub
-
-        Public Overrides ReadOnly Property Properties As LayoutProperty()
-            Get
-                Dim lProperties As IList(Of org.gephi.layout.spi.LayoutProperty) = New List(Of org.gephi.layout.spi.LayoutProperty)()
-                Const LABELADJUST_CATEGORY = "LabelAdjust"
-                Try
-                    lProperties.Add(layout.spi.LayoutProperty.createProperty(Me, GetType(Double), org.openide.util.NbBundle.getMessage(Me.GetType(), "LabelAdjust.speed.name"), LABELADJUST_CATEGORY, "LabelAdjust.speed.name", org.openide.util.NbBundle.getMessage(Me.GetType(), "LabelAdjust.speed.desc"), "getSpeed", "setSpeed"))
-                    lProperties.Add(layout.spi.LayoutProperty.createProperty(Me, GetType(Boolean), org.openide.util.NbBundle.getMessage(Me.GetType(), "LabelAdjust.adjustBySize.name"), LABELADJUST_CATEGORY, "LabelAdjust.adjustBySize.name", org.openide.util.NbBundle.getMessage(Me.GetType(), "LabelAdjust.adjustBySize.desc"), "isAdjustBySize", "setAdjustBySize"))
-                Catch e As Exception
-                    org.openide.util.Exceptions.printStackTrace(e)
-                End Try
-                Return CType(lProperties, List(Of org.gephi.layout.spi.LayoutProperty)).ToArray()
-            End Get
-        End Property
 
         Public Overridable Property Speed As Double?
             Get
@@ -301,7 +281,7 @@ Namespace layout
                 Me.index = index
                 Me.row = row
                 Me.col = col
-                nodesField = New List(Of org.gephi.graph.api.Node)()
+                nodesField = New List(Of Node)()
             End Sub
 
             Public Overridable ReadOnly Property Nodes As IList(Of Node)
@@ -326,11 +306,11 @@ Namespace layout
             Public Sub New(outerInstance As LabelAdjust, numberNodes As Integer, aspectRatio As Single)
                 Me.outerInstance = outerInstance
                 If aspectRatio > 0 Then
-                    COLUMNS = CInt(Math.Ceiling(numberNodes / 50.0F))
-                    ROWS = CInt(Math.Ceiling(COLUMNS / aspectRatio))
+                    COLUMNS = CInt(std.Ceiling(numberNodes / 50.0F))
+                    ROWS = CInt(std.Ceiling(COLUMNS / aspectRatio))
                 Else
-                    ROWS = CInt(Math.Ceiling(numberNodes / 50.0F))
-                    COLUMNS = CInt(Math.Ceiling(ROWS / aspectRatio))
+                    ROWS = CInt(std.Ceiling(numberNodes / 50.0F))
+                    COLUMNS = CInt(std.Ceiling(ROWS / aspectRatio))
                 End If
                 quads = New QuadNode(COLUMNS * ROWS - 1) {}
                 For row = 0 To ROWS - 1
@@ -349,16 +329,16 @@ Namespace layout
                 Dim radius As Single = node.size()
 
                 ' Get the rectangle occupied by the node (size + label)
-                Dim nxmin = Math.Min(x - w / 2, x - radius)
-                Dim nxmax = Math.Max(x + w / 2, x + radius)
-                Dim nymin = Math.Min(y - h / 2, y - radius)
-                Dim nymax = Math.Max(y + h / 2, y + radius)
+                Dim nxmin = std.Min(x - w / 2, x - radius)
+                Dim nxmax = std.Max(x + w / 2, x + radius)
+                Dim nymin = std.Min(y - h / 2, y - radius)
+                Dim nymax = std.Max(y + h / 2, y + radius)
 
                 ' Get the rectangle as boxes
-                Dim minXbox As Integer = Math.Floor((COLUMNS - 1) * (nxmin - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim maxXbox As Integer = Math.Floor((COLUMNS - 1) * (nxmax - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim minYbox As Integer = Math.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymax - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
-                Dim maxYbox As Integer = Math.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymin - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
+                Dim minXbox As Integer = std.Floor((COLUMNS - 1) * (nxmin - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
+                Dim maxXbox As Integer = std.Floor((COLUMNS - 1) * (nxmax - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
+                Dim minYbox As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymax - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
+                Dim maxYbox As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (nymin - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
                 Dim col = minXbox
 
                 While col <= maxXbox AndAlso col < COLUMNS AndAlso col >= 0
@@ -373,8 +353,8 @@ Namespace layout
                 End While
 
                 'Get the node center
-                Dim centerX As Integer = Math.Floor((COLUMNS - 1) * (x - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
-                Dim centerY As Integer = Math.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (y - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
+                Dim centerX As Integer = std.Floor((COLUMNS - 1) * (x - outerInstance.xmin) / (outerInstance.xmax - outerInstance.xmin))
+                Dim centerY As Integer = std.Floor((ROWS - 1) * ((outerInstance.ymax - outerInstance.ymin - (y - outerInstance.ymin)) / (outerInstance.ymax - outerInstance.ymin)))
                 Dim layoutData As LabelAdjustLayoutData = node.LayoutData
                 layoutData.labelAdjustQuadNode = quads(centerY * COLUMNS + centerX).index
             End Sub
@@ -388,14 +368,14 @@ Namespace layout
                     Return quads(0).Nodes
                 End If
 
-                Dim adjNodes As IList(Of org.gephi.graph.api.Node) = New List(Of org.gephi.graph.api.Node)()
-                Dim left = Math.Max(0, col - 1)
-                Dim top = Math.Max(0, row - 1)
-                Dim right = Math.Min(COLUMNS - 1, col + 1)
-                Dim bottom = Math.Min(ROWS - 1, row + 1)
+                Dim adjNodes As New List(Of Node)()
+                Dim left = std.Max(0, col - 1)
+                Dim top = std.Max(0, row - 1)
+                Dim right = std.Min(COLUMNS - 1, col + 1)
+                Dim bottom = std.Min(ROWS - 1, row + 1)
                 For i = left To right
                     For j = top To bottom
-                        CType(adjNodes, List(Of org.gephi.graph.api.Node)).AddRange(quads(j * COLUMNS + i).Nodes)
+                        CType(adjNodes, List(Of Node)).AddRange(quads(j * COLUMNS + i).Nodes)
                     Next
                 Next
                 Return adjNodes
