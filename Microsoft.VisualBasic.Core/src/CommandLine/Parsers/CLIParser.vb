@@ -66,6 +66,13 @@ Namespace CommandLine.Parsers
     ''' </summary>
     Public Module CLIParser
 
+        ''' <summary>
+        ''' split the key=value tuple insdie the commandline argument token string
+        ''' </summary>
+        ''' <param name="tokens">
+        ''' a set of the commandline argument token list
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Private Iterator Function extract(tokens As IEnumerable(Of String)) As IEnumerable(Of String)
             For Each token As String In tokens
@@ -85,13 +92,13 @@ Namespace CommandLine.Parsers
         End Function
 
         ''' <summary>
-        ''' Try parsing the cli command string from the string value.(尝试着从文本行之中解析出命令行参数信息)
+        ''' Try parsing the cli command string from the string value.
         ''' </summary>
         ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
         ''' <param name="duplicatedAllows">Allow the duplicated command parameter argument name in the input, 
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(尝试着从文本行之中解析出命令行参数信息)</remarks>
         <ExportAPI("TryParse")>
         <Extension>
         Public Function TryParse(args As StringList,
