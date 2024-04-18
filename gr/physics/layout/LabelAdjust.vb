@@ -54,6 +54,7 @@ Namespace layout
         Public Property Y As Double Implements Layout2D.Y
         Public Property LayoutData As ForceVectorNodeLayoutData
         Public Property size As Double
+        Public Property fixed As Boolean
 
     End Class
 
@@ -137,18 +138,18 @@ Namespace layout
 
             'Add all nodes in the quadtree
             Dim quadTree As QuadTree = New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
-            For Each n As gephi.graph.api.Node In correctNodes
+            For Each n As Node In correctNodes
                 quadTree.add(n)
             Next
 
             'Compute repulsion - with neighbours in the 8 quadnodes around the node
-            For Each n As gephi.graph.api.Node In correctNodes
+            For Each n As Node In correctNodes
                 timeStamp += 1
                 Dim layoutData As LabelAdjustLayoutData = n.LayoutData
                 Dim quad = quadTree.getQuadNode(layoutData.labelAdjustQuadNode)
 
                 'Repulse with adjacent quad - but only one per pair of nodes, timestamp is guaranteeing that
-                For Each neighbour As gephi.graph.api.Node In quadTree.getAdjacentNodes(quad.row, quad.col)
+                For Each neighbour As Node In quadTree.getAdjacentNodes(quad.row, quad.col)
                     Dim neighborLayoutData As LabelAdjustLayoutData = neighbour.LayoutData
                     If neighbour IsNot n AndAlso neighborLayoutData.freeze < timeStamp Then
                         Dim collision = Me.repulse(n, neighbour)
@@ -162,13 +163,13 @@ Namespace layout
                 Converged = True
             Else
                 ' apply forces
-                For Each n As gephi.graph.api.Node In correctNodes
+                For Each n As Node In correctNodes
                     Dim layoutData As LabelAdjustLayoutData = n.LayoutData
                     If Not n.Fixed Then
                         layoutData.dx *= speedField
                         layoutData.dy *= speedField
-                        Dim x As Single = n.x() + layoutData.dx
-                        Dim y As Single = n.y() + layoutData.dy
+                        Dim x As Single = n.X() + layoutData.dx
+                        Dim y As Single = n.Y() + layoutData.dy
 
                         n.X = x
                         n.Y = y
