@@ -1,4 +1,5 @@
-﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports System.Drawing
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 ' 
@@ -85,6 +86,8 @@ Namespace layout
 
         Dim Converged As Boolean
         Dim max_iterations As Integer = 10000
+
+        Public canvas As SizeF
 
         Public Sub resetPropertiesValues()
             Speed = 1
@@ -199,6 +202,15 @@ Namespace layout
                         layoutData.dy *= Speed
                         Dim x As Single = n.X() + layoutData.dx
                         Dim y As Single = n.Y() + layoutData.dy
+
+                        If x < 0 Then x = 0
+                        If y < 0 Then y = 0
+                        If x + labels(n).Width > canvas.Width Then
+                            x = canvas.Width - labels(n).Width
+                        End If
+                        If y + labels(n).Height > canvas.Height Then
+                            y = canvas.Height - labels(n).Height
+                        End If
 
                         n.X = x
                         n.Y = y
