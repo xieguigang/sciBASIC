@@ -59,6 +59,14 @@ Namespace layout
     End Class
 
     ''' <summary>
+    ''' the label drawing style data
+    ''' </summary>
+    Public Class TextProperties
+        Public Property Width As Single
+        Public Property Height As Single
+    End Class
+
+    ''' <summary>
     ''' @author Mathieu Jacomy
     ''' </summary>
     Public Class LabelAdjust
@@ -85,7 +93,7 @@ Namespace layout
             Converged = False
         End Sub
 
-        Public Sub goAlgo(nodes As Node())
+        Public Sub goAlgo(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
             'Reset Layout Data
             For Each n As Node In nodes
                 If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
@@ -107,7 +115,7 @@ Namespace layout
             For Each n As Node In nodes
                 Dim x As Single = n.X()
                 Dim y As Single = n.Y()
-                Dim t As gephi.graph.api.TextProperties = n.TextProperties
+                Dim t As TextProperties = labels(n)
                 Dim w As Single = t.Width
                 Dim h As Single = t.Height
                 Dim radius As Single = n.size() / 2.0F
@@ -137,9 +145,9 @@ Namespace layout
             Dim someCollision = False
 
             'Add all nodes in the quadtree
-            Dim quadTree As QuadTree = New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
+            Dim quadTree As New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
             For Each n As Node In correctNodes
-                quadTree.add(n)
+                quadTree.add(n, labels)
             Next
 
             'Compute repulsion - with neighbours in the 8 quadnodes around the node
@@ -152,7 +160,7 @@ Namespace layout
                 For Each neighbour As Node In quadTree.getAdjacentNodes(quad.row, quad.col)
                     Dim neighborLayoutData As LabelAdjustLayoutData = neighbour.LayoutData
                     If neighbour IsNot n AndAlso neighborLayoutData.freeze < timeStamp Then
-                        Dim collision = Me.repulse(n, neighbour)
+                        Dim collision = Me.repulse(n, neighbour, labels)
                         someCollision = someCollision OrElse collision
                     End If
                     neighborLayoutData.freeze = timeStamp 'Use the existing freeze float variable to set timestamp
@@ -165,7 +173,7 @@ Namespace layout
                 ' apply forces
                 For Each n As Node In correctNodes
                     Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                    If Not n.Fixed Then
+                    If Not n.fixed Then
                         layoutData.dx *= speedField
                         layoutData.dy *= speedField
                         Dim x As Single = n.X() + layoutData.dx
@@ -178,14 +186,14 @@ Namespace layout
             End If
         End Sub
 
-        Private Function repulse(n1 As Node, n2 As Node) As Boolean
+        Private Function repulse(n1 As Node, n2 As Node, labels As Dictionary(Of Node, TextProperties)) As Boolean
             Dim collision = False
-            Dim n1x As Single = n1.x()
-            Dim n1y As Single = n1.y()
-            Dim n2x As Single = n2.x()
-            Dim n2y As Single = n2.y()
-            Dim t1 As gephi.graph.api.TextProperties = n1.TextProperties
-            Dim t2 As gephi.graph.api.TextProperties = n2.TextProperties
+            Dim n1x As Single = n1.X()
+            Dim n1y As Single = n1.Y()
+            Dim n2x As Single = n2.X()
+            Dim n2y As Single = n2.Y()
+            Dim t1 As TextProperties = labels(n1)
+            Dim t2 As TextProperties = labels(n2)
             Dim n1w As Single = t1.Width
             Dim n2w As Single = t2.Width
             Dim n1h As Single = t1.Height
@@ -321,10 +329,10 @@ Namespace layout
                 Next
             End Sub
 
-            Public Overridable Sub add(node As Node)
-                Dim x As Single = node.x()
-                Dim y As Single = node.y()
-                Dim t As gephi.graph.api.TextProperties = node.TextProperties
+            Public Overridable Sub add(node As Node, labels As Dictionary(Of Node, TextProperties))
+                Dim x As Single = node.X()
+                Dim y As Single = node.Y()
+                Dim t As TextProperties = labels(node)
                 Dim w As Single = t.Width
                 Dim h As Single = t.Height
                 Dim radius As Single = node.size()
