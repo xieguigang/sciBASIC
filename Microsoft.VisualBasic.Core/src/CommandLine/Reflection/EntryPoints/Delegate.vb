@@ -187,10 +187,16 @@ Namespace CommandLine.Reflection.EntryPoints
                 If name.StringEmpty Then
                     ' no matches inside the commandline argument inputs
                     ' check for optional
-                    If pars(i).IsOptional Then
-                        callParameters(i) = pars(i).DefaultValue
-                    ElseIf type Is GetType(CommandLine) Then
+                    If type Is GetType(CommandLine) Then
+                        ' 20240418 set commandline value should be before check of the
+                        ' optional parameter, due to the reason of if the un-matched(always)
+                        ' commandline args parameter is optional, then its default value
+                        ' always is nothing, so that we can not get the commandline object
+                        ' if we check the optional before check of the commandline object
+                        ' argument type.
                         callParameters(i) = args
+                    ElseIf pars(i).IsOptional Then
+                        callParameters(i) = pars(i).DefaultValue
                     Else
                         If parAlias Is Nothing Then
                             name = "--" & pars(i).Name
