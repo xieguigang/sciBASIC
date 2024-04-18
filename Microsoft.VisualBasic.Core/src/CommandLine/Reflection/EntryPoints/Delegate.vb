@@ -220,7 +220,17 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="[alias]"></param>
         ''' <returns></returns>
         Private Shared Function MatchArgumentName(args As CommandLine, name As String, [alias] As Parameter) As String
+            If Not [alias] Is Nothing Then
+                name = [alias].Alias.TrimParamPrefix
+            End If
 
+            name = args.Keys _
+                .Where(Function(name2)
+                           Return name2.TrimParamPrefix.TextEquals(name)
+                       End Function) _
+                .FirstOrDefault
+
+            Return name
         End Function
 
         Public Overrides Function ToString() As String
