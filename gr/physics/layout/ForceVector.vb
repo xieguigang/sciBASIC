@@ -43,7 +43,7 @@ Imports LayoutData = org.gephi.graph.spi.LayoutData
 ' Portions Copyrighted 2011 Gephi Consortium.
 ' 
 
-Namespace org.gephi.layout.plugin.force
+Namespace layout
 
     ''' <summary>
     ''' @author Helder Suzuki

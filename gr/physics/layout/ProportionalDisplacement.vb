@@ -40,9 +40,7 @@
 ' Portions Copyrighted 2011 Gephi Consortium.
 ' 
 
-Imports Node = org.gephi.graph.api.Node
-
-Namespace org.gephi.layout.plugin.force
+Namespace layout
 
     ''' <summary>
     ''' The movement of the node is in the direction of the force and it's

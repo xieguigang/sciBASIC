@@ -40,9 +40,7 @@
 ' Portions Copyrighted 2011 Gephi Consortium.
 ' 
 
-Imports Node = org.gephi.graph.api.Node
-
-Namespace org.gephi.layout.plugin.force
+Namespace layout
 
     ''' <summary>
     ''' @author Helder Suzuki

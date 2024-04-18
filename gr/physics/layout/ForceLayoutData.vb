@@ -46,7 +46,7 @@ Namespace layout
     ''' @author Helder Suzuki
     ''' </summary>
     Public Class ForceLayoutData
-        Inherits plugin.force.ForceVector
+        Inherits ForceVector
 
         Public energy0 As Single
         Public [step] As Single
