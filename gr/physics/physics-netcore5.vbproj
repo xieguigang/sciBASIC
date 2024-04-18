@@ -528,7 +528,6 @@
     <Compile Remove="physics_Test\**" />
     <EmbeddedResource Remove="physics_Test\**" />
     <None Remove="physics_Test\**" />
-    <Compile Remove="layout\ForceVectorUtils.vb" />
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -543,10 +542,6 @@
     <ProjectReference Include="..\..\Data_science\Graph\graph-netcore5.vbproj" />
     <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="layout\" />
   </ItemGroup>
 
 </Project>

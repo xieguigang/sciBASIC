@@ -1,5 +1,5 @@
 ﻿Imports System
-Imports LayoutData = org.gephi.graph.spi.LayoutData
+Imports std = System.Math
 
 ' 
 ' Copyright 2008-2010 Gephi
@@ -122,7 +122,7 @@ Namespace layout
 
         Public Overridable ReadOnly Property Norm As Single
             Get
-                Return Math.Sqrt(Energy)
+                Return std.Sqrt(Energy)
             End Get
         End Property
 

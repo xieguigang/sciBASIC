@@ -61,12 +61,12 @@ Namespace layout
             Return ret
         End Function
 
-        Public Overridable Sub moveNode(node As Node, forceData As ForceVector) Implements Displacement.moveNode
+        Public Overridable Sub moveNode(node As Layout2D, forceData As ForceVector) Implements Displacement.moveNode
             Dim displacement As ForceVector = forceData.normalize()
             displacement.multiply(stepField)
 
-            Dim x As Single = node.x() + displacement.x()
-            Dim y As Single = node.y() + displacement.y()
+            Dim x As Single = node.X() + displacement.x()
+            Dim y As Single = node.Y() + displacement.y()
 
             If assertValue(x) Then
                 node.X = x

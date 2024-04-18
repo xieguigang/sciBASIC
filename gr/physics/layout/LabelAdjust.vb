@@ -58,120 +58,111 @@ Namespace layout
         Private ymin As Single
         Private ymax As Single
 
-        Public Sub New(layoutBuilder As LayoutBuilder)
-            MyBase.New(layoutBuilder)
-        End Sub
+        Dim Converged As Boolean
 
-        Public Overrides Sub resetPropertiesValues()
+        Public Sub resetPropertiesValues()
             speedField = 1
             radiusScale = 1.1F
             adjustBySizeField = True
         End Sub
 
-        Public Overrides Sub initAlgo()
-            MyBase.Converged = False
+        Public Sub initAlgo()
+            Converged = False
         End Sub
 
-        Public Overrides Sub goAlgo()
-            graph = MyBase.graphModelField.GraphVisible
-            graph.readLock()
-            Try
-                Dim nodes As org.gephi.graph.api.Node() = graph.Nodes.toArray()
+        Public Sub goAlgo()
+            Dim nodes As org.gephi.graph.api.Node() = graph.Nodes.toArray()
 
-                'Reset Layout Data
-                For Each n As gephi.graph.api.Node In nodes
-                    If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
-                        n.LayoutData = New LabelAdjustLayoutData()
-                    End If
-                    Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                    layoutData.freeze = 0
-                    layoutData.dx = 0
-                    layoutData.dy = 0
-                Next
-
-                ' Get xmin, xmax, ymin, ymax
-                xmin = Single.MaxValue
-                xmax = Single.Epsilon
-                ymin = Single.MaxValue
-                ymax = Single.Epsilon
-
-                Dim correctNodes As IList(Of org.gephi.graph.api.Node) = New List(Of org.gephi.graph.api.Node)()
-                For Each n As gephi.graph.api.Node In nodes
-                    Dim x As Single = n.x()
-                    Dim y As Single = n.y()
-                    Dim t As gephi.graph.api.TextProperties = n.TextProperties
-                    Dim w As Single = t.Width
-                    Dim h As Single = t.Height
-                    Dim radius As Single = n.size() / 2.0F
-
-                    If w > 0 AndAlso h > 0 Then
-                        ' Get the rectangle occupied by the node (size + label)
-                        Dim nxmin = Math.Min(x - w / 2, x - radius)
-                        Dim nxmax = Math.Max(x + w / 2, x + radius)
-                        Dim nymin = Math.Min(y - h / 2, y - radius)
-                        Dim nymax = Math.Max(y + h / 2, y + radius)
-
-                        ' Update global boundaries
-                        xmin = Math.Min(xmin, nxmin)
-                        xmax = Math.Max(xmax, nxmax)
-                        ymin = Math.Min(ymin, nymin)
-                        ymax = Math.Max(ymax, nymax)
-
-                        correctNodes.Add(n)
-                    End If
-                Next
-
-                If correctNodes.Count = 0 OrElse xmin = xmax OrElse ymin = ymax Then
-                    Return
+            'Reset Layout Data
+            For Each n As gephi.graph.api.Node In nodes
+                If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
+                    n.LayoutData = New LabelAdjustLayoutData()
                 End If
+                Dim layoutData As LabelAdjustLayoutData = n.LayoutData
+                layoutData.freeze = 0
+                layoutData.dx = 0
+                layoutData.dy = 0
+            Next
 
-                Dim timeStamp As Long = 1
-                Dim someCollision = False
+            ' Get xmin, xmax, ymin, ymax
+            xmin = Single.MaxValue
+            xmax = Single.Epsilon
+            ymin = Single.MaxValue
+            ymax = Single.Epsilon
 
-                'Add all nodes in the quadtree
-                Dim quadTree As QuadTree = New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
-                For Each n As gephi.graph.api.Node In correctNodes
-                    quadTree.add(n)
-                Next
+            Dim correctNodes As IList(Of org.gephi.graph.api.Node) = New List(Of org.gephi.graph.api.Node)()
+            For Each n As gephi.graph.api.Node In nodes
+                Dim x As Single = n.x()
+                Dim y As Single = n.y()
+                Dim t As gephi.graph.api.TextProperties = n.TextProperties
+                Dim w As Single = t.Width
+                Dim h As Single = t.Height
+                Dim radius As Single = n.size() / 2.0F
 
-                'Compute repulsion - with neighbours in the 8 quadnodes around the node
-                For Each n As gephi.graph.api.Node In correctNodes
-                    timeStamp += 1
-                    Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                    Dim quad = quadTree.getQuadNode(layoutData.labelAdjustQuadNode)
+                If w > 0 AndAlso h > 0 Then
+                    ' Get the rectangle occupied by the node (size + label)
+                    Dim nxmin = Math.Min(x - w / 2, x - radius)
+                    Dim nxmax = Math.Max(x + w / 2, x + radius)
+                    Dim nymin = Math.Min(y - h / 2, y - radius)
+                    Dim nymax = Math.Max(y + h / 2, y + radius)
 
-                    'Repulse with adjacent quad - but only one per pair of nodes, timestamp is guaranteeing that
-                    For Each neighbour As gephi.graph.api.Node In quadTree.getAdjacentNodes(quad.row, quad.col)
-                        Dim neighborLayoutData As LabelAdjustLayoutData = neighbour.LayoutData
-                        If neighbour IsNot n AndAlso neighborLayoutData.freeze < timeStamp Then
-                            Dim collision = Me.repulse(n, neighbour)
-                            someCollision = someCollision OrElse collision
-                        End If
-                        neighborLayoutData.freeze = timeStamp 'Use the existing freeze float variable to set timestamp
-                    Next
-                Next
+                    ' Update global boundaries
+                    xmin = Math.Min(xmin, nxmin)
+                    xmax = Math.Max(xmax, nxmax)
+                    ymin = Math.Min(ymin, nymin)
+                    ymax = Math.Max(ymax, nymax)
 
-                If Not someCollision Then
-                    MyBase.Converged = True
-                Else
-                    ' apply forces
-                    For Each n As gephi.graph.api.Node In correctNodes
-                        Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                        If Not n.Fixed Then
-                            layoutData.dx *= speedField
-                            layoutData.dy *= speedField
-                            Dim x As Single = n.x() + layoutData.dx
-                            Dim y As Single = n.y() + layoutData.dy
-
-                            n.X = x
-                            n.Y = y
-                        End If
-                    Next
+                    correctNodes.Add(n)
                 End If
+            Next
 
-            Finally
-                graph.readUnlockAll()
-            End Try
+            If correctNodes.Count = 0 OrElse xmin = xmax OrElse ymin = ymax Then
+                Return
+            End If
+
+            Dim timeStamp As Long = 1
+            Dim someCollision = False
+
+            'Add all nodes in the quadtree
+            Dim quadTree As QuadTree = New QuadTree(Me, correctNodes.Count, (xmax - xmin) / (ymax - ymin))
+            For Each n As gephi.graph.api.Node In correctNodes
+                quadTree.add(n)
+            Next
+
+            'Compute repulsion - with neighbours in the 8 quadnodes around the node
+            For Each n As gephi.graph.api.Node In correctNodes
+                timeStamp += 1
+                Dim layoutData As LabelAdjustLayoutData = n.LayoutData
+                Dim quad = quadTree.getQuadNode(layoutData.labelAdjustQuadNode)
+
+                'Repulse with adjacent quad - but only one per pair of nodes, timestamp is guaranteeing that
+                For Each neighbour As gephi.graph.api.Node In quadTree.getAdjacentNodes(quad.row, quad.col)
+                    Dim neighborLayoutData As LabelAdjustLayoutData = neighbour.LayoutData
+                    If neighbour IsNot n AndAlso neighborLayoutData.freeze < timeStamp Then
+                        Dim collision = Me.repulse(n, neighbour)
+                        someCollision = someCollision OrElse collision
+                    End If
+                    neighborLayoutData.freeze = timeStamp 'Use the existing freeze float variable to set timestamp
+                Next
+            Next
+
+            If Not someCollision Then
+                Converged = True
+            Else
+                ' apply forces
+                For Each n As gephi.graph.api.Node In correctNodes
+                    Dim layoutData As LabelAdjustLayoutData = n.LayoutData
+                    If Not n.Fixed Then
+                        layoutData.dx *= speedField
+                        layoutData.dy *= speedField
+                        Dim x As Single = n.x() + layoutData.dx
+                        Dim y As Single = n.y() + layoutData.dy
+
+                        n.X = x
+                        n.Y = y
+                    End If
+                Next
+            End If
         End Sub
 
         Private Function repulse(n1 As Node, n2 As Node) As Boolean

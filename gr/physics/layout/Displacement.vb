@@ -49,7 +49,7 @@ Namespace layout
 
         WriteOnly Property [Step] As Single
 
-        Sub moveNode(node As Node, forceData As ForceVector)
+        Sub moveNode(node As Layout2D, forceData As ForceVector)
     End Interface
 
 End Namespace

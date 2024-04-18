@@ -1,4 +1,8 @@
-﻿' 
+﻿Imports std = System.Math
+Imports Microsoft.VisualBasic.Math
+
+'
+'
 ' Copyright 2008-2010 Gephi
 ' Authors : Mathieu Jacomy
 ' Website : http://www.gephi.org
@@ -47,20 +51,20 @@ Namespace layout
     ''' </summary>
     Public Class ForceVectorUtils
 
-        Public Shared Function distance(n1 As Node, n2 As Node) As Single
-            Return CSng(Math.hypot(n1.x() - n2.x(), n1.y() - n2.y()))
+        Public Shared Function distance(n1 As Layout2D, n2 As Layout2D) As Single
+            Return CSng(Hypot(n1.X() - n2.X(), n1.Y() - n2.Y()))
         End Function
 
-        Public Shared Sub fcBiRepulsor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcBiRepulsor(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = repulsion(c, dist)
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -70,16 +74,16 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_y(N1 As Node, N2 As Node, c As Double, verticalization As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcBiRepulsor_y(N1 As Layout2D, N2 As Layout2D, c As Double, verticalization As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = repulsion(c, dist)
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += verticalization * yDist / dist * f
@@ -89,16 +93,16 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_noCollide(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = Math.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
+        Public Shared Sub fcBiRepulsor_noCollide(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
 
             If dist > 0 Then
                 Dim f = repulsion(c, dist)
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -108,8 +112,8 @@ Namespace layout
             ElseIf dist <> 0 Then
                 Dim f = -c 'flat repulsion
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -119,31 +123,31 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcUniRepulsor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcUniRepulsor(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = repulsion(c, dist)
 
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N2L.dx -= xDist / dist * f
                 N2L.dy -= yDist / dist * f
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcBiAttractor(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = attraction(c, dist)
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -153,16 +157,16 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor_noCollide(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = Math.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
+        Public Shared Sub fcBiAttractor_noCollide(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
 
             If dist > 0 Then
                 Dim f = attraction(c, dist)
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -172,16 +176,16 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcBiFlatAttractor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcBiFlatAttractor(N1 As Layout2D, N2 As Layout2D, c As Double)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = -c
 
-                Dim N1L As plugin.ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N1L.dx += xDist / dist * f
                 N1L.dy += yDist / dist * f
@@ -191,15 +195,15 @@ Namespace layout
             End If
         End Sub
 
-        Public Shared Sub fcUniAttractor(N1 As Node, N2 As Node, c As Single)
-            Dim xDist As Double = N1.x() - N2.x() ' distance en x entre les deux noeuds
-            Dim yDist As Double = N1.y() - N2.y()
-            Dim dist As Double = CSng(Math.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+        Public Shared Sub fcUniAttractor(N1 As Layout2D, N2 As Layout2D, c As Single)
+            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+            Dim yDist As Double = N1.Y() - N2.Y()
+            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
 
             If dist > 0 Then
                 Dim f = attraction(c, dist)
 
-                Dim N2L As plugin.ForceVectorNodeLayoutData = N2.LayoutData
+                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
 
                 N2L.dx -= xDist / dist * f
                 N2L.dy -= yDist / dist * f

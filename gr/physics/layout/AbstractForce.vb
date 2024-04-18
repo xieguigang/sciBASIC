@@ -47,11 +47,11 @@ Namespace layout
     ''' </summary>
     Public MustInherit Class AbstractForce
 
-        Public Overridable Function calculateForce(node1 As Node, node2 As Node) As ForceVector
-            Return Me.calculateForce(node1, node2, plugin.ForceVectorUtils.distance(node1, node2))
+        Public Overridable Function calculateForce(node1 As Layout2D, node2 As Layout2D) As ForceVector
+            Return Me.calculateForce(node1, node2, ForceVectorUtils.distance(node1, node2))
         End Function
 
-        Public MustOverride Function calculateForce(node1 As Node, node2 As Node, distance As Single) As ForceVector
+        Public MustOverride Function calculateForce(node1 As Layout2D, node2 As Layout2D, distance As Single) As ForceVector
     End Class
 
 End Namespace
