@@ -58,6 +58,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection.EntryPoints
@@ -111,7 +112,7 @@ Namespace CommandLine.Reflection.EntryPoints
             _metaData = attribute
             __funcInvoker = Invoke
             _metaData = attribute
-            _NumberOfParameters = 32
+            _NumberOfParameters = attribute.Target.GetParameters.Length
         End Sub
 
         Protected Sub New()
@@ -172,20 +173,54 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="parameters">数组的长度必须与目标函数的参数的数目一致，否则短于目标函数的参数的数目的数组会使用Nothing来填充缺少的部分，而多于目标函数的参数会被截断</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Execute(parameters As Object()) As Integer
-            Dim callParameters() As Object
+        Public Function Execute(args As CommandLine) As Integer
+            Dim callParameters() As Object = New Object(_NumberOfParameters - 1) {}
+            Dim pars As ParameterInfo() = _metaData.Target.GetParameters
 
-            If parameters.Length < _NumberOfParameters Then
-                callParameters = New Object(_NumberOfParameters - 1) {}
-                Call parameters.CopyTo(callParameters, 0)
-            ElseIf parameters.Length > _NumberOfParameters Then
-                callParameters = New Object(_NumberOfParameters - 1) {}
-                Call Array.ConstrainedCopy(parameters, 0, callParameters, 0, _NumberOfParameters)
-            Else
-                callParameters = parameters
-            End If
+            For i As Integer = 0 To pars.Length - 1
+                Dim type As Type = pars(i).ParameterType
+                Dim name As String = pars(i).Name
+                Dim parAlias As Parameter = pars(i).GetCustomAttribute(Of Parameter)
+
+                name = MatchArgumentName(args, name, parAlias)
+
+                If name.StringEmpty Then
+                    ' no matches inside the commandline argument inputs
+                    ' check for optional
+                    If pars(i).IsOptional Then
+                        callParameters(i) = pars(i).DefaultValue
+                    ElseIf type Is GetType(CommandLine) Then
+                        callParameters(i) = args
+                    Else
+                        If parAlias Is Nothing Then
+                            name = "--" & pars(i).Name
+                        Else
+                            name = parAlias.Alias
+                        End If
+
+                        ' missing required argument!
+                        Throw New MissingMemberException($"missing the required argument({name}) inside your commandline input!")
+                    End If
+                Else
+                    Dim val_str As String = args(name)
+                    Dim value As Object = Scripting.CTypeDynamic(val_str, type)
+
+                    callParameters(i) = value
+                End If
+            Next
 
             Return __funcInvoker.Invoke(callParameters)
+        End Function
+
+        ''' <summary>
+        ''' convert the clr function parameter name as the commandline argument name
+        ''' </summary>
+        ''' <param name="args"></param>
+        ''' <param name="name"></param>
+        ''' <param name="[alias]"></param>
+        ''' <returns></returns>
+        Private Shared Function MatchArgumentName(args As CommandLine, name As String, [alias] As Parameter) As String
+
         End Function
 
         Public Overrides Function ToString() As String

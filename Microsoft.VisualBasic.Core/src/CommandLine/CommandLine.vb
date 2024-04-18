@@ -1035,5 +1035,9 @@ Namespace CommandLine
         Public Shared Function BuildFromArguments(args As String()) As CommandLine
             Return Parsers.TryParse(args, False, rawInput:=args.Select(Function(s) s.CLIToken).JoinBy(" "))
         End Function
+
+        Public Shared Function BuildFromArguments(name As String, args As String()) As CommandLine
+            Return Parsers.TryParse({name}.JoinIterates(args), False, name.CLIToken & " " & args.Select(Function(s) s.CLIToken).JoinBy(" "))
+        End Function
     End Class
 End Namespace

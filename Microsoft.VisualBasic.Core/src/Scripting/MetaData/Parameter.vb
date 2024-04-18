@@ -78,11 +78,11 @@ Namespace Scripting.MetaData
         Dim _alias As String
 
         ''' <summary>
-        ''' The alias name of this function parameter in the scripting.(脚本函数的参数的别名)
+        ''' The alias name of this function parameter in the scripting.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(脚本函数的参数的别名)</remarks>
         Public Property [Alias] As String Implements INamedValue.Key
             Get
                 If String.IsNullOrEmpty(_alias) AndAlso Not ParameterInfo Is Nothing Then

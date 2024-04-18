@@ -146,7 +146,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overridable Function Execute(args As CommandLine) As Integer
             If Not args.IsNullOrEmpty Then
-                Dim i As Integer = apiInvoke(args.Name, {args}, args.Parameters)
+                Dim i As Integer = apiInvoke(args, args.Parameters)
 #If DEBUG Then
                 If Stack.TextEquals("Main") Then
                     If DebuggerArgs.AutoPaused Then
@@ -193,41 +193,41 @@ Namespace CommandLine
         ''' <param name="args">就只有一个命令行对象</param>
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
-        Private Function apiInvoke(commandName$, args As Object(), help_argvs$()) As Integer
-            Dim cli As CommandLine = DirectCast(args(Scan0), CommandLine)
+        Private Function apiInvoke(args As CommandLine, help_argvs$()) As Integer
+            Dim command As String = args.Name.ToLower
 
-            If apiTable.ContainsKey(commandName.ToLower) Then
-                Return apiTable(commandName.ToLower).Execute(args)
+            If apiTable.ContainsKey(command) Then
+                Return apiTable(command).Execute(args)
             End If
 
-            Select Case commandName.ToLower
+            Select Case command
                 Case "??vars"
                     Call ExecuteImpl.PrintVariables()
                 Case "??history"
-                    Call ExecuteImpl.HandleShellHistory(args:=cli)
+                    Call ExecuteImpl.HandleShellHistory(args)
                 Case "?", "??", "--help"
                     If help_argvs.IsNullOrEmpty Then
                         Return Help("")
                     ElseIf (Not HasCommandName(help_argvs.First)) AndAlso Not ExecuteQuery Is Nothing Then
-                        Return ExecuteQuery(cli)
+                        Return ExecuteQuery(args)
                     Else
                         Return Help(help_argvs.First)
                     End If
                 Case "~"  ' 打印出应用程序的位置，linux里面的HOME
                     Call Console.WriteLine(App.ExecutablePath)
                 Case "man"
-                    Call ExecuteImpl.HandleProgramManual(Me, cli)
+                    Call ExecuteImpl.HandleProgramManual(Me, args)
                 Case "/linux-bash"
                     Call My.UNIX.BashShell()
                 Case "/cli.dev"
-                    Call Me.CreateCLIPipelineFile(args:=cli)
+                    Call Me.CreateCLIPipelineFile(args)
                 Case Else
-                    If InStr(commandName, "??") = 1 Then
+                    If InStr(args.Name, "??") = 1 Then
                         ' 支持类似于R语言里面的 ??帮助命令
                         ' 去除前面的两个??问号，得到查询的term
-                        Return Mid(commandName, 3).DoCall(AddressOf Help)
+                        Return Mid(args.Name, 3).DoCall(AddressOf Help)
                     Else
-                        Return apiInvokeEtc(commandName, cli)
+                        Return apiInvokeEtc(args.Name, args)
                     End If
             End Select
 
@@ -353,13 +353,13 @@ Namespace CommandLine
         Public Function Execute(CommandLineArgs As String()) As Integer
             Dim CommandName As String = CommandLineArgs.First
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
-            Dim i As Integer = apiInvoke(CommandName, argvs, help_argvs:=argvs)
+            Dim i As Integer = apiInvoke(CommandLine.BuildFromArguments(CommandLineArgs), help_argvs:=argvs)
 
             Return i
         End Function
 
         Public Function Execute(CommandName As String, args As String()) As Integer
-            Return apiInvoke(CommandName.ToLower, args, help_argvs:=args)
+            Return apiInvoke(CommandLine.BuildFromArguments(CommandName, args), help_argvs:=args)
         End Function
 
         ''' <summary>
