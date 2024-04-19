@@ -374,6 +374,8 @@ Public Class JsonParser
         If buffer > 0 Then
             If comment_escape Then
                 comments(comment_key) = New String(buffer.PopAllChars)
+            ElseIf Not strictVectorSyntax Then
+                Yield MeasureToken()
             Else
                 Throw New Exception("unknow parser error at the end of the json document stream!")
             End If
