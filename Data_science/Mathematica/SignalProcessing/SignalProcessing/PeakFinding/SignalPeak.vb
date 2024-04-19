@@ -62,6 +62,10 @@ Namespace PeakFinding
     Public Structure SignalPeak : Implements IsEmpty
 
         Dim region As ITimeSignal()
+
+        ''' <summary>
+        ''' the integration area percentage, value [0,100]
+        ''' </summary>
         Dim integration As Double
         Dim baseline As Double
 
