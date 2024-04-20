@@ -66,8 +66,12 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
-    ''' 定义在Ini配置文件之中的Section的名称
+    ''' define a single section inside a ini configuration file
     ''' </summary>
+    ''' <remarks>
+    ''' you may needs defined a class array for mapping multiple sections inside a ini file.
+    ''' (定义在Ini配置文件之中的Section的名称)
+    ''' </remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
     Public Class ClassName : Inherits Attribute
 

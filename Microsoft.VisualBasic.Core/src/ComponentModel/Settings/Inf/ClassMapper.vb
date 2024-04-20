@@ -164,7 +164,11 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="ini"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function WriteClass(Of T As Class)(x As T, ini As String) As Boolean
+        Public Function WriteClass(Of T As Class)(x As T, ini As String, Optional clean As Boolean = False) As Boolean
+            If clean Then
+                Call "".SaveTo(ini)
+            End If
+
             Try
                 Using inf As New IniFile(ini)
                     Call x.ClassDumper(inf)
