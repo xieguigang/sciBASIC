@@ -93,6 +93,10 @@ Namespace Serialization.BinaryDumping
             Return vals
         End Function
 
+        Public Function ParseDouble(raw As Byte()) As Double()
+            Return decode(raw)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBytes(d As IEnumerable(Of Double)) As Byte()
             Return encode(d.SafeQuery.ToArray)
