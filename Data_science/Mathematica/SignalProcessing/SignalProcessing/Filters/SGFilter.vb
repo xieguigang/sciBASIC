@@ -1,7 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+﻿Imports System.Math
+Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.ListExtensions
-Imports System.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 ' 
 '  Copyright [2009] [Marcin Rzeźnicki]
@@ -369,12 +369,12 @@ Namespace Filters
                 sdata(x - nlField) = sum
             Next
             sg = coeffs(0)
-            For X = nlField + bias To n - nrField - bias - 1
+            For x As Integer = nlField + bias To n - nrField - bias - 1
                 Dim sum As Double = 0
                 For i = -nlField To nrField
-                    sum += dataCopy(X() + i) * sg(nlField + i)
+                    sum += dataCopy(x + i) * sg(nlField + i)
                 Next
-                sdata(X() - nlField) = sum
+                sdata(x - nlField) = sum
             Next
             For b = 1 To bias
                 sg = coeffs(b)

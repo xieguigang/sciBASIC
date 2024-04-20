@@ -1,4 +1,6 @@
-﻿Namespace Filters
+﻿Imports std = System.Math
+
+Namespace Filters
 
     ''' <summary>
     ''' Filters data using Ramer-Douglas-Peucker algorithm with specified tolerance
@@ -48,9 +50,9 @@
             Dim a As Double = endIndex - startIndex
             Dim b = points(endIndex) - points(startIndex)
             Dim c = -(b * startIndex - a * points(startIndex))
-            Dim norm = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2))
+            Dim norm = std.Sqrt(a ^ 2 + b ^ 2)
             For i = startIndex + 1 To endIndex - 1
-                Dim distance = Math.Abs(b * i - a * points(i) + c) / norm
+                Dim distance = std.Abs(b * i - a * points(i) + c) / norm
                 If distance > dmax Then
                     idx = i
                     dmax = distance

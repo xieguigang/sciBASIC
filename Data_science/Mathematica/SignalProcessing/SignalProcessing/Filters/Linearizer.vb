@@ -1,4 +1,6 @@
-﻿' 
+﻿Imports std = System.Math
+
+' 
 '  Copyright [2009] [Marcin Rzeźnicki]
 ' 
 ' Licensed under the Apache License, Version 2.0 (the "License");
@@ -87,7 +89,7 @@ linregBreak:
                 If data(i) = 0 AndAlso data(i + 1) = 0 Then
                     deltas(i) = 0
                 Else
-                    deltas(i) = Math.Abs(1 - data(i + 1) / data(i))
+                    deltas(i) = std.Abs(1 - data(i + 1) / data(i))
                 End If
             Next
             Return deltas
@@ -113,8 +115,8 @@ linregBreak:
             End If
             Dim slope = (data(x1) - data(x0)) / (x1 - x0)
             Dim y0 = data(x0)
-            For X = x0 + 1 To x1 - 1
-                data(X) = slope * (X() - x0) + y0
+            For x As Integer = x0 + 1 To x1 - 1
+                data(x) = slope * (x - x0) + y0
             Next
         End Sub
 

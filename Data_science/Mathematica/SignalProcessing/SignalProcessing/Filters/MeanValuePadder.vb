@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 ' 
 '  Copyright [2009] [Marcin Rzeźnicki]
@@ -106,7 +106,7 @@ Namespace Filters
                     End If
                 Next
                 Dim avg As Double = 0
-                Dim m As Integer = Math.Min(l + windowLengthField / 2, n)
+                Dim m As Integer = std.Min(l + windowLengthField / 2, n)
                 For i = l To m - 1
                     avg += data(i)
                 Next
@@ -125,7 +125,7 @@ Namespace Filters
                     End If
                 Next
                 Dim avg As Double = 0
-                Dim m As Integer = Math.Min(windowLengthField / 2, r + 1)
+                Dim m As Integer = std.Min(windowLengthField / 2, r + 1)
                 For i = 0 To m - 1
                     avg += data(r - i)
                 Next

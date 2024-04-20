@@ -36,8 +36,8 @@ Namespace Filters
             End If
             Dim y0 = data(0)
             Dim slope = (data(n - 1) - y0) / (n - 1)
-            For X = 0 To n - 1
-                data(X) -= slope * X() + y0
+            For x As Integer = 0 To n - 1
+                data(x) -= slope * x + y0
             Next
         End Sub
 
@@ -53,8 +53,8 @@ Namespace Filters
             Dim n = data.Length
             Dim y0 = data(0)
             Dim slope = (data(n - 1) - y0) / (n - 1)
-            For X = 0 To n - 1
-                newData(X) += slope * X() + y0
+            For x As Integer = 0 To n - 1
+                newData(x) += slope * x + y0
             Next
         End Sub
 
