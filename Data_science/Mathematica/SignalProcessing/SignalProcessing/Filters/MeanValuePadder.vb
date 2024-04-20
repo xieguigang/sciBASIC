@@ -53,7 +53,7 @@ Namespace Filters
     Public Class MeanValuePadder
         Implements Preprocessor
 
-        Private windowLengthField As Integer
+        Private m_windowLength As Integer
 
         ''' 
         ''' <param name="windowLength">
@@ -64,7 +64,7 @@ Namespace Filters
             If windowLength < 0 Then
                 Throw New ArgumentException("windowLength < 0")
             End If
-            windowLengthField = windowLength
+            m_windowLength = windowLength
         End Sub
 
         ''' 
@@ -80,15 +80,15 @@ Namespace Filters
             If windowLength < 0 Then
                 Throw New ArgumentException("windowLength < 0")
             End If
-            windowLengthField = windowLength
-            paddingLeftField = paddingLeft
-            paddingRightField = paddingRight
+            m_windowLength = windowLength
+            _PaddingLeft = paddingLeft
+            _PaddingRight = paddingRight
         End Sub
 
         Public Overridable Sub apply(data As Double()) Implements Preprocessor.apply
             ' padding values with average of last (WINDOW_LENGTH / 2) points
             Dim n = data.Length
-            If paddingLeftField Then
+            If PaddingLeft Then
                 Dim l = 0
                 ' seek first non-zero cell
                 For i = 0 To n - 1
@@ -98,7 +98,7 @@ Namespace Filters
                     End If
                 Next
                 Dim avg As Double = 0
-                Dim m As Integer = std.Min(l + windowLengthField / 2, n)
+                Dim m As Integer = std.Min(l + m_windowLength / 2, n)
                 For i = l To m - 1
                     avg += data(i)
                 Next
@@ -107,7 +107,7 @@ Namespace Filters
                     data(i) = avg
                 Next
             End If
-            If paddingRightField Then
+            If PaddingRight Then
                 Dim r = 0
                 ' seek last non-zero cell
                 For i = n - 1 To 0 Step -1
@@ -117,7 +117,7 @@ Namespace Filters
                     End If
                 Next
                 Dim avg As Double = 0
-                Dim m As Integer = std.Min(windowLengthField / 2, r + 1)
+                Dim m As Integer = std.Min(m_windowLength / 2, r + 1)
                 For i = 0 To m - 1
                     avg += data(r - i)
                 Next
@@ -132,13 +132,13 @@ Namespace Filters
         ''' <returns> {@code windowLength} </returns>
         Public Overridable Property WindowLength As Integer
             Get
-                Return windowLengthField
+                Return m_windowLength
             End Get
             Set(value As Integer)
                 If value < 0 Then
                     Throw New ArgumentException("windowLength < 0")
                 End If
-                windowLengthField = value
+                m_windowLength = value
             End Set
         End Property
 

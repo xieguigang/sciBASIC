@@ -41,8 +41,6 @@ Namespace Filters
         ''' <param name="degree">
         '''            order of smoothin polynomial </param>
         ''' <returns> Savitzky-Golay coefficients </returns>
-        ''' <exception cref="IllegalArgumentException">
-        '''             if {@code nl </> </> <degree/> </exception>
         Public Shared Function computeSGCoefficients(nl As Integer, nr As Integer, degree As Integer) As Double()
             If nl < 0 OrElse nr < 0 OrElse nl + nr < degree Then
                 Throw New ArgumentException("Bad arguments")
@@ -104,8 +102,6 @@ Namespace Filters
         '''            numer of past data points filter will use </param>
         ''' <param name="nr">
         '''            numer of future data points filter will use </param>
-        ''' <exception cref="IllegalArgumentException">
-        '''             of {@code nl </> </> </exception>
         Public Sub New(nl As Integer, nr As Integer)
             If nl < 0 OrElse nr < 0 Then
                 Throw New ArgumentException("Bad arguments")
@@ -119,7 +115,6 @@ Namespace Filters
         ''' </summary>
         ''' <param name="dataFilter">
         '''            dataFilter </param>
-        ''' <seealso cref="DataFilter"/> </seealso>
         Public Overridable Sub appendDataFilter(dataFilter As DataFilter)
             dataFilters.Add(dataFilter)
         End Sub
@@ -129,7 +124,6 @@ Namespace Filters
         ''' </summary>
         ''' <param name="p">
         '''            preprocessor </param>
-        ''' <seealso cref="Preprocessor"/> </seealso>
         Public Overridable Sub appendPreprocessor(p As Preprocessor)
             preprocessors.Add(p)
         End Sub
@@ -169,7 +163,6 @@ Namespace Filters
         '''            data filter </param>
         ''' <param name="index">
         '''            where it should be placed in data filters queue </param>
-        ''' <seealso cref="DataFilter"/> </seealso>
         Public Overridable Sub insertDataFilter(dataFilter As DataFilter, index As Integer)
             dataFilters.Insert(index, dataFilter)
         End Sub
@@ -181,7 +174,6 @@ Namespace Filters
         '''            preprocessor </param>
         ''' <param name="index">
         '''            where it should be placed in preprocessors queue </param>
-        ''' <seealso cref="Preprocessor"/> </seealso>
         Public Overridable Sub insertPreprocessor(p As Preprocessor, index As Integer)
             preprocessors.Insert(index, p)
         End Sub

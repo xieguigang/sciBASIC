@@ -20,7 +20,6 @@ Namespace Filters
     ''' place. Useful examples include: eliminating zeros, padding etc.
     ''' 
     ''' @author Marcin Rzeźnicki </summary>
-    ''' <seealso cref="SGFilter"/> </seealso>
     Public Interface Preprocessor
 
         ''' <summary>

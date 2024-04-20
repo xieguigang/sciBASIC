@@ -4,9 +4,9 @@ Namespace Filters
 
     ''' <summary>
     ''' Filters data using Ramer-Douglas-Peucker algorithm with specified tolerance
+    ''' <a href="http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm">Ramer-Douglas-Peucker algorithm</a>
     ''' 
     ''' @author Rzeźnik </summary>
-    ''' <seealso cref=""/> <ahref="http://en.wikipedia.org/wiki/Ramer-Douglas-Peucker_algorithm">Ramer-Douglas-Peucker algorithm</a> </seealso>
     Public Class RamerDouglasPeuckerFilter
         Implements DataFilter
 
@@ -17,8 +17,6 @@ Namespace Filters
         '''            epsilon in Ramer-Douglas-Peucker algorithm (maximum distance
         '''            of a point in data between original curve and simplified
         '''            curve) </param>
-        ''' <exception cref="IllegalArgumentException">
-        '''             when {@code epsilon </> </exception>
         Public Sub New(epsilon As Double)
             If epsilon <= 0 Then
                 Throw New ArgumentException("Epsilon nust be > 0")
