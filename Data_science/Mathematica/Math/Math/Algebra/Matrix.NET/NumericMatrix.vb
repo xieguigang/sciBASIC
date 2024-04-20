@@ -1622,7 +1622,7 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>     solution if A is square, least squares solution otherwise
         ''' </returns>
 
-        Public Overridable Function Solve(B As GeneralMatrix) As GeneralMatrix
+        Public Overridable Overloads Function Solve(B As GeneralMatrix) As GeneralMatrix
             Dim decompose As Decomposition
 
             If m = n Then
@@ -1634,6 +1634,12 @@ Namespace LinearAlgebra.Matrix
             End If
 
             Return decompose.Solve(B)
+        End Function
+
+        Public Overloads Function Solve(b As Double()) As Double()
+            Dim colMat As New NumericMatrix(b)
+            Dim a = Solve(colMat)
+            Return a.ColumnVector(0).ToArray
         End Function
 
         ''' <summary>Solve X*A = B, which is also A'*X' = B'</summary>
