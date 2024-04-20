@@ -77,9 +77,9 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
+Imports StringReader = Microsoft.VisualBasic.ComponentModel.DataSourceModel.StringReader
 
 Namespace CommandLine
 
@@ -98,6 +98,7 @@ Namespace CommandLine
     Public Class CommandLine
         Implements ICollection(Of NamedValue(Of String))
         Implements INamedValue
+        Implements IStringGetter
 
         Friend arguments As New List(Of NamedValue(Of String))
         ''' <summary>
@@ -389,6 +390,10 @@ Namespace CommandLine
             Return LQuery > 50
         End Function
 
+        Private Function hasKey(name As String) As Boolean Implements IStringGetter.HasKey
+            Return ContainsParameter(name)
+        End Function
+
         ''' <summary>
         ''' Parsing the commandline string as object model
         ''' </summary>
@@ -541,7 +546,7 @@ Namespace CommandLine
         ''' Return the index Of the named field. If the name is not exists in the parameter list, then a -1 value will be return.
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetOrdinal(parameter As String) As Integer
+        Public Function GetOrdinal(parameter As String) As Integer Implements IStringGetter.GetOrdinal
             Dim i% = LinqAPI.DefaultFirst(Of Integer)(-1) _
                                                           _
                 <= From entry As NamedValue(Of String)
@@ -558,7 +563,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetString(parameter As String) As String
+        Public Function GetString(parameter As String) As String Implements IStringGetter.GetString
             If IsTrue(parameter) Then
                 Return "true"
             End If
@@ -902,6 +907,22 @@ Namespace CommandLine
 
         Public Shared Function BuildFromArguments(name As String, args As String()) As CommandLine
             Return Parsers.TryParse({name}.JoinIterates(args), False, name.CLIToken & " " & args.Select(Function(s) s.CLIToken).JoinBy(" "))
+        End Function
+
+        Public Function GetDataReader() As StringReader
+            Return New StringReader(Me)
+        End Function
+
+        Private Function GetString(ordinal As Integer) As String Implements IStringGetter.GetString
+            Return arguments(ordinal).Value
+        End Function
+
+        Private Function GetSize() As Integer Implements IStringGetter.GetSize
+            Return Count
+        End Function
+
+        Private Function MoveNext() As Boolean Implements IStringGetter.MoveNext
+            Return False
         End Function
     End Class
 End Namespace
