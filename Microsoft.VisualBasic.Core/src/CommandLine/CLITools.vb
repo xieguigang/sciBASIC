@@ -378,7 +378,7 @@ Namespace CommandLine
             End If
 
             For Each bFlag As String In args1.BoolFlags
-                If Not args2.GetBoolean(bFlag) Then
+                If Not args2.IsTrue(bFlag) Then
                     Return False
                 End If
             Next

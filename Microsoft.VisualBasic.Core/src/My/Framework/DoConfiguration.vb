@@ -101,7 +101,7 @@ Namespace My.FrameworkInternal
         <Extension>
         Friend Sub ConfigFrameworkRuntime(configuration As Config, args As CLI)
             Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
-            Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
+            Dim disableLoadOptions As Boolean = args.IsTrue("--load_options.disable")
             Dim max_stack_size As String = args.Tokens _
                 .SafeQuery _
                 .Where(Function(t) Strings.LCase(t).StartsWith("/stack:")) _
