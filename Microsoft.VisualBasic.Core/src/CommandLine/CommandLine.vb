@@ -266,10 +266,9 @@ Namespace CommandLine
 
         ''' <summary>
         ''' See if the target logical flag argument is exists in the commandline?
-        ''' (查看命令行之中是否存在某一个逻辑开关)
         ''' </summary>
         ''' <param name="name"></param>
-        ''' <returns></returns>
+        ''' <returns>(查看命令行之中是否存在某一个逻辑开关)</returns>
         Public Function HavebFlag(name As String) As Boolean
             If Me.BoolFlags.IsNullOrEmpty Then
                 Return False
@@ -441,6 +440,14 @@ Namespace CommandLine
             End If
         End Function
 
+        ''' <summary>
+        ''' Gets the value Of the specified column As a Boolean.
+        ''' </summary>
+        ''' <param name="parameter">可以包含有开关参数</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)
+        ''' </remarks>
         Public Function IsTrue(parameter$) As Boolean
             If Me.HavebFlag(parameter) Then
                 Return True
@@ -531,143 +538,6 @@ Namespace CommandLine
 #Region "IDataRecord Methods"
 
         ''' <summary>
-        ''' Gets the value Of the specified column As a Boolean.
-        ''' </summary>
-        ''' <param name="parameter">可以包含有开关参数</param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' (这个函数也同时包含有开关参数的，开关参数默认为逻辑值类型，当包含有开关参数的时候，其逻辑值为True，反之函数会检查参数列表，参数不存在则为空值字符串，则也为False)
-        ''' </remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetBoolean(parameter As String) As Boolean
-            Return Me.IsTrue(parameter)
-        End Function
-
-        ''' <summary>
-        ''' Gets the 8-bit unsigned Integer value Of the specified column.
-        ''' </summary>
-        ''' <param name="parameter"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetByte(parameter As String) As Byte
-            Return CByte(Val(Me(parameter)))
-        End Function
-
-        ''' <summary>
-        ''' Reads a stream Of bytes from the specified column offset into the buffer As an array, starting at the given buffer offset.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetBytes(parameter As String) As Byte()
-            Dim tokens As String() = Me(parameter).DefaultValue.Split(","c)
-            Return (From s As String In tokens Select CByte(Val(s))).ToArray
-        End Function
-
-        ''' <summary>
-        ''' Gets the character value Of the specified column.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetChar(parameter As String) As Char
-            Dim s As String = Me(parameter)
-
-            If String.IsNullOrEmpty(s) Then
-                Return ASCII.NUL
-            Else
-                Return s.First
-            End If
-        End Function
-
-        ''' <summary>
-        ''' Reads a stream Of characters from the specified column offset into the buffer As an array, starting at the given buffer offset.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetChars(parameter As String) As Char()
-            Return Me(parameter)
-        End Function
-
-        ''' <summary>
-        ''' Gets the Date And time data value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetDateTime(parameter As String) As DateTime
-            Return Me(parameter).DefaultValue.ParseDateTime
-        End Function
-
-        ''' <summary>
-        ''' Gets the fixed-position numeric value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetDecimal(parameter As String) As Decimal
-            Return CDec(Val(Me(parameter).DefaultValue))
-        End Function
-
-        ''' <summary>
-        ''' Gets the Double-precision floating point number Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetDouble(parameter As String) As Double
-            Return Val(Me(parameter).DefaultValue)
-        End Function
-
-        ''' <summary>
-        ''' Gets the Single-precision floating point number Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetFloat(parameter As String) As Single
-            Return CSng(Val(Me(parameter).DefaultValue))
-        End Function
-
-        ''' <summary>
-        ''' Returns the GUID value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetGuid(parameter As String) As Guid
-            Return Guid.Parse(Me(parameter))
-        End Function
-
-        ''' <summary>
-        ''' Gets the 16-bit signed Integer value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetInt16(parameter As String) As Int16
-            Return CType(Val(Me(parameter).DefaultValue), Int16)
-        End Function
-
-        ''' <summary>
-        ''' Gets the 32-bit signed Integer value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetInt32(parameter As String) As Int32
-            Return CInt(Val(Me(parameter).DefaultValue))
-        End Function
-
-        ''' <summary>
-        ''' Gets the 64-bit signed Integer value Of the specified field.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetInt64(parameter As String) As Int64
-            Return CLng(Val(Me(parameter).DefaultValue))
-        End Function
-
-        ''' <summary>
         ''' Return the index Of the named field. If the name is not exists in the parameter list, then a -1 value will be return.
         ''' </summary>
         ''' <returns></returns>
@@ -689,17 +559,11 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(parameter As String) As String
-            Return Me(parameter)
-        End Function
+            If IsTrue(parameter) Then
+                Return "true"
+            End If
 
-        ''' <summary>
-        ''' Return whether the specified field Is Set To null.
-        ''' </summary>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function IsNull(parameter As String) As Boolean
-            Return Not Me.ContainsParameter(parameter, False)
+            Return Me(parameter)
         End Function
 
         ''' <summary>
