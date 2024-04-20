@@ -20,18 +20,18 @@ Namespace Filters
 
     ''' <summary>
     ''' Linearizes data by seeking points with relative difference greater than
-    ''' <seealsocref="getTruncateRatio()"/> and replacing them with points
+    ''' <seealso cref="TruncateRatio"/> and replacing them with points
     ''' lying on line between the first and the last of such points. Strictly:
     ''' <para>
     ''' let <tt>delta(i)</tt> be function which assigns to an element at index
     ''' <tt>i (data[i])</tt>, for <tt>0
-    ''' </> <data.length/></tt>, value of
+    ''' data.length</tt>, value of
     ''' <tt>|(data[i] - data[i+1])/data[i]|</tt>. Then for each range <tt>(j,k)</tt>
     ''' of data, such that
-    ''' <tt>delta(j) > <seealsocref="getTruncateRatio()"/></tt> and
+    ''' <tt>delta(j) > <seealso cref="TruncateRatio"/></tt> and
     ''' <tt>delta(k)
-    ''' </> <seealsocref="getTruncateRatio()"/></tt>, <tt>data[x] = ((data[k] -
-    ''' data[j])/(k - j)) * (x - k) + data[j])</tt> for <tt>j </> </></tt>.
+    '''  <seealso cref="TruncateRatio"/></tt>, <tt>data[x] = ((data[k] -
+    ''' data[j])/(k - j)) * (x - k) + data[j])</tt> for <tt>j </tt>.
     ''' </para>
     ''' 
     ''' @author Marcin Rzeźnicki
@@ -40,35 +40,33 @@ Namespace Filters
     Public Class Linearizer
         Implements Preprocessor
 
-        Private truncateRatioField As Single = 0.5F
+        Private m_truncateRatio As Single = 0.5F
 
         ''' <summary>
-        ''' Default constructor. <seealsocref="getTruncateRatio()"/> is 0.5
+        ''' Default constructor. <seealso cref="TruncateRatio"/> is 0.5
         ''' </summary>
         Public Sub New()
 
         End Sub
 
         ''' 
-        ''' <paramname="truncateRatio">
+        ''' <param name="truncateRatio">
         '''            maximum relative difference of subsequent data points above
         '''            which linearization begins </param>
-        ''' <exceptioncref="IllegalArgumentException">
-        '''             when {@code truncateRatio} </> </exception>
         Public Sub New(truncateRatio As Single)
             If truncateRatio < 0F Then
                 Throw New ArgumentException("truncateRatio < 0")
             End If
-            truncateRatioField = truncateRatio
+            m_truncateRatio = truncateRatio
         End Sub
 
         Public Overridable Sub apply(data As Double()) Implements Preprocessor.apply
             Dim n = data.Length - 1
             Dim deltas = computeDeltas(data)
             For i = 0 To n - 1
-                If deltas(i) > truncateRatioField Then
+                If deltas(i) > m_truncateRatio Then
                     For k = i + 1 To n - 1
-                        If deltas(k) <= truncateRatioField Then
+                        If deltas(k) <= m_truncateRatio Then
                             linest(data, i, k)
                             i = k - 1
                             GoTo linregContinue
@@ -99,13 +97,13 @@ linregBreak:
         ''' <returns> {@code truncateRatio} </returns>
         Public Overridable Property TruncateRatio As Single
             Get
-                Return truncateRatioField
+                Return m_truncateRatio
             End Get
             Set(value As Single)
                 If value < 0F Then
                     Throw New ArgumentException("truncateRatio < 0")
                 End If
-                truncateRatioField = value
+                m_truncateRatio = value
             End Set
         End Property
 

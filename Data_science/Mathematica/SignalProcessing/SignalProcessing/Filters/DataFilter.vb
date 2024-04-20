@@ -4,10 +4,11 @@
     ''' eliminate redundant points.
     ''' 
     ''' @author Marcin Rzeźnicki </summary>
-    ''' <seealsocref="SGFilter"/> </seealso>
+    ''' 
     Public Interface DataFilter
 
         Function filter(data As Double()) As Double()
+
     End Interface
 
 End Namespace

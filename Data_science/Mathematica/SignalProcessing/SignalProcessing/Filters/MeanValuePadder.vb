@@ -31,7 +31,7 @@ Namespace Filters
     ''' then for every element <tt>e</tt> which index is <tt>i</tt> such that:
     ''' <ul>
     ''' <li>
-    ''' <tt>0 </> <l/></tt>, <tt>e</tt> is replaced with arithmetic mean of
+    ''' <tt>0 </tt>, <tt>e</tt> is replaced with arithmetic mean of
     ''' <tt>data[l]..data[l + window_length/2 - 1]</tt> (left padding)</li>
     ''' <li>
     ''' <tt>r <i/> <data.length/></tt>, <tt>e</tt> is replaced with arithmetic mean of
@@ -41,10 +41,10 @@ Namespace Filters
     ''' Example:
     ''' <para>
     ''' Given data: <tt>[0,0,0,1,2,1,3,1,2,4,0]</tt> result of applying
-    ''' MeanValuePadder with <seealsocref="getWindowLength()"/> = 4 is:
+    ''' MeanValuePadder with <seealso cref="WindowLength"/> = 4 is:
     ''' <tt>[1.5,1.5,1.5,1,2,1,3,1,2,4,0]</tt> in case of {@link #isPaddingLeft()
     ''' left padding}; <tt>[0,0,0,1,2,1,3,1,2,4,3]</tt> in case of
-    ''' <seealsocref="isPaddingRight()"/>;
+    ''' <seealso cref="PaddingRight"/>;
     ''' </para>
     ''' 
     ''' @author Marcin Rzeźnicki
@@ -53,19 +53,13 @@ Namespace Filters
     Public Class MeanValuePadder
         Implements Preprocessor
 
-        Private paddingLeftField As Boolean = True
-
-        Private paddingRightField As Boolean = True
-
         Private windowLengthField As Integer
 
         ''' 
-        ''' <paramname="windowLength">
+        ''' <param name="windowLength">
         '''            window length of filter which will be used to smooth data.
         '''            Padding will use half of {@code windowLength} length. In this
         '''            way padding will be suited to smoothing operation </param>
-        ''' <exceptioncref="IllegalArgumentException">
-        '''             if {@code windowLength} </> </exception>
         Public Sub New(windowLength As Integer)
             If windowLength < 0 Then
                 Throw New ArgumentException("windowLength < 0")
@@ -74,16 +68,14 @@ Namespace Filters
         End Sub
 
         ''' 
-        ''' <paramname="windowLength">
+        ''' <param name="windowLength">
         '''            window length of filter which will be used to smooth data.
         '''            Padding will use half of {@code windowLength} length. In this
         '''            way padding will be suited to smoothing operation </param>
-        ''' <paramname="paddingLeft">
+        ''' <param name="paddingLeft">
         '''            enables or disables left padding </param>
-        ''' <paramname="paddingRight">
+        ''' <param name="paddingRight">
         '''            enables or disables left padding </param>
-        ''' <exceptioncref="IllegalArgumentException">
-        '''             if {@code windowLength} </> </exception>
         Public Sub New(windowLength As Integer, paddingLeft As Boolean, paddingRight As Boolean)
             If windowLength < 0 Then
                 Throw New ArgumentException("windowLength < 0")
@@ -152,28 +144,11 @@ Namespace Filters
 
         ''' 
         ''' <returns> {@code paddingLeft} </returns>
-        Public Overridable Property PaddingLeft As Boolean
-            Get
-                Return paddingLeftField
-            End Get
-            Set(value As Boolean)
-                paddingLeftField = value
-            End Set
-        End Property
+        Public Overridable Property PaddingLeft As Boolean = True
 
         ''' 
         ''' <returns> {@code paddingRight} </returns>
-        Public Overridable Property PaddingRight As Boolean
-            Get
-                Return paddingRightField
-            End Get
-            Set(value As Boolean)
-                paddingRightField = value
-            End Set
-        End Property
-
-
-
+        Public Overridable Property PaddingRight As Boolean = True
 
     End Class
 

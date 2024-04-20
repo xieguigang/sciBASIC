@@ -29,7 +29,7 @@ Namespace Filters
     ''' with index <tt>j</tt> such that:
     ''' <ul>
     ''' <li><tt>l </> <i/></tt> and <tt>e' <> 0</tt> and for all indexes
-    ''' <tt>k: j <k/> <i/></tt> - when <seealsocref="isAlignToLeft()"/>
+    ''' <tt>k: j <k/> <i/></tt> - when <seealso cref="isAlignToLeft()"/>
     ''' is true</li>
     ''' <li><tt>i <j/> </></tt> and <tt>e' <> 0</tt> and for all indexes
     ''' <tt>k: i <k/> <j/></tt> - otherwise</li>
@@ -39,7 +39,7 @@ Namespace Filters
     ''' <para>
     ''' Given data: <tt>[0,0,0,1,2,0,3,0,0,4,0]</tt> result of applying
     ''' ZeroEliminator is: <tt>[0,0,0,1,2,2,3,3,3,4,0]</tt> if
-    ''' <seealsocref="isAlignToLeft()"/> is true;
+    ''' <seealso cref="isAlignToLeft()"/> is true;
     ''' <tt>[0,0,0,1,2,3,3,4,4,4,0]</tt> - otherwise
     ''' </para>
     ''' 
@@ -54,13 +54,13 @@ Namespace Filters
         ''' <summary>
         ''' Default constructor: {@code alignToLeft} is {@code false}
         ''' </summary>
-        ''' <seealsocref=""/> </seealso>
+        ''' <seealso cref=""/> </seealso>
         Public Sub New()
 
         End Sub
 
         ''' 
-        ''' <paramname="alignToLeft">
+        ''' <param name="alignToLeft">
         '''            if {@code true} zeros will be replaced with non-zero element
         '''            to the left, if {@code false} - to the right </param>
         Public Sub New(alignToLeft As Boolean)

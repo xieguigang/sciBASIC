@@ -34,14 +34,14 @@ Namespace Filters
         ''' <summary>
         ''' Computes Savitzky-Golay coefficients for given parameters
         ''' </summary>
-        ''' <paramname="nl">
+        ''' <param name="nl">
         '''            numer of past data points filter will use </param>
-        ''' <paramname="nr">
+        ''' <param name="nr">
         '''            number of future data points filter will use </param>
-        ''' <paramname="degree">
+        ''' <param name="degree">
         '''            order of smoothin polynomial </param>
         ''' <returns> Savitzky-Golay coefficients </returns>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             if {@code nl </> </> <degree/> </exception>
         Public Shared Function computeSGCoefficients(nl As Integer, nr As Integer, degree As Integer) As Double()
             If nl < 0 OrElse nr < 0 OrElse nl + nr < degree Then
@@ -100,11 +100,11 @@ Namespace Filters
         ''' Constructs Savitzky-Golay filter which uses specified numebr of
         ''' surrounding data points
         ''' </summary>
-        ''' <paramname="nl">
+        ''' <param name="nl">
         '''            numer of past data points filter will use </param>
-        ''' <paramname="nr">
+        ''' <param name="nr">
         '''            numer of future data points filter will use </param>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             of {@code nl </> </> </exception>
         Public Sub New(nl As Integer, nr As Integer)
             If nl < 0 OrElse nr < 0 Then
@@ -117,9 +117,9 @@ Namespace Filters
         ''' <summary>
         ''' Appends data filter
         ''' </summary>
-        ''' <paramname="dataFilter">
+        ''' <param name="dataFilter">
         '''            dataFilter </param>
-        ''' <seealsocref="DataFilter"/> </seealso>
+        ''' <seealso cref="DataFilter"/> </seealso>
         Public Overridable Sub appendDataFilter(dataFilter As DataFilter)
             dataFilters.Add(dataFilter)
         End Sub
@@ -127,9 +127,9 @@ Namespace Filters
         ''' <summary>
         ''' Appends data preprocessor
         ''' </summary>
-        ''' <paramname="p">
+        ''' <param name="p">
         '''            preprocessor </param>
-        ''' <seealsocref="Preprocessor"/> </seealso>
+        ''' <seealso cref="Preprocessor"/> </seealso>
         Public Overridable Sub appendPreprocessor(p As Preprocessor)
             preprocessors.Add(p)
         End Sub
@@ -165,11 +165,11 @@ Namespace Filters
         ''' <summary>
         ''' Inserts data filter
         ''' </summary>
-        ''' <paramname="dataFilter">
+        ''' <param name="dataFilter">
         '''            data filter </param>
-        ''' <paramname="index">
+        ''' <param name="index">
         '''            where it should be placed in data filters queue </param>
-        ''' <seealsocref="DataFilter"/> </seealso>
+        ''' <seealso cref="DataFilter"/> </seealso>
         Public Overridable Sub insertDataFilter(dataFilter As DataFilter, index As Integer)
             dataFilters.Insert(index, dataFilter)
         End Sub
@@ -177,11 +177,11 @@ Namespace Filters
         ''' <summary>
         ''' Inserts preprocessor
         ''' </summary>
-        ''' <paramname="p">
+        ''' <param name="p">
         '''            preprocessor </param>
-        ''' <paramname="index">
+        ''' <param name="index">
         '''            where it should be placed in preprocessors queue </param>
-        ''' <seealsocref="Preprocessor"/> </seealso>
+        ''' <seealso cref="Preprocessor"/> </seealso>
         Public Overridable Sub insertPreprocessor(p As Preprocessor, index As Integer)
             preprocessors.Insert(index, p)
         End Sub
@@ -189,7 +189,7 @@ Namespace Filters
         ''' <summary>
         ''' Removes data filter
         ''' </summary>
-        ''' <paramname="dataFilter">
+        ''' <param name="dataFilter">
         '''            data filter to be removed </param>
         ''' <returns> {@code true} if data filter existed and was removed, {@code
         '''         false} otherwise </returns>
@@ -200,7 +200,7 @@ Namespace Filters
         ''' <summary>
         ''' Removes data filter
         ''' </summary>
-        ''' <paramname="index">
+        ''' <param name="index">
         '''            which data filter to remove </param>
         ''' <returns> removed data filter </returns>
         Public Overridable Function removeDataFilter(index As Integer) As DataFilter
@@ -210,7 +210,7 @@ Namespace Filters
         ''' <summary>
         ''' Removes preprocessor
         ''' </summary>
-        ''' <paramname="index">
+        ''' <param name="index">
         '''            which preprocessor to remove </param>
         ''' <returns> removed preprocessor </returns>
         Public Overridable Function removePreprocessor(index As Integer) As Preprocessor
@@ -220,7 +220,7 @@ Namespace Filters
         ''' <summary>
         ''' Removes preprocessor
         ''' </summary>
-        ''' <paramname="p">
+        ''' <param name="p">
         '''            preprocessor to be removed </param>
         ''' <returns> {@code true} if preprocessor existed and was removed, {@code
         '''         false} otherwise </returns>
@@ -233,14 +233,14 @@ Namespace Filters
         ''' <summary>
         ''' Smooths data by using Savitzky-Golay filter. This method will use 0 for
         ''' any element beyond {@code data} which will be needed for computation (you
-        ''' may want to use some <seealsocref="Preprocessor"/>)
+        ''' may want to use some <seealso cref="Preprocessor"/>)
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Double(), coeffs As Double()) As Double()
             Return smooth(data, 0, data.Length, coeffs)
@@ -253,16 +253,16 @@ Namespace Filters
         ''' need this feature you may pass empty arrays (filter will use 0s in this
         ''' place, so you may want to use appropriate preprocessor)
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="leftPad">
+        ''' <param name="leftPad">
         '''            left padding </param>
-        ''' <paramname="rightPad">
+        ''' <param name="rightPad">
         '''            right padding </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Double(), leftPad As Double(), rightPad As Double(), coeffs As Double()) As Double()
             Return smooth(data, leftPad, rightPad, 0, New Double()() {coeffs})
@@ -296,23 +296,23 @@ Namespace Filters
         ''' leftmost range). If you do not wish to use pads completely for
         ''' symmetrical filter then you should pass <tt>bias = nl = nr</tt>
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="leftPad">
+        ''' <param name="leftPad">
         '''            left padding </param>
-        ''' <paramname="rightPad">
+        ''' <param name="rightPad">
         '''            right padding </param>
-        ''' <paramname="bias">
+        ''' <param name="bias">
         '''            how many points of pad should be left out when smoothing </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            array of filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             when <tt>bias </></tt> or <tt>bias > min(nr, nl)</tt> </exception>
-        ''' <exceptioncref="IndexOutOfBoundsException">
+        ''' <exception cref="IndexOutOfBoundsException">
         '''             when {@code coeffs} has less than <tt>2*bias + 1</tt>
         '''             elements </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Double(), leftPad As Double(), rightPad As Double(), bias As Integer, coeffs As Double()()) As Double()
             If bias < 0 OrElse bias > nrField OrElse bias > nlField Then
@@ -393,20 +393,20 @@ Namespace Filters
         ''' (excluding). Data beyond range spanned by {@code from} and {@code to}
         ''' will be used for padding
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="from">
+        ''' <param name="from">
         '''            inedx of the first element of data </param>
-        ''' <paramname="to">
+        ''' <param name="to">
         '''            index of the first element omitted </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="ArrayIndexOutOfBoundsException">
+        ''' <exception cref="ArrayIndexOutOfBoundsException">
         '''             if <tt>to > data.length</tt> </exception>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             if <tt>from </></tt> or <tt>to > data.length</tt> </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             if {@code data} is null or {@code coeffs} is null </exception>
         Public Overridable Function smooth(data As Double(), from As Integer, [to] As Integer, coeffs As Double()) As Double()
             Return smooth(data, from, [to], 0, New Double()() {coeffs})
@@ -416,28 +416,28 @@ Namespace Filters
         ''' Runs filter on data from {@code from} (including) to {@code to}
         ''' (excluding). Data beyond range spanned by {@code from} and {@code to}
         ''' will be used for padding. See
-        ''' <seealsocref="smooth(,,,Integer,)"/> for usage
+        ''' <seealso cref="smooth(,,,Integer,)"/> for usage
         ''' of {@code bias}
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="from">
+        ''' <param name="from">
         '''            inedx of the first element of data </param>
-        ''' <paramname="to">
+        ''' <param name="to">
         '''            index of the first element omitted </param>
-        ''' <paramname="bias">
+        ''' <param name="bias">
         '''            how many points of pad should be left out when smoothing </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="ArrayIndexOutOfBoundsException">
+        ''' <exception cref="ArrayIndexOutOfBoundsException">
         '''             if <tt>to > data.length</tt> or when {@code coeffs} has less
         '''             than <tt>2*bias + 1</tt> elements </exception>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             if <tt>from </></tt> or <tt>to > data.length</tt> or
         '''             <tt>from > to</tt> or when <tt>bias </></tt> or
         '''             <tt>bias > min(nr, nl)</tt> </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             if {@code data} is null or {@code coeffs} is null </exception>
         Public Overridable Function smooth(data As Double(), from As Integer, [to] As Integer, bias As Integer, coeffs As Double()()) As Double()
             Dim leftPad = copyOfRange(data, 0, from)
@@ -447,62 +447,62 @@ Namespace Filters
         End Function
 
         ''' <summary>
-        ''' See <seealsocref="smooth(,)"/>. This method converts {@code
+        ''' See <seealso cref="smooth(,)"/>. This method converts {@code
         ''' data} to double for computation and then converts it back to float
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Single(), coeffs As Double()) As Single()
             Return smooth(data, 0, data.Length, coeffs)
         End Function
 
         ''' <summary>
-        ''' See <seealsocref="smooth(,,,)"/>. This method
+        ''' See <seealso cref="smooth(,,,)"/>. This method
         ''' converts {@code data} {@code leftPad} and {@code rightPad} to double for
         ''' computation and then converts back to float
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="leftPad">
+        ''' <param name="leftPad">
         '''            left padding </param>
-        ''' <paramname="rightPad">
+        ''' <param name="rightPad">
         '''            right padding </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Single(), leftPad As Single(), rightPad As Single(), coeffs As Double()) As Single()
             Return smooth(data, leftPad, rightPad, 0, New Double()() {coeffs})
         End Function
 
         ''' <summary>
-        ''' See <seealsocref="smooth(,,,Integer,)"/>. This
+        ''' See <seealso cref="smooth(,,,Integer,)"/>. This
         ''' method converts {@code data} {@code leftPad} and {@code rightPad} to
         ''' double for computation and then converts back to float
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="leftPad">
+        ''' <param name="leftPad">
         '''            left padding </param>
-        ''' <paramname="rightPad">
+        ''' <param name="rightPad">
         '''            right padding </param>
-        ''' <paramname="bias">
+        ''' <param name="bias">
         '''            how many points of pad should be left out when smoothing </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            array of filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             when <tt>bias </></tt> or <tt>bias > min(nr, nl)</tt> </exception>
-        ''' <exceptioncref="IndexOutOfBoundsException">
+        ''' <exception cref="IndexOutOfBoundsException">
         '''             when {@code coeffs} has less than <tt>2*bias + 1</tt>
         '''             elements </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             when any array passed as parameter is null </exception>
         Public Overridable Function smooth(data As Single(), leftPad As Single(), rightPad As Single(), bias As Integer, coeffs As Double()()) As Single()
             Dim dataAsDouble = New Double(data.Length - 1) {}
@@ -518,52 +518,52 @@ Namespace Filters
         End Function
 
         ''' <summary>
-        ''' See <seealsocref="smooth(,Integer,Integer,)"/>. This method converts
+        ''' See <seealso cref="smooth(,Integer,Integer,)"/>. This method converts
         ''' {@code data} to double for computation and then converts it back to float
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="from">
+        ''' <param name="from">
         '''            inedx of the first element of data </param>
-        ''' <paramname="to">
+        ''' <param name="to">
         '''            index of the first element omitted </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="ArrayIndexOutOfBoundsException">
+        ''' <exception cref="ArrayIndexOutOfBoundsException">
         '''             if <tt>to > data.length</tt> </exception>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             if <tt>from </></tt> or <tt>to > data.length</tt> </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             if {@code data} is null or {@code coeffs} is null </exception>
         Public Overridable Function smooth(data As Single(), from As Integer, [to] As Integer, coeffs As Double()) As Single()
             Return smooth(data, from, [to], 0, New Double()() {coeffs})
         End Function
 
         ''' <summary>
-        ''' See <seealsocref="smooth(,Integer,Integer,Integer,)"/>. This method
+        ''' See <seealso cref="smooth(,Integer,Integer,Integer,)"/>. This method
         ''' converts {@code data} to double for computation and then converts it back
         ''' to float
         ''' </summary>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            data for filter </param>
-        ''' <paramname="from">
+        ''' <param name="from">
         '''            inedx of the first element of data </param>
-        ''' <paramname="to">
+        ''' <param name="to">
         '''            index of the first element omitted </param>
-        ''' <paramname="bias">
+        ''' <param name="bias">
         '''            how many points of pad should be left out when smoothing </param>
-        ''' <paramname="coeffs">
+        ''' <param name="coeffs">
         '''            filter coefficients </param>
         ''' <returns> filtered data </returns>
-        ''' <exceptioncref="ArrayIndexOutOfBoundsException">
+        ''' <exception cref="ArrayIndexOutOfBoundsException">
         '''             if <tt>to > data.length</tt> or when {@code coeffs} has less
         '''             than <tt>2*bias + 1</tt> elements </exception>
-        ''' <exceptioncref="IllegalArgumentException">
+        ''' <exception cref="IllegalArgumentException">
         '''             if <tt>from </></tt> or <tt>to > data.length</tt> or
         '''             <tt>from > to</tt> or when <tt>bias </></tt> or
         '''             <tt>bias > min(nr, nl)</tt> </exception>
-        ''' <exceptioncref="NullPointerException">
+        ''' <exception cref="NullPointerException">
         '''             if {@code data} is null or {@code coeffs} is null </exception>
         Public Overridable Function smooth(data As Single(), from As Integer, [to] As Integer, bias As Integer, coeffs As Double()()) As Single()
             Dim leftPad = copyOfRange(data, 0, from)

@@ -15,6 +15,7 @@
 ' 
 
 Namespace Filters
+
     ''' <summary>
     ''' Pads data to left and/or right, starting from the first (last) non-zero cell
     ''' and extending it to the beginning (end) of data. More specifically:
@@ -29,7 +30,7 @@ Namespace Filters
     ''' then for every element <tt>e</tt> which index is <tt>i</tt> such that:
     ''' <ul>
     ''' <li>
-    ''' <tt>0 </> <l/></tt>, <tt>e</tt> is replaced with element <tt>data[l]</tt>
+    ''' <tt>0</tt>, <tt>e</tt> is replaced with element <tt>data[l]</tt>
     ''' (left padding)</li>
     ''' <li>
     ''' <tt>r <i/> <data.length/></tt>, <tt>e</tt> is replaced with element
@@ -40,19 +41,22 @@ Namespace Filters
     ''' <para>
     ''' Given data: <tt>[0,0,0,1,2,1,3,1,2,4,0]</tt> result of applying
     ''' ContinuousPadder is: <tt>[1,1,1,1,2,1,3,1,2,4,0]</tt> in case of
-    ''' <seealsocref="isPaddingLeft()"/>; <tt>[0,0,0,1,2,1,3,1,2,4,4]</tt> in
-    ''' case of <seealsocref="isPaddingRight()"/>;
+    ''' <seealso cref="PaddingLeft"/>; <tt>[0,0,0,1,2,1,3,1,2,4,4]</tt> in
+    ''' case of <seealso cref="PaddingRight"/>;
     ''' </para>
     ''' 
     ''' @author Marcin Rzeźnicki
     ''' 
     ''' </summary>
-    Public Class ContinuousPadder
-        Implements Preprocessor
+    Public Class ContinuousPadder : Implements Preprocessor
 
-        Private paddingLeftField As Boolean = True
+        ''' 
+        ''' <returns> {@code paddingLeft} </returns>
+        Public Overridable Property PaddingLeft As Boolean = True
+        ''' 
+        ''' <returns> {@code paddingRight} </returns>
+        Public Overridable Property PaddingRight As Boolean = True
 
-        Private paddingRightField As Boolean = True
 
         ''' <summary>
         ''' Default construcot. Both left and right padding are turned on
@@ -62,18 +66,18 @@ Namespace Filters
         End Sub
 
         ''' 
-        ''' <paramname="paddingLeft">
+        ''' <param name="paddingLeft">
         '''            enables or disables left padding </param>
-        ''' <paramname="paddingRight">
+        ''' <param name="paddingRight">
         '''            enables or disables right padding </param>
         Public Sub New(paddingLeft As Boolean, paddingRight As Boolean)
-            paddingLeftField = paddingLeft
-            paddingRightField = paddingRight
+            _PaddingLeft = paddingLeft
+            _PaddingRight = paddingRight
         End Sub
 
         Public Overridable Sub apply(data As Double()) Implements Preprocessor.apply
             Dim n = data.Length
-            If paddingLeftField Then
+            If PaddingLeft Then
                 Dim l = 0
                 ' seek first non-zero cell
                 For i = 0 To n - 1
@@ -87,7 +91,7 @@ Namespace Filters
                     data(i) = y0
                 Next
             End If
-            If paddingRightField Then
+            If PaddingRight Then
                 Dim r = 0
                 ' seek last non-zero cell
                 For i = n - 1 To 0 Step -1
@@ -102,30 +106,6 @@ Namespace Filters
                 Next
             End If
         End Sub
-
-        ''' 
-        ''' <returns> {@code paddingLeft} </returns>
-        Public Overridable Property PaddingLeft As Boolean
-            Get
-                Return paddingLeftField
-            End Get
-            Set(value As Boolean)
-                paddingLeftField = value
-            End Set
-        End Property
-
-        ''' 
-        ''' <returns> {@code paddingRight} </returns>
-        Public Overridable Property PaddingRight As Boolean
-            Get
-                Return paddingRightField
-            End Get
-            Set(value As Boolean)
-                paddingRightField = value
-            End Set
-        End Property
-
-
 
     End Class
 

@@ -20,14 +20,14 @@ Namespace Filters
     ''' place. Useful examples include: eliminating zeros, padding etc.
     ''' 
     ''' @author Marcin Rzeźnicki </summary>
-    ''' <seealsocref="SGFilter"/> </seealso>
+    ''' <seealso cref="SGFilter"/> </seealso>
     Public Interface Preprocessor
 
         ''' <summary>
         ''' Data processing method. Called on Preprocessor instance when its
         ''' processing is needed
         ''' </summary>
-        ''' <paramname="data"> </param>
+        ''' <param name="data"> </param>
         Sub apply(data As Double())
     End Interface
 

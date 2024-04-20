@@ -18,7 +18,7 @@ Namespace Filters
     ''' <summary>
     ''' De-trends data by setting straight line between the first and the last point
     ''' and subtracting it from data. Having applied filters to data you should
-    ''' reverse detrending by using <seealsocref="TrendRemover.retrend(,)"/>
+    ''' reverse detrending by using <seealso cref="TrendRemover.retrend(,)"/>
     ''' 
     ''' @author Marcin Rzeźnicki
     ''' 
@@ -42,12 +42,12 @@ Namespace Filters
         End Sub
 
         ''' <summary>
-        ''' Reverses the effect of <seealsocref="apply()"/> by modifying {@code
+        ''' Reverses the effect of <seealso cref="apply()"/> by modifying {@code
         ''' newData}
         ''' </summary>
-        ''' <paramname="newData">
+        ''' <param name="newData">
         '''            processed data </param>
-        ''' <paramname="data">
+        ''' <param name="data">
         '''            original data </param>
         Public Overridable Sub retrend(newData As Double(), data As Double())
             Dim n = data.Length
