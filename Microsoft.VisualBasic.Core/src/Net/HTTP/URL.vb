@@ -126,8 +126,12 @@ Namespace Net.Http
             End With
         End Function
 
+        Public Function UrlQueryString() As String
+            Return query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")
+        End Function
+
         Public Overrides Function ToString() As String
-            Return $"{protocol}{hostName}:{port}/{path}?{query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")}#{hashcode}"
+            Return $"{protocol}{hostName}:{port}/{path}?{UrlQueryString()}#{hashcode}"
         End Function
 
         Private Shared Sub Parser(url As String,
