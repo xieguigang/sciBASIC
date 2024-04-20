@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.SignalProcessing.EmGaussian
 Imports Microsoft.VisualBasic.Serialization.JSON
 
