@@ -14,7 +14,7 @@
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
     ''' <summary>
     ''' Eliminates zeros from data - starting from the first non-zero element, ending
     ''' at the last non-zero element. More specifically:
@@ -46,69 +46,69 @@ Namespace mr.go.sgfilter
     ''' @author Marcin Rzeźnicki
     ''' 
     ''' </summary></para></summary>    Public Class ZeroEliminator
-        Implements Preprocessor
+    Implements Preprocessor
 
-        Private alignToLeftField As Boolean
+    Private alignToLeftField As Boolean
 
-        ''' <summary>
-        ''' Default constructor: {@code alignToLeft} is {@code false}
-        ''' </summary>
-        ''' <seealsocref=""/> </seealso>
-        Public Sub New()
+    ''' <summary>
+    ''' Default constructor: {@code alignToLeft} is {@code false}
+    ''' </summary>
+    ''' <seealsocref=""/> </seealso>
+    Public Sub New()
 
-        End Sub
+    End Sub
 
-        ''' 
-        ''' <paramname="alignToLeft">
-        '''            if {@code true} zeros will be replaced with non-zero element
-        '''            to the left, if {@code false} - to the right </param>
-        Public Sub New(alignToLeft As Boolean)
-            alignToLeftField = alignToLeft
-        End Sub
+    ''' 
+    ''' <paramname="alignToLeft">
+    '''            if {@code true} zeros will be replaced with non-zero element
+    '''            to the left, if {@code false} - to the right </param>
+    Public Sub New(alignToLeft As Boolean)
+        alignToLeftField = alignToLeft
+    End Sub
 
-        Public Overridable Sub apply(data As Double()) Implements Preprocessor.apply
-            Dim n = data.Length
-            Dim l = 0, r = 0
-            ' seek first non-zero cell
-            For i = 0 To n - 1
-                If data(i) <> 0 Then
-                    l = i
-                    Exit For
-                End If
-            Next
-            ' seek last non-zero cell
-            For i = n - 1 To 0 Step -1
-                If data(i) <> 0 Then
-                    r = i
-                    Exit For
-                End If
-            Next
-            ' eliminate 0s
-            If alignToLeftField Then
-                For i = l + 1 To r - 1
-                    If data(i) = 0 Then
-                        data(i) = data(i - 1)
-                    End If
-                Next
-            Else
-                For i = r - 1 To l + 1 Step -1
-                    If data(i) = 0 Then
-                        data(i) = data(i + 1)
-                    End If
-                Next
+    Public Overridable Sub apply(data As Double()) Implements Preprocessor.apply
+        Dim n = data.Length
+        Dim l = 0, r = 0
+        ' seek first non-zero cell
+        For i = 0 To n - 1
+            If data(i) <> 0 Then
+                l = i
+                Exit For
             End If
-        End Sub
+        Next
+        ' seek last non-zero cell
+        For i = n - 1 To 0 Step -1
+            If data(i) <> 0 Then
+                r = i
+                Exit For
+            End If
+        Next
+        ' eliminate 0s
+        If alignToLeftField Then
+            For i = l + 1 To r - 1
+                If data(i) = 0 Then
+                    data(i) = data(i - 1)
+                End If
+            Next
+        Else
+            For i = r - 1 To l + 1 Step -1
+                If data(i) = 0 Then
+                    data(i) = data(i + 1)
+                End If
+            Next
+        End If
+    End Sub
 
-        ''' 
-        ''' <returns> {@code alignToLeft} </returns>
-        Public Overridable Property AlignToLeft As Boolean
-            Get
-                Return alignToLeftField
-            End Get
-            Set(value As Boolean)
-                alignToLeftField = value
-            End Set
-        End Property
+    ''' 
+    ''' <returns> {@code alignToLeft} </returns>
+    Public Overridable Property AlignToLeft As Boolean
+        Get
+            Return alignToLeftField
+        End Get
+        Set(value As Boolean)
+            alignToLeftField = value
+        End Set
+    End Property
 
 
     End Class

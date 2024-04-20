@@ -14,7 +14,7 @@
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
     ''' <summary>
     ''' De-trends data by setting straight line between the first and the last point
     ''' and subtracting it from data. Having applied filters to data you should
@@ -36,8 +36,8 @@ Namespace mr.go.sgfilter
             End If
             Dim y0 = data(0)
             Dim slope = (data(n - 1) - y0) / (n - 1)
-            For x = 0 To n - 1
-                data(x) -= slope * x + y0
+            For X = 0 To n - 1
+                data(X) -= slope * X() + y0
             Next
         End Sub
 
@@ -53,8 +53,8 @@ Namespace mr.go.sgfilter
             Dim n = data.Length
             Dim y0 = data(0)
             Dim slope = (data(n - 1) - y0) / (n - 1)
-            For x = 0 To n - 1
-                newData(x) += slope * x + y0
+            For X = 0 To n - 1
+                newData(X) += slope * X() + y0
             Next
         End Sub
 

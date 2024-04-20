@@ -14,7 +14,7 @@
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
     ''' <summary>
     ''' This interface represents types which are able to perform data processing in
     ''' place. Useful examples include: eliminating zeros, padding etc.

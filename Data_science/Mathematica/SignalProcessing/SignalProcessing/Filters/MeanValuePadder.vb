@@ -16,7 +16,7 @@
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
     ''' <summary>
     ''' Pads data to left and/or right.:
     ''' 

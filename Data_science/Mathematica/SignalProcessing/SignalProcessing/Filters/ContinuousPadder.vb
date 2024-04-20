@@ -14,7 +14,7 @@
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
     ''' <summary>
     ''' Pads data to left and/or right, starting from the first (last) non-zero cell
     ''' and extending it to the beginning (end) of data. More specifically:

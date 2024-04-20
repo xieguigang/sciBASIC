@@ -1,10 +1,4 @@
-﻿Namespace mr.go.sgfilter
-    'JAVA TO C# CONVERTER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-    '	import static Math.abs;
-    'JAVA TO C# CONVERTER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-    '	import static Math.pow;
-    'JAVA TO C# CONVERTER TODO TASK: This Java 'import static' statement cannot be converted to C#:
-    '	import static Math.sqrt;
+﻿Namespace Filters
 
     ''' <summary>
     ''' Filters data using Ramer-Douglas-Peucker algorithm with specified tolerance

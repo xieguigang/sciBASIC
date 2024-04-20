@@ -19,7 +19,7 @@ Imports System.Math
 ' limitations under the License.
 ' 
 
-Namespace mr.go.sgfilter
+Namespace Filters
 
     ''' <summary>
     ''' Savitzky-Golay filter implementation. For more information see
@@ -369,12 +369,12 @@ Namespace mr.go.sgfilter
                 sdata(x - nlField) = sum
             Next
             sg = coeffs(0)
-            For x = nlField + bias To n - nrField - bias - 1
+            For X = nlField + bias To n - nrField - bias - 1
                 Dim sum As Double = 0
                 For i = -nlField To nrField
-                    sum += dataCopy(x + i) * sg(nlField + i)
+                    sum += dataCopy(X() + i) * sg(nlField + i)
                 Next
-                sdata(x - nlField) = sum
+                sdata(X() - nlField) = sum
             Next
             For b = 1 To bias
                 sg = coeffs(b)

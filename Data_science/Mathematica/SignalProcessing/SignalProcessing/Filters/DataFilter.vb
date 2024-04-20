@@ -1,4 +1,4 @@
-﻿Namespace mr.go.sgfilter
+﻿Namespace Filters
     ''' <summary>
     ''' This interface represents types which are able to filter data, for example:
     ''' eliminate redundant points.
