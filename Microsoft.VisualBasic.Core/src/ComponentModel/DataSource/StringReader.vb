@@ -1,4 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.DataSourceModel
 
@@ -107,7 +109,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetByte(parameter As String) As Byte
-            Return CByte(Val(Me(parameter)))
+            Return Byte.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -115,7 +117,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public Function GetBytes(parameter As String) As Byte()
-            Dim tokens As String() = Me(parameter).DefaultValue.Split(","c)
+            Dim tokens As String() = getter.GetString(parameter).Split(","c)
             Return (From s As String In tokens Select CByte(Val(s))).ToArray
         End Function
 
@@ -124,7 +126,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public Function GetChar(parameter As String) As Char
-            Dim s As String = Me(parameter)
+            Dim s As String = getter.GetString(parameter)
 
             If String.IsNullOrEmpty(s) Then
                 Return ASCII.NUL
@@ -140,7 +142,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetChars(parameter As String) As Char()
-            Return Me(parameter)
+            Return getter.GetString(parameter).ToArray
         End Function
 
         ''' <summary>
@@ -150,7 +152,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDateTime(parameter As String) As DateTime
-            Return Me(parameter).DefaultValue.ParseDateTime
+            Return getter.GetString(parameter).ParseDateTime
         End Function
 
         ''' <summary>
@@ -160,7 +162,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDecimal(parameter As String) As Decimal
-            Return CDec(Val(Me(parameter).DefaultValue))
+            Return Decimal.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -170,7 +172,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDouble(parameter As String) As Double
-            Return Val(Me(parameter).DefaultValue)
+            Return Val(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -180,7 +182,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFloat(parameter As String) As Single
-            Return CSng(Val(Me(parameter).DefaultValue))
+            Return Single.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -190,7 +192,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetGuid(parameter As String) As Guid
-            Return Guid.Parse(Me(parameter))
+            Return Guid.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -200,7 +202,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt16(parameter As String) As Int16
-            Return CType(Val(Me(parameter).DefaultValue), Int16)
+            Return Int16.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -210,7 +212,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt32(parameter As String) As Int32
-            Return CInt(Val(Me(parameter).DefaultValue))
+            Return Integer.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -220,7 +222,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt64(parameter As String) As Int64
-            Return CLng(Val(Me(parameter).DefaultValue))
+            Return Long.Parse(getter.GetString(parameter))
         End Function
 
         ''' <summary>
@@ -240,7 +242,11 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsNull(parameter As String) As Boolean
-            Return Not Me.ContainsParameter(parameter, False)
+            If getter.HasKey(parameter) Then
+                Return getter.GetString(parameter) Is Nothing
+            Else
+                Return True
+            End If
         End Function
 
         Public Shared Function WrapDictionary(dict As Dictionary(Of String, String)) As StringReader

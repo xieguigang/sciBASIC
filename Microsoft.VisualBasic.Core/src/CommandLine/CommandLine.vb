@@ -413,7 +413,7 @@ Namespace CommandLine
         ''' <param name="failure"></param>
         ''' <returns></returns>
         Public Function Assert(name As String, Optional failure As String = "") As String
-            If GetBoolean(name) Then
+            If IsTrue(name) Then
                 Return name
             Else
                 Return failure
@@ -592,7 +592,7 @@ Namespace CommandLine
             If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
-                        Return DirectCast(DirectCast(GetBoolean(name), Object), T)
+                        Return CType(CObj(True), T)
                     End If
                 End If
 
