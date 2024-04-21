@@ -110,11 +110,17 @@ Namespace ComponentModel.Settings.Inf
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
             Dim obj As Object = Activator.CreateInstance(type)
             Dim maps = MapParser(type)
+            Dim o As Object
 
-            For Each map In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
                 Dim key As String = map.field.Name
-                Dim value As String = ini.ReadValue(maps.Name, key)
-                Dim o As Object = Scripting.CTypeDynamic(value, map.Type)
+
+                If Not DataFramework.IsPrimitive(map.Type) Then
+                    o = ClassWriter(ini, map.Type)
+                Else
+                    o = any.CTypeDynamic(ini.ReadValue(maps.Name, key), map.Type)
+                End If
+
                 Call map.SetValue(obj, o)
             Next
 
