@@ -135,7 +135,7 @@ Namespace ComponentModel.Settings.Inf
                 Dim key As String = map.field.Name
                 Dim value As Object = map.GetValue(x)
 
-                If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value) Then
+                If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value.GetType) Then
                     Call ClassDumper(value.GetType, value, ini)
                     Continue For
                 End If
