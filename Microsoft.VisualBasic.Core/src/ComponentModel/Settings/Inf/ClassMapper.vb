@@ -56,6 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.Settings.Inf
 
@@ -132,13 +133,20 @@ Namespace ComponentModel.Settings.Inf
 
             For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
                 Dim key As String = map.field.Name
-                Dim value As String = Scripting.ToString(map.GetValue(x))
+                Dim value As Object = map.GetValue(x)
+
+                If value IsNot Nothing AndAlso Not DataFramework.IsPrimitive(value) Then
+                    Call ClassDumper(value.GetType, value, ini)
+                    Continue For
+                End If
+
+                Dim val_str As String = any.ToString(value)
                 Dim comment As String = map.member.Description
 
-                If value.StringEmpty Then
+                If val_str.StringEmpty Then
                     Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
                 Else
-                    Call ini.WriteValue(maps.Name, key, value, comment)
+                    Call ini.WriteValue(maps.Name, key, val_str, comment)
                 End If
             Next
         End Sub
