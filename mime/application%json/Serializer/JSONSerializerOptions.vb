@@ -56,5 +56,6 @@ Public Class JSONSerializerOptions
     Public Property enumToString As Boolean = True
     Public Property unixTimestamp As Boolean = True
     Public Property digest As Dictionary(Of Type, Func(Of Object, Object))
+    Public Property unicodeEscape As Boolean = True
 
 End Class

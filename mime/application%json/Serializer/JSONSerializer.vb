@@ -128,10 +128,32 @@ Public Module JSONSerializer
         If TypeOf value Is Date AndAlso opt.unixTimestamp Then
             Return DirectCast(value, Date).UnixTimeStamp
         ElseIf TypeOf value Is String Then
-            Return JsonContract.GetObjectJson(GetType(String), value)
+            If opt.unicodeEscape Then
+                Dim sb As New StringBuilder
+                Dim code As Integer
+                Dim bytes As Byte()
+
+                For Each c As Char In DirectCast(value, String)
+                    code = AscW(c)
+
+                    If code < 0 OrElse code > Byte.MaxValue Then
+                        sb.Append("\u")
+                        bytes = Encoding.Unicode.GetBytes(c)
+                        sb.Append(bytes(1).ToString("x"))
+                        sb.Append(bytes(0).ToString("x"))
+                    Else
+                        sb.Append(c)
+                    End If
+                Next
+
+                Return $"""{sb.ToString}"""
+            Else
+                Return JsonContract.GetObjectJson(GetType(String), value)
+            End If
         ElseIf TypeOf value Is Boolean Then
             Return value.ToString.ToLower
         Else
+            ' number,integer,etc
             Return any.ToString(value)
         End If
     End Function
