@@ -32,6 +32,10 @@ Namespace Drawing2D.Colors.Scaler
             Call Me.New(category, Designer.GetColors(colorSchema))
         End Sub
 
+        Sub New(terms As IEnumerable(Of String), colorSet As String)
+            Call Me.New(terms.Distinct.ToDictionary(Function(s) s), Designer.GetColors(colorSet))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(terms As IEnumerable(Of String), colors As IEnumerable(Of String))
             Call Me.New(
