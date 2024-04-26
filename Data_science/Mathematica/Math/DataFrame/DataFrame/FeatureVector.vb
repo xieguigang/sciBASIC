@@ -221,6 +221,8 @@ Public Class FeatureVector : Implements IReadOnlyId
                             Return CastTo(Of Date, Double)(Function(d) d.UnixTimeStamp)
                         Case GetType(TimeSpan)
                             Return CastTo(Of TimeSpan, Double)(Function(d) d.TotalMilliseconds)
+                        Case GetType(String)
+                            Return CastTo(Of String, Double)(AddressOf Conversion.Val)
                     End Select
             End Select
 
