@@ -457,12 +457,23 @@ Namespace Scripting
         ''' <param name="array"></param>
         ''' <param name="type">数组里面的元素的类型</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' please note that, this function cast type by using direct cast, without 
+        ''' any type conversion. type-mismatch error may be happends.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [DirectCast](array As IEnumerable, type As Type) As Array
             Return Runtime.Extensions.CreateArray(data:=array, type)
         End Function
 
+        ''' <summary>
+        ''' the given <paramref name="type"/> value should be the target 
+        ''' array element type.
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CTypeDynamic(array As IEnumerable, type As Type) As Array
             Dim pullAll As Array
