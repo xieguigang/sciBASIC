@@ -67,6 +67,7 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports std = System.Math
 
 Namespace Imaging
 
@@ -283,7 +284,18 @@ Namespace Imaging
         End Function
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
-            Throw New NotImplementedException()
+            If angle <> 0 Then
+                Dim text As New GraphicsText(g)
+                Dim sz As SizeF = g.MeasureString(s, font)
+
+                If angle > 0 Then
+                    Call text.DrawString(s, font, brush, New Point(x, y), angle:=angle)
+                Else
+                    Call text.DrawString(s, font, brush, New Point(x, y + sz.Height * std.Sin(angle * 180 / std.PI)), angle:=angle)
+                End If
+            Else
+                Call Graphics.DrawString(s, font, brush, x, y)
+            End If
         End Sub
     End Class
 End Namespace
