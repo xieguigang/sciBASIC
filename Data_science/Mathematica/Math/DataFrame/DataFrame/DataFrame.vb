@@ -114,6 +114,19 @@ Public Class DataFrame : Implements INumericMatrix
         End Set
     End Property
 
+    Default Public ReadOnly Property Item(cols As IEnumerable(Of String)) As DataFrame
+        Get
+            Return New DataFrame With {
+                .rownames = rownames.ToArray,
+                .features = cols _
+                    .ToDictionary(Function(c) c,
+                                  Function(c)
+                                      Return Me(c)
+                                  End Function)
+            }
+        End Get
+    End Property
+
     Sub New()
     End Sub
 

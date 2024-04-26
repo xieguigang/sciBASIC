@@ -2232,34 +2232,23 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-        '
-        ' Summary:
-        '     Draws the specified text string in the specified rectangle with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        '     of the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   layoutRectangle:
-        '     System.Drawing.RectangleF structure that specifies the location of the drawn
-        '     text.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
-        '     spacing and alignment, that are applied to the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string in the specified rectangle with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
+        ''' of the specified System.Drawing.StringFormat.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
+        ''' text.</param>
+        ''' <param name="format">System.Drawing.StringFormat that specifies formatting attributes, such as line
+        ''' spacing and alignment, that are applied to the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
+
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, angle As Single, x As Single, y As Single)
+
         '
         ' Summary:
         '     Draws the specified text string at the specified location with the specified
