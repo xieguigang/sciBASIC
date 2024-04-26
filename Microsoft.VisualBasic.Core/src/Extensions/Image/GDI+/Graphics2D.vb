@@ -281,5 +281,9 @@ Namespace Imaging
 
             Return True
         End Function
+
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

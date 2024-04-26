@@ -1007,5 +1007,9 @@ Namespace PostScript
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Throw New NotImplementedException()
         End Function
+
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

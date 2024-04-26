@@ -2247,7 +2247,7 @@ Namespace Imaging
         ''' spacing and alignment, that are applied to the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
 
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, angle As Single, x As Single, y As Single)
+        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
 
         '
         ' Summary:

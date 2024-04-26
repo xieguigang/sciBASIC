@@ -720,7 +720,14 @@ Namespace SVG
             Next
         End Sub
 
-        Public Overloads Sub DrawString(s As String, font As Font, brush As Brush, ByRef x!, ByRef y!, angle!)
+        Public Overrides Function MeasureString(text As String, font As Font) As SizeF
+            Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
+            Dim size As SizeF = gdi.MeasureString(text, font)
+
+            Return size
+        End Function
+
+        Public Overloads Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x!, ByRef y!, angle!)
             ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
