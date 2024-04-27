@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.ComponentModel
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.ColorBrewer
 
 Namespace Drawing2D.Colors
 
@@ -101,6 +102,21 @@ Namespace Drawing2D.Colors
         <Description("red_channel")> Red
         <Description("green_channel")> Green
         <Description("blue_channel")> Blue
+
+        <Description(SequentialSchemes.OrRd9)> ColorBrewer_OrRd
+        <Description(SequentialSchemes.PuBu9)> ColorBrewer_PuBu
+        <Description(SequentialSchemes.BuPu9)> ColorBrewer_BuPu
+        <Description(SequentialSchemes.Oranges9)> ColorBrewer_Oranges
+        <Description(SequentialSchemes.BuGn9)> ColorBrewer_BuGn
+        <Description(SequentialSchemes.YlOrBr9)> ColorBrewer_YlOrBr
+        <Description(SequentialSchemes.YlGn9)> ColorBrewer_YlGn
+        <Description(SequentialSchemes.RdPu9)> ColorBrewer_RdPu
+        <Description(SequentialSchemes.YlGnBu9)> ColorBrewer_YlGnBu
+        <Description(SequentialSchemes.Purples9)> ColorBrewer_Purples
+        <Description(SequentialSchemes.GnBu9)> ColorBrewer_GnBu
+        <Description(SequentialSchemes.YlOrRd8)> ColorBrewer_YlOrRd
+        <Description(SequentialSchemes.PuRd9)> ColorBrewer_PuRd
+        <Description(SequentialSchemes.PuBuGn9)> ColorBrewer_PuBuGn
 
         Rainbow
         FlexImaging
