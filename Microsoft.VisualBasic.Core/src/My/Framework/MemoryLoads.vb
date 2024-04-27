@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::423cdfaf16282bc77774dfcbc7c22cd3, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\MemoryLoads.vb"
+﻿#Region "Microsoft.VisualBasic::119e1fb4aaa060b2be0b1246e4747f9d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/MemoryLoads.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
+    '   Total Lines: 20
     '    Code Lines: 7
-    ' Comment Lines: 6
+    ' Comment Lines: 12
     '   Blank Lines: 1
-    '     File Size: 285 B
+    '     File Size: 542 B
 
 
     '     Enum MemoryLoads

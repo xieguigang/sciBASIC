@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544d24fd28eb0610bfaa52ba1d9bdd0e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::2161a71ba6b42c85a08f17161cb26299, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Wmf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 89
+    '   Total Lines: 170
+    '    Code Lines: 92
     ' Comment Lines: 53
-    '   Blank Lines: 24
-    '     File Size: 7.70 KB
+    '   Blank Lines: 25
+    '     File Size: 7.91 KB
 
 
     '     Class Wmf
@@ -46,7 +46,8 @@
     '         Properties: Size, wmfFile
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Sub: Dispose, DrawCircle, Flush, initg, releaseInternal
+    '         Sub: Dispose, DrawCircle, DrawString, Flush, initg
+    '              releaseInternal
     ' 
     ' 
     ' /********************************************************************************/

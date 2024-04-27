@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::023e62024aa46f51d84770b70a446c3f, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::bf5aecd9e4773292b0d7775cd58fc0d7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/Sequence.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 43
+    '   Total Lines: 62
+    '    Code Lines: 40
     ' Comment Lines: 11
-    '   Blank Lines: 12
-    '     File Size: 2.00 KB
+    '   Blank Lines: 11
+    '     File Size: 1.83 KB
 
 
     '     Class Sequence
@@ -46,7 +46,7 @@
     '         Properties: n, range, steps
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GenericEnumerator, GetEnumerator, ToArray, ToString
+    '         Function: GenericEnumerator, ToArray, ToString
     ' 
     ' 
     ' /********************************************************************************/

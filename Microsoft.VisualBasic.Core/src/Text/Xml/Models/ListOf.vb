@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d00aae1efbc1cf9aa886a8232ce2f78, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::ce43cbbae1968b6951d50b4780adfa6f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/ListOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 72
+    '   Total Lines: 108
+    '    Code Lines: 69
     ' Comment Lines: 23
-    '   Blank Lines: 17
-    '     File Size: 3.59 KB
+    '   Blank Lines: 16
+    '     File Size: 3.53 KB
 
 
     '     Interface IList
@@ -49,7 +49,7 @@
     ' 
     '         Properties: size
     ' 
-    '         Function: GenericEnumerator, GetEnumerator
+    '         Function: GenericEnumerator
     ' 
     '     Class XmlList
     ' 

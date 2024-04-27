@@ -1,55 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::a97670ed0d5849f8ec54d55ab3f1f99f, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::d60bbd5d9d698fbbc7fb1c926aaa8130, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/EntityModels/ClusterEntity.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 79
-'    Code Lines: 51
-' Comment Lines: 20
-'   Blank Lines: 8
-'     File Size: 3.09 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ClusterEntity
-' 
-'         Properties: cluster, uid
-' 
-'         Function: (+2 Overloads) ToDataModel, ToString
-'         Operators: <>, =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 79
+    ' Comment Lines: 57
+    '   Blank Lines: 16
+    '     File Size: 5.46 KB
+
+
+    '     Class ClusterEntity
+    ' 
+    '         Properties: cluster, entityVector, uid
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: Equals, (+2 Overloads) ToDataModel, ToString
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

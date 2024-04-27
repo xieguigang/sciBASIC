@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdfaf52f4e4a99ea35de6f64c203c4db, sciBASIC#\Data\BinaryData\netCDF\Data\CDFDataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::d74e4c5752e5ab436aef7eaec4dfd724, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Data/CDFDataTypes.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
+    '   Total Lines: 104
     '    Code Lines: 23
-    ' Comment Lines: 66
+    ' Comment Lines: 69
     '   Blank Lines: 12
-    '     File Size: 3.29 KB
+    '     File Size: 3.38 KB
 
 
     '     Enum CDFDataTypes

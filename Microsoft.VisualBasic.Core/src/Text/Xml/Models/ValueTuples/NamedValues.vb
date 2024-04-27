@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26e8d17572f2f763a16888cb4dfae8f4, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::f26dac78c8cc846104843d743440f9b9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/ValueTuples/NamedValues.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 71
-    ' Comment Lines: 35
-    '   Blank Lines: 20
-    '     File Size: 4.02 KB
+    '   Total Lines: 143
+    '    Code Lines: 77
+    ' Comment Lines: 44
+    '   Blank Lines: 22
+    '     File Size: 4.49 KB
 
 
     '     Class NamedValue
     ' 
     '         Properties: name, text
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: ToString
     '         Operators: +
     ' 
@@ -53,7 +53,7 @@
     ' 
     '         Properties: comment, name, value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Structure NamedVector

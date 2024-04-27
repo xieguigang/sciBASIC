@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cee1c02315c8b92eddeba6be53138c24, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::7257be68ac7e964c6f836808195d52f4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/Graphics2D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 129
+    '   Total Lines: 238
+    '    Code Lines: 143
     ' Comment Lines: 60
-    '   Blank Lines: 33
-    '     File Size: 8.20 KB
+    '   Blank Lines: 35
+    '     File Size: 8.93 KB
 
 
     '     Class Graphics2D
@@ -49,7 +49,7 @@
     ' 
     '         Function: CreateDevice, CreateObject, Open, (+3 Overloads) Save, ToString
     ' 
-    '         Sub: DrawCircle, saveFile
+    '         Sub: DrawCircle, DrawString, saveFile
     '         Structure Context
     ' 
     '             Function: Create

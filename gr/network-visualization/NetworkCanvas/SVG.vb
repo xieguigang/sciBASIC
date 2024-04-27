@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bc83e84d453ef5529c440f5cd415b21, sciBASIC#\gr\network-visualization\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::510c76742c95396e25210b5fa636911d, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//SVG.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 169
-    '    Code Lines: 139
+    '   Total Lines: 151
+    '    Code Lines: 115
     ' Comment Lines: 15
-    '   Blank Lines: 15
-    '     File Size: 7.51 KB
+    '   Blank Lines: 21
+    '     File Size: 6.29 KB
 
 
     ' Module SVGExtensions
     ' 
     '     Function: DefaultStyle, ToSVG
+    ' 
+    '     Sub: CreateEdgeLinks, CreateLabels, CreateNodes
     '     Delegate Function
     ' 
     '         Function: Get2DPoint, Get3DPoint, getRadius

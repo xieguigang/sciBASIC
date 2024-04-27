@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::064c6fcae38c56766002329a7d933ecc, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
+﻿#Region "Microsoft.VisualBasic::064c6fcae38c56766002329a7d933ecc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Implementation/StrongRules.vb"
 
     ' Author:
     ' 

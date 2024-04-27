@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0ecd1e0c39fbdd28356a5893765cc16, sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::eedb2b4f5e8f5a86d13fffe65947602a, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//Canvas.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 239
-    '    Code Lines: 169
+    '   Total Lines: 248
+    '    Code Lines: 177
     ' Comment Lines: 35
-    '   Blank Lines: 35
-    '     File Size: 7.41 KB
+    '   Blank Lines: 36
+    '     File Size: 7.74 KB
 
 
     ' Class Canvas
@@ -48,9 +48,9 @@
     ' 
     '     Function: GetSnapshot, GetTargetNode, WriteLayout
     ' 
-    '     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, doPaint
-    '          doPhysicsUpdates, Run, SetFDGParams, SetPhysical, SetRotate
-    '          setupGraph
+    '     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, Canvas_SizeChanged
+    '          doPaint, doPhysicsUpdates, Run, SetFDGParams, SetPhysical
+    '          SetRotate, setupGraph
     ' 
     ' /********************************************************************************/
 

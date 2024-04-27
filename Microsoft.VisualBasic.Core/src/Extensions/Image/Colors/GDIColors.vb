@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1366ca43f296eec72ebc35aba9119389, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::67923b6d4f723dd77f4b92a417d25a24, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/GDIColors.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 466
-    '    Code Lines: 256
-    ' Comment Lines: 156
-    '   Blank Lines: 54
-    '     File Size: 23.31 KB
+    '   Total Lines: 492
+    '    Code Lines: 268
+    ' Comment Lines: 167
+    '   Blank Lines: 57
+    '     File Size: 24.78 KB
 
 
     '     Module GDIColors
@@ -46,9 +46,10 @@
     '         Properties: AllDotNetColorNames, AllDotNetPrefixColors, ChartColors
     ' 
     '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   ColorTranslatorInternal, Darken, Equals, EuclideanDistance, Greyscale
-    '                   HTMLColors, IsColorExpression, IsNullOrEmpty, IsTransparent, Lighten
-    '                   Middle, RGBExpression, ToColor, TranslateColor
+    '                   Blue, ColorTranslatorInternal, Darken, Equals, EuclideanDistance
+    '                   Green, Greyscale, HTMLColors, IsColorExpression, IsNullOrEmpty
+    '                   IsTransparent, Lighten, Middle, Red, RGBExpression
+    '                   ToColor, TranslateColor
     ' 
     ' 
     ' /********************************************************************************/

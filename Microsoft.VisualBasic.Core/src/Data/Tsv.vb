@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f64e58f8c379ac5d5e872027beeaadd4, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::1fdb0a6b31b45946f6afd70be2932d2f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Tsv.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 175
+    '   Total Lines: 176
     '    Code Lines: 112
-    ' Comment Lines: 44
+    ' Comment Lines: 45
     '   Blank Lines: 19
-    '     File Size: 7.77 KB
+    '     File Size: 7.95 KB
 
 
     '     Module TsvFileIO

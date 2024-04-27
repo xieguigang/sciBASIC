@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa256efcdb8b080b4bf8bef21b08fe77, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BString.vb"
+﻿#Region "Microsoft.VisualBasic::6539cde7a18b82192a2c1cd61a54ced9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BElements/BString.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 40
+    '   Total Lines: 109
+    '    Code Lines: 62
     ' Comment Lines: 30
-    '   Blank Lines: 12
-    '     File Size: 2.77 KB
+    '   Blank Lines: 17
+    '     File Size: 3.57 KB
 
 
     '     Class BString

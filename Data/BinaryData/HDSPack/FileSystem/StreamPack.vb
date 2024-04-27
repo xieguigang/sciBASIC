@@ -1,61 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::75126c4ac890131e3a819d343f677491, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
+﻿#Region "Microsoft.VisualBasic::5aeee2c22344250050ff9a53c33d4058, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//FileSystem/StreamPack.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 449
-'    Code Lines: 271
-' Comment Lines: 116
-'   Blank Lines: 62
-'     File Size: 17.57 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class StreamPack
-' 
-'         Properties: files, globalAttributes, is_readonly, superBlock
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: CreateNewStream, Delete, FileExists, FileSize, GetGlobalAttribute
-'                   GetObject, (+2 Overloads) OpenBlock, OpenFile, ParseTree, ReadAllText
-'                   ToString, WriteText
-' 
-'         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
-'              ParseMetadata, (+2 Overloads) SetAttribute
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 615
+    '    Code Lines: 354
+    ' Comment Lines: 180
+    '   Blank Lines: 81
+    '     File Size: 25.28 KB
+
+
+    '     Class StreamPack
+    ' 
+    '         Properties: files, globalAttributes, is_readonly, superBlock
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Allocate, AllocateNext, CreateNewStream, Delete, FileExists
+    '                   FileSize, (+2 Overloads) GetFiles, GetFullPath, GetGlobalAttribute, GetObject
+    '                   (+2 Overloads) OpenBlock, OpenFile, OpenReadOnly, ParseTree, ReadAllText
+    '                   (+2 Overloads) TestMagic, ToString, WriteText
+    ' 
+    '         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
+    '              ParseMetadata, (+2 Overloads) SetAttribute
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

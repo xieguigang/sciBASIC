@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b15a65d43026ec288ce8b4932b0459d5, sciBASIC#\Data_science\DataMining\UMAP\DistanceFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::4655d992c7a58446e397085a2173acc4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//DistanceFunctions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
-    '    Code Lines: 16
-    ' Comment Lines: 1
-    '   Blank Lines: 4
-    '     File Size: 892 B
+    '   Total Lines: 46
+    '    Code Lines: 21
+    ' Comment Lines: 20
+    '   Blank Lines: 5
+    '     File Size: 1.85 KB
 
 
     ' Class DistanceFunctions
     ' 
-    '     Function: Cosine, CosineForNormalizedVectors, Euclidean
+    '     Function: Cosine, CosineForNormalizedVectors, Euclidean, SpectralSimilarity
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c594eccdea53c7500570b92595c89b6, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\BIFF\ExcelFile.vb"
+﻿#Region "Microsoft.VisualBasic::cfb39159bc0fb76eb7606a5c38d613a6, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/XLS/BIFF//ExcelFile.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 648
-    '    Code Lines: 418
-    ' Comment Lines: 62
-    '   Blank Lines: 168
-    '     File Size: 20.46 KB
+    '   Total Lines: 506
+    '    Code Lines: 351
+    ' Comment Lines: 68
+    '   Blank Lines: 87
+    '     File Size: 18.36 KB
 
 
     '     Class BiffWriter
     ' 
-    '         Properties: PrintGridLines, ProtectSpreadsheet
-    ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CloseFile, CreateFile, InsertHorizPageBreak, SetColumnWidth, SetDefaultRowHeight
     '                   SetFilePassword, SetFont, SetFooter, SetHeader, SetMargin
     '                   SetRowHeight, WriteDefaultFormats, WriteValue
+    ' 
+    '         Sub: SetPrintGridLines, SetProtectSpreadsheet
     ' 
     ' 
     ' /********************************************************************************/

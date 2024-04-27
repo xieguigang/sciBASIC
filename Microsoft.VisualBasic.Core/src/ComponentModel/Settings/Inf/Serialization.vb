@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b0d51b5393f39ab9816abbfe05e69ca, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::1d44d652497a6ebf460ff86e255809ba, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/Serialization.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
+    '   Total Lines: 57
     '    Code Lines: 28
-    ' Comment Lines: 15
+    ' Comment Lines: 19
     '   Blank Lines: 10
-    '     File Size: 1.78 KB
+    '     File Size: 1.98 KB
 
 
     '     Class ClassName

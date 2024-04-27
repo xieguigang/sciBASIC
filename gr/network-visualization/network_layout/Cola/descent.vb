@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2435d7c67f14528fef86a8f9f1b84ca7, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\descent.vb"
+﻿#Region "Microsoft.VisualBasic::73591468d066fd3da98298da82ba578e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/descent.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 348
     ' Comment Lines: 84
     '   Blank Lines: 50
-    '     File Size: 19.57 KB
+    '     File Size: 19.56 KB
 
 
     '     Class Descent

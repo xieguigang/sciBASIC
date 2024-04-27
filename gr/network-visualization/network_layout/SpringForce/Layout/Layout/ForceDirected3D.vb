@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::869d6e9e2e9d14e640e0e3cb5e7cc3d0, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Layout\ForceDirected3D.vb"
+﻿#Region "Microsoft.VisualBasic::ddd0bb83d5ba39688b9fac70014f658a, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/Layout/Layout/ForceDirected3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 49
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 2.51 KB
+    '     File Size: 2.47 KB
 
 
     '     Class ForceDirected3D

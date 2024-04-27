@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8fb9d8c3f392482d3d4b812712e6791, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\DelimiterLocation.vb"
+﻿#Region "Microsoft.VisualBasic::7b0438763c52e7f7abe927100ce7a96f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/DelimiterLocation.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 5
-    ' Comment Lines: 12
+    '   Total Lines: 21
+    '    Code Lines: 6
+    ' Comment Lines: 15
     '   Blank Lines: 0
-    '     File Size: 446 B
+    '     File Size: 556 B
 
 
     ' Enum DelimiterLocation
     ' 
-    '     NextFirst, NotIncludes, PreviousLast
+    '     Individual, NextFirst, NotIncludes, PreviousLast
     ' 
     '  
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508c95cdd6edcde824e25c1e276872c0, sciBASIC#\mime\text%yaml\1.2\Syntax\YamlStream.vb"
+﻿#Region "Microsoft.VisualBasic::508c95cdd6edcde824e25c1e276872c0, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/YamlStream.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 638.00 B
+    '     File Size: 638 B
 
 
     '     Class YamlStream

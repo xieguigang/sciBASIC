@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8d1b7cc6abe0b21de80d88318447a50, sciBASIC#\Microsoft.VisualBasic.Core\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::3a47cbd8325526c635707f573aee4b65, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//Program.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 7
+    '   Total Lines: 14
+    '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 169 B
+    '     File Size: 321 B
 
 
     ' Module Program

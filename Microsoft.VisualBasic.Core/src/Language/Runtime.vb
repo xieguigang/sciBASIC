@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcb3322ee4e391d22a4a9c2180c661fa, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::6266b53f6242a8f568431e952e963008, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Runtime.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 120
     ' Comment Lines: 26
     '   Blank Lines: 27
-    '     File Size: 6.04 KB
+    '     File Size: 6.05 KB
 
 
     '     Class ArgumentReference

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa0235b5e688c852b5a5364f82481152, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::ec96caa198a36c9665a3d873063f0ccc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/HtmlParser/TagAttributeParser.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 97
+    '   Total Lines: 157
+    '    Code Lines: 103
     ' Comment Lines: 31
-    '   Blank Lines: 22
-    '     File Size: 5.69 KB
+    '   Blank Lines: 23
+    '     File Size: 5.88 KB
 
 
     '     Module TagAttributeParser

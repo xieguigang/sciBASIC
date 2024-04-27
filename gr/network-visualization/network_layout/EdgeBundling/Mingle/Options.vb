@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea5cbb45b44fe85ea4c456f18c96230, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Options.vb"
+﻿#Region "Microsoft.VisualBasic::2ed8c0e5d7ae5ec236d4f02996e0838c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/Options.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 266 B
+    '     File Size: 258 B
 
 
     '     Class Options

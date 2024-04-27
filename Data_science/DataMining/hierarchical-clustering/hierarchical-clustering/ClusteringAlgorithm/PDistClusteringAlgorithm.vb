@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c700fc2f84936a956c26a48e5e87a8d, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\PDistClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::2c700fc2f84936a956c26a48e5e87a8d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//ClusteringAlgorithm/PDistClusteringAlgorithm.vb"
 
 ' Author:
 ' 

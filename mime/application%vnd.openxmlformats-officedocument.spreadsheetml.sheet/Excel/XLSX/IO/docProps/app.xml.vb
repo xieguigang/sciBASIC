@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92403ba43701af0747ef305977a0659d, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\app.xml.vb"
+﻿#Region "Microsoft.VisualBasic::480a87893651d06864c2d5391a78f2a1, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/docProps/app.xml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 46
+    '   Total Lines: 68
+    '    Code Lines: 47
     ' Comment Lines: 8
     '   Blank Lines: 13
-    '     File Size: 2.18 KB
+    '     File Size: 2.20 KB
 
 
     '     Class app

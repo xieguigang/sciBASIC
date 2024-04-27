@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af789b0d6865e25776b370ed0206e358, sciBASIC#\Data\DataFrame\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::fc85d126d5e1c2a042a8acdb5150e8c0, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/Module1.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1020 B
+    '     File Size: 1010 B
 
 
     ' Module Module1

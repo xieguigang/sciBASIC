@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e7103512269fda3b0ff2c779b3b1a83, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::65f98a62f1ad4bee24a18e099e8febcd, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Edge.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 131
-    ' Comment Lines: 52
+    '   Total Lines: 242
+    '    Code Lines: 132
+    ' Comment Lines: 84
     '   Blank Lines: 26
-    '     File Size: 7.29 KB
+    '     File Size: 8.40 KB
 
 
     '     Class Edge

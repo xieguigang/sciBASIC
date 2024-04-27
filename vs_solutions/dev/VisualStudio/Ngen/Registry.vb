@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798648205ca3a3474306bad9ebb8f2a5, sciBASIC#\vs_solutions\dev\VisualStudio\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::d8b8d4ba88784681a07247ce502565b1, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//Ngen/Registry.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
+    '   Total Lines: 88
     '    Code Lines: 57
     ' Comment Lines: 18
-    '   Blank Lines: 15
-    '     File Size: 3.24 KB
+    '   Blank Lines: 13
+    '     File Size: 3.23 KB
 
 
     ' Module RegistryUtils

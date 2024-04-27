@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a33e499722e8f82ca55ee720a1cf47ca, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::c5405833bab8d1314ab3022bfc834a46, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/SimpleConfig.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 84
+    '   Total Lines: 128
+    '    Code Lines: 83
     ' Comment Lines: 26
     '   Blank Lines: 19
-    '     File Size: 5.80 KB
+    '     File Size: 5.76 KB
 
 
     '     Class SimpleConfig

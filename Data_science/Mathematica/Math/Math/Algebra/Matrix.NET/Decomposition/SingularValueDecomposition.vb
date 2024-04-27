@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::39da3f7fc404e6c31b7ae26e66212dd2, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::956e8db6d0839ceebd0a47e87949c318, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/SingularValueDecomposition.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 572
-'    Code Lines: 410
-' Comment Lines: 92
-'   Blank Lines: 70
-'     File Size: 23.05 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SingularValueDecomposition
-' 
-'         Properties: Condition, Norm2, Rank, S, SingularValues
-'                     U, V
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: ISerializable_GetObjectData
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 572
+    '    Code Lines: 410
+    ' Comment Lines: 92
+    '   Blank Lines: 70
+    '     File Size: 22.95 KB
+
+
+    '     Class SingularValueDecomposition
+    ' 
+    '         Properties: Condition, Norm2, Rank, S, SingularValues
+    '                     U, V
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ISerializable_GetObjectData
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

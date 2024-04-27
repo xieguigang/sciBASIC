@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c325e0f5412ca62e83f8274b4b584861, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::0e4e5f843232eb29e85bce863518ccd3, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/Accessor.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.81 KB
+    '     File Size: 1.80 KB
 
 
     '     Class Accessor

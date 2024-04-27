@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5c2f8a6713d3da7553af66b004f0728, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::181bb74dd65410969709ff588dd79890, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Persistent/Socket/ServicesSocket.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 159
     ' Comment Lines: 98
     '   Blank Lines: 45
-    '     File Size: 11.89 KB
+    '     File Size: 12.19 KB
 
 
     '     Class ServicesSocket

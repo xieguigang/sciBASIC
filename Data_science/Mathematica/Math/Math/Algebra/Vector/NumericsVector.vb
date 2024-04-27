@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::988df915a79171ca3cc1d21c46229268, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\NumericsVector.vb"
+﻿#Region "Microsoft.VisualBasic::0efa1f5bd6f293589c4f4edb9840c885, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/NumericsVector.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
+    '   Total Lines: 97
     '    Code Lines: 43
-    ' Comment Lines: 18
+    ' Comment Lines: 43
     '   Blank Lines: 11
-    '     File Size: 2.90 KB
+    '     File Size: 4.17 KB
 
 
     '     Module NumericsVector

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eadcdd71d7a85a3b0a6688567f34e2a, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\FunctionInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::d680f77bf00309d483aae1763c56d02c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/FunctionInvoke.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
+    '   Total Lines: 28
     '    Code Lines: 19
-    ' Comment Lines: 0
+    ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 881 B
+    '     File Size: 934 B
 
 
     '     Class FunctionInvoke

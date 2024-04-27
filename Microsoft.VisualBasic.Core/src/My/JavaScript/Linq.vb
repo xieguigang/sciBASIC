@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ece2066a485f1682bc5fcfd8369dd9d, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7d60664d81650c4bffb3e3dd4ce33c50, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/Linq.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 105
+    '   Total Lines: 196
+    '    Code Lines: 109
     ' Comment Lines: 55
-    '   Blank Lines: 30
-    '     File Size: 6.77 KB
+    '   Blank Lines: 32
+    '     File Size: 6.94 KB
 
 
+    '     Interface requestAnimationFrame
+    ' 
+    '         Sub: requestAnimationFrame
+    ' 
     '     Module Linq
     ' 
     '         Function: findIndex, (+2 Overloads) map, pop, (+5 Overloads) reduce, shift

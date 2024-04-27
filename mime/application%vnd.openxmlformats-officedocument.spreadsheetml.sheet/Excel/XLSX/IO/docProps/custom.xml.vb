@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9688ab1239e04edd327c1a09dfd4d660, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\custom.xml.vb"
+﻿#Region "Microsoft.VisualBasic::6e9299f914bd1d8386c592837ced86fe, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/docProps/custom.xml.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 31
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 1.33 KB
+    '     File Size: 1.34 KB
 
 
     '     Class custom

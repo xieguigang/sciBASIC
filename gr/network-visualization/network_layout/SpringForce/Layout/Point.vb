@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c1effd093ee81592b4e63f356501f34, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::51c34d91137cb5f234a242d96bfa24ed, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/Layout/Point.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 64
+    '   Total Lines: 155
+    '    Code Lines: 86
     ' Comment Lines: 48
-    '   Blank Lines: 19
-    '     File Size: 4.64 KB
+    '   Blank Lines: 21
+    '     File Size: 5.31 KB
 
 
     '     Class LayoutPoint
     ' 
     '         Properties: acceleration, mass, node, position, velocity
+    '                     X, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

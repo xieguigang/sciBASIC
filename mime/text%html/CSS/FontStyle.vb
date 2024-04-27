@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2eba2f7c70c8e4c7eb244b1f123d5ed7, sciBASIC#\mime\text%html\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::9531ab72762e57ecc69f7df88792b996, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//CSS/FontStyle.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 189
-    ' Comment Lines: 98
-    '   Blank Lines: 34
-    '     File Size: 14.95 KB
+    '   Total Lines: 330
+    '    Code Lines: 193
+    ' Comment Lines: 102
+    '   Blank Lines: 35
+    '     File Size: 15.20 KB
 
 
     '     Class CSSFont

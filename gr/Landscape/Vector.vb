@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7216e223813806800a6ddd81ff28f362, sciBASIC#\gr\Landscape\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::79bc8001ac5d8d574a42d35b8418231f, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//Vector.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 6
     '   Blank Lines: 6
-    '     File Size: 1.27 KB
+    '     File Size: 1.31 KB
 
 
     '     Structure Vector

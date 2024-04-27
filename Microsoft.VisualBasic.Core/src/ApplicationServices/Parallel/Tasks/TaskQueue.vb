@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3d675575414548526c95ea11808cbe1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::bb553da908397724f06eb57e88178862, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Tasks/TaskQueue.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 149
     ' Comment Lines: 66
     '   Blank Lines: 42
-    '     File Size: 9.06 KB
+    '     File Size: 9.31 KB
 
 
     '     Interface ITaskHandle

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2269d46cdac80badc3c8dcb3d3122368, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CliArgumentParsers.vb"
+﻿#Region "Microsoft.VisualBasic::2269d46cdac80badc3c8dcb3d3122368, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Parsers/CliArgumentParsers.vb"
 
     ' Author:
     ' 

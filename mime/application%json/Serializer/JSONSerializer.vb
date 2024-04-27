@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdd59b6a0114f259ead31dc6a039afec, sciBASIC#\mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::ccb6c77addc6b58ec103fc71989229af, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
-    '    Code Lines: 90
-    ' Comment Lines: 27
-    '   Blank Lines: 15
-    '     File Size: 4.77 KB
+    '   Total Lines: 158
+    '    Code Lines: 111
+    ' Comment Lines: 28
+    '   Blank Lines: 19
+    '     File Size: 5.65 KB
 
 
     ' Module JSONSerializer
     ' 
-    '     Function: (+2 Overloads) BuildJsonString, GetJson, jsonArrayString, jsonObjectString, jsonValueString
+    '     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
+    '               jsonValueString
     ' 
     ' /********************************************************************************/
 

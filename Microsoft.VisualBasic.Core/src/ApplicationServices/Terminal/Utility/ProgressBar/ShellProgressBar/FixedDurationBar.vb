@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fadb8e3c0a5c96bb676fab9a6a8ff049, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb"
+﻿#Region "Microsoft.VisualBasic::7d245fc1d2c6bf5b23d753b87d1f16db, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/FixedDurationBar.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 44
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 1.55 KB
+    '     File Size: 1.54 KB
 
 
     ' 	Class FixedDurationBar
@@ -104,4 +104,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 		End Sub
 	End Class
 End Namespace
-

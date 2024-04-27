@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c66066efad9196dc7b8eac9d3919273, sciBASIC#\Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
+﻿#Region "Microsoft.VisualBasic::969abd21470b422ac98d3c2763e066ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//KBand/KBandSearch.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 90
     ' Comment Lines: 20
     '   Blank Lines: 24
-    '     File Size: 3.56 KB
+    '     File Size: 3.69 KB
 
 
     ' Class KBandSearch

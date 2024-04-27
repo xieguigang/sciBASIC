@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::f08b6278bebba993bdafbed1ddf6690b, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::34d906164ec2db1bb2954d55b49971ac, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/SvgPath/ModelBuilder.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 241
-'    Code Lines: 157
-' Comment Lines: 52
-'   Blank Lines: 32
-'     File Size: 8.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ModelBuilder
-' 
-'         Function: ParseSVGPathData, PiePath, (+2 Overloads) SVGPath, SVGPathData
-' 
-'         Sub: [Call]
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 229
+    '    Code Lines: 144
+    ' Comment Lines: 55
+    '   Blank Lines: 30
+    '     File Size: 8.49 KB
+
+
+    '     Module ModelBuilder
+    ' 
+    '         Function: ParseSVGPathData, PiePath, SVGPathData
+    ' 
+    '         Sub: [Call]
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

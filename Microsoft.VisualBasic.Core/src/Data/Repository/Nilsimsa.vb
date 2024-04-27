@@ -1,4 +1,58 @@
-﻿Imports Microsoft.VisualBasic.Language.Java
+﻿#Region "Microsoft.VisualBasic::f83b8643978d9664198dce48c04097be, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Repository/Nilsimsa.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 313
+    '    Code Lines: 169
+    ' Comment Lines: 100
+    '   Blank Lines: 44
+    '     File Size: 11.91 KB
+
+
+    '     Class Nilsimsa
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: bitCount, bitwiseDifference, compare, (+3 Overloads) digest, (+2 Overloads) getHash
+    '                   (+3 Overloads) hexdigest, reset, tran3, (+2 Overloads) update
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language.Java
 Imports System.Runtime.CompilerServices
 Imports System.Text
 

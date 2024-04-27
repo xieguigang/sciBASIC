@@ -1,4 +1,69 @@
-﻿Imports Microsoft.VisualBasic.Language.Java.Arrays
+﻿#Region "Microsoft.VisualBasic::28c656291bbf7a7e66b80961b1d61a2b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/Evolution.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 220
+    '    Code Lines: 165
+    ' Comment Lines: 16
+    '   Blank Lines: 39
+    '     File Size: 9.24 KB
+
+
+    '     Class Evolution
+    ' 
+    '         Properties: ExpressionFactory
+    ' 
+    '         Function: breadChildren, evolve, evolvePolyFor, evolveTreeFor, tournamentSelection
+    ' 
+    '         Sub: breadNewPopulation, evaluatePopulation, initPopulation, mutate
+    '         Enum EvolutionType
+    ' 
+    '             GA, GP
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Language.Java.Arrays
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory

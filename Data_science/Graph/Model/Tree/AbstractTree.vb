@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5ad9334a5901a0cced6b8ebb6241c7c, sciBASIC#\Data_science\Graph\Model\Tree\AbstractTree.vb"
+﻿#Region "Microsoft.VisualBasic::7020f89d381d6cb7cd1e28817b1e572e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/AbstractTree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 77
-    ' Comment Lines: 36
-    '   Blank Lines: 20
-    '     File Size: 3.75 KB
+    '   Total Lines: 166
+    '    Code Lines: 102
+    ' Comment Lines: 42
+    '   Blank Lines: 22
+    '     File Size: 4.73 KB
 
 
     ' Class AbstractTree

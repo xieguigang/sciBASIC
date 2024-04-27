@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::4e23cd0fd15bffb54ec401d29d33dca3, sciBASIC#\Data\word2vec\utils\Counter.vb"
+﻿#Region "Microsoft.VisualBasic::5e305f3889508f6706e44654d0d0dcfe, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/TokenCounter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 96
-'    Code Lines: 53
-' Comment Lines: 27
-'   Blank Lines: 16
-'     File Size: 2.96 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Counter
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: [get], keySet, size, ToString
-' 
-'         Sub: (+2 Overloads) add, remove
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 43
+    ' Comment Lines: 27
+    '   Blank Lines: 14
+    '     File Size: 2.63 KB
+
+
+    '     Class TokenCounter
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: [get], keySet, size, ToString
+    ' 
+    '         Sub: (+2 Overloads) add, remove
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

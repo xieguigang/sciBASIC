@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78b472b29c5817e5f6c83fe984e0c255, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Models\ClusterCollection.vb"
+﻿#Region "Microsoft.VisualBasic::82e53da2e78cf1acbe319eac5b9d3c61, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/Models/ClusterCollection.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 15
     '   Blank Lines: 9
-    '     File Size: 2.16 KB
+    '     File Size: 2.17 KB
 
 
     '     Class ClusterCollection

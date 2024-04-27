@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::b444ddca74dd29280e23f69fbfa34375, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\FormattedParser.vb"
+﻿#Region "Microsoft.VisualBasic::927501c059b9158407219108dae9e984, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/FormattedParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 127
-'    Code Lines: 55
-' Comment Lines: 54
-'   Blank Lines: 18
-'     File Size: 4.78 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module FormattedParser
-' 
-'         Function: CrossFields, FieldParser, FlagSplit
-'         Delegate Function
-' 
-'             Function: ReadHead, UntilBlank
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 63
+    ' Comment Lines: 60
+    '   Blank Lines: 19
+    '     File Size: 5.30 KB
+
+
+    '     Module FormattedParser
+    ' 
+    '         Function: CrossFields, FieldParser, (+2 Overloads) FlagSplit
+    '         Delegate Function
+    ' 
+    '             Function: ReadHead, UntilBlank
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

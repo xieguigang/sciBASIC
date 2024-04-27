@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1554b6bdaa5a8f8f0f733a8ab6163986, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::6f7be169f3720f5e01d339c15fb418dc, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/ProviderBase.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
+    '   Total Lines: 138
     '    Code Lines: 60
-    ' Comment Lines: 58
+    ' Comment Lines: 60
     '   Blank Lines: 18
-    '     File Size: 5.35 KB
+    '     File Size: 5.39 KB
 
 
     '     Class StorageProvider

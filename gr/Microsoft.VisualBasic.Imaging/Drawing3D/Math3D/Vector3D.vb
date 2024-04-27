@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::871329b0c1ea7fe3ae5f83a8bac62f56, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::333db1696fff70faa1e9f73f66b01303, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/Vector3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 111
     ' Comment Lines: 20
     '   Blank Lines: 27
-    '     File Size: 5.98 KB
+    '     File Size: 5.95 KB
 
 
     '     Structure Vector3D

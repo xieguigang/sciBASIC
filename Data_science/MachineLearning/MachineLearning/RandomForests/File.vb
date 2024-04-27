@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb494ae79927510baa177b84cfd23f9b, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
+﻿#Region "Microsoft.VisualBasic::580318ff3d8d9223510fee323cb63ab6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//RandomForests/File.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 144
     ' Comment Lines: 53
     '   Blank Lines: 22
-    '     File Size: 10.50 KB
+    '     File Size: 10.39 KB
 
 
     '     Enum LF_c

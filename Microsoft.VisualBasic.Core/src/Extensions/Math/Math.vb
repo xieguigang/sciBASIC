@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::dd94312966b591733bcb90904e663a53, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::dc90f7174a4ea02270534874eee37df7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Math.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 678
-'    Code Lines: 392
-' Comment Lines: 212
-'   Blank Lines: 74
-'     File Size: 23.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module VBMath
-' 
-'         Function: Covariance, CumSum, Factorial, FactorialSequence, FormatNumeric
-'                   Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN, Max
-'                   Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt
-'                   RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq
-'                   (+5 Overloads) Sum, WeighedAverage
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 725
+    '    Code Lines: 410
+    ' Comment Lines: 237
+    '   Blank Lines: 78
+    '     File Size: 25.37 KB
+
+
+    '     Module VBMath
+    ' 
+    '         Function: Clamp, Clip, Covariance, CumSum, Factorial
+    '                   FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN
+    '                   (+2 Overloads) Max, Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL
+    '                   (+3 Overloads) RangesAt, RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD
+    '                   (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

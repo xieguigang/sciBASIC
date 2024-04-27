@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::51e86c3ac5fa0b5c906c5ec7d2076a80, sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
+﻿#Region "Microsoft.VisualBasic::6d2aa55532f836428f5e322c0e24bb0e, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/StreamReader/ReaderProvider.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 119
-'    Code Lines: 75
-' Comment Lines: 29
-'   Blank Lines: 15
-'     File Size: 4.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ReaderProvider
-' 
-'     Properties: Length, URI
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: Open
-' 
-'     Sub: Cleanup, (+2 Overloads) Dispose, Read
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 215
+    '    Code Lines: 132
+    ' Comment Lines: 55
+    '   Blank Lines: 28
+    '     File Size: 7.68 KB
+
+
+    ' Class ReaderProvider
+    ' 
+    '     Properties: Length, ReadScalar, URI
+    ' 
+    '     Constructor: (+4 Overloads) Sub New
+    ' 
+    '     Function: LoadObject, Open
+    ' 
+    '     Sub: Cleanup, (+2 Overloads) Dispose, Read
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

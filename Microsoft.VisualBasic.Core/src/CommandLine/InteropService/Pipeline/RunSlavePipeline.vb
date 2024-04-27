@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::606cb4661e24c98e7886253b80d9a3c1, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::df3284b413f52c7a297981ac761245cf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/Pipeline/RunSlavePipeline.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 111
-'    Code Lines: 77
-' Comment Lines: 11
-'   Blank Lines: 23
-'     File Size: 3.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class RunSlavePipeline
-' 
-'         Properties: Arguments, CommandLine, Process, Shell
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: Run, Start, ToString
-' 
-'         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 80
+    ' Comment Lines: 36
+    '   Blank Lines: 24
+    '     File Size: 5.04 KB
+
+
+    '     Class RunSlavePipeline
+    ' 
+    '         Properties: Arguments, CommandLine, Process, Shell
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Run, Start, ToString
+    ' 
+    '         Sub: HookProgress, ProcessMessage, SendMessage, SendProgress
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

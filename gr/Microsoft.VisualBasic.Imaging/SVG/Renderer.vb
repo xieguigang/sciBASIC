@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc09b231248d9abaf45f2d3f13fe6122, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::38f8e6e841217fd8370ad3d4eb2d44dd, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/Renderer.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 67
+    '   Total Lines: 72
+    '    Code Lines: 52
     ' Comment Lines: 12
-    '   Blank Lines: 10
-    '     File Size: 3.19 KB
+    '   Blank Lines: 8
+    '     File Size: 2.55 KB
 
 
     '     Module Renderer
     ' 
-    '         Function: DrawImage, PopulateLayers, SVGColorHelper
+    '         Function: DrawImage, SVGColorHelper
     ' 
     '         Sub: drawLayer
     ' 

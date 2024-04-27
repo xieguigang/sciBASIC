@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb186b95e89e05896c2441948266e306, sciBASIC#\Data\BinaryData\netCDF\DataVector\flags.vb"
+﻿#Region "Microsoft.VisualBasic::ae8ee92ae0b6ee173857192f42e19ca3, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/flags.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 15
+    '   Total Lines: 39
+    '    Code Lines: 30
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 605 B
+    '   Blank Lines: 9
+    '     File Size: 1.35 KB
 
 
     '     Class flags
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

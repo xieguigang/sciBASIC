@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::085ae1e21e68e7c84e20f5cad7cd5a26, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::d871669c0eb18149f7ac5217614df636, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Stream/ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 51
-    ' Comment Lines: 37
-    '   Blank Lines: 15
-    '     File Size: 3.83 KB
+    '   Total Lines: 126
+    '    Code Lines: 59
+    ' Comment Lines: 51
+    '   Blank Lines: 16
+    '     File Size: 4.67 KB
 
 
     '     Module ZipStreamExtensions
     ' 
-    '         Function: Deflate, UnZipStream, Zip
+    '         Function: Deflate, TestZipMagic, UnZipStream, Zip
     ' 
     ' 
     ' /********************************************************************************/

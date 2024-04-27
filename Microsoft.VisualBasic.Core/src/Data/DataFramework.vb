@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::859e1ea42ae49a54d9e74cf8ebb92a16, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::d8db0a7ee800255f64486642b63ffb37, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/DataFramework.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 272
-    ' Comment Lines: 109
-    '   Blank Lines: 56
-    '     File Size: 19.54 KB
+    '   Total Lines: 489
+    '    Code Lines: 305
+    ' Comment Lines: 120
+    '   Blank Lines: 64
+    '     File Size: 21.71 KB
 
 
     '     Module DataFramework
@@ -50,7 +50,8 @@
     '                   ParseSchemaInternal, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: IsIntegerType, IsNullable, IsNumericType, IsPrimitive, valueToString
+    '             Function: GetPrimitiveTypes, IsCollection, IsIntegerType, IsNullable, IsNumericCollection
+    '                       IsNumericType, IsPrimitive, valueToString
     '         Enum EnumCastTo
     ' 
     '             [integer], [string], none

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca35e0767632c52f206ef09f5f59df21, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::ae34f4ddfed9d794e797806ef278642d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Bootstraping.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 265
-    '    Code Lines: 168
+    '   Total Lines: 271
+    '    Code Lines: 173
     ' Comment Lines: 70
-    '   Blank Lines: 27
-    '     File Size: 11.19 KB
+    '   Blank Lines: 28
+    '     File Size: 11.49 KB
 
 
     '     Module Bootstraping
     ' 
-    '         Function: Distributes, GetBagSample, Hist, Sample, (+2 Overloads) Samples
+    '         Function: Distributes, GetBagSample, Hist, (+2 Overloads) Sample, (+2 Overloads) Samples
     '                   Sampling, TabulateBin, TabulateMode
     ' 
     ' 

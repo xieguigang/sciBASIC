@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e3ac8d3d1f83075a71b63a5cbbff716, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\AbstractVector.vb"
+﻿#Region "Microsoft.VisualBasic::66fdf6a02058b224ca461f63c8fdcc53, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Vectors/AbstractVector.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 122
+    '   Total Lines: 184
+    '    Code Lines: 118
     ' Comment Lines: 40
-    '   Blank Lines: 25
-    '     File Size: 7.66 KB
+    '   Blank Lines: 26
+    '     File Size: 7.01 KB
 
 
     '     Class AbstractVector

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8ac78a1e8eb3ffd77efd86c89cf9fc8, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/DataSource.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 259
-    '    Code Lines: 145
+    '   Total Lines: 264
+    '    Code Lines: 148
     ' Comment Lines: 80
-    '   Blank Lines: 34
-    '     File Size: 10.48 KB
+    '   Blank Lines: 36
+    '     File Size: 10.83 KB
 
 
     '     Class ColumnAttribute
@@ -50,7 +50,7 @@
     ' 
     '     Class Field
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class DataFrameColumnAttribute
     ' 

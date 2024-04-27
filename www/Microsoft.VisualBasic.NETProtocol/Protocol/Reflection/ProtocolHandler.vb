@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e00f02d9b28d7d9655a3b7a0e091b897, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\ProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::430d61fad0a977527a708297d5cccbba, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Protocol/Reflection/ProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 112
-    ' Comment Lines: 30
-    '   Blank Lines: 24
-    '     File Size: 7.63 KB
+    '   Total Lines: 172
+    '    Code Lines: 114
+    ' Comment Lines: 33
+    '   Blank Lines: 25
+    '     File Size: 7.82 KB
 
 
     '     Class ProtocolHandler

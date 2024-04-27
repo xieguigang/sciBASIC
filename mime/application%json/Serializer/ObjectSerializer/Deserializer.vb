@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::774e2c83ad6d6af9896fcca1486c87db, sciBASIC#\mime\application%json\Serializer\Deserializer.vb"
+﻿#Region "Microsoft.VisualBasic::b22c5474fc198962904e205c001af781, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/ObjectSerializer/Deserializer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 161
-'    Code Lines: 120
-' Comment Lines: 20
-'   Blank Lines: 21
-'     File Size: 6.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Deserializer
-' 
-'     Function: activate, createArray, createObject, (+2 Overloads) CreateObject, createVariant
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 180
+    '    Code Lines: 128
+    ' Comment Lines: 34
+    '   Blank Lines: 18
+    '     File Size: 7.68 KB
+
+
+    ' Module Deserializer
+    ' 
+    '     Function: createArray, createObject, (+3 Overloads) CreateObject, createVariant
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

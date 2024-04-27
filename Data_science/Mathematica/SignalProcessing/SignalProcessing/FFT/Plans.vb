@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::357d12e3467fd8c860caebc01c92c163, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\Plans.vb"
+﻿#Region "Microsoft.VisualBasic::bf631eacfebcf0c38d9ca50b5ab0deb9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/Plans.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 22
     '   Blank Lines: 3
-    '     File Size: 950 B
+    '     File Size: 948 B
 
 
     ' Enum Plans
@@ -83,4 +83,3 @@ Public Enum Plans
     MIXED_RADIX
     BLUESTEIN
 End Enum
-

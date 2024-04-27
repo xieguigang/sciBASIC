@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb77d3107d2ea7bdf2035ef6758191b4, sciBASIC#\Data\DataFrame\IO\csv\RowTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::8eb0989d666ba70473d36fe6eb3ff578, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/RowTokenizer.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 78
-    ' Comment Lines: 16
-    '   Blank Lines: 24
-    '     File Size: 3.97 KB
+    '   Total Lines: 139
+    '    Code Lines: 93
+    ' Comment Lines: 17
+    '   Blank Lines: 29
+    '     File Size: 4.49 KB
 
 
     '     Class RowTokenizer
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetTokens, ToString, walkChar, walkQuotStack
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: GetStackOpenStatus, GetTokens, ToString, walkChar, walkQuotStack
     ' 
     ' 
     ' /********************************************************************************/

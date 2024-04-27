@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e9b53a36bfdf693e858ad95d75e1152, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\QLinear.vb"
+﻿#Region "Microsoft.VisualBasic::cff8bcfa3c69b235396eb2329bf6b2a8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Regression/QLinear.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 30
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 968 B
+    '     File Size: 1003 B
 
 
     '     Class QLinear

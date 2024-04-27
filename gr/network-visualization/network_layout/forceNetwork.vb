@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d7bdef7734c50a9f21c791c1527dfe, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::f758b294a759050e77a16805e1f0586f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//forceNetwork.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 115
+    '   Total Lines: 165
+    '    Code Lines: 113
     ' Comment Lines: 34
-    '   Blank Lines: 19
-    '     File Size: 7.57 KB
+    '   Blank Lines: 18
+    '     File Size: 6.97 KB
 
 
-    '     Module forceNetwork
+    ' Module forceNetwork
     ' 
-    '         Function: CheckZero, (+2 Overloads) doForceLayout, doRandomLayout
-    ' 
+    '     Function: CheckZero, (+2 Overloads) doForceLayout, doRandomLayout
     ' 
     ' /********************************************************************************/
 

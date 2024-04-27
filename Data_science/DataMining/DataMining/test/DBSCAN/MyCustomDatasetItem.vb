@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, sciBASIC#\Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/DBSCAN/MyCustomDatasetItem.vb"
 
     ' Author:
     ' 

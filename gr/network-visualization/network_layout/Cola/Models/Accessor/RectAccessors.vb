@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84894a374131f725dfba9d39b573f747, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Accessor\RectAccessors.vb"
+﻿#Region "Microsoft.VisualBasic::904bd442daa0b7c7a219d3f4720333c9, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Accessor/RectAccessors.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 590 B
+    '     File Size: 582 B
 
 
     '     Class RectAccessors

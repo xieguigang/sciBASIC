@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b90b7990b6377319dc3d61d743919616, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Add.vb"
+﻿#Region "Microsoft.VisualBasic::f18ce48bcaf54c9d47be3ebf7d98ea47, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Add.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
+    '   Total Lines: 133
     '    Code Lines: 89
-    ' Comment Lines: 18
+    ' Comment Lines: 25
     '   Blank Lines: 19
-    '     File Size: 4.94 KB
+    '     File Size: 5.19 KB
 
 
     '     Class Add

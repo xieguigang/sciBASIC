@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c6c0159ccd7303e0a47f530ec2e7a43, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::85853db8d0c36ba47faf1a9eedf2d62c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/LayoutUpdater.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 8
     '   Blank Lines: 10
-    '     File Size: 1.54 KB
+    '     File Size: 1.53 KB
 
 
     '     Module LayoutUpdater

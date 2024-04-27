@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc74cec4af48946b59f951b892fd409d, sciBASIC#\Data\DataFrame\test\parserTest.vb"
+﻿#Region "Microsoft.VisualBasic::6ef3282c031882bafed72a0a9e396c87, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/parserTest.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 21
+    '   Total Lines: 49
+    '    Code Lines: 26
     ' Comment Lines: 3
-    '   Blank Lines: 17
-    '     File Size: 3.55 KB
+    '   Blank Lines: 20
+    '     File Size: 3.92 KB
 
 
     ' Module parserTest

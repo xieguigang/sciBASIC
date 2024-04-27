@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9f5e13b8cffab7e256f8ae97c4b054c, sciBASIC#\Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::2162d91c6cffb42b34a1b2d5726c1146, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Abstract/Edge.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 21
+    '   Total Lines: 68
+    '    Code Lines: 30
     ' Comment Lines: 31
-    '   Blank Lines: 5
-    '     File Size: 1.93 KB
+    '   Blank Lines: 7
+    '     File Size: 2.25 KB
 
 
     ' Class Edge
     ' 
     '     Properties: ID, U, V, weight
     ' 
-    '     Function: ToString
+    '     Function: Equals, ToString
     ' 
     ' /********************************************************************************/
 

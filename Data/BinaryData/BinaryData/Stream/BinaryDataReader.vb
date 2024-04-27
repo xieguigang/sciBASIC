@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78ea8a13f9a63651947efab96a5b4890, sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::9a08d2b59f74e8ac57c17b94ebd00fd4, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 669
-    '    Code Lines: 327
-    ' Comment Lines: 273
-    '   Blank Lines: 69
-    '     File Size: 29.91 KB
+    '   Total Lines: 739
+    '    Code Lines: 370
+    ' Comment Lines: 293
+    '   Blank Lines: 76
+    '     File Size: 32.51 KB
 
 
     ' Class BinaryDataReader
@@ -46,15 +46,16 @@
     '     Properties: BufferView, ByteOrder, Encoding, EndOfStream, Length
     '                 Position
     ' 
-    '     Constructor: (+6 Overloads) Sub New
+    '     Constructor: (+8 Overloads) Sub New
     ' 
-    '     Function: DecimalFromBytes, getDebugView, ReadByteLengthPrefixString, ReadBytes, ReadDateTime
-    '               ReadDecimal, ReadDecimals, ReadDouble, ReadDoubles, ReadDwordLengthPrefixString
-    '               ReadDwordLenString, ReadInt16, ReadInt16s, ReadInt32, ReadInt32s
-    '               ReadInt64, ReadInt64s, ReadMultiple, ReadSBytes, ReadSingle
-    '               ReadSingles, (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32
-    '               ReadUInt32s, ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString
-    '               (+2 Overloads) Seek, (+3 Overloads) TemporarySeek, ToString
+    '     Function: DecimalFromBytes, getDebugView, ReadBoolean, ReadByte, ReadByteLengthPrefixString
+    '               ReadBytes, ReadChar, ReadDateTime, ReadDecimal, ReadDecimals
+    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString, ReadInt16
+    '               ReadInt16s, ReadInt32, ReadInt32s, ReadInt64, ReadInt64s
+    '               ReadMultiple, ReadSByte, ReadSBytes, ReadSingle, ReadSingles
+    '               (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s
+    '               ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek
+    '               (+3 Overloads) TemporarySeek, ToString
     ' 
     '     Sub: Align, Mark, Reset, TemporarySeek
     ' 

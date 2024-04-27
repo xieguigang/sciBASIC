@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d1b1bbe2fe22e965762bfdd046306b8, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4cb4c3920e0d873d8c6c07e5bd582f3b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Random/RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 346
-    '    Code Lines: 165
-    ' Comment Lines: 143
-    '   Blank Lines: 38
-    '     File Size: 13.26 KB
+    '   Total Lines: 405
+    '    Code Lines: 181
+    ' Comment Lines: 182
+    '   Blank Lines: 42
+    '     File Size: 16.43 KB
 
 
     '     Delegate Function
@@ -51,8 +51,8 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: (+2 Overloads) [Next], GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
-    '                   (+2 Overloads) NextGaussian, NextInteger, NextNumber, NextTriangular, Permutation
+    '         Function: (+4 Overloads) [Next], (+2 Overloads) GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
+    '                   (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger, NextNumber, NextTriangular, Permutation
     '                   randf, RandomSingle, Seed
     ' 
     '         Sub: SetSeed, (+3 Overloads) Shuffle

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b187e5b545fac688dcc4d5ac0baeffab, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\worksheets.vb"
+﻿#Region "Microsoft.VisualBasic::c46d38bc3bef08846d594c6a94e44e64, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/XlsxDirectoryPart/worksheets.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 67
+    '   Total Lines: 87
+    '    Code Lines: 68
     ' Comment Lines: 7
     '   Blank Lines: 12
-    '     File Size: 3.38 KB
+    '     File Size: 3.51 KB
 
 
     '     Class worksheets

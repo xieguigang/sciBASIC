@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fa07892c8942301ebe716b3fd4798de, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptValue.vb"
+﻿#Region "Microsoft.VisualBasic::b7d2ad13f6d392d4ad7da408afcd724b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/JavaScriptObject/JavaScriptValue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 38
+    '   Total Lines: 53
+    '    Code Lines: 41
     ' Comment Lines: 0
-    '   Blank Lines: 11
-    '     File Size: 1.37 KB
+    '   Blank Lines: 12
+    '     File Size: 1.47 KB
 
 
     '     Class JavaScriptValue

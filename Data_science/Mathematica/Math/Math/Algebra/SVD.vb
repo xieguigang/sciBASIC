@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::4234f7b02b0ab99b14aa98775806333f, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\SVD.vb"
+﻿#Region "Microsoft.VisualBasic::f598384011bdf34132cbe0c37b401799, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/SVD.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 359
-'    Code Lines: 274
-' Comment Lines: 28
-'   Blank Lines: 57
-'     File Size: 12.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module SVD
-' 
-'         Function: Pythag, Sign
-' 
-'         Sub: SVDecomposition
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 360
+    '    Code Lines: 275
+    ' Comment Lines: 28
+    '   Blank Lines: 57
+    '     File Size: 12.38 KB
+
+
+    '     Module SVD
+    ' 
+    '         Function: Pythag, Sign
+    ' 
+    '         Sub: SVDecomposition
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fb832b65d9795c1516ba07ab1530009, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::13260cf48c897457c85e670782fa5ccf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/Config.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 97
+    '   Total Lines: 135
+    '    Code Lines: 98
     ' Comment Lines: 17
     '   Blank Lines: 20
-    '     File Size: 4.88 KB
+    '     File Size: 4.92 KB
 
 
     '     Class Config

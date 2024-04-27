@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::81cf1477165f2fcafd76324ce2b58abf, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::c0234e585d330d78da76bae1ab1d0765, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Models/Vector2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 80
-'    Code Lines: 47
-' Comment Lines: 20
-'   Blank Lines: 13
-'     File Size: 2.30 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Vector2D
-' 
-'         Properties: Length, x, y
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: ToString
-'         Operators: (+2 Overloads) -, (+2 Overloads) *, +
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 56
+    ' Comment Lines: 35
+    '   Blank Lines: 16
+    '     File Size: 3.20 KB
+
+
+    '     Class Vector2D
+    ' 
+    '         Properties: Length, x, y
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetDistance, ToString
+    '         Operators: (+2 Overloads) -, (+2 Overloads) *, +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

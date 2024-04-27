@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::8f54efee5d53e50df4269b8e3e76c2fb, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::84e6536b7d47a62cb2de872fbc5366ca, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Logging/LogFile/LogFile.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 253
-'    Code Lines: 153
-' Comment Lines: 59
-'   Blank Lines: 41
-'     File Size: 10.69 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LogFile
-' 
-'         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: openFile, SaveLog, SystemInfo, ToString
-' 
-'         Sub: Debug, (+2 Overloads) Dispose, info, log, (+2 Overloads) LogException
-'              Save, (+2 Overloads) Trace, (+4 Overloads) WriteLine
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 277
+    '    Code Lines: 172
+    ' Comment Lines: 60
+    '   Blank Lines: 45
+    '     File Size: 11.48 KB
+
+
+    '     Class LogFile
+    ' 
+    '         Properties: fileName, filePath, MimeType, NowTimeNormalizedString
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: openFile, SaveLog, SystemInfo, ToString
+    ' 
+    '         Sub: Debug, (+2 Overloads) Dispose, info, (+2 Overloads) log, (+2 Overloads) LogException
+    '              Save, (+2 Overloads) Trace, (+4 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fe9150c2f14275c86ce34271a463fa, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Input.vb"
+﻿#Region "Microsoft.VisualBasic::599e0d3175de92970d991a6b01e664a2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Input.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 75
     ' Comment Lines: 11
     '   Blank Lines: 16
-    '     File Size: 3.51 KB
+    '     File Size: 3.62 KB
 
 
     '     Class Input

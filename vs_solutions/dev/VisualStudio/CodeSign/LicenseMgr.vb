@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b1e6029a806277343f083dc7d4cab5, sciBASIC#\vs_solutions\dev\VisualStudio\CodeSign\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::21b1e6029a806277343f083dc7d4cab5, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//CodeSign/LicenseMgr.vb"
 
     ' Author:
     ' 

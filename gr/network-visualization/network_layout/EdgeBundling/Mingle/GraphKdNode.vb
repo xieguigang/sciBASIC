@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0576caf4a806d9d4496978dcd4bbff45, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\GraphKdNode.vb"
+﻿#Region "Microsoft.VisualBasic::430cec0ae480ac10b11045fd9ac22f94, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/GraphKdNode.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 459 B
+    '     File Size: 451 B
 
 
     '     Class GraphKdNode

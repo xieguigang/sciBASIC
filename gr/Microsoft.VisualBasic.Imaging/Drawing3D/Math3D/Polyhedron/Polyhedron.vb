@@ -1,4 +1,57 @@
-﻿Imports stdNum = System.Math
+﻿#Region "Microsoft.VisualBasic::cfed9bb15dfc1c18cc3b7e4a5365273b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/Polyhedron/Polyhedron.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 347
+    '    Code Lines: 59
+    ' Comment Lines: 270
+    '   Blank Lines: 18
+    '     File Size: 15.78 KB
+
+
+    '     Class Polyhedron
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: triangle_positions, volume, winding_number
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports stdNum = System.Math
 Imports ValueError = System.ArgumentException
 
 Namespace Drawing3D.Math3D

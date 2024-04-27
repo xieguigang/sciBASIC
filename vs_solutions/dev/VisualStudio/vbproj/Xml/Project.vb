@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b9ee16a003c7c6a02b593324a3a066b, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Xml\Project.vb"
+﻿#Region "Microsoft.VisualBasic::b1d63a0e52085e32e87005a7a82ade8c, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/Project.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 80
-    ' Comment Lines: 7
-    '   Blank Lines: 22
-    '     File Size: 4.27 KB
+    '   Total Lines: 123
+    '    Code Lines: 87
+    ' Comment Lines: 13
+    '   Blank Lines: 23
+    '     File Size: 4.76 KB
 
 
     '     Class Project
     ' 
     '         Properties: [Imports], DefaultTargets, FilePath, IsDotNetCoreSDK, ItemGroups
-    '                     MimeType, PropertyGroups, Sdk, Targets, ToolsVersion
+    '                     MainGroup, MimeType, PropertyGroups, Sdk, Targets
+    '                     ToolsVersion
     ' 
     '         Function: GetProfile, Load, ProcessDotNetCoreSDK, (+2 Overloads) Save, ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6332ac4898baa85d28703b9746753e2f, sciBASIC#\mime\text%html\Xml\Node.vb"
+﻿#Region "Microsoft.VisualBasic::6c571310838d343558a66ad0f8b53590, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Xml/Node.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
+    '   Total Lines: 39
     '    Code Lines: 12
-    ' Comment Lines: 11
+    ' Comment Lines: 19
     '   Blank Lines: 8
-    '     File Size: 930 B
+    '     File Size: 1.12 KB
 
 
     '     Class Node

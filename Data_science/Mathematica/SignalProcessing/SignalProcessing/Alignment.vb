@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7de66b02dfcbf000d58f6429257d5262, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Alignment.vb"
+﻿#Region "Microsoft.VisualBasic::abd7528f9c1272b43b521c3544efa8ba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Alignment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 64
     ' Comment Lines: 9
     '   Blank Lines: 10
-    '     File Size: 3.34 KB
+    '     File Size: 3.37 KB
 
 
     ' Module Alignment

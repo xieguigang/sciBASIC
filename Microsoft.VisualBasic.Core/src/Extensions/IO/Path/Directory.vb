@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a22d7552749a986b1dbb8aab187343f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::4891209ef9066f1ffbc17e5a1c7190af, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Path/Directory.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 107
-    ' Comment Lines: 61
-    '   Blank Lines: 30
-    '     File Size: 7.74 KB
+    '   Total Lines: 242
+    '    Code Lines: 118
+    ' Comment Lines: 91
+    '   Blank Lines: 33
+    '     File Size: 10.05 KB
 
 
     '     Class Directory
     ' 
-    '         Properties: [readonly], folder
+    '         Properties: [readonly], folder, strict
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: CopyTo, DeleteFile, Exists, FileExists, FileSize
-    '                   FromLocalFileSystem, GetFullPath, GetRelativePath, GetSubDirectories, IsAbsolutePath
-    '                   OpenFile, ReadAllText, ToString, WriteText
+    '                   FromLocalFileSystem, GetFiles, GetFullPath, GetRelativePath, GetSubDirectories
+    '                   IsAbsolutePath, OpenFile, ReadAllText, ToString, WriteText
     ' 
     '         Sub: Close, CreateDirectory, Delete, Flush
     ' 

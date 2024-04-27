@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fa52bfeeead6bcaf333c7bd3a6d723b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringEmbedder.vb"
+﻿#Region "Microsoft.VisualBasic::49ff9aaec38888dbc6d559be2402b719, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringEmbedder.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 188
-    '    Code Lines: 121
+    '   Total Lines: 185
+    '    Code Lines: 119
     ' Comment Lines: 32
-    '   Blank Lines: 35
-    '     File Size: 7.56 KB
+    '   Blank Lines: 34
+    '     File Size: 6.94 KB
 
 
-    '     Class SpringEmbedder
+    ' Class SpringEmbedder
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: ForceDirectedLayout
+    '     Function: ForceDirectedLayout
     ' 
-    '         Sub: Collide, doLayout, edgeAttractions, repulsions, setLocation
-    ' 
+    '     Sub: Collide, doLayout, edgeAttractions, repulsions, setLocation
     ' 
     ' /********************************************************************************/
 

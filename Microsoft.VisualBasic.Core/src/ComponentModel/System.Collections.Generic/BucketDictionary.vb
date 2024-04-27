@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3086fa466de9d82cddf70b0eac24a358, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::abfe659f73bed215e52f83bb2894783c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 217
+    '   Total Lines: 224
     '    Code Lines: 151
-    ' Comment Lines: 30
+    ' Comment Lines: 37
     '   Blank Lines: 36
-    '     File Size: 8.38 KB
+    '     File Size: 8.66 KB
 
 
     '     Interface IBucketVector

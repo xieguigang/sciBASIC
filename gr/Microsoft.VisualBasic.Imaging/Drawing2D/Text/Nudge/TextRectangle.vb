@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::ac4c4d1dffc9035ac479822bff327e5c, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\TextRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::0809e617a5a56173150bbb740c000336, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/TextRectangle.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 149
-'    Code Lines: 104
-' Comment Lines: 25
-'   Blank Lines: 20
-'     File Size: 4.98 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class TextRectangle
-' 
-'         Properties: text
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: change_state, deepCopy, ToString
-' 
-'         Sub: down_translation, left_translation, right_translation, upper_translation
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 164
+    '    Code Lines: 117
+    ' Comment Lines: 25
+    '   Blank Lines: 22
+    '     File Size: 5.51 KB
+
+
+    '     Class TextRectangle
+    ' 
+    '         Properties: rect, text
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: change_state, deepCopy, ToString
+    ' 
+    '         Sub: down_translation, left_translation, right_translation, upper_translation
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

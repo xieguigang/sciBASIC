@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35599630eff601d0bedf5f433fb99266, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::cfa2c932524b64b3bbe49afebbf93135, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 38
     ' Comment Lines: 26
     '   Blank Lines: 9
-    '     File Size: 3.10 KB
+    '     File Size: 3.17 KB
 
 
     '     Module Resources
@@ -123,4 +123,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::431114117a6ab98b8e4e5ca7b9fbaf71, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::66e00524b0cde6831fc58bf50fef4fc9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 48
+    '   Total Lines: 97
+    '    Code Lines: 68
     ' Comment Lines: 12
-    '   Blank Lines: 13
-    '     File Size: 2.41 KB
+    '   Blank Lines: 17
+    '     File Size: 3.21 KB
 
 
     '     Class CharPtr
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: PeekNext, PopNext, ToString
-    '         Operators: (+2 Overloads) Not
+    '         Operators: <>, =, (+2 Overloads) Like, (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/

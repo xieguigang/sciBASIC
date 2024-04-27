@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25e743ee7591c1e71fdaa2fd2db4d63, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\LanguageHelper\LanguageAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b25e743ee7591c1e71fdaa2fd2db4d63, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/LanguageHelper/LanguageAttribute.vb"
 
     ' Author:
     ' 

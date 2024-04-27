@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17fa217c16bf3f6207485cae13e83349, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::100b8def2d5a92777d764cf107e22ede, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 17
     '   Blank Lines: 8
-    '     File Size: 1.55 KB
+    '     File Size: 1.54 KB
 
 
     ' Module Extensions

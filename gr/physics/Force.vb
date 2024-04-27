@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff12c433a4da43a5deb6338e381a4ef2, sciBASIC#\gr\physics\Force.vb"
+﻿#Region "Microsoft.VisualBasic::2557f80e8b3002ce71963b0de95f9d72, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Force.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 66
+    '   Total Lines: 109
+    '    Code Lines: 68
     ' Comment Lines: 22
     '   Blank Lines: 19
-    '     File Size: 3.00 KB
+    '     File Size: 3.08 KB
 
 
     ' Class Force

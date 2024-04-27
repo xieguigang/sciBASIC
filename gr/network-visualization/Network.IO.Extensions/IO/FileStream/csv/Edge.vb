@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fced0e3182f986bf6194883eba67545, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0451fe65c63d780a6ababd6deaccc4ab, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/FileStream/csv/Edge.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 106
     ' Comment Lines: 27
     '   Blank Lines: 19
-    '     File Size: 5.98 KB
+    '     File Size: 6.13 KB
 
 
     '     Class NetworkEdge

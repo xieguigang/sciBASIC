@@ -1,4 +1,62 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::b6130c69e9d9456081218b2c10a2c27e, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form3.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 287
+    '    Code Lines: 51
+    ' Comment Lines: 172
+    '   Blank Lines: 64
+    '     File Size: 10.92 KB
+
+
+    ' Class Form3
+    ' 
+    '     Properties: deltaTime
+    ' 
+    '     Sub: Form3_Load, Form3_SizeChanged, Timer1_Tick
+    ' 
+    ' Module FluidRender
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Render
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Physics

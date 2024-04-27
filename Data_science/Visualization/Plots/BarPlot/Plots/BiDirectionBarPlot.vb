@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18f4ee665eda8f25af96484ce77df62c, sciBASIC#\Data_science\Visualization\Plots\BarPlot\BiDirectionBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7a614ab167f252cf28257439f57a764, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/Plots/BiDirectionBarPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 114
     ' Comment Lines: 11
     '   Blank Lines: 34
-    '     File Size: 7.43 KB
+    '     File Size: 7.44 KB
 
 
     '     Class BiDirectionBarPlot

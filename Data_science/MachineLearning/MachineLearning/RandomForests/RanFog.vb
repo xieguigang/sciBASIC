@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60394917a4f28226103c0af7816f65e9, sciBASIC#\Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
+﻿#Region "Microsoft.VisualBasic::d32077e185eda46b8b8b2cce7694489c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//RandomForests/RanFog.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 407
+    '   Total Lines: 405
     '    Code Lines: 222
     ' Comment Lines: 151
-    '   Blank Lines: 34
-    '     File Size: 20.98 KB
+    '   Blank Lines: 32
+    '     File Size: 20.97 KB
 
 
     '     Class RanFog
@@ -462,6 +462,3 @@ Namespace RandomForests
 
     End Class
 End Namespace
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, sciBASIC#\mime\text%yaml\1.2\Syntax\NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/NodeProperty.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 270.00 B
+    '     File Size: 270 B
 
 
     '     Class NodeProperty

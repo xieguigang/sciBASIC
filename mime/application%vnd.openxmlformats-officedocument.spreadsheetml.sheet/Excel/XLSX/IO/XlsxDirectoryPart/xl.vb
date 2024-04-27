@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f36525a6e321691a67ec5cb6612708c, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\xl.vb"
+﻿#Region "Microsoft.VisualBasic::b9b032e325877eac75efe7a31667b45c, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/XlsxDirectoryPart/xl.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 52
     ' Comment Lines: 17
     '   Blank Lines: 12
-    '     File Size: 3.16 KB
+    '     File Size: 3.20 KB
 
 
     '     Class xl

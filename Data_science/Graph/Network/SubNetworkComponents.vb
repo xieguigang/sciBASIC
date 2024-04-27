@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbbbd71ecc2d8f6d0b0d766f3c98e429, sciBASIC#\Data_science\Graph\Network\SubNetworkComponents.vb"
+﻿#Region "Microsoft.VisualBasic::888392d0a51b39fc8a610c2ac9a909b2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/SubNetworkComponents.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 116
+    '   Total Lines: 156
+    '    Code Lines: 114
     ' Comment Lines: 13
-    '   Blank Lines: 32
-    '     File Size: 6.09 KB
+    '   Blank Lines: 29
+    '     File Size: 5.94 KB
 
 
-    '     Interface NodeMetaDataAccessor
-    ' 
-    '         Function: getMetadata, hasMetadata
-    ' 
     '     Class SubNetworkComponents
     ' 
     '         Constructor: (+1 Overloads) Sub New

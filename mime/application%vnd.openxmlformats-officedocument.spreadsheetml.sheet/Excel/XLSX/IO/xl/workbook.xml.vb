@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e88af68f45fec018daa0ed4fc1017e10, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\workbook.xml.vb"
+﻿#Region "Microsoft.VisualBasic::3000989eda2b3495b96f7b8f18c274da, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/xl/workbook.xml.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 140
     ' Comment Lines: 9
     '   Blank Lines: 39
-    '     File Size: 6.08 KB
+    '     File Size: 6.10 KB
 
 
     '     Class workbook

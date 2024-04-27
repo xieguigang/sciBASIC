@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70fe6fdc5d3ae5ddb73eea97c6e018a, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::d7b33281a80aa492a269dfccdef639b4, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/linear.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 80
+    '   Total Lines: 161
+    '    Code Lines: 92
     ' Comment Lines: 48
-    '   Blank Lines: 18
-    '     File Size: 5.29 KB
+    '   Blank Lines: 21
+    '     File Size: 5.86 KB
 
 
     '     Class LinearScale
@@ -46,7 +46,7 @@
     '         Properties: domainSize, type, valueDomain, Zero
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+5 Overloads) domain, ToString
+    '         Function: (+6 Overloads) domain, (+2 Overloads) range, ToString
     ' 
     ' 
     ' /********************************************************************************/

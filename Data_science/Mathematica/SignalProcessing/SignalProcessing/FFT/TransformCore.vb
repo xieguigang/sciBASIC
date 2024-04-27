@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46dd1105168f1ff5812067b8411220dc, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\TransformCore.vb"
+﻿#Region "Microsoft.VisualBasic::d446095173d19ee6e59605a9801baaeb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/TransformCore.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Namespace FFT
         Public Shared ReadOnly THREADS_BEGIN_N_3D As Integer = 65536
     End Class
 End Namespace
-

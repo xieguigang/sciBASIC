@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef8ab3eeb9a777bc671d87d3af0aa894, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Pool.vb"
+﻿#Region "Microsoft.VisualBasic::c128f702a707469381b8eb9f3e7162ed, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Pool.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 66
     ' Comment Lines: 0
     '   Blank Lines: 22
-    '     File Size: 2.68 KB
+    '     File Size: 2.77 KB
 
 
     '     Class Pool

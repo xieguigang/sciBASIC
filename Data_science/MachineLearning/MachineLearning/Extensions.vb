@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfe9955d334cc4772312f58a9aaad5d2, sciBASIC#\Data_science\MachineLearning\MachineLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d3fd1eef42704bce9b871b50de7ce3aa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 48
     ' Comment Lines: 32
     '   Blank Lines: 9
-    '     File Size: 3.29 KB
+    '     File Size: 3.38 KB
 
 
     ' Module Extensions

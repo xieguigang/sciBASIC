@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd58f91286bd2d4c50817adc95a7e156, sciBASIC#\mime\text%html\Document\Elements\HtmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::518a370031030500cf78d561086fa553, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Document/Elements/HtmlElement.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 233
     ' Comment Lines: 108
     '   Blank Lines: 53
-    '     File Size: 17.08 KB
+    '     File Size: 17.15 KB
 
 
     '     Class HtmlElement

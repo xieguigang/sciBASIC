@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f27f3c35f9395cb49638b2c882b0ec3, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::c769dd28bad939004cff74eb554f3b86, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/INIProfile.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
-    '    Code Lines: 96
+    '   Total Lines: 171
+    '    Code Lines: 95
     ' Comment Lines: 59
     '   Blank Lines: 17
-    '     File Size: 7.56 KB
+    '     File Size: 7.51 KB
 
 
     '     Module INIProfile

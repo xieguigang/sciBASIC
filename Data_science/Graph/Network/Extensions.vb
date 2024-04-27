@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1888b9e57c3410fbf689cd7e8b80c24c, sciBASIC#\Data_science\Graph\Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3abf5cf05a99d8f49916027f3c7895f0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 55
+    '   Total Lines: 95
+    '    Code Lines: 57
     ' Comment Lines: 23
-    '   Blank Lines: 14
-    '     File Size: 4.48 KB
+    '   Blank Lines: 15
+    '     File Size: 4.47 KB
 
 
     '     Module Extensions

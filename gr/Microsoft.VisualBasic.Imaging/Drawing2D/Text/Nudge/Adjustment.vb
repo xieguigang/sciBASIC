@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aeea2250e4caec0140deb034862657e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\Adjustment.vb"
+﻿#Region "Microsoft.VisualBasic::35d4a890c675ca142ea2cfd875d4b753, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/Adjustment.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 131
     ' Comment Lines: 16
     '   Blank Lines: 22
-    '     File Size: 6.51 KB
+    '     File Size: 6.50 KB
 
 
     '     Module Adjustment

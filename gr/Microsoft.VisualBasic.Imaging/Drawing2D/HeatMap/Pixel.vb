@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c004b0b0e8f696931c474bd074ddf1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Pixel.vb"
+﻿#Region "Microsoft.VisualBasic::a8a39ce8088881898502e22a657c7afd, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/Pixel.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 35
-    ' Comment Lines: 20
-    '   Blank Lines: 12
-    '     File Size: 1.71 KB
+    '   Total Lines: 109
+    '    Code Lines: 82
+    ' Comment Lines: 8
+    '   Blank Lines: 19
+    '     File Size: 4.12 KB
 
 
-    '     Interface Pixel
+    '     Interface IRasterGrayscaleHeatmap
     ' 
-    '         Properties: Scale, X, Y
+    '         Function: GetRasterPixels
     ' 
     '     Structure PixelData
     ' 
     '         Properties: isEmpty, Scale, X, Y
     ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: CreateStream, (+2 Overloads) ParseStream, ToString
     ' 
     ' 
     ' /********************************************************************************/

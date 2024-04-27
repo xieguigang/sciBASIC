@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed7b7f692d32c2dc0721df7380401e2, sciBASIC#\Data_science\DataMining\UMAP\Components\NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::9ed7b7f692d32c2dc0721df7380401e2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/NNDescent.vb"
 
     ' Author:
     ' 

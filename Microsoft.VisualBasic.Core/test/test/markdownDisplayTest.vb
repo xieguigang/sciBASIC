@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f67a3757cdc1b3252dfc5d6901a650, sciBASIC#\Microsoft.VisualBasic.Core\test\markdownDisplayTest.vb"
+﻿#Region "Microsoft.VisualBasic::5e37bcdbf8516ce3bb219d53ef15b407, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/markdownDisplayTest.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 16
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 413 B
+    '   Total Lines: 53
+    '    Code Lines: 34
+    ' Comment Lines: 1
+    '   Blank Lines: 18
+    '     File Size: 1.12 KB
 
 
     ' Module markdownDisplayTest
     ' 
-    '     Sub: Main1
+    '     Sub: consoleTest, Main1
     ' 
     ' /********************************************************************************/
 

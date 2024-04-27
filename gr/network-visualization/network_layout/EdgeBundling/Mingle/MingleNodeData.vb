@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb638358cdb116fa709fb865c92b12b5, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\MingleNodeData.vb"
+﻿#Region "Microsoft.VisualBasic::4ebdd9b13ebb6b453ce9fe3039e0a2b1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/MingleNodeData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 53
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 2.16 KB
+    '     File Size: 2.15 KB
 
 
     '     Class MingleNodeData

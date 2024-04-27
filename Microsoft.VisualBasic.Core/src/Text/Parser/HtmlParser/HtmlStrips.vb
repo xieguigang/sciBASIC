@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbb02d80e95ae87e727150f71f9da47b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::e0c26003e1109f4c23cbf3d4cbbedbba, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/HtmlParser/HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 236
     ' Comment Lines: 81
     '   Blank Lines: 49
-    '     File Size: 13.65 KB
+    '     File Size: 13.66 KB
 
 
     '     Module HtmlStrips

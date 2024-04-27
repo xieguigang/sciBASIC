@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeea519afd17da857810af769111f0a1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::172ffc809cd27f4367e505ed4a72bfcf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/PointF3D.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,36 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 11
-    ' Comment Lines: 3
-    '   Blank Lines: 4
-    '     File Size: 442 B
+    '   Total Lines: 89
+    '    Code Lines: 24
+    ' Comment Lines: 47
+    '   Blank Lines: 18
+    '     File Size: 2.20 KB
 
 
     '     Interface PointF3D
+    ' 
+    '         Properties: Z
+    ' 
+    '     Interface IPoint3D
+    ' 
+    '         Properties: Z
+    ' 
+    '     Structure SpatialIndex3D
     ' 
     '         Properties: X, Y, Z
     ' 
     '     Interface Layout2D
     ' 
     '         Properties: X, Y
+    ' 
+    '     Interface RasterPixel
+    ' 
+    '         Properties: X, Y
+    ' 
+    '     Interface Pixel
+    ' 
+    '         Properties: Scale
     ' 
     ' 
     ' /********************************************************************************/

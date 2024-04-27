@@ -1,4 +1,94 @@
-﻿Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+﻿#Region "Microsoft.VisualBasic::9ee5b34274a4f448ba9c4299a9425880, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/SvgDefaults.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 57
+    '    Code Lines: 50
+    ' Comment Lines: 0
+    '   Blank Lines: 7
+    '     File Size: 2.63 KB
+
+
+    '     Module SvgDefaults
+    ' 
+    ' 
+    '         Class Attributes
+    ' 
+    ' 
+    '             Class FillAndStroke
+    ' 
+    ' 
+    ' 
+    '             Class Position
+    ' 
+    ' 
+    ' 
+    '             Class Size
+    ' 
+    ' 
+    ' 
+    '             Class Radius
+    ' 
+    ' 
+    ' 
+    '             Class Gradient
+    ' 
+    ' 
+    ' 
+    '             Class Text
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Enum LineJoin
+    ' 
+    '         Miter
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
 
 Namespace SVG.XML
     Public Module SvgDefaults

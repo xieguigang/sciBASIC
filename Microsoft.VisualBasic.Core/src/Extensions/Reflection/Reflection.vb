@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29825c8b0f407da82b2cfc1484de2c2e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::78ad878d8fe95e0137768de4e6efd826, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Reflection.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 567
-    '    Code Lines: 339
-    ' Comment Lines: 158
-    '   Blank Lines: 70
-    '     File Size: 21.87 KB
+    '   Total Lines: 566
+    '    Code Lines: 334
+    ' Comment Lines: 163
+    '   Blank Lines: 69
+    '     File Size: 21.82 KB
 
 
     ' Module EmitReflection
     ' 
-    '     Function: AsLambda, Collection2GenericIEnumerable, (+2 Overloads) CreateObject, (+3 Overloads) Description, FullName
+    '     Function: AsLambda, Collection2GenericIEnumerable, (+2 Overloads) CreateObject, (+2 Overloads) Description, FullName
     '               (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint, GetFullName, (+2 Overloads) GetReadWriteProperties
     '               GetTypeElement, GetTypesHelper, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
     '               IsNonParametric, IsNumericType, ModuleVersion, ResourcesSatellite, Source

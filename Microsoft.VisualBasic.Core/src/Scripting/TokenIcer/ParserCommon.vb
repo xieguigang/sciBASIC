@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::143f9bcf1f88b605c1c3a5e20145a857, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\ParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::fe5c5f094686e1d923ee2249b6412599, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/ParserCommon.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
+    '   Total Lines: 104
     '    Code Lines: 50
-    ' Comment Lines: 41
+    ' Comment Lines: 43
     '   Blank Lines: 11
-    '     File Size: 3.98 KB
+    '     File Size: 4.09 KB
 
 
     '     Module ParserCommon

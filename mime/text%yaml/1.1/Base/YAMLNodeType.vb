@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4efc758f3f1c45982f3bc04e05a3137a, sciBASIC#\mime\text%yaml\1.1\Base\YAMLNodeType.vb"
+﻿#Region "Microsoft.VisualBasic::4efc758f3f1c45982f3bc04e05a3137a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/YAMLNodeType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 9
     '   Blank Lines: 3
-    '     File Size: 450.00 B
+    '     File Size: 450 B
 
 
     '     Enum YAMLNodeType

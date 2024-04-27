@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92b077ee5953d923f97d83e5763ed99b, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::849624991f6b626b0ee3e7961ae63627, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/AVLTree/AVLTree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
+    '   Total Lines: 198
     '    Code Lines: 120
-    ' Comment Lines: 33
+    ' Comment Lines: 47
     '   Blank Lines: 31
-    '     File Size: 7.27 KB
+    '     File Size: 7.90 KB
 
 
     '     Delegate Sub

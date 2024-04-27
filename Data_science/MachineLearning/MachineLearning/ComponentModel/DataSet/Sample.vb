@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee0cb77fe51666652281800f97b92aa, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::25100db61a08375096de23bb418f61d7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/Sample.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 55
-    ' Comment Lines: 31
-    '   Blank Lines: 13
-    '     File Size: 3.41 KB
+    '   Total Lines: 256
+    '    Code Lines: 171
+    ' Comment Lines: 46
+    '   Blank Lines: 39
+    '     File Size: 9.42 KB
 
 
+    '     Class SampleData
+    ' 
+    '         Properties: features, id, labels
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: CreateDataSet, Load, ToString, TransformDataset
+    ' 
+    '         Sub: Save
+    ' 
     '     Class Sample
     ' 
-    '         Properties: ID, status, target, vector
+    '         Properties: ID, label, target, vector
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

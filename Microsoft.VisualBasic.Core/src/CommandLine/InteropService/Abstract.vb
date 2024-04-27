@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8a13f20dc5d47b3bafda389b5940ccd, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::1d4fa4484d02cfff3fdadb3b5908c10c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/Abstract.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
+    '   Total Lines: 179
     '    Code Lines: 98
-    ' Comment Lines: 52
+    ' Comment Lines: 55
     '   Blank Lines: 26
-    '     File Size: 6.55 KB
+    '     File Size: 6.71 KB
 
 
     '     Class InteropService

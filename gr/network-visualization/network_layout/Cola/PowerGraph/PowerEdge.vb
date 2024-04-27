@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b4a45c46a6d158ec2c0c0395d08c86e, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\PowerEdge.vb"
+﻿#Region "Microsoft.VisualBasic::2603da6939dad1febeb9f9e095816bd5, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/PowerGraph/PowerEdge.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 1.22 KB
+    '     File Size: 1.21 KB
 
 
     '     Class PowerEdge

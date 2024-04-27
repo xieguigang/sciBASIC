@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b283d05b5c493782cbba4f96295f082c, sciBASIC#\Data_science\Visualization\Plots\g\HeatMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2d36593bab41da9da61f3531f3650886, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/HeatMapPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 1.50 KB
+    '     File Size: 1.54 KB
 
 
     '     Class HeatMapPlot

@@ -1,4 +1,63 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::27dd55ac0abfb18ffb22c3c8971d67ac, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/Write_csv.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 97
+    ' Comment Lines: 31
+    '   Blank Lines: 15
+    '     File Size: 6.16 KB
+
+
+    ' Module Write_csv
+    ' 
+    '     Function: (+2 Overloads) SaveTo
+    '     Class Arguments
+    ' 
+    '         Properties: encoding, layout, maps, metaBlank, nonParallel
+    '                     reorderKeys, silent, strict, transpose, tsv
+    ' 
+    '         Function: ToCsv
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection

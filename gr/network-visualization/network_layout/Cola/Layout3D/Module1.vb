@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f80cab578cdaaf40a82d831cf378d70, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e305984237eb14688d943de8990fbed2, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Layout3D/Module1.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 385 B
+    '     File Size: 377 B
 
 
     '     Class IConstraint

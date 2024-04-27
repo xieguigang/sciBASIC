@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86b96a252d60dc8f0eae08c7c30c6029, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\IFileSystemEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::ac34bba72da0d90fd97360f25b3553a7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/IFileSystemEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 16
-    ' Comment Lines: 51
-    '   Blank Lines: 6
-    '     File Size: 2.44 KB
+    '   Total Lines: 90
+    '    Code Lines: 18
+    ' Comment Lines: 63
+    '   Blank Lines: 9
+    '     File Size: 3.07 KB
 
 
     '     Interface IFileSystemEnvironment
     ' 
     '         Properties: [readonly]
     ' 
-    '         Function: DeleteFile, FileExists, FileSize, OpenFile, ReadAllText
-    '                   WriteText
+    '         Function: DeleteFile, FileExists, FileSize, GetFiles, GetFullPath
+    '                   OpenFile, ReadAllText, WriteText
     ' 
     '         Sub: Close, Flush
     ' 

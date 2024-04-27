@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87dc741afa2b50e2cc0ef72750fda598, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Locks.vb"
+﻿#Region "Microsoft.VisualBasic::896464d20029246de733dd95d4944b3f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Locks.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 19
     '   Blank Lines: 6
-    '     File Size: 1.34 KB
+    '     File Size: 1.33 KB
 
 
     '     Class Locks

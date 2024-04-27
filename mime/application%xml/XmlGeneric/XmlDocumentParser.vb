@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9bd62b7ae0f06f258aaa0b24eb3b0d6, sciBASIC#\mime\application%xml\XmlGeneric\Xmlparser.vb"
+﻿#Region "Microsoft.VisualBasic::1579e9b4720fe88fdb969f34aab8ffa9, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//XmlGeneric/XmlDocumentParser.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 37
+    '   Total Lines: 56
+    '    Code Lines: 42
     ' Comment Lines: 5
-    '   Blank Lines: 10
-    '     File Size: 1.69 KB
+    '   Blank Lines: 9
+    '     File Size: 1.94 KB
 
 
     ' Module XmlParser
     ' 
-    '     Function: (+2 Overloads) ParseXml
+    '     Function: (+2 Overloads) ParseXml, PopulateChilds
     ' 
     ' /********************************************************************************/
 

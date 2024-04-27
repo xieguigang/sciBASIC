@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c50cd7b161793324a73956d91c37c893, sciBASIC#\CLI_tools\rundll32\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c50cd7b161793324a73956d91c37c893, G:/GCModeller/src/runtime/sciBASIC#/CLI_tools/rundll32//Program.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 86
     ' Comment Lines: 3
     '   Blank Lines: 17
-    '     File Size: 4.51 KB
+    '     File Size: 4.50 KB
 
 
     ' Module Program

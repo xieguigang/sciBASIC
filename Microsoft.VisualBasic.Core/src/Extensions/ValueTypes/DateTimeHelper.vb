@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6edbf3f4225e17bf4cb6191e65404630, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::28f321ef9a6b2fb767bc2059593a6272, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 223
-    '    Code Lines: 135
+    '   Total Lines: 228
+    '    Code Lines: 139
     ' Comment Lines: 51
-    '   Blank Lines: 37
-    '     File Size: 7.68 KB
+    '   Blank Lines: 38
+    '     File Size: 7.91 KB
 
 
     '     Enum TimeScales
@@ -56,7 +56,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: DateSeq, FillDateZero, FromMilliseconds, FromUnixTimeStamp, GetMonthInteger
-    '                   IsEmpty, ReadableElapsedTime, ToDate, UnixTimeStamp, YYMMDD
+    '                   IsEmpty, ReadableElapsedTime, ToDate, UnixTimeStamp, UnixTimeStampMillis
+    '                   YYMMDD
     ' 
     ' 
     ' /********************************************************************************/

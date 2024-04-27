@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17e61872d0d5bde28a436f14dd94ab4a, sciBASIC#\Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
+﻿#Region "Microsoft.VisualBasic::6f16c422848b9754bade0974ab3e5924, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Zscore/ZScoresPlot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 132
     ' Comment Lines: 6
     '   Blank Lines: 22
-    '     File Size: 6.99 KB
+    '     File Size: 7.00 KB
 
 
     ' Class ZScoresPlot

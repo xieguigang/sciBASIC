@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a71f8244283f87c3bc32878830edc2eb, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Snapshot.vb"
+﻿#Region "Microsoft.VisualBasic::9ab486c268722b768d7c93fb15fa327b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/StoreProcedure/Snapshot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 111
     ' Comment Lines: 19
     '   Blank Lines: 25
-    '     File Size: 6.07 KB
+    '     File Size: 6.21 KB
 
 
     '     Class Snapshot

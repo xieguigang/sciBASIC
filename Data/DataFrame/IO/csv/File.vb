@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b661d95955291c067cee2486486ddde8, sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::57e5b5845538c028367eb9b54906079a, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/File.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 960
-    '    Code Lines: 577
-    ' Comment Lines: 258
+    '   Total Lines: 966
+    '    Code Lines: 582
+    ' Comment Lines: 259
     '   Blank Lines: 125
-    '     File Size: 37.60 KB
+    '     File Size: 39.03 KB
 
 
     '     Class File
     ' 
-    '         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
+    '         Properties: Cell, Columns, EstimatedFileSize, Headers, Rows
+    '                     Width
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 

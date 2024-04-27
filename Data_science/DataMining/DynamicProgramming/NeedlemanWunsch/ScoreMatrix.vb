@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8777bf0e114a92962f4ba19c55212040, sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\ScoreMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::cff75b3ac5971175cdc42b28f0757abe, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//NeedlemanWunsch/ScoreMatrix.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 26
     ' Comment Lines: 14
     '   Blank Lines: 11
-    '     File Size: 1.51 KB
+    '     File Size: 1.57 KB
 
 
     '     Class ScoreMatrix

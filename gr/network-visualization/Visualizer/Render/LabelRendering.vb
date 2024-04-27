@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b93986d62723b779007009f97e323fbe, sciBASIC#\gr\network-visualization\Visualizer\Render\LabelRendering.vb"
+﻿#Region "Microsoft.VisualBasic::44ede704f9c2114c4165c22cbb333ffc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Render/LabelRendering.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 123
+    '   Total Lines: 131
+    '    Code Lines: 106
     ' Comment Lines: 8
     '   Blank Lines: 17
-    '     File Size: 5.86 KB
+    '     File Size: 5.10 KB
 
 
     ' Class LabelRendering

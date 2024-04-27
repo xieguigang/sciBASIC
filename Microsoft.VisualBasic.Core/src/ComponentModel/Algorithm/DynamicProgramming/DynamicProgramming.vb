@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f506608694faa5f51d75c94347722b9, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::0406e6159606ed06fc7a9ca4c8f1c1c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 21
+    '   Total Lines: 34
+    '    Code Lines: 24
     ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1004 B
+    '   Blank Lines: 10
+    '     File Size: 1.13 KB
 
 
     '     Class Cost
@@ -49,6 +49,11 @@
     ' 
     ' 
     '     Delegate Function
+    ' 
+    ' 
+    '     Interface IScore
+    ' 
+    '         Function: GetSimilarityScore
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c3fc6f4babdf446082c89fec874cd8b, sciBASIC#\mime\text%html\Parser\CSS\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::5e30b2e1b7afffdecc4f6b87419cb550, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/CSS/Parser.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
+    '   Total Lines: 203
     '    Code Lines: 131
-    ' Comment Lines: 42
+    ' Comment Lines: 47
     '   Blank Lines: 25
-    '     File Size: 7.33 KB
+    '     File Size: 7.52 KB
 
 
     '     Module CssParser

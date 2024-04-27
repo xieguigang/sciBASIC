@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54db153efb468a8a71c3e0c1be46d2b7, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\MatrixTypeCast.vb"
+﻿#Region "Microsoft.VisualBasic::d83a3efb6c0f39e985bdabdbbf6adbc6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/MatrixTypeCast.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 15
+    '   Total Lines: 56
+    '    Code Lines: 42
     ' Comment Lines: 5
-    '   Blank Lines: 4
-    '     File Size: 714 B
+    '   Blank Lines: 9
+    '     File Size: 1.68 KB
 
 
     ' Module MatrixTypeCast
     ' 
-    '     Function: GetDataFrame
+    '     Function: GetDataFrame, Transpose
     ' 
     ' /********************************************************************************/
 

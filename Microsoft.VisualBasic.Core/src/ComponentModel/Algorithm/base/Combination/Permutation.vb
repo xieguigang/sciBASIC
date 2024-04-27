@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8fadaea1b911ab51551b88c631c608f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::35b219b31e619b294a88d8c972a67094, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/base/Combination/Permutation.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 64
+    '   Total Lines: 105
+    '    Code Lines: 83
     ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.04 KB
+    '   Blank Lines: 22
+    '     File Size: 2.99 KB
 
 
     '     Class Permutation
@@ -46,6 +46,9 @@
     '         Properties: CanPermute, Data
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) allPermutations
+    ' 
     '         Sub: FindIndices, Permutate, Reverse, Swap
     ' 
     ' 

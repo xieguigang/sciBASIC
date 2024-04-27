@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1de438c0a305f76fcc013b664314cd64, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::ab2064be779bfeaa0b3a54e7edc1e579, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CLI/IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 156
     ' Comment Lines: 96
     '   Blank Lines: 40
-    '     File Size: 14.10 KB
+    '     File Size: 14.39 KB
 
 
     '     Class IORedirectFile

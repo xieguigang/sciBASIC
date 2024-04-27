@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4a291301a17327262a1ec2d0dc57f7f, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
+﻿#Region "Microsoft.VisualBasic::efc3cd498e15724e9065707f5330f680, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/xl/worksheets/sheet.xml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 162
-    ' Comment Lines: 23
-    '   Blank Lines: 39
-    '     File Size: 7.60 KB
+    '   Total Lines: 251
+    '    Code Lines: 180
+    ' Comment Lines: 27
+    '   Blank Lines: 44
+    '     File Size: 8.53 KB
 
 
     '     Class worksheet
@@ -105,16 +105,24 @@
     ' 
     '     Structure row
     ' 
-    '         Properties: columns, customFormat, customHeight, dyDescent, ht
-    '                     r, s, spans
+    '         Properties: collapsed, columns, customFormat, customHeight, dyDescent
+    '                     hidden, ht, outlineLevel, r, s
+    '                     spans
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure [is]
+    ' 
+    '         Properties: t
     ' 
     '         Function: ToString
     ' 
     '     Structure c
     ' 
-    '         Properties: r, s, sharedStringsRef, t, v
+    '         Properties: [is], r, s, sharedStringsRef, t
+    '                     v
     ' 
-    '         Function: ToString
+    '         Function: GetValueString, ToString
     ' 
     '     Class pageMargins
     ' 

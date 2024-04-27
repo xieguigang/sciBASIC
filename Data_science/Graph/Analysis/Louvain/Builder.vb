@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35bf775c288801a58f90d34378dc3c5, sciBASIC#\Data_science\Graph\Analysis\Louvain\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::25b23436fc2946f08a6563a0a68d9f6f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Louvain/Builder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 78
+    '   Total Lines: 111
+    '    Code Lines: 86
     ' Comment Lines: 3
-    '   Blank Lines: 21
-    '     File Size: 3.99 KB
+    '   Blank Lines: 22
+    '     File Size: 4.47 KB
 
 
     '     Class Builder

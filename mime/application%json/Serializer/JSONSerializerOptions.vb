@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32543567e11838dd94f0b4b9de368ee2, sciBASIC#\mime\application%json\Serializer\JSONSerializerOptions.vb"
+﻿#Region "Microsoft.VisualBasic::5ec74406f97ddd0daaaff7a118de2c07, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/JSONSerializerOptions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 7
+    '   Total Lines: 10
+    '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 330 B
+    '     File Size: 383 B
 
 
     ' Class JSONSerializerOptions
     ' 
-    '     Properties: digest, enumToString, indent, maskReadonly, unixTimestamp
+    '     Properties: digest, enumToString, indent, maskReadonly, unicodeEscape
+    '                 unixTimestamp
     ' 
     ' /********************************************************************************/
 

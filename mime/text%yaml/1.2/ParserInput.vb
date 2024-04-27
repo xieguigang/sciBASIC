@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adec478ab0683caaeb480cf13b7bac4a, sciBASIC#\mime\text%yaml\1.2\ParserInput.vb"
+﻿#Region "Microsoft.VisualBasic::adec478ab0683caaeb480cf13b7bac4a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/ParserInput.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 477.00 B
+    '     File Size: 477 B
 
 
     '     Interface ParserInput

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af255d502d76b33a5e799e0f10eb858e, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::f3ed7cbe3b4ac62ecd512d166ff4a2fd, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/ColorIndex.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 94
-    ' Comment Lines: 5
-    '   Blank Lines: 20
-    '     File Size: 4.18 KB
+    '   Total Lines: 96
+    '    Code Lines: 76
+    ' Comment Lines: 3
+    '   Blank Lines: 17
+    '     File Size: 3.27 KB
 
 
     '     Class ColorIndex
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLevel, IndexOf
-    ' 
-    '     Structure ColorRange
-    ' 
-    '         Properties: Level, Points
-    ' 
-    '         Function: GetMinDistance, ToString
     ' 
     ' 
     ' /********************************************************************************/

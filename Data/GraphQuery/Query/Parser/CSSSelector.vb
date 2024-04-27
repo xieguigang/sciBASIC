@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cbf7b96bf10f6b796d4b860873630e3, sciBASIC#\Data\GraphQuery\Query\Parser\CSSSelector.vb"
+﻿#Region "Microsoft.VisualBasic::4b1b372f53fb06a946c5cd5bf836a9b0, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Query/Parser/CSSSelector.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 128
-    ' Comment Lines: 32
-    '   Blank Lines: 23
-    '     File Size: 7.21 KB
+    '   Total Lines: 195
+    '    Code Lines: 133
+    ' Comment Lines: 37
+    '   Blank Lines: 25
+    '     File Size: 7.52 KB
 
 
     ' Class CSSSelector
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: getElementQueryOutput, ParseImpl, selectByClass, selectByList, selectByTagName
     ' 
     ' Structure Selector

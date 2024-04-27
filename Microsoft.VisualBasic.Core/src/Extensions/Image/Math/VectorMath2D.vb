@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a4adfde30cf1a6f4dc770db618305, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\VectorMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::e38a2264d159429d7192cdf3f47121dd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/VectorMath2D.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
+    '   Total Lines: 182
     '    Code Lines: 163
-    ' Comment Lines: 0
-    '   Blank Lines: 18
-    '     File Size: 9.27 KB
+    ' Comment Lines: 3
+    '   Blank Lines: 16
+    '     File Size: 8.79 KB
 
 
     '     Class VectorMath2D
     ' 
-    '         Function: absAngle, absAngleDeg, add, angle, angleDeg
-    '                   (+3 Overloads) createPointAuto, innerProduct, isNear, length, subtract
+    '         Function: absAngle, absAngleDeg, angle, angleDeg, (+3 Overloads) createPointAuto
+    '                   innerProduct, isNear
     ' 
     ' 
     ' /********************************************************************************/

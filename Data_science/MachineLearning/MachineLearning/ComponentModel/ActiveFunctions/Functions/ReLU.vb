@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5433a7927d9bf9f1ccbfd567c0472754, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::c188e4a3a19fbfab5332b8f577dacda9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/ReLU.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 52
+    '   Total Lines: 86
+    '    Code Lines: 72
     ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 1.75 KB
+    '   Blank Lines: 14
+    '     File Size: 2.47 KB
 
 
     '     Class ReLU
@@ -46,7 +46,7 @@
     '         Properties: Store
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Function], CalculateDerivative, Derivative, ToString
+    '         Function: [Function], CalculateDerivative, Derivative, (+3 Overloads) ReLU, ToString
     ' 
     ' 
     ' /********************************************************************************/

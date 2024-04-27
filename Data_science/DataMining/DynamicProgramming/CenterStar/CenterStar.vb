@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::13d8b23095825ac104911eaa6f30192f, GCModeller\analysis\SequenceToolkit\MSA\CenterStar.vb"
+﻿#Region "Microsoft.VisualBasic::428c0b7e7483866e25b8b7fe4284e7c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//CenterStar/CenterStar.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 201
-'    Code Lines: 142
-' Comment Lines: 33
-'   Blank Lines: 26
-'     File Size: 6.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class CenterStar
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: calculateTotalCost, Compute
-' 
-'     Sub: findStarIndex, multipleAlignmentImpl
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 210
+    '    Code Lines: 147
+    ' Comment Lines: 33
+    '   Blank Lines: 30
+    '     File Size: 7.08 KB
+
+
+    ' Class CenterStar
+    ' 
+    '     Properties: NameList
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: calculateTotalCost, Compute, computeInternal
+    ' 
+    '     Sub: findStarIndex, multipleAlignmentImpl
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

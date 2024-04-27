@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78b6b0a9c2c51dbd2b10710dab1d892, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::0c44651776909e193cf7a4c80c5b91b9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/Synapse.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 42
     ' Comment Lines: 25
     '   Blank Lines: 9
-    '     File Size: 2.36 KB
+    '     File Size: 2.43 KB
 
 
     '     Class Synapse

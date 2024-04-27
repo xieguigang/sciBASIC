@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::eb357249dc56432f5f04e838312e9825, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::105a07328e629002502db1f3613b4493, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/CharBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 174
-'    Code Lines: 112
-' Comment Lines: 31
-'   Blank Lines: 31
-'     File Size: 5.16 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CharBuffer
-' 
-'         Properties: isInteger, Last, Size
-' 
-'         Function: Add, GetLastOrDefault, Pop, PopAllChars, ToString
-' 
-'         Sub: Clear
-' 
-'         Operators: *, (+3 Overloads) +, <, (+2 Overloads) <>, (+2 Overloads) =
-'                    >, (+2 Overloads) Like
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 346
+    '    Code Lines: 201
+    ' Comment Lines: 100
+    '   Blank Lines: 45
+    '     File Size: 11.18 KB
+
+
+    '     Class CharBuffer
+    ' 
+    '         Properties: isInteger, Last, Size
+    ' 
+    '         Function: (+2 Overloads) Add, AsEnumerable, GetLastOrDefault, Pop, PopAllChars
+    '                   (+3 Overloads) StartsWith, ToArray, ToString
+    ' 
+    '         Sub: Clear
+    ' 
+    '         Operators: *, (+3 Overloads) +, <, (+3 Overloads) <>, (+3 Overloads) =
+    '                    >, (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

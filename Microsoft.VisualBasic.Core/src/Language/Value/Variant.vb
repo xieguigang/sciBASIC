@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8caf1d295046ae2bf88c32ac737c1423, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Variant.vb"
+﻿#Region "Microsoft.VisualBasic::2043b8d04dba52ac16ef96b02f499c69, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Variant.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 138
-    ' Comment Lines: 44
+    '   Total Lines: 227
+    '    Code Lines: 142
+    ' Comment Lines: 59
     '   Blank Lines: 26
-    '     File Size: 7.42 KB
+    '     File Size: 8.36 KB
 
 
     '     Class [Variant]

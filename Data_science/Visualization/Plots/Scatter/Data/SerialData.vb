@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00e47b108d780ff7f2b2ddac3e8af21c, sciBASIC#\Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::6df1f784c86502359b065e63c0911c6a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Data/SerialData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 96
-    '    Code Lines: 58
-    ' Comment Lines: 25
-    '   Blank Lines: 13
-    '     File Size: 3.19 KB
+    '   Total Lines: 107
+    '    Code Lines: 61
+    ' Comment Lines: 32
+    '   Blank Lines: 14
+    '     File Size: 3.45 KB
 
 
     ' Class SerialData
     ' 
     '     Properties: DataAnnotations, title
     ' 
-    '     Function: BrushHandler, GetPen, GetPointByX, ToString
+    '     Function: BrushHandler, GetPen, GetPointByX, ToString, x
     ' 
     '     Sub: AddMarker
     ' 

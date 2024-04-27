@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3476fa9a65292ec12085b6f71a225118, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::ced27b770225ef4247666144a2b8fdb1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/AnonymousJSON.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
+    '   Total Lines: 99
     '    Code Lines: 48
-    ' Comment Lines: 35
+    ' Comment Lines: 40
     '   Blank Lines: 11
-    '     File Size: 3.64 KB
+    '     File Size: 3.87 KB
 
 
     '     Module AnonymousJSONExtensions

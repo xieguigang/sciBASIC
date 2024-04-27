@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621fac823c2f87d127ece9f31559d0d4, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::bf25cd6bf0af9a8c7b231fbb21e7ff96, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/UnmanagedDll.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 309
-    '    Code Lines: 140
-    ' Comment Lines: 126
-    '   Blank Lines: 43
-    '     File Size: 15.62 KB
+    '   Total Lines: 341
+    '    Code Lines: 157
+    ' Comment Lines: 140
+    '   Blank Lines: 44
+    '     File Size: 16.71 KB
 
 
     '     Class UnmanagedDll
     ' 
-    '         Properties: FileName
+    '         Properties: FileName, LibraryHandle
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: checkedGetSymbolHandle, createLdLibPathMsg, DangerousGetHandle, GetAnsiString, GetByte
-    '                   (+3 Overloads) GetFunction, GetFunctionAddress, GetInt32, GetInt64, GetIntPtr
+    '         Function: checkedGetSymbolHandle, CheckHandleInvalid, createLdLibPathMsg, DangerousGetHandle, GetAnsiString
+    '                   GetByte, (+3 Overloads) GetFunction, GetFunctionAddress, GetInt32, GetInt64
+    '                   GetIntPtr, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose, ReportLoadLibError, ThrowFailedLibraryLoad, WriteByte, WriteInt32
     '              WriteInt64, WriteIntPtr

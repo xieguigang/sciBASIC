@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebddfab9a23f5e58f464be3029a204a2, sciBASIC#\Data_science\Visualization\Plots\csv\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e4161c35669eb5f41be40088c92a9744, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//csv/Extensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 6
     '   Blank Lines: 8
-    '     File Size: 2.14 KB
+    '     File Size: 2.15 KB
 
 
     '     Module Extensions

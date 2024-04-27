@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3ce5a47abd922ccd1869ab1a24cfa56, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::55bfbe1664b31ad39a06d9093e23b360, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 118
-    ' Comment Lines: 15
-    '   Blank Lines: 17
-    '     File Size: 6.36 KB
+    '   Total Lines: 186
+    '    Code Lines: 146
+    ' Comment Lines: 20
+    '   Blank Lines: 20
+    '     File Size: 7.86 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, GetOutputDirectory, GetOutputName, legacyProjectSource
-    '                   newDotNetSDKProjectSource, RootNamespace, vbfileFilter
+    '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, ExtractNuGetAssemblyInfo, GetOutputDirectory, GetOutputName
+    '                   legacyProjectSource, newDotNetSDKProjectSource, RootNamespace, vbfileFilter
     ' 
     ' 
     ' /********************************************************************************/

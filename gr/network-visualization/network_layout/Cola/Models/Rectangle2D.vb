@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce98a48a91e19346aa68066565f7cd1b, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::995e0bf0f7ae4da90247832885b1f214, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 400 B
+    '     File Size: 392 B
 
 
     '     Class Rectangle2D

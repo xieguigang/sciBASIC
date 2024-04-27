@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed3f4b544815f9f29a412d328d9af56d, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d3753a739d8821df26dad91fc2759cd0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/DefaultValue/Default.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
+    '   Total Lines: 233
     '    Code Lines: 128
-    ' Comment Lines: 71
-    '   Blank Lines: 28
-    '     File Size: 8.83 KB
+    ' Comment Lines: 75
+    '   Blank Lines: 30
+    '     File Size: 8.97 KB
 
 
     '     Delegate Function

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3b88c258c452568f121a4468c11d487, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::6404f80d94747d0c8d3ee60962f4d61d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/EntryPoints/Delegate.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 97
-    ' Comment Lines: 19
-    '   Blank Lines: 24
-    '     File Size: 5.44 KB
+    '   Total Lines: 191
+    '    Code Lines: 125
+    ' Comment Lines: 35
+    '   Blank Lines: 31
+    '     File Size: 7.84 KB
 
 
     '     Class APIDelegate
@@ -46,7 +46,7 @@
     '         Properties: Example, Info, Name, Usage
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Execute, HelpInformation, ToString
+    '         Function: Execute, HelpInformation, MatchArgumentName, ToString
     ' 
     ' 
     ' /********************************************************************************/

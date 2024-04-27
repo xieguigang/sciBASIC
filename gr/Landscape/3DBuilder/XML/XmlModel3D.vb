@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4738e9d79a2d3559de9e15f82d7865a3, sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
+﻿#Region "Microsoft.VisualBasic::1594f9190feb57c3c42e9c67abd6fe25, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//3DBuilder/XML/XmlModel3D.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 54
     ' Comment Lines: 6
     '   Blank Lines: 14
-    '     File Size: 2.21 KB
+    '     File Size: 2.29 KB
 
 
     '     Class XmlModel3D

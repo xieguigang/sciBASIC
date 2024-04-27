@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::632c496aa23bcc3b3b59bc3a778dc34b, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::de1dbf86023da46a7ce02f88e63efc70, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Convolution.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 116
     ' Comment Lines: 1
     '   Blank Lines: 33
-    '     File Size: 5.22 KB
+    '     File Size: 5.37 KB
 
 
     '     Class Convolution

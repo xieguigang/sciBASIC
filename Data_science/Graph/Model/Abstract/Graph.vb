@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33331bfd618242a24b1aad4f54692029, sciBASIC#\Data_science\Graph\Model\Abstract\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::c4399bd0e9b8846f5703b34a76c9af77, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Abstract/Graph.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 346
-    '    Code Lines: 188
+    '   Total Lines: 345
+    '    Code Lines: 187
     ' Comment Lines: 115
     '   Blank Lines: 43
-    '     File Size: 11.86 KB
+    '     File Size: 11.89 KB
 
 
     ' Class Graph

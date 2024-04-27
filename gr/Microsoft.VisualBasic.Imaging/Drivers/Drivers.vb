@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bc274bd8f02fc291527e37636b58a79, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::598b582dd23ff10b42654dbcb2c0fcc7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/Drivers.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 18
     '   Blank Lines: 3
-    '     File Size: 1014 B
+    '     File Size: 1.04 KB
 
 
     '     Enum Drivers

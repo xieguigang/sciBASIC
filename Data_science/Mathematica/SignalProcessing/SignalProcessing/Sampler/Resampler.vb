@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::f5c4848179aa59575e050f23c3ce185b, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Resampler.vb"
+﻿#Region "Microsoft.VisualBasic::c11ab7c610aae4a79e95336ab65255cc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/Resampler.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 78
-'    Code Lines: 58
-' Comment Lines: 7
-'   Blank Lines: 13
-'     File Size: 2.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Resampler
-' 
-'     Properties: enumerateMeasures
-' 
-'     Function: (+2 Overloads) CreateSampler, GetIntensity, getPosition
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 121
+    '    Code Lines: 89
+    ' Comment Lines: 14
+    '   Blank Lines: 18
+    '     File Size: 3.61 KB
+
+
+    ' Class Resampler
+    ' 
+    '     Properties: enumerateMeasures
+    ' 
+    '     Function: (+2 Overloads) CreateSampler, GetIntensity, getPosition
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

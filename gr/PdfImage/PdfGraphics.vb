@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86cb31f9afc082a402df7d4102b7c12d, sciBASIC#\gr\PdfImage\PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::66194f8c798659c6a823bef58d09ec3b, G:/GCModeller/src/runtime/sciBASIC#/gr/PdfImage//PdfGraphics.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 982
-    '    Code Lines: 746
+    '   Total Lines: 986
+    '    Code Lines: 749
     ' Comment Lines: 6
-    '   Blank Lines: 230
-    '     File Size: 41.45 KB
+    '   Blank Lines: 231
+    '     File Size: 41.66 KB
 
 
     ' Class PdfGraphics
@@ -55,7 +55,7 @@
     '          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
     '          (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
     '          DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '          (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
+    '          (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString, EndContainer
     '          (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
     '          (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
     '          (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform

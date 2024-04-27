@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12f9475ef073c1a84a501bd522929613, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::f89e8889d87af6042d88bea79aa8aede, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Arithmetic.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 54
     '   Blank Lines: 8
-    '     File Size: 4.36 KB
+    '     File Size: 4.37 KB
 
 
     '     Module Arithmetic

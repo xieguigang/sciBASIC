@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::119ed789440dac7fa7f6361ed545893a, sciBASIC#\Data_science\Mathematica\Math\DataFittings\Linear\LeastSquares.vb"
+﻿#Region "Microsoft.VisualBasic::d3d40a8801838a547aaa0576bf66dfe1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/LeastSquares.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 149
     ' Comment Lines: 46
     '   Blank Lines: 26
-    '     File Size: 7.40 KB
+    '     File Size: 7.38 KB
 
 
     ' Module LeastSquares

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e434d7f771b74081aa2a1799e729f83, sciBASIC#\gr\network-visualization\Visualizer\Render\NodeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::c60f6b61d6b23ed0e5e839b40a44aa40, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Render/NodeRendering.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 151
-    ' Comment Lines: 4
-    '   Blank Lines: 21
-    '     File Size: 6.49 KB
+    '   Total Lines: 218
+    '    Code Lines: 183
+    ' Comment Lines: 5
+    '   Blank Lines: 30
+    '     File Size: 8.00 KB
 
 
     ' Class NodeRendering
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: RenderingVertexNodes, renderNode
+    '     Function: DefaultDrawNodeShape, DrawDefaultCircle, RenderingVertexNodes, renderNode
     ' 
     ' /********************************************************************************/
 

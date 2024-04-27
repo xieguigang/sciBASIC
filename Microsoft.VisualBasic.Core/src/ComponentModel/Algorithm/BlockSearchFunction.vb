@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::ce38d213a771b10a6babea9fae11cc3f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b4a5e85316550eee5b5a8e44cd6652ee, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BlockSearchFunction.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 181
-'    Code Lines: 130
-' Comment Lines: 24
-'   Blank Lines: 27
-'     File Size: 5.99 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure Block
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetComparision, ToString
-' 
-'     Structure SequenceTag
-' 
-'         Function: ToString
-' 
-'     Class BlockSearchFunction
-' 
-'         Properties: Keys
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: getOrderSeq, Search
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 221
+    '    Code Lines: 151
+    ' Comment Lines: 35
+    '   Blank Lines: 35
+    '     File Size: 7.49 KB
+
+
+    '     Structure Block
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetComparision, ToString
+    ' 
+    '     Structure SequenceTag
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class BlockSearchFunction
+    ' 
+    '         Properties: Keys, raw, size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: BuildIndex, getOrderSeq, Search
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

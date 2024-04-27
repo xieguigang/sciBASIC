@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e3d9250e48d51b96de211eff0a7a5d0, sciBASIC#\Data_science\Visualization\Plots\g\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::6233dbc10a835f33a1fba523732ba4ee, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/Mapper/ColorManager.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 99
-    '    Code Lines: 70
-    ' Comment Lines: 8
-    '   Blank Lines: 21
-    '     File Size: 3.56 KB
+    '   Total Lines: 29
+    '    Code Lines: 20
+    ' Comment Lines: 0
+    '   Blank Lines: 9
+    '     File Size: 853 B
 
 
     '     Class ColorProfile
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class CategoryColorProfile
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) GetColor
-    ' 
-    '     Class ValueScaleColorProfile
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetColor
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

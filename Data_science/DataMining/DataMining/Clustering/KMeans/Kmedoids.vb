@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::752ae9d468b4f47e24dc93f5ed189067, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Kmedoids.vb"
+﻿#Region "Microsoft.VisualBasic::2dd48b8b4c63448ed1c9309036c93b72, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/Kmedoids.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 74
-    ' Comment Lines: 22
-    '   Blank Lines: 24
-    '     File Size: 4.85 KB
+    '   Total Lines: 159
+    '    Code Lines: 89
+    ' Comment Lines: 42
+    '   Blank Lines: 28
+    '     File Size: 6.16 KB
 
 
     '     Module Kmedoids
     ' 
-    '         Function: doKMedoids, DoKMedoids
+    '         Function: CalculateClusterMean, doKMedoids, DoKMedoids
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d46d1ec9029454f31d4726bbf331c88, sciBASIC#\Data\DataFrame\Extensions\Math.vb"
+﻿#Region "Microsoft.VisualBasic::9c55a3a0414c95d42f87fb64f820138f, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/Math.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 24
+    '   Total Lines: 34
+    '    Code Lines: 27
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 1.11 KB
+    '     File Size: 1.21 KB
 
 
     ' Module DataSetMath

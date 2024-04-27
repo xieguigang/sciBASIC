@@ -1,53 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::4048fa476e0ce34a06dd4c5f23427ec3, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::7ebfade8b0f7f2a17e9e78b0a9b53980, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/CustomDesigns.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 104
-'    Code Lines: 86
-' Comment Lines: 8
-'   Blank Lines: 10
-'     File Size: 3.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CustomDesigns
-' 
-'         Function: ClusterColour, FlexImaging, Halloween, Paper, Rainbow
-'                   TSF, Unicorn, Vibrant
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 160
+    '    Code Lines: 129
+    ' Comment Lines: 16
+    '   Blank Lines: 15
+    '     File Size: 6.64 KB
+
+
+    '     Class CustomDesigns
+    ' 
+    '         Function: ClusterColour, ExtractThemeColors, FlexImaging, Halloween, IsBlackColor
+    '                   IsWhiteColor, Order, Paper, Rainbow, TSF
+    '                   Unicorn, Vibrant
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

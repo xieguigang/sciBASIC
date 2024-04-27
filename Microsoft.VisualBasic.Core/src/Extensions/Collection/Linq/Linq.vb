@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e50f53417f6f2b31cee3aaa4e9f9aa37, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::b1c35d49b0e00853172c7d6059b61c65, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Linq.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 455
-    '    Code Lines: 255
-    ' Comment Lines: 154
-    '   Blank Lines: 46
-    '     File Size: 17.66 KB
+    '   Total Lines: 472
+    '    Code Lines: 265
+    ' Comment Lines: 160
+    '   Blank Lines: 47
+    '     File Size: 18.06 KB
 
 
     '     Module Extensions

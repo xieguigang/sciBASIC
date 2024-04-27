@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c5e08544747e612c04cecf676d51ba5, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
+﻿#Region "Microsoft.VisualBasic::55f97632107091f0512eb5cae7958894, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Communities.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 100
-    ' Comment Lines: 33
+    '   Total Lines: 174
+    '    Code Lines: 102
+    ' Comment Lines: 40
     '   Blank Lines: 32
-    '     File Size: 6.18 KB
+    '     File Size: 6.94 KB
 
 
     '     Class Communities

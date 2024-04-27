@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f98ffafcafac875392b4850eacd396e0, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\SIMD.vb"
+﻿#Region "Microsoft.VisualBasic::a39325e2fff870a383054c66ec7c14f2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/SIMD.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
+    '   Total Lines: 65
     '    Code Lines: 23
-    ' Comment Lines: 22
+    ' Comment Lines: 34
     '   Blank Lines: 8
-    '     File Size: 1.88 KB
+    '     File Size: 2.30 KB
 
 
     '     Enum SIMDConfiguration

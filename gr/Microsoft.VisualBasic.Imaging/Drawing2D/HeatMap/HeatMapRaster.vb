@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a555d1f6ed6c9cc2a02cc736ac77aa1, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapRaster.vb"
+﻿#Region "Microsoft.VisualBasic::58518d4883782fbc211928d0dd89ef0f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/HeatMapRaster.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 219
-    '    Code Lines: 138
-    ' Comment Lines: 47
-    '   Blank Lines: 34
-    '     File Size: 7.46 KB
+    '   Total Lines: 200
+    '    Code Lines: 112
+    ' Comment Lines: 58
+    '   Blank Lines: 30
+    '     File Size: 6.71 KB
 
 
     '     Class HeatMapRaster
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) GetRasterPixels, MultiplyKernel, PopulateDenseRasterMatrix, SetDataInternal, SetDatas
+    '         Function: (+2 Overloads) GetRasterPixels, MultiplyKernel, SetDataInternal, SetDatas
     ' 
     '         Sub: gaussiankernel
     ' 

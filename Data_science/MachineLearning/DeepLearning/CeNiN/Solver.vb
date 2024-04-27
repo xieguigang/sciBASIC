@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0517312e504a1361c021728fd654e2d, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::f804ce811611631000683127c939eb2c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Solver.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 49
+    '   Total Lines: 63
+    '    Code Lines: 48
     ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.42 KB
+    '   Blank Lines: 15
+    '     File Size: 2.43 KB
 
 
     '     Module Solver

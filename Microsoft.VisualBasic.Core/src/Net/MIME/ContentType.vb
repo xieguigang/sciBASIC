@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68c45b6449dc61ed9f624d3fafdd0994, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::29459a51bd13d441b9cf57569025dbca, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/MIME/ContentType.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 43
+    '   Total Lines: 89
+    '    Code Lines: 50
     ' Comment Lines: 26
-    '   Blank Lines: 11
-    '     File Size: 2.46 KB
+    '   Blank Lines: 13
+    '     File Size: 2.65 KB
 
 
     '     Class ContentType
     ' 
     '         Properties: Details, FileExt, IsEmpty, MIMEType, Name
     ' 
-    '         Function: __createObject, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: parseLine, ToString
     ' 
     ' 
     ' /********************************************************************************/

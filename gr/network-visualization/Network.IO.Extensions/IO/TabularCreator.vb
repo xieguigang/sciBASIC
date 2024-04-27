@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08b3db98bead1fd39f912a2046b58c51, sciBASIC#\gr\network-visualization\Network.IO.Extensions\IO\TabularCreator.vb"
+﻿#Region "Microsoft.VisualBasic::f6d58a8bf4a119a2dd0be61a72e8112a, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/TabularCreator.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 195
-    '    Code Lines: 142
-    ' Comment Lines: 25
-    '   Blank Lines: 28
-    '     File Size: 7.96 KB
+    '   Total Lines: 222
+    '    Code Lines: 152
+    ' Comment Lines: 40
+    '   Blank Lines: 30
+    '     File Size: 9.31 KB
 
 
     '     Module TabularCreator
     ' 
-    '         Function: CreateGraphTable, CreateNodesMetaData, dumpNodeVertex, GetUnionProperties, (+3 Overloads) Tabular
+    '         Function: (+2 Overloads) CreateGraphTable, (+2 Overloads) CreateNodesMetaData, dumpNodeVertex, GetUnionProperties, (+3 Overloads) Tabular
     ' 
     ' 
     ' /********************************************************************************/

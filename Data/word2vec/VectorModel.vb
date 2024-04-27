@@ -1,58 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::3e9594161dc849d35076616d9837eb1f, sciBASIC#\Data\word2vec\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::ca2fadfb98bd62bb591752f6f03c675f, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//VectorModel.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 273
-'    Code Lines: 176
-' Comment Lines: 35
-'   Blank Lines: 62
-'     File Size: 9.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class VectorModel
-' 
-'         Properties: topNSize, vectorSize, wordMap
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: analogy, getWordVector, loadFromFile, (+2 Overloads) similar
-' 
-'         Sub: saveModel
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 113
+    ' Comment Lines: 45
+    '   Blank Lines: 39
+    '     File Size: 6.55 KB
+
+
+    ' Class VectorModel
+    ' 
+    '     Properties: vectorSize, wordMap, words
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: analogy, GenericEnumerator, getWordVector, (+2 Overloads) similar, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

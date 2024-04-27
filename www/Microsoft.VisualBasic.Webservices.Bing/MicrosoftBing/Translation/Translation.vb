@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::162654c1fbddd9dccee8e16ceb95edf0, sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::e28f7d81aaac18c4f4c25ad43257dd7d, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//MicrosoftBing/Translation/Translation.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 89
+    '   Total Lines: 107
+    '    Code Lines: 88
     ' Comment Lines: 5
     '   Blank Lines: 14
-    '     File Size: 3.96 KB
+    '     File Size: 3.92 KB
 
 
     '     Module Translation

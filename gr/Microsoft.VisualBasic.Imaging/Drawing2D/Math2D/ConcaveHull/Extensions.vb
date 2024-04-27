@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdadca718d96cfde616f0c4466e646a7, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::261df770fe487574e3500871578e242c, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConcaveHull/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 15
-    ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 544 B
+    '   Total Lines: 49
+    '    Code Lines: 16
+    ' Comment Lines: 29
+    '   Blank Lines: 4
+    '     File Size: 2.72 KB
 
 
     '     Module Extensions

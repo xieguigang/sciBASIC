@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::810e4df6293df1a9d391b517001a9dbf, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\_rels.vb"
+﻿#Region "Microsoft.VisualBasic::315c9baa444af3854718b9f9b37ad4c5, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/XlsxDirectoryPart/_rels.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 8
     '   Blank Lines: 7
-    '     File Size: 1.20 KB
+    '     File Size: 1.24 KB
 
 
     '     Class _rels

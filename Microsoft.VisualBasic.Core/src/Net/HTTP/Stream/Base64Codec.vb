@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d71ca32d87ad43f48387876e292baab6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::2ef13c28e4f4afbb8e164b2254bc8be0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Stream/Base64Codec.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 116
-    ' Comment Lines: 53
-    '   Blank Lines: 28
-    '     File Size: 7.35 KB
+    '   Total Lines: 203
+    '    Code Lines: 119
+    ' Comment Lines: 55
+    '   Blank Lines: 29
+    '     File Size: 7.48 KB
 
 
     '     Module Base64Codec

@@ -1,4 +1,63 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿#Region "Microsoft.VisualBasic::1994c934770026c522b0ef09032470cf, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbeddingResult.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1322
+    '    Code Lines: 1145
+    ' Comment Lines: 84
+    '   Blank Lines: 93
+    '     File Size: 63.88 KB
+
+
+    '     Class OrthographicEmbeddingResult
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: addVertices, edgeFits, edgeFitsIgnoring, find, findEdgeEnd1
+    '                   findEdgeEnd2, findFirstNonOrthogonalEdge, findNonOrthogonalEdges, fixNonOrthogonalEdge, indexOfClosest
+    '                   nodeHorizontalWiggleRoom, nodeHorizontalWiggleRoomSingleNode, nodeVerticalWiggleRoom, nodeVerticalWiggleRoomSingleNode, removeVertex
+    '                   sanityCheck, ToString
+    ' 
+    '         Sub: fixNonOrthogonalEdges, gridAlign
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.util
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math

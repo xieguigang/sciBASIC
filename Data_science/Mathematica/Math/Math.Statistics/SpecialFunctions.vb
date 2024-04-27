@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4d58b24ca6728c7abf385bc685d6f95, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::8614db7d6e5eb8f70a775b9b93115fa5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//SpecialFunctions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 626
-    '    Code Lines: 493
-    ' Comment Lines: 88
-    '   Blank Lines: 45
-    '     File Size: 20.40 KB
+    '   Total Lines: 729
+    '    Code Lines: 546
+    ' Comment Lines: 129
+    '   Blank Lines: 54
+    '     File Size: 23.08 KB
 
 
     ' Module SpecialFunctions
     ' 
-    '     Function: BetaFunction, Binom, Binomial, Choose, Correlation
-    '               Covariance, EvaluatePolynomial, Factorial, gamma, gammaln
-    '               incbcf, incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal
-    '               MutualProbability, pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
+    '     Function: BetaFunction, Binom, Binomial, BinomialCoefficient, Choose
+    '               Combination, Correlation, Covariance, EvaluatePolynomial, Factorial
+    '               (+2 Overloads) FactorialCalculation, gamma, gammaln, incbcf, incbd
+    '               IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability, Permutation
+    '               pseries, RegularizedIncompleteBetaFunction, safeDiv, StirlingsFormula
     ' 
     ' /********************************************************************************/
 

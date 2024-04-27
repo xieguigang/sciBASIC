@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f2820ed9307f27d1f5c4ea8e0b2f4b0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\StateObject.vb"
+﻿#Region "Microsoft.VisualBasic::16f9df96bc137c5bf876d1b056d24273, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/StateObject.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 34
+    '   Total Lines: 81
+    '    Code Lines: 33
     ' Comment Lines: 34
     '   Blank Lines: 14
-    '     File Size: 2.91 KB
+    '     File Size: 2.87 KB
 
 
     '     Class StateObject

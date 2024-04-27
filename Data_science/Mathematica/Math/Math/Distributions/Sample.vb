@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87b317886ec2b3a2309c165c42e6f6a3, sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::94b1aa1e631b9ed5c9794d9331f1f7fe, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Sample.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
+    '   Total Lines: 157
     '    Code Lines: 99
-    ' Comment Lines: 27
+    ' Comment Lines: 37
     '   Blank Lines: 21
-    '     File Size: 4.68 KB
+    '     File Size: 5.18 KB
 
 
     '     Class SampleDistribution

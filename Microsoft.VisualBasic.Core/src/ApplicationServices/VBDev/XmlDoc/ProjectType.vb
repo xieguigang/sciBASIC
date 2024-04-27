@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e6fb82ef646f86895796c2c71d0f124, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::4437279933aa32d731a5e7e67cd4ebdd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/XmlDoc/ProjectType.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 129
-    ' Comment Lines: 18
-    '   Blank Lines: 40
-    '     File Size: 7.16 KB
+    '   Total Lines: 216
+    '    Code Lines: 137
+    ' Comment Lines: 34
+    '   Blank Lines: 45
+    '     File Size: 8.28 KB
 
 
+    '     Class XmlDocs
+    ' 
+    '         Properties: Name, Remarks, Summary
+    ' 
     '     Class ProjectType
     ' 
-    '         Properties: [Namespace], Name, Remarks, Summary
+    '         Properties: [Namespace]
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 

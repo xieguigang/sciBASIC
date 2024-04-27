@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d104bb84812e274d5eda9f4107e46b28, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d81a74c352036e75044a38eb2a027291, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/ConsoleTableBuilderExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 618
-    '    Code Lines: 479
-    ' Comment Lines: 31
-    '   Blank Lines: 108
-    '     File Size: 28.18 KB
+    '   Total Lines: 639
+    '    Code Lines: 484
+    ' Comment Lines: 46
+    '   Blank Lines: 109
+    '     File Size: 28.91 KB
 
 
     '     Module ConsoleTableBuilderExtensions

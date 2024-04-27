@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::140159388cfb232e28bb0b2783a151fc, sciBASIC#\Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::b667d85dd15bb1057b1ba005d05e9f66, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/FuzzyCMeans/Entity.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 21
-    ' Comment Lines: 8
+    '   Total Lines: 36
+    '    Code Lines: 20
+    ' Comment Lines: 11
     '   Blank Lines: 5
-    '     File Size: 1.12 KB
+    '     File Size: 1.23 KB
 
 
     '     Class FuzzyCMeansEntity

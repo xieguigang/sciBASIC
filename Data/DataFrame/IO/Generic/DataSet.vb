@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aa5177528dd39799f4a409120c29815, sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::a842837602250c308519748738e05e6d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/Generic/DataSet.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 123
+    '   Total Lines: 229
+    '    Code Lines: 134
     ' Comment Lines: 69
-    '   Blank Lines: 23
-    '     File Size: 9.23 KB
+    '   Blank Lines: 26
+    '     File Size: 9.71 KB
 
 
     '     Class DataSet
@@ -46,8 +46,8 @@
     '         Properties: ID, MyHashCode, Vector
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Append, Copy, (+2 Overloads) LoadDataSet, LoadMatrix, SubSet
-    '                   ToString
+    '         Function: Append, Copy, JoinVector, (+2 Overloads) LoadDataSet, LoadMatrix
+    '                   SubSet, ToString
     ' 
     ' 
     ' /********************************************************************************/

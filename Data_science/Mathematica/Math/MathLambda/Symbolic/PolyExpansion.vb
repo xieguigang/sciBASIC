@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae56d81577da9e0c9e58075802e775c2, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Symbolic\PolyExpansion.vb"
+﻿#Region "Microsoft.VisualBasic::cf4f863597edd1c0a8f8c1d46fa8d261, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/PolyExpansion.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 91
     ' Comment Lines: 3
     '   Blank Lines: 19
-    '     File Size: 3.95 KB
+    '     File Size: 3.94 KB
 
 
     '     Module PolyExpansion

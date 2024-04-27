@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3805dfc96b451aa657abfc9aeeeae703, sciBASIC#\Data_science\MachineLearning\XGBoostDataSet\Conversion.vb"
+﻿#Region "Microsoft.VisualBasic::df0f490ffee65b26e9ba6059b8c59cb6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/XGBoostDataSet//Conversion.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 90
     ' Comment Lines: 0
     '   Blank Lines: 22
-    '     File Size: 4.18 KB
+    '     File Size: 4.29 KB
 
 
     ' Module Conversion

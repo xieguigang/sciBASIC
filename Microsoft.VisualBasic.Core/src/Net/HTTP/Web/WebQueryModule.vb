@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d9a446d64c69c485ac3eddcf2d1e1c6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
+﻿#Region "Microsoft.VisualBasic::b1ee04b67b0e34a0d5f73e3634ce0467, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Web/WebQueryModule.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
+    '   Total Lines: 70
     '    Code Lines: 31
-    ' Comment Lines: 16
+    ' Comment Lines: 25
     '   Blank Lines: 14
-    '     File Size: 2.04 KB
+    '     File Size: 2.35 KB
 
 
     '     Interface IHttpGet

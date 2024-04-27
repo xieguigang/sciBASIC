@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a4d1f6d0cdb1f1307a812a683d643ae, sciBASIC#\mime\text%yaml\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::5a4d1f6d0cdb1f1307a812a683d643ae, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//test/Module1.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 5
     '   Blank Lines: 8
-    '     File Size: 745.00 B
+    '     File Size: 745 B
 
 
     ' Module Module1

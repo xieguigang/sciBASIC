@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eadf212817182d8f7f0dd03a31b30136, sciBASIC#\Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::e21898ecaffc6d73cb30d7900e831485, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/Infrastructure/BTree/BTreeNode.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 115
     ' Comment Lines: 111
     '   Blank Lines: 40
-    '     File Size: 10.81 KB
+    '     File Size: 11.07 KB
 
 
     '     Class BTreeNode

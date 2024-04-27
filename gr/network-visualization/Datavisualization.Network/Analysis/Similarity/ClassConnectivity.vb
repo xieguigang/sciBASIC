@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab6a108f5b3236abbfa0bf7020aba4c4, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Similarity\ClassConnectivity.vb"
+﻿#Region "Microsoft.VisualBasic::dec49edf59a839fc8dd091ae1c836fcd, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Similarity/ClassConnectivity.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 36
+    '   Total Lines: 41
+    '    Code Lines: 35
     ' Comment Lines: 1
     '   Blank Lines: 5
-    '     File Size: 1.73 KB
+    '     File Size: 1.70 KB
 
 
     '     Module ClassConnectivity

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a214475483ee752eaea4d7afda4be596, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::5023f7796dda589a791a16cd8cbaea98, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Marshal/IntPtr(Of T).vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
+    '   Total Lines: 181
     '    Code Lines: 69
-    ' Comment Lines: 87
-    '   Blank Lines: 21
-    '     File Size: 7.15 KB
+    ' Comment Lines: 90
+    '   Blank Lines: 22
+    '     File Size: 7.26 KB
 
 
     '     Delegate Sub

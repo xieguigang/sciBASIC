@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f099861e8528ac2b4d1e7c1e1778e320, sciBASIC#\Microsoft.VisualBasic.Core\src\Data\Trinity\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::f099861e8528ac2b4d1e7c1e1778e320, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Trinity/Expression.vb"
 
     ' Author:
     ' 

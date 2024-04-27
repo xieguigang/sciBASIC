@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5db76c6c27cacfb60cc608fc9c5e531d, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::ee7ae9e9c706b6b711041aabcd15093c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/SCS.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 106
     ' Comment Lines: 21
     '   Blank Lines: 24
-    '     File Size: 5.60 KB
+    '     File Size: 5.62 KB
 
 
     '     Module SCS

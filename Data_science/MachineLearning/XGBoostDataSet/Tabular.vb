@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7dd4cd917e0ceeeef5eca7cb84d443d, sciBASIC#\Data_science\MachineLearning\XGBoostDataSet\Tabular.vb"
+﻿#Region "Microsoft.VisualBasic::437fdd296f49d14ae7d3c678dd574fdf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/XGBoostDataSet//Tabular.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 154
     ' Comment Lines: 10
     '   Blank Lines: 44
-    '     File Size: 6.90 KB
+    '     File Size: 7.11 KB
 
 
     ' Module Tabular

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5ce6694de32b9b465697962abf84c00, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::60fd2e4d3bddbe41241f1d968a4c742f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/BitmapScale.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 297
-    '    Code Lines: 165
-    ' Comment Lines: 95
-    '   Blank Lines: 37
-    '     File Size: 11.53 KB
+    '   Total Lines: 314
+    '    Code Lines: 174
+    ' Comment Lines: 100
+    '   Blank Lines: 40
+    '     File Size: 12.32 KB
 
 
     '     Module BitmapScale

@@ -1,64 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::73774cd933f6d8e81ca1fe76597e6f32, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d29d79c8ffa2462f688988a9f3629c9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Extensions/numpyExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 160
-'    Code Lines: 106
-' Comment Lines: 39
-'   Blank Lines: 15
-'     File Size: 6.67 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Enum ApplyOnAxis
-' 
-' 
-'  
-' 
-' 
-' 
-'     Class Numpy
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: array
-' 
-'     Module NumpyExtensions
-' 
-'         Function: Apply, Mean, Sort, Std, Sum
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 309
+    '    Code Lines: 200
+    ' Comment Lines: 75
+    '   Blank Lines: 34
+    '     File Size: 12.69 KB
+
+
+    '     Enum ApplyOnAxis
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Numpy
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: argsort, array, column_stack, eye, power
+    '                   Sort, (+2 Overloads) Sum, (+2 Overloads) Where
+    ' 
+    '     Module NumpyExtensions
+    ' 
+    '         Function: Apply, flatten, Mean, r, shape
+    '                   Sort, Std, sum, Sum, t
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

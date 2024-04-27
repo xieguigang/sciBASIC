@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
+﻿#Region "Microsoft.VisualBasic::3f7bcb6306bcd8e9843770240b6e4549, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/JavaMath.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2219
-    '    Code Lines: 194
+    '   Total Lines: 2216
+    '    Code Lines: 192
     ' Comment Lines: 1909
-    '   Blank Lines: 116
-    '     File Size: 110.59 KB
+    '   Blank Lines: 115
+    '     File Size: 110.45 KB
 
 
     '     Module JavaMath
@@ -50,11 +50,6 @@
     '                   (+2 Overloads) max, (+2 Overloads) min, (+2 Overloads) multiplyExact, (+2 Overloads) negateExact, pow
     '                   random, sin, sinh, sqrt, (+2 Overloads) subtractExact
     '                   tan, tanh, toDegrees, toIntExact, toRadians
-    '         Class RandomNumberGeneratorHolder
-    ' 
-    ' 
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

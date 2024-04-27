@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d04fe8a9ef18e2a5acd81bb32c461013, sciBASIC#\Data_science\Visualization\Plots\Scatter\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::49476d68c88847a89f0153ca4e85a6b5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/LinePlot.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 18
+    '   Total Lines: 20
+    '    Code Lines: 15
     ' Comment Lines: 1
     '   Blank Lines: 4
-    '     File Size: 850 B
+    '     File Size: 684 B
 
 
     ' Module LinePlot
