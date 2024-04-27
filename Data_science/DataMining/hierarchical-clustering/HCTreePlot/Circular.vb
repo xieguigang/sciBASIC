@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class Circular : Inherits DendrogramPanel
 
@@ -76,9 +76,9 @@ Public Class Circular : Inherits DendrogramPanel
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim plotRegion = canvas.PlotRegion
-        Dim maxRadius As Double = stdNum.Min(plotRegion.Width, plotRegion.Height) / 2
+        Dim maxRadius As Double = std.Min(plotRegion.Width, plotRegion.Height) / 2
         ' 每一个样本点都平分一段长度
-        Dim unitAngle As Double = (2 * stdNum.PI) / hist.Leafs
+        Dim unitAngle As Double = (2 * std.PI) / hist.Leafs
         Dim axisTicks As Double()
         Dim center As New PointF(plotRegion.Left + plotRegion.Width / 2, plotRegion.Top + plotRegion.Height / 2)
 
@@ -159,7 +159,7 @@ Public Class Circular : Inherits DendrogramPanel
         End If
 
         If partition.isLeaf OrElse showAllNodes Then
-            Call g.DrawCircle(New PointF(x, angle), theme.PointSize, pointColor)
+            Call g.DrawCircle(New PointF(x, angle), theme.pointSize, pointColor)
         End If
 
         If partition.isLeaf OrElse showAllLabels Then
@@ -172,7 +172,7 @@ Public Class Circular : Inherits DendrogramPanel
         If partition.isLeaf Then
             ' 绘制class颜色块
             Dim color As New SolidBrush(GetColor(partition.Name))
-            Dim d As Double = stdNum.Max(charWidth / 2, theme.PointSize)
+            Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
             Dim layout As New Rectangle With {
                 .Location = New Point(x + d, angle - unitAngle / 2),
                 .Size = New Size(labelPadding - d * 1.25, unitAngle)

@@ -1,56 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::2c700fc2f84936a956c26a48e5e87a8d, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\PDistClusteringAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 56
-    ' Comment Lines: 31
-    '   Blank Lines: 21
-    '     File Size: 4.88 KB
+' Summaries:
 
 
-    ' Class PDistClusteringAlgorithm
-    ' 
-    '     Function: accessFunction, createClusters, createLinkages, performClustering, performFlatClustering
-    '               performWeightedClustering
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 56
+' Comment Lines: 31
+'   Blank Lines: 21
+'     File Size: 4.88 KB
+
+
+' Class PDistClusteringAlgorithm
+' 
+'     Function: accessFunction, createClusters, createLinkages, performClustering, performFlatClustering
+'               performWeightedClustering
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
