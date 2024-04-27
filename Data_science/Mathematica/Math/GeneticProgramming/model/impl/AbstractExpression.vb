@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1af5df9b55ae5eab83d03345df8ff8e6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/AbstractExpression.vb"
+﻿#Region "Microsoft.VisualBasic::32c4aefba9f7a2d1b604d31e44c596a2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/AbstractExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 750 B
+    '     File Size: 748 B
 
 
     '     Class AbstractExpression
@@ -68,4 +68,3 @@ Namespace model.impl
 
     End Class
 End Namespace
-

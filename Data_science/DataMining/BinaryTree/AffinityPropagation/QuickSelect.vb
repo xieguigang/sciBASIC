@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7cf0a0b4c2af330a9bccb810d1a242, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/QuickSelect.vb"
+﻿#Region "Microsoft.VisualBasic::18513d7e1e346e0492bed43e10987ec7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/QuickSelect.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Namespace AffinityPropagation
 
     End Module
 End Namespace
-

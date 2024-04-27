@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7c370f007af05a01d0c42a54da76b4a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//BayesianCurveFitting.vb"
+﻿#Region "Microsoft.VisualBasic::d0f8edf93580fed05125c995a219daa2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//BayesianCurveFitting.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@ Public Class BayesianCurveFitting
     End Function
 
 End Class
-

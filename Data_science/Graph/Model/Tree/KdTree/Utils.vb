@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fbb8d718f296fe9813428cecb52d719, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/KdTree/Utils.vb"
+﻿#Region "Microsoft.VisualBasic::0d254e30b5195471c49cd8749e6608be, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/KdTree/Utils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
+    '   Total Lines: 20
     '    Code Lines: 11
     ' Comment Lines: 6
-    '   Blank Lines: 4
-    '     File Size: 589 B
+    '   Blank Lines: 3
+    '     File Size: 587 B
 
 
     '     Module Utils
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 

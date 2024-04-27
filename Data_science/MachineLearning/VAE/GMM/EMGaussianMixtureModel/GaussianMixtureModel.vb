@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c5a1ab211b7e311c50f7aa438b0b18b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/EMGaussianMixtureModel/GaussianMixtureModel.vb"
+﻿#Region "Microsoft.VisualBasic::5a0c13c9af0ff01bb01258bbcfa3c737, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/EMGaussianMixtureModel/GaussianMixtureModel.vb"
 
     ' Author:
     ' 
@@ -297,4 +297,3 @@ Namespace GMM.EMGaussianMixtureModel
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5bdecf7d5df825777aaa51811299573, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/UnaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::253a43d83cb9c6a4fbf586176fc839c6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/UnaryExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 232 B
+    '     File Size: 230 B
 
 
     '     Interface UnaryExpression
@@ -64,4 +64,3 @@ Namespace model
     End Interface
 
 End Namespace
-

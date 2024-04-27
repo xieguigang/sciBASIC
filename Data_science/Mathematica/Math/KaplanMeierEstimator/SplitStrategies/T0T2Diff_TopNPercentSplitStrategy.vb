@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c75b91587b326086fcec1e1cfddbe566, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/T0T2Diff_TopNPercentSplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::dea720cc42814fd43154c0fe3dee3067, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/T0T2Diff_TopNPercentSplitStrategy.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Namespace SplitStrategies
         End Property
     End Class
 End Namespace
-

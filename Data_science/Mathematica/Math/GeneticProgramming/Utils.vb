@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82025f2663fde2d63dde317a164b8ffc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::d0f8d8b03af7165bf9c957bbf6513ad5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//Utils.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 452 B
+    '     File Size: 450 B
 
 
     ' Module Utils
@@ -68,4 +68,3 @@ Friend Module Utils
     End Sub
 
 End Module
-

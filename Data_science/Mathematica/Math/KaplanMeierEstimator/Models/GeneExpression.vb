@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe4ab467fbc95e26029fc8c0227bbf58, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/GeneExpression.vb"
+﻿#Region "Microsoft.VisualBasic::f8f03288d5572db3b7ad15ef97839315, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/GeneExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 4
     '   Blank Lines: 7
-    '     File Size: 780 B
+    '     File Size: 778 B
 
 
     '     Class GeneExpression
@@ -78,4 +78,3 @@ Namespace Models
         End Property
     End Class
 End Namespace
-

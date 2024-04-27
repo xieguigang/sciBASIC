@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22f1e5ace5ba499e9fa12af8b812bf9b, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/Render.vb"
+﻿#Region "Microsoft.VisualBasic::fe3404f0fef8770b9ba55355675b190d, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/Render.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Public MustInherit Class Render
     Public MustOverride Function Table(head As String(), rows As IEnumerable(Of String())) As String
 
 End Class
-

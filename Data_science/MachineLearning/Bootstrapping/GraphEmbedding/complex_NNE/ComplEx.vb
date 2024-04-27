@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::053262b9491eb1bf8e818c6cef7d3a5a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE/ComplEx.vb"
+﻿#Region "Microsoft.VisualBasic::3ae9b459017ab34dca3fb1d8ebab21c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE/ComplEx.vb"
 
     ' Author:
     ' 
@@ -228,4 +228,3 @@ Namespace GraphEmbedding.complex_NNE
     End Class
 
 End Namespace
-

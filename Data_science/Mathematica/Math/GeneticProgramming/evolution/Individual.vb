@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c84acc45e5a3ab409eec4879cc4f2d28, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/Individual.vb"
+﻿#Region "Microsoft.VisualBasic::a5c60f0d439890c2981d0c22c7eef1bb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/Individual.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 438 B
+    '     File Size: 436 B
 
 
     '     Interface Individual
@@ -69,4 +69,3 @@ Namespace evolution
     End Interface
 
 End Namespace
-

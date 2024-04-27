@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5614c66859540ef64e4f59b6a909aef4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/Number.vb"
+﻿#Region "Microsoft.VisualBasic::457d070c9cf1c06f25667f70e20154ab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/Number.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 0
     '   Blank Lines: 12
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     '     Class Number
@@ -101,4 +101,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

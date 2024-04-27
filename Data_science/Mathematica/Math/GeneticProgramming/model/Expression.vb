@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f539896b7a5156d7007dabd4def934bf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/Expression.vb"
+﻿#Region "Microsoft.VisualBasic::ae360ea92a752d17742410c857dbb2ff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/Expression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 10
     '   Blank Lines: 8
-    '     File Size: 887 B
+    '     File Size: 885 B
 
 
     '     Interface Expression
@@ -79,4 +79,3 @@ Namespace model
     End Interface
 
 End Namespace
-

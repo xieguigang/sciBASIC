@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e77dcf87769d94d6609f81b452c3970, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/MultiThreadedDeepContrastiveDivergence.vb"
+﻿#Region "Microsoft.VisualBasic::85019bbf96b8888e9cc90032e85c54b8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/MultiThreadedDeepContrastiveDivergence.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 27
     '   Blank Lines: 26
-    '     File Size: 5.83 KB
+    '     File Size: 5.82 KB
 
 
     '     Class MultiThreadedDeepContrastiveDivergence
@@ -187,4 +187,3 @@ Namespace nn.rbm.learn
     End Class
 
 End Namespace
-

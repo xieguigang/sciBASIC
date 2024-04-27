@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f467acd7b038d739715d1647cd8d3788, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//Math.vb"
+﻿#Region "Microsoft.VisualBasic::014f5bcd17a5ff37909ce3d57b91c55f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//Math.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 23
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 764 B
+    '     File Size: 762 B
 
 
     ' Module Math
@@ -80,4 +80,3 @@ Public Module Math
         Return v.Log
     End Function
 End Module
-

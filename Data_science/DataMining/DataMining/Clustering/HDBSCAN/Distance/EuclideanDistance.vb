@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d861deb542b05bcbabbc691c8e6dfebd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/EuclideanDistance.vb"
+﻿#Region "Microsoft.VisualBasic::8a3335ba8382060b67ee54ecd9eb0a78, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/EuclideanDistance.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 897 B
+    '     File Size: 895 B
 
 
     '     Class EuclideanDistance
@@ -70,4 +70,3 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
-

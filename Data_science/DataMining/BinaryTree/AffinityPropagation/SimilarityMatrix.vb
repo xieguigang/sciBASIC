@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad499e7a05c5bea66d704ad84d10f2c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/SimilarityMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::030afa7b4d4407f19f2639ed5dcd5dac, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/SimilarityMatrix.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
+    '   Total Lines: 40
     '    Code Lines: 27
     ' Comment Lines: 7
-    '   Blank Lines: 7
+    '   Blank Lines: 6
     '     File Size: 1.50 KB
 
 
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.Evaluation

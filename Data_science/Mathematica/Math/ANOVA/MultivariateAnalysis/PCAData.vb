@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b41f865c3eaa385dc4b65f3b7885f207, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/PCAData.vb"
+﻿#Region "Microsoft.VisualBasic::533cf598102025a2b5594785cf09c943, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/PCAData.vb"
 
     ' Author:
     ' 
@@ -116,4 +116,3 @@ Public Module PCAData
         Return loading.Transpose
     End Function
 End Module
-

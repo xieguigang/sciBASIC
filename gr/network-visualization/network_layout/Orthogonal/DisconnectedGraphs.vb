@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fb959f47c2eab9f8f9bba8adf5e980f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/DisconnectedGraphs.vb"
+﻿#Region "Microsoft.VisualBasic::877ecb4f90e41ecfa0249870246f9737, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/DisconnectedGraphs.vb"
 
     ' Author:
     ' 
@@ -172,4 +172,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

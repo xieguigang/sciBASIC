@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c934d1d52c0e410c2a00c83527af0ca3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Power.vb"
+﻿#Region "Microsoft.VisualBasic::2e6899e3333cea2fe04f051d422f2812, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Power.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 772 B
+    '     File Size: 770 B
 
 
     '     Class Power
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

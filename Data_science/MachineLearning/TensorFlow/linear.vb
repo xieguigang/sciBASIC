@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::244f096b424668682199d9d7da4934bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//linear.vb"
+﻿#Region "Microsoft.VisualBasic::9318b51be5a371fa2592afaafe39799b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//linear.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 471 B
+    '     File Size: 469 B
 
 
     ' Module linear
@@ -62,4 +62,3 @@ Public Module linear
 
     End Function
 End Module
-

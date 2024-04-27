@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d9a61e64b520bdedad9c4e0987f26bb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//MNIST.vb"
+﻿#Region "Microsoft.VisualBasic::a56e43876fe554ebde1e9e246f6e82e2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//MNIST.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 113
     ' Comment Lines: 26
     '   Blank Lines: 31
-    '     File Size: 5.87 KB
+    '     File Size: 5.86 KB
 
 
     ' Class MNIST
@@ -226,4 +226,3 @@ Public Class MNIST : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

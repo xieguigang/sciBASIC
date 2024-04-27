@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f317abaa78cb5d5df2cf2748c373d533, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsMathematics.vb"
+﻿#Region "Microsoft.VisualBasic::706d006b1529215048ca5ff41870f7f3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsMathematics.vb"
 
     ' Author:
     ' 
@@ -187,4 +187,3 @@ Public Class StatisticsMathematics
         stdev = std.Sqrt(sum / (size - 1))
     End Sub
 End Class
-

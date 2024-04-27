@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bd36198d7943949b8ce4ffdb5598e67, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/ForceLayoutData.vb"
+﻿#Region "Microsoft.VisualBasic::b5b7e2584d2eb74f7882a5d1da7813f6, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/ForceLayoutData.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Namespace layout
     End Class
 
 End Namespace
-

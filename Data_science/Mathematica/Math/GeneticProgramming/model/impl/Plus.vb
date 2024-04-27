@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210f89a5be50c245fb3b176191851d71, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Plus.vb"
+﻿#Region "Microsoft.VisualBasic::cf3575428a0074aaab42016dfc7fc75c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Plus.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 734 B
+    '     File Size: 732 B
 
 
     '     Class Plus
@@ -74,4 +74,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

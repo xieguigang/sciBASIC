@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34b401f16e55def27e064c5478ca4c69, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::9906ab1c222c5bf319f28aab1fd2e11a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/DataSet.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
+    '   Total Lines: 81
     '    Code Lines: 58
     ' Comment Lines: 13
-    '   Blank Lines: 11
+    '   Blank Lines: 10
     '     File Size: 3.44 KB
 
 
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -131,4 +130,3 @@ Public Module DataSetHelper
         Return ds
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23afd11e521875f4e193bcec0b25dd9b, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/FileIO/LowLevel.vb"
+﻿#Region "Microsoft.VisualBasic::7f1c0ee6dd529bac07171e32cf03dd14, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/FileIO/LowLevel.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 1188
     ' Comment Lines: 316
     '   Blank Lines: 97
-    '     File Size: 86.04 KB
+    '     File Size: 86.03 KB
 
 
     '     Class LowLevel
@@ -1662,4 +1662,3 @@ Namespace XLSX.FileIO
 
     End Class
 End Namespace
-

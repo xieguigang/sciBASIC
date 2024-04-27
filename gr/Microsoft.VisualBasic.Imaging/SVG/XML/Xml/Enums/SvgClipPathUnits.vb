@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::593cdfe6d428ae8d10b7081cbbdc5bf6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgClipPathUnits.vb"
+﻿#Region "Microsoft.VisualBasic::6a617773d14eae6f08f19b89a1d17caa, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgClipPathUnits.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 452 B
+    '     File Size: 450 B
 
 
     '     Class SvgClipPathUnits
@@ -65,4 +65,3 @@ Namespace SVG.XML.Enums
         Public Shared ReadOnly Property ObjectBoundingBox As SvgClipPathUnits = New SvgClipPathUnits("objectBoundingBox")
     End Class
 End Namespace
-

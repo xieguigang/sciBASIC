@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e5102c100bc61f9208a8a98d3179063, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/polyline.vb"
+﻿#Region "Microsoft.VisualBasic::fb34045d0f32bd3b0d8195b19e50d32b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/polyline.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Namespace SVG.XML
         End Function
     End Class
 End Namespace
-

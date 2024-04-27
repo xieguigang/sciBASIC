@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2dd15dea96428d5cd7900d06f41ea4c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/ISplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::096e533edf419849ad86f807701a81c8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/ISplitStrategy.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 410 B
+    '     File Size: 408 B
 
 
     '     Interface ISplitStrategy
@@ -62,4 +62,3 @@ Namespace SplitStrategies
         Sub DoSplit(ByVal genes As IEnumerable(Of GeneExpression), <Out> ByRef groupA As IEnumerable(Of Patient), <Out> ByRef groupB As IEnumerable(Of Patient))
     End Interface
 End Namespace
-

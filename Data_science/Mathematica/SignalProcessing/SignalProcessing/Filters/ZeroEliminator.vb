@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::946bf67c6fc84557e67ef01b01ed2040, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/ZeroEliminator.vb"
+﻿#Region "Microsoft.VisualBasic::ea9469c038b3cd33fdf7903bf19d7089, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/ZeroEliminator.vb"
 
     ' Author:
     ' 
@@ -170,4 +170,3 @@ Namespace Filters
     End Class
 
 End Namespace
-

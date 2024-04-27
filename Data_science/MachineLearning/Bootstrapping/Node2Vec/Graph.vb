@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b186a1e870ea068991c280d6fe724509, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/Graph.vb"
+﻿#Region "Microsoft.VisualBasic::9e2b57e2426aab679139e2975251ba88, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/Graph.vb"
 
     ' Author:
     ' 
@@ -299,4 +299,3 @@ Namespace node2vec
     End Class
 
 End Namespace
-

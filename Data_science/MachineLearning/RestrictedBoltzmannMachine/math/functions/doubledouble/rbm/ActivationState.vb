@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9dae877df525e2777e669bd537630dc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/rbm/ActivationState.vb"
+﻿#Region "Microsoft.VisualBasic::c0d7d7c87e2c701af4cee88aeddb6f3a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/rbm/ActivationState.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 365 B
+    '     File Size: 363 B
 
 
     '     Class ActivationState
@@ -62,4 +62,3 @@ Namespace math.functions.doubledouble.rbm
     End Class
 
 End Namespace
-

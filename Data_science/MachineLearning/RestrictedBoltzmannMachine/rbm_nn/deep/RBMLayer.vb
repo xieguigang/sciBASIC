@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df6e6f0f2c06a9029d5a6e2e59a5ed22, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/deep/RBMLayer.vb"
+﻿#Region "Microsoft.VisualBasic::8425375c542f477aa19c3673f0e0942d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/deep/RBMLayer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 5
     '   Blank Lines: 9
-    '     File Size: 820 B
+    '     File Size: 818 B
 
 
     '     Class RBMLayer
@@ -83,4 +83,3 @@ Namespace nn.rbm.deep
 
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42cb8ca6a77908e524e709de4f40216f, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Boids/Boid.vb"
+﻿#Region "Microsoft.VisualBasic::f223f40fb8de1cf15e013b8ca33c01d3, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Boids/Boid.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 49
     ' Comment Lines: 6
     '   Blank Lines: 12
-    '     File Size: 2.26 KB
+    '     File Size: 2.25 KB
 
 
     '     Class Boid
@@ -121,4 +121,3 @@ Namespace Boids
         End Function
     End Class
 End Namespace
-

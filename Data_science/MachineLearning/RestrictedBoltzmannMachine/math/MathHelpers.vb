@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90074318b9107c36e720646deb5b67a8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/MathHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::94b26c1192c484a2d9df7ad7f7d9a368, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/MathHelpers.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
+    '   Total Lines: 49
     '    Code Lines: 34
     ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 1.46 KB
+    '   Blank Lines: 15
+    '     File Size: 1.45 KB
 
 
     '     Class DoubleFunction
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra

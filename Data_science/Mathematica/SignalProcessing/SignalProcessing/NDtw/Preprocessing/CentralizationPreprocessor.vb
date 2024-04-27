@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaa9e6e09e23d6d99a0347fd6b5c2dd9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/CentralizationPreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::616513fac774ab64fb8535159bb821e0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/CentralizationPreprocessor.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 597 B
+    '     File Size: 595 B
 
 
     '     Class CentralizationPreprocessor
@@ -69,4 +69,3 @@ Namespace NDtw.Preprocessing
         End Function
     End Class
 End Namespace
-

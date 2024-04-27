@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eb6891d5e96b38be051e00f46ae6d15, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Power.vb"
+﻿#Region "Microsoft.VisualBasic::1db974dbe1d0902d314d44b2e535460c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Power.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
+    '   Total Lines: 19
     '    Code Lines: 12
     ' Comment Lines: 3
-    '   Blank Lines: 5
-    '     File Size: 462 B
+    '   Blank Lines: 4
+    '     File Size: 458 B
 
 
     '     Class Power
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace math.functions
     ''' <summary>
@@ -71,4 +70,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f87691c0ee1c526d4adff4f826afd9ec, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsObject.vb"
+﻿#Region "Microsoft.VisualBasic::93809bea614973964a3b1a4a4cd4f663, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsObject.vb"
 
     ' Author:
     ' 
@@ -272,4 +272,3 @@ Public Class StatisticsObject
         Return XDataMatrix.GetLength(1)
     End Function
 End Class
-

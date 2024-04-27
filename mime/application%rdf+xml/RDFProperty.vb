@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebe3fdb207e5cac4e0e7da78235d8d55, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//RDFProperty.vb"
+﻿#Region "Microsoft.VisualBasic::e597fae89faa802ff51afc46f797d496, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//RDFProperty.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
+    '   Total Lines: 107
     '    Code Lines: 65
     ' Comment Lines: 24
-    '   Blank Lines: 19
-    '     File Size: 3.39 KB
+    '   Blank Lines: 18
+    '     File Size: 3.38 KB
 
 
     ' Class RDFProperty
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
@@ -165,4 +164,3 @@ Public Class EntityProperty
         Return res.value <> str
     End Operator
 End Class
-

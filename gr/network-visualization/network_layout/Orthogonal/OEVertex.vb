@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da24479613f2824ba5ea853dc5a2fb93, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OEVertex.vb"
+﻿#Region "Microsoft.VisualBasic::5886011bc516ba70438fec9e499fdbe5, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OEVertex.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 20
     ' Comment Lines: 9
     '   Blank Lines: 5
-    '     File Size: 976 B
+    '     File Size: 974 B
 
 
     '     Class OEVertex
@@ -85,4 +85,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f9ac00e9de55942cac7580ae743a3ff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Round.vb"
+﻿#Region "Microsoft.VisualBasic::1ff1ffbb7a653c3f750c51318f2567a8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Round.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 715 B
+    '     File Size: 713 B
 
 
     '     Class Round
@@ -78,4 +78,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

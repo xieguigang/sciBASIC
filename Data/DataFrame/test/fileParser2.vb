@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66180195cac7a3d150bc17365d055d91, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/fileParser2.vb"
+﻿#Region "Microsoft.VisualBasic::9461b05ebffb2d7b809583469b447b8b, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/fileParser2.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 1
     '   Blank Lines: 8
-    '     File Size: 560 B
+    '     File Size: 558 B
 
 
     ' Module fileParser2
@@ -70,4 +70,3 @@ Module fileParser2
     End Sub
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4daa29a7ccc052e662ec0f42659d910a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/TupleHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d813928dc077075814d5aaad6fbf489b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/TupleHelper.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 844 B
+    '     File Size: 842 B
 
 
     ' Module TupleHelper
@@ -78,4 +78,3 @@ Public Module TupleHelper
         d = t.Item4
     End Sub
 End Module
-

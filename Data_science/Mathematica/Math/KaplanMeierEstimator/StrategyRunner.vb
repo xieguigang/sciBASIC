@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d14de5138616da57434b1b47a273c4ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//StrategyRunner.vb"
+﻿#Region "Microsoft.VisualBasic::de618e67f1212fdd64cc4be7ace788a7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//StrategyRunner.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 1.98 KB
+    '     File Size: 1.97 KB
 
 
     ' Class StrategyRunner
@@ -94,4 +94,3 @@ Public Class StrategyRunner
         Return sortedResults
     End Function
 End Class
-

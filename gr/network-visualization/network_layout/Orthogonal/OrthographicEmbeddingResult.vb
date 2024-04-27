@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c05fd2c6aa0f5fc213e6ee7e30b821ac, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbeddingResult.vb"
+﻿#Region "Microsoft.VisualBasic::1994c934770026c522b0ef09032470cf, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbeddingResult.vb"
 
     ' Author:
     ' 
@@ -1379,4 +1379,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

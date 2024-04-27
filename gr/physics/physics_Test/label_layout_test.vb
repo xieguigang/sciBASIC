@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab48e207c27639312921b5886207d149, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/label_layout_test.vb"
+﻿#Region "Microsoft.VisualBasic::df3efb65f4f18d5c9c0f6e65fd683cfa, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/label_layout_test.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Module label_layout_test
         Pause()
     End Sub
 End Module
-

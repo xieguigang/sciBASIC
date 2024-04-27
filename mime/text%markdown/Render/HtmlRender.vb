@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad188e51448e77b04725678ed91124c7, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::0f222236f8d764134d20811e5b692997, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/HtmlRender.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ Public Class HtmlRender : Inherits Render
         Return $"<u>{text}</u>"
     End Function
 End Class
-

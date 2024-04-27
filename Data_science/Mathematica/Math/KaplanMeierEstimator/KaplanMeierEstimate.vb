@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee301abf1167abfd5be0db0e251c0d9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//KaplanMeierEstimate.vb"
+﻿#Region "Microsoft.VisualBasic::5786d956ce34f2a2d7e5fcdefa8fec1d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//KaplanMeierEstimate.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 156
     ' Comment Lines: 27
     '   Blank Lines: 39
-    '     File Size: 7.96 KB
+    '     File Size: 7.95 KB
 
 
     ' Class KaplanMeierEstimate
@@ -287,4 +287,3 @@ Public Class KaplanMeierEstimate
         PValue = 1 - Distribution.ChiSquare(statistic, freedom:=1)
     End Sub
 End Class
-

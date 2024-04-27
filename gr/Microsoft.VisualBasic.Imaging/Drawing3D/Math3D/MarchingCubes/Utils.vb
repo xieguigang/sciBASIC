@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4be25b50901a1aed729f2ace89b47a2, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/MarchingCubes/Utils.vb"
+﻿#Region "Microsoft.VisualBasic::e23992f8ba5a1fe47724ac17d4388db7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/MarchingCubes/Utils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 7
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 288 B
+    '   Blank Lines: 2
+    '     File Size: 286 B
 
 
     '     Module Utils
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Drawing3D.Math3D.MarchingCubes
 

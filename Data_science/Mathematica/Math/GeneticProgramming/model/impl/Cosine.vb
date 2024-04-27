@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f3d3f601d20acdd6ad4061deea2d240, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Cosine.vb"
+﻿#Region "Microsoft.VisualBasic::f258edd533a828fc51de2ebc6829f751, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Cosine.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 648 B
+    '     File Size: 646 B
 
 
     '     Class Cosine
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

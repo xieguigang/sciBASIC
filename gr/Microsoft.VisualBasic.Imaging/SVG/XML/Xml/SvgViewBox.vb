@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::061721f25e2927d0db099c4fdd35a34e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/SvgViewBox.vb"
+﻿#Region "Microsoft.VisualBasic::55cfc20f22e2ce95b68ca1164814e238, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/SvgViewBox.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 1.30 KB
+    '     File Size: 1.29 KB
 
 
     '     Structure SvgViewBox
@@ -89,4 +89,3 @@ Namespace SVG.XML
 
     End Structure
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6222748ebf99212fc4b0733c12f379f8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::713d015c9a577a7fb41ca1a08822a95a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/Matrix.vb"
 
     ' Author:
     ' 
@@ -302,4 +302,3 @@ Namespace math
     End Class
 
 End Namespace
-

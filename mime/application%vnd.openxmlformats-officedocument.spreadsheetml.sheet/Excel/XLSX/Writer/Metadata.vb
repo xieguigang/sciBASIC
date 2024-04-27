@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d6492c1269e76ee028882398e0d1599, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::0bc25f489efc3475020b9259c5ab993d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Metadata.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 72
     ' Comment Lines: 63
     '   Blank Lines: 18
-    '     File Size: 6.78 KB
+    '     File Size: 6.77 KB
 
 
     '     Class Metadata
@@ -211,4 +211,3 @@ Namespace XLSX.Writer
         End Function
     End Class
 End Namespace
-

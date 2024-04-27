@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ce2928aa5fdca3839affb1ab812c70b, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::795c95d178648715b029371fca99c5d6, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

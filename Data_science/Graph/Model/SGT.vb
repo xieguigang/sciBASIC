@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::beec9ea98ed2e93c678713163600c88d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/SGT.vb"
+﻿#Region "Microsoft.VisualBasic::36d21ca763d4147a48ee52cc39d43b57, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/SGT.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 170
     ' Comment Lines: 105
     '   Blank Lines: 48
-    '     File Size: 11.87 KB
+    '     File Size: 11.86 KB
 
 
     ' Class SequenceGraphTransform
@@ -386,4 +386,3 @@ Public Class SequenceGraphTransform
         Return sgtv
     End Function
 End Class
-

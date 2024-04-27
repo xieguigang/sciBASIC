@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::495d7540bbc19e457b6e702e77cf45b8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Minus.vb"
+﻿#Region "Microsoft.VisualBasic::8402c0ec77029fa85f480aa5cad06daa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Minus.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 735 B
+    '     File Size: 733 B
 
 
     '     Class Minus
@@ -74,4 +74,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::392de5cb3c30130afa4f0a4c69c1031a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//PQTree.vb"
+﻿#Region "Microsoft.VisualBasic::224514d95b523dffd800775d954a4864, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//PQTree.vb"
 
     ' Author:
     ' 
@@ -1021,4 +1021,3 @@ Public Class PQTree
     End Function
 
 End Class
-

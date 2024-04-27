@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c437787b013709df5a51166002b869f6, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/TextRender.vb"
+﻿#Region "Microsoft.VisualBasic::d018a94e25471bceb316e5f50dfc84b7, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//Render/TextRender.vb"
 
     ' Author:
     ' 
@@ -138,4 +138,3 @@ Public Class TextRender : Inherits Render
         Return sb.ToString
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eed00a3f6c7c22670c3c07fff732bc6e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinOutlineTextMetric.vb"
+﻿#Region "Microsoft.VisualBasic::655841810f34e7370a25b3536fb3c8ea, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinOutlineTextMetric.vb"
 
     ' Author:
     ' 
@@ -241,4 +241,3 @@ Public Class WinOutlineTextMetric
         otmpFullName = DC.ReadString()
     End Sub
 End Class
-

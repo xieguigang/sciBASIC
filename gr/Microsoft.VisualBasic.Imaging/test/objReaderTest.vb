@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b00339f142e823a07bcacac37a212ed, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/objReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::77f38d32f4d7175cd68bfa18886fdc28, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/objReaderTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 342 B
+    '     File Size: 340 B
 
 
     ' Module objReaderTest
@@ -62,4 +62,3 @@ Module objReaderTest
         End Using
     End Sub
 End Module
-

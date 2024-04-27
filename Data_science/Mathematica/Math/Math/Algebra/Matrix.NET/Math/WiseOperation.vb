@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b98484f55a8f45443e17cbe52891f15, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Math/WiseOperation.vb"
+﻿#Region "Microsoft.VisualBasic::214369396ce57aafd3fbbfb35dee4a42, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Math/WiseOperation.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
+    '   Total Lines: 31
     '    Code Lines: 24
     ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 943 B
+    '   Blank Lines: 7
+    '     File Size: 941 B
 
 
     '     Class WiseOperation
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Linq
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c136fdcacabcac412fd9de5f02fbfbd3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/RamerDouglasPeuckerFilter.vb"
+﻿#Region "Microsoft.VisualBasic::665989b8f14294efc71d355d28fb42f4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/RamerDouglasPeuckerFilter.vb"
 
     ' Author:
     ' 
@@ -127,4 +127,3 @@ Namespace Filters
     End Class
 
 End Namespace
-

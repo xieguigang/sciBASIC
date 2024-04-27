@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4324cbf67e421b77b0ac91037c4bb974, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Test/Module2.vb"
+﻿#Region "Microsoft.VisualBasic::d44e04cece63bbad1e6a11019e1848e2, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Test/Module2.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 898 B
+    '     File Size: 896 B
 
 
     ' Module Module2
@@ -67,4 +67,3 @@ Module Module2
         Pause()
     End Sub
 End Module
-

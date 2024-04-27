@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b549c1c02bea63de8b819dad7952b0a1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/T0_TopNPercentSplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::04ce934598f3f075aa23b08da857d882, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/T0_TopNPercentSplitStrategy.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 34
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.94 KB
+    '     File Size: 1.93 KB
 
 
     '     Class T0_TopNPercentSplitStrategy
@@ -96,4 +96,3 @@ Namespace SplitStrategies
         End Property
     End Class
 End Namespace
-

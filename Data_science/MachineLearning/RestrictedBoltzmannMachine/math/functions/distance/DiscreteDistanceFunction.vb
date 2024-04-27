@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd63cf60dc0ac8ed293a9774629b3757, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/DiscreteDistanceFunction.vb"
+﻿#Region "Microsoft.VisualBasic::be31637638f0aa5cf521fd39e3489935, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/DiscreteDistanceFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
+    '   Total Lines: 26
     '    Code Lines: 17
     ' Comment Lines: 3
-    '   Blank Lines: 7
-    '     File Size: 782 B
+    '   Blank Lines: 6
+    '     File Size: 778 B
 
 
     '     Class DiscreteDistanceFunction
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace math.functions.distance
 
@@ -77,4 +76,3 @@ Namespace math.functions.distance
     End Class
 
 End Namespace
-

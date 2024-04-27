@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be8004bf4f0bbcbbfec63c1b0ee5ba66, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/MeanSquareError.vb"
+﻿#Region "Microsoft.VisualBasic::544929a4890dddfea821107351eb34ba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/MeanSquareError.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 313 B
+    '     File Size: 311 B
 
 
     '     Class MeanSquareError
@@ -61,4 +61,3 @@ Namespace evolution.measure
     End Class
 
 End Namespace
-

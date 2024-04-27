@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af468238a9b339a638c9e539c8295734, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2b7566c350af7e5e93a3d28bdea81f3, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 51
     ' Comment Lines: 9
     '   Blank Lines: 13
-    '     File Size: 2.98 KB
+    '     File Size: 2.97 KB
 
 
     '     Class MySettings
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

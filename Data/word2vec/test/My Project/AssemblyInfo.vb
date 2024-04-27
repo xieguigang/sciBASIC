@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dcf9a304b6d5c656ef8178a7395ff3a, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cf8b54c3b4ca74bf285b32614dd02164, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//test/My Project/AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 15
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.14 KB
 
 
     ' 
@@ -81,4 +81,3 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyVersion("1.0.0.0")>
 <Assembly: AssemblyFileVersion("1.0.0.0")>
-

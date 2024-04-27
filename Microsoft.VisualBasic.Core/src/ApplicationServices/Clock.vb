@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e8bacd0ded2bc80b8ad2cc4b8b4408b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Clock.vb"
+﻿#Region "Microsoft.VisualBasic::fac0ffa78c93afafe8b4027d2830e7de, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Clock.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 56
     ' Comment Lines: 0
     '   Blank Lines: 18
-    '     File Size: 1.96 KB
+    '     File Size: 1.95 KB
 
 
     '     Class Clock
@@ -130,4 +130,3 @@ Namespace ApplicationServices
     End Class
 
 End Namespace
-

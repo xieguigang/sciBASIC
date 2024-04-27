@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5b7ea8efed407000a7f821201165b08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/NormalizationPreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::49d66cf073edf9990ac70a60e61494af, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/NormalizationPreprocessor.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Namespace NDtw.Preprocessing
         End Function
     End Class
 End Namespace
-

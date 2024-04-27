@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::746104a7e42b2479c2cca5374ddd044d, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8d3070a7ef77d618e483b59a6bd56f7e, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/My Project/Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

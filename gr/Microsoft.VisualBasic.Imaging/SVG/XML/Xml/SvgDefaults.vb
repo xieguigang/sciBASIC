@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce234cf51d67e9fec8262722a05633eb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/SvgDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::9ee5b34274a4f448ba9c4299a9425880, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/SvgDefaults.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Namespace SVG.XML
         Miter
     End Enum
 End Namespace
-

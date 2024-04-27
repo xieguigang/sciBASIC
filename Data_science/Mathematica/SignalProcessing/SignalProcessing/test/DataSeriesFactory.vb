@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46cb001da3e655b9810cf12a7eb4813d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/DataSeriesFactory.vb"
+﻿#Region "Microsoft.VisualBasic::b3f61498c96429f7a4b9dbaacc90099d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/DataSeriesFactory.vb"
 
     ' Author:
     ' 
@@ -6168,4 +6168,3 @@ Namespace NDtw.Examples
         End Function
     End Class
 End Namespace
-

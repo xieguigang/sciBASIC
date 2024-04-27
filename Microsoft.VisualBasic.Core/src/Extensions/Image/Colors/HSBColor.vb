@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac7f694926f517a23afe83f1188ee375, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/HSBColor.vb"
+﻿#Region "Microsoft.VisualBasic::7119a6a1b3c0dff8ddb496381ec0d0eb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/HSBColor.vb"
 
     ' Author:
     ' 
@@ -169,4 +169,3 @@ Namespace Imaging
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aa11a366af2ec6ceefb2b59e7999c50, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/util/NegativeTripleGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::717f847d6c1b2c6fd4b86f535731fa35, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/util/NegativeTripleGenerator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 59
     ' Comment Lines: 0
     '   Blank Lines: 18
-    '     File Size: 3.19 KB
+    '     File Size: 3.18 KB
 
 
     '     Class NegativeTripleGenerator
@@ -128,4 +128,3 @@ Namespace GraphEmbedding.util
     End Class
 
 End Namespace
-

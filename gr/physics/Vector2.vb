@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6745937994ca2c1cb0d614e2c73002e, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Vector2.vb"
+﻿#Region "Microsoft.VisualBasic::f6f340f5d1434bb5e4164445484152d4, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Vector2.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 112
     ' Comment Lines: 0
     '   Blank Lines: 22
-    '     File Size: 4.06 KB
+    '     File Size: 4.05 KB
 
 
     ' Class Vector2
@@ -188,4 +188,3 @@ Public Class Vector2 : Inherits Vector2D
         End If
     End Operator
 End Class
-

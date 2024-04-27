@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b34b16bb699a51744b02e2ac671c3e95, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/PearsonCorrelation.vb"
+﻿#Region "Microsoft.VisualBasic::daf74a53cdaafaedd888669914a670ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/PearsonCorrelation.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 1.68 KB
+    '     File Size: 1.67 KB
 
 
     '     Class PearsonCorrelation
@@ -86,4 +86,3 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
-

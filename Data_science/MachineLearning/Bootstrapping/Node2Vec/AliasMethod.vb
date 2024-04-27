@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fe7fb2517800f86d73d7a34fe05c28, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/AliasMethod.vb"
+﻿#Region "Microsoft.VisualBasic::67a51c6fc9d58e07a359066e123a18d9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/AliasMethod.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 53
     ' Comment Lines: 67
     '   Blank Lines: 21
-    '     File Size: 6.41 KB
+    '     File Size: 6.40 KB
 
 
     '     Class AliasMethod
@@ -192,4 +192,3 @@ Namespace node2vec
     End Class
 
 End Namespace
-

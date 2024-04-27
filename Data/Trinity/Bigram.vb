@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::322a7ffff8a9edd7853f0374cd4ecf49, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Bigram.vb"
+﻿#Region "Microsoft.VisualBasic::713273939ca40df842bbd86f21753aea, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Bigram.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Public Class Bigram
     End Function
 
 End Class
-

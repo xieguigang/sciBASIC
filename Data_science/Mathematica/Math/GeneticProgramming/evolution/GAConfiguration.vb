@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e698ce28e1a0f08546ca608920f7313f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::df5b877d873a62b63764377641e3f489, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAConfiguration.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace evolution
     End Class
 
 End Namespace
-

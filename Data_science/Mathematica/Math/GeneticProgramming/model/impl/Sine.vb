@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1fad9b6d8709a7eb0244f741400badc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Sine.vb"
+﻿#Region "Microsoft.VisualBasic::1bd6f6e85c7b779d811375e200b64c0a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Sine.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 646 B
+    '     File Size: 644 B
 
 
     '     Class Sine
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

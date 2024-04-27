@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::000f582c5302d30d48c45c220653a0c3, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Container/SvgGroup.vb"
+﻿#Region "Microsoft.VisualBasic::446b8996188619428f6740f4a326c96b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Container/SvgGroup.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 13
     ' Comment Lines: 7
     '   Blank Lines: 4
-    '     File Size: 872 B
+    '     File Size: 870 B
 
 
     '     Class SvgGroup
@@ -75,4 +75,3 @@ Namespace SVG.XML
         End Function
     End Class
 End Namespace
-

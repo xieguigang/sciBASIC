@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35376dc5668f400a9f8d461077eb56d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeEAN13.vb"
+﻿#Region "Microsoft.VisualBasic::4608d2af6cc3f52effcfbfa1ad5cb21e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeEAN13.vb"
 
     ' Author:
     ' 
@@ -392,4 +392,3 @@ Public Class BarcodeEAN13
         Return
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bf9ec9238f93839563ee58ac1583fc2, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/SegmentLengthEmbeddingComparator.vb"
+﻿#Region "Microsoft.VisualBasic::577036fccb7e44589b404dc2681907e1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/SegmentLengthEmbeddingComparator.vb"
 
     ' Author:
     ' 
@@ -108,4 +108,3 @@ Namespace Orthogonal.optimization
     End Class
 
 End Namespace
-

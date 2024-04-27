@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8529b77254f704b5f32874ae12fcc327, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMVAE/Metrics.vb"
+﻿#Region "Microsoft.VisualBasic::f371d457385bf34682b9a8b06b7ac96d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMVAE/Metrics.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Public Class Metrics
         Return linear.normalized_mutual_info_score(Y_pred, Y, average_method:="arithmetic")
     End Function
 End Class
-

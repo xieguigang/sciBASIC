@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc522b2b365c7ad32b93beb7249a75b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/OrthographicEmbeddingPathOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::4bfe7e54f1d234c29139b11a17abf47e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/OrthographicEmbeddingPathOptimizer.vb"
 
     ' Author:
     ' 
@@ -438,4 +438,3 @@ Namespace Orthogonal.optimization
     End Class
 
 End Namespace
-

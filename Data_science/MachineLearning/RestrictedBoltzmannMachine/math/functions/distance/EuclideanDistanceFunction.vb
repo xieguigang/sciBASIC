@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c344ec27ac975cac85eeed7312fb0adb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/EuclideanDistanceFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d2f86b5d966d0eb86447e41dd618d393, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/EuclideanDistanceFunction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
+    '   Total Lines: 23
     '    Code Lines: 15
     ' Comment Lines: 3
-    '   Blank Lines: 6
-    '     File Size: 733 B
+    '   Blank Lines: 5
+    '     File Size: 729 B
 
 
     '     Class EuclideanDistanceFunction
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace math.functions.distance
 
@@ -74,4 +73,3 @@ Namespace math.functions.distance
     End Class
 
 End Namespace
-

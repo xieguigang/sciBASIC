@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ded5fa4bf4f6b0aafd3fbb6cfbcb49a4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Relation.vb"
+﻿#Region "Microsoft.VisualBasic::6600801b6869f62744591794b66522f4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Relation.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 10
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 343 B
+    '     File Size: 341 B
 
 
     '     Structure Relation
@@ -67,4 +67,3 @@ Namespace GraphEmbedding.struct
     End Structure
 
 End Namespace
-

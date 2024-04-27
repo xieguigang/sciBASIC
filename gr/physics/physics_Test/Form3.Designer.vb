@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95340ed118428a15e50dddc33aa6ae6a, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form3.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::510f9d9d03c00a25e676a09ed2614441, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form3.Designer.vb"
 
     ' Author:
     ' 
@@ -109,4 +109,3 @@ Partial Class Form3
     Friend WithEvents PictureBox1 As Windows.Forms.PictureBox
     Friend WithEvents Timer1 As Windows.Forms.Timer
 End Class
-

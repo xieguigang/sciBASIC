@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a563f7e9ef956d09cd4d3e5b52be5106, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/RandomGaussian.vb"
+﻿#Region "Microsoft.VisualBasic::8e117277203e753f2654128c237f56fb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/RandomGaussian.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 3
     '   Blank Lines: 3
-    '     File Size: 399 B
+    '     File Size: 397 B
 
 
     '     Class RandomGaussian
@@ -65,4 +65,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

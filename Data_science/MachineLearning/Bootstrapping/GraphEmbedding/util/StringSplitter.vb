@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84d4b4b62d88770994e450358cb51db4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/util/StringSplitter.vb"
+﻿#Region "Microsoft.VisualBasic::901d2f500ed3228ef260d0dfb9e71576, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/util/StringSplitter.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Namespace GraphEmbedding.util
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b91cfee90a029429d3474e81b400fc, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/Write_csv.vb"
+﻿#Region "Microsoft.VisualBasic::27dd55ac0abfb18ffb22c3c8971d67ac, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/Write_csv.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 97
     ' Comment Lines: 31
     '   Blank Lines: 15
-    '     File Size: 6.17 KB
+    '     File Size: 6.16 KB
 
 
     ' Module Write_csv
@@ -200,4 +200,3 @@ Public Module Write_csv
         Return success
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d88eba0153ece925bcc404de30e236b4, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ff97fccb53b4c2bbee5a396f5dad63eb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//test/My Project/Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

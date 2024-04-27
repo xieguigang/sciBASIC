@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66d72e03b20321b4fc30d105355cbf99, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/Graph.vb"
+﻿#Region "Microsoft.VisualBasic::cf8253323cfbf97c2ded28c572c4a1f3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/Graph.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 932 B
+    '     File Size: 930 B
 
 
     '     Class Graph
@@ -83,4 +83,3 @@ Namespace AffinityPropagation
 
     End Class
 End Namespace
-

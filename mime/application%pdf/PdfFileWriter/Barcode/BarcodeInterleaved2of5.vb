@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53abb1e6ca0fdc33f70ae8a9bca81410, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeInterleaved2of5.vb"
+﻿#Region "Microsoft.VisualBasic::59edefc73930f76d95d6cf2ef811b4a9, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeInterleaved2of5.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Public Class BarcodeInterleaved2of5
         Return
     End Sub
 End Class
-

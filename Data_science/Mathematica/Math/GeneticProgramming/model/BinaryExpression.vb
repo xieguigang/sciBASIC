@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85eb3e0b886e0cea6453d07d25b87dcf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::3b0d9f1ae1d1de8cf775c259991f45ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 366 B
+    '     File Size: 364 B
 
 
     '     Interface BinaryExpression
@@ -67,4 +67,3 @@ Namespace model
     End Interface
 
 End Namespace
-

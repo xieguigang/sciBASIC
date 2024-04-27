@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b861038d82a007f91fd280eb781bcd6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Container/SvgClipPath.vb"
+﻿#Region "Microsoft.VisualBasic::b858a11b6eb3e1e746ab8a01d5d73336, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Container/SvgClipPath.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 975 B
+    '     File Size: 973 B
 
 
     '     Class SvgClipPath
@@ -82,4 +82,3 @@ Namespace SVG.XML
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13bc22c8737cc23af7fcaa3d6786b8c9, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/TextBox/TextBoxSeg.vb"
+﻿#Region "Microsoft.VisualBasic::aa45917fb0191d61ce70a824de89c307, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/TextBox/TextBoxSeg.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
+    '   Total Lines: 93
     '    Code Lines: 32
     ' Comment Lines: 49
-    '   Blank Lines: 13
-    '     File Size: 3.02 KB
+    '   Blank Lines: 12
+    '     File Size: 3.01 KB
 
 
     ' Class TextBoxSeg
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 
@@ -147,4 +146,3 @@ Public Class TextBoxSeg
         Return Me.Font Is Font AndAlso Me.FontSize = FontSize AndAlso Me.DrawStyle = DrawStyle AndAlso Me.FontColor = FontColor AndAlso AnnotAction.IsEqual(Me.AnnotAction, AnnotAction)
     End Function
 End Class
-

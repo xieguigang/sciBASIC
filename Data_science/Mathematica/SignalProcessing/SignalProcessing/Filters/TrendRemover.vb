@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::276ed793c40e9a3c2e12b9d4759b4350, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/TrendRemover.vb"
+﻿#Region "Microsoft.VisualBasic::91c66a358dd4b36b4e71913688a89f7b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/TrendRemover.vb"
 
     ' Author:
     ' 
@@ -113,4 +113,3 @@ Namespace Filters
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0d2b5fa79e39d54c111445599adf85, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/Flags.vb"
+﻿#Region "Microsoft.VisualBasic::d36a78a4851bbc84d5a2a60cc82a95e0, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/Flags.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
+    '   Total Lines: 63
     '    Code Lines: 16
     ' Comment Lines: 42
-    '   Blank Lines: 6
-    '     File Size: 1.05 KB
+    '   Blank Lines: 5
+    '     File Size: 1.04 KB
 
 
     ' Enum FileAttachIcon
@@ -61,7 +61,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' File attachement icon
@@ -126,4 +125,3 @@ Public Enum StickyNoteIcon
     ''' </summary>
     Insert
 End Enum
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e5fb36fffb99ee9955539da7e46919, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GPConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::c61f1e9597ae03a1b960298ee1b1c96c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GPConfiguration.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
+    '   Total Lines: 50
     '    Code Lines: 26
     ' Comment Lines: 10
-    '   Blank Lines: 15
+    '   Blank Lines: 14
     '     File Size: 1.65 KB
 
 
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.evolution.measure
 
@@ -101,4 +100,3 @@ Namespace evolution
     End Class
 
 End Namespace
-

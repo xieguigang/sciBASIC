@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d487a545faefc7a442f57b4143944712, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/PLSData.vb"
+﻿#Region "Microsoft.VisualBasic::75342804545da4865fdd04aaa76ea5e0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/PLSData.vb"
 
     ' Author:
     ' 
@@ -170,4 +170,3 @@ Public Class Component
     End Function
 
 End Class
-

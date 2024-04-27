@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2af1c714306d0e5f28681bf6d3f3ff11, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAPolynomial.vb"
+﻿#Region "Microsoft.VisualBasic::4d8da7e78fb2844a8c7c24267625be82, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAPolynomial.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Namespace evolution
     End Class
 
 End Namespace
-

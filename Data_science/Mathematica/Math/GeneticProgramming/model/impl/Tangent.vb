@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::132da750054b30f36028e914a3d580fa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Tangent.vb"
+﻿#Region "Microsoft.VisualBasic::528cbf755e30c0723ca5490b8e3b3d00, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Tangent.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 649 B
+    '     File Size: 647 B
 
 
     '     Class Tangent
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

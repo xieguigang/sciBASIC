@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92c71d4f55191b375c8d384d213a4c0c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::f9c1d9d11f4996fecd261f6d8b6d1778, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//Gibbs.vb"
 
     ' Author:
     ' 
@@ -260,4 +260,3 @@ Public Class Gibbs
         Return randomValues
     End Function
 End Class
-

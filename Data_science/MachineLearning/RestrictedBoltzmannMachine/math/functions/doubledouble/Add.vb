@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3cc744d1f340ed1463cb4837512a688, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Add.vb"
+﻿#Region "Microsoft.VisualBasic::7837556f706e3d8ea43eb18f29006386, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Add.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 336 B
+    '     File Size: 334 B
 
 
     '     Class Add
@@ -62,4 +62,3 @@ Namespace math.functions.doubledouble
     End Class
 
 End Namespace
-

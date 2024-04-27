@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a165bd4b87a799cca17444fe43ade39f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Triple.vb"
+﻿#Region "Microsoft.VisualBasic::cab37472d5a4e1a54e78184a488ddad0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Triple.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 6
     '   Blank Lines: 5
-    '     File Size: 802 B
+    '     File Size: 800 B
 
 
     '     Structure Triple
@@ -79,4 +79,3 @@ Namespace GraphEmbedding.struct
     End Structure
 
 End Namespace
-

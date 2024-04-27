@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bcd92024a4b36f49e3e4f080194cb95, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/HdbscanConstraintType.vb"
+﻿#Region "Microsoft.VisualBasic::2565b491d7f44e3c184947ee54651e1d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/HdbscanConstraintType.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 137 B
+    '     File Size: 135 B
 
 
     '     Enum HdbscanConstraintType
@@ -60,4 +60,3 @@ Namespace HDBSCAN.Hdbscanstar
         CannotLink
     End Enum
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfc3d939368a26bc46a1f9bc07303109, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Logarithm.vb"
+﻿#Region "Microsoft.VisualBasic::f9c5f1dacf1b1d290eb98a03a75227ce, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Logarithm.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 651 B
+    '     File Size: 649 B
 
 
     '     Class Logarithm
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

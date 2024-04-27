@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc4f6c8b038c05eee97d56a5df1e0f35, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Divide.vb"
+﻿#Region "Microsoft.VisualBasic::cfbff53913222625d7499297bd07604c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Divide.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 736 B
+    '     File Size: 734 B
 
 
     '     Class Divide
@@ -74,4 +74,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

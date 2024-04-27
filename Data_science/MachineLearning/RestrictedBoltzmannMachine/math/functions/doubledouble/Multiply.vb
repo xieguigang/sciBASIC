@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edebf59f112ecee4892bd8ab66a2ff44, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::a5927d7e3c7ddeb75ad5fe12cae0d870, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Multiply.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 343 B
+    '     File Size: 341 B
 
 
     '     Class Multiply
@@ -63,4 +63,3 @@ Namespace math.functions.doubledouble
     End Class
 
 End Namespace
-

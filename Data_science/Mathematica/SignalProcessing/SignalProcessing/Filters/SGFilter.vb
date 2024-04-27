@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea762b812cf365a24c2aac1dd0c5b150, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/SGFilter.vb"
+﻿#Region "Microsoft.VisualBasic::16720ab89eb6014d737c6e84f070d994, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/SGFilter.vb"
 
     ' Author:
     ' 
@@ -625,4 +625,3 @@ Namespace Filters
     End Class
 
 End Namespace
-

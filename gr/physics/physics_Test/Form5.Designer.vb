@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a21dca1f72bda8ef034f8c26d6109049, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form5.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9c869e2e3ea10a3d8a49a3209927ae44, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form5.Designer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 22
     ' Comment Lines: 5
     '   Blank Lines: 3
-    '     File Size: 1.12 KB
+    '     File Size: 1.11 KB
 
 
     ' Class Form5
@@ -79,4 +79,3 @@ Partial Class Form5
         Me.Text = "Form5"
     End Sub
 End Class
-

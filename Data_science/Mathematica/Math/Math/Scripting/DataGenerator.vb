@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc19015fcef28d3408a5f0aace3b7629, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/DataGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9d287dbb974f2a713f2313051ce17b3d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/DataGenerator.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
+    '   Total Lines: 39
     '    Code Lines: 28
     ' Comment Lines: 0
-    '   Blank Lines: 12
+    '   Blank Lines: 11
     '     File Size: 1.14 KB
 
 
@@ -60,7 +60,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Xml.Serialization

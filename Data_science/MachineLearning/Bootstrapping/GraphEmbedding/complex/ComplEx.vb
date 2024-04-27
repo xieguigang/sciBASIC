@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76c65b207724161352970f8fb3bc5b2d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex/ComplEx.vb"
+﻿#Region "Microsoft.VisualBasic::38df023f1c3c8ee8c536c0ff8e753eb8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex/ComplEx.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
+    '   Total Lines: 191
     '    Code Lines: 165
     ' Comment Lines: 7
-    '   Blank Lines: 20
-    '     File Size: 10.79 KB
+    '   Blank Lines: 19
+    '     File Size: 10.78 KB
 
 
     '     Class ComplEx
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.ComponentModel
 Imports System.IO
@@ -243,4 +242,3 @@ Namespace GraphEmbedding.complex
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64de0fc52efecc062d3732e67d4de63e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::52913cff15d1ce17ad980303329d6e88, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Sigmoid.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
+    '   Total Lines: 18
     '    Code Lines: 11
     ' Comment Lines: 3
-    '   Blank Lines: 5
-    '     File Size: 472 B
+    '   Blank Lines: 4
+    '     File Size: 468 B
 
 
     '     Class Sigmoid
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace math.functions
     ''' <summary>
@@ -69,4 +68,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

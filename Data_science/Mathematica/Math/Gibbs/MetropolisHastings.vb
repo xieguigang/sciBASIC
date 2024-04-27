@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8cb0c6ce0710ea48e6a3eb3bd8664cb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//MetropolisHastings.vb"
+﻿#Region "Microsoft.VisualBasic::8a213793d892e2bab4ae22fd3490fdb6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//MetropolisHastings.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 102
     ' Comment Lines: 26
     '   Blank Lines: 34
-    '     File Size: 4.75 KB
+    '     File Size: 4.74 KB
 
 
     ' Class MetropolisHastings
@@ -213,4 +213,3 @@ Public Class MetropolisHastings
         Return total
     End Function
 End Class
-

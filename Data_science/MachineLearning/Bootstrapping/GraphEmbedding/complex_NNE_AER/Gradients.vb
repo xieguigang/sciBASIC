@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::194d3aab2d6181c59c7c6349c34fa206, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE_AER/Gradients.vb"
+﻿#Region "Microsoft.VisualBasic::58ad885ad11a308130da59dd83d7d052, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE_AER/Gradients.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 4.89 KB
+    '     File Size: 4.88 KB
 
 
     '     Class Gradients
@@ -137,4 +137,3 @@ Namespace GraphEmbedding.complex_NNE_AER
     End Class
 
 End Namespace
-

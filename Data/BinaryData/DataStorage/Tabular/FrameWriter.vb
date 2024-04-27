@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a70e6def913d04ea228fbdddc8571cf, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/FrameWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4ef23851255e604e9278366d2736adee, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/FrameWriter.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Public Module FrameWriter
     End Sub
 
 End Module
-

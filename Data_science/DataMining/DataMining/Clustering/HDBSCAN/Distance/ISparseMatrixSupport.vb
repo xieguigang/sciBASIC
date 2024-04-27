@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::346dfe23141631ecea17f4c9fc191fdc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/ISparseMatrixSupport.vb"
+﻿#Region "Microsoft.VisualBasic::670c8819e3f719df605b560e2b46ec9e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/ISparseMatrixSupport.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 3
     '   Blank Lines: 0
-    '     File Size: 296 B
+    '     File Size: 294 B
 
 
     '     Interface ISparseMatrixSupport
@@ -58,4 +58,3 @@ Namespace HDBSCAN.Distance
         Function GetMostCommonDistanceValueForSparseMatrix() As Double
     End Interface
 End Namespace
-

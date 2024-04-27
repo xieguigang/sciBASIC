@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53d0839ac6ccf07f8a5b550f9af88e6b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/LineEdit/getline.vb"
+﻿#Region "Microsoft.VisualBasic::9e4e492fa58a933b1053143eb4e9fe05, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/LineEdit/getline.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 714
     ' Comment Lines: 360
     '   Blank Lines: 177
-    '     File Size: 45.76 KB
+    '     File Size: 45.75 KB
 
 
     '     Class LineEditor
@@ -1317,4 +1317,3 @@ mismatch:
 
     End Class
 End Namespace
-

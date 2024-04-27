@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cf0fe6247789754fe490496027ff451, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/logicTest.vb"
+﻿#Region "Microsoft.VisualBasic::749193b3f43ab201a94bff410cb295c2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/logicTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 569 B
+    '     File Size: 567 B
 
 
     ' Module logicTest
@@ -67,4 +67,3 @@ Module logicTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cb8b23796f87c63f37bea8aa5ddeabf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/CowAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::b549b730fcdef7cd2ec7fc2b6ca2a62f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/CowAlignment.vb"
 
     ' Author:
     ' 
@@ -370,4 +370,3 @@ Namespace COW
         End Function
     End Class
 End Namespace
-

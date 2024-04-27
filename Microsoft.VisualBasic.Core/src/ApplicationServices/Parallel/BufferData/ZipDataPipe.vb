@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ec72614d09ff874f7e13bf25932fd45, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/BufferData/ZipDataPipe.vb"
+﻿#Region "Microsoft.VisualBasic::fc1e3f9f210ba67cb8e81f458cd16716, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/BufferData/ZipDataPipe.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
+    '   Total Lines: 118
     '    Code Lines: 77
     ' Comment Lines: 25
-    '   Blank Lines: 17
+    '   Blank Lines: 16
     '     File Size: 4.04 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

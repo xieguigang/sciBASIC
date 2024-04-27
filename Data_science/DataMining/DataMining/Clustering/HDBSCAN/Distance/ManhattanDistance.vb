@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f76cfac433b68c865eb2771f56fad35f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/ManhattanDistance.vb"
+﻿#Region "Microsoft.VisualBasic::89ba23ef83e45034d62aad9f11bf22ae, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/ManhattanDistance.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 842 B
+    '     File Size: 840 B
 
 
     '     Class ManhattanDistance
@@ -70,4 +70,3 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
-

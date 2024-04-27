@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69cdebeb946bc2bd4a5c253324bb0649, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//EventFreeSurvival.vb"
+﻿#Region "Microsoft.VisualBasic::b90206735e4627e16bafa1a5158a7acb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//EventFreeSurvival.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 74 B
+    '     File Size: 72 B
 
 
     ' Enum EventFreeSurvival
@@ -56,4 +56,3 @@ Public Enum EventFreeSurvival
     Censored = 0
     Death = 1
 End Enum
-

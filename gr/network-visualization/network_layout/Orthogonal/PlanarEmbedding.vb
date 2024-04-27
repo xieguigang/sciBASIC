@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bd6bef06778768ad5a2e6d13dcac6d7, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/PlanarEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::0de6332e3c18da64d92aaaeb1a84cdd8, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/PlanarEmbedding.vb"
 
     ' Author:
     ' 
@@ -487,4 +487,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

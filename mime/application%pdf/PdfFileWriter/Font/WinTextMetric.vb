@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0c7957eb12792d53744f2d1655fdccc, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinTextMetric.vb"
+﻿#Region "Microsoft.VisualBasic::e504d08cd9d38ed2addb6c6da5246bfb, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinTextMetric.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 262
+    '   Total Lines: 260
     '    Code Lines: 186
     ' Comment Lines: 69
-    '   Blank Lines: 7
-    '     File Size: 7.50 KB
+    '   Blank Lines: 5
+    '     File Size: 7.49 KB
 
 
     ' Class WinTextMetric
@@ -50,11 +50,9 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' TextMetric class
@@ -316,5 +314,3 @@ Public Class WinTextMetric
         Return
     End Sub
 End Class
-
-

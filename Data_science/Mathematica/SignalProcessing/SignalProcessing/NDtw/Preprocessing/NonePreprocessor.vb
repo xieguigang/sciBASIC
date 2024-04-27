@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9df0cafebad54944ebd07fbb43cd6231, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/NonePreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::8120e2406c054691fffb8b735f796f26, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/NonePreprocessor.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
+    '   Total Lines: 27
     '    Code Lines: 12
     ' Comment Lines: 11
-    '   Blank Lines: 5
-    '     File Size: 740 B
+    '   Blank Lines: 4
+    '     File Size: 736 B
 
 
     '     Class NonePreprocessor
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 
@@ -78,4 +77,3 @@ Namespace NDtw.Preprocessing
         End Function
     End Class
 End Namespace
-

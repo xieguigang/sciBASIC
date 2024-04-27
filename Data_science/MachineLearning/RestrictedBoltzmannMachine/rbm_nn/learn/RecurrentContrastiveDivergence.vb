@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::321de0b9163983d9f78d7ff89fe5d767, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/RecurrentContrastiveDivergence.vb"
+﻿#Region "Microsoft.VisualBasic::3ccaf28ae00c1f95e6d463a722238d7a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/RecurrentContrastiveDivergence.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 214
+    '   Total Lines: 212
     '    Code Lines: 112
     ' Comment Lines: 52
-    '   Blank Lines: 50
-    '     File Size: 10.96 KB
+    '   Blank Lines: 48
+    '     File Size: 10.95 KB
 
 
     '     Class RecurrentContrastiveDivergence
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
@@ -268,4 +266,3 @@ Namespace nn.rbm.learn
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cebcca4a8bfa6ff8e654491ecd97fb6f, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/FontBox.vb"
+﻿#Region "Microsoft.VisualBasic::eca56d72251321c72369e13e862afbda, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/FontBox.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
+    '   Total Lines: 37
     '    Code Lines: 13
     ' Comment Lines: 18
-    '   Blank Lines: 7
-    '     File Size: 785 B
+    '   Blank Lines: 6
+    '     File Size: 781 B
 
 
     ' Class FontBox
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Font box class
@@ -89,4 +88,3 @@ Public Class FontBox
         Return
     End Sub
 End Class
-

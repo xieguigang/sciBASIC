@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71e5501fb2bde7a0f86e718205ab097e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleSet.vb"
+﻿#Region "Microsoft.VisualBasic::aef095a0cceef03b321955f6389f1fda, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleSet.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Namespace GraphEmbedding.struct
     End Class
 
 End Namespace
-

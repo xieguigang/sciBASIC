@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffa1570817f7f2486abfff959995311a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::3118e430a0cff687ee0a78f2586b385c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/Debugger.vb"
 
     ' Author:
     ' 
@@ -258,4 +258,3 @@ Public Module Debugger
         End Using
     End Sub
 End Module
-

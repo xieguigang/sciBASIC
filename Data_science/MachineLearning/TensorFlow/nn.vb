@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc69787cc3203e7748b755ed4ced38f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//nn.vb"
+﻿#Region "Microsoft.VisualBasic::60afca04da066478a71c8717bff8e9a7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//nn.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 964 B
+    '     File Size: 962 B
 
 
     ' Module nn
@@ -75,4 +75,3 @@ Public Module nn
         Return logits - std.Log(tf.reduce_sum(tf.exp(logits)))
     End Function
 End Module
-

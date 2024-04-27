@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e5fb9ab467b03b219314f0affa5811c, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/big_jsonTest.vb"
+﻿#Region "Microsoft.VisualBasic::8a3c56cbba16867a8b4a24ce38c99fed, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/big_jsonTest.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 369 B
+    '     File Size: 367 B
 
 
     ' Module big_jsonTest
@@ -60,4 +60,3 @@ Module big_jsonTest
         Pause()
     End Sub
 End Module
-

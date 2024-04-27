@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0068b36901c57ec3621b95ff44a1a0d0, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Vector2Math.vb"
+﻿#Region "Microsoft.VisualBasic::b79a9ef227b95215ab4632009d5a4d14, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Vector2Math.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 781 B
+    '     File Size: 779 B
 
 
     ' Module Vector2Math
@@ -74,4 +74,3 @@ Public Module Vector2Math
         Return Max(0, Min(1, x))
     End Function
 End Module
-

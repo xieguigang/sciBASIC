@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::132b78504b3cd370eca156fb06be45de, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::0aa1025c6a509477294736c3fa143d63, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Exponential.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 653 B
+    '     File Size: 651 B
 
 
     '     Class Exponential
@@ -76,4 +76,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

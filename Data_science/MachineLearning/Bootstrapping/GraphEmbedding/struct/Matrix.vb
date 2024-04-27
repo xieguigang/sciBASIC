@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4115c43e5de8ad69c79f4f489a37aa05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::f3416147a6e97e361c0f3cfd4daa06d7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Matrix.vb"
 
     ' Author:
     ' 
@@ -281,4 +281,3 @@ Namespace GraphEmbedding.struct
     End Class
 
 End Namespace
-

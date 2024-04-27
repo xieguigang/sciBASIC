@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c235dc163f32a88762e9ad93f8efdbe7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/DegreeData.vb"
+﻿#Region "Microsoft.VisualBasic::5c7c70b5d28df1c4044d00cbfbec1b5f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/DegreeData.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 6
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 211 B
+    '   Blank Lines: 3
+    '     File Size: 209 B
 
 
     '     Class DegreeData
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Network
 

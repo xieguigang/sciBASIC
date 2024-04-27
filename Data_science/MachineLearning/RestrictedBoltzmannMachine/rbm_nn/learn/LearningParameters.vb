@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508535822f81a63acfde66dd6bd4d0be, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/LearningParameters.vb"
+﻿#Region "Microsoft.VisualBasic::77c238d8503e1f82ce2ae83ff86af079, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/LearningParameters.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
+    '   Total Lines: 83
     '    Code Lines: 59
     ' Comment Lines: 3
-    '   Blank Lines: 23
+    '   Blank Lines: 21
     '     File Size: 2.61 KB
 
 
@@ -52,8 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math.functions
@@ -138,4 +136,3 @@ Namespace nn.rbm.learn
     End Class
 
 End Namespace
-

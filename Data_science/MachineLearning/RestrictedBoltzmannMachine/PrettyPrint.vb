@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81550bd690099270bf72e47581ac056c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//PrettyPrint.vb"
+﻿#Region "Microsoft.VisualBasic::4e391e604811f7fab8ef519ea049876b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//PrettyPrint.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 55
     ' Comment Lines: 3
     '   Blank Lines: 10
-    '     File Size: 2.49 KB
+    '     File Size: 2.48 KB
 
 
     '     Class PrettyPrint
@@ -119,4 +119,3 @@ Namespace utils
     End Class
 
 End Namespace
-

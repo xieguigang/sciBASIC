@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b5033f643513a1774dfaaa4cd200040, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/CosineSimilarity.vb"
+﻿#Region "Microsoft.VisualBasic::8ecb413476b369d318c83ea59d28f6bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/CosineSimilarity.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 86
     ' Comment Lines: 4
     '   Blank Lines: 18
-    '     File Size: 5.31 KB
+    '     File Size: 5.30 KB
 
 
     '     Class CosineSimilarity
@@ -159,4 +159,3 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
-

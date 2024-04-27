@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61a9040f4673b88bb9915963f316feea, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/Mapper/CategoryColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::21ed3a707b85b218d40ec96506a07985, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/Mapper/CategoryColorProfile.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 38
+    '   Total Lines: 71
+    '    Code Lines: 41
     ' Comment Lines: 17
-    '   Blank Lines: 12
-    '     File Size: 2.45 KB
+    '   Blank Lines: 13
+    '     File Size: 2.64 KB
 
 
     '     Class CategoryColorProfile
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: (+2 Overloads) GetColor
     ' 
     ' 

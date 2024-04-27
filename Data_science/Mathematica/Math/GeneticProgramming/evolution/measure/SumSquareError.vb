@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cdc8834585e5ad21a35c565511713b9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumSquareError.vb"
+﻿#Region "Microsoft.VisualBasic::ad167c096d12efeffcddb06c5e8a433c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumSquareError.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 631 B
+    '     File Size: 629 B
 
 
     '     Class SumSquareError
@@ -70,4 +70,3 @@ Namespace evolution.measure
     End Class
 
 End Namespace
-

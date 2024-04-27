@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::844e191cc01f09f7c63bd35e1c2651eb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/PI.vb"
+﻿#Region "Microsoft.VisualBasic::d11422c25f7d10027436ef4da44bc84f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/PI.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 480 B
+    '     File Size: 478 B
 
 
     '     Class PI
@@ -74,4 +74,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

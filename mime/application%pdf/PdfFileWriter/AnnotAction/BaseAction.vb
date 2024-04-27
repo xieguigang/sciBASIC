@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d416c20f444e9012b9d3e9f0238e70bf, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/BaseAction.vb"
+﻿#Region "Microsoft.VisualBasic::86d4f30611284182c17604370a11a6b7, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/BaseAction.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
+    '   Total Lines: 33
     '    Code Lines: 23
     ' Comment Lines: 6
-    '   Blank Lines: 5
-    '     File Size: 1.07 KB
+    '   Blank Lines: 4
+    '     File Size: 1.06 KB
 
 
     ' Class AnnotAction
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Annotation action base class
@@ -86,4 +85,3 @@ Public Class AnnotAction
         Return One.IsEqual(Two)
     End Function
 End Class
-

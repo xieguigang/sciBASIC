@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b6b82e4704d3245c5ee2c9235a12fb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgStrokeLineCap.vb"
+﻿#Region "Microsoft.VisualBasic::790f07252af349ef9c716f55a3d9999a, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgStrokeLineCap.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 509 B
+    '     File Size: 507 B
 
 
     '     Class SvgStrokeLineCap
@@ -66,4 +66,3 @@ Namespace SVG.XML.Enums
         Public Shared ReadOnly Property Square As SvgStrokeLineCap = New SvgStrokeLineCap("square")
     End Class
 End Namespace
-

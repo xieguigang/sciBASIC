@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38aa27a43dacd9ed37810885af503c0a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Runner/HdbscanResult.vb"
+﻿#Region "Microsoft.VisualBasic::0a0bbc8ac1e56ade120fa13e75217397, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Runner/HdbscanResult.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 318 B
+    '     File Size: 316 B
 
 
     '     Class HdbscanResult
@@ -59,4 +59,3 @@ Namespace HDBSCAN.Runner
         Public Property HasInfiniteStability As Boolean
     End Class
 End Namespace
-

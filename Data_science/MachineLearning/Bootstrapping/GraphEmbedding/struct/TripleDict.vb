@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::834197a82df4a8f9aec576932f2c23aa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleDict.vb"
+﻿#Region "Microsoft.VisualBasic::3a60e78d2c27791699d7a9d64cb41181, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleDict.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 1.22 KB
+    '     File Size: 1.21 KB
 
 
     '     Class TripleDict
@@ -96,4 +96,3 @@ Namespace GraphEmbedding.struct
     End Class
 
 End Namespace
-

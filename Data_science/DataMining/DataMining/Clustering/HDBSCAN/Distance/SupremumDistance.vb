@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a0b7a34ded454e9fa854e56ca97bfcc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/SupremumDistance.vb"
+﻿#Region "Microsoft.VisualBasic::ac5030548b1cd5a74c1fdc468bff5f08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/SupremumDistance.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 916 B
+    '     File Size: 914 B
 
 
     '     Class SupremumDistance
@@ -71,4 +71,3 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
-

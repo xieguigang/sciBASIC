@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d268062183f71d04f9cc3cb9244d9093, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/E.vb"
+﻿#Region "Microsoft.VisualBasic::0cf84e9442797db25d2e6ec61f4907f3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/E.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 473 B
+    '     File Size: 471 B
 
 
     '     Class E
@@ -74,4 +74,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

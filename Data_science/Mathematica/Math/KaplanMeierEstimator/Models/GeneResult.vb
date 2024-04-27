@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8faf962eaeeaf849216343eeffa1a4b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/GeneResult.vb"
+﻿#Region "Microsoft.VisualBasic::3c6bc58a96c9cd8a69d33bdb52e69fe4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/GeneResult.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
+    '   Total Lines: 11
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 269 B
+    '   Blank Lines: 3
+    '     File Size: 265 B
 
 
     '     Class GeneResult
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Models
     Public Class GeneResult
@@ -62,4 +61,3 @@ Namespace Models
         Public Property FDR As Double
     End Class
 End Namespace
-

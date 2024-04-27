@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19c36109081a1bbd2deff81855a6647e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/HdbscanConstraint.vb"
+﻿#Region "Microsoft.VisualBasic::872cc80b8510f66a5f569356ab37e92a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/HdbscanConstraint.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Namespace HDBSCAN.Hdbscanstar
         End Function
     End Class
 End Namespace
-

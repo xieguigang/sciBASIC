@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bcc6a9fdef3d5724b0c41edc1b1ba0a, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/StyleRepository.vb"
+﻿#Region "Microsoft.VisualBasic::acea349aaf11bb8cd57e5884dd4c085c, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/StyleRepository.vb"
 
     ' Author:
     ' 
@@ -136,4 +136,3 @@ Namespace XLSX.Writer
         End Sub
     End Class
 End Namespace
-

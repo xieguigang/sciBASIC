@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68824874f96d52df6941dcdbcf93366b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GPTreeUtils.vb"
+﻿#Region "Microsoft.VisualBasic::9d05ff7f586e6bcc1320a4f81533426e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GPTreeUtils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
+    '   Total Lines: 176
     '    Code Lines: 123
     ' Comment Lines: 17
-    '   Blank Lines: 37
-    '     File Size: 7.13 KB
+    '   Blank Lines: 36
+    '     File Size: 7.12 KB
 
 
     '     Class GPTreeUtils
@@ -75,7 +75,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.factory
@@ -253,4 +252,3 @@ Namespace evolution
     End Class
 
 End Namespace
-

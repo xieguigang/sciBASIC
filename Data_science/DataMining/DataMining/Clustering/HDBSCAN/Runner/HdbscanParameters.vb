@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca9439c9fdcc7c4b73793ec744ef31ff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Runner/HdbscanParameters.vb"
+﻿#Region "Microsoft.VisualBasic::9205eea14b0b6c1c04737152af3b6093, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Runner/HdbscanParameters.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 669 B
+    '     File Size: 667 B
 
 
     '     Class HdbscanParameters
@@ -68,4 +68,3 @@ Namespace HDBSCAN.Runner
         Public Property Constraints As List(Of HdbscanConstraint)
     End Class
 End Namespace
-

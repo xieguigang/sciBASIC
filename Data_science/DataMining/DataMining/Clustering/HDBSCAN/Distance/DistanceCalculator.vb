@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4205dd287a002e20aa01c103725321d7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/DistanceCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::cf1bbbd2e50b8fac32f35700e0990e2d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/DistanceCalculator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 13
     '   Blank Lines: 0
-    '     File Size: 1007 B
+    '     File Size: 1005 B
 
 
     '     Interface IDistanceCalculator
@@ -68,4 +68,3 @@ Namespace HDBSCAN.Distance
         Function ComputeDistance(indexOne As Integer, indexTwo As Integer, attributesOne As T, attributesTwo As T) As Double
     End Interface
 End Namespace
-

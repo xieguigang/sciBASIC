@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d683442136b583450775eadeb6a173e1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/FunctionElement.vb"
+﻿#Region "Microsoft.VisualBasic::cb676199ec298d92b59147cdb646b00f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/FunctionElement.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
+    '   Total Lines: 28
     '    Code Lines: 19
     ' Comment Lines: 3
-    '   Blank Lines: 7
-    '     File Size: 771 B
+    '   Blank Lines: 6
+    '     File Size: 767 B
 
 
     '     Class FunctionElement
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -82,4 +81,3 @@ Namespace COW
         End Function
     End Class
 End Namespace
-

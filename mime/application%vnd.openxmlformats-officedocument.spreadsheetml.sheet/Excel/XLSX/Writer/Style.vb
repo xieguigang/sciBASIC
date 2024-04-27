@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e07d4e1664fd5bcca8da7cde9369d3, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Style.vb"
+﻿#Region "Microsoft.VisualBasic::ba3c65cf3300c9fe5a3609c8945b98d1, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Style.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 1227
     ' Comment Lines: 749
     '   Blank Lines: 173
-    '     File Size: 96.95 KB
+    '     File Size: 96.94 KB
 
 
     '     Class Style
@@ -2386,4 +2386,3 @@ Namespace XLSX.Writer
         End Class
     End Class
 End Namespace
-

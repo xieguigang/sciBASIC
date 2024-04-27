@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56fc5461d70022e4526c1ed24ddf2f2c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/DistanceMeasure.vb"
+﻿#Region "Microsoft.VisualBasic::081f1c381cb4a012c888140795be8113, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/DistanceMeasure.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
+    '   Total Lines: 8
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 177 B
+    '   Blank Lines: 0
+    '     File Size: 173 B
 
 
     '     Enum DistanceMeasure
@@ -53,7 +53,6 @@
 
 #End Region
 
-
 Namespace NDtw
     Public Enum DistanceMeasure
         Manhattan = 1
@@ -62,4 +61,3 @@ Namespace NDtw
         Maximum = 4
     End Enum
 End Namespace
-

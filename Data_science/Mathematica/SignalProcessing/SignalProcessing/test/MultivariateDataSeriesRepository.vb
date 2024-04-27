@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89c5b0489cc40d0ee879b2f8a2e18f98, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/MultivariateDataSeriesRepository.vb"
+﻿#Region "Microsoft.VisualBasic::da46817d009da8c2d846ea7796fbecc1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/MultivariateDataSeriesRepository.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Namespace NDtw.Examples
         End Sub
     End Class
 End Namespace
-

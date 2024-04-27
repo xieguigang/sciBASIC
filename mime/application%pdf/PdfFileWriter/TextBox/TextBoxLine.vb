@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96bfeb4baf9537b88d005a93fe7a87da, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/TextBox/TextBoxLine.vb"
+﻿#Region "Microsoft.VisualBasic::1eb19152f3cf43fbd2f60d995542335e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/TextBox/TextBoxLine.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
+    '   Total Lines: 79
     '    Code Lines: 46
     ' Comment Lines: 25
-    '   Blank Lines: 9
+    '   Blank Lines: 8
     '     File Size: 2.10 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' TextBoxLine class
@@ -131,4 +130,3 @@ Public Class TextBoxLine
         Me.SegArray = SegArray
     End Sub
 End Class
-

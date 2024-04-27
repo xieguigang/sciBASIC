@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::541a6df5f575dd3a1ac2f8fbb2e24345, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OEElement.vb"
+﻿#Region "Microsoft.VisualBasic::4919e066066a2a81ab8a38a0a8843795, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OEElement.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 35
     ' Comment Lines: 17
     '   Blank Lines: 10
-    '     File Size: 2.22 KB
+    '     File Size: 2.21 KB
 
 
     '     Class OEElement
@@ -113,4 +113,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4eef64e9f9c71d850b3b5734aa5e8cf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/demo_data1.vb"
+﻿#Region "Microsoft.VisualBasic::b5f4996d55d5c23c0fc15ff01462fa8c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/demo_data1.vb"
 
     ' Author:
     ' 
@@ -100,4 +100,3 @@ Module demo_data1
         Pause()
     End Sub
 End Module
-

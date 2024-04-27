@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8629b131d3ae5d0f1e2b77bf2cb30d77, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Signal.vb"
+﻿#Region "Microsoft.VisualBasic::d7b31422f4511e8088fb2c10c5a17b4b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Signal.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Public Class Signal : Inherits Vector(Of TimeSignal)
         Throw New NotImplementedException
     End Operator
 End Class
-

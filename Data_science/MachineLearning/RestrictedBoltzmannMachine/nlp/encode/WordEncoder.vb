@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6f6b0bb61bd3d2920305c0a61e5b42b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/encode/WordEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::282ec0b2ade9bff6b4d3517fdfdef2ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/encode/WordEncoder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
+    '   Total Lines: 13
     '    Code Lines: 6
     ' Comment Lines: 4
-    '   Blank Lines: 4
-    '     File Size: 357 B
+    '   Blank Lines: 3
+    '     File Size: 353 B
 
 
     '     Interface WordEncoder
@@ -49,7 +49,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.RestrictedBoltzmannMachine.math
 
@@ -64,4 +63,3 @@ Namespace nlp.encode
     End Interface
 
 End Namespace
-

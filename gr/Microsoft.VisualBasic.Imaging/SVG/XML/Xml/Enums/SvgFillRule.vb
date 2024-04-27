@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b76240b3a87392ccb224bad9c4f819fb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgFillRule.vb"
+﻿#Region "Microsoft.VisualBasic::9c37c67453803ce5048b5b92670dd3b0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgFillRule.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 360 B
+    '     File Size: 358 B
 
 
     '     Class SvgFillRule
@@ -65,4 +65,3 @@ Namespace SVG.XML.Enums
 
     End Class
 End Namespace
-

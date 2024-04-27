@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9de73cafe30855390e07b77f80b542aa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/BasicMathematics.vb"
+﻿#Region "Microsoft.VisualBasic::95822ea8aca69ecc6ea31923dd9e74f4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/BasicMathematics.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Public Class BasicMathematics
         Return sum
     End Function
 End Class
-

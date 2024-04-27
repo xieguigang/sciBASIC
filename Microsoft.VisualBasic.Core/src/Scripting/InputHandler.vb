@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c6f6aceb6a0baefc6b557e7b0c1bed1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::d7cd3d1ab9d36ec141b0d90354a7e73e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/InputHandler.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 433
+    '   Total Lines: 444
     '    Code Lines: 263
-    ' Comment Lines: 123
+    ' Comment Lines: 134
     '   Blank Lines: 47
-    '     File Size: 19.05 KB
+    '     File Size: 19.52 KB
 
 
     '     Module InputHandler

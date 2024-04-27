@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e95cae29b3e7e2253a96b921ce88508f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/Edge.vb"
+﻿#Region "Microsoft.VisualBasic::ca7aa3750a9b851419ae9922ee1d37e3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/Edge.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
+    '   Total Lines: 35
     '    Code Lines: 29
     ' Comment Lines: 0
-    '   Blank Lines: 7
+    '   Blank Lines: 6
     '     File Size: 1.32 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON

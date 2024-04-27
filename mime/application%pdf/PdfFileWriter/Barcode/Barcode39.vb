@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd67877078e56b7af6ef5df902079619, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/Barcode39.vb"
+﻿#Region "Microsoft.VisualBasic::3915f3aed4c978739bfcc32f92cec1f9, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/Barcode39.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 101
     ' Comment Lines: 96
     '   Blank Lines: 33
-    '     File Size: 9.04 KB
+    '     File Size: 9.03 KB
 
 
     ' Class Barcode39
@@ -280,4 +280,3 @@ Public Class Barcode39
         Return
     End Sub
 End Class
-

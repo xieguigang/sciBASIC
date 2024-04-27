@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8caba73dba7e2a214a0a65be07aa9471, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinPanose.vb"
+﻿#Region "Microsoft.VisualBasic::ce2496741d60c466569e840e07c9a237, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinPanose.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
+    '   Total Lines: 75
     '    Code Lines: 25
     ' Comment Lines: 39
-    '   Blank Lines: 13
+    '   Blank Lines: 11
     '     File Size: 1.85 KB
 
 
@@ -51,8 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ''' <summary>
 ''' Panose class
@@ -129,4 +127,3 @@ Public Class WinPanose
         Return
     End Sub
 End Class
-

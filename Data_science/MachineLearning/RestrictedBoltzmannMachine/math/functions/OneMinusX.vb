@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9eb59ec548894a11bc9b7ef76d282b2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/OneMinusX.vb"
+﻿#Region "Microsoft.VisualBasic::18d20952eb660b8d0b0b6df39114444f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/OneMinusX.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 308 B
+    '     File Size: 306 B
 
 
     '     Class OneMinusX
@@ -62,4 +62,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

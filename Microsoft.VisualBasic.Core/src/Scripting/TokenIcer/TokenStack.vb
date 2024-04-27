@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b1963d7d8290ccae33bf284f10a21a3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/TokenStack.vb"
+﻿#Region "Microsoft.VisualBasic::605f74e79e32e9a55e1bdd2d3f893c68, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/TokenStack.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
+    '   Total Lines: 102
     '    Code Lines: 67
     ' Comment Lines: 17
-    '   Blank Lines: 19
+    '   Blank Lines: 18
     '     File Size: 3.36 KB
 
 
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 

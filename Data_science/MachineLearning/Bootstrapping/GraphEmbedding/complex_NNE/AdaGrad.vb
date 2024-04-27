@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7495a62999977dccfa4ea96ff40130e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE/AdaGrad.vb"
+﻿#Region "Microsoft.VisualBasic::d9d1ba2b8e3e882ca8acb56c3432f5ee, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE/AdaGrad.vb"
 
     ' Author:
     ' 
@@ -177,4 +177,3 @@ Namespace GraphEmbedding.complex_NNE
     End Class
 
 End Namespace
-

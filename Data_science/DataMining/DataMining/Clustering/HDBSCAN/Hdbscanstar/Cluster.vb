@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c037ad1faf8e2e20bb7a009fcb9dc22c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::1ba30e180063ed119a8e2e2a152dd9a0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/Cluster.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ Namespace HDBSCAN.Hdbscanstar
         End Sub
     End Class
 End Namespace
-

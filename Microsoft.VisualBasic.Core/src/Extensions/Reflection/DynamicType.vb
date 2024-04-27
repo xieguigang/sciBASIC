@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ff9757acfb7800842d6cb8a4cb46994, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/DynamicType.vb"
+﻿#Region "Microsoft.VisualBasic::c26ebb2b2a87d5ecb1466044a688379e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/DynamicType.vb"
 
     ' Author:
     ' 
@@ -227,4 +227,3 @@ Public Class DynamicType
         Return obj
     End Function
 End Class
-

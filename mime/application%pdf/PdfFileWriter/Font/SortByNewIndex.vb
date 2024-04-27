@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47c2d384e601ae21240a695c98a386fa, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/SortByNewIndex.vb"
+﻿#Region "Microsoft.VisualBasic::9b5bfe3d7cefada0de4f7c68d264e0ce, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/SortByNewIndex.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
+    '   Total Lines: 9
     '    Code Lines: 5
     ' Comment Lines: 3
-    '   Blank Lines: 2
-    '     File Size: 359 B
+    '   Blank Lines: 1
+    '     File Size: 357 B
 
 
     ' Class SortByNewIndex
@@ -48,7 +48,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' IComparer class for new glyph index sort

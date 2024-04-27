@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e1a53e70fcdb220f984558ae6be239, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//GlobalSuppressions.vb"
+﻿#Region "Microsoft.VisualBasic::73c470e5d5cd65e7e61e693483f60234, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//GlobalSuppressions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 4
     '   Blank Lines: 2
-    '     File Size: 782 B
+    '     File Size: 780 B
 
 
     ' 
@@ -54,4 +54,3 @@
 Imports System.Diagnostics.CodeAnalysis
 
 <Assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification:="<挂起>", Scope:="member", Target:="~M:Microsoft.VisualBasic.Data.visualize.Network.Styling.FillBrushes.DiscreteSequenceBrush.GetBrush(System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.Data.visualize.Network.Graph.Node})~System.Collections.Generic.IEnumerable{Microsoft.VisualBasic.ComponentModel.Map{Microsoft.VisualBasic.Data.visualize.Network.Graph.Node,System.Drawing.Brush}}")>
-

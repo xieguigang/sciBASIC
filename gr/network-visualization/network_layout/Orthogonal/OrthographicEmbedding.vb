@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a07478bb61807af8166059b6d982dbe1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::95e9a5d2639b986e60b7195530e82041, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbedding.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 502
     ' Comment Lines: 109
     '   Blank Lines: 69
-    '     File Size: 31.97 KB
+    '     File Size: 31.96 KB
 
 
     '     Class OrthographicEmbedding
@@ -732,4 +732,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

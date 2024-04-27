@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::400105a8b4cda6a338ae7a5a5809d0f8, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//DataTableStream.vb"
+﻿#Region "Microsoft.VisualBasic::c4fb8cf71b662cab31109ad7ac8db3a7, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//DataTableStream.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Public Module DataTableStream
         Next
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1a45ae3ee751c411ba8ff9f07f0fbc8, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::69ff5f04b49f729cd9126b28d35d4099, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//test/Module1.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 744 B
+    '     File Size: 742 B
 
 
     ' Module Module1
@@ -69,4 +69,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

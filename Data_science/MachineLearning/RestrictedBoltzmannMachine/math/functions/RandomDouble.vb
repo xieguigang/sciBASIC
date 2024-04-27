@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a635a4a92847480eec8c534ae797eb39, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/RandomDouble.vb"
+﻿#Region "Microsoft.VisualBasic::67d8aab58485e7e4b83d5941e084cce0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/RandomDouble.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 610 B
+    '     File Size: 608 B
 
 
     '     Class RandomDouble
@@ -78,4 +78,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

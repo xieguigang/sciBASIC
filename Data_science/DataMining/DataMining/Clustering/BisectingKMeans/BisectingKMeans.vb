@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89f1de8d0fac7edff2f41714197ed31a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/BisectingKMeans/BisectingKMeans.vb"
+﻿#Region "Microsoft.VisualBasic::fb4289a54268c62846b46b13ec7affa1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/BisectingKMeans/BisectingKMeans.vb"
 
     ' Author:
     ' 
@@ -191,4 +191,3 @@ Namespace KMeans.Bisecting
         End Function
     End Class
 End Namespace
-

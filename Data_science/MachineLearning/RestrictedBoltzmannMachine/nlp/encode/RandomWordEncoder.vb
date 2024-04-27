@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0048c19b51f29a65c4645ee53030b4a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/encode/RandomWordEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::ca582987afd8892d8497954ad1b6034a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/encode/RandomWordEncoder.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 21
     ' Comment Lines: 4
     '   Blank Lines: 9
-    '     File Size: 931 B
+    '     File Size: 929 B
 
 
     '     Class RandomWordEncoder
@@ -85,4 +85,3 @@ Namespace nlp.encode
     End Class
 
 End Namespace
-

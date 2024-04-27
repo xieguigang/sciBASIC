@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b07528f56883e69962ff6de838f2dfe7, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/Displacement.vb"
+﻿#Region "Microsoft.VisualBasic::1678ee057965dea08e848c87fe1fb44c, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/Displacement.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Namespace layout
     End Interface
 
 End Namespace
-

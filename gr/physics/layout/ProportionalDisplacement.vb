@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02b42cd22a48a44aa3408ac8c132f326, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/ProportionalDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::ce14c040bf4a09ac76e699c17609a51a, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/ProportionalDisplacement.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Namespace layout
     End Class
 
 End Namespace
-

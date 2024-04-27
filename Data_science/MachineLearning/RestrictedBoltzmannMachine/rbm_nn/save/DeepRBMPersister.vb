@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ab2698d01c82e8f9309e2dd33cce122, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/save/DeepRBMPersister.vb"
+﻿#Region "Microsoft.VisualBasic::120e617da9876e19c2c0930311e21c74, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/save/DeepRBMPersister.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 66
     '   Blank Lines: 17
-    '     File Size: 3.38 KB
+    '     File Size: 3.37 KB
 
 
     '     Class DeepRBMPersister
@@ -147,4 +147,3 @@ Namespace nn.rbm.save
 
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cebd8eb2460ba20738a0d9b3eab34b89, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/text.vb"
+﻿#Region "Microsoft.VisualBasic::bbdb892f6c215d6f058f3e919a6465a0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/text.vb"
 
     ' Author:
     ' 
@@ -218,4 +218,3 @@ Namespace SVG.XML
         End Function
     End Class
 End Namespace
-

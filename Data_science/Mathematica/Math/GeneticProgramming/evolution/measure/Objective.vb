@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::502c6e6b90f02f641e1d34c9fb0d82d8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/Objective.vb"
+﻿#Region "Microsoft.VisualBasic::197329628c618eca54dbe33eb5c78e3b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/Objective.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 251 B
+    '     File Size: 249 B
 
 
     '     Interface Objective
@@ -60,4 +60,3 @@ Namespace evolution.measure
     End Interface
 
 End Namespace
-

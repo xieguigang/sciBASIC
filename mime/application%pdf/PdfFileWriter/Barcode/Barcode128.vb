@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a29dfdb95dcc470f18cfdf1757c7720, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/Barcode128.vb"
+﻿#Region "Microsoft.VisualBasic::c037f928ddf1f489c00e7cc3d3785155, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/Barcode128.vb"
 
     ' Author:
     ' 
@@ -856,4 +856,3 @@ Public Class Barcode128
         Return
     End Sub
 End Class
-

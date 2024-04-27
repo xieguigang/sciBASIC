@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4efdeba7da6bfd302e33f0f1778033a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/DataFilter.vb"
+﻿#Region "Microsoft.VisualBasic::2fea55a73a2bdf7d04417b2f29b0e677, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/DataFilter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 6
     '   Blank Lines: 3
-    '     File Size: 354 B
+    '     File Size: 352 B
 
 
     '     Interface DataFilter
@@ -64,4 +64,3 @@ Namespace Filters
     End Interface
 
 End Namespace
-

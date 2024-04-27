@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62e1479ccdc45a351a853e8ae0e8d2e2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinKerningPair.vb"
+﻿#Region "Microsoft.VisualBasic::ca3512461bf42e0d47f98332b399dadc, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinKerningPair.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
+    '   Total Lines: 47
     '    Code Lines: 19
     ' Comment Lines: 22
-    '   Blank Lines: 8
-    '     File Size: 1.38 KB
+    '   Blank Lines: 6
+    '     File Size: 1.37 KB
 
 
     ' Class WinKerningPair
@@ -51,8 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ''' <summary>
 ''' Kerning pair class
@@ -101,4 +99,3 @@ Public Class WinKerningPair : Implements IComparable(Of WinKerningPair)
         Return If(First <> Other.First, AscW(First) - AscW(Other.First), AscW(Second) - AscW(Other.Second))
     End Function
 End Class
-

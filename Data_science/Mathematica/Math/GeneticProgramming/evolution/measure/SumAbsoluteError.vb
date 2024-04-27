@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8346a204be7b30c8826b4bef24d51210, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumAbsoluteError.vb"
+﻿#Region "Microsoft.VisualBasic::6dbf6f96b49cfcbbe1a5faf2ef8c7615, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumAbsoluteError.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 16
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 644 B
+    '     File Size: 642 B
 
 
     '     Class SumAbsoluteError
@@ -71,4 +71,3 @@ Namespace evolution.measure
     End Class
 
 End Namespace
-

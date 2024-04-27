@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c5ee5967caeddd5bd13712c241661db, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/DistanceFunction.vb"
+﻿#Region "Microsoft.VisualBasic::973f255d8316c1efca2fad1e584e86ac, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/DistanceFunction.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 5
     '   Blank Lines: 2
-    '     File Size: 327 B
+    '     File Size: 325 B
 
 
     '     Interface DistanceFunction
@@ -62,4 +62,3 @@ Namespace math.functions.distance
     End Interface
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea973ec36d82a61f21f088efb1448d80, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Graph2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::b6a2718d16fab8fbe6f6e2befd110a38, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Graph2Vec.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class Graph2Vec
     End Function
 
 End Class
-

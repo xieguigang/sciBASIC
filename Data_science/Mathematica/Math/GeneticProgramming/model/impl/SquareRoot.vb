@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aa72599fbd5ec5877fc3478001fbd57, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/SquareRoot.vb"
+﻿#Region "Microsoft.VisualBasic::ffd05a65f3136a2c57c2fc0b4f98142c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/SquareRoot.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 17
     ' Comment Lines: 0
     '   Blank Lines: 7
-    '     File Size: 653 B
+    '     File Size: 651 B
 
 
     '     Class SquareRoot
@@ -75,4 +75,3 @@ Namespace model.impl
     End Class
 
 End Namespace
-

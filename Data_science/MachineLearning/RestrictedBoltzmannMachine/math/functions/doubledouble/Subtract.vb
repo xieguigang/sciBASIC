@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b2e123518fca734a47e72f373253ceb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::eb2b8478ca1058205047174d5cf9e0a1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Subtract.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 3
     '   Blank Lines: 1
-    '     File Size: 341 B
+    '     File Size: 339 B
 
 
     '     Class Subtract
@@ -62,4 +62,3 @@ Namespace math.functions.doubledouble
     End Class
 
 End Namespace
-

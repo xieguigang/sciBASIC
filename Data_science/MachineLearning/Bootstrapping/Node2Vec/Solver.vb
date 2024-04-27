@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6864cb63db3153709b3cdecf345c0bdf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/Solver.vb"
+﻿#Region "Microsoft.VisualBasic::44cb9d3a68d37fe00b0d8b637c4b12c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/Solver.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 23
     '   Blank Lines: 15
-    '     File Size: 3.15 KB
+    '     File Size: 3.14 KB
 
 
     '     Module Solver
@@ -135,4 +135,3 @@ Namespace node2vec
     End Module
 
 End Namespace
-

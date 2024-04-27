@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7ee7740e3c0606e4ca984e6c1c2e428, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/StreamReader/BindAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::14fd378454dd18e4d7a05d38f8f00e58, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/StreamReader/BindAttribute.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
+    '   Total Lines: 18
     '    Code Lines: 12
     ' Comment Lines: 3
-    '   Blank Lines: 4
-    '     File Size: 533 B
+    '   Blank Lines: 3
+    '     File Size: 529 B
 
 
     ' Class BindAttribute
@@ -47,7 +47,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -71,5 +70,3 @@ Public Class BindAttribute : Inherits Attribute
         Return Type.Description
     End Function
 End Class
-
-

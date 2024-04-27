@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76ed67cd4984a97c3dbd280db803da51, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeBox.vb"
+﻿#Region "Microsoft.VisualBasic::84e6253b7ab172b64d784b1d8ee25089, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeBox.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 18
     ' Comment Lines: 31
     '   Blank Lines: 5
-    '     File Size: 1.60 KB
+    '     File Size: 1.59 KB
 
 
     ' Class BarcodeBox
@@ -103,4 +103,3 @@ Public Class BarcodeBox
         Return
     End Sub
 End Class
-

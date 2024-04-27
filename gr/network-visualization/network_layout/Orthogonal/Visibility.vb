@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea8cca2342c831e25856ed24fee1cd2, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Visibility.vb"
+﻿#Region "Microsoft.VisualBasic::15212ac95fdcdbed47ab25bdb12bebf7, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Visibility.vb"
 
     ' Author:
     ' 
@@ -1074,4 +1074,3 @@ Namespace Orthogonal
     End Class
 
 End Namespace
-

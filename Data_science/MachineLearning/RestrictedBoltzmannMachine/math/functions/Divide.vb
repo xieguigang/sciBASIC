@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e672193b0ffb2a162b2e3618a0b18c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Divide.vb"
+﻿#Region "Microsoft.VisualBasic::5fba2a87832a38bc9876abd7e9c2dce1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Divide.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 12
     ' Comment Lines: 3
     '   Blank Lines: 4
-    '     File Size: 455 B
+    '     File Size: 453 B
 
 
     '     Class Divide
@@ -70,4 +70,3 @@ Namespace math.functions
     End Class
 
 End Namespace
-

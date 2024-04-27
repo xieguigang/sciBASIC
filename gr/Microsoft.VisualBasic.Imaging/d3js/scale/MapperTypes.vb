@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c84c763c709b5ea37b4a8eb60775e83, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/MapperTypes.vb"
+﻿#Region "Microsoft.VisualBasic::dcddce55e459509801cacddc4a0d0d40, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/MapperTypes.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 21
+    '   Total Lines: 20
     '    Code Lines: 7
     ' Comment Lines: 12
-    '   Blank Lines: 2
-    '     File Size: 536 B
+    '   Blank Lines: 1
+    '     File Size: 534 B
 
 
     '     Enum MapperTypes
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace d3js.scale
 

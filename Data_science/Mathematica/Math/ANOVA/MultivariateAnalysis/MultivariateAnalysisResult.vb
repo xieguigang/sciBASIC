@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50674d780bd890489d97dfc5ad2c5228, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/MultivariateAnalysisResult.vb"
+﻿#Region "Microsoft.VisualBasic::baddeafd1f299b16fbd2c1832a93ba90, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/MultivariateAnalysisResult.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 32
     ' Comment Lines: 8
     '   Blank Lines: 9
-    '     File Size: 2.15 KB
+    '     File Size: 2.14 KB
 
 
     ' Class MultivariateAnalysisResult
@@ -103,4 +103,3 @@ Public Class MultivariateAnalysisResult
     Public Property Contributions As New ObservableCollection(Of Double)()
 
 End Class
-

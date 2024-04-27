@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b51f35ca9ed2e073fd6fe0e1c59aaca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAPolynomialUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a620d39478c3138276dfae1688597d5d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAPolynomialUtils.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
+    '   Total Lines: 147
     '    Code Lines: 108
     ' Comment Lines: 9
-    '   Blank Lines: 31
+    '   Blank Lines: 30
     '     File Size: 6.01 KB
 
 
@@ -71,7 +71,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
@@ -220,4 +219,3 @@ Namespace evolution
     End Class
 
 End Namespace
-

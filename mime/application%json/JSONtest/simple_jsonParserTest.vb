@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dee990e3a2858d0426b7883f2029366, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/simple_jsonParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::bc88ea83c1c1346c6195722a26af5b35, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/simple_jsonParserTest.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Module simple_jsonParserTest
         Pause()
     End Sub
 End Module
-

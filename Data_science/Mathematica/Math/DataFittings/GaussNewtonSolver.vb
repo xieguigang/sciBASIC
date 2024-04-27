@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6178856b855dbfc262286a8aedd76798, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//GaussNewtonSolver.vb"
+﻿#Region "Microsoft.VisualBasic::7c569e8c44602644e35481210f9f323f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//GaussNewtonSolver.vb"
 
     ' Author:
     ' 
@@ -320,4 +320,3 @@ Public Class GaussNewtonSolver
         Return (True, IA)
     End Function
 End Class
-

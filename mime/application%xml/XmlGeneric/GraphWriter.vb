@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::882dbf38aa9fe7c9b95ea7083eeab36b, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//XmlGeneric/GraphWriter.vb"
+﻿#Region "Microsoft.VisualBasic::05f554580061c41650b17eca2240ed8d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//XmlGeneric/GraphWriter.vb"
 
     ' Author:
     ' 
@@ -183,4 +183,3 @@ Public Class GraphWriter
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03724c0a228fd7964a31732a46941548, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Dtw.vb"
+﻿#Region "Microsoft.VisualBasic::ed6e1f36b1e8f9dd202464d32b8b10fc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Dtw.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 327
     ' Comment Lines: 109
     '   Blank Lines: 84
-    '     File Size: 27.35 KB
+    '     File Size: 27.34 KB
 
 
     '     Class Dtw
@@ -576,4 +576,3 @@ Namespace NDtw
         End Function
     End Class
 End Namespace
-

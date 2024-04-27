@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bb53e581cd51e2fe4257034fd3c40cf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/NumericDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::f9377cddc2267fce265e1866458942c1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/NumericDataSet.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 60
-    ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 2.64 KB
+    '   Total Lines: 131
+    '    Code Lines: 105
+    ' Comment Lines: 6
+    '   Blank Lines: 20
+    '     File Size: 4.53 KB
 
 
     ' Module NumericDataSet
     ' 
-    '     Function: IndexGetter, NumericGetter, NumericMatrix
+    '     Function: IndexGetter, NumericGetter, NumericMatrix, ZScale, ZScaleByCol
+    '               ZScaleByRow
     ' 
     ' /********************************************************************************/
 
@@ -180,4 +181,3 @@ Public Module NumericDataSet
         Return z
     End Function
 End Module
-

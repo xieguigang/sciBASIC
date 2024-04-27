@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d8f9ef3f37a65b8f8f4940da8a9d68b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/EmbeddingComparator.vb"
+﻿#Region "Microsoft.VisualBasic::758ae727edadca386f3e86946574a54c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/EmbeddingComparator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 9
     '   Blank Lines: 3
-    '     File Size: 489 B
+    '     File Size: 487 B
 
 
     '     Interface EmbeddingComparator
@@ -67,4 +67,3 @@ Namespace Orthogonal.optimization
     End Interface
 
 End Namespace
-

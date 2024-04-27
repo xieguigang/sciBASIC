@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d37588a23eeead674fbed29df54a6af3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/UndirectedGraph.vb"
+﻿#Region "Microsoft.VisualBasic::4d190819505c38c0b541e1df742ef408, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/UndirectedGraph.vb"
 
     ' Author:
     ' 
@@ -230,4 +230,3 @@ Namespace HDBSCAN.Hdbscanstar
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c292c9c353779df5232cba2632dc4c2, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::79a4285e7236b8627f55679ae444eacc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Blocks.vb"
 
     ' Author:
     ' 
@@ -226,4 +226,3 @@ Namespace Orthogonal
         End Function
     End Class
 End Namespace
-

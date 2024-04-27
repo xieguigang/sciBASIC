@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19b88b556fb8b7d748fb59d5827a3d24, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_R/AdaGrad.vb"
+﻿#Region "Microsoft.VisualBasic::834bd397716749a4a0b1f9dde7e5f434, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_R/AdaGrad.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 109
     ' Comment Lines: 0
     '   Blank Lines: 11
-    '     File Size: 6.41 KB
+    '     File Size: 6.40 KB
 
 
     '     Class AdaGrad
@@ -171,4 +171,3 @@ Namespace GraphEmbedding.complex_R
     End Class
 
 End Namespace
-

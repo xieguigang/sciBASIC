@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e0c6de106366c1613b92f41bbb183db, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Parser/Token.vb"
+﻿#Region "Microsoft.VisualBasic::22b9e6ee75a16a174f12e515ba170522, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Parser/Token.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 45
     ' Comment Lines: 7
     '   Blank Lines: 7
-    '     File Size: 1.79 KB
+    '     File Size: 1.78 KB
 
 
     ' Class Token
@@ -120,4 +120,3 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
     End Function
 
 End Class
-

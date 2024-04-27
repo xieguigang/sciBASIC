@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fb69de54b7bb9a8677dff24f9a30ae6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/factory/RBMFactory.vb"
+﻿#Region "Microsoft.VisualBasic::d63db75a34be823b7f8d21daa552cb38, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/factory/RBMFactory.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 5
     ' Comment Lines: 3
     '   Blank Lines: 2
-    '     File Size: 260 B
+    '     File Size: 258 B
 
 
     '     Interface RBMFactory
@@ -60,4 +60,3 @@ Namespace nn.rbm.factory
     End Interface
 
 End Namespace
-

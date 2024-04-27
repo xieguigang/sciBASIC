@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10900cb191b8d3f9fefb0daa354691f1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/FrameReader.vb"
+﻿#Region "Microsoft.VisualBasic::f9dd99b93a24204578880354e7b30d83, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/FrameReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 2
     ' Comment Lines: 0
     '   Blank Lines: 1
-    '     File Size: 34 B
+    '     File Size: 32 B
 
 
     ' Module FrameReader
@@ -52,4 +52,3 @@
 Module FrameReader
 
 End Module
-

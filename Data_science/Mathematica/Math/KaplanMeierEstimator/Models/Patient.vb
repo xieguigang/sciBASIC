@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2132fb63ef9da1a7e79132a6d0e5c29b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/Patient.vb"
+﻿#Region "Microsoft.VisualBasic::339384eaade8e50422dd7444a55d7fff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/Patient.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 7
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 227 B
+    '     File Size: 225 B
 
 
     '     Class Patient
@@ -59,4 +59,3 @@ Namespace Models
         Public Property CensorEventTime As Integer
     End Class
 End Namespace
-

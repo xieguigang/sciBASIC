@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e68465bd4ce477d057cbdffd3a18a2c3, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/path.vb"
+﻿#Region "Microsoft.VisualBasic::10fd715c14c19effb11ea39fe9d7537a, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/path.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 26
     '   Blank Lines: 7
-    '     File Size: 2.56 KB
+    '     File Size: 2.55 KB
 
 
     '     Class SvgPath
@@ -126,4 +126,3 @@ Namespace SVG.XML
         End Function
     End Class
 End Namespace
-
