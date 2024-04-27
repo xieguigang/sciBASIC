@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9422125b5a066157fa00f9cfbf41bf46, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\MassHandler.vb"
+﻿#Region "Microsoft.VisualBasic::5186fd9f168c25fdde87b6d8a8293bab, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/MassHandler.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 8
     '   Blank Lines: 6
-    '     File Size: 1.23 KB
+    '     File Size: 1.22 KB
 
 
     '     Class MassHandler

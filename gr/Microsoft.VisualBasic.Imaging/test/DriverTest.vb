@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c1005091c0e2303dbde521355501f0, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
+﻿#Region "Microsoft.VisualBasic::fd4808c8c16daef020fc32e5569ac257, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/DriverTest.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
+    '   Total Lines: 60
     '    Code Lines: 30
-    ' Comment Lines: 14
+    ' Comment Lines: 13
     '   Blank Lines: 17
-    '     File Size: 2.04 KB
+    '     File Size: 2.01 KB
 
 
     ' Module DriverTest

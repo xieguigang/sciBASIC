@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e9d917bd76ead24c91e506eb526bdb8, sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::77141969ebf5e1f6b4f6d3610fafe28b, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/Generic/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 306
-    '    Code Lines: 203
-    ' Comment Lines: 76
+    '   Total Lines: 311
+    '    Code Lines: 200
+    ' Comment Lines: 84
     '   Blank Lines: 27
-    '     File Size: 13.13 KB
+    '     File Size: 13.40 KB
 
 
     '     Module Extensions
     ' 
     '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, Project
-    '                   (+2 Overloads) PropertyNames, (+2 Overloads) Transpose, Values, (+2 Overloads) Vector
+    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, (+2 Overloads) PropertyNames
+    '                   (+2 Overloads) Transpose, Values, (+2 Overloads) Vector
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

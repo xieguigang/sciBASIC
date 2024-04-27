@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc86142007a57b354b7a51163b3ac00b, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::4a547acf56be9aabacdf365d16f8829b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/Sigmoid.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 39
     ' Comment Lines: 74
     '   Blank Lines: 12
-    '     File Size: 4.19 KB
+    '     File Size: 4.31 KB
 
 
     '     Class Sigmoid

@@ -1,68 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::3f685703b4c3f91abe28cb0ef29214cb, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::857ab1c62ed718e0149d83067c683b06, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CommandLine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 959
-'    Code Lines: 488
-' Comment Lines: 363
-'   Blank Lines: 108
-'     File Size: 40.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CommandLine
-' 
-'         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
-'                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
-'                     Parameters, SingleValue, Tokens
-' 
-'         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
-'                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
-'                   GetDateTime, GetDecimal, GetDictionary, GetDouble, GetEnumerator
-'                   GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath, GetGuid
-'                   GetInt16, GetInt32, GetInt64, GetObject, GetOrdinal
-'                   GetString, GetValue, HavebFlag, IsNull, IsTrue
-'                   OpenHandle, OpenStreamInput, OpenStreamOutput, Parse, ParseTokens
-'                   ReadInput, (+2 Overloads) Remove, ToArgumentVector, ToString, TrimNamePrefix
-' 
-'         Sub: (+2 Overloads) Add, Clear, CopyTo
-' 
-'         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
-'                    >, (+2 Overloads) >=
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 860
+    '    Code Lines: 457
+    ' Comment Lines: 302
+    '   Blank Lines: 101
+    '     File Size: 36.84 KB
+
+
+    '     Class CommandLine
+    ' 
+    '         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
+    '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
+    '                     Parameters, SingleValue, Tokens
+    ' 
+    '         Function: Assert, (+2 Overloads) BuildFromArguments, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains
+    '                   ContainsParameter, GetDataReader, GetDictionary, GetEnumerator, GetEnumerator1
+    '                   GetFullDIRPath, GetFullFilePath, GetObject, GetOrdinal, GetSize
+    '                   (+2 Overloads) GetString, GetValue, hasKey, HavebFlag, IsTrue
+    '                   MoveNext, OpenHandle, OpenStreamInput, OpenStreamOutput, Parse
+    '                   ParseTokens, ReadInput, (+2 Overloads) Remove, ToArgumentVector, ToString
+    '                   TrimNamePrefix
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo
+    ' 
+    '         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
+    '                    >, (+2 Overloads) >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

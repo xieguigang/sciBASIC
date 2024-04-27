@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1af4537af37f767040f7bf53a6a8e7ea, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
+﻿#Region "Microsoft.VisualBasic::68b2edcea3f231cfea6f4172ef081f4f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/RectangularArray.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 32
+    '   Total Lines: 71
+    '    Code Lines: 49
     ' Comment Lines: 8
-    '   Blank Lines: 11
-    '     File Size: 1.61 KB
+    '   Blank Lines: 14
+    '     File Size: 2.46 KB
 
 
     '     Class RectangularArray
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Cubic, (+2 Overloads) Matrix
+    '         Function: Cubic, CubicMatrix, (+2 Overloads) Matrix
     ' 
     ' 
     ' /********************************************************************************/

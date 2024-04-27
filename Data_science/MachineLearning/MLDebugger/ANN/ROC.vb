@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::352bbae8c214ba7810ff141fed76b2af, sciBASIC#\Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::ed282dcae4dd55571c496b2e613e4d84, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDebugger//ANN/ROC.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 47
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 2.27 KB
+    '     File Size: 2.28 KB
 
 
     ' Module ROC

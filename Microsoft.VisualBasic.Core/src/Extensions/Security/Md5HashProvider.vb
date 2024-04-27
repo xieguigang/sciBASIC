@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81fb0eed5a2e47aa2f57020a9833ef1, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::1e1a84b99b89cee07edd688d982def9d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Security/Md5HashProvider.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
+    '   Total Lines: 103
     '    Code Lines: 52
-    ' Comment Lines: 29
+    ' Comment Lines: 34
     '   Blank Lines: 17
-    '     File Size: 3.54 KB
+    '     File Size: 3.75 KB
 
 
     '     Class Md5HashProvider

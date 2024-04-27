@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85f694a73ab063bd4ae417f3c4181fd5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::1149cef836c6d508ccfa24520c8199c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/NumberGroups.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 402
-    '    Code Lines: 261
-    ' Comment Lines: 94
-    '   Blank Lines: 47
-    '     File Size: 15.05 KB
+    '   Total Lines: 466
+    '    Code Lines: 302
+    ' Comment Lines: 109
+    '   Blank Lines: 55
+    '     File Size: 18.38 KB
 
 
-    '     Interface INumericKey
-    ' 
-    '         Properties: key
-    ' 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, diff, (+5 Overloads) GroupBy, GroupByImpl, GroupByParallel
-    '                   Groups, Match, Min
+    '         Function: BinarySearch, diff, (+6 Overloads) GroupBy, GroupByImpl, GroupByParallel
+    '                   (+2 Overloads) GroupByTree, Groups, Match, Min, NumberGroupHelper
     ' 
     '     Interface IVector
     ' 

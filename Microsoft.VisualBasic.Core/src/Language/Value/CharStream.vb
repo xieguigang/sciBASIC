@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b13cc75929d945706caddec5b92b1f, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::3536dad55eb892311701f9e5e94f0c76, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/CharStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 31
+    '   Total Lines: 44
+    '    Code Lines: 34
     ' Comment Lines: 0
-    '   Blank Lines: 9
-    '     File Size: 1.47 KB
+    '   Blank Lines: 10
+    '     File Size: 1.60 KB
 
 
     '     Class CharStream
     ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add
     ' 

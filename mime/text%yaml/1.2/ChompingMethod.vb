@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bedcc4bc233daac4c1f0f8f6ed56313c, sciBASIC#\mime\text%yaml\1.2\ChompingMethod.vb"
+﻿#Region "Microsoft.VisualBasic::bedcc4bc233daac4c1f0f8f6ed56313c, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/ChompingMethod.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 12
     '   Blank Lines: 4
-    '     File Size: 513.00 B
+    '     File Size: 513 B
 
 
     '     Enum ChompingMethod

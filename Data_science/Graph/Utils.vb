@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55ece0719175b253c6e81b8ca6186854, sciBASIC#\Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::45f4a1065f4fcd7f9ae6416b5ac47327, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Utils.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 53
+    '   Total Lines: 85
+    '    Code Lines: 55
     ' Comment Lines: 20
     '   Blank Lines: 10
-    '     File Size: 2.74 KB
+    '     File Size: 2.88 KB
 
 
     ' Module Utils

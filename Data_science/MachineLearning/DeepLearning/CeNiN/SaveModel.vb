@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aec107f998403929eda47a1fdd0ec30, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\SaveModel.vb"
+﻿#Region "Microsoft.VisualBasic::d1c1c50955ba92516cfc23eb9ed9c312, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/SaveModel.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 90
     ' Comment Lines: 4
     '   Blank Lines: 17
-    '     File Size: 3.67 KB
+    '     File Size: 3.80 KB
 
 
     '     Module SaveModel

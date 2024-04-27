@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0b3a5d1a6d91f82bba36e9fd4bacc47, sciBASIC#\Data\BinaryData\netCDF\DataVector\bytes.vb"
+﻿#Region "Microsoft.VisualBasic::5e25a414e198c4afe33956b543b9afe0, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/bytes.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 15
+    '   Total Lines: 39
+    '    Code Lines: 30
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 596 B
+    '   Blank Lines: 9
+    '     File Size: 1.32 KB
 
 
     '     Class bytes
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb42dc78170f514db114124d010d4b61, sciBASIC#\Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::8b96da5e7643a2f1028e70f7635a2572, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 359
-    '    Code Lines: 284
+    '   Total Lines: 358
+    '    Code Lines: 283
     ' Comment Lines: 35
     '   Blank Lines: 40
-    '     File Size: 11.60 KB
+    '     File Size: 11.56 KB
 
 
     ' Class ByteBuffer

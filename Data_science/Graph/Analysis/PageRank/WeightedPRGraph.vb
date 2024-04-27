@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffad814c142aafad230055a1a969ddce, sciBASIC#\Data_science\Graph\Analysis\PageRank\WeightedPRGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0268e791285b8985610570d8c00ddd60, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PageRank/WeightedPRGraph.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 104
     ' Comment Lines: 33
     '   Blank Lines: 35
-    '     File Size: 6.17 KB
+    '     File Size: 6.22 KB
 
 
     '     Class WeightedPRNode

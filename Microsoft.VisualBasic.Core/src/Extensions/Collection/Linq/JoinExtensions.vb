@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30dc3fde4d3fac3ee0834a039287ff25, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::29195d05e441ece2a9df95217d648b6a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/JoinExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
+    '   Total Lines: 74
     '    Code Lines: 43
-    ' Comment Lines: 21
+    ' Comment Lines: 24
     '   Blank Lines: 7
-    '     File Size: 2.62 KB
+    '     File Size: 2.79 KB
 
 
     '     Module JoinExtensions

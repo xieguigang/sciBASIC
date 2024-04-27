@@ -1,104 +1,80 @@
-﻿#Region "Microsoft.VisualBasic::6d0827fbbc4d7dc11c48da1f5e3d9d51, sciBASIC#\mime\application%pdf\PdfFileWriter\AnnotAction.vb"
+﻿#Region "Microsoft.VisualBasic::079bab98795d37c6f6bbea5809d57d99, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/AnnotAction.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 271
-'    Code Lines: 112
-' Comment Lines: 128
-'   Blank Lines: 31
-'     File Size: 8.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Enum FileAttachIcon
-' 
-'     Graph, NoIcon, Paperclip, PushPin, Tag
-' 
-'  
-' 
-' 
-' 
-'     Enum StickyNoteIcon
-' 
-'         Comment, Help, Insert, Key, NewParagraph
-'         Note, Paragraph
-' 
-'  
-' 
-' 
-' 
-'     Class AnnotAction
-' 
-'         Properties: Subtype
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) IsEqual
-' 
-'     Class AnnotWebLink
-' 
-'         Properties: WebLinkStr
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: IsEqual
-' 
-'     Class AnnotLinkAction
-' 
-'         Properties: LocMarkerName
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: IsEqual
-' 
-'     Class AnnotDisplayMedia
-' 
-'         Properties: DisplayMedia
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: IsEqual
-' 
-'     Class AnnotFileAttachment
-' 
-'         Properties: EmbeddedFile
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: IsEqual
-' 
-'     Class AnnotStickyNote
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: IsEqual
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 72
+    ' Comment Lines: 80
+    '   Blank Lines: 18
+    '     File Size: 5.10 KB
+
+
+    ' Class AnnotWebLink
+    ' 
+    '     Properties: WebLinkStr
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' Class AnnotLinkAction
+    ' 
+    '     Properties: LocMarkerName
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' Class AnnotDisplayMedia
+    ' 
+    '     Properties: DisplayMedia
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' Class AnnotFileAttachment
+    ' 
+    '     Properties: EmbeddedFile
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' Class AnnotStickyNote
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: IsEqual
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

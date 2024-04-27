@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2937fb5a9f802ac484f61dd5b8c32b46, sciBASIC#\Data_science\DataMining\DynamicProgramming\SmithWaterman\LocalHSPMatch.vb"
+﻿#Region "Microsoft.VisualBasic::7501d5585c6e190fb7ddaf2f4e364615, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//SmithWaterman/LocalHSPMatch.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ece72aebad853e55e95176ce07b775f, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::7ab0c18249fff28c8bfe9e648a4295ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 64
+    '   Total Lines: 112
+    '    Code Lines: 70
     ' Comment Lines: 29
-    '   Blank Lines: 10
-    '     File Size: 4.81 KB
+    '   Blank Lines: 13
+    '     File Size: 5.30 KB
 
 
     '     Class NormalizeMatrix
     ' 
     '         Properties: matrix, names
     ' 
-    '         Function: CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
+    '         Function: (+2 Overloads) CreateFromSamples, doNormalInternal, DoNormalize, (+2 Overloads) NormalizeInput
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae0f2733324a23d71959d9b3e7692625, sciBASIC#\Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::767a7858e8c26a9083614a49b9ef8afb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Procedures.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 1067
     ' Comment Lines: 100
     '   Blank Lines: 284
-    '     File Size: 51.43 KB
+    '     File Size: 52.88 KB
 
 
     '     Module Procedures

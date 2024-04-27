@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b140b45efb2c416d791cbd542d79ce76, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7796aba60398bd10a6893c306dc51ea4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Linq/Linq.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 375
-    '    Code Lines: 226
+    '   Total Lines: 384
+    '    Code Lines: 234
     ' Comment Lines: 109
-    '   Blank Lines: 40
-    '     File Size: 19.19 KB
+    '   Blank Lines: 41
+    '     File Size: 19.66 KB
 
 
     '     Module Data

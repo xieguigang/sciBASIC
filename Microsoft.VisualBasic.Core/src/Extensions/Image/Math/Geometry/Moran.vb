@@ -1,4 +1,62 @@
-﻿Imports Microsoft.VisualBasic.Parallel
+﻿#Region "Microsoft.VisualBasic::41a2d40d034a7b96e632a2820ab82685, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Geometry/Moran.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 96
+    ' Comment Lines: 9
+    '   Blank Lines: 28
+    '     File Size: 4.71 KB
+
+
+    '     Module Moran
+    ' 
+    '         Function: calc_moran, calc_spatial, distanceCalculate, normalize
+    '         Class MoranSpatialTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Parallel
 Imports std = System.Math
 
 Namespace Imaging.Math2D

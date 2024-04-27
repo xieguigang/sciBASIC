@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8babc7d7387f7b4c1a144d073443c986, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\GBM.vb"
+﻿#Region "Microsoft.VisualBasic::fa6355027c23fa06df287992dba2cb20, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/GBM.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 202
     ' Comment Lines: 97
     '   Blank Lines: 44
-    '     File Size: 15.20 KB
+    '     File Size: 15.54 KB
 
 
     '     Class GBM

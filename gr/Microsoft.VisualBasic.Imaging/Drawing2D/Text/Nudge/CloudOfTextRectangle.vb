@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::0b711f43833c4f177dacad8a7b98b5e6, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\CloudOfTextRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::3a378216e913cee22071a79ceb0dddb7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/CloudOfTextRectangle.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 216
-'    Code Lines: 125
-' Comment Lines: 64
-'   Blank Lines: 27
-'     File Size: 9.38 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CloudOfTextRectangle
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: arrange_text, get_conflicts, get_tree_leaves, new_config_cloud, ToString
-'                   treat_conflicts
-' 
-'         Sub: moveArrows
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 260
+    '    Code Lines: 154
+    ' Comment Lines: 71
+    '   Blank Lines: 35
+    '     File Size: 10.79 KB
+
+
+    '     Class CloudOfTextRectangle
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: arrange_text, conflicts_with, get_conflicts, get_tree_leaves, new_config_cloud
+    '                   ToString, treat_conflicts
+    ' 
+    '         Sub: add_label, moveArrows, remove_label
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

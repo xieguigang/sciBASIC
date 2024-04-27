@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::038f2d48412de3f13593d61c4d71821f, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\RANSAC\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::85f4b640b545c8825d0d5ce4d1c50ef6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//RANSAC/Algorithm.vb"
 
     ' Author:
     ' 
@@ -283,4 +283,3 @@ Namespace RANSAC
         End Function
     End Class
 End Namespace
-

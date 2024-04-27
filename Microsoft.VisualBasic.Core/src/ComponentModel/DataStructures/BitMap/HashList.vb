@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31c09f91738df57827a2a4593e45d627, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashList.vb"
+﻿#Region "Microsoft.VisualBasic::b54c692043e62979349116607e5f7192, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/BitMap/HashList.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 139
-    ' Comment Lines: 35
+    '   Total Lines: 200
+    '    Code Lines: 134
+    ' Comment Lines: 36
     '   Blank Lines: 30
-    '     File Size: 7.77 KB
+    '     File Size: 7.61 KB
 
 
     '     Class HashList

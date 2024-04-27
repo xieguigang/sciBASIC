@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6743101944b14599fc105f033b066855, sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::2896797bb4d032209ab3a8c67a84b5ef, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Graph.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 595
-    '    Code Lines: 353
-    ' Comment Lines: 163
-    '   Blank Lines: 79
-    '     File Size: 22.07 KB
+    '   Total Lines: 651
+    '    Code Lines: 365
+    ' Comment Lines: 205
+    '   Blank Lines: 81
+    '     File Size: 25.07 KB
 
 
     '     Class NetworkGraph
     ' 
-    '         Properties: connectedNodes
+    '         Properties: connectedNodes, pinnedNodes
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, ComputeIfNotExists, Copy
-    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
-    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName
-    '                   StyleSelectorGetElementById, ToString
+    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, Copy, (+2 Overloads) CreateEdge
+    '                   createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex, GetEdge
+    '                   (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName, StyleSelectorGetElementById
+    '                   ToString, Union
     ' 
-    '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
-    '              (+2 Overloads) RemoveNode
+    '         Sub: Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode, FilterEdges
+    '              FilterNodes, Merge, RemoveEdge, (+2 Overloads) RemoveNode, RemovesIsolatedNodes
     ' 
     ' 
     ' /********************************************************************************/

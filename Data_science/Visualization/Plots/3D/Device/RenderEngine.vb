@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbd262ba2f968e62d7645c082fffa98c, sciBASIC#\Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a8daa45161f2d4e21a6e24b8a70a9656, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/Device/RenderEngine.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 100
     ' Comment Lines: 20
     '   Blank Lines: 16
-    '     File Size: 5.82 KB
+    '     File Size: 5.83 KB
 
 
     '     Module RenderEngine

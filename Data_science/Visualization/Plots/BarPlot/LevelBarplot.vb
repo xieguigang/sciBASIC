@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e07388be61b5fb81292ba24afd44f1f, sciBASIC#\Data_science\Visualization\Plots\BarPlot\LevelBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::368131d3d1469bdb6f31f58c47810254, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/LevelBarplot.vb"
 
     ' Author:
     ' 

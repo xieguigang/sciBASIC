@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4beb05938dc3624f5359ae6cd372f0a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IndeterminateChildProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::6a8691de4a332f834ee84e2e5f4c0452, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/IndeterminateChildProgressBar.vb"
 
     ' Author:
     ' 
@@ -97,4 +97,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Sub
     End Class
 End Namespace
-

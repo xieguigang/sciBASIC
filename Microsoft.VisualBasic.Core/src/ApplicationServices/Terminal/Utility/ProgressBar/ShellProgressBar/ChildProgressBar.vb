@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f5d77bde410f8ea40880994227110ab, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ChildProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::afe663eb552880c42ff837113604f0e9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ChildProgressBar.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 59
     ' Comment Lines: 0
     '   Blank Lines: 15
-    '     File Size: 2.77 KB
+    '     File Size: 2.76 KB
 
 
     '     Class ChildProgressBar
@@ -131,4 +131,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Function
     End Class
 End Namespace
-

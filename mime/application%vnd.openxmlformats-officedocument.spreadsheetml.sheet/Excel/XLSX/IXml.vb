@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::702ec229de9ac4b5a4a0c1eaa9d1b7fe, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
+﻿#Region "Microsoft.VisualBasic::a1cf05a19b4d3b8dba1a4275bc5340d7, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IXml.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 14
+    '   Total Lines: 23
+    '    Code Lines: 16
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 473 B
+    '   Blank Lines: 7
+    '     File Size: 571 B
 
 
-    ' Interface IXml
+    '     Interface IXml
     ' 
-    '     Function: filePath, toXml
+    '         Function: filePath, toXml
     ' 
-    ' Module XMLExtensions
+    '     Module XMLExtensions
     ' 
-    '     Function: WriteXml
+    '         Function: WriteXml
+    ' 
     ' 
     ' /********************************************************************************/
 

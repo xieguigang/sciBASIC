@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94c9e1ff57b3eadbf97549d5cc66cb36, sciBASIC#\Data_science\DataMining\BinaryTree\ComparisonProvider\Comparison.vb"
+﻿#Region "Microsoft.VisualBasic::9f1923d445010df36473aecff91ad3eb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//ComparisonProvider/Comparison.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 13
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 501 B
+    '   Total Lines: 25
+    '    Code Lines: 17
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 805 B
 
 
     ' Class Comparison
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetSimilarity
+    '     Function: GetObject, GetSimilarity
     ' 
     ' /********************************************************************************/
 

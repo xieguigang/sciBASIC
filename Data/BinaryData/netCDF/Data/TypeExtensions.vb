@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6673df65a41850ca3b52345068cb47fa, sciBASIC#\Data\BinaryData\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e18b034665be000463e79ecfc675a9aa, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Data/TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 70
     ' Comment Lines: 21
     '   Blank Lines: 9
-    '     File Size: 4.19 KB
+    '     File Size: 4.26 KB
 
 
     '     Module TypeExtensions

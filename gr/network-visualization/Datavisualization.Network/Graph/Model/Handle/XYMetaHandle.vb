@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f10f64ef20bc0a653e5e06d0b133d6d, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Handle\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::41519e22a949d1b41e068c6ac15da2d9, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Handle/XYMetaHandle.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 39
-    ' Comment Lines: 18
-    '   Blank Lines: 12
-    '     File Size: 2.34 KB
+    '   Total Lines: 88
+    '    Code Lines: 44
+    ' Comment Lines: 30
+    '   Blank Lines: 14
+    '     File Size: 3.09 KB
 
 
     '     Class XYMetaHandle
@@ -46,7 +46,7 @@
     '         Properties: isNaN, xoffsetscale, yoffsetscale
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) CreateVector, GetPoint, ToString
+    '         Function: (+2 Overloads) CreateVector, (+2 Overloads) GetPoint, ToString
     ' 
     ' 
     ' /********************************************************************************/

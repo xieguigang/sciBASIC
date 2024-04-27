@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5659aacd154fd6ca139cd6eef3266ed9, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorMapLegend.vb"
+﻿#Region "Microsoft.VisualBasic::f35819951207bf9b5795f93d5ddc261e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Legend/ColorMapLegend.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 48
-    ' Comment Lines: 7
-    '   Blank Lines: 7
-    '     File Size: 2.26 KB
+    '   Total Lines: 85
+    '    Code Lines: 64
+    ' Comment Lines: 11
+    '   Blank Lines: 10
+    '     File Size: 3.11 KB
 
 
     '     Class ColorMapLegend
@@ -47,9 +47,9 @@
     '                     ruleOffset, tickAxisStroke, tickFont, ticks, title
     '                     titleFont, unmapColor
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: Draw, ToString
+    '         Function: Draw, ScaleColors, ToString
     ' 
     '         Sub: Draw
     ' 

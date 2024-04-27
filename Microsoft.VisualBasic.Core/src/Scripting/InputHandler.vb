@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::0edb47586fcd6f4a4d8ba00b56b96915, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::0c6f6aceb6a0baefc6b557e7b0c1bed1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/InputHandler.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 401
-'    Code Lines: 246
-' Comment Lines: 114
-'   Blank Lines: 41
-'     File Size: 17.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module InputHandler
-' 
-'         Properties: [String], CasterString, Types
-' 
-'         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+3 Overloads) CTypeDynamic
-'                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
-'                   (+2 Overloads) ToString
-' 
-'         Sub: CapabilityPromise
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 433
+    '    Code Lines: 263
+    ' Comment Lines: 123
+    '   Blank Lines: 47
+    '     File Size: 19.05 KB
+
+
+    '     Module InputHandler
+    ' 
+    '         Properties: [String], CasterString, Types
+    ' 
+    '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+4 Overloads) CTypeDynamic
+    '                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
+    '                   (+2 Overloads) ToString
+    ' 
+    '         Sub: CapabilityPromise
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

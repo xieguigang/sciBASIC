@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2189b00bc555b193f0464393a7ea948, sciBASIC#\Data_science\DataMining\DynamicProgramming\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f1d4f5a6188d163ae6522b74ec309481, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//Extensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 15
+    '   Total Lines: 33
+    '    Code Lines: 24
     ' Comment Lines: 6
-    '   Blank Lines: 2
-    '     File Size: 837 B
+    '   Blank Lines: 3
+    '     File Size: 1.20 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: PopulateAlignments
+    '     Function: GetGeneralCharSymbol, PopulateAlignments
     ' 
     ' /********************************************************************************/
 

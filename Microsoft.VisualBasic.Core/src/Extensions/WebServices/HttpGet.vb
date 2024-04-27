@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7c0f338f02edab1b98f12ac17dd9b10, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::834a1cb0d61dac9e6558d68b7a813c12, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/WebServices/HttpGet.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 226
-    '    Code Lines: 161
-    ' Comment Lines: 25
+    '   Total Lines: 229
+    '    Code Lines: 159
+    ' Comment Lines: 30
     '   Blank Lines: 40
-    '     File Size: 8.27 KB
+    '     File Size: 8.61 KB
 
 
     ' Module HttpGet

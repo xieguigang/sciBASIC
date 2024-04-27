@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b662da2227b8f3ca6d41875e82d0a8b4, sciBASIC#\Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
+﻿#Region "Microsoft.VisualBasic::28b0a00da3f3a8509077b01799e57940, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/AttributeList.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 74
     ' Comment Lines: 7
     '   Blank Lines: 21
-    '     File Size: 3.75 KB
+    '     File Size: 3.85 KB
 
 
     '     Class AttributeList

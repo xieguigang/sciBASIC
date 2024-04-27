@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2587947bba388a6f54f5f06c0d5246f1, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::0b28ee65bcb10123c1b335da753f55bd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Multipart.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 80
+    '   Total Lines: 155
+    '    Code Lines: 97
     ' Comment Lines: 36
-    '   Blank Lines: 20
-    '     File Size: 5.31 KB
+    '   Blank Lines: 22
+    '     File Size: 6.19 KB
 
 
     '     Class MultipartForm

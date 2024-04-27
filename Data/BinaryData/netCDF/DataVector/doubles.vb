@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4740e32877e1fccdcce5c5550ba7db2d, sciBASIC#\Data\BinaryData\netCDF\DataVector\doubles.vb"
+﻿#Region "Microsoft.VisualBasic::8eba80625d10d9d461ad17e972db165a, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/doubles.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 21
+    '   Total Lines: 46
+    '    Code Lines: 35
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 803 B
+    '   Blank Lines: 11
+    '     File Size: 1.47 KB
 
 
     '     Class doubles
@@ -46,6 +46,7 @@
     '         Properties: cdfDataType
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

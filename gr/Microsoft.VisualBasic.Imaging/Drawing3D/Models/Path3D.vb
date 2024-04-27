@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::429f0909b137a8cd1e9ef42c85e2bf27, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::18b54cd9e6370c6a797d7d65a374da2f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Path3D.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 156
-    ' Comment Lines: 20
+    '   Total Lines: 235
+    '    Code Lines: 157
+    ' Comment Lines: 32
     '   Blank Lines: 46
-    '     File Size: 7.91 KB
+    '     File Size: 8.38 KB
 
 
     '     Class Path3D

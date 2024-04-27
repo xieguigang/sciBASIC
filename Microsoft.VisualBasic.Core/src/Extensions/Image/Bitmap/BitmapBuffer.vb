@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76f607e33408df343ed97b8bbab994a0, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::af2dddbb8524fad28b67dfc3f06f1cf1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 382
-    '    Code Lines: 211
-    ' Comment Lines: 116
-    '   Blank Lines: 55
-    '     File Size: 13.41 KB
+    '   Total Lines: 412
+    '    Code Lines: 223
+    ' Comment Lines: 131
+    '   Blank Lines: 58
+    '     File Size: 14.87 KB
 
 
     '     Class BitmapBuffer
@@ -47,8 +47,9 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: FromBitmap, FromImage, GetARGBStream, GetEnumerator, GetImage
-    '                   (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, IEnumerable_GetEnumerator, OutOfRange, ToPixel2D
+    '         Function: FromBitmap, FromImage, GetARGBStream, GetColor, GetEnumerator
+    '                   GetImage, (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, GetPixelsAll, IEnumerable_GetEnumerator
+    '                   OutOfRange, ToPixel2D
     ' 
     '         Sub: Dispose, (+3 Overloads) SetPixel, WriteARGBStream
     ' 

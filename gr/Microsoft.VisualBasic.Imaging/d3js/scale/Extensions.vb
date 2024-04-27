@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1084db3cca299772deacba15b5ca2b70, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2137b78b3599d92712897360b2681cbb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 21
+    '   Total Lines: 91
+    '    Code Lines: 24
     ' Comment Lines: 61
-    '   Blank Lines: 5
-    '     File Size: 4.08 KB
+    '   Blank Lines: 6
+    '     File Size: 4.22 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: linear, LinearScale, ordinal
+    '         Function: constant, linear, LinearScale, ordinal
     ' 
     ' 
     ' /********************************************************************************/

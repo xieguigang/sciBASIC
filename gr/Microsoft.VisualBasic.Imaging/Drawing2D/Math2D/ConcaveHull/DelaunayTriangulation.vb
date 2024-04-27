@@ -1,70 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::ed5be1f4a2b240d9ab197b8e3036e71d, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
+﻿#Region "Microsoft.VisualBasic::012bf3d247d611f2f7a4b624bb6ba40b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConcaveHull/DelaunayTriangulation.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 325
-'    Code Lines: 281
-' Comment Lines: 9
-'   Blank Lines: 35
-'     File Size: 13.24 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DelaunayTriangulation
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
-' 
-'     Structure TriangleIndex
-' 
-'         Function: ToString
-' 
-'     Structure TriangleVertex
-' 
-' 
-' 
-'     Structure Triangle
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'     Structure EdgeInfo
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetEdgeType, IsValid
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 267
+    '    Code Lines: 229
+    ' Comment Lines: 14
+    '   Blank Lines: 24
+    '     File Size: 11.67 KB
+
+
+    '     Class DelaunayTriangulation
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::708662ae342ebb27208a8e66aa4233f7, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::167993104bf5e209289d3f11c031d468, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/LQuerySchedule/LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 100
-    ' Comment Lines: 61
-    '   Blank Lines: 26
-    '     File Size: 8.77 KB
+    '   Total Lines: 175
+    '    Code Lines: 95
+    ' Comment Lines: 55
+    '   Blank Lines: 25
+    '     File Size: 8.32 KB
 
 
     '     Module LQuerySchedule
     ' 
-    '         Properties: CPU_NUMBER, Recommended_NUM_THREADS
+    '         Properties: CPU_NUMBER
     ' 
     '         Function: [Where], AutoConfig, DefaultConfig, (+3 Overloads) LQuery
     ' 

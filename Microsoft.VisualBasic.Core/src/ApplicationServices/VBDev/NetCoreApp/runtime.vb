@@ -1,70 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::a9d89634311f0ec1c5779be3ba075dd1, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCore5\runtime.vb"
+﻿#Region "Microsoft.VisualBasic::518006cb9e8ac0f628c76857d1b680e4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/NetCoreApp/runtime.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 39
-'    Code Lines: 26
-' Comment Lines: 0
-'   Blank Lines: 13
-'     File Size: 924 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class runtime
-' 
-'         Properties: assemblyVersion, fileVersion
-' 
-'     Class runtimeTarget
-' 
-'         Properties: assetType, rid
-' 
-'     Class library
-' 
-'         Properties: hashPath, path, serviceable, sha512, type
-' 
-'     Class frameworkTarget
-' 
-'         Properties: name, signature
-' 
-'         Function: ToString
-' 
-'     Class compilationOptions
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 26
+    ' Comment Lines: 0
+    '   Blank Lines: 13
+    '     File Size: 926 B
+
+
+    '     Class runtime
+    ' 
+    '         Properties: assemblyVersion, fileVersion
+    ' 
+    '     Class runtimeTarget
+    ' 
+    '         Properties: assetType, rid
+    ' 
+    '     Class library
+    ' 
+    '         Properties: hashPath, path, serviceable, sha512, type
+    ' 
+    '     Class frameworkTarget
+    ' 
+    '         Properties: name, signature
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class compilationOptions
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

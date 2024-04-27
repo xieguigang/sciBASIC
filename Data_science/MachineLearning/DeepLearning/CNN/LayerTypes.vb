@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3982435f32d28c23c167c80b18a9cb, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\LayerTypes.vb"
+﻿#Region "Microsoft.VisualBasic::90ef35d3c1daed44617a0a3923f04e62, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/LayerTypes.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 2
-    '     File Size: 338 B
+    '   Total Lines: 36
+    '    Code Lines: 23
+    ' Comment Lines: 9
+    '   Blank Lines: 4
+    '     File Size: 1.09 KB
 
 
     '     Enum LayerTypes

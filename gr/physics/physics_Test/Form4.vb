@@ -1,4 +1,73 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::198f119e3ca30211d6227847796d5544, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form4.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 459
+    '    Code Lines: 343
+    ' Comment Lines: 11
+    '   Blank Lines: 105
+    '     File Size: 14.03 KB
+
+
+    ' Class Form4
+    ' 
+    '     Sub: [step], applyViscosity, draw, findNeighbors, Form4_Load
+    '          Form4_SizeChanged, Setup, simulate, solveBoundaries, solveFluid
+    '          Timer1_Tick
+    '     Class Vector
+    ' 
+    '         Properties: size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Clear, pushBack
+    ' 
+    ' 
+    ' 
+    ' Class Hash
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class Particles
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics

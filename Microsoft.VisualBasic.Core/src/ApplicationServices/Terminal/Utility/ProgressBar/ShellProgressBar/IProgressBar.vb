@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a264db899a6d8a4593d19152ce56b610, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::1342c2e8f0012bfb8993cefd8d13a37c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/IProgressBar.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         Function AsProgress(Of T)(Optional message As Func(Of T, String) = Nothing, Optional percentage As Func(Of T, Double?) = Nothing) As IProgress(Of T)
     End Interface
 End Namespace
-

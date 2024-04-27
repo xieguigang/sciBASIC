@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, sciBASIC#\Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::18afd26838320737197e5790529d3846, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/Excel/Coordinates.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 90
-    ' Comment Lines: 12
-    '   Blank Lines: 20
-    '     File Size: 4.05 KB
+    '   Total Lines: 129
+    '    Code Lines: 94
+    ' Comment Lines: 14
+    '   Blank Lines: 21
+    '     File Size: 4.25 KB
 
 
     '     Module Coordinates

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2ae1dd5742845fab2fc2a010d657091, sciBASIC#\Data\Trinity\Model\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::005ff88053fa9f5f2b79e9da01bd98bb, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/Paragraph.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 52
-    ' Comment Lines: 0
-    '   Blank Lines: 16
-    '     File Size: 2.03 KB
+    '   Total Lines: 89
+    '    Code Lines: 61
+    ' Comment Lines: 11
+    '   Blank Lines: 17
+    '     File Size: 3.03 KB
 
 
     '     Class Paragraph
     ' 
     '         Properties: sentences
     ' 
-    '         Function: GetParagraph, Segmentation, ToString, Trim
+    '         Function: GetParagraph, Segmentation, SplitParagraph, ToString, Trim
     ' 
     ' 
     ' /********************************************************************************/

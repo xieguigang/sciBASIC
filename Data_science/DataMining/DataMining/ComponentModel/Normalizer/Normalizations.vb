@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cf0199fefe8aa7f59f5689098964c70, sciBASIC#\Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::50ed10d75d5f739e37dc12a90e93f6b0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Normalizer/Normalizations.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 65
-    ' Comment Lines: 16
+    '   Total Lines: 96
+    '    Code Lines: 66
+    ' Comment Lines: 17
     '   Blank Lines: 13
-    '     File Size: 3.37 KB
+    '     File Size: 3.45 KB
 
 
     '     Module Normalizations

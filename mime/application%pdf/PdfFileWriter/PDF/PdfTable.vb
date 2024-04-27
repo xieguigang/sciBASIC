@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6ccda802bc54f2273b3ea871abe7990, sciBASIC#\mime\application%pdf\PdfFileWriter\PDF\PdfTable.vb"
+﻿#Region "Microsoft.VisualBasic::7d97f28e179b7ce9c721402da6987ff8, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/PDF/PdfTable.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1030
-    '    Code Lines: 398
-    ' Comment Lines: 470
-    '   Blank Lines: 162
-    '     File Size: 34.89 KB
+    '   Total Lines: 1014
+    '    Code Lines: 391
+    ' Comment Lines: 478
+    '   Blank Lines: 145
+    '     File Size: 34.91 KB
 
 
     ' Delegate Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b138bf3ae4ac97a484233ce61f703277, sciBASIC#\Data\BinaryData\netCDF\DataVector\floats.vb"
+﻿#Region "Microsoft.VisualBasic::9a385e1045021640a1cfbc0986a7e43f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/floats.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 15
+    '   Total Lines: 41
+    '    Code Lines: 32
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 604 B
+    '   Blank Lines: 9
+    '     File Size: 1.41 KB
 
 
     '     Class floats
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

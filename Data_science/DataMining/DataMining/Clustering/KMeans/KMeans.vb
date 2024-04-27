@@ -1,53 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::d0ec385451e64964603e5f3a1c435053, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::e2228f5102c03f30e8ad7502ee5d1a00, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/KMeans.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 332
-'    Code Lines: 223
-' Comment Lines: 60
-'   Blank Lines: 49
-'     File Size: 15.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module KMeansAlgorithm
-' 
-'         Function: (+2 Overloads) ClusterDataSet, ClusterMean, CrossOver, means, minIndex
-'                   ParallelMicrosoft, ParallelUnix
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 221
+    ' Comment Lines: 53
+    '   Blank Lines: 51
+    '     File Size: 13.87 KB
+
+
+    '     Class KMeansAlgorithm
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CheckParallel, (+3 Overloads) ClusterDataSet, ClusterDataSetLoop, (+2 Overloads) CreateInitialCenters, means
+    '                   minIndex, ParallelEuclideanDistance
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

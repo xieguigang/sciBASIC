@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9970a6391eeadec6fca6dc4a9530483d, sciBASIC#\Data\BinaryData\netCDF\Data\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::04e157ecf277bbf51faa22aa3f8654ab, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Data/DataReader.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 60
     ' Comment Lines: 36
     '   Blank Lines: 12
-    '     File Size: 4.61 KB
+    '     File Size: 4.64 KB
 
 
     '     Module DataReader

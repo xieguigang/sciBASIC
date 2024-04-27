@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ef5e07986e9065218497a65eeada9e2, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::385ffbe1f63302a18d4e8c9f44f6d998, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Enumerator.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 681 B
+    '     File Size: 679 B
 
 
     '     Class Enumerator

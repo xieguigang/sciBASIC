@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd35ce888aa1cd4287f2a4c2fea87b3b, sciBASIC#\Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanSession.vb"
+﻿#Region "Microsoft.VisualBasic::de47e5c4a6f902ae3af011a558346470, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/DBSCAN/DbscanSession.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 144
-    ' Comment Lines: 35
-    '   Blank Lines: 30
-    '     File Size: 8.52 KB
+    '   Total Lines: 252
+    '    Code Lines: 171
+    ' Comment Lines: 40
+    '   Blank Lines: 41
+    '     File Size: 9.85 KB
 
 
     '     Class DbscanSession
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: CheckNeighborPts, isNoise, LoadDensityVector, RegionQuery, RegionQuerySingle
+    '         Function: CheckNeighborPts, isNoise, LoadDensityVector, RegionQuery
     ' 
     '         Sub: ExpandCluster, ExpandClusterParallel
+    '         Class QueryTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Solve
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

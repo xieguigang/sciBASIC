@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86cb31f9afc082a402df7d4102b7c12d, sciBASIC#\gr\PdfImage\PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::def8d2df6014348317a5b9588b5c1d3a, G:/GCModeller/src/runtime/sciBASIC#/gr/PdfImage//PdfGraphics.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 746
     ' Comment Lines: 6
     '   Blank Lines: 230
-    '     File Size: 41.45 KB
+    '     File Size: 41.46 KB
 
 
     ' Class PdfGraphics

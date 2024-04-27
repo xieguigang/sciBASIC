@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7075546f0babe2fabc26932b629beb88, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\IProtocolHandler.vb"
+﻿#Region "Microsoft.VisualBasic::dde078b1e8ade79a9acb6ba52d46a7d8, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//IProtocolHandler.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 42
+    '   Total Lines: 77
+    '    Code Lines: 44
     ' Comment Lines: 14
     '   Blank Lines: 19
-    '     File Size: 2.48 KB
+    '     File Size: 2.54 KB
 
 
     ' Class IProtocolHandler

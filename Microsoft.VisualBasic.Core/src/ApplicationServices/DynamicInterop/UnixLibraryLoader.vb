@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a591e45dcc98adcab22fca36e032fae5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnixLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::94e9d675d53833b395d86af2ab3aba1d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/UnixLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 46
+    '   Total Lines: 89
+    '    Code Lines: 52
     ' Comment Lines: 21
-    '   Blank Lines: 13
-    '     File Size: 3.78 KB
+    '   Blank Lines: 16
+    '     File Size: 4.09 KB
 
 
     '     Class UnixLibraryLoader
     ' 
     '         Function: dlclose, dlerror, dlopen, dlsym, FreeLibrary
     '                   GetFunctionAddress, GetLastError, getSearchPaths, InternalLoadLibrary, LoadLibrary
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/

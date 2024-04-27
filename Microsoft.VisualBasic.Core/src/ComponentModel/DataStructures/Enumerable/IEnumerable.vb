@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb69c5ec28321fbdb068dfd45528a54, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\IEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::3eb69c5ec28321fbdb068dfd45528a54, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Enumerable/IEnumerable.vb"
 
     ' Author:
     ' 

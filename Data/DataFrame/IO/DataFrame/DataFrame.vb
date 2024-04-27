@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cae7aae50883509aca21736cf51b4420, sciBASIC#\Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::961183e60bfb99cfdec27fd154f30832, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/DataFrame/DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,31 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 685
-    '    Code Lines: 445
-    ' Comment Lines: 135
-    '   Blank Lines: 105
-    '     File Size: 27.42 KB
+    '   Total Lines: 747
+    '    Code Lines: 474
+    ' Comment Lines: 162
+    '   Blank Lines: 111
+    '     File Size: 30.31 KB
 
 
     '     Class DataFrame
     ' 
     '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-    '                     IsClosed, Item, RecordsAffected, SchemaOridinal
+    '                     IsClosed, Item, Nrows, RecordsAffected, Rows
+    '                     SchemaOridinal
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: __createTableVector, [Select], AddAttribute, ColumnRows, CreateDataSource
-    '                   CreateObject, createObjectInternal, csv, EnumerateData, EnumerateRowObjects
-    '                   Generate, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, getColumnList, GetData, GetDataTypeName, GetDateTime
-    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-    '                   GetValueLambda, GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load
-    '                   LoadDataSet, MeasureTypeSchema, Parse, Read, reviewColumnHeader
-    '                   ToString
+    '         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
+    '                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
+    '                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
+    '                   GetChars, getColumnList, GetColumnVectors, GetData, GetDataTypeName
+    '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
+    '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
+    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable
+    '                   GetString, GetValue, GetValueLambda, GetValues, IDataRecord_GetValue
+    '                   IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema, Parse
+    '                   Read, reviewColumnHeader, ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset

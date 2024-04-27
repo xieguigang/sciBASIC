@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3f75c4df164dd554ab694d461760b5a, sciBASIC#\mime\text%yaml\1.2\Syntax\Tag.vb"
+﻿#Region "Microsoft.VisualBasic::b3f75c4df164dd554ab694d461760b5a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/Tag.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 9
-    '     File Size: 782.00 B
+    '     File Size: 782 B
 
 
     '     Class Tag

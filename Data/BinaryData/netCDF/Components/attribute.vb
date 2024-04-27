@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5c42e8da4614ecd46f8d9e0fadac40c, sciBASIC#\Data\BinaryData\netCDF\Components\attribute.vb"
+﻿#Region "Microsoft.VisualBasic::c52e82dd2d90e99bcd94be42192b7545, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Components/attribute.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 59
+    '   Total Lines: 93
+    '    Code Lines: 62
     ' Comment Lines: 18
-    '   Blank Lines: 12
-    '     File Size: 3.46 KB
+    '   Blank Lines: 13
+    '     File Size: 3.65 KB
 
 
     '     Class attribute
     ' 
     '         Properties: name, type, value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: getBytes, getObjectValue, ToString
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d37100019e03d5e1e357b7a68e38168, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\DegreeWeightedPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::42d1ce9f8f930b05aaf7f598bece906f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/DegreeWeightedPlanner.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 87
     ' Comment Lines: 11
     '   Blank Lines: 23
-    '     File Size: 4.84 KB
+    '     File Size: 4.83 KB
 
 
     '     Class DegreeWeightedPlanner

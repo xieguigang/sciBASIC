@@ -1,4 +1,85 @@
-﻿Imports System.Collections.ObjectModel
+﻿#Region "Microsoft.VisualBasic::f87691c0ee1c526d4adff4f826afd9ec, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsObject.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 124
+    ' Comment Lines: 36
+    '   Blank Lines: 33
+    '     File Size: 6.78 KB
+
+
+    ' Enum ScaleMethod
+    ' 
+    '     AutoScale, MeanCenter, None, ParetoScale
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Enum TransformMethod
+    ' 
+    '     Log10, None, QuadRoot
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class BasicStats
+    ' 
+    '     Properties: Average, ID, Legend, MaxValue, Median
+    '                 MinValue, SeventyFiveValue, Stdev, TwentyFiveValue
+    ' 
+    ' Class StatisticsObject
+    ' 
+    '     Properties: decoder, Scale, Transform, XColors, XDataMatrix
+    '                 XIndexes, XLabels, XMeans, XScaled, XStdevs
+    '                 XTransformed, YColors, YIndexes, YLabels, YLabels2
+    '                 YMean, YScaled, YStdev, YTransformed, YVariables
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: ColumnSize, CopyX, CopyY, RowSize, YBackTransform
+    ' 
+    '     Sub: StatInitialization
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.ObjectModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Enum ScaleMethod
@@ -191,3 +272,4 @@ Public Class StatisticsObject
         Return XDataMatrix.GetLength(1)
     End Function
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f7c7bf3f528e9cff39fe552cde071c5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::405bee02ccfc2064ac4ca7ef10a96f08, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ProgressBar.vb"
 
     ' Author:
     ' 
@@ -522,4 +522,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Function
     End Class
 End Namespace
-

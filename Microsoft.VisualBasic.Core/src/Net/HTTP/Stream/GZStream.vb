@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ff8d0297bbae867e9058a9c291e3db6, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::297b02e36b609a7b469bbaeea97d72b1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Stream/GZStream.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 59
+    '   Total Lines: 139
+    '    Code Lines: 76
     ' Comment Lines: 44
-    '   Blank Lines: 15
-    '     File Size: 4.56 KB
+    '   Blank Lines: 19
+    '     File Size: 5.33 KB
 
 
     '     Module GZipStreamHandler
     ' 
-    '         Function: AddGzipMagic, CheckGZipMagic, GZipAsBase64, GZipStream, UnGzipBase64
+    '         Function: AddGzipMagic, (+2 Overloads) CheckGZipMagic, (+2 Overloads) GZipAsBase64, GZipStream, UnGzipBase64
     '                   (+2 Overloads) UnGzipStream
     ' 
     ' 

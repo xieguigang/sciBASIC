@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b4c5ada2457a3b56de6655185c390d7, sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\SignalsWriter.vb"
+﻿#Region "Microsoft.VisualBasic::b8db10a83d8a54b66fe1216750ceff24, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Signal.IO//SignalsWriter.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 119
     ' Comment Lines: 14
     '   Blank Lines: 27
-    '     File Size: 7.99 KB
+    '     File Size: 8.02 KB
 
 
     ' Module SignalsWriter

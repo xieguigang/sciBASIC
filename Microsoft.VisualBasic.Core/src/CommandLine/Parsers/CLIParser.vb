@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fb95d646b67a56f1e5b09562057d1e3, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::f73f89db3ab68ea37d96d5728325ecbe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Parsers/CLIParser.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 145
-    ' Comment Lines: 34
-    '   Blank Lines: 30
-    '     File Size: 8.01 KB
+    '   Total Lines: 155
+    '    Code Lines: 104
+    ' Comment Lines: 29
+    '   Blank Lines: 22
+    '     File Size: 6.25 KB
 
 
     '     Module CLIParser
     ' 
-    '         Function: checkKeyDuplicated, extract, GetTokens, (+2 Overloads) TryParse
+    '         Function: checkKeyDuplicated, extract, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

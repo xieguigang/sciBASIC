@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8c5420d1c157c3f9677ce953f9e2078, sciBASIC#\Data\BinaryData\msgpack\Serialization\MessagePackMemberAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::262244559ec047469eb2645a199eb3b8, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Serialization/MessagePackMemberAttribute.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 3
     '   Blank Lines: 6
-    '     File Size: 868 B
+    '     File Size: 859 B
 
 
     '     Class MessagePackMemberAttribute

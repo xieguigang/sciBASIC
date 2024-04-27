@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::f3dd0616a44b1855534d15e5816cfbd9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::948f3ba155bdd0fcb8b81ca73b8afa56, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/StringHelpers/Parser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 364
-'    Code Lines: 225
-' Comment Lines: 94
-'   Blank Lines: 45
-'     File Size: 11.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PrimitiveParser
-' 
-'     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
-'               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
-'               ParseLong, ParseSingle, ParseTimeSpan
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 426
+    '    Code Lines: 240
+    ' Comment Lines: 136
+    '   Blank Lines: 50
+    '     File Size: 13.84 KB
+
+
+    ' Module PrimitiveParser
+    ' 
+    '     Function: Eval, IsBooleanFactor, IsInteger, isNaN, IsNumeric
+    '               IsSimpleNumber, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
+    '               ParseLong, ParseSingle, ParseTimeSpan
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

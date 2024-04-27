@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2e5b4a7fdfb1884f2e63d1b8d32734d, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Radial\RadialLayout.vb"
+﻿#Region "Microsoft.VisualBasic::b4c1c79061aed40a7a95a96b011b262a, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Radial/RadialLayout.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 37
     ' Comment Lines: 4
     '   Blank Lines: 10
-    '     File Size: 2.09 KB
+    '     File Size: 2.08 KB
 
 
     '     Module RadialLayout

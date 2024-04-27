@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f44734a1b70ce403f90032cf909642b, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
+﻿#Region "Microsoft.VisualBasic::2a8ced7d94b5e269a0ffb3cddc4d3f08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/Literal.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 45
-    ' Comment Lines: 0
-    '   Blank Lines: 12
-    '     File Size: 1.75 KB
+    '   Total Lines: 92
+    '    Code Lines: 64
+    ' Comment Lines: 11
+    '   Blank Lines: 17
+    '     File Size: 2.77 KB
 
 
     '     Class Literal
     ' 
-    '         Properties: isInteger, number
+    '         Properties: isInteger, number, One, Zero
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Evaluate, GetNegative, GetReciprocal, ToString
+    '         Operators: <>, =
     ' 
     ' 
     ' /********************************************************************************/

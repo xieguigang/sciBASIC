@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea56ce42c81b5bfd44b7321219c14f86, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::702b7b2e9b71f55aaa4b1cc20e0a00c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 37
-    ' Comment Lines: 49
+    '   Total Lines: 68
+    '    Code Lines: 28
+    ' Comment Lines: 33
     '   Blank Lines: 7
-    '     File Size: 3.77 KB
+    '     File Size: 2.35 KB
 
 
     '     Module ParallelExtension
     ' 
     '         Function: AsyncTask, DoEvents, RunTask
-    ' 
-    '         Sub: DoEvents
     ' 
     ' 
     ' /********************************************************************************/

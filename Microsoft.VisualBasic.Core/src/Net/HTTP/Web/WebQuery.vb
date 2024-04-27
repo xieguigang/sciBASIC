@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::c0cd387d26e0f037cd77c0295068ef69, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::8965c296648cc06cceff612545271cb3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Web/WebQuery.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 258
-'    Code Lines: 146
-' Comment Lines: 74
-'   Blank Lines: 38
-'     File Size: 10.57 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class WebQuery
-' 
-'         Properties: offlineMode
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
-' 
-'         Sub: runHttpGet
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 352
+    '    Code Lines: 196
+    ' Comment Lines: 105
+    '   Blank Lines: 51
+    '     File Size: 14.81 KB
+
+
+    '     Class WebQuery
+    ' 
+    '         Properties: offlineMode
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: GetText, IsNullKey, (+2 Overloads) Query, QueryCacheText, queryText
+    '                   (+2 Overloads) queryTextImpl
+    ' 
+    '         Sub: Clear404URLIndex, (+2 Overloads) Dispose, runHttpGet, Write404CacheList
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba79766148957cdc9e1bd68420f7c4b2, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::0528ea67e6f5a84bd443e29df91223d4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/Levenshtein/LevenshteinDistance.vb"
 
     ' Author:
     ' 

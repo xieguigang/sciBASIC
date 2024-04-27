@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d5fe54b527272a72a0db73db9f7c1e, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\batch.vb"
+﻿#Region "Microsoft.VisualBasic::2525260cb7f18b842ffad2f56c49fbfb, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/batch.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 117
     ' Comment Lines: 27
     '   Blank Lines: 19
-    '     File Size: 8.19 KB
+    '     File Size: 8.18 KB
 
 
     '     Module batch

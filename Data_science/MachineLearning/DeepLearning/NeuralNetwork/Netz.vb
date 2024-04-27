@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::481dd354d179a1c3d4f3835bc9c17662, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
+﻿#Region "Microsoft.VisualBasic::9de059e0c9219a5af0c76441a392924c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Netz.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 226
     ' Comment Lines: 6
     '   Blank Lines: 48
-    '     File Size: 10.70 KB
+    '     File Size: 10.98 KB
 
 
     '     Class Netz
@@ -337,4 +337,3 @@ Namespace NeuralNetwork
     End Class
 
 End Namespace
-

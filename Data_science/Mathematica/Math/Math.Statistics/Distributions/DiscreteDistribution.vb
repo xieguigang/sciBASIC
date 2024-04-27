@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a49bf7f936c2a8b8b4d643ef2f4a01e, sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\DiscreteDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::d0314ed266cab9adfc01c082b90f5475, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/DiscreteDistribution.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 116
     ' Comment Lines: 170
     '   Blank Lines: 44
-    '     File Size: 10.04 KB
+    '     File Size: 10.37 KB
 
 
     '     Class DiscreteDistribution

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fdc752e22decce062fed8f63eb5ffe4, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Signal.vb"
+﻿#Region "Microsoft.VisualBasic::705d047bf34d602c110b89a93d10e69b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Source/Signal.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
+    '   Total Lines: 89
     '    Code Lines: 42
     ' Comment Lines: 29
-    '   Blank Lines: 19
+    '   Blank Lines: 18
     '     File Size: 3.49 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda392c98ae1f63a816862d319136503, sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\SignalClustering.vb"
+﻿#Region "Microsoft.VisualBasic::3464b60d9dbb97cd2b999bb7b903409d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Cluster/SignalClustering.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
+    '   Total Lines: 52
     '    Code Lines: 39
-    ' Comment Lines: 0
+    ' Comment Lines: 3
     '   Blank Lines: 10
-    '     File Size: 1.61 KB
+    '     File Size: 1.70 KB
 
 
     ' Class SignalClustering

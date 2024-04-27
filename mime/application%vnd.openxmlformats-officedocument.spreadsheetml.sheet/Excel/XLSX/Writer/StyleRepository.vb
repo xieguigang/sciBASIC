@@ -1,4 +1,62 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::3bcc6a9fdef3d5724b0c41edc1b1ba0a, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/StyleRepository.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 36
+    ' Comment Lines: 35
+    '   Blank Lines: 9
+    '     File Size: 2.94 KB
+
+
+    '     Class StyleRepository
+    ' 
+    '         Properties: Instance, Styles
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddStyle
+    ' 
+    '         Sub: FlushStyles
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  PicoXLSX is a small .NET library to generate and read XLSX (Microsoft Excel 2007 or newer) files in an easy and native way
 '  Copyright Raphael Stoeckli © 2023
 '  This library is licensed under the MIT License.
@@ -78,3 +136,4 @@ Namespace XLSX.Writer
         End Sub
     End Class
 End Namespace
+

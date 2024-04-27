@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05795db54251f2690bde79ecec77cfd2, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::fdfaaa354b70a13ceb542dffa60918ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/Network.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 90
     ' Comment Lines: 71
     '   Blank Lines: 26
-    '     File Size: 7.31 KB
+    '     File Size: 7.50 KB
 
 
     '     Class Network

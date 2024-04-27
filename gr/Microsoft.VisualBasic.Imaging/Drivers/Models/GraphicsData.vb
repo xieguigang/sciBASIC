@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aff01acc33b6fc81473de30392c35c46, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::c7308d5331a6e753c5b7174b3669c743, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/Models/GraphicsData.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 65
     ' Comment Lines: 45
     '   Blank Lines: 15
-    '     File Size: 4.76 KB
+    '     File Size: 4.77 KB
 
 
     '     Class GraphicsData

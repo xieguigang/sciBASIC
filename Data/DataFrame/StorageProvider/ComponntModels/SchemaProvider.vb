@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f5c82d434064b330802898b1d15bde3, sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::bc66891f9c0a4101f0df67d6dec184ff, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/SchemaProvider.vb"
 
     ' Author:
     ' 

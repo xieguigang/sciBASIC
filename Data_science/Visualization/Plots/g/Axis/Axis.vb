@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f802dd9bea7d06228cfa804777200837, sciBASIC#\Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::43741703f997ad43254fade717158ecb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/Axis.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 484
-    '    Code Lines: 323
+    '   Total Lines: 501
+    '    Code Lines: 339
     ' Comment Lines: 110
-    '   Blank Lines: 51
-    '     File Size: 22.34 KB
+    '   Blank Lines: 52
+    '     File Size: 23.52 KB
 
 
     '     Module Axis
@@ -47,7 +47,7 @@
     ' 
     '         Function: __plotLabel, (+2 Overloads) DrawLabel
     ' 
-    '         Sub: checkScaler, (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY
+    '         Sub: checkScaler, (+3 Overloads) DrawAxis, DrawString, DrawX, DrawY
     '              DrawYGrid
     ' 
     ' 

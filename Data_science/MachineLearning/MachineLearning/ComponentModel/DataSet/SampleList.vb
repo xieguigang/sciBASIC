@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1094148389a9fd58a672b7acee33f857, sciBASIC#\Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\SampleList.vb"
+﻿#Region "Microsoft.VisualBasic::f67caf927f05b8304e84da41750f4450, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/SampleList.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 62
-    ' Comment Lines: 4
-    '   Blank Lines: 14
-    '     File Size: 2.90 KB
+    '   Total Lines: 90
+    '    Code Lines: 67
+    ' Comment Lines: 7
+    '   Blank Lines: 16
+    '     File Size: 3.15 KB
 
 
     '     Class SampleList
     ' 
     '         Properties: items
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: [Select], CreateDataSet, getCollection, getSize
     ' 
     ' 

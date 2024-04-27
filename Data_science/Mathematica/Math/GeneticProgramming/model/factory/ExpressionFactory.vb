@@ -1,4 +1,60 @@
-﻿Imports Microsoft.VisualBasic.Emit.Delegates
+﻿#Region "Microsoft.VisualBasic::9652332f441ccef372c94d38aad2207d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/factory/ExpressionFactory.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 79
+    ' Comment Lines: 1
+    '   Blank Lines: 21
+    '     File Size: 4.68 KB
+
+
+    '     Class ExpressionFactory
+    ' 
+    '         Properties: BinaryExpressions, TerminalExpressions, UnaryExpressions
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: createBinaryExpression, createTerminalExpression, createUnaryExpression, generateExpression, generateExpressions
+    '                   generatePolyExpression, generatePolyExpressions
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming.model.impl
 Imports rndf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -99,3 +155,4 @@ Namespace model.factory
     End Class
 
 End Namespace
+

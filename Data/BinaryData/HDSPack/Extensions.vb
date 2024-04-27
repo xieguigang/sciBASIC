@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::a54222024ab7bcf07fd63ac8e0c5c1d7, sciBASIC#\Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1bfd6679a55caa162a0889d05b5074b7, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 58
-'    Code Lines: 45
-' Comment Lines: 0
-'   Blank Lines: 13
-'     File Size: 1.78 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-'     Function: ReadText, (+2 Overloads) WriteText
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 72
+    ' Comment Lines: 20
+    '   Blank Lines: 17
+    '     File Size: 3.88 KB
+
+
+    ' Module Extensions
+    ' 
+    '     Function: ReadBinary, (+2 Overloads) ReadText, (+2 Overloads) WriteText
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

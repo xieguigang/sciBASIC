@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e20ebf789813fbf19867990055a073ec, sciBASIC#\mime\text%yaml\1.2\Syntax\YamlVersion.vb"
+﻿#Region "Microsoft.VisualBasic::e20ebf789813fbf19867990055a073ec, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/YamlVersion.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 0
     '   Blank Lines: 3
-    '     File Size: 263.00 B
+    '     File Size: 263 B
 
 
     '     Class YamlVersion

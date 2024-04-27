@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e8d035772684a3580f4b6a1953bfc94, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::7ac62f7651e0aee276309a48a33f9b48, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/SeqValue.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 87
+    '   Total Lines: 189
+    '    Code Lines: 93
     ' Comment Lines: 73
-    '   Blank Lines: 21
-    '     File Size: 6.19 KB
+    '   Blank Lines: 23
+    '     File Size: 6.46 KB
 
 
     '     Structure SeqValue
@@ -51,7 +51,7 @@
     ' 
     '         Sub: Assign
     ' 
-    '         Operators: (+2 Overloads) -, (+3 Overloads) +, <>, =, (+2 Overloads) Mod
+    '         Operators: (+2 Overloads) -, (+3 Overloads) +, (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) Mod
     ' 
     ' 
     ' /********************************************************************************/

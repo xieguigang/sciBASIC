@@ -1,52 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::e60b8ad39a90c810c090f46f60e62eea, sciBASIC#\mime\application%json\Serializer\ObjectSchema.vb"
+﻿#Region "Microsoft.VisualBasic::04b342d9f56f3d605704187928a05a50, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/ObjectSchema.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 126
-'    Code Lines: 92
-' Comment Lines: 18
-'   Blank Lines: 16
-'     File Size: 4.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ObjectSchema
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Function: CreateSchema, FindInterfaceImpementations, GetSchema, Score, ToString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 263
+    '    Code Lines: 173
+    ' Comment Lines: 55
+    '   Blank Lines: 35
+    '     File Size: 10.48 KB
+
+
+    '     Enum Serializations
+    ' 
+    '         JSON, XML
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class SoapGraph
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Activate, CreateSchema, FindInterfaceImplementations, GetAddMethod, GetJSONCLRWriters
+    '                   (+2 Overloads) GetSchema, GetXmlCLRWriters, Score, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

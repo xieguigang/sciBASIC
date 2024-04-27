@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::831bdbf118d2af936bce07f6261d6c76, sciBASIC#\mime\application%pdf\PdfFileWriter\FontApi.vb"
+﻿#Region "Microsoft.VisualBasic::4dec5e910552d6d871be1f4645e71463, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/FontApi.vb"
 
     ' Author:
     ' 
@@ -34,66 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1651
-    '    Code Lines: 834
-    ' Comment Lines: 487
-    '   Blank Lines: 330
-    '     File Size: 47.60 KB
+    '   Total Lines: 656
+    '    Code Lines: 260
+    ' Comment Lines: 281
+    '   Blank Lines: 115
+    '     File Size: 22.83 KB
 
 
-    ' Class CharInfo
-    ' 
-    '     Properties: ActiveChar, CharCode, DesignBBoxBottom, DesignBBoxLeft, DesignBBoxRight
-    '                 DesignBBoxTop, DesignWidth, GlyphIndex, Type0Font
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: CompareTo
-    ' 
-    ' Class SortByNewIndex
-    ' 
-    '     Function: Compare
-    ' 
-    ' Class FontBox
-    ' 
-    '     Properties: Bottom, Left, Right, Top
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class WinPanose
-    ' 
-    '     Properties: bArmStyle, bContrast, bFamilyType, bLetterform, bMidline
-    '                 bProportion, bSerifStyle, bStrokeVariation, bWeight, bXHeight
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class WinKerningPair
-    ' 
-    '     Properties: First, KernAmount, Second
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: CompareTo
-    ' 
-    ' Class WinTextMetric
-    ' 
-    '     Properties: tmAscent, tmAveCharWidth, tmBreakChar, tmCharSet, tmDefaultChar
-    '                 tmDescent, tmDigitizedAspectX, tmDigitizedAspectY, tmExternalLeading, tmFirstChar
-    '                 tmHeight, tmInternalLeading, tmItalic, tmLastChar, tmMaxCharWidth
-    '                 tmOverhang, tmPitchAndFamily, tmStruckOut, tmUnderlined, tmWeight
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    ' Class WinOutlineTextMetric
-    ' 
-    '     Properties: otmAscent, otmDescent, otmEMSquare, otmfsSelection, otmfsType
-    '                 otmItalicAngle, otmLineGap, otmMacAscent, otmMacDescent, otmMacLineGap
-    '                 otmPanoseNumber, otmpFaceName, otmpFamilyName, otmpFullName, otmpStyleName
-    '                 otmptSubscriptOffset, otmptSubscriptSize, otmptSuperscriptOffset, otmptSuperscriptSize, otmrcFontBox
-    '                 otmsCapEmHeight, otmsCharSlopeRise, otmsCharSlopeRun, otmSize, otmsStrikeoutPosition
-    '                 otmsStrikeoutSize, otmsUnderscorePosition, otmsUnderscoreSize, otmsXHeight, otmTextMetric
-    '                 otmusMinimumPPEM
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' Class FontApi
     ' 
     '     Constructor: (+1 Overloads) Sub New

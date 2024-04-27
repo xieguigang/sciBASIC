@@ -1,60 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::dc8717e1efb9b478fd19b6a45a3a61e9, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::f6e277b662129bd97eb96b93cfb1045c, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpServicesSocket.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 466
-'    Code Lines: 264
-' Comment Lines: 126
-'   Blank Lines: 76
-'     File Size: 19.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class TcpServicesSocket
-' 
-'         Properties: IsShutdown, LastError, LocalPort, ResponseHandler, Running
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, startSocket
-'                   ToString
-' 
-'         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
-'              Send, WaitForStart
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 352
+    '    Code Lines: 192
+    ' Comment Lines: 103
+    '   Blank Lines: 57
+    '     File Size: 14.27 KB
+
+
+    '     Class TcpServicesSocket
+    ' 
+    '         Properties: IsShutdown, LastError, LocalPort, ResponseHandler, Running
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
+    ' 
+    '         Sub: accept, acceptWorker, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest
+    '              Send, WaitForStart
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

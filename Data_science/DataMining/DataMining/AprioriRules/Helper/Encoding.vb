@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, sciBASIC#\Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Helper/Encoding.vb"
 
     ' Author:
     ' 

@@ -1,67 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::6617b991a65b75308c236722fcb50603, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::11e932390595d73e691be069b08cad8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1414
-'    Code Lines: 791
-' Comment Lines: 491
-'   Blank Lines: 132
-'     File Size: 50.84 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-' 
-' Module Extensions
-' 
-'     Function: [Set], Add, (+4 Overloads) AddRange, AsRange, (+2 Overloads) Average
-'               CheckDuplicated, Constrain, DateToString, DriverRun, FuzzyMatching
-'               IndexOf, (+2 Overloads) InlineCopy, InsertOrUpdate, Invoke, InvokeSet
-'               Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, (+2 Overloads) LongSeq, MatrixToUltraLargeVector
-'               MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, (+2 Overloads) Offset
-'               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
-'               RunDriver, Second, SeqRandom, (+3 Overloads) Sequence, (+11 Overloads) ShadowCopy
-'               Shell, Shuffles, Slice, (+2 Overloads) SplitMV, ToArray
-'               ToBoolean, ToDictionary, ToNormalizedPathString, ToString, ToStringArray
-'               ToVector, (+3 Overloads) TrimNull, TryCount, Unlist, WriteAddress
-' 
-'     Sub: Add, FillBlank, Removes, (+2 Overloads) Swap, SwapItem
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1543
+    '    Code Lines: 856
+    ' Comment Lines: 543
+    '   Blank Lines: 144
+    '     File Size: 57.35 KB
+
+
+    ' Module Extensions
+    ' 
+    ' 
+    ' Module Extensions
+    ' 
+    '     Function: [Set], Add, (+5 Overloads) AddRange, AsRange, (+2 Overloads) Average
+    '               CheckDuplicated, Constrain, DateToString, DescriptionValue, DriverRun
+    '               FuzzyMatching, IndexOf, (+2 Overloads) InlineCopy, InsertOrUpdate, Invoke
+    '               InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               (+2 Overloads) Offset, Range, Remove, RemoveDuplicates, RemoveFirst
+    '               (+2 Overloads) RemoveLast, Second, SeqRandom, (+3 Overloads) Sequence, (+11 Overloads) ShadowCopy
+    '               Shell, Shuffles, Slice, (+2 Overloads) SplitMV, Sum
+    '               (+2 Overloads) ToArray, ToBoolean, ToDictionary, ToNormalizedPathString, ToString
+    '               ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount, Unlist
+    '               WriteAddress
+    ' 
+    '     Sub: Add, FillBlank, Removes, (+2 Overloads) Swap, SwapItem
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

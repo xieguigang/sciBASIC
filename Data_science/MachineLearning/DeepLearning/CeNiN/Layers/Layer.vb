@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c1f656d7b2cc16caf3e8782e0a80a80, sciBASIC#\Data_science\MachineLearning\DeepLearning\CNN\Layers\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::a998160be066e84e039231d24524bf90, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Layer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 81
     ' Comment Lines: 20
     '   Blank Lines: 24
-    '     File Size: 4.32 KB
+    '     File Size: 4.45 KB
 
 
     '     Class Layer

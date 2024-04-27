@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::804b56dbd601329189728b5de6582199, sciBASIC#\Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::9061108d6e4da6b89aedbbf152b1b0e9, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Mappings.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 114
+    '   Total Lines: 115
     '    Code Lines: 60
-    ' Comment Lines: 41
+    ' Comment Lines: 42
     '   Blank Lines: 13
-    '     File Size: 4.65 KB
+    '     File Size: 5.02 KB
 
 
     ' Class MappingsHelper

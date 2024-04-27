@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e63ea171b1f7653fc683cfc3f0ac0b4, sciBASIC#\Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::47a633f9b05b9dd77dc6ec5069aee966, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//ByteOrder/NetworkByteOrderBitConvertor.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 170
-    ' Comment Lines: 73
-    '   Blank Lines: 27
-    '     File Size: 10.10 KB
+    '   Total Lines: 282
+    '    Code Lines: 174
+    ' Comment Lines: 80
+    '   Blank Lines: 28
+    '     File Size: 10.94 KB
 
 
     ' Module NetworkByteOrderBitConvertor
@@ -46,7 +46,7 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: f32Bits, f64Bits, (+5 Overloads) GetBytes, getf32, getf64
     '               geti16, geti32, geti64, i16Bits, i32Bits
-    '               i64Bits, ToDouble, ToInt16, ToInt32, ToInt64
+    '               i64Bits, (+2 Overloads) ToDouble, ToInt16, ToInt32, ToInt64
     '               ToSingle
     ' 
     ' /********************************************************************************/

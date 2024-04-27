@@ -1,52 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::c01efe879a62dd983db25056f69b3d3a, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::2e6f103bd6db7cb6117e0f9eb7bffbb0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/Evaluation.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 106
-'    Code Lines: 72
-' Comment Lines: 13
-'   Blank Lines: 21
-'     File Size: 3.66 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Evaluation
-' 
-'         Function: AverageDistance, Dunn, Silhouette
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 496
+    '    Code Lines: 341
+    ' Comment Lines: 76
+    '   Blank Lines: 79
+    '     File Size: 19.28 KB
+
+
+    '     Module Evaluation
+    ' 
+    '         Function: AverageDistance, CalcMaxInDist, CalcMinOutDist, calcularAverageBetweenClusterDistance, calcularAverageDistance
+    '                   calcularDavidBouldin, CalcularMaximumDiameter, calcularMinimumDistance, (+2 Overloads) CalinskiHarabasz, (+2 Overloads) Dunn
+    '                   (+2 Overloads) Silhouette, SquaredDistance
+    '         Class CalcMaxInDistTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: GetMax
+    ' 
+    '             Sub: Solve
+    ' 
+    '         Class CalcMinOutDistTask
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: GetMin
+    ' 
+    '             Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

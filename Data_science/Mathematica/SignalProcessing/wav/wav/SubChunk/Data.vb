@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb1963a9c33857e7c4c82114f725bb4c, sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
+﻿#Region "Microsoft.VisualBasic::1f93c14d29a1bcbb0342a7a5a96aab05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav//SubChunk/Data.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 110
+    '   Total Lines: 137
+    '    Code Lines: 107
     ' Comment Lines: 2
-    '   Blank Lines: 29
-    '     File Size: 4.80 KB
+    '   Blank Lines: 28
+    '     File Size: 4.64 KB
 
 
     ' Class DataSubChunk
     ' 
     '     Properties: data
     ' 
-    '     Function: GenericEnumerator, GetEnumerator, loadData, LoadSamples, ParseData
+    '     Function: GenericEnumerator, loadData, LoadSamples, ParseData
     ' 
     ' Class SampleDataChunk
     ' 

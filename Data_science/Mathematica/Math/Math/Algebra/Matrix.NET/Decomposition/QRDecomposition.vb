@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::049f8db2694fba3729b1469c779a9122, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::875b8cad1467cf1409ab8d17dd4d13c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/QRDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 237
-    '    Code Lines: 154
-    ' Comment Lines: 56
-    '   Blank Lines: 27
-    '     File Size: 8.73 KB
+    '   Total Lines: 231
+    '    Code Lines: 150
+    ' Comment Lines: 55
+    '   Blank Lines: 26
+    '     File Size: 8.48 KB
 
 
     '     Class QRDecomposition
@@ -46,10 +46,7 @@
     '         Properties: FullRank, H, Q, R
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    ' 
     '         Function: Solve
-    ' 
-    '         Sub: ISerializable_GetObjectData
     ' 
     ' 
     ' /********************************************************************************/

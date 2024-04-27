@@ -1,4 +1,60 @@
-﻿Imports System.Collections.ObjectModel
+﻿#Region "Microsoft.VisualBasic::50674d780bd890489d97dfc5ad2c5228, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/MultivariateAnalysisResult.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 49
+    '    Code Lines: 32
+    ' Comment Lines: 8
+    '   Blank Lines: 9
+    '     File Size: 2.15 KB
+
+
+    ' Class MultivariateAnalysisResult
+    ' 
+    '     Properties: analysis, Coefficients, Contributions, CPreds, FilteredXArray
+    '                 NFold, OptimizedFactor, OptimizedOrthoFactor, PoPreds, PPredCoeffs
+    '                 PPredCovs, PPreds, PredictedYs, Presses, Q2Cums
+    '                 Q2Values, Rmsee, SsCVs, SsPreds, StatisticsObject
+    '                 StdevFilteredXs, stdevT, ToPreds, Totals, TPreds
+    '                 UPreds, Vips, WoPreds, WPreds
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Collections.ObjectModel
 
 Public Class MultivariateAnalysisResult
 
@@ -47,3 +103,4 @@ Public Class MultivariateAnalysisResult
     Public Property Contributions As New ObservableCollection(Of Double)()
 
 End Class
+

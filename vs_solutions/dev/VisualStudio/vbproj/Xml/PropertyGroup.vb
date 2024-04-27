@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::853d02106d98223b7f89cde5d831cab6, sciBASIC#\vs_solutions\dev\VisualStudio\vbproj\Xml\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::8fc23cc05644a362ca17bd08d5bb409d, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/PropertyGroup.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 61
+    '   Total Lines: 72
+    '    Code Lines: 68
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 2.87 KB
+    '     File Size: 3.20 KB
 
 
     '     Class PropertyGroup
     ' 
-    '         Properties: ApplicationManifest, ApplicationRevision, ApplicationVersion, AssemblyName, AutoGenerateBindingRedirects
-    '                     BootstrapperEnabled, CodeAnalysisRuleSet, Condition, Configuration, DebugSymbols
-    '                     DebugType, DefineConstants, DefineDebug, DefineTrace, DelaySign
-    '                     DocumentationFile, FileAlignment, GenerateManifests, GenerateSerializationAssemblies, Install
-    '                     InstallFrom, IsWebBootstrapper, MapFileExtensions, MyType, NoWarn
-    '                     Optimize, OptionCompare, OptionExplicit, OptionInfer, OptionStrict
-    '                     OutputPath, OutputType, Platform, PlatformTarget, Prefer32Bit
+    '         Properties: ApplicationManifest, ApplicationRevision, ApplicationVersion, AssemblyName, AssemblyVersion
+    '                     AutoGenerateBindingRedirects, BootstrapperEnabled, CodeAnalysisRuleSet, Company, Condition
+    '                     Configuration, Copyright, DebugSymbols, DebugType, DefineConstants
+    '                     DefineDebug, DefineTrace, DelaySign, Description, DocumentationFile
+    '                     FileAlignment, GenerateManifests, GenerateSerializationAssemblies, Install, InstallFrom
+    '                     IsWebBootstrapper, MapFileExtensions, MyType, NoWarn, Optimize
+    '                     OptionCompare, OptionExplicit, OptionInfer, OptionStrict, OutputPath
+    '                     OutputType, Platform, Platforms, PlatformTarget, Prefer32Bit
     '                     ProjectGuid, PublishUrl, RemoveIntegerChecks, RootNamespace, SignAssembly
-    '                     StartupObject, TargetFrameworkProfile, TargetFrameworkVersion, TargetZone, UpdateEnabled
-    '                     UpdateInterval, UpdateIntervalUnits, UpdateMode, UpdatePeriodically, UpdateRequired
-    '                     UseApplicationTrust, WarningsAsErrors
+    '                     StartupObject, TargetFramework, TargetFrameworkProfile, TargetFrameworkVersion, TargetZone
+    '                     UpdateEnabled, UpdateInterval, UpdateIntervalUnits, UpdateMode, UpdatePeriodically
+    '                     UpdateRequired, UseApplicationTrust, Version, WarningsAsErrors
     ' 
     '         Function: ToString
     ' 

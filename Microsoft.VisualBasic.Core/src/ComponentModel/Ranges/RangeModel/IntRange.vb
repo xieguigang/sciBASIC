@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc59df59459baa5f3e01bf2aa9b97dbf, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::b96520dcbb2e87616b54416b362416e1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/RangeModel/IntRange.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 
     '     Class IntRange
     ' 
-    '         Properties: Length, Max, Min
+    '         Properties: Interval, Max, Min
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping, ScaleMapping

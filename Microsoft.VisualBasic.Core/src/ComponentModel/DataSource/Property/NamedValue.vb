@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::8e36552f21fdff10a54a50f9e5800a15, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
+﻿#Region "Microsoft.VisualBasic::b5e45dc8e792775a8c3ccd9cddf5409b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/Property/NamedValue.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 200
-'    Code Lines: 124
-' Comment Lines: 50
-'   Blank Lines: 26
-'     File Size: 7.74 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure NamedValue
-' 
-'         Properties: Description, IsEmpty, Name, Value, ValueType
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: FixValue, ToString
-'         Operators: (+2 Overloads) +, <>, =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 140
+    ' Comment Lines: 50
+    '   Blank Lines: 28
+    '     File Size: 8.42 KB
+
+
+    '     Structure NamedValue
+    ' 
+    '         Properties: Description, IsEmpty, Name, Value, ValueType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: FixValue, getValueStr, ToString
+    '         Operators: (+2 Overloads) +, <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

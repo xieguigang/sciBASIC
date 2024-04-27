@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f81e7eb358336f0315d4cd6e174c7219, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\layout3d.vb"
+﻿#Region "Microsoft.VisualBasic::c6f0c36d883159aecd0d4c891ee25892, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Layout3D/layout3d.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 80
     ' Comment Lines: 6
     '   Blank Lines: 20
-    '     File Size: 4.23 KB
+    '     File Size: 4.33 KB
 
 
     '     Class Layout3D

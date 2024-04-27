@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de11401d5f361830e4c906c74a52a0ca, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\CommentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ad347a05c952990b7cae8d101c490ddf, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/CommentHelper.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29
+    '   Total Lines: 36
+    '    Code Lines: 28
     ' Comment Lines: 0
     '   Blank Lines: 8
-    '     File Size: 1.19 KB
+    '     File Size: 1.13 KB
 
 
     '     Module CommentHelper

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::927c19f33eda5f6f5d99d004fe0eea64, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::446ad01da79a5dc6acc415c04290a232, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Trainings/Helpers.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 44
     ' Comment Lines: 13
     '   Blank Lines: 10
-    '     File Size: 2.41 KB
+    '     File Size: 2.48 KB
 
 
     '     Module Helpers

@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::bb8325b9f34cd3cbd83e4fa625d59ab9, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::5a1034e65064f5326ba325fce7821efe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Extensions/PathExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1016
-'    Code Lines: 604
-' Comment Lines: 301
-'   Blank Lines: 111
-'     File Size: 39.77 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PathExtensions
-' 
-'     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-'               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-'               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-'               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-'               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-'               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1047
+    '    Code Lines: 610
+    ' Comment Lines: 324
+    '   Blank Lines: 113
+    '     File Size: 40.94 KB
+
+
+    ' Module PathExtensions
+    ' 
+    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

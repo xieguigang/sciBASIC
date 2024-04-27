@@ -1,3 +1,56 @@
+ï»¿#Region "Microsoft.VisualBasic::d235ffd096abe0be37a05ae5d5727afd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//DataPack/PackWriter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 115
+    '    Code Lines: 82
+    ' Comment Lines: 11
+    '   Blank Lines: 22
+    '     File Size: 4.90 KB
+
+
+    '     Class PackWriter
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: AddSamples, (+2 Overloads) Dispose, WriteDataSet, WriteEncoder
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
@@ -89,25 +142,25 @@ Namespace DataPack
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' TODO: ÊÍ·ÅÍÐ¹Ü×´Ì¬(ÍÐ¹Ü¶ÔÏó)
+                    ' TODO: ï¿½Í·ï¿½ï¿½Ð¹ï¿½×´Ì¬(ï¿½Ð¹Ü¶ï¿½ï¿½ï¿½)
                     Call stream.Dispose()
                 End If
 
-                ' TODO: ÊÍ·ÅÎ´ÍÐ¹ÜµÄ×ÊÔ´(Î´ÍÐ¹ÜµÄ¶ÔÏó)²¢ÖØÐ´ÖÕ½áÆ÷
-                ' TODO: ½«´óÐÍ×Ö¶ÎÉèÖÃÎª null
+                ' TODO: ï¿½Í·ï¿½Î´ï¿½Ð¹Üµï¿½ï¿½ï¿½Ô´(Î´ï¿½Ð¹ÜµÄ¶ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Õ½ï¿½ï¿½ï¿½
+                ' TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½ï¿½Îª null
                 disposedValue = True
             End If
         End Sub
 
-        ' ' TODO: ½öµ±¡°Dispose(disposing As Boolean)¡±ÓµÓÐÓÃÓÚÊÍ·ÅÎ´ÍÐ¹Ü×ÊÔ´µÄ´úÂëÊ±²ÅÌæ´úÖÕ½áÆ÷
+        ' ' TODO: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Dispose(disposing As Boolean)ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·ï¿½Î´ï¿½Ð¹ï¿½ï¿½ï¿½Ô´ï¿½Ä´ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ½ï¿½ï¿½ï¿½
         ' Protected Overrides Sub Finalize()
-        '     ' ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(disposing As Boolean)¡±·½·¨ÖÐ
+        '     ' ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä´Ë´ï¿½ï¿½ë¡£ï¿½ë½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡°Dispose(disposing As Boolean)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         '     Dispose(disposing:=False)
         '     MyBase.Finalize()
         ' End Sub
 
         Public Sub Dispose() Implements IDisposable.Dispose
-            ' ²»Òª¸ü¸Ä´Ë´úÂë¡£Çë½«ÇåÀí´úÂë·ÅÈë¡°Dispose(disposing As Boolean)¡±·½·¨ÖÐ
+            ' ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä´Ë´ï¿½ï¿½ë¡£ï¿½ë½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¡°Dispose(disposing As Boolean)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub

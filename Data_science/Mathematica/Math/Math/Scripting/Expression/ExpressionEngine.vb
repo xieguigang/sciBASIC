@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c0ebab13b66be5cb391d297588da2d6, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
+﻿#Region "Microsoft.VisualBasic::bcf92ea39b2d00d39d400f74de35edd4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/ExpressionEngine.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 100
     ' Comment Lines: 9
     '   Blank Lines: 19
-    '     File Size: 5.67 KB
+    '     File Size: 5.58 KB
 
 
     '     Class ExpressionEngine

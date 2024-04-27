@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e847d8feb83fac085ed7a85f71bbc078, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\EdgeBundling\Mingle\Bundler.vb"
+﻿#Region "Microsoft.VisualBasic::ada7bb2dfc9b5d7432688ef545abc7f1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/Bundler.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 510
+    '   Total Lines: 513
     '    Code Lines: 406
-    ' Comment Lines: 26
-    '   Blank Lines: 78
-    '     File Size: 21.02 KB
+    ' Comment Lines: 31
+    '   Blank Lines: 76
+    '     File Size: 21.30 KB
 
 
     '     Class Bundler

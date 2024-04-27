@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb1a3466a20458c509d0ff859cef244f, sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::162b60188c016b60fc52d7260617fbab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 324
-    '    Code Lines: 174
+    '   Total Lines: 340
+    '    Code Lines: 187
     ' Comment Lines: 113
-    '   Blank Lines: 37
-    '     File Size: 12.07 KB
+    '   Blank Lines: 40
+    '     File Size: 12.65 KB
 
 
     ' Module Extensions
@@ -46,7 +46,7 @@
     '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
     '               FirstDecrease, FirstIncrease, FlipCoin, IntRange, IsInside
     '               Iterates, (+2 Overloads) Range, Reach, seq2, Sim
-    '               SSM, Tanimoto, X, Y
+    '               SSM, SSM_SIMD, Tanimoto, X, Y
     ' 
     ' /********************************************************************************/
 

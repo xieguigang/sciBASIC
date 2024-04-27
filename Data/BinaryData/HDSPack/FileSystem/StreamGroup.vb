@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3519746eca79815461443c10a55ba30, sciBASIC#\Data\BinaryData\HDSPack\FileSystem\StreamGroup.vb"
+﻿#Region "Microsoft.VisualBasic::37127985fe21e4c531712f3819ae029a, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//FileSystem/StreamGroup.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 236
-    '    Code Lines: 143
-    ' Comment Lines: 58
-    '   Blank Lines: 35
-    '     File Size: 8.81 KB
+    '   Total Lines: 258
+    '    Code Lines: 152
+    ' Comment Lines: 70
+    '   Blank Lines: 36
+    '     File Size: 9.70 KB
 
 
     '     Class StreamGroup
     ' 
-    '         Properties: files, totalSize
+    '         Properties: dirs, files, totalSize
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

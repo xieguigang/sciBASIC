@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::218fa8e83c548dc93f16087458411895, sciBASIC#\Data_science\Visualization\Plots\Scatter\Plot\LinePlot2D.vb"
+﻿#Region "Microsoft.VisualBasic::69981c9a800a048cc33a7fc1f1ea1824, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Plot/LinePlot2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 281
-'    Code Lines: 200
-' Comment Lines: 35
-'   Blank Lines: 46
-'     File Size: 11.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LinePlot2D
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CreateScaler
-' 
-'         Sub: DrawLine, PlotInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 313
+    '    Code Lines: 225
+    ' Comment Lines: 35
+    '   Blank Lines: 53
+    '     File Size: 12.83 KB
+
+
+    '     Class LinePlot2D
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateScaler
+    ' 
+    '         Sub: DrawLine, PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

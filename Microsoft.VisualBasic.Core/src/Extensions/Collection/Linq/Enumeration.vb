@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f411ba53961fdf1727b672ff2a7f14, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumeration.vb"
+﻿#Region "Microsoft.VisualBasic::4db217bb047465b70dc3bd70ec7273c1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Enumeration.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 7
-    ' Comment Lines: 21
-    '   Blank Lines: 5
-    '     File Size: 1.59 KB
+    '   Total Lines: 28
+    '    Code Lines: 6
+    ' Comment Lines: 18
+    '   Blank Lines: 4
+    '     File Size: 1.32 KB
 
 
     '     Interface Enumeration
     ' 
-    '         Function: GenericEnumerator, GetEnumerator
+    '         Function: GenericEnumerator
     ' 
     ' 
     ' /********************************************************************************/

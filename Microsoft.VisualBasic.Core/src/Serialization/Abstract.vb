@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1b251284fda7fe774793bd92fae0ee, sciBASIC#\Microsoft.VisualBasic.Core\src\Serialization\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::0d1b251284fda7fe774793bd92fae0ee, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/Abstract.vb"
 
     ' Author:
     ' 

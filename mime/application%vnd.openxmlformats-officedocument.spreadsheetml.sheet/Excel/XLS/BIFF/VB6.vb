@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31b00fa7b240fae4fb40b91573aa7474, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\BIFF\VB6.vb"
+﻿#Region "Microsoft.VisualBasic::65be7b3ff75ffd49eb84baef0025d1d2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/XLS/BIFF//VB6.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 23
-    ' Comment Lines: 4
-    '   Blank Lines: 6
-    '     File Size: 1.17 KB
+    '   Total Lines: 29
+    '    Code Lines: 24
+    ' Comment Lines: 0
+    '   Blank Lines: 5
+    '     File Size: 850 B
 
 
     '     Module VB6
     ' 
-    '         Function: MKI
-    ' 
-    '         Sub: (+2 Overloads) Put
+    '         Sub: (+3 Overloads) Put
     ' 
     ' 
     ' /********************************************************************************/

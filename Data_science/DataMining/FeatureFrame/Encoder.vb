@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25d7e6ffe7007cb7d58785d5027f25b, sciBASIC#\Data_science\DataMining\FeatureFrame\Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::495a615b0ab73ab6a052c87645ce7e81, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame//Encoder.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
+    '   Total Lines: 80
     '    Code Lines: 44
-    ' Comment Lines: 21
+    ' Comment Lines: 24
     '   Blank Lines: 12
-    '     File Size: 2.51 KB
+    '     File Size: 2.66 KB
 
 
     ' Class Encoder

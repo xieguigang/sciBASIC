@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b1d1506c295d3102d3c919ee453df89, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
+﻿#Region "Microsoft.VisualBasic::c7982d7e587ac1df5967b3e64616bf40, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//PostScript/GraphicsPS.vb"
 
     ' Author:
     ' 

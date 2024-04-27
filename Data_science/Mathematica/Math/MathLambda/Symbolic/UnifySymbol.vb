@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::57bd05582d639f1491e93ee960f5a108, sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Symbolic\UnifySymbol.vb"
+﻿#Region "Microsoft.VisualBasic::a32e52df8e46c8aa8362b23b8eb2774a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/UnifySymbol.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 27
-'    Code Lines: 16
-' Comment Lines: 5
-'   Blank Lines: 6
-'     File Size: 865 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class UnifySymbol
-' 
-'         Properties: factor, power
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Evaluate, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 65
+    ' Comment Lines: 17
+    '   Blank Lines: 13
+    '     File Size: 3.38 KB
+
+
+    '     Class UnifySymbol
+    ' 
+    '         Properties: factor, power
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Evaluate, GetExpressionType, GetSimplify, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

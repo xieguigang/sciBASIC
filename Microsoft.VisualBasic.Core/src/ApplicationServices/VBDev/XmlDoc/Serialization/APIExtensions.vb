@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb72f54eaa8ba4e9e7131b990fac8694, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::83bd69d6cfd51024ea5c96353d5ba9fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/XmlDoc/Serialization/APIExtensions.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' Code Statistics:
 
     '   Total Lines: 143
-    '    Code Lines: 97
-    ' Comment Lines: 14
+    '    Code Lines: 93
+    ' Comment Lines: 18
     '   Blank Lines: 32
     '     File Size: 5.24 KB
 

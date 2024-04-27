@@ -1,4 +1,58 @@
-﻿Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
+﻿#Region "Microsoft.VisualBasic::3e27efe43eac6a39d9732333b3232ce6, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Cell/Range.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 72
+    ' Comment Lines: 40
+    '   Blank Lines: 14
+    '     File Size: 4.77 KB
+
+
+    '     Structure Range
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Copy, Equals, GetHashCode, ResolveEnclosedAddresses, ToString
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
 
 Namespace XLSX.Writer
 

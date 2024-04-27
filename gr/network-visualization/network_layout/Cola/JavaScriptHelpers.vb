@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a510674e2a759a0f2473b744df1e8b73, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\JavaScriptHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::7e1fa94b0404774d0890881172a9d17b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/JavaScriptHelpers.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 4
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 87 B
+    '     File Size: 79 B
 
 
     '     Module JavaScriptHelpers

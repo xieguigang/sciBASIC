@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3304c264db5e6c92fce698bf64378333, sciBASIC#\Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::9c253fc2c7b72323c6d3fdbb396a3807, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/Neuron.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 171
     ' Comment Lines: 89
     '   Blank Lines: 48
-    '     File Size: 10.85 KB
+    '     File Size: 11.16 KB
 
 
     '     Class Neuron

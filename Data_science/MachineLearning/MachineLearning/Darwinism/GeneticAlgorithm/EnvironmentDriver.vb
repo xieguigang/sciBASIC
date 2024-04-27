@@ -1,66 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::4b42f9d82c258d6ae599c1b1bf3b9ae7, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::fb74354153922bd8f8b90263e4c9f9c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/EnvironmentDriver.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 165
-'    Code Lines: 105
-' Comment Lines: 35
-'   Blank Lines: 25
-'     File Size: 6.51 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class EnvironmentDriver
-' 
-'         Properties: Iterations, Threshold
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CreateReport
-' 
-'         Sub: reset, Terminate, Train
-' 
-'     Structure outPrint
-' 
-'         Properties: chromosome, fit, iter, MutationRate
-' 
-'         Function: ToString
-' 
-'         Sub: PrintTitle
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 116
+    ' Comment Lines: 39
+    '   Blank Lines: 27
+    '     File Size: 7.14 KB
+
+
+    '     Class EnvironmentDriver
+    ' 
+    '         Properties: BestModel, Iterations, Threshold
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateReport
+    ' 
+    '         Sub: reset, Terminate, Train
+    ' 
+    '     Structure outPrint
+    ' 
+    '         Properties: chromosome, fit, iter, MutationRate
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: PrintTitle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

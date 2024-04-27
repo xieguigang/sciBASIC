@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99cf6d6a63d0ae5c00fa6b92d0195c38, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::cd25328abf1e10de5b4ea7f2368e0011, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/MetaData/Type.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 220
-    '    Code Lines: 127
-    ' Comment Lines: 56
-    '   Blank Lines: 37
-    '     File Size: 8.05 KB
+    '   Total Lines: 250
+    '    Code Lines: 132
+    ' Comment Lines: 80
+    '   Blank Lines: 38
+    '     File Size: 9.31 KB
 
 
     '     Class TypeInfo
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: [GetType], (+2 Overloads) LoadAssembly, ToString, TryHandleKnownType
+    '         Function: [GetType], (+3 Overloads) LoadAssembly, ToString, TryHandleKnownType
     ' 
     '         Sub: doInfoParser
     ' 

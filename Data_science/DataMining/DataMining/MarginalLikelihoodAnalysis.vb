@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3edc2f561bdab4e29c61373edb95c8db, sciBASIC#\Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::d10d937373783f10747424848847da93, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 160
     ' Comment Lines: 68
     '   Blank Lines: 53
-    '     File Size: 10.50 KB
+    '     File Size: 10.46 KB
 
 
     ' Enum AnalysisTypes

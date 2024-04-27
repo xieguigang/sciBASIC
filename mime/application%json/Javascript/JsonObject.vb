@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::6309673a58feeebd722b744d28cc37ef, sciBASIC#\mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::e9d2836315049b4b53dc7c97ea578326, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Javascript/JsonObject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 208
-'    Code Lines: 134
-' Comment Lines: 41
-'   Blank Lines: 33
-'     File Size: 7.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class JsonObject
-' 
-'         Properties: isArray, ObjectKeys
-' 
-'         Function: ContainsElement, (+2 Overloads) CreateObject, GetEnumerator, HasObjectKey, IEnumerable_GetEnumerator
-'                   Remove, Score, ToJsonArray, ToString
-' 
-'         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 209
+    '    Code Lines: 130
+    ' Comment Lines: 48
+    '   Blank Lines: 31
+    '     File Size: 7.57 KB
+
+
+    '     Class JsonObject
+    ' 
+    '         Properties: isArray, ObjectKeys, size
+    ' 
+    '         Function: ContainsElement, (+2 Overloads) CreateObject, GetEnumerator, HasObjectKey, IEnumerable_GetEnumerator
+    '                   Remove, ToJsonArray, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

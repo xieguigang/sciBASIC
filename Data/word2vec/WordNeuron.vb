@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::6d0baebdac07b0d90d629848d101de4b, sciBASIC#\Data\word2vec\WordNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::01cfe022684ce1b8bf09430b16b86c57, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//WordNeuron.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 38
-'    Code Lines: 24
-' Comment Lines: 4
-'   Blank Lines: 10
-'     File Size: 1.04 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class WordNeuron
-' 
-'         Properties: name, pathNeurons
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 39
+    '    Code Lines: 26
+    ' Comment Lines: 4
+    '   Blank Lines: 9
+    '     File Size: 1.10 KB
+
+
+    ' Class WordNeuron
+    ' 
+    '     Properties: name, pathNeurons
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

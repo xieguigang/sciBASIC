@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8e7b70fdcf526181404346c144c3473, sciBASIC#\Data_science\Graph\Analysis\PQDijkstra\DijkstraFast.vb"
+﻿#Region "Microsoft.VisualBasic::6348fc46c6eb133242e3ac29a5b16625, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PQDijkstra/DijkstraFast.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 268
+    '   Total Lines: 269
     '    Code Lines: 132
     ' Comment Lines: 103
-    '   Blank Lines: 33
-    '     File Size: 11.58 KB
+    '   Blank Lines: 34
+    '     File Size: 11.55 KB
 
 
     '     Class DijkstraFast

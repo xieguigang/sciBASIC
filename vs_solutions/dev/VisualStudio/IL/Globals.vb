@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cad90964e58d1afd98117ed7237c3f5, sciBASIC#\vs_solutions\dev\VisualStudio\IL\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::b9e287db502c1b27629daacd0cfc33cf, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//IL/Globals.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 42
-    ' Comment Lines: 116
-    '   Blank Lines: 25
-    '     File Size: 4.38 KB
+    '   Total Lines: 203
+    '    Code Lines: 55
+    ' Comment Lines: 121
+    '   Blank Lines: 27
+    '     File Size: 5.19 KB
 
 
     '     Module Globals
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: ProcessSpecialTypes
+    '         Function: GetOpCode, ProcessSpecialTypes
     ' 
     '         Sub: LoadOpCodes
     ' 

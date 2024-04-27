@@ -1,59 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::ea2c286f5c5ebd639fa5d65e593dbd7a, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::e48160e763c9ee3426c19da22e2763f7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Polygon2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 326
-'    Code Lines: 216
-' Comment Lines: 59
-'   Blank Lines: 51
-'     File Size: 11.64 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Polygon2D
-' 
-'         Properties: height, length, width, xpoints, ypoints
-' 
-'         Constructor: (+8 Overloads) Sub New
-' 
-'         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetEnumerator
-'                   GetRandomPoint, GetRectangle, GetShoelaceArea, (+4 Overloads) inside
-' 
-'         Sub: calculateBounds
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 418
+    '    Code Lines: 256
+    ' Comment Lines: 102
+    '   Blank Lines: 60
+    '     File Size: 15.15 KB
+
+
+    '     Class Polygon2D
+    ' 
+    '         Properties: height, length, width, xpoints, ypoints
+    ' 
+    '         Constructor: (+10 Overloads) Sub New
+    ' 
+    '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetDimension
+    '                   GetRandomPoint, GetRectangle, GetShoelaceArea, GetSize, GetSizeF
+    '                   (+4 Overloads) inside
+    ' 
+    '         Sub: calculateBounds
+    ' 
+    '         Operators: -, +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

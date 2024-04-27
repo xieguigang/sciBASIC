@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::8450d02c5fe4c4f80f81a9880e0f8dc0, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::737b9a7ab097fdd23295973e1bf844c9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/Models/GeneralFitnessPool.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 109
-'    Code Lines: 68
-' Comment Lines: 25
-'   Blank Lines: 16
-'     File Size: 4.46 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class FitnessPool
-' 
-'         Properties: Cacheable, evaluateFitness
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: Fitness, getOrCacheOfFitness
-' 
-'         Sub: Clear
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 69
+    ' Comment Lines: 25
+    '   Blank Lines: 19
+    '     File Size: 4.23 KB
+
+
+    '     Class GeneralFitnessPool
+    ' 
+    '         Properties: Cacheable, evaluateFitness
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Fitness, getOrCacheOfFitness
+    ' 
+    '         Sub: Clear
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2bfba5c1186c74bc739c4ba0c6cfb21, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\powergraph.vb"
+﻿#Region "Microsoft.VisualBasic::7aad402e4c42dbf3a493b939e69a3f40, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/PowerGraph/powergraph.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 6
-    '     File Size: 514 B
+    '     File Size: 506 B
 
 
     '     Interface network

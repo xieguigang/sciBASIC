@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbda7779a9d3390e9c5052bfce5f2497, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\MsHtml.vb"
+﻿#Region "Microsoft.VisualBasic::9cbceee9b6bb35d9c119b11702acb973, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLS/MsHtml.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 40
+    '   Total Lines: 56
+    '    Code Lines: 42
     ' Comment Lines: 6
-    '   Blank Lines: 7
-    '     File Size: 1.85 KB
+    '   Blank Lines: 8
+    '     File Size: 2.13 KB
 
 
-    ' Module MsHtml
+    '     Module MsHtml
     ' 
-    '     Function: (+2 Overloads) ToExcel
+    '         Function: (+2 Overloads) ToExcel
+    ' 
     ' 
     ' /********************************************************************************/
 

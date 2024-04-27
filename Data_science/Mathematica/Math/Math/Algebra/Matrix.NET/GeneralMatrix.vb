@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2a5bac2a6675bfe428f3a36bc40697b, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::87a182cabce23a116da2ba1e2464a7db, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 16
-    ' Comment Lines: 36
-    '   Blank Lines: 8
-    '     File Size: 2.12 KB
+    '   Total Lines: 77
+    '    Code Lines: 19
+    ' Comment Lines: 47
+    '   Blank Lines: 11
+    '     File Size: 2.68 KB
 
 
+    '     Interface INumericMatrix
+    ' 
+    '         Function: ArrayPack
+    ' 
     '     Interface GeneralMatrix
     ' 
     '         Properties: ColumnDimension, RowDimension, (+4 Overloads) X
     ' 
-    '         Function: ArrayPack, GetMatrix, Resize, RowVectors, Transpose
+    '         Function: Dot, GetMatrix, Resize, RowVectors, Transpose
     ' 
     ' 
     ' /********************************************************************************/

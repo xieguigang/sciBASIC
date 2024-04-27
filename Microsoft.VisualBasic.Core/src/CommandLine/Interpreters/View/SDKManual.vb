@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214f37c3c933ee27546c1dfdd46ac7e3, sciBASIC#\Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::3d46eebdac23d0c2a0018bdc4f224af7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Interpreters/View/SDKManual.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 310
-    '    Code Lines: 231
+    '   Total Lines: 311
+    '    Code Lines: 232
     ' Comment Lines: 30
     '   Blank Lines: 49
-    '     File Size: 14.06 KB
+    '     File Size: 14.22 KB
 
 
     '     Module SDKManual

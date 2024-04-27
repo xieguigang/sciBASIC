@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a649574c9030718ea8836402bb143c70, sciBASIC#\gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::8005febb21c59ef5c0f0f0c1f91a71c3, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 444
-    '    Code Lines: 308
-    ' Comment Lines: 82
-    '   Blank Lines: 54
-    '     File Size: 21.22 KB
+    '   Total Lines: 455
+    '    Code Lines: 317
+    ' Comment Lines: 85
+    '   Blank Lines: 53
+    '     File Size: 21.83 KB
 
 
     ' Module NetworkVisualizer
@@ -49,9 +49,14 @@
     ' 
     '     Delegate Function
     ' 
+    ' 
+    '     Delegate Sub
+    ' 
     '         Function: DirectMapRadius, DrawImage
     ' 
     '         Sub: drawhullPolygon
+    ' 
+    ' 
     ' 
     ' 
     ' 

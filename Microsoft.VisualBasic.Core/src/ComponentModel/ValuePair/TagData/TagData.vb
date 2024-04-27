@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e176dfff2224ee642a4cfd5299a867f1, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::827f8bb732aeff55eaa035038c6674e9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/TagData/TagData.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 44
-    ' Comment Lines: 34
-    '   Blank Lines: 19
-    '     File Size: 3.21 KB
+    '   Total Lines: 121
+    '    Code Lines: 55
+    ' Comment Lines: 41
+    '   Blank Lines: 25
+    '     File Size: 3.79 KB
 
 
     '     Class TagData
@@ -47,12 +47,18 @@
     ' 
     '     Class IntegerTagged
     ' 
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class DoubleTagged
     ' 
+    '         Properties: Tag
+    ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
+    ' 
+    '     Interface INumericKey
+    ' 
+    '         Properties: key
     ' 
     '     Class LongTagged
     ' 

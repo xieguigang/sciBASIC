@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::141542ede48d3f04b005ac0fd842551e, sciBASIC#\mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e0ecea07df7d25af9c823f2f4a6a5829, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONTextParser.vb"
 
     ' Author:
     ' 
@@ -38,10 +38,10 @@
     '    Code Lines: 87
     ' Comment Lines: 23
     '   Blank Lines: 15
-    '     File Size: 4.44 KB
+    '     File Size: 4.69 KB
 
 
-    ' Module Extensions
+    ' Module JSONTextParser
     ' 
     '     Function: AsString, AsStringVector, CreateJsObject, DecodeArray, ParseJson
     '               ParseJsonFile

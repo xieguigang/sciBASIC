@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b33edec6b478f5c6021d626296774253, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\StringExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3862a2a41cbd62c044aef25cc0745ae6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/StringExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
+    '   Total Lines: 8
     '    Code Lines: 8
     ' Comment Lines: 0
-    '   Blank Lines: 1
-    '     File Size: 408 B
+    '   Blank Lines: 0
+    '     File Size: 404 B
 
 
     '     Module StringExtensions
@@ -50,7 +50,6 @@
 
 #End Region
 
-
 Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
     Friend Module StringExtensions
         Public Function Excerpt(phrase As String, Optional length As Integer = 60) As String
@@ -59,4 +58,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         End Function
     End Module
 End Namespace
-

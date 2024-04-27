@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b32edf9ac5d2bcf75c88f12194753b, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\GreekAlphabets.vb"
+﻿#Region "Microsoft.VisualBasic::cbc8a154a82c6eb43c83abcc770304fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/GreekAlphabets.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 110
+    '   Total Lines: 147
+    '    Code Lines: 108
     ' Comment Lines: 23
-    '   Blank Lines: 18
-    '     File Size: 6.33 KB
+    '   Blank Lines: 16
+    '     File Size: 6.28 KB
 
 
     '     Module GreekAlphabets

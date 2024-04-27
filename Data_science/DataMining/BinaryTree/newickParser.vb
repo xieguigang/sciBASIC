@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e71dc849c576895bb2ed750bdb9d22, GCModeller\analysis\Metagenome\Metagenome\newickParser.vb"
+﻿#Region "Microsoft.VisualBasic::e0e71dc849c576895bb2ed750bdb9d22, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//newickParser.vb"
 
     ' Author:
     ' 

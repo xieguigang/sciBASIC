@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb95a736be338c6c7b975f1a00c951ed, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\SpringForce\Interfaces\IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::492f7bbca8e895f491e18fe4fb45b223, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/Interfaces/IForceDirected.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 21
+    '   Total Lines: 76
+    '    Code Lines: 23
     ' Comment Lines: 42
-    '   Blank Lines: 9
-    '     File Size: 2.71 KB
+    '   Blank Lines: 11
+    '     File Size: 2.77 KB
 
 
     '     Delegate Sub
@@ -49,8 +49,8 @@
     ' 
     '     Interface IForceDirected
     ' 
-    '         Properties: Damping, graph, interactiveMode, Repulsion, Stiffness
-    '                     Threshold, WithinThreshold
+    '         Properties: Damping, graph, height, interactiveMode, Repulsion
+    '                     Stiffness, Threshold, width, WithinThreshold
     ' 
     '         Function: GetBoundingBox, GetPoint, Nearest
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90252f887afdc474709324f51e6bc9f5, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::bebf41fcde06b08b7faffd320dc0f560, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 275
-    '    Code Lines: 181
-    ' Comment Lines: 64
-    '   Blank Lines: 30
-    '     File Size: 12.30 KB
+    '   Total Lines: 290
+    '    Code Lines: 190
+    ' Comment Lines: 69
+    '   Blank Lines: 31
+    '     File Size: 13.16 KB
 
 
     '     Module Extensions

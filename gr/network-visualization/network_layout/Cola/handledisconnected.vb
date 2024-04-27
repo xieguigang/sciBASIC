@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4586ccd331c6179128d502679b2f50b2, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\handledisconnected.vb"
+﻿#Region "Microsoft.VisualBasic::9bdde9b04bd776f9442bc0050a17e287, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/handledisconnected.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 236
     ' Comment Lines: 76
     '   Blank Lines: 69
-    '     File Size: 14.67 KB
+    '     File Size: 14.66 KB
 
 
     '     Class packingOptions

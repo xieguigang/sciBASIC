@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::939f8204158f16cacbc8ec4d825c0eeb, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\Plot\Layouts.vb"
+﻿#Region "Microsoft.VisualBasic::939f8204158f16cacbc8ec4d825c0eeb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot//Layouts.vb"
 
     ' Author:
     ' 

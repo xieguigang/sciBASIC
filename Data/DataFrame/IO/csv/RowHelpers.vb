@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5d207ce7ac0e0eb6c3455135da14e64, sciBASIC#\Data\DataFrame\IO\csv\RowHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::358feec53e9ea7ce78b6f1f419443b11, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/RowHelpers.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 51
-    ' Comment Lines: 29
-    '   Blank Lines: 10
-    '     File Size: 3.21 KB
+    '   Total Lines: 119
+    '    Code Lines: 73
+    ' Comment Lines: 31
+    '   Blank Lines: 15
+    '     File Size: 4.30 KB
 
 
     '     Module RowHelpers
     ' 
-    '         Function: Distinct, doDelimiterMask, IsNullOrEmpty, Pointer
+    '         Function: Distinct, doDelimiterMask, GetColumn, GetColumns, IsNullOrEmpty
+    '                   Pointer
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adc770ecc7e23ad2329fa647a7ad767b, sciBASIC#\Data\BinaryData\msgpack\Properties\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::adc770ecc7e23ad2329fa647a7ad767b, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Properties/AssemblyInfo.vb"
 
     ' Author:
     ' 

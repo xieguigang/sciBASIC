@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99e4f4b4a72cc1fbcd90872d9bf2a193, sciBASIC#\Data_science\Graph\Model\GridNetwork\GridCell.vb"
+﻿#Region "Microsoft.VisualBasic::fd3a1df9ea6f77ce215a9a5f838d1d22, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/GridGraph/GridCell.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 51
+    '   Total Lines: 70
+    '    Code Lines: 53
     ' Comment Lines: 4
-    '   Blank Lines: 12
-    '     File Size: 1.59 KB
+    '   Blank Lines: 13
+    '     File Size: 1.83 KB
 
 
-    ' Class GridCell
+    '     Class GridCell
     ' 
-    '     Properties: data, index, Layout2D_X, Layout2D_Y, X
-    '                 Y
+    '         Properties: data, index, Layout2D_X, Layout2D_Y, X
+    '                     Y
     ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

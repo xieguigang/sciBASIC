@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8103ad98e3a87e175788d6c79efea969, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
+﻿#Region "Microsoft.VisualBasic::3bc74fb830b377ea381d36695e990f9d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/URL.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 124
-    ' Comment Lines: 22
-    '   Blank Lines: 20
-    '     File Size: 6.22 KB
+    '   Total Lines: 179
+    '    Code Lines: 132
+    ' Comment Lines: 25
+    '   Blank Lines: 22
+    '     File Size: 6.62 KB
 
 
     '     Class URL
     ' 
-    '         Properties: hashcode, hostName, path, port, protocol
-    '                     query
+    '         Properties: hashcode, Host, hostName, path, port
+    '                     protocol, query
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: BuildUrl, GetValues, Parse, ToString
+    '         Function: BuildUrl, GetValues, Parse, ToString, UrlQueryString
     ' 
     '         Sub: Parser
     ' 

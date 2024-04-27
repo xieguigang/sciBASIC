@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41f01b2d4bcd8e9c30df902a505e1ae9, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::76110239d9d3c77396c54835d899ee29, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/PixelRender.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 101
+    '   Total Lines: 161
+    '    Code Lines: 118
     ' Comment Lines: 19
-    '   Blank Lines: 21
-    '     File Size: 5.29 KB
+    '   Blank Lines: 24
+    '     File Size: 6.41 KB
 
 
     '     Class PixelRender
@@ -47,7 +47,7 @@
     ' 
     '         Function: RenderRasterImage, (+2 Overloads) ScalePixels
     ' 
-    '         Sub: FillRectangles, SetPixels
+    '         Sub: (+2 Overloads) FillRectangles, SetPixels
     ' 
     ' 
     ' /********************************************************************************/

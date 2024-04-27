@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cad92d5eeb55ae5a2249713b36b9cfa5, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::01cf1e22edce052ce6778ff0ff15ca07, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/NumberEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 11
     '   Blank Lines: 10
-    '     File Size: 1.71 KB
+    '     File Size: 1.70 KB
 
 
     '     Class NumberEqualityComparer

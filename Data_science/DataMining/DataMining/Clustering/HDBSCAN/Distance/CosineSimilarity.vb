@@ -1,4 +1,57 @@
-﻿Imports System
+﻿#Region "Microsoft.VisualBasic::2b5033f643513a1774dfaaa4cd200040, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/CosineSimilarity.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 86
+    ' Comment Lines: 4
+    '   Blank Lines: 18
+    '     File Size: 5.31 KB
+
+
+    '     Class CosineSimilarity
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) CalculateAndCacheMagnitude, (+2 Overloads) ComputeDistance, GetMostCommonDistanceValueForSparseMatrix
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System
 Imports System.Collections.Concurrent
 Imports System.Collections.Generic
 Imports stdNum = System.Math
@@ -106,3 +159,4 @@ Namespace HDBSCAN.Distance
         End Function
     End Class
 End Namespace
+

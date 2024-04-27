@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76a6b197484730eecf1168a257e27c78, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1843be5fda645f36a6d048add2a3e3ea, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 635
-    '    Code Lines: 380
-    ' Comment Lines: 168
+    '   Total Lines: 662
+    '    Code Lines: 409
+    ' Comment Lines: 166
     '   Blank Lines: 87
-    '     File Size: 24.73 KB
+    '     File Size: 25.71 KB
 
 
     '     Module GraphicsExtensions
@@ -50,7 +50,7 @@
     '                   ToFloat, ToPoint, ToPoints, ToStream, X
     '                   Y
     ' 
-    '         Sub: (+5 Overloads) DrawCircle
+    '         Sub: (+5 Overloads) DrawCircle, FillPolygon
     ' 
     ' 
     ' /********************************************************************************/

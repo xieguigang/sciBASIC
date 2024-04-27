@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd78ad1841054af778763d8efe013046, sciBASIC#\Data_science\Mathematica\Math\DataFrame\DataFrame\FeatureVector.vb"
+﻿#Region "Microsoft.VisualBasic::bb8a5b9770234b0f6a2f27e5fdaee265, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/FeatureVector.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 119
-    ' Comment Lines: 5
-    '   Blank Lines: 32
-    '     File Size: 5.27 KB
+    '   Total Lines: 218
+    '    Code Lines: 152
+    ' Comment Lines: 29
+    '   Blank Lines: 37
+    '     File Size: 7.37 KB
 
 
     ' Class FeatureVector
@@ -46,7 +46,8 @@
     '     Properties: isScalar, name, size, type, vector
     ' 
     '     Constructor: (+10 Overloads) Sub New
-    '     Function: [TryCast], CastTo, CheckSupports, FromGeneral, ToString
+    '     Function: [TryCast], CastTo, CheckSupports, FromGeneral, GetScalarValue
+    '               ToString
     ' 
     ' /********************************************************************************/
 

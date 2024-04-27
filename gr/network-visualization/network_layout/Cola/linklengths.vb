@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61d62c72a781e53a9d3576640211125e, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\linklengths.vb"
+﻿#Region "Microsoft.VisualBasic::a657035672b51bce1f32fbcfe7a02a1b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/linklengths.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 134
     ' Comment Lines: 64
     '   Blank Lines: 27
-    '     File Size: 10.16 KB
+    '     File Size: 10.15 KB
 
 
     '     Module linkLengthExtensions

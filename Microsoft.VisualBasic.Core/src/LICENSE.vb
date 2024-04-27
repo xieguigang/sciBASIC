@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b19316480e931dee2d07a353e91503b0, sciBASIC#\Microsoft.VisualBasic.Core\src\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::b662ae0812e27ad353e607293ac2a2b2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//LICENSE.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 16
+    '   Total Lines: 41
+    '    Code Lines: 14
     ' Comment Lines: 23
-    '   Blank Lines: 5
-    '     File Size: 1.49 KB
+    '   Blank Lines: 4
+    '     File Size: 1.46 KB
 
 
     ' Module LICENSE

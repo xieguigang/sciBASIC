@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4382e79af77203f4d7721dcabfc96e6b, sciBASIC#\Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::713eeece2785b5349249793e911f0374, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Linq/WriteStream.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 156
     ' Comment Lines: 71
     '   Blank Lines: 38
-    '     File Size: 9.66 KB
+    '     File Size: 9.93 KB
 
 
     '     Class WriteStream

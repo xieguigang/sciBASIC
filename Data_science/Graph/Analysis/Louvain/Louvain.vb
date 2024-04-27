@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::8b015b2797e8f9081a703495b8248c9b, sciBASIC#\Data_science\Graph\Analysis\Louvain\Louvain.vb"
+﻿#Region "Microsoft.VisualBasic::0492e6ad4f8a21703b3c07201657441b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Louvain/Louvain.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 364
-'    Code Lines: 218
-' Comment Lines: 78
-'   Blank Lines: 68
-'     File Size: 11.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LouvainCommunity
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetCommunity, SolveClusters, TryMoveNode
-' 
-'         Sub: addNewEdge, rebuildGraph, setCluster0
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 383
+    '    Code Lines: 225
+    ' Comment Lines: 89
+    '   Blank Lines: 69
+    '     File Size: 12.41 KB
+
+
+    '     Class LouvainCommunity
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetClusterCount, GetCommunity, SolveClusters, TryMoveNode
+    ' 
+    '         Sub: addNewEdge, rebuildGraph, setCluster0
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

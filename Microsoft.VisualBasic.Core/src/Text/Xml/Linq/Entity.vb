@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7740d000dbe437e32b9737ac8f62803a, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::cec26b669ddc399d210a7f6bc78ba0a1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Linq/Entity.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 15
     ' Comment Lines: 0
     '   Blank Lines: 4
-    '     File Size: 595 B
+    '     File Size: 613 B
 
 
     '     Class Entity

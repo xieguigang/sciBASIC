@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86da936a4731fb4542a289a6f7bf6b99, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::128194f05d6e03b61d02480ee6ef8a80, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/Terminal.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 366
     ' Comment Lines: 626
     '   Blank Lines: 91
-    '     File Size: 60.15 KB
+    '     File Size: 60.22 KB
 
 
     '     Class Terminal

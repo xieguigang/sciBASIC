@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84267a091925de0068dc69f7add4099c, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::f4f1881a88ecf1b1364c300fdc3fbe52, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Numeric/i32.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 309
-    '    Code Lines: 175
+    '   Total Lines: 313
+    '    Code Lines: 178
     ' Comment Lines: 94
-    '   Blank Lines: 40
-    '     File Size: 11.10 KB
+    '   Blank Lines: 41
+    '     File Size: 11.23 KB
 
 
     '     Class i32
@@ -49,7 +49,7 @@
     '         Function: (+2 Overloads) CompareTo, Equals, GetHexInteger, (+2 Overloads) ToString
     '         Operators: (+3 Overloads) -, *, (+2 Overloads) /, (+4 Overloads) +, (+3 Overloads) <
     '                    <<, <=, (+3 Overloads) >, >=, (+2 Overloads) And
-    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not
+    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Mod, (+2 Overloads) Not
     ' 
     ' 
     ' /********************************************************************************/

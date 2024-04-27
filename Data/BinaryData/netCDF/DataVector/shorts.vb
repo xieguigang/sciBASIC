@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db94a68e0d25bbca0f2eeb9caff09469, sciBASIC#\Data\BinaryData\netCDF\DataVector\shorts.vb"
+﻿#Region "Microsoft.VisualBasic::a4bfc25b75f9353947564a7550f6125f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/shorts.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 15
+    '   Total Lines: 44
+    '    Code Lines: 34
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 602 B
+    '   Blank Lines: 10
+    '     File Size: 1.56 KB
 
 
     '     Class shorts
     ' 
     '         Properties: cdfDataType
+    ' 
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed4d947013c87f78d07459225a824ef4, sciBASIC#\Data_science\Graph\Model\GridNetwork\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::7b5b95a2ca989c266b0cd52e08449e5d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/GridGraph/Grid.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 43
+    '   Total Lines: 83
+    '    Code Lines: 45
     ' Comment Lines: 22
-    '   Blank Lines: 15
-    '     File Size: 2.22 KB
+    '   Blank Lines: 16
+    '     File Size: 2.51 KB
 
 
-    ' Class Grid
+    '     Class Grid
     ' 
-    '     Properties: layout, steps
+    '         Properties: layout, steps
     ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Function: (+2 Overloads) Index, ToString
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: (+2 Overloads) Index, ToString
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e34b418056dcd05e9b81bca7cae585ad, sciBASIC#\mime\text%html\Document\HtmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::af2165d2a3ec4a3d7bf404956d56dc67, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Document/HtmlDocument.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
+    '   Total Lines: 37
     '    Code Lines: 21
-    ' Comment Lines: 5
+    ' Comment Lines: 9
     '   Blank Lines: 7
-    '     File Size: 1.15 KB
+    '     File Size: 1.33 KB
 
 
     '     Class HtmlDocument

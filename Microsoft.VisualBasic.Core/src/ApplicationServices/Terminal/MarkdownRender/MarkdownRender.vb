@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::5950d7ab9de8c7aa48cc2d7899e80d56, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::07492a03a92310d4696595b66ba87ecd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/MarkdownRender.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 284
-'    Code Lines: 228
-' Comment Lines: 22
-'   Blank Lines: 34
-'     File Size: 9.81 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class MarkdownRender
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: bufferAllIs, bufferIs, DefaultStyleRender
-' 
-'         Sub: applyGlobal, DoParseSpans, DoPrint, EndSpan, Print
-'              PrintSpans, Reset, restoreStyle, WalkChar
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 378
+    '    Code Lines: 288
+    ' Comment Lines: 45
+    '   Blank Lines: 45
+    '     File Size: 13.93 KB
+
+
+    '     Class MarkdownRender
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: bufferAllIs, bufferIs, DefaultStyleRender
+    ' 
+    '         Sub: applyGlobal, buildTableSimple, DoParseSpans, DoPrint, EndSpan
+    '              Print, PrintSpans, Reset, restoreStyle, WalkChar
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8536a6d51eb6553f5cbc18ee79cf4f6, sciBASIC#\Data\BinaryData\netCDF\DataVector\integers.vb"
+﻿#Region "Microsoft.VisualBasic::81a5c2d22a24481ea46d0f46e0f319a9, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/integers.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 20
+    '   Total Lines: 46
+    '    Code Lines: 35
     ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 752 B
+    '   Blank Lines: 11
+    '     File Size: 1.47 KB
 
 
     '     Class integers
@@ -46,6 +46,7 @@
     '         Properties: cdfDataType
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToFactors, ToFloat, ToInteger, ToLong, ToNumeric
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f33061cc2ba166f39d3c6a8f9ea74dd1, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::5e42f293398a742a224bc70982c48b01, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Solver.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 121
     ' Comment Lines: 16
     '   Blank Lines: 31
-    '     File Size: 5.46 KB
+    '     File Size: 5.45 KB
 
 
     '     Class Solver

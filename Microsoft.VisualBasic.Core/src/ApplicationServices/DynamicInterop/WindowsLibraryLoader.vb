@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d5c51bc0373ca613d4accf135673b25, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::23c59d3ec87c022b996364f84daccc49, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/WindowsLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 54
-    ' Comment Lines: 7
-    '   Blank Lines: 15
-    '     File Size: 3.16 KB
+    '   Total Lines: 88
+    '    Code Lines: 58
+    ' Comment Lines: 13
+    '   Blank Lines: 17
+    '     File Size: 3.55 KB
 
 
     '     Class WindowsLibraryLoader
     ' 
     '         Function: FreeLibrary, GetFunctionAddress, GetLastError, GetShortPath, LoadLibrary
+    '                   ToString
     ' 
     '     Module Win32
     ' 

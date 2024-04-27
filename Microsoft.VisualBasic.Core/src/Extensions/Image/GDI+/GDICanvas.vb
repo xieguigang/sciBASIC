@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3867cbcd4d2eab164c6dc8bf8eee0f3, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::29010f0a63140f389eebe42645c2ba02, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4870
-    '    Code Lines: 679
-    ' Comment Lines: 4017
-    '   Blank Lines: 174
-    '     File Size: 211.06 KB
+    '   Total Lines: 4885
+    '    Code Lines: 688
+    ' Comment Lines: 4022
+    '   Blank Lines: 175
+    '     File Size: 211.61 KB
 
 
     '     Class GDICanvas
@@ -61,8 +61,8 @@
     '              EndContainer, (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse
     '              FillPath, (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion
     '              Finalize, (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip
-    '              ResetTransform, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints
-    '              (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              ResetTransform, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, SetTransformMatrix
+    '              (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/

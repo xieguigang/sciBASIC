@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72072e9b61fb1a9b5bafc5755fd8bedb, sciBASIC#\mime\text%yaml\1.2\Syntax\TagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::72072e9b61fb1a9b5bafc5755fd8bedb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/TagPrefix.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 424.00 B
+    '     File Size: 424 B
 
 
     '     Class TagPrefix

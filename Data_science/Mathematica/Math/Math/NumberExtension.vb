@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccde46ac83fb0f80a48a38f7031ea9fb, sciBASIC#\Data_science\Mathematica\Math\Math\NumberExtension.vb"
+﻿#Region "Microsoft.VisualBasic::dae792bac5bdf7aa13c502b1882a193e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//NumberExtension.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 416
     ' Comment Lines: 151
     '   Blank Lines: 89
-    '     File Size: 23.12 KB
+    '     File Size: 23.78 KB
 
 
     ' Module NumberExtension
@@ -711,4 +711,3 @@ Public Module NumberExtension
         Return BitConverter.Int64BitsToDouble((highDWord And &HFFFFFFFFL) << 32 Or lowDWord And &HFFFFFFFFL)
     End Function
 End Module
-

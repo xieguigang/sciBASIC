@@ -1,59 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::af2a1d9931655c545603c4984f7c8cea, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::d3a33f49cc4137c8622b8bae9e8f5cc6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/WebResponse.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 56
-'    Code Lines: 40
-' Comment Lines: 0
-'   Blank Lines: 16
-'     File Size: 1.66 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class WebResponseResult
-' 
-'         Properties: headers, html, timespan, url
-' 
-'     Class ResponseHeaders
-' 
-'         Properties: customHeaders, headers
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: Header200, Header404NotFound, (+2 Overloads) TryGetValue
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 113
+    '    Code Lines: 88
+    ' Comment Lines: 4
+    '   Blank Lines: 21
+    '     File Size: 3.98 KB
+
+
+    '     Class WebResponseResult
+    ' 
+    '         Properties: headers, html, payload, timespan, url
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class ResponseHeaders
+    ' 
+    '         Properties: contentType, customHeaders, headers, httpCode
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Header200, Header404NotFound, Header500InternalServerError, HttpRequestError, (+2 Overloads) TryGetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

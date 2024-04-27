@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec88e1c7025c20acdd572ff495e95649, sciBASIC#\Data_science\Graph\Model\Tree\TermTree.vb"
+﻿#Region "Microsoft.VisualBasic::e4d9e1d486b553d182ec4c32111305c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/TermTree.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 49
+    '   Total Lines: 80
+    '    Code Lines: 56
     ' Comment Lines: 11
-    '   Blank Lines: 10
-    '     File Size: 2.16 KB
+    '   Blank Lines: 13
+    '     File Size: 2.43 KB
 
 
     ' Class TermTree
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: (+2 Overloads) Add, newChild, Visit
+    '     Function: (+2 Overloads) Add, FindRoot, newChild, Visit
     ' 
     ' /********************************************************************************/
 

@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::6e6c7eb91a11c2129af72949fd3d6907, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::f741db03ac7914d7e37f4d7cf9100fe8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Multiply.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 38
-'    Code Lines: 23
-' Comment Lines: 6
-'   Blank Lines: 9
-'     File Size: 1.09 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Multiply
-' 
-'         Function: f64_op_multiply_f64, f64_scalar_op_multiply_f64
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 220
+    '    Code Lines: 157
+    ' Comment Lines: 28
+    '   Blank Lines: 35
+    '     File Size: 8.37 KB
+
+
+    '     Class Multiply
+    ' 
+    '         Function: f32_op_multiply_f32, f32_scalar_op_multiply_f32, f64_op_multiply_f64, f64_scalar_op_multiply_f64
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

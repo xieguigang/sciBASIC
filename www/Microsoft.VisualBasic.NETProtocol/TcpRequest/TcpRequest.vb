@@ -1,57 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::ca4ea1e197caa2191613b66334d469a0, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::b3c16530c6ece0cbc005818fb9d6f240, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/TcpRequest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 402
-'    Code Lines: 205
-' Comment Lines: 140
-'   Blank Lines: 57
-'     File Size: 17.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class TcpRequest
-' 
-'         Constructor: (+5 Overloads) Sub New
-' 
-'         Function: getSocket, LocalConnection, OperationTimeOut, (+6 Overloads) SendMessage, ToString
-' 
-'         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
-'              RequestToStream
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 397
+    '    Code Lines: 202
+    ' Comment Lines: 137
+    '   Blank Lines: 58
+    '     File Size: 16.07 KB
+
+
+    '     Class TcpRequest
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: doWait, getSocket, LocalConnection, (+4 Overloads) SendMessage, SetTimeOut
+    '                   ToString
+    ' 
+    '         Sub: ConnectCallback, (+2 Overloads) Dispose, doSend, Receive, ReceiveCallback
+    '              RequestToStream
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

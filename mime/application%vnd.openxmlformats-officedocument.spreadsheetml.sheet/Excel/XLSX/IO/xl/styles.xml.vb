@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47174717eb95b7d47c8957100a1e822d, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
+﻿#Region "Microsoft.VisualBasic::843414ab28881a3714d04d7668a0c9d2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/xl/styles.xml.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 150
     ' Comment Lines: 3
     '   Blank Lines: 42
-    '     File Size: 6.29 KB
+    '     File Size: 6.30 KB
 
 
     '     Class styles

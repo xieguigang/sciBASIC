@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1db8a2fd33e57b40930e8575c88f1870, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HSLColor.vb"
+﻿#Region "Microsoft.VisualBasic::3963edb49d23d59932d98b0a8d97f127, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/HSLColor.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
+    '   Total Lines: 147
     '    Code Lines: 88
-    ' Comment Lines: 33
+    ' Comment Lines: 38
     '   Blank Lines: 21
-    '     File Size: 4.68 KB
+    '     File Size: 4.92 KB
 
 
     '     Structure HSLColor

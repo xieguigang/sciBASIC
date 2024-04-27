@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::641af121dadad678721f7b91e5260cf4, sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::58097e6cf244c752c9de61705f265ddf, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 255
-    '    Code Lines: 172
-    ' Comment Lines: 40
-    '   Blank Lines: 43
-    '     File Size: 8.60 KB
+    '   Total Lines: 59
+    '    Code Lines: 30
+    ' Comment Lines: 19
+    '   Blank Lines: 10
+    '     File Size: 1.90 KB
 
 
     '     Class SVGDataLayers
     ' 
-    '         Properties: GetLastLayer, styles
+    '         Properties: styles
     ' 
-    '         Function: (+7 Overloads) Add, ApplyFilter, GenericEnumerator, GetEnumerator, GetSVG
-    '                   innerDefaultHeight, innerDefaultWidth, updateLayerIndex
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Sub: Add, ApplyFilter, Clear
+    '         Function: ApplyFilter
     ' 
-    '         Operators: (+2 Overloads) +
+    '         Sub: ApplyFilter, Clear
     ' 
     ' 
     ' /********************************************************************************/

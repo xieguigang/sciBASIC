@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bda06d123d3d322620ad54be9db3682, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\Models\KMeansCluster.vb"
+﻿#Region "Microsoft.VisualBasic::add7c5621c0a153add7c4259a0395529, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/Models/KMeansCluster.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 83
-    ' Comment Lines: 22
-    '   Blank Lines: 19
-    '     File Size: 4.76 KB
+    '   Total Lines: 103
+    '    Code Lines: 67
+    ' Comment Lines: 21
+    '   Blank Lines: 15
+    '     File Size: 3.81 KB
 
 
     '     Class KMeansCluster
     ' 
     '         Properties: Center, ClusterMean, ClusterSum, NumOfEntity
     ' 
-    '         Function: CalculateCenter, CalculateKMeansCost, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: CalculateKMeansCost, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Add, refresh
     ' 

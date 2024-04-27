@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ef0b5e6e730b1e63d075dfca922d681, sciBASIC#\Microsoft.VisualBasic.Core\src\Net\HTTP\HTTP_RFC.vb"
+﻿#Region "Microsoft.VisualBasic::359fbf458ee8a9c5bb34c4f2b9c01666, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/HTTP_RFC.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 600
-    '    Code Lines: 179
-    ' Comment Lines: 387
-    '   Blank Lines: 34
-    '     File Size: 30.65 KB
+    '   Total Lines: 602
+    '    Code Lines: 171
+    ' Comment Lines: 395
+    '   Blank Lines: 36
+    '     File Size: 30.76 KB
 
 
     '     Enum HTTP_RFC

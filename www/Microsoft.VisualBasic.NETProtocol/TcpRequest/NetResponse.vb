@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc83765c39b50ef011450d1d21b4c077, sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\TcpRequest\NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::314039fa89eb2e3b95d925e781c63881, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/NetResponse.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 678
-    '    Code Lines: 164
+    '   Total Lines: 685
+    '    Code Lines: 170
     ' Comment Lines: 476
-    '   Blank Lines: 38
-    '     File Size: 37.06 KB
+    '   Blank Lines: 39
+    '     File Size: 37.33 KB
 
 
     '     Module NetResponse

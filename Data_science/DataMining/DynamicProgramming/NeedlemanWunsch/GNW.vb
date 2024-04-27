@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8354bff7ce9943f95c5a0e038d9ad82, sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::f9a2dac2c06ac9bd3cdefc00815698e3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//NeedlemanWunsch/GNW.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 103
+    '   Total Lines: 199
+    '    Code Lines: 105
     ' Comment Lines: 66
     '   Blank Lines: 28
-    '     File Size: 8.24 KB
+    '     File Size: 8.43 KB
 
 
     '     Class NeedlemanWunsch
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Compute, fillTracebackMatrix
+    '         Function: Compute, MaximizingCell
     ' 
     '         Sub: traceback
     ' 

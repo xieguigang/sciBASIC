@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04c542b49ebc18d0b49f2352173fd754, sciBASIC#\Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::823862748c60b9aa2220feb1a2158377, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Runtime/CType/Casting.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 415
-    '    Code Lines: 245
+    '   Total Lines: 420
+    '    Code Lines: 250
     ' Comment Lines: 126
     '   Blank Lines: 44
-    '     File Size: 15.97 KB
+    '     File Size: 16.13 KB
 
 
     '     Module Casting

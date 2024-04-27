@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::f5706ef9fabe0406b0aef4a6e95a475b, sciBASIC#\Data_science\DataMining\DataMining\Clustering\KMeans\CompleteLinkage\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::7c225f87c1ecc5deb854db7520d24f3b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/Lloyds/Clustering.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 37
-'    Code Lines: 24
-' Comment Lines: 6
-'   Blank Lines: 7
-'     File Size: 1.15 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Clustering
-' 
-'         Properties: Points
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: __writeCluster
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 38
+    '    Code Lines: 25
+    ' Comment Lines: 6
+    '   Blank Lines: 7
+    '     File Size: 1.18 KB
+
+
+    '     Class Clustering
+    ' 
+    '         Properties: Points
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __writeCluster
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

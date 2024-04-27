@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb9407c5fe42cee35f042e7608cb841f, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2c3fa73221c51d1dbdbc3bd66c826f8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Delegate/TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 37
-    ' Comment Lines: 18
-    '   Blank Lines: 11
-    '     File Size: 2.46 KB
+    '   Total Lines: 87
+    '    Code Lines: 52
+    ' Comment Lines: 19
+    '   Blank Lines: 16
+    '     File Size: 3.29 KB
 
 
     '     Module TypeExtensions
     ' 
-    '         Function: CanBeAssignedFrom, (+2 Overloads) ImplementInterface
+    '         Function: CanBeAssignedFrom, (+2 Overloads) ImplementInterface, ImplementInterfaceAssertInternal
     ' 
     ' 
     ' /********************************************************************************/

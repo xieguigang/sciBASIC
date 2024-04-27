@@ -1,4 +1,72 @@
-﻿'
+﻿#Region "Microsoft.VisualBasic::53d0839ac6ccf07f8a5b550f9af88e6b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/LineEdit/getline.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1251
+    '    Code Lines: 714
+    ' Comment Lines: 360
+    '   Blank Lines: 177
+    '     File Size: 45.76 KB
+
+
+    '     Class LineEditor
+    ' 
+    '         Properties: HeuristicsMode, LineCount, TabAtStartCompletes
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) Edit, HeuristicAutoComplete, TextToRenderPos, TextToScreenPos, WordBackward
+    '                   WordForward
+    ' 
+    '         Sub: CmdBackspace, CmdBackwardWord, CmdDebug, CmdDeleteBackword, CmdDeleteChar
+    '              CmdDeleteWord, CmdDone, CmdDown, CmdEnd, CmdForwardWord
+    '              CmdHistoryNext, CmdHistoryPrev, CmdHome, CmdKillToEOF, CmdLeft
+    '              CmdRefresh, CmdReverseSearch, CmdRight, CmdTabOrComplete, CmdUp
+    '              CmdYank, Complete, ComputeRendered, EditLoop, ForceCursor
+    '              GetUnixConsoleReset, HandleChar, HideCompletions, HistoryUpdateLine, InitText
+    '              InsertChar, InsertTextAtCursor, InterruptEdit, Render, RenderAfter
+    '              RenderFrom, ReverseSearch, SaveHistory, SearchAppend, SetPrompt
+    '              SetSearchPrompt, SetText, ShowCompletions, UpdateCompletionWindow, UpdateCursor
+    '              UpdateHomeRow
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+'
 ' getline.cs: A command line editor
 '
 ' Authors:
@@ -1249,3 +1317,4 @@ mismatch:
 
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa58c152a11a1dd0fc953a8304239a8, sciBASIC#\Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::5c5588d156e26f21214475fb22789317, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/ASCII.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 471
-    '    Code Lines: 190
+    '   Total Lines: 474
+    '    Code Lines: 193
     ' Comment Lines: 252
     '   Blank Lines: 29
-    '     File Size: 18.02 KB
+    '     File Size: 18.21 KB
 
 
     '     Class ASCII

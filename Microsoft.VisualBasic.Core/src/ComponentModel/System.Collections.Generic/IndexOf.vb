@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c848d0fa99997a0de2d82c171ecb8f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::9e76e47818c645eb46c8c532918f4fd3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/IndexOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 419
-    '    Code Lines: 243
-    ' Comment Lines: 125
-    '   Blank Lines: 51
-    '     File Size: 14.85 KB
+    '   Total Lines: 506
+    '    Code Lines: 270
+    ' Comment Lines: 179
+    '   Blank Lines: 57
+    '     File Size: 18.64 KB
 
 
     '     Class Index
@@ -47,13 +47,14 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, IEnumerable_GetEnumerator
-    '                   indexing, Indexing, (+2 Overloads) Intersect, NotExists, ToString
+    '         Function: (+2 Overloads) Add, EnumerateMapKeys, GetEnumerator, GetOrdinal, GetSynonymOrdinal
+    '                   IEnumerable_GetEnumerator, indexing, Indexing, (+2 Overloads) Intersect, NotExists
+    '                   ToString
     ' 
-    '         Sub: [Set], Add, Clear, Delete
+    '         Sub: [Set], Add, AddList, Clear, (+2 Overloads) Delete
     ' 
-    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <>, =, (+2 Overloads) IsFalse
-    '                    (+2 Overloads) IsTrue, (+2 Overloads) Like
+    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <, <>, =
+    '                    >, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

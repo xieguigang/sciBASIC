@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8d2b0a83be42a4551173398efa657dd, sciBASIC#\Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\ReplacementStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::8422160e74aebb74095bee4b4015c1f5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/Population/Substitution/ReplacementStrategy.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 59
-    ' Comment Lines: 29
-    '   Blank Lines: 17
-    '     File Size: 4.17 KB
+    '   Total Lines: 31
+    '    Code Lines: 23
+    ' Comment Lines: 3
+    '   Blank Lines: 5
+    '     File Size: 1.11 KB
 
 
     '     Interface IStrategy
@@ -58,18 +58,6 @@
     '     Module Extensions
     ' 
     '         Function: GetStrategy
-    ' 
-    '     Structure SimpleReplacement
-    ' 
-    '         Properties: type
-    ' 
-    '         Function: newPopulation
-    ' 
-    '     Class EliteReplacement
-    ' 
-    '         Properties: type
-    ' 
-    '         Function: newPopulation
     ' 
     ' 
     ' /********************************************************************************/

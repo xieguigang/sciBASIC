@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::3f0b263a722e820cb244b5f83fcf977a, sciBASIC#\Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::f0f3779401b16a4529ad3574f13d6d5c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/JavaScriptObject/JavaScriptObject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 191
-'    Code Lines: 139
-' Comment Lines: 21
-'   Blank Lines: 31
-'     File Size: 7.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class JavaScriptObject
-' 
-'         Properties: length, this
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetDescription, GetEnumerator, GetGenericJson, GetMemberValue, GetNames
-'                   IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
-' 
-'         Sub: Delete
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 257
+    '    Code Lines: 193
+    ' Comment Lines: 21
+    '   Blank Lines: 43
+    '     File Size: 10.16 KB
+
+
+    '     Class JavaScriptObject
+    ' 
+    '         Properties: length, this
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) CreateObject, GetDescription, GetEnumerator, GetGenericJson, GetMemberValue
+    '                   GetNames, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
+    ' 
+    '         Sub: Delete, loadObject
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

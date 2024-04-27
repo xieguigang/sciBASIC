@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::8c6e2f9223c5c56c5b4fae9951579c5d, sciBASIC#\Data_science\Graph\Model\Abstract\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::3234442abe4a1584fe0af5d58f10afe8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Abstract/Vertex.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 33
-'    Code Lines: 17
-' Comment Lines: 12
-'   Blank Lines: 4
-'     File Size: 1.06 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Vertex
-' 
-'     Properties: ID, label
-' 
-'     Function: ToString
-' 
-'     Sub: Assign
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 55
+    '    Code Lines: 30
+    ' Comment Lines: 17
+    '   Blank Lines: 8
+    '     File Size: 1.64 KB
+
+
+    ' Class Vertex
+    ' 
+    '     Properties: ID, label
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: Equals, ToString
+    ' 
+    '     Sub: Assign
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f598529e40275c18cf2cceca2a020363, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarHeight.vb"
+﻿#Region "Microsoft.VisualBasic::21dc5897f30df867bdbd1354e545033d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ProgressBarHeight.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 0
     '   Blank Lines: 0
-    '     File Size: 171 B
+    '     File Size: 169 B
 
 
     '     Enum ProgressBarHeight
@@ -60,4 +60,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
         Decrement
     End Enum
 End Namespace
-

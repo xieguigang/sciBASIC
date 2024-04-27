@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7895b78b6d7923a1de231156a2660081, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
+﻿#Region "Microsoft.VisualBasic::11c96f53df5909efd24deeab80001ce5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Solvers/SOR.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 29
+    '   Total Lines: 53
+    '    Code Lines: 33
     ' Comment Lines: 9
-    '   Blank Lines: 9
-    '     File Size: 1.62 KB
+    '   Blank Lines: 11
+    '     File Size: 1.73 KB
 
 
     '     Module SOR

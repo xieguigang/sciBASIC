@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a3b06a98f83508d15b9e9dc5b68468f, sciBASIC#\gr\network-visualization\Datavisualization.Network\Analysis\Similarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::4d46b6290b7b235cde7f3ec13016f74e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Similarity/Similarity.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 73
+    '   Total Lines: 111
+    '    Code Lines: 75
     ' Comment Lines: 16
     '   Blank Lines: 20
-    '     File Size: 4.28 KB
+    '     File Size: 4.36 KB
 
 
     '     Module Similarity

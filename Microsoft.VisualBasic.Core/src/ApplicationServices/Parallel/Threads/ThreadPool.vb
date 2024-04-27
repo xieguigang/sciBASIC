@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acfec142079ea3616f8a852f3ac82332, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::770ded09dc182a6fe5ffc77b0cce8418, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/ThreadPool.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 349
+    '   Total Lines: 353
     '    Code Lines: 200
-    ' Comment Lines: 93
+    ' Comment Lines: 97
     '   Blank Lines: 56
-    '     File Size: 12.62 KB
+    '     File Size: 13.14 KB
 
 
     '     Class ThreadPool

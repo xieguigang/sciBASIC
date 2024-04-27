@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e46db2998119df9c17fb255e6dcf9d7, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::7b31b762b70db2ad8f585b0dcf1304ef, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/RangeModel/DoubleRange.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 349
-    '    Code Lines: 184
-    ' Comment Lines: 120
-    '   Blank Lines: 45
-    '     File Size: 12.84 KB
+    '   Total Lines: 369
+    '    Code Lines: 199
+    ' Comment Lines: 124
+    '   Blank Lines: 46
+    '     File Size: 13.60 KB
 
 
     '     Class DoubleRange
     ' 
-    '         Properties: Length, Max, Min
+    '         Properties: Length, Max, Min, MinMax
     ' 
     '         Constructor: (+9 Overloads) Sub New
-    '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside
-    '                   (+2 Overloads) IsOverlapping, (+2 Overloads) ScaleMapping, (+2 Overloads) ToString, TryParse
+    '         Function: Contains, (+2 Overloads) Enumerate, GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
+    '                   (+2 Overloads) ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =, (+2 Overloads) Like
     ' 
     ' 

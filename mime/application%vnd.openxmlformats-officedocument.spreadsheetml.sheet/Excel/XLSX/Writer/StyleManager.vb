@@ -1,4 +1,64 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::677dea52c84355ed8e17860add8d1d6d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/StyleManager.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 489
+    '    Code Lines: 294
+    ' Comment Lines: 156
+    '   Blank Lines: 39
+    '     File Size: 20.36 KB
+
+
+    '     Class StyleManager
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddStyle, (+2 Overloads) AddStyleComponent, GetBorderByHash, GetBorders, GetBorderStyleNumber
+    '                   GetCellXfByHash, GetCellXfs, GetCellXfStyleNumber, GetComponentByHash, GetFillByHash
+    '                   GetFills, GetFillStyleNumber, GetFontByHash, GetFonts, GetFontStyleNumber
+    '                   GetManagedStyles, GetNumberFormatByHash, GetNumberFormats, GetNumberFormatStyleNumber, GetStyleByHash
+    '                   GetStyleByName, GetStyleNumber, GetStyles, IsUsedByStyle
+    ' 
+    '         Sub: CleanupStyleComponents, RemoveStyle, Reorganize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  PicoXLSX is a small .NET library to generate XLSX (Microsoft Excel 2007 or newer) files in an easy and native way
 '  Copyright Raphael Stoeckli © 2023
 '  This library is licensed under the MIT License.
@@ -487,3 +547,4 @@ Namespace XLSX.Writer
         End Function
     End Class
 End Namespace
+

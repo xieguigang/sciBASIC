@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af55dd35d3f1ab24c9f6e3cc80e0161d, sciBASIC#\Data_science\NLP\LDA\Corpus.vb"
+﻿#Region "Microsoft.VisualBasic::0abbd8432b89e821ca2fc38749c69da6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/Corpus.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
+    '   Total Lines: 88
     '    Code Lines: 53
-    ' Comment Lines: 12
+    ' Comment Lines: 17
     '   Blank Lines: 18
-    '     File Size: 2.52 KB
+    '     File Size: 2.68 KB
 
 
     '     Class Corpus

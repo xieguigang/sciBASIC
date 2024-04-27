@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::953e2b4e23b621025ea248508f9b639d, sciBASIC#\Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::9a96eebe53ccc7e496293a9b3e915a52, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Log4VB.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 104
+    '   Total Lines: 175
+    '    Code Lines: 101
     ' Comment Lines: 51
     '   Blank Lines: 23
-    '     File Size: 7.38 KB
+    '     File Size: 7.21 KB
 
 
     '     Module Log4VB
     ' 
     '         Function: getColor, Print
     ' 
-    '         Sub: (+2 Overloads) Print, Println
+    '         Sub: Print, Println
     ' 
     ' 
     ' /********************************************************************************/

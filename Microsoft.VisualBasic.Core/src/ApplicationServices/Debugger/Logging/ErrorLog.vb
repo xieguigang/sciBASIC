@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e8eb229134ed89af21286977335729, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
+﻿#Region "Microsoft.VisualBasic::28e4191721c5a14d8f5a2c58f81bf29c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Logging/ErrorLog.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 65
+    '   Total Lines: 83
+    '    Code Lines: 70
     ' Comment Lines: 7
-    '   Blank Lines: 5
-    '     File Size: 3.23 KB
+    '   Blank Lines: 6
+    '     File Size: 3.43 KB
 
 
     '     Module ErrorLog
     ' 
-    '         Function: BugsFormatter, GetErrorLines
+    '         Function: BugsFormatter, EnvironmentInfo, GetErrorLines
     ' 
     ' 
     ' /********************************************************************************/

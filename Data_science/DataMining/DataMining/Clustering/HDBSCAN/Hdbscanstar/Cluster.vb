@@ -1,4 +1,64 @@
-﻿Imports System
+﻿#Region "Microsoft.VisualBasic::c037ad1faf8e2e20bb7a009fcb9dc22c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/Cluster.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 162
+    '    Code Lines: 114
+    ' Comment Lines: 32
+    '   Blank Lines: 16
+    '     File Size: 7.87 KB
+
+
+    '     Class Cluster
+    ' 
+    '         Properties: HasChildren, HierarchyPosition, Label, Parent, PropagatedDescendants
+    '                     PropagatedLowestChildDeathLevel, Stability
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: VirtualChildClusterConstraintsPoint
+    ' 
+    '         Sub: AddConstraintsSatisfied, AddPointsToVirtualChildCluster, AddVirtualChildConstraintsSatisfied, DetachPoints, Propagate
+    '              ReleaseVirtualChildCluster
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System
 Imports System.Collections.Generic
 
 Namespace HDBSCAN.Hdbscanstar
@@ -160,3 +220,4 @@ Namespace HDBSCAN.Hdbscanstar
         End Sub
     End Class
 End Namespace
+

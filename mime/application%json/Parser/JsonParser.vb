@@ -1,57 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::180411b12eaddeb1a5d4a195281c225b, sciBASIC#\mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::1b5590f54454a59b4d0b4e6b6637bede, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Parser/JsonParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 516
-'    Code Lines: 338
-' Comment Lines: 114
-'   Blank Lines: 64
-'     File Size: 16.14 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class JsonParser
-' 
-'     Properties: JSONvalue
-' 
-'     Function: _parse, GetParserErrors, Open, OpenJSON, Parse
-'               parseArray, parseBoolean, parseKey, parseNull, parseNumber
-'               parseObject, parseString, parseValue, StripString
-' 
-'     Sub: ClearParserError, skipChar
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 486
+    '    Code Lines: 333
+    ' Comment Lines: 94
+    '   Blank Lines: 59
+    '     File Size: 16.74 KB
+
+
+    ' Class JsonParser
+    ' 
+    '     Properties: JSONvalue
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: _parse, GetParserErrors, GetTokenSequence, MeasureToken, Open
+    '               OpenJSON, Parse, PullArray, PullJson, PullObject
+    '               StripString, walkChar
+    ' 
+    '     Sub: ClearParserError
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

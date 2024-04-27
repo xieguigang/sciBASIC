@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f81c9416833b774b207578261958106e, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::8a02e6195d62da551e6c4f07fe56682e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/IDynamicLibraryLoader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
+    '   Total Lines: 40
     '    Code Lines: 8
-    ' Comment Lines: 25
+    ' Comment Lines: 28
     '   Blank Lines: 4
-    '     File Size: 1.71 KB
+    '     File Size: 1.78 KB
 
 
     '     Interface IDynamicLibraryLoader

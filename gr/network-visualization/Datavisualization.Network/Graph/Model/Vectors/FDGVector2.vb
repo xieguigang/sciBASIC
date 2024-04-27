@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a95ce18a1e14c8164a0fcfef057d8bb8, sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Models\Vectors\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::123e805a8b3edd3ddc43312c471797f6, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Vectors/FDGVector2.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 175
+    '   Total Lines: 256
+    '    Code Lines: 157
     ' Comment Lines: 58
-    '   Blank Lines: 37
-    '     File Size: 9.24 KB
+    '   Blank Lines: 41
+    '     File Size: 8.30 KB
 
 
     '     Class FDGVector2
@@ -46,10 +46,9 @@
     '         Properties: x, y
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
-    '                   Magnitude, Multiply, Normal, Normalize, Normalized
-    '                   Random, SetIdentity, SetZero, SquaredNorm, Subtract
-    '                   Zero
+    '         Function: (+2 Overloads) Equals, GetHashCode, Identity, Magnitude, Normal
+    '                   Normalize, Normalized, Random, SetIdentity, SetZero
+    '                   SquaredNorm, Zero
     '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, (+2 Overloads) +, <>
     '                    =
     ' 

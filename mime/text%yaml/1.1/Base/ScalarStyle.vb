@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7b2d63d99ae0596fac4d841c07c708a, sciBASIC#\mime\text%yaml\1.1\Base\ScalarStyle.vb"
+﻿#Region "Microsoft.VisualBasic::e7b2d63d99ae0596fac4d841c07c708a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/ScalarStyle.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 8
     ' Comment Lines: 15
     '   Blank Lines: 4
-    '     File Size: 572.00 B
+    '     File Size: 572 B
 
 
     '     Enum ScalarStyle

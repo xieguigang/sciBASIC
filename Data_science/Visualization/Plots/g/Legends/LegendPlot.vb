@@ -1,54 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::400dfdb43c1c8fd55f6eba1ecb0455fa, sciBASIC#\Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5f7845c97d24b99ef72675d044693d56, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Legends/LegendPlot.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 358
-'    Code Lines: 248
-' Comment Lines: 52
-'   Blank Lines: 58
-'     File Size: 14.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module LegendPlotExtensions
-' 
-'         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
-' 
-'         Sub: DrawLegends, DrawLegendShape
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 375
+    '    Code Lines: 260
+    ' Comment Lines: 55
+    '   Blank Lines: 60
+    '     File Size: 15.32 KB
+
+
+    '     Module LegendPlotExtensions
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: DrawLegend, LegendStyls, MaxLegendSize, ParseLegendStyle
+    ' 
+    '         Sub: DrawLegends, DrawLegendShape, DrawShape
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

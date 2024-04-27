@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0088f67676cdf50f1c7a64b1d22c91f, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::63efba3466a045cf8176d20d774ac203, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/Enumerable.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 34
+    '   Total Lines: 86
+    '    Code Lines: 45
     ' Comment Lines: 31
-    '   Blank Lines: 7
-    '     File Size: 2.74 KB
+    '   Blank Lines: 10
+    '     File Size: 3.15 KB
 
 
     '     Module Enumerable
     ' 
-    '         Function: PopulateNodes, PopulateSequence, (+2 Overloads) Values
+    '         Function: GetNodeCounts, PopulateNodes, PopulateSequence, (+2 Overloads) Values
     ' 
     ' 
     ' /********************************************************************************/

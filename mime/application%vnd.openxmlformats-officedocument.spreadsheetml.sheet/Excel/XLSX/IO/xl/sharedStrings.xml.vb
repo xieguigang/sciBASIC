@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb828afccaae402af0fd499d31e9a63c, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\sharedStrings.xml.vb"
+﻿#Region "Microsoft.VisualBasic::480977bfe62091e854d1732b0be43176, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/xl/sharedStrings.xml.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 53
-    ' Comment Lines: 14
-    '   Blank Lines: 13
-    '     File Size: 2.59 KB
+    '   Total Lines: 105
+    '    Code Lines: 72
+    ' Comment Lines: 18
+    '   Blank Lines: 15
+    '     File Size: 3.30 KB
 
 
     '     Class sharedStrings

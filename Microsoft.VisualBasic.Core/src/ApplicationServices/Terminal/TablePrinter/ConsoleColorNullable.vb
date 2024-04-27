@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee360feb76cb8d6958eafb4643ab55c5, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
+﻿#Region "Microsoft.VisualBasic::a31be0a5f92283a5ee87e5bc6608bad9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/ConsoleColorNullable.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 20
+    '   Total Lines: 20
+    '    Code Lines: 15
     ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 857 B
+    '   Blank Lines: 5
+    '     File Size: 620 B
 
 
     '     Class ConsoleColorNullable

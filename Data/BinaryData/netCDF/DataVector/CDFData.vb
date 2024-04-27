@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::eb065e625b7649b46bf1f9cc3efcac56, sciBASIC#\Data\BinaryData\netCDF\DataVector\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::c33fc336e493964ab84dcbb1c9f267af, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/CDFData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 155
-'    Code Lines: 127
-' Comment Lines: 10
-'   Blank Lines: 18
-'     File Size: 6.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CDFData
-' 
-'         Properties: genericValue, ICDFDataVector_length
-' 
-'         Function: GetBuffer, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 164
+    '    Code Lines: 134
+    ' Comment Lines: 10
+    '   Blank Lines: 20
+    '     File Size: 7.56 KB
+
+
+    '     Class CDFData
+    ' 
+    '         Properties: genericValue, ICDFDataVector_length
+    ' 
+    '         Function: GetBuffer, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

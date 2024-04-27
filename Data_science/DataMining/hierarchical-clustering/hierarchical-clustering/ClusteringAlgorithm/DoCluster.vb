@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad0ffb53cf89d6cbf10cda3eaca17f01, sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DoCluster.vb"
+﻿#Region "Microsoft.VisualBasic::890b0c590e65c37dd07136302154cf40, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//ClusteringAlgorithm/DoCluster.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 22
+    '   Total Lines: 82
+    '    Code Lines: 57
     ' Comment Lines: 9
-    '   Blank Lines: 6
-    '     File Size: 1.93 KB
+    '   Blank Lines: 16
+    '     File Size: 3.36 KB
 
 
     ' Module DoCluster
     ' 
     '     Properties: DefaultClusteringAlgorithm, DefaultLinkageStrategy
     ' 
-    '     Function: RunCluster
+    '     Function: CreateDistanceMatrix, RunCluster
+    '     Class EuclideanTask
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Solve
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfc6bcf6877a49f0b31778d7d0153675, sciBASIC#\Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::42aa90d57a9c12fb5abb3f794d617c0a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/BinaryTree.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 80
+    '   Total Lines: 100
+    '    Code Lines: 76
     ' Comment Lines: 9
-    '   Blank Lines: 16
-    '     File Size: 3.63 KB
+    '   Blank Lines: 15
+    '     File Size: 3.54 KB
 
 
     '     Module Extensions

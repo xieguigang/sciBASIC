@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73200b0b04d79b85d99a5aada40c5a6a, sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3027b843c983021fe8daff25ac82e847, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/ProgramPathSearchTool.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 156
     ' Comment Lines: 50
     '   Blank Lines: 37
-    '     File Size: 10.16 KB
+    '     File Size: 10.25 KB
 
 
     '     Class ProgramPathSearchTool

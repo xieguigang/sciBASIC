@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f586e09d058cac7401b0c075e534a77, sciBASIC#\Data\BinaryData\BinaryData\Bzip2\BZip2InputStream.vb"
+﻿#Region "Microsoft.VisualBasic::cf5492f7947e4785dc438afffdfab74c, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/BZip2InputStream.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,10 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
+    '   Total Lines: 236
     '    Code Lines: 149
     ' Comment Lines: 43
-    '   Blank Lines: 43
+    '   Blank Lines: 44
     '     File Size: 9.60 KB
 
 

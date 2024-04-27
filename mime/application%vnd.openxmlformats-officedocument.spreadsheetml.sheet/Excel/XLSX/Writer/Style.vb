@@ -1,4 +1,243 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::04e07d4e1664fd5bcca8da7cde9369d3, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Style.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 2149
+    '    Code Lines: 1227
+    ' Comment Lines: 749
+    '   Blank Lines: 173
+    '     File Size: 96.95 KB
+
+
+    '     Class Style
+    ' 
+    '         Properties: BottomColor, BottomStyle, CurrentBorder, CurrentCellXf, CurrentFill
+    '                     CurrentFont, CurrentNumberFormat, DiagonalColor, DiagonalDown, DiagonalStyle
+    '                     DiagonalUp, IsInternalStyle, LeftColor, LeftStyle, Name
+    '                     RightColor, RightStyle, TopColor, TopStyle
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: Append, (+2 Overloads) Copy, CopyBorder, CopyStyle, (+2 Overloads) GetHashCode
+    '                   GetStyleName, IsEmpty, (+2 Overloads) ToString
+    '         Class Border
+    ' 
+    ' 
+    '             Enum StyleValue
+    ' 
+    '                 dashDot, dashDotDot, dashed, dotted, hair
+    '                 medium, mediumDashDot, mediumDashDotDot, mediumDashed, none
+    '                 s_double, slantDashDot, thick, thin
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Class CellXf
+    ' 
+    ' 
+    '             Enum HorizontalAlignValue
+    ' 
+    '                 center, centerContinuous, distributed, fill, general
+    '                 justify, left, none, right
+    ' 
+    ' 
+    ' 
+    '             Enum TextBreakValue
+    ' 
+    '                 none, shrinkToFit, wrapText
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '             Enum TextDirectionValue
+    ' 
+    '                 horizontal, vertical
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '             Enum VerticalAlignValue
+    ' 
+    '                 bottom, center, distributed, justify, none
+    '                 top
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Alignment, ForceApplyAlignment, Hidden, HorizontalAlign, Indent
+    '                 Locked, TextDirection, TextRotation, VerticalAlign
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: CalculateInternalRotation, Copy, CopyCellXf, GetHashCode, ToString
+    ' 
+    '         Class Fill
+    ' 
+    ' 
+    '             Enum FillType
+    ' 
+    '                 fillColor, patternColor
+    ' 
+    ' 
+    ' 
+    '             Enum PatternValue
+    ' 
+    '                 darkGray, gray0625, gray125, lightGray, mediumGray
+    '                 none, solid
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: BackgroundColor, ForegroundColor, IndexedColor, PatternFill
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: Copy, CopyFill, GetHashCode, GetPatternName, ToString
+    ' 
+    '     Sub: SetColor, ValidateColor
+    ' 
+    '         Class Font
+    ' 
+    ' 
+    '             Enum SchemeValue
+    ' 
+    '                 major, minor, none
+    ' 
+    ' 
+    ' 
+    '             Enum VerticalAlignValue
+    ' 
+    '                 bottom, center, distributed, justify, none
+    '                 top
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '             Enum UnderlineValue
+    ' 
+    '                 doubleAccounting, none, singleAccounting, u_double, u_single
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Bold, Charset, ColorTheme, ColorValue, Family
+    '                 IsDefaultFont, Italic, Name, Scheme, Size
+    '                 Strike, Underline, VerticalAlign
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Copy, CopyFont, GetHashCode, ToString
+    ' 
+    '         Class NumberFormat
+    ' 
+    ' 
+    '             Enum FormatNumber
+    ' 
+    ' 
+    ' 
+    ' 
+    '             Enum FormatRange
+    ' 
+    '                 custom_format, defined_format, invalid, undefined
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: CustomFormatCode, CustomFormatID, IsCustomFormat, Number
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Copy, CopyNumberFormat, GetHashCode, IsDateFormat, IsTimeFormat
+    '               ToString, TryParseFormatNumber
+    ' 
+    '         Class BasicStyles
+    ' 
+    ' 
+    '             Enum StyleEnum
+    ' 
+    '                 bold, boldItalic, borderFrame, borderFrameHeader, dateFormat
+    '                 dottedFill_0_125, doubleUnderline, italic, mergeCellStyle, roundFormat
+    '                 strike, timeFormat, underline
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Bold, BoldItalic, BorderFrame, BorderFrameHeader, DateFormat
+    '                 DottedFill_0_125, DoubleUnderline, Italic, MergeCellStyle, RoundFormat
+    '                 Strike, TimeFormat, Underline
+    ' 
+    '     Function: ColorizedBackground, ColorizedText, Font, GetStyle
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class AbstractStyle
+    ' 
+    '         Properties: InternalID
+    ' 
+    '         Function: CompareTo, Equals, HandleProperties
+    ' 
+    '         Sub: AddPropertyAsJson, CopyProperties
+    '         Class AppendAttribute
+    ' 
+    '             Properties: Ignore, NestedProperty
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '  PicoXLSX is a small .NET library to generate XLSX (Microsoft Excel 2007 or newer) files in an easy and native way
 '  Copyright Raphael Stoeckli © 2023
 '  This library is licensed under the MIT License.
@@ -2147,3 +2386,4 @@ Namespace XLSX.Writer
         End Class
     End Class
 End Namespace
+

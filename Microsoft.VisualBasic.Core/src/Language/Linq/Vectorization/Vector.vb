@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::6af8b4c3829a1a100a6f914014f0d2e5, sciBASIC#\Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::0631a83b30393e8fddc62c429ce88104, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Vectorization/Vector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 398
-'    Code Lines: 237
-' Comment Lines: 122
-'   Blank Lines: 39
-'     File Size: 14.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Vector
-' 
-'         Properties: Array, First, IsSingle, Last, Length
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString
-'                   Which
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 407
+    '    Code Lines: 237
+    ' Comment Lines: 131
+    '   Blank Lines: 39
+    '     File Size: 15.05 KB
+
+
+    '     Class Vector
+    ' 
+    '         Properties: Array, First, IsScalar, Last, Length
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString
+    '                   Which
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

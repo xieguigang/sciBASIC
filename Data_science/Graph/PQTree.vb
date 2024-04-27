@@ -1,4 +1,61 @@
-﻿Imports Microsoft.VisualBasic.IEnumerations
+﻿#Region "Microsoft.VisualBasic::392de5cb3c30130afa4f0a4c69c1031a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//PQTree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 966
+    '    Code Lines: 809
+    ' Comment Lines: 90
+    '   Blank Lines: 67
+    '     File Size: 43.83 KB
+
+
+    ' Class PQTree
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: allNodes, applyTemplate, contains, fromEmptyToFullP, fromFullToEmptyP
+    '               indentString, isDescendant, isFullLeaf, isPertinentTree, recursivelyRemoveLeaf
+    '               recursivelyRemoveLeafNotThroughQNodes, (+2 Overloads) reduce, sanityTest, (+2 Overloads) toString, ToString
+    ' 
+    '     Sub: allNodes, clearLabels, getLeaves, reverse
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.ListExtensions
 
 ' 
@@ -964,3 +1021,4 @@ Public Class PQTree
     End Function
 
 End Class
+

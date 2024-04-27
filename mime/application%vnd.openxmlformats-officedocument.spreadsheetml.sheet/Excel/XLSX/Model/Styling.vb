@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ab36b6dbbcf1b78faa65c4baa813ee, sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
+﻿#Region "Microsoft.VisualBasic::e9d7fcd90449b46e87569ba2e553b8fb, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Model/Styling.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 60
+    '   Total Lines: 78
+    '    Code Lines: 66
     ' Comment Lines: 0
-    '   Blank Lines: 10
-    '     File Size: 2.70 KB
+    '   Blank Lines: 12
+    '     File Size: 3.11 KB
 
 
-    ' Module Styling
+    '     Module Styling
     ' 
-    '     Function: (+2 Overloads) ColorScale, StyleFont
+    '         Function: (+2 Overloads) ColorScale, StyleFont
     ' 
-    '     Sub: SetColorScaleStyles
+    '         Sub: SetColorScaleStyles
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a3bc2feefb61f9a020768d46e1657e5, sciBASIC#\mime\text%yaml\1.2\Syntax\BlockScalarModifier.vb"
+﻿#Region "Microsoft.VisualBasic::2a3bc2feefb61f9a020768d46e1657e5, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/BlockScalarModifier.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 24
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 815.00 B
+    '     File Size: 815 B
 
 
     '     Class BlockScalarModifier

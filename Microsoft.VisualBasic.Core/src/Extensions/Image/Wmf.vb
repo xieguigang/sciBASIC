@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544d24fd28eb0610bfaa52ba1d9bdd0e, sciBASIC#\Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::544d24fd28eb0610bfaa52ba1d9bdd0e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Wmf.vb"
 
     ' Author:
     ' 

@@ -1,56 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::b0e968d8c42d86c478598ff75e08701d, sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::abbc32540d27ea08b6a36ce96b7cf598, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/EigenvalueDecomposition.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 976
-'    Code Lines: 710
-' Comment Lines: 131
-'   Blank Lines: 135
-'     File Size: 36.98 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class EigenvalueDecomposition
-' 
-'         Properties: D, ImagEigenvalues, RealEigenvalues, V
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: cdiv, hqr2, ISerializable_GetObjectData, orthes, tql2
-'              tred2
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 980
+    '    Code Lines: 707
+    ' Comment Lines: 140
+    '   Blank Lines: 133
+    '     File Size: 36.83 KB
+
+
+    '     Class EigenvalueDecomposition
+    ' 
+    '         Properties: D, ImagEigenvalues, RealEigenvalues, V
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: cdiv, hqr2, orthes, tql2, tred2
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
