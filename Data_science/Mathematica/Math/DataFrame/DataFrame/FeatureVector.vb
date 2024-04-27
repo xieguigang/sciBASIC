@@ -1,38 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::bb8a5b9770234b0f6a2f27e5fdaee265, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/FeatureVector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
 
-    ' Code Statistics:
+' Code Statistics:
 
     '   Total Lines: 218
     '    Code Lines: 152
@@ -50,6 +50,21 @@
     '               ToString
     ' 
     ' /********************************************************************************/
+'   Total Lines: 156
+'    Code Lines: 119
+' Comment Lines: 5
+'   Blank Lines: 32
+'     File Size: 5.27 KB
+
+
+' Class FeatureVector
+' 
+'     Properties: isScalar, name, size, type, vector
+' 
+'     Constructor: (+10 Overloads) Sub New
+'     Function: [TryCast], CastTo, CheckSupports, FromGeneral, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -195,6 +210,17 @@ Public Class FeatureVector : Implements IReadOnlyId
         End If
     End Function
 
+    Public Function Getter() As Func(Of Integer, Object)
+        If vector Is Nothing OrElse vector.Length = 0 Then
+            Return Function() Nothing
+        ElseIf vector.Length = 1 Then
+            Dim [single] As Object = GetScalarValue()
+            Return Function() [single]
+        Else
+            Return Function(i) _vector(i)
+        End If
+    End Function
+
     Public Function [TryCast](Of T)() As T()
         If GetType(T) Is type Then
             Return DirectCast(vector, T())
@@ -211,6 +237,8 @@ Public Class FeatureVector : Implements IReadOnlyId
                             Return CastTo(Of Date, Double)(Function(d) d.UnixTimeStamp)
                         Case GetType(TimeSpan)
                             Return CastTo(Of TimeSpan, Double)(Function(d) d.TotalMilliseconds)
+                        Case GetType(String)
+                            Return CastTo(Of String, Double)(AddressOf Conversion.Val)
                     End Select
             End Select
 

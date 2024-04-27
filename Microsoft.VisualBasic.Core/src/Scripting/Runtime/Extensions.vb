@@ -124,6 +124,12 @@ Namespace Scripting.Runtime
             Return BinaryOperator.CreateOperator(methods?.ToArray)
         End Function
 
+        ''' <summary>
+        ''' the given <paramref name="type"/> is the array element type
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CreateArray(data As IEnumerable, type As Type) As Object
             Dim src = data.Cast(Of Object).ToArray

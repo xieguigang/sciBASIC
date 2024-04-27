@@ -217,5 +217,9 @@ Namespace Imaging
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
             Throw New NotImplementedException()
         End Sub
+
+        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

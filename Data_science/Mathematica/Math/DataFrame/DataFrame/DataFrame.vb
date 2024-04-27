@@ -58,6 +58,7 @@
 Imports System.Data
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -117,6 +118,19 @@ Public Class DataFrame : Implements INumericMatrix
         End Set
     End Property
 
+    Default Public ReadOnly Property Item(cols As IEnumerable(Of String)) As DataFrame
+        Get
+            Return New DataFrame With {
+                .rownames = rownames.ToArray,
+                .features = cols _
+                    .ToDictionary(Function(c) c,
+                                  Function(c)
+                                      Return Me(c)
+                                  End Function)
+            }
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
@@ -149,6 +163,21 @@ Public Class DataFrame : Implements INumericMatrix
     Public Sub add(featureName As String, v As IEnumerable(Of Integer))
         Call features.Add(featureName, New FeatureVector(featureName, v))
     End Sub
+
+    Public Function row(i As Integer) As Object()
+        Return features.Select(Function(c) c.Value(i)).ToArray
+    End Function
+
+    Public Iterator Function foreachRow() As IEnumerable(Of NamedCollection(Of Object))
+        Dim cols = features.Select(Function(c) c.Value.Getter).ToArray
+        Dim nrow As Integer = rownames.Length
+
+        For i As Integer = 0 To nrow - 1
+#Disable Warning
+            Yield New NamedCollection(Of Object)(rownames(i), cols.Select(Function(v) v(i)))
+#Enable Warning
+        Next
+    End Function
 
     ''' <summary>
     ''' current dataframe object append the additional data 
