@@ -57,7 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Ranges
 
@@ -70,18 +70,19 @@ Namespace ComponentModel.Ranges
         Implements Value(Of T).IValueOf
 
         Dim tag#
-        Dim value As T
+        Dim description As String
 
-        Private Property IValueOf_Value As T Implements Value(Of T).IValueOf.Value
+        Public Property Value As T Implements Value(Of T).IValueOf.Value
 
-        Sub New(tag#, value As T)
+        Sub New(tag#, value As T, Optional desc As String = Nothing)
+            Me.description = desc
             Me.tag = tag
-            Me.value = value
+            Me.Value = value
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"#{tag} {value.GetJson}"
+            Return $"#{tag} {Value.GetJson}"
         End Function
 
         ''' <summary>
@@ -95,7 +96,7 @@ Namespace ComponentModel.Ranges
             If d = 0R Then
                 Return 0
             Else
-                Return stdNum.Sign(d)
+                Return std.Sign(d)
             End If
         End Function
 
@@ -122,7 +123,7 @@ Namespace ComponentModel.Ranges
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(t As NumericTagged(Of T)) As T
-            Return t.value
+            Return t.Value
         End Operator
     End Structure
 End Namespace

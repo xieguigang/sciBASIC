@@ -120,6 +120,10 @@ Namespace Text.Xml.Models
 
     End Class
 
+    ''' <summary>
+    ''' a general list model for export a collection of the clr object to a single xml file
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class XmlList(Of T) : Inherits ListOf(Of T)
         Implements XmlDataModel.IXmlType
 
@@ -147,6 +151,13 @@ Namespace Text.Xml.Models
         End Property
 
         <XmlElement("item")> Public Property items As T()
+
+        Sub New()
+        End Sub
+
+        Sub New(data As IEnumerable(Of T))
+            items = data.SafeQuery.ToArray
+        End Sub
 
         Protected Overrides Function getSize() As Integer
             If items Is Nothing Then

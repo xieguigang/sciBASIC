@@ -76,7 +76,8 @@ Namespace Data.Trinity
                                     Optional andalso$ = "and",
                                     Optional etc$ = "etc",
                                     Optional joinSpace As Boolean = True,
-                                    Optional enUS As Boolean = False) As String
+                                    Optional enUS As Boolean = False,
+                                    Optional max_number As Integer = 8) As String
 
             Dim space As String = "" Or " ".When(joinSpace)
             Dim dataArray As String() = list.SafeQuery.Where(Function(s) Not s.StringEmpty).ToArray
@@ -88,10 +89,10 @@ Namespace Data.Trinity
             With dataArray
                 If .Length = 1 Then
                     Return .ByRef(0)
-                ElseIf .Length < 8 Then
+                ElseIf .Length < max_number Then
                     Return .Take(.Length - 1).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .Last
                 Else
-                    Dim str = .Take(7).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .ByRef(7)
+                    Dim str = .Take(max_number - 1).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .ByRef(max_number - 1)
 
                     If enUS Then
                         Return str & $"{comma}{space}{etc}"
