@@ -99,6 +99,7 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
@@ -137,6 +138,7 @@ Namespace Graph
             End Get
         End Property
 
+        <IgnoreDataMember>
         Public ReadOnly Property pinnedNodes As Node()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
