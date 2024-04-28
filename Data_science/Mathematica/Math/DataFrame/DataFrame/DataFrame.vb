@@ -59,6 +59,7 @@
 Imports System.Data
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
@@ -178,6 +179,48 @@ Public Class DataFrame : Implements INumericMatrix
             Yield New NamedCollection(Of Object)(rownames(i), cols.Select(Function(v) v(i)))
 #Enable Warning
         Next
+    End Function
+
+    Public Function slice(rownames As IEnumerable(Of String)) As DataFrame
+        Dim rowIndex As Index(Of String) = rownames.Indexing
+
+        If rowIndex.Count = 0 Then
+            Return Nothing
+        End If
+
+        Dim offset As Integer
+        Dim cols = features.Select(Function(c) c.Value.Getter).ToArray
+        Dim nrow As Integer = Me.rownames.Length
+        Dim rowname As String
+        Dim rowcopy As NamedCollection(Of Object)() = New NamedCollection(Of Object)(rowIndex.Count - 1) {}
+        Dim rowdata As Object()
+
+        For i As Integer = 0 To nrow - 1
+            rowname = Me.rownames(i)
+            offset = i
+
+            If rowIndex.IndexOf(rowname) > -1 Then
+                rowdata = cols.Select(Function(c) c(offset)).ToArray
+                rowcopy(rowIndex.IndexOf(rowname)) = New NamedCollection(Of Object)(rowname, rowdata)
+            End If
+        Next
+
+        Dim featureCols As New Dictionary(Of String, FeatureVector)
+        Dim featureNames As String() = features.Keys.ToArray
+        Dim vec As FeatureVector
+
+        For i As Integer = 0 To featureNames.Length - 1
+            offset = i
+            vec = FeatureVector.FromGeneral(featureNames(i), rowcopy.Select(Function(r) r(offset)).ToArray)
+            featureCols.Add(featureNames(i), vec)
+        Next
+
+        Return New DataFrame With {
+            .rownames = rowcopy _
+                .Select(Function(r) r.name) _
+                .ToArray,
+            .features = featureCols
+        }
     End Function
 
     ''' <summary>
