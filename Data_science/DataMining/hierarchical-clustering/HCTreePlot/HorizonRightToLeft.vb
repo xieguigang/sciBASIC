@@ -12,6 +12,7 @@ Public Class HorizonRightToLeft
     Public Property labelFont As Font
     Public Property labelPadding As Single = 5
     Public Property pointSize As Single = 5
+    Public Property log_scale As Boolean = True
 
     Dim labels As New List(Of NamedValue(Of PointF))
 
@@ -24,15 +25,16 @@ Public Class HorizonRightToLeft
 
         If hist.DistanceValue <= 0.1 Then
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks(decimalDigits:=-1)
+            log_scale = False
         Else
-            axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
+            axisTicks = {0, If(log_scale, std.Log(hist.DistanceValue), hist.DistanceValue)}.Range.CreateAxisTicks
         End If
 
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
         Dim scaleX As d3js.scale.LinearScale = d3js.scale _
             .linear() _
             .domain(values:=axisTicks) _
-            .range(integers:={plotRegion.Left, plotRegion.Right})
+            .range(integers:={0, plotRegion.Width})
 
         Call DendrogramPlot(hist, unitWidth, g, plotRegion, 0, scaleX, Nothing, charWidth)
     End Sub
@@ -47,7 +49,7 @@ Public Class HorizonRightToLeft
                                charWidth As Single)
 
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
-        Dim x = plotRegion.Left + scaleX(partition.DistanceValue)
+        Dim x = plotRegion.Left + scaleX(If(log_scale AndAlso partition.DistanceValue > 0, std.Log(partition.DistanceValue), partition.DistanceValue))
         Dim y As Integer
 
         If partition.isLeaf Then
@@ -75,17 +77,17 @@ Public Class HorizonRightToLeft
         End If
 
         If partition.isLeaf Then
-            If showLeafLabels Then
-                ' 绘制class颜色块
-                Dim color As New SolidBrush(GetColor(partition.Name))
-                Dim d As Double = std.Max(charWidth / 2, pointSize)
-                Dim layout As New Rectangle With {
-                    .Location = New Point(x - d, y - unitWidth / 2),
-                    .Size = New Size(labelPadding - d * 1.25, unitWidth)
-                }
+            'If showLeafLabels Then
+            '    ' 绘制class颜色块
+            '    Dim color As New SolidBrush(GetColor(partition.Name))
+            '    Dim d As Double = std.Max(charWidth / 2, pointSize)
+            '    Dim layout As New Rectangle With {
+            '        .Location = New Point(x - d, y - unitWidth / 2),
+            '        .Size = New Size(labelPadding - d * 1.25, unitWidth)
+            '    }
 
-                Call g.FillRectangle(color, layout)
-            End If
+            '    Call g.FillRectangle(color, layout)
+            'End If
         Else
             Dim n As Integer = 0
 
