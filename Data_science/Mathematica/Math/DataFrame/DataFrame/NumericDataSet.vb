@@ -52,6 +52,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -98,6 +99,33 @@ Public Module NumericDataSet
             Case Else
                 Throw New NotImplementedException($"could not cast object of type '{v.type.Name}' to numeric value!")
         End Select
+    End Function
+
+    <Extension>
+    Public Iterator Function PullDataSet(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(df As DataFrame) As IEnumerable(Of T)
+        Dim colnames As String() = df.featureNames
+        Dim fieldGetters As Func(Of Integer, Double)() = colnames _
+            .Select(Function(s) df(s).NumericGetter) _
+            .ToArray
+        Dim nrow As Integer = df.nsamples
+        Dim rownames As String() = df.rownames
+        Dim offset As Integer
+        Dim row As Dictionary(Of String, Double)
+        Dim datasetRow As T
+
+        For i As Integer = 0 To nrow - 1
+            offset = i
+            row = New Dictionary(Of String, Double)
+
+            For j As Integer = 0 To colnames.Length - 1
+                row.Add(colnames(j), fieldGetters(j)(offset))
+            Next
+
+            datasetRow = New T With {.Key = rownames(i)}
+            datasetRow.Properties = row
+
+            Yield datasetRow
+        Next
     End Function
 
     <Extension>

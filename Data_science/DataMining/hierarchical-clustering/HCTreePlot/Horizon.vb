@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel.Encoder
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class Horizon : Inherits DendrogramPanelV2
 
@@ -158,8 +158,8 @@ Public Class Horizon : Inherits DendrogramPanelV2
             Call g.DrawLine(linkColor, New PointF(x, y), New PointF(x, parentPt.Y))
         End If
 
-        If (partition.isLeaf OrElse showAllNodes) AndAlso theme.PointSize > 0 Then
-            Call g.DrawCircle(New PointF(x, y), theme.PointSize, pointColor)
+        If (partition.isLeaf OrElse showAllNodes) AndAlso theme.pointSize > 0 Then
+            Call g.DrawCircle(New PointF(x, y), theme.pointSize, pointColor)
         End If
 
         If showLeafLabels AndAlso (partition.isLeaf OrElse showAllLabels) Then
@@ -172,7 +172,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
         If partition.isLeaf Then
             ' 绘制class颜色块
             Dim color As New SolidBrush(GetColor(partition.Name))
-            Dim d As Double = stdNum.Max(charWidth / 2, theme.PointSize)
+            Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
             Dim layout As New Rectangle With {
                 .Location = New Point(x - unitWidth / 2, y + d),
                 .Size = New Size(unitWidth, labelPadding - d * 1.25)

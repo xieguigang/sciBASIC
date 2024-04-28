@@ -163,6 +163,10 @@ Public Class Cluster : Implements INamedValue
         Return Children.Contains(cluster)
     End Function
 
+    ''' <summary>
+    ''' get the cluster entity plot orders from this function
+    ''' </summary>
+    ''' <returns></returns>
     Public Function OrderLeafs() As String()
         If Children.IsNullOrEmpty Then
             Return New String() {Name}

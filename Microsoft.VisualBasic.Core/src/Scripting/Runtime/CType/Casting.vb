@@ -373,7 +373,7 @@ Namespace Scripting.Runtime
             If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
                 Return New Date
             ElseIf obj.IsPattern("\d+") Then
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
                 ' unix timestamp
                 Return CLng(Val(obj)).FromUnixTimeStamp
 #Else

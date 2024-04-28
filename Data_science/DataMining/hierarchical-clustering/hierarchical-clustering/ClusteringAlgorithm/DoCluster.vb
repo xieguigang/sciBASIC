@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Parallel
 
@@ -70,6 +71,24 @@ Public Module DoCluster
 
     Public ReadOnly Property DefaultClusteringAlgorithm As [Default](Of DefaultClusteringAlgorithm) = New DefaultClusteringAlgorithm
     Public ReadOnly Property DefaultLinkageStrategy As [Default](Of LinkageStrategy) = New AverageLinkageStrategy()
+
+    <Extension>
+    Public Function RunVectorCluster(Of DataSet As {INamedValue, IVector})(objects As IEnumerable(Of DataSet),
+                                                                           Optional algorithm As ClusteringAlgorithm = Nothing,
+                                                                           Optional linkageStrategy As LinkageStrategy = Nothing) As Cluster
+        Dim rawdata = objects.ToArray
+        Dim distances As Double()() = rawdata.CreateDistanceMatrix(Function(r) r.Data)
+        Dim keys As String() = rawdata.Keys
+
+        linkageStrategy = linkageStrategy Or DefaultLinkageStrategy
+
+        ' with (algorithm or new DefaultClusteringAlgorithm as default) if algorithm is nothing
+        With algorithm Or DefaultClusteringAlgorithm  ' (Function(alg) alg Is Nothing)
+            ' using (linkageStrategy or new AverageLinkageStrategy as default) if linkageStrategy is nothing
+            Dim cluster As Cluster = .performClustering(distances, keys, linkageStrategy)
+            Return cluster
+        End With
+    End Function
 
     ''' <summary>
     ''' Run hierarchical clustering
@@ -84,7 +103,12 @@ Public Module DoCluster
                                Optional linkageStrategy As LinkageStrategy = Nothing) As Cluster
 
         Dim rawdata = objects.ToArray
-        Dim distances As Double()() = rawdata.CreateDistanceMatrix
+        Dim features As String() = objects _
+            .Select(Function(a) a.Properties.Keys) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+        Dim distances As Double()() = rawdata.CreateDistanceMatrix(Function(r) r(features))
         Dim keys As String() = rawdata.Keys
 
         linkageStrategy = linkageStrategy Or DefaultLinkageStrategy
@@ -98,16 +122,11 @@ Public Module DoCluster
     End Function
 
     <Extension>
-    Private Function CreateDistanceMatrix(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(objects As DataSet()) As Double()()
+    Private Function CreateDistanceMatrix(Of T)(objects As T(), getVector As Func(Of T, Double())) As Double()()
         Dim rawdata As New List(Of Double())
-        Dim keys As String() = objects _
-            .Select(Function(a) a.Properties.Keys) _
-            .IteratesALL _
-            .Distinct _
-            .ToArray
 
-        For Each r As DataSet In objects
-            Call rawdata.Add(r(keys))
+        For Each r As T In objects
+            Call rawdata.Add(getVector(r))
         Next
 
         Dim par As New EuclideanTask(rawdata.ToArray)
