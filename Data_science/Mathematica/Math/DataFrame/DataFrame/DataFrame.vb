@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
 ''' R language liked dataframe object
@@ -208,10 +209,27 @@ Public Class DataFrame : Implements INumericMatrix
         Dim featureCols As New Dictionary(Of String, FeatureVector)
         Dim featureNames As String() = features.Keys.ToArray
         Dim vec As FeatureVector
+        Dim dataArray As Array
+        Dim firstValue As Object
 
         For i As Integer = 0 To featureNames.Length - 1
             offset = i
-            vec = FeatureVector.FromGeneral(featureNames(i), rowcopy.Select(Function(r) r(offset)).ToArray)
+            dataArray = rowcopy.Select(Function(r) r(offset)).ToArray
+            firstValue = (From xi As Object In dataArray Where Not xi Is Nothing).FirstOrDefault
+
+            If Not firstValue Is Nothing Then
+                dataArray = CreateArray(dataArray, dataArray(0).GetType)
+            Else
+                ' 20240428 all is nothing
+                '
+                ' cast to string array by default
+                ' or the FeatureVector.FromGeneral function will throw error 
+                ' due to the reason of dataarray default is an object array
+                ' object array is not supported 
+                dataArray = New String(dataArray.Length - 1) {}
+            End If
+
+            vec = FeatureVector.FromGeneral(featureNames(i), dataArray)
             featureCols.Add(featureNames(i), vec)
         Next
 
