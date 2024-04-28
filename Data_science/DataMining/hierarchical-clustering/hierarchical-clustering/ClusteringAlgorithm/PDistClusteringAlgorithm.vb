@@ -95,7 +95,6 @@ Public Class PDistClusteringAlgorithm
     End Function
 
     Public Function performFlatClustering(distances As Double()(), clusterNames As String(), linkageStrategy As LinkageStrategy, threshold As Double) As IList(Of Cluster) Implements ClusteringAlgorithm.performFlatClustering
-
         ' Argument checks 
         If distances Is Nothing OrElse distances.Length = 0 Then Throw New System.ArgumentException("Invalid distance matrix")
         If distances(0).Length <> clusterNames.Length * (clusterNames.Length - 1) \ 2 Then Throw New System.ArgumentException("Invalid cluster name array")
@@ -133,7 +132,7 @@ Public Class PDistClusteringAlgorithm
     End Function
 
     Private Function createClusters(clusterNames As String()) As IList(Of Cluster)
-        Dim clusters As IList(Of Cluster) = New List(Of Cluster)
+        Dim clusters As New List(Of Cluster)
 
         For Each clusterName As String In clusterNames
             Dim cluster As New Cluster(clusterName)
