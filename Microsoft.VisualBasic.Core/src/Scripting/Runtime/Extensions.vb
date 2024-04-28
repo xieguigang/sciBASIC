@@ -128,16 +128,24 @@ Namespace Scripting.Runtime
         ''' the given <paramref name="type"/> is the array element type
         ''' </summary>
         ''' <param name="data"></param>
-        ''' <param name="type"></param>
-        ''' <returns></returns>
+        ''' <param name="type">
+        ''' the element type of the generated target array
+        ''' </param>
+        ''' <returns>a generic type array</returns>
         <Extension>
-        Public Function CreateArray(data As IEnumerable, type As Type) As Object
+        Public Function CreateArray(data As IEnumerable, type As Type, Optional safeCast As Boolean = True) As Object
             Dim src = data.Cast(Of Object).ToArray
             Dim array As Array = Array.CreateInstance(type, src.Length)
 
-            For i As Integer = 0 To src.Length - 1
-                array.SetValue(src(i), i)
-            Next
+            If safeCast Then
+                For i As Integer = 0 To src.Length - 1
+                    Call array.SetValue(Conversion.CTypeDynamic(src(i), type), i)
+                Next
+            Else
+                For i As Integer = 0 To src.Length - 1
+                    Call array.SetValue(src(i), i)
+                Next
+            End If
 
             Return array
         End Function
