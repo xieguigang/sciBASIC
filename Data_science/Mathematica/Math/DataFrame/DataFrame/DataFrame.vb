@@ -206,6 +206,12 @@ Public Class DataFrame : Implements INumericMatrix
             End If
         Next
 
+        For i As Integer = 0 To rowcopy.Length - 1
+            If rowcopy(i).value Is Nothing Then
+                Throw New MissingPrimaryKeyException($"missing the row data which its name is: '{rowIndex.Objects(i)}'! This is your rownames of the dataframe: {Me.rownames.JoinBy("; ")}.")
+            End If
+        Next
+
         Dim featureCols As New Dictionary(Of String, FeatureVector)
         Dim featureNames As String() = features.Keys.ToArray
         Dim vec As FeatureVector
