@@ -149,6 +149,62 @@ Public Module NumericDataSet
         Next
     End Function
 
+    <Extension>
+    Public Function Standard(df As DataFrame, Optional byrow As Boolean = False) As DataFrame
+        If byrow Then
+            Return df.StandardByRow
+        Else
+            Return df.StandardByCol
+        End If
+    End Function
+
+    <Extension>
+    Private Function StandardByRow(df As DataFrame) As DataFrame
+        Dim df_z As New List(Of Double())
+        Dim v As Double()
+
+        For Each row As NamedCollection(Of Object) In df.foreachRow
+            v = row.value.CTypeDynamic(type:=GetType(Double))
+            v = (v.AsVector - v.Min) / v.Max
+            df_z.Add(v)
+        Next
+
+        Dim cols As String() = df.featureNames
+        Dim z As New DataFrame With {
+            .features = New Dictionary(Of String, FeatureVector),
+            .rownames = df.rownames.ToArray
+        }
+        Dim offset As Integer
+
+        For i As Integer = 0 To cols.Length - 1
+            offset = i
+            v = df_z.Select(Function(row) row(offset)).ToArray
+            z.add(cols(i), v)
+        Next
+
+        Return z
+    End Function
+
+    <Extension>
+    Private Function StandardByCol(df As DataFrame) As DataFrame
+        Dim df_z As New DataFrame With {
+            .features = New Dictionary(Of String, FeatureVector),
+            .rownames = df.rownames.ToArray
+        }
+
+        For Each name As String In df.featureNames
+            Dim v As Double() = df(name).TryCast(Of Double)
+
+            If v.Length > 1 Then
+                v = (v.AsVector - v.Min) / v.Max
+            End If
+
+            df_z(name) = New FeatureVector(name, v)
+        Next
+
+        Return df_z
+    End Function
+
     ''' <summary>
     ''' z-score scale of the dataframe data, usually used for the heatmap drawing
     ''' </summary>
@@ -200,9 +256,11 @@ Public Module NumericDataSet
             .features = New Dictionary(Of String, FeatureVector),
             .rownames = df.rownames.ToArray
         }
+        Dim offset As Integer
 
         For i As Integer = 0 To cols.Length - 1
-            v = df_z.Select(Function(row) row(i)).ToArray
+            offset = i
+            v = df_z.Select(Function(row) row(offset)).ToArray
             z.add(cols(i), v)
         Next
 
