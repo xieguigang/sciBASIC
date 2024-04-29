@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Parallel
 
 Public Module DoCluster
 
-    Public ReadOnly Property DefaultClusteringAlgorithm As [Default](Of DefaultClusteringAlgorithm) = New DefaultClusteringAlgorithm
+    Public ReadOnly Property DefaultClusteringAlgorithm As [Default](Of ClusteringAlgorithm) = New DefaultClusteringAlgorithm
     Public ReadOnly Property DefaultLinkageStrategy As [Default](Of LinkageStrategy) = New AverageLinkageStrategy()
 
     <Extension>
