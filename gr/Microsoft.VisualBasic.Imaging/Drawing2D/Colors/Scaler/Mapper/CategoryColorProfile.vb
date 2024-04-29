@@ -55,6 +55,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Colors.Scaler
 
@@ -71,6 +72,16 @@ Namespace Drawing2D.Colors.Scaler
         ''' [0...N]
         ''' </summary>
         ReadOnly categoryIndex As Index(Of String)
+
+        ''' <summary>
+        ''' get the size of the category collection
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property size As Integer
+            Get
+                Return categoryIndex.Count
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
@@ -118,6 +129,12 @@ Namespace Drawing2D.Colors.Scaler
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
             Return GetColor(termName:=item.Name)
+        End Function
+
+        Public Iterator Function GetTermColors() As IEnumerable(Of NamedValue(Of Color))
+            For Each termMap As SeqValue(Of String) In categoryIndex
+                Yield New NamedValue(Of Color)(termMap.value, colors(termMap))
+            Next
         End Function
     End Class
 

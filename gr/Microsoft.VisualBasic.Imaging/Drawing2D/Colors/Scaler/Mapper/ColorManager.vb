@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D.Colors.Scaler
 
+    ''' <summary>
+    ''' A color collection
+    ''' </summary>
     Public MustInherit Class ColorProfile
 
         Protected colors As Color()
