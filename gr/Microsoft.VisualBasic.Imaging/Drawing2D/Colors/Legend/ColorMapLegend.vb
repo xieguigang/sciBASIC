@@ -80,6 +80,7 @@ Namespace Drawing2D.Colors
         Public Property legendOffsetLeft As Single = -99999
         Public Property noblank As Boolean = True
         Public Property foreColor As Color = Color.Black
+        Public Property maxWidth As Single = -1
 
         Sub New()
         End Sub
@@ -123,7 +124,8 @@ Namespace Drawing2D.Colors
                 format:=format,
                 legendOffsetLeft:=legendOffsetLeft,
                 noLeftBlank:=noblank,
-                foreColor:=foreColor.ToHtmlColor
+                foreColor:=foreColor.ToHtmlColor,
+                maxWidth:=maxWidth
             )
         End Sub
 
