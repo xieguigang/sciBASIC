@@ -129,6 +129,7 @@ Namespace Drawing2D.Colors
             {"darker", New Apply(AddressOf darker)},
             {"alpha", New Apply(AddressOf alpha)},
             {"reverse", New Apply(AddressOf reverse)},
+            {"rev", New Apply(AddressOf reverse)},
             {"skip", New Apply(AddressOf skip)},
             {"take", New Apply(AddressOf take)}
         }
