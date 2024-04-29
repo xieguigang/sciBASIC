@@ -96,6 +96,10 @@ Namespace Drawing2D.Colors
                 .ToArray
         End Sub
 
+        Sub New(palette As IEnumerable(Of SolidBrush))
+            designer = palette.ToArray
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
