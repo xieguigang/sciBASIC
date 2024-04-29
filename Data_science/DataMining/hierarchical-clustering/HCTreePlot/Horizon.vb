@@ -86,6 +86,8 @@ Public Class Horizon : Inherits DendrogramPanelV2
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
         End If
 
+        Me.labelFont = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+
         Dim scaleY As d3js.scale.LinearScale = d3js.scale _
             .linear() _
             .domain(values:=axisTicks) _
