@@ -78,6 +78,8 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 
@@ -419,51 +421,52 @@ Namespace IO
         ''' </summary>
         ''' <param name="table"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' just check for the table header and give the warning message
+        ''' </remarks>
         Private Shared Function getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
-            Return LinqAPI.MakeList(Of String) _
-                                               _
-                () <= From strValue As String
-                      In table.First
-                      Let s = reviewColumnHeader(strValue)
-                      Select s
+            Dim empty_ordinal As New List(Of Integer)
+            Dim whitespace_padding As New List(Of (String, Integer))
+            Dim colnames As List(Of String) = table.FirstOrDefault.AsList
 
+            If colnames.IsNullOrEmpty Then
+                Call "empty table data!".Warning
+            Else
+                For i As Integer = 0 To colnames.Count - 1
+                    If colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
+                        Call empty_ordinal.Add(i)
+                    Else
+                        Dim lc As Char = colnames(i).First
+                        Dim rc As Char = colnames(i).Last
+
+                        If lc = " "c OrElse lc = ASCII.TAB OrElse rc = " "c OrElse rc = ASCII.TAB Then
+                            Call whitespace_padding.Add((colnames(i), i))
+                        End If
+                    End If
+                Next
+
+                ' 20240430
+                ' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
+                ' 使用Trim函数之后，反而可能会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
+                If empty_ordinal.Any OrElse whitespace_padding.Any Then
+                    Dim warnings As New List(Of String)
+
+                    If empty_ordinal.Any Then
+                        warnings.Add($"there are empty column header in your table data in columns: {empty_ordinal.ToArray.GetJson}.")
+                    End If
+                    If whitespace_padding.Any Then
+                        If warnings.Any Then
+                            warnings.Add("and also ")
+                        End If
+                        warnings.Add($"there are column headers that padding with whitespace in left or right: {whitespace_padding.Select(Function(c) $"[{c.Item2}] '{c.Item1}'").JoinBy(", ")}. these may caused the ``GetOrder()`` function execute failure!")
+                    End If
+
+                    Call warnings.JoinBy("").Warning
+                End If
+            End If
+
+            Return colnames
         End Function
-
-        ''' <summary>
-        ''' ``[CSV::Reflector::Warnning] There are empty column header in your data!``
-        ''' </summary>
-        Const EmptyWarning$ = "[CSV::Reflector::Warnning] There are empty column header in your data!"
-
-        ''' <summary>
-        ''' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
-        ''' 使用Trim函数之后，反而会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
-        ''' </summary>
-        ''' <param name="strValue"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Private Shared Function reviewColumnHeader(strValue As String) As String
-            If String.IsNullOrEmpty(strValue) Then
-                Call EmptyWarning.Warning
-                Return ""
-            End If
-
-            Dim ch As Char = strValue.First
-
-            If ch = " "c OrElse ch = vbTab Then
-                Call xConsole.WriteLine($"^y{String.Format(FailureWarning, strValue)}^!")
-            End If
-            ch = strValue.Last
-            If ch = " "c OrElse ch = vbTab Then
-                Call xConsole.WriteLine($"^y{String.Format(FailureWarning, strValue)}^!")
-            End If
-
-            ' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
-            ' 使用Trim函数之后，反而可能会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
-            Return strValue
-        End Function
-
-        Const FailureWarning As String =
-            "[CSV::Reflector::Warning] The Column header ""{0}"" end with the space character value, this may caused the ``GetOrder()`` function execute failure!"
 
         ''' <summary>
         ''' Creates the data frame object from the csv docs.

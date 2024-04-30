@@ -283,10 +283,11 @@ Namespace Language
         ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
         ''' contains elements copied from the specified collection and has sufficient capacity
         ''' to accommodate the number of elements copied.
-        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
         ''' </summary>
         ''' <param name="source">The collection whose elements are copied to the new list.</param>
-        ''' 
+        ''' <remarks>
+        ''' (这是一个安全的构造函数，假若输入的参数为空值，则只会创建一个空的列表，而不会抛出错误)
+        ''' </remarks>
         <DebuggerStepThrough>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(If(source Is Nothing, {}, source.ToArray))
