@@ -365,17 +365,17 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' Save the binary data into the filesystem.(保存二进制数据包值文件系统)
+    ''' Save the binary data into the filesystem.
     ''' </summary>
     ''' <param name="buf">The binary bytes data of the target package's data.(目标二进制数据)</param>
     ''' <param name="path">The saved file path of the target binary data chunk.(目标二进制数据包所要进行保存的文件名路径)</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(保存二进制数据包值文件系统)</remarks>
     '''
     <ExportAPI("FlushStream")>
     <Extension>
     Public Function FlushStream(buf As IEnumerable(Of Byte), path$) As Boolean
-        Using write As New BinaryWriter(path.Open)
+        Using write As New BinaryWriter(path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
             For Each b As Byte In buf
                 Call write.Write(b)
             Next
