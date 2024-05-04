@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Namespace GMM
@@ -62,7 +63,7 @@ Namespace GMM
     ''' <summary>
     ''' A collection of <see cref="Datum"/>
     ''' </summary>
-    Public Class DatumList : Implements IEnumerable(Of Datum)
+    Public Class DatumList : Implements Enumeration(Of Datum)
 
         Private m_data As Datum()
         Private m_components As Integer
@@ -136,14 +137,10 @@ Namespace GMM
             Return m_data(i)
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Datum) Implements IEnumerable(Of Datum).GetEnumerator
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Datum) Implements Enumeration(Of Datum).GenericEnumerator
             For Each xi As Datum In m_data
                 Yield xi
             Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
