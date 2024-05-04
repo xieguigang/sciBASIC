@@ -1,4 +1,5 @@
-﻿Imports signalData = Microsoft.VisualBasic.Math.SignalProcessing.Signal
+﻿Imports Microsoft.VisualBasic.Math.Distributions
+Imports signalData = Microsoft.VisualBasic.Math.SignalProcessing.Signal
 
 Namespace Source
 
@@ -8,12 +9,19 @@ Namespace Source
         Public Property max_intensity As Double
         Public Property width As Double
 
-        Public Function GetSignalData(left As Double, right As Double, dt As Double) As signalData
+        Public Function GetSignalData(dt As Double) As signalData
             Dim tick As New List(Of (time As Double, value As Double))
+            Dim xi As Double = 0
+            Dim center As Double = width / 2
+
+            Do While xi < width
+                tick.Add((xi + offset, Gaussian.Gaussian(xi, max_intensity, center, width)))
+                xi += dt
+            Loop
 
             Return New signalData(
-                (From xi In tick Select xi.time),
-                (From xi In tick Select xi.value)
+                (From ti In tick Select ti.time),
+                (From ti In tick Select ti.value)
             )
         End Function
 

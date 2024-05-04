@@ -67,10 +67,10 @@ Namespace Distributions
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="x#"></param>
-        ''' <param name="a#">is the height of the curve's peak</param>
-        ''' <param name="b#">is the position of the center of the peak</param>
-        ''' <param name="sigma#">(the standard deviation, sometimes called the Gaussian RMS width) 
+        ''' <param name="x"></param>
+        ''' <param name="a">is the height of the curve's peak</param>
+        ''' <param name="b">is the position of the center of the peak</param>
+        ''' <param name="sigma">(the standard deviation, sometimes called the Gaussian RMS width) 
         ''' controls the width of the "bell"</param>
         ''' <returns></returns>
         Public Function Gaussian(x#, a#, b#, sigma#) As Double
