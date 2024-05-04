@@ -87,9 +87,23 @@ Public Class Signal : Inherits Vector(Of TimeSignal)
         Call MyBase.New(data)
     End Sub
 
+    Sub New(time As IEnumerable(Of Double), value As IEnumerable(Of Double))
+        Call MyBase.New(Zip(time.ToArray, value.ToArray))
+    End Sub
+
     Sub New(data As IEnumerable(Of ITimeSignal))
         Call MyBase.New(From ti As ITimeSignal In data.SafeQuery Select New TimeSignal(ti))
     End Sub
+
+    Private Shared Iterator Function Zip(time As Double(), value As Double()) As IEnumerable(Of TimeSignal)
+        If time.Length <> value.Length Then
+            Throw New InvalidProgramException($"the dimension size of the signal time({time.Length}) mis-matched with the dimension size of signal intensity vector({value.Length})!")
+        End If
+
+        For i As Integer = 0 To time.Length - 1
+            Yield New TimeSignal(time(i), value(i))
+        Next
+    End Function
 
     Public Shared Operator +(a As Signal, b As Signal) As Signal
         Throw New NotImplementedException
