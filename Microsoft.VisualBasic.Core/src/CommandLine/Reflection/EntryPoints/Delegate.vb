@@ -170,7 +170,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' + 如果目标方法是一个Function函数,则退出代码为目标函数返回值
         ''' + 如果目标方法是一个无返回的Sub,则退出代码永远都是零
         ''' </summary>
-        ''' <param name="parameters">数组的长度必须与目标函数的参数的数目一致，否则短于目标函数的参数的数目的数组会使用Nothing来填充缺少的部分，而多于目标函数的参数会被截断</param>
+        ''' <param name="args">数组的长度必须与目标函数的参数的数目一致，否则短于目标函数的参数的数目的数组会使用Nothing来填充缺少的部分，而多于目标函数的参数会被截断</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Execute(args As CommandLine) As Integer

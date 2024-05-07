@@ -104,7 +104,7 @@ Namespace ComponentModel.Collection
         ''' <summary>
         ''' Gets the input object keys that using for the construction of this index.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>an array of value copy of the map keys</returns>
         Public ReadOnly Property Objects As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

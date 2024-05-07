@@ -428,6 +428,11 @@ Namespace ComponentModel.Collection
             Return source.Select(Function(c) c.value).IteratesALL.ToArray
         End Function
 
+        <Extension>
+        Public Sub Add(Of T)(ByRef list As System.Collections.Generic.List(Of NamedCollection(Of T)), name As String, data As IEnumerable(Of T))
+            Call list.Add(New NamedCollection(Of T)(name, data))
+        End Sub
+
         ''' <summary>
         ''' Groups source by <see cref="INamedValue.Key"/>
         ''' </summary>

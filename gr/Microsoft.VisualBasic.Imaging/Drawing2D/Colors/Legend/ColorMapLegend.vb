@@ -80,6 +80,7 @@ Namespace Drawing2D.Colors
         Public Property legendOffsetLeft As Single = -99999
         Public Property noblank As Boolean = True
         Public Property foreColor As Color = Color.Black
+        Public Property maxWidth As Single = -1
 
         Sub New()
         End Sub
@@ -94,6 +95,10 @@ Namespace Drawing2D.Colors
             designer = CubicSpline(palette.Select(Function(c) c.TranslateColor), mapLevels) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
+        End Sub
+
+        Sub New(palette As IEnumerable(Of SolidBrush))
+            designer = palette.ToArray
         End Sub
 
         ''' <summary>
@@ -119,7 +124,8 @@ Namespace Drawing2D.Colors
                 format:=format,
                 legendOffsetLeft:=legendOffsetLeft,
                 noLeftBlank:=noblank,
-                foreColor:=foreColor.ToHtmlColor
+                foreColor:=foreColor.ToHtmlColor,
+                maxWidth:=maxWidth
             )
         End Sub
 

@@ -112,6 +112,12 @@ Public Class DataFrame : Implements INumericMatrix
         End Get
     End Property
 
+    Public ReadOnly Property nfeatures As Integer
+        Get
+            Return features.Count
+        End Get
+    End Property
+
     Default Public Property Item(featureName As String) As FeatureVector
         Get
             Return features(featureName)

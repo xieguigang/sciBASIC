@@ -184,7 +184,8 @@ Namespace Drawing2D.Colors
                                   Optional format$ = "F2",
                                   Optional legendOffsetLeft! = -99999,
                                   Optional noLeftBlank As Boolean = False,
-                                  Optional foreColor As String = "black")
+                                  Optional foreColor As String = "black",
+                                  Optional maxWidth As Single = -1)
 
             Dim titleSize As SizeF = g.MeasureString(title, titleFont)
             Dim legendOffsetTop!

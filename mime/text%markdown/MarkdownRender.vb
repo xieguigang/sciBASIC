@@ -94,7 +94,7 @@ Public Class MarkdownRender
         Call hideImage()
         Call hideUrl()
 
-        ' Call RunAutoLink()
+        Call RunAutoLink()
 
         ' markdown table contains a line of ------ between the thead and tbody
         ' this syntax may confused with the <hr/> syntax. so markdown table rendering
@@ -125,16 +125,25 @@ Public Class MarkdownRender
     Private Sub AutoParagraph()
         ' split on two or more newlines
         Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
+        Dim graf_text As String
+
+        Static check_tags As String() = {"<p>", "<blockquote>", "<div>", "<ul>", "<ol>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>"}
 
         For i As Integer = 0 To grafs.Length - 1
-            grafs(i) = Paragraph(grafs(i))
+            graf_text = grafs(i).Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB)
+
+            If check_tags.Any(Function(prefix) graf_text.StartsWith(prefix)) Then
+                Continue For
+            End If
+
+            grafs(i) = Paragraph(graf_text)
         Next
 
         text = grafs.JoinBy(vbLf & vbLf)
     End Sub
 
     Private Function Paragraph(text As String) As String
-        Dim lines = text.Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB).LineTokens
+        Dim lines As String() = text.LineTokens
 
         If (lines.Length = 0) OrElse lines.All(Function(s) s.Trim.StringEmpty) Then
             Return text
@@ -247,6 +256,7 @@ Public Class MarkdownRender
 
     ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly auto_link As New Regex("[<][^>^\s]{2,}[>]", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly url_link As New Regex("[^""^']" & UrlLinkPattern & "[^""^']", RegexICMul Or RegexOptions.Compiled)
 
     Private Sub RunUrl()
         For Each link In urls.Reverse
@@ -255,7 +265,11 @@ Public Class MarkdownRender
     End Sub
 
     Private Sub RunAutoLink()
-        text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
+        ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
+        text = url_link.Replace(text, Function(m)
+                                          Dim url As String = m.Value.Trim
+                                          Return render.AnchorLink(url, url, url)
+                                      End Function)
     End Sub
 
     Private Function AutoLink(s As String) As String
@@ -357,10 +371,12 @@ Public Class MarkdownRender
         Return Strings.Trim(s).Trim("*"c, "_"c)
     End Function
 
-    ReadOnly italic As New Regex("([*].+[*])|([_].+[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly italic As New Regex("([*].*?[*])|([_].*?[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunItalic()
-        text = italic.Replace(text, Function(m) render.Italic(TrimBold(m.Value)))
+        text = italic.Replace(text, Function(m)
+                                        Return render.Italic(TrimBold(m.Value))
+                                    End Function)
     End Sub
 
     ReadOnly quote As New Regex("(\n[>][^\n]*)+", RegexOptions.Compiled Or RegexOptions.Singleline)

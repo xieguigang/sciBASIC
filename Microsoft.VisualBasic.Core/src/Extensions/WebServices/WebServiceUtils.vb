@@ -108,7 +108,14 @@ Public Module WebServiceUtils
     Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
     Public Const UnixPathPattern$ = "([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+    ''' <summary>
+    ''' regex pattern for http url
+    ''' </summary>
     Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+" & UnixPathPattern
+    ''' <summary>
+    ''' regex pattern for any kind of url protocol
+    ''' </summary>
+    Public Const UrlLinkPattern$ = "[a-z\-_0-9]+://([\w+?\.\w+])+" & UnixPathPattern
 
     ''' <summary>
     ''' Determine that is this uri string is a network location?

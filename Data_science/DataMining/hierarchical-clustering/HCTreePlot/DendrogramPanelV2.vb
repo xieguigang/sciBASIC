@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports std = System.Math
 
 ''' <summary>
-''' 绘制层次聚类图
+''' 绘制层次聚类图(竖直方向)
 ''' </summary>
 Public Class DendrogramPanelV2 : Inherits DendrogramPanel
 
