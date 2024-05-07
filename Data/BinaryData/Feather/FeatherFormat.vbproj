@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <Version>0.6.0</Version>
+    <Authors>Kevin Montrose</Authors>
+    <Company>Kevin Montrose</Company>
+    <Product>FeatherDotNet</Product>
+    <Description>An implementation of the Feather format for .NET.</Description>
+    <PackageReleaseNotes>Update to target netcoreapp2.0</PackageReleaseNotes>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>FeatherDotNet.snk</AssemblyOriginatorKeyFile>
+    <Platforms>AnyCPU;x64</Platforms>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+    <RootNamespace />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\FeatherDotNet.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.0|x64'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\FeatherDotNet.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+</Project>
