@@ -82,5 +82,9 @@ Namespace Math.Information
                 End If
             End With
         End Function
+
+        Public Function SingleToInt32Bits(value As Single) As Integer
+            Return BitConverter.ToInt32(BitConverter.GetBytes(value), Scan0)
+        End Function
     End Module
 End Namespace
