@@ -576,7 +576,7 @@ inferFromUntyped:
                 End If
 
                 ' multiple enums, so let's merge them all together but maintain the category nature of it
-                Dim synthEnum As System.Type = Lookup(seenTypes.[Select](Function(t) If(Nullable.GetUnderlyingType(t), t)))
+                Dim synthEnum As System.Type = SyntheticEnum.Lookup(seenTypes.[Select](Function(t) If(Nullable.GetUnderlyingType(t), t)))
 
                 If mustBeNullable Then
                     synthEnum = AssureNullable(synthEnum)
