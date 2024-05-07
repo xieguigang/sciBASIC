@@ -13,7 +13,8 @@
     <AssemblyOriginatorKeyFile>FeatherDotNet.snk</AssemblyOriginatorKeyFile>
     <Platforms>AnyCPU;x64</Platforms>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
-    <RootNamespace />
+    <RootNamespace>Microsoft.VisualBasic.DataStorage.FeatherFormat</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.DataStorage.FeatherFormat</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netcoreapp2.0|AnyCPU'">
     <DocumentationFile>bin\Release\netcoreapp2.0\FeatherDotNet.xml</DocumentationFile>
@@ -22,6 +23,7 @@
     <DocumentationFile>bin\Release\netcoreapp2.0\FeatherDotNet.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="E:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
   </ItemGroup>
 </Project>
