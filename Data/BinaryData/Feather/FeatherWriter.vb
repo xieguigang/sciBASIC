@@ -440,7 +440,7 @@ Public NotInheritable Class FeatherWriter
         End If
     End Sub
 
-    Private Shared Sub DetermineTypeLengthAndNullCount(data As IEnumerable, <Out> ByRef type As Type, <Out> ByRef length As Long, <Out> ByRef numNulls As Long)
+    Private Shared Sub DetermineTypeLengthAndNullCount(data As IEnumerable, <Out> ByRef type As System.Type, <Out> ByRef length As Long, <Out> ByRef numNulls As Long)
         Dim realType = data.GetType()
         If realType.IsArray Then
             type = realType.GetElementType()
@@ -476,7 +476,7 @@ Public NotInheritable Class FeatherWriter
                 GoTo inferFromUntyped
             End If
 
-            length = GetLength(type, data)
+            length = type.GetLength(data)
 
             If IsNonNullable(type) Then
                 numNulls = 0
@@ -519,42 +519,44 @@ inferFromUntyped:
         Dim hasTimeSpan = False
         Dim hasEnums = False
 
-        Dim mostToLeastPermissive = seenTypes.OrderBy(Function(rawType)
-                                                          Dim t = If(Nullable.GetUnderlyingType(rawType), rawType)
+        Dim mostToLeastPermissive = seenTypes _
+            .OrderBy(Function(rawType)
+                         Dim t = If(Nullable.GetUnderlyingType(rawType), rawType)
 
-                                                          If t Is GetType(String) Then Return 0
-                                                          If t Is GetType(Double) Then Return 1
-                                                          If t Is GetType(Single) Then Return 2
-                                                          If t Is GetType(Long) Then Return 3
-                                                          If t Is GetType(ULong) Then Return 4
-                                                          If t Is GetType(Integer) Then Return 5
-                                                          If t Is GetType(UInteger) Then Return 6
-                                                          If t Is GetType(Short) Then Return 7
-                                                          If t Is GetType(UShort) Then Return 8
-                                                          If t Is GetType(Byte) Then Return 9
-                                                          If t Is GetType(SByte) Then Return 10
+                         If t Is GetType(String) Then Return 0
+                         If t Is GetType(Double) Then Return 1
+                         If t Is GetType(Single) Then Return 2
+                         If t Is GetType(Long) Then Return 3
+                         If t Is GetType(ULong) Then Return 4
+                         If t Is GetType(Integer) Then Return 5
+                         If t Is GetType(UInteger) Then Return 6
+                         If t Is GetType(Short) Then Return 7
+                         If t Is GetType(UShort) Then Return 8
+                         If t Is GetType(Byte) Then Return 9
+                         If t Is GetType(SByte) Then Return 10
 
-                                                          If t Is GetType(Date) Then
-                                                              hasDateTime = True
-                                                              Return 11
-                                                          End If
-                                                          If t Is GetType(DateTimeOffset) Then
-                                                              hasDateTime = True
-                                                              Return 11
-                                                          End If
+                         If t Is GetType(Date) Then
+                             hasDateTime = True
+                             Return 11
+                         End If
+                         If t Is GetType(DateTimeOffset) Then
+                             hasDateTime = True
+                             Return 11
+                         End If
 
-                                                          If t Is GetType(TimeSpan) Then
-                                                              hasTimeSpan = True
-                                                              Return 12
-                                                          End If
+                         If t Is GetType(TimeSpan) Then
+                             hasTimeSpan = True
+                             Return 12
+                         End If
 
-                                                          If t.IsEnum Then
-                                                              hasEnums = True
-                                                              Return 13
-                                                          End If
+                         If t.IsEnum Then
+                             hasEnums = True
+                             Return 13
+                         End If
 
-                                                          Throw New InvalidOperationException($"Unexpected type found when trying to determing covering type for untyped column {rawType.Name}")
-                                                      End Function).ToList()
+                         Throw New InvalidOperationException($"Unexpected type found when trying to determing covering type for untyped column {rawType.Name}")
+                     End Function) _
+            .ToList()
 
         If mostToLeastPermissive.Count = 0 Then Return Nothing
 
@@ -574,7 +576,7 @@ inferFromUntyped:
                 End If
 
                 ' multiple enums, so let's merge them all together but maintain the category nature of it
-                Dim synthEnum = Lookup(seenTypes.[Select](Function(t) If(Nullable.GetUnderlyingType(t), t)))
+                Dim synthEnum As System.Type = Lookup(seenTypes.[Select](Function(t) If(Nullable.GetUnderlyingType(t), t)))
 
                 If mustBeNullable Then
                     synthEnum = AssureNullable(synthEnum)
@@ -777,7 +779,7 @@ inferFromUntyped:
         Dim realInterfaces = realType.GetInterfaces()
         Dim iCollection = realInterfaces.FirstOrDefault(Function(i) i.IsGenericType AndAlso i.GetGenericTypeDefinition() Is GetType(ICollection(Of)))
         If iCollection IsNot Nothing Then
-            Return GetLength(iCollection.GetGenericArguments()(0), data)
+            Return iCollection.GetGenericArguments()(0).GetLength(data)
         End If
 
         ' handling the System.Collection types
@@ -834,7 +836,7 @@ inferFromUntyped:
         Dim iCollection = realInterfaces.FirstOrDefault(Function(i) i.IsGenericType AndAlso i.GetGenericTypeDefinition() Is GetType(ICollection(Of)))
         If iCollection IsNot Nothing Then
             Dim elemType = iCollection.GetGenericArguments()(0)
-            length = GetLength(elemType, data)
+            length = elemType.GetLength(data)
 
             If IsNonNullable(elemType) Then
                 nullCount = 0

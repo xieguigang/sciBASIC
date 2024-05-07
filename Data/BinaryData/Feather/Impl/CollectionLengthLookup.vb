@@ -1,9 +1,13 @@
 ﻿Imports System.Reflection.Emit
+Imports System.Runtime.CompilerServices
 
 Namespace Impl
-    Friend Module CollectionLengthLookup
-        Private ReadOnly LengthGetterLookup As Dictionary(Of Type, Func(Of Object, Integer)) = New Dictionary(Of Type, Func(Of Object, Integer))()
 
+    Friend Module CollectionLengthLookup
+
+        ReadOnly LengthGetterLookup As New Dictionary(Of Type, Func(Of Object, Integer))()
+
+        <Extension>
         Public Function GetLength(elementType As Type, collection As Object) As Integer
             Dim getter As Func(Of Object, Integer)
 

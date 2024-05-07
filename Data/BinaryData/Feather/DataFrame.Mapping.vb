@@ -6,6 +6,7 @@ Imports System.Reflection.Emit
 Imports System.Text
 Imports Impl
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 
 Partial Public Class DataFrame
