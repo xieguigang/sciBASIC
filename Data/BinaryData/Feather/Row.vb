@@ -8,7 +8,7 @@ Public Class RowValueEnumerator
     Implements IEnumerator(Of Value)
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Private _CurrentProp As Value
     Friend Parent As DataFrame
@@ -38,14 +38,14 @@ Public Class RowValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -58,7 +58,7 @@ Public Class RowValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1
@@ -96,7 +96,7 @@ Public Class Row
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -132,7 +132,7 @@ Public Class Row
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -175,7 +175,7 @@ Public Class Row
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As RowValueEnumerator
         Return New RowValueEnumerator(Parent, TranslatedRowIndex)

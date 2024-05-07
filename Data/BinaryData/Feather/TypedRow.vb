@@ -11,7 +11,7 @@ Public Class TypedRowValueEnumerator
     Private Index As Long
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public ReadOnly Property CurrentProp As Value Implements IEnumerator(Of Value).Current
         Get
@@ -32,13 +32,13 @@ Public Class TypedRowValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -50,7 +50,7 @@ Public Class TypedRowValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Inner.Reset()
