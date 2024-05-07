@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Enum DateTimePrecisionType
         NONE = 0
 

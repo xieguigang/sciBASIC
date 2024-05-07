@@ -2,7 +2,7 @@
 
 Imports FlatBuffers
 
-Namespace feather.fbs
+Namespace Impl.Metadata
 
     Friend Class DateMetadata
         Implements IFlatbufferObject

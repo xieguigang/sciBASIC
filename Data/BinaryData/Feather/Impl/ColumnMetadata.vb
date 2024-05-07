@@ -1,7 +1,7 @@
 ﻿Imports System
 Imports System.Runtime.InteropServices
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Class ColumnMetadata
         Public Property Name As String
 

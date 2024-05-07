@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Imports System.Reflection
 Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module DataWidener
         Private ReadOnly WidenerLookup As Dictionary(Of Type, Func(Of IEnumerable, IEnumerable)) = New Dictionary(Of Type, Func(Of IEnumerable, IEnumerable)) From {
 {GetType(String), Function(d) WidenToString(d)},

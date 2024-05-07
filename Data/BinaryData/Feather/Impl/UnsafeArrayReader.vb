@@ -1,7 +1,7 @@
 ﻿Imports System.IO.MemoryMappedFiles
 Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend NotInheritable Class UnsafeArrayReader(Of T)
         Private Shared ReadOnly [Delegate] As Action(Of MemoryMappedViewAccessor, Long, T(), Integer, Integer)
 

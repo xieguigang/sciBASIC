@@ -4,7 +4,7 @@ Imports System.Linq
 Imports System.Reflection
 Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module SyntheticEnum
         Friend Class Key
             Implements IEquatable(Of Key)

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Interface IDataFrame
         ReadOnly Property RowCount As Long
         ReadOnly Property ColumnCount As Long

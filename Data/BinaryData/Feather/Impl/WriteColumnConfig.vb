@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Class WriteColumnConfig
         Public Property Name As String
         Public Property DotNetType As Type

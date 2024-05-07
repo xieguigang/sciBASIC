@@ -4,7 +4,7 @@ Imports System.IO
 Imports System.Linq
 Imports System.Threading
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Class BufferedStream
         Inherits Stream
         Public Overrides ReadOnly Property CanRead As Boolean

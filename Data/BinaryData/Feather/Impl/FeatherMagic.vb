@@ -1,6 +1,6 @@
 ﻿Imports System
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module FeatherMagic
         Public Const ARROW_ALIGNMENT As Integer = 8  ' 64-bits per https://arrow.apache.org/docs/memory_layout.html
         Public Const FEATHER_VERSION As Integer = 2

@@ -2,7 +2,7 @@
 Imports System.Collections.Generic
 Imports System.Runtime.InteropServices
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Interface IColumn(Of T)
         Inherits IList(Of T) ' implement so Linq's ElementAt is as fast as you'd expect
         ReadOnly Property Index As Long

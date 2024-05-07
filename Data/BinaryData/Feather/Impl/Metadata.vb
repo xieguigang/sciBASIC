@@ -1,4 +1,4 @@
-﻿Namespace FeatherDotNet.Impl
+﻿Namespace Impl
     Friend Class Metadata
         Public Property NumRows As Long
         Public Property Columns As ColumnSpec()

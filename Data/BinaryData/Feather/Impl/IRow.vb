@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Interface IRow
         ReadOnly Property Index As Long
         ReadOnly Property Length As Long

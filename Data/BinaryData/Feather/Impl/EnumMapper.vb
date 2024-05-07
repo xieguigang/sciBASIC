@@ -1,7 +1,8 @@
 ﻿Imports System
 Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
+
     Friend NotInheritable Class EnumMapper(Of T)
         Private Shared ReadOnly [Delegate] As Func(Of Integer, T)
         Shared Sub New()

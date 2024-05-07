@@ -4,7 +4,7 @@
 Imports FlatBuffers
 Imports System
 
-Namespace feather.fbs
+Namespace Impl.Metadata
 
     Friend Class Column
         Implements IFlatbufferObject

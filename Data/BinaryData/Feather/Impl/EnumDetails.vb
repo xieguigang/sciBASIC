@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module EnumDetails
         Private ReadOnly LevelsLookup As Dictionary(Of Type, String()) = New Dictionary(Of Type, String())()
         Private ReadOnly LevelIndexLookupLookup As Dictionary(Of Type, Dictionary(Of Long, Integer)) = New Dictionary(Of Type, Dictionary(Of Long, Integer))()

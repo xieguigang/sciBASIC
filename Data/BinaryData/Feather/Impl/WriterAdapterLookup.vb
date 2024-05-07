@@ -4,7 +4,7 @@ Imports System.Linq
 Imports System.Reflection
 Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module WriterAdapterLookup
         Friend Class AdapterKey
             Implements IEquatable(Of AdapterKey)

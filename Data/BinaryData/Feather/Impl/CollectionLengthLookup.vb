@@ -1,6 +1,6 @@
 ﻿Imports System.Reflection.Emit
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend Module CollectionLengthLookup
         Private ReadOnly LengthGetterLookup As Dictionary(Of Type, Func(Of Object, Integer)) = New Dictionary(Of Type, Func(Of Object, Integer))()
 

@@ -3,7 +3,7 @@ Imports System.Linq
 Imports System.Reflection.Emit
 Imports System.Reflection
 
-Namespace FeatherDotNet.Impl
+Namespace Impl
     Friend NotInheritable Class ValueCaster(Of T)
         Private Shared ReadOnly [Delegate] As Func(Of Value, CategoryEnumMapType, T)
 
