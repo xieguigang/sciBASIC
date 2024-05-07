@@ -1,8 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Linq
+﻿Imports System.IO
 Imports System.Threading
+Imports std = System.Math
 
 Namespace Impl
     Friend Class BufferedStream
@@ -248,7 +246,7 @@ Namespace Impl
                 End If
             Next
 
-            placeIn = New Byte(Math.Max(count, INITIAL_BUFFER_SIZE) - 1) {}
+            placeIn = New Byte(std.Max(count, INITIAL_BUFFER_SIZE) - 1) {}
 
 copy:
             Array.Copy(data, offset, placeIn, 0, count)

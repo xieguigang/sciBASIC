@@ -2,6 +2,7 @@
 Imports System.IO.MemoryMappedFiles
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.FlatBuffers
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl.FbsMetadata
 
@@ -237,7 +238,7 @@ Public Module FeatherReader
                         End If
 
                     Case TypeMetadata.TimestampMetadata
-                        If arrayDetails.Type <> feather.fbs.Type.INT64 Then
+                        If arrayDetails.Type <> FbsMetadata.Type.INT64 Then
                             metadata = Nothing
                             [error] = $"Column {name} has Timestamp metadata, but isn't backed by an Int64 array"
                             Return False
@@ -251,10 +252,10 @@ Public Module FeatherReader
                         ' note: this type is spec'd (https://github.com/wesm/feather/blob/master/cpp/src/feather/metadata.fbs#L25), 
                         '  but it looks like R always writes it as an int64?
                         ' Possibly a bug.
-                        effectiveType = feather.fbs.Type.TIMESTAMP
+                        effectiveType = FbsMetadata.Type.TIMESTAMP
 
                     Case TypeMetadata.TimeMetadata
-                        If arrayDetails.Type <> feather.fbs.Type.INT64 Then
+                        If arrayDetails.Type <> FbsMetadata.Type.INT64 Then
                             metadata = Nothing
                             [error] = $"Column {name} has Time metadata, but isn't backed by an Int64 array"
                             Return False
@@ -268,10 +269,10 @@ Public Module FeatherReader
                         ' note: this type is spec'd (https://github.com/wesm/feather/blob/master/cpp/src/feather/metadata.fbs#L27), 
                         '  but it looks like R always writes it as an int64?
                         ' Possibly a bug.
-                        effectiveType = feather.fbs.Type.TIME
+                        effectiveType = FbsMetadata.Type.TIME
 
                     Case TypeMetadata.DateMetadata
-                        If arrayDetails.Type <> feather.fbs.Type.INT32 Then
+                        If arrayDetails.Type <> FbsMetadata.Type.INT32 Then
                             metadata = Nothing
                             [error] = $"Column {name} has Time metadata, but isn't backed by an Int32 array"
                             Return False
@@ -280,7 +281,7 @@ Public Module FeatherReader
                         ' note: this type is spec'd (https://github.com/wesm/feather/blob/master/cpp/src/feather/metadata.fbs#L26), 
                         '  but it looks like R always writes it as an int32?
                         ' Possibly a bug.
-                        effectiveType = feather.fbs.Type.DATE
+                        effectiveType = FbsMetadata.Type.DATE
 
                     Case TypeMetadata.NONE
                 End Select
@@ -303,54 +304,54 @@ Public Module FeatherReader
         End Using
     End Function
 
-    Private Function TryGetType(effectiveType As feather.fbs.Type, ByRef array As PrimitiveArray, precision As DateTimePrecisionType, <Out> ByRef type As ColumnType, <Out> ByRef isNullable As Boolean, <Out> ByRef errorMessage As String) As Boolean
+    Private Function TryGetType(effectiveType As FbsMetadata.Type, ByRef array As PrimitiveArray, precision As DateTimePrecisionType, <Out> ByRef type As ColumnType, <Out> ByRef isNullable As Boolean, <Out> ByRef errorMessage As String) As Boolean
         isNullable = array.NullCount <> 0
 
         If Not isNullable Then
             Select Case effectiveType
-                Case feather.fbs.Type.BINARY
+                Case FbsMetadata.Type.BINARY
                     type = ColumnType.Binary
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.BOOL
+                Case FbsMetadata.Type.BOOL
                     type = ColumnType.Bool
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.CATEGORY
+                Case FbsMetadata.Type.CATEGORY
                     type = ColumnType.Category
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.DATE
+                Case FbsMetadata.Type.DATE
                     type = ColumnType.Date
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.DOUBLE
+                Case FbsMetadata.Type.DOUBLE
                     type = ColumnType.Double
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.FLOAT
+                Case FbsMetadata.Type.FLOAT
                     type = ColumnType.Float
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT16
+                Case FbsMetadata.Type.INT16
                     type = ColumnType.Int16
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT32
+                Case FbsMetadata.Type.INT32
                     type = ColumnType.Int32
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT64
+                Case FbsMetadata.Type.INT64
                     type = ColumnType.Int64
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT8
+                Case FbsMetadata.Type.INT8
                     type = ColumnType.Int8
                     errorMessage = Nothing
                     Return True
 
 
-                Case feather.fbs.Type.TIMESTAMP
+                Case FbsMetadata.Type.TIMESTAMP
                     Select Case precision
                         Case DateTimePrecisionType.Microsecond
                             type = ColumnType.Timestamp_Microsecond
@@ -374,7 +375,7 @@ Public Module FeatherReader
                             Return False
                     End Select
 
-                Case feather.fbs.Type.TIME
+                Case FbsMetadata.Type.TIME
                     Select Case precision
                         Case DateTimePrecisionType.Microsecond
                             type = ColumnType.Time_Microsecond
@@ -398,24 +399,24 @@ Public Module FeatherReader
                             Return False
                     End Select
 
-                Case feather.fbs.Type.UINT16
+                Case FbsMetadata.Type.UINT16
                     type = ColumnType.Uint16
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT32
+                Case FbsMetadata.Type.UINT32
                     type = ColumnType.Uint32
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT64
+                Case FbsMetadata.Type.UINT64
                     type = ColumnType.Uint64
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT8
+                Case FbsMetadata.Type.UINT8
                     type = ColumnType.Uint8
                     errorMessage = Nothing
                     Return True
 
-                Case feather.fbs.Type.UTF8
+                Case FbsMetadata.Type.UTF8
                     type = ColumnType.String
                     errorMessage = Nothing
                     Return True
@@ -426,48 +427,48 @@ Public Module FeatherReader
             End Select
         Else
             Select Case effectiveType
-                Case feather.fbs.Type.BINARY
+                Case FbsMetadata.Type.BINARY
                     type = ColumnType.NullableBinary
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.BOOL
+                Case FbsMetadata.Type.BOOL
                     type = ColumnType.NullableBool
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.CATEGORY
+                Case FbsMetadata.Type.CATEGORY
                     type = ColumnType.NullableCategory
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.DATE
+                Case FbsMetadata.Type.DATE
                     type = ColumnType.NullableDate
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.DOUBLE
+                Case FbsMetadata.Type.DOUBLE
                     type = ColumnType.NullableDouble
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.FLOAT
+                Case FbsMetadata.Type.FLOAT
                     type = ColumnType.NullableFloat
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT16
+                Case FbsMetadata.Type.INT16
                     type = ColumnType.NullableInt16
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT32
+                Case FbsMetadata.Type.INT32
                     type = ColumnType.NullableInt32
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT64
+                Case FbsMetadata.Type.INT64
                     type = ColumnType.NullableInt64
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.INT8
+                Case FbsMetadata.Type.INT8
                     type = ColumnType.NullableInt8
                     errorMessage = Nothing
                     Return True
 
-                Case feather.fbs.Type.TIMESTAMP
+                Case FbsMetadata.Type.TIMESTAMP
                     Select Case precision
                         Case DateTimePrecisionType.Microsecond
                             type = ColumnType.NullableTimestamp_Microsecond
@@ -491,7 +492,7 @@ Public Module FeatherReader
                             Return False
                     End Select
 
-                Case feather.fbs.Type.TIME
+                Case FbsMetadata.Type.TIME
                     Select Case precision
                         Case DateTimePrecisionType.Microsecond
                             type = ColumnType.NullableTime_Microsecond
@@ -515,24 +516,24 @@ Public Module FeatherReader
                             Return False
                     End Select
 
-                Case feather.fbs.Type.UINT16
+                Case FbsMetadata.Type.UINT16
                     type = ColumnType.NullableUint16
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT32
+                Case FbsMetadata.Type.UINT32
                     type = ColumnType.NullableUint32
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT64
+                Case FbsMetadata.Type.UINT64
                     type = ColumnType.NullableUint64
                     errorMessage = Nothing
                     Return True
-                Case feather.fbs.Type.UINT8
+                Case FbsMetadata.Type.UINT8
                     type = ColumnType.NullableUint8
                     errorMessage = Nothing
                     Return True
 
-                Case feather.fbs.Type.UTF8
+                Case FbsMetadata.Type.UTF8
                     type = ColumnType.NullableString
                     errorMessage = Nothing
                     Return True
@@ -544,7 +545,7 @@ Public Module FeatherReader
         End If
     End Function
 
-    Private Function TryReadCategoryLevels(view As MemoryMappedViewAccessor, ByRef column As feather.fbs.Column, <Out> ByRef categoryLevels As String(), <Out> ByRef errorMessage As String) As Boolean
+    Private Function TryReadCategoryLevels(view As MemoryMappedViewAccessor, ByRef column As FbsMetadata.Column, <Out> ByRef categoryLevels As String(), <Out> ByRef errorMessage As String) As Boolean
         Dim metadata = column.Metadata(Of CategoryMetadata)()
         If metadata Is Nothing Then
             categoryLevels = Nothing
@@ -560,7 +561,7 @@ Public Module FeatherReader
         End If
 
         Dim levels = metadataValue.Levels
-        If levels.Type <> feather.fbs.Type.UTF8 Then
+        If levels.Type <> FbsMetadata.Type.UTF8 Then
             categoryLevels = Nothing
             errorMessage = $"Found non-string ({levels.Type}) for column {column.Name}"
             Return False
@@ -583,7 +584,7 @@ Public Module FeatherReader
         Return True
     End Function
 
-    Private Function TryReadTimestampPrecision(ByRef column As feather.fbs.Column, <Out> ByRef precision As DateTimePrecisionType, <Out> ByRef errorMessage As String) As Boolean
+    Private Function TryReadTimestampPrecision(ByRef column As FbsMetadata.Column, <Out> ByRef precision As DateTimePrecisionType, <Out> ByRef errorMessage As String) As Boolean
         Dim metadata = column.Metadata(Of TimestampMetadata)()
         If metadata Is Nothing Then
             precision = Nothing
@@ -630,7 +631,7 @@ Public Module FeatherReader
         Return True
     End Function
 
-    Private Function TryReadTimePrecision(ByRef column As feather.fbs.Column, <Out> ByRef precision As DateTimePrecisionType, <Out> ByRef errorMessage As String) As Boolean
+    Private Function TryReadTimePrecision(ByRef column As FbsMetadata.Column, <Out> ByRef precision As DateTimePrecisionType, <Out> ByRef errorMessage As String) As Boolean
         Dim metadata = column.Metadata(Of TimeMetadata)()
         If metadata Is Nothing Then
             precision = Nothing

@@ -1,8 +1,7 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports System
-Imports System.Collections.Generic
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl.FbsMetadata
 
 Namespace Impl
     Friend Enum DateTimePrecisionType
@@ -94,67 +93,67 @@ Namespace Impl
 
     Friend Module ColumnTypeExtensionMethods
         <Extension()>
-        Public Function MapToFeatherEnum(onDiskType As ColumnType) As feather.fbs.Type
+        Public Function MapToFeatherEnum(onDiskType As ColumnType) As FbsMetadata.Type
             Select Case onDiskType
                 Case ColumnType.Binary, ColumnType.NullableBinary
-                    Return feather.fbs.Type.BINARY
+                    Return FbsMetadata.Type.BINARY
 
                 Case ColumnType.Bool, ColumnType.NullableBool
-                    Return feather.fbs.Type.BOOL
+                    Return FbsMetadata.Type.BOOL
 
                 Case ColumnType.Category, ColumnType.NullableCategory
-                    'return feather.fbs.Type.CATEGORY;
+                    'return FbsMetadata.Type.CATEGORY;
                     ' note: even though there is a CATEGORY type, R produces Int32 backed
                     '   columns.  Possibly a bug?
-                    Return feather.fbs.Type.INT32
+                    Return FbsMetadata.Type.INT32
 
                 Case ColumnType.Date, ColumnType.NullableDate
-                    Return feather.fbs.Type.DATE
+                    Return FbsMetadata.Type.DATE
 
                 Case ColumnType.Double, ColumnType.NullableDouble
-                    Return feather.fbs.Type.DOUBLE
+                    Return FbsMetadata.Type.DOUBLE
 
                 Case ColumnType.Float, ColumnType.NullableFloat
-                    Return feather.fbs.Type.FLOAT
+                    Return FbsMetadata.Type.FLOAT
 
                 Case ColumnType.Int16, ColumnType.NullableInt16
-                    Return feather.fbs.Type.INT16
+                    Return FbsMetadata.Type.INT16
 
                 Case ColumnType.Int32, ColumnType.NullableInt32
-                    Return feather.fbs.Type.INT32
+                    Return FbsMetadata.Type.INT32
 
                 Case ColumnType.Int64, ColumnType.NullableInt64
-                    Return feather.fbs.Type.INT64
+                    Return FbsMetadata.Type.INT64
 
                 Case ColumnType.Int8, ColumnType.NullableInt8
-                    Return feather.fbs.Type.INT8
+                    Return FbsMetadata.Type.INT8
 
                 Case ColumnType.Timestamp_Millisecond, ColumnType.Timestamp_Microsecond, ColumnType.Timestamp_Second, ColumnType.Timestamp_Nanosecond, ColumnType.NullableTimestamp_Millisecond, ColumnType.NullableTimestamp_Microsecond, ColumnType.NullableTimestamp_Second, ColumnType.NullableTimestamp_Nanosecond
-                    'return feather.fbs.Type.TIMESTAMP;
+                    'return FbsMetadata.Type.TIMESTAMP;
                     ' note: even though there is a TIMESTAMP type, the actual primitive's the R library produces
                     '  is an int64
-                    Return feather.fbs.Type.INT64
+                    Return FbsMetadata.Type.INT64
 
                 Case ColumnType.Time_Microsecond, ColumnType.Time_Millisecond, ColumnType.Time_Nanosecond, ColumnType.Time_Second, ColumnType.NullableTime_Microsecond, ColumnType.NullableTime_Millisecond, ColumnType.NullableTime_Nanosecond, ColumnType.NullableTime_Second
-                    'return feather.fbs.Type.TIME;
+                    'return FbsMetadata.Type.TIME;
                     ' note: even though there is a TIME type, the actual primitive's the R library produces
                     '  is an int64
-                    Return feather.fbs.Type.INT64
+                    Return FbsMetadata.Type.INT64
 
                 Case ColumnType.Uint16, ColumnType.NullableUint16
-                    Return feather.fbs.Type.UINT16
+                    Return FbsMetadata.Type.UINT16
 
                 Case ColumnType.Uint32, ColumnType.NullableUint32
-                    Return feather.fbs.Type.UINT32
+                    Return FbsMetadata.Type.UINT32
 
                 Case ColumnType.Uint64, ColumnType.NullableUint64
-                    Return feather.fbs.Type.UINT64
+                    Return FbsMetadata.Type.UINT64
 
                 Case ColumnType.Uint8, ColumnType.NullableUint8
-                    Return feather.fbs.Type.UINT8
+                    Return FbsMetadata.Type.UINT8
 
                 Case ColumnType.String, ColumnType.NullableString
-                    Return feather.fbs.Type.UTF8
+                    Return FbsMetadata.Type.UTF8
                 Case Else
 
                     Throw New Exception($"Unexpected ColumnType {onDiskType}")
@@ -221,7 +220,7 @@ Namespace Impl
         End Function
 
         <Extension()>
-        Public Function CanMapTo(fromType As ColumnType, toType As Type, categoryMetadata As String()) As Boolean
+        Public Function CanMapTo(fromType As ColumnType, toType As System.Type, categoryMetadata As String()) As Boolean
             If toType Is GetType(Value) Then Return True
 
             Dim hasCategoryMetadata = categoryMetadata IsNot Nothing
@@ -353,7 +352,7 @@ Namespace Impl
         End Function
 
         <Extension()>
-        Public Function GetMapType(type As ColumnType) As Type
+        Public Function GetMapType(type As ColumnType) As System.Type
             Select Case type
                 Case ColumnType.NullableBinary, ColumnType.Binary
                     Return GetType(Byte())
@@ -439,7 +438,7 @@ Namespace Impl
             End Select
         End Function
 
-        Friend Function TryCategoriesMapToEnum(enumType As Type, categories As String(), <Out> ByRef mapType As CategoryEnumMapType) As Boolean
+        Friend Function TryCategoriesMapToEnum(enumType As System.Type, categories As String(), <Out> ByRef mapType As CategoryEnumMapType) As Boolean
             ' Operating under the assumption that the
             '   the number of entries and categories
             '   is normally small so avoiding a
@@ -566,12 +565,12 @@ Namespace Impl
     End Module
 
     Friend Class ColumnSpec
-        Public Property CategoryEnumMap As Dictionary(Of Type, CategoryEnumMapType)
+        Public Property CategoryEnumMap As Dictionary(Of System.Type, CategoryEnumMapType)
 
         Public Property Name As String
         Public Property Length As Long
         Public Property Type As ColumnType
-        Public ReadOnly Property MappedType As Type
+        Public ReadOnly Property MappedType As System.Type
             Get
                 Return Type.GetMapType()
             End Get
@@ -582,14 +581,14 @@ Namespace Impl
 
         Public Property CategoryLevels As String()
 
-        Public Function CanMapTo(type As Type) As Boolean
+        Public Function CanMapTo(type As System.Type) As Boolean
             Return Me.Type.CanMapTo(type, CategoryLevels)
         End Function
 
         Public Function GetCategoryEnumMap(Of TEnumType)() As CategoryEnumMapType
             If CategoryEnumMap Is Nothing Then Return CategoryEnumMapType.NONE
 
-            Dim enumType = GetType(TEnumType)
+            Dim enumType As System.Type = GetType(TEnumType)
             enumType = If(Nullable.GetUnderlyingType(enumType), enumType)
 
             If Not enumType.IsEnum Then Return CategoryEnumMapType.NONE
@@ -609,16 +608,16 @@ Namespace Impl
 
     Friend Module DateTimePrecisionTypeExtensionMethods
         <Extension()>
-        Public Function MapToDiskType(type As DateTimePrecisionType) As feather.fbs.TimeUnit
+        Public Function MapToDiskType(type As DateTimePrecisionType) As TimeUnit
             Select Case type
                 Case DateTimePrecisionType.Microsecond
-                    Return feather.fbs.TimeUnit.MICROSECOND
+                    Return TimeUnit.MICROSECOND
                 Case DateTimePrecisionType.Millisecond
-                    Return feather.fbs.TimeUnit.MILLISECOND
+                    Return TimeUnit.MILLISECOND
                 Case DateTimePrecisionType.Nanosecond
-                    Return feather.fbs.TimeUnit.NANOSECOND
+                    Return TimeUnit.NANOSECOND
                 Case DateTimePrecisionType.Second
-                    Return feather.fbs.TimeUnit.SECOND
+                    Return TimeUnit.SECOND
                 Case Else
                     Throw New InvalidOperationException($"Unexpected {NameOf(DateTimePrecisionType)}: {type}")
             End Select

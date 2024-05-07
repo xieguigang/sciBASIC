@@ -118,6 +118,7 @@
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\Feather\FeatherFormat.vbproj" />
   </ItemGroup>
 
 </Project>

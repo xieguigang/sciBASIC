@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <Version>0.6.0</Version>
     <Authors>Kevin Montrose</Authors>

@@ -1,7 +1,4 @@
-﻿Imports System.Collections
-Imports System.Collections.Generic
-
-''' <summary>
+﻿''' <summary>
 ''' Allocation free enumerable for a row.
 ''' </summary>
 Public Class RowEnumerable

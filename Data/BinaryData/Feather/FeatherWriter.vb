@@ -1,12 +1,10 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Linq
-Imports System.Text
-Imports Impl
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports Microsoft.VisualBasic.Math.Information
+﻿Imports System.IO
 Imports System.Runtime.InteropServices
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
+Imports Microsoft.VisualBasic.Math.Information
+Imports std = System.Math
 
 ''' <summary>
 ''' Indicates how a FeatherWriter should schedule writing to disk.
@@ -1035,7 +1033,7 @@ inferFromUntyped:
         Dim unit As DateTimePrecisionType
 
         ' advance all streams to latest point, so any backing buffers know they can flush
-        Dim furtherPoint = Math.Max(Math.Max(DataIndex, NullIndex), VariableIndex)
+        Dim furtherPoint = std.Max(std.Max(DataIndex, NullIndex), VariableIndex)
         AdvanceDataStreamTo(furtherPoint)
         AdvanceNullStreamTo(furtherPoint)
         AdvanceVariableStreamTo(furtherPoint)
@@ -1063,17 +1061,17 @@ inferFromUntyped:
         End If
 
         Return New ColumnMetadata With {
-.Encoding = feather.fbs.Encoding.PLAIN,
+.Encoding = FbsMetadata.Encoding.PLAIN,
 .Length = column.Length,
-.levels = levels,
+.Levels = levels,
 .Name = column.Name,
 .NullCount = column.NullCount,
 .Offset = dataOffset,
 .Ordered = False,
-.timezone = timezone,
+.TimeZone = timezone,
 .TotalBytes = bytesWritten,
 .Type = column.OnDiskType,
-.unit = unit
+.Unit = unit
 }
     End Function
 
@@ -1302,26 +1300,26 @@ inferFromUntyped:
         '    configuration correctly so always write default values
         bufferBuilder.ForceDefaults = True
 
-        Dim columns = New List(Of FlatBuffers.Offset(Of feather.fbs.Column))()
+        Dim columns = New List(Of FlatBuffers.Offset(Of FbsMetadata.Column))()
         For Each col In Metadata
             Dim colName = bufferBuilder.CreateString(col.Name)
 
-            Dim primArr = feather.fbs.PrimitiveArray.CreatePrimitiveArray(bufferBuilder, col.Type.MapToFeatherEnum(), col.Encoding, col.Offset, col.Length, col.NullCount, col.TotalBytes)
+            Dim primArr = FbsMetadata.PrimitiveArray.CreatePrimitiveArray(bufferBuilder, col.Type.MapToFeatherEnum(), col.Encoding, col.Offset, col.Length, col.NullCount, col.TotalBytes)
 
-            Dim metadataType As feather.fbs.TypeMetadata
-            Dim levels As FlatBuffers.Offset(Of feather.fbs.PrimitiveArray)
+            Dim metadataType As FbsMetadata.TypeMetadata
+            Dim levels As FlatBuffers.Offset(Of FbsMetadata.PrimitiveArray)
             Dim metaDataOffset As Integer
 
             col.CreateMetadata(bufferBuilder, Me, metaDataOffset, metadataType, levels)
 
-            Dim colRef = feather.fbs.Column.CreateColumn(bufferBuilder, colName, primArr, metadataType, metaDataOffset, Nothing)
+            Dim colRef = FbsMetadata.Column.CreateColumn(bufferBuilder, colName, primArr, metadataType, metaDataOffset, Nothing)
 
             columns.Add(colRef)
         Next
 
-        Dim columnsVec = feather.fbs.CTable.CreateColumnsVector(bufferBuilder, columns.ToArray())
+        Dim columnsVec = FbsMetadata.CTable.CreateColumnsVector(bufferBuilder, columns.ToArray())
 
-        Dim ctable = feather.fbs.CTable.CreateCTable(bufferBuilder, Nothing, NumRows, columnsVec, FEATHER_VERSION, Nothing)
+        Dim ctable = FbsMetadata.CTable.CreateCTable(bufferBuilder, Nothing, NumRows, columnsVec, FEATHER_VERSION, Nothing)
 
         bufferBuilder.Finish(ctable.Value)
 
@@ -2896,7 +2894,7 @@ inferFromUntyped:
     Const MICROSECONDS_PER_TICK As Double = 0.1
     Const NANOSECONDS_PER_TICK As Double = 100
     Private Shared Function MapToDiskType(elapsedTicks As Long) As Long
-        Return Math.Round(MICROSECONDS_PER_TICK * elapsedTicks)
+        Return std.Round(MICROSECONDS_PER_TICK * elapsedTicks)
     End Function
 
     Friend Sub BlitDateTimeArray(col As Date())

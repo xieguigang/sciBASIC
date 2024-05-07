@@ -17,6 +17,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports std = System.Math
 
 ' @file
 ' @addtogroup flatbuffers_csharp_api
@@ -616,7 +617,7 @@ endLoop:
 
                     _vtables = newvtables
                 End If
-                _vtables(Math.Min(Threading.Interlocked.Increment(_numVtables), _numVtables - 1)) = Offset
+                _vtables(std.Min(Threading.Interlocked.Increment(_numVtables), _numVtables - 1)) = Offset
                 ' Point table to current vtable.
                 _bb.PutInt(_bb.Length - vtableloc, Offset - vtableloc)
             End If
