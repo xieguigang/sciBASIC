@@ -127,12 +127,12 @@ Public Class MarkdownRender
         Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
         Dim graf_text As String
 
-        Static check_tag As String() = {"<p>", "<blockquot>", "<div>", "<ul>", "<ol>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>"}
+        Static check_tags As String() = {"<p>", "<blockquote>", "<div>", "<ul>", "<ol>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>"}
 
         For i As Integer = 0 To grafs.Length - 1
             graf_text = grafs(i).Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB)
 
-            If check_tag.Any(Function(prefix) graf_text.StartsWith(prefix)) Then
+            If check_tags.Any(Function(prefix) graf_text.StartsWith(prefix)) Then
                 Continue For
             End If
 
@@ -371,10 +371,12 @@ Public Class MarkdownRender
         Return Strings.Trim(s).Trim("*"c, "_"c)
     End Function
 
-    ReadOnly italic As New Regex("([*].+[*])|([_].+[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly italic As New Regex("([*].*?[*])|([_].*?[_])", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunItalic()
-        text = italic.Replace(text, Function(m) render.Italic(TrimBold(m.Value)))
+        text = italic.Replace(text, Function(m)
+                                        Return render.Italic(TrimBold(m.Value))
+                                    End Function)
     End Sub
 
     ReadOnly quote As New Regex("(\n[>][^\n]*)+", RegexOptions.Compiled Or RegexOptions.Singleline)
