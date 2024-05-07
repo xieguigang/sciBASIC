@@ -125,16 +125,25 @@ Public Class MarkdownRender
     Private Sub AutoParagraph()
         ' split on two or more newlines
         Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
+        Dim graf_text As String
+
+        Static check_tag As String() = {"<p>", "<blockquot>", "<div>", "<ul>", "<ol>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>"}
 
         For i As Integer = 0 To grafs.Length - 1
-            grafs(i) = Paragraph(grafs(i))
+            graf_text = grafs(i).Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB)
+
+            If check_tag.Any(Function(prefix) graf_text.StartsWith(prefix)) Then
+                Continue For
+            End If
+
+            grafs(i) = Paragraph(graf_text)
         Next
 
         text = grafs.JoinBy(vbLf & vbLf)
     End Sub
 
     Private Function Paragraph(text As String) As String
-        Dim lines = text.Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB).LineTokens
+        Dim lines As String() = text.LineTokens
 
         If (lines.Length = 0) OrElse lines.All(Function(s) s.Trim.StringEmpty) Then
             Return text
@@ -257,7 +266,10 @@ Public Class MarkdownRender
 
     Private Sub RunAutoLink()
         ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
-        text = url_link.Replace(text, Function(m) render.AnchorLink(m.Value, m.Value, m.Value))
+        text = url_link.Replace(text, Function(m)
+                                          Dim url As String = m.Value.Trim
+                                          Return render.AnchorLink(url, url, url)
+                                      End Function)
     End Sub
 
     Private Function AutoLink(s As String) As String
