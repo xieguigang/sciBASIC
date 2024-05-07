@@ -37,7 +37,7 @@ Public Class RowEnumerator
     ''' <summary>
     ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
     ''' </summary>
-    Private _CurrentProp As FeatherDotNet.Row
+    Private _CurrentProp As Row
     Private Parent As DataFrame
     Private Index As Long
 

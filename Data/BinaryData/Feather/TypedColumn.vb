@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections
-Imports System.Collections.Generic
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Allocation free enumerator for a typed column.

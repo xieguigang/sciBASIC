@@ -4,6 +4,7 @@ Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
+Imports std = System.Math
 
 ''' <summary>
 ''' Represents a dataframe.
@@ -175,7 +176,7 @@ Partial Public Class DataFrame
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnName As String) As Value Implements IDataFrame.Item
         Get
-            Dim value As Value
+            Dim value As Value = Nothing
             If Not TryGetValue(rowIndex, columnName, value) Then
                 Dim translatedColumIx As Long
                 If Not TryLookupTranslatedColumnIndex(columnName, translatedColumIx) Then
@@ -279,7 +280,7 @@ Partial Public Class DataFrame
     ''' If the passed indexes are out of bounds, or the value cannot be coerced, false is returned.  Otherwise, true is returned;
     ''' </summary>
     Public Function TryGetValue(Of T)(rowIndex As Long, columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IDataFrame.TryGetValue
-        Dim column As Column
+        Dim column As Column = Nothing
         If Not TryGetColumn(columnIndex, column) Then
             value = Nothing
             Return False
@@ -598,7 +599,7 @@ Partial Public Class DataFrame
             End If
 
             If buffer Is Nothing Then
-                newSize = Math.Max(newSize, MIN_BYTE_BUFFER_SIZE)
+                newSize = std.Max(newSize, MIN_BYTE_BUFFER_SIZE)
                 buffer = New Byte(newSize - 1) {}
             Else
                 Array.Resize(buffer, newSize)

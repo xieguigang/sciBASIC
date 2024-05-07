@@ -4,7 +4,7 @@ Imports System.Linq
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports System.Text
-Imports FeatherDotNet.Impl
+Imports Impl
 Imports System.Runtime.InteropServices
 
 

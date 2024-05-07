@@ -1,6 +1,5 @@
-﻿Imports System
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Utility class for addressing a <see cref="ProxyDataFrame(OfTProxyType)"/>'s rows.
@@ -45,13 +44,16 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     ''' <summary>
     ''' The backing <see cref="DataFrame"/>
     ''' </summary>
+    Dim _Inner As DataFrame
     ''' <summary>
     ''' An enumerable of all the rows in this DataFrame.
     ''' </summary>
+    Dim _AllRows As ProxyRowEnumerable(Of TProxyType)
     ''' <summary>
     ''' A utility accessor for rows in this DataFrame.
     ''' </summary>
-    Private _Inner As FeatherDotNet.DataFrame, _AllRows As FeatherDotNet.ProxyRowEnumerable(Of TProxyType), _Rows As FeatherDotNet.ProxyRowMap(Of TProxyType)
+    Dim _Rows As ProxyRowMap(Of TProxyType)
+
     Private ReadOnly Mapper As Func(Of Row, TProxyType, TProxyType)
     Private ReadOnly Factory As Func(Of TProxyType)
 

@@ -1,5 +1,5 @@
-﻿Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Utility class for addressing a <see cref="TypedDataFrameBase(OfTRowType)"/> rows.
@@ -41,17 +41,21 @@ End Class
 ''' </summary>
 Public MustInherit Class TypedDataFrameBase(Of TRowType)
     Implements IDataFrame
+
     ''' <summary>
     ''' The backing <see cref="DataFrame"/>
     ''' </summary>
+    Dim _Inner As DataFrame
 
     ''' <summary>
     ''' An enumerable of all the rows in this DataFrame.
     ''' </summary>
+    Dim _AllRows As TypedRowEnumerable(Of TRowType)
+
     ''' <summary>
     ''' A utility accessor for rows in this DataFrame.
     ''' </summary>
-    Private _Inner As FeatherDotNet.DataFrame, _AllRows As FeatherDotNet.TypedRowEnumerable(Of TRowType), _Rows As FeatherDotNet.TypedRowMap(Of TRowType)
+    Dim _Rows As TypedRowMap(Of TRowType)
 
     Public Property Inner As DataFrame
         Get
@@ -226,7 +230,7 @@ Public NotInheritable Class TypedDataFrame(Of TCol1)
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1)
+    Private _Column1 As TypedColumn(Of TCol1)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -260,10 +264,11 @@ Public NotInheritable Class TypedDataFrameType(Of TCol1, TCol2)
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
+    Dim _Column1 As TypedColumn(Of TCol1)
     ''' <summary>
     ''' The second column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2)
+    Dim _Column2 As TypedColumn(Of TCol2)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -316,7 +321,7 @@ Public NotInheritable Class TypedDataFrameType1(Of TCol1, TCol2, TCol3)
     ''' <summary>
     ''' The third column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -385,7 +390,7 @@ Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
     ''' <summary>
     ''' The fourth column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3), _Column4 As FeatherDotNet.TypedColumn(Of TCol4)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -470,7 +475,7 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
     ''' <summary>
     ''' The fifth column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3), _Column4 As FeatherDotNet.TypedColumn(Of TCol4), _Column5 As FeatherDotNet.TypedColumn(Of TCol5)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -571,7 +576,7 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
     ''' <summary>
     ''' The sixth column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3), _Column4 As FeatherDotNet.TypedColumn(Of TCol4), _Column5 As FeatherDotNet.TypedColumn(Of TCol5), _Column6 As FeatherDotNet.TypedColumn(Of TCol6)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -688,7 +693,7 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
     ''' <summary>
     ''' The seventh column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3), _Column4 As FeatherDotNet.TypedColumn(Of TCol4), _Column5 As FeatherDotNet.TypedColumn(Of TCol5), _Column6 As FeatherDotNet.TypedColumn(Of TCol6), _Column7 As FeatherDotNet.TypedColumn(Of TCol7)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6), _Column7 As TypedColumn(Of TCol7)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
@@ -821,7 +826,7 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
     ''' <summary>
     ''' The eigth column in the dataframe.
     ''' </summary>
-    Private _Column1 As FeatherDotNet.TypedColumn(Of TCol1), _Column2 As FeatherDotNet.TypedColumn(Of TCol2), _Column3 As FeatherDotNet.TypedColumn(Of TCol3), _Column4 As FeatherDotNet.TypedColumn(Of TCol4), _Column5 As FeatherDotNet.TypedColumn(Of TCol5), _Column6 As FeatherDotNet.TypedColumn(Of TCol6), _Column7 As FeatherDotNet.TypedColumn(Of TCol7), _Column8 As FeatherDotNet.TypedColumn(Of TCol8)
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6), _Column7 As TypedColumn(Of TCol7), _Column8 As TypedColumn(Of TCol8)
 
     Public Property Column1 As TypedColumn(Of TCol1)
         Get

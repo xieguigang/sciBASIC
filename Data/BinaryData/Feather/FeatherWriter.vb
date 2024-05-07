@@ -3,7 +3,7 @@ Imports System.Collections.Generic
 Imports System.IO
 Imports System.Linq
 Imports System.Text
-Imports FeatherDotNet.Impl
+Imports Impl
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Math.Information
 Imports System.Runtime.InteropServices
@@ -42,7 +42,7 @@ Public NotInheritable Class FeatherWriter
     ''' <summary>
     ''' Number of rows in the dataframe being written
     ''' </summary>
-    Private _Mode As FeatherDotNet.WriteMode, _NumRows As Long
+    Private _Mode As WriteMode, _NumRows As Long
     Private NullIndex As Long
     Private DataIndex As Long
     Private VariableIndex As Long

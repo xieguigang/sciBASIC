@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections
-Imports System.Collections.Generic
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Allocation free enumerator for a row.
@@ -13,7 +10,7 @@ Public Class RowValueEnumerator
     ''' <summary>
     ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
-    Private _CurrentProp As FeatherDotNet.Value
+    Private _CurrentProp As Value
     Friend Parent As DataFrame
     Friend TranslatedRowIndex As Long
     Friend Index As Long

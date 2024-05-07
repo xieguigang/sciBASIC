@@ -2,6 +2,8 @@
 Imports System.IO.MemoryMappedFiles
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl.FbsMetadata
 
 ''' <summary>
 ''' Utility class for reading Feather files.
@@ -658,7 +660,7 @@ Public Module FeatherReader
         Return True
     End Function
 
-    Private Function TryMakeColumnSpec(name As String, effectiveType As feather.fbs.Type, ByRef arrayDetails As PrimitiveArray, categoryLevels As String(), precision As DateTimePrecisionType, <Out> ByRef columnSpec As ColumnSpec, <Out> ByRef errorMessage As String) As Boolean
+    Private Function TryMakeColumnSpec(name As String, effectiveType As FbsMetadata.Type, ByRef arrayDetails As PrimitiveArray, categoryLevels As String(), precision As DateTimePrecisionType, <Out> ByRef columnSpec As ColumnSpec, <Out> ByRef errorMessage As String) As Boolean
         Dim arrayOffset = arrayDetails.Offset
         Dim arrayLength = arrayDetails.Length
         Dim arrayNulls = arrayDetails.NullCount
