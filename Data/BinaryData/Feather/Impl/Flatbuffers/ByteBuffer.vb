@@ -31,7 +31,6 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Math.Information
-Imports System
 
 Namespace FlatBuffers
     ''' <summary>

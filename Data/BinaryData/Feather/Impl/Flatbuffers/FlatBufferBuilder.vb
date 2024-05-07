@@ -15,9 +15,8 @@
 
 
 
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports System
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
 ' @file
 ' @addtogroup flatbuffers_csharp_api

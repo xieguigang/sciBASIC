@@ -14,9 +14,8 @@
 '* limitations under the License.
 
 
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports System
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
 Namespace FlatBuffers
     ''' <summary>
