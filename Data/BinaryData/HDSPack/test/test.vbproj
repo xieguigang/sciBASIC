@@ -16,8 +16,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\BinaryData\binarydata-netcore5.vbproj" />
+    <ProjectReference Include="..\..\DataStorage\datastorage-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Feather\FeatherFormat.vbproj" />
+    <ProjectReference Include="..\..\HDF5\HDF5.vbproj" />
     <ProjectReference Include="..\..\msgpack\msgpack-netcore5.vbproj" />
     <ProjectReference Include="..\HDSPack.vbproj" />
   </ItemGroup>
