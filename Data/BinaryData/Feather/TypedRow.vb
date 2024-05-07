@@ -143,7 +143,7 @@ Public Class TypedRow(Of TCol1)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -320,7 +320,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -505,7 +505,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -527,7 +527,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(Of T)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
@@ -698,7 +698,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -899,7 +899,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1108,7 +1108,7 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1325,7 +1325,7 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1550,7 +1550,7 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)

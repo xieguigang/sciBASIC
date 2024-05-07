@@ -10,7 +10,7 @@ Public Class RowEnumerable
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As RowEnumerator
         Return New RowEnumerator(Parent)
@@ -32,7 +32,7 @@ Public Class RowEnumerator
     Implements IEnumerator(Of Row)
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T).Current"/>
     ''' </summary>
     Private _CurrentProp As Row
     Private Parent As DataFrame

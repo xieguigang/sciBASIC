@@ -8,7 +8,7 @@ Public Class TypedRowEnumerator(Of TRow)
     Implements IEnumerator(Of TRow)
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T).Current"/>
     ''' </summary>
     Private _CurrentProp As TRow
     Private Parent As TypedDataFrameBase(Of TRow)
@@ -75,7 +75,7 @@ Public Class TypedRowEnumerable(Of TRow)
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowEnumerator(Of TRow)
         Return New TypedRowEnumerator(Of TRow)(Parent)

@@ -13,7 +13,7 @@ Public Class ProxyRowEnumerable(Of TProxyType)
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As ProxyRowEnumerator(Of TProxyType)
         Return New ProxyRowEnumerator(Of TProxyType)(Parent)
@@ -35,7 +35,7 @@ Public Class ProxyRowEnumerator(Of TProxyType)
     Implements IEnumerator(Of TProxyType)
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T).Current"/>
     ''' </summary>
     Private _CurrentProp As TProxyType
     Private Parent As ProxyDataFrame(Of TProxyType)

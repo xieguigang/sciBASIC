@@ -108,7 +108,7 @@ Public Class TypedColumn(Of TColumnType)
     End Property
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' 
     ''' Throws if <see cref="Length"/> will not fit in an int.
     ''' </summary>
@@ -119,7 +119,7 @@ Public Class TypedColumn(Of TColumnType)
     End Property
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' 
     ''' Always return true.
     ''' </summary>
@@ -131,7 +131,7 @@ Public Class TypedColumn(Of TColumnType)
 
     ''' <summary>
     ''' &lt;see cref="this[long]"/&gt;
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' </summary>
     Default Public Property Item(index As Integer) As TColumnType Implements IList(Of TColumnType).Item
         Get
@@ -145,7 +145,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,TColumnType)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     ''' <param name="rowIndex">The index of the value to get, in the appropriate basis.</param>
     Default Public ReadOnly Property Item(rowIndex As Long) As TColumnType
@@ -245,7 +245,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedColumnEnumerator(Of TColumnType)
         Return New TypedColumnEnumerator(Of TColumnType)(Inner)
@@ -411,14 +411,14 @@ Public Class TypedColumn(Of TColumnType)
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(Of T).Contains(T)"/>
     ''' </summary>
     Public Function Contains(item As TColumnType) As Boolean Implements ICollection(Of TColumnType).Contains
         Return LongIndexOf(item) <> -1
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(Of T).CopyTo"/>
     ''' </summary>
     Public Sub CopyTo(array As TColumnType(), arrayIndex As Integer) Implements ICollection(Of TColumnType).CopyTo
         If array Is Nothing Then Throw New ArgumentNullException(NameOf(array))
