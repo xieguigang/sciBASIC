@@ -2,7 +2,7 @@
 
 Imports FlatBuffers
 
-Namespace Impl.Metadata
+Namespace Impl.FbsMetadata
 
     Friend Class PrimitiveArray
         Implements IFlatbufferObject

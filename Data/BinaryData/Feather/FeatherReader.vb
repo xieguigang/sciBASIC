@@ -1,12 +1,7 @@
-﻿Imports feather.fbs
-Imports FeatherDotNet.Impl
-Imports FlatBuffers
-Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports System
-Imports System.Collections.Generic
-Imports System.IO
+﻿Imports System.IO
 Imports System.IO.MemoryMappedFiles
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
 ''' <summary>
 ''' Utility class for reading Feather files.
@@ -18,8 +13,8 @@ Public Module FeatherReader
     ''' Throws if the dataframe cannot be created.
     ''' </summary>
     Public Function ReadFromFile(filePath As String, basis As BasisType) As DataFrame
-        Dim errorMessage As String
-        Dim ret As DataFrame
+        Dim errorMessage As String = Nothing
+        Dim ret As DataFrame = Nothing
         If Not TryReadFromFile(filePath, basis, ret, errorMessage) Then
             Throw New InvalidOperationException(errorMessage)
         End If
@@ -59,8 +54,8 @@ Public Module FeatherReader
     ''' Throws if the dataframe cannot be created.
     ''' </summary>
     Public Function ReadFromName(name As String, size As Long, basis As BasisType) As DataFrame
-        Dim errorMessage As String
-        Dim ret As DataFrame
+        Dim errorMessage As String = Nothing
+        Dim ret As DataFrame = Nothing
         If Not TryReadFromName(name, size, basis, ret, errorMessage) Then
             Throw New InvalidOperationException(errorMessage)
         End If
@@ -76,7 +71,9 @@ Public Module FeatherReader
     Public Function TryReadFromName(name As String, size As Long, basis As BasisType, <Out> ByRef frame As DataFrame, <Out> ByRef errorMessage As String) As Boolean
         Dim memoryMapped As MemoryMappedFile
         Try
+#Disable Warning
             memoryMapped = MemoryMappedFile.OpenExisting(name)
+#Enable Warning
         Catch e As Exception
             errorMessage = $"Encountered {e.GetType().Name} trying to open name ""{name}"": {e.Message}"
             frame = Nothing
@@ -97,8 +94,8 @@ Public Module FeatherReader
     ''' Throws if the dataframe cannot be created.
     ''' </summary>
     Public Function ReadFromBytes(bytes As Byte(), basis As BasisType) As DataFrame
-        Dim errorMessage As String
-        Dim ret As DataFrame
+        Dim errorMessage As String = Nothing
+        Dim ret As DataFrame = Nothing
         If Not TryReadFromBytes(bytes, basis, ret, errorMessage) Then
             Throw New InvalidOperationException(errorMessage)
         End If
@@ -130,7 +127,7 @@ Public Module FeatherReader
     End Function
 
     Private Function MakeMemoryMappedProxy(bytes As Byte()) As MemoryMappedFile
-        Dim newFile = MemoryMappedFile.CreateNew(NameOf(FeatherDotNet) & "." & NameOf(MakeMemoryMappedProxy) & "." & Guid.NewGuid().ToString(), bytes.Length)
+        Dim newFile = MemoryMappedFile.CreateNew(NameOf(FeatherFormat) & "." & NameOf(MakeMemoryMappedProxy) & "." & Guid.NewGuid().ToString(), bytes.Length)
         Try
             Using stream = newFile.CreateViewStream()
                 stream.Write(bytes, 0, bytes.Length)
@@ -700,12 +697,12 @@ Public Module FeatherReader
         Dim dataOffset = If(Not isNullable, arrayOffset, nullOffset + numNullBytes + nullPadding)
 
         columnSpec = New ColumnSpec With {
-.name = name,
+.Name = name,
 .NullBitmaskOffset = nullOffset,
-.dataOffset = dataOffset,
+.DataOffset = dataOffset,
 .Length = arrayLength,
-.type = type,
-.categoryLevels = categoryLevels,
+.Type = type,
+.CategoryLevels = categoryLevels,
 .CategoryEnumMap = If(categoryLevels IsNot Nothing, New Dictionary(Of System.Type, CategoryEnumMapType)(), Nothing) ' only spin up this map if we've got categories to potentially map to
 }
         errorMessage = Nothing
