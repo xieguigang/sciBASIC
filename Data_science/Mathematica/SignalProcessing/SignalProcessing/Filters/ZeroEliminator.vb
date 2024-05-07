@@ -73,34 +73,18 @@ Namespace Filters
     ''' <summary>
     ''' Eliminates zeros from data - starting from the first non-zero element, ending
     ''' at the last non-zero element. More specifically:
-    ''' <para>
-    ''' <ul>
-    ''' <li>
-    ''' Let <tt>l</tt> be the index of the first non-zero element in data,</li>
-    ''' <li>let <tt>r</tt> be the index of the last non-zero element in data</li>
-    ''' </ul>
-    ''' then for every element <tt>e</tt> which index is <tt>i</tt> such that:
-    ''' <tt>l <i/> <r/></tt> and <tt>e == 0</tt>, <tt>e</tt> is replaced with element <tt>e'</tt>
-    ''' with index <tt>j</tt> such that:
-    ''' <ul>
-    ''' <li><tt>l </> <i/></tt> and <tt>e' <> 0</tt> and for all indexes
-    ''' <tt>k: j <k/> <i/></tt> - when <seealso cref="isAlignToLeft()"/>
-    ''' is true</li>
-    ''' <li><tt>i <j/> </></tt> and <tt>e' <> 0</tt> and for all indexes
-    ''' <tt>k: i <k/> <j/></tt> - otherwise</li>
-    ''' </ul>
-    ''' </para>
+    ''' 
     ''' Example:
     ''' <para>
     ''' Given data: <tt>[0,0,0,1,2,0,3,0,0,4,0]</tt> result of applying
     ''' ZeroEliminator is: <tt>[0,0,0,1,2,2,3,3,3,4,0]</tt> if
-    ''' <seealso cref="isAlignToLeft()"/> is true;
+    ''' isAlignToLeft is true;
     ''' <tt>[0,0,0,1,2,3,3,4,4,4,0]</tt> - otherwise
     ''' </para>
     ''' 
     ''' @author Marcin Rzeźnicki
     ''' 
-    ''' </summary></para></summary>   
+    ''' </summary>
     Public Class ZeroEliminator
         Implements Preprocessor
 
@@ -109,7 +93,6 @@ Namespace Filters
         ''' <summary>
         ''' Default constructor: {@code alignToLeft} is {@code false}
         ''' </summary>
-        ''' <seealso cref=""/> </seealso>
         Public Sub New()
 
         End Sub

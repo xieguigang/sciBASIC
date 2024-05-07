@@ -168,6 +168,29 @@ Namespace StorageProvider.Reflection
             End If
             ' #End If
 
+            attrs = [Property].GetCustomAttributes(attributeType:=GetType(SchemaMaps.DataFrameColumnAttribute), inherit:=True)
+
+            If Not attrs.IsNullOrEmpty Then
+                Dim attr = DirectCast(attrs(Scan0), SchemaMaps.DataFrameColumnAttribute)
+                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
+            End If
+
+            attrs = [Property].GetCustomAttributes(attributeType:=GetType(SchemaMaps.Field), inherit:=True)
+
+            If Not attrs.IsNullOrEmpty Then
+                Dim attr = DirectCast(attrs(Scan0), SchemaMaps.Field)
+                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
+            End If
+
+#If NETCOREAPP Then
+            attrs = [Property].GetCustomAttributes(attributeType:=GetType(System.ComponentModel.DataAnnotations.Schema.ColumnAttribute), inherit:=True)
+
+            If Not attrs.IsNullOrEmpty Then
+                Dim attr = DirectCast(attrs(Scan0), System.ComponentModel.DataAnnotations.Schema.ColumnAttribute)
+                Return __generateMask([Property], [alias]:=attr.Name, forcePrimitive:=forcePrimitive)
+            End If
+#End If
+
             If Not Explicit Then
                 Return __generateMask([Property], "", forcePrimitive)
             Else

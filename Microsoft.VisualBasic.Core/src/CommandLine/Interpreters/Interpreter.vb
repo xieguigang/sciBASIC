@@ -189,7 +189,6 @@ Namespace CommandLine
         ''' <summary>
         ''' The interpreter runs all of the command from here.(所有的命令行都从这里开始执行)
         ''' </summary>
-        ''' <param name="commandName"></param>
         ''' <param name="args">就只有一个命令行对象</param>
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
