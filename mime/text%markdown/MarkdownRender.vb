@@ -94,7 +94,7 @@ Public Class MarkdownRender
         Call hideImage()
         Call hideUrl()
 
-        ' Call RunAutoLink()
+        Call RunAutoLink()
 
         ' markdown table contains a line of ------ between the thead and tbody
         ' this syntax may confused with the <hr/> syntax. so markdown table rendering
@@ -247,6 +247,7 @@ Public Class MarkdownRender
 
     ReadOnly url As New Regex("\[.*?\]\(.*?\)", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly auto_link As New Regex("[<][^>^\s]{2,}[>]", RegexOptions.Compiled Or RegexOptions.Multiline)
+    ReadOnly url_link As New Regex("[^""^']" & UrlLinkPattern & "[^""^']", RegexICMul Or RegexOptions.Compiled)
 
     Private Sub RunUrl()
         For Each link In urls.Reverse
@@ -255,7 +256,8 @@ Public Class MarkdownRender
     End Sub
 
     Private Sub RunAutoLink()
-        text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
+        ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
+        text = url_link.Replace(text, Function(m) render.AnchorLink(m.Value, m.Value, m.Value))
     End Sub
 
     Private Function AutoLink(s As String) As String
