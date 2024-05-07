@@ -86,5 +86,10 @@ Namespace Math.Information
         Public Function SingleToInt32Bits(value As Single) As Integer
             Return BitConverter.ToInt32(BitConverter.GetBytes(value), Scan0)
         End Function
+
+        <Extension>
+        Public Function UnsafeTruncateInteger(val As ULong) As Integer
+            Return BitConverter.ToInt32(BitConverter.GetBytes(val), Scan0)
+        End Function
     End Module
 End Namespace
