@@ -8,7 +8,7 @@ Public Class ColumnValueEnumerator
     Implements IEnumerator(Of Value)
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Private _CurrentProp As Value
     Friend Parent As DataFrame
@@ -38,14 +38,14 @@ Public Class ColumnValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -58,7 +58,7 @@ Public Class ColumnValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(Of T)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1
@@ -112,7 +112,7 @@ Public Class Column
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long) As Value
         Get
@@ -146,7 +146,7 @@ Public Class Column
     End Property
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' 
     ''' Throws if <see cref="Length"/> will not fit in an int.
     ''' </summary>
@@ -156,7 +156,7 @@ Public Class Column
         End Get
     End Property
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' 
     ''' Always return true.
     ''' </summary>
@@ -168,7 +168,7 @@ Public Class Column
 
     ''' <summary>
     ''' &lt;see cref="this[long]"/&gt;
-    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(Of T)"/>
     ''' </summary>
     Default Public Property Item(index As Integer) As Value Implements IList(Of Value).Item
         Get
@@ -369,7 +369,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(Of T).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As ColumnValueEnumerator
         Return New ColumnValueEnumerator(Parent, TranslatedColumnIndex)
@@ -472,14 +472,14 @@ Public Class Column
     End Sub
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(Of T).Contains(T)"/>
     ''' </summary>
     Public Function Contains(item As Value) As Boolean Implements ICollection(Of Value).Contains
         Return LongIndexOf(item) <> -1
     End Function
 
     ''' <summary>
-    ''' <see cref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(Of T).CopyTo"/>
     ''' </summary>
     Public Sub CopyTo(array As Value(), arrayIndex As Integer) Implements ICollection(Of Value).CopyTo
         If array Is Nothing Then Throw New ArgumentNullException(NameOf(array))

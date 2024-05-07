@@ -147,7 +147,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' 
     ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,TColumnType)"/> for non-throwing gets.
     ''' </summary>
-    ''' <paramname="rowIndex">The index of the value to get, in the appropriate basis.</param>
+    ''' <param name="rowIndex">The index of the value to get, in the appropriate basis.</param>
     Default Public ReadOnly Property Item(rowIndex As Long) As TColumnType
         Get
             Dim category = Inner.Parent.Metadata.Columns(Inner.TranslatedColumnIndex).GetCategoryEnumMap(Of TColumnType)()

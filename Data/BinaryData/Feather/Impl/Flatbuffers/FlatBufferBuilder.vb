@@ -49,7 +49,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Create a FlatBufferBuilder with a given initial size.
         ''' </summary>
-        ''' <paramname="initialSize">
+        ''' <param name="initialSize">
         ''' The initial size to use for the internal buffer.
         ''' </param>
         Public Sub New(initialSize As Integer)
@@ -190,7 +190,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `bool` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `bool` to add to the buffer.</param>
+        ''' <param name="x">The `bool` to add to the buffer.</param>
         Public Sub AddBool(x As Boolean)
             Prep(HeapSizeOf.byte, 0)
             PutBool(x)
@@ -199,7 +199,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `sbyte` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `sbyte` to add to the buffer.</param>
+        ''' <param name="x">The `sbyte` to add to the buffer.</param>
         Public Sub AddSbyte(x As SByte)
             Prep(HeapSizeOf.sbyte, 0)
             PutSbyte(x)
@@ -208,7 +208,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `byte` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `byte` to add to the buffer.</param>
+        ''' <param name="x">The `byte` to add to the buffer.</param>
         Public Sub AddByte(x As Byte)
             Prep(HeapSizeOf.byte, 0)
             PutByte(x)
@@ -217,7 +217,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `short` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `short` to add to the buffer.</param>
+        ''' <param name="x">The `short` to add to the buffer.</param>
         Public Sub AddShort(x As Short)
             Prep(HeapSizeOf.short, 0)
             PutShort(x)
@@ -226,7 +226,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add an `ushort` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `ushort` to add to the buffer.</param>
+        ''' <param name="x">The `ushort` to add to the buffer.</param>
         Public Sub AddUshort(x As UShort)
             Prep(HeapSizeOf.ushort, 0)
             PutUshort(x)
@@ -235,7 +235,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add an `int` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `int` to add to the buffer.</param>
+        ''' <param name="x">The `int` to add to the buffer.</param>
         Public Sub AddInt(x As Integer)
             Prep(HeapSizeOf.int, 0)
             PutInt(x)
@@ -244,7 +244,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add an `uint` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `uint` to add to the buffer.</param>
+        ''' <param name="x">The `uint` to add to the buffer.</param>
         Public Sub AddUint(x As UInteger)
             Prep(HeapSizeOf.uint, 0)
             PutUint(x)
@@ -253,7 +253,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `long` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `long` to add to the buffer.</param>
+        ''' <param name="x">The `long` to add to the buffer.</param>
         Public Sub AddLong(x As Long)
             Prep(HeapSizeOf.long, 0)
             PutLong(x)
@@ -262,7 +262,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add an `ulong` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `ulong` to add to the buffer.</param>
+        ''' <param name="x">The `ulong` to add to the buffer.</param>
         Public Sub AddUlong(x As ULong)
             Prep(HeapSizeOf.ulong, 0)
             PutUlong(x)
@@ -271,7 +271,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `float` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `float` to add to the buffer.</param>
+        ''' <param name="x">The `float` to add to the buffer.</param>
         Public Sub AddFloat(x As Single)
             Prep(HeapSizeOf.float, 0)
             PutFloat(x)
@@ -280,7 +280,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Add a `double` to the buffer (aligns the data and grows if necessary).
         ''' </summary>
-        ''' <paramname="x">The `double` to add to the buffer.</param>
+        ''' <param name="x">The `double` to add to the buffer.</param>
         Public Sub AddDouble(x As Double)
             Prep(HeapSizeOf.double, 0)
             PutDouble(x)
@@ -289,7 +289,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds an offset, relative to where it will be written.
         ''' </summary>
-        ''' <paramname="off">The offset to add to the buffer.</param>
+        ''' <param name="off">The offset to add to the buffer.</param>
         Public Sub AddOffset(off As Integer)
             Prep(HeapSizeOf.int, 0)  ' Ensure alignment is already done.
             If off > Offset Then Throw New ArgumentException()
@@ -318,7 +318,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Creates a vector of tables.
         ''' </summary>
-        ''' <paramname="offsets">Offsets of the tables.</param>
+        ''' <param name="offsets">Offsets of the tables.</param>
         Public Function CreateVectorOfTables(Of T As Structure)(offsets As Offset(Of T)()) As VectorOffset
             NotNested()
             StartVector(HeapSizeOf.int, offsets.Length, HeapSizeOf.int)
@@ -365,10 +365,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a Boolean to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddBool(o As Integer, x As Boolean, d As Boolean)
             If ForceDefaults OrElse x <> d Then
                 AddBool(x)
@@ -379,10 +379,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a SByte to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddSbyte(o As Integer, x As SByte, d As SByte)
             If ForceDefaults OrElse x <> d Then
                 AddSbyte(x)
@@ -393,10 +393,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a Byte to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddByte(o As Integer, x As Byte, d As Byte)
             If ForceDefaults OrElse x <> d Then
                 AddByte(x)
@@ -407,10 +407,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a Int16 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddShort(o As Integer, x As Short, d As Integer)
             If ForceDefaults OrElse x <> d Then
                 AddShort(x)
@@ -421,10 +421,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a UInt16 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddUshort(o As Integer, x As UShort, d As UShort)
             If ForceDefaults OrElse x <> d Then
                 AddUshort(x)
@@ -435,10 +435,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds an Int32 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddInt(o As Integer, x As Integer, d As Integer)
             If ForceDefaults OrElse x <> d Then
                 AddInt(x)
@@ -449,10 +449,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a UInt32 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddUint(o As Integer, x As UInteger, d As UInteger)
             If ForceDefaults OrElse x <> d Then
                 AddUint(x)
@@ -463,10 +463,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds an Int64 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddLong(o As Integer, x As Long, d As Long)
             If ForceDefaults OrElse x <> d Then
                 AddLong(x)
@@ -477,10 +477,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a UInt64 to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddUlong(o As Integer, x As ULong, d As ULong)
             If ForceDefaults OrElse x <> d Then
                 AddUlong(x)
@@ -491,10 +491,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a Single to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddFloat(o As Integer, x As Single, d As Double)
             If ForceDefaults OrElse x <> d Then
                 AddFloat(x)
@@ -505,10 +505,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a Double to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddDouble(o As Integer, x As Double, d As Double)
             If ForceDefaults OrElse x <> d Then
                 AddDouble(x)
@@ -519,10 +519,10 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Adds a buffer offset to the Table at index `o` in its vtable using the value `x` and default `d`
         ''' </summary>
-        ''' <paramname="o">The index into the vtable</param>
-        ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
+        ''' <param name="o">The index into the vtable</param>
+        ''' <param name="x">The value to put into the buffer. If the value is equal to the default
         ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
-        ''' <paramname="d">The default value to compare the value against</param>
+        ''' <param name="d">The default value to compare the value against</param>
         Public Sub AddOffset(o As Integer, x As Integer, d As Integer)
             If ForceDefaults OrElse x <> d Then
                 AddOffset(x)
@@ -534,7 +534,7 @@ Namespace FlatBuffers
         ''' <summary>
         ''' Encode the string `s` in the buffer using UTF-8.
         ''' </summary>
-        ''' <paramname="s">The string to encode.</param>
+        ''' <param name="s">The string to encode.</param>
         ''' <returns>
         ''' The offset in the buffer where the encoded string starts.
         ''' </returns>
@@ -640,7 +640,7 @@ endLoop:
         ''' <summary>
         ''' Finalize a buffer, pointing to the given `root_table`.
         ''' </summary>
-        ''' <paramname="rootTable">
+        ''' <param name="rootTable">
         ''' An offset to be added to the buffer.
         ''' </param>
         Public Sub Finish(rootTable As Integer)
@@ -682,10 +682,10 @@ endLoop:
         ''' <summary>
         ''' Finalize a buffer, pointing to the given `rootTable`.
         ''' </summary>
-        ''' <paramname="rootTable">
+        ''' <param name="rootTable">
         ''' An offset to be added to the buffer.
         ''' </param>
-        ''' <paramname="fileIdentifier">
+        ''' <param name="fileIdentifier">
         ''' A FlatBuffer file identifier to be added to the buffer before
         ''' `root_table`.
         ''' </param>
