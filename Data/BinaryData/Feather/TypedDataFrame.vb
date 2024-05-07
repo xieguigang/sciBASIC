@@ -2,7 +2,7 @@
 Imports System.Runtime.InteropServices
 
 ''' <summary>
-''' Utility class for addressing a <seecref="TypedDataFrameBase(OfTRowType)"/> rows.
+''' Utility class for addressing a <see cref="TypedDataFrameBase(OfTRowType)"/> rows.
 ''' </summary>
 Public Class TypedRowMap(Of TRow)
     Private Parent As TypedDataFrameBase(Of TRow)
@@ -37,12 +37,12 @@ End Class
 ''' <summary>
 ''' Represents a dataframe, where each column has been typed.
 ''' 
-''' Is backed by a <seecref="DataFrame"/>, and will become invalid when that dataframe is disposed.
+''' Is backed by a <see cref="DataFrame"/>, and will become invalid when that dataframe is disposed.
 ''' </summary>
 Public MustInherit Class TypedDataFrameBase(Of TRowType)
     Implements IDataFrame
     ''' <summary>
-    ''' The backing <seecref="DataFrame"/>
+    ''' The backing <see cref="DataFrame"/>
     ''' </summary>
 
     ''' <summary>
@@ -126,7 +126,7 @@ Public MustInherit Class TypedDataFrameBase(Of TRowType)
     ''' <summary>
     ''' Return the value at the given row and column indexes.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnIndex As Long) As Value Implements IDataFrame.Item
         Get
@@ -137,7 +137,7 @@ Public MustInherit Class TypedDataFrameBase(Of TRowType)
     ''' <summary>
     ''' Return the value at the given row index in the column with the given name.
     ''' 
-    ''' Will throw if the index is out of bounds or the column is not found.  Use <seecref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds or the column is not found.  Use <see cref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnName As String) As Value Implements IDataFrame.Item
         Get
@@ -245,7 +245,7 @@ Public NotInheritable Class TypedDataFrame(Of TCol1)
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRow(Of TCol1)
         Return New TypedRow(Of TCol1)(row)
@@ -295,7 +295,7 @@ Public NotInheritable Class TypedDataFrameType(Of TCol1, TCol2)
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType(Of TCol1, TCol2)
         Return New TypedRowType(Of TCol1, TCol2)(row)
@@ -361,7 +361,7 @@ Public NotInheritable Class TypedDataFrameType1(Of TCol1, TCol2, TCol3)
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType1(Of TCol1, TCol2, TCol3)
         Return New TypedRowType1(Of TCol1, TCol2, TCol3)(row)
@@ -443,7 +443,7 @@ Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
         Return New TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)(row)
@@ -541,7 +541,7 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
         Return New TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)(row)
@@ -655,7 +655,7 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
         Return New TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)(row)
@@ -785,7 +785,7 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
         Return New TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)(row)
@@ -931,7 +931,7 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <seecref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
         Return New TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)(row)

@@ -366,7 +366,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddBool(o As Integer, x As Boolean, d As Boolean)
             If ForceDefaults OrElse x <> d Then
@@ -380,7 +380,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddSbyte(o As Integer, x As SByte, d As SByte)
             If ForceDefaults OrElse x <> d Then
@@ -394,7 +394,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddByte(o As Integer, x As Byte, d As Byte)
             If ForceDefaults OrElse x <> d Then
@@ -408,7 +408,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddShort(o As Integer, x As Short, d As Integer)
             If ForceDefaults OrElse x <> d Then
@@ -422,7 +422,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddUshort(o As Integer, x As UShort, d As UShort)
             If ForceDefaults OrElse x <> d Then
@@ -436,7 +436,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddInt(o As Integer, x As Integer, d As Integer)
             If ForceDefaults OrElse x <> d Then
@@ -450,7 +450,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddUint(o As Integer, x As UInteger, d As UInteger)
             If ForceDefaults OrElse x <> d Then
@@ -464,7 +464,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddLong(o As Integer, x As Long, d As Long)
             If ForceDefaults OrElse x <> d Then
@@ -478,7 +478,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddUlong(o As Integer, x As ULong, d As ULong)
             If ForceDefaults OrElse x <> d Then
@@ -492,7 +492,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddFloat(o As Integer, x As Single, d As Double)
             If ForceDefaults OrElse x <> d Then
@@ -506,7 +506,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddDouble(o As Integer, x As Double, d As Double)
             If ForceDefaults OrElse x <> d Then
@@ -520,7 +520,7 @@ Namespace FlatBuffers
         ''' </summary>
         ''' <paramname="o">The index into the vtable</param>
         ''' <paramname="x">The value to put into the buffer. If the value is equal to the default
-        ''' and <seecref="ForceDefaults"/> is false, the value will be skipped.</param>
+        ''' and <see cref="ForceDefaults"/> is false, the value will be skipped.</param>
         ''' <paramname="d">The default value to compare the value against</param>
         Public Sub AddOffset(o As Integer, x As Integer, d As Integer)
             If ForceDefaults OrElse x <> d Then

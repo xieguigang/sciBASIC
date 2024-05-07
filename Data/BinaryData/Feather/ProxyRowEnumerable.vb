@@ -13,7 +13,7 @@ Public Class ProxyRowEnumerable(Of TProxyType)
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As ProxyRowEnumerator(Of TProxyType)
         Return New ProxyRowEnumerator(Of TProxyType)(Parent)
@@ -35,7 +35,7 @@ Public Class ProxyRowEnumerator(Of TProxyType)
     Implements IEnumerator(Of TProxyType)
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
     ''' </summary>
     Private _CurrentProp As TProxyType
     Private Parent As ProxyDataFrame(Of TProxyType)
@@ -63,14 +63,14 @@ Public Class ProxyRowEnumerator(Of TProxyType)
     End Property
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -83,7 +83,7 @@ Public Class ProxyRowEnumerator(Of TProxyType)
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1

@@ -11,7 +11,7 @@ Public Class TypedColumnEnumerator(Of TColumnType)
     Implements IEnumerator(Of TColumnType)
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Private _CurrentProp As TColumnType
     Private Inner As Column
@@ -39,13 +39,13 @@ Public Class TypedColumnEnumerator(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -60,7 +60,7 @@ Public Class TypedColumnEnumerator(Of TColumnType)
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1
@@ -111,9 +111,9 @@ Public Class TypedColumn(Of TColumnType)
     End Property
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' 
-    ''' Throws if <seecref="Length"/> will not fit in an int.
+    ''' Throws if <see cref="Length"/> will not fit in an int.
     ''' </summary>
     Public ReadOnly Property Count As Integer Implements ICollection(Of TColumnType).Count
         Get
@@ -122,7 +122,7 @@ Public Class TypedColumn(Of TColumnType)
     End Property
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' 
     ''' Always return true.
     ''' </summary>
@@ -134,7 +134,7 @@ Public Class TypedColumn(Of TColumnType)
 
     ''' <summary>
     ''' &lt;see cref="this[long]"/&gt;
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' </summary>
     Default Public Property Item(index As Integer) As TColumnType Implements IList(Of TColumnType).Item
         Get
@@ -148,7 +148,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,TColumnType)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,TColumnType)"/> for non-throwing gets.
     ''' </summary>
     ''' <paramname="rowIndex">The index of the value to get, in the appropriate basis.</param>
     Default Public ReadOnly Property Item(rowIndex As Long) As TColumnType
@@ -190,7 +190,7 @@ Public Class TypedColumn(Of TColumnType)
         Inner.ToArray(array)
     End Sub
     ''' <summary>
-    ''' Converts this column to an array of <seecref="Value"/>.
+    ''' Converts this column to an array of <see cref="Value"/>.
     ''' 
     ''' Throws if the column cannot fit in an array.
     ''' </summary>
@@ -211,7 +211,7 @@ Public Class TypedColumn(Of TColumnType)
         Inner.GetRange(sourceIndex, length, array)
     End Sub
     ''' <summary>
-    ''' Converts a subset of this column to an array of <seecref="Value"/>.
+    ''' Converts a subset of this column to an array of <see cref="Value"/>.
     ''' 
     ''' The column subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -235,7 +235,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' Converts a subset of this column to an array of <seecref="Value"/>.
+    ''' Converts a subset of this column to an array of <see cref="Value"/>.
     ''' 
     ''' The column subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -248,7 +248,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedColumnEnumerator(Of TColumnType)
         Return New TypedColumnEnumerator(Of TColumnType)(Inner)
@@ -290,35 +290,35 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Column.GetRange(OfT)(Long,Integer)"/>
+    ''' <see cref="Column.GetRange(OfT)(Long,Integer)"/>
     ''' </summary>
     Public Sub GetRange(Of V)(rowSourceIndex As Long, length As Integer, ByRef array As V()) Implements IColumn(Of TColumnType).GetRange
         Inner.GetRange(rowSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Column.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Column.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(Of V)(rowSourceIndex As Long, length As Integer, ByRef array As V(), destinationIndex As Integer) Implements IColumn(Of TColumnType).GetRange
         Inner.GetRange(rowSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Column.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Column.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of V)(rowIndex As Long, <Out> ByRef value As V) As Boolean Implements IColumn(Of TColumnType).TryGetValue
         Return Inner.TryGetValue(rowIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Column.TryGetValue(Long,Value)"/>
+    ''' <see cref="Column.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(rowIndex As Long, <Out> ByRef value As Value) As Boolean Implements IColumn(Of TColumnType).TryGetValueCell
         Return Inner.TryGetValue(rowIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedColumn(Of TColumnType)) Then Return False
@@ -328,13 +328,13 @@ Public Class TypedColumn(Of TColumnType)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return Inner.GetHashCode() * 17 + GetType(TColumnType).GetHashCode()
     End Function
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedColumn<{GetType(TColumnType).Name}> ""{Name}"" Index = {Index}"
@@ -414,14 +414,14 @@ Public Class TypedColumn(Of TColumnType)
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
     ''' </summary>
     Public Function Contains(item As TColumnType) As Boolean Implements ICollection(Of TColumnType).Contains
         Return LongIndexOf(item) <> -1
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
     ''' </summary>
     Public Sub CopyTo(array As TColumnType(), arrayIndex As Integer) Implements ICollection(Of TColumnType).CopyTo
         If array Is Nothing Then Throw New ArgumentNullException(NameOf(array))
@@ -433,7 +433,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="ToArray()"/>
+    ''' Equivalent to <see cref="ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(col As TypedColumn(Of TColumnType)) As Value()
         Dim ret As Value() = Nothing
@@ -442,7 +442,7 @@ Public Class TypedColumn(Of TColumnType)
     End Operator
 
     ''' <summary>
-    ''' Equivalent to <seecref="ToArray()"/>
+    ''' Equivalent to <see cref="ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(col As TypedColumn(Of TColumnType)) As TColumnType()
         Return col.ToArray()

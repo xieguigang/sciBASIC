@@ -1,6 +1,6 @@
-﻿Imports System
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
+Imports std = System.Math
 
 ''' <summary>
 ''' Represents a value in a dataframe cell.
@@ -83,7 +83,7 @@ Public Class Value
     ''' </summary>
     Public ReadOnly Property Column As Column
         Get
-            Dim col As Column
+            Dim col As Column = Nothing
             If Not Parent.TryGetColumnTranslated(TranslatedColumnIndex, col) Then
                 Throw New ArgumentOutOfRangeException($"Column index unexpectedly out of bounds {TranslatedColumnIndex}")
             End If
@@ -1444,7 +1444,7 @@ Public Class Value
     End Function
 
     Public Shared Widening Operator CType(value As Value) As String
-        Dim ret As String
+        Dim ret As String = Nothing
         If value.TryConvert(ret) Then
             Return ret
         End If
@@ -1607,7 +1607,7 @@ Public Class Value
                     Return True
 
                 Case ColumnType.Timestamp_Nanosecond, ColumnType.NullableTimestamp_Nanosecond
-                    value = DATETIME_EPOCH + TimeSpan.FromTicks(Math.Round(val * TICKS_PER_NANOSECOND))
+                    value = DATETIME_EPOCH + TimeSpan.FromTicks(std.Round(val * TICKS_PER_NANOSECOND))
                     Return True
 
                 Case ColumnType.Timestamp_Second, ColumnType.NullableTimestamp_Second
@@ -1661,7 +1661,7 @@ Public Class Value
                     Return True
 
                 Case ColumnType.Timestamp_Nanosecond, ColumnType.NullableTimestamp_Nanosecond
-                    value = DATETIME_EPOCH + TimeSpan.FromTicks(Math.Round(val * TICKS_PER_NANOSECOND))
+                    value = DATETIME_EPOCH + TimeSpan.FromTicks(std.Round(val * TICKS_PER_NANOSECOND))
                     Return True
 
                 Case ColumnType.Timestamp_Second, ColumnType.NullableTimestamp_Second
@@ -1748,7 +1748,7 @@ Public Class Value
                 Return True
 
             Case ColumnType.NullableTime_Nanosecond, ColumnType.Time_Nanosecond
-                value = TimeSpan.FromTicks(Math.Round(val * TICKS_PER_NANOSECOND))
+                value = TimeSpan.FromTicks(std.Round(val * TICKS_PER_NANOSECOND))
                 Return True
 
             Case ColumnType.NullableTime_Second, ColumnType.Time_Second
@@ -1793,7 +1793,7 @@ Public Class Value
                 Return True
 
             Case ColumnType.NullableTime_Nanosecond, ColumnType.Time_Nanosecond
-                value = TimeSpan.FromTicks(Math.Round(val * TICKS_PER_NANOSECOND))
+                value = TimeSpan.FromTicks(std.Round(val * TICKS_PER_NANOSECOND))
                 Return True
 
             Case ColumnType.NullableTime_Second, ColumnType.Time_Second

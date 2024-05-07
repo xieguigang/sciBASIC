@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections
-Imports System.Collections.Generic
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Allocation free enumerator for a column.
@@ -11,9 +8,9 @@ Public Class ColumnValueEnumerator
     Implements IEnumerator(Of Value)
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
-    Private _CurrentProp As FeatherDotNet.Value
+    Private _CurrentProp As Value
     Friend Parent As DataFrame
     Friend TranslatedColumnIndex As Long
     Friend Index As Long
@@ -41,19 +38,19 @@ Public Class ColumnValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
 
-        Dim value As Value
+        Dim value As Value = Nothing
         If Not Parent.TryGetValueTranslated(Index, TranslatedColumnIndex, value) Then Return False
 
         CurrentProp = value
@@ -61,7 +58,7 @@ Public Class ColumnValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1
@@ -115,7 +112,7 @@ Public Class Column
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long) As Value
         Get
@@ -149,9 +146,9 @@ Public Class Column
     End Property
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' 
-    ''' Throws if <seecref="Length"/> will not fit in an int.
+    ''' Throws if <see cref="Length"/> will not fit in an int.
     ''' </summary>
     Public ReadOnly Property Count As Integer Implements ICollection(Of Value).Count
         Get
@@ -159,7 +156,7 @@ Public Class Column
         End Get
     End Property
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' 
     ''' Always return true.
     ''' </summary>
@@ -171,7 +168,7 @@ Public Class Column
 
     ''' <summary>
     ''' &lt;see cref="this[long]"/&gt;
-    ''' <seecref="System.Collections.Generic.IList(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IList(OfT)"/>
     ''' </summary>
     Default Public Property Item(index As Integer) As Value Implements IList(Of Value).Item
         Get
@@ -204,7 +201,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' Converts this column to an array of <seecref="Value"/>.
+    ''' Converts this column to an array of <see cref="Value"/>.
     ''' 
     ''' Throws if the column cannot fit in an array.
     ''' </summary>
@@ -224,7 +221,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' Converts a subset of this column to an array of <seecref="Value"/>.
+    ''' Converts a subset of this column to an array of <see cref="Value"/>.
     ''' 
     ''' Throws if the subset cannot fit in an array.
     ''' </summary>
@@ -244,7 +241,7 @@ Public Class Column
     End Sub
 
     ''' <summary>
-    ''' Converts this column to an array of <seecref="Value"/>.
+    ''' Converts this column to an array of <see cref="Value"/>.
     ''' 
     ''' The array is stored at index 0 in the passed array reference, which is initialized or resized if needed.
     ''' </summary>
@@ -266,7 +263,7 @@ Public Class Column
     End Sub
 
     ''' <summary>
-    ''' Converts a subset of this column to an array of <seecref="Value"/>.
+    ''' Converts a subset of this column to an array of <see cref="Value"/>.
     ''' 
     ''' The column subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -325,7 +322,7 @@ Public Class Column
     End Sub
 
     ''' <summary>
-    ''' Converts a subset of this column to an array of <seecref="Value"/>.
+    ''' Converts a subset of this column to an array of <see cref="Value"/>.
     ''' 
     ''' The column subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -343,7 +340,7 @@ Public Class Column
     ''' If the passed index is out of bounds, or the coercing fails, false is returned.  Otherwise, true is returned;
     ''' </summary>
     Public Function TryGetValue(Of T)(rowIndex As Long, <Out> ByRef value As T) As Boolean Implements IColumn(Of Value).TryGetValue
-        Dim rawValue As Value
+        Dim rawValue As Value = Nothing
         If Not TryGetValue(rowIndex, rawValue) Then
             value = Nothing
             Return False
@@ -361,7 +358,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' Sets value to the <seecref="Value"/> of the row at the passed index (in the dataframe's basis).
+    ''' Sets value to the <see cref="Value"/> of the row at the passed index (in the dataframe's basis).
     ''' 
     ''' If the passed index is out of bounds false is returned.  Otherwise, true is returned;
     ''' </summary>
@@ -372,7 +369,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As ColumnValueEnumerator
         Return New ColumnValueEnumerator(Parent, TranslatedColumnIndex)
@@ -386,7 +383,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is Column) Then Return False
@@ -396,13 +393,13 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return Parent.GetHashCode() * 17 + TranslatedColumnIndex.GetHashCode()
     End Function
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"Column ""{Name}"" Index = {Index}"
@@ -475,14 +472,14 @@ Public Class Column
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(OfT).Contains(T)"/>
     ''' </summary>
     Public Function Contains(item As Value) As Boolean Implements ICollection(Of Value).Contains
         Return LongIndexOf(item) <> -1
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
+    ''' <see cref="System.Collections.Generic.ICollection(OfT).CopyTo(,Integer)"/>
     ''' </summary>
     Public Sub CopyTo(array As Value(), arrayIndex As Integer) Implements ICollection(Of Value).CopyTo
         If array Is Nothing Then Throw New ArgumentNullException(NameOf(array))
@@ -501,7 +498,7 @@ Public Class Column
     End Function
 
     ''' <summary>
-    ''' Equivalent to <seecref="ToArray()"/>
+    ''' Equivalent to <see cref="ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(col As Column) As Value()
         Return col.ToArray()

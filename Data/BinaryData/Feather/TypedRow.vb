@@ -1,8 +1,5 @@
-﻿Imports System
-Imports System.Collections
-Imports System.Collections.Generic
-Imports FeatherDotNet.Impl
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Allocation free enumerator for a typed row.
@@ -14,7 +11,7 @@ Public Class TypedRowValueEnumerator
     Private Index As Long
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public ReadOnly Property CurrentProp As Value Implements IEnumerator(Of Value).Current
         Get
@@ -35,13 +32,13 @@ Public Class TypedRowValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -53,7 +50,7 @@ Public Class TypedRowValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Inner.Reset()
@@ -89,7 +86,7 @@ Public Class TypedRow(Of TCol1)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -100,7 +97,7 @@ Public Class TypedRow(Of TCol1)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -122,7 +119,7 @@ Public Class TypedRow(Of TCol1)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRow(Of TCol1)) Then Return False
@@ -132,21 +129,21 @@ Public Class TypedRow(Of TCol1)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -161,70 +158,70 @@ Public Class TypedRow(Of TCol1)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRow(Of TCol1)) As Value()
         Return row.ToArray()
@@ -258,7 +255,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -269,7 +266,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -299,7 +296,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType(Of TCol1, TCol2)) Then Return False
@@ -309,21 +306,21 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return (Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -338,70 +335,70 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType(Of TCol1, TCol2)) As Value()
         Return row.ToArray()
@@ -435,7 +432,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -446,7 +443,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -484,7 +481,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType1(Of TCol1, TCol2, TCol3)) Then Return False
@@ -494,21 +491,21 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return ((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -523,70 +520,70 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType1(Of TCol1, TCol2, TCol3)) As Value()
         Return row.ToArray()
@@ -620,7 +617,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -631,7 +628,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -677,7 +674,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)) Then Return False
@@ -687,21 +684,21 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return (((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()) * 17 + GetType(TCol4).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}, {GetType(TCol4).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -716,70 +713,70 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)) As Value()
         Return row.ToArray()
@@ -813,7 +810,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -824,7 +821,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -878,7 +875,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)) Then Return False
@@ -888,21 +885,21 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return ((((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()) * 17 + GetType(TCol4).GetHashCode()) * 17 + GetType(TCol5).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}, {GetType(TCol4).Name}, {GetType(TCol5).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -917,70 +914,70 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)) As Value()
         Return row.ToArray()
@@ -1014,7 +1011,7 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -1025,7 +1022,7 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -1087,7 +1084,7 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)) Then Return False
@@ -1097,21 +1094,21 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return (((((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()) * 17 + GetType(TCol4).GetHashCode()) * 17 + GetType(TCol5).GetHashCode()) * 17 + GetType(TCol6).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}, {GetType(TCol4).Name}, {GetType(TCol5).Name}, {GetType(TCol6).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1126,70 +1123,70 @@ Public Class TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)) As Value()
         Return row.ToArray()
@@ -1223,7 +1220,7 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -1234,7 +1231,7 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -1304,7 +1301,7 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)) Then Return False
@@ -1314,21 +1311,21 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return ((((((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()) * 17 + GetType(TCol4).GetHashCode()) * 17 + GetType(TCol5).GetHashCode()) * 17 + GetType(TCol6).GetHashCode()) * 17 + GetType(TCol7).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}, {GetType(TCol4).Name}, {GetType(TCol5).Name}, {GetType(TCol6).Name}, {GetType(TCol7).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1343,70 +1340,70 @@ Public Class TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)) As Value()
         Return row.ToArray()
@@ -1440,7 +1437,7 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -1451,7 +1448,7 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -1529,7 +1526,7 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)) Then Return False
@@ -1539,21 +1536,21 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return (((((((Inner.GetHashCode() * 17 + GetType(TCol1).GetHashCode()) * 17 + GetType(TCol2).GetHashCode()) * 17 + GetType(TCol3).GetHashCode()) * 17 + GetType(TCol4).GetHashCode()) * 17 + GetType(TCol5).GetHashCode()) * 17 + GetType(TCol6).GetHashCode()) * 17 + GetType(TCol7).GetHashCode()) * 17 + GetType(TCol8).GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"TypedRow<{GetType(TCol1).Name}, {GetType(TCol2).Name}, {GetType(TCol3).Name}, {GetType(TCol4).Name}, {GetType(TCol5).Name}, {GetType(TCol6).Name}, {GetType(TCol7).Name}, {GetType(TCol8).Name}> Index = {Index}"
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As TypedRowValueEnumerator
         Return New TypedRowValueEnumerator(Inner.GetEnumerator(), Length)
@@ -1568,70 +1565,70 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue(Long,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue(String,Value)"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Function ToArray() As Value() Implements IRow.ToArray
         Return Inner.ToArray()
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer)"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
     End Function
 
     ''' <summary>
-    ''' <seecref="Row.ToArray()"/>
+    ''' <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Sub ToArray(ByRef array As Value()) Implements IRow.ToArray
         ToArray(array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <seecref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' Equivalent to <seecref="Row.ToArray()"/>
+    ''' Equivalent to <see cref="Row.ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)) As Value()
         Return row.ToArray()

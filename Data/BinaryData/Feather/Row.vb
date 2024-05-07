@@ -11,7 +11,7 @@ Public Class RowValueEnumerator
     Implements IEnumerator(Of Value)
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Private _CurrentProp As FeatherDotNet.Value
     Friend Parent As DataFrame
@@ -41,14 +41,14 @@ Public Class RowValueEnumerator
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -61,7 +61,7 @@ Public Class RowValueEnumerator
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1
@@ -99,7 +99,7 @@ Public Class Row
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -135,7 +135,7 @@ Public Class Row
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <seecref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -178,7 +178,7 @@ Public Class Row
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As RowValueEnumerator
         Return New RowValueEnumerator(Parent, TranslatedRowIndex)
@@ -192,7 +192,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Sets value to the <seecref="Value"/> of the column at the passed index (in the dataframe's basis).
+    ''' Sets value to the <see cref="Value"/> of the column at the passed index (in the dataframe's basis).
     ''' 
     ''' If the passed index is out of bounds false is returned.  Otherwise, true is returned;
     ''' </summary>
@@ -225,7 +225,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Sets value to the <seecref="Value"/> of the column with the passed name.
+    ''' Sets value to the <see cref="Value"/> of the column with the passed name.
     ''' 
     ''' If the passed index is out of bounds false is returned.  Otherwise, true is returned;
     ''' </summary>
@@ -263,7 +263,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Converts this column to an array of <seecref="Value"/>.
+    ''' Converts this column to an array of <see cref="Value"/>.
     ''' 
     ''' Throws if the row cannot fit in an array.
     ''' </summary>
@@ -274,7 +274,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Converts this row to an array of <seecref="Value"/>.
+    ''' Converts this row to an array of <see cref="Value"/>.
     ''' 
     ''' The array is stored at index 0 in the passed array reference, which is initialized or resized if needed.
     ''' </summary>
@@ -283,7 +283,7 @@ Public Class Row
     End Sub
 
     ''' <summary>
-    ''' Converts a subset of this row to an array of <seecref="Value"/>.
+    ''' Converts a subset of this row to an array of <see cref="Value"/>.
     ''' 
     ''' Throws if the subset cannot fit in an array.
     ''' </summary>
@@ -294,7 +294,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Converts a subset of this row to an array of <seecref="Value"/>.
+    ''' Converts a subset of this row to an array of <see cref="Value"/>.
     ''' 
     ''' The subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -305,7 +305,7 @@ Public Class Row
     End Sub
 
     ''' <summary>
-    ''' Converts a subset of this row to an array of <seecref="Value"/>.
+    ''' Converts a subset of this row to an array of <see cref="Value"/>.
     ''' 
     ''' The subset starts at the given index (in the dataframe's basis) and is of the given length.
     ''' 
@@ -342,7 +342,7 @@ Public Class Row
     End Sub
 
     ''' <summary>
-    ''' <seecref="Object.Equals(Object)"/>
+    ''' <see cref="Object.Equals(Object)"/>
     ''' </summary>
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is Row) Then Return False
@@ -352,21 +352,21 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.GetHashCode"/>
+    ''' <see cref="Object.GetHashCode"/>
     ''' </summary>
     Public Overrides Function GetHashCode() As Integer
         Return Parent.GetHashCode() * 17 + TranslatedRowIndex.GetHashCode()
     End Function
 
     ''' <summary>
-    ''' <seecref="Object.ToString"/>
+    ''' <see cref="Object.ToString"/>
     ''' </summary>
     Public Overrides Function ToString() As String
         Return $"Row Index = {Parent.UntranslateIndex(TranslatedRowIndex)}"
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRow(OfTCol1)"/>.
+    ''' Maps this row to a <see cref="TypedRow(OfTCol1)"/>.
     ''' </summary>
     Public Function Map(Of TCol1)() As TypedRow(Of TCol1)
         If Parent.ColumnCount < 1 Then Throw New ArgumentException($"Cannot map row, mapping has 1 column while row has {Parent.ColumnCount:N0} columns")
@@ -381,7 +381,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType(OfTCol1,TCol2)"/>.
+    ''' Maps this row to a <see cref="TypedRowType(OfTCol1,TCol2)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2)() As TypedRowType(Of TCol1, TCol2)
         If Parent.ColumnCount < 2 Then Throw New ArgumentException($"Cannot map row, mapping has 2 columns while row has {Parent.ColumnCount:N0} columns")
@@ -396,7 +396,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType1(OfTCol1,TCol2,TCol3)"/>.
+    ''' Maps this row to a <see cref="TypedRowType1(OfTCol1,TCol2,TCol3)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3)() As TypedRowType1(Of TCol1, TCol2, TCol3)
         If Parent.ColumnCount < 3 Then Throw New ArgumentException($"Cannot map row, mapping has 3 columns while row has {Parent.ColumnCount:N0} columns")
@@ -411,7 +411,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType2(OfTCol1,TCol2,TCol3,TCol4)"/>.
+    ''' Maps this row to a <see cref="TypedRowType2(OfTCol1,TCol2,TCol3,TCol4)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4)() As TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
         If Parent.ColumnCount < 4 Then Throw New ArgumentException($"Cannot map row, mapping has 4 columns while row has {Parent.ColumnCount:N0} columns")
@@ -426,7 +426,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType3(OfTCol1,TCol2,TCol3,TCol4,TCol5)"/>.
+    ''' Maps this row to a <see cref="TypedRowType3(OfTCol1,TCol2,TCol3,TCol4,TCol5)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5)() As TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
         If Parent.ColumnCount < 5 Then Throw New ArgumentException($"Cannot map row, mapping has 5 columns while row has {Parent.ColumnCount:N0} columns")
@@ -441,7 +441,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType4(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6)"/>.
+    ''' Maps this row to a <see cref="TypedRowType4(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)() As TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
         If Parent.ColumnCount < 6 Then Throw New ArgumentException($"Cannot map row, mapping has 6 columns while row has {Parent.ColumnCount:N0} columns")
@@ -456,7 +456,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType5(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7)"/>.
+    ''' Maps this row to a <see cref="TypedRowType5(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)() As TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
         If Parent.ColumnCount < 7 Then Throw New ArgumentException($"Cannot map row, mapping has 7 columns while row has {Parent.ColumnCount:N0} columns")
@@ -471,7 +471,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <seecref="TypedRowType6(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7,TCol8)"/>.
+    ''' Maps this row to a <see cref="TypedRowType6(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7,TCol8)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)() As TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
         If Parent.ColumnCount < 8 Then Throw New ArgumentException($"Cannot map row, mapping has 8 columns while row has {Parent.ColumnCount:N0} columns")
@@ -486,7 +486,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Equivalent to <seecref="ToArray()"/>
+    ''' Equivalent to <see cref="ToArray()"/>
     ''' </summary>
     Public Shared Narrowing Operator CType(row As Row) As Value()
         Return row.ToArray()

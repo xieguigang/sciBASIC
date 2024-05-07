@@ -1,11 +1,9 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.IO.MemoryMappedFiles
+﻿Imports System.IO.MemoryMappedFiles
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
-Imports FeatherDotNet.Impl
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
-Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
 ''' Represents a dataframe.
@@ -14,7 +12,7 @@ Imports System.Runtime.InteropServices
 ''' 
 ''' Is backed by a MemoryMappedFile, remember to Dispose when done using the dataframe.
 ''' 
-''' Any <seecref="ProxyDataFrame(OfTProxyType)"/>, <seecref="TypedDataFrameBase(OfTRowType)"/>, or <seecref="Value"/> instances
+''' Any <see cref="ProxyDataFrame(OfTProxyType)"/>, <see cref="TypedDataFrameBase(OfTRowType)"/>, or <see cref="Value"/> instances
 ''' (and their enumerables) obtained via a DataFrame become invalid after that DataFrame is disposed.  Be sure to have converted
 ''' to built-in types prior to Disposing.
 ''' </summary>
@@ -24,21 +22,28 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Whether this DataFrame is addressable with base-0 or base-1 indexes.
     ''' </summary>
+    Dim _Basis As BasisType
 
     ''' <summary>
     ''' An enumerable of all the columns in this DataFrame.
     ''' </summary>
+    Dim _AllColumns As ColumnEnumerable
+
     ''' <summary>
     ''' An enumerable of all the rows in this DataFrame.
     ''' </summary>
+    Dim _AllRows As RowEnumerable
 
     ''' <summary>
     ''' A utility accessor for columns in this DataFrame.
     ''' </summary>
+    Dim _Columns As ColumnMap
+
     ''' <summary>
     ''' A utility accessor for rows in this DataFrame.
     ''' </summary>
-    Private _Basis As FeatherDotNet.BasisType, _AllColumns As FeatherDotNet.ColumnEnumerable, _AllRows As FeatherDotNet.RowEnumerable, _Columns As FeatherDotNet.ColumnMap, _Rows As FeatherDotNet.RowMap
+    Dim _Rows As RowMap
+
     Private ReadOnly InternalSyncLock As Object = New Object()
 
     Private File As MemoryMappedFile
@@ -112,7 +117,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the row at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetRow(Long,Row)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetRow(Long,Row)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long) As Row
         Get
@@ -123,7 +128,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the column with the given name.
     ''' 
-    ''' Will throw if the name is not found.  Use <seecref="TryGetColumn(String,Column)"/> for non-throwing gets.
+    ''' Will throw if the name is not found.  Use <see cref="TryGetColumn(String,Column)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Column
         Get
@@ -134,7 +139,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the value at the given row and column indexes.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnIndex As Long) As Value Implements IDataFrame.Item
         Get
@@ -166,7 +171,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the value at the given row index in the column with the given name.
     ''' 
-    ''' Will throw if the index is out of bounds or the column is not found.  Use <seecref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds or the column is not found.  Use <see cref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnName As String) As Value Implements IDataFrame.Item
         Get
@@ -315,7 +320,7 @@ Partial Public Class DataFrame
     End Function
 
     ''' <summary>
-    ''' <seecref="IDisposable.Dispose"/>
+    ''' <see cref="IDisposable.Dispose"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         ' burn down View

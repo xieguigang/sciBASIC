@@ -1,7 +1,4 @@
-﻿Imports System.Collections
-Imports System.Collections.Generic
-
-''' <summary>
+﻿''' <summary>
 ''' Allocation free enumerable for the columns in a dataframe.
 ''' </summary>
 Public Class ColumnEnumerable
@@ -13,7 +10,7 @@ Public Class ColumnEnumerable
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
+    ''' <see cref="System.Collections.Generic.IEnumerable(OfT).GetEnumerator"/>
     ''' </summary>
     Public Function GetEnumerator() As ColumnEnumerator
         Return New ColumnEnumerator(Parent)
@@ -35,9 +32,9 @@ Public Class ColumnEnumerator
     Implements IEnumerator(Of Column)
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT).CurrentProp"/>
     ''' </summary>
-    Private _CurrentProp As FeatherDotNet.Column
+    Private _CurrentProp As Column
     Private Parent As DataFrame
     Private Index As Long
 
@@ -63,14 +60,14 @@ Public Class ColumnEnumerator
     End Property
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Parent = Nothing
     End Sub
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
@@ -83,7 +80,7 @@ Public Class ColumnEnumerator
     End Function
 
     ''' <summary>
-    ''' <seecref="System.Collections.Generic.IEnumerator(OfT)"/>
+    ''' <see cref="System.Collections.Generic.IEnumerator(OfT)"/>
     ''' </summary>
     Public Sub Reset() Implements IEnumerator.Reset
         Index = -1

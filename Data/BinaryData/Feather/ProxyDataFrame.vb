@@ -3,7 +3,7 @@ Imports FeatherDotNet.Impl
 Imports System.Runtime.InteropServices
 
 ''' <summary>
-''' Utility class for addressing a <seecref="ProxyDataFrame(OfTProxyType)"/>'s rows.
+''' Utility class for addressing a <see cref="ProxyDataFrame(OfTProxyType)"/>'s rows.
 ''' </summary>
 Public Class ProxyRowMap(Of TProxyType)
     Private Parent As ProxyDataFrame(Of TProxyType)
@@ -37,13 +37,13 @@ End Class
 ''' <summary>
 ''' Represents a dataframe, where each row has been mapped to an instance of a type.
 ''' 
-''' Is backed by a <seecref="DataFrame"/>, and will become invalid when that dataframe is disposed.
+''' Is backed by a <see cref="DataFrame"/>, and will become invalid when that dataframe is disposed.
 ''' </summary>
 Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     Implements IDataFrame
 
     ''' <summary>
-    ''' The backing <seecref="DataFrame"/>
+    ''' The backing <see cref="DataFrame"/>
     ''' </summary>
     ''' <summary>
     ''' An enumerable of all the rows in this DataFrame.
@@ -129,7 +129,7 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     ''' <summary>
     ''' Return the row at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetRow(Long,TProxyType)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetRow(Long,TProxyType)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long) As TProxyType
         Get
@@ -140,7 +140,7 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     ''' <summary>
     ''' Return the column with the given name.
     ''' 
-    ''' Will throw if the name is not found.  Use <seecref="TryGetColumn(String,Column)"/> for non-throwing gets.
+    ''' Will throw if the name is not found.  Use <see cref="TryGetColumn(String,Column)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Column
         Get
@@ -151,7 +151,7 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     ''' <summary>
     ''' Return the value at the given row and column indexes.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <seecref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnIndex As Long) As Value Implements IDataFrame.Item
         Get
@@ -162,7 +162,7 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     ''' <summary>
     ''' Return the value at the given row index in the column with the given name.
     ''' 
-    ''' Will throw if the index is out of bounds or the column is not found.  Use <seecref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds or the column is not found.  Use <see cref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnName As String) As Value Implements IDataFrame.Item
         Get

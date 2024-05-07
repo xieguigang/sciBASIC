@@ -16,6 +16,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports std = System.Math
 
 Namespace FlatBuffers
     ''' <summary>
@@ -96,7 +97,9 @@ Namespace FlatBuffers
         End Function
 
         Public Shared Function __has_identifier(bb As ByteBuffer, ident As String) As Boolean
-            If ident.Length <> FileIdentifierLength Then Throw New ArgumentException("FlatBuffers: file identifier must be length " & FileIdentifierLength.ToString(), "ident")
+            If ident.Length <> FileIdentifierLength Then
+                Throw New ArgumentException("FlatBuffers: file identifier must be length " & FileIdentifierLength.ToString(), "ident")
+            End If
 
             For i = 0 To FileIdentifierLength - 1
                 If ident(i) <> Microsoft.VisualBasic.ChrW(bb.Get(bb.Position + HeapSizeOf.int + i)) Then Return False
@@ -113,7 +116,7 @@ Namespace FlatBuffers
             Dim len_2 = bb.GetInt(offset_2)
             Dim startPos_1 = offset_1 + HeapSizeOf.int
             Dim startPos_2 = offset_2 + HeapSizeOf.int
-            Dim len = Math.Min(len_1, len_2)
+            Dim len = std.Min(len_1, len_2)
             Dim bbArray = bb.Data
             For i = 0 To len - 1
                 If bbArray(i + startPos_1) <> bbArray(i + startPos_2) Then Return bbArray(i + startPos_1) - bbArray(i + startPos_2)
@@ -127,7 +130,7 @@ Namespace FlatBuffers
             Dim len_1 = bb.GetInt(offset_1)
             Dim len_2 = key.Length
             Dim startPos_1 = offset_1 + HeapSizeOf.int
-            Dim len = Math.Min(len_1, len_2)
+            Dim len = std.Min(len_1, len_2)
             Dim bbArray = bb.Data
             For i = 0 To len - 1
                 If bbArray(i + startPos_1) <> key(i) Then Return bbArray(i + startPos_1) - key(i)

@@ -430,7 +430,7 @@ Public NotInheritable Class FeatherWriter
     End Sub
 
     ''' <summary>
-    ''' <seecref="IDisposable.Dispose"/>
+    ''' <see cref="IDisposable.Dispose"/>
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Dim dataCopy = DataStream
