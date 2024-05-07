@@ -13,10 +13,13 @@ Imports std = System.Math
 ''' 
 ''' Is backed by a MemoryMappedFile, remember to Dispose when done using the dataframe.
 ''' 
-''' Any <see cref="ProxyDataFrame(OfTProxyType)"/>, <see cref="TypedDataFrameBase(OfTRowType)"/>, or <see cref="Value"/> instances
+''' Any <see cref="ProxyDataFrame(Of TProxyType)"/>, <see cref="TypedDataFrameBase(Of TRowType)"/>, or <see cref="Value"/> instances
 ''' (and their enumerables) obtained via a DataFrame become invalid after that DataFrame is disposed.  Be sure to have converted
 ''' to built-in types prior to Disposing.
 ''' </summary>
+''' <remarks>
+''' https://github.com/kevin-montrose/FeatherDotNet
+''' </remarks>
 Partial Public Class DataFrame
     Implements IDisposable, IDataFrame
 
