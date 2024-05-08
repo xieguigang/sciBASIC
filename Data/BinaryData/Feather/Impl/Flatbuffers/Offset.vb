@@ -18,24 +18,36 @@ Namespace FlatBuffers
     ''' <summary>
     ''' Offset class for typesafe assignments.
     ''' </summary>
-    Friend Class Offset(Of T)
+    Friend Structure Offset(Of T)
         Public Value As Integer
         Public Sub New(value As Integer)
             Me.Value = value
         End Sub
-    End Class
 
-    Friend Class StringOffset
-        Public Value As Integer
-        Public Sub New(value As Integer)
-            Me.Value = value
-        End Sub
-    End Class
+        Public Overrides Function ToString() As String
+            Return $"Offset(Of {GetType(T).Name}): {StringFormats.Lanudry(bytes:=Value)}"
+        End Function
+    End Structure
 
-    Friend Class VectorOffset
+    Friend Structure StringOffset
         Public Value As Integer
         Public Sub New(value As Integer)
             Me.Value = value
         End Sub
-    End Class
+
+        Public Overrides Function ToString() As String
+            Return $"StringOffset: {StringFormats.Lanudry(bytes:=Value)}"
+        End Function
+    End Structure
+
+    Friend Structure VectorOffset
+        Public Value As Integer
+        Public Sub New(value As Integer)
+            Me.Value = value
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"VectorOffset: {StringFormats.Lanudry(bytes:=Value)}"
+        End Function
+    End Structure
 End Namespace
