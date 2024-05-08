@@ -2,6 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 Imports Microsoft.VisualBasic.Math.Information
 Imports std = System.Math
@@ -33,25 +34,23 @@ End Enum
 Public NotInheritable Class FeatherWriter
     Implements IDisposable
 
-    ''' <summary>
-    ''' WriteMode this FeatherWriter is configured in.
-    ''' </summary>
+    Dim _Mode As WriteMode
+    Dim _NumRows As Long
 
-    ''' <summary>
-    ''' Number of rows in the dataframe being written
-    ''' </summary>
-    Private _Mode As WriteMode, _NumRows As Long
     Private NullIndex As Long
     Private DataIndex As Long
     Private VariableIndex As Long
 
-    Private NullStream As BinaryWriter
-    Private DataStream As BinaryWriter
-    Private VariableStream As BinaryWriter
+    Private NullStream As BinaryDataWriter
+    Private DataStream As BinaryDataWriter
+    Private VariableStream As BinaryDataWriter
 
     Private PendingColumns As LinkedList(Of WriteColumnConfig)
     Private Metadata As LinkedList(Of ColumnMetadata)
 
+    ''' <summary>
+    ''' WriteMode this FeatherWriter is configured in.
+    ''' </summary>
     Public Property Mode As WriteMode
         Get
             Return _Mode
@@ -61,6 +60,9 @@ Public NotInheritable Class FeatherWriter
         End Set
     End Property
 
+    ''' <summary>
+    ''' Number of rows in the dataframe being written
+    ''' </summary>
     Public Property NumRows As Long
         Get
             Return _NumRows
@@ -69,6 +71,7 @@ Public NotInheritable Class FeatherWriter
             _NumRows = value
         End Set
     End Property
+
     ''' <summary>
     ''' Number of columns added to this dataframe
     ''' </summary>
@@ -104,9 +107,9 @@ Public NotInheritable Class FeatherWriter
         End Select
 
         Try
-            DataStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-            NullStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-            VariableStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+            DataStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
+            NullStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
+            VariableStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
 
             Setup(mode)
         Catch
@@ -137,9 +140,9 @@ Public NotInheritable Class FeatherWriter
         Dim multiplexer = New MultiStreamProvider(outputStream)
 
         Try
-            DataStream = New BinaryWriter(multiplexer.CreateChildStream())
-            NullStream = New BinaryWriter(multiplexer.CreateChildStream())
-            VariableStream = New BinaryWriter(multiplexer.CreateChildStream())
+            DataStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            NullStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            VariableStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
 
             Setup(mode)
         Catch
@@ -218,7 +221,7 @@ Public NotInheritable Class FeatherWriter
     Public Sub AddColumn(name As String, column As IEnumerable)
         If column Is Nothing Then Throw New ArgumentNullException(NameOf(column))
 
-        Dim type As Type
+        Dim type As Type = Nothing
         Dim length As Long
         Dim nullCount As Long
         DetermineTypeLengthAndNullCount(column, type, length, nullCount)
@@ -234,7 +237,7 @@ Public NotInheritable Class FeatherWriter
         If column Is Nothing Then Throw New ArgumentNullException(NameOf(column))
         If length < 0 Then Throw New ArgumentOutOfRangeException(NameOf(length), $"Expected value >= 0, found {length}")
 
-        Dim type As Type
+        Dim type As Type = Nothing
         Dim nullCount As Long
         DetermineTypeAndNullCount(column, type, nullCount)
 
@@ -267,7 +270,7 @@ Public NotInheritable Class FeatherWriter
                     Dim name = namesE.Current
                     Dim column = columnE.Current
 
-                    Dim type As Type
+                    Dim type As Type = Nothing
                     Dim length As Long
                     Dim nullCount As Long
                     DetermineTypeLengthAndNullCount(column, type, length, nullCount)
@@ -311,7 +314,7 @@ Public NotInheritable Class FeatherWriter
                         Dim name = namesE.Current
                         Dim column = columnE.Current
                         Dim length = lengthE.Current
-                        Dim type As Type
+                        Dim type As Type = Nothing
                         Dim nullCount As Long
                         DetermineTypeAndNullCount(column, type, nullCount)
 
@@ -1030,8 +1033,8 @@ inferFromUntyped:
     Private Function WriteColumn(ByRef column As WriteColumnConfig) As ColumnMetadata
         Dim dataOffset As Long
 
-        Dim levels As String()
-        Dim timezone As String
+        Dim levels As String() = Nothing
+        Dim timezone As String = Nothing
         Dim unit As DateTimePrecisionType
 
         ' advance all streams to latest point, so any backing buffers know they can flush
@@ -1082,9 +1085,9 @@ inferFromUntyped:
 
         startIndex = DataIndex
 
-        Dim __ As String()
-        Dim ___ As String
-        Dim ____ As DateTimePrecisionType
+        Dim __ As String() = Nothing
+        Dim ___ As String = Nothing
+        Dim ____ As DateTimePrecisionType = Nothing
         WriteVariableSizedData(GetType(String), levels, levels.Length, ColumnType.String, startIndex, numBytes, __, ___, ____)
     End Sub
 
@@ -1283,8 +1286,7 @@ inferFromUntyped:
 
     Private Sub CloseAndDiscard()
         WriteMetadata()
-
-        WriteTrailingMagic()
+        WriteMagic()
 
         DataStream.Dispose()
         NullStream.Dispose()
@@ -1336,15 +1338,9 @@ inferFromUntyped:
     End Sub
 
     Private Sub WriteMagic()
+        DataStream.ByteOrder = ByteOrder.LittleEndian
         DataStream.Write(MAGIC_HEADER)
         DataIndex += MAGIC_HEADER_SIZE
-    End Sub
-
-    Private Sub WriteLeadingMagic()
-        WriteMagic()
-    End Sub
-    Private Sub WriteTrailingMagic()
-        WriteMagic()
     End Sub
 
     Private Sub SerializeAndDiscard()
@@ -3534,5 +3530,9 @@ inferFromUntyped:
             NullStream.Write(currentByte)
             NullIndex += 1
         End If
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
     End Sub
 End Class

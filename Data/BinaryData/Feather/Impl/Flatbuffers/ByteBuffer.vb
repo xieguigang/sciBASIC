@@ -80,6 +80,10 @@ Namespace FlatBuffers
         Private doublehelper As Double() = {0.0}
         Private ulonghelper As ULong() = {0UL}
 
+        Public Overrides Function ToString() As String
+            Return "ByteBuffer: " & StringFormats.Lanudry(bytes:=Length)
+        End Function
+
         ' Helper functions for the unsafe version.
         Public Shared Function ReverseBytes(input As UShort) As UShort
             Return (input And &HFFUI) << 8 Or (input And &HFF00UI) >> 8

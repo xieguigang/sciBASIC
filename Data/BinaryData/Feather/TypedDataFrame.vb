@@ -660,7 +660,7 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(Of TRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
         Return New TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)(row)
@@ -790,7 +790,7 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(Of TRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
         Return New TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)(row)
@@ -936,7 +936,7 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
     End Sub
 
     ''' <summary>
-    ''' <see cref="TypedDataFrameBase(OfTRowType).MapRow(Row)"/>
+    ''' <see cref="TypedDataFrameBase(Of TRowType).MapRow(Row)"/>
     ''' </summary>
     Protected Friend Overrides Function MapRow(row As Row) As TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
         Return New TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)(row)

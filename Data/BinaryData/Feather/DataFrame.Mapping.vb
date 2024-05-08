@@ -468,7 +468,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 8 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
+        Dim ret As TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}, {GetType(TCol3).Name} = {Enumerable.ElementAt(AllColumns, 2).Type.Name}, {GetType(TCol4).Name} = {Enumerable.ElementAt(AllColumns, 3).Type.Name}, {GetType(TCol5).Name} = {Enumerable.ElementAt(AllColumns, 4).Type.Name}, {GetType(TCol6).Name} = {Enumerable.ElementAt(AllColumns, 5).Type.Name}, {GetType(TCol7).Name} = {Enumerable.ElementAt(AllColumns, 6).Type.Name}, {GetType(TCol8).Name} = {Enumerable.ElementAt(AllColumns, 7).Type.Name}")
         End If
@@ -602,7 +602,7 @@ Partial Public Class DataFrame
     End Function
 
     Private Function TryInferMapping(Of TProxyType)(membersInColumnOrder As String(), <Out> ByRef translatedColumnIndexToMemberMapping As Dictionary(Of Long, MemberInfo), <Out> ByRef errorMessage As String) As Boolean
-        Dim suggested As Dictionary(Of Long, MemberInfo)
+        Dim suggested As Dictionary(Of Long, MemberInfo) = Nothing
         If Not TrySuggestMapping(Of TProxyType)(membersInColumnOrder, suggested, errorMessage) Then
             translatedColumnIndexToMemberMapping = Nothing
             Return False

@@ -50,7 +50,7 @@ Public Class RowValueEnumerator
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
 
-        Dim value As Value
+        Dim value As Value = Nothing
         If Not Parent.TryGetValueTranslated(TranslatedRowIndex, Index, value) Then Return False
 
         CurrentProp = value
@@ -102,7 +102,7 @@ Public Class Row
         Get
             Dim translatedColumnIndex = Parent.TranslateIndex(columnIndex)
 
-            Dim value As Value
+            Dim value As Value = Nothing
             If Not Parent.TryGetValueTranslated(TranslatedRowIndex, translatedColumnIndex, value) Then
                 Dim rowIndex = Parent.UntranslateIndex(TranslatedRowIndex)
 
@@ -141,7 +141,7 @@ Public Class Row
                 Throw New KeyNotFoundException($"Could not find column with name ""{columnName}""")
             End If
 
-            Dim value As Value
+            Dim value As Value = Nothing
             If Not Parent.TryGetValueTranslated(TranslatedRowIndex, translatedColumnIndex, value) Then
                 Dim rowIndex = Parent.UntranslateIndex(TranslatedRowIndex)
                 Dim columnIndex = Parent.UntranslateIndex(translatedColumnIndex)
@@ -490,8 +490,10 @@ Public Class Row
     End Operator
 
     Friend Function UnsafeGetTranslated(Of T)(translatedColumnIndex As Long) As T
-        Dim value As Value
-        If Not Parent.TryGetValueTranslated(TranslatedRowIndex, translatedColumnIndex, value) Then Throw New InvalidOperationException($"Unexpectedly couldn't find value at {translatedColumnIndex}")
+        Dim value As Value = Nothing
+        If Not Parent.TryGetValueTranslated(TranslatedRowIndex, translatedColumnIndex, value) Then
+            Throw New InvalidOperationException($"Unexpectedly couldn't find value at {translatedColumnIndex}")
+        End If
 
         Dim category = Parent.Metadata.Columns(translatedColumnIndex).GetCategoryEnumMap(Of T)()
 

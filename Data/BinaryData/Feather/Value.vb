@@ -114,6 +114,152 @@ Public Class Value
         Me.TranslatedColumnIndex = translatedColumnIndex
     End Sub
 
+    Public Function [TryCast](type As Type) As Object
+        Select Case type
+            Case GetType(Boolean)
+                Dim val As Boolean = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Integer)
+
+                Dim val As Integer = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Single)
+
+                Dim val As Single = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Long)
+
+                Dim val As Long = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Double)
+
+                Dim val As Double = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(String)
+
+                Dim val As String = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(UInteger)
+
+                Dim val As UInteger = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(ULong)
+
+                Dim val As ULong = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Date)
+
+                Dim val As Date = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(TimeSpan)
+
+                Dim val As TimeSpan = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Byte)
+
+                Dim val As Byte = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(SByte)
+
+                Dim val As SByte = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(Short)
+
+                Dim val As Short = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case GetType(UShort)
+
+                Dim val As UShort = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case Else
+                Throw New NotImplementedException(type.FullName)
+        End Select
+    End Function
+
     Public Overloads Function Equals(other As Value) As Boolean Implements IEquatable(Of Value).Equals
         Select Case other.OnDiskType
                 ' TODO (Binary)

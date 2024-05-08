@@ -39,7 +39,7 @@ Namespace Impl
         Public Function GetWidener(widestType As Type) As Func(Of IEnumerable, IEnumerable)
             Dim nonNull = If(Nullable.GetUnderlyingType(widestType), widestType)
 
-            Dim widener As Func(Of IEnumerable, IEnumerable)
+            Dim widener As Func(Of IEnumerable, IEnumerable) = Nothing
             If Not WidenerLookup.TryGetValue(widestType, widener) Then
                 If nonNull.IsEnum Then
                     Return GetEnumWidener(widestType)

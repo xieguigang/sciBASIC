@@ -47,7 +47,7 @@ Public Class TypedColumnEnumerator(Of TColumnType)
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
 
-        Dim value As Value
+        Dim value As Value = Nothing
         If Not Inner.TryGetValueTranslated(Index, value) Then Return False
 
         Dim category = Inner.Parent.Metadata.Columns(Inner.TranslatedColumnIndex).GetCategoryEnumMap(Of TColumnType)()
@@ -112,7 +112,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' 
     ''' Throws if <see cref="Length"/> will not fit in an int.
     ''' </summary>
-    Public ReadOnly Property Count As Integer Implements ICollection(Of TColumnType).Count
+    Private ReadOnly Property Count As Integer Implements ICollection(Of TColumnType).Count
         Get
             Return Length
         End Get
@@ -123,7 +123,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' 
     ''' Always return true.
     ''' </summary>
-    Public ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of TColumnType).IsReadOnly
+    Private ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of TColumnType).IsReadOnly
         Get
             Return True
         End Get
@@ -265,7 +265,7 @@ Public Class TypedColumn(Of TColumnType)
     ''' If the passed index is out of bounds false is returned.  Otherwise, true is returned;
     ''' </summary>
     Public Function TryGetValue(rowIndex As Long, <Out> ByRef value As TColumnType) As Boolean Implements IColumn(Of TColumnType).TryGetValue
-        Dim innerValue As Value
+        Dim innerValue As Value = Nothing
         If Not Inner.TryGetValue(rowIndex, innerValue) Then
             value = Nothing
             Return False
@@ -287,7 +287,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Column.GetRange(OfT)(Long,Integer)"/>
+    ''' <see cref="Column.GetRange(Of T)(Long,Integer)"/>
     ''' </summary>
     Public Sub GetRange(Of V)(rowSourceIndex As Long, length As Integer, ByRef array As V()) Implements IColumn(Of TColumnType).GetRange
         Inner.GetRange(rowSourceIndex, length, array)
@@ -301,7 +301,7 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Column.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Column.TryGetValue(Of T)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of V)(rowIndex As Long, <Out> ByRef value As V) As Boolean Implements IColumn(Of TColumnType).TryGetValue
         Return Inner.TryGetValue(rowIndex, value)

@@ -79,6 +79,9 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
     ''' <param name="output">The output stream.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output is null.</exception>
+    ''' <remarks>
+    ''' this data writer object inherits the <see cref="BinaryWriter"/>.
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream)
         Me.New(output, New UTF8Encoding(), False)
@@ -93,6 +96,9 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
     ''' is disposed; otherwise <c>false</c>.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output is null.</exception>
+    ''' <remarks>
+    ''' this data writer object inherits the <see cref="BinaryWriter"/>.
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream, leaveOpen As Boolean)
         Me.New(output, New UTF8Encoding(), leaveOpen)
@@ -106,6 +112,9 @@ Public Class BinaryDataWriter : Inherits BinaryWriter
     ''' <param name="encoding">The character encoding to use.</param>
     ''' <exception cref="ArgumentException">The stream does not support writing or is already closed.</exception>
     ''' <exception cref="ArgumentNullException">output or encoding is null.</exception>
+    ''' <remarks>
+    ''' this data writer object inherits the <see cref="BinaryWriter"/>.as
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub New(output As Stream, encoding As Encoding)
         Me.New(output, encoding, False)

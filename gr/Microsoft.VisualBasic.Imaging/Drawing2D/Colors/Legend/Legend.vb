@@ -275,12 +275,14 @@ Namespace Drawing2D.Colors
             g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
             g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
 
+            Dim tickOffset As Double = If(App.IsMicrosoftPlatform, tickFont.Height / 2, 0)
+
             y -= tickFont.Height
             x += ruleOffset + 5
-            point = New PointF(x, y - tickFont.Height / 2)
+            point = New PointF(x, y - tickOffset)
             g.DrawString(ticks.Max.ToString(format), tickFont, fontColor, point)
 
-            point = New PointF(x, y + legendHeight - tickFont.Height / 2)
+            point = New PointF(x, y + legendHeight - tickOffset)
             g.DrawString(ticks.Min.ToString(format), tickFont, fontColor, point)
 
             ticks = ticks _
@@ -295,6 +297,7 @@ Namespace Drawing2D.Colors
             y += delta
             x -= ruleOffset
             tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
+            tickOffset = If(App.IsMicrosoftPlatform, tickFont.Height, 0)
 
             ' 画出剩余的小标尺
             For Each tick As Double In ticks
@@ -306,7 +309,7 @@ Namespace Drawing2D.Colors
 
                 point = New PointF With {
                     .X = x + 2,
-                    .Y = y - tickFont.Height
+                    .Y = y - tickOffset
                 }
                 g.DrawLine(Pens.Black, x, y, x - 5, y)
                 g.DrawString(tickStr, tickFont, fontColor, point)

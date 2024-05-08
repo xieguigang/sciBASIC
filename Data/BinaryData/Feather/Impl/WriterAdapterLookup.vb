@@ -191,7 +191,7 @@ Namespace Impl
             ' making an assumption that actually using the adapter
             '   dominates creating it, making this lock acceptable
             SyncLock CollectionAdapters
-                Dim ret As Action(Of FeatherWriter, IEnumerable)
+                Dim ret As Action(Of FeatherWriter, IEnumerable) = Nothing
                 If CollectionAdapters.TryGetValue(key, ret) Then Return ret
                 ret = CollectionAdapter.Create(elementType, toType)
                 CollectionAdapters(key) = ret
