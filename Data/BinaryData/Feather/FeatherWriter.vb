@@ -218,7 +218,7 @@ Public NotInheritable Class FeatherWriter
     Public Sub AddColumn(name As String, column As IEnumerable)
         If column Is Nothing Then Throw New ArgumentNullException(NameOf(column))
 
-        Dim type As Type
+        Dim type As Type = Nothing
         Dim length As Long
         Dim nullCount As Long
         DetermineTypeLengthAndNullCount(column, type, length, nullCount)
@@ -234,7 +234,7 @@ Public NotInheritable Class FeatherWriter
         If column Is Nothing Then Throw New ArgumentNullException(NameOf(column))
         If length < 0 Then Throw New ArgumentOutOfRangeException(NameOf(length), $"Expected value >= 0, found {length}")
 
-        Dim type As Type
+        Dim type As Type = Nothing
         Dim nullCount As Long
         DetermineTypeAndNullCount(column, type, nullCount)
 
@@ -267,7 +267,7 @@ Public NotInheritable Class FeatherWriter
                     Dim name = namesE.Current
                     Dim column = columnE.Current
 
-                    Dim type As Type
+                    Dim type As Type = Nothing
                     Dim length As Long
                     Dim nullCount As Long
                     DetermineTypeLengthAndNullCount(column, type, length, nullCount)
@@ -311,7 +311,7 @@ Public NotInheritable Class FeatherWriter
                         Dim name = namesE.Current
                         Dim column = columnE.Current
                         Dim length = lengthE.Current
-                        Dim type As Type
+                        Dim type As Type = Nothing
                         Dim nullCount As Long
                         DetermineTypeAndNullCount(column, type, nullCount)
 
@@ -1030,8 +1030,8 @@ inferFromUntyped:
     Private Function WriteColumn(ByRef column As WriteColumnConfig) As ColumnMetadata
         Dim dataOffset As Long
 
-        Dim levels As String()
-        Dim timezone As String
+        Dim levels As String() = Nothing
+        Dim timezone As String = Nothing
         Dim unit As DateTimePrecisionType
 
         ' advance all streams to latest point, so any backing buffers know they can flush
@@ -1082,9 +1082,9 @@ inferFromUntyped:
 
         startIndex = DataIndex
 
-        Dim __ As String()
-        Dim ___ As String
-        Dim ____ As DateTimePrecisionType
+        Dim __ As String() = Nothing
+        Dim ___ As String = Nothing
+        Dim ____ As DateTimePrecisionType = Nothing
         WriteVariableSizedData(GetType(String), levels, levels.Length, ColumnType.String, startIndex, numBytes, __, ___, ____)
     End Sub
 

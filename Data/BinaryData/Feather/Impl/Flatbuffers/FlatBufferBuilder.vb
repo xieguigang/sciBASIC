@@ -185,7 +185,7 @@ Namespace FlatBuffers
             _space = HeapSizeOf.double
             _bb.PutDouble(_space, x)
         End Sub
-        ''' @endcond
+        ' @endcond
 
         ''' <summary>
         ''' Add a `bool` to the buffer (aligns the data and grows if necessary).
@@ -305,7 +305,7 @@ Namespace FlatBuffers
             Prep(HeapSizeOf.int, elemSize * count)
             Prep(alignment, elemSize * count) ' Just in case alignment > int.
         End Sub
-        ''' @endcond
+        ' @endcond
 
         ''' <summary>
         ''' Writes data necessary to finish a vector construction.
@@ -529,7 +529,7 @@ Namespace FlatBuffers
                 Slot(o)
             End If
         End Sub
-        ''' @endcond
+        ' @endcond
 
         ''' <summary>
         ''' Encode the string `s` in the buffer using UTF-8.
@@ -548,7 +548,7 @@ Namespace FlatBuffers
             Return New StringOffset(EndVector().Value)
         End Function
 
-        ''' @cond FLATBUFFERS_INTERNAL
+        ' @cond FLATBUFFERS_INTERNAL
         ' Structs are stored inline, so nothing additional is being added.
         ' `d` is always 0.
         Public Sub AddStruct(voffset As Integer, x As Integer, d As Integer)
@@ -635,7 +635,7 @@ endLoop:
             ' If this fails, the caller will show what field needs to be set.
             If Not ok Then Throw New InvalidOperationException("FlatBuffers: field " & field.ToString() & " must be set")
         End Sub
-        ''' @endcond
+        ' @endcond
 
         ''' <summary>
         ''' Finalize a buffer, pointing to the given `root_table`.

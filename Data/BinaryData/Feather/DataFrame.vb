@@ -147,7 +147,7 @@ Partial Public Class DataFrame
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnIndex As Long) As Value Implements IDataFrame.Item
         Get
-            Dim value As Value
+            Dim value As Value = Nothing
             If Not TryGetValue(rowIndex, columnIndex, value) Then
                 Dim minRowIx, minColIx, maxRowIx, maxColIx As Long
                 Select Case Basis
