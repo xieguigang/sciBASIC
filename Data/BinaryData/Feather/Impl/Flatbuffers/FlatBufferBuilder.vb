@@ -92,7 +92,7 @@ Namespace FlatBuffers
         End Property
 
         Public Sub Pad(size As Integer)
-            _space = size
+            _space -= size
             _bb.PutByte(_space, 0, size)
         End Sub
 
@@ -132,57 +132,57 @@ Namespace FlatBuffers
         End Sub
 
         Public Sub PutBool(x As Boolean)
-            _space = HeapSizeOf.byte
+            _space -= HeapSizeOf.byte
             _bb.PutByte(_space, CByte(If(x, 1, 0)))
         End Sub
 
         Public Sub PutSbyte(x As SByte)
-            _space = HeapSizeOf.sbyte
+            _space -= HeapSizeOf.sbyte
             _bb.PutSbyte(_space, x)
         End Sub
 
         Public Sub PutByte(x As Byte)
-            _space = HeapSizeOf.byte
+            _space -= HeapSizeOf.byte
             _bb.PutByte(_space, x)
         End Sub
 
         Public Sub PutShort(x As Short)
-            _space = HeapSizeOf.short
+            _space -= HeapSizeOf.short
             _bb.PutShort(_space, x)
         End Sub
 
         Public Sub PutUshort(x As UShort)
-            _space = HeapSizeOf.ushort
+            _space -= HeapSizeOf.ushort
             _bb.PutUshort(_space, x)
         End Sub
 
         Public Sub PutInt(x As Integer)
-            _space = HeapSizeOf.int
+            _space -= HeapSizeOf.int
             _bb.PutInt(_space, x)
         End Sub
 
         Public Sub PutUint(x As UInteger)
-            _space = HeapSizeOf.uint
+            _space -= HeapSizeOf.uint
             _bb.PutUint(_space, x)
         End Sub
 
         Public Sub PutLong(x As Long)
-            _space = HeapSizeOf.long
+            _space -= HeapSizeOf.long
             _bb.PutLong(_space, x)
         End Sub
 
         Public Sub PutUlong(x As ULong)
-            _space = HeapSizeOf.ulong
+            _space -= HeapSizeOf.ulong
             _bb.PutUlong(_space, x)
         End Sub
 
         Public Sub PutFloat(x As Single)
-            _space = HeapSizeOf.float
+            _space -= HeapSizeOf.float
             _bb.PutFloat(_space, x)
         End Sub
 
         Public Sub PutDouble(x As Double)
-            _space = HeapSizeOf.double
+            _space -= HeapSizeOf.double
             _bb.PutDouble(_space, x)
         End Sub
         ' @endcond
@@ -543,7 +543,7 @@ Namespace FlatBuffers
             AddByte(0)
             Dim utf8StringLen = Encoding.UTF8.GetByteCount(s)
             StartVector(1, utf8StringLen, 1)
-            _space = utf8StringLen
+            _space -= utf8StringLen
             Encoding.UTF8.GetBytes(s, 0, s.Length, _bb.Data, _space)
             Return New StringOffset(EndVector().Value)
         End Function
