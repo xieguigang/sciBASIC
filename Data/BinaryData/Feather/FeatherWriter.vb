@@ -33,14 +33,9 @@ End Enum
 Public NotInheritable Class FeatherWriter
     Implements IDisposable
 
-    ''' <summary>
-    ''' WriteMode this FeatherWriter is configured in.
-    ''' </summary>
+    Dim _Mode As WriteMode
+    Dim _NumRows As Long
 
-    ''' <summary>
-    ''' Number of rows in the dataframe being written
-    ''' </summary>
-    Private _Mode As WriteMode, _NumRows As Long
     Private NullIndex As Long
     Private DataIndex As Long
     Private VariableIndex As Long
@@ -52,6 +47,9 @@ Public NotInheritable Class FeatherWriter
     Private PendingColumns As LinkedList(Of WriteColumnConfig)
     Private Metadata As LinkedList(Of ColumnMetadata)
 
+    ''' <summary>
+    ''' WriteMode this FeatherWriter is configured in.
+    ''' </summary>
     Public Property Mode As WriteMode
         Get
             Return _Mode
@@ -61,6 +59,9 @@ Public NotInheritable Class FeatherWriter
         End Set
     End Property
 
+    ''' <summary>
+    ''' Number of rows in the dataframe being written
+    ''' </summary>
     Public Property NumRows As Long
         Get
             Return _NumRows
@@ -69,6 +70,7 @@ Public NotInheritable Class FeatherWriter
             _NumRows = value
         End Set
     End Property
+
     ''' <summary>
     ''' Number of columns added to this dataframe
     ''' </summary>
@@ -3534,5 +3536,9 @@ inferFromUntyped:
             NullStream.Write(currentByte)
             NullIndex += 1
         End If
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        MyBase.Finalize()
     End Sub
 End Class
