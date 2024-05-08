@@ -143,7 +143,18 @@ Public Module FeatherReader
         Return newFile
     End Function
 
-    Private Function TryRead(file As MemoryMappedFile, fileSize As Long, basis As BasisType, <Out> ByRef frame As DataFrame, <Out> ByRef errorMessage As String) As Boolean
+    ''' <summary>
+    ''' try read feather dataframe from a memory map file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <param name="fileSize"></param>
+    ''' <param name="basis"></param>
+    ''' <param name="frame"></param>
+    ''' <param name="errorMessage"></param>
+    ''' <returns></returns>
+    Private Function TryRead(file As MemoryMappedFile, fileSize As Long, basis As BasisType,
+                             <Out> ByRef frame As DataFrame,
+                             <Out> ByRef errorMessage As String) As Boolean
         Select Case basis
             Case BasisType.One, BasisType.Zero
             Case Else
@@ -152,7 +163,7 @@ Public Module FeatherReader
                 Return False
         End Select
 
-        Dim metadata As Metadata
+        Dim metadata As Metadata = Nothing
         If Not TryReadMetaData(file, fileSize, metadata, errorMessage) Then
             frame = Nothing
             Return False
@@ -164,6 +175,12 @@ Public Module FeatherReader
         Return True
     End Function
 
+    Public Function TryRead(file As Stream, fileSize As Long, basis As BasisType,
+                            <Out> ByRef frame As DataFrame,
+                            <Out> ByRef errorMessage As String) As Boolean
+
+    End Function
+
     Private Function TryReadMetaData(file As MemoryMappedFile, size As Long, <Out> ByRef metadata As Metadata, <Out> ByRef [error] As String) As Boolean
         If size < MAGIC_HEADER_SIZE * 2 Then
             metadata = Nothing
@@ -171,7 +188,7 @@ Public Module FeatherReader
             Return False
         End If
 
-        Using accessor = file.CreateViewAccessor()
+        Using accessor As MemoryMappedViewAccessor = file.CreateViewAccessor()
             Dim leadingHeader = accessor.ReadInt32(0)
 
             If leadingHeader <> MAGIC_HEADER Then
