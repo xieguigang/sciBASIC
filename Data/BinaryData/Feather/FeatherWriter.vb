@@ -2,6 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 Imports Microsoft.VisualBasic.Math.Information
 Imports std = System.Math
@@ -40,9 +41,9 @@ Public NotInheritable Class FeatherWriter
     Private DataIndex As Long
     Private VariableIndex As Long
 
-    Private NullStream As BinaryWriter
-    Private DataStream As BinaryWriter
-    Private VariableStream As BinaryWriter
+    Private NullStream As BinaryDataWriter
+    Private DataStream As BinaryDataWriter
+    Private VariableStream As BinaryDataWriter
 
     Private PendingColumns As LinkedList(Of WriteColumnConfig)
     Private Metadata As LinkedList(Of ColumnMetadata)
@@ -106,9 +107,9 @@ Public NotInheritable Class FeatherWriter
         End Select
 
         Try
-            DataStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-            NullStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
-            VariableStream = New BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite))
+            DataStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
+            NullStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
+            VariableStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
 
             Setup(mode)
         Catch
@@ -139,9 +140,9 @@ Public NotInheritable Class FeatherWriter
         Dim multiplexer = New MultiStreamProvider(outputStream)
 
         Try
-            DataStream = New BinaryWriter(multiplexer.CreateChildStream())
-            NullStream = New BinaryWriter(multiplexer.CreateChildStream())
-            VariableStream = New BinaryWriter(multiplexer.CreateChildStream())
+            DataStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            NullStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            VariableStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
 
             Setup(mode)
         Catch
@@ -1285,8 +1286,7 @@ inferFromUntyped:
 
     Private Sub CloseAndDiscard()
         WriteMetadata()
-
-        WriteTrailingMagic()
+        WriteMagic()
 
         DataStream.Dispose()
         NullStream.Dispose()
@@ -1338,15 +1338,9 @@ inferFromUntyped:
     End Sub
 
     Private Sub WriteMagic()
+        DataStream.ByteOrder = ByteOrder.LittleEndian
         DataStream.Write(MAGIC_HEADER)
         DataIndex += MAGIC_HEADER_SIZE
-    End Sub
-
-    Private Sub WriteLeadingMagic()
-        WriteMagic()
-    End Sub
-    Private Sub WriteTrailingMagic()
-        WriteMagic()
     End Sub
 
     Private Sub SerializeAndDiscard()
