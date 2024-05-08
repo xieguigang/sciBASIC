@@ -173,6 +173,10 @@ Public Class DataFrame : Implements INumericMatrix
         Call features.Add(featureName, New FeatureVector(featureName, v))
     End Sub
 
+    Public Sub add(feature As FeatureVector)
+        Call features.Add(feature.name, feature)
+    End Sub
+
     Public Function row(i As Integer) As Object()
         Return features.Select(Function(c) c.Value(i)).ToArray
     End Function

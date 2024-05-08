@@ -15,7 +15,7 @@ Public Module FeatherReader
     ''' 
     ''' Throws if the dataframe cannot be created.
     ''' </summary>
-    Public Function ReadFromFile(filePath As String, basis As BasisType) As DataFrame
+    Public Function ReadFromFile(filePath As String, Optional basis As BasisType = BasisType.Zero) As DataFrame
         Dim errorMessage As String = Nothing
         Dim ret As DataFrame = Nothing
         If Not TryReadFromFile(filePath, basis, ret, errorMessage) Then
