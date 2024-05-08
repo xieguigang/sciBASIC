@@ -114,6 +114,22 @@ Public Class Value
         Me.TranslatedColumnIndex = translatedColumnIndex
     End Sub
 
+    Public Function [TryCast](type As Type) As Object
+        Select Case type
+            Case GetType(Boolean)
+                Dim val As Boolean = Nothing
+
+                If TryConvert(val) Then
+                    Return val
+                Else
+                    Return Nothing
+                End If
+
+            Case Else
+                Throw New NotImplementedException(type.FullName)
+        End Select
+    End Function
+
     Public Overloads Function Equals(other As Value) As Boolean Implements IEquatable(Of Value).Equals
         Select Case other.OnDiskType
                 ' TODO (Binary)
