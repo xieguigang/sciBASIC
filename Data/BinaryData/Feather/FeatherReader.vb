@@ -114,7 +114,7 @@ Public Module FeatherReader
     Public Function TryReadFromBytes(bytes As Byte(), basis As BasisType, <Out> ByRef frame As DataFrame, <Out> ByRef errorMessage As String) As Boolean
         Dim memoryMapped As MemoryMappedFile
         Try
-            memoryMapped = MakeMemoryMappedProxy(bytes)
+            memoryMapped = MakeMemoryMappedProxy(New MemoryStream(bytes))
         Catch e As Exception
             errorMessage = $"Encoutered {e.GetType().Name} trying to create a memory mapped proxy for passed bytes: {e.Message}"
             frame = Nothing
@@ -129,17 +129,44 @@ Public Module FeatherReader
         Return ret
     End Function
 
-    Private Function MakeMemoryMappedProxy(bytes As Byte()) As MemoryMappedFile
-        Dim newFile = MemoryMappedFile.CreateNew(NameOf(FeatherFormat) & "." & NameOf(MakeMemoryMappedProxy) & "." & Guid.NewGuid().ToString(), bytes.Length)
+    Public Function ReadFromStream(s As Stream, Optional basis As BasisType = BasisType.Zero) As DataFrame
+        Dim memoryMapped As MemoryMappedFile
+        Dim errorMessage As String = Nothing
+        Dim frame As DataFrame = Nothing
+
+        Try
+            memoryMapped = MakeMemoryMappedProxy(s)
+        Catch e As Exception
+            errorMessage = $"Encoutered {e.GetType().Name} trying to create a memory mapped proxy for passed bytes: {e.Message}"
+            Return Nothing
+        End Try
+
+        Dim ret = TryRead(memoryMapped, s.Length, basis, frame, errorMessage)
+
+        If Not ret Then
+            memoryMapped.Dispose()
+            Throw New Exception(errorMessage)
+        Else
+            Return frame
+        End If
+    End Function
+
+    Private Function MakeMemoryMappedProxy(bytes As Stream) As MemoryMappedFile
+        Dim memoryHandle As String = NameOf(FeatherFormat) & "." & NameOf(MakeMemoryMappedProxy) & "." & Guid.NewGuid().ToString()
+        Dim newFile = MemoryMappedFile.CreateNew(memoryHandle, bytes.Length)
+
         Try
             Using stream = newFile.CreateViewStream()
-                stream.Write(bytes, 0, bytes.Length)
+                Call bytes.Seek(Scan0, SeekOrigin.Begin)
+                Call bytes.CopyTo(stream)
+                Call stream.Flush()
+                ' stream.Write(bytes, 0, bytes.Length)
             End Using
-
         Catch
             newFile?.Dispose()
             Throw
         End Try
+
         Return newFile
     End Function
 
@@ -173,12 +200,6 @@ Public Module FeatherReader
 
         errorMessage = Nothing
         Return True
-    End Function
-
-    Public Function TryRead(file As Stream, fileSize As Long, basis As BasisType,
-                            <Out> ByRef frame As DataFrame,
-                            <Out> ByRef errorMessage As String) As Boolean
-
     End Function
 
     Private Function TryReadMetaData(file As MemoryMappedFile, size As Long, <Out> ByRef metadata As Metadata, <Out> ByRef [error] As String) As Boolean
