@@ -72,7 +72,7 @@ Namespace AprioriRules.Entities
 #Region "IComparable"
 
         Public Function CompareTo(other As TransactionTokensItem) As Integer Implements IComparable(Of TransactionTokensItem).CompareTo
-            Return Name.Items.Sum.CompareTo(other.Name.Items.Sum)
+            Return Name.CompareTo(other.Name)
         End Function
 #End Region
 

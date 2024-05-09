@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace AprioriRules.Impl
 
-    Public Structure ItemSet
+    Public Structure ItemSet : Implements IComparable(Of ItemSet)
 
         Public Items As Integer()
 
@@ -165,6 +165,22 @@ Namespace AprioriRules.Impl
             Return Not a = b
         End Operator
 
+        Private Function GetCompareValue() As ULong
+            Dim p As ULong = 0
+
+            For i As Integer = 0 To Items.Length - 1
+                p += Items(i) * (10 ^ i)
+            Next
+
+            Return p
+        End Function
+
+        Public Function CompareTo(other As ItemSet) As Integer Implements IComparable(Of ItemSet).CompareTo
+            Dim val1 As ULong = GetCompareValue()
+            Dim val2 As ULong = other.GetCompareValue
+
+            Return val1.CompareTo(val2)
+        End Function
     End Structure
 
     ''' <summary>
