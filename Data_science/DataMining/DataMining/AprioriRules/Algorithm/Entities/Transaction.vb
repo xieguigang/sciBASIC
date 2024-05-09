@@ -62,9 +62,20 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules.Entities
 
+    ''' <summary>
+    ''' a transaction record
+    ''' </summary>
     Public Structure Transaction
 
+        ''' <summary>
+        ''' the transaction unique id
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
+        ''' <summary>
+        ''' the item collection that contains inside current transaction.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Items As String()
 
         Public Overrides Function ToString() As String

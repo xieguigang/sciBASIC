@@ -55,7 +55,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace AprioriRules.Entities
 
@@ -109,7 +109,7 @@ Namespace AprioriRules.Entities
 #End Region
 
         Public Overrides Function ToString() As String
-            Return $"({SupportXY}/{SupportX} = {stdNum.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
+            Return $"({SupportXY}/{SupportX} = {std.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
         End Function
 
 #Region "IComparable<clssRules> Members"
