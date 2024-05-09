@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.Diagnostics.CodeAnalysis
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Linq.JoinExtensions
 
@@ -20,6 +21,12 @@ Namespace AprioriRules
             End Get
         End Property
 
+        Public ReadOnly Property HashCode As Integer
+            Get
+                Return GetHashCode()
+            End Get
+        End Property
+
         Sub New(scalar As Item)
             Items = {scalar}
         End Sub
@@ -37,7 +44,7 @@ Namespace AprioriRules
             Dim el_hash As Integer
 
             For Each element As Item In Items
-                el_hash = element.Code Xor (element.Code >> 32)
+                el_hash = element.Code Xor (element.Code >> 31)
                 hash = 31 * hash + el_hash
             Next
 
@@ -115,6 +122,16 @@ Namespace AprioriRules
             Next
 
             Return p
+        End Function
+
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If obj Is Nothing Then
+                Return Items Is Nothing
+            ElseIf Not TypeOf obj Is ItemSet Then
+                Return False
+            End If
+
+            Return DirectCast(obj, ItemSet).GetHashCode = GetHashCode()
         End Function
 
         Public Function CompareTo(other As ItemSet) As Integer Implements IComparable(Of ItemSet).CompareTo

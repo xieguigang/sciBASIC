@@ -85,7 +85,7 @@ Namespace AprioriRules.Impl
                                           <Parameter("Items")> items As IEnumerable(Of Item),
                                           <Parameter("Transactions")> transactions As ItemSet()) As Output
 
-            Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray)
+            Dim frequentItems As List(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray).AsList
             Dim allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
             Dim candidates As New Dictionary(Of ItemSet, Double)()
             Dim transactionsCount As Double = transactions.Length
@@ -112,13 +112,13 @@ Namespace AprioriRules.Impl
             Call Console.WriteLine("maximal item rules...")
             Dim maximalItemSets As IList(Of ItemSet) = GetMaximalItemSets(closedItemSets)
 
-            Dim out As New Output() With {
+            Return New Output() With {
                 .StrongRules = strongRules,
                 .MaximalItemSets = maximalItemSets,
                 .ClosedItemSets = closedItemSets,
-                .FrequentItems = allFrequentItems
+                .FrequentItems = allFrequentItems,
+                .TransactionSize = transactions.Length
             }
-            Return out
         End Function
 
 #End Region
@@ -126,20 +126,19 @@ Namespace AprioriRules.Impl
 #Region "Private Internal Methods"
 
         <Extension>
-        Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As List(Of TransactionTokensItem)
+        Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As IEnumerable(Of TransactionTokensItem)
             Dim transactionsCount As Double = transactions.Length
-            Dim frequentItemsL1 = LinqAPI.MakeList(Of TransactionTokensItem) _
-                                                                             _
-                () <= From item As ItemSet
-                      In items.AsParallel
-                      Let support As Double = GetSupport(item, transactions)
-                      Where support / transactionsCount >= minSupport
-                      Select New TransactionTokensItem() With {
-                          .Name = item,
-                          .Support = support
-                      }
+            Dim frequentItemsL1 = From item As ItemSet
+                                  In items
+                                  Let support As Double = GetSupport(item, transactions)
+                                  Where support / transactionsCount >= minSupport
+                                  Let t = New TransactionTokensItem() With {
+                                      .Name = item,
+                                      .Support = support
+                                  }
+                                  Select t
+                                  Order By t
 
-            Call frequentItemsL1.Sort()
             Return frequentItemsL1
         End Function
 
@@ -171,9 +170,7 @@ Namespace AprioriRules.Impl
         <Extension>
         Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of ItemSet, Double)
             Dim parallelBuild = From i As Integer
-                                In (frequentItems.Count) _
-                                    .SeqIterator _
-                                    .AsParallel
+                                In Enumerable.Range(0, frequentItems.Count)
                                 Let firstItem As ItemSet = frequentItems(i).Name.SorterSortTokens
                                 Let candidate = frequentItems.GetCandidate(i, firstItem, transactions)
                                 Select candidate

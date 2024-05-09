@@ -83,6 +83,19 @@ Namespace AprioriRules.Entities
             Me.Items = items.ToArray
         End Sub
 
+        Sub New(name As String, items As String)
+            Me.Name = name
+            Me.Items = items.Select(Function(c) c.ToString).ToArray
+        End Sub
+
+        ''' <summary>
+        ''' use the char as transaction items, just used for debug test
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As String)
+            Call Me.New(data, data)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Name} = {{ {Items.JoinBy(", ")} }}"
         End Function

@@ -54,7 +54,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
-Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 Imports std = System.Math
 
 Namespace AprioriRules.Entities
@@ -82,6 +81,12 @@ Namespace AprioriRules.Entities
         <Column(Name:="support(X)")>
         Public ReadOnly Property SupportX As Double
 
+        Public ReadOnly Property length As Integer
+            Get
+                Return X.Length + Y.Length
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -99,7 +104,7 @@ Namespace AprioriRules.Entities
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"({SupportXY}/{SupportX} = {std.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
+            Return $"({SupportXY}/{SupportX} = {std.Round(Confidence, 4)}) {X} -> {Y}"
         End Function
 
         Public Function CompareTo(other As Rule) As Integer Implements IComparable(Of Rule).CompareTo

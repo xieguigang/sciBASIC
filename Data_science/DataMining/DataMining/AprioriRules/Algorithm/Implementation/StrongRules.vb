@@ -68,7 +68,7 @@ Namespace AprioriRules.Impl
             Dim concats = LinqAPI.Exec(Of Rule()) _
                                                   _
                 () <= From item
-                      In allFrequentItems.AsParallel
+                      In allFrequentItems' .AsParallel
                       Where item.Key.Length > 1
                       Select item.concatRules()
 
@@ -83,7 +83,7 @@ Namespace AprioriRules.Impl
 
         <Extension>
         Private Function concatRules(token As KeyValuePair(Of ItemSet, TransactionTokensItem)) As Rule()
-            Dim subsetsList As IEnumerable(Of ItemSet) = GenerateSubsets(token.Key)
+            Dim subsetsList As ItemSet() = GenerateSubsets(token.Key).ToArray
             Dim list As New List(Of Rule)
 
             For Each subset As ItemSet In subsetsList

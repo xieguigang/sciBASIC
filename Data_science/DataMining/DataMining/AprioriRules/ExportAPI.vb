@@ -57,41 +57,69 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules
 
-    Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of Integer), transactions As ItemSet()) As Output
+    Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of Item), transactions As ItemSet()) As Output
 
     ''' <summary>
     ''' ``AprioriRules`` API export module
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module AprioriExport
 
         ReadOnly aprioriDefaultWorker As [Default](Of AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="transactions"></param>
+        ''' <param name="items"></param>
+        ''' <param name="minSupport">``(0,1]``</param>
+        ''' <param name="minConfidence">``(0,1]``</param>
+        ''' <param name="minlen">min item count in the generated strong rule</param>
+        ''' <param name="impl"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of ItemSet),
                                              items As Item(),
-                                             Optional minSupport# = 1,
-                                             Optional minConfidence# = 1,
+                                             Optional minSupport# = 0.01,
+                                             Optional minConfidence# = 0.01,
+                                             Optional minlen As Integer = 2,
                                              Optional impl As AprioriPredictions = Nothing) As Output
 
             Dim output As Output = (impl Or aprioriDefaultWorker)(
-                minSupport:=minSupport / 100,
-                minConfidence:=minConfidence / 100,
+                minSupport:=minSupport,
+                minConfidence:=minConfidence,
                 items:=items,
                 transactions:=transactions.ToArray()
             )
+
+            output.StrongRules = output.StrongRules _
+                .Where(Function(r) r.length >= minlen) _
+                .OrderByDescending(Function(r) r.Confidence) _
+                .AsList
+
             Return output
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="transactions"></param>
+        ''' <param name="minSupport#">``(0,1]``</param>
+        ''' <param name="minConfidence">``(0,1]``</param>
+        ''' <param name="impl"></param>
+        ''' <param name="minlen">min item count in the generated strong rule</param>
+        ''' <returns></returns>
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of Transaction),
-                                             Optional minSupport# = 1,
-                                             Optional minConfidence# = 1,
+                                             Optional minSupport# = 0.01,
+                                             Optional minConfidence# = 0.01,
+                                             Optional minlen As Integer = 2,
                                              Optional impl As AprioriPredictions = Nothing) As Output
 
             Dim trans_pool As Transaction() = transactions.ToArray
@@ -102,12 +130,12 @@ Namespace AprioriRules
                     items:=encoding.AllItems,
                     minSupport:=minSupport,
                     minConfidence:=minConfidence,
-                    impl:=impl
+                    impl:=impl,
+                    minlen:=minlen
                 )
 
             Return out
         End Function
-
 
     End Module
 End Namespace

@@ -60,6 +60,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module AprioriTest
     Sub Main()
+
+        Call test2()
         Call BasicQuickTest()
 
 
@@ -77,6 +79,24 @@ Module AprioriTest
 
 
 
+        Pause()
+    End Sub
+
+
+    Sub test2()
+        Dim trans As Transaction() = {
+            New Transaction("ABC"),
+             New Transaction("ABD"),
+             New Transaction("ACD"),
+             New Transaction("ABCE"),
+             New Transaction("ACE"),
+             New Transaction("BDE"),
+             New Transaction("ABCD")
+        }
+
+        Dim result = trans.AnalysisTransactions(3 / 7, 5 / 7, minlen:=2)
+
+        Call result.ToString.SaveTo("./test2.html")
         Pause()
     End Sub
 
