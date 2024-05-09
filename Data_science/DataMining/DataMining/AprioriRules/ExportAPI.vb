@@ -74,7 +74,7 @@ Namespace AprioriRules
 
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of ItemSet),
-                                             items As Integer(),
+                                             items As Item(),
                                              Optional minSupport# = 1,
                                              Optional minConfidence# = 1,
                                              Optional impl As AprioriPredictions = Nothing) As Output
@@ -99,7 +99,7 @@ Namespace AprioriRules
             Dim out As Output = encoding _
                 .TransactionEncoding(trans_pool) _
                 .AnalysisTransactions(
-                    items:=encoding.AllCodes,
+                    items:=encoding.AllItems,
                     minSupport:=minSupport,
                     minConfidence:=minConfidence,
                     impl:=impl

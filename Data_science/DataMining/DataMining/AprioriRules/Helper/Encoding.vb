@@ -68,8 +68,7 @@ Namespace AprioriRules
         ' 一个事务是有多个关联的对象组成的，在这里一个事务就是一个字符串，一个字符就是事务里面有关联信息的对象
 
         Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Integer, String)
-        Public ReadOnly Property AllItems As String()
-        Public ReadOnly Property AllCodes As Integer()
+        Public ReadOnly Property AllItems As Item()
 
         Dim itemCodes As Dictionary(Of String, Integer)
 
@@ -92,8 +91,9 @@ Namespace AprioriRules
                                   Return c.raw
                               End Function)
             itemCodes = CodeMappings.ToDictionary(Function(t) t.Value, Function(t) t.Key)
-            AllItems = CodeMappings.Values.ToArray
-            AllCodes = CodeMappings.Keys.ToArray
+            AllItems = CodeMappings _
+                .Select(Function(t) New Item(t.Key, t.Value)) _
+                .ToArray
         End Sub
 
         Public Overrides Function ToString() As String
