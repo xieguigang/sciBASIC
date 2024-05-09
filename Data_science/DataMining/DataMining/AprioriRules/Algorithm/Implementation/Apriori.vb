@@ -77,9 +77,6 @@ Namespace AprioriRules.Impl
              Cites:="")>
     Public Module Apriori
 
-#Region "IApriori"
-
-        <ExportAPI("Apriori.Predictions")>
         Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
                                           <Parameter("Confidence.Min")> minConfidence#,
                                           <Parameter("Items")> items As IEnumerable(Of Item),
@@ -97,19 +94,11 @@ Namespace AprioriRules.Impl
                 For Each item In frequentItems
                     Call allFrequentItems.Add(item.Name, item)
                 Next
-
-                Call Console.Write(".")
             Loop While candidates.Count <> 0
 
-            Call Console.WriteLine("Start to export association rules data....")
-
-            Call Console.WriteLine("rules...")
             Dim rules As HashSet(Of Rule) = GenerateRules(allFrequentItems)
-            Call Console.WriteLine("strong rules...")
             Dim strongRules As IList(Of Rule) = GetStrongRules(minConfidence, rules, allFrequentItems)
-            Call Console.WriteLine("closed item rules...")
             Dim closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double)) = GetClosedItemSets(allFrequentItems)
-            Call Console.WriteLine("maximal item rules...")
             Dim maximalItemSets As IList(Of ItemSet) = GetMaximalItemSets(closedItemSets)
 
             Return New Output() With {
@@ -120,10 +109,6 @@ Namespace AprioriRules.Impl
                 .TransactionSize = transactions.Length
             }
         End Function
-
-#End Region
-
-#Region "Private Internal Methods"
 
         <Extension>
         Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As IEnumerable(Of TransactionTokensItem)
@@ -276,6 +261,5 @@ Namespace AprioriRules.Impl
 
             Return True
         End Function
-#End Region
     End Module
 End Namespace
