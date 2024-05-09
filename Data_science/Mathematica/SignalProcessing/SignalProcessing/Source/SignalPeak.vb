@@ -9,12 +9,13 @@ Namespace Source
         Public Property max_intensity As Double
         Public Property width As Double
 
-        Public Function GetSignalData(dt As Double) As signalData
+        Public Function GetSignalData(dt As Double, Optional scale As Double = 1.5) As signalData
             Dim tick As New List(Of (time As Double, value As Double))
-            Dim xi As Double = 0
+            Dim right As Double = width * scale
+            Dim xi As Double = -right
             Dim center As Double = width / 2
 
-            Do While xi < width
+            Do While xi < right
                 tick.Add((xi + offset, Gaussian.Gaussian(xi, max_intensity, center, width)))
                 xi += dt
             Loop

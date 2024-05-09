@@ -1037,14 +1037,16 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' The target parameter <paramref name="n"/> value is NaN or not a real number or not?
-    ''' (判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了
-    ''' <see cref="Double"></see>的上限或者下限)
     ''' </summary>
     ''' <param name="n"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了
+    ''' <see cref="Double"></see>的上限或者下限)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
+    <Extension>
+    Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
 #End If
