@@ -67,20 +67,20 @@ Namespace AprioriRules.Entities
 
 #Region "Member Variables"
 
-        Dim combination As String
-        Dim remaining As String
+        Dim combination As ItemSet
+        Dim remaining As ItemSet
 
 #End Region
 
 #Region "Public Properties"
 
-        <Column(Name:="rule.X")> Public ReadOnly Property X As String
+        <Column(Name:="rule.X")> Public ReadOnly Property X As ItemSet
             Get
                 Return combination
             End Get
         End Property
 
-        <Column(Name:="rule.Y")> Public ReadOnly Property Y As String
+        <Column(Name:="rule.Y")> Public ReadOnly Property Y As ItemSet
             Get
                 Return remaining
             End Get
@@ -99,7 +99,7 @@ Namespace AprioriRules.Entities
         ''' <remarks></remarks>
         <Column(Name:="confidence")> Public ReadOnly Property Confidence As Double
 
-        Public Sub New(combination$, remaining$, confidence#, supports As (XY#, X#))
+        Public Sub New(combination As ItemSet, remaining As ItemSet, confidence#, supports As (XY#, X#))
             Me.combination = combination
             Me.remaining = remaining
             Me.Confidence = confidence
@@ -120,8 +120,10 @@ Namespace AprioriRules.Entities
 #End Region
 
         Public Overrides Function GetHashCode() As Integer
-            Dim sortedXY$ = Apriori.SorterSortTokens(X & Y)
-            Return sortedXY.GetHashCode()
+            Dim sortedXY As ItemSet = (combination & remaining).SorterSortTokens
+            Dim hash As Integer = sortedXY.GetHashCode()
+
+            Return hash
         End Function
 
         Public Overrides Function Equals(obj As Object) As Boolean

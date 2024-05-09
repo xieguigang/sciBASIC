@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -65,9 +66,9 @@ Namespace AprioriRules.Entities
         ''' </summary>
         ''' <returns></returns>
         Public Property StrongRules() As List(Of Rule)
-        Public Property MaximalItemSets() As List(Of String)
-        Public Property ClosedItemSets() As Dictionary(Of String, Dictionary(Of String, Double))
-        Public Property FrequentItems() As Dictionary(Of String, TransactionTokensItem)
+        Public Property MaximalItemSets() As List(Of ItemSet)
+        Public Property ClosedItemSets() As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))
+        Public Property FrequentItems() As Dictionary(Of ItemSet, TransactionTokensItem)
 
         Public Overrides Function ToString() As String
             Dim html As New StringBuilder()

@@ -72,9 +72,35 @@ Namespace AprioriRules.Impl
             End Get
         End Property
 
+        Default Public ReadOnly Property Item(offset As Integer) As Integer
+            Get
+                Return Items(offset)
+            End Get
+        End Property
+
         Sub New(scalar As Integer)
             Items = {scalar}
         End Sub
+
+        Sub New(items As IEnumerable(Of Integer))
+            Me.Items = items.ToArray
+        End Sub
+
+        Public Overrides Function GetHashCode() As Integer
+            If IsNullOrEmpty() Then
+                Return 0
+            End If
+
+            Dim hash As Integer = 1
+            Dim el_hash As Integer
+
+            For Each element As Integer In Items
+                el_hash = element Xor (element >> 32)
+                hash = 31 * hash + el_hash
+            Next
+
+            Return hash
+        End Function
 
         Public Function IsNullOrEmpty() As Boolean
             Return Items Is Nothing OrElse Items.Length = 0
@@ -98,8 +124,29 @@ Namespace AprioriRules.Impl
             Return False
         End Function
 
+        Public Function PopLast() As ItemSet
+            Return New ItemSet(scalar:=Items.Last)
+        End Function
+
         Public Shared Function Empty() As ItemSet
             Return New ItemSet With {.Items = {}}
+        End Function
+
+        ''' <summary>
+        ''' GetRemaining: removes all child elements from parent
+        ''' </summary>
+        ''' <param name="child"></param>
+        ''' <returns></returns>
+        Public Function Remove(child As ItemSet) As ItemSet
+            Dim remaining As New List(Of Integer)
+
+            For Each i As Integer In Items
+                If Not child.Contains(i) Then
+                    Call remaining.Add(i)
+                End If
+            Next
+
+            Return New ItemSet(remaining)
         End Function
 
         Public Function Slice(start As Integer, count As Integer) As ItemSet
@@ -144,8 +191,8 @@ Namespace AprioriRules.Impl
                                           <Parameter("Transactions")> transactions As ItemSet()) As Output
 
             Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)))
-            Dim allFrequentItems As Dictionary(Of String, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name.ToString)
-            Dim candidates As New Dictionary(Of String, Double)()
+            Dim allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
+            Dim candidates As New Dictionary(Of ItemSet, Double)()
             Dim transactionsCount As Double = transactions.Length
 
             Do
@@ -153,7 +200,7 @@ Namespace AprioriRules.Impl
                 frequentItems = candidates.GetFrequentItems(minSupport, transactionsCount)
 
                 For Each item In frequentItems
-                    Call allFrequentItems.Add(item.Name.ToString, item)
+                    Call allFrequentItems.Add(item.Name, item)
                 Next
 
                 Call Console.Write(".")
@@ -166,7 +213,7 @@ Namespace AprioriRules.Impl
             Call Console.WriteLine("strong rules...")
             Dim strongRules As IList(Of Rule) = GetStrongRules(minConfidence, rules, allFrequentItems)
             Call Console.WriteLine("closed item rules...")
-            Dim closedItemSets As Dictionary(Of String, Dictionary(Of String, Double)) = GetClosedItemSets(allFrequentItems)
+            Dim closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double)) = GetClosedItemSets(allFrequentItems)
             Call Console.WriteLine("maximal item rules...")
             Dim maximalItemSets As IList(Of String) = GetMaximalItemSets(closedItemSets)
 
@@ -227,7 +274,7 @@ Namespace AprioriRules.Impl
 
         <ExportAPI("Candidates.Generate")>
         <Extension>
-        Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of String, Double)
+        Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of ItemSet, Double)
             Dim parallelBuild = From i As Integer
                                 In (frequentItems.Count) _
                                     .SeqIterator _
@@ -246,15 +293,15 @@ Namespace AprioriRules.Impl
         Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem),
                                      i%,
                                      firstItem As ItemSet,
-                                     transactions As IEnumerable(Of ItemSet)) As Dictionary(Of String, Double)
+                                     transactions As IEnumerable(Of ItemSet)) As Dictionary(Of ItemSet, Double)
 
-            Dim candidates As New Dictionary(Of String, Double)()
+            Dim candidates As New Dictionary(Of ItemSet, Double)()
 
             For j As Integer = i + 1 To frequentItems.Count - 1
                 Dim secondItem As ItemSet = frequentItems(j).Name.SorterSortTokens
                 Dim generatedCandidate As ItemSet = GenerateCandidate(firstItem, secondItem)
 
-                If Not String.IsNullOrEmpty(generatedCandidate) Then
+                If Not generatedCandidate.IsNullOrEmpty Then
                     Dim support = GetSupport(generatedCandidate, transactions)
                     Call candidates.Add(generatedCandidate, support)
                 End If
@@ -274,19 +321,19 @@ Namespace AprioriRules.Impl
             Dim secondSubString As ItemSet = secondItem.Slice(0, length - 1)
 
             If firstSubString = secondSubString Then
-                Return firstItem & secondItem(length - 1)
+                Return firstItem & secondItem.PopLast
             End If
 
-            Return String.Empty
+            Return ItemSet.Empty
         End Function
 
         <ExportAPI("Get.FrequentItems")>
         <Extension>
-        Public Function GetFrequentItems(candidates As IDictionary(Of String, Double), minSupport#, transactionsCount#) As List(Of TransactionTokensItem)
+        Public Function GetFrequentItems(candidates As IDictionary(Of ItemSet, Double), minSupport#, transactionsCount#) As List(Of TransactionTokensItem)
             Return LinqAPI.MakeList(Of TransactionTokensItem) _
- _
+                                                              _
                 () <= From candidate
-                      In candidates.AsParallel
+                      In candidates
                       Where candidate.Value / transactionsCount >= minSupport
                       Select New TransactionTokensItem() With {
                           .Name = candidate.Key,
@@ -294,8 +341,8 @@ Namespace AprioriRules.Impl
                       }
         End Function
 
-        Public Function GetClosedItemSets(allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As Dictionary(Of String, Dictionary(Of String, Double))
-            Dim closedItemSets As New Dictionary(Of String, Dictionary(Of String, Double))()
+        Public Function GetClosedItemSets(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))
+            Dim closedItemSets As New Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))()
             Dim i As i32 = 0
 
             For Each item In allFrequentItems
@@ -310,12 +357,12 @@ Namespace AprioriRules.Impl
         End Function
 
         <Extension>
-        Public Function GetItemParents(child$, index%, allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As Dictionary(Of String, Double)
-            Dim parents = New Dictionary(Of String, Double)()
+        Public Function GetItemParents(child As ItemSet, index%, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As Dictionary(Of ItemSet, Double)
+            Dim parents = New Dictionary(Of ItemSet, Double)()
             Dim data = allFrequentItems.Values.ToArray
 
             For j As Integer = index To allFrequentItems.Count - 1
-                Dim parent As String = data(j).Name
+                Dim parent As ItemSet = data(j).Name
 
                 If parent.Length = child.Length + 1 Then
                     If CheckIsSubset(child, parent) Then
@@ -328,8 +375,8 @@ Namespace AprioriRules.Impl
         End Function
 
         <Extension>
-        Public Function CheckIsClosed(child$, parents As Dictionary(Of String, Double), allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As Boolean
-            For Each parent As String In parents.Keys
+        Public Function CheckIsClosed(child As ItemSet, parents As Dictionary(Of ItemSet, Double), allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As Boolean
+            For Each parent As ItemSet In parents.Keys
                 If allFrequentItems(child).Support = allFrequentItems(parent).Support Then
                     Return False
                 End If
