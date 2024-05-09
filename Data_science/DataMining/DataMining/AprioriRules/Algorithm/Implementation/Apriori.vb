@@ -206,7 +206,7 @@ Namespace AprioriRules.Impl
                                           <Parameter("Items")> items As IEnumerable(Of Integer),
                                           <Parameter("Transactions")> transactions As ItemSet()) As Output
 
-            Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)))
+            Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray)
             Dim allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
             Dim candidates As New Dictionary(Of ItemSet, Double)()
             Dim transactionsCount As Double = transactions.Length
@@ -231,7 +231,7 @@ Namespace AprioriRules.Impl
             Call Console.WriteLine("closed item rules...")
             Dim closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double)) = GetClosedItemSets(allFrequentItems)
             Call Console.WriteLine("maximal item rules...")
-            Dim maximalItemSets As IList(Of String) = GetMaximalItemSets(closedItemSets)
+            Dim maximalItemSets As IList(Of ItemSet) = GetMaximalItemSets(closedItemSets)
 
             Dim out As New Output() With {
                 .StrongRules = strongRules,
