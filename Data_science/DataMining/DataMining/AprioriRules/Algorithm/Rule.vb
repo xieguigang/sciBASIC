@@ -65,26 +65,17 @@ Namespace AprioriRules.Entities
     ''' <remarks></remarks>
     Public Class Rule : Implements IComparable(Of Rule)
 
-#Region "Member Variables"
-
-        Dim combination As ItemSet
-        Dim remaining As ItemSet
-
-#End Region
-
-#Region "Public Properties"
-
+        ''' <summary>
+        ''' combination 
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="rule.X")> Public ReadOnly Property X As ItemSet
-            Get
-                Return combination
-            End Get
-        End Property
 
+        ''' <summary>
+        ''' remaining
+        ''' </summary>
+        ''' <returns></returns>
         <Column(Name:="rule.Y")> Public ReadOnly Property Y As ItemSet
-            Get
-                Return remaining
-            End Get
-        End Property
 
         <Column(Name:="support(XY)")>
         Public ReadOnly Property SupportXY As Double
@@ -100,27 +91,23 @@ Namespace AprioriRules.Entities
         <Column(Name:="confidence")> Public ReadOnly Property Confidence As Double
 
         Public Sub New(combination As ItemSet, remaining As ItemSet, confidence#, supports As (XY#, X#))
-            Me.combination = combination
-            Me.remaining = remaining
+            Me.X = combination
+            Me.Y = remaining
             Me.Confidence = confidence
             Me.SupportX = supports.X
             Me.SupportXY = supports.XY
         End Sub
-#End Region
 
         Public Overrides Function ToString() As String
             Return $"({SupportXY}/{SupportX} = {std.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
         End Function
 
-#Region "IComparable<clssRules> Members"
-
         Public Function CompareTo(other As Rule) As Integer Implements IComparable(Of Rule).CompareTo
             Return X.CompareTo(other.X)
         End Function
-#End Region
 
         Public Overrides Function GetHashCode() As Integer
-            Dim sortedXY As ItemSet = (combination & remaining).SorterSortTokens
+            Dim sortedXY As ItemSet = (X & Y).SorterSortTokens
             Dim hash As Integer = sortedXY.GetHashCode()
 
             Return hash
