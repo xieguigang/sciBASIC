@@ -1,72 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::744c8a4af52e4c31fc7aa8eb01956e12, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/DecisionTreeProgram.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 474
-    '    Code Lines: 57
-    ' Comment Lines: 322
-    '   Blank Lines: 95
-    '     File Size: 22.07 KB
+' Summaries:
 
 
-    '     Module DecisionTreeProgram
-    ' 
-    '         Sub: Main, treeTest2
-    ' 
-    '     Class CsvFileHandler
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ImportFromCsvFile
-    ' 
-    '         Sub: DisplayErrorMessage
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 474
+'    Code Lines: 57
+' Comment Lines: 322
+'   Blank Lines: 95
+'     File Size: 22.07 KB
+
+
+'     Module DecisionTreeProgram
+' 
+'         Sub: Main, treeTest2
+' 
+'     Class CsvFileHandler
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ImportFromCsvFile
+' 
+'         Sub: DisplayErrorMessage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 'Imports System.Collections.Generic
 'Imports System.Data
 'Imports System.IO
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.DataMining.DecisionTree
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 Namespace DecisionTree
 
@@ -74,7 +72,7 @@ Namespace DecisionTree
 
         Sub Main()
 
-            Call treeTest2()
+            '  Call treeTest2()
 
             Dim data As DataTable = CsvFileHandler.ImportFromCsvFile("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\trainingdata.csv")
             Dim decisionTree As New Tree(data)
@@ -99,27 +97,27 @@ Namespace DecisionTree
         End Sub
 
 
-        Sub treeTest2()
-            Dim data As DataTable = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.csv").AsMatrix.Imports
-            Dim tree As New Tree(data)
+        'Sub treeTest2()
+        '    Dim data As DataTable = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.csv").AsMatrix.Imports
+        '    Dim tree As New Tree(data)
 
-            '   Call tree.root.GetJson.SaveTo("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.json")
+        '    '   Call tree.root.GetJson.SaveTo("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTrainData.json")
 
-            Dim validations = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTestData.csv").AsMatrix.Imports.AsValidateSet.ToArray
-            Dim runTest = Function(test As NamedValue(Of Dictionary(Of String, String)))
-                              Dim result = tree.CalculateResult(test.Value)
-                              Dim validates = result.result.ToLower = test.Name.ToLower
+        '    Dim validations = csv.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\DecisionTree\RestaurantTestData.csv").AsMatrix.Imports.AsValidateSet.ToArray
+        '    Dim runTest = Function(test As NamedValue(Of Dictionary(Of String, String)))
+        '                      Dim result = tree.CalculateResult(test.Value)
+        '                      Dim validates = result.result.ToLower = test.Name.ToLower
 
-                              Return New NamedValue(Of ClassifyResult) With {.Name = test.Name, .Value = result, .Description = validates}
-                          End Function
+        '                      Return New NamedValue(Of ClassifyResult) With {.Name = test.Name, .Value = result, .Description = validates}
+        '                  End Function
 
-            Dim validaTest = validations.Select(Function(test) test.DoCall(runTest)).GroupBy(Function(result) result.Description).Select(Function(g)
-                                                                                                                                             Return New NamedCollection(Of ClassifyResult)(g.Key, g.Select(Function(d) d.Value)) With {.Description = .Length}
-                                                                                                                                         End Function).ToArray
+        '    Dim validaTest = validations.Select(Function(test) test.DoCall(runTest)).GroupBy(Function(result) result.Description).Select(Function(g)
+        '                                                                                                                                     Return New NamedCollection(Of ClassifyResult)(g.Key, g.Select(Function(d) d.Value)) With {.Description = .Length}
+        '                                                                                                                                 End Function).ToArray
 
 
-            Pause()
-        End Sub
+        '    Pause()
+        'End Sub
     End Module
 
     Public NotInheritable Class CsvFileHandler
