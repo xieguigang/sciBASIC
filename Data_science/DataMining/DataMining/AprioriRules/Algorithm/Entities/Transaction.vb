@@ -78,6 +78,11 @@ Namespace AprioriRules.Entities
         ''' <returns></returns>
         Public Property Items As String()
 
+        Sub New(name As String, items As IEnumerable(Of String))
+            Me.Name = name
+            Me.Items = items.ToArray
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Name} = {{ {Items.JoinBy(", ")} }}"
         End Function

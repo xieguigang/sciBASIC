@@ -62,6 +62,64 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace AprioriRules.Impl
 
+    Public Structure ItemSet
+
+        Public Items As Integer()
+
+        Public ReadOnly Property Length As Integer
+            Get
+                Return Items.Length
+            End Get
+        End Property
+
+        Sub New(scalar As Integer)
+            Items = {scalar}
+        End Sub
+
+        Public Function IsNullOrEmpty() As Boolean
+            Return Items Is Nothing OrElse Items.Length = 0
+        End Function
+
+        Public Function SorterSortTokens() As ItemSet
+            Return New ItemSet With {.Items = Items.OrderBy(Function(a) a).ToArray}
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return "{" & Items.JoinBy(", ") & "}"
+        End Function
+
+        Public Function Contains(i As Integer) As Boolean
+            For Each i32 As Integer In Items
+                If i32 = i Then
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
+
+        Public Shared Function Empty() As ItemSet
+            Return New ItemSet With {.Items = {}}
+        End Function
+
+        Public Function Slice(start As Integer, count As Integer) As ItemSet
+            Return New ItemSet With {.Items = Items.Skip(start).Take(count).ToArray}
+        End Function
+
+        Public Overloads Shared Operator &(a As ItemSet, b As ItemSet) As ItemSet
+            Return New ItemSet With {.Items = a.Items.JoinIterates(b.Items).ToArray}
+        End Operator
+
+        Public Overloads Shared Operator =(a As ItemSet, b As ItemSet) As Boolean
+            Return a.Items.SequenceEqual(b.Items)
+        End Operator
+
+        Public Overloads Shared Operator <>(a As ItemSet, b As ItemSet) As Boolean
+            Return Not a = b
+        End Operator
+
+    End Structure
+
     ''' <summary>
     ''' 关联分析程序（当某一种事务的样本较少的时候，将无法分析出关联性）
     ''' </summary>
@@ -82,12 +140,12 @@ Namespace AprioriRules.Impl
         <ExportAPI("Apriori.Predictions")>
         Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
                                           <Parameter("Confidence.Min")> minConfidence#,
-                                          <Parameter("Items")> items As IEnumerable(Of String),
-                                          <Parameter("Transactions")> transactions$()) As Output
+                                          <Parameter("Items")> items As IEnumerable(Of Integer),
+                                          <Parameter("Transactions")> transactions As ItemSet()) As Output
 
-            Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items)
-            Dim allFrequentItems As Dictionary(Of String, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
-            Dim candidates As IDictionary(Of String, Double) = New Dictionary(Of String, Double)()
+            Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)))
+            Dim allFrequentItems As Dictionary(Of String, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name.ToString)
+            Dim candidates As New Dictionary(Of String, Double)()
             Dim transactionsCount As Double = transactions.Length
 
             Do
@@ -95,7 +153,7 @@ Namespace AprioriRules.Impl
                 frequentItems = candidates.GetFrequentItems(minSupport, transactionsCount)
 
                 For Each item In frequentItems
-                    Call allFrequentItems.Add(item.Name, item)
+                    Call allFrequentItems.Add(item.Name.ToString, item)
                 Next
 
                 Call Console.Write(".")
@@ -125,26 +183,12 @@ Namespace AprioriRules.Impl
 
 #Region "Private Internal Methods"
 
-        ''' <summary>
-        ''' 将字符串之中的字符进行排序操作
-        ''' </summary>
-        ''' <param name="token"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ''' 
-        <ExportAPI("Tokens.Sort")>
-        Public Function SorterSortTokens(token As String) As String
-            Dim tokenArray As Char() = token.ToCharArray()
-            Call Array.Sort(tokenArray)
-            Return New String(tokenArray)
-        End Function
-
         <Extension>
-        Public Function GetL1FrequentItems(transactions$(), minSupport#, items$()) As List(Of TransactionTokensItem)
+        Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As List(Of TransactionTokensItem)
             Dim transactionsCount As Double = transactions.Length
             Dim frequentItemsL1 = LinqAPI.MakeList(Of TransactionTokensItem) _
- _
-                () <= From item As String
+                                                                             _
+                () <= From item As ItemSet
                       In items.AsParallel
                       Let support As Double = GetSupport(item, transactions)
                       Where support / transactionsCount >= minSupport
@@ -159,10 +203,10 @@ Namespace AprioriRules.Impl
 
         <ExportAPI("Get.Support")>
         <Extension>
-        Public Function GetSupport(generatedCandidate$, transactionsList As IEnumerable(Of String)) As Double
+        Public Function GetSupport(generatedCandidate As ItemSet, transactionsList As IEnumerable(Of ItemSet)) As Double
             Dim support As Double = 0
 
-            For Each transaction As String In transactionsList
+            For Each transaction As ItemSet In transactionsList
                 If True = CheckIsSubset(generatedCandidate, transaction) Then
                     support += 1
                 End If
@@ -171,8 +215,8 @@ Namespace AprioriRules.Impl
             Return support
         End Function
 
-        Public Function CheckIsSubset(child$, parent$) As Boolean
-            For Each c As Char In child
+        Public Function CheckIsSubset(child As ItemSet, parent As ItemSet) As Boolean
+            For Each c As Integer In child.Items
                 If Not parent.Contains(c) Then
                     Return False
                 End If
@@ -183,12 +227,12 @@ Namespace AprioriRules.Impl
 
         <ExportAPI("Candidates.Generate")>
         <Extension>
-        Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of String)) As Dictionary(Of String, Double)
+        Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of String, Double)
             Dim parallelBuild = From i As Integer
                                 In (frequentItems.Count) _
                                     .SeqIterator _
                                     .AsParallel
-                                Let firstItem As String = SorterSortTokens(frequentItems(i).Name)
+                                Let firstItem As ItemSet = frequentItems(i).Name.SorterSortTokens
                                 Let candidate = frequentItems.GetCandidate(i, firstItem, transactions)
                                 Select candidate
             Dim candidates = parallelBuild _
@@ -201,14 +245,14 @@ Namespace AprioriRules.Impl
         <Extension>
         Public Function GetCandidate(frequentItems As IList(Of TransactionTokensItem),
                                      i%,
-                                     firstItem$,
-                                     transactions As IEnumerable(Of String)) As Dictionary(Of String, Double)
+                                     firstItem As ItemSet,
+                                     transactions As IEnumerable(Of ItemSet)) As Dictionary(Of String, Double)
 
             Dim candidates As New Dictionary(Of String, Double)()
 
             For j As Integer = i + 1 To frequentItems.Count - 1
-                Dim secondItem As String = SorterSortTokens(frequentItems(j).Name)
-                Dim generatedCandidate As String = GenerateCandidate(firstItem, secondItem)
+                Dim secondItem As ItemSet = frequentItems(j).Name.SorterSortTokens
+                Dim generatedCandidate As ItemSet = GenerateCandidate(firstItem, secondItem)
 
                 If Not String.IsNullOrEmpty(generatedCandidate) Then
                     Dim support = GetSupport(generatedCandidate, transactions)
@@ -219,15 +263,15 @@ Namespace AprioriRules.Impl
             Return candidates
         End Function
 
-        Public Function GenerateCandidate(firstItem As String, secondItem As String) As String
+        Public Function GenerateCandidate(firstItem As ItemSet, secondItem As ItemSet) As ItemSet
             Dim length As Integer = firstItem.Length
 
             If length = 1 Then
                 Return firstItem & secondItem
             End If
 
-            Dim firstSubString As String = firstItem.Substring(0, length - 1)
-            Dim secondSubString As String = secondItem.Substring(0, length - 1)
+            Dim firstSubString As ItemSet = firstItem.Slice(0, length - 1)
+            Dim secondSubString As ItemSet = secondItem.Slice(0, length - 1)
 
             If firstSubString = secondSubString Then
                 Return firstItem & secondItem(length - 1)

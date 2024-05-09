@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::537e2ceb6350f84164a1fafc67df66bf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/ExportAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 59
-    ' Comment Lines: 3
-    '   Blank Lines: 10
-    '     File Size: 3.31 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module AprioriExport
-    ' 
-    '         Function: (+3 Overloads) AnalysisTransactions
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 59
+' Comment Lines: 3
+'   Blank Lines: 10
+'     File Size: 3.31 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module AprioriExport
+' 
+'         Function: (+3 Overloads) AnalysisTransactions
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,7 +70,7 @@ Namespace AprioriRules
     ''' </summary>
     Public Module AprioriExport
 
-        ReadOnly aprioriDefaultWorker As [Default](Of  AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
+        ReadOnly aprioriDefaultWorker As [Default](Of AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
 
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of String),
@@ -109,10 +109,10 @@ Namespace AprioriRules
         Public Function AnalysisTransactions(transactions As IEnumerable(Of Transaction),
                                              Optional minSupport# = 1,
                                              Optional minConfidence# = 1,
-                                             Optional impl As AprioriPredictions = Nothing) As (encoding As Encoding, rules As Output)
+                                             Optional impl As AprioriPredictions = Nothing) As Output
             With transactions.ToArray
                 Dim encoding As New Encoding(.AllItems)
-                Dim out = encoding _
+                Dim out As Output = encoding _
                     .TransactionEncoding(.ByRef) _
                     .AnalysisTransactions(
                         items:=encoding.AllCodes,
@@ -121,8 +121,12 @@ Namespace AprioriRules
                         impl:=impl
                     )
 
-                Return (encoding, out)
+                out.MaximalItemSets = out.MaximalItemSets.Select(Function(s) encoding.Decode)
+
+                Return out
             End With
         End Function
+
+
     End Module
 End Namespace
