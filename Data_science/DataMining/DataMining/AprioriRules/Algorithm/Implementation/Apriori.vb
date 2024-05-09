@@ -82,7 +82,7 @@ Namespace AprioriRules.Impl
         <ExportAPI("Apriori.Predictions")>
         Public Function GetAssociateRules(<Parameter("Support.Min")> minSupport#,
                                           <Parameter("Confidence.Min")> minConfidence#,
-                                          <Parameter("Items")> items As IEnumerable(Of Integer),
+                                          <Parameter("Items")> items As IEnumerable(Of Item),
                                           <Parameter("Transactions")> transactions As ItemSet()) As Output
 
             Dim frequentItems As IList(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray)
@@ -158,7 +158,7 @@ Namespace AprioriRules.Impl
         End Function
 
         Public Function CheckIsSubset(child As ItemSet, parent As ItemSet) As Boolean
-            For Each c As Integer In child.Items
+            For Each c As Item In child.Items
                 If Not parent.Contains(c) Then
                     Return False
                 End If

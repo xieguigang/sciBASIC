@@ -6,7 +6,7 @@ Namespace AprioriRules
 
     Public Structure ItemSet : Implements IComparable(Of ItemSet)
 
-        Public Items As Integer()
+        Public Items As Item()
 
         Public ReadOnly Property Length As Integer
             Get
@@ -14,17 +14,17 @@ Namespace AprioriRules
             End Get
         End Property
 
-        Default Public ReadOnly Property Item(offset As Integer) As Integer
+        Default Public ReadOnly Property Item(offset As Integer) As Item
             Get
                 Return Items(offset)
             End Get
         End Property
 
-        Sub New(scalar As Integer)
+        Sub New(scalar As Item)
             Items = {scalar}
         End Sub
 
-        Sub New(items As IEnumerable(Of Integer))
+        Sub New(items As IEnumerable(Of Item))
             Me.Items = items.ToArray
         End Sub
 
@@ -36,8 +36,8 @@ Namespace AprioriRules
             Dim hash As Integer = 1
             Dim el_hash As Integer
 
-            For Each element As Integer In Items
-                el_hash = element Xor (element >> 32)
+            For Each element As Item In Items
+                el_hash = element.Code Xor (element.Code >> 32)
                 hash = 31 * hash + el_hash
             Next
 
@@ -53,11 +53,11 @@ Namespace AprioriRules
         End Function
 
         Public Overrides Function ToString() As String
-            Return "{" & Items.JoinBy(", ") & "}"
+            Return "{" & Items.Select(Function(i) i.Item).JoinBy(", ") & "}"
         End Function
 
-        Public Function Contains(i As Integer) As Boolean
-            For Each i32 As Integer In Items
+        Public Function Contains(i As Item) As Boolean
+            For Each i32 As Item In Items
                 If i32 = i Then
                     Return True
                 End If
@@ -80,9 +80,9 @@ Namespace AprioriRules
         ''' <param name="child"></param>
         ''' <returns></returns>
         Public Function Remove(child As ItemSet) As ItemSet
-            Dim remaining As New List(Of Integer)
+            Dim remaining As New List(Of Item)
 
-            For Each i As Integer In Items
+            For Each i As Item In Items
                 If Not child.Contains(i) Then
                     Call remaining.Add(i)
                 End If
@@ -111,7 +111,7 @@ Namespace AprioriRules
             Dim p As ULong = 0
 
             For i As Integer = 0 To Items.Length - 1
-                p += Items(i) * (10 ^ i)
+                p += Items(i).Code * (10 ^ i)
             Next
 
             Return p

@@ -55,9 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
-Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text
 
 Namespace AprioriRules
 
@@ -103,19 +101,6 @@ Namespace AprioriRules
         End Function
 
         ''' <summary>
-        ''' rule transaction string to item names
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Decode(rule As ItemSet) As String()
-            Return rule.Items _
-                .Select(Function(c) CodeMappings(key:=c)) _
-                .ToArray
-        End Function
-
-        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="data">将事务编码为字符集和</param>
@@ -129,7 +114,7 @@ Namespace AprioriRules
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function TransactionEncoding(data As Transaction) As ItemSet
-            Return New ItemSet(data.Items.Select(Function(item) itemCodes(item)))
+            Return New ItemSet(data.Items.Select(Function(item) New Item(itemCodes(item), item)))
         End Function
     End Class
 End Namespace
