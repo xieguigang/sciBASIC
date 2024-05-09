@@ -138,6 +138,12 @@ Namespace IO
             End Get
         End Property
 
+        Default Public ReadOnly Property Column(offset As Integer) As String()
+            Get
+                Return table.GetColumn(offset)
+            End Get
+        End Property
+
         ''' <summary>
         ''' get number of the row data
         ''' </summary>
