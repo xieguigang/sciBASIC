@@ -154,6 +154,12 @@ Public Class Word2Vec
         Call readTokens((From wi As Word In tokenizer.words Select wi.str).ToArray)
     End Sub
 
+    ''' <summary>
+    ''' input a sentence words
+    ''' </summary>
+    ''' <param name="tokenizer">
+    ''' a collection of the words in current given sentence.
+    ''' </param>
     Public Sub readTokens(tokenizer As ICollection(Of String))
         If tokenizer Is Nothing OrElse tokenizer.Count < 1 Then
             Return
