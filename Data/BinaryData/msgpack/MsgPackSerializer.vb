@@ -86,10 +86,12 @@ Public Class MsgPackSerializer
     Private Shared Function GetInfo(type As Type) As TypeInfo
         Dim info As TypeInfo = Nothing
 
-        If Not typeInfos.TryGetValue(type, info) Then
-            info = New TypeInfo(type)
-            typeInfos(type) = info
-        End If
+        SyncLock typeInfos
+            If Not typeInfos.TryGetValue(type, info) Then
+                info = New TypeInfo(type)
+                typeInfos(type) = info
+            End If
+        End SyncLock
 
         Return info
     End Function
