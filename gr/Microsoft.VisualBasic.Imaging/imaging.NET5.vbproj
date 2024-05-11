@@ -710,10 +710,14 @@
 		</PackageReference>
 	</ItemGroup>
 
-  <!--<dependentAssembly>
+	<!-- System.Resources.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51 -->
+
+<!--
+  <dependentAssembly>
     <assemblyIdentity name="System.Resources.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
-    <bindingRedirect oldVersion="0.0.0.0-5.0.0.0" newVersion="5.0.0.0" />
-  </dependentAssembly>-->
+    <bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="6.0.0.0" />
+  </dependentAssembly>
+  -->
   
 	<ItemGroup>
 		<ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
