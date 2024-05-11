@@ -281,6 +281,12 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim source As Exception = ex
             Dim trace$ = MethodBase.GetCurrentMethod.GetFullName
 
+            Call "".EchoLine
+            Call ManView.ExceptionHandler.Print(source, EntryPoint)
+            Call "".EchoLine
+            Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
+            Call VBDebugger.WaitOutput()
+
             ex = New Exception(paramTrace, ex)
             ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
 
@@ -291,17 +297,7 @@ Namespace CommandLine.Reflection.EntryPoints
             Call DebuggerArgs.SaveErrorLog(ErrorLog.BugsFormatter(ex))
             Call VBDebugger.WaitOutput()
 
-            If [throw] Then
-                Throw ex
-            Else
-                Call "".EchoLine
-                Call ManView.ExceptionHandler.Print(source, EntryPoint)
-                Call "".EchoLine
-                Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
-                Call VBDebugger.WaitOutput()
-
-                Return -100
-            End If
+            Return 500
         End Function
 
         ''' <summary>

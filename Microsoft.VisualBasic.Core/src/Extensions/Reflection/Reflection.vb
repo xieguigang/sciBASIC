@@ -514,10 +514,14 @@ EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" i
     <ExportAPI("Get.FullName")>
     <Extension> Public Function GetFullName(method As MethodBase, Optional IncludeAssembly As Boolean = False) As String
         Dim Name As String = $"{method.DeclaringType.FullName}::{method.ToString}"
+        Dim libdll As String = method.DeclaringType.Module.Assembly.Location
+
         If Not IncludeAssembly Then
             Return Name
+        ElseIf libdll.FileExists Then
+            Return $"{libdll.ToFileURL}!{Name}"
         Else
-            Return $"{method.DeclaringType.Module.Assembly.Location.ToFileURL}!{Name}"
+            Return $"{libdll}!{Name}"
         End If
     End Function
 
