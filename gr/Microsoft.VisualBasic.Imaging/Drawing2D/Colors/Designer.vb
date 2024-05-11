@@ -220,42 +220,54 @@ Namespace Drawing2D.Colors
         ''' </remarks>
         Sub New()
             Try
-                Dim colors As Dictionary(Of String, String()) = My.Resources _
+                AvailableInterpolates = ParseAvailableInterpolates()
+            Catch ex As Exception
+                AvailableInterpolates = New Dictionary(Of Color, Color())
+
+                Call App.LogException(ex)
+            End Try
+
+            Try
+                ColorBrewer = ParseColorBrewer()
+            Catch ex As Exception
+                ColorBrewer = New Dictionary(Of String, ColorBrewer)
+
+                Call App.LogException(ex)
+                Call "ColorBrewer module is not available on Linux server".Warning
+            End Try
+        End Sub
+
+        Private Function ParseColorBrewer() As Dictionary(Of String, ColorBrewer)
+            Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
+            Dim ns As String() = r _
+                .Matches(colorBrewerJSON, """\d+""", RegexOptions.Singleline) _
+                .ToArray(Function(m)
+                             Return m.Trim(""""c)
+                         End Function)
+            Dim sb As New StringBuilder(colorBrewerJSON)
+
+            For Each n As String In ns.Distinct
+                Call sb.Replace($"""{n}""", $"""c{n}""")
+            Next
+
+            Return sb.ToString.LoadJSON(Of Dictionary(Of String, ColorBrewer))
+        End Function
+
+        Private Function ParseAvailableInterpolates() As Dictionary(Of Color, Color())
+            Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
                     .GetString(Encodings.UTF8) _
                     .LoadJSON(Of Dictionary(Of String, String()))
-                Dim valids As New Dictionary(Of Color, Color())
+            Dim valids As New Dictionary(Of Color, Color())
 
-                For Each x As KeyValuePair(Of String, String()) In colors
-                    valids(ColorTranslator.FromHtml(x.Key)) = x.Value _
-                        .Select(AddressOf ColorTranslator.FromHtml) _
-                        .ToArray
-                Next
+            For Each x As KeyValuePair(Of String, String()) In colors
+                valids(ColorTranslator.FromHtml(x.Key)) = x.Value _
+                    .Select(AddressOf ColorTranslator.FromHtml) _
+                    .ToArray
+            Next
 
-                AvailableInterpolates = valids
-
-                Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
-                Dim ns As String() = r _
-                    .Matches(colorBrewerJSON, """\d+""", RegexOptions.Singleline) _
-                    .ToArray(Function(m)
-                                 Return m.Trim(""""c)
-                             End Function)
-                Dim sb As New StringBuilder(colorBrewerJSON)
-
-                For Each n As String In ns.Distinct
-                    Call sb.Replace($"""{n}""", $"""c{n}""")
-                Next
-
-                ColorBrewer = sb.ToString.LoadJSON(Of Dictionary(Of String, ColorBrewer))
-
-            Catch ex As Exception
-                Call App.LogException(ex)
-                Call "ColorBrewer module is not available on Linux server".Warning
-
-                ColorBrewer = New Dictionary(Of String, ColorBrewer)
-                AvailableInterpolates = New Dictionary(Of Color, Color())
-            End Try
-        End Sub
+            Return valids
+        End Function
 
         ''' <summary>
         ''' <see cref="ColorMap"/> pattern names
