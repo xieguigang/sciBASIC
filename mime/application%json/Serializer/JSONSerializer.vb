@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::ccb6c77addc6b58ec103fc71989229af, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/JSONSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 158
-    '    Code Lines: 111
-    ' Comment Lines: 28
-    '   Blank Lines: 19
-    '     File Size: 5.65 KB
+' Summaries:
 
 
-    ' Module JSONSerializer
-    ' 
-    '     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
-    '               jsonValueString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 158
+'    Code Lines: 111
+' Comment Lines: 28
+'   Blank Lines: 19
+'     File Size: 5.65 KB
+
+
+' Module JSONSerializer
+' 
+'     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
+'               jsonValueString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -110,7 +111,29 @@ Public Module JSONSerializer
         End Select
     End Function
 
+    ''' <summary>
+    ''' find two char
+    ''' </summary>
+    ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
+
     Private Function encodeString(value As String, opt As JSONSerializerOptions) As String
+        If InStr(value, """") > 0 Then
+            ' escape the quote symbol inside string,
+            ' or json string will syntax error
+            Dim unescape_quotes As String() = unescape.Matches(value).ToArray
+
+            For Each unescape_char As String In unescape_quotes
+                value = value.Replace(
+                    unescape_char,
+                    unescape_char.First & "\" & unescape_char.Last
+                )
+            Next
+
+            If value.First = """"c Then
+                value = "\" & value
+            End If
+        End If
+
         If opt.unicodeEscape Then
             Dim sb As New StringBuilder
             Dim code As Integer
