@@ -84,7 +84,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Function Write(name$, target As Object, value As Object) As Boolean
             Dim p As BindProperty(Of T) = FindField(name)
 
-            If p.member Is Nothing Then
+            If p Is Nothing OrElse p.member Is Nothing Then
                 Return False
             End If
 
