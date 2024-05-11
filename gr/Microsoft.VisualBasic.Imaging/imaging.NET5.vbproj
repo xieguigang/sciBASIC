@@ -34,6 +34,8 @@
 		<PackageTags>gdi</PackageTags>
 
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+
+		<UseApplicationFramework>True</UseApplicationFramework>
 		
 	</PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
