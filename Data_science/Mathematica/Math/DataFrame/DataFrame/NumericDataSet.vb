@@ -73,6 +73,11 @@ Public Module NumericDataSet
         End If
     End Function
 
+    ''' <summary>
+    ''' a getter delegate helper for number type
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function NumericGetter(v As FeatureVector) As Func(Of Integer, Double)
         Select Case v.type
@@ -101,6 +106,12 @@ Public Module NumericDataSet
         End Select
     End Function
 
+    ''' <summary>
+    ''' convert the row data inside the given dataframe as given type of the row data objects
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="df"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function PullDataSet(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(df As DataFrame) As IEnumerable(Of T)
         Dim colnames As String() = df.featureNames
@@ -149,6 +160,12 @@ Public Module NumericDataSet
         Next
     End Function
 
+    ''' <summary>
+    ''' log of the dataframe fields 
+    ''' </summary>
+    ''' <param name="df"></param>
+    ''' <param name="base"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Log(df As DataFrame, Optional base As Double = 2) As DataFrame
         Dim df_z As New DataFrame With {

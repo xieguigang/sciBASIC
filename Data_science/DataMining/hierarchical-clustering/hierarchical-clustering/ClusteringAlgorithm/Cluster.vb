@@ -167,6 +167,9 @@ Public Class Cluster : Implements INamedValue
     ''' get the cluster entity plot orders from this function
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function could be used for get the re-order labels of the data rows for plot heatmap
+    ''' </remarks>
     Public Function OrderLeafs() As String()
         If Children.IsNullOrEmpty Then
             Return New String() {Name}
