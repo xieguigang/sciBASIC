@@ -284,7 +284,6 @@ Namespace CommandLine.Reflection.EntryPoints
             Call "".EchoLine
             Call ManView.ExceptionHandler.Print(source, EntryPoint)
             Call "".EchoLine
-            Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
             Call VBDebugger.WaitOutput()
 
             ex = New Exception(paramTrace, ex)
