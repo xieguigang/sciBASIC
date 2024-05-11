@@ -86,6 +86,11 @@ Public Class MsgPackSerializer
     Private Shared Function GetInfo(type As Type) As TypeInfo
         Dim info As TypeInfo = Nothing
 
+        ' 20240511 typeInfos is a global shared object that contains the type
+        ' schema cache for read messagepack data. multiple thread may cased
+        ' the null reference error at here.
+        ' due to the reason of typeinfos collection modification problem
+        ' add synlock for avoid such multiple thread error.
         SyncLock typeInfos
             If Not typeInfos.TryGetValue(type, info) Then
                 info = New TypeInfo(type)
@@ -301,7 +306,7 @@ Public Class MsgPackSerializer
                     Throw New ApplicationException("The serialized map format isn't valid")
                 End If
 
-                For i = 0 To numElements - 1
+                For i As Integer = 0 To numElements - 1
                     Dim propName = CStr(ReadMsgPackString(reader, NilImplication.Null))
                     Dim propToProcess As SerializableProperty = Nothing
 
