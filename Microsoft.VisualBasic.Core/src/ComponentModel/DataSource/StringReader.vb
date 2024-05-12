@@ -290,6 +290,11 @@ Namespace ComponentModel.DataSourceModel
             Return Long.Parse(getter.GetString(parameter))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetUInt64(name As String) As ULong
+            Return ULong.Parse(getter.GetString(name))
+        End Function
+
         ''' <summary>
         ''' Gets the String value Of the specified field.
         ''' </summary>
