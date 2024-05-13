@@ -134,6 +134,8 @@ Public Module JSONSerializer
             End If
         End If
 
+        value = value.Replace(vbCr, vbLf).Replace(vbLf, "\n")
+
         If opt.unicodeEscape Then
             Dim sb As New StringBuilder
             Dim code As Integer
