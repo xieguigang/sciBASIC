@@ -139,6 +139,13 @@ Namespace Graphic.Axis
             Me.labelColor = labelColor
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="layout"></param>
+        ''' <param name="y0">the plot location of y value when y axis value is ZERO</param>
+        ''' <param name="offset"></param>
         Public Sub Draw(g As IGraphics, layout As XAxisLayoutStyles, y0 As Double, offset As PointF)
             Dim Y% = plotRegion.Top + offset.Y
             Dim size As Size = plotRegion.Size
