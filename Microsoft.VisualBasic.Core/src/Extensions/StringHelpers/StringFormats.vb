@@ -67,7 +67,7 @@ Public Module StringFormats
         ElseIf bytes.IsNaNImaginary Then
             Return "n/a KB"
         ElseIf bytes < 1024 Then
-            Return $"{bytes} B"
+            Return $"{CInt(bytes)} B"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}
