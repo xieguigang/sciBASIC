@@ -127,7 +127,7 @@ THE SOFTWARE.",
         ''' <returns></returns>
         <Extension>
         Public Function Insert(src As String, info As LicenseInfo, rootDir$, Optional ByRef stat As CodeStatics = Nothing) As Boolean
-            Dim file As String = PathExtensions.RelativePath(rootDir, src, appendParent:=False)
+            Dim file As String = PathExtensions.RelativePath(rootDir.GetDirectoryFullPath, src.GetFullPath, appendParent:=False)
             Dim [in] As String = src.ReadAllText
             Dim path As String = src
 
