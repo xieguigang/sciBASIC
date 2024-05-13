@@ -56,6 +56,18 @@ Imports std = System.Math
 
 Public Module StringFormats
 
+    Public Function nsize(x As Double) As String
+        If x <= 0 Then
+            Return "0"
+        ElseIf x.IsNaNImaginary Then
+            Return "n/a"
+        ElseIf x < 500 Then
+            Return CInt(x).ToString
+        Else
+            Return CInt(x / 1000).ToString & "K"
+        End If
+    End Function
+
     ''' <summary>
     ''' 对bytes数值进行格式自动优化显示
     ''' </summary>
