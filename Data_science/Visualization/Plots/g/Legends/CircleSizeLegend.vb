@@ -27,8 +27,8 @@ Namespace Graphic.Legend
                 r = radius * 2
                 y += r
 
-                Call g.DrawEllipse(circleStroke, New RectangleF(left, y - r, r, r))
-                Call g.DrawString(radius, radiusFont, Brushes.Black, New PointF(tick_left, y - tickSize.Height / 2))
+                Call g.DrawEllipse(circleStroke, New RectangleF(left + (max_r * 2 - r) / 2, y - r, r, r))
+                Call g.DrawString(radius, radiusFont, Brushes.Black, New PointF(tick_left, y - r - tickSize.Height / 2))
 
                 y += dy
             Next
