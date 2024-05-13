@@ -175,7 +175,7 @@ Namespace Graphic.Axis
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Call drawLabel(g, size, d)
+                Call drawLabel(g, size, d, ZERO)
             End If
         End Sub
 
@@ -222,20 +222,20 @@ Namespace Graphic.Axis
             Next
         End Sub
 
-        Private Sub drawLabel(g As IGraphics, size As Size, d As Double)
+        Private Sub drawLabel(g As IGraphics, size As Size, d As Double, zero As Point)
             If htmlLabel Then
                 Dim labelImage As Image = label.__plotLabel(labelFont, False)
                 Dim point As New Point With {
                     .X = (size.Width - labelImage.Width) / 2 + plotRegion.Left,
-                    .Y = plotRegion.Top + size.Height + tickFont.Height + d * 4
+                    .Y = zero.Y + size.Height + tickFont.Height + d * 4
                 }
 
                 Call g.DrawImageUnscaled(labelImage, point)
             Else
                 Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
                 Dim fSize As SizeF = g.MeasureString(label, font)
-                Dim y1 As Double = plotRegion.Bottom + tickFont.Height + d * 3
-                Dim y2 As Double = plotRegion.Bottom + ((g.Size.Height - plotRegion.Bottom) - fSize.Height) / 2
+                Dim y1 As Double = zero.Y + tickFont.Height + d * 3
+                Dim y2 As Double = zero.Y + ((g.Size.Height - plotRegion.Bottom) - fSize.Height) / 2
                 Dim point As New PointF With {
                     .X = (size.Width - fSize.Width) / 2 + plotRegion.Left,
                     .Y = std.Max(y1, y2)
