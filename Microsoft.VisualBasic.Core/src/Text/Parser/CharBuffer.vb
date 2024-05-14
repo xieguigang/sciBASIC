@@ -338,11 +338,15 @@ Namespace Text.Parser
         End Operator
 
         ''' <summary>
-        ''' test current char buffer is equals to the given char?
+        ''' test current char buffer size is 1 and also is equals to the given char?
         ''' </summary>
         ''' <param name="buf"></param>
         ''' <param name="test"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns false if the buffer size is not equals to 1
+        ''' if the single char in the given buffer is not equals to the given 
+        ''' <paramref name="test"/> char, then returns false.
+        ''' </returns>
         Public Shared Operator =(buf As CharBuffer, test As Char) As Boolean
             If buf.Size <> 1 Then
                 Return False

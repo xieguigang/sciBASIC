@@ -88,6 +88,13 @@ Namespace Serialization
     ''' <returns></returns>
     Public Delegate Function IStringBuilder(data As Object) As String
 
+    ''' <summary>
+    ''' delegate for generic cast object to string
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
+
     Public Delegate Function IToString(Of T)(obj As T) As String
 
 End Namespace
