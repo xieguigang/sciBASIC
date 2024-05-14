@@ -250,6 +250,18 @@ Public Class CDFWriter : Implements IDisposable
         Return Me
     End Function
 
+    Public Function GlobalAttributes(name As String, value As String) As CDFWriter
+        Return GlobalAttributes(New attribute(name, value))
+    End Function
+
+    Public Function GlobalAttributes(name As String, value As Boolean) As CDFWriter
+        Return GlobalAttributes(New attribute(name, If(value, 1, 0), CDFDataTypes.NC_INT))
+    End Function
+
+    Public Function GlobalAttributes(name As String, value As Integer) As CDFWriter
+        Return GlobalAttributes(New attribute(name, value, CDFDataTypes.NC_INT))
+    End Function
+
     ''' <summary>
     ''' 在这里定义在数据集中所使用到的基础数据类型信息
     ''' </summary>
@@ -500,6 +512,53 @@ Public Class CDFWriter : Implements IDisposable
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
+    End Sub
+
+    ''' <summary>
+    ''' Add a numeric vector into target cdf file
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <param name="vec"></param>
+    ''' <param name="[dim]"></param>
+    ''' <param name="attrs"></param>
+    ''' <remarks>
+    ''' A wrapper of the <see cref="AddVariable(String, ICDFDataVector, Dimension(), attribute())"/> function
+    ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Single), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, floats), [dim], attrs)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Char), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, chars), [dim], attrs)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Integer), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, integers), [dim], attrs)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="vec"></param>
+    ''' <param name="[dim]"></param>
+    ''' <param name="attrs"></param>
+    ''' <remarks>
+    ''' due to the reason of string value is in variable length, so we just pass the dimension name at here
+    ''' </remarks>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name As String, vec As IEnumerable(Of String),
+                                   [dim] As String,
+                                   Optional attrs As attribute() = Nothing)
+
+        Dim chars As chars = CType(vec.ToArray, chars)
+        Dim dimSize As New Dimension([dim], chars.Length)
+
+        Call AddVariable(name, chars, dimSize, attrs)
     End Sub
 
     ''' <summary>

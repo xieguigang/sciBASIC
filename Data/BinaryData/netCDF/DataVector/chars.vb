@@ -133,5 +133,9 @@ Namespace DataVector
         Public Overloads Shared Narrowing Operator CType(chars As chars) As String
             Return New String(chars.buffer)
         End Operator
+
+        Public Overloads Shared Widening Operator CType(vec As String()) As chars
+            Return New chars(vec)
+        End Operator
     End Class
 End Namespace
