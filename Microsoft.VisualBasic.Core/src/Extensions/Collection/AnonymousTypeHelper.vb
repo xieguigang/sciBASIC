@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/AnonymousTypeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, Microsoft.VisualBasic.Core\src\Extensions\Collection\AnonymousTypeHelper.vb"
 
     ' Author:
     ' 

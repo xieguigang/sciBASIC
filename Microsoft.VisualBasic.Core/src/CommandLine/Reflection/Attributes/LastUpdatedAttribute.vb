@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b74918c1abe9b30f63774f8b47e27455, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/LastUpdatedAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::b74918c1abe9b30f63774f8b47e27455, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\LastUpdatedAttribute.vb"
 
     ' Author:
     ' 

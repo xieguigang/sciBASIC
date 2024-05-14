@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84ba2e392bce626c33be750feb519490, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Filters/ImageStrech.vb"
+﻿#Region "Microsoft.VisualBasic::84ba2e392bce626c33be750feb519490, gr\Microsoft.VisualBasic.Imaging\Filters\ImageStrech.vb"
 
     ' Author:
     ' 

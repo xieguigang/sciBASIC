@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::047f69a452f7388430d1607ebda355e8, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//Turtle/Triple.vb"
+﻿#Region "Microsoft.VisualBasic::047f69a452f7388430d1607ebda355e8, mime\application%rdf+xml\Turtle\Triple.vb"
 
     ' Author:
     ' 

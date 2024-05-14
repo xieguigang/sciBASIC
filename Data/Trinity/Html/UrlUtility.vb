@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36644267a65f266f15f8569f0c5a816d, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Html/UrlUtility.vb"
+﻿#Region "Microsoft.VisualBasic::36644267a65f266f15f8569f0c5a816d, Data\Trinity\Html\UrlUtility.vb"
 
     ' Author:
     ' 

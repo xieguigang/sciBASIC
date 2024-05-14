@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::840c7e590c62e794646ba84236d76b24, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//MathML/Expression/BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::840c7e590c62e794646ba84236d76b24, mime\application%xml\MathML\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad7a919c3018cf750f038e7f0b7e0e25, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfReader/Document/PdfIdentifier.vb"
+﻿#Region "Microsoft.VisualBasic::ad7a919c3018cf750f038e7f0b7e0e25, mime\application%pdf\PdfReader\Document\PdfIdentifier.vb"
 
     ' Author:
     ' 

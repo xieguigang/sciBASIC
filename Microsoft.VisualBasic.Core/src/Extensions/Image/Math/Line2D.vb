@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c86d7d9ce2bd6a4484c65e7684c3a90, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Line2D.vb"
+﻿#Region "Microsoft.VisualBasic::1c86d7d9ce2bd6a4484c65e7684c3a90, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Line2D.vb"
 
     ' Author:
     ' 

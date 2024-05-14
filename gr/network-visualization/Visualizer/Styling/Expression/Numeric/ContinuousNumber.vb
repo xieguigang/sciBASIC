@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797bf5dae1fba00822715c3b2e9c4e31, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Numeric/ContinuousNumber.vb"
+﻿#Region "Microsoft.VisualBasic::797bf5dae1fba00822715c3b2e9c4e31, gr\network-visualization\Visualizer\Styling\Expression\Numeric\ContinuousNumber.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35bb62c91af63df6d1b35eb179671ee1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::35bb62c91af63df6d1b35eb179671ee1, gr\network-visualization\NetworkCanvas\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

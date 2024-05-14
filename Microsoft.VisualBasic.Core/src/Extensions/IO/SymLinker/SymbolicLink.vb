@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/SymLinker/SymbolicLink.vb"
+﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\SymbolicLink.vb"
 
     ' Author:
     ' 

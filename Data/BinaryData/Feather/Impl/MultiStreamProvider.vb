@@ -1,4 +1,79 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::0c6ef3952c0d2212ff8eef0ec3f2ee78, Data\BinaryData\Feather\Impl\MultiStreamProvider.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 274
+    '    Code Lines: 220
+    ' Comment Lines: 2
+    '   Blank Lines: 52
+    '     File Size: 9.55 KB
+
+
+    '     Class BufferedStream
+    ' 
+    '         Properties: CanRead, CanSeek, CanWrite, Length, Position
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Read, Seek
+    ' 
+    '         Sub: Dispose, Flush, SetLength, Write
+    ' 
+    '     Class MultiStreamProvider
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateChildStream, PlaceInBuffer
+    ' 
+    '         Sub: AdvanceTo, Push, RemoveChild, RequestFlush, ReturnBuffer
+    '              WriteToStream
+    '         Class PendingEntry
+    ' 
+    '             Properties: Count, Data, WriteAtPosition
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: (+2 Overloads) Equals, GetHashCode
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Threading
 Imports std = System.Math
 
@@ -272,3 +347,4 @@ copy:
         End Sub
     End Class
 End Namespace
+

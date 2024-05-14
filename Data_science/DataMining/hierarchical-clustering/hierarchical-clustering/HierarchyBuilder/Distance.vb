@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1b6405d1db6978c951801af46f93b40, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//HierarchyBuilder/Distance.vb"
+﻿#Region "Microsoft.VisualBasic::c1b6405d1db6978c951801af46f93b40, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\Distance.vb"
 
     ' Author:
     ' 

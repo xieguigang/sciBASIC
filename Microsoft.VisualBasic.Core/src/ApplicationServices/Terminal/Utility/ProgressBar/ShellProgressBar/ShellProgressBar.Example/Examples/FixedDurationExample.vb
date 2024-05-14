@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3e1a767693c9801bd4defc97d917df, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//Examples/FixedDurationExample.vb"
+﻿#Region "Microsoft.VisualBasic::7a3e1a767693c9801bd4defc97d917df, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\FixedDurationExample.vb"
 
     ' Author:
     ' 

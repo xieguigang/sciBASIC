@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0316a6523ff83aff596540db7e435104, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/Flags/HeaderCharMapPositions.vb"
+﻿#Region "Microsoft.VisualBasic::0316a6523ff83aff596540db7e435104, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\HeaderCharMapPositions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3203c71c2ce16b64564efff3e606a26, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONLogic/TreeBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::e3203c71c2ce16b64564efff3e606a26, mime\application%json\JSONLogic\TreeBuilder.vb"
 
     ' Author:
     ' 

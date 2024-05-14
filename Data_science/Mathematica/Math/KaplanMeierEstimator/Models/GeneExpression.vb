@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f03288d5572db3b7ad15ef97839315, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//Models/GeneExpression.vb"
+﻿#Region "Microsoft.VisualBasic::f8f03288d5572db3b7ad15ef97839315, Data_science\Mathematica\Math\KaplanMeierEstimator\Models\GeneExpression.vb"
 
     ' Author:
     ' 

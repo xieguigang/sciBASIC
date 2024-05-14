@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b0582f0d57d18c3f9dc593b2cbf3c72, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/DataObjects/Headers/Messages/DataTypeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::6b0582f0d57d18c3f9dc593b2cbf3c72, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
 
     ' Author:
     ' 

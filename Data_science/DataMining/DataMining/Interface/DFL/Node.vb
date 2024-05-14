@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e49b1be2e3629db99eb6ae3a2cd3a1bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Interface/DFL/Node.vb"
+﻿#Region "Microsoft.VisualBasic::e49b1be2e3629db99eb6ae3a2cd3a1bc, Data_science\DataMining\DataMining\Interface\DFL\Node.vb"
 
     ' Author:
     ' 

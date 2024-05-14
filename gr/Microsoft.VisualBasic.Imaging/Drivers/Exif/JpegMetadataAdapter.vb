@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb37be7a57753d64404175d0021b7fba, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/Exif/JpegMetadataAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::cb37be7a57753d64404175d0021b7fba, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::742c8bfa81660fc6ae66f5eae36b658d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::742c8bfa81660fc6ae66f5eae36b658d, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb4289a54268c62846b46b13ec7affa1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/BisectingKMeans/BisectingKMeans.vb"
+﻿#Region "Microsoft.VisualBasic::fb4289a54268c62846b46b13ec7affa1, Data_science\DataMining\DataMining\Clustering\BisectingKMeans\BisectingKMeans.vb"
 
     ' Author:
     ' 

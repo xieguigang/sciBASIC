@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214369396ce57aafd3fbbfb35dee4a42, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Math/WiseOperation.vb"
+﻿#Region "Microsoft.VisualBasic::214369396ce57aafd3fbbfb35dee4a42, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\WiseOperation.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a33437c1f4fcc6111cf3e0299e2dcb0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/base/Combination/Comb.vb"
+﻿#Region "Microsoft.VisualBasic::4a33437c1f4fcc6111cf3e0299e2dcb0, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 

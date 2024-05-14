@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a1ec8118bd67f40fb630ab229627d10, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/Interface.vb"
+﻿#Region "Microsoft.VisualBasic::7a1ec8118bd67f40fb630ab229627d10, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2dd36df890fd43916c15ad3e1b811e5b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery//GridBox.vb"
+﻿#Region "Microsoft.VisualBasic::2dd36df890fd43916c15ad3e1b811e5b, Data_science\DataMining\DensityQuery\GridBox.vb"
 
     ' Author:
     ' 

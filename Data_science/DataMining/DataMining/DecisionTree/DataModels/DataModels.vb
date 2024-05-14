@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a50c8dafaaa55942ae280072f56ddd73, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//DecisionTree/DataModels/DataModels.vb"
+﻿#Region "Microsoft.VisualBasic::a50c8dafaaa55942ae280072f56ddd73, Data_science\DataMining\DataMining\DecisionTree\DataModels\DataModels.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5872d3744776dd3f67e0d8671738f9c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9b749b55c36f404e755ae78d085b492e, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
-    '    Code Lines: 121
-    ' Comment Lines: 29
-    '   Blank Lines: 27
-    '     File Size: 5.83 KB
+    '   Total Lines: 318
+    '    Code Lines: 182
+    ' Comment Lines: 95
+    '   Blank Lines: 41
+    '     File Size: 11.02 KB
 
 
     ' Class DataFrame
     ' 
-    '     Properties: dims, featureNames, features, nsamples, rownames
+    '     Properties: dims, featureNames, features, nfeatures, nsamples
+    '                 rownames
     ' 
     '     Constructor: (+3 Overloads) Sub New
     ' 
-    '     Function: ArrayPack, delete, foreachRow, row, ToString
-    '               Union
+    '     Function: ArrayPack, delete, foreachRow, row, slice
+    '               ToString, Union
     ' 
-    '     Sub: (+2 Overloads) add
+    '     Sub: (+3 Overloads) add
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da1ee84a25bbfc6aa0c7b8874478229e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Layout/Group.vb"
+﻿#Region "Microsoft.VisualBasic::da1ee84a25bbfc6aa0c7b8874478229e, gr\network-visualization\network_layout\Cola\Layout\Group.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::629b4019ba72bee4ed36d9827422d02b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Circular/CircularLayout.vb"
+﻿#Region "Microsoft.VisualBasic::629b4019ba72bee4ed36d9827422d02b, gr\network-visualization\network_layout\Circular\CircularLayout.vb"
 
     ' Author:
     ' 

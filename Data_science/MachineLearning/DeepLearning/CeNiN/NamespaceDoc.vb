@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f3d71a383a30b4e4060ca7422d59698, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::2f3d71a383a30b4e4060ca7422d59698, Data_science\MachineLearning\DeepLearning\CeNiN\NamespaceDoc.vb"
 
     ' Author:
     ' 

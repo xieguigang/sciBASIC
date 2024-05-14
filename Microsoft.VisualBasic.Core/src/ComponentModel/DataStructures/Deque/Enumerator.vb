@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed9fc06dfa15f5d676d8e5033794d4c7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Deque/Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::ed9fc06dfa15f5d676d8e5033794d4c7, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Enumerator.vb"
 
     ' Author:
     ' 

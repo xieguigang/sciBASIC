@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd0ec0417469eee2159136d1538d1f0e, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dd0ec0417469eee2159136d1538d1f0e, www\githubAPI\Extensions.vb"
 
     ' Author:
     ' 

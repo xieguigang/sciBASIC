@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee2f8cff11dadab6afab790cc16069f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/FrameworkConfig.vb"
+﻿#Region "Microsoft.VisualBasic::7ee2f8cff11dadab6afab790cc16069f, Microsoft.VisualBasic.Core\src\My\Framework\FrameworkConfig.vb"
 
     ' Author:
     ' 

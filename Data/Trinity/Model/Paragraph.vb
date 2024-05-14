@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::005ff88053fa9f5f2b79e9da01bd98bb, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::005ff88053fa9f5f2b79e9da01bd98bb, Data\Trinity\Model\Paragraph.vb"
 
     ' Author:
     ' 

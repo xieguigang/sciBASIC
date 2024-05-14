@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8010d2a75b0505934abab58b936643f3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/WhichIndex.vb"
+﻿#Region "Microsoft.VisualBasic::8010d2a75b0505934abab58b936643f3, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\WhichIndex.vb"
 
     ' Author:
     ' 

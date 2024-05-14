@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ab486c268722b768d7c93fb15fa327b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/StoreProcedure/Snapshot.vb"
+﻿#Region "Microsoft.VisualBasic::9ab486c268722b768d7c93fb15fa327b, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Snapshot.vb"
 
     ' Author:
     ' 

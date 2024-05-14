@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3a33f49cc4137c8622b8bae9e8f5cc6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/WebResponse.vb"
+﻿#Region "Microsoft.VisualBasic::d3a33f49cc4137c8622b8bae9e8f5cc6, Microsoft.VisualBasic.Core\src\Net\HTTP\WebResponse.vb"
 
     ' Author:
     ' 

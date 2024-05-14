@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::749193b3f43ab201a94bff410cb295c2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/logicTest.vb"
+﻿#Region "Microsoft.VisualBasic::749193b3f43ab201a94bff410cb295c2, mime\application%json\JSONtest\logicTest.vb"
 
     ' Author:
     ' 

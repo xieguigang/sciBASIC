@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad10bb2f44e7f86075aa0c2769d23294, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/ExpressionTokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::ad10bb2f44e7f86075aa0c2769d23294, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionTokenIcer.vb"
 
     ' Author:
     ' 

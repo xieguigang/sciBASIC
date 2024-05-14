@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b6db20ed99b91932bdc8e6e828c08f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//test/OrthogonalTest.vb"
+﻿#Region "Microsoft.VisualBasic::09b6db20ed99b91932bdc8e6e828c08f, gr\network-visualization\Datavisualization.Network\test\OrthogonalTest.vb"
 
     ' Author:
     ' 

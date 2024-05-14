@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5339882ed85e020df3e003b9bdb7d4b6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Trinity/WordSimilarityIndex.vb"
+﻿#Region "Microsoft.VisualBasic::5339882ed85e020df3e003b9bdb7d4b6, Microsoft.VisualBasic.Core\src\Data\Trinity\WordSimilarityIndex.vb"
 
     ' Author:
     ' 

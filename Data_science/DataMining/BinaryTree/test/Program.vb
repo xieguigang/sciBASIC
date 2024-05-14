@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3af2f49e121c64755e9b05ef2ed8e5d1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/test//Program.vb"
+﻿#Region "Microsoft.VisualBasic::3af2f49e121c64755e9b05ef2ed8e5d1, Data_science\DataMining\BinaryTree\test\Program.vb"
 
     ' Author:
     ' 

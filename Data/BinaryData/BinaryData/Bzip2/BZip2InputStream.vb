@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf5492f7947e4785dc438afffdfab74c, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/BZip2InputStream.vb"
+﻿#Region "Microsoft.VisualBasic::cf5492f7947e4785dc438afffdfab74c, Data\BinaryData\BinaryData\Bzip2\BZip2InputStream.vb"
 
     ' Author:
     ' 

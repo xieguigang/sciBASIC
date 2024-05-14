@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35d4a890c675ca142ea2cfd875d4b753, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/Adjustment.vb"
+﻿#Region "Microsoft.VisualBasic::35d4a890c675ca142ea2cfd875d4b753, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\Adjustment.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41519e22a949d1b41e068c6ac15da2d9, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Handle/XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::41519e22a949d1b41e068c6ac15da2d9, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\XYMetaHandle.vb"
 
     ' Author:
     ' 

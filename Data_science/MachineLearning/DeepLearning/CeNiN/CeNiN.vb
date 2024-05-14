@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/CeNiN.vb"
+﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, Data_science\MachineLearning\DeepLearning\CeNiN\CeNiN.vb"
 
     ' Author:
     ' 

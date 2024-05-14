@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3ed7cbe3b4ac62ecd512d166ff4a2fd, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::f3ed7cbe3b4ac62ecd512d166ff4a2fd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\ColorIndex.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::101d419776556a1e68617c9a5d76d1d0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/Tcp/TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::101d419776556a1e68617c9a5d76d1d0, Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 

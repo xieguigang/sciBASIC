@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28f321ef9a6b2fb767bc2059593a6272, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::28f321ef9a6b2fb767bc2059593a6272, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 

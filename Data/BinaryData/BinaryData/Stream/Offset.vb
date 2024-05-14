@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/Offset.vb"
+﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, Data\BinaryData\BinaryData\Stream\Offset.vb"
 
     ' Author:
     ' 

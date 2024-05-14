@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/Flags.vb"
+﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Flags.vb"
 
     ' Author:
     ' 

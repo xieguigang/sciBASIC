@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49858a28b558a9ab68c7a3553a77ee89, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/RangeTransform/IRangeTransform.vb"
+﻿#Region "Microsoft.VisualBasic::49858a28b558a9ab68c7a3553a77ee89, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\IRangeTransform.vb"
 
     ' Author:
     ' 

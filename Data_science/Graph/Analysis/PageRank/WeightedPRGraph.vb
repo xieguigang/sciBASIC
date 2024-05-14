@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0268e791285b8985610570d8c00ddd60, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PageRank/WeightedPRGraph.vb"
+﻿#Region "Microsoft.VisualBasic::0268e791285b8985610570d8c00ddd60, Data_science\Graph\Analysis\PageRank\WeightedPRGraph.vb"
 
     ' Author:
     ' 

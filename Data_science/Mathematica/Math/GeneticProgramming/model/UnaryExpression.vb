@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::253a43d83cb9c6a4fbf586176fc839c6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/UnaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::253a43d83cb9c6a4fbf586176fc839c6, Data_science\Mathematica\Math\GeneticProgramming\model\UnaryExpression.vb"
 
     ' Author:
     ' 

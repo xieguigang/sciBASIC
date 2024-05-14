@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b1aa1e631b9ed5c9794d9331f1f7fe, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Sample.vb"
+﻿#Region "Microsoft.VisualBasic::94b1aa1e631b9ed5c9794d9331f1f7fe, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 

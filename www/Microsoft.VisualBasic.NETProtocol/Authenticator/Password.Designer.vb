@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b419f7fa6b05f9581422e64c6e8a468d, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Authenticator/Password.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b419f7fa6b05f9581422e64c6e8a468d, www\Microsoft.VisualBasic.NETProtocol\Authenticator\Password.Designer.vb"
 
     ' Author:
     ' 

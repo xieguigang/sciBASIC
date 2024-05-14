@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::4727dd3905c17d0657064742b099e5c0, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
 
     ' Author:
     ' 

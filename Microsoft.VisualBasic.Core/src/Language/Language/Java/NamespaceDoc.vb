@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778fade6af9fcd57355c0a28a9bad6b0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::778fade6af9fcd57355c0a28a9bad6b0, Microsoft.VisualBasic.Core\src\Language\Language\Java\NamespaceDoc.vb"
 
     ' Author:
     ' 

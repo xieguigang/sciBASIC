@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::119e1fb4aaa060b2be0b1246e4747f9d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/MemoryLoads.vb"
+﻿#Region "Microsoft.VisualBasic::119e1fb4aaa060b2be0b1246e4747f9d, Microsoft.VisualBasic.Core\src\My\Framework\MemoryLoads.vb"
 
     ' Author:
     ' 

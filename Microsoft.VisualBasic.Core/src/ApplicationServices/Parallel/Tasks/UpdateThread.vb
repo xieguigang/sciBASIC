@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bbcd5999c731c098ef051b1464af64d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Tasks/UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::3bbcd5999c731c098ef051b1464af64d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 

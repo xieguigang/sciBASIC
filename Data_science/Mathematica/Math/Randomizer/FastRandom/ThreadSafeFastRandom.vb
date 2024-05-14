@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf2da557fd2588452d6670a23ff753f5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Randomizer//FastRandom/ThreadSafeFastRandom.vb"
+﻿#Region "Microsoft.VisualBasic::cf2da557fd2588452d6670a23ff753f5, Data_science\Mathematica\Math\Randomizer\FastRandom\ThreadSafeFastRandom.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49476d68c88847a89f0153ca4e85a6b5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::49476d68c88847a89f0153ca4e85a6b5, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaac9e96bab91106ab0a2587de35a1de, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/Shell.vb"
+﻿#Region "Microsoft.VisualBasic::eaac9e96bab91106ab0a2587de35a1de, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 

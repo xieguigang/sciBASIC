@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ee1a9bf730f719b822c16f5dee981d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/Generic/EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::43ee1a9bf730f719b822c16f5dee981d, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 

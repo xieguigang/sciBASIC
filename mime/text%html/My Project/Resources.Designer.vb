@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e14bf4a931b4477ee9bc5aa15dd9c0, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::95e14bf4a931b4477ee9bc5aa15dd9c0, mime\text%html\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

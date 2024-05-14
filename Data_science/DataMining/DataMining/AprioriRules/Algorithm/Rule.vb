@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7c7e7b41521fca7dd96a9905ffeb94e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Entities/Rule.vb"
+﻿#Region "Microsoft.VisualBasic::1caa13c352693c8b4a4f4a7c7a30a314, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Rule.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 54
-    ' Comment Lines: 10
-    '   Blank Lines: 18
-    '     File Size: 2.50 KB
+    '   Total Lines: 76
+    '    Code Lines: 43
+    ' Comment Lines: 18
+    '   Blank Lines: 15
+    '     File Size: 2.44 KB
 
 
     '     Class Rule
     ' 
-    '         Properties: Confidence, SupportX, SupportXY, X, Y
+    '         Properties: Confidence, length, SupportX, SupportXY, X
+    '                     Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: CompareTo, Equals, GetHashCode, ToString

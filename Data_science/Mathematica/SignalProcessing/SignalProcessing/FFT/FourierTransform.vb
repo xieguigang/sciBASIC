@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6405285d4f8fa76564909c9678e07e5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::b6405285d4f8fa76564909c9678e07e5, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\FourierTransform.vb"
 
     ' Author:
     ' 

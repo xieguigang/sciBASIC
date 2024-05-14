@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::428c0b7e7483866e25b8b7fe4284e7c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//CenterStar/CenterStar.vb"
+﻿#Region "Microsoft.VisualBasic::428c0b7e7483866e25b8b7fe4284e7c3, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
 
     ' Author:
     ' 

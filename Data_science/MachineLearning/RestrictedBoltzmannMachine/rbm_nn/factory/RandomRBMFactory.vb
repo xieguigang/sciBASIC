@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c33444871f1ff2e5530c090660d19b6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/factory/RandomRBMFactory.vb"
+﻿#Region "Microsoft.VisualBasic::7c33444871f1ff2e5530c090660d19b6, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\factory\RandomRBMFactory.vb"
 
     ' Author:
     ' 

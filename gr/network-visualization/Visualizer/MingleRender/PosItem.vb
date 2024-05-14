@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28b3cc072e2870adcb95661477f00604, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//MingleRender/PosItem.vb"
+﻿#Region "Microsoft.VisualBasic::28b3cc072e2870adcb95661477f00604, gr\network-visualization\Visualizer\MingleRender\PosItem.vb"
 
     ' Author:
     ' 

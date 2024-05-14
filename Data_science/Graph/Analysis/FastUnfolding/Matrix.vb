@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dc22c15b021af6d429d95295b6f146e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/FastUnfolding/Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::4dc22c15b021af6d429d95295b6f146e, Data_science\Graph\Analysis\FastUnfolding\Matrix.vb"
 
     ' Author:
     ' 

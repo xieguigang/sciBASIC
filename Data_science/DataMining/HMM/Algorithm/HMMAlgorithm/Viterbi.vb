@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ef1a2f35c001382b3869809465abd8c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMAlgorithm/Viterbi.vb"
+﻿#Region "Microsoft.VisualBasic::6ef1a2f35c001382b3869809465abd8c, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Viterbi.vb"
 
     ' Author:
     ' 

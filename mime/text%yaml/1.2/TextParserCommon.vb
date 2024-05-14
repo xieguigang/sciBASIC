@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab2cbe52d16bbe81bd3fc924abc28a90, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/TextParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::ab2cbe52d16bbe81bd3fc924abc28a90, mime\text%yaml\1.2\TextParserCommon.vb"
 
     ' Author:
     ' 

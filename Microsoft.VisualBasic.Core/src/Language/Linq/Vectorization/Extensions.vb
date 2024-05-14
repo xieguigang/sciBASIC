@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fef618e0b4e8a5afc7d73c7a372a656, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Vectorization/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3fef618e0b4e8a5afc7d73c7a372a656, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Extensions.vb"
 
     ' Author:
     ' 

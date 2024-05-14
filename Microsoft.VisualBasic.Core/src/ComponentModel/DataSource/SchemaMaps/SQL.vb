@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b06e4396b4bda66d00a83bb75c598bd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/SQL.vb"
+﻿#Region "Microsoft.VisualBasic::5b06e4396b4bda66d00a83bb75c598bd, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 

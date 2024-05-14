@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd9fb0f08a6e20a3c69afb259a3fec41, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/AnsiColor.vb"
+﻿#Region "Microsoft.VisualBasic::fd9fb0f08a6e20a3c69afb259a3fec41, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiColor.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::334fc7f4ec0683e91664890a30cee102, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/TraceBackAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::334fc7f4ec0683e91664890a30cee102, Data_science\DataMining\DataMining\ComponentModel\TraceBackAlgorithm.vb"
 
     ' Author:
     ' 

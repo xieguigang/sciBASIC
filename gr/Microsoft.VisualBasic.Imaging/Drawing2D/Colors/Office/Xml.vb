@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f01be840fdbaea60c129e724ba0c78fa, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Office/Xml.vb"
+﻿#Region "Microsoft.VisualBasic::f01be840fdbaea60c129e724ba0c78fa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\Xml.vb"
 
     ' Author:
     ' 

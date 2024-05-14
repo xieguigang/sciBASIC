@@ -1,4 +1,56 @@
-﻿Imports System
+﻿#Region "Microsoft.VisualBasic::f8edb1eb25280fb797194ab9ff43c9ba, Data\BinaryData\Feather\Impl\FeatherMagic.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 11
+    ' Comment Lines: 0
+    '   Blank Lines: 2
+    '     File Size: 735 B
+
+
+    '     Module FeatherMagic
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System
 
 Namespace Impl
     Friend Module FeatherMagic
@@ -11,3 +63,4 @@ Namespace Impl
         Public ReadOnly DATETIME_EPOCH As Date = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
     End Module
 End Namespace
+

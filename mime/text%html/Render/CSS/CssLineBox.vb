@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82eeef22797b4aa17b8248cba0d99c9d, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssLineBox.vb"
+﻿#Region "Microsoft.VisualBasic::82eeef22797b4aa17b8248cba0d99c9d, mime\text%html\Render\CSS\CssLineBox.vb"
 
     ' Author:
     ' 

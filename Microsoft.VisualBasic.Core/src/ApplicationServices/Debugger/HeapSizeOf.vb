@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6210a1e00ed9dcd8db58cda000009e8f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/HeapSizeOf.vb"
+﻿#Region "Microsoft.VisualBasic::5c5ae74ed858393dad793f130f81490b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
-    '    Code Lines: 97
-    ' Comment Lines: 30
-    '   Blank Lines: 11
-    '     File Size: 5.18 KB
+    '   Total Lines: 163
+    '    Code Lines: 110
+    ' Comment Lines: 39
+    '   Blank Lines: 14
+    '     File Size: 6.23 KB
 
 
     '     Class HeapSizeOf

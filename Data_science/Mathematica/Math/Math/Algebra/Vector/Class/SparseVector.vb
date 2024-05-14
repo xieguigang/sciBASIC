@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17f4ead36d2c9a1193769353dde1d244, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/Class/SparseVector.vb"
+﻿#Region "Microsoft.VisualBasic::17f4ead36d2c9a1193769353dde1d244, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
 
     ' Author:
     ' 

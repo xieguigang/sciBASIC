@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae360ea92a752d17742410c857dbb2ff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/Expression.vb"
+﻿#Region "Microsoft.VisualBasic::ae360ea92a752d17742410c857dbb2ff, Data_science\Mathematica\Math\GeneticProgramming\model\Expression.vb"
 
     ' Author:
     ' 

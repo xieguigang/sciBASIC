@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1386717a718ecb9c6c2da87df742d753, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//SmithWaterman/SimpleChaining.vb"
+﻿#Region "Microsoft.VisualBasic::1386717a718ecb9c6c2da87df742d753, Data_science\DataMining\DynamicProgramming\SmithWaterman\SimpleChaining.vb"
 
     ' Author:
     ' 

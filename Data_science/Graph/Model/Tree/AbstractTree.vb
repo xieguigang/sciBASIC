@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7020f89d381d6cb7cd1e28817b1e572e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/AbstractTree.vb"
+﻿#Region "Microsoft.VisualBasic::7020f89d381d6cb7cd1e28817b1e572e, Data_science\Graph\Model\Tree\AbstractTree.vb"
 
     ' Author:
     ' 

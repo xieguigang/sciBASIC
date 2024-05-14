@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c4f462dd3198974583933ba03d16a6c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::3c4f462dd3198974583933ba03d16a6c, Data_science\DataMining\DataMining\ValueMapping.vb"
 
     ' Author:
     ' 

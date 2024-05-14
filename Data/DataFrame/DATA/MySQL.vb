@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/MySQL.vb"
+﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, Data\DataFrame\DATA\MySQL.vb"
 
     ' Author:
     ' 

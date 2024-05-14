@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4b692663af291e00303da003aece0c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot//DendrogramPanelV2.vb"
+﻿#Region "Microsoft.VisualBasic::423f9246c4ddf8cf98a650208b9cb4e2, Data_science\DataMining\hierarchical-clustering\HCTreePlot\DendrogramPanelV2.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 124
     ' Comment Lines: 8
     '   Blank Lines: 27
-    '     File Size: 7.00 KB
+    '     File Size: 7.01 KB
 
 
     ' Class DendrogramPanelV2

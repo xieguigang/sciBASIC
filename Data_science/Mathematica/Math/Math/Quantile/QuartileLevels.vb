@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Quantile/QuartileLevels.vb"
+﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
 
     ' Author:
     ' 

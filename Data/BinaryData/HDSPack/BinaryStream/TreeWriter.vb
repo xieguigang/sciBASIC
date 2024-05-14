@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd6f945e33e1ee3140e0d6e29af3e70e, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//BinaryStream/TreeWriter.vb"
+﻿#Region "Microsoft.VisualBasic::fd6f945e33e1ee3140e0d6e29af3e70e, Data\BinaryData\HDSPack\BinaryStream\TreeWriter.vb"
 
     ' Author:
     ' 

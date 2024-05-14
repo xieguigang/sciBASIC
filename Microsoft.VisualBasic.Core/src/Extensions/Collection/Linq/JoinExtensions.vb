@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29195d05e441ece2a9df95217d648b6a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::29195d05e441ece2a9df95217d648b6a, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::639f7377931baa4aaa6fcf3c309403a1, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
     ' Author:
     ' 

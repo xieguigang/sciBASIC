@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddf2f9c4eacaf51fa9b7f26e5060f321, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/Generic/Table.vb"
+﻿#Region "Microsoft.VisualBasic::ddf2f9c4eacaf51fa9b7f26e5060f321, Data\DataFrame\IO\Generic\Table.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav//SubChunk/Enums.vb"
+﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
 
     ' Author:
     ' 

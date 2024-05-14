@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fae8613d3e8d3763cc25148a55aa345, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9fae8613d3e8d3763cc25148a55aa345, mime\application%json\JSONtest\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a496ec2b87c7d6ac6014cd105ecf21d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::7a496ec2b87c7d6ac6014cd105ecf21d, Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 

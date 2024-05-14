@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::042edf4b849718f1c0444d96f054ab03, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::042edf4b849718f1c0444d96f054ab03, Microsoft.VisualBasic.Core\src\Text\Paragraph.vb"
 
     ' Author:
     ' 

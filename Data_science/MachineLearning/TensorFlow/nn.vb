@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60afca04da066478a71c8717bff8e9a7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//nn.vb"
+﻿#Region "Microsoft.VisualBasic::60afca04da066478a71c8717bff8e9a7, Data_science\MachineLearning\TensorFlow\nn.vb"
 
     ' Author:
     ' 

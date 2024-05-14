@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1db974dbe1d0902d314d44b2e535460c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Power.vb"
+﻿#Region "Microsoft.VisualBasic::1db974dbe1d0902d314d44b2e535460c, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\Power.vb"
 
     ' Author:
     ' 

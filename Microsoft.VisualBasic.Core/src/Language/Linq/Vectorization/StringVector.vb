@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::621eabfe57bd52ef167a5dc0ece568d4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Vectorization/StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::621eabfe57bd52ef167a5dc0ece568d4, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 

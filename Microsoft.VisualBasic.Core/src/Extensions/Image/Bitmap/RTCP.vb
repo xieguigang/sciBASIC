@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77f07f9bc6da7e5beb2b57a5b0557e1a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/RTCP.vb"
+﻿#Region "Microsoft.VisualBasic::77f07f9bc6da7e5beb2b57a5b0557e1a, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\RTCP.vb"
 
     ' Author:
     ' 

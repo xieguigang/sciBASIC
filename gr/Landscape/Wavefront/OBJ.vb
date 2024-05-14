@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c649bfb05a5369f7d57cf6b5f703d827, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//Wavefront/OBJ.vb"
+﻿#Region "Microsoft.VisualBasic::c649bfb05a5369f7d57cf6b5f703d827, gr\Landscape\Wavefront\OBJ.vb"
 
     ' Author:
     ' 

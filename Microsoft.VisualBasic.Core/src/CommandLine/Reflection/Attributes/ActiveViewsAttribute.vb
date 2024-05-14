@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::739f2005aa1812d6eed17fed26549c46, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/ActiveViewsAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::739f2005aa1812d6eed17fed26549c46, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ActiveViewsAttribute.vb"
 
     ' Author:
     ' 

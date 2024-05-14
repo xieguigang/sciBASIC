@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db0731c1b3b2da14a20ad1c15c49de7f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Exception/TraceBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::db0731c1b3b2da14a20ad1c15c49de7f, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\TraceBuffer.vb"
 
     ' Author:
     ' 

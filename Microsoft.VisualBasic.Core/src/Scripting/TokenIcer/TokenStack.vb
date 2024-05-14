@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::605f74e79e32e9a55e1bdd2d3f893c68, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/TokenStack.vb"
+﻿#Region "Microsoft.VisualBasic::605f74e79e32e9a55e1bdd2d3f893c68, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\TokenStack.vb"
 
     ' Author:
     ' 

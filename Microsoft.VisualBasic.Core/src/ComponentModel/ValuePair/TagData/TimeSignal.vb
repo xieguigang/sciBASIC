@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51226cc199be686a619232eef1c0baa4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/TagData/TimeSignal.vb"
+﻿#Region "Microsoft.VisualBasic::51226cc199be686a619232eef1c0baa4, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TimeSignal.vb"
 
     ' Author:
     ' 

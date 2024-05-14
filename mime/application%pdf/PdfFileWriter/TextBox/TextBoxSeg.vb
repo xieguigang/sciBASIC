@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa45917fb0191d61ce70a824de89c307, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/TextBox/TextBoxSeg.vb"
+﻿#Region "Microsoft.VisualBasic::aa45917fb0191d61ce70a824de89c307, mime\application%pdf\PdfFileWriter\TextBox\TextBoxSeg.vb"
 
     ' Author:
     ' 

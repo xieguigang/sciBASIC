@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Captcha.vb"
+﻿#Region "Microsoft.VisualBasic::c42464b7010a0c31979890d94c4fbae7, www\Microsoft.VisualBasic.NETProtocol\Captcha.vb"
 
     ' Author:
     ' 

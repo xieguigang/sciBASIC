@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/HtmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::584aaf4fa61d02a3e35c8ff0c57f3e71, Microsoft.VisualBasic.Core\src\Text\Xml\HtmlBuilder.vb"
 
     ' Author:
     ' 

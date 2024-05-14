@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b64241959852cfd06f9f58db63e2a7c9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::b64241959852cfd06f9f58db63e2a7c9, Data_science\MachineLearning\MLDataStorage\DataImports.vb"
 
     ' Author:
     ' 

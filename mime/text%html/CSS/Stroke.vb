@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1478aab31a0e1c0a40d4aedeeb435e8c, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//CSS/Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::1478aab31a0e1c0a40d4aedeeb435e8c, mime\text%html\CSS\Stroke.vb"
 
     ' Author:
     ' 

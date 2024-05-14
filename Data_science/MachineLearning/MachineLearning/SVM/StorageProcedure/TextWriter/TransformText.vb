@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4da5806c01cb4fc0ec41cdcdce2c65aa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/StorageProcedure/TextWriter/TransformText.vb"
+﻿#Region "Microsoft.VisualBasic::4da5806c01cb4fc0ec41cdcdce2c65aa, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\TransformText.vb"
 
     ' Author:
     ' 

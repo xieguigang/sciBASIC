@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b81b01bc823a77fadee0ed3c4611974, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfReader/Parser/ParseBoolean.vb"
+﻿#Region "Microsoft.VisualBasic::6b81b01bc823a77fadee0ed3c4611974, mime\application%pdf\PdfReader\Parser\ParseBoolean.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92aca244904dcb300ae1a57e70a0dad7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//KNN/Cosine.vb"
+﻿#Region "Microsoft.VisualBasic::92aca244904dcb300ae1a57e70a0dad7, Data_science\Graph\KNN\Cosine.vb"
 
     ' Author:
     ' 

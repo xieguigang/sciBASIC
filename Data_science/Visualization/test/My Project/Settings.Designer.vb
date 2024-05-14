@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b926bf65943d58039c27e83c9ad0807d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b926bf65943d58039c27e83c9ad0807d, Data_science\Visualization\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

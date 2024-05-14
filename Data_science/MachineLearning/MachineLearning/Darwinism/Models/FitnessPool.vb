@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::388a92a5f99e384aecc63647b781bc41, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/Models/FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::388a92a5f99e384aecc63647b781bc41, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 

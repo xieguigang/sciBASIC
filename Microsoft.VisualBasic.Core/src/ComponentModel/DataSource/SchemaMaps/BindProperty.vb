@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::032f2b7875dea5b71babb73176f209b5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/BindProperty.vb"
+﻿#Region "Microsoft.VisualBasic::032f2b7875dea5b71babb73176f209b5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\BindProperty.vb"
 
     ' Author:
     ' 

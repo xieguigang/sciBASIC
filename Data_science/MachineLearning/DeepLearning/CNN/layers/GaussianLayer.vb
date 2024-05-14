@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::540dcf7555af85751293e0568fc8453c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/Layers/GaussianLayer.vb"
+﻿#Region "Microsoft.VisualBasic::540dcf7555af85751293e0568fc8453c, Data_science\MachineLearning\DeepLearning\CNN\layers\GaussianLayer.vb"
 
     ' Author:
     ' 

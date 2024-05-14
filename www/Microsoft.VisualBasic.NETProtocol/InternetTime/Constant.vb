@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7050459bee9174d8cd2a27ffa7954a80, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//InternetTime/Constant.vb"
+﻿#Region "Microsoft.VisualBasic::7050459bee9174d8cd2a27ffa7954a80, www\Microsoft.VisualBasic.NETProtocol\InternetTime\Constant.vb"
 
     ' Author:
     ' 

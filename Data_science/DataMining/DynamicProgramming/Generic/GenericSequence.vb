@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f70b9883d7db98da5930ec2caf2f81, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//Generic/GenericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::48f70b9883d7db98da5930ec2caf2f81, Data_science\DataMining\DynamicProgramming\Generic\GenericSequence.vb"
 
     ' Author:
     ' 

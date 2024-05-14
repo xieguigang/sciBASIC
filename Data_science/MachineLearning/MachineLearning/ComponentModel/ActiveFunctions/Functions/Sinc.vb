@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eaa030ce9f9ab63b93aaf98effe07a5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/Sinc.vb"
+﻿#Region "Microsoft.VisualBasic::8eaa030ce9f9ab63b93aaf98effe07a5, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Sinc.vb"
 
     ' Author:
     ' 

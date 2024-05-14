@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97cc3bd90a37fe426bd105d621954555, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//SmithWaterman/GSW.vb"
+﻿#Region "Microsoft.VisualBasic::97cc3bd90a37fe426bd105d621954555, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 

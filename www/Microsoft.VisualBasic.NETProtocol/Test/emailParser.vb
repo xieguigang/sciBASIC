@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7992fa5d604c8ad89f6e2300dcf49175, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Test/emailParser.vb"
+﻿#Region "Microsoft.VisualBasic::7992fa5d604c8ad89f6e2300dcf49175, www\Microsoft.VisualBasic.NETProtocol\Test\emailParser.vb"
 
     ' Author:
     ' 

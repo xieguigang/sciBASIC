@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07c7f917e89139650882b38cc1d8053c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Globals.vb"
+﻿#Region "Microsoft.VisualBasic::07c7f917e89139650882b38cc1d8053c, Microsoft.VisualBasic.Core\src\Globals.vb"
 
     ' Author:
     ' 

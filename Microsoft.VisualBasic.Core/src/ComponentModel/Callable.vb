@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21503c8c43601089569559e3ad68c39f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Callable.vb"
+﻿#Region "Microsoft.VisualBasic::21503c8c43601089569559e3ad68c39f, Microsoft.VisualBasic.Core\src\ComponentModel\Callable.vb"
 
     ' Author:
     ' 

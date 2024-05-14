@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44d970541f46228caec7693e170af01d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Property/Properties.vb"
+﻿#Region "Microsoft.VisualBasic::44d970541f46228caec7693e170af01d, Data\DataFrame.Extensions\Property\Properties.vb"
 
     ' Author:
     ' 

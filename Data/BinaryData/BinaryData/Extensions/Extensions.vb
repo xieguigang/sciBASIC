@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b6cc84c77e86905479f815f26966b0f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Extensions/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4b6cc84c77e86905479f815f26966b0f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 

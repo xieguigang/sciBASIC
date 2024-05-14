@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//IL/MethodBodyReader.vb"
+﻿#Region "Microsoft.VisualBasic::75bbbd352531d2ceedbfc8dcce6a417b, vs_solutions\dev\VisualStudio\IL\MethodBodyReader.vb"
 
     ' Author:
     ' 

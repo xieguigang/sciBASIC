@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0f8edf93580fed05125c995a219daa2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//BayesianCurveFitting.vb"
+﻿#Region "Microsoft.VisualBasic::d0f8edf93580fed05125c995a219daa2, Data_science\Mathematica\Math\DataFittings\BayesianCurveFitting.vb"
 
     ' Author:
     ' 

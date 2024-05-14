@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22e0d756b8ab969dcd7a8b9bb5f999c8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Expressions/ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::22e0d756b8ab969dcd7a8b9bb5f999c8, Microsoft.VisualBasic.Core\src\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3464b60d9dbb97cd2b999bb7b903409d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Cluster/SignalClustering.vb"
+﻿#Region "Microsoft.VisualBasic::3464b60d9dbb97cd2b999bb7b903409d, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\SignalClustering.vb"
 
     ' Author:
     ' 

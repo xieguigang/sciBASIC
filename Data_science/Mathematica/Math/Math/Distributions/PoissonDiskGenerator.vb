@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9db438a0f119c6fa4dbdb7f3e9e2014, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/PoissonDiskGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::d9db438a0f119c6fa4dbdb7f3e9e2014, Data_science\Mathematica\Math\Math\Distributions\PoissonDiskGenerator.vb"
 
     ' Author:
     ' 

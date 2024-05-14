@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/SymLinker/HardLink.vb"
+﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, Microsoft.VisualBasic.Core\src\Extensions\IO\SymLinker\HardLink.vb"
 
     ' Author:
     ' 

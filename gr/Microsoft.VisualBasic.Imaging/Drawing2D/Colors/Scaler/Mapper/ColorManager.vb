@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6233dbc10a835f33a1fba523732ba4ee, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/Mapper/ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::32c38cf9b383b5a5f0cf681180713724, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ColorManager.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
+    '   Total Lines: 32
     '    Code Lines: 20
-    ' Comment Lines: 0
+    ' Comment Lines: 3
     '   Blank Lines: 9
-    '     File Size: 853 B
+    '     File Size: 920 B
 
 
     '     Class ColorProfile

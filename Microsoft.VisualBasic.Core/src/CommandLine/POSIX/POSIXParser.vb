@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e46c85a5b3d42b865153ab4fde167e4a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/POSIX/POSIXParser.vb"
+﻿#Region "Microsoft.VisualBasic::e46c85a5b3d42b865153ab4fde167e4a, Microsoft.VisualBasic.Core\src\CommandLine\POSIX\POSIXParser.vb"
 
     ' Author:
     ' 

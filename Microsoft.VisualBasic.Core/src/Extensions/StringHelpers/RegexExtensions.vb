@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00492b428789cc93948e9162ba6b6ac, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/StringHelpers/RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b00492b428789cc93948e9162ba6b6ac, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 

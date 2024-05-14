@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f560b88ef6ef660399bf1150ab8b6b5, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//test/My Project/Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2f560b88ef6ef660399bf1150ab8b6b5, www\Microsoft.VisualBasic.Webservices.Bing\test\My Project\Application.Designer.vb"
 
     ' Author:
     ' 

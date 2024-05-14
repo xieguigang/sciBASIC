@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70003e87abf3f1c42bdc9eba12a0bbc8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//ClusteringAlgorithm/DefaultClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::70003e87abf3f1c42bdc9eba12a0bbc8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
 
     ' Author:
     ' 

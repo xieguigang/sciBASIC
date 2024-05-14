@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f47c0d1dbe063c228365e23d1510d3e6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/Components/XAxis.vb"
+﻿#Region "Microsoft.VisualBasic::39f83863340862db60ce02ce25e37a6e, Data_science\Visualization\Plots\g\Axis\Components\XAxis.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
+    '   Total Lines: 204
     '    Code Lines: 162
-    ' Comment Lines: 5
+    ' Comment Lines: 19
     '   Blank Lines: 23
-    '     File Size: 7.34 KB
+    '     File Size: 7.79 KB
 
 
     '     Class XAxis

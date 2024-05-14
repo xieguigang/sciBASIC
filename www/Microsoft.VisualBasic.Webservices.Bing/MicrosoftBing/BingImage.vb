@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76d0a71e57718de2e6780450229c00f9, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//MicrosoftBing/BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::76d0a71e57718de2e6780450229c00f9, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\BingImage.vb"
 
     ' Author:
     ' 

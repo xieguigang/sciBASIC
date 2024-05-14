@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fc23cc05644a362ca17bd08d5bb409d, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::8fc23cc05644a362ca17bd08d5bb409d, vs_solutions\dev\VisualStudio\vbproj\Xml\PropertyGroup.vb"
 
     ' Author:
     ' 

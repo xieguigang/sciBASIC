@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2b7566c350af7e5e93a3d28bdea81f3, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONtest/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2b7566c350af7e5e93a3d28bdea81f3, mime\application%json\JSONtest\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

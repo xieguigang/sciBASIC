@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd3d9ff7f99ed4146d03523b018a6f5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Factors/NamedVector.vb"
+﻿#Region "Microsoft.VisualBasic::3fd3d9ff7f99ed4146d03523b018a6f5, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
 
     ' Author:
     ' 

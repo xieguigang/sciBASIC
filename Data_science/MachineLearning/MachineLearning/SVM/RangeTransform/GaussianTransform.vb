@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42ceee9bf84b03ee9c5a4b51c7b09c5a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/RangeTransform/GaussianTransform.vb"
+﻿#Region "Microsoft.VisualBasic::42ceee9bf84b03ee9c5a4b51c7b09c5a, Data_science\MachineLearning\MachineLearning\SVM\RangeTransform\GaussianTransform.vb"
 
     ' Author:
     ' 

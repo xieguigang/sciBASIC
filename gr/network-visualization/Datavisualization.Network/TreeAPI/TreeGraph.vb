@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a075c461b75a52060e80e58f67cc4571, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//TreeAPI/TreeGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a075c461b75a52060e80e58f67cc4571, gr\network-visualization\Datavisualization.Network\TreeAPI\TreeGraph.vb"
 
     ' Author:
     ' 

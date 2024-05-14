@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::125da894ab23907e08619faf132aa716, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/AxisProvider.vb"
+﻿#Region "Microsoft.VisualBasic::125da894ab23907e08619faf132aa716, Data_science\Visualization\Plots\g\Axis\AxisProvider.vb"
 
     ' Author:
     ' 

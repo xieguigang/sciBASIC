@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44ede704f9c2114c4165c22cbb333ffc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Render/LabelRendering.vb"
+﻿#Region "Microsoft.VisualBasic::44ede704f9c2114c4165c22cbb333ffc, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
 
     ' Author:
     ' 

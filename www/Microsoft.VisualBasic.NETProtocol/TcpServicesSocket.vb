@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6e277b662129bd97eb96b93cfb1045c, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::f6e277b662129bd97eb96b93cfb1045c, www\Microsoft.VisualBasic.NETProtocol\TcpServicesSocket.vb"
 
     ' Author:
     ' 

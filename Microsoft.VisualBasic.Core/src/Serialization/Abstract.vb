@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d1b251284fda7fe774793bd92fae0ee, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::ad72cf3e497acf943146a1af33e522c6, Microsoft.VisualBasic.Core\src\Serialization\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
+    '   Total Lines: 29
     '    Code Lines: 7
-    ' Comment Lines: 11
-    '   Blank Lines: 4
-    '     File Size: 965 B
+    ' Comment Lines: 17
+    '   Blank Lines: 5
+    '     File Size: 1.17 KB
 
 
     '     Delegate Function

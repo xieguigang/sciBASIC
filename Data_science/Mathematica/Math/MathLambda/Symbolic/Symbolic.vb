@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53aa95c748cee7c9024f9682d7a2d0bd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/Symbolic.vb"
+﻿#Region "Microsoft.VisualBasic::53aa95c748cee7c9024f9682d7a2d0bd, Data_science\Mathematica\Math\MathLambda\Symbolic\Symbolic.vb"
 
     ' Author:
     ' 

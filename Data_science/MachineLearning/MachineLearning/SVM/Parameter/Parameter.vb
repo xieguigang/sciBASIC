@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Parameter/Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::6660c748be09594936710401bc64f5cf, Data_science\MachineLearning\MachineLearning\SVM\Parameter\Parameter.vb"
 
     ' Author:
     ' 

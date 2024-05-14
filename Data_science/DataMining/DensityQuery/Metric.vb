@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76fec6abb4bf34f6795ac2ba125c205, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery//Metric.vb"
+﻿#Region "Microsoft.VisualBasic::c76fec6abb4bf34f6795ac2ba125c205, Data_science\DataMining\DensityQuery\Metric.vb"
 
     ' Author:
     ' 

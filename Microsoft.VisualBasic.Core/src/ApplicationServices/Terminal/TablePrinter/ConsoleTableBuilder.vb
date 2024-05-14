@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5122faa1c50741a39d7b302b4d946f26, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/ConsoleTableBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::5122faa1c50741a39d7b302b4d946f26, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilder.vb"
 
     ' Author:
     ' 

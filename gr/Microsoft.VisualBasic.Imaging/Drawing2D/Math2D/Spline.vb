@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::181d06ce70cf9904609831f07ae720bc, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/Spline.vb"
+﻿#Region "Microsoft.VisualBasic::181d06ce70cf9904609831f07ae720bc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
 
     ' Author:
     ' 

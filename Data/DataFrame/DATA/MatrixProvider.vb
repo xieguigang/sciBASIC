@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c42b4cfce8e11212ce4b5721b1461f, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/MatrixProvider.vb"
+﻿#Region "Microsoft.VisualBasic::b1c42b4cfce8e11212ce4b5721b1461f, Data\DataFrame\DATA\MatrixProvider.vb"
 
     ' Author:
     ' 

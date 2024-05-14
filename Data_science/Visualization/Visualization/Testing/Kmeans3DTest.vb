@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2e55246b5dc1c9bf7660a386221af85, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//Testing/Kmeans3DTest.vb"
+﻿#Region "Microsoft.VisualBasic::c2e55246b5dc1c9bf7660a386221af85, Data_science\Visualization\Visualization\Testing\Kmeans3DTest.vb"
 
     ' Author:
     ' 

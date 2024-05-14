@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4a71acfc7f56578fd34c4a1b4ebf9b8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//ROCplotTest.vb"
+﻿#Region "Microsoft.VisualBasic::f4a71acfc7f56578fd34c4a1b4ebf9b8, Data_science\Visualization\test\ROCplotTest.vb"
 
     ' Author:
     ' 

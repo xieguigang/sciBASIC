@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/NoteAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::bf23dd5abcd4c079b5dc29f66a019927, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\NoteAttribute.vb"
 
     ' Author:
     ' 

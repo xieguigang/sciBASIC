@@ -1,4 +1,154 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::c78ce2cff18dc2a2c4474bac2ca1b6f0, Data\BinaryData\Feather\TypedRow.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1636
+    '    Code Lines: 831
+    ' Comment Lines: 619
+    '   Blank Lines: 186
+    '     File Size: 57.98 KB
+
+
+    ' Class TypedRowValueEnumerator
+    ' 
+    '     Properties: Current, CurrentProp
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MoveNext
+    ' 
+    '     Sub: Dispose, Reset
+    ' 
+    ' Class TypedRow
+    ' 
+    '     Properties: Column1, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator1, GetEnumerator2, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType
+    ' 
+    '     Properties: Column1, Column2, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator3, GetEnumerator4, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType1
+    ' 
+    '     Properties: Column1, Column2, Column3, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator5, GetEnumerator6, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType2
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Index
+    '                 Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator7, GetEnumerator8, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType3
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator10, GetEnumerator9, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType4
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator11, GetEnumerator12, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType5
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6, Column7, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator13, GetEnumerator14, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' Class TypedRowType6
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6, Column7, Column8, Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator15, GetEnumerator16, GetHashCode
+    '               GetRange, ToArray, ToString, (+4 Overloads) TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
@@ -1634,3 +1784,4 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
         Return row.ToArray()
     End Operator
 End Class
+

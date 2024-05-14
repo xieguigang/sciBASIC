@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a0c13c9af0ff01bb01258bbcfa3c737, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/EMGaussianMixtureModel/GaussianMixtureModel.vb"
+﻿#Region "Microsoft.VisualBasic::5a0c13c9af0ff01bb01258bbcfa3c737, Data_science\MachineLearning\VAE\GMM\EMGaussianMixtureModel\GaussianMixtureModel.vb"
 
     ' Author:
     ' 

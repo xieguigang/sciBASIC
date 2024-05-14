@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90a38f4530f12696707401b45a55eb0c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDebugger//ANN/ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::90a38f4530f12696707401b45a55eb0c, Data_science\MachineLearning\MLDebugger\ANN\ANNDebugger.vb"
 
     ' Author:
     ' 

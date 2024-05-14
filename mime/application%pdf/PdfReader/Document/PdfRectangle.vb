@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fac665f08cf07ef00b39f868e60845f, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfReader/Document/PdfRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::8fac665f08cf07ef00b39f868e60845f, mime\application%pdf\PdfReader\Document\PdfRectangle.vb"
 
     ' Author:
     ' 

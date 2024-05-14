@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1db17a1dd6ff68dfd1cc962313bf941, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/XmlDoc/Serialization/Models/Member.vb"
+﻿#Region "Microsoft.VisualBasic::a1db17a1dd6ff68dfd1cc962313bf941, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb"
 
     ' Author:
     ' 

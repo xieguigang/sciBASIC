@@ -1,4 +1,56 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::4dd46c090f71e377df3076e1132bcb42, Data\BinaryData\Feather\DataFrame.Mapping.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 686
+    '    Code Lines: 448
+    ' Comment Lines: 124
+    '   Blank Lines: 114
+    '     File Size: 31.09 KB
+
+
+    ' Class DataFrame
+    ' 
+    '     Function: MakeDefaultFactory, MakeMapper, MakeProxy, (+8 Overloads) Map, (+2 Overloads) Proxy
+    '               TryInferMapping, (+8 Overloads) TryMap, (+2 Overloads) TryProxy, TrySuggestMapping
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Reflection
 Imports System.Reflection.Emit
 Imports System.Runtime.InteropServices
 Imports System.Text
@@ -684,3 +736,4 @@ Partial Public Class DataFrame
         Return True
     End Function
 End Class
+

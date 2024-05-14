@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01208aa46597ee2016adc32233d5e27c, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/HtmlParser.vb"
+﻿#Region "Microsoft.VisualBasic::01208aa46597ee2016adc32233d5e27c, mime\text%html\Parser\HtmlParser.vb"
 
     ' Author:
     ' 

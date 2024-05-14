@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4587d61853640c2b7468672a9cadc2c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/1D/DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::6beeba3756fdfb39ca7ce45fc3d965e2, Data_science\MachineLearning\VAE\GMM\1D\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 69
+    '   Total Lines: 90
+    '    Code Lines: 67
     ' Comment Lines: 8
-    '   Blank Lines: 16
-    '     File Size: 2.91 KB
+    '   Blank Lines: 15
+    '     File Size: 2.77 KB
 
 
     '     Class DatumList
@@ -46,8 +46,7 @@
     '         Properties: Mean, Stdev, width
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: [get], components, GetEnumerator, IEnumerable_GetEnumerator, nI
-    '                   size
+    '         Function: [get], components, GetEnumerator, nI, size
     ' 
     ' 
     ' /********************************************************************************/

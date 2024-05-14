@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::961183e60bfb99cfdec27fd154f30832, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/DataFrame/DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::11fe9417e172d566076bc523cb3a292c, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 747
-    '    Code Lines: 474
-    ' Comment Lines: 162
+    '   Total Lines: 756
+    '    Code Lines: 489
+    ' Comment Lines: 156
     '   Blank Lines: 111
-    '     File Size: 30.31 KB
+    '     File Size: 30.78 KB
 
 
     '     Class DataFrame
@@ -58,7 +58,7 @@
     '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable
     '                   GetString, GetValue, GetValueLambda, GetValues, IDataRecord_GetValue
     '                   IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema, Parse
-    '                   Read, reviewColumnHeader, ToString
+    '                   Read, ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset

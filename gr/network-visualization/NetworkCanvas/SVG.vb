@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::510c76742c95396e25210b5fa636911d, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//SVG.vb"
+﻿#Region "Microsoft.VisualBasic::510c76742c95396e25210b5fa636911d, gr\network-visualization\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 

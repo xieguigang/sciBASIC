@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4cfddccf794f10cabd9e0b88450e8a5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/Property/NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::d4cfddccf794f10cabd9e0b88450e8a5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/InCompatible.vb"
+﻿#Region "Microsoft.VisualBasic::d3381a220021d85959f81ad7dab17afc, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\InCompatible.vb"
 
     ' Author:
     ' 

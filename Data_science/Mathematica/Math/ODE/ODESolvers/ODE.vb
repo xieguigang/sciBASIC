@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48989c74a7761dd42d8a802636df5b28, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//ODESolvers/ODE.vb"
+﻿#Region "Microsoft.VisualBasic::48989c74a7761dd42d8a802636df5b28, Data_science\Mathematica\Math\ODE\ODESolvers\ODE.vb"
 
     ' Author:
     ' 

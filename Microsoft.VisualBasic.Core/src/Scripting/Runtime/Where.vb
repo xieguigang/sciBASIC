@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Runtime/Where.vb"
+﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Where.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3273250dc7b9cdb2547c1c51e529530d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/data/LP/LP_tool//Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3273250dc7b9cdb2547c1c51e529530d, Data_science\Mathematica\data\LP\LP_tool\Module1.vb"
 
     ' Author:
     ' 

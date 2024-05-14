@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20b379ef25f3b7a6a1b1cb3aea4eba5f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PageRank/PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::20b379ef25f3b7a6a1b1cb3aea4eba5f, Data_science\Graph\Analysis\PageRank\PageRank.vb"
 
     ' Author:
     ' 

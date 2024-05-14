@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81f798b5bc6f6fb869f1930061df2aff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Implementation/Apriori.vb"
+﻿#Region "Microsoft.VisualBasic::56e143706cfbb54c4527d84851d82618, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\Apriori.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 244
-    '    Code Lines: 189
-    ' Comment Lines: 12
-    '   Blank Lines: 43
-    '     File Size: 10.75 KB
+    '   Total Lines: 211
+    '    Code Lines: 169
+    ' Comment Lines: 5
+    '   Blank Lines: 37
+    '     File Size: 9.94 KB
 
 
     '     Module Apriori
     ' 
     '         Function: CheckIsClosed, CheckIsSubset, GenerateCandidate, GenerateCandidates, GetAssociateRules
     '                   GetCandidate, GetClosedItemSets, GetFrequentItems, GetItemParents, GetL1FrequentItems
-    '                   GetSupport, SorterSortTokens
+    '                   GetSupport
     ' 
     ' 
     ' /********************************************************************************/

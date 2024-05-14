@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Expressions/Selector.vb"
+﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Selector.vb"
 
     ' Author:
     ' 

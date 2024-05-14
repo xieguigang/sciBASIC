@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58e009055c440bc711e5ba3e2ab64bb4, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/HtmlConstants.vb"
+﻿#Region "Microsoft.VisualBasic::58e009055c440bc711e5ba3e2ab64bb4, mime\text%html\Render\HtmlConstants.vb"
 
     ' Author:
     ' 

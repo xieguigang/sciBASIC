@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd2770113ad8a178615a1fd793da99d2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Deque/ReversedEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::fd2770113ad8a178615a1fd793da99d2, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\ReversedEnumerator.vb"
 
     ' Author:
     ' 

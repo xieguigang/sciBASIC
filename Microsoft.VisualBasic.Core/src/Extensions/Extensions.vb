@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11e932390595d73e691be069b08cad8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f441c35f6297c38b15f8d66ade81accf, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1543
-    '    Code Lines: 856
-    ' Comment Lines: 543
+    '   Total Lines: 1545
+    '    Code Lines: 857
+    ' Comment Lines: 544
     '   Blank Lines: 144
-    '     File Size: 57.35 KB
+    '     File Size: 57.36 KB
 
 
     ' Module Extensions

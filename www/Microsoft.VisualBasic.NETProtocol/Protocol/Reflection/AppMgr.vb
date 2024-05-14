@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d315b51b60f30e97e1c3adba55c65e27, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Protocol/Reflection/AppMgr.vb"
+﻿#Region "Microsoft.VisualBasic::d315b51b60f30e97e1c3adba55c65e27, www\Microsoft.VisualBasic.NETProtocol\Protocol\Reflection\AppMgr.vb"
 
     ' Author:
     ' 

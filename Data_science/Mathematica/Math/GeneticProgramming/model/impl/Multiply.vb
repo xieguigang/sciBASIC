@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::709d58fdd1df55c95e055ca53fad2d09, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::709d58fdd1df55c95e055ca53fad2d09, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Multiply.vb"
 
     ' Author:
     ' 

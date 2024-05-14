@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eca56d72251321c72369e13e862afbda, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/FontBox.vb"
+﻿#Region "Microsoft.VisualBasic::eca56d72251321c72369e13e862afbda, mime\application%pdf\PdfFileWriter\Font\FontBox.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbb536d9f835d795193fda151e6b80ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/DoubleLinear.vb"
+﻿#Region "Microsoft.VisualBasic::cbb536d9f835d795193fda151e6b80ca, Data_science\Mathematica\Math\DataFittings\Linear\DoubleLinear.vb"
 
     ' Author:
     ' 

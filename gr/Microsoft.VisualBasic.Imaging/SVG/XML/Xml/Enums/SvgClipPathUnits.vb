@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a617773d14eae6f08f19b89a1d17caa, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgClipPathUnits.vb"
+﻿#Region "Microsoft.VisualBasic::6a617773d14eae6f08f19b89a1d17caa, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgClipPathUnits.vb"
 
     ' Author:
     ' 

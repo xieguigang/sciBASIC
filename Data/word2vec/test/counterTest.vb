@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44e695ce6a6affa80a80a389617b4d77, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//test/counterTest.vb"
+﻿#Region "Microsoft.VisualBasic::44e695ce6a6affa80a80a389617b4d77, Data\word2vec\test\counterTest.vb"
 
     ' Author:
     ' 

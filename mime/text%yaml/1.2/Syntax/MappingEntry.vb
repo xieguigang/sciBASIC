@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78d6e080aafe97ac231a62e744dafee4, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::78d6e080aafe97ac231a62e744dafee4, mime\text%yaml\1.2\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aabdc7afef0756977d75e8e894f20fed, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Legends/ColorBar/DualColorBar.vb"
+﻿#Region "Microsoft.VisualBasic::aabdc7afef0756977d75e8e894f20fed, Data_science\Visualization\Plots\g\Legends\ColorBar\DualColorBar.vb"
 
     ' Author:
     ' 

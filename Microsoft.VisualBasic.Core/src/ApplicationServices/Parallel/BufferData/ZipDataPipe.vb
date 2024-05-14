@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc1e3f9f210ba67cb8e81f458cd16716, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/BufferData/ZipDataPipe.vb"
+﻿#Region "Microsoft.VisualBasic::fc1e3f9f210ba67cb8e81f458cd16716, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\ZipDataPipe.vb"
 
     ' Author:
     ' 

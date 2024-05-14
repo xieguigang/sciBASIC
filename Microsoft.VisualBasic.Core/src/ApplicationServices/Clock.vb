@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fac0ffa78c93afafe8b4027d2830e7de, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Clock.vb"
+﻿#Region "Microsoft.VisualBasic::fac0ffa78c93afafe8b4027d2830e7de, Microsoft.VisualBasic.Core\src\ApplicationServices\Clock.vb"
 
     ' Author:
     ' 

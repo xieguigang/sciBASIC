@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f712bb8e689b8cc55b79dfb1b222f3aa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning.Data.Extensions//LabeledData.vb"
+﻿#Region "Microsoft.VisualBasic::f712bb8e689b8cc55b79dfb1b222f3aa, Data_science\MachineLearning\MachineLearning.Data.Extensions\LabeledData.vb"
 
     ' Author:
     ' 

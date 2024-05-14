@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dae9f36534d4ca05764e35eb48fb3d7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Heatmap/DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5dae9f36534d4ca05764e35eb48fb3d7, Data_science\Visualization\Plots-statistics\Heatmap\DensityPlot.vb"
 
     ' Author:
     ' 

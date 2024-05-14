@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b055bb42074e8c1b33be1feba0710584, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Fractions/TreeMap.vb"
+﻿#Region "Microsoft.VisualBasic::b055bb42074e8c1b33be1feba0710584, Data_science\Visualization\Plots\Fractions\TreeMap.vb"
 
     ' Author:
     ' 

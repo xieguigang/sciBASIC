@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0138834c495bca6ecf2bd45b72987c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE_AER/AERGradients.vb"
+﻿#Region "Microsoft.VisualBasic::e0138834c495bca6ecf2bd45b72987c5, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex_NNE_AER\AERGradients.vb"
 
     ' Author:
     ' 

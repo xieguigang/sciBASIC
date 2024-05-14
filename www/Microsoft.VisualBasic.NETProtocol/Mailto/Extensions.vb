@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49f2e8ba21bd96ee6694c43c6b36c2af, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Mailto/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::49f2e8ba21bd96ee6694c43c6b36c2af, www\Microsoft.VisualBasic.NETProtocol\Mailto\Extensions.vb"
 
     ' Author:
     ' 

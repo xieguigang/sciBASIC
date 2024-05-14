@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aaf09dd99cc3280bf048fbcbf2ab306, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Tree/TreeNodeBase.vb"
+﻿#Region "Microsoft.VisualBasic::2aaf09dd99cc3280bf048fbcbf2ab306, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
 
     ' Author:
     ' 

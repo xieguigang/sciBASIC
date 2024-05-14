@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::445673a59c27b0978bcb6564318abffe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/JoinElement.vb"
+﻿#Region "Microsoft.VisualBasic::445673a59c27b0978bcb6564318abffe, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\JoinElement.vb"
 
     ' Author:
     ' 

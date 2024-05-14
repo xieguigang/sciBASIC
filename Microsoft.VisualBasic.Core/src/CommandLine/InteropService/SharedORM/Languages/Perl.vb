@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/SharedORM/Languages/Perl.vb"
+﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\Perl.vb"
 
     ' Author:
     ' 

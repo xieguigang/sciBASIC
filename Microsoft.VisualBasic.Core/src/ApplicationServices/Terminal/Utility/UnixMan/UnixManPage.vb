@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0adad75b7efa70e95bbb85d67786cb8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/UnixMan/UnixManPage.vb"
+﻿#Region "Microsoft.VisualBasic::0adad75b7efa70e95bbb85d67786cb8c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb"
 
     ' Author:
     ' 

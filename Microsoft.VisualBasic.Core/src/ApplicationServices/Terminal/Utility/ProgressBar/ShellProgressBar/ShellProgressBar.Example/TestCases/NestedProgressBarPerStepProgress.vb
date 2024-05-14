@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cc4589722b2fc97853cf671d487d60d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/NestedProgressBarPerStepProgress.vb"
+﻿#Region "Microsoft.VisualBasic::4cc4589722b2fc97853cf671d487d60d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NestedProgressBarPerStepProgress.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::172ffc809cd27f4367e505ed4a72bfcf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::172ffc809cd27f4367e505ed4a72bfcf, Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
 
     ' Author:
     ' 

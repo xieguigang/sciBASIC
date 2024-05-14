@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6404f80d94747d0c8d3ee60962f4d61d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/EntryPoints/Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::b6af4696496cc65cccd0b7e5731dbbe6, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 125
     ' Comment Lines: 35
     '   Blank Lines: 31
-    '     File Size: 7.84 KB
+    '     File Size: 7.83 KB
 
 
     '     Class APIDelegate

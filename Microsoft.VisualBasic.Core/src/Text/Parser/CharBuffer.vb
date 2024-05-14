@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::105a07328e629002502db1f3613b4493, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::c9492e12360a6fadcf25c670f9477a27, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 346
+    '   Total Lines: 350
     '    Code Lines: 201
-    ' Comment Lines: 100
+    ' Comment Lines: 104
     '   Blank Lines: 45
-    '     File Size: 11.18 KB
+    '     File Size: 11.43 KB
 
 
     '     Class CharBuffer

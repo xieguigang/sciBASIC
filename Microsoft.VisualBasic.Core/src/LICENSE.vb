@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b662ae0812e27ad353e607293ac2a2b2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::b662ae0812e27ad353e607293ac2a2b2, Microsoft.VisualBasic.Core\src\LICENSE.vb"
 
     ' Author:
     ' 

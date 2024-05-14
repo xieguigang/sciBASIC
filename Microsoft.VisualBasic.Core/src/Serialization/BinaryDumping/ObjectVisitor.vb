@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89823ddb728c98ad30586bb09fda91ce, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BinaryDumping/ObjectVisitor.vb"
+﻿#Region "Microsoft.VisualBasic::89823ddb728c98ad30586bb09fda91ce, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\ObjectVisitor.vb"
 
     ' Author:
     ' 

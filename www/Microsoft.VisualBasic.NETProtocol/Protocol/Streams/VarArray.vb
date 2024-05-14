@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f96d1b8fe455bcc689650341a8cbf4c, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Protocol/Streams/VarArray.vb"
+﻿#Region "Microsoft.VisualBasic::2f96d1b8fe455bcc689650341a8cbf4c, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\VarArray.vb"
 
     ' Author:
     ' 

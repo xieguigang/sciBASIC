@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dec49edf59a839fc8dd091ae1c836fcd, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Similarity/ClassConnectivity.vb"
+﻿#Region "Microsoft.VisualBasic::dec49edf59a839fc8dd091ae1c836fcd, gr\network-visualization\Datavisualization.Network\Analysis\Similarity\ClassConnectivity.vb"
 
     ' Author:
     ' 

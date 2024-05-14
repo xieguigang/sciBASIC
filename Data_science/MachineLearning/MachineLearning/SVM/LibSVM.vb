@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93a172c904a317663d2712285efb0fc2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/LibSVM.vb"
+﻿#Region "Microsoft.VisualBasic::93a172c904a317663d2712285efb0fc2, Data_science\MachineLearning\MachineLearning\SVM\LibSVM.vb"
 
     ' Author:
     ' 

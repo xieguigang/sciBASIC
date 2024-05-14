@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/UNIX/LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::269e6d7fe7f8917e88765ee6fffd309f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Schema/SQLParser.vb"
+﻿#Region "Microsoft.VisualBasic::269e6d7fe7f8917e88765ee6fffd309f, Data\BinaryData\SQLite3\Schema\SQLParser.vb"
 
     ' Author:
     ' 

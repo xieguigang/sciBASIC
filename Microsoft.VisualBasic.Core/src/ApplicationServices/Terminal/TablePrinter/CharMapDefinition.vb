@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6734a8870378a74e0658638690091cb8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/CharMapDefinition.vb"
+﻿#Region "Microsoft.VisualBasic::6734a8870378a74e0658638690091cb8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\CharMapDefinition.vb"
 
     ' Author:
     ' 

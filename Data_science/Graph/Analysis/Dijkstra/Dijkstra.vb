@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a3142b4cb5966babe2af0501407dd7e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Dijkstra/Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::4a3142b4cb5966babe2af0501407dd7e, Data_science\Graph\Analysis\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 

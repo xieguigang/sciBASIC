@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df2f6c24fb1c2beba4d9e0a7c4daf145, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/HiddenLayers.vb"
+﻿#Region "Microsoft.VisualBasic::df2f6c24fb1c2beba4d9e0a7c4daf145, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\HiddenLayers.vb"
 
     ' Author:
     ' 

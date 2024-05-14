@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, G:/GCModeller/src/runtime/sciBASIC#/gr/avi//FrameStream.vb"
+﻿#Region "Microsoft.VisualBasic::ee1594793836462f564cc264ea8e05f2, gr\avi\FrameStream.vb"
 
     ' Author:
     ' 

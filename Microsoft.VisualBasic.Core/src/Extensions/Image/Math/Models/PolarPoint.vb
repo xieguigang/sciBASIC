@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b08dac12e35da1eb1e24ab1746fb57d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Models/PolarPoint.vb"
+﻿#Region "Microsoft.VisualBasic::5b08dac12e35da1eb1e24ab1746fb57d, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\PolarPoint.vb"
 
     ' Author:
     ' 

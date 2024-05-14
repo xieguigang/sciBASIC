@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58097e6cf244c752c9de61705f265ddf, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::58097e6cf244c752c9de61705f265ddf, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 

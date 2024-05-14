@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb2f420a4d5d6740e4f87388029535ba, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Algorithm/BZip2HuffmanStageDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::cb2f420a4d5d6740e4f87388029535ba, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageDecoder.vb"
 
     ' Author:
     ' 

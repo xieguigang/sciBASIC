@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6356a44eb26925de492af41f4df944e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/DeviceDescription.vb"
+﻿#Region "Microsoft.VisualBasic::d6356a44eb26925de492af41f4df944e, gr\Microsoft.VisualBasic.Imaging\Drivers\DeviceDescription.vb"
 
     ' Author:
     ' 

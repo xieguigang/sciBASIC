@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3f030f0b7bcf2cc2151826a729f2f2b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Uid.vb"
+﻿#Region "Microsoft.VisualBasic::e3f030f0b7bcf2cc2151826a729f2f2b, Microsoft.VisualBasic.Core\src\ComponentModel\Uid.vb"
 
     ' Author:
     ' 

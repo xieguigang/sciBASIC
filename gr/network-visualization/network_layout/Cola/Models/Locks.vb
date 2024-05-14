@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::896464d20029246de733dd95d4944b3f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Locks.vb"
+﻿#Region "Microsoft.VisualBasic::896464d20029246de733dd95d4944b3f, gr\network-visualization\network_layout\Cola\Models\Locks.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93809bea614973964a3b1a4a4cd4f663, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/StatisticsObject.vb"
+﻿#Region "Microsoft.VisualBasic::93809bea614973964a3b1a4a4cd4f663, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\StatisticsObject.vb"
 
     ' Author:
     ' 

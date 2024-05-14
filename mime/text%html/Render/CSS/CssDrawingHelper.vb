@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d1918b58b44c5eda308090b429c4fb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::45d1918b58b44c5eda308090b429c4fb, mime\text%html\Render\CSS\CssDrawingHelper.vb"
 
     ' Author:
     ' 

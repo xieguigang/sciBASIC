@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79bc8001ac5d8d574a42d35b8418231f, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//Vector.vb"
+﻿#Region "Microsoft.VisualBasic::79bc8001ac5d8d574a42d35b8418231f, gr\Landscape\Vector.vb"
 
     ' Author:
     ' 

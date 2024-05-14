@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63a0fd91918fd6be9f1a6ac8c6e9b6c9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/XmlElementExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::63a0fd91918fd6be9f1a6ac8c6e9b6c9, Microsoft.VisualBasic.Core\src\Text\Xml\XmlElementExtensions.vb"
 
     ' Author:
     ' 

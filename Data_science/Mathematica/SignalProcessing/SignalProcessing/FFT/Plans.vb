@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf631eacfebcf0c38d9ca50b5ab0deb9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/Plans.vb"
+﻿#Region "Microsoft.VisualBasic::bf631eacfebcf0c38d9ca50b5ab0deb9, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\Plans.vb"
 
     ' Author:
     ' 

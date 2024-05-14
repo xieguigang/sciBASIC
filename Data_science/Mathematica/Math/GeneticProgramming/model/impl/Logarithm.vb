@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9c5f1dacf1b1d290eb98a03a75227ce, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Logarithm.vb"
+﻿#Region "Microsoft.VisualBasic::f9c5f1dacf1b1d290eb98a03a75227ce, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Logarithm.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7b4464530d4fd57d5d480ead7aa8d9f, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//github-vcard/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::b7b4464530d4fd57d5d480ead7aa8d9f, www\githubAPI\github-vcard\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

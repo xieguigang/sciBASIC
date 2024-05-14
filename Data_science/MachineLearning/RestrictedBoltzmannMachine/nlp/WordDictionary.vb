@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b06c97ea1b2d0c858e580222bf436987, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/WordDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::b06c97ea1b2d0c858e580222bf436987, Data_science\MachineLearning\RestrictedBoltzmannMachine\nlp\WordDictionary.vb"
 
     ' Author:
     ' 

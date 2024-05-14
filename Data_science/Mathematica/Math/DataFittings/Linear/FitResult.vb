@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4abd31197e588fd551c884ffaaa35f, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//NETProtocol/AppServer/PushAPI/InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::9d4abd31197e588fd551c884ffaaa35f, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9357288f5948680e42a848e3191edbad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/factory/CompositeExpression.vb"
+﻿#Region "Microsoft.VisualBasic::9357288f5948680e42a848e3191edbad, Data_science\Mathematica\Math\GeneticProgramming\model\factory\CompositeExpression.vb"
 
     ' Author:
     ' 

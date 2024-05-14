@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be713a89836a5b6e7c45905528fc5cc, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssTable.vb"
+﻿#Region "Microsoft.VisualBasic::3be713a89836a5b6e7c45905528fc5cc, mime\text%html\Render\CSS\CssTable.vb"
 
     ' Author:
     ' 

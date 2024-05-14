@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d46eebdac23d0c2a0018bdc4f224af7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Interpreters/View/SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::3d46eebdac23d0c2a0018bdc4f224af7, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 

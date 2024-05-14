@@ -1,57 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::677f5ea9fa56622501543cf8692e9b93, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Vectorization/SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::7f486ad9602dcee63dc9d2ae7876cb7d, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\SchemaProvider.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 317
-'    Code Lines: 227
-' Comment Lines: 46
-'   Blank Lines: 44
-'     File Size: 12.26 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class VectorSchemaProvider
-' 
-'         Properties: PropertyNames, Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, CreateSchema
-'                   GetDynamicMemberNames, ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember
-'                   TrySetMember, TryUnaryOperation
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 233
+    ' Comment Lines: 46
+    '   Blank Lines: 46
+    '     File Size: 12.55 KB
+
+
+    '     Class VectorSchemaProvider
+    ' 
+    '         Properties: PropertyNames, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, CreateSchema
+    '                   GetDynamicMemberNames, ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember
+    '                   TrySetMember, TryUnaryOperation
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::081f1c381cb4a012c888140795be8113, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/DistanceMeasure.vb"
+﻿#Region "Microsoft.VisualBasic::081f1c381cb4a012c888140795be8113, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\DistanceMeasure.vb"
 
     ' Author:
     ' 

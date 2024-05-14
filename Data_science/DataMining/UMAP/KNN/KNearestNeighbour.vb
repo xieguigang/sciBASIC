@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::265f66cd28164f4d96cc73ceb6364c8a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//KNN/KNearestNeighbour.vb"
+﻿#Region "Microsoft.VisualBasic::265f66cd28164f4d96cc73ceb6364c8a, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
 
     ' Author:
     ' 

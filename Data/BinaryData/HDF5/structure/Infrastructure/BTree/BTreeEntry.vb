@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49926b555242b3d5810c86196797cfe1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/Infrastructure/BTree/BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::49926b555242b3d5810c86196797cfe1, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 

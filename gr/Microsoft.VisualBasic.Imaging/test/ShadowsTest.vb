@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68397ce361c70fd984f3a930cff75325, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::68397ce361c70fd984f3a930cff75325, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ffb90df1dd9483c6d01dc58233d6b50, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/htmlParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::9ffb90df1dd9483c6d01dc58233d6b50, Microsoft.VisualBasic.Core\test\test\htmlParserTest.vb"
 
     ' Author:
     ' 

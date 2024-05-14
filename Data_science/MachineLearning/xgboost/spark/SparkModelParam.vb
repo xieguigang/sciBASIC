@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1808c0a4191940be084129b134770b3a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//spark/SparkModelParam.vb"
+﻿#Region "Microsoft.VisualBasic::1808c0a4191940be084129b134770b3a, Data_science\MachineLearning\xgboost\spark\SparkModelParam.vb"
 
     ' Author:
     ' 

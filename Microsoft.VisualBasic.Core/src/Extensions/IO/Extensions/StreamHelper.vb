@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::911a6f6699df0dd2e31f6fa4130e9794, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Extensions/StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::911a6f6699df0dd2e31f6fa4130e9794, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 

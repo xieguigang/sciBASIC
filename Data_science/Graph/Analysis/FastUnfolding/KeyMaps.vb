@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b13833050374e55863c9c09d0733dc6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/FastUnfolding/KeyMaps.vb"
+﻿#Region "Microsoft.VisualBasic::5b13833050374e55863c9c09d0733dc6, Data_science\Graph\Analysis\FastUnfolding\KeyMaps.vb"
 
     ' Author:
     ' 

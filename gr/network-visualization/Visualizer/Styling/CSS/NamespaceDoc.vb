@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d59dc02b61f07e983eb0c7bbb701f84, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/CSS/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8d59dc02b61f07e983eb0c7bbb701f84, gr\network-visualization\Visualizer\Styling\CSS\NamespaceDoc.vb"
 
     ' Author:
     ' 

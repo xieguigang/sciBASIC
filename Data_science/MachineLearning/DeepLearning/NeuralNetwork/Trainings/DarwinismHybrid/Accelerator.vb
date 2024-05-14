@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::338b7bc57993fb50447580f82018a9d0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Trainings/DarwinismHybrid/Accelerator.vb"
+﻿#Region "Microsoft.VisualBasic::338b7bc57993fb50447580f82018a9d0, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\DarwinismHybrid\Accelerator.vb"
 
     ' Author:
     ' 

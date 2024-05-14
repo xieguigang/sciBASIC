@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Polynomial/Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
 
     ' Author:
     ' 

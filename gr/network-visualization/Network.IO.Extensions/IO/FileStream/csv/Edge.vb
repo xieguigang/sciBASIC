@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0451fe65c63d780a6ababd6deaccc4ab, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/FileStream/csv/Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0451fe65c63d780a6ababd6deaccc4ab, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0acd3b5596f83e19e475b58fbb0a4f8c, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/SvgPath/Commands/Q.vb"
+﻿#Region "Microsoft.VisualBasic::0acd3b5596f83e19e475b58fbb0a4f8c, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\Commands\Q.vb"
 
     ' Author:
     ' 

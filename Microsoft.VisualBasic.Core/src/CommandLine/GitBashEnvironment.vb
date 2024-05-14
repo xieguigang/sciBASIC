@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::054bd1f8370bf193d5254fd978ad2c5d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/GitBashEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::054bd1f8370bf193d5254fd978ad2c5d, Microsoft.VisualBasic.Core\src\CommandLine\GitBashEnvironment.vb"
 
     ' Author:
     ' 

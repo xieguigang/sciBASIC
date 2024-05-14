@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd5664ed0171df4c8b70987ef14b587e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::dd5664ed0171df4c8b70987ef14b587e, Data_science\DataMining\DynamicProgramming\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

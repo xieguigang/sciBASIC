@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de1e4df285cd602e8dc699f3f2d68efa, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/TrIQ.vb"
+﻿#Region "Microsoft.VisualBasic::de1e4df285cd602e8dc699f3f2d68efa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\TrIQ.vb"
 
     ' Author:
     ' 

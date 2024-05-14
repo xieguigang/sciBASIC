@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8402c0ec77029fa85f480aa5cad06daa, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Minus.vb"
+﻿#Region "Microsoft.VisualBasic::8402c0ec77029fa85f480aa5cad06daa, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Minus.vb"
 
     ' Author:
     ' 

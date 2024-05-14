@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a1051fc8a74ca98a95d99a976e8c8f4, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::6a1051fc8a74ca98a95d99a976e8c8f4, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

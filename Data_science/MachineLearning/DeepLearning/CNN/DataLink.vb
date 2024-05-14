@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a511bd96efe8430f71c8824b2dddf131, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/DataLink.vb"
+﻿#Region "Microsoft.VisualBasic::a511bd96efe8430f71c8824b2dddf131, Data_science\MachineLearning\DeepLearning\CNN\DataLink.vb"
 
     ' Author:
     ' 

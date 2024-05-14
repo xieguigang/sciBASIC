@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c97a10b15a5e8db99b645742c1524ab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::7c97a10b15a5e8db99b645742c1524ab, Data_science\Visualization\Plots\g\Mapper.vb"
 
     ' Author:
     ' 

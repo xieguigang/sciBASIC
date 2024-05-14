@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bd6f6e85c7b779d811375e200b64c0a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Sine.vb"
+﻿#Region "Microsoft.VisualBasic::1bd6f6e85c7b779d811375e200b64c0a, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Sine.vb"
 
     ' Author:
     ' 

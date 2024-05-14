@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::354925f422b3b0a74630504d8d1cdaac, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::354925f422b3b0a74630504d8d1cdaac, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 

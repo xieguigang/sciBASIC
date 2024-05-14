@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62392eae59a48ed7bab9e0706a540c46, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Outlining/Schema.vb"
+﻿#Region "Microsoft.VisualBasic::62392eae59a48ed7bab9e0706a540c46, Data\DataFrame.Extensions\Outlining\Schema.vb"
 
     ' Author:
     ' 

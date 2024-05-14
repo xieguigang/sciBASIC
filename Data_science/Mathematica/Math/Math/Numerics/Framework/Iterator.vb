@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62ba84d57fabde09150e5ee2c05dac64, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/Framework/Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::62ba84d57fabde09150e5ee2c05dac64, Data_science\Mathematica\Math\Math\Numerics\Framework\Iterator.vb"
 
     ' Author:
     ' 

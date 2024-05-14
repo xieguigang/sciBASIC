@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ae599b39eb0aee132d5a6b71ef4900f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::6ae599b39eb0aee132d5a6b71ef4900f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 

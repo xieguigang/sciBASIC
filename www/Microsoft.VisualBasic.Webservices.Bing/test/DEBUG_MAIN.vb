@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f12559c3de0b1405a154ba528d74b244, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//test/DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::f12559c3de0b1405a154ba528d74b244, www\Microsoft.VisualBasic.Webservices.Bing\test\DEBUG_MAIN.vb"
 
     ' Author:
     ' 

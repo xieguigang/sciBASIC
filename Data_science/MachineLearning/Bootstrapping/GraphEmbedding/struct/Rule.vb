@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6555714cb49ca9ff72729b9dbddf8da6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/Rule.vb"
+﻿#Region "Microsoft.VisualBasic::6555714cb49ca9ff72729b9dbddf8da6, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\Rule.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::834a1cb0d61dac9e6558d68b7a813c12, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/WebServices/HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::834a1cb0d61dac9e6558d68b7a813c12, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 

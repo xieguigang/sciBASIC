@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07bdbe1d3d2880e4c064a2630343ebfc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/GridGraph/Spatial3D.vb"
+﻿#Region "Microsoft.VisualBasic::07bdbe1d3d2880e4c064a2630343ebfc, Data_science\Graph\Model\GridGraph\Spatial3D.vb"
 
     ' Author:
     ' 

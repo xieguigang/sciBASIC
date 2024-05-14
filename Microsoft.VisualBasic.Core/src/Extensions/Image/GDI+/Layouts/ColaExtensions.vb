@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52d1fd2850cb177372a640f45ef31dbe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/Layouts/ColaExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::52d1fd2850cb177372a640f45ef31dbe, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\ColaExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df3284b413f52c7a297981ac761245cf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/Pipeline/RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::df3284b413f52c7a297981ac761245cf, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 

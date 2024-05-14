@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::664cbb192ae0610149e715f48e4418ed, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/Polyhedron/Math.vb"
+﻿#Region "Microsoft.VisualBasic::664cbb192ae0610149e715f48e4418ed, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Polyhedron\Math.vb"
 
     ' Author:
     ' 

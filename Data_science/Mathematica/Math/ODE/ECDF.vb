@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::453e093b2ec0cc369e5e17f6f49ac3a3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//ECDF.vb"
+﻿#Region "Microsoft.VisualBasic::453e093b2ec0cc369e5e17f6f49ac3a3, Data_science\Mathematica\Math\ODE\ECDF.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd6c99ce5d92930a25749aac38bdd24, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Spline/PolynomialNewton.vb"
+﻿#Region "Microsoft.VisualBasic::ffd6c99ce5d92930a25749aac38bdd24, Data_science\Mathematica\Math\Math\Spline\PolynomialNewton.vb"
 
     ' Author:
     ' 

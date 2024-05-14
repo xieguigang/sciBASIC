@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17c43a61ffc7404600b1be600763ab9c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Random/Permutator.vb"
+﻿#Region "Microsoft.VisualBasic::17c43a61ffc7404600b1be600763ab9c, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\Permutator.vb"
 
     ' Author:
     ' 

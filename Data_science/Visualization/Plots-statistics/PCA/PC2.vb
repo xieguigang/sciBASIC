@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03aef11faf83faf526e51e8adaeba8ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//PCA/PC2.vb"
+﻿#Region "Microsoft.VisualBasic::03aef11faf83faf526e51e8adaeba8ca, Data_science\Visualization\Plots-statistics\PCA\PC2.vb"
 
     ' Author:
     ' 

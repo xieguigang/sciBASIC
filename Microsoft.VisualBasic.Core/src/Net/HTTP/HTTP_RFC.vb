@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::359fbf458ee8a9c5bb34c4f2b9c01666, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/HTTP_RFC.vb"
+﻿#Region "Microsoft.VisualBasic::359fbf458ee8a9c5bb34c4f2b9c01666, Microsoft.VisualBasic.Core\src\Net\HTTP\HTTP_RFC.vb"
 
     ' Author:
     ' 

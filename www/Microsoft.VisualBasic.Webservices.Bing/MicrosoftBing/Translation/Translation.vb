@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e28f7d81aaac18c4f4c25ad43257dd7d, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//MicrosoftBing/Translation/Translation.vb"
+﻿#Region "Microsoft.VisualBasic::e28f7d81aaac18c4f4c25ad43257dd7d, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Translation\Translation.vb"
 
     ' Author:
     ' 

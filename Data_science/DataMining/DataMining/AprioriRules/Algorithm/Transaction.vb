@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3145582edf54a2b53a31cacd2168be8e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Entities/Transaction.vb"
+﻿#Region "Microsoft.VisualBasic::769542c7d83ce1b07da3402a62154671, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Transaction.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.40 KB
+    '   Total Lines: 69
+    '    Code Lines: 44
+    ' Comment Lines: 15
+    '   Blank Lines: 10
+    '     File Size: 2.31 KB
 
 
     '     Structure Transaction
     ' 
     '         Properties: Items, Name
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Module TransactionExtensions

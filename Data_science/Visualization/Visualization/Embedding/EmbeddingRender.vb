@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc7a1e2f48db6b0a6372e5712ade6a0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//Embedding/EmbeddingRender.vb"
+﻿#Region "Microsoft.VisualBasic::dfc7a1e2f48db6b0a6372e5712ade6a0, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e157ecf277bbf51faa22aa3f8654ab, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Data/DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::04e157ecf277bbf51faa22aa3f8654ab, Data\BinaryData\netCDF\Data\DataReader.vb"
 
     ' Author:
     ' 

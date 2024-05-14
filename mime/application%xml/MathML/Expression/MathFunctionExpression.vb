@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a92e639703ea4a4ae4f1b00f40ddb78d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//MathML/Expression/MathFunctionExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a92e639703ea4a4ae4f1b00f40ddb78d, mime\application%xml\MathML\Expression\MathFunctionExpression.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cbb33942790924b29c741e8ceaf2528, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/TreeBase.vb"
+﻿#Region "Microsoft.VisualBasic::0cbb33942790924b29c741e8ceaf2528, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
 
     ' Author:
     ' 

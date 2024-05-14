@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b97c0c24c82bb75cea4baf0ca36af81, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/SchemaProvider/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5b97c0c24c82bb75cea4baf0ca36af81, Microsoft.VisualBasic.Core\src\Serialization\JSON\SchemaProvider\Extensions.vb"
 
     ' Author:
     ' 

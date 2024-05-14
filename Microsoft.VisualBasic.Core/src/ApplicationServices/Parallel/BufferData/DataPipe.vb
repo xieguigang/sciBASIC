@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7d4b8740b61d4ededc9807bcec5cff, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/BufferData/DataPipe.vb"
+﻿#Region "Microsoft.VisualBasic::ed7d4b8740b61d4ededc9807bcec5cff, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\DataPipe.vb"
 
     ' Author:
     ' 

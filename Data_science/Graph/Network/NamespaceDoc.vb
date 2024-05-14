@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4e19c372cab54e727c7da82d5e7d21d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a4e19c372cab54e727c7da82d5e7d21d, Data_science\Graph\Network\NamespaceDoc.vb"
 
     ' Author:
     ' 

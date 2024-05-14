@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a657035672b51bce1f32fbcfe7a02a1b, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/linklengths.vb"
+﻿#Region "Microsoft.VisualBasic::a657035672b51bce1f32fbcfe7a02a1b, gr\network-visualization\network_layout\Cola\linklengths.vb"
 
     ' Author:
     ' 

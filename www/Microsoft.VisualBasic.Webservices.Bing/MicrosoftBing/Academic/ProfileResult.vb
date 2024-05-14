@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c26eb2f049763576926aa5a969e626fd, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//MicrosoftBing/Academic/ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::c26eb2f049763576926aa5a969e626fd, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 

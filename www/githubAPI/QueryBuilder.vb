@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52caca25ab75dbc8e61b485fae247c74, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//QueryBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::52caca25ab75dbc8e61b485fae247c74, www\githubAPI\QueryBuilder.vb"
 
     ' Author:
     ' 

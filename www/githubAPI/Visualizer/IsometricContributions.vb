@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3201436b9bd47b1cdd93f137bfb8a514, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//Visualizer/IsometricContributions.vb"
+﻿#Region "Microsoft.VisualBasic::3201436b9bd47b1cdd93f137bfb8a514, www\githubAPI\Visualizer\IsometricContributions.vb"
 
     ' Author:
     ' 

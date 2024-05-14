@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9528e3e5d05aa6ae9f19b47f9c1070d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex/AdaGrad.vb"
+﻿#Region "Microsoft.VisualBasic::a9528e3e5d05aa6ae9f19b47f9c1070d, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex\AdaGrad.vb"
 
     ' Author:
     ' 

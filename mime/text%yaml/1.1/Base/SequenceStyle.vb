@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af3049e344b85a6da6fea3244406ec4b, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/SequenceStyle.vb"
+﻿#Region "Microsoft.VisualBasic::af3049e344b85a6da6fea3244406ec4b, mime\text%yaml\1.1\Base\SequenceStyle.vb"
 
     ' Author:
     ' 

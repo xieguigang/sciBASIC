@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::758ae727edadca386f3e86946574a54c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/optimization/EmbeddingComparator.vb"
+﻿#Region "Microsoft.VisualBasic::758ae727edadca386f3e86946574a54c, gr\network-visualization\network_layout\Orthogonal\optimization\EmbeddingComparator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826a36c440bdd1fc8bd797127bef65fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::826a36c440bdd1fc8bd797127bef65fe, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorCube.vb"
 
     ' Author:
     ' 

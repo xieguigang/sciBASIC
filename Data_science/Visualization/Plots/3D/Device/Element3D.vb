@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a72bb6ce28682f8b427d4b26e3f44d1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/Device/Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::8a72bb6ce28682f8b427d4b26e3f44d1, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56caaaed13fc8170e7d29409e3c11962, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/Metric.vb"
+﻿#Region "Microsoft.VisualBasic::56caaaed13fc8170e7d29409e3c11962, Data_science\DataMining\DataMining\Evaluation\Metric.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ac788b8a6cb1a75187239dc2d56161d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//KNN/ScoreMetric.vb"
+﻿#Region "Microsoft.VisualBasic::1ac788b8a6cb1a75187239dc2d56161d, Data_science\Graph\KNN\ScoreMetric.vb"
 
     ' Author:
     ' 

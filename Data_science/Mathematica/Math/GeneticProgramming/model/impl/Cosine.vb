@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f258edd533a828fc51de2ebc6829f751, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Cosine.vb"
+﻿#Region "Microsoft.VisualBasic::f258edd533a828fc51de2ebc6829f751, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Cosine.vb"
 
     ' Author:
     ' 

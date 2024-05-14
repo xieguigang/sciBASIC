@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40c740ce307b247baf9dfc001e135437, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Math/Subtraction.vb"
+﻿#Region "Microsoft.VisualBasic::40c740ce307b247baf9dfc001e135437, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Subtraction.vb"
 
     ' Author:
     ' 

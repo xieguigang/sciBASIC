@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cd9f019a84df2f074e5299d7d79194e, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/RowIterator.vb"
+﻿#Region "Microsoft.VisualBasic::4cd9f019a84df2f074e5299d7d79194e, Data\DataFrame\IO\csv\RowIterator.vb"
 
     ' Author:
     ' 

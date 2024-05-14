@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60fd2e4d3bddbe41241f1d968a4c742f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::60fd2e4d3bddbe41241f1d968a4c742f, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 

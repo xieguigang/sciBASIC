@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dad60f9d39a4676e6d9cec347c33bec4, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Constants/FixedMap.vb"
+﻿#Region "Microsoft.VisualBasic::dad60f9d39a4676e6d9cec347c33bec4, Data\BinaryData\msgpack\Constants\FixedMap.vb"
 
     ' Author:
     ' 

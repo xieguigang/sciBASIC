@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50ed10d75d5f739e37dc12a90e93f6b0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Normalizer/Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::50ed10d75d5f739e37dc12a90e93f6b0, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 

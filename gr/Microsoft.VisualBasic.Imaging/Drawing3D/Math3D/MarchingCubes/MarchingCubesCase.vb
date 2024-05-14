@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::667b137dbc0efeee5a2fe32d25463b32, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/MarchingCubes/MarchingCubesCase.vb"
+﻿#Region "Microsoft.VisualBasic::667b137dbc0efeee5a2fe32d25463b32, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\MarchingCubes\MarchingCubesCase.vb"
 
     ' Author:
     ' 

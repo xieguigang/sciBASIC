@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b2ac8d0c6bb29410ddd947bd1c3ec59e, Microsoft.VisualBasic.Core\src\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 

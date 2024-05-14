@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2557f80e8b3002ce71963b0de95f9d72, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Force.vb"
+﻿#Region "Microsoft.VisualBasic::2557f80e8b3002ce71963b0de95f9d72, gr\physics\Force.vb"
 
     ' Author:
     ' 

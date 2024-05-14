@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6539cde7a18b82192a2c1cd61a54ced9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BElements/BString.vb"
+﻿#Region "Microsoft.VisualBasic::6539cde7a18b82192a2c1cd61a54ced9, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BString.vb"
 
     ' Author:
     ' 

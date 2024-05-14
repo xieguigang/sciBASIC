@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c970eeee8ccdea7af7eaa1601bbbe76, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown//MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::0b4fb004626c786c8a8545a9c20aa2c0, mime\text%markdown\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 352
-    '    Code Lines: 254
+    '   Total Lines: 368
+    '    Code Lines: 267
     ' Comment Lines: 19
-    '   Blank Lines: 79
-    '     File Size: 13.20 KB
+    '   Blank Lines: 82
+    '     File Size: 14.02 KB
 
 
     ' Class MarkdownRender

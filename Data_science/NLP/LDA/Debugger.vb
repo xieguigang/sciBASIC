@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0c8c38c210e4455429c2af8c47e493, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::7b0c8c38c210e4455429c2af8c47e493, Data_science\NLP\LDA\Debugger.vb"
 
     ' Author:
     ' 

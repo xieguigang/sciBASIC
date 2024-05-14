@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bcea484f1a1b3722fbe95ae4938b9ea, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMAlgorithm/Backward.vb"
+﻿#Region "Microsoft.VisualBasic::0bcea484f1a1b3722fbe95ae4938b9ea, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Backward.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba1566cdca57b99f7a2d559eaaaae073, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ba1566cdca57b99f7a2d559eaaaae073, Data_science\Visualization\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 

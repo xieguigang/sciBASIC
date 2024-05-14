@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44cb9d3a68d37fe00b0d8b637c4b12c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/Solver.vb"
+﻿#Region "Microsoft.VisualBasic::44cb9d3a68d37fe00b0d8b637c4b12c5, Data_science\MachineLearning\Bootstrapping\Node2Vec\Solver.vb"
 
     ' Author:
     ' 

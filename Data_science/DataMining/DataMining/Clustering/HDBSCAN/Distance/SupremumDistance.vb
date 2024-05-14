@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac5030548b1cd5a74c1fdc468bff5f08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/SupremumDistance.vb"
+﻿#Region "Microsoft.VisualBasic::ac5030548b1cd5a74c1fdc468bff5f08, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\SupremumDistance.vb"
 
     ' Author:
     ' 

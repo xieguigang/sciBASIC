@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d91fadf6f8f99c58d8e392055ca30964, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Interpreters/InteractiveConsole.vb"
+﻿#Region "Microsoft.VisualBasic::d91fadf6f8f99c58d8e392055ca30964, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\InteractiveConsole.vb"
 
     ' Author:
     ' 

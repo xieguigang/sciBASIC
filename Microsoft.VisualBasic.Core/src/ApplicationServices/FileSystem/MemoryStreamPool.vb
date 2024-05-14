@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea9c0f0d6afb12c884c2ba6cd238ee4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/MemoryStreamPool.vb"
+﻿#Region "Microsoft.VisualBasic::cea9c0f0d6afb12c884c2ba6cd238ee4, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\MemoryStreamPool.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2129d0a26c311ae11d7a793fd4e374b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/Property/IProperty.vb"
+﻿#Region "Microsoft.VisualBasic::e2129d0a26c311ae11d7a793fd4e374b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\IProperty.vb"
 
     ' Author:
     ' 

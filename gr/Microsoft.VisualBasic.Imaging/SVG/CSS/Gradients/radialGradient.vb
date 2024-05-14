@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e86a136d912896380e4cec90a65fe6d0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/CSS/Gradients/radialGradient.vb"
+﻿#Region "Microsoft.VisualBasic::e86a136d912896380e4cec90a65fe6d0, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\radialGradient.vb"
 
     ' Author:
     ' 

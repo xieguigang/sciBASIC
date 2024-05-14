@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9531ab72762e57ecc69f7df88792b996, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//CSS/FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::9531ab72762e57ecc69f7df88792b996, mime\text%html\CSS\FontStyle.vb"
 
     ' Author:
     ' 

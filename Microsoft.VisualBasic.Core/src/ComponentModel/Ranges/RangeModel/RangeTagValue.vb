@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3f49b2ca0dc87c7d54e6e5185b6903, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/RangeModel/RangeTagValue.vb"
+﻿#Region "Microsoft.VisualBasic::8a3f49b2ca0dc87c7d54e6e5185b6903, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\RangeTagValue.vb"
 
     ' Author:
     ' 

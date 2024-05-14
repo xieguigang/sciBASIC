@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5111f0c69fb580eeca22b6f2dd77136e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/StatisticsMathExtensions/Average.vb"
+﻿#Region "Microsoft.VisualBasic::5111f0c69fb580eeca22b6f2dd77136e, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Average.vb"
 
     ' Author:
     ' 

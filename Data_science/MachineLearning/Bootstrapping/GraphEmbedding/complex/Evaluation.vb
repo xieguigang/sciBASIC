@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1cb8af010b72f4eb4fa59345cd591be, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex/Evaluation.vb"
+﻿#Region "Microsoft.VisualBasic::f1cb8af010b72f4eb4fa59345cd591be, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex\Evaluation.vb"
 
     ' Author:
     ' 

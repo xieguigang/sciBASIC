@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::598b582dd23ff10b42654dbcb2c0fcc7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::598b582dd23ff10b42654dbcb2c0fcc7, gr\Microsoft.VisualBasic.Imaging\Drivers\Drivers.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a71baf045f47e4d097555d7f0e88504b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::a71baf045f47e4d097555d7f0e88504b, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 

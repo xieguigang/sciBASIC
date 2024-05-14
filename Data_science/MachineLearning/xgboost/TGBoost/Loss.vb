@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229f3266d4435676954852ad18b0a207, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/Loss.vb"
+﻿#Region "Microsoft.VisualBasic::229f3266d4435676954852ad18b0a207, Data_science\MachineLearning\xgboost\TGBoost\Loss.vb"
 
     ' Author:
     ' 

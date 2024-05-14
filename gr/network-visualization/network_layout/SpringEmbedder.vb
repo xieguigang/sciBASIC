@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49ff9aaec38888dbc6d559be2402b719, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringEmbedder.vb"
+﻿#Region "Microsoft.VisualBasic::49ff9aaec38888dbc6d559be2402b719, gr\network-visualization\network_layout\SpringEmbedder.vb"
 
     ' Author:
     ' 

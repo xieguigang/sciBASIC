@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a490b5129df8aee6825e242275be213d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/EmGaussian/TimeBins.vb"
+﻿#Region "Microsoft.VisualBasic::a490b5129df8aee6825e242275be213d, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\EmGaussian\TimeBins.vb"
 
     ' Author:
     ' 

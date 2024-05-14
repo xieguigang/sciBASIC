@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b0c3112940bb250ccdb1fcf427f7e41, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Extensions/NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::3b0c3112940bb250ccdb1fcf427f7e41, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\NetFile.vb"
 
     ' Author:
     ' 

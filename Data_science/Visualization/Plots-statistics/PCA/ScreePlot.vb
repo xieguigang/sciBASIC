@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7cdcfe7a6f3045e77017e87c20a2192, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//PCA/ScreePlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7cdcfe7a6f3045e77017e87c20a2192, Data_science\Visualization\Plots-statistics\PCA\ScreePlot.vb"
 
     ' Author:
     ' 

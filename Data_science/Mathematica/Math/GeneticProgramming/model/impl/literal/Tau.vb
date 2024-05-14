@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69a15f16d9ecd338518ab539500f2a9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/Tau.vb"
+﻿#Region "Microsoft.VisualBasic::b69a15f16d9ecd338518ab539500f2a9, Data_science\Mathematica\Math\GeneticProgramming\model\impl\literal\Tau.vb"
 
     ' Author:
     ' 

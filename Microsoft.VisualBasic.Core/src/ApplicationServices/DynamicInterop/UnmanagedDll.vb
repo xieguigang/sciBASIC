@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf25cd6bf0af9a8c7b231fbb21e7ff96, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/UnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::bf25cd6bf0af9a8c7b231fbb21e7ff96, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\UnmanagedDll.vb"
 
     ' Author:
     ' 

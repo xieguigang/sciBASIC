@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b405eb77ea4f75941317c9ef1171b57, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/PDF/PdfAnnotation.vb"
+﻿#Region "Microsoft.VisualBasic::7b405eb77ea4f75941317c9ef1171b57, mime\application%pdf\PdfFileWriter\PDF\PdfAnnotation.vb"
 
     ' Author:
     ' 

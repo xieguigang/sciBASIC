@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1729fa951c74553a42dd0d12919398d, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//POSTagger/PartOfSpeech.vb"
+﻿#Region "Microsoft.VisualBasic::c1729fa951c74553a42dd0d12919398d, Data\Trinity\POSTagger\PartOfSpeech.vb"
 
     ' Author:
     ' 

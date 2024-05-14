@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c225f87c1ecc5deb854db7520d24f3b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/Lloyds/Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::7c225f87c1ecc5deb854db7520d24f3b, Data_science\DataMining\DataMining\Clustering\Lloyds\Clustering.vb"
 
     ' Author:
     ' 

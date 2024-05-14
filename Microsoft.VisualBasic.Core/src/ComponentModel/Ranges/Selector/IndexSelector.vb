@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::466091d693617e1e941716a2c1fa5628, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Selector/IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::466091d693617e1e941716a2c1fa5628, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
     ' Author:
     ' 

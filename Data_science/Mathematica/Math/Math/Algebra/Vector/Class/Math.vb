@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49d0c83eedca5947ea3fa7a0b23db63b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/Class/Math.vb"
+﻿#Region "Microsoft.VisualBasic::49d0c83eedca5947ea3fa7a0b23db63b, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 

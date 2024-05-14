@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9e287db502c1b27629daacd0cfc33cf, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//IL/Globals.vb"
+﻿#Region "Microsoft.VisualBasic::b9e287db502c1b27629daacd0cfc33cf, vs_solutions\dev\VisualStudio\IL\Globals.vb"
 
     ' Author:
     ' 

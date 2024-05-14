@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::184ff26ae6041bdd7436707be88407dd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/TypeTest.vb"
+﻿#Region "Microsoft.VisualBasic::184ff26ae6041bdd7436707be88407dd, Microsoft.VisualBasic.Core\test\test\TypeTest.vb"
 
     ' Author:
     ' 

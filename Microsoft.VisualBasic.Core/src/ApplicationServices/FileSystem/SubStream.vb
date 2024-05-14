@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31eb86a7637c09f1430e22e544021c95, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/SubStream.vb"
+﻿#Region "Microsoft.VisualBasic::31eb86a7637c09f1430e22e544021c95, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
 
     ' Author:
     ' 

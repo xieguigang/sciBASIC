@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c83ad273705007da9b42c7ba682e646, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing//MicrosoftBing/SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::1c83ad273705007da9b42c7ba682e646, www\Microsoft.VisualBasic.Webservices.Bing\MicrosoftBing\SearchEngine.vb"
 
     ' Author:
     ' 

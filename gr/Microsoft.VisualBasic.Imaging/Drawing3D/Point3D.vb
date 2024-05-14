@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0267888757a28434b54ae5ae30fb713c, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::0267888757a28434b54ae5ae30fb713c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 

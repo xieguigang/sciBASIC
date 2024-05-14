@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//WaveletTransform/Constructors/WaveletConstructor.vb"
+﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
 
     ' Author:
     ' 

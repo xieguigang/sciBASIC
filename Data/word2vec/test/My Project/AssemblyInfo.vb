@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8b54c3b4ca74bf285b32614dd02164, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::cf8b54c3b4ca74bf285b32614dd02164, Data\word2vec\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

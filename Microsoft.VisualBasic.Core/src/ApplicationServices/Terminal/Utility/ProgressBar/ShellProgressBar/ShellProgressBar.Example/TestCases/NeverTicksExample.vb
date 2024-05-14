@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a104ecb14fdd64714cfa9bd23861ab66, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/NeverTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::a104ecb14fdd64714cfa9bd23861ab66, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverTicksExample.vb"
 
     ' Author:
     ' 

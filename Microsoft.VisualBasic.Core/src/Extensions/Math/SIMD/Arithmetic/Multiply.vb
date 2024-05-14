@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f741db03ac7914d7e37f4d7cf9100fe8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::f741db03ac7914d7e37f4d7cf9100fe8, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Multiply.vb"
 
     ' Author:
     ' 

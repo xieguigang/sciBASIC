@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6004c228798a107fdd01c9739bc50627, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6004c228798a107fdd01c9739bc50627, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::705d047bf34d602c110b89a93d10e69b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Source/Signal.vb"
+﻿#Region "Microsoft.VisualBasic::705d047bf34d602c110b89a93d10e69b, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\Signal.vb"
 
     ' Author:
     ' 

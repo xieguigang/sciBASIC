@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7869cfbdb108e160e37726b4bb3e8e35, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Interpreters/Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::09cf0386909c7d6c7aeb72b408dc869d, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 724
+    '   Total Lines: 723
     '    Code Lines: 416
-    ' Comment Lines: 215
+    ' Comment Lines: 214
     '   Blank Lines: 93
-    '     File Size: 31.68 KB
+    '     File Size: 31.63 KB
 
 
     '     Class Interpreter

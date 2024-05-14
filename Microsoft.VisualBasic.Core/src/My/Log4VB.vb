@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a96eebe53ccc7e496293a9b3e915a52, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::9a96eebe53ccc7e496293a9b3e915a52, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
 
     ' Author:
     ' 

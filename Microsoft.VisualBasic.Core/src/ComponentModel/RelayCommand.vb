@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/RelayCommand.vb"
+﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, Microsoft.VisualBasic.Core\src\ComponentModel\RelayCommand.vb"
 
     ' Author:
     ' 

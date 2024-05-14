@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c37c67453803ce5048b5b92670dd3b0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgFillRule.vb"
+﻿#Region "Microsoft.VisualBasic::9c37c67453803ce5048b5b92670dd3b0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgFillRule.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Selector/SelectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b69e81435087deddd22021c4849209c7, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\SelectorExtensions.vb"
 
     ' Author:
     ' 

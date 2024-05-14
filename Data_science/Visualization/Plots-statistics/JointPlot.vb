@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::522f35d0acc94909a8053a5f2b9d6469, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//JointPlot.vb"
+﻿#Region "Microsoft.VisualBasic::522f35d0acc94909a8053a5f2b9d6469, Data_science\Visualization\Plots-statistics\JointPlot.vb"
 
     ' Author:
     ' 

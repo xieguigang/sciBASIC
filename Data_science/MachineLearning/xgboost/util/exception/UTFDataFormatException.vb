@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e673410164ded60553ad677454baccef, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//util/exception/UTFDataFormatException.vb"
+﻿#Region "Microsoft.VisualBasic::e673410164ded60553ad677454baccef, Data_science\MachineLearning\xgboost\util\exception\UTFDataFormatException.vb"
 
     ' Author:
     ' 

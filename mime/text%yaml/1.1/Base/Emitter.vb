@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61d31cbf3bfcf6a60745eb5670cb52f, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/Emitter.vb"
+﻿#Region "Microsoft.VisualBasic::c61d31cbf3bfcf6a60745eb5670cb52f, mime\text%yaml\1.1\Base\Emitter.vb"
 
     ' Author:
     ' 

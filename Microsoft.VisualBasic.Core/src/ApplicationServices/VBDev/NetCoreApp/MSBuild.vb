@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f416ffc084a36a78ed0349447b314559, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/NetCoreApp/MSBuild.vb"
+﻿#Region "Microsoft.VisualBasic::f416ffc084a36a78ed0349447b314559, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCoreApp\MSBuild.vb"
 
     ' Author:
     ' 

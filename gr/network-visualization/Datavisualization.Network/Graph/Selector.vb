@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf2df1deb25f008e0c0400d292caef07, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Selector.vb"
+﻿#Region "Microsoft.VisualBasic::bf2df1deb25f008e0c0400d292caef07, gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66194f8c798659c6a823bef58d09ec3b, G:/GCModeller/src/runtime/sciBASIC#/gr/PdfImage//PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::66194f8c798659c6a823bef58d09ec3b, gr\PdfImage\PdfGraphics.vb"
 
     ' Author:
     ' 

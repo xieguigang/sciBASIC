@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39f384cb84adce6a7997e14fa808618d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Correlations/Ranking.vb"
+﻿#Region "Microsoft.VisualBasic::39f384cb84adce6a7997e14fa808618d, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranking.vb"
 
     ' Author:
     ' 

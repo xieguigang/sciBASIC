@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a8cfbae2c451f8a143de383a1b4d38, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/LUDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::d7a8cfbae2c451f8a143de383a1b4d38, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\LUDecomposition.vb"
 
     ' Author:
     ' 

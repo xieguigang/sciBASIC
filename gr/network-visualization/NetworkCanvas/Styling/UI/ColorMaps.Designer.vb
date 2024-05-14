@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc1771086c71a4c6bcd5e0817f43a7fc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//Styling/UI/ColorMaps.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::fc1771086c71a4c6bcd5e0817f43a7fc, gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.Designer.vb"
 
     ' Author:
     ' 

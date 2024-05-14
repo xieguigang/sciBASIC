@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60911abb1f4ed47a5547e28b771fb6ee, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Particles/Particle.vb"
+﻿#Region "Microsoft.VisualBasic::60911abb1f4ed47a5547e28b771fb6ee, gr\physics\Particles\Particle.vb"
 
     ' Author:
     ' 

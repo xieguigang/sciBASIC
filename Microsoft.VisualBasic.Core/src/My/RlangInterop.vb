@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d1283cc28a958992c638bb70836a719, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/RlangInterop.vb"
+﻿#Region "Microsoft.VisualBasic::6d1283cc28a958992c638bb70836a719, Microsoft.VisualBasic.Core\src\My\RlangInterop.vb"
 
     ' Author:
     ' 

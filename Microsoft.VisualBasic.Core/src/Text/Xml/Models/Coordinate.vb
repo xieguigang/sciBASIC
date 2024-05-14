@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e437f1e97ae03e2ffad19a618184450d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/Coordinate.vb"
+﻿#Region "Microsoft.VisualBasic::e437f1e97ae03e2ffad19a618184450d, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Coordinate.vb"
 
     ' Author:
     ' 

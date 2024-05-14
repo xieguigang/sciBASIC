@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbd05851a8db32da48b6612b43e769e7, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Components/recordDimension.vb"
+﻿#Region "Microsoft.VisualBasic::fbd05851a8db32da48b6612b43e769e7, Data\BinaryData\netCDF\Components\recordDimension.vb"
 
     ' Author:
     ' 

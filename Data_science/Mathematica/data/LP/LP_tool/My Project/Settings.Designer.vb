@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99f83f81f1886ce51df2e654978b59be, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/data/LP/LP_tool//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::99f83f81f1886ce51df2e654978b59be, Data_science\Mathematica\data\LP\LP_tool\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

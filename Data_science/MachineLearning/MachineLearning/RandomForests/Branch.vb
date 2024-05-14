@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5922e15b937867f5b478d5785ba5e08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//RandomForests/Branch.vb"
+﻿#Region "Microsoft.VisualBasic::c5922e15b937867f5b478d5785ba5e08, Data_science\MachineLearning\MachineLearning\RandomForests\Branch.vb"
 
     ' Author:
     ' 

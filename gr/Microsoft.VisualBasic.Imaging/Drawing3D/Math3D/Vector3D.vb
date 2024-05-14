@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::333db1696fff70faa1e9f73f66b01303, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::333db1696fff70faa1e9f73f66b01303, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 

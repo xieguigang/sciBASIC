@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1e732d55243ae0190f634624d24e366, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/SIMD/SIMDInt.vb"
+﻿#Region "Microsoft.VisualBasic::a1e732d55243ae0190f634624d24e366, Data_science\DataMining\UMAP\Components\SIMD\SIMDInt.vb"
 
     ' Author:
     ' 

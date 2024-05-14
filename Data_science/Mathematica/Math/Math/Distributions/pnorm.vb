@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43d6199f2ef0248d57e395f3285e4790, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/pnorm.vb"
+﻿#Region "Microsoft.VisualBasic::43d6199f2ef0248d57e395f3285e4790, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
     ' Author:
     ' 

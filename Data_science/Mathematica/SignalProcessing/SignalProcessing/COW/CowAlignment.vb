@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b549b730fcdef7cd2ec7fc2b6ca2a62f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/CowAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::b549b730fcdef7cd2ec7fc2b6ca2a62f, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\CowAlignment.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07492a03a92310d4696595b66ba87ecd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::07492a03a92310d4696595b66ba87ecd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\MarkdownRender.vb"
 
     ' Author:
     ' 

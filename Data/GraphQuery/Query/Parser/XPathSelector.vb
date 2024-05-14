@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a640e3c3c6edac4efa438368a486f88, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Query/Parser/XPathSelector.vb"
+﻿#Region "Microsoft.VisualBasic::4a640e3c3c6edac4efa438368a486f88, Data\GraphQuery\Query\Parser\XPathSelector.vb"
 
     ' Author:
     ' 

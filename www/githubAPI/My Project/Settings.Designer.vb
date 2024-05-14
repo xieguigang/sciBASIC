@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::065f96353ef5b7fb39f708cefedbbc08, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::065f96353ef5b7fb39f708cefedbbc08, www\githubAPI\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

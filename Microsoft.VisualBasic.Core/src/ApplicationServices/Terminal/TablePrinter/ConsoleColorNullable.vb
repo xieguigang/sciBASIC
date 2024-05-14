@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a31be0a5f92283a5ee87e5bc6608bad9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/ConsoleColorNullable.vb"
+﻿#Region "Microsoft.VisualBasic::a31be0a5f92283a5ee87e5bc6608bad9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleColorNullable.vb"
 
     ' Author:
     ' 

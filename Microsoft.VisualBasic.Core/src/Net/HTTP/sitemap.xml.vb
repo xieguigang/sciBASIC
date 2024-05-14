@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bc7d87b1c2b8387d9a23a207a33af6b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::4bc7d87b1c2b8387d9a23a207a33af6b, Microsoft.VisualBasic.Core\src\Net\HTTP\sitemap.xml.vb"
 
     ' Author:
     ' 

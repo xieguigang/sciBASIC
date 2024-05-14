@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14aa13c87d6e5ec8a37d0e2600c00890, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/ECDF.vb"
+﻿#Region "Microsoft.VisualBasic::14aa13c87d6e5ec8a37d0e2600c00890, Data_science\Mathematica\Math\Math\Distributions\ECDF.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fa24466fcf97290572a948f5a68948d, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/InternalCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::1fa24466fcf97290572a948f5a68948d, gr\Microsoft.VisualBasic.Imaging\Drivers\InternalCanvas.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e94875a10296ed8905d9a85878934fd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//ANOVA/DistributionTable.vb"
+﻿#Region "Microsoft.VisualBasic::4e94875a10296ed8905d9a85878934fd, Data_science\Mathematica\Math\ANOVA\ANOVA\DistributionTable.vb"
 
     ' Author:
     ' 

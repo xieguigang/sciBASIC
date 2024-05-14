@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ff4d89124a64b1c77ac8a0e343c9c05, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//test/demoCDFWrite.vb"
+﻿#Region "Microsoft.VisualBasic::5ff4d89124a64b1c77ac8a0e343c9c05, Data\BinaryData\DataStorage\test\demoCDFWrite.vb"
 
     ' Author:
     ' 

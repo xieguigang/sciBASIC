@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a95ebd30216be532744c6995b88bdbba, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//MathML/mathOperators.vb"
+﻿#Region "Microsoft.VisualBasic::a95ebd30216be532744c6995b88bdbba, mime\application%xml\MathML\mathOperators.vb"
 
     ' Author:
     ' 

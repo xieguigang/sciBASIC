@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150ee4edc251ece5969ceeb8680ab871, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Kernel/IQMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::150ee4edc251ece5969ceeb8680ab871, Data_science\MachineLearning\MachineLearning\SVM\Kernel\IQMatrix.vb"
 
     ' Author:
     ' 

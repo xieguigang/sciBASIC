@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef883f2c87bc0257d200b71103e31edc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Syntax.vb"
+﻿#Region "Microsoft.VisualBasic::ef883f2c87bc0257d200b71103e31edc, gr\network-visualization\Visualizer\Styling\Expression\Syntax.vb"
 
     ' Author:
     ' 

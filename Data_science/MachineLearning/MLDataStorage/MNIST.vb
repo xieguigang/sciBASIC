@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a56e43876fe554ebde1e9e246f6e82e2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//MNIST.vb"
+﻿#Region "Microsoft.VisualBasic::a56e43876fe554ebde1e9e246f6e82e2, Data_science\MachineLearning\MLDataStorage\MNIST.vb"
 
     ' Author:
     ' 

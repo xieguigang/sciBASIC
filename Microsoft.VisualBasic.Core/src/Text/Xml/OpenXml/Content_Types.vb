@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/OpenXml/Content_Types.vb"
+﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, Microsoft.VisualBasic.Core\src\Text\Xml\OpenXml\Content_Types.vb"
 
     ' Author:
     ' 

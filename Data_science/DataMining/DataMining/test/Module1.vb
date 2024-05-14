@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2fe8dc165ee288dfdef4f874425a492, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e2fe8dc165ee288dfdef4f874425a492, Data_science\DataMining\DataMining\test\Module1.vb"
 
     ' Author:
     ' 

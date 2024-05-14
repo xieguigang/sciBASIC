@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb731df769fc5b2b617239d4b471997, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/Diagnostics.vb"
+﻿#Region "Microsoft.VisualBasic::acb731df769fc5b2b617239d4b471997, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Diagnostics.vb"
 
     ' Author:
     ' 

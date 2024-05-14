@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::282ec0b2ade9bff6b4d3517fdfdef2ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/encode/WordEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::282ec0b2ade9bff6b4d3517fdfdef2ca, Data_science\MachineLearning\RestrictedBoltzmannMachine\nlp\encode\WordEncoder.vb"
 
     ' Author:
     ' 

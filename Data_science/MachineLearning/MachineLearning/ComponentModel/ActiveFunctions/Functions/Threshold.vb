@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91b96c3ba6701e84b45f7ff89ea2c8eb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/Threshold.vb"
+﻿#Region "Microsoft.VisualBasic::91b96c3ba6701e84b45f7ff89ea2c8eb, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Threshold.vb"
 
     ' Author:
     ' 

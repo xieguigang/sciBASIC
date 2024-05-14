@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::193f67ffc0a6558739f3d7b3c9b00ecb, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::193f67ffc0a6558739f3d7b3c9b00ecb, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 

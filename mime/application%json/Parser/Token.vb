@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22b9e6ee75a16a174f12e515ba170522, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Parser/Token.vb"
+﻿#Region "Microsoft.VisualBasic::22b9e6ee75a16a174f12e515ba170522, mime\application%json\Parser\Token.vb"
 
     ' Author:
     ' 

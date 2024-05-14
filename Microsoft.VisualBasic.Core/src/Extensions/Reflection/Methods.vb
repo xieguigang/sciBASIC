@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::566a5359f103960306dcd8f231de2d24, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Methods.vb"
+﻿#Region "Microsoft.VisualBasic::566a5359f103960306dcd8f231de2d24, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 

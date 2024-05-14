@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c731ec82de28a8df54c1fc518f9ded, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Theme/FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::50c731ec82de28a8df54c1fc518f9ded, Data_science\Visualization\Plots\g\Theme\FontStyle.vb"
 
     ' Author:
     ' 

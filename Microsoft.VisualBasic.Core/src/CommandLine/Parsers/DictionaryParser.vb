@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18358647228356832b40e826eebbd9ed, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Parsers/DictionaryParser.vb"
+﻿#Region "Microsoft.VisualBasic::18358647228356832b40e826eebbd9ed, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\DictionaryParser.vb"
 
     ' Author:
     ' 

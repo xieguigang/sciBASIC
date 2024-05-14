@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e82ea8282ba7b73a56ae4da36954a331, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMAlgorithm/BaumWelch.vb"
+﻿#Region "Microsoft.VisualBasic::e82ea8282ba7b73a56ae4da36954a331, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\BaumWelch.vb"
 
     ' Author:
     ' 

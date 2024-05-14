@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9318b51be5a371fa2592afaafe39799b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow//linear.vb"
+﻿#Region "Microsoft.VisualBasic::9318b51be5a371fa2592afaafe39799b, Data_science\MachineLearning\TensorFlow\linear.vb"
 
     ' Author:
     ' 

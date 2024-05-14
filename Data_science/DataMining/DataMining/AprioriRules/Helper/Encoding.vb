@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215821029db9113be0d815793c42d62f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Helper/Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::e644c072ff6e3fee21829a675434afa6, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 51
-    ' Comment Lines: 25
-    '   Blank Lines: 13
-    '     File Size: 3.46 KB
+    '   Total Lines: 65
+    '    Code Lines: 37
+    ' Comment Lines: 19
+    '   Blank Lines: 9
+    '     File Size: 2.69 KB
 
 
     '     Class Encoding
     ' 
-    '         Properties: AllCodes, AllItems, CodeMappings
+    '         Properties: AllItems, CodeMappings
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Decode, GenerateCodes, ToString, (+2 Overloads) TransactionEncoding
+    '         Function: ToString, (+2 Overloads) TransactionEncoding
     ' 
     ' 
     ' /********************************************************************************/

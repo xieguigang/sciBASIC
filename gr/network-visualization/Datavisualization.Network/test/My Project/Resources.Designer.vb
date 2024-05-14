@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c35c169c86b8136878dd380bf4578817, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c35c169c86b8136878dd380bf4578817, gr\network-visualization\Datavisualization.Network\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

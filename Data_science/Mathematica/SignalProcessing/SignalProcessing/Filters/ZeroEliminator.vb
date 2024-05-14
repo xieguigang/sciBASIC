@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea9469c038b3cd33fdf7903bf19d7089, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/ZeroEliminator.vb"
+﻿#Region "Microsoft.VisualBasic::d8fc6278c64253a73642265257570065, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\ZeroEliminator.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
+    '   Total Lines: 100
     '    Code Lines: 48
-    ' Comment Lines: 59
+    ' Comment Lines: 42
     '   Blank Lines: 10
-    '     File Size: 4.04 KB
+    '     File Size: 3.18 KB
 
 
     '     Class ZeroEliminator

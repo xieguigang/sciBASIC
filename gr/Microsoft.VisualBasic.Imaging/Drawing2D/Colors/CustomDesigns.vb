@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ebfade8b0f7f2a17e9e78b0a9b53980, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::7ebfade8b0f7f2a17e9e78b0a9b53980, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
     ' Author:
     ' 

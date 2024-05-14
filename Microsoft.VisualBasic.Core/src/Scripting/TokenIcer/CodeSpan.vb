@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8451dda2f14b33c39f39f5b1dc2195ea, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/CodeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::8451dda2f14b33c39f39f5b1dc2195ea, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\CodeSpan.vb"
 
     ' Author:
     ' 

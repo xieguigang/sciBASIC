@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::815c1eae0e3c2d87ed7e4a09a430bcb6, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/CSS/Enums/CssProperty.vb"
+﻿#Region "Microsoft.VisualBasic::815c1eae0e3c2d87ed7e4a09a430bcb6, mime\text%html\Parser\CSS\Enums\CssProperty.vb"
 
     ' Author:
     ' 

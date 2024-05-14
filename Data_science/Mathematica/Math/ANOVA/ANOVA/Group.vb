@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89ca5c4768685dd68fe4e47530859103, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//ANOVA/Group.vb"
+﻿#Region "Microsoft.VisualBasic::89ca5c4768685dd68fe4e47530859103, Data_science\Mathematica\Math\ANOVA\ANOVA\Group.vb"
 
     ' Author:
     ' 

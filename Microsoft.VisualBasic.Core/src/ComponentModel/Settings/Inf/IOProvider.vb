@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d3eb3705667b82881bcc847fca2a15a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3d3eb3705667b82881bcc847fca2a15a, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 

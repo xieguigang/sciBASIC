@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b928ec5cb5ce058d9ccb119a3d091aea, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/DoConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::b928ec5cb5ce058d9ccb119a3d091aea, Microsoft.VisualBasic.Core\src\My\Framework\DoConfiguration.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::523b1576b70468dc3140eabcae8a4d30, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/Algorithms.vb"
+﻿#Region "Microsoft.VisualBasic::523b1576b70468dc3140eabcae8a4d30, gr\network-visualization\network_layout\ForceDirected\Algorithms.vb"
 
     ' Author:
     ' 

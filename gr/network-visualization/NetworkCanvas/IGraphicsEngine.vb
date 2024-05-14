@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//IGraphicsEngine.vb"
+﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
 
     ' Author:
     ' 

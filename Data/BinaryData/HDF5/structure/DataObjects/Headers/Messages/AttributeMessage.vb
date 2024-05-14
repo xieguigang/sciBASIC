@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f201a4684cccb42f1f8c49e0f2f4061, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/DataObjects/Headers/Messages/AttributeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::4f201a4684cccb42f1f8c49e0f2f4061, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
 
     ' Author:
     ' 

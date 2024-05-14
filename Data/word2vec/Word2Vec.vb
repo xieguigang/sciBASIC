@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6439c6c0c697af6e95be2f8c42b01cf8, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//Word2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::541405d84eb9ff4781798072076a4dc2, Data\word2vec\Word2Vec.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 371
+    '   Total Lines: 377
     '    Code Lines: 226
-    ' Comment Lines: 78
+    ' Comment Lines: 84
     '   Blank Lines: 67
-    '     File Size: 12.63 KB
+    '     File Size: 12.81 KB
 
 
     ' Class Word2Vec

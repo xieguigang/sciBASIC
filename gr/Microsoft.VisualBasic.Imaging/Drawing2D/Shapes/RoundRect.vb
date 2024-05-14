@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbc7e10ca0dcb92228513fcdd8536730, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Shapes/RoundRect.vb"
+﻿#Region "Microsoft.VisualBasic::cbc7e10ca0dcb92228513fcdd8536730, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
 
     ' Author:
     ' 

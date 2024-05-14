@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6f951975dd5484f4957a0570a7c56c3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/TagData/Indexing.vb"
+﻿#Region "Microsoft.VisualBasic::d6f951975dd5484f4957a0570a7c56c3, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\Indexing.vb"
 
     ' Author:
     ' 

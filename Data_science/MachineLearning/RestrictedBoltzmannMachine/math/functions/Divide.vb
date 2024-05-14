@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fba2a87832a38bc9876abd7e9c2dce1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Divide.vb"
+﻿#Region "Microsoft.VisualBasic::5fba2a87832a38bc9876abd7e9c2dce1, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\Divide.vb"
 
     ' Author:
     ' 

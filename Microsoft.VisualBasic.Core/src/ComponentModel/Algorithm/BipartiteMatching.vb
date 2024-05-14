@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85889dcbc8213524990be39681034a90, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BipartiteMatching.vb"
+﻿#Region "Microsoft.VisualBasic::85889dcbc8213524990be39681034a90, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BipartiteMatching.vb"
 
     ' Author:
     ' 

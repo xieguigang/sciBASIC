@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b371e321a291f68cf2a6122ea0811b7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/SaveGdiBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::1b371e321a291f68cf2a6122ea0811b7, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
 
     ' Author:
     ' 

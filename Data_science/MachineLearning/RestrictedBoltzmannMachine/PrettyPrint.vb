@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e391e604811f7fab8ef519ea049876b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//PrettyPrint.vb"
+﻿#Region "Microsoft.VisualBasic::4e391e604811f7fab8ef519ea049876b, Data_science\MachineLearning\RestrictedBoltzmannMachine\PrettyPrint.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b90206735e4627e16bafa1a5158a7acb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//EventFreeSurvival.vb"
+﻿#Region "Microsoft.VisualBasic::b90206735e4627e16bafa1a5158a7acb, Data_science\Mathematica\Math\KaplanMeierEstimator\EventFreeSurvival.vb"
 
     ' Author:
     ' 

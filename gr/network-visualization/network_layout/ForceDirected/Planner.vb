@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a2ff4e9d2abb4dfac69439bf57664d8, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/Planner.vb"
+﻿#Region "Microsoft.VisualBasic::5a2ff4e9d2abb4dfac69439bf57664d8, gr\network-visualization\network_layout\ForceDirected\Planner.vb"
 
     ' Author:
     ' 

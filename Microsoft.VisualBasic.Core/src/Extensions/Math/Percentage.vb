@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade59e8aaf858a06d9158fc9af56f6d3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::ade59e8aaf858a06d9158fc9af56f6d3, Microsoft.VisualBasic.Core\src\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 

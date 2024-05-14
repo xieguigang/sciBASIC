@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8744a6c59f7de0ab8941bd85c4a625f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/StringValue.vb"
+﻿#Region "Microsoft.VisualBasic::e8744a6c59f7de0ab8941bd85c4a625f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\StringValue.vb"
 
     ' Author:
     ' 

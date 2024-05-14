@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ed63d32be0f358b373082d50fcbf07f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//MsgPackSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::3432fc4835f2f08214316456126b9e56, Data\BinaryData\msgpack\MsgPackSerializer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 379
-    '    Code Lines: 308
-    ' Comment Lines: 0
+    '   Total Lines: 386
+    '    Code Lines: 310
+    ' Comment Lines: 5
     '   Blank Lines: 71
-    '     File Size: 15.70 KB
+    '     File Size: 16.11 KB
 
 
     ' Class MsgPackSerializer

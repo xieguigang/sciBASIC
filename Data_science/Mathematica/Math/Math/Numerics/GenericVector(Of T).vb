@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2207e431f94291f702c63743effd8e86, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::2207e431f94291f702c63743effd8e86, Data_science\Mathematica\Math\Math\Numerics\GenericVector(Of T).vb"
 
     ' Author:
     ' 

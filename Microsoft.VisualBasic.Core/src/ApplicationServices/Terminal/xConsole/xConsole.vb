@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db3b8e9543d16ef36a97631e72ad620e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/xConsole/xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::db3b8e9543d16ef36a97631e72ad620e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 

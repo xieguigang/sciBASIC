@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::870564f55daf9d9f6c41a05626b4e5cc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//HashMaps/Crc32.vb"
+﻿#Region "Microsoft.VisualBasic::870564f55daf9d9f6c41a05626b4e5cc, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dd182cc126f1ec9add3568244450e3c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/LongestCommonSubsequence.vb"
+﻿#Region "Microsoft.VisualBasic::1dd182cc126f1ec9add3568244450e3c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb"
 
     ' Author:
     ' 

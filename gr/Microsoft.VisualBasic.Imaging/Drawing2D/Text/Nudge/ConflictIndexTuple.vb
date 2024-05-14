@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0859768551c7e7b3e91488ee892039, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/ConflictIndexTuple.vb"
+﻿#Region "Microsoft.VisualBasic::fe0859768551c7e7b3e91488ee892039, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\ConflictIndexTuple.vb"
 
     ' Author:
     ' 

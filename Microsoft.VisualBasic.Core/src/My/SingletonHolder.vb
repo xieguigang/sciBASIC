@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de045038e7dbdd5390bce387149e0ccc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::de045038e7dbdd5390bce387149e0ccc, Microsoft.VisualBasic.Core\src\My\SingletonHolder.vb"
 
     ' Author:
     ' 

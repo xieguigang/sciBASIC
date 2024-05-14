@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c79e8481c39c61cc9c4d3ae1fc9b7f9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Heatmap/Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5c79e8481c39c61cc9c4d3ae1fc9b7f9, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
 
     ' Author:
     ' 

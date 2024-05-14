@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b68d6bf18c430b9fd63d2d08e0e08576, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/XmlDocumentTree.vb"
+﻿#Region "Microsoft.VisualBasic::b68d6bf18c430b9fd63d2d08e0e08576, Microsoft.VisualBasic.Core\src\Text\Xml\XmlDocumentTree.vb"
 
     ' Author:
     ' 

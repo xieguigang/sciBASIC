@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c3fafb58c18003f3a50ef9407b792eb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BencodeDecoder.vb"
+﻿#Region "Microsoft.VisualBasic::3c3fafb58c18003f3a50ef9407b792eb, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodeDecoder.vb"
 
     ' Author:
     ' 

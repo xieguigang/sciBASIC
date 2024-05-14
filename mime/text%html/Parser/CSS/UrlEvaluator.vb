@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::817a462648dbc00f66e286d4222d0491, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/CSS/UrlEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::817a462648dbc00f66e286d4222d0491, mime\text%html\Parser\CSS\UrlEvaluator.vb"
 
     ' Author:
     ' 

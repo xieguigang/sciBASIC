@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f641fb6ef0df2e32b739fa1c8cdad8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Exception/VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::a0f641fb6ef0df2e32b739fa1c8cdad8, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\VisualBasicAppException.vb"
 
     ' Author:
     ' 

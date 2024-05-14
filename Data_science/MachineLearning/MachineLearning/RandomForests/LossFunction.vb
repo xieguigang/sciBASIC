@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69a1815b362191cb2ab067259b14b036, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//RandomForests/LossFunction.vb"
+﻿#Region "Microsoft.VisualBasic::69a1815b362191cb2ab067259b14b036, Data_science\MachineLearning\MachineLearning\RandomForests\LossFunction.vb"
 
     ' Author:
     ' 

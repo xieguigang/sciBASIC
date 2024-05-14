@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d89077c179ce90950f2efcae3a83d79d, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Schema/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d89077c179ce90950f2efcae3a83d79d, Data\BinaryData\SQLite3\Schema\Extensions.vb"
 
     ' Author:
     ' 

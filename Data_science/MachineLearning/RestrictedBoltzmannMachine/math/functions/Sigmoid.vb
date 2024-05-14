@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52913cff15d1ce17ad980303329d6e88, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::52913cff15d1ce17ad980303329d6e88, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\Sigmoid.vb"
 
     ' Author:
     ' 

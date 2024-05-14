@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9c335737da1934fe3819602854126d, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::7b9c335737da1934fe3819602854126d, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 

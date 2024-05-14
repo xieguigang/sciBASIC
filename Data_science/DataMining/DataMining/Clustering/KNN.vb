@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5060f9db75dd7c6da450342ec0a2b3d3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KNN.vb"
+﻿#Region "Microsoft.VisualBasic::5060f9db75dd7c6da450342ec0a2b3d3, Data_science\DataMining\DataMining\Clustering\KNN.vb"
 
     ' Author:
     ' 

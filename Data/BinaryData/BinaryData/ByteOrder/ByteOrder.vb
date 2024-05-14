@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c827fd1a75721f0943e2ea01ed096e65, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//ByteOrder/ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::c827fd1a75721f0943e2ea01ed096e65, Data\BinaryData\BinaryData\ByteOrder\ByteOrder.vb"
 
     ' Author:
     ' 

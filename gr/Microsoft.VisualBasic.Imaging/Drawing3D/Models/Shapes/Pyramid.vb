@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Shapes/Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
 
     ' Author:
     ' 

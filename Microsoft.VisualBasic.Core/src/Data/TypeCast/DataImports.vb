@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b34b2b584e8a1743bdbb092ba006eaa, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/TypeCast/DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::6b34b2b584e8a1743bdbb092ba006eaa, Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
 
     ' Author:
     ' 

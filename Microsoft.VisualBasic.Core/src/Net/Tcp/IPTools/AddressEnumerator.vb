@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/Tcp/IPTools/AddressEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::8f8c6151177cfe095a53de8901e19930, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\AddressEnumerator.vb"
 
     ' Author:
     ' 

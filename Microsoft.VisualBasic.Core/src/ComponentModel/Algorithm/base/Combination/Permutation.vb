@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35b219b31e619b294a88d8c972a67094, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/base/Combination/Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::35b219b31e619b294a88d8c972a67094, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
 
     ' Author:
     ' 

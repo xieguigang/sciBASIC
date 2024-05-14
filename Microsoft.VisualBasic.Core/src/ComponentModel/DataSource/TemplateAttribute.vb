@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0442cf63a9796676bc934dac75b3a7f0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/TemplateAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0442cf63a9796676bc934dac75b3a7f0, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\TemplateAttribute.vb"
 
     ' Author:
     ' 

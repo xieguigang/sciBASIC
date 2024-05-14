@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc4b52b4d26178f00c91580fe870653d, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConcaveHull/DelaunayMesh2d.vb"
+﻿#Region "Microsoft.VisualBasic::cc4b52b4d26178f00c91580fe870653d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad1e0d82c3789343282d4d159b115a90, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/FunctionMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::ad1e0d82c3789343282d4d159b115a90, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\FunctionMatrix.vb"
 
     ' Author:
     ' 

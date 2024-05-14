@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Math/HuffmanAllocator.vb"
+﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
 
     ' Author:
     ' 

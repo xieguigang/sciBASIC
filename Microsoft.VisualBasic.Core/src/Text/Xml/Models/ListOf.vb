@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce43cbbae1968b6951d50b4780adfa6f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::eec66f5f52d32b017e8e40c864e31de4, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 69
-    ' Comment Lines: 23
-    '   Blank Lines: 16
-    '     File Size: 3.53 KB
+    '   Total Lines: 119
+    '    Code Lines: 74
+    ' Comment Lines: 27
+    '   Blank Lines: 18
+    '     File Size: 3.85 KB
 
 
     '     Interface IList
@@ -55,6 +55,7 @@
     ' 
     '         Properties: items, TypeComment
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: getCollection, getSize
     ' 
     ' 

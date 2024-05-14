@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15a14075c62b3a7bcfa84df211f7d7da, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/StringSimilarity/Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::15a14075c62b3a7bcfa84df211f7d7da, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 

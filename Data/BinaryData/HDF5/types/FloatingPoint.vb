@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93aabb6720b0e557cb95331a3921247f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//types/FloatingPoint.vb"
+﻿#Region "Microsoft.VisualBasic::93aabb6720b0e557cb95331a3921247f, Data\BinaryData\HDF5\types\FloatingPoint.vb"
 
     ' Author:
     ' 

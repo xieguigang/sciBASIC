@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c7c70b5d28df1c4044d00cbfbec1b5f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/DegreeData.vb"
+﻿#Region "Microsoft.VisualBasic::5c7c70b5d28df1c4044d00cbfbec1b5f, Data_science\Graph\Network\DegreeData.vb"
 
     ' Author:
     ' 

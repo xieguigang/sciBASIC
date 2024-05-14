@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5834ea2d7b39560dd5d476170c1be22, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/Property/PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::b5834ea2d7b39560dd5d476170c1be22, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 

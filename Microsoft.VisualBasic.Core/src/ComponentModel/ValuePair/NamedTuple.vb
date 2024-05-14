@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0370942fdea2143985cd7a098918c6d4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::0370942fdea2143985cd7a098918c6d4, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\NamedTuple.vb"
 
     ' Author:
     ' 

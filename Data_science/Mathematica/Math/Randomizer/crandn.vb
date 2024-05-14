@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::512944ef23ab5129c65b2a7039ec4bcf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Randomizer//crandn.vb"
+﻿#Region "Microsoft.VisualBasic::512944ef23ab5129c65b2a7039ec4bcf, Data_science\Mathematica\Math\Randomizer\crandn.vb"
 
     ' Author:
     ' 

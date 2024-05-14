@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b351871f9bb3b28d49e5cea2bb3e9fc7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Emperical.vb"
+﻿#Region "Microsoft.VisualBasic::b351871f9bb3b28d49e5cea2bb3e9fc7, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Emperical.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eebf8d7f1c9d48b563fe3a2f501deba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDataStorage//DataPack/PackReader.vb"
+﻿#Region "Microsoft.VisualBasic::5eebf8d7f1c9d48b563fe3a2f501deba, Data_science\MachineLearning\MLDataStorage\DataPack\PackReader.vb"
 
     ' Author:
     ' 

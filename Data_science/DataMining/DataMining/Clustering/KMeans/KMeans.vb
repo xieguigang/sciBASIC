@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2228f5102c03f30e8ad7502ee5d1a00, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::e2228f5102c03f30e8ad7502ee5d1a00, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25b3b0256c1dcc3a95046b555ec29ab2, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//BSON/BSON.vb"
+﻿#Region "Microsoft.VisualBasic::25b3b0256c1dcc3a95046b555ec29ab2, mime\application%json\BSON\BSON.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9d1c622d3793b1e51fe219b77fcfd47, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Fractions/Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::a9d1c622d3793b1e51fe219b77fcfd47, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 

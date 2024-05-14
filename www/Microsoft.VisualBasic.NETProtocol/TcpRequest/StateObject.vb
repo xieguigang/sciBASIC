@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16f9df96bc137c5bf876d1b056d24273, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/StateObject.vb"
+﻿#Region "Microsoft.VisualBasic::16f9df96bc137c5bf876d1b056d24273, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\StateObject.vb"
 
     ' Author:
     ' 

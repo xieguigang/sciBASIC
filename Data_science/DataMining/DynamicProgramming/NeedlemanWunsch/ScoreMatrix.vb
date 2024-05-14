@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff75b3ac5971175cdc42b28f0757abe, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//NeedlemanWunsch/ScoreMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::cff75b3ac5971175cdc42b28f0757abe, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\ScoreMatrix.vb"
 
     ' Author:
     ' 

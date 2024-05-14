@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::908cd1699f096ae75afbd0b6ef67ba89, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//ANOVA/TableOnepercent.vb"
+﻿#Region "Microsoft.VisualBasic::908cd1699f096ae75afbd0b6ef67ba89, Data_science\Mathematica\Math\ANOVA\ANOVA\TableOnepercent.vb"
 
     ' Author:
     ' 

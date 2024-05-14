@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d66d0fdad825a2eec5a6796e045516ec, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/ColorHeightMap.vb"
+﻿#Region "Microsoft.VisualBasic::d66d0fdad825a2eec5a6796e045516ec, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\ColorHeightMap.vb"
 
     ' Author:
     ' 

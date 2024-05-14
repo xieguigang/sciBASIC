@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::514efbde58b7f1691ee49f5c09746d6f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/HTMLRender.vb"
+﻿#Region "Microsoft.VisualBasic::514efbde58b7f1691ee49f5c09746d6f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
 
     ' Author:
     ' 

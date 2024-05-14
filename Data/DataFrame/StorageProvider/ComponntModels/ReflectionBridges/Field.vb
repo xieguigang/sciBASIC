@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/ReflectionBridges/Field.vb"
+﻿#Region "Microsoft.VisualBasic::6d11cd9ce72980b2195df3b9d7ba765e, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 

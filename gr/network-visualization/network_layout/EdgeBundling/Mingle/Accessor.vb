@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4e5f843232eb29e85bce863518ccd3, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::0e4e5f843232eb29e85bce863518ccd3, gr\network-visualization\network_layout\EdgeBundling\Mingle\Accessor.vb"
 
     ' Author:
     ' 

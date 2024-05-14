@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ea8673eecd4a8bbd78db8d5c2f814ff, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Serialization/XmlComment.vb"
+﻿#Region "Microsoft.VisualBasic::2ea8673eecd4a8bbd78db8d5c2f814ff, Microsoft.VisualBasic.Core\src\Text\Xml\Serialization\XmlComment.vb"
 
     ' Author:
     ' 

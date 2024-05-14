@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc58dced97fb91b1899b7ac627c5805a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/BitMap/BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::fc58dced97fb91b1899b7ac627c5805a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\BitSet.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d24b98fe3d16ba62414111fa114dcf46, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/StoreProcedure/Formats/Scattered.vb"
+﻿#Region "Microsoft.VisualBasic::d24b98fe3d16ba62414111fa114dcf46, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
 
     ' Author:
     ' 

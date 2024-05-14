@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e048141e62f5bb74d0dc52649cb4ea9a, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::e048141e62f5bb74d0dc52649cb4ea9a, Data\BinaryData\BinaryData\Stream\Helpers.vb"
 
     ' Author:
     ' 

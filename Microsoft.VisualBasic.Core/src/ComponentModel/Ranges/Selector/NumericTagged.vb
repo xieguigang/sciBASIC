@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c25cbf97c8907fe5a27efd3b11a29da, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Selector/NumericTagged.vb"
+﻿#Region "Microsoft.VisualBasic::ce93ed6b33a78042e7a57c54412ccffd, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\NumericTagged.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 51
+    '   Total Lines: 74
+    '    Code Lines: 52
     ' Comment Lines: 10
     '   Blank Lines: 12
-    '     File Size: 2.67 KB
+    '     File Size: 2.74 KB
 
 
     '     Structure NumericTagged
     ' 
-    '         Properties: IValueOf_Value
+    '         Properties: Value
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) CompareTo, ToString

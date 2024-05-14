@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::314039fa89eb2e3b95d925e781c63881, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::314039fa89eb2e3b95d925e781c63881, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\NetResponse.vb"
 
     ' Author:
     ' 

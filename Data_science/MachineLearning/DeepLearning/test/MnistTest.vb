@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b923ebf59b652c6a4a68d753e864bf6e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test//MnistTest.vb"
+﻿#Region "Microsoft.VisualBasic::b923ebf59b652c6a4a68d753e864bf6e, Data_science\MachineLearning\DeepLearning\test\MnistTest.vb"
 
     ' Author:
     ' 

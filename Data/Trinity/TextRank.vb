@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bba5a8d8a1df3c9f1069f946038617da, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::bba5a8d8a1df3c9f1069f946038617da, Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 

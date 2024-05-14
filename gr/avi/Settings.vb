@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f53570cd82211f389ab2fe9b320ce66, G:/GCModeller/src/runtime/sciBASIC#/gr/avi//Settings.vb"
+﻿#Region "Microsoft.VisualBasic::3f53570cd82211f389ab2fe9b320ce66, gr\avi\Settings.vb"
 
     ' Author:
     ' 

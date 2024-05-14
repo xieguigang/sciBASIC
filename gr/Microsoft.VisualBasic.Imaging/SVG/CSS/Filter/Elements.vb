@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7864519d18ed9757acb5094e7763ea18, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/CSS/Filter/Elements.vb"
+﻿#Region "Microsoft.VisualBasic::7864519d18ed9757acb5094e7763ea18, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter\Elements.vb"
 
     ' Author:
     ' 

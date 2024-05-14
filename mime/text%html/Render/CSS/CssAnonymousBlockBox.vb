@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73fc5ccb77bbfc410ddaca2a5df52771, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssAnonymousBlockBox.vb"
+﻿#Region "Microsoft.VisualBasic::73fc5ccb77bbfc410ddaca2a5df52771, mime\text%html\Render\CSS\CssAnonymousBlockBox.vb"
 
     ' Author:
     ' 

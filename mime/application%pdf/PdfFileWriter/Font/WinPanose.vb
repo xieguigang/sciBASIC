@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2496741d60c466569e840e07c9a237, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinPanose.vb"
+﻿#Region "Microsoft.VisualBasic::ce2496741d60c466569e840e07c9a237, mime\application%pdf\PdfFileWriter\Font\WinPanose.vb"
 
     ' Author:
     ' 

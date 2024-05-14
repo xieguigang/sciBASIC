@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ccaf28ae00c1f95e6d463a722238d7a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/RecurrentContrastiveDivergence.vb"
+﻿#Region "Microsoft.VisualBasic::3ccaf28ae00c1f95e6d463a722238d7a, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\learn\RecurrentContrastiveDivergence.vb"
 
     ' Author:
     ' 

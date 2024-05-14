@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53a2cab73731d25e6cfa01e9a741b402, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::53a2cab73731d25e6cfa01e9a741b402, mime\text%html\Render\CSS\CssRectangle.vb"
 
     ' Author:
     ' 

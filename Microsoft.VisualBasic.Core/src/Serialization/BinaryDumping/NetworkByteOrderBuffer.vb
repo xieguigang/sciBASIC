@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae7369042a99744ed2b9403a23dd42c2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BinaryDumping/NetworkByteOrderBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::ae7369042a99744ed2b9403a23dd42c2, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
     ' Author:
     ' 

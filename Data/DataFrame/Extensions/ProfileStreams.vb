@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 

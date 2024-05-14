@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9185ff40d7400dbfac5cf8ba569b12e0, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Constants/Bool.vb"
+﻿#Region "Microsoft.VisualBasic::9185ff40d7400dbfac5cf8ba569b12e0, Data\BinaryData\msgpack\Constants\Bool.vb"
 
     ' Author:
     ' 

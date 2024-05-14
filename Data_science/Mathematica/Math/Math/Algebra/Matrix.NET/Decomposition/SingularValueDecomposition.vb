@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::956e8db6d0839ceebd0a47e87949c318, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::956e8db6d0839ceebd0a47e87949c318, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
 
     ' Author:
     ' 

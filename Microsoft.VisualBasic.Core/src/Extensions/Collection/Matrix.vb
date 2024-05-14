@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58f4ab51943fb0027d75627444edaecb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::58f4ab51943fb0027d75627444edaecb, Microsoft.VisualBasic.Core\src\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 

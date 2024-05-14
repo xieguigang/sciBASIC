@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed1dda5563410a59b26a6ce5c5ddb336, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/ASCIIArt/CharSet.vb"
+﻿#Region "Microsoft.VisualBasic::ed1dda5563410a59b26a6ce5c5ddb336, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
 
     ' Author:
     ' 

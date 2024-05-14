@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351d2554aafa50a92b5cb337133f19ac, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//POSTagger/BrillTransformationRules.vb"
+﻿#Region "Microsoft.VisualBasic::351d2554aafa50a92b5cb337133f19ac, Data\Trinity\POSTagger\BrillTransformationRules.vb"
 
     ' Author:
     ' 

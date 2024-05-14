@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f02277fbcbdeec0cd55ebc16cc9be72, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/complex_NNE/Gradients.vb"
+﻿#Region "Microsoft.VisualBasic::8f02277fbcbdeec0cd55ebc16cc9be72, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\complex_NNE\Gradients.vb"
 
     ' Author:
     ' 

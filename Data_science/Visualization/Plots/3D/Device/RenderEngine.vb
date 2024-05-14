@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8daa45161f2d4e21a6e24b8a70a9656, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/Device/RenderEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a8daa45161f2d4e21a6e24b8a70a9656, Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
 
     ' Author:
     ' 

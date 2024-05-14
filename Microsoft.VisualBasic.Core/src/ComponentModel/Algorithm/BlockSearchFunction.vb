@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4a5e85316550eee5b5a8e44cd6652ee, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b4a5e85316550eee5b5a8e44cd6652ee, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
     ' Author:
     ' 

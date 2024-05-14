@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a8ced7d94b5e269a0ffb3cddc4d3f08, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/Literal.vb"
+﻿#Region "Microsoft.VisualBasic::2a8ced7d94b5e269a0ffb3cddc4d3f08, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Literal.vb"
 
     ' Author:
     ' 

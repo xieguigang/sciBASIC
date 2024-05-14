@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee0d593f3ff828a35ed2958645d2ffe6, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//Turtle/ttl_property.vb"
+﻿#Region "Microsoft.VisualBasic::ee0d593f3ff828a35ed2958645d2ffe6, mime\application%rdf+xml\Turtle\ttl_property.vb"
 
     ' Author:
     ' 

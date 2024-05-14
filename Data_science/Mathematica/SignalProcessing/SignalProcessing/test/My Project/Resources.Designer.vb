@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deab62002143211fc75b8d8cce318326, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::deab62002143211fc75b8d8cce318326, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

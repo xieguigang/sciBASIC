@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a431a5efd7f81c7354f3f2f0fb331334, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/HalfHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a431a5efd7f81c7354f3f2f0fb331334, Data_science\Mathematica\Math\Math\Numerics\HalfHelper.vb"
 
     ' Author:
     ' 

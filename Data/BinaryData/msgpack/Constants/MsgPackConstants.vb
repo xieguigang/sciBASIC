@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6027da4becb6e05db8f636c5e52f110d, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Constants/MsgPackConstants.vb"
+﻿#Region "Microsoft.VisualBasic::6027da4becb6e05db8f636c5e52f110d, Data\BinaryData\msgpack\Constants\MsgPackConstants.vb"
 
     ' Author:
     ' 

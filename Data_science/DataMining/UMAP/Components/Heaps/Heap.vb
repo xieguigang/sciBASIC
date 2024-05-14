@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::542e03adcecfe64f1ba36741ed9ca295, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/Heaps/Heap.vb"
+﻿#Region "Microsoft.VisualBasic::542e03adcecfe64f1ba36741ed9ca295, Data_science\DataMining\UMAP\Components\Heaps\Heap.vb"
 
     ' Author:
     ' 

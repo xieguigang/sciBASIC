@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4c9f6507b8a0859ededa1b11ae093b4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/AVLTree/AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::d4c9f6507b8a0859ededa1b11ae093b4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
     ' Author:
     ' 

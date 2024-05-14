@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96458672676fa96f6a85c04c012ccc2b, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/CSS/Selector.vb"
+﻿#Region "Microsoft.VisualBasic::96458672676fa96f6a85c04c012ccc2b, mime\text%html\Parser\CSS\Selector.vb"
 
     ' Author:
     ' 

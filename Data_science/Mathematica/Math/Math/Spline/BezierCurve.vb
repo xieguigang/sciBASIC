@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee79a70c5370ab971af0f4a425e047f6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Spline/BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::ee79a70c5370ab971af0f4a425e047f6, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
     ' Author:
     ' 

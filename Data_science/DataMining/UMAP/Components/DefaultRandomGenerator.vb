@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2724ddaa591ec0d6492bdca0e7e9fc4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/DefaultRandomGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f2724ddaa591ec0d6492bdca0e7e9fc4, Data_science\DataMining\UMAP\Components\DefaultRandomGenerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295563325f2f3a759a427684768f3863, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Selector/OrderSelector.vb"
+﻿#Region "Microsoft.VisualBasic::295563325f2f3a759a427684768f3863, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\OrderSelector.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::150386fe3396050394bd3493fa83f9a4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/MarshalExtra.vb"
+﻿#Region "Microsoft.VisualBasic::150386fe3396050394bd3493fa83f9a4, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\MarshalExtra.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27028d22d4ce5c8bf7bfd6da65e406d8, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//device/datasetReader/DatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::27028d22d4ce5c8bf7bfd6da65e406d8, Data\BinaryData\HDF5\device\datasetReader\DatasetReader.vb"
 
     ' Author:
     ' 

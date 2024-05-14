@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a81bdb40f9b2618198a20570793689e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgTextAnchor.vb"
+﻿#Region "Microsoft.VisualBasic::3a81bdb40f9b2618198a20570793689e, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgTextAnchor.vb"
 
     ' Author:
     ' 

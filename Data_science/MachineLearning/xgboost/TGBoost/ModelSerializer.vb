@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8d8e8a7c25b9caf43c6bc2657b86b81, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/ModelSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::d8d8e8a7c25b9caf43c6bc2657b86b81, Data_science\MachineLearning\xgboost\TGBoost\ModelSerializer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dc1683ad25833ec9918bf97721540c5, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/DataChunk.vb"
+﻿#Region "Microsoft.VisualBasic::6dc1683ad25833ec9918bf97721540c5, Data\BinaryData\HDF5\structure\DataChunk.vb"
 
     ' Author:
     ' 

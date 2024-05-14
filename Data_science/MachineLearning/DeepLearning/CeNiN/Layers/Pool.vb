@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c128f702a707469381b8eb9f3e7162ed, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Pool.vb"
+﻿#Region "Microsoft.VisualBasic::c128f702a707469381b8eb9f3e7162ed, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Pool.vb"
 
     ' Author:
     ' 

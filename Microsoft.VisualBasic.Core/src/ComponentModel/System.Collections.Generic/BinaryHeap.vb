@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ae888f626a3b818319faa9b836de1a0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/BinaryHeap.vb"
+﻿#Region "Microsoft.VisualBasic::3ae888f626a3b818319faa9b836de1a0, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BinaryHeap.vb"
 
     ' Author:
     ' 

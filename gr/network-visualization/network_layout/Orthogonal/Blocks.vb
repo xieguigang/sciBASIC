@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79a4285e7236b8627f55679ae444eacc, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::79a4285e7236b8627f55679ae444eacc, gr\network-visualization\network_layout\Orthogonal\Blocks.vb"
 
     ' Author:
     ' 

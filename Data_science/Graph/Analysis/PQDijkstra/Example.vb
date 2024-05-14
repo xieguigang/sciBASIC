@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PQDijkstra/Example.vb"
+﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, Data_science\Graph\Analysis\PQDijkstra\Example.vb"
 
     ' Author:
     ' 

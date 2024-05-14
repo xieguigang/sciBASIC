@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12e589610e8bed1ff72b0f7ac6994d2a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/Histogram/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::12e589610e8bed1ff72b0f7ac6994d2a, Data_science\Visualization\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 

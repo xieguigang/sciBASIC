@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff6705646d75334dd171413b3d22f8ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/SoftMax.vb"
+﻿#Region "Microsoft.VisualBasic::ff6705646d75334dd171413b3d22f8ad, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\SoftMax.vb"
 
     ' Author:
     ' 

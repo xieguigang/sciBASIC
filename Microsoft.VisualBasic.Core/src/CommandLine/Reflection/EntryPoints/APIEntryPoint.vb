@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::234eda72d958479ce97b83b7265bf310, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/EntryPoints/APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::a25347672374ea1825af8b654ae45f90, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 313
-    '    Code Lines: 169
+    '   Total Lines: 308
+    '    Code Lines: 164
     ' Comment Lines: 101
     '   Blank Lines: 43
-    '     File Size: 13.26 KB
+    '     File Size: 13.09 KB
 
 
     '     Class APIEntryPoint

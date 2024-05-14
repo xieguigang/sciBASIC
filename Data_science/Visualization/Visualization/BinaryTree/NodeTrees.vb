@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae888446c779a64c3b1ec764b04d88a5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//BinaryTree/NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::ae888446c779a64c3b1ec764b04d88a5, Data_science\Visualization\Visualization\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 

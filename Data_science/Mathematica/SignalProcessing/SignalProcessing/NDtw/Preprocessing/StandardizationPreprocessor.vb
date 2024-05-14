@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc4ffc18f140dd411ea0bfadff59444a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/StandardizationPreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::bc4ffc18f140dd411ea0bfadff59444a, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\Preprocessing\StandardizationPreprocessor.vb"
 
     ' Author:
     ' 

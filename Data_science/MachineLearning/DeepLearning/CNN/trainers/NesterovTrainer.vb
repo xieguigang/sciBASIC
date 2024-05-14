@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11b3127a85e844332b5155f9840a1f87, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/trainers/NesterovTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::11b3127a85e844332b5155f9840a1f87, Data_science\MachineLearning\DeepLearning\CNN\trainers\NesterovTrainer.vb"
 
     ' Author:
     ' 

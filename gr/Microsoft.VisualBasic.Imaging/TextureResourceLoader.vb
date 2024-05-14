@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70faa7f2455322daa334d649b1713eb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//TextureResourceLoader.vb"
+﻿#Region "Microsoft.VisualBasic::e70faa7f2455322daa334d649b1713eb, gr\Microsoft.VisualBasic.Imaging\TextureResourceLoader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd2677b36fa39f34cb95a4defda21d5c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/DBSCAN/Program.vb"
+﻿#Region "Microsoft.VisualBasic::fd2677b36fa39f34cb95a4defda21d5c, Data_science\DataMining\DataMining\test\DBSCAN\Program.vb"
 
     ' Author:
     ' 

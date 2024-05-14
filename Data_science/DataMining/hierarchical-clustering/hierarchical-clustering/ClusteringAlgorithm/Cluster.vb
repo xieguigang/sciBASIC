@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0444cc5817effe7e932f28332d44cae3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//ClusteringAlgorithm/Cluster.vb"
+﻿#Region "Microsoft.VisualBasic::890e2bdfc5df7b68da2321c38c9b705c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 172
+    '   Total Lines: 179
     '    Code Lines: 107
-    ' Comment Lines: 40
+    ' Comment Lines: 47
     '   Blank Lines: 25
-    '     File Size: 5.14 KB
+    '     File Size: 5.41 KB
 
 
     ' Class Cluster

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec615370fabe2d6d3c29922c58c25ebd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//QLearning/QLearning.vb"
+﻿#Region "Microsoft.VisualBasic::ec615370fabe2d6d3c29922c58c25ebd, Data_science\MachineLearning\MachineLearning\QLearning\QLearning.vb"
 
     ' Author:
     ' 

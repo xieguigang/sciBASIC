@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba5eca678615f088cd3d52fc2d87cde, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/numberParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::8ba5eca678615f088cd3d52fc2d87cde, Microsoft.VisualBasic.Core\test\test\numberParserTest.vb"
 
     ' Author:
     ' 

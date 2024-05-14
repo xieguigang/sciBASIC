@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DriverModel.vb"
+﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, Microsoft.VisualBasic.Core\src\ComponentModel\DriverModel.vb"
 
     ' Author:
     ' 

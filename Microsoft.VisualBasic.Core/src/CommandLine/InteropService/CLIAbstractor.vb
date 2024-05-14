@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::620a74df1490b707ca723085e2996b2e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/CLIAbstractor.vb"
+﻿#Region "Microsoft.VisualBasic::620a74df1490b707ca723085e2996b2e, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\CLIAbstractor.vb"
 
     ' Author:
     ' 

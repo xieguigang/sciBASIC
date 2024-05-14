@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65a747f564bb5e081974d67c1d674644, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Randomizer//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::65a747f564bb5e081974d67c1d674644, Data_science\Mathematica\Math\Randomizer\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

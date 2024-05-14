@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c2f3e8a1da36a1c99837e7e58e5bf05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Splitter.vb"
+﻿#Region "Microsoft.VisualBasic::7c2f3e8a1da36a1c99837e7e58e5bf05, Data_science\Mathematica\Math\Math\Scripting\Expression\Splitter.vb"
 
     ' Author:
     ' 

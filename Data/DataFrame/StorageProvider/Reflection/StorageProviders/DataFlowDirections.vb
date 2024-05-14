@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0720c8e5af3efa52ad43264a8f773142, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/Reflection/StorageProviders/DataFlowDirections.vb"
+﻿#Region "Microsoft.VisualBasic::0720c8e5af3efa52ad43264a8f773142, Data\DataFrame\StorageProvider\Reflection\StorageProviders\DataFlowDirections.vb"
 
     ' Author:
     ' 

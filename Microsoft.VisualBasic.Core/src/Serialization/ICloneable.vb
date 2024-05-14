@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::273da05431d41f4560295a7f7996af28, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/ICloneable.vb"
+﻿#Region "Microsoft.VisualBasic::273da05431d41f4560295a7f7996af28, Microsoft.VisualBasic.Core\src\Serialization\ICloneable.vb"
 
     ' Author:
     ' 

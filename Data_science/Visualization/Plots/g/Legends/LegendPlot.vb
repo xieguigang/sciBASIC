@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f7845c97d24b99ef72675d044693d56, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Legends/LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::5f7845c97d24b99ef72675d044693d56, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 

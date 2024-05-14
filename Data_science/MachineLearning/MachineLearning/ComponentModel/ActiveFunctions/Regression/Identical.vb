@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19aec2692bc715cc6b610a086cca0f58, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Regression/Identical.vb"
+﻿#Region "Microsoft.VisualBasic::19aec2692bc715cc6b610a086cca0f58, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\Identical.vb"
 
     ' Author:
     ' 

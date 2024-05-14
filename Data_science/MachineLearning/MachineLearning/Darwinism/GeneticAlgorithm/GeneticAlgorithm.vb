@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85bd8e350572383e6eab137c29ed7efd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::85bd8e350572383e6eab137c29ed7efd, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 

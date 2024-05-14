@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9fa072e40e08745bb22c987cc3e8263, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/KdTree/KdTree.vb"
+﻿#Region "Microsoft.VisualBasic::b9fa072e40e08745bb22c987cc3e8263, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
     ' Author:
     ' 

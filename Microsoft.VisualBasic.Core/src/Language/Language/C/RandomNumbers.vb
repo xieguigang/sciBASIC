@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/C/RandomNumbers.vb"
+﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
 
     ' Author:
     ' 

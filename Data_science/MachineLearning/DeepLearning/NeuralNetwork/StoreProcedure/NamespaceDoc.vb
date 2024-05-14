@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::890d65e120fdc78fcb3a131269e30aab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/StoreProcedure/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::890d65e120fdc78fcb3a131269e30aab, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c26ebb2b2a87d5ecb1466044a688379e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/DynamicType.vb"
+﻿#Region "Microsoft.VisualBasic::c26ebb2b2a87d5ecb1466044a688379e, Microsoft.VisualBasic.Core\src\Extensions\Reflection\DynamicType.vb"
 
     ' Author:
     ' 

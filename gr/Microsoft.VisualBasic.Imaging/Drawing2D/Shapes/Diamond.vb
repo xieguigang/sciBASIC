@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7ec5eb6d39c143de4bbc08c13518e6e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Shapes/Diamond.vb"
+﻿#Region "Microsoft.VisualBasic::a7ec5eb6d39c143de4bbc08c13518e6e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de6cfa0c844217dfe9ea5a05146b4413, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/Plugin/PluginAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::de6cfa0c844217dfe9ea5a05146b4413, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\PluginAttribute.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad167c096d12efeffcddb06c5e8a433c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumSquareError.vb"
+﻿#Region "Microsoft.VisualBasic::ad167c096d12efeffcddb06c5e8a433c, Data_science\Mathematica\Math\GeneticProgramming\evolution\measure\SumSquareError.vb"
 
     ' Author:
     ' 

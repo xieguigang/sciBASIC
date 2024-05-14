@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0748dc17bfa88a15051a4ad455c57fd3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/HyperbolicTangent.vb"
+﻿#Region "Microsoft.VisualBasic::0748dc17bfa88a15051a4ad455c57fd3, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb"
 
     ' Author:
     ' 

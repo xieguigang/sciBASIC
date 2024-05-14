@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4e40e25520176971167dc3d54ceea1f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BoxPlot/Box.vb"
+﻿#Region "Microsoft.VisualBasic::a4e40e25520176971167dc3d54ceea1f, Data_science\Visualization\Plots\BoxPlot\Box.vb"
 
     ' Author:
     ' 

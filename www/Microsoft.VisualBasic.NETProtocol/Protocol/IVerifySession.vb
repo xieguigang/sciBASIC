@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9921e6519c012de881113b9d47fae2f9, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Protocol/IVerifySession.vb"
+﻿#Region "Microsoft.VisualBasic::9921e6519c012de881113b9d47fae2f9, www\Microsoft.VisualBasic.NETProtocol\Protocol\IVerifySession.vb"
 
     ' Author:
     ' 

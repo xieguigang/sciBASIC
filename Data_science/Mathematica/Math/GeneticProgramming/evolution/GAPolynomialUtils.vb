@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a620d39478c3138276dfae1688597d5d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/GAPolynomialUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a620d39478c3138276dfae1688597d5d, Data_science\Mathematica\Math\GeneticProgramming\evolution\GAPolynomialUtils.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6438eb51b688ea913d00f1f902d80fb5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/CBusyIndicator.vb"
+﻿#Region "Microsoft.VisualBasic::6438eb51b688ea913d00f1f902d80fb5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\CBusyIndicator.vb"
 
     ' Author:
     ' 

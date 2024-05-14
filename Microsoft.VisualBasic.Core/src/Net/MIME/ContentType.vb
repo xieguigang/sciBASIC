@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29459a51bd13d441b9cf57569025dbca, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/MIME/ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::29459a51bd13d441b9cf57569025dbca, Microsoft.VisualBasic.Core\src\Net\MIME\ContentType.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Algorithm/BZip2BlockCompressor.vb"
+﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
 
     ' Author:
     ' 

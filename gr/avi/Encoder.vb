@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, G:/GCModeller/src/runtime/sciBASIC#/gr/avi//Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::aad705cc49500f777372edcd446ab136, gr\avi\Encoder.vb"
 
     ' Author:
     ' 

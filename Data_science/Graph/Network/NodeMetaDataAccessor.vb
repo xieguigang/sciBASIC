@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34983f72d609591ae053e166fdfc3342, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/NodeMetaDataAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::34983f72d609591ae053e166fdfc3342, Data_science\Graph\Network\NodeMetaDataAccessor.vb"
 
     ' Author:
     ' 

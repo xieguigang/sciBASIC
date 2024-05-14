@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93ee43aa3455dae54daa53c9142543a5, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//test/mathMLloaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::93ee43aa3455dae54daa53c9142543a5, mime\application%rdf+xml\test\mathMLloaderTest.vb"
 
     ' Author:
     ' 

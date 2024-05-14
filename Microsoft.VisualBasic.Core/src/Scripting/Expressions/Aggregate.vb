@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::883efcb5ab21f62333f0b4d7c2beb12c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Expressions/Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::883efcb5ab21f62333f0b4d7c2beb12c, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Aggregate.vb"
 
     ' Author:
     ' 

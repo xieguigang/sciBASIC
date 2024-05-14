@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f298ad8c28fb982a2a3ff79012ee7490, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BElements/BList.vb"
+﻿#Region "Microsoft.VisualBasic::f298ad8c28fb982a2a3ff79012ee7490, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BList.vb"
 
     ' Author:
     ' 

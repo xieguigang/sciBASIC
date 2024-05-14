@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f1b8f2a20fef839bfe27f925d9c1e73, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::7f1b8f2a20fef839bfe27f925d9c1e73, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
 
     ' Author:
     ' 

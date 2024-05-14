@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3a1e79ea425c36cbd7c94998c3d40f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/MockGDIPlusGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::7a3a1e79ea425c36cbd7c94998c3d40f, gr\Microsoft.VisualBasic.Imaging\Drivers\MockGDIPlusGraphics.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69420915938050eb66507408a1f66071, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//TimeSignals.vb"
+﻿#Region "Microsoft.VisualBasic::69420915938050eb66507408a1f66071, Data_science\Mathematica\SignalProcessing\SignalProcessing\TimeSignals.vb"
 
     ' Author:
     ' 

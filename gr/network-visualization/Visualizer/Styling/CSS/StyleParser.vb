@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::175d9df9b7a86cf85d25e2b4b6367bc7, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/CSS/StyleParser.vb"
+﻿#Region "Microsoft.VisualBasic::175d9df9b7a86cf85d25e2b4b6367bc7, gr\network-visualization\Visualizer\Styling\CSS\StyleParser.vb"
 
     ' Author:
     ' 

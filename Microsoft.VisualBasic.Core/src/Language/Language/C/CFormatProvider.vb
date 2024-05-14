@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff8692e0dfc97084d2061c0f69d994ed, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/C/CFormatProvider.vb"
+﻿#Region "Microsoft.VisualBasic::ff8692e0dfc97084d2061c0f69d994ed, Microsoft.VisualBasic.Core\src\Language\Language\C\CFormatProvider.vb"
 
     ' Author:
     ' 

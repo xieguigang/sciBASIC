@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa5b6987d268ec40c78c195a22221ad8, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgDominantBaseline.vb"
+﻿#Region "Microsoft.VisualBasic::fa5b6987d268ec40c78c195a22221ad8, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgDominantBaseline.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce34067740e8a46aa4be2900fe2f7d03, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/StorageProcedure/TextWriter/ProblemText.vb"
+﻿#Region "Microsoft.VisualBasic::ce34067740e8a46aa4be2900fe2f7d03, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::717f847d6c1b2c6fd4b86f535731fa35, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/util/NegativeTripleGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::717f847d6c1b2c6fd4b86f535731fa35, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\util\NegativeTripleGenerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::385ffbe1f63302a18d4e8c9f44f6d998, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Enumerator.vb"
+﻿#Region "Microsoft.VisualBasic::385ffbe1f63302a18d4e8c9f44f6d998, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Enumerator.vb"
 
     ' Author:
     ' 

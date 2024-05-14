@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61c9331e7394af012d6c7c0f49acf0b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame//Encoder/EnumEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::a61c9331e7394af012d6c7c0f49acf0b, Data_science\DataMining\FeatureFrame\Encoder\EnumEncoder.vb"
 
     ' Author:
     ' 

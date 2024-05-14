@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f1da4bbdab232fd4266416cc2c8d6e4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Patterns/Validator/Validator.vb"
+﻿#Region "Microsoft.VisualBasic::8f1da4bbdab232fd4266416cc2c8d6e4, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\Validator.vb"
 
     ' Author:
     ' 

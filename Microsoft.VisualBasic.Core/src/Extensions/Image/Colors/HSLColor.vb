@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3963edb49d23d59932d98b0a8d97f127, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/HSLColor.vb"
+﻿#Region "Microsoft.VisualBasic::3963edb49d23d59932d98b0a8d97f127, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HSLColor.vb"
 
     ' Author:
     ' 

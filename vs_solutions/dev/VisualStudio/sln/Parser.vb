@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfd3863104dcd40b6835f8c1740be46b, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//sln/Parser.vb"
+﻿#Region "Microsoft.VisualBasic::cfd3863104dcd40b6835f8c1740be46b, vs_solutions\dev\VisualStudio\sln\Parser.vb"
 
     ' Author:
     ' 

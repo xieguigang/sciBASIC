@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cafa00dc9889175256cf6220b15f67bc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/Levenshtein/LevenshteinModel.vb"
+﻿#Region "Microsoft.VisualBasic::cafa00dc9889175256cf6220b15f67bc, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinModel.vb"
 
     ' Author:
     ' 

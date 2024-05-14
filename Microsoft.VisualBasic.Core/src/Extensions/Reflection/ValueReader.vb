@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730e50db90928fe89e59df24de395b5c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/ValueReader.vb"
+﻿#Region "Microsoft.VisualBasic::730e50db90928fe89e59df24de395b5c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ValueReader.vb"
 
     ' Author:
     ' 

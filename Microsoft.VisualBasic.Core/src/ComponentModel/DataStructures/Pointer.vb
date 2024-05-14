@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Pointer.vb"
 
     ' Author:
     ' 

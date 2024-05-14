@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5d124ec5793dd97ffb34ea0fbf396f7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/EventProc.vb"
+﻿#Region "Microsoft.VisualBasic::e5d124ec5793dd97ffb34ea0fbf396f7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\EventProc.vb"
 
     ' Author:
     ' 

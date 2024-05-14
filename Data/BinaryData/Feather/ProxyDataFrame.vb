@@ -1,4 +1,65 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::fa9b4acda25702dd9e543160ad9e394f, Data\BinaryData\Feather\ProxyDataFrame.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 264
+    '    Code Lines: 138
+    ' Comment Lines: 95
+    '   Blank Lines: 31
+    '     File Size: 9.51 KB
+
+
+    ' Class ProxyRowMap
+    ' 
+    '     Properties: Count
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class ProxyDataFrame
+    ' 
+    '     Properties: AllColumns, AllRows, Basis, ColumnCount, Columns
+    '                 Inner, RowCount, Rows
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ProxyRow, (+2 Overloads) TryGetColumn, TryGetRow, TryGetRowTranslated, (+4 Overloads) TryGetValue
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
@@ -262,3 +323,4 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
         Return Mapper(row, toRet)
     End Function
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07e08422335d228a158f898d1d9752a0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/VectorEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::07e08422335d228a158f898d1d9752a0, Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
 
     ' Author:
     ' 

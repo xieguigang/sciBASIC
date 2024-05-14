@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c294fdb2eb1a77b518d9d828eba5e30, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Linq/LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::0c294fdb2eb1a77b518d9d828eba5e30, Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 

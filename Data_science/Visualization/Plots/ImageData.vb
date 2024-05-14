@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65769e0a88dc1bf5100e87e916a720bd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::65769e0a88dc1bf5100e87e916a720bd, Data_science\Visualization\Plots\ImageData.vb"
 
     ' Author:
     ' 

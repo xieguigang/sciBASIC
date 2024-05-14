@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27dd55ac0abfb18ffb22c3c8971d67ac, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Extensions/Write_csv.vb"
+﻿#Region "Microsoft.VisualBasic::27dd55ac0abfb18ffb22c3c8971d67ac, Data\DataFrame\Extensions\Write_csv.vb"
 
     ' Author:
     ' 

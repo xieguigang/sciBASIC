@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e0c49b1ebc1c6a8060f80b31f0c190a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//OutlineTest.vb"
+﻿#Region "Microsoft.VisualBasic::6e0c49b1ebc1c6a8060f80b31f0c190a, Data_science\Visualization\test\OutlineTest.vb"
 
     ' Author:
     ' 

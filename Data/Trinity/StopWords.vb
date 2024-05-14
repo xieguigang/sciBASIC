@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a212d2ae70ae9cbe31bb6918a074df57, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::a212d2ae70ae9cbe31bb6918a074df57, Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ac875600138d60b05e68fc97d411c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//Module1.vb"
+﻿#Region "Microsoft.VisualBasic::45ac875600138d60b05e68fc97d411c5, Data_science\Visualization\test\Module1.vb"
 
     ' Author:
     ' 

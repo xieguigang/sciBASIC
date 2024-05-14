@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d055e26e87c71dddaf3531018336432f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/Plot/Scatter3D.vb"
+﻿#Region "Microsoft.VisualBasic::d055e26e87c71dddaf3531018336432f, Data_science\Visualization\Plots\3D\Plot\Scatter3D.vb"
 
     ' Author:
     ' 

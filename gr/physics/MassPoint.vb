@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//MassPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, gr\physics\MassPoint.vb"
 
     ' Author:
     ' 

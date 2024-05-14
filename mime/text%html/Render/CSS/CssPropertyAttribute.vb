@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47ce05ab7d1f0d93d6141c042f8d2245, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssPropertyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::47ce05ab7d1f0d93d6141c042f8d2245, mime\text%html\Render\CSS\CssPropertyAttribute.vb"
 
     ' Author:
     ' 

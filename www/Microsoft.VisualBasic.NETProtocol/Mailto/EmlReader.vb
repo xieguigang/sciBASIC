@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f08b6d5b5f35f15fad86fe34228455c5, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Mailto/EmlReader.vb"
+﻿#Region "Microsoft.VisualBasic::f08b6d5b5f35f15fad86fe34228455c5, www\Microsoft.VisualBasic.NETProtocol\Mailto\EmlReader.vb"
 
     ' Author:
     ' 

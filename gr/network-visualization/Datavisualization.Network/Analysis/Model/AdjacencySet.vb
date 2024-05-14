@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0e8a387e69725f8daa801736a12652, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Model/AdjacencySet.vb"
+﻿#Region "Microsoft.VisualBasic::4a0e8a387e69725f8daa801736a12652, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::510f9d9d03c00a25e676a09ed2614441, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//physics_Test/Form3.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::510f9d9d03c00a25e676a09ed2614441, gr\physics\physics_Test\Form3.Designer.vb"
 
     ' Author:
     ' 

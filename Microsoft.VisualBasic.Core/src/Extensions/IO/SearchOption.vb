@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb9d7825cca0cb03855537da0405f5e7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/SearchOption.vb"
+﻿#Region "Microsoft.VisualBasic::fb9d7825cca0cb03855537da0405f5e7, Microsoft.VisualBasic.Core\src\Extensions\IO\SearchOption.vb"
 
     ' Author:
     ' 

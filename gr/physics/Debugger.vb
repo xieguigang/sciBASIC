@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4dd9917c269cada70cc5800e2eac201, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::a4dd9917c269cada70cc5800e2eac201, gr\physics\Debugger.vb"
 
     ' Author:
     ' 

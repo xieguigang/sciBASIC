@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ba0188a43ca2000189a3c7bb69c7234, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/LinearMoments/Pareto.vb"
+﻿#Region "Microsoft.VisualBasic::9ba0188a43ca2000189a3c7bb69c7234, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Pareto.vb"
 
     ' Author:
     ' 

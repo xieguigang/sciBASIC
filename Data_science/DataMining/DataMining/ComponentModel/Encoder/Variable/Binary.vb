@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9fe436ed8a291e398486aa4aae39493, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Encoder/Variable/Binary.vb"
+﻿#Region "Microsoft.VisualBasic::e9fe436ed8a291e398486aa4aae39493, Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Binary.vb"
 
     ' Author:
     ' 

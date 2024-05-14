@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b252aef4e7935a26809d277b8277e41, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Wget/wget.vb"
+﻿#Region "Microsoft.VisualBasic::6b252aef4e7935a26809d277b8277e41, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
 
     ' Author:
     ' 

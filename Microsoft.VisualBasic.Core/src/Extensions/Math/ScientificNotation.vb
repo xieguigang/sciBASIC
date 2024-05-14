@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65cde6c4d02a7bca04736fe866a4bb9b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/ScientificNotation.vb"
+﻿#Region "Microsoft.VisualBasic::65cde6c4d02a7bca04736fe866a4bb9b, Microsoft.VisualBasic.Core\src\Extensions\Math\ScientificNotation.vb"
 
     ' Author:
     ' 

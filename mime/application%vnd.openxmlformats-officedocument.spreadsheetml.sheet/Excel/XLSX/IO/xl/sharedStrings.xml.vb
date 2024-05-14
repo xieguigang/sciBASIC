@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480977bfe62091e854d1732b0be43176, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/xl/sharedStrings.xml.vb"
+﻿#Region "Microsoft.VisualBasic::480977bfe62091e854d1732b0be43176, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\xl\sharedStrings.xml.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05f554580061c41650b17eca2240ed8d, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//XmlGeneric/GraphWriter.vb"
+﻿#Region "Microsoft.VisualBasic::05f554580061c41650b17eca2240ed8d, mime\application%xml\XmlGeneric\GraphWriter.vb"
 
     ' Author:
     ' 

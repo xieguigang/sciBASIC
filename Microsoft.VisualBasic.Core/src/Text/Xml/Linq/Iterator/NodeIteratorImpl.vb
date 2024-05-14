@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3a092d9792116778eefee8c4d0b8879, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Linq/Iterator/NodeIteratorImpl.vb"
+﻿#Region "Microsoft.VisualBasic::b3a092d9792116778eefee8c4d0b8879, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\NodeIteratorImpl.vb"
 
     ' Author:
     ' 

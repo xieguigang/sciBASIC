@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e76e47818c645eb46c8c532918f4fd3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::2935fa7ac8214956f4877463a979f842, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 270
     ' Comment Lines: 179
     '   Blank Lines: 57
-    '     File Size: 18.64 KB
+    '     File Size: 18.68 KB
 
 
     '     Class Index

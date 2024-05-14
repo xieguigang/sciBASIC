@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bddb309848b14d69bf3fea831c41753, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/util/algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::1bddb309848b14d69bf3fea831c41753, gr\network-visualization\network_layout\Orthogonal\util\algorithm.vb"
 
     ' Author:
     ' 

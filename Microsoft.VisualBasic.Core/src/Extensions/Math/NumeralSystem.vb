@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19de6bd9898c3ec432f52570db8e30c0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/NumeralSystem.vb"
+﻿#Region "Microsoft.VisualBasic::19de6bd9898c3ec432f52570db8e30c0, Microsoft.VisualBasic.Core\src\Extensions\Math\NumeralSystem.vb"
 
     ' Author:
     ' 

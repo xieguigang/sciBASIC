@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47a633f9b05b9dd77dc6ec5069aee966, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//ByteOrder/NetworkByteOrderBitConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::47a633f9b05b9dd77dc6ec5069aee966, Data\BinaryData\BinaryData\ByteOrder\NetworkByteOrderBitConvertor.vb"
 
     ' Author:
     ' 

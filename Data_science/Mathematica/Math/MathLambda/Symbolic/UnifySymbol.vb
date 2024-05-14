@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a32e52df8e46c8aa8362b23b8eb2774a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/UnifySymbol.vb"
+﻿#Region "Microsoft.VisualBasic::a32e52df8e46c8aa8362b23b8eb2774a, Data_science\Mathematica\Math\MathLambda\Symbolic\UnifySymbol.vb"
 
     ' Author:
     ' 

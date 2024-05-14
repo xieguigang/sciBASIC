@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::893a5c33e1b46ac7efb326b40986298e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BinaryDumping/StructSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::893a5c33e1b46ac7efb326b40986298e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructSerializer.vb"
 
     ' Author:
     ' 

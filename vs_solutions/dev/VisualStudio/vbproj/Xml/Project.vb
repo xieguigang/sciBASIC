@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1d63a0e52085e32e87005a7a82ade8c, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/Project.vb"
+﻿#Region "Microsoft.VisualBasic::b1d63a0e52085e32e87005a7a82ade8c, vs_solutions\dev\VisualStudio\vbproj\Xml\Project.vb"
 
     ' Author:
     ' 

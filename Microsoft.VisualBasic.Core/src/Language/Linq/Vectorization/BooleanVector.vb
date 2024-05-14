@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873e1965e63335164cb2a33b2f76dc37, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Vectorization/BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::873e1965e63335164cb2a33b2f76dc37, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 

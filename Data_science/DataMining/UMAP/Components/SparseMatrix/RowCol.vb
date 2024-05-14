@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::572bfff23f1ca1f98a0fc5d9875d3869, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/SparseMatrix/RowCol.vb"
+﻿#Region "Microsoft.VisualBasic::572bfff23f1ca1f98a0fc5d9875d3869, Data_science\DataMining\UMAP\Components\SparseMatrix\RowCol.vb"
 
     ' Author:
     ' 

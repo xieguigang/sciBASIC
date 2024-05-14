@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4db37b73c74a963bb749c2f19e7ed92, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/labeler/Label.vb"
+﻿#Region "Microsoft.VisualBasic::d4db37b73c74a963bb749c2f19e7ed92, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 

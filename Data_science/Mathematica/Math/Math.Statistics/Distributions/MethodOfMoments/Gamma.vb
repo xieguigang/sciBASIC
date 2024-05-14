@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26e005b70610addc80f083157c45cab9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::26e005b70610addc80f083157c45cab9, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gamma.vb"
 
     ' Author:
     ' 

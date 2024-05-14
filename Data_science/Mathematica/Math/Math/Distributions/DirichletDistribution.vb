@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1532b89b231e3e6ac3a99457888ad2f2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/DirichletDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::1532b89b231e3e6ac3a99457888ad2f2, Data_science\Mathematica\Math\Math\Distributions\DirichletDistribution.vb"
 
     ' Author:
     ' 

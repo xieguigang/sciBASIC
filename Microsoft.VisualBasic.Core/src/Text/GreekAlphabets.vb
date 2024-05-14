@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbc8a154a82c6eb43c83abcc770304fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/GreekAlphabets.vb"
+﻿#Region "Microsoft.VisualBasic::cbc8a154a82c6eb43c83abcc770304fe, Microsoft.VisualBasic.Core\src\Text\GreekAlphabets.vb"
 
     ' Author:
     ' 

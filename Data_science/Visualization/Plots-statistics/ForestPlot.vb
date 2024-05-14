@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b494f0ffdfbee91cdf4cdc29ff6a8161, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//ForestPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b494f0ffdfbee91cdf4cdc29ff6a8161, Data_science\Visualization\Plots-statistics\ForestPlot.vb"
 
     ' Author:
     ' 

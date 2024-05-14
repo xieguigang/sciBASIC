@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b81e01e9c623c899fd4b059707b72cb1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/UNIX/PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::b81e01e9c623c899fd4b059707b72cb1, Microsoft.VisualBasic.Core\src\My\UNIX\PathMapper.vb"
 
     ' Author:
     ' 

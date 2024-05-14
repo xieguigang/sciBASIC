@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d813928dc077075814d5aaad6fbf489b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/TupleHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d813928dc077075814d5aaad6fbf489b, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\TupleHelper.vb"
 
     ' Author:
     ' 

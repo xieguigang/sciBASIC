@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3408ec15315e758abcdec009775a7bd3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/LinearMoments/FDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::3408ec15315e758abcdec009775a7bd3, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\FDistribution.vb"
 
     ' Author:
     ' 

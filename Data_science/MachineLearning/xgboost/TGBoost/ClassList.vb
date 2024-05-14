@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9147bb5b869432baf71e04a354f337d2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/ClassList.vb"
+﻿#Region "Microsoft.VisualBasic::9147bb5b869432baf71e04a354f337d2, Data_science\MachineLearning\xgboost\TGBoost\ClassList.vb"
 
     ' Author:
     ' 

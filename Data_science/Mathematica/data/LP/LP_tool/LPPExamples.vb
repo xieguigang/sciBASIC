@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3368a71463cbdeae93d9961338ada045, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/data/LP/LP_tool//LPPExamples.vb"
+﻿#Region "Microsoft.VisualBasic::3368a71463cbdeae93d9961338ada045, Data_science\Mathematica\data\LP\LP_tool\LPPExamples.vb"
 
     ' Author:
     ' 

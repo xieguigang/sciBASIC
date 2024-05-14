@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69abc7b6f7f7be07f2b5d32c09aaa9ad, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::69abc7b6f7f7be07f2b5d32c09aaa9ad, Data\Trinity\Test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

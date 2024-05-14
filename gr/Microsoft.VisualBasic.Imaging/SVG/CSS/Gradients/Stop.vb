@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da4fb06d7e476bb6cfb4dadb47df2fc6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/CSS/Gradients/Stop.vb"
+﻿#Region "Microsoft.VisualBasic::da4fb06d7e476bb6cfb4dadb47df2fc6, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\Stop.vb"
 
     ' Author:
     ' 

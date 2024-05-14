@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::096e533edf419849ad86f807701a81c8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/ISplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::096e533edf419849ad86f807701a81c8, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\ISplitStrategy.vb"
 
     ' Author:
     ' 

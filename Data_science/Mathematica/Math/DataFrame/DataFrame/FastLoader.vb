@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50319dface387165b1eff40309a4e45e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::50319dface387165b1eff40309a4e45e, Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 

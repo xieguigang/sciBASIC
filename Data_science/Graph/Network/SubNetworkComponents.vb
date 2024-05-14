@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::888392d0a51b39fc8a610c2ac9a909b2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/SubNetworkComponents.vb"
+﻿#Region "Microsoft.VisualBasic::888392d0a51b39fc8a610c2ac9a909b2, Data_science\Graph\Network\SubNetworkComponents.vb"
 
     ' Author:
     ' 

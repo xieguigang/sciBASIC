@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a962fbe21e07df9f2aea4908fab4d346, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/UncheckIntegerHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a962fbe21e07df9f2aea4908fab4d346, Data_science\Mathematica\Math\Math\Numerics\UncheckIntegerHelpers.vb"
 
     ' Author:
     ' 

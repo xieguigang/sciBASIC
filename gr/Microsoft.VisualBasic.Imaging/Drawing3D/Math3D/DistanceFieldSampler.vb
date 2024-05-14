@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cae858b2ae57838f1a6f1596cc411651, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/DistanceFieldSampler.vb"
+﻿#Region "Microsoft.VisualBasic::cae858b2ae57838f1a6f1596cc411651, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\DistanceFieldSampler.vb"
 
     ' Author:
     ' 

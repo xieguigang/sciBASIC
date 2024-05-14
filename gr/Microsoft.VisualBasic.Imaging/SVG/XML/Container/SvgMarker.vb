@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c158be157f84d8d6ec4e88acf63a208, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Container/SvgMarker.vb"
+﻿#Region "Microsoft.VisualBasic::7c158be157f84d8d6ec4e88acf63a208, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgMarker.vb"
 
     ' Author:
     ' 

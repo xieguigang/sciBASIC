@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f827c09b0f3b003a0adb8f1f317f5e7c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Value.vb"
+﻿#Region "Microsoft.VisualBasic::f827c09b0f3b003a0adb8f1f317f5e7c, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
     ' Author:
     ' 

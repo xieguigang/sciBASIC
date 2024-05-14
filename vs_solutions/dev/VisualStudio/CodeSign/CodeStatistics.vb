@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78aaa54146dc9f319859217a8792c51f, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//CodeSign/CodeStatistics.vb"
+﻿#Region "Microsoft.VisualBasic::78aaa54146dc9f319859217a8792c51f, vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
 
     ' Author:
     ' 

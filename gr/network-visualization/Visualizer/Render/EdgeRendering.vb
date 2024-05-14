@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9c7f58fd3cd3f1c506fa08b5f319253, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Render/EdgeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::a9c7f58fd3cd3f1c506fa08b5f319253, gr\network-visualization\Visualizer\Render\EdgeRendering.vb"
 
     ' Author:
     ' 

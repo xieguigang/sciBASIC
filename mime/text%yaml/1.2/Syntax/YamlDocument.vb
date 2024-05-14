@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f46d6f246faad453f2660ccb2a195cb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/YamlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::9f46d6f246faad453f2660ccb2a195cb, mime\text%yaml\1.2\Syntax\YamlDocument.vb"
 
     ' Author:
     ' 

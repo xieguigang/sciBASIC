@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ed0afe998827fe008da60b118e5705, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/MySQLImportsTest.vb"
+﻿#Region "Microsoft.VisualBasic::17ed0afe998827fe008da60b118e5705, Data\DataFrame\test\MySQLImportsTest.vb"
 
     ' Author:
     ' 

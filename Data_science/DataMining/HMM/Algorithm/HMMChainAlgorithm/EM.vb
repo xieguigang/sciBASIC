@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c43d712ea72f4f6c37b87a20b620846, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMChainAlgorithm/EM.vb"
+﻿#Region "Microsoft.VisualBasic::5c43d712ea72f4f6c37b87a20b620846, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\EM.vb"
 
     ' Author:
     ' 

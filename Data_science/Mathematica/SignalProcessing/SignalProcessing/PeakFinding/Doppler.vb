@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71a5a884164a96138371dd378dc27abb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//PeakFinding/Doppler.vb"
+﻿#Region "Microsoft.VisualBasic::71a5a884164a96138371dd378dc27abb, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Doppler.vb"
 
     ' Author:
     ' 

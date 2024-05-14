@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f67caf927f05b8304e84da41750f4450, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/SampleList.vb"
+﻿#Region "Microsoft.VisualBasic::f67caf927f05b8304e84da41750f4450, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\SampleList.vb"
 
     ' Author:
     ' 

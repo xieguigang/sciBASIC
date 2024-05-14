@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Logging/LogFile/LogEntry.vb"
+﻿#Region "Microsoft.VisualBasic::3dbae4711a9e602a3a9daf2f1771469d, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb"
 
     ' Author:
     ' 

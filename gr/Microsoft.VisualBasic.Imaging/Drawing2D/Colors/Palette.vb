@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1aa91146191baad3eb2d5ef3761baf8, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Palette.vb"
+﻿#Region "Microsoft.VisualBasic::b1aa91146191baad3eb2d5ef3761baf8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb"
 
     ' Author:
     ' 

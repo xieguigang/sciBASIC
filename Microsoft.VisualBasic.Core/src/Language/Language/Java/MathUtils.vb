@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 

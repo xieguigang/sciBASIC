@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2288afd9598785195d560ffecb003f84, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/LdaInterpreter.vb"
+﻿#Region "Microsoft.VisualBasic::2288afd9598785195d560ffecb003f84, Data_science\NLP\LDA\LdaInterpreter.vb"
 
     ' Author:
     ' 

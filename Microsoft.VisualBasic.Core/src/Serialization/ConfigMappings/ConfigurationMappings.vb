@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/ConfigMappings/ConfigurationMappings.vb"
+﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, Microsoft.VisualBasic.Core\src\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 

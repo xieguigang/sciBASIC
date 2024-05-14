@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29afd3833f7c25be169196a4e1c45d8b, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//MathML/XML/maction.vb"
+﻿#Region "Microsoft.VisualBasic::29afd3833f7c25be169196a4e1c45d8b, mime\application%xml\MathML\XML\maction.vb"
 
     ' Author:
     ' 

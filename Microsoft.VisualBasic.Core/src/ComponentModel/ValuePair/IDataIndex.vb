@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df22c1f73b5ac0d88ccf7969720d9252, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/IDataIndex.vb"
+﻿#Region "Microsoft.VisualBasic::df22c1f73b5ac0d88ccf7969720d9252, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\IDataIndex.vb"
 
     ' Author:
     ' 

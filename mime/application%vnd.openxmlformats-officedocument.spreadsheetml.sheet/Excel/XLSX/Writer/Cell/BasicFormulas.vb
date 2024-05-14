@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c8364591be76ff733ee55883ef41c18, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Cell/BasicFormulas.vb"
+﻿#Region "Microsoft.VisualBasic::5c8364591be76ff733ee55883ef41c18, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\BasicFormulas.vb"
 
     ' Author:
     ' 

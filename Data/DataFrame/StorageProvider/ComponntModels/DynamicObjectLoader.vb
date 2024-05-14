@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 

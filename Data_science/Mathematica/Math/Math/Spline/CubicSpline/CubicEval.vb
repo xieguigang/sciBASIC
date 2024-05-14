@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ea108cf947d574f856a1bdda1177ead, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Spline/CubicSpline/CubicEval.vb"
+﻿#Region "Microsoft.VisualBasic::6ea108cf947d574f856a1bdda1177ead, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicEval.vb"
 
     ' Author:
     ' 

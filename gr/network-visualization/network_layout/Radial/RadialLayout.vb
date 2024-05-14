@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c1c79061aed40a7a95a96b011b262a, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Radial/RadialLayout.vb"
+﻿#Region "Microsoft.VisualBasic::b4c1c79061aed40a7a95a96b011b262a, gr\network-visualization\network_layout\Radial\RadialLayout.vb"
 
     ' Author:
     ' 

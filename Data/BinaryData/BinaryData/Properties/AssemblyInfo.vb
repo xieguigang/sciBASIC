@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e030ffdc8d28b19461e03955216a5b83, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Properties/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::e030ffdc8d28b19461e03955216a5b83, Data\BinaryData\BinaryData\Properties\AssemblyInfo.vb"
 
     ' Author:
     ' 

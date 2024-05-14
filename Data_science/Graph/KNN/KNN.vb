@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::242222728f495aec92ab9d1c7c9c9d1c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//KNN/KNN.vb"
+﻿#Region "Microsoft.VisualBasic::242222728f495aec92ab9d1c7c9c9d1c, Data_science\Graph\KNN\KNN.vb"
 
     ' Author:
     ' 

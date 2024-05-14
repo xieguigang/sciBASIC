@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40771875f9ad365bbfdae672fc996ad2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMVAE/LossFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::40771875f9ad365bbfdae672fc996ad2, Data_science\MachineLearning\VAE\GMVAE\LossFunctions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe263aca58775caccd75d6d9b9f2772c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/SIMDTest.vb"
+﻿#Region "Microsoft.VisualBasic::fe263aca58775caccd75d6d9b9f2772c, Microsoft.VisualBasic.Core\test\test\SIMDTest.vb"
 
     ' Author:
     ' 

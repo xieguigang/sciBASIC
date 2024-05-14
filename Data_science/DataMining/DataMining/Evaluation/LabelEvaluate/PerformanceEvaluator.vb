@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4261b9ce3d6254262d88b8b83ca8ec, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/LabelEvaluate/PerformanceEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::9d4261b9ce3d6254262d88b8b83ca8ec, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\PerformanceEvaluator.vb"
 
     ' Author:
     ' 

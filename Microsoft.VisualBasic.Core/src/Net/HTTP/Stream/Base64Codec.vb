@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ef13c28e4f4afbb8e164b2254bc8be0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Stream/Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::2ef13c28e4f4afbb8e164b2254bc8be0, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
 
     ' Author:
     ' 

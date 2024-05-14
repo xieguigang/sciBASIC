@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d050dc125f2e05fbca1ec5699ac806f6, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//sourceMap/mappingDecode.vb"
+﻿#Region "Microsoft.VisualBasic::d050dc125f2e05fbca1ec5699ac806f6, vs_solutions\dev\VisualStudio\sourceMap\mappingDecode.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5fa6a06bdb08f22d64257f415082bd9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/IOStream.vb"
+﻿#Region "Microsoft.VisualBasic::e5fa6a06bdb08f22d64257f415082bd9, Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dde5788128f23c2af66d7dbe257e68b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/ASCIIArt/Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::6dde5788128f23c2af66d7dbe257e68b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 

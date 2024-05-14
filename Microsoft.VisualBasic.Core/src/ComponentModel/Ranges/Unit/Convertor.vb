@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f660384bd7e021798b05a8b297a717e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Unit/Convertor.vb"
+﻿#Region "Microsoft.VisualBasic::1f660384bd7e021798b05a8b297a717e, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\Convertor.vb"
 
     ' Author:
     ' 

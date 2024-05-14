@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d543155fe16ecea3b2d889a417a9c03b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/Helper/MemoryDump.vb"
+﻿#Region "Microsoft.VisualBasic::d543155fe16ecea3b2d889a417a9c03b, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca41c84d8592361c10560dbe89167b7, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::dca41c84d8592361c10560dbe89167b7, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 

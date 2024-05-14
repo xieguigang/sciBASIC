@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e21898ecaffc6d73cb30d7900e831485, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/Infrastructure/BTree/BTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::e21898ecaffc6d73cb30d7900e831485, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeNode.vb"
 
     ' Author:
     ' 

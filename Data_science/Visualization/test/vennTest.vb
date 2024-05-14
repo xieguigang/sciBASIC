@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::274e1f1d04f72de31859ade394bd3753, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//vennTest.vb"
+﻿#Region "Microsoft.VisualBasic::274e1f1d04f72de31859ade394bd3753, Data_science\Visualization\test\vennTest.vb"
 
     ' Author:
     ' 

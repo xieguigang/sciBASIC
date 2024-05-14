@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7d2ad13f6d392d4ad7da408afcd724b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/JavaScriptObject/JavaScriptValue.vb"
+﻿#Region "Microsoft.VisualBasic::b7d2ad13f6d392d4ad7da408afcd724b, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptValue.vb"
 
     ' Author:
     ' 

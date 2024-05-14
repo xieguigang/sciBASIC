@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef7f209661ae7d45eb0706d7a27e1e37, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/API.vb"
+﻿#Region "Microsoft.VisualBasic::ef7f209661ae7d45eb0706d7a27e1e37, Microsoft.VisualBasic.Core\src\Language\API.vb"
 
     ' Author:
     ' 

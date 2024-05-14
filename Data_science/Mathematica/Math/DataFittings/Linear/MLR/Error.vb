@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7643f29f48b09ae0824144c0702c9065, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/MLR/Error.vb"
+﻿#Region "Microsoft.VisualBasic::7643f29f48b09ae0824144c0702c9065, Data_science\Mathematica\Math\DataFittings\Linear\MLR\Error.vb"
 
     ' Author:
     ' 

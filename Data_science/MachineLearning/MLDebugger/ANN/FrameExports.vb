@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e6211672550423ebd4a7ed0572f303, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MLDebugger//ANN/FrameExports.vb"
+﻿#Region "Microsoft.VisualBasic::b0e6211672550423ebd4a7ed0572f303, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
     ' Author:
     ' 

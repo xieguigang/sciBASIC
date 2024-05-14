@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::858a877fe406fbb85e04205b755b3ea0, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//IPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::858a877fe406fbb85e04205b755b3ea0, gr\network-visualization\network_layout\IPlanner.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edaad5bd14d42e7c0f243ca97da0e8bb, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Javascript/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::edaad5bd14d42e7c0f243ca97da0e8bb, mime\application%json\Javascript\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d72ab609360444bf697f0f2f68d84b43, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Designer.vb"
+﻿#Region "Microsoft.VisualBasic::9cfcec8baf9f0c5186f8881e38aa3a32, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 586
-    '    Code Lines: 293
+    '   Total Lines: 598
+    '    Code Lines: 303
     ' Comment Lines: 233
-    '   Blank Lines: 60
-    '     File Size: 32.62 KB
+    '   Blank Lines: 62
+    '     File Size: 32.97 KB
 
 
     '     Module Designer
@@ -50,7 +50,7 @@
     ' 
     '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
     '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
-    '                   IsColorNameList, rangeConstraint, SplitColorList
+    '                   IsColorNameList, ParseAvailableInterpolates, ParseColorBrewer, rangeConstraint, SplitColorList
     ' 
     '         Sub: Register
     ' 

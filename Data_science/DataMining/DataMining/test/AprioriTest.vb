@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b06bba936ea8ea8f174f15fb8d3b466e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/AprioriTest.vb"
+﻿#Region "Microsoft.VisualBasic::d4c050cbac8e64d98698b9981c98df7d, Data_science\DataMining\DataMining\test\AprioriTest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 41
-    ' Comment Lines: 0
-    '   Blank Lines: 13
-    '     File Size: 1.99 KB
+    '   Total Lines: 73
+    '    Code Lines: 34
+    ' Comment Lines: 21
+    '   Blank Lines: 18
+    '     File Size: 2.66 KB
 
 
     ' Module AprioriTest
     ' 
-    '     Function: BuildTransactions
-    ' 
-    '     Sub: BasicQuickTest, Main
+    '     Sub: BasicQuickTest, Main, test2
     ' 
     ' /********************************************************************************/
 

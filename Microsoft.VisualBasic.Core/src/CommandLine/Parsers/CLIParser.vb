@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f73f89db3ab68ea37d96d5728325ecbe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Parsers/CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::f73f89db3ab68ea37d96d5728325ecbe, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 

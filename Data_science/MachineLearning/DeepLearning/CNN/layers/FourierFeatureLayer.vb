@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/Layers/FourierFeatureLayer.vb"
+﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, Data_science\MachineLearning\DeepLearning\CNN\layers\FourierFeatureLayer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1474dac9d9aee2feb829bc801e2f1f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::5f1474dac9d9aee2feb829bc801e2f1f, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\SigmoidFunction.vb"
 
     ' Author:
     ' 

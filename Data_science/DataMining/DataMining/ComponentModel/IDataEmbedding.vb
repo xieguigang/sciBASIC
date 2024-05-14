@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a99bc9ef812a8f2513d72ef2da03b05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/IDataEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::4a99bc9ef812a8f2513d72ef2da03b05, Data_science\DataMining\DataMining\ComponentModel\IDataEmbedding.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0c26003e1109f4c23cbf3d4cbbedbba, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/HtmlParser/HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::e0c26003e1109f4c23cbf3d4cbbedbba, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 

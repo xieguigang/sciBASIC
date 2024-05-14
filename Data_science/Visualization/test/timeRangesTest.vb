@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0acaf4255e851a6f2fbeb54e28f24ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//timeRangesTest.vb"
+﻿#Region "Microsoft.VisualBasic::c0acaf4255e851a6f2fbeb54e28f24ca, Data_science\Visualization\test\timeRangesTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35dcc72116e7db220850b5bf81385f3b, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//Class/SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::35dcc72116e7db220850b5bf81385f3b, www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 

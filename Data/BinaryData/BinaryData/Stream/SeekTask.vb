@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::070f8f1af03c432a2bd4f4c8b8667aa4, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/SeekTask.vb"
+﻿#Region "Microsoft.VisualBasic::070f8f1af03c432a2bd4f4c8b8667aa4, Data\BinaryData\BinaryData\Stream\SeekTask.vb"
 
     ' Author:
     ' 

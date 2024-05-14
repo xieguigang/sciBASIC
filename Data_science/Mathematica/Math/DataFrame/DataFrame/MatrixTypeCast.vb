@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d83a3efb6c0f39e985bdabdbbf6adbc6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/MatrixTypeCast.vb"
+﻿#Region "Microsoft.VisualBasic::d83a3efb6c0f39e985bdabdbbf6adbc6, Data_science\Mathematica\Math\DataFrame\DataFrame\MatrixTypeCast.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::773b152fe806b97ae8969f0253538bf8, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssLength.vb"
+﻿#Region "Microsoft.VisualBasic::773b152fe806b97ae8969f0253538bf8, mime\text%html\Render\CSS\CssLength.vb"
 
     ' Author:
     ' 

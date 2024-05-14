@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae792bac5bdf7aa13c502b1882a193e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//NumberExtension.vb"
+﻿#Region "Microsoft.VisualBasic::dae792bac5bdf7aa13c502b1882a193e, Data_science\Mathematica\Math\Math\NumberExtension.vb"
 
     ' Author:
     ' 

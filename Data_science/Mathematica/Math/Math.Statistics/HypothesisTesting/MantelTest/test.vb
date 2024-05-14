@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6519615a782b8667f28c5eeda7f37d69, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/MantelTest/test.vb"
+﻿#Region "Microsoft.VisualBasic::6519615a782b8667f28c5eeda7f37d69, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\test.vb"
 
     ' Author:
     ' 

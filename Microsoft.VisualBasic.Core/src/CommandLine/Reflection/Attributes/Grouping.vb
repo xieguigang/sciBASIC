@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5a222b781d498a1d810a60f4396b7ea, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::e5a222b781d498a1d810a60f4396b7ea, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\Grouping.vb"
 
     ' Author:
     ' 

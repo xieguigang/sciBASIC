@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::576db843f4b21b9cfc316d847dae8812, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/Math2DHelper.vb"
+﻿#Region "Microsoft.VisualBasic::576db843f4b21b9cfc316d847dae8812, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
 
     ' Author:
     ' 

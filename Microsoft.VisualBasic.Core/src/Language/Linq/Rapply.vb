@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f1a64cf3bb254ca0f2bc9bee362f2d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Rapply.vb"
+﻿#Region "Microsoft.VisualBasic::91f1a64cf3bb254ca0f2bc9bee362f2d, Microsoft.VisualBasic.Core\src\Language\Linq\Rapply.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6410bb579f55ac1d8bc70774b849d88a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//test/My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6410bb579f55ac1d8bc70774b849d88a, Data_science\MachineLearning\MachineLearning\test\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

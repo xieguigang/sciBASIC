@@ -1,4 +1,76 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::52ae50ad96bfe8d17df97cefee195bb4, Data\BinaryData\Feather\Column.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 526
+    '    Code Lines: 281
+    ' Comment Lines: 174
+    '   Blank Lines: 71
+    '     File Size: 20.71 KB
+
+
+    ' Class ColumnValueEnumerator
+    ' 
+    '     Properties: Current, CurrentProp
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MoveNext
+    ' 
+    '     Sub: Dispose, Reset
+    ' 
+    ' Class Column
+    ' 
+    '     Properties: Count, Index, IsReadOnly, Length, Name
+    '                 OnDiskType, Type
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: CanBeBlitted, Cast, Contains, Equals, GetEnumerator
+    '               GetEnumerator1, GetEnumerator2, GetHashCode, (+2 Overloads) GetRange, IndexOf
+    '               LongIndexOf, Remove, (+2 Overloads) ToArray, ToString, (+2 Overloads) TryGetValue
+    '               TryGetValueTranslated
+    ' 
+    '     Sub: Add, Clear, CopyTo, (+4 Overloads) GetRange, Insert
+    '          RemoveAt, (+2 Overloads) ToArray
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
@@ -524,3 +596,4 @@ Public Class Column
         Return False
     End Function
 End Class
+

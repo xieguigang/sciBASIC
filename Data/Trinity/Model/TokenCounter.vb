@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e305f3889508f6706e44654d0d0dcfe, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/TokenCounter.vb"
+﻿#Region "Microsoft.VisualBasic::5e305f3889508f6706e44654d0d0dcfe, Data\Trinity\Model\TokenCounter.vb"
 
     ' Author:
     ' 

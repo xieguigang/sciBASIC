@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::315f17819ff4730bbe3505c39dade521, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::315f17819ff4730bbe3505c39dade521, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 

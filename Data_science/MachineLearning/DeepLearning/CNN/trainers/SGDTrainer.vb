@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ff2c2041da66ee8061460dfc0e7115, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/trainers/SGDTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::b1ff2c2041da66ee8061460dfc0e7115, Data_science\MachineLearning\DeepLearning\CNN\trainers\SGDTrainer.vb"
 
     ' Author:
     ' 

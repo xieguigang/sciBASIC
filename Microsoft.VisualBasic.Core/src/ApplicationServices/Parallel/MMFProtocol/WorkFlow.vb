@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa9a6c158df2b0f6ff46e52ef7b79e28, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/MMFProtocol/WorkFlow.vb"
+﻿#Region "Microsoft.VisualBasic::aa9a6c158df2b0f6ff46e52ef7b79e28, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb"
 
     ' Author:
     ' 

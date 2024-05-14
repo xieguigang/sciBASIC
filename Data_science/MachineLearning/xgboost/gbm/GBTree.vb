@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8410467057d1bbc5a08d25f3776a9064, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//gbm/GBTree.vb"
+﻿#Region "Microsoft.VisualBasic::8410467057d1bbc5a08d25f3776a9064, Data_science\MachineLearning\xgboost\gbm\GBTree.vb"
 
     ' Author:
     ' 

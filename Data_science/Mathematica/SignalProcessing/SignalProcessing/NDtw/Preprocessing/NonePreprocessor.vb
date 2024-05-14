@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8120e2406c054691fffb8b735f796f26, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/NonePreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::8120e2406c054691fffb8b735f796f26, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\Preprocessing\NonePreprocessor.vb"
 
     ' Author:
     ' 

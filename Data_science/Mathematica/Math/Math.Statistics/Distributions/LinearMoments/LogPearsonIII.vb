@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b64d15deba6af2bcdfc36d5a0d9e90c3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/LinearMoments/LogPearsonIII.vb"
+﻿#Region "Microsoft.VisualBasic::b64d15deba6af2bcdfc36d5a0d9e90c3, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\LogPearsonIII.vb"
 
     ' Author:
     ' 

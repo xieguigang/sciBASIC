@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc43e741a7877e50f74b37ecc4ad130, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//TextParser/FunctionModel/InternalInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::9dc43e741a7877e50f74b37ecc4ad130, Data\GraphQuery\TextParser\FunctionModel\InternalInvoke.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/ProfileGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, Data_science\Visualization\Plots\g\ProfileGroup.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65975eadc33fb63cb7f11d8015e228d5, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Shadow.vb"
+﻿#Region "Microsoft.VisualBasic::65975eadc33fb63cb7f11d8015e228d5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60aedae5c1bd772273f9f5dfba3dab5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/g/Axis.vb"
+﻿#Region "Microsoft.VisualBasic::f60aedae5c1bd772273f9f5dfba3dab5, Data_science\Visualization\Plots\3D\g\Axis.vb"
 
     ' Author:
     ' 

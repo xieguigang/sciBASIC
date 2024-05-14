@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::766812eb8e5139bb33a1e1eefbeb9209, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/Models/WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::766812eb8e5139bb33a1e1eefbeb9209, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
     ' Author:
     ' 

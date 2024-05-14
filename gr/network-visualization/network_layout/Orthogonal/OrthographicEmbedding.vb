@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e9a5d2639b986e60b7195530e82041, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OrthographicEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::95e9a5d2639b986e60b7195530e82041, gr\network-visualization\network_layout\Orthogonal\OrthographicEmbedding.vb"
 
     ' Author:
     ' 

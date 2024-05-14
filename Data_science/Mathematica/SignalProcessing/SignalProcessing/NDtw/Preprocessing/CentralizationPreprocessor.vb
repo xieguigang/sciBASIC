@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::616513fac774ab64fb8535159bb821e0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//NDtw/Preprocessing/CentralizationPreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::616513fac774ab64fb8535159bb821e0, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\Preprocessing\CentralizationPreprocessor.vb"
 
     ' Author:
     ' 

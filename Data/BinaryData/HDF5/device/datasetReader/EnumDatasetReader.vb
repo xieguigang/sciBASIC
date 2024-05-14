@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e174aace797214793fe0267658a6ecc, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//device/datasetReader/EnumDatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::5e174aace797214793fe0267658a6ecc, Data\BinaryData\HDF5\device\datasetReader\EnumDatasetReader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8402d0f1d848bf07dbf24c811558be, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Kernel/Neuron/Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::cf8402d0f1d848bf07dbf24c811558be, Data_science\DataMining\DataMining\Kernel\Neuron\Neuron.vb"
 
     ' Author:
     ' 

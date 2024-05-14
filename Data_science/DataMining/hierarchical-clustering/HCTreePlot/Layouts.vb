@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::939f8204158f16cacbc8ec4d825c0eeb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot//Layouts.vb"
+﻿#Region "Microsoft.VisualBasic::54d2b716351d134572452f2b4d3a484a, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Layouts.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 5
-    ' Comment Lines: 9
+    '   Total Lines: 18
+    '    Code Lines: 6
+    ' Comment Lines: 12
     '   Blank Lines: 0
-    '     File Size: 295 B
+    '     File Size: 396 B
 
 
     ' Enum Layouts
     ' 
-    '     Circular, Horizon
+    '     Circular, Horizon, HorizonRightToLeft
     ' 
     '  
     ' 

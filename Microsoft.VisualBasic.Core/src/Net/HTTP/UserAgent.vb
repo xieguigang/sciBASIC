@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3c85cf2e353528215c1470ddd91dd11, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/UserAgent.vb"
+﻿#Region "Microsoft.VisualBasic::a3c85cf2e353528215c1470ddd91dd11, Microsoft.VisualBasic.Core\src\Net\HTTP\UserAgent.vb"
 
     ' Author:
     ' 

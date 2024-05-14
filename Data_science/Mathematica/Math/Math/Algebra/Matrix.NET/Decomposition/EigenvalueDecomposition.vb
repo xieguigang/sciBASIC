@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abbc32540d27ea08b6a36ce96b7cf598, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Decomposition/EigenvalueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::abbc32540d27ea08b6a36ce96b7cf598, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb"
 
     ' Author:
     ' 

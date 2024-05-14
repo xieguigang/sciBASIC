@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ef3282c031882bafed72a0a9e396c87, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/parserTest.vb"
+﻿#Region "Microsoft.VisualBasic::6ef3282c031882bafed72a0a9e396c87, Data\DataFrame\test\parserTest.vb"
 
     ' Author:
     ' 

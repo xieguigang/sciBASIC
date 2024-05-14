@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e429487764fc08e60f156b3bb194a438, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE//RandomHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e429487764fc08e60f156b3bb194a438, Data_science\MachineLearning\t-SNE\RandomHelper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb34045d0f32bd3b0d8195b19e50d32b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/polyline.vb"
+﻿#Region "Microsoft.VisualBasic::fb34045d0f32bd3b0d8195b19e50d32b, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\polyline.vb"
 
     ' Author:
     ' 

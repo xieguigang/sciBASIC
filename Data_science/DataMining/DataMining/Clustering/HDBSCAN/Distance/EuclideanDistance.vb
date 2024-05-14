@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3335ba8382060b67ee54ecd9eb0a78, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/EuclideanDistance.vb"
+﻿#Region "Microsoft.VisualBasic::8a3335ba8382060b67ee54ecd9eb0a78, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\EuclideanDistance.vb"
 
     ' Author:
     ' 

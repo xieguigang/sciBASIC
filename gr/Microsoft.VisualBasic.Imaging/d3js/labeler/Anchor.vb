@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/labeler/Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 

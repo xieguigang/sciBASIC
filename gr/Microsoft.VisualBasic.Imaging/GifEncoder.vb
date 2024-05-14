@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//GifEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, gr\Microsoft.VisualBasic.Imaging\GifEncoder.vb"
 
     ' Author:
     ' 

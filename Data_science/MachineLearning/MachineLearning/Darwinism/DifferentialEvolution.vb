@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7bd9eff8987a9fbe1916e60e72f53f1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::b7bd9eff8987a9fbe1916e60e72f53f1, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 

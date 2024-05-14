@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c6c5e5250ea09d390ae7e3bd6d28bf3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//Dynamics/Data/ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::5c6c5e5250ea09d390ae7e3bd6d28bf3, Data_science\Mathematica\Math\ODE\Dynamics\Data\ODEsOut.vb"
 
     ' Author:
     ' 

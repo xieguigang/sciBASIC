@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6affdbf7ce5fb2225912d13837aded85, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/IPeak2D.vb"
+﻿#Region "Microsoft.VisualBasic::6affdbf7ce5fb2225912d13837aded85, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\IPeak2D.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ab89772408bb09e526ac036fd63f8d5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/OutlierScore.vb"
+﻿#Region "Microsoft.VisualBasic::7ab89772408bb09e526ac036fd63f8d5, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\OutlierScore.vb"
 
     ' Author:
     ' 

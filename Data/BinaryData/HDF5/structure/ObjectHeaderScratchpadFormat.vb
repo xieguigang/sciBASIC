@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::184ff99a78c7620296f6a9d50566fd74, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/ObjectHeaderScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::184ff99a78c7620296f6a9d50566fd74, Data\BinaryData\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
 
     ' Author:
     ' 

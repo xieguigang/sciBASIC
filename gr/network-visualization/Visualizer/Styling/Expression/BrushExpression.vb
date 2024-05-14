@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb010f2816cbc69ad911197957bff86, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/BrushExpression.vb"
+﻿#Region "Microsoft.VisualBasic::3eb010f2816cbc69ad911197957bff86, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
 
     ' Author:
     ' 

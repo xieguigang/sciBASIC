@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c7a47cafb990417bf2f585c8479f951, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/CSS/RuntimeInvoker.vb"
+﻿#Region "Microsoft.VisualBasic::4c7a47cafb990417bf2f585c8479f951, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\RuntimeInvoker.vb"
 
     ' Author:
     ' 

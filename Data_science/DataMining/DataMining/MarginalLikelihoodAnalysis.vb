@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d10d937373783f10747424848847da93, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//MarginalLikelihoodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::d10d937373783f10747424848847da93, Data_science\DataMining\DataMining\MarginalLikelihoodAnalysis.vb"
 
     ' Author:
     ' 

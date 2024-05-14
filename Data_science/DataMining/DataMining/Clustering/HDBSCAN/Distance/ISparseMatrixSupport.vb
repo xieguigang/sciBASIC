@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::670c8819e3f719df605b560e2b46ec9e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/ISparseMatrixSupport.vb"
+﻿#Region "Microsoft.VisualBasic::670c8819e3f719df605b560e2b46ec9e, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\ISparseMatrixSupport.vb"
 
     ' Author:
     ' 

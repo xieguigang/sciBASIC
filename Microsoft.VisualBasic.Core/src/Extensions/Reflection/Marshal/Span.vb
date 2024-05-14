@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc7dc3168a2449078295907a679b11ba, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Marshal/Span.vb"
+﻿#Region "Microsoft.VisualBasic::fc7dc3168a2449078295907a679b11ba, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span.vb"
 
     ' Author:
     ' 

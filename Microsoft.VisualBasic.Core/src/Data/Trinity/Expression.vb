@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f099861e8528ac2b4d1e7c1e1778e320, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Trinity/Expression.vb"
+﻿#Region "Microsoft.VisualBasic::30a2ce0641911cf53cf7615b2eb743cb, Microsoft.VisualBasic.Core\src\Data\Trinity\Expression.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 34
+    '   Total Lines: 54
+    '    Code Lines: 35
     ' Comment Lines: 12
     '   Blank Lines: 7
-    '     File Size: 2.05 KB
+    '     File Size: 2.16 KB
 
 
     '     Module Expression

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70abdfe3eb97ea73bc0e8d37a00692a2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/EmGaussian/GaussianFit.vb"
+﻿#Region "Microsoft.VisualBasic::70abdfe3eb97ea73bc0e8d37a00692a2, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\EmGaussian\GaussianFit.vb"
 
     ' Author:
     ' 

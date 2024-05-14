@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a378216e913cee22071a79ceb0dddb7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/CloudOfTextRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::3a378216e913cee22071a79ceb0dddb7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\CloudOfTextRectangle.vb"
 
     ' Author:
     ' 

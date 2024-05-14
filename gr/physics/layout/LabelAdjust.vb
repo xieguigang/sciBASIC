@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09274a99e2594b4507ea6fd0af7ddd0b, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/LabelAdjust.vb"
+﻿#Region "Microsoft.VisualBasic::09274a99e2594b4507ea6fd0af7ddd0b, gr\physics\layout\LabelAdjust.vb"
 
     ' Author:
     ' 

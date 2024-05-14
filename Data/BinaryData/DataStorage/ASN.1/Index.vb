@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06a9d45deebb2a921bcea31d33420142, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//ASN.1/Index.vb"
+﻿#Region "Microsoft.VisualBasic::06a9d45deebb2a921bcea31d33420142, Data\BinaryData\DataStorage\ASN.1\Index.vb"
 
     ' Author:
     ' 

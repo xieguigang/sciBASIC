@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3ab7841ef576adb5fd42f46d5af3c58, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::409ed0e766c4de07998844781a1ddd15, Data\BinaryData\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 528
-    '    Code Lines: 214
-    ' Comment Lines: 259
-    '   Blank Lines: 55
-    '     File Size: 23.09 KB
+    '   Total Lines: 587
+    '    Code Lines: 243
+    ' Comment Lines: 280
+    '   Blank Lines: 64
+    '     File Size: 25.68 KB
 
 
     ' Class CDFWriter
@@ -46,9 +46,9 @@
     '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
-    '               GlobalAttributes
+    '               (+4 Overloads) GlobalAttributes
     ' 
-    '     Sub: (+3 Overloads) AddVariable, AddVector, (+2 Overloads) Dispose, Flush, Save
+    '     Sub: (+3 Overloads) AddVariable, (+5 Overloads) AddVector, (+2 Overloads) Dispose, Flush, Save
     '          writeAttributes
     ' 
     ' /********************************************************************************/

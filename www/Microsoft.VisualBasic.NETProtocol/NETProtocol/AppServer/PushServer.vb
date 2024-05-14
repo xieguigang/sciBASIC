@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd84f557dba7919f02e713f28b404399, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//NETProtocol/AppServer/PushServer.vb"
+﻿#Region "Microsoft.VisualBasic::fd84f557dba7919f02e713f28b404399, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
 
     ' Author:
     ' 

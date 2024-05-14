@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::50a11c14c627bd89aec86f36f560f720, Data_science\Visualization\Plots\g\Scaling.vb"
 
     ' Author:
     ' 

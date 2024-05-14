@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::782c80c02f80a9c7abf7bcef8fcfba92, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//PCA/Ellipse.vb"
+﻿#Region "Microsoft.VisualBasic::782c80c02f80a9c7abf7bcef8fcfba92, Data_science\Visualization\Plots-statistics\PCA\Ellipse.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba4b0cdb8500ef891eab9b8b03368ac8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/UnixBash/Cowsay.vb"
+﻿#Region "Microsoft.VisualBasic::ba4b0cdb8500ef891eab9b8b03368ac8, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Cowsay.vb"
 
     ' Author:
     ' 

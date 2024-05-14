@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e0ecc5295458f0b1869c321c3475b4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/Section.vb"
+﻿#Region "Microsoft.VisualBasic::21e0ecc5295458f0b1869c321c3475b4, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 

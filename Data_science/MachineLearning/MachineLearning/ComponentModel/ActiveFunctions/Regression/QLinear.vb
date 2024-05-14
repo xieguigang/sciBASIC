@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff8bcfa3c69b235396eb2329bf6b2a8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Regression/QLinear.vb"
+﻿#Region "Microsoft.VisualBasic::cff8bcfa3c69b235396eb2329bf6b2a8, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Regression\QLinear.vb"
 
     ' Author:
     ' 

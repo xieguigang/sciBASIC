@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e597fae89faa802ff51afc46f797d496, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//RDFProperty.vb"
+﻿#Region "Microsoft.VisualBasic::e597fae89faa802ff51afc46f797d496, mime\application%rdf+xml\RDFProperty.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/DefaultAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::8f5dc2d2723bf368ee62ccf0148ba17d, Microsoft.VisualBasic.Core\src\Data\DefaultAttribute.vb"
 
     ' Author:
     ' 

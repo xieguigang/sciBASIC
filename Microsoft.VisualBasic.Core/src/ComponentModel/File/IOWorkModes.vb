@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a5c8a6df5b7d04181144da60fd5ed5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/IOWorkModes.vb"
+﻿#Region "Microsoft.VisualBasic::84a5c8a6df5b7d04181144da60fd5ed5, Microsoft.VisualBasic.Core\src\ComponentModel\File\IOWorkModes.vb"
 
     ' Author:
     ' 

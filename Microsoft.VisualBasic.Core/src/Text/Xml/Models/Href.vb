@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08c37d07e12bcd1b14d7abbe21a4729f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/Href.vb"
+﻿#Region "Microsoft.VisualBasic::08c37d07e12bcd1b14d7abbe21a4729f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Href.vb"
 
     ' Author:
     ' 

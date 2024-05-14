@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd05a65f3136a2c57c2fc0b4f98142c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/SquareRoot.vb"
+﻿#Region "Microsoft.VisualBasic::ffd05a65f3136a2c57c2fc0b4f98142c, Data_science\Mathematica\Math\GeneticProgramming\model\impl\SquareRoot.vb"
 
     ' Author:
     ' 

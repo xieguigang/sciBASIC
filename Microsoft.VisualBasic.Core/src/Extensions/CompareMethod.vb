@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fe0dba05ae83114adbf0ac246d20c59, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/CompareMethod.vb"
+﻿#Region "Microsoft.VisualBasic::5fe0dba05ae83114adbf0ac246d20c59, Microsoft.VisualBasic.Core\src\Extensions\CompareMethod.vb"
 
     ' Author:
     ' 

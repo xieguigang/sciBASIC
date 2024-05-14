@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/Model/Vectors/FDGVectorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0935a7310ef6979912f174d7e4179e87, gr\network-visualization\Datavisualization.Network\Graph\Model\Vectors\FDGVectorExtensions.vb"
 
     ' Author:
     ' 

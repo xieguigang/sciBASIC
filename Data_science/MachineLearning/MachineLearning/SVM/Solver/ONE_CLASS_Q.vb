@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349d392d8758400a9965393d010f4694, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Solver/ONE_CLASS_Q.vb"
+﻿#Region "Microsoft.VisualBasic::349d392d8758400a9965393d010f4694, Data_science\MachineLearning\MachineLearning\SVM\Solver\ONE_CLASS_Q.vb"
 
     ' Author:
     ' 

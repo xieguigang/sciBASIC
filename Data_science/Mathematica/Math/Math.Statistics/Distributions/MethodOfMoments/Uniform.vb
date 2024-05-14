@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcd13a6ea45f1437f07f1c6c796a7ca5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Uniform.vb"
+﻿#Region "Microsoft.VisualBasic::fcd13a6ea45f1437f07f1c6c796a7ca5, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Uniform.vb"
 
     ' Author:
     ' 

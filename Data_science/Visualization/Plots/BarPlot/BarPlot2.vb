@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f2255d65178b56f826438fa494eb1b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::b5f2255d65178b56f826438fa494eb1b, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 

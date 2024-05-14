@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//HTTP/iana.org/MediaTypes.vb"
+﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
 
     ' Author:
     ' 

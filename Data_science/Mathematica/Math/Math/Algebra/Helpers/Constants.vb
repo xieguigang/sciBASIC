@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48ef65efb5e19a41d480c0d074ca0823, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Helpers/Constants.vb"
+﻿#Region "Microsoft.VisualBasic::48ef65efb5e19a41d480c0d074ca0823, Data_science\Mathematica\Math\Math\Algebra\Helpers\Constants.vb"
 
     ' Author:
     ' 

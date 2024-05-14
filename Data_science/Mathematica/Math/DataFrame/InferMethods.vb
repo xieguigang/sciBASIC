@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db7eae00c386f245beb3d8f038484957, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//InferMethods.vb"
+﻿#Region "Microsoft.VisualBasic::db7eae00c386f245beb3d8f038484957, Data_science\Mathematica\Math\DataFrame\InferMethods.vb"
 
     ' Author:
     ' 

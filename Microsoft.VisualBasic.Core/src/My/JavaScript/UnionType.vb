@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02a6b956c15a6bc900237956efeeadbb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/UnionType.vb"
+﻿#Region "Microsoft.VisualBasic::02a6b956c15a6bc900237956efeeadbb, Microsoft.VisualBasic.Core\src\My\JavaScript\UnionType.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/SharedORM/Languages/PHP.vb"
+﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\PHP.vb"
 
     ' Author:
     ' 

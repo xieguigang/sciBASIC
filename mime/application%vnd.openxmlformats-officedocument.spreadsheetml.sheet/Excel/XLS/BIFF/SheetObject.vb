@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2dc48651c58d8a5bb99ec999ec606ea, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/XLS/BIFF//SheetObject.vb"
+﻿#Region "Microsoft.VisualBasic::a2dc48651c58d8a5bb99ec999ec606ea, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLS\BIFF\SheetObject.vb"
 
     ' Author:
     ' 

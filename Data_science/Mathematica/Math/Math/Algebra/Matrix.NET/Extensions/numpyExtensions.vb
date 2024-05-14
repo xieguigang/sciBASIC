@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d29d79c8ffa2462f688988a9f3629c9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Extensions/numpyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d29d79c8ffa2462f688988a9f3629c9, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\numpyExtensions.vb"
 
     ' Author:
     ' 

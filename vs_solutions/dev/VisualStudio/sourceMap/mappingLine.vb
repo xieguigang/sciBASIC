@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c7b5d623f7837bb5050e174713ab0c, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//sourceMap/mappingLine.vb"
+﻿#Region "Microsoft.VisualBasic::52c7b5d623f7837bb5050e174713ab0c, vs_solutions\dev\VisualStudio\sourceMap\mappingLine.vb"
 
     ' Author:
     ' 

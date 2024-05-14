@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f00de03fb66661dd9d739dbf2548f51, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Filters/GaussianSmooth.vb"
+﻿#Region "Microsoft.VisualBasic::6f00de03fb66661dd9d739dbf2548f51, gr\Microsoft.VisualBasic.Imaging\Filters\GaussianSmooth.vb"
 
     ' Author:
     ' 

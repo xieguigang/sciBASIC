@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d74122cace1213a8d034d726989ab43, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/ModuleAPI.vb"
+﻿#Region "Microsoft.VisualBasic::6d74122cace1213a8d034d726989ab43, gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
 
     ' Author:
     ' 

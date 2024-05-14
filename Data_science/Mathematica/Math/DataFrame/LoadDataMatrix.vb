@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6ace6f916b84f94c734ad76c5f54991, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//LoadDataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c6ace6f916b84f94c734ad76c5f54991, Data_science\Mathematica\Math\DataFrame\LoadDataMatrix.vb"
 
     ' Author:
     ' 

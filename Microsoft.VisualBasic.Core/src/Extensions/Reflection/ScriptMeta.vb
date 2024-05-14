@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45bccd6cfe407ec3ef9d88cc49906018, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/ScriptMeta.vb"
+﻿#Region "Microsoft.VisualBasic::45bccd6cfe407ec3ef9d88cc49906018, Microsoft.VisualBasic.Core\src\Extensions\Reflection\ScriptMeta.vb"
 
     ' Author:
     ' 

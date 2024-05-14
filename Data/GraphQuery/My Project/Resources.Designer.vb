@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c693beeaa7bf611d96454ce910d735a2, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c693beeaa7bf611d96454ce910d735a2, Data\GraphQuery\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

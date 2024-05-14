@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda82927f2532399610bec4e05f30f06, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::bda82927f2532399610bec4e05f30f06, Microsoft.VisualBasic.Core\src\Extensions\Image\TiffWriter.vb"
 
     ' Author:
     ' 

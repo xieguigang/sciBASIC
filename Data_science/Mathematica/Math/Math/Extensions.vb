@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::162b60188c016b60fc52d7260617fbab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::162b60188c016b60fc52d7260617fbab, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 

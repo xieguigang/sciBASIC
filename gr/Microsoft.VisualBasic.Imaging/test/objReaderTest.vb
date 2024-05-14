@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77f38d32f4d7175cd68bfa18886fdc28, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/objReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::77f38d32f4d7175cd68bfa18886fdc28, gr\Microsoft.VisualBasic.Imaging\test\objReaderTest.vb"
 
     ' Author:
     ' 

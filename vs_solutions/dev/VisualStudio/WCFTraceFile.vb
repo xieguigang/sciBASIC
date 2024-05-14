@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aafd6af1281499665f84b36579893673, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//WCFTraceFile.vb"
+﻿#Region "Microsoft.VisualBasic::aafd6af1281499665f84b36579893673, vs_solutions\dev\VisualStudio\WCFTraceFile.vb"
 
     ' Author:
     ' 

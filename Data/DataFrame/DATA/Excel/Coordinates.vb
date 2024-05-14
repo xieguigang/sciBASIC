@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18afd26838320737197e5790529d3846, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/Excel/Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::18afd26838320737197e5790529d3846, Data\DataFrame\DATA\Excel\Coordinates.vb"
 
     ' Author:
     ' 

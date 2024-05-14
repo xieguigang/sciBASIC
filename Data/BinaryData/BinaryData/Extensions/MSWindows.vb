@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dabda53def1609e856f1d536793907a1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Extensions/MSWindows.vb"
+﻿#Region "Microsoft.VisualBasic::dabda53def1609e856f1d536793907a1, Data\BinaryData\BinaryData\Extensions\MSWindows.vb"
 
     ' Author:
     ' 

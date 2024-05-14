@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb4d1f554a42476f3190a53e19dab5ed, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Deque/Deque.vb"
+﻿#Region "Microsoft.VisualBasic::cb4d1f554a42476f3190a53e19dab5ed, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Deque.vb"
 
     ' Author:
     ' 

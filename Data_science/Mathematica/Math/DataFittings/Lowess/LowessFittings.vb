@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::778bc3554a0ac39616dc79f52d2f3dba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Lowess/LowessFittings.vb"
+﻿#Region "Microsoft.VisualBasic::778bc3554a0ac39616dc79f52d2f3dba, Data_science\Mathematica\Math\DataFittings\Lowess\LowessFittings.vb"
 
     ' Author:
     ' 

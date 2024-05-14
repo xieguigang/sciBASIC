@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c6335af5f985a73d4262c05d072226e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/TripleVariant.vb"
+﻿#Region "Microsoft.VisualBasic::7c6335af5f985a73d4262c05d072226e, Microsoft.VisualBasic.Core\src\Language\Value\TripleVariant.vb"
 
     ' Author:
     ' 

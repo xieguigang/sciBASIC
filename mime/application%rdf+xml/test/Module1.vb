@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e534213f9f72a1239833c2353c43a2c4, G:/GCModeller/src/runtime/sciBASIC#/mime/application%rdf+xml//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e534213f9f72a1239833c2353c43a2c4, mime\application%rdf+xml\test\Module1.vb"
 
     ' Author:
     ' 

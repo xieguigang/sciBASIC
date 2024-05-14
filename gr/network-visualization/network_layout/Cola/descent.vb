@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73591468d066fd3da98298da82ba578e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/descent.vb"
+﻿#Region "Microsoft.VisualBasic::73591468d066fd3da98298da82ba578e, gr\network-visualization\network_layout\Cola\descent.vb"
 
     ' Author:
     ' 

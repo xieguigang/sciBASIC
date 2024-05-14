@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/Formatter/Strategies/SingleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
 
     ' Author:
     ' 

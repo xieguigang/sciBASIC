@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f572f6cf8766b30293e7396b4afc7f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Normal.vb"
+﻿#Region "Microsoft.VisualBasic::51f572f6cf8766b30293e7396b4afc7f, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Normal.vb"
 
     ' Author:
     ' 

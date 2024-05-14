@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4ac39b554ee308d53f58010efa121b0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/MetaData/MetaAPI.vb"
+﻿#Region "Microsoft.VisualBasic::a4ac39b554ee308d53f58010efa121b0, Microsoft.VisualBasic.Core\src\Scripting\MetaData\MetaAPI.vb"
 
     ' Author:
     ' 

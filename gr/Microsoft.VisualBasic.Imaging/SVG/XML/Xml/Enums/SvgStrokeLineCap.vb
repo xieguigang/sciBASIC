@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::790f07252af349ef9c716f55a3d9999a, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/Xml/Enums/SvgStrokeLineCap.vb"
+﻿#Region "Microsoft.VisualBasic::790f07252af349ef9c716f55a3d9999a, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgStrokeLineCap.vb"
 
     ' Author:
     ' 

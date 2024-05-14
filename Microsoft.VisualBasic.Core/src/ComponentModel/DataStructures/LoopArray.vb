@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::389ebc5e68795e26088493ec3004cf12, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::389ebc5e68795e26088493ec3004cf12, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db9f5269029f591c99930ac9cf93e10f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Trinity/NLP/TextTokens.vb"
+﻿#Region "Microsoft.VisualBasic::db9f5269029f591c99930ac9cf93e10f, Microsoft.VisualBasic.Core\src\Data\Trinity\NLP\TextTokens.vb"
 
     ' Author:
     ' 

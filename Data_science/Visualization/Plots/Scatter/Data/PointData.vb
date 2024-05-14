@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5beb4fe7bba87858a957e0f31d78fa62, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Data/PointData.vb"
+﻿#Region "Microsoft.VisualBasic::5beb4fe7bba87858a957e0f31d78fa62, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
 
     ' Author:
     ' 

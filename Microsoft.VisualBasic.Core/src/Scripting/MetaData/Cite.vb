@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7832f705d2d954f961650e5493d73356, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/MetaData/Cite.vb"
+﻿#Region "Microsoft.VisualBasic::7832f705d2d954f961650e5493d73356, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Cite.vb"
 
     ' Author:
     ' 

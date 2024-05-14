@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1dbbb536e8ac6f2809a7a074168fb1f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Legend/Legend.vb"
+﻿#Region "Microsoft.VisualBasic::1d97ec9be1f514d20db881ba2bfcffef, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend\Legend.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 340
-    '    Code Lines: 239
+    '   Total Lines: 344
+    '    Code Lines: 242
     ' Comment Lines: 51
-    '   Blank Lines: 50
-    '     File Size: 13.91 KB
+    '   Blank Lines: 51
+    '     File Size: 14.12 KB
 
 
     '     Module Legends

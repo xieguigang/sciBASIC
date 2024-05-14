@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124cc2313b48daeb8adc737d57e91e10, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Bitmap/Effects.vb"
+﻿#Region "Microsoft.VisualBasic::124cc2313b48daeb8adc737d57e91e10, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Effects.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c56a04064fe3efc53d46a2afad71d2bd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::c56a04064fe3efc53d46a2afad71d2bd, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Subtract.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e3bc80a71130854c8b7e09b112d53eb, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//test/SQLParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::0e3bc80a71130854c8b7e09b112d53eb, Data\BinaryData\DataStorage\test\SQLParserTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab524aabf5eceabc36f8dd0af02b69f8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//DiffusionMap.vb"
+﻿#Region "Microsoft.VisualBasic::ab524aabf5eceabc36f8dd0af02b69f8, Data_science\DataMining\BinaryTree\DiffusionMap.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::437fdd296f49d14ae7d3c678dd574fdf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/XGBoostDataSet//Tabular.vb"
+﻿#Region "Microsoft.VisualBasic::437fdd296f49d14ae7d3c678dd574fdf, Data_science\MachineLearning\XGBoostDataSet\Tabular.vb"
 
     ' Author:
     ' 

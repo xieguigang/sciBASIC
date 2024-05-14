@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4890a8491d3712900aa0481e45b23f74, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//IterationReporter.vb"
+﻿#Region "Microsoft.VisualBasic::4890a8491d3712900aa0481e45b23f74, Data_science\MachineLearning\MachineLearning\IterationReporter.vb"
 
     ' Author:
     ' 
