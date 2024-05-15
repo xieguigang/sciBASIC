@@ -34,19 +34,16 @@
 
 ' Code Statistics:
 
-<<<<<<< HEAD
     '   Total Lines: 386
     '    Code Lines: 310
     ' Comment Lines: 5
     '   Blank Lines: 71
     '     File Size: 16.11 KB
-=======
 '   Total Lines: 379
 '    Code Lines: 308
 ' Comment Lines: 0
 '   Blank Lines: 71
 '     File Size: 15.70 KB
->>>>>>> f95c55912865ae8b2035edc894bd3bb0467d7324
 
 
 ' Class MsgPackSerializer
