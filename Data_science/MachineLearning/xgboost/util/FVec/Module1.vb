@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e849e492af2ec50b9988965385039204, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//util/FVec/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::e849e492af2ec50b9988965385039204, Data_science\MachineLearning\xgboost\util\FVec\Module1.vb"
 
     ' Author:
     ' 

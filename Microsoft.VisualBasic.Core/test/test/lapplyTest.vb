@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95cadc0d9c1ac8ab5566911ac44427ab, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/lapplyTest.vb"
+﻿#Region "Microsoft.VisualBasic::95cadc0d9c1ac8ab5566911ac44427ab, Microsoft.VisualBasic.Core\test\test\lapplyTest.vb"
 
     ' Author:
     ' 

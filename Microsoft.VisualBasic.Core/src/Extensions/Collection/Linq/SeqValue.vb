@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac62f7651e0aee276309a48a33f9b48, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::7ac62f7651e0aee276309a48a33f9b48, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 

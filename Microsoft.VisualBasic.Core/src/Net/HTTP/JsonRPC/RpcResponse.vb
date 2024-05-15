@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c1fe978aae9d8bbb515c69dc726e3f0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/JsonRPC/RpcResponse.vb"
+﻿#Region "Microsoft.VisualBasic::9c1fe978aae9d8bbb515c69dc726e3f0, Microsoft.VisualBasic.Core\src\Net\HTTP\JsonRPC\RpcResponse.vb"
 
     ' Author:
     ' 

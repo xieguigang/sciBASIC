@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11ac4bc08006a86fa4aaf70adfd638f6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/Status0.vb"
+﻿#Region "Microsoft.VisualBasic::11ac4bc08006a86fa4aaf70adfd638f6, Data_science\MachineLearning\MachineLearning\ComponentModel\Status0.vb"
 
     ' Author:
     ' 

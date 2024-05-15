@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4057e7254eae74f90294a3a97e0f8ee, G:/GCModeller/src/runtime/sciBASIC#/gr/avi//UInt8Array.vb"
+﻿#Region "Microsoft.VisualBasic::d4057e7254eae74f90294a3a97e0f8ee, gr\avi\UInt8Array.vb"
 
     ' Author:
     ' 

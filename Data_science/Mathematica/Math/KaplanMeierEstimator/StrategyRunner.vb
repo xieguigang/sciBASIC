@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de618e67f1212fdd64cc4be7ace788a7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//StrategyRunner.vb"
+﻿#Region "Microsoft.VisualBasic::de618e67f1212fdd64cc4be7ace788a7, Data_science\Mathematica\Math\KaplanMeierEstimator\StrategyRunner.vb"
 
     ' Author:
     ' 

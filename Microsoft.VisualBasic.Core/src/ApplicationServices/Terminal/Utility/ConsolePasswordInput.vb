@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cb4c9de3c3a481d4d8a749b0cc0156f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/ConsolePasswordInput.vb"
+﻿#Region "Microsoft.VisualBasic::7cb4c9de3c3a481d4d8a749b0cc0156f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ConsolePasswordInput.vb"
 
     ' Author:
     ' 

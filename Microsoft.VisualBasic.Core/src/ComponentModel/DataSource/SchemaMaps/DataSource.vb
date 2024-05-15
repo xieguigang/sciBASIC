@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6066079bd69ca401fc858155e337e572, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/QuickSortFunction.vb"
+﻿#Region "Microsoft.VisualBasic::6066079bd69ca401fc858155e337e572, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\QuickSortFunction.vb"
 
     ' Author:
     ' 

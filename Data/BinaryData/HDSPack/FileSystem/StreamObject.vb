@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0eb9ede464d99beff52f2f9c922782, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//FileSystem/StreamObject.vb"
+﻿#Region "Microsoft.VisualBasic::7b0eb9ede464d99beff52f2f9c922782, Data\BinaryData\HDSPack\FileSystem\StreamObject.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dc78bb37bdd82f48f6b85cbc48a3483, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/test//AffinityPropagationDemo.vb"
+﻿#Region "Microsoft.VisualBasic::1dc78bb37bdd82f48f6b85cbc48a3483, Data_science\DataMining\BinaryTree\test\AffinityPropagationDemo.vb"
 
     ' Author:
     ' 

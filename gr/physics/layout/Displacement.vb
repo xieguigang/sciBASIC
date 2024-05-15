@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1678ee057965dea08e848c87fe1fb44c, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/Displacement.vb"
+﻿#Region "Microsoft.VisualBasic::1678ee057965dea08e848c87fe1fb44c, gr\physics\layout\Displacement.vb"
 
     ' Author:
     ' 

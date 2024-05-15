@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adac4ef038e6c4ab8a1d831171223a3b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Heatmap/CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::adac4ef038e6c4ab8a1d831171223a3b, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
     ' Author:
     ' 

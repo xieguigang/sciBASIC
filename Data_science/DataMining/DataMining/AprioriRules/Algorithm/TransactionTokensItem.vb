@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7341cd314f5984cc56d6cde262f924ef, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Entities/TransactionTokensItem.vb"
+﻿#Region "Microsoft.VisualBasic::aa732358bae00acaced6a26a0438db3b, Data_science\DataMining\DataMining\AprioriRules\Algorithm\TransactionTokensItem.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 16
+    '   Total Lines: 19
+    '    Code Lines: 13
     ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 688 B
+    '   Blank Lines: 6
+    '     File Size: 667 B
 
 
     '     Class TransactionTokensItem
@@ -52,27 +52,22 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
+
 Namespace AprioriRules.Entities
 
     Public Class TransactionTokensItem : Implements IComparable(Of TransactionTokensItem)
 
-#Region "Public Properties"
-
-        Public Property Name() As String
+        Public Property Name() As ItemSet
         Public Property Support() As Double
-
-#End Region
 
         Public Overrides Function ToString() As String
             Return String.Format("(support={0})  {1}", Support, Name)
         End Function
 
-#Region "IComparable"
-
         Public Function CompareTo(other As TransactionTokensItem) As Integer Implements IComparable(Of TransactionTokensItem).CompareTo
             Return Name.CompareTo(other.Name)
         End Function
-#End Region
 
     End Class
 End Namespace

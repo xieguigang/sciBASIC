@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cd829278b61636ed7b387469991f70c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/KdTree/ApproximateNearNeighbor/VectorAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::3cd829278b61636ed7b387469991f70c, Data_science\Graph\Model\Tree\KdTree\ApproximateNearNeighbor\VectorAccessor.vb"
 
     ' Author:
     ' 

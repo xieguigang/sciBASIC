@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0b77250564abb52ce7fc40e1741e987, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/Validate.vb"
+﻿#Region "Microsoft.VisualBasic::d0b77250564abb52ce7fc40e1741e987, Data_science\DataMining\DataMining\Evaluation\Validate.vb"
 
     ' Author:
     ' 

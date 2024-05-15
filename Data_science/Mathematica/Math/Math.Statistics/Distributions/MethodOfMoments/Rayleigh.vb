@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6282c7313c21be312c0b984620ca7119, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Rayleigh.vb"
+﻿#Region "Microsoft.VisualBasic::6282c7313c21be312c0b984620ca7119, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Rayleigh.vb"
 
     ' Author:
     ' 

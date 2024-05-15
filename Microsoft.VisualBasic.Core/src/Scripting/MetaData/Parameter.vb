@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55efe4d57b4beb5e985b2e10c0bf628c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/MetaData/Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::55efe4d57b4beb5e985b2e10c0bf628c, Microsoft.VisualBasic.Core\src\Scripting\MetaData\Parameter.vb"
 
     ' Author:
     ' 

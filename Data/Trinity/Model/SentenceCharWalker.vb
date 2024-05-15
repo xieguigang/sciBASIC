@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aa245627d6277b33bcd0c5c078aacab, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/SentenceCharWalker.vb"
+﻿#Region "Microsoft.VisualBasic::0aa245627d6277b33bcd0c5c078aacab, Data\Trinity\Model\SentenceCharWalker.vb"
 
     ' Author:
     ' 

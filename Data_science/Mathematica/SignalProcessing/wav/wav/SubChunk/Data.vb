@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f93c14d29a1bcbb0342a7a5a96aab05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav//SubChunk/Data.vb"
+﻿#Region "Microsoft.VisualBasic::1f93c14d29a1bcbb0342a7a5a96aab05, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
 
     ' Author:
     ' 

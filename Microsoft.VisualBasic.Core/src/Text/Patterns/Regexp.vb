@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5797b66d3a24dd047b09d5c1418b8bb9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Patterns/Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::5797b66d3a24dd047b09d5c1418b8bb9, Microsoft.VisualBasic.Core\src\Text\Patterns\Regexp.vb"
 
     ' Author:
     ' 

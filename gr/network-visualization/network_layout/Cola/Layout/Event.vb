@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24d68c6249124923f895424335cc9101, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Layout/Event.vb"
+﻿#Region "Microsoft.VisualBasic::24d68c6249124923f895424335cc9101, gr\network-visualization\network_layout\Cola\Layout\Event.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10e6602431168e7a3225952f595a7881, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/AbstractBinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::10e6602431168e7a3225952f595a7881, Data_science\Mathematica\Math\GeneticProgramming\model\impl\AbstractBinaryExpression.vb"
 
     ' Author:
     ' 

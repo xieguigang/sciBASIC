@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::265f01a4502ce527037de4fe68e69719, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConcaveHull/Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::265f01a4502ce527037de4fe68e69719, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\Triangle.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::430cec0ae480ac10b11045fd9ac22f94, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//EdgeBundling/Mingle/GraphKdNode.vb"
+﻿#Region "Microsoft.VisualBasic::430cec0ae480ac10b11045fd9ac22f94, gr\network-visualization\network_layout\EdgeBundling\Mingle\GraphKdNode.vb"
 
     ' Author:
     ' 

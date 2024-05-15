@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::079bab98795d37c6f6bbea5809d57d99, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/AnnotAction.vb"
+﻿#Region "Microsoft.VisualBasic::079bab98795d37c6f6bbea5809d57d99, mime\application%pdf\PdfFileWriter\AnnotAction\AnnotAction.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98785c57ebbf8bbac2e308ccbb12a370, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//ChartingBase.Test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::98785c57ebbf8bbac2e308ccbb12a370, Data_science\Visualization\test\ChartingBase.Test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

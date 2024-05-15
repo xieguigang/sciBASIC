@@ -1,4 +1,68 @@
-﻿' 
+﻿#Region "Microsoft.VisualBasic::8bc449afbd2e33b661357b411574bd60, Data\BinaryData\Feather\Impl\Flatbuffers\FlatBufferBuilder.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 703
+    '    Code Lines: 352
+    ' Comment Lines: 267
+    '   Blank Lines: 84
+    '     File Size: 28.52 KB
+
+
+    '     Class FlatBufferBuilder
+    ' 
+    '         Properties: DataBuffer, ForceDefaults, Offset
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateString, CreateVectorOfTables, EndObject, EndVector, SizedByteArray
+    ' 
+    '         Sub: (+2 Overloads) AddBool, (+2 Overloads) AddByte, (+2 Overloads) AddDouble, (+2 Overloads) AddFloat, (+2 Overloads) AddInt
+    '              (+2 Overloads) AddLong, (+2 Overloads) AddOffset, (+2 Overloads) AddSbyte, (+2 Overloads) AddShort, AddStruct
+    '              (+2 Overloads) AddUint, (+2 Overloads) AddUlong, (+2 Overloads) AddUshort, Clear, (+2 Overloads) Finish
+    '              GrowBuffer, Nested, NotNested, Pad, Prep
+    '              PutBool, PutByte, PutDouble, PutFloat, PutInt
+    '              PutLong, PutSbyte, PutShort, PutUint, PutUlong
+    '              PutUshort, Required, Slot, StartObject, StartVector
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' 
 '* Copyright 2014 Google Inc. All rights reserved.
 '*
 '* Licensed under the Apache License, Version 2.0 (the "License");
@@ -701,3 +765,4 @@ endLoop:
 End Namespace
 
 ' @}
+

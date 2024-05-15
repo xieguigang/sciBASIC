@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf3100816f57b3660cc49a95d6d3a658, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/DoubleFFT_1D.vb"
+﻿#Region "Microsoft.VisualBasic::bf3100816f57b3660cc49a95d6d3a658, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\DoubleFFT_1D.vb"
 
     ' Author:
     ' 

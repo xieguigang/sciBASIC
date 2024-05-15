@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349dba59af30a71bbdc1a237da4f671c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Doc/PartitionedStream.vb"
+﻿#Region "Microsoft.VisualBasic::349dba59af30a71bbdc1a237da4f671c, Microsoft.VisualBasic.Core\src\Extensions\Doc\PartitionedStream.vb"
 
     ' Author:
     ' 

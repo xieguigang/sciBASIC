@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::984725eeaf753ec0c852975f22b168d1, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Test/graphQueryTest.vb"
+﻿#Region "Microsoft.VisualBasic::984725eeaf753ec0c852975f22b168d1, Data\Trinity\Test\graphQueryTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76e53225407031e21750116ab01d4f4c, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//xsd/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::76e53225407031e21750116ab01d4f4c, mime\application%xml\xsd\NamespaceDoc.vb"
 
     ' Author:
     ' 

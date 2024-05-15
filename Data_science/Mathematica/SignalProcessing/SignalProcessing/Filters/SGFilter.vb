@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16720ab89eb6014d737c6e84f070d994, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/SGFilter.vb"
+﻿#Region "Microsoft.VisualBasic::b4cdfb55fbad8744a185e3363399c336, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\SGFilter.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 568
+    '   Total Lines: 516
     '    Code Lines: 218
-    ' Comment Lines: 316
+    ' Comment Lines: 264
     '   Blank Lines: 34
-    '     File Size: 26.45 KB
+    '     File Size: 22.80 KB
 
 
     '     Class SGFilter

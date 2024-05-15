@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::995e0bf0f7ae4da90247832885b1f214, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::995e0bf0f7ae4da90247832885b1f214, gr\network-visualization\network_layout\Cola\Models\Rectangle2D.vb"
 
     ' Author:
     ' 

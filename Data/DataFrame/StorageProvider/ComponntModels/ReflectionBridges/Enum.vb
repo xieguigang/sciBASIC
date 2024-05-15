@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e601b76310010aebb99c324f0e943326, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/ComponntModels/ReflectionBridges/Enum.vb"
+﻿#Region "Microsoft.VisualBasic::e601b76310010aebb99c324f0e943326, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Enum.vb"
 
     ' Author:
     ' 

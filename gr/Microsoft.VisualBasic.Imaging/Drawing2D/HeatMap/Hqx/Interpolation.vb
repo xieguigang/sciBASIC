@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c464018a22be96d1849c69d195b603e7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/Hqx/Interpolation.vb"
+﻿#Region "Microsoft.VisualBasic::c464018a22be96d1849c69d195b603e7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Interpolation.vb"
 
     ' Author:
     ' 

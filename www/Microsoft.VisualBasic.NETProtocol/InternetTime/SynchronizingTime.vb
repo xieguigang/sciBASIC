@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f134b13d48a2ab1affa6e492f861e229, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//InternetTime/SynchronizingTime.vb"
+﻿#Region "Microsoft.VisualBasic::f134b13d48a2ab1affa6e492f861e229, www\Microsoft.VisualBasic.NETProtocol\InternetTime\SynchronizingTime.vb"
 
     ' Author:
     ' 

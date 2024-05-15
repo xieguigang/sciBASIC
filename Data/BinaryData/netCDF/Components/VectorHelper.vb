@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5c07199c1c35961486e6246d7868b35, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Components/VectorHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b5c07199c1c35961486e6246d7868b35, Data\BinaryData\netCDF\Components\VectorHelper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::0960e1dc32ec5fdb0f8798145f67d96f, mime\text%yaml\1.2\Syntax\NodeProperty.vb"
 
     ' Author:
     ' 

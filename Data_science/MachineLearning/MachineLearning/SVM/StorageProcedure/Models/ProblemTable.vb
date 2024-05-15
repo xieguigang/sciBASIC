@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/StorageProcedure/Models/ProblemTable.vb"
+﻿#Region "Microsoft.VisualBasic::dca0d8eb053aea50944ddbb57bb9b978, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\Models\ProblemTable.vb"
 
     ' Author:
     ' 

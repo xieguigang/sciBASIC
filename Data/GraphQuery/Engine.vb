@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f41769dd90e7e40fa53836d10219534, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Engine.vb"
+﻿#Region "Microsoft.VisualBasic::6f41769dd90e7e40fa53836d10219534, Data\GraphQuery\Engine.vb"
 
     ' Author:
     ' 

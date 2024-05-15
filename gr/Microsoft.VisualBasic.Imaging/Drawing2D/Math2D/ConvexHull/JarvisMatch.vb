@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34acc545dcc96c0a699d1f62de7a8369, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConvexHull/JarvisMatch.vb"
+﻿#Region "Microsoft.VisualBasic::34acc545dcc96c0a699d1f62de7a8369, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce6fe2b07e5df3d75e9e728204a3aa49, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/BufferData/DuplexPipe.vb"
+﻿#Region "Microsoft.VisualBasic::ce6fe2b07e5df3d75e9e728204a3aa49, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\DuplexPipe.vb"
 
     ' Author:
     ' 

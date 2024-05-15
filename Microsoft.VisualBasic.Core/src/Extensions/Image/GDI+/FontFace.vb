@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a709b6220a899fd757fd88fbc0ca2460, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::a709b6220a899fd757fd88fbc0ca2460, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cef72db460c8ac3f449cead2fd91c39, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConcaveHull/BallConcave.vb"
+﻿#Region "Microsoft.VisualBasic::7cef72db460c8ac3f449cead2fd91c39, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\BallConcave.vb"
 
     ' Author:
     ' 

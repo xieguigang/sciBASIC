@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2f1e1842f6cbd8e130158d5b9db2e75, G:/GCModeller/src/runtime/sciBASIC#/gr/avi//AVIStream.vb"
+﻿#Region "Microsoft.VisualBasic::c2f1e1842f6cbd8e130158d5b9db2e75, gr\avi\AVIStream.vb"
 
     ' Author:
     ' 

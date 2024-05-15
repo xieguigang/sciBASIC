@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c514e4a749d1f065db8dd28d7e850e1b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/MIME/MIME.vb"
+﻿#Region "Microsoft.VisualBasic::c514e4a749d1f065db8dd28d7e850e1b, Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
 
     ' Author:
     ' 

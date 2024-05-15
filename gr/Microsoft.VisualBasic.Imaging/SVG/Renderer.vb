@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38f8e6e841217fd8370ad3d4eb2d44dd, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::38f8e6e841217fd8370ad3d4eb2d44dd, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
     ' Author:
     ' 

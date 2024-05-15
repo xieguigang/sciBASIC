@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9c1d9d11f4996fecd261f6d8b6d1778, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::f9c1d9d11f4996fecd261f6d8b6d1778, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
 
     ' Author:
     ' 

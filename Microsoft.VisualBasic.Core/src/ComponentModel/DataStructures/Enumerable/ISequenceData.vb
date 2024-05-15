@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f4f243e2219f3abcbf18d1c425a64b1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Enumerable/ISequenceData.vb"
+﻿#Region "Microsoft.VisualBasic::0f4f243e2219f3abcbf18d1c425a64b1, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\ISequenceData.vb"
 
     ' Author:
     ' 

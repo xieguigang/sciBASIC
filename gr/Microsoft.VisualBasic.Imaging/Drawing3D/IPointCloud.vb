@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05f642cac8c5ea00e983402090afcfed, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/IPointCloud.vb"
+﻿#Region "Microsoft.VisualBasic::05f642cac8c5ea00e983402090afcfed, gr\Microsoft.VisualBasic.Imaging\Drawing3D\IPointCloud.vb"
 
     ' Author:
     ' 

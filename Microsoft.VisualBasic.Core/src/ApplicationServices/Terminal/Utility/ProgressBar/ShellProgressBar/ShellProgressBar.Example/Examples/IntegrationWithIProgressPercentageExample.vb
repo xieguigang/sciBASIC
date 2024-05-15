@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2437900f8bfa1b7e8a09bd25c464f171, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//Examples/IntegrationWithIProgressPercentageExample.vb"
+﻿#Region "Microsoft.VisualBasic::2437900f8bfa1b7e8a09bd25c464f171, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IntegrationWithIProgressPercentageExample.vb"
 
     ' Author:
     ' 

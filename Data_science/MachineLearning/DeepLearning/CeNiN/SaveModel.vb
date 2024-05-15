@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c1c50955ba92516cfc23eb9ed9c312, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/SaveModel.vb"
+﻿#Region "Microsoft.VisualBasic::d1c1c50955ba92516cfc23eb9ed9c312, Data_science\MachineLearning\DeepLearning\CeNiN\SaveModel.vb"
 
     ' Author:
     ' 

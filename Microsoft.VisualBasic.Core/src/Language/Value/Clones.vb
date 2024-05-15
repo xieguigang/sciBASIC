@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da06393bffe69bbe757e33a122958bdb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Clones.vb"
+﻿#Region "Microsoft.VisualBasic::da06393bffe69bbe757e33a122958bdb, Microsoft.VisualBasic.Core\src\Language\Value\Clones.vb"
 
     ' Author:
     ' 

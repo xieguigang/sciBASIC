@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15212ac95fdcdbed47ab25bdb12bebf7, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/Visibility.vb"
+﻿#Region "Microsoft.VisualBasic::15212ac95fdcdbed47ab25bdb12bebf7, gr\network-visualization\network_layout\Orthogonal\Visibility.vb"
 
     ' Author:
     ' 

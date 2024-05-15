@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d64f3864e053198bf2e705956364aa1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//LayoutLabel.vb"
+﻿#Region "Microsoft.VisualBasic::6d64f3864e053198bf2e705956364aa1, gr\network-visualization\Visualizer\LayoutLabel.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afcaede2db5e3503a398605c71e96b2c, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Query/AutoContext.vb"
+﻿#Region "Microsoft.VisualBasic::afcaede2db5e3503a398605c71e96b2c, Data\GraphQuery\Query\AutoContext.vb"
 
     ' Author:
     ' 

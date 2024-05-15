@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::798d3dedbb3a082d232688c0d66a904b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/ActiveFunctionXml.vb"
+﻿#Region "Microsoft.VisualBasic::798d3dedbb3a082d232688c0d66a904b, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\ActiveFunctionXml.vb"
 
     ' Author:
     ' 

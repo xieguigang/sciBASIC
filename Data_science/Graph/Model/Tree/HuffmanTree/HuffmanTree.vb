@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43f72a1625a3fcb0f4ddeab5f9677b6b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/HuffmanTree/HuffmanTree.vb"
+﻿#Region "Microsoft.VisualBasic::43f72a1625a3fcb0f4ddeab5f9677b6b, Data_science\Graph\Model\Tree\HuffmanTree\HuffmanTree.vb"
 
     ' Author:
     ' 

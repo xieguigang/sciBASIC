@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf9d1c76cfe9fc4a2da6486333a0b8b0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Render2D/Path2D.vb"
+﻿#Region "Microsoft.VisualBasic::bf9d1c76cfe9fc4a2da6486333a0b8b0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\Path2D.vb"
 
     ' Author:
     ' 

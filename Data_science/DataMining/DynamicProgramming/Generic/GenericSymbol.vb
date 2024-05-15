@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//Generic/GenericSymbol.vb"
+﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
 
     ' Author:
     ' 

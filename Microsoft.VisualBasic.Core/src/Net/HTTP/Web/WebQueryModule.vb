@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ee04b67b0e34a0d5f73e3634ce0467, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Web/WebQueryModule.vb"
+﻿#Region "Microsoft.VisualBasic::b1ee04b67b0e34a0d5f73e3634ce0467, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQueryModule.vb"
 
     ' Author:
     ' 

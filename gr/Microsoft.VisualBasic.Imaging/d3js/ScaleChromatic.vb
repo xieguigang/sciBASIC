@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd68761433179889fe8b6c0379d701e7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/ScaleChromatic.vb"
+﻿#Region "Microsoft.VisualBasic::fd68761433179889fe8b6c0379d701e7, gr\Microsoft.VisualBasic.Imaging\d3js\ScaleChromatic.vb"
 
     ' Author:
     ' 

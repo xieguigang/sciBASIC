@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebe2c913895d59d23d18b527d5344bfd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/HtmlParser/Table.vb"
+﻿#Region "Microsoft.VisualBasic::ebe2c913895d59d23d18b527d5344bfd, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 

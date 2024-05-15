@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d8d636568111d4680c9d14dbbdc8910, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/1D/Datum.vb"
+﻿#Region "Microsoft.VisualBasic::3d8d636568111d4680c9d14dbbdc8910, Data_science\MachineLearning\VAE\GMM\1D\Datum.vb"
 
     ' Author:
     ' 

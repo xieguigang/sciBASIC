@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e095b2781c36f2bb7504e96e8921b727, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//BSON/Encoder.vb"
+﻿#Region "Microsoft.VisualBasic::e095b2781c36f2bb7504e96e8921b727, mime\application%json\BSON\Encoder.vb"
 
     ' Author:
     ' 

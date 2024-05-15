@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/PriorityQueue/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb"
 
     ' Author:
     ' 

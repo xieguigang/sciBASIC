@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78ad878d8fe95e0137768de4e6efd826, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::932414beb9a9dd3d7eff24b9e76c62c1, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 566
-    '    Code Lines: 334
+    '   Total Lines: 570
+    '    Code Lines: 337
     ' Comment Lines: 163
-    '   Blank Lines: 69
-    '     File Size: 21.82 KB
+    '   Blank Lines: 70
+    '     File Size: 21.94 KB
 
 
     ' Module EmitReflection
@@ -514,10 +514,14 @@ EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" i
     <ExportAPI("Get.FullName")>
     <Extension> Public Function GetFullName(method As MethodBase, Optional IncludeAssembly As Boolean = False) As String
         Dim Name As String = $"{method.DeclaringType.FullName}::{method.ToString}"
+        Dim libdll As String = method.DeclaringType.Module.Assembly.Location
+
         If Not IncludeAssembly Then
             Return Name
+        ElseIf libdll.FileExists Then
+            Return $"{libdll.ToFileURL}!{Name}"
         Else
-            Return $"{method.DeclaringType.Module.Assembly.Location.ToFileURL}!{Name}"
+            Return $"{libdll}!{Name}"
         End If
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daaaf2df410c48852713dcb1eb12b5b8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/UnixMan/IndexedManual.vb"
+﻿#Region "Microsoft.VisualBasic::daaaf2df410c48852713dcb1eb12b5b8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb"
 
     ' Author:
     ' 

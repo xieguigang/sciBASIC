@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/ES6/Map.vb"
+﻿#Region "Microsoft.VisualBasic::d778ee5d576e999a44c42696c94281f5, Microsoft.VisualBasic.Core\src\My\JavaScript\ES6\Map.vb"
 
     ' Author:
     ' 

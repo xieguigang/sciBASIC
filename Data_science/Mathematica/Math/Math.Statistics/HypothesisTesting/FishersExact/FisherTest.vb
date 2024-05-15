@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::570ed7a889acca2756219a33ba97faf1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/FishersExact/FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::570ed7a889acca2756219a33ba97faf1, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\FisherTest.vb"
 
     ' Author:
     ' 

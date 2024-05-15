@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ee29fb5759c35da6ddb646ec1a6f0c8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//HierarchyBuilder/HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::5ee29fb5759c35da6ddb646ec1a6f0c8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 

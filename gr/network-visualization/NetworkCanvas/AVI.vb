@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f26fc72e80d008a56bc766d42a017335, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//AVI.vb"
+﻿#Region "Microsoft.VisualBasic::f26fc72e80d008a56bc766d42a017335, gr\network-visualization\NetworkCanvas\AVI.vb"
 
     ' Author:
     ' 

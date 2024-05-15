@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6350f24e2f405757258b905380145a7a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/FishersExact/HyperState.vb"
+﻿#Region "Microsoft.VisualBasic::6350f24e2f405757258b905380145a7a, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FishersExact\HyperState.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb2f6d0cf8d3f95dd34f2df18602ff49, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/Mics.vb"
+﻿#Region "Microsoft.VisualBasic::fb2f6d0cf8d3f95dd34f2df18602ff49, vs_solutions\dev\VisualStudio\vbproj\Xml\Mics.vb"
 
     ' Author:
     ' 

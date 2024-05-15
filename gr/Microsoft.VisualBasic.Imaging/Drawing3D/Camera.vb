@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d90f16bfd7a9769af471bac74f00dd6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Camera.vb"
+﻿#Region "Microsoft.VisualBasic::7d90f16bfd7a9769af471bac74f00dd6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 

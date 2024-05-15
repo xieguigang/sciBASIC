@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1f0969b36e43471e7d9e1b3d084daa6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/ExifTest.vb"
+﻿#Region "Microsoft.VisualBasic::e1f0969b36e43471e7d9e1b3d084daa6, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
 
     ' Author:
     ' 

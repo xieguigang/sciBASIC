@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a6f785492189b3f2276162dc8d8bda8, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Kosaraju.vb"
+﻿#Region "Microsoft.VisualBasic::3a6f785492189b3f2276162dc8d8bda8, gr\network-visualization\Datavisualization.Network\Analysis\Kosaraju.vb"
 
     ' Author:
     ' 

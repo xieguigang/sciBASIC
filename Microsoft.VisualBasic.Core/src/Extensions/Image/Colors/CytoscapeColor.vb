@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4961155af412b3ed26de1bfe5e85b8cf, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/CytoscapeColor.vb"
+﻿#Region "Microsoft.VisualBasic::4961155af412b3ed26de1bfe5e85b8cf, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\CytoscapeColor.vb"
 
     ' Author:
     ' 

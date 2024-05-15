@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1be43a6ee647aa8da1acca44e69cb74, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Runtime/CType/ICTypeVector.vb"
+﻿#Region "Microsoft.VisualBasic::c1be43a6ee647aa8da1acca44e69cb74, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\ICTypeVector.vb"
 
     ' Author:
     ' 

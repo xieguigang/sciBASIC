@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f719d8d2d778d891f41996af8c770eb1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/Protocols/Dropout.vb"
+﻿#Region "Microsoft.VisualBasic::f719d8d2d778d891f41996af8c770eb1, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Protocols\Dropout.vb"
 
     ' Author:
     ' 

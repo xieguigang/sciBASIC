@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dd1841a0382106fceb96b1dd0cddac6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//BinaryTree/EntityNode.vb"
+﻿#Region "Microsoft.VisualBasic::3dd1841a0382106fceb96b1dd0cddac6, Data_science\Visualization\Visualization\BinaryTree\EntityNode.vb"
 
     ' Author:
     ' 

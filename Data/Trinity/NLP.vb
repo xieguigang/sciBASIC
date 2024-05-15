@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43867c5deb714515e3ef89b5ecc006ba, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//NLP.vb"
+﻿#Region "Microsoft.VisualBasic::43867c5deb714515e3ef89b5ecc006ba, Data\Trinity\NLP.vb"
 
     ' Author:
     ' 

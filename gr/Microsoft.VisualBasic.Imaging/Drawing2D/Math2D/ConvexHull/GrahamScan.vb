@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d90deff852096edc55b231535c331cb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConvexHull/GrahamScan.vb"
+﻿#Region "Microsoft.VisualBasic::9d90deff852096edc55b231535c331cb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
 
     ' Author:
     ' 

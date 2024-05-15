@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae8a93a96a05ced9dd712d5238cadcc, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//Wavefront/TextParser.vb"
+﻿#Region "Microsoft.VisualBasic::2ae8a93a96a05ced9dd712d5238cadcc, gr\Landscape\Wavefront\TextParser.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::467b8ab3cf58cfaf3d7b2a7310434835, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::467b8ab3cf58cfaf3d7b2a7310434835, Data_science\Visualization\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 

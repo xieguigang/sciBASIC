@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29c13c36980dd0eb8cd382e6b38141e8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::29c13c36980dd0eb8cd382e6b38141e8, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

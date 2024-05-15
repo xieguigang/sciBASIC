@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c0744c0bb8e22463b0fb738e4f49c88, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//XDR/XdrEncoding.vb"
+﻿#Region "Microsoft.VisualBasic::7c0744c0bb8e22463b0fb738e4f49c88, Data\BinaryData\BinaryData\XDR\XdrEncoding.vb"
 
     ' Author:
     ' 

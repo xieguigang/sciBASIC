@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73c470e5d5cd65e7e61e693483f60234, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//GlobalSuppressions.vb"
+﻿#Region "Microsoft.VisualBasic::73c470e5d5cd65e7e61e693483f60234, gr\network-visualization\Visualizer\GlobalSuppressions.vb"
 
     ' Author:
     ' 

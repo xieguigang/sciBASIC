@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59bd2fa95b9c61d2dba7e52326f4afae, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::59bd2fa95b9c61d2dba7e52326f4afae, Microsoft.VisualBasic.Core\src\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 

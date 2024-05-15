@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5011ad252e421a063341e4589cfddcda, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/XmlAssembly/DigitalSignature.vb"
+﻿#Region "Microsoft.VisualBasic::5011ad252e421a063341e4589cfddcda, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\DigitalSignature.vb"
 
     ' Author:
     ' 

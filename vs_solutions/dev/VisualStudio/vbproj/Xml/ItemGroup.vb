@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2be1121fabcabfcac18263958b62c236, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//vbproj/Xml/ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::2be1121fabcabfcac18263958b62c236, vs_solutions\dev\VisualStudio\vbproj\Xml\ItemGroup.vb"
 
     ' Author:
     ' 

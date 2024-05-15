@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::291906b7da015c19f17d87f0bca9bbac, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/SearchEngine/TextIndexing/TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::291906b7da015c19f17d87f0bca9bbac, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
     ' Author:
     ' 

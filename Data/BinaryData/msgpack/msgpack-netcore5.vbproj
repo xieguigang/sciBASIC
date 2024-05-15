@@ -136,7 +136,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+    <DefineConstants>MTA=1,UNIX=1</DefineConstants>
  
   </PropertyGroup>
 

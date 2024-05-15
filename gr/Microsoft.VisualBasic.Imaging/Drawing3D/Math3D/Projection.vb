@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b312deb5af4068c1d40067226df27f54, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Math3D/Projection.vb"
+﻿#Region "Microsoft.VisualBasic::b312deb5af4068c1d40067226df27f54, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Projection.vb"
 
     ' Author:
     ' 

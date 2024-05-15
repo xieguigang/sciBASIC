@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e33dbabb23de3f7ed96b705bea945e8e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Counter.vb"
+﻿#Region "Microsoft.VisualBasic::e33dbabb23de3f7ed96b705bea945e8e, Microsoft.VisualBasic.Core\src\ComponentModel\Counter.vb"
 
     ' Author:
     ' 

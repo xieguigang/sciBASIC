@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75faff2f8409ee57417268200cc341c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering//PrintHelper.vb"
+﻿#Region "Microsoft.VisualBasic::75faff2f8409ee57417268200cc341c4, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\PrintHelper.vb"
 
     ' Author:
     ' 

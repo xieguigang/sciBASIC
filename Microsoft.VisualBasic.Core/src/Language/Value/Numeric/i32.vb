@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4f1881a88ecf1b1364c300fdc3fbe52, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Numeric/i32.vb"
+﻿#Region "Microsoft.VisualBasic::f4f1881a88ecf1b1364c300fdc3fbe52, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 

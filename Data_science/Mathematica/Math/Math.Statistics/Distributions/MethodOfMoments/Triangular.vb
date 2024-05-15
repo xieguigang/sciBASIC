@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d292df53e70397a605c1c0824c7bdf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Triangular.vb"
+﻿#Region "Microsoft.VisualBasic::99d292df53e70397a605c1c0824c7bdf, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
 
     ' Author:
     ' 

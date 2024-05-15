@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0406e6159606ed06fc7a9ca4c8f1c1c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::0406e6159606ed06fc7a9ca4c8f1c1c5, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
 
     ' Author:
     ' 

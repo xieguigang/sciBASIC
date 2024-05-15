@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be31637638f0aa5cf521fd39e3489935, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/DiscreteDistanceFunction.vb"
+﻿#Region "Microsoft.VisualBasic::be31637638f0aa5cf521fd39e3489935, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\distance\DiscreteDistanceFunction.vb"
 
     ' Author:
     ' 

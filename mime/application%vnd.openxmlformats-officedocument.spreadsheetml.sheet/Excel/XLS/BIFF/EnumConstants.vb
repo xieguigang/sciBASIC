@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a99ea40b320ac408093681642138dede, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/XLS/BIFF//EnumConstants.vb"
+﻿#Region "Microsoft.VisualBasic::a99ea40b320ac408093681642138dede, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLS\BIFF\EnumConstants.vb"
 
     ' Author:
     ' 

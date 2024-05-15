@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::528cbf755e30c0723ca5490b8e3b3d00, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Tangent.vb"
+﻿#Region "Microsoft.VisualBasic::528cbf755e30c0723ca5490b8e3b3d00, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Tangent.vb"
 
     ' Author:
     ' 

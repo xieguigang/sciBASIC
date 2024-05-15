@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa691dc2c7d96d17bcfe98969f60c811, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//KNNGraph.vb"
+﻿#Region "Microsoft.VisualBasic::fa691dc2c7d96d17bcfe98969f60c811, Data_science\DataMining\BinaryTree\KNNGraph.vb"
 
     ' Author:
     ' 

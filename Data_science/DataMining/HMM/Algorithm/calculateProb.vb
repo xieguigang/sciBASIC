@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b269572ddb20e9b52d4e244c892a1b6d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/CalculateProb.vb"
+﻿#Region "Microsoft.VisualBasic::b269572ddb20e9b52d4e244c892a1b6d, Data_science\DataMining\HMM\Algorithm\CalculateProb.vb"
 
     ' Author:
     ' 

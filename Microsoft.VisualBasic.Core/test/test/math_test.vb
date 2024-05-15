@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8091106e52a916a288dfdcb396e0d07, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/math_test.vb"
+﻿#Region "Microsoft.VisualBasic::f8091106e52a916a288dfdcb396e0d07, Microsoft.VisualBasic.Core\test\test\math_test.vb"
 
     ' Author:
     ' 

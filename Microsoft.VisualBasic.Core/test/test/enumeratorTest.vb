@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e81a12e8ea21d2a72fbb1916918043c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/enumeratorTest.vb"
+﻿#Region "Microsoft.VisualBasic::1e81a12e8ea21d2a72fbb1916918043c, Microsoft.VisualBasic.Core\test\test\enumeratorTest.vb"
 
     ' Author:
     ' 

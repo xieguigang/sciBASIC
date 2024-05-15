@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c69ce8ad31ea97f9c344936893785ae7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//ClusterTree/ClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::c69ce8ad31ea97f9c344936893785ae7, Data_science\DataMining\BinaryTree\ClusterTree\ClusterTree.vb"
 
     ' Author:
     ' 

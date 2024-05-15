@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/Zip/Options.vb"
+﻿#Region "Microsoft.VisualBasic::ebdf46fff322a8fbaf22989b286305b2, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\Options.vb"
 
     ' Author:
     ' 

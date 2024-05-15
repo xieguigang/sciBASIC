@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c200c8eeff2906f21da9699abaf81ade, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/NativeHandle.vb"
+﻿#Region "Microsoft.VisualBasic::c200c8eeff2906f21da9699abaf81ade, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\NativeHandle.vb"
 
     ' Author:
     ' 

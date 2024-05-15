@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f7f70edce49dbaf0313b7a9183dccb3, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/NetworkCanvas//InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::1f7f70edce49dbaf0313b7a9183dccb3, gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3db4a44b98a315280f653f594cf43011, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//JSONLogic/jsonLogic.vb"
+﻿#Region "Microsoft.VisualBasic::3db4a44b98a315280f653f594cf43011, mime\application%json\JSONLogic\jsonLogic.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0438763c52e7f7abe927100ce7a96f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/DelimiterLocation.vb"
+﻿#Region "Microsoft.VisualBasic::7b0438763c52e7f7abe927100ce7a96f, Microsoft.VisualBasic.Core\src\Extensions\Collection\DelimiterLocation.vb"
 
     ' Author:
     ' 

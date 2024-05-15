@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7b2d63d99ae0596fac4d841c07c708a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/ScalarStyle.vb"
+﻿#Region "Microsoft.VisualBasic::e7b2d63d99ae0596fac4d841c07c708a, mime\text%yaml\1.1\Base\ScalarStyle.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bac0b2173c35d3b5e32a69163a0bc3b5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/SymbolExpression.vb"
+﻿#Region "Microsoft.VisualBasic::bac0b2173c35d3b5e32a69163a0bc3b5, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\SymbolExpression.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc1d35ad60a4fe008ae21a361386f9d, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/MetaType.vb"
+﻿#Region "Microsoft.VisualBasic::abc1d35ad60a4fe008ae21a361386f9d, mime\text%yaml\1.1\Base\MetaType.vb"
 
     ' Author:
     ' 

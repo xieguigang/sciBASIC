@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358feec53e9ea7ce78b6f1f419443b11, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/RowHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::358feec53e9ea7ce78b6f1f419443b11, Data\DataFrame\IO\csv\RowHelpers.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5723dc4e4812a32ed1a2cb43dabb24e9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Trinity/WordClass.vb"
+﻿#Region "Microsoft.VisualBasic::5723dc4e4812a32ed1a2cb43dabb24e9, Microsoft.VisualBasic.Core\src\Data\Trinity\WordClass.vb"
 
     ' Author:
     ' 

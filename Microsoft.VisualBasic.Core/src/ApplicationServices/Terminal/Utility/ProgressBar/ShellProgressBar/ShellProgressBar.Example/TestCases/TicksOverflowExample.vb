@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a33c3ad70464427eafa4e5228f103f9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/TicksOverflowExample.vb"
+﻿#Region "Microsoft.VisualBasic::1a33c3ad70464427eafa4e5228f103f9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\TicksOverflowExample.vb"
 
     ' Author:
     ' 

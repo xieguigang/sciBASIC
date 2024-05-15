@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::983991e36624fea88dd926589289f132, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/OPLS.vb"
+﻿#Region "Microsoft.VisualBasic::983991e36624fea88dd926589289f132, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\OPLS.vb"
 
     ' Author:
     ' 

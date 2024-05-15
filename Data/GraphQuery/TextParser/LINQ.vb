@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab0803602782baa3c6f04f6b4bb7aa16, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//TextParser/LINQ.vb"
+﻿#Region "Microsoft.VisualBasic::ab0803602782baa3c6f04f6b4bb7aa16, Data\GraphQuery\TextParser\LINQ.vb"
 
     ' Author:
     ' 

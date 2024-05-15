@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76d2ce41b722afffab60aed9d63311ab, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::76d2ce41b722afffab60aed9d63311ab, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\RequestStream.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a23303fe05719389b64f6902e4051330, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Property/Reflector.vb"
+﻿#Region "Microsoft.VisualBasic::a23303fe05719389b64f6902e4051330, Data\DataFrame.Extensions\Property\Reflector.vb"
 
     ' Author:
     ' 

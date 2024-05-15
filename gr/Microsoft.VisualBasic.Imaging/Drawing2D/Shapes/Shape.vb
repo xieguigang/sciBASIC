@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::308bf091e449b13a390f0744254b7c1e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Shapes/Shape.vb"
+﻿#Region "Microsoft.VisualBasic::308bf091e449b13a390f0744254b7c1e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
 
     ' Author:
     ' 

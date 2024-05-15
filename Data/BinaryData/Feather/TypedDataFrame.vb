@@ -1,4 +1,124 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::5e4a1ed1251f17581cb3798ba97fd020, Data\BinaryData\Feather\TypedDataFrame.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 944
+    '    Code Lines: 592
+    ' Comment Lines: 237
+    '   Blank Lines: 115
+    '     File Size: 30.92 KB
+
+
+    ' Class TypedRowMap
+    ' 
+    '     Properties: Count
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class TypedDataFrameBase
+    ' 
+    '     Properties: AllColumns, AllRows, Basis, ColumnCount, Columns
+    '                 Inner, RowCount, Rows
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: TryGetRow, TryGetRowTranslated, (+4 Overloads) TryGetValue
+    ' 
+    ' Class TypedDataFrame
+    ' 
+    '     Properties: Column1
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType
+    ' 
+    '     Properties: Column1, Column2
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType1
+    ' 
+    '     Properties: Column1, Column2, Column3
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType2
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType3
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType4
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType5
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6, Column7
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' Class TypedDataFrameType6
+    ' 
+    '     Properties: Column1, Column2, Column3, Column4, Column5
+    '                 Column6, Column7, Column8
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MapRow
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
@@ -942,3 +1062,4 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         Return New TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)(row)
     End Function
 End Class
+

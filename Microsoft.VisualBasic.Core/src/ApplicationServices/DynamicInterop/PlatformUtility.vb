@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9782ddefd09bbd56b82550737795e382, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/PlatformUtility.vb"
+﻿#Region "Microsoft.VisualBasic::9782ddefd09bbd56b82550737795e382, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\PlatformUtility.vb"
 
     ' Author:
     ' 

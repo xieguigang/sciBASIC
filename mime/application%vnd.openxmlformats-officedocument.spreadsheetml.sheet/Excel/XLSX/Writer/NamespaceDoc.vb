@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::304a6e29a9ef2dca4a8b3927e6203697, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::304a6e29a9ef2dca4a8b3927e6203697, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\NamespaceDoc.vb"
 
     ' Author:
     ' 

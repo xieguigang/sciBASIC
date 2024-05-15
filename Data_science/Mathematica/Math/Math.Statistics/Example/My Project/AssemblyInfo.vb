@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce18b31570ebe9d9ef87c55c37b9df63, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Example/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ce18b31570ebe9d9ef87c55c37b9df63, Data_science\Mathematica\Math\Math.Statistics\Example\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

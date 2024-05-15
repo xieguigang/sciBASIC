@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3db160ac2cb0f11e171ddd00b7c6587e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Trainings/IndividualParallelTraining.vb"
+﻿#Region "Microsoft.VisualBasic::3db160ac2cb0f11e171ddd00b7c6587e, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\IndividualParallelTraining.vb"
 
     ' Author:
     ' 

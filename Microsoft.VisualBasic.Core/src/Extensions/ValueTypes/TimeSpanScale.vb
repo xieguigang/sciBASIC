@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/ValueTypes/TimeSpanScale.vb"
+﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\TimeSpanScale.vb"
 
     ' Author:
     ' 

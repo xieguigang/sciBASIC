@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47029061b0222090f779ae578a4e56f0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning.Data.Extensions//QTableDump.vb"
+﻿#Region "Microsoft.VisualBasic::47029061b0222090f779ae578a4e56f0, Data_science\MachineLearning\MachineLearning.Data.Extensions\QTableDump.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bac56438c6394f3ad3d004ef53f5677, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::6bac56438c6394f3ad3d004ef53f5677, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Iterator.vb"
 
     ' Author:
     ' 

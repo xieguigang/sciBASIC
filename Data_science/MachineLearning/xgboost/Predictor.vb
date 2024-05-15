@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a1ce374d1ea9b01451624effe3b58ce, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//Predictor.vb"
+﻿#Region "Microsoft.VisualBasic::0a1ce374d1ea9b01451624effe3b58ce, Data_science\MachineLearning\xgboost\Predictor.vb"
 
     ' Author:
     ' 

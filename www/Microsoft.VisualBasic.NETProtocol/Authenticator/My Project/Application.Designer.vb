@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffa276dc5aaa6e6322d024f91446be51, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Authenticator/My Project/Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::ffa276dc5aaa6e6322d024f91446be51, www\Microsoft.VisualBasic.NETProtocol\Authenticator\My Project\Application.Designer.vb"
 
     ' Author:
     ' 

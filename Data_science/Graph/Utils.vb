@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f4a1065f4fcd7f9ae6416b5ac47327, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::45f4a1065f4fcd7f9ae6416b5ac47327, Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 

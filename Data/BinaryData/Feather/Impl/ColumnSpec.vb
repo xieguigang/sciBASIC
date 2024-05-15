@@ -1,4 +1,100 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::8e6679463bd5981ea494cfe90e94969d, Data\BinaryData\Feather\Impl\ColumnSpec.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 626
+    '    Code Lines: 459
+    ' Comment Lines: 20
+    '   Blank Lines: 147
+    '     File Size: 27.61 KB
+
+
+    '     Enum DateTimePrecisionType
+    ' 
+    '         Microsecond, Millisecond, Nanosecond, Second
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum CategoryEnumMapType
+    ' 
+    '         ByName, ByOrdinal
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum ColumnType
+    ' 
+    '         [Date], [Double], [String], Binary, Bool
+    '         Category, Float, Int16, Int32, Int64
+    '         Int8, NullableBinary, NullableBool, NullableCategory, NullableDate
+    '         NullableDouble, NullableFloat, NullableInt16, NullableInt32, NullableInt64
+    '         NullableInt8, NullableString, NullableTime_Microsecond, NullableTime_Millisecond, NullableTime_Nanosecond
+    '         NullableTime_Second, NullableTimestamp_Microsecond, NullableTimestamp_Millisecond, NullableTimestamp_Nanosecond, NullableTimestamp_Second
+    '         NullableUint16, NullableUint32, NullableUint64, NullableUint8, Time_Microsecond
+    '         Time_Millisecond, Time_Nanosecond, Time_Second, Timestamp_Microsecond, Timestamp_Millisecond
+    '         Timestamp_Nanosecond, Timestamp_Second, Uint16, Uint32, Uint64
+    '         Uint8
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module ColumnTypeExtensionMethods
+    ' 
+    '         Function: CanMapTo, GetAlignment, GetMapType, MapToFeatherEnum, TryCategoriesMapToEnum
+    ' 
+    '     Class ColumnSpec
+    ' 
+    '         Properties: CategoryEnumMap, CategoryLevels, DataOffset, Length, MappedType
+    '                     Name, NullBitmaskOffset, Type
+    ' 
+    '         Function: CanMapTo, GetCategoryEnumMap
+    ' 
+    '     Module DateTimePrecisionTypeExtensionMethods
+    ' 
+    '         Function: MapToDiskType
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl.FbsMetadata
@@ -624,3 +720,4 @@ Namespace Impl
         End Function
     End Module
 End Namespace
+

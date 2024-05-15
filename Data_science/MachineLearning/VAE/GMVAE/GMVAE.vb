@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e58d5666db1397491db0051a764bd4c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMVAE/GMVAE.vb"
+﻿#Region "Microsoft.VisualBasic::0e58d5666db1397491db0051a764bd4c, Data_science\MachineLearning\VAE\GMVAE\GMVAE.vb"
 
     ' Author:
     ' 

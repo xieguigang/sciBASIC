@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c5588d156e26f21214475fb22789317, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::5c5588d156e26f21214475fb22789317, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
 
     ' Author:
     ' 

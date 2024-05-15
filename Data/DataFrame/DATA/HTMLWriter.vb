@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2f3cc7cb9e56cce814903463f37ba9b, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::c2f3cc7cb9e56cce814903463f37ba9b, Data\DataFrame\DATA\HTMLWriter.vb"
 
     ' Author:
     ' 

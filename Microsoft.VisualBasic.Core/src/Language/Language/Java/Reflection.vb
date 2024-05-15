@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20be5e5db69eaa44a3037b9727dc487a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::20be5e5db69eaa44a3037b9727dc487a, Microsoft.VisualBasic.Core\src\Language\Language\Java\Reflection.vb"
 
     ' Author:
     ' 

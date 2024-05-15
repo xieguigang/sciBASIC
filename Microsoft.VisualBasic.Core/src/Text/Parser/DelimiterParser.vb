@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db7b729a28662090935eb4231d09ae42, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/DelimiterParser.vb"
+﻿#Region "Microsoft.VisualBasic::db7b729a28662090935eb4231d09ae42, Microsoft.VisualBasic.Core\src\Text\Parser\DelimiterParser.vb"
 
     ' Author:
     ' 

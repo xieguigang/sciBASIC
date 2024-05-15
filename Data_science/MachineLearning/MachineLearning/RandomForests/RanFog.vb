@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d32077e185eda46b8b8b2cce7694489c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//RandomForests/RanFog.vb"
+﻿#Region "Microsoft.VisualBasic::d32077e185eda46b8b8b2cce7694489c, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
 
     ' Author:
     ' 

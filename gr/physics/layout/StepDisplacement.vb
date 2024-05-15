@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05f71f617df0dd689cac41587c1d5ffc, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//layout/StepDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::05f71f617df0dd689cac41587c1d5ffc, gr\physics\layout\StepDisplacement.vb"
 
     ' Author:
     ' 

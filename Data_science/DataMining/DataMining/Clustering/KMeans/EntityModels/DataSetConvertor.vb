@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d54ac1ed316e767c411e27de3a501a6b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/KMeans/EntityModels/DataSetConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::d54ac1ed316e767c411e27de3a501a6b, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\DataSetConvertor.vb"
 
     ' Author:
     ' 

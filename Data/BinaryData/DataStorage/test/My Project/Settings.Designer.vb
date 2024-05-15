@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f51a9adaf56c5aba31e0aa236fe6af1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::0f51a9adaf56c5aba31e0aa236fe6af1, Data\BinaryData\DataStorage\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

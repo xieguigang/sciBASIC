@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5754cbc26cca5ff85a3c17f25939e13, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Shapes/Stairs.vb"
+﻿#Region "Microsoft.VisualBasic::f5754cbc26cca5ff85a3c17f25939e13, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Stairs.vb"
 
     ' Author:
     ' 

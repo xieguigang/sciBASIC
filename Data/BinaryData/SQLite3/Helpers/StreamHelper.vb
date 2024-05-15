@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0e42c57c523973aaf7d35d39c60a1ea, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Helpers/StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c0e42c57c523973aaf7d35d39c60a1ea, Data\BinaryData\SQLite3\Helpers\StreamHelper.vb"
 
     ' Author:
     ' 

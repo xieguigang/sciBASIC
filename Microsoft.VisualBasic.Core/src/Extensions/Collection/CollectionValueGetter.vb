@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08e84a86ec4d652c53ba0b377734b9db, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::08e84a86ec4d652c53ba0b377734b9db, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 

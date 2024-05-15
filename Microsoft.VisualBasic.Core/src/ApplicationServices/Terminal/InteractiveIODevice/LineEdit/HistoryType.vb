@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f57909467f6d859630797db62835e259, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/LineEdit/HistoryType.vb"
+﻿#Region "Microsoft.VisualBasic::f57909467f6d859630797db62835e259, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\HistoryType.vb"
 
     ' Author:
     ' 

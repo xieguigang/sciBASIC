@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a429dd2d7dcb8fd4ceab3a452ec9c401, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/SparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a429dd2d7dcb8fd4ceab3a452ec9c401, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\SparseMatrix.vb"
 
     ' Author:
     ' 

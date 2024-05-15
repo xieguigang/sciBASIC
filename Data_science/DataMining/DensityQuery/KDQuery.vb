@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f7257d214192e2217db3c09de280ee2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery//KDQuery.vb"
+﻿#Region "Microsoft.VisualBasic::2f7257d214192e2217db3c09de280ee2, Data_science\DataMining\DensityQuery\KDQuery.vb"
 
     ' Author:
     ' 

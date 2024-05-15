@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f511fd972828adb3075654c4ee2e030f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinaryTree/RBTree/RBTree.vb"
+﻿#Region "Microsoft.VisualBasic::f511fd972828adb3075654c4ee2e030f, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb"
 
     ' Author:
     ' 

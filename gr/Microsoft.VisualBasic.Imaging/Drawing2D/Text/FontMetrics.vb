@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7efbb902579954f4254e686efbde6f59, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::7efbb902579954f4254e686efbde6f59, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 

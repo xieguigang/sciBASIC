@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9680ed3980692bd67d1211d60de4b6b6, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Protocol/Streams/String.vb"
+﻿#Region "Microsoft.VisualBasic::9680ed3980692bd67d1211d60de4b6b6, www\Microsoft.VisualBasic.NETProtocol\Protocol\Streams\String.vb"
 
     ' Author:
     ' 

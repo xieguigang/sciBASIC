@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::859cf26cf935f7c0da951fa76af2dcda, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Model/Sentence.vb"
+﻿#Region "Microsoft.VisualBasic::859cf26cf935f7c0da951fa76af2dcda, Data\Trinity\Model\Sentence.vb"
 
     ' Author:
     ' 

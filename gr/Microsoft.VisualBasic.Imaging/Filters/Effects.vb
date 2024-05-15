@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::013564c353a88c8732e00c76039b437c, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Filters/Effects.vb"
+﻿#Region "Microsoft.VisualBasic::013564c353a88c8732e00c76039b437c, gr\Microsoft.VisualBasic.Imaging\Filters\Effects.vb"
 
     ' Author:
     ' 

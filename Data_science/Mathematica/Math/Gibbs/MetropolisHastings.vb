@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a213793d892e2bab4ae22fd3490fdb6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Gibbs//MetropolisHastings.vb"
+﻿#Region "Microsoft.VisualBasic::8a213793d892e2bab4ae22fd3490fdb6, Data_science\Mathematica\Math\Gibbs\MetropolisHastings.vb"
 
     ' Author:
     ' 

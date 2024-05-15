@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bc0ae2b810898015f662f4b5c95ccf6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/g/Grid.vb"
+﻿#Region "Microsoft.VisualBasic::7bc0ae2b810898015f662f4b5c95ccf6, Data_science\Visualization\Plots\3D\g\Grid.vb"
 
     ' Author:
     ' 

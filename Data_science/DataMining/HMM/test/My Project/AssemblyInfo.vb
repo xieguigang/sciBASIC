@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ef21f2e9bf9f105e3847d2b2c2dd5e1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3ef21f2e9bf9f105e3847d2b2c2dd5e1, Data_science\DataMining\HMM\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

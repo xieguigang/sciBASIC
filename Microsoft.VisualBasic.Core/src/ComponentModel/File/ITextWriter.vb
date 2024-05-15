@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0b636574e2ea60742b329b13e62b244, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/ITextWriter.vb"
+﻿#Region "Microsoft.VisualBasic::c0b636574e2ea60742b329b13e62b244, Microsoft.VisualBasic.Core\src\ComponentModel\File\ITextWriter.vb"
 
     ' Author:
     ' 

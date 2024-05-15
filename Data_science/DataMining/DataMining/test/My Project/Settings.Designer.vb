@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::857d6062ede0d396c80d967c8d6dc8fb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::857d6062ede0d396c80d967c8d6dc8fb, Data_science\DataMining\DataMining\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

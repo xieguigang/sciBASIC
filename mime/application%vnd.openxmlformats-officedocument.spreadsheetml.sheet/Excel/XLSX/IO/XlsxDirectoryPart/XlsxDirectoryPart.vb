@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0310c313f5b1e2c9c0eab5262bfa7ae0, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/IO/XlsxDirectoryPart/XlsxDirectoryPart.vb"
+﻿#Region "Microsoft.VisualBasic::0310c313f5b1e2c9c0eab5262bfa7ae0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\XlsxDirectoryPart.vb"
 
     ' Author:
     ' 

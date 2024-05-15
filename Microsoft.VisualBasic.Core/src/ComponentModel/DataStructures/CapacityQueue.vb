@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3671c550d58132fc3b4056767b3e8568, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/CapacityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::3671c550d58132fc3b4056767b3e8568, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\CapacityQueue.vb"
 
     ' Author:
     ' 

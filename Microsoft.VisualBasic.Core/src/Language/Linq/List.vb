@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3569dcb78a2ae1e811fdf4b54f36f84d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/List.vb"
+﻿#Region "Microsoft.VisualBasic::7259ea32fe5b455da300874f169c3e56, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 684
+    '   Total Lines: 685
     '    Code Lines: 367
-    ' Comment Lines: 253
+    ' Comment Lines: 254
     '   Blank Lines: 64
-    '     File Size: 26.34 KB
+    '     File Size: 26.37 KB
 
 
     '     Class List

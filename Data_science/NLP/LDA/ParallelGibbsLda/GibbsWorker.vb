@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ec8ef8b94273c1219ce554e502ac76, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/ParallelGibbsLda/GibbsWorker.vb"
+﻿#Region "Microsoft.VisualBasic::90ec8ef8b94273c1219ce554e502ac76, Data_science\NLP\LDA\ParallelGibbsLda\GibbsWorker.vb"
 
     ' Author:
     ' 

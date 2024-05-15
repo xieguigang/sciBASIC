@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99f875f0df13c8cba402ca06852ec117, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/XmlAssembly/XmlStyleProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::99f875f0df13c8cba402ca06852ec117, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlStyleProcessor.vb"
 
     ' Author:
     ' 

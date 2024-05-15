@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c959d801678d18a1c85e6b1f32c95c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/Population/Substitution/EliteReplacement.vb"
+﻿#Region "Microsoft.VisualBasic::f5c959d801678d18a1c85e6b1f32c95c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Substitution\EliteReplacement.vb"
 
     ' Author:
     ' 

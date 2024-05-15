@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d190819505c38c0b541e1df742ef408, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Hdbscanstar/UndirectedGraph.vb"
+﻿#Region "Microsoft.VisualBasic::4d190819505c38c0b541e1df742ef408, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\UndirectedGraph.vb"
 
     ' Author:
     ' 

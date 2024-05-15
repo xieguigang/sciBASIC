@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7a38f375afa824c0d5309b49db8ee61, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/RegressionROC.vb"
+﻿#Region "Microsoft.VisualBasic::b7a38f375afa824c0d5309b49db8ee61, Data_science\DataMining\DataMining\Evaluation\RegressionROC.vb"
 
     ' Author:
     ' 

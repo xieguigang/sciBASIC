@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d287dbb974f2a713f2313051ce17b3d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/DataGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9d287dbb974f2a713f2313051ce17b3d, Data_science\Mathematica\Math\Math\Scripting\DataGenerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0492e6ad4f8a21703b3c07201657441b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Louvain/Louvain.vb"
+﻿#Region "Microsoft.VisualBasic::0492e6ad4f8a21703b3c07201657441b, Data_science\Graph\Analysis\Louvain\Louvain.vb"
 
     ' Author:
     ' 

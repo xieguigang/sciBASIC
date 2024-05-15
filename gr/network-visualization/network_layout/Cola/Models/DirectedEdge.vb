@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7ff2dbfad77ec1018ec20f24d0ffd10, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Models/DirectedEdge.vb"
+﻿#Region "Microsoft.VisualBasic::f7ff2dbfad77ec1018ec20f24d0ffd10, gr\network-visualization\network_layout\Cola\Models\DirectedEdge.vb"
 
     ' Author:
     ' 

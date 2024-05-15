@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e504d08cd9d38ed2addb6c6da5246bfb, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinTextMetric.vb"
+﻿#Region "Microsoft.VisualBasic::e504d08cd9d38ed2addb6c6da5246bfb, mime\application%pdf\PdfFileWriter\Font\WinTextMetric.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::675a967a44add44cc604a19e846f2e28, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//ColorLegendTest.vb"
+﻿#Region "Microsoft.VisualBasic::675a967a44add44cc604a19e846f2e28, Data_science\Visualization\test\ColorLegendTest.vb"
 
     ' Author:
     ' 

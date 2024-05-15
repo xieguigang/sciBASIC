@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f52e114438a78ca9db1048040ae5e44, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//MingleRender/RenderHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::5f52e114438a78ca9db1048040ae5e44, gr\network-visualization\Visualizer\MingleRender\RenderHelpers.vb"
 
     ' Author:
     ' 

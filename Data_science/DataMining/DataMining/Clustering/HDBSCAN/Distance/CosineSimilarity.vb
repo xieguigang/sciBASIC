@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ecb413476b369d318c83ea59d28f6bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/CosineSimilarity.vb"
+﻿#Region "Microsoft.VisualBasic::8ecb413476b369d318c83ea59d28f6bc, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\CosineSimilarity.vb"
 
     ' Author:
     ' 

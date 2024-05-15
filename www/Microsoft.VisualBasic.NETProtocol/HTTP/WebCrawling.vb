@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dac9f7ec22e7e7e84cf9f7af868c310f, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//HTTP/WebCrawling.vb"
+﻿#Region "Microsoft.VisualBasic::dac9f7ec22e7e7e84cf9f7af868c310f, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
     ' Author:
     ' 

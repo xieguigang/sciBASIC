@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c698f3ceca015d598a121270bd86cf11, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//World.vb"
+﻿#Region "Microsoft.VisualBasic::c698f3ceca015d598a121270bd86cf11, gr\physics\World.vb"
 
     ' Author:
     ' 

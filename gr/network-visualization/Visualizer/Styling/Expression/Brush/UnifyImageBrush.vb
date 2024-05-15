@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3628ccb3e8bbcf28796cd26fe32a8211, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Brush/UnifyImageBrush.vb"
+﻿#Region "Microsoft.VisualBasic::3628ccb3e8bbcf28796cd26fe32a8211, gr\network-visualization\Visualizer\Styling\Expression\Brush\UnifyImageBrush.vb"
 
     ' Author:
     ' 

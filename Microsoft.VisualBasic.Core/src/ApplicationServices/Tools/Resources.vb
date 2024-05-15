@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::571f539d0e274c412c3b7d16f11c45ae, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/Resources.vb"
+﻿#Region "Microsoft.VisualBasic::571f539d0e274c412c3b7d16f11c45ae, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Resources.vb"
 
     ' Author:
     ' 

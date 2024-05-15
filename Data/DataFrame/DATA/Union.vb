@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/Union.vb"
+﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, Data\DataFrame\DATA\Union.vb"
 
     ' Author:
     ' 

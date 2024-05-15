@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cac9e880578574c47a9bd5199daba26d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/DocumentLoader.vb"
+﻿#Region "Microsoft.VisualBasic::cac9e880578574c47a9bd5199daba26d, Data_science\NLP\LDA\DocumentLoader.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b6ad84a20bf49c36fd0a3bb8ce3f8a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/data/TrainResult.vb"
+﻿#Region "Microsoft.VisualBasic::65b6ad84a20bf49c36fd0a3bb8ce3f8a, Data_science\MachineLearning\DeepLearning\CNN\data\TrainResult.vb"
 
     ' Author:
     ' 

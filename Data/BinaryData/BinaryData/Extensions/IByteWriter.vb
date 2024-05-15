@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4386dbc456c9a3b3e9229ce0fed35df0, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Extensions/IByteWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4386dbc456c9a3b3e9229ce0fed35df0, Data\BinaryData\BinaryData\Extensions\IByteWriter.vb"
 
     ' Author:
     ' 

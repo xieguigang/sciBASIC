@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df6c30b20183d0575770c1c9e429664f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/SharedORM/CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::df6c30b20183d0575770c1c9e429664f, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 

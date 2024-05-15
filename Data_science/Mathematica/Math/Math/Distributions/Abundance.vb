@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86aebebcbcd403d3928aec072e4fb9a0, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/Excel/ExcelReader.vb"
+﻿#Region "Microsoft.VisualBasic::86aebebcbcd403d3928aec072e4fb9a0, Data\DataFrame\DATA\Excel\ExcelReader.vb"
 
     ' Author:
     ' 

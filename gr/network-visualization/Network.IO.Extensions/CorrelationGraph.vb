@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1146657baf34d029047e0bfe28b464, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//CorrelationGraph.vb"
+﻿#Region "Microsoft.VisualBasic::ab1146657baf34d029047e0bfe28b464, gr\network-visualization\Network.IO.Extensions\CorrelationGraph.vb"
 
     ' Author:
     ' 

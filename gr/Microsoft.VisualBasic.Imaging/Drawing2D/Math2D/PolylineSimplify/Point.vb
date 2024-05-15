@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb311a22ff969ca5dc948764b1fc2d41, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/PolylineSimplify/Point.vb"
+﻿#Region "Microsoft.VisualBasic::eb311a22ff969ca5dc948764b1fc2d41, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\PolylineSimplify\Point.vb"
 
     ' Author:
     ' 

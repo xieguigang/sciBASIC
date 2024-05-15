@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::705d1658b3724f42ac0718e6f1e91aa8, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Html/Article.vb"
+﻿#Region "Microsoft.VisualBasic::705d1658b3724f42ac0718e6f1e91aa8, Data\Trinity\Html\Article.vb"
 
     ' Author:
     ' 

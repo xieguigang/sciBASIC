@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee50458d0a734abe5791b95add19f118, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Cache/head_t.vb"
+﻿#Region "Microsoft.VisualBasic::ee50458d0a734abe5791b95add19f118, Data_science\MachineLearning\MachineLearning\SVM\Cache\head_t.vb"
 
     ' Author:
     ' 

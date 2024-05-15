@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21c7b59f3286485d29202e79ef245f10, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//Dynamics/Data/StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::21c7b59f3286485d29202e79ef245f10, Data_science\Mathematica\Math\ODE\Dynamics\Data\StreamExtension.vb"
 
     ' Author:
     ' 

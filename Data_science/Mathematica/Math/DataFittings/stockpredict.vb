@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c2e9759fefbfc143fb7790ca12c59a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//stockpredict.vb"
+﻿#Region "Microsoft.VisualBasic::56c2e9759fefbfc143fb7790ca12c59a, Data_science\Mathematica\Math\DataFittings\stockpredict.vb"
 
     ' Author:
     ' 

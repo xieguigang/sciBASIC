@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d0c4456f566c0361dca7e54948959e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame//Encoder/NumericEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::58d0c4456f566c0361dca7e54948959e, Data_science\DataMining\FeatureFrame\Encoder\NumericEncoder.vb"
 
     ' Author:
     ' 

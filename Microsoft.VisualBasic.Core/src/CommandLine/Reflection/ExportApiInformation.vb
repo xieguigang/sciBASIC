@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13c0d0aa24d0f0328ded6d32f18d33d1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/ExportApiInformation.vb"
+﻿#Region "Microsoft.VisualBasic::13c0d0aa24d0f0328ded6d32f18d33d1, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ExportApiInformation.vb"
 
     ' Author:
     ' 

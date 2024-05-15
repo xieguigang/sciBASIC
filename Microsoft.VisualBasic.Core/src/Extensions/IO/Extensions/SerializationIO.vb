@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1bd7efd74d26ef3c83346b698b9aaa4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Extensions/SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::a1bd7efd74d26ef3c83346b698b9aaa4, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\SerializationIO.vb"
 
     ' Author:
     ' 

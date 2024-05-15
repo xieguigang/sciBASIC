@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bb1e2c8219f1d5b4bbb8d0fef9d9e51, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/DBSCAN/Optics/Point.vb"
+﻿#Region "Microsoft.VisualBasic::2bb1e2c8219f1d5b4bbb8d0fef9d9e51, Data_science\DataMining\DataMining\Clustering\DBSCAN\Optics\Point.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db8c64960649fd050e784298d8fb20ca, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/TextSpan.vb"
+﻿#Region "Microsoft.VisualBasic::db8c64960649fd050e784298d8fb20ca, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TextSpan.vb"
 
     ' Author:
     ' 

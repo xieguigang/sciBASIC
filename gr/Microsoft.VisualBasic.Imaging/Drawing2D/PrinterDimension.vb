@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d0ba36573a5a55c82503fe68ee208e9, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/PrinterDimension.vb"
+﻿#Region "Microsoft.VisualBasic::4d0ba36573a5a55c82503fe68ee208e9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\PrinterDimension.vb"
 
     ' Author:
     ' 

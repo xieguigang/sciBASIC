@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ee85ef0f082ce4ce5a0fd6846af4d16, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/QREncoder/QREncoder.vb"
+﻿#Region "Microsoft.VisualBasic::2ee85ef0f082ce4ce5a0fd6846af4d16, mime\application%pdf\PdfFileWriter\QREncoder\QREncoder.vb"
 
     ' Author:
     ' 

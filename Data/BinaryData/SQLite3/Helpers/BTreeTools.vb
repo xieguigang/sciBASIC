@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b87e48927d79dbf31a5f3010c7a4181, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Helpers/BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::8b87e48927d79dbf31a5f3010c7a4181, Data\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a0c43b209b7d3a4047aab292c2980bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/DBSCAN/MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::0f9ecc6d720a4c05937d0d1394755704, Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 
@@ -34,14 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 12
-    '    Code Lines: 9
+    '   Total Lines: 14
+    '    Code Lines: 10
     ' Comment Lines: 0
-    '   Blank Lines: 3
-    '     File Size: 247 B
+    '   Blank Lines: 4
+    '     File Size: 371 B
 
 
     ' Class MyCustomDatasetItem
+    ' 
+    '     Properties: Identity
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -49,9 +51,9 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.DataMining.DBSCAN
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
-Public Class MyCustomDatasetItem
+Public Class MyCustomDatasetItem : Implements IReadOnlyId
 
     Public X As Double
     Public Y As Double
@@ -60,4 +62,6 @@ Public Class MyCustomDatasetItem
         X = x__1
         Y = y__2
     End Sub
+
+    Public ReadOnly Property Identity As String Implements IReadOnlyId.Identity
 End Class

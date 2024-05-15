@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8611498ebb5fdf1882e96b5f8e123bf6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//3D/PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::8611498ebb5fdf1882e96b5f8e123bf6, Data_science\Visualization\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 

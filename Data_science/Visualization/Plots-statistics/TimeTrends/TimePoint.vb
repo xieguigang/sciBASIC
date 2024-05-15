@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13d6686418c2307e5f1fbaf1bd94fa36, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//TimeTrends/TimePoint.vb"
+﻿#Region "Microsoft.VisualBasic::13d6686418c2307e5f1fbaf1bd94fa36, Data_science\Visualization\Plots-statistics\TimeTrends\TimePoint.vb"
 
     ' Author:
     ' 

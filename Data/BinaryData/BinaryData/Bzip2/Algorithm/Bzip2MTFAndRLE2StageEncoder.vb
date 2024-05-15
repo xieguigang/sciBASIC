@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f56cbd58ab573460eba7aadda0b0404, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Algorithm/Bzip2MTFAndRLE2StageEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::9f56cbd58ab573460eba7aadda0b0404, Data\BinaryData\BinaryData\Bzip2\Algorithm\Bzip2MTFAndRLE2StageEncoder.vb"
 
     ' Author:
     ' 

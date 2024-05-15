@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2545004bbf22df1b121354da8939da63, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Security/SHA.vb"
+﻿#Region "Microsoft.VisualBasic::2545004bbf22df1b121354da8939da63, Microsoft.VisualBasic.Core\src\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 

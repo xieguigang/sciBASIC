@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48c46fd055084cbea5a334bb102d176, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE//Helper.vb"
+﻿#Region "Microsoft.VisualBasic::f48c46fd055084cbea5a334bb102d176, Data_science\MachineLearning\t-SNE\Helper.vb"
 
     ' Author:
     ' 

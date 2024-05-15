@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed43de2c9f0c1d94cf59c15eb0e3d271, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//QQPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ed43de2c9f0c1d94cf59c15eb0e3d271, Data_science\Visualization\Plots-statistics\QQPlot.vb"
 
     ' Author:
     ' 

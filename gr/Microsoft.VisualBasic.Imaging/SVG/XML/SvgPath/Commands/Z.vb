@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aaf4326dc1384c782ababa9db81676bb, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/SvgPath/Commands/Z.vb"
+﻿#Region "Microsoft.VisualBasic::aaf4326dc1384c782ababa9db81676bb, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\Commands\Z.vb"
 
     ' Author:
     ' 

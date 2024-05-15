@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Bihistogram.vb"
+﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, Data_science\Visualization\Plots-statistics\Bihistogram.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fc91cb61a73740afa785ef73aef078a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::9fc91cb61a73740afa785ef73aef078a, Microsoft.VisualBasic.Core\src\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 

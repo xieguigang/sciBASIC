@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70fbf99bdc4044e68253c5ff0d105655, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/HtmlTag.vb"
+﻿#Region "Microsoft.VisualBasic::70fbf99bdc4044e68253c5ff0d105655, mime\text%html\Render\HtmlTag.vb"
 
     ' Author:
     ' 

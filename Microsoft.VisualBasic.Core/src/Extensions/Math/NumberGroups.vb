@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1149cef836c6d508ccfa24520c8199c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::1149cef836c6d508ccfa24520c8199c5, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 

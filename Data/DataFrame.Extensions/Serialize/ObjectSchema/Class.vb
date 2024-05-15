@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::492fb063c19575c675b8ca1a0a0dac43, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Serialize/ObjectSchema/Class.vb"
+﻿#Region "Microsoft.VisualBasic::492fb063c19575c675b8ca1a0a0dac43, Data\DataFrame.Extensions\Serialize\ObjectSchema\Class.vb"
 
     ' Author:
     ' 

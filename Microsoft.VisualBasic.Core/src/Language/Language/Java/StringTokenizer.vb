@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2847cc47d8661f7df702f6cafc16e335, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/StringTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::2847cc47d8661f7df702f6cafc16e335, Microsoft.VisualBasic.Core\src\Language\Language\Java\StringTokenizer.vb"
 
     ' Author:
     ' 

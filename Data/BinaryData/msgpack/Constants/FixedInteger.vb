@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d6988c56b93e787f86005d6969fc9ca, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Constants/FixedInteger.vb"
+﻿#Region "Microsoft.VisualBasic::0d6988c56b93e787f86005d6969fc9ca, Data\BinaryData\msgpack\Constants\FixedInteger.vb"
 
     ' Author:
     ' 

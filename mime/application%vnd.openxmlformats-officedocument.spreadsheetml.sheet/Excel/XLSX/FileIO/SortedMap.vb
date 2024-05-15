@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::526b174882318115de7c206d8a4f6f0f, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/FileIO/SortedMap.vb"
+﻿#Region "Microsoft.VisualBasic::526b174882318115de7c206d8a4f6f0f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\SortedMap.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d35d6c3317c8dd207189f735aeb7bab8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/BinBox/DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::d35d6c3317c8dd207189f735aeb7bab8, Data_science\Mathematica\Math\Math\Distributions\BinBox\DataBinBox.vb"
 
     ' Author:
     ' 

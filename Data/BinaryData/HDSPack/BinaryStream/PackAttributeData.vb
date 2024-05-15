@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b2330f227cbcaff173d9480966c533, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//BinaryStream/PackAttributeData.vb"
+﻿#Region "Microsoft.VisualBasic::01b2330f227cbcaff173d9480966c533, Data\BinaryData\HDSPack\BinaryStream\PackAttributeData.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c29bbafc272b780e7ab5c97ad626854c, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//Metadata/AttributeMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::c29bbafc272b780e7ab5c97ad626854c, Data\BinaryData\HDSPack\Metadata\AttributeMetadata.vb"
 
     ' Author:
     ' 

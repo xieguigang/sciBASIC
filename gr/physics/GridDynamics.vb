@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55e764b3b47258ebcc549bfbbe07ccc, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//GridDynamics.vb"
+﻿#Region "Microsoft.VisualBasic::e55e764b3b47258ebcc549bfbbe07ccc, gr\physics\GridDynamics.vb"
 
     ' Author:
     ' 

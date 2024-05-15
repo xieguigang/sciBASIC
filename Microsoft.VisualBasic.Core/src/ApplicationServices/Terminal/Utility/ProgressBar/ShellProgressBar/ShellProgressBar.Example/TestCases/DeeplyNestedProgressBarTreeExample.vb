@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22760958142c72952b455f97724f330c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/DeeplyNestedProgressBarTreeExample.vb"
+﻿#Region "Microsoft.VisualBasic::22760958142c72952b455f97724f330c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\DeeplyNestedProgressBarTreeExample.vb"
 
     ' Author:
     ' 

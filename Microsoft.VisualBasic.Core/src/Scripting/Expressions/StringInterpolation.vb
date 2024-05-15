@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aa365d9fe12cfeb3d5af60dae796238, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Expressions/StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::7aa365d9fe12cfeb3d5af60dae796238, Microsoft.VisualBasic.Core\src\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 

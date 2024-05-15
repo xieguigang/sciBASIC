@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19c0f29c961c78ff3b2b17867594d837, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/UnicodeWidth.vb"
+﻿#Region "Microsoft.VisualBasic::19c0f29c961c78ff3b2b17867594d837, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\UnicodeWidth.vb"
 
     ' Author:
     ' 

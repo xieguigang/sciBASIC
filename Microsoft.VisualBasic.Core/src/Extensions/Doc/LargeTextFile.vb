@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::442d9072bd109450a268fd058fd3f4d3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Doc/LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::442d9072bd109450a268fd058fd3f4d3, Microsoft.VisualBasic.Core\src\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 

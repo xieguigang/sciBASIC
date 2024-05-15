@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ab72ba42317fd979c89ee7da702bfcf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//csv/SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::2ab72ba42317fd979c89ee7da702bfcf, Data_science\Visualization\Plots\csv\SerialData.vb"
 
     ' Author:
     ' 

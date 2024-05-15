@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::844e07299c8ff46a146d216497ab7b91, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//VersionControl/git/log.vb"
+﻿#Region "Microsoft.VisualBasic::844e07299c8ff46a146d216497ab7b91, vs_solutions\dev\VisualStudio\VersionControl\git\log.vb"
 
     ' Author:
     ' 

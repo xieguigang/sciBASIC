@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::181baee34a76331677bd01b292702aaf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/Canopy.vb"
+﻿#Region "Microsoft.VisualBasic::181baee34a76331677bd01b292702aaf, Data_science\DataMining\DataMining\Clustering\Canopy.vb"
 
     ' Author:
     ' 

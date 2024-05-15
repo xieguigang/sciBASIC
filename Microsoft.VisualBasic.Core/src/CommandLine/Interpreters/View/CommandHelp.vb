@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f2345daa33dd6572b9e0b68af236f0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Interpreters/View/CommandHelp.vb"
+﻿#Region "Microsoft.VisualBasic::45f2345daa33dd6572b9e0b68af236f0, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\View\CommandHelp.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::501d840aeedf2f0300b14221d9165c2b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Dijkstra/LinkCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::501d840aeedf2f0300b14221d9165c2b, Data_science\Graph\Analysis\Dijkstra\LinkCalculator.vb"
 
     ' Author:
     ' 

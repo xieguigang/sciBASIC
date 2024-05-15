@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c864e4a19c2b393aac50a1610ab8d3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/CategoryOperations.vb"
+﻿#Region "Microsoft.VisualBasic::72c864e4a19c2b393aac50a1610ab8d3, Microsoft.VisualBasic.Core\src\Extensions\Collection\CategoryOperations.vb"
 
     ' Author:
     ' 

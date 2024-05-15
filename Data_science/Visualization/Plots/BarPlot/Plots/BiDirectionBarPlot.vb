@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7a614ab167f252cf28257439f57a764, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/Plots/BiDirectionBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c7a614ab167f252cf28257439f57a764, Data_science\Visualization\Plots\BarPlot\Plots\BiDirectionBarPlot.vb"
 
     ' Author:
     ' 

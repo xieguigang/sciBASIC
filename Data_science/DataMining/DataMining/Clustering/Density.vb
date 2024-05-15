@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c64f0e80158ea6bb7cdadef2bded5c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/Density.vb"
+﻿#Region "Microsoft.VisualBasic::56c64f0e80158ea6bb7cdadef2bded5c, Data_science\DataMining\DataMining\Clustering\Density.vb"
 
     ' Author:
     ' 

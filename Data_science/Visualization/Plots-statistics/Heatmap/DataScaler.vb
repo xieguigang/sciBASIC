@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82ec1fab2b7ad7a28d3c22610c054848, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Heatmap/DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::82ec1fab2b7ad7a28d3c22610c054848, Data_science\Visualization\Plots-statistics\Heatmap\DataScaler.vb"
 
     ' Author:
     ' 

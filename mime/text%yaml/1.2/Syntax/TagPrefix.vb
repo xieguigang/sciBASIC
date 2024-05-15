@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72072e9b61fb1a9b5bafc5755fd8bedb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/TagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::72072e9b61fb1a9b5bafc5755fd8bedb, mime\text%yaml\1.2\Syntax\TagPrefix.vb"
 
     ' Author:
     ' 

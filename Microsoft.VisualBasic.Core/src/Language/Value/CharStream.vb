@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3536dad55eb892311701f9e5e94f0c76, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::3536dad55eb892311701f9e5e94f0c76, Microsoft.VisualBasic.Core\src\Language\Value\CharStream.vb"
 
     ' Author:
     ' 

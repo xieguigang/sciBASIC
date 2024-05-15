@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eac45289a98915aaa9f44b9918eaeb91, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/Flags/MetaRowPositions.vb"
+﻿#Region "Microsoft.VisualBasic::eac45289a98915aaa9f44b9918eaeb91, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\MetaRowPositions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c98a7e023a873122bae56ad986681136, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Solvers/ISolver.vb"
+﻿#Region "Microsoft.VisualBasic::c98a7e023a873122bae56ad986681136, Data_science\Mathematica\Math\Math\Algebra\Solvers\ISolver.vb"
 
     ' Author:
     ' 

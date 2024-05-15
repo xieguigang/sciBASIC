@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d00cc02e9a1f4843b3a1949b0ed4eee, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/C/CString.vb"
+﻿#Region "Microsoft.VisualBasic::2d00cc02e9a1f4843b3a1949b0ed4eee, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
 
     ' Author:
     ' 

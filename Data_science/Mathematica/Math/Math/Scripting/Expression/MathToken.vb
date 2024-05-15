@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5968315bd5c118d751d8be8d8f064109, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/MathToken.vb"
+﻿#Region "Microsoft.VisualBasic::5968315bd5c118d751d8be8d8f064109, Data_science\Mathematica\Math\Math\Scripting\Expression\MathToken.vb"
 
     ' Author:
     ' 

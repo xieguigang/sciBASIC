@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95c7f5694bc15319afa22aafa1864e9e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//FuzzyLogic/MembershipFunctionCollection.vb"
+﻿#Region "Microsoft.VisualBasic::95c7f5694bc15319afa22aafa1864e9e, Data_science\Mathematica\Math\Math\FuzzyLogic\MembershipFunctionCollection.vb"
 
     ' Author:
     ' 

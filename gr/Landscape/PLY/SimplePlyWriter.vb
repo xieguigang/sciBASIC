@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c41fa6a60f8e00aebe45022a02c38db, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//PLY/SimplePlyWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2c41fa6a60f8e00aebe45022a02c38db, gr\Landscape\PLY\SimplePlyWriter.vb"
 
     ' Author:
     ' 

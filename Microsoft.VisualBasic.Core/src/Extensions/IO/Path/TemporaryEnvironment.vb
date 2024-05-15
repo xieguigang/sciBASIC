@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbaf9467465590201c2ad01f9a9df81b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Path/TemporaryEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::dbaf9467465590201c2ad01f9a9df81b, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\TemporaryEnvironment.vb"
 
     ' Author:
     ' 

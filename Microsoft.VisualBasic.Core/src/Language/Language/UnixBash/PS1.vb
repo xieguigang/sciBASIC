@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe79dc9907f00af89005ab4d3bed2e97, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/UnixBash/PS1.vb"
+﻿#Region "Microsoft.VisualBasic::fe79dc9907f00af89005ab4d3bed2e97, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\PS1.vb"
 
     ' Author:
     ' 

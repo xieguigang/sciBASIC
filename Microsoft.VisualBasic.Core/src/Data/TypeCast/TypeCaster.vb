@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557fdd33cac4103a207d5c5f9a1771ad, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/TypeCast/TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::557fdd33cac4103a207d5c5f9a1771ad, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
     ' Author:
     ' 

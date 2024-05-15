@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18513d7e1e346e0492bed43e10987ec7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//AffinityPropagation/QuickSelect.vb"
+﻿#Region "Microsoft.VisualBasic::18513d7e1e346e0492bed43e10987ec7, Data_science\DataMining\BinaryTree\AffinityPropagation\QuickSelect.vb"
 
     ' Author:
     ' 

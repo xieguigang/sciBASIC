@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Quantile/DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
     ' Author:
     ' 

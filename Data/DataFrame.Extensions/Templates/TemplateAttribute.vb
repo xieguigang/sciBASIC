@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e893d1214dacac3cf8609c97a5c7b005, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Templates/TemplateAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e893d1214dacac3cf8609c97a5c7b005, Data\DataFrame.Extensions\Templates\TemplateAttribute.vb"
 
     ' Author:
     ' 

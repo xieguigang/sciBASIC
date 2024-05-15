@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bd573cf77a8c464ba4b502604fce772, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//Correlation/CorrelationMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::4bd573cf77a8c464ba4b502604fce772, Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
 
     ' Author:
     ' 

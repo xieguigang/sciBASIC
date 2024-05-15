@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ff772a9f875d2a4faa2e329c7e2aeaa, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::5ff772a9f875d2a4faa2e329c7e2aeaa, Data\BinaryData\HDSPack\Debugger.vb"
 
     ' Author:
     ' 

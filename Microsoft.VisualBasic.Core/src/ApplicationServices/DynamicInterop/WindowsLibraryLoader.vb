@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23c59d3ec87c022b996364f84daccc49, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/WindowsLibraryLoader.vb"
+﻿#Region "Microsoft.VisualBasic::23c59d3ec87c022b996364f84daccc49, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\WindowsLibraryLoader.vb"
 
     ' Author:
     ' 

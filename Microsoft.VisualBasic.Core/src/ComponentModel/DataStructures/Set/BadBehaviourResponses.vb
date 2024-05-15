@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc03d914d599c8998230d843a443ae88, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Set/BadBehaviourResponses.vb"
+﻿#Region "Microsoft.VisualBasic::bc03d914d599c8998230d843a443ae88, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\BadBehaviourResponses.vb"
 
     ' Author:
     ' 

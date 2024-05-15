@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e597e0e1508e892c6dcf61d74efea0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/Class/HalfVector.vb"
+﻿#Region "Microsoft.VisualBasic::21e597e0e1508e892c6dcf61d74efea0, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\HalfVector.vb"
 
     ' Author:
     ' 

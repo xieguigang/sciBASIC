@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88bc27bbe850c4978ca07c71af857668, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/1D/Solver.vb"
+﻿#Region "Microsoft.VisualBasic::88bc27bbe850c4978ca07c71af857668, Data_science\MachineLearning\VAE\GMM\1D\Solver.vb"
 
     ' Author:
     ' 

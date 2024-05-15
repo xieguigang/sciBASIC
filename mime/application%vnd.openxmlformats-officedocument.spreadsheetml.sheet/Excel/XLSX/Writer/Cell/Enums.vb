@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::058abd1f7071dc00ef630cf9da1a5f59, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Writer/Cell/Enums.vb"
+﻿#Region "Microsoft.VisualBasic::058abd1f7071dc00ef630cf9da1a5f59, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\Enums.vb"
 
     ' Author:
     ' 

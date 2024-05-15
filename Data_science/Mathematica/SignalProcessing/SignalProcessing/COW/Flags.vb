@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b632f9926babbc7c55c6f6f1a48f9fe, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//COW/Flags.vb"
+﻿#Region "Microsoft.VisualBasic::1b632f9926babbc7c55c6f6f1a48f9fe, Data_science\Mathematica\SignalProcessing\SignalProcessing\COW\Flags.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b82805adf3da7475d153e7804bbc721f, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/csv/Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::b82805adf3da7475d153e7804bbc721f, Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 

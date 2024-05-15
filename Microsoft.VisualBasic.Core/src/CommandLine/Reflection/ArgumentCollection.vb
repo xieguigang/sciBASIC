@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/ArgumentCollection.vb"
+﻿#Region "Microsoft.VisualBasic::a3a948fb061036548bb8c87a27764b1f, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\ArgumentCollection.vb"
 
     ' Author:
     ' 

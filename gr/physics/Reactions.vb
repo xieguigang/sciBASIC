@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::947251ea82f34688f58a535f74e72c73, G:/GCModeller/src/runtime/sciBASIC#/gr/physics//Reactions.vb"
+﻿#Region "Microsoft.VisualBasic::947251ea82f34688f58a535f74e72c73, gr\physics\Reactions.vb"
 
     ' Author:
     ' 

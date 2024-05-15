@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a533c58b8a26ecb2e234987b65f9c5d9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a533c58b8a26ecb2e234987b65f9c5d9, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 

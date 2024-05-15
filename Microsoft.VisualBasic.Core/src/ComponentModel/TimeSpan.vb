@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/TimeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, Microsoft.VisualBasic.Core\src\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 

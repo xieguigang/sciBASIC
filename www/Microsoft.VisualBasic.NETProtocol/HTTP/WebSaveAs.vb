@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ca7773e0f046ab2ff0c7fe64012b57, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//HTTP/WebSaveAs.vb"
+﻿#Region "Microsoft.VisualBasic::15ca7773e0f046ab2ff0c7fe64012b57, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebSaveAs.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0b62ee226a6655a11e9b26edcefe8e3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//BinaryTree/Partition.vb"
+﻿#Region "Microsoft.VisualBasic::e0b62ee226a6655a11e9b26edcefe8e3, Data_science\Visualization\Visualization\BinaryTree\Partition.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae438b94b78c20f584e509a4248d3898, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/SoftmaxLayer.vb"
+﻿#Region "Microsoft.VisualBasic::ae438b94b78c20f584e509a4248d3898, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\SoftmaxLayer.vb"
 
     ' Author:
     ' 

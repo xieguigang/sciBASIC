@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65599c41fbe94bb3a3f46a34bf6dfbc, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::e65599c41fbe94bb3a3f46a34bf6dfbc, mime\text%html\Render\CSS\CssDefaults.vb"
 
     ' Author:
     ' 

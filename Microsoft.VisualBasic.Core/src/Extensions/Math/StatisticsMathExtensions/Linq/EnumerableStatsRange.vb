@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cbbbd091c6e8bf2f0bc42c9da7fd035, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsRange.vb"
+﻿#Region "Microsoft.VisualBasic::3cbbbd091c6e8bf2f0bc42c9da7fd035, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsRange.vb"
 
     ' Author:
     ' 

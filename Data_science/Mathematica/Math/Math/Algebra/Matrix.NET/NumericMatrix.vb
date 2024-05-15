@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b685f30b9f81ca644b29872909153724, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::b685f30b9f81ca644b29872909153724, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 

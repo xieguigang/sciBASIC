@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::665989b8f14294efc71d355d28fb42f4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/RamerDouglasPeuckerFilter.vb"
+﻿#Region "Microsoft.VisualBasic::665989b8f14294efc71d355d28fb42f4, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\RamerDouglasPeuckerFilter.vb"
 
     ' Author:
     ' 

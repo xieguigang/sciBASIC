@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e16a293347816d3f3f8e19b163bc7474, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/CSSModel.vb"
+﻿#Region "Microsoft.VisualBasic::e16a293347816d3f3f8e19b163bc7474, gr\Microsoft.VisualBasic.Imaging\d3js\CSSModel.vb"
 
     ' Author:
     ' 

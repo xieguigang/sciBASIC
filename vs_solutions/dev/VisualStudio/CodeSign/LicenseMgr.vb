@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b1e6029a806277343f083dc7d4cab5, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//CodeSign/LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::5d6070a351bcfca1469daef5d71ba290, vs_solutions\dev\VisualStudio\CodeSign\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 137
     ' Comment Lines: 27
     '   Blank Lines: 38
-    '     File Size: 7.66 KB
+    '     File Size: 7.69 KB
 
 
     '     Module LicenseMgr
@@ -127,7 +127,7 @@ THE SOFTWARE.",
         ''' <returns></returns>
         <Extension>
         Public Function Insert(src As String, info As LicenseInfo, rootDir$, Optional ByRef stat As CodeStatics = Nothing) As Boolean
-            Dim file As String = PathExtensions.RelativePath(rootDir, src, appendParent:=False)
+            Dim file As String = PathExtensions.RelativePath(rootDir.GetDirectoryFullPath, src.GetFullPath, appendParent:=False)
             Dim [in] As String = src.ReadAllText
             Dim path As String = src
 

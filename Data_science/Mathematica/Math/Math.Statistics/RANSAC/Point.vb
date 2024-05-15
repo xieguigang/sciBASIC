@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91628eb84a3daf226e8550b56e4605a3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//RANSAC/Point.vb"
+﻿#Region "Microsoft.VisualBasic::91628eb84a3daf226e8550b56e4605a3, Data_science\Mathematica\Math\Math.Statistics\RANSAC\Point.vb"
 
     ' Author:
     ' 

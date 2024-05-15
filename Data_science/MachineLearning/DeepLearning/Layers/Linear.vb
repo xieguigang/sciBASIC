@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d73e8de7c0a480d20e68fc7a4cffae2f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//Layers/Linear.vb"
+﻿#Region "Microsoft.VisualBasic::d73e8de7c0a480d20e68fc7a4cffae2f, Data_science\MachineLearning\DeepLearning\Layers\Linear.vb"
 
     ' Author:
     ' 

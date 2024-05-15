@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6a569d63894b5f99f8e50017c76ef8d, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Persistent/Socket/TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::f6a569d63894b5f99f8e50017c76ef8d, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\TcpClient.vb"
 
     ' Author:
     ' 

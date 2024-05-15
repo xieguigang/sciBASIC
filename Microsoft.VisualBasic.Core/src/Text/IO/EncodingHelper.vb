@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/IO/EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, Microsoft.VisualBasic.Core\src\Text\IO\EncodingHelper.vb"
 
     ' Author:
     ' 

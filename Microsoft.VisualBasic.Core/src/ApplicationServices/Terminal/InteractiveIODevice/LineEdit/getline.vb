@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e4e492fa58a933b1053143eb4e9fe05, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/InteractiveIODevice/LineEdit/getline.vb"
+﻿#Region "Microsoft.VisualBasic::9e4e492fa58a933b1053143eb4e9fe05, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\getline.vb"
 
     ' Author:
     ' 

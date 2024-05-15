@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::172b2b61dcfb7746c362b2c75246a7e1, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/Reflection/Attributes/Column.vb"
+﻿#Region "Microsoft.VisualBasic::172b2b61dcfb7746c362b2c75246a7e1, Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
 
     ' Author:
     ' 

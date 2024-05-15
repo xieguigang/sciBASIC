@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/WebServices/WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::d445cef547ce840494d44dac58c9d12e, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebResult.vb"
 
     ' Author:
     ' 

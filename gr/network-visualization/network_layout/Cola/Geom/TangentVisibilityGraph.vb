@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb2cf44390580071538e1dba2480d62c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/Geom/TangentVisibilityGraph.vb"
+﻿#Region "Microsoft.VisualBasic::fb2cf44390580071538e1dba2480d62c, gr\network-visualization\network_layout\Cola\Geom\TangentVisibilityGraph.vb"
 
     ' Author:
     ' 

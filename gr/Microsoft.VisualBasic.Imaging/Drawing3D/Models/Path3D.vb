@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18b54cd9e6370c6a797d7d65a374da2f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::18b54cd9e6370c6a797d7d65a374da2f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 

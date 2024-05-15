@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b96520dcbb2e87616b54416b362416e1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/RangeModel/IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::b96520dcbb2e87616b54416b362416e1, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 

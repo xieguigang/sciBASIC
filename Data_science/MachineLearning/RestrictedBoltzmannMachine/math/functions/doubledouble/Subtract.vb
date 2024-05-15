@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb2b8478ca1058205047174d5cf9e0a1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/doubledouble/Subtract.vb"
+﻿#Region "Microsoft.VisualBasic::eb2b8478ca1058205047174d5cf9e0a1, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\doubledouble\Subtract.vb"
 
     ' Author:
     ' 

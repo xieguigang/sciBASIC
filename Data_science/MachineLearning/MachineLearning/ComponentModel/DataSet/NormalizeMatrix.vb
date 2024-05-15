@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ab0c18249fff28c8bfe9e648a4295ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::7ab0c18249fff28c8bfe9e648a4295ca, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NormalizeMatrix.vb"
 
     ' Author:
     ' 

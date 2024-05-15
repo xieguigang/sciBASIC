@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/StringSimilarity/IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::e55be13f3c8d0809bcc427b49cb1e3ca, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 

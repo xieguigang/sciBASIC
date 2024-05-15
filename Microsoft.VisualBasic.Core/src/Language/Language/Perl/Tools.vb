@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Perl/Tools.vb"
+﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, Microsoft.VisualBasic.Core\src\Language\Language\Perl\Tools.vb"
 
     ' Author:
     ' 

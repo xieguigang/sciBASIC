@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a4bcc8c8786b6a634dc637c064d5b35, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/LinqExpressiontest.vb"
+﻿#Region "Microsoft.VisualBasic::2a4bcc8c8786b6a634dc637c064d5b35, Microsoft.VisualBasic.Core\test\test\LinqExpressiontest.vb"
 
     ' Author:
     ' 

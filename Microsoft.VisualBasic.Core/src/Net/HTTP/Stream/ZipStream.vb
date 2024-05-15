@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d871669c0eb18149f7ac5217614df636, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Stream/ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::d871669c0eb18149f7ac5217614df636, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\ZipStream.vb"
 
     ' Author:
     ' 

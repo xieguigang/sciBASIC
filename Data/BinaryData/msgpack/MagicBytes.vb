@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9454b6b28d428b6a9a3a76ef6a80360, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//MagicBytes.vb"
+﻿#Region "Microsoft.VisualBasic::b9454b6b28d428b6a9a3a76ef6a80360, Data\BinaryData\msgpack\MagicBytes.vb"
 
     ' Author:
     ' 

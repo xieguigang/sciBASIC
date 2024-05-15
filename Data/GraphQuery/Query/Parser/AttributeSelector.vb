@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0430b886aff8d2fb842e33732490e334, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Query/Parser/AttributeSelector.vb"
+﻿#Region "Microsoft.VisualBasic::0430b886aff8d2fb842e33732490e334, Data\GraphQuery\Query\Parser\AttributeSelector.vb"
 
     ' Author:
     ' 

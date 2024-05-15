@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e924ad3b5077799ccb8c858fd143ccf4, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Paths/Rectangle.vb"
+﻿#Region "Microsoft.VisualBasic::e924ad3b5077799ccb8c858fd143ccf4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Rectangle.vb"
 
     ' Author:
     ' 

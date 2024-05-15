@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b96da5e7643a2f1028e70f7635a2572, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::8b96da5e7643a2f1028e70f7635a2572, Data\BinaryData\BinaryData\ByteBuffer.vb"
 
     ' Author:
     ' 

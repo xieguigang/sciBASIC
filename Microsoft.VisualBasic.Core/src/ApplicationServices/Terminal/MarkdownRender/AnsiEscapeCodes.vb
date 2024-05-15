@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67ba4fade69a9c3a8ec2b2986fbb2f8d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/AnsiEscapeCodes.vb"
+﻿#Region "Microsoft.VisualBasic::67ba4fade69a9c3a8ec2b2986fbb2f8d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiEscapeCodes.vb"
 
     ' Author:
     ' 

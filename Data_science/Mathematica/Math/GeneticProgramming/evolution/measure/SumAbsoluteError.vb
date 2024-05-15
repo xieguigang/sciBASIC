@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dbf6f96b49cfcbbe1a5faf2ef8c7615, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/SumAbsoluteError.vb"
+﻿#Region "Microsoft.VisualBasic::6dbf6f96b49cfcbbe1a5faf2ef8c7615, Data_science\Mathematica\Math\GeneticProgramming\evolution\measure\SumAbsoluteError.vb"
 
     ' Author:
     ' 

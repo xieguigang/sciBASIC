@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9688c1ee2d246d3adeb21e84798208ef, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//FuzzyLogic/Models/Models.vb"
+﻿#Region "Microsoft.VisualBasic::9688c1ee2d246d3adeb21e84798208ef, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\Models.vb"
 
     ' Author:
     ' 

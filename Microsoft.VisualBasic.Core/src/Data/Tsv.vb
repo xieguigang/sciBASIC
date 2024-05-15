@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fdb0a6b31b45946f6afd70be2932d2f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::1fdb0a6b31b45946f6afd70be2932d2f, Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
 
     ' Author:
     ' 

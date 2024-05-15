@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc70a6260265380977e2d461d7b88d61, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//Linear/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fc70a6260265380977e2d461d7b88d61, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
 
     ' Author:
     ' 

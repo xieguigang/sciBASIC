@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a44667e154ca0733667d2c1a681f3e5, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Office/OfficeColorThemes.vb"
+﻿#Region "Microsoft.VisualBasic::8a44667e154ca0733667d2c1a681f3e5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Office\OfficeColorThemes.vb"
 
     ' Author:
     ' 

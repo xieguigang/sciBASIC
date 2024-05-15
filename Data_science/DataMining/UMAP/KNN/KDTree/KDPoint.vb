@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579fa48d582987d3f031c394ca6f24fb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//KNN/KDTree/KDPoint.vb"
+﻿#Region "Microsoft.VisualBasic::579fa48d582987d3f031c394ca6f24fb, Data_science\DataMining\UMAP\KNN\KDTree\KDPoint.vb"
 
     ' Author:
     ' 

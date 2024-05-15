@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7683d13f411374dff211a96cc4c2f6e, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//InternetTime/WinAPI.vb"
+﻿#Region "Microsoft.VisualBasic::e7683d13f411374dff211a96cc4c2f6e, www\Microsoft.VisualBasic.NETProtocol\InternetTime\WinAPI.vb"
 
     ' Author:
     ' 

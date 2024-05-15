@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c76e05306941ee92263cec735060591, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::6c76e05306941ee92263cec735060591, mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 

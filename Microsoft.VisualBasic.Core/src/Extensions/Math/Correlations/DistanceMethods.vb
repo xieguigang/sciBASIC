@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c98e95e2daf60299f56380568c7106, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Correlations/DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::52c98e95e2daf60299f56380568c7106, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 

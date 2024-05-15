@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a51c6fc9d58e07a359066e123a18d9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//Node2Vec/AliasMethod.vb"
+﻿#Region "Microsoft.VisualBasic::67a51c6fc9d58e07a359066e123a18d9, Data_science\MachineLearning\Bootstrapping\Node2Vec\AliasMethod.vb"
 
     ' Author:
     ' 

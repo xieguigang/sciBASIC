@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01cfe022684ce1b8bf09430b16b86c57, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//WordNeuron.vb"
+﻿#Region "Microsoft.VisualBasic::01cfe022684ce1b8bf09430b16b86c57, Data\word2vec\WordNeuron.vb"
 
     ' Author:
     ' 

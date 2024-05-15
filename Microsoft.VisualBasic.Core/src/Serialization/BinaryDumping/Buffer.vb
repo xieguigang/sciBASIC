@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51912bccf8e45edd957f0da4a5f1c13e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BinaryDumping/Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::51912bccf8e45edd957f0da4a5f1c13e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 

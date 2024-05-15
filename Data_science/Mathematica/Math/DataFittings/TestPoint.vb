@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7da5369975bb158fc9590ccf9947006c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//TestPoint.vb"
+﻿#Region "Microsoft.VisualBasic::7da5369975bb158fc9590ccf9947006c, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
 
     ' Author:
     ' 

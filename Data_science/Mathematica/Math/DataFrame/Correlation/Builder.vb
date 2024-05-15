@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1369a0d02b94b2806de21144b8e346ce, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//Correlation/Builder.vb"
+﻿#Region "Microsoft.VisualBasic::1369a0d02b94b2806de21144b8e346ce, Data_science\Mathematica\Math\DataFrame\Correlation\Builder.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/DataFrame/HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 

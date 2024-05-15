@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//test/Module1.vb"
+﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
 
     ' Author:
     ' 

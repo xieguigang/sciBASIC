@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38b0818891c4bf803d15d5d9d02dea2b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::6e614aae571ab76f79b778dd339a1b03, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 923
-    '    Code Lines: 532
+    '   Total Lines: 928
+    '    Code Lines: 536
     ' Comment Lines: 289
-    '   Blank Lines: 102
-    '     File Size: 39.29 KB
+    '   Blank Lines: 103
+    '     File Size: 39.55 KB
 
 
     '     Module KeyValuePairExtensions
@@ -53,7 +53,7 @@
     '                   ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
     '                   XMLModel
     ' 
-    '         Sub: SortByKey, SortByValue
+    '         Sub: Add, SortByKey, SortByValue
     ' 
     ' 
     ' /********************************************************************************/

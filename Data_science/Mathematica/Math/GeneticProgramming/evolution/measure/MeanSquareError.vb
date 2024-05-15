@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544929a4890dddfea821107351eb34ba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//evolution/measure/MeanSquareError.vb"
+﻿#Region "Microsoft.VisualBasic::544929a4890dddfea821107351eb34ba, Data_science\Mathematica\Math\GeneticProgramming\evolution\measure\MeanSquareError.vb"
 
     ' Author:
     ' 

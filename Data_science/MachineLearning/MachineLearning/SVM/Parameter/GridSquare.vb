@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82425df8f9ac5aed02641be5d166f397, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//SVM/Parameter/GridSquare.vb"
+﻿#Region "Microsoft.VisualBasic::82425df8f9ac5aed02641be5d166f397, Data_science\MachineLearning\MachineLearning\SVM\Parameter\GridSquare.vb"
 
     ' Author:
     ' 

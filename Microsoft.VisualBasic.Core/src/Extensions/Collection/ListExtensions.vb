@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92e7ae451f5137bec3edd27f09c82709, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::92e7ae451f5137bec3edd27f09c82709, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 

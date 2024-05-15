@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbedf0252652f4d03e94a8db319af729, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/SharedORM/CLI.vb"
+﻿#Region "Microsoft.VisualBasic::fbedf0252652f4d03e94a8db319af729, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\CLI.vb"
 
     ' Author:
     ' 

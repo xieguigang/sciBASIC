@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6ae6eb69aa8a6b65f849efe066325b5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/Tree/FlatTree.vb"
+﻿#Region "Microsoft.VisualBasic::a6ae6eb69aa8a6b65f849efe066325b5, Data_science\DataMining\UMAP\Components\Tree\FlatTree.vb"
 
     ' Author:
     ' 

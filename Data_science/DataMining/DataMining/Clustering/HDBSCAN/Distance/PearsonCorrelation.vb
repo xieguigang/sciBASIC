@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daf74a53cdaafaedd888669914a670ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/PearsonCorrelation.vb"
+﻿#Region "Microsoft.VisualBasic::daf74a53cdaafaedd888669914a670ca, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\PearsonCorrelation.vb"
 
     ' Author:
     ' 

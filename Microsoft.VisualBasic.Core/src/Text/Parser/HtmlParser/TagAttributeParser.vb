@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec96caa198a36c9665a3d873063f0ccc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/HtmlParser/TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::ec96caa198a36c9665a3d873063f0ccc, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 

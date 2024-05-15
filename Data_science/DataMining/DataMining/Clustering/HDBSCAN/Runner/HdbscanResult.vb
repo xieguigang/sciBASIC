@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a0bbc8ac1e56ade120fa13e75217397, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Runner/HdbscanResult.vb"
+﻿#Region "Microsoft.VisualBasic::0a0bbc8ac1e56ade120fa13e75217397, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Runner\HdbscanResult.vb"
 
     ' Author:
     ' 

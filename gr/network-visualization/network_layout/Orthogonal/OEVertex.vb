@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5886011bc516ba70438fec9e499fdbe5, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/OEVertex.vb"
+﻿#Region "Microsoft.VisualBasic::5886011bc516ba70438fec9e499fdbe5, gr\network-visualization\network_layout\Orthogonal\OEVertex.vb"
 
     ' Author:
     ' 

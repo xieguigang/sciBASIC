@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56cb293f4b305e37cf08aa0416aa0015, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Viridis.vb"
+﻿#Region "Microsoft.VisualBasic::56cb293f4b305e37cf08aa0416aa0015, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Viridis.vb"
 
     ' Author:
     ' 

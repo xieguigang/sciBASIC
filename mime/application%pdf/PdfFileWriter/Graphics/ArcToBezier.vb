@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06d35d986eed3e848dacf655fe2836d4, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Graphics/ArcToBezier.vb"
+﻿#Region "Microsoft.VisualBasic::06d35d986eed3e848dacf655fe2836d4, mime\application%pdf\PdfFileWriter\Graphics\ArcToBezier.vb"
 
     ' Author:
     ' 

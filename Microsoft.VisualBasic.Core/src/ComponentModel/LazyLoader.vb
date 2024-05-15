@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f2492c0796ad85ab891091031fad3f0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::5f2492c0796ad85ab891091031fad3f0, Microsoft.VisualBasic.Core\src\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 

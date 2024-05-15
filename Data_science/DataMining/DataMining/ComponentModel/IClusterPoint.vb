@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eed7515f44e75d6dde5a6d303900c72f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/IClusterPoint.vb"
+﻿#Region "Microsoft.VisualBasic::eed7515f44e75d6dde5a6d303900c72f, Data_science\DataMining\DataMining\ComponentModel\IClusterPoint.vb"
 
     ' Author:
     ' 

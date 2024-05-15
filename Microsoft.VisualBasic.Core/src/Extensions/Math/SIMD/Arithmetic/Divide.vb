@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0fa6db6262c7ab51360b6d295325dbd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Divide.vb"
+﻿#Region "Microsoft.VisualBasic::b0fa6db6262c7ab51360b6d295325dbd, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Divide.vb"
 
     ' Author:
     ' 

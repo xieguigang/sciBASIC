@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76110239d9d3c77396c54835d899ee29, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::76110239d9d3c77396c54835d899ee29, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
 
     ' Author:
     ' 

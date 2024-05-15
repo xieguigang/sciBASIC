@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5bfe3d7cefada0de4f7c68d264e0ce, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/SortByNewIndex.vb"
+﻿#Region "Microsoft.VisualBasic::9b5bfe3d7cefada0de4f7c68d264e0ce, mime\application%pdf\PdfFileWriter\Font\SortByNewIndex.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90f7a030a01f66bebe173399f4302129, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/LinearMoments/GEV.vb"
+﻿#Region "Microsoft.VisualBasic::90f7a030a01f66bebe173399f4302129, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\GEV.vb"
 
     ' Author:
     ' 

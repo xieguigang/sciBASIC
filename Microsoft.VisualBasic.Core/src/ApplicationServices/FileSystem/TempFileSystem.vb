@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::691e08da6cafb964d79d372fe32f8058, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/TempFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::691e08da6cafb964d79d372fe32f8058, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\TempFileSystem.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60d39a262667e6eaaf9b15e3277d4962, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/LayoutField.vb"
+﻿#Region "Microsoft.VisualBasic::60d39a262667e6eaaf9b15e3277d4962, Data\BinaryData\HDF5\structure\LayoutField.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b86dcb5621984a40262d292c2630cb3f, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Document/Elements/InnerPlantText.vb"
+﻿#Region "Microsoft.VisualBasic::b86dcb5621984a40262d292c2630cb3f, mime\text%html\Document\Elements\InnerPlantText.vb"
 
     ' Author:
     ' 

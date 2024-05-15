@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64f323af4af4104fc143d30e42288576, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//DensityPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::64f323af4af4104fc143d30e42288576, Data_science\Visualization\test\DensityPlotTest.vb"
 
     ' Author:
     ' 

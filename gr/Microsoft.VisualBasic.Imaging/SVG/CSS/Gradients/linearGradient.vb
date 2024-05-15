@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de57f0dd8f985f475d53ed6e6ba963b1, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/CSS/Gradients/linearGradient.vb"
+﻿#Region "Microsoft.VisualBasic::de57f0dd8f985f475d53ed6e6ba963b1, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Gradients\linearGradient.vb"
 
     ' Author:
     ' 

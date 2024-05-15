@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3045daa806ea69fd3e897bfcf5c89aa9, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//sourceMap/base64VLQ.vb"
+﻿#Region "Microsoft.VisualBasic::3045daa806ea69fd3e897bfcf5c89aa9, vs_solutions\dev\VisualStudio\sourceMap\base64VLQ.vb"
 
     ' Author:
     ' 

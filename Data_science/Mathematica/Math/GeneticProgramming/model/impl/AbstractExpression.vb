@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c4aefba9f7a2d1b604d31e44c596a2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/AbstractExpression.vb"
+﻿#Region "Microsoft.VisualBasic::32c4aefba9f7a2d1b604d31e44c596a2, Data_science\Mathematica\Math\GeneticProgramming\model\impl\AbstractExpression.vb"
 
     ' Author:
     ' 

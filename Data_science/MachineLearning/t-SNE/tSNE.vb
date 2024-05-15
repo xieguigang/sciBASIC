@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dc71124d97268512d567c00e0d55819, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE//tSNE.vb"
+﻿#Region "Microsoft.VisualBasic::4dc71124d97268512d567c00e0d55819, Data_science\MachineLearning\t-SNE\tSNE.vb"
 
     ' Author:
     ' 

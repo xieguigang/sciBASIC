@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dc1acb63ba04eafcf3b371f704582aa, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/LabelingTest.vb"
+﻿#Region "Microsoft.VisualBasic::0dc1acb63ba04eafcf3b371f704582aa, gr\Microsoft.VisualBasic.Imaging\test\LabelingTest.vb"
 
     ' Author:
     ' 

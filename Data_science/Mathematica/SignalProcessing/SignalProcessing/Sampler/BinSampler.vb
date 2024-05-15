@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29521ef3388eb234bac5313fe88b3b7f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/BinSampler.vb"
+﻿#Region "Microsoft.VisualBasic::29521ef3388eb234bac5313fe88b3b7f, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\BinSampler.vb"
 
     ' Author:
     ' 

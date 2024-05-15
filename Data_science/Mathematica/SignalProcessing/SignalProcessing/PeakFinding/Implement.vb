@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84bd4f053a2a34e258291a29ad82d11d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//PeakFinding/Implement.vb"
+﻿#Region "Microsoft.VisualBasic::84bd4f053a2a34e258291a29ad82d11d, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Implement.vb"
 
     ' Author:
     ' 

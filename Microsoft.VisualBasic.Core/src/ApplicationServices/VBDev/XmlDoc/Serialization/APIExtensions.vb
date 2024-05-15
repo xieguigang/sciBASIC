@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bd69d6cfd51024ea5c96353d5ba9fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/XmlDoc/Serialization/APIExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::83bd69d6cfd51024ea5c96353d5ba9fe, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
 
     ' Author:
     ' 

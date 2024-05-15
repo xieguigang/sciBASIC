@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e0c4afd6bcc94795c3de87747396540, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/Network.vb"
+﻿#Region "Microsoft.VisualBasic::9e0c4afd6bcc94795c3de87747396540, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f65139c3675057aebf2bade890f8619c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//ZScorePlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::f65139c3675057aebf2bade890f8619c, Data_science\Visualization\test\ZScorePlotTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e94f5a3e6241501f8507c645bd360b0, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Objects/Enums/FileWriteVersion.vb"
+﻿#Region "Microsoft.VisualBasic::7e94f5a3e6241501f8507c645bd360b0, Data\BinaryData\SQLite3\Objects\Enums\FileWriteVersion.vb"
 
     ' Author:
     ' 

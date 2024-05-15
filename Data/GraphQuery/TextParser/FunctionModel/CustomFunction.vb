@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e620fadb0bed5b2bd2eb4db3f40186af, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//TextParser/FunctionModel/CustomFunction.vb"
+﻿#Region "Microsoft.VisualBasic::e620fadb0bed5b2bd2eb4db3f40186af, Data\GraphQuery\TextParser\FunctionModel\CustomFunction.vb"
 
     ' Author:
     ' 

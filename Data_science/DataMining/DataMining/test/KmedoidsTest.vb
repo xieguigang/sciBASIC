@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::928207e415a54cd7822190ea41ccd707, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//test/KmedoidsTest.vb"
+﻿#Region "Microsoft.VisualBasic::928207e415a54cd7822190ea41ccd707, Data_science\DataMining\DataMining\test\KmedoidsTest.vb"
 
     ' Author:
     ' 

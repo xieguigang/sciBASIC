@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 

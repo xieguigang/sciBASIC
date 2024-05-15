@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4541d1bbd1fd5c69507ad49892fd6da8, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/Hqx/RgbYuv.vb"
+﻿#Region "Microsoft.VisualBasic::4541d1bbd1fd5c69507ad49892fd6da8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\RgbYuv.vb"
 
     ' Author:
     ' 

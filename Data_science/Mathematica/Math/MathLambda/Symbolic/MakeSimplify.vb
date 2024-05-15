@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc4eee75828a699aad79cd31aebf2652, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/MakeSimplify.vb"
+﻿#Region "Microsoft.VisualBasic::fc4eee75828a699aad79cd31aebf2652, Data_science\Mathematica\Math\MathLambda\Symbolic\MakeSimplify.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47a176099fe8ea7633561d49142e3ac1, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Persistent/Protocols/POST.vb"
+﻿#Region "Microsoft.VisualBasic::47a176099fe8ea7633561d49142e3ac1, www\Microsoft.VisualBasic.NETProtocol\Persistent\Protocols\POST.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8614db7d6e5eb8f70a775b9b93115fa5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::8614db7d6e5eb8f70a775b9b93115fa5, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 

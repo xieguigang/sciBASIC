@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5580a43e00a52df2259ad8c4cd685b3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/XmlAssembly/XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::a5580a43e00a52df2259ad8c4cd685b3, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
 
     ' Author:
     ' 

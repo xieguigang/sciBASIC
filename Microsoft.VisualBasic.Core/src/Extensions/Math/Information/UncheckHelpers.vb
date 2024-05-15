@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae89f686d7e481105d44408dc3ba7fc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Information/UncheckHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::d7aee119c62904e9c7c6105ba85e09d3, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\UncheckHelpers.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 32
+    '   Total Lines: 43
+    '    Code Lines: 37
     ' Comment Lines: 0
-    '   Blank Lines: 5
-    '     File Size: 1.23 KB
+    '   Blank Lines: 6
+    '     File Size: 1.49 KB
 
 
     '     Module UncheckHelpers
     ' 
-    '         Function: ToTruncateInt32, ToTruncateInt64
+    '         Function: SingleToInt32Bits, ToTruncateInt32, ToTruncateInt64, UnsafeTruncateInteger
     ' 
     ' 
     ' /********************************************************************************/

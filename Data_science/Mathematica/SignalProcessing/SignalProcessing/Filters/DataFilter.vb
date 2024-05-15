@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fea55a73a2bdf7d04417b2f29b0e677, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/DataFilter.vb"
+﻿#Region "Microsoft.VisualBasic::2fea55a73a2bdf7d04417b2f29b0e677, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\DataFilter.vb"
 
     ' Author:
     ' 

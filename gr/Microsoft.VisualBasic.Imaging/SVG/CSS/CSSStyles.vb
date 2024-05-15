@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd9924e6d5889c158ac05aa709f829ff, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/CSS/CSSStyles.vb"
+﻿#Region "Microsoft.VisualBasic::cd9924e6d5889c158ac05aa709f829ff, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\CSSStyles.vb"
 
     ' Author:
     ' 

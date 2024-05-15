@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Vector/Class/DoCall.vb"
+﻿#Region "Microsoft.VisualBasic::2be909ef2f2b250086f753b22bff18ab, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
 
     ' Author:
     ' 

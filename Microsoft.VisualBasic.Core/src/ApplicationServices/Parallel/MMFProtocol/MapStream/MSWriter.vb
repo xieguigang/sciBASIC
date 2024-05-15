@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87875128aa281d5755d90adb3b445deb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/MMFProtocol/MapStream/MSWriter.vb"
+﻿#Region "Microsoft.VisualBasic::87875128aa281d5755d90adb3b445deb, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb"
 
     ' Author:
     ' 

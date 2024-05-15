@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75a38d2ae37213a442bae18c4847af09, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//SymbolIndex.vb"
+﻿#Region "Microsoft.VisualBasic::75a38d2ae37213a442bae18c4847af09, Data_science\Mathematica\Math\MathLambda\SymbolIndex.vb"
 
     ' Author:
     ' 

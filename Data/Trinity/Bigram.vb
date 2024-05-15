@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::713273939ca40df842bbd86f21753aea, G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity//Bigram.vb"
+﻿#Region "Microsoft.VisualBasic::713273939ca40df842bbd86f21753aea, Data\Trinity\Bigram.vb"
 
     ' Author:
     ' 

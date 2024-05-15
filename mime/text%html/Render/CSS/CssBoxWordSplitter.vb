@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dcf340b42dd0b324dc0248a10c3b9fb, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssBoxWordSplitter.vb"
+﻿#Region "Microsoft.VisualBasic::0dcf340b42dd0b324dc0248a10c3b9fb, mime\text%html\Render\CSS\CssBoxWordSplitter.vb"
 
     ' Author:
     ' 

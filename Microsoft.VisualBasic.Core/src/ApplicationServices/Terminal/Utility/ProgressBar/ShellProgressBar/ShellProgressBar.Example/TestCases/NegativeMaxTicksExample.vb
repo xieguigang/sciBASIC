@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1615bda73659afef3bc11c603dadad2d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/NegativeMaxTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::1615bda73659afef3bc11c603dadad2d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NegativeMaxTicksExample.vb"
 
     ' Author:
     ' 

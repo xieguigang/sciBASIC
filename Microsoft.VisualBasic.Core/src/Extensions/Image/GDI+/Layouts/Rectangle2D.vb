@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/GDI+/Layouts/Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 

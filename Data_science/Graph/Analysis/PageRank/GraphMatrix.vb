@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fefb68ccd2aa3584166fd672e20a4916, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PageRank/GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::fefb68ccd2aa3584166fd672e20a4916, Data_science\Graph\Analysis\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 

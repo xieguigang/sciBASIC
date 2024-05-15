@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3f75c4df164dd554ab694d461760b5a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/Tag.vb"
+﻿#Region "Microsoft.VisualBasic::b3f75c4df164dd554ab694d461760b5a, mime\text%yaml\1.2\Syntax\Tag.vb"
 
     ' Author:
     ' 

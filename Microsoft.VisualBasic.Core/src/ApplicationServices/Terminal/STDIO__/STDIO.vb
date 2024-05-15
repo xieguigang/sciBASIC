@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::842ede966f066ef8c19a778a952cc508, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/STDIO__/STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::842ede966f066ef8c19a778a952cc508, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\STDIO__\STDIO.vb"
 
     ' Author:
     ' 

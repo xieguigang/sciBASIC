@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d269aac013502f8dd76dd5465580275, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP//LDA/Vocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::4d269aac013502f8dd76dd5465580275, Data_science\NLP\LDA\Vocabulary.vb"
 
     ' Author:
     ' 

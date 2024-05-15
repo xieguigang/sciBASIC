@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f2444cf2296bbe95a601dfb460a552, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/MapperProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::f8f2444cf2296bbe95a601dfb460a552, gr\network-visualization\Visualizer\Styling\MapperProcessor.vb"
 
     ' Author:
     ' 

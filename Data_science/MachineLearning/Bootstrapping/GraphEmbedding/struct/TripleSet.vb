@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aef095a0cceef03b321955f6389f1fda, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleSet.vb"
+﻿#Region "Microsoft.VisualBasic::aef095a0cceef03b321955f6389f1fda, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleSet.vb"
 
     ' Author:
     ' 

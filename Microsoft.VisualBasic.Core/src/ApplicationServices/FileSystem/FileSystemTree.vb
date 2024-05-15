@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7158a0eb4617fb997bc45868f36cfcc9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/FileSystemTree.vb"
+﻿#Region "Microsoft.VisualBasic::7158a0eb4617fb997bc45868f36cfcc9, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\FileSystemTree.vb"
 
     ' Author:
     ' 

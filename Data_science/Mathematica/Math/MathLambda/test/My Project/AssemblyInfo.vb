@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12f22bd2b7833fb1278864ba9430b191, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//test/My Project/AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::12f22bd2b7833fb1278864ba9430b191, Data_science\Mathematica\Math\MathLambda\test\My Project\AssemblyInfo.vb"
 
     ' Author:
     ' 

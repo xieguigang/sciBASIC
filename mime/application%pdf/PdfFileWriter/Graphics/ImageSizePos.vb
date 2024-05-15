@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd59f6fbfab53fe3270199fcc52ba29e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Graphics/ImageSizePos.vb"
+﻿#Region "Microsoft.VisualBasic::fd59f6fbfab53fe3270199fcc52ba29e, mime\application%pdf\PdfFileWriter\Graphics\ImageSizePos.vb"
 
     ' Author:
     ' 

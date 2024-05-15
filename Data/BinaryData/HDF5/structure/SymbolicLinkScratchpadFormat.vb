@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f736e0466b96007ecf87e07c7577052f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/SymbolicLinkScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::f736e0466b96007ecf87e07c7577052f, Data\BinaryData\HDF5\structure\SymbolicLinkScratchpadFormat.vb"
 
     ' Author:
     ' 

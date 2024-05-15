@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c46875aa3c1ab4821f8fadc15fa8c66b, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::b3fdf26f6255e3bbe9c8c3d69a0c071e, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 602
+    '   Total Lines: 611
     '    Code Lines: 286
-    ' Comment Lines: 257
+    ' Comment Lines: 266
     '   Blank Lines: 59
-    '     File Size: 25.19 KB
+    '     File Size: 25.53 KB
 
 
     ' Class BinaryDataWriter

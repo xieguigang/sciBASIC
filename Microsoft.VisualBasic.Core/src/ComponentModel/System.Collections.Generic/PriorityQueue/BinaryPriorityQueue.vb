@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ea121c6ee5b5da0ea643b7db0334da4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/PriorityQueue/BinaryPriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::7ea121c6ee5b5da0ea643b7db0334da4, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb"
 
     ' Author:
     ' 

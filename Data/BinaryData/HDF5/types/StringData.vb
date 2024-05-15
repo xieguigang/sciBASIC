@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75b02da5ab5d30d22e0004527bc8e023, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//types/StringData.vb"
+﻿#Region "Microsoft.VisualBasic::75b02da5ab5d30d22e0004527bc8e023, Data\BinaryData\HDF5\types\StringData.vb"
 
     ' Author:
     ' 

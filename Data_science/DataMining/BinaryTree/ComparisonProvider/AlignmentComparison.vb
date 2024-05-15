@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13031076e28d4842280b3073479610e8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree//ComparisonProvider/AlignmentComparison.vb"
+﻿#Region "Microsoft.VisualBasic::13031076e28d4842280b3073479610e8, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
     ' Author:
     ' 

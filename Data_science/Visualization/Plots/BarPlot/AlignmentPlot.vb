@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86a35c77cc7e1bb5cf07ec9069a458ed, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::86a35c77cc7e1bb5cf07ec9069a458ed, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 

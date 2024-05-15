@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10e0cb594557883c73921ecdd86d4765, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/MMFProtocol/MMFChannel.vb"
+﻿#Region "Microsoft.VisualBasic::10e0cb594557883c73921ecdd86d4765, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb"
 
     ' Author:
     ' 

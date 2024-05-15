@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98ae7eeaa7c39573d6d9503a971814fc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Aggregate/Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::98ae7eeaa7c39573d6d9503a971814fc, Data_science\Mathematica\Math\Math\Scripting\Aggregate\Aggregate.vb"
 
     ' Author:
     ' 

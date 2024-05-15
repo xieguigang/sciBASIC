@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//DependencyGraph/package.json.vb"
+﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, www\githubAPI\DependencyGraph\package.json.vb"
 
     ' Author:
     ' 

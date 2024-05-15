@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::537e2ceb6350f84164a1fafc67df66bf, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::4dddf44e68aa7973a3c6a1599730ba37, Data_science\DataMining\DataMining\AprioriRules\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 59
-    ' Comment Lines: 3
-    '   Blank Lines: 10
-    '     File Size: 3.31 KB
+    '   Total Lines: 85
+    '    Code Lines: 50
+    ' Comment Lines: 23
+    '   Blank Lines: 12
+    '     File Size: 3.57 KB
 
 
     '     Delegate Function
@@ -46,7 +46,7 @@
     ' 
     '     Module AprioriExport
     ' 
-    '         Function: (+3 Overloads) AnalysisTransactions
+    '         Function: (+2 Overloads) AnalysisTransactions
     ' 
     ' 
     ' 
@@ -57,72 +57,85 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules
 
-    Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of String), transactions$()) As Output
+    Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of Item), transactions As ItemSet()) As Output
 
     ''' <summary>
     ''' ``AprioriRules`` API export module
     ''' </summary>
+    ''' 
+    <HideModuleName>
     Public Module AprioriExport
 
-        ReadOnly aprioriDefaultWorker As [Default](Of  AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
+        ReadOnly aprioriDefaultWorker As [Default](Of AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="transactions"></param>
+        ''' <param name="items"></param>
+        ''' <param name="minSupport">``(0,1]``</param>
+        ''' <param name="minConfidence">``(0,1]``</param>
+        ''' <param name="minlen">min item count in the generated strong rule</param>
+        ''' <param name="impl"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function AnalysisTransactions(transactions As IEnumerable(Of String),
-                                             items As Char(),
-                                             Optional minSupport# = 1,
-                                             Optional minConfidence# = 1,
+        Public Function AnalysisTransactions(transactions As IEnumerable(Of ItemSet),
+                                             items As Item(),
+                                             Optional minSupport# = 0.01,
+                                             Optional minConfidence# = 0.01,
+                                             Optional minlen As Integer = 2,
                                              Optional impl As AprioriPredictions = Nothing) As Output
 
-            Dim itemList = (From ch In items Select str = ch.ToString Distinct).ToArray
             Dim output As Output = (impl Or aprioriDefaultWorker)(
-                minSupport:=minSupport / 100,
-                minConfidence:=minConfidence / 100,
-                items:=itemList,
+                minSupport:=minSupport,
+                minConfidence:=minConfidence,
+                items:=items,
                 transactions:=transactions.ToArray()
             )
+
+            output.StrongRules = output.StrongRules _
+                .Where(Function(r) r.length >= minlen) _
+                .OrderByDescending(Function(r) r.Confidence) _
+                .AsList
+
             Return output
         End Function
 
-        <Extension>
-        Public Function AnalysisTransactions(transactions As IEnumerable(Of String),
-                                             Optional minSupport# = 1,
-                                             Optional minConfidence# = 1,
-                                             Optional impl As AprioriPredictions = Nothing) As Output
-
-            Dim data$() = transactions.ToArray
-            Dim items = (From transaction In data Select transaction.AsEnumerable) _
-                .IteratesALL _
-                .Distinct _
-                .Select(Function(c) CStr(c)) _
-                .ToArray
-            Dim output As Output = (impl Or aprioriDefaultWorker)(minSupport / 100, minConfidence / 100, items, transactions:=data)
-            Return output
-        End Function
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="transactions"></param>
+        ''' <param name="minSupport#">``(0,1]``</param>
+        ''' <param name="minConfidence">``(0,1]``</param>
+        ''' <param name="impl"></param>
+        ''' <param name="minlen">min item count in the generated strong rule</param>
+        ''' <returns></returns>
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of Transaction),
-                                             Optional minSupport# = 1,
-                                             Optional minConfidence# = 1,
-                                             Optional impl As AprioriPredictions = Nothing) As (encoding As Encoding, rules As Output)
-            With transactions.ToArray
-                Dim encoding As New Encoding(.AllItems)
-                Dim out = encoding _
-                    .TransactionEncoding(.ByRef) _
-                    .AnalysisTransactions(
-                        items:=encoding.AllCodes,
-                        minSupport:=minSupport,
-                        minConfidence:=minConfidence,
-                        impl:=impl
-                    )
+                                             Optional minSupport# = 0.01,
+                                             Optional minConfidence# = 0.01,
+                                             Optional minlen As Integer = 2,
+                                             Optional impl As AprioriPredictions = Nothing) As Output
 
-                Return (encoding, out)
-            End With
+            Dim trans_pool As Transaction() = transactions.ToArray
+            Dim encoding As New Encoding(trans_pool.AllItems)
+            Dim out As Output = encoding _
+                .TransactionEncoding(trans_pool) _
+                .AnalysisTransactions(
+                    items:=encoding.AllItems,
+                    minSupport:=minSupport,
+                    minConfidence:=minConfidence,
+                    impl:=impl,
+                    minlen:=minlen
+                )
+
+            Return out
         End Function
+
     End Module
 End Namespace

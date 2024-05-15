@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::313e3d556a3fb5524e6c53ff0045fef3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/DataView.vb"
+﻿#Region "Microsoft.VisualBasic::313e3d556a3fb5524e6c53ff0045fef3, Microsoft.VisualBasic.Core\src\My\JavaScript\DataView.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14575111acb769e54ce30377d1c624d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE//CostFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b14575111acb769e54ce30377d1c624d, Data_science\MachineLearning\t-SNE\CostFunction.vb"
 
     ' Author:
     ' 

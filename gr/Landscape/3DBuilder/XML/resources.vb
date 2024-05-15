@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd8f660e1491d5bb44fc0a9fc1c75801, G:/GCModeller/src/runtime/sciBASIC#/gr/Landscape//3DBuilder/XML/resources.vb"
+﻿#Region "Microsoft.VisualBasic::fd8f660e1491d5bb44fc0a9fc1c75801, gr\Landscape\3DBuilder\XML\resources.vb"
 
     ' Author:
     ' 

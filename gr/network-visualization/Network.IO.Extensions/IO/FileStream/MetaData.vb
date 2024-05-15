@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed14054e733e8383d7695ad915c60726, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/FileStream/MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::ed14054e733e8383d7695ad915c60726, gr\network-visualization\Network.IO.Extensions\IO\FileStream\MetaData.vb"
 
     ' Author:
     ' 

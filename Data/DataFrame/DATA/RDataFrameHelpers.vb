@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a94179f171cb5cf078e77708f9af12d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/RDataFrameHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1a94179f171cb5cf078e77708f9af12d, Data\DataFrame\DATA\RDataFrameHelpers.vb"
 
     ' Author:
     ' 

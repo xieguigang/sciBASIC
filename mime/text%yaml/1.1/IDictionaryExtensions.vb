@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::879901a8bb9d27ea3c6cc6a202105ce3, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/IDictionaryExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::879901a8bb9d27ea3c6cc6a202105ce3, mime\text%yaml\1.1\IDictionaryExtensions.vb"
 
     ' Author:
     ' 

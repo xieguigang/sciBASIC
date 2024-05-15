@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e7f55177d63fdf2b40f29d1db8eadd4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/LabelEvaluate/ChangePoint.vb"
+﻿#Region "Microsoft.VisualBasic::2e7f55177d63fdf2b40f29d1db8eadd4, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\ChangePoint.vb"
 
     ' Author:
     ' 

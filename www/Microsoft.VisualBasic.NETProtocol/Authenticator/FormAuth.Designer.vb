@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27553b7b1045bacc5103bffa912f6feb, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Authenticator/FormAuth.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::27553b7b1045bacc5103bffa912f6feb, www\Microsoft.VisualBasic.NETProtocol\Authenticator\FormAuth.Designer.vb"
 
     ' Author:
     ' 

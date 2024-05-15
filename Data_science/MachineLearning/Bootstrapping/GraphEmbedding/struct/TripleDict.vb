@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a60e78d2c27791699d7a9d64cb41181, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping//GraphEmbedding/struct/TripleDict.vb"
+﻿#Region "Microsoft.VisualBasic::3a60e78d2c27791699d7a9d64cb41181, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleDict.vb"
 
     ' Author:
     ' 

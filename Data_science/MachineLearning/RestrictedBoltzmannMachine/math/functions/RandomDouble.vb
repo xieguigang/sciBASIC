@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67d8aab58485e7e4b83d5941e084cce0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/RandomDouble.vb"
+﻿#Region "Microsoft.VisualBasic::67d8aab58485e7e4b83d5941e084cce0, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\RandomDouble.vb"
 
     ' Author:
     ' 

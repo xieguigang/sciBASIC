@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c118018626760676a3fc9601c964582, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/OSVersionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::3c118018626760676a3fc9601c964582, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\OSVersionInfo.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19550160d12739be889a364350134ee8, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/indexTest.vb"
+﻿#Region "Microsoft.VisualBasic::19550160d12739be889a364350134ee8, Microsoft.VisualBasic.Core\test\test\indexTest.vb"
 
     ' Author:
     ' 

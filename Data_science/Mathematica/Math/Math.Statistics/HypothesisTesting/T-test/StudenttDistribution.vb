@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8c0b796c214a732aceb241a3df00800, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/T-test/StudenttDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::f8c0b796c214a732aceb241a3df00800, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\StudenttDistribution.vb"
 
     ' Author:
     ' 

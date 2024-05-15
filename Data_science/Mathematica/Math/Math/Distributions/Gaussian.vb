@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b478c694e6194604c2e084ae450940f7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Gaussian.vb"
+﻿#Region "Microsoft.VisualBasic::e3e48f0a5956c5ce3874082df4304fce, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 27
     ' Comment Lines: 25
     '   Blank Lines: 6
-    '     File Size: 2.29 KB
+    '     File Size: 2.28 KB
 
 
     '     Module Gaussian

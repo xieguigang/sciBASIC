@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d2850ea66d6cabfaea739801e9eac2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/KaplanMeierEstimator//SplitStrategies/T2_TopNPercentSplitStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::58d2850ea66d6cabfaea739801e9eac2, Data_science\Mathematica\Math\KaplanMeierEstimator\SplitStrategies\T2_TopNPercentSplitStrategy.vb"
 
     ' Author:
     ' 

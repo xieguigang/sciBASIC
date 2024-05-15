@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9bbad5eb163605d003d738d3f7148ab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//NeedlemanWunsch/GlobalAlign.vb"
+﻿#Region "Microsoft.VisualBasic::c9bbad5eb163605d003d738d3f7148ab, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GlobalAlign.vb"
 
     ' Author:
     ' 

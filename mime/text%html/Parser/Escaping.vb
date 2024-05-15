@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7ce9547eb8fd742cf239f8912399202, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Parser/Escaping.vb"
+﻿#Region "Microsoft.VisualBasic::a7ce9547eb8fd742cf239f8912399202, mime\text%html\Parser\Escaping.vb"
 
     ' Author:
     ' 

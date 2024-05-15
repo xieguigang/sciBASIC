@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ef35d3c1daed44617a0a3923f04e62, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/LayerTypes.vb"
+﻿#Region "Microsoft.VisualBasic::90ef35d3c1daed44617a0a3923f04e62, Data_science\MachineLearning\DeepLearning\CNN\LayerTypes.vb"
 
     ' Author:
     ' 

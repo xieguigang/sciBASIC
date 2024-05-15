@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ccaf427df832fba69d3b7a1edb74305, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//LMA.vb"
+﻿#Region "Microsoft.VisualBasic::5ccaf427df832fba69d3b7a1edb74305, Data_science\Mathematica\Math\DataFittings\LMA.vb"
 
     ' Author:
     ' 

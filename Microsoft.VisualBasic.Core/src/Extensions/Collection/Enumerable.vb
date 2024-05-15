@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6397817a47a85186942ecdb4c3f4f08c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::6397817a47a85186942ecdb4c3f4f08c, Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 

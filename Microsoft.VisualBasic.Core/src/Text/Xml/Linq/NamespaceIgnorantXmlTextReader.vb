@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Linq/NamespaceIgnorantXmlTextReader.vb"
+﻿#Region "Microsoft.VisualBasic::1dd2d81772c9463a25d2615ef944eb6f, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\NamespaceIgnorantXmlTextReader.vb"
 
     ' Author:
     ' 

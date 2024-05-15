@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6df1f784c86502359b065e63c0911c6a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Data/SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::6df1f784c86502359b065e63c0911c6a, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 

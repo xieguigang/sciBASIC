@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21b606b1226b294efb6ef4c10082b3bb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Indexer.vb"
+﻿#Region "Microsoft.VisualBasic::21b606b1226b294efb6ef4c10082b3bb, Microsoft.VisualBasic.Core\src\Language\Linq\Indexer.vb"
 
     ' Author:
     ' 

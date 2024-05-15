@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82bf4452f78ec43a77b4048934b42c52, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/BackErrorPropagation.vb"
+﻿#Region "Microsoft.VisualBasic::82bf4452f78ec43a77b4048934b42c52, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\learn\BackErrorPropagation.vb"
 
     ' Author:
     ' 

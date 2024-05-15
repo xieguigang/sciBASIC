@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d239073c2fbc6b9a91ef3df001b58e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/DefaultValue/BooleanAssert.vb"
+﻿#Region "Microsoft.VisualBasic::58d239073c2fbc6b9a91ef3df001b58e, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\BooleanAssert.vb"
 
     ' Author:
     ' 

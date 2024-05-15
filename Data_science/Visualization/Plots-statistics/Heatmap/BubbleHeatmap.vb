@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::702fe78566c47381def9e6c4c2a8dd8f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//Heatmap/BubbleHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::702fe78566c47381def9e6c4c2a8dd8f, Data_science\Visualization\Plots-statistics\Heatmap\BubbleHeatmap.vb"
 
     ' Author:
     ' 

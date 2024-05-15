@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2b58862d64fb542fc56e70f154d98a2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/LQuerySchedule/TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::b2b58862d64fb542fc56e70f154d98a2, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 

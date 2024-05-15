@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3156fb0868cd0be2c2da152b5023fc, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/base/SlideWindow/SlideWindow.vb"
+﻿#Region "Microsoft.VisualBasic::7a3156fb0868cd0be2c2da152b5023fc, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
 
     ' Author:
     ' 

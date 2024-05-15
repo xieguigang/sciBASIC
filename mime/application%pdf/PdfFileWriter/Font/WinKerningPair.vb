@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca3512461bf42e0d47f98332b399dadc, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Font/WinKerningPair.vb"
+﻿#Region "Microsoft.VisualBasic::ca3512461bf42e0d47f98332b399dadc, mime\application%pdf\PdfFileWriter\Font\WinKerningPair.vb"
 
     ' Author:
     ' 

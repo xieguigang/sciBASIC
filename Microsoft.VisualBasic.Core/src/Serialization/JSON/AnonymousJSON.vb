@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ced27b770225ef4247666144a2b8fdb1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::ced27b770225ef4247666144a2b8fdb1, Microsoft.VisualBasic.Core\src\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32e10c9bd83ae9824a0744ef74c27c2e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Randomizer//FastRandom/IProvideRandomValues.vb"
+﻿#Region "Microsoft.VisualBasic::32e10c9bd83ae9824a0744ef74c27c2e, Data_science\Mathematica\Math\Randomizer\FastRandom\IProvideRandomValues.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/Groups/GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 

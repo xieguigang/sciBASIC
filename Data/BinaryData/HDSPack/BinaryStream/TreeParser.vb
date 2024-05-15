@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5021cb21334bb902d6d727c27963d906, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//BinaryStream/TreeParser.vb"
+﻿#Region "Microsoft.VisualBasic::5021cb21334bb902d6d727c27963d906, Data\BinaryData\HDSPack\BinaryStream\TreeParser.vb"
 
     ' Author:
     ' 

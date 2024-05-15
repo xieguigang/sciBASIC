@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3118e430a0cff687ee0a78f2586b385c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::3118e430a0cff687ee0a78f2586b385c, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\Debugger.vb"
 
     ' Author:
     ' 

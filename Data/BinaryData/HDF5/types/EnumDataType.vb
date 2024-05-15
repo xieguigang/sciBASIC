@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3cb10a192ce0db76c45d36cabd4a1e1, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//types/EnumDataType.vb"
+﻿#Region "Microsoft.VisualBasic::a3cb10a192ce0db76c45d36cabd4a1e1, Data\BinaryData\HDF5\types\EnumDataType.vb"
 
     ' Author:
     ' 

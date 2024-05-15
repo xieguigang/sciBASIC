@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01cf1e22edce052ce6778ff0ff15ca07, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/NumberEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::01cf1e22edce052ce6778ff0ff15ca07, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberEqualityComparer.vb"
 
     ' Author:
     ' 

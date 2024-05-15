@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::702b7b2e9b71f55aaa4b1cc20e0a00c5, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Threads/ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::702b7b2e9b71f55aaa4b1cc20e0a00c5, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 

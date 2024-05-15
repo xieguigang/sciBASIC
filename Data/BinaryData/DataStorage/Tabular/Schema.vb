@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40af21946cd4b380029b0d0c4e50e47f, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/Schema.vb"
+﻿#Region "Microsoft.VisualBasic::40af21946cd4b380029b0d0c4e50e47f, Data\BinaryData\DataStorage\Tabular\Schema.vb"
 
     ' Author:
     ' 

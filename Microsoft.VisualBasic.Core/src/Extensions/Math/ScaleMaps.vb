@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c9cf6cdeb99f34d1da941d00f7786fe, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/ScaleMaps.vb"
+﻿#Region "Microsoft.VisualBasic::9c9cf6cdeb99f34d1da941d00f7786fe, Microsoft.VisualBasic.Core\src\Extensions\Math\ScaleMaps.vb"
 
     ' Author:
     ' 

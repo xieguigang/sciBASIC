@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00be1d6d919b48e02d8de045b9739b5a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/Framework/IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::00be1d6d919b48e02d8de045b9739b5a, Microsoft.VisualBasic.Core\src\My\Framework\IOHandler.vb"
 
     ' Author:
     ' 

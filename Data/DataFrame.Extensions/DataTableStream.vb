@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4fb8cf71b662cab31109ad7ac8db3a7, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//DataTableStream.vb"
+﻿#Region "Microsoft.VisualBasic::c4fb8cf71b662cab31109ad7ac8db3a7, Data\DataFrame.Extensions\DataTableStream.vb"
 
     ' Author:
     ' 

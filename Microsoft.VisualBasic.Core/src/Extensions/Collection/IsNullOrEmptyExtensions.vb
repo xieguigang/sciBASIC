@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::185ac18f571a872caf274da2a2d91651, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::185ac18f571a872caf274da2a2d91651, Microsoft.VisualBasic.Core\src\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd41909ac7af4e0011cea5f18d0bc056, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Python/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::dd41909ac7af4e0011cea5f18d0bc056, Microsoft.VisualBasic.Core\src\Language\Language\Python\NamespaceDoc.vb"
 
     ' Author:
     ' 

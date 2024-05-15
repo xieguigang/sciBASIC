@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c4c0936ddd8aeecd3741d069e56dbf6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::4c4c0936ddd8aeecd3741d069e56dbf6, Data_science\DataMining\DataMining\Evaluation\NamespaceDoc.vb"
 
     ' Author:
     ' 

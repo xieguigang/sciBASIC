@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e9cc85d88a634488df990b70e6a31a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/Formatter/JsonFormatterStrategyContext.vb"
+﻿#Region "Microsoft.VisualBasic::60e9cc85d88a634488df990b70e6a31a, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\JsonFormatterStrategyContext.vb"
 
     ' Author:
     ' 

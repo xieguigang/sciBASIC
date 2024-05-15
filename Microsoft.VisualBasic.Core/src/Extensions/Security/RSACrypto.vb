@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Security/RSACrypto.vb"
+﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, Microsoft.VisualBasic.Core\src\Extensions\Security\RSACrypto.vb"
 
     ' Author:
     ' 

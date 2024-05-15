@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba28388678cc39dee2b865c7423830fa, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/MsgBoxStyle.vb"
+﻿#Region "Microsoft.VisualBasic::ba28388678cc39dee2b865c7423830fa, Microsoft.VisualBasic.Core\src\Extensions\MsgBoxStyle.vb"
 
     ' Author:
     ' 

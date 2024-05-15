@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d4fa4484d02cfff3fdadb3b5908c10c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::1d4fa4484d02cfff3fdadb3b5908c10c, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 

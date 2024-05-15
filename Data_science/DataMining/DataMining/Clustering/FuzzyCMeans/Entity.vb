@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b667d85dd15bb1057b1ba005d05e9f66, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/FuzzyCMeans/Entity.vb"
+﻿#Region "Microsoft.VisualBasic::b667d85dd15bb1057b1ba005d05e9f66, Data_science\DataMining\DataMining\Clustering\FuzzyCMeans\Entity.vb"
 
     ' Author:
     ' 

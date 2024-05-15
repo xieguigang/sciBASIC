@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e0c689b978f381c65b0f5aad7b4f226, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/Louvain/Edge.vb"
+﻿#Region "Microsoft.VisualBasic::7e0c689b978f381c65b0f5aad7b4f226, Data_science\Graph\Analysis\Louvain\Edge.vb"
 
     ' Author:
     ' 

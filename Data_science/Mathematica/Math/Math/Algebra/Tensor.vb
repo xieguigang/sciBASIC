@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dfbeebf282663b7f3aef2899d4b0eb6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::8dfbeebf282663b7f3aef2899d4b0eb6, Data_science\Mathematica\Math\Math\Algebra\Tensor.vb"
 
     ' Author:
     ' 

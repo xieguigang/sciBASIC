@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57a6d00e6b220b9ecbaed37a203c9e4e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//MathML/Expression/LambdaExpression.vb"
+﻿#Region "Microsoft.VisualBasic::57a6d00e6b220b9ecbaed37a203c9e4e, mime\application%xml\MathML\Expression\LambdaExpression.vb"
 
     ' Author:
     ' 

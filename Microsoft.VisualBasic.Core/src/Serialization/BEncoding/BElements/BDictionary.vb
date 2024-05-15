@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e609cc4628ddde42a5d217fd7e81775, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BElements/BDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::8e609cc4628ddde42a5d217fd7e81775, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BDictionary.vb"
 
     ' Author:
     ' 

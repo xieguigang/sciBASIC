@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::760f40fe4f1ed74133d713b3ee081bf1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::760f40fe4f1ed74133d713b3ee081bf1, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 

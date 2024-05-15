@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c05213e2e579f274491f78d88e79b431, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::c05213e2e579f274491f78d88e79b431, Data_science\MachineLearning\xgboost\TGBoost\TreeNode.vb"
 
     ' Author:
     ' 

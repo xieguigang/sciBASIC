@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d47d48bd0cfa2ef00ad1fa9fe6a86ff, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMAlgorithm/Bayes.vb"
+﻿#Region "Microsoft.VisualBasic::4d47d48bd0cfa2ef00ad1fa9fe6a86ff, Data_science\DataMining\HMM\Algorithm\HMMAlgorithm\Bayes.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f524fbb68291258c1f6914b7fa502e06, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/Outlining/Class1.vb"
+﻿#Region "Microsoft.VisualBasic::f524fbb68291258c1f6914b7fa502e06, Data\DataFrame\test\Outlining\Class1.vb"
 
     ' Author:
     ' 

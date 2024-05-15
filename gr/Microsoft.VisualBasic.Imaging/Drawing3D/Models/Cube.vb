@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9370de73bb561e603f3933fe0934432a, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Cube.vb"
+﻿#Region "Microsoft.VisualBasic::9370de73bb561e603f3933fe0934432a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
 
     ' Author:
     ' 

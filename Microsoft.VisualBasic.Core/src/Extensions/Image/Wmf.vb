@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2161a71ba6b42c85a08f17161cb26299, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::2161a71ba6b42c85a08f17161cb26299, Microsoft.VisualBasic.Core\src\Extensions\Image\Wmf.vb"
 
     ' Author:
     ' 

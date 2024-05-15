@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93b12635b715e4be73e1991fa1bde011, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//InternalHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::93b12635b715e4be73e1991fa1bde011, Data_science\Mathematica\Math\DataFrame\InternalHelpers.vb"
 
     ' Author:
     ' 

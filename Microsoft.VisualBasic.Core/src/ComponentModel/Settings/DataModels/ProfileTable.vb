@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25116c411d3081067fe2931bf057c3b6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/DataModels/ProfileTable.vb"
+﻿#Region "Microsoft.VisualBasic::25116c411d3081067fe2931bf057c3b6, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\DataModels\ProfileTable.vb"
 
     ' Author:
     ' 

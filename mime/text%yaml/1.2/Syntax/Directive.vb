@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7dba7f49e2fcca27a0e385727cd04b6, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.2/Syntax/Directive.vb"
+﻿#Region "Microsoft.VisualBasic::f7dba7f49e2fcca27a0e385727cd04b6, mime\text%yaml\1.2\Syntax\Directive.vb"
 
     ' Author:
     ' 

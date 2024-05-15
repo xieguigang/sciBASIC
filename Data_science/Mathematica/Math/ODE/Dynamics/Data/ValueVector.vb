@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c7c5d6727043c557dae717be2518ceb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//Dynamics/Data/ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::0c7c5d6727043c557dae717be2518ceb, Data_science\Mathematica\Math\ODE\Dynamics\Data\ValueVector.vb"
 
     ' Author:
     ' 

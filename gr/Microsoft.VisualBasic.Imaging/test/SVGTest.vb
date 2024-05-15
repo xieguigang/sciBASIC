@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c893d313c5e8914106eceda10b4fa30, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/SVGTest.vb"
+﻿#Region "Microsoft.VisualBasic::2c893d313c5e8914106eceda10b4fa30, gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79be4bf930733f918300519c34d6f175, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/PlateRectangle.vb"
+﻿#Region "Microsoft.VisualBasic::79be4bf930733f918300519c34d6f175, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\PlateRectangle.vb"
 
     ' Author:
     ' 

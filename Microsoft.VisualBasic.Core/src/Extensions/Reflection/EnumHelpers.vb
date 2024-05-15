@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 

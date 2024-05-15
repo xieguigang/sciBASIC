@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5405833bab8d1314ab3022bfc834a46, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::c5405833bab8d1314ab3022bfc834a46, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 

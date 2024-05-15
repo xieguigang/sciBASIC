@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::067f9367f812385e656985211acdf33d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/MetaData/GenericMeta.vb"
+﻿#Region "Microsoft.VisualBasic::067f9367f812385e656985211acdf33d, Data\DataFrame\IO\MetaData\GenericMeta.vb"
 
     ' Author:
     ' 

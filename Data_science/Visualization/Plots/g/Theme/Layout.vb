@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecc78af885834651cb82e4251c33af01, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Theme/Layout.vb"
+﻿#Region "Microsoft.VisualBasic::ecc78af885834651cb82e4251c33af01, Data_science\Visualization\Plots\g\Theme\Layout.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acb3f4c657693f3f83734bd80f7d14ff, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Assert/AssertEqualsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::acb3f4c657693f3f83734bd80f7d14ff, Microsoft.VisualBasic.Core\src\Language\Linq\Assert\AssertEqualsExtensions.vb"
 
     ' Author:
     ' 

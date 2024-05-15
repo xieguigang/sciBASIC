@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1bb407a8f47baa7e7b319f4402731b7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//Examples/IndeterminateChildrenNoCollapse.vb"
+﻿#Region "Microsoft.VisualBasic::c1bb407a8f47baa7e7b319f4402731b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\Examples\IndeterminateChildrenNoCollapse.vb"
 
     ' Author:
     ' 

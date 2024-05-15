@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b5bb278e9cc7e9e483c1e377eaae6ea, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/LogTricks.vb"
+﻿#Region "Microsoft.VisualBasic::9b5bb278e9cc7e9e483c1e377eaae6ea, Microsoft.VisualBasic.Core\src\Language\Language\Java\LogTricks.vb"
 
     ' Author:
     ' 

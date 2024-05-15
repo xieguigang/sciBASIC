@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86c3798794d16153fed93a164beffd05, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Fractions/RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::86c3798794d16153fed93a164beffd05, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 

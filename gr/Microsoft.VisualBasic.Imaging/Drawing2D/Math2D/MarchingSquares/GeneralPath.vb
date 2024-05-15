@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7085476f7f5e7707085f4bf204557d64, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/MarchingSquares/GeneralPath.vb"
+﻿#Region "Microsoft.VisualBasic::7085476f7f5e7707085f4bf204557d64, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
 
     ' Author:
     ' 

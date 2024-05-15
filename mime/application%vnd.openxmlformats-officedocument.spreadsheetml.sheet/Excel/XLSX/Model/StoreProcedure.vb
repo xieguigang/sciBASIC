@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46738daeaf8739828721c95f7440b879, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/Model/StoreProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::46738daeaf8739828721c95f7440b879, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Model\StoreProcedure.vb"
 
     ' Author:
     ' 

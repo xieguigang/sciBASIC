@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a842837602250c308519748738e05e6d, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//IO/Generic/DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::337fd3c300d9c36596f0e67870f51ee4, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 229
+    '   Total Lines: 231
     '    Code Lines: 134
-    ' Comment Lines: 69
+    ' Comment Lines: 71
     '   Blank Lines: 26
-    '     File Size: 9.71 KB
+    '     File Size: 9.75 KB
 
 
     '     Class DataSet

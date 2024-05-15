@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3027b843c983021fe8daff25ac82e847, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/FileSystem/ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3027b843c983021fe8daff25ac82e847, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
 
     ' Author:
     ' 

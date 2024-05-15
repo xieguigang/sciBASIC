@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3995fd60face0724f4ba5557e5393a6e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/hqx_test.vb"
+﻿#Region "Microsoft.VisualBasic::3995fd60face0724f4ba5557e5393a6e, gr\Microsoft.VisualBasic.Imaging\test\hqx_test.vb"
 
     ' Author:
     ' 

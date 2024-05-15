@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abb1f44460101a4c04d6f44e10d206a9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::abb1f44460101a4c04d6f44e10d206a9, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41081eac9d8b2576f3b6f8cc89c82140, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/BinaryDateTimeFormat.vb"
+﻿#Region "Microsoft.VisualBasic::41081eac9d8b2576f3b6f8cc89c82140, Data\BinaryData\BinaryData\Stream\BinaryDateTimeFormat.vb"
 
     ' Author:
     ' 

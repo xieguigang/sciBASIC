@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31fa0cd6ac08db181a93bd8a2614d2c9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/VisualStudioPreviews.vb"
+﻿#Region "Microsoft.VisualBasic::31fa0cd6ac08db181a93bd8a2614d2c9, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\VisualStudioPreviews.vb"
 
     ' Author:
     ' 

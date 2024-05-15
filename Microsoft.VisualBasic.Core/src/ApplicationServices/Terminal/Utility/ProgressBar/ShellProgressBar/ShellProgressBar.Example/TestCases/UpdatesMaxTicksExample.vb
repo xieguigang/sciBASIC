@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b754aeb6cf72d6c69ce7aefe287edd35, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/UpdatesMaxTicksExample.vb"
+﻿#Region "Microsoft.VisualBasic::b754aeb6cf72d6c69ce7aefe287edd35, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\UpdatesMaxTicksExample.vb"
 
     ' Author:
     ' 

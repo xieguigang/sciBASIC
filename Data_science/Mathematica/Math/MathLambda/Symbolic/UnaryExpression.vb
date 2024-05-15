@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::559bd4389a172c80f4756d87dbe2fdc4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/UnaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::559bd4389a172c80f4756d87dbe2fdc4, Data_science\Mathematica\Math\MathLambda\Symbolic\UnaryExpression.vb"
 
     ' Author:
     ' 

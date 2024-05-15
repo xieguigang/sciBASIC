@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Graph/GraphTree.vb"
+﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
 
     ' Author:
     ' 

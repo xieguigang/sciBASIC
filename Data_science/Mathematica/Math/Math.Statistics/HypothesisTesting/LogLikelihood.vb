@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbad7ee164ecfc13ba78d7a6d0651a8e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/LogLikelihood.vb"
+﻿#Region "Microsoft.VisualBasic::bbad7ee164ecfc13ba78d7a6d0651a8e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\LogLikelihood.vb"
 
     ' Author:
     ' 

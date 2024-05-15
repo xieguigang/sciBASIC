@@ -1,4 +1,73 @@
-﻿Imports System.Runtime.InteropServices
+﻿#Region "Microsoft.VisualBasic::1dabcc2ac1448d272a3e27174fa1db8a, Data\BinaryData\Feather\Row.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 502
+    '    Code Lines: 287
+    ' Comment Lines: 127
+    '   Blank Lines: 88
+    '     File Size: 24.82 KB
+
+
+    ' Class RowValueEnumerator
+    ' 
+    '     Properties: Current, CurrentProp
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MoveNext
+    ' 
+    '     Sub: Dispose, Reset
+    ' 
+    ' Class Row
+    ' 
+    '     Properties: Index, Length
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Equals, GetEnumerator, GetEnumerator1, GetEnumerator2, GetHashCode
+    '               GetRange, (+8 Overloads) Map, ToArray, ToString, (+4 Overloads) TryGetValue
+    '               UnsafeGetTranslated
+    ' 
+    '     Sub: (+2 Overloads) GetRange, ToArray
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
@@ -500,3 +569,4 @@ Public Class Row
         Return value.UnsafeCast(Of T)(category)
     End Function
 End Class
+

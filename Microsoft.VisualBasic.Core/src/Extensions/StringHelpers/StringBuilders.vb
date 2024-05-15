@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/StringHelpers/StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 

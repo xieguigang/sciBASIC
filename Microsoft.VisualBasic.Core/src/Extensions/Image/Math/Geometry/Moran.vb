@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a2d40d034a7b96e632a2820ab82685, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Geometry/Moran.vb"
+﻿#Region "Microsoft.VisualBasic::41a2d40d034a7b96e632a2820ab82685, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Geometry\Moran.vb"
 
     ' Author:
     ' 

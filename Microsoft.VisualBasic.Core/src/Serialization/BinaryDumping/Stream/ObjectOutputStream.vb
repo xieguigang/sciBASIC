@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7223f7508fd056ff32e2b365feeb476e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BinaryDumping/Stream/ObjectOutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::7223f7508fd056ff32e2b365feeb476e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Stream\ObjectOutputStream.vb"
 
     ' Author:
     ' 

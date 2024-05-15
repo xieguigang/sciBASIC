@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ffc121d7acb4d0f6af1a4c8d579f664, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/TokenIcer/Token.vb"
+﻿#Region "Microsoft.VisualBasic::6ffc121d7acb4d0f6af1a4c8d579f664, Microsoft.VisualBasic.Core\src\Scripting\TokenIcer\Token.vb"
 
     ' Author:
     ' 

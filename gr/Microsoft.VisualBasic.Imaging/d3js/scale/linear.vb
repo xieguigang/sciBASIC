@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7b33281a80aa492a269dfccdef639b4, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/linear.vb"
+﻿#Region "Microsoft.VisualBasic::d7b33281a80aa492a269dfccdef639b4, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 

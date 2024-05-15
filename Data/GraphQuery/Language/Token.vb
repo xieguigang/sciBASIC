@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9180dd28945b99aa1765f3c335ed842b, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Language/Token.vb"
+﻿#Region "Microsoft.VisualBasic::9180dd28945b99aa1765f3c335ed842b, Data\GraphQuery\Language\Token.vb"
 
     ' Author:
     ' 

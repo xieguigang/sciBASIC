@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e69392bfe8e845a7da0810c5925927, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//Darwinism/GeneticAlgorithm/Population/PopulationList.vb"
+﻿#Region "Microsoft.VisualBasic::95e69392bfe8e845a7da0810c5925927, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\PopulationList.vb"
 
     ' Author:
     ' 

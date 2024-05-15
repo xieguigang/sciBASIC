@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/Zip/UnZip.vb"
+﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
 
     ' Author:
     ' 

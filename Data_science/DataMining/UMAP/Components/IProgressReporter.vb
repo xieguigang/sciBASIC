@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74243db976226d7956ee82d201cd5f6b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/IProgressReporter.vb"
+﻿#Region "Microsoft.VisualBasic::74243db976226d7956ee82d201cd5f6b, Data_science\DataMining\UMAP\Components\IProgressReporter.vb"
 
     ' Author:
     ' 

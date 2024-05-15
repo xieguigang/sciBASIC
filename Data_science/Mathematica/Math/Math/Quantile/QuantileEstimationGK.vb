@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca02b3f8652f03a649f551247c73f05d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Quantile/QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::ca02b3f8652f03a649f551247c73f05d, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 

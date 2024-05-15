@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ddcd862d0d56eff40c232466b909aa6, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Filters/GaussBlur.vb"
+﻿#Region "Microsoft.VisualBasic::5ddcd862d0d56eff40c232466b909aa6, gr\Microsoft.VisualBasic.Imaging\Filters\GaussBlur.vb"
 
     ' Author:
     ' 

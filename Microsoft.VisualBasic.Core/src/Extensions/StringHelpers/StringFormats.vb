@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49360e95b31c16054a62ca4622a87b6d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/StringHelpers/StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::2d006d7ad3af901d81a1d8bd003c4b1f, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 83
+    '   Total Lines: 137
+    '    Code Lines: 94
     ' Comment Lines: 26
-    '   Blank Lines: 16
-    '     File Size: 4.49 KB
+    '   Blank Lines: 17
+    '     File Size: 4.82 KB
 
 
     ' Module StringFormats
     ' 
-    '     Function: FormatTime, (+2 Overloads) Lanudry, (+2 Overloads) ReadableElapsedTime
+    '     Function: FormatTime, (+2 Overloads) Lanudry, nsize, (+2 Overloads) ReadableElapsedTime
     ' 
     ' /********************************************************************************/
 
@@ -56,6 +56,18 @@ Imports std = System.Math
 
 Public Module StringFormats
 
+    Public Function nsize(x As Double) As String
+        If x <= 0 Then
+            Return "0"
+        ElseIf x.IsNaNImaginary Then
+            Return "n/a"
+        ElseIf x < 500 Then
+            Return CInt(x).ToString
+        Else
+            Return CInt(x / 1000).ToString & "K"
+        End If
+    End Function
+
     ''' <summary>
     ''' 对bytes数值进行格式自动优化显示
     ''' </summary>
@@ -67,7 +79,7 @@ Public Module StringFormats
         ElseIf bytes.IsNaNImaginary Then
             Return "n/a KB"
         ElseIf bytes < 1024 Then
-            Return $"{bytes} B"
+            Return $"{CInt(bytes)} B"
         End If
 
         Dim symbols = {"B", "KB", "MB", "GB", "TB"}

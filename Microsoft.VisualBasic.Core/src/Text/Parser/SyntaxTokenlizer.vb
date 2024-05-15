@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d19a5f7569f61e05f1f50ae2de9c97a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/SyntaxTokenlizer.vb"
+﻿#Region "Microsoft.VisualBasic::8d19a5f7569f61e05f1f50ae2de9c97a, Microsoft.VisualBasic.Core\src\Text\Parser\SyntaxTokenlizer.vb"
 
     ' Author:
     ' 

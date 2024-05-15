@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afd199c6c0bc89d4c399c59dbfc59e18, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/Scaler/Mapper/ValueScaleColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::afd199c6c0bc89d4c399c59dbfc59e18, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb"
 
     ' Author:
     ' 

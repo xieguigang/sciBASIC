@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88fd998f4e0101c2b71d2b3f42694a96, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//ServerModule.vb"
+﻿#Region "Microsoft.VisualBasic::88fd998f4e0101c2b71d2b3f42694a96, www\Microsoft.VisualBasic.NETProtocol\ServerModule.vb"
 
     ' Author:
     ' 

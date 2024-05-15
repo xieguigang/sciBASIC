@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd97186ced904da0bec33fd8bd7f7fa4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/streamTest.vb"
+﻿#Region "Microsoft.VisualBasic::dd97186ced904da0bec33fd8bd7f7fa4, Microsoft.VisualBasic.Core\test\test\streamTest.vb"
 
     ' Author:
     ' 

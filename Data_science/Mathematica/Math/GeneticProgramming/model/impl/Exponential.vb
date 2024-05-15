@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aa1025c6a509477294736c3fa143d63, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::0aa1025c6a509477294736c3fa143d63, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Exponential.vb"
 
     ' Author:
     ' 

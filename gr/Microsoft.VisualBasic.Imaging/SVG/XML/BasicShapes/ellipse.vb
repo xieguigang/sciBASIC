@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc01d1ad2c683f9097d0565d3cab7fb9, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/ellipse.vb"
+﻿#Region "Microsoft.VisualBasic::bc01d1ad2c683f9097d0565d3cab7fb9, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\ellipse.vb"
 
     ' Author:
     ' 

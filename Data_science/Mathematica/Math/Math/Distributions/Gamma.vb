@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef232de001f4d07d12b206313d8623ca, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Distributions/Gamma.vb"
+﻿#Region "Microsoft.VisualBasic::ef232de001f4d07d12b206313d8623ca, Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2843442d7f9c74cde1791d4f1ce8ab15, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Python/Collection.vb"
+﻿#Region "Microsoft.VisualBasic::2843442d7f9c74cde1791d4f1ce8ab15, Microsoft.VisualBasic.Core\src\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 

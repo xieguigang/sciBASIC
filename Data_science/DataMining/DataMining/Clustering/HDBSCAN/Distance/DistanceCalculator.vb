@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf1bbbd2e50b8fac32f35700e0990e2d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/HDBSCAN/Distance/DistanceCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::cf1bbbd2e50b8fac32f35700e0990e2d, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\DistanceCalculator.vb"
 
     ' Author:
     ' 

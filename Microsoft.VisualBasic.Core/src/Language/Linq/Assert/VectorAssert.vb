@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd2f9068b0a8fd7a0b42615034d55cae, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Linq/Assert/VectorAssert.vb"
+﻿#Region "Microsoft.VisualBasic::bd2f9068b0a8fd7a0b42615034d55cae, Microsoft.VisualBasic.Core\src\Language\Linq\Assert\VectorAssert.vb"
 
     ' Author:
     ' 

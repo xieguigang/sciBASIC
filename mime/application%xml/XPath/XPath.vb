@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccc7b98d4153d413b2fef299f5e98d9c, G:/GCModeller/src/runtime/sciBASIC#/mime/application%xml//XPath/XPath.vb"
+﻿#Region "Microsoft.VisualBasic::ccc7b98d4153d413b2fef299f5e98d9c, mime\application%xml\XPath\XPath.vb"
 
     ' Author:
     ' 

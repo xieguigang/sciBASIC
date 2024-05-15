@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::538b725a890188152fb7d16dee349015, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Shapes/Pentacle.vb"
+﻿#Region "Microsoft.VisualBasic::538b725a890188152fb7d16dee349015, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
     ' Author:
     ' 

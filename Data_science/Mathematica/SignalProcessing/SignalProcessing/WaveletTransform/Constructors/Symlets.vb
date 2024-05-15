@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2afc9e74920c64f896d45122dc4d7d1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//WaveletTransform/Constructors/Symlets.vb"
+﻿#Region "Microsoft.VisualBasic::a2afc9e74920c64f896d45122dc4d7d1, Data_science\Mathematica\SignalProcessing\SignalProcessing\WaveletTransform\Constructors\Symlets.vb"
 
     ' Author:
     ' 

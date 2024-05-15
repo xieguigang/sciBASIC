@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68b2edcea3f231cfea6f4172ef081f4f, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/RectangularArray.vb"
+﻿#Region "Microsoft.VisualBasic::68b2edcea3f231cfea6f4172ef081f4f, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
 
     ' Author:
     ' 

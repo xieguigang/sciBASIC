@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9b6c4bd88bf53ffb6b95b91e694a516, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization//CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::b9b6c4bd88bf53ffb6b95b91e694a516, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e46e64266c17d052e94915097844226, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5e46e64266c17d052e94915097844226, Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
 
     ' Author:
     ' 

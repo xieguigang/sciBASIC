@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 

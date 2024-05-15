@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f36db390f8164faa1b2505d767abdebb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Kernel/Bayesian.vb"
+﻿#Region "Microsoft.VisualBasic::f36db390f8164faa1b2505d767abdebb, Data_science\DataMining\DataMining\Kernel\Bayesian.vb"
 
     ' Author:
     ' 

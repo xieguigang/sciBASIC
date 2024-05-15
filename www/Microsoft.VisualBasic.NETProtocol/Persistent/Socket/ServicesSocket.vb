@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::181bb74dd65410969709ff588dd79890, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Persistent/Socket/ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::181bb74dd65410969709ff588dd79890, www\Microsoft.VisualBasic.NETProtocol\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 

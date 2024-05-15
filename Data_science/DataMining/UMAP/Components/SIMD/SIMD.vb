@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db25f382e9449c3effa1709eb97797c1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/SIMD/SIMD.vb"
+﻿#Region "Microsoft.VisualBasic::db25f382e9449c3effa1709eb97797c1, Data_science\DataMining\UMAP\Components\SIMD\SIMD.vb"
 
     ' Author:
     ' 

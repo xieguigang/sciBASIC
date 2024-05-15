@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c793066defb4f6a5d309661e2525c5f5, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//Ngen/Ngen.vb"
+﻿#Region "Microsoft.VisualBasic::c793066defb4f6a5d309661e2525c5f5, vs_solutions\dev\VisualStudio\Ngen\Ngen.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c569e8c44602644e35481210f9f323f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings//GaussNewtonSolver.vb"
+﻿#Region "Microsoft.VisualBasic::7c569e8c44602644e35481210f9f323f, Data_science\Mathematica\Math\DataFittings\GaussNewtonSolver.vb"
 
     ' Author:
     ' 

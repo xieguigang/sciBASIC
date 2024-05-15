@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09563b37b7594b1fa14472a16bd3b4d0, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//StorageProvider/Reflection/StorageProviders/TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::8891facf327a9441b15438e53e184638, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 296
-    '    Code Lines: 184
+    '   Total Lines: 319
+    '    Code Lines: 201
     ' Comment Lines: 62
-    '   Blank Lines: 50
-    '     File Size: 13.53 KB
+    '   Blank Lines: 56
+    '     File Size: 14.74 KB
 
 
     '     Module TypeSchemaProvider

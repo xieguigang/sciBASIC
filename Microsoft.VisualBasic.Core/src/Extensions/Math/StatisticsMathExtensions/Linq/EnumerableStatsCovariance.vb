@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsCovariance.vb"
+﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f86b5d966d0eb86447e41dd618d393, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/distance/EuclideanDistanceFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d2f86b5d966d0eb86447e41dd618d393, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\distance\EuclideanDistanceFunction.vb"
 
     ' Author:
     ' 

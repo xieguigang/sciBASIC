@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abd7528f9c1272b43b521c3544efa8ba, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Alignment.vb"
+﻿#Region "Microsoft.VisualBasic::abd7528f9c1272b43b521c3544efa8ba, Data_science\Mathematica\SignalProcessing\SignalProcessing\Alignment.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45fb7ef629fb542c0dec1ee419c19ce4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//MatrixMarket/MTXFormat.vb"
+﻿#Region "Microsoft.VisualBasic::45fb7ef629fb542c0dec1ee419c19ce4, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MTXFormat.vb"
 
     ' Author:
     ' 

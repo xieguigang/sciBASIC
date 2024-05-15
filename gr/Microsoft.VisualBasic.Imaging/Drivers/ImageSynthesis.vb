@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3168f2de99809415664f74df3350525d, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drivers/ImageSynthesis.vb"
+﻿#Region "Microsoft.VisualBasic::3168f2de99809415664f74df3350525d, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
 
     ' Author:
     ' 

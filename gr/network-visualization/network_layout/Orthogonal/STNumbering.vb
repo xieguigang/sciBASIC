@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e78888f1aa90042cb53284fbc4694fe1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Orthogonal/STNumbering.vb"
+﻿#Region "Microsoft.VisualBasic::e78888f1aa90042cb53284fbc4694fe1, gr\network-visualization\network_layout\Orthogonal\STNumbering.vb"
 
     ' Author:
     ' 

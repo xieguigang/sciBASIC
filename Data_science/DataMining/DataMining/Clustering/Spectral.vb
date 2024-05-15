@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44a344b8d46dda8f18a4b94b15e75b4e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/Spectral.vb"
+﻿#Region "Microsoft.VisualBasic::44a344b8d46dda8f18a4b94b15e75b4e, Data_science\DataMining\DataMining\Clustering\Spectral.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//HashMaps/HashMap.vb"
+﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, Data_science\Mathematica\Math\Math\HashMaps\HashMap.vb"
 
     ' Author:
     ' 

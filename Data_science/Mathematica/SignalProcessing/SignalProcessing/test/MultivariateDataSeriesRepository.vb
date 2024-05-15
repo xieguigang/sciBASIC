@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da46817d009da8c2d846ea7796fbecc1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//test/MultivariateDataSeriesRepository.vb"
+﻿#Region "Microsoft.VisualBasic::da46817d009da8c2d846ea7796fbecc1, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\MultivariateDataSeriesRepository.vb"
 
     ' Author:
     ' 

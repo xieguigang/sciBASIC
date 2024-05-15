@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a0f6b90612caa9bf2714f87ad4b48ae, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Xml/Meta.vb"
+﻿#Region "Microsoft.VisualBasic::8a0f6b90612caa9bf2714f87ad4b48ae, mime\text%html\Xml\Meta.vb"
 
     ' Author:
     ' 

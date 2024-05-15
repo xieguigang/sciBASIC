@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fcfa1900c543e5ca1382fc40a9e5950, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/DataScaler/TermScaler.vb"
+﻿#Region "Microsoft.VisualBasic::5fcfa1900c543e5ca1382fc40a9e5950, Data_science\Visualization\Plots\g\Axis\DataScaler\TermScaler.vb"
 
     ' Author:
     ' 

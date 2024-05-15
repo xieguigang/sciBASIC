@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f6cf241bc969fdbe96c852ba07d6544, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Serialization/EntityVectorFile.vb"
+﻿#Region "Microsoft.VisualBasic::6f6cf241bc969fdbe96c852ba07d6544, Data_science\DataMining\DataMining\ComponentModel\Serialization\EntityVectorFile.vb"
 
     ' Author:
     ' 

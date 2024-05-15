@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f5076dcb746ac4e9f915caaf2463983, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Patterns/Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::4f5076dcb746ac4e9f915caaf2463983, Microsoft.VisualBasic.Core\src\Text\Patterns\Wildcards.vb"
 
     ' Author:
     ' 

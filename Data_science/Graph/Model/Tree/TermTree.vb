@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4d9e1d486b553d182ec4c32111305c5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/TermTree.vb"
+﻿#Region "Microsoft.VisualBasic::e4d9e1d486b553d182ec4c32111305c5, Data_science\Graph\Model\Tree\TermTree.vb"
 
     ' Author:
     ' 

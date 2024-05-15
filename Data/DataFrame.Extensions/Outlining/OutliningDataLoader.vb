@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::173bfb3b84059653648c9d5a76894fea, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Outlining/OutliningDataLoader.vb"
+﻿#Region "Microsoft.VisualBasic::173bfb3b84059653648c9d5a76894fea, Data\DataFrame.Extensions\Outlining\OutliningDataLoader.vb"
 
     ' Author:
     ' 

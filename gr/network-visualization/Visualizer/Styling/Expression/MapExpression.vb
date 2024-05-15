@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bdaef27a7c04ccbee6d8cd6ef51a8f8, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/MapExpression.vb"
+﻿#Region "Microsoft.VisualBasic::9bdaef27a7c04ccbee6d8cd6ef51a8f8, gr\network-visualization\Visualizer\Styling\Expression\MapExpression.vb"
 
     ' Author:
     ' 

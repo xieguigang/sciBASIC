@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, Microsoft.VisualBasic.Core\src\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 

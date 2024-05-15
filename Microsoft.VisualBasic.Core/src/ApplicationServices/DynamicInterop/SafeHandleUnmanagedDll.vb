@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab073e36270b8618d0f79c6cc793c9ac, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/DynamicInterop/SafeHandleUnmanagedDll.vb"
+﻿#Region "Microsoft.VisualBasic::ab073e36270b8618d0f79c6cc793c9ac, Microsoft.VisualBasic.Core\src\ApplicationServices\DynamicInterop\SafeHandleUnmanagedDll.vb"
 
     ' Author:
     ' 

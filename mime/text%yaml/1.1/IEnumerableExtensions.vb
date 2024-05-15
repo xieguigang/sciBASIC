@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d3c20f90bc15443addf0b9e957045d6, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/IEnumerableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7d3c20f90bc15443addf0b9e957045d6, mime\text%yaml\1.1\IEnumerableExtensions.vb"
 
     ' Author:
     ' 

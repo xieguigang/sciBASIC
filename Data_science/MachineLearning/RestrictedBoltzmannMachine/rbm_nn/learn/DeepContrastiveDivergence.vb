@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc200da578547e98495cc2abb9206f7d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/learn/DeepContrastiveDivergence.vb"
+﻿#Region "Microsoft.VisualBasic::fc200da578547e98495cc2abb9206f7d, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\learn\DeepContrastiveDivergence.vb"
 
     ' Author:
     ' 

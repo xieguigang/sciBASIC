@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fc1db2e6208fb90a99353505f436fe9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/CLITypes.vb"
+﻿#Region "Microsoft.VisualBasic::2fc1db2e6208fb90a99353505f436fe9, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\CLITypes.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99119a63f12643437907543ea0afd405, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test//test/objToStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::99119a63f12643437907543ea0afd405, Microsoft.VisualBasic.Core\test\test\objToStringTest.vb"
 
     ' Author:
     ' 

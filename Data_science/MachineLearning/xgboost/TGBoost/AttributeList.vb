@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28b0a00da3f3a8509077b01799e57940, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//TGBoost/AttributeList.vb"
+﻿#Region "Microsoft.VisualBasic::28b0a00da3f3a8509077b01799e57940, Data_science\MachineLearning\xgboost\TGBoost\AttributeList.vb"
 
     ' Author:
     ' 

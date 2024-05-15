@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4890cf57fde5e00cded4c2f639b3a07, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Serialization/SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::a4890cf57fde5e00cded4c2f639b3a07, Data\BinaryData\msgpack\Serialization\SchemaProvider.vb"
 
     ' Author:
     ' 

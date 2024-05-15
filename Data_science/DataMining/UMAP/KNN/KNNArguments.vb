@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//KNN/KNNArguments.vb"
+﻿#Region "Microsoft.VisualBasic::bc6cf39e51b0a829daa8044b62847971, Data_science\DataMining\UMAP\KNN\KNNArguments.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2d74cdc597b510c9cd4cf4aae0d364c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//My Project/Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2d74cdc597b510c9cd4cf4aae0d364c, Data_science\Mathematica\Math\DataFrame\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

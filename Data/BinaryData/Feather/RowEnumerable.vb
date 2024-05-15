@@ -1,4 +1,66 @@
-﻿''' <summary>
+﻿#Region "Microsoft.VisualBasic::501c89262cf4145dba905d4e1750d6bf, Data\BinaryData\Feather\RowEnumerable.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 88
+    '    Code Lines: 53
+    ' Comment Lines: 21
+    '   Blank Lines: 14
+    '     File Size: 2.49 KB
+
+
+    ' Class RowEnumerable
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: GetEnumerator, GetEnumerator1, GetEnumerator2
+    ' 
+    ' Class RowEnumerator
+    ' 
+    '     Properties: Current, CurrentProp
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MoveNext
+    ' 
+    '     Sub: Dispose, Reset
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''' <summary>
 ''' Allocation free enumerable for a row.
 ''' </summary>
 Public Class RowEnumerable
@@ -86,3 +148,4 @@ Public Class RowEnumerator
         Index = -1
     End Sub
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccaa35be97abab677cc17970dabbf5a8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Bubble.vb"
+﻿#Region "Microsoft.VisualBasic::ccaa35be97abab677cc17970dabbf5a8, Data_science\Visualization\Plots\Scatter\Bubble.vb"
 
     ' Author:
     ' 

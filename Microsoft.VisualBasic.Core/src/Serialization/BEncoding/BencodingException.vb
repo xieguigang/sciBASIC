@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6b0e7311bbd742e92731c1f0e00928c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BencodingException.vb"
+﻿#Region "Microsoft.VisualBasic::f6b0e7311bbd742e92731c1f0e00928c, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingException.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a880b14c81cb8dd1e7ee3055e29f0ba7, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/States.vb"
+﻿#Region "Microsoft.VisualBasic::a880b14c81cb8dd1e7ee3055e29f0ba7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\States.vb"
 
     ' Author:
     ' 

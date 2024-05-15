@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f47c0d1dbe063c228365e23d1510d3e6, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Axis/Components/XAxis.vb"
+﻿#Region "Microsoft.VisualBasic::39f83863340862db60ce02ce25e37a6e, Data_science\Visualization\Plots\g\Axis\Components\XAxis.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
+    '   Total Lines: 204
     '    Code Lines: 162
-    ' Comment Lines: 5
+    ' Comment Lines: 19
     '   Blank Lines: 23
-    '     File Size: 7.34 KB
+    '     File Size: 7.79 KB
 
 
     '     Class XAxis
@@ -139,6 +139,13 @@ Namespace Graphic.Axis
             Me.labelColor = labelColor
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="layout"></param>
+        ''' <param name="y0">the plot location of y value when y axis value is ZERO</param>
+        ''' <param name="offset"></param>
         Public Sub Draw(g As IGraphics, layout As XAxisLayoutStyles, y0 As Double, offset As PointF)
             Dim Y% = plotRegion.Top + offset.Y
             Dim size As Size = plotRegion.Size
@@ -168,7 +175,7 @@ Namespace Graphic.Axis
             End If
 
             If Not label.StripHTMLTags(stripBlank:=True).StringEmpty Then
-                Call drawLabel(g, size, d)
+                Call drawLabel(g, size, d, ZERO)
             End If
         End Sub
 
@@ -215,20 +222,27 @@ Namespace Graphic.Axis
             Next
         End Sub
 
-        Private Sub drawLabel(g As IGraphics, size As Size, d As Double)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="size">the plot region size</param>
+        ''' <param name="d"></param>
+        ''' <param name="zero"></param>
+        Private Sub drawLabel(g As IGraphics, size As Size, d As Double, zero As Point)
             If htmlLabel Then
                 Dim labelImage As Image = label.__plotLabel(labelFont, False)
                 Dim point As New Point With {
                     .X = (size.Width - labelImage.Width) / 2 + plotRegion.Left,
-                    .Y = plotRegion.Top + size.Height + tickFont.Height + d * 4
+                    .Y = zero.Y + tickFont.Height + d * 4
                 }
 
                 Call g.DrawImageUnscaled(labelImage, point)
             Else
                 Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
                 Dim fSize As SizeF = g.MeasureString(label, font)
-                Dim y1 As Double = plotRegion.Bottom + tickFont.Height + d * 3
-                Dim y2 As Double = plotRegion.Bottom + ((g.Size.Height - plotRegion.Bottom) - fSize.Height) / 2
+                Dim y1 As Double = zero.Y + tickFont.Height * 2
+                Dim y2 As Double = zero.Y + fSize.Height
                 Dim point As New PointF With {
                     .X = (size.Width - fSize.Width) / 2 + plotRegion.Left,
                     .Y = std.Max(y1, y2)

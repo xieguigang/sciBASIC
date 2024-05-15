@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de1dbf86023da46a7ce02f88e63efc70, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/Layers/Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::de1dbf86023da46a7ce02f88e63efc70, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
 
     ' Author:
     ' 

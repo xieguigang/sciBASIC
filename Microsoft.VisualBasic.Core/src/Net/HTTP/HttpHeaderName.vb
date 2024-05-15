@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90bb1cf86dad89664ec9d7cf56d45643, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/HttpHeaderName.vb"
+﻿#Region "Microsoft.VisualBasic::90bb1cf86dad89664ec9d7cf56d45643, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpHeaderName.vb"
 
     ' Author:
     ' 

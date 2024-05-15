@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a429e057377336a53e590c16bb738180, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Patterns/CommonTagParser.vb"
+﻿#Region "Microsoft.VisualBasic::a429e057377336a53e590c16bb738180, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
 
     ' Author:
     ' 

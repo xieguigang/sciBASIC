@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1124a0f8383f649a8ceb886eabadb08e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Set/SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::1124a0f8383f649a8ceb886eabadb08e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 

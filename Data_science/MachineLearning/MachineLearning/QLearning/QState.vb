@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38db7f194f62b5cf3172d0da708b2383, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//QLearning/QState.vb"
+﻿#Region "Microsoft.VisualBasic::38db7f194f62b5cf3172d0da708b2383, Data_science\MachineLearning\MachineLearning\QLearning\QState.vb"
 
     ' Author:
     ' 

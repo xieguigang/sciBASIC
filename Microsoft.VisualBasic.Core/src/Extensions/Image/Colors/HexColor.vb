@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd9430d658431c8d0ed76605c87dd77, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Colors/HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::5cd9430d658431c8d0ed76605c87dd77, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 

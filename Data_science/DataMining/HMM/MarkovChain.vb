@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cdb2dca04bfe454da508f6f18bbc26e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//MarkovChain.vb"
+﻿#Region "Microsoft.VisualBasic::9cdb2dca04bfe454da508f6f18bbc26e, Data_science\DataMining\HMM\MarkovChain.vb"
 
     ' Author:
     ' 

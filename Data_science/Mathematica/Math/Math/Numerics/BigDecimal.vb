@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ccd6abd0347058a0a3f8e1dd9e1c7d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/BigDecimal.vb"
+﻿#Region "Microsoft.VisualBasic::e1ccd6abd0347058a0a3f8e1dd9e1c7d, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
 
     ' Author:
     ' 

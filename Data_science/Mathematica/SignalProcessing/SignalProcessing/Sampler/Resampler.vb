@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c11ab7c610aae4a79e95336ab65255cc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/Resampler.vb"
+﻿#Region "Microsoft.VisualBasic::c11ab7c610aae4a79e95336ab65255cc, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\Resampler.vb"
 
     ' Author:
     ' 

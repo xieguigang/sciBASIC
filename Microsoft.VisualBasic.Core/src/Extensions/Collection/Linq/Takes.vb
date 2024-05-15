@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4de2be1628622acbfba8995d6f4152, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Takes.vb"
+﻿#Region "Microsoft.VisualBasic::ae4de2be1628622acbfba8995d6f4152, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Takes.vb"
 
     ' Author:
     ' 

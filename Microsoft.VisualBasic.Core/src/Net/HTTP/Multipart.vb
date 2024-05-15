@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b28ee65bcb10123c1b335da753f55bd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::0b28ee65bcb10123c1b335da753f55bd, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
 
     ' Author:
     ' 

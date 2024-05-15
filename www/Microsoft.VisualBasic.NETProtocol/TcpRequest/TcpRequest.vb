@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c16530c6ece0cbc005818fb9d6f240, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//TcpRequest/TcpRequest.vb"
+﻿#Region "Microsoft.VisualBasic::b3c16530c6ece0cbc005818fb9d6f240, www\Microsoft.VisualBasic.NETProtocol\TcpRequest\TcpRequest.vb"
 
     ' Author:
     ' 

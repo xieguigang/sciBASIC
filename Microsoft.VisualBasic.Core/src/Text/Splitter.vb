@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a539a9b87975a8fe28029b95cbd6a5eb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Splitter.vb"
+﻿#Region "Microsoft.VisualBasic::a539a9b87975a8fe28029b95cbd6a5eb, Microsoft.VisualBasic.Core\src\Text\Splitter.vb"
 
     ' Author:
     ' 

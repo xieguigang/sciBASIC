@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e9838375a586e46e50ef25f7e26e1ba, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//WordScore.vb"
+﻿#Region "Microsoft.VisualBasic::8e9838375a586e46e50ef25f7e26e1ba, Data\word2vec\WordScore.vb"
 
     ' Author:
     ' 

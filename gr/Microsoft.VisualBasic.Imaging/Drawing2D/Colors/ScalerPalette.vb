@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a642598c1098be39d741001b19dec56f, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/ScalerPalette.vb"
+﻿#Region "Microsoft.VisualBasic::a642598c1098be39d741001b19dec56f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ScalerPalette.vb"
 
     ' Author:
     ' 

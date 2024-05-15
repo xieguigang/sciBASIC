@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9461b05ebffb2d7b809583469b447b8b, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/fileParser2.vb"
+﻿#Region "Microsoft.VisualBasic::9461b05ebffb2d7b809583469b447b8b, Data\DataFrame\test\fileParser2.vb"
 
     ' Author:
     ' 

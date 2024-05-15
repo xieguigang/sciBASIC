@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/DebuggerLevels.vb"
+﻿#Region "Microsoft.VisualBasic::70fd68fd2eafbadf80da2922e0ec0b7d, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerLevels.vb"
 
     ' Author:
     ' 

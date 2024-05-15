@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2ea574ad3073fb176f72036be9f6149, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//test/simpleANNtest.vb"
+﻿#Region "Microsoft.VisualBasic::d2ea574ad3073fb176f72036be9f6149, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
 
     ' Author:
     ' 

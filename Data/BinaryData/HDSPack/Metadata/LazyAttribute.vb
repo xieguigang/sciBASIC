@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a9daa1c5c3c3bf08fe4aad241a0e98d, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDSPack//Metadata/LazyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::0a9daa1c5c3c3bf08fe4aad241a0e98d, Data\BinaryData\HDSPack\Metadata\LazyAttribute.vb"
 
     ' Author:
     ' 

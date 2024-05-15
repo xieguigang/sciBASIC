@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::533cf598102025a2b5594785cf09c943, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ANOVA//MultivariateAnalysis/PCAData.vb"
+﻿#Region "Microsoft.VisualBasic::533cf598102025a2b5594785cf09c943, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCAData.vb"
 
     ' Author:
     ' 

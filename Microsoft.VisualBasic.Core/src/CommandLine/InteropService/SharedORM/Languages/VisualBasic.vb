@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/SharedORM/Languages/VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
     ' Author:
     ' 

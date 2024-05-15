@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f55b44ccaca05d1edae7551d0b6e9456, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/TryParse.vb"
+﻿#Region "Microsoft.VisualBasic::f55b44ccaca05d1edae7551d0b6e9456, Microsoft.VisualBasic.Core\src\Text\Parser\TryParse.vb"
 
     ' Author:
     ' 

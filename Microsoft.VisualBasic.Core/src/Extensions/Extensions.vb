@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11e932390595d73e691be069b08cad8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f441c35f6297c38b15f8d66ade81accf, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1543
-    '    Code Lines: 856
-    ' Comment Lines: 543
+    '   Total Lines: 1545
+    '    Code Lines: 857
+    ' Comment Lines: 544
     '   Blank Lines: 144
-    '     File Size: 57.35 KB
+    '     File Size: 57.36 KB
 
 
     ' Module Extensions
@@ -1037,14 +1037,16 @@ Public Module Extensions
 #If FRAMEWORD_CORE Then
     ''' <summary>
     ''' The target parameter <paramref name="n"/> value is NaN or not a real number or not?
-    ''' (判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了
-    ''' <see cref="Double"></see>的上限或者下限)
     ''' </summary>
     ''' <param name="n"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (判断目标实数是否为一个无穷数或者非计算的数字，产生的原因主要来自于除0运算结果或者达到了
+    ''' <see cref="Double"></see>的上限或者下限)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function IsNaNImaginary(n As Double) As Boolean
+    <Extension>
+    Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
     <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
 #End If

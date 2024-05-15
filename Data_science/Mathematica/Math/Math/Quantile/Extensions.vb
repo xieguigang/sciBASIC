@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d2dae826b1316ca476a9278e2f737f3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Quantile/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9d2dae826b1316ca476a9278e2f737f3, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 

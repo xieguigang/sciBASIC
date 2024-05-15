@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Interface/DFL/I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 

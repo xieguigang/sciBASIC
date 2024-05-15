@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::405ccc23ca8070c77f66e0889c306a29, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/Layout/Spring.vb"
+﻿#Region "Microsoft.VisualBasic::405ccc23ca8070c77f66e0889c306a29, gr\network-visualization\network_layout\SpringForce\Layout\Spring.vb"
 
     ' Author:
     ' 

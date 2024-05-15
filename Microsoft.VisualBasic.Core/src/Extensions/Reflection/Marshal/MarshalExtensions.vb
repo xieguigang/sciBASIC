@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Marshal/MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8ba07e347942f1b505de3c4900f780fd, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Tree/BinaryTree/Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::cf604f709a0ada068726574cd3cccdda, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 

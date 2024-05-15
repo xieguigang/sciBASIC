@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bc74fb830b377ea381d36695e990f9d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/URL.vb"
+﻿#Region "Microsoft.VisualBasic::3bc74fb830b377ea381d36695e990f9d, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
     ' Author:
     ' 

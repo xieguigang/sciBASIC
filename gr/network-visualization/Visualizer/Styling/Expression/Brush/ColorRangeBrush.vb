@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25d5f0d06f4c7575dc449f276f129929, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Brush/ColorRangeBrush.vb"
+﻿#Region "Microsoft.VisualBasic::25d5f0d06f4c7575dc449f276f129929, gr\network-visualization\Visualizer\Styling\Expression\Brush\ColorRangeBrush.vb"
 
     ' Author:
     ' 

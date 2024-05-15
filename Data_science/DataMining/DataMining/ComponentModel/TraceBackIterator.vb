@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc67ab97633127a0ef0bdd0526432314, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/TraceBackIterator.vb"
+﻿#Region "Microsoft.VisualBasic::cc67ab97633127a0ef0bdd0526432314, Data_science\DataMining\DataMining\ComponentModel\TraceBackIterator.vb"
 
     ' Author:
     ' 

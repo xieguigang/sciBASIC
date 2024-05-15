@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11c96f53df5909efd24deeab80001ce5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Solvers/SOR.vb"
+﻿#Region "Microsoft.VisualBasic::11c96f53df5909efd24deeab80001ce5, Data_science\Mathematica\Math\Math\Algebra\Solvers\SOR.vb"
 
     ' Author:
     ' 

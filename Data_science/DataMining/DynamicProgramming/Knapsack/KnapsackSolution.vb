@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8120929c9416b024567c9f4579a33f16, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//Knapsack/KnapsackSolution.vb"
+﻿#Region "Microsoft.VisualBasic::8120929c9416b024567c9f4579a33f16, Data_science\DataMining\DynamicProgramming\Knapsack\KnapsackSolution.vb"
 
     ' Author:
     ' 

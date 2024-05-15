@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d60664d81650c4bffb3e3dd4ce33c50, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//My/JavaScript/Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7d60664d81650c4bffb3e3dd4ce33c50, Microsoft.VisualBasic.Core\src\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 

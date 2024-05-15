@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8db4dc255405672baee3ffcea4275ba7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test//ScatterTest.vb"
+﻿#Region "Microsoft.VisualBasic::8db4dc255405672baee3ffcea4275ba7, Data_science\Visualization\test\ScatterTest.vb"
 
     ' Author:
     ' 

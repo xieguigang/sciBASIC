@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::002752e9432384c651c3c6094b682d46, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/trainers/AdaDeltaTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::002752e9432384c651c3c6094b682d46, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaDeltaTrainer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73b97bd3da14c1a328975ca711b33bae, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Trigonometric/Arctan.vb"
+﻿#Region "Microsoft.VisualBasic::73b97bd3da14c1a328975ca711b33bae, Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Arctan.vb"
 
     ' Author:
     ' 

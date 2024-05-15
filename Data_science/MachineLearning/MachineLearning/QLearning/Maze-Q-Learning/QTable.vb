@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a91ac14412d89010bc4ce5abdfc7eb4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//QLearning/Maze-Q-Learning/QTable.vb"
+﻿#Region "Microsoft.VisualBasic::3a91ac14412d89010bc4ce5abdfc7eb4, Data_science\MachineLearning\MachineLearning\QLearning\Maze-Q-Learning\QTable.vb"
 
     ' Author:
     ' 

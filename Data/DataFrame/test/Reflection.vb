@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a1e40038193c35737e2ea618ec124ed, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//test/Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::8a1e40038193c35737e2ea618ec124ed, Data\DataFrame\test\Reflection.vb"
 
     ' Author:
     ' 

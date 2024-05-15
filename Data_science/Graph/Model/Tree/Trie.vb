@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bace54574ae83201d15228ddd19e57f9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Tree/Trie.vb"
+﻿#Region "Microsoft.VisualBasic::bace54574ae83201d15228ddd19e57f9, Data_science\Graph\Model\Tree\Trie.vb"
 
     ' Author:
     ' 

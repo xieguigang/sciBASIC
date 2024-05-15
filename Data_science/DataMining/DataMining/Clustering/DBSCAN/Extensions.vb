@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2783105ae343001a575c73ed38db74af, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Clustering/DBSCAN/Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2783105ae343001a575c73ed38db74af, Data_science\DataMining\DataMining\Clustering\DBSCAN\Extensions.vb"
 
     ' Author:
     ' 

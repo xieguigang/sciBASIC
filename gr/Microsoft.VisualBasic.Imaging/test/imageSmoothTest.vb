@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a18dc6a573709d3f1a0407d47fc859, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//test/imageSmoothTest.vb"
+﻿#Region "Microsoft.VisualBasic::d7a18dc6a573709d3f1a0407d47fc859, gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
 
     ' Author:
     ' 

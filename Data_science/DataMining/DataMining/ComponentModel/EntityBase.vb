@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd642958c4ea83d9c52b8c0076669875, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/EntityBase.vb"
+﻿#Region "Microsoft.VisualBasic::dd642958c4ea83d9c52b8c0076669875, Data_science\DataMining\DataMining\ComponentModel\EntityBase.vb"
 
     ' Author:
     ' 

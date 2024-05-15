@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b39e753d0ba8c53101dceeee2f988dd, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/msgpack//Serialization/SerializationMethod.vb"
+﻿#Region "Microsoft.VisualBasic::2b39e753d0ba8c53101dceeee2f988dd, Data\BinaryData\msgpack\Serialization\SerializationMethod.vb"
 
     ' Author:
     ' 

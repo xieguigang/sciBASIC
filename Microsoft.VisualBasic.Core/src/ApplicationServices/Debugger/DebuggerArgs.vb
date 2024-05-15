@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62c220eb4d5efb98e794884ce4ac51b7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::62c220eb4d5efb98e794884ce4ac51b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\DebuggerArgs.vb"
 
     ' Author:
     ' 

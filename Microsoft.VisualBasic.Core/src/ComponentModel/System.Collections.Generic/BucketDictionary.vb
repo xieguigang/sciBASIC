@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abfe659f73bed215e52f83bb2894783c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::abfe659f73bed215e52f83bb2894783c, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\BucketDictionary.vb"
 
     ' Author:
     ' 

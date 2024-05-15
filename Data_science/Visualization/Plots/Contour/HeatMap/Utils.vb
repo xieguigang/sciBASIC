@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Contour/HeatMap/Utils.vb"
+﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
 
     ' Author:
     ' 

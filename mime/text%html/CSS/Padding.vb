@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa617ce374852856b95e46efd669a417, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//CSS/Padding.vb"
+﻿#Region "Microsoft.VisualBasic::aa617ce374852856b95e46efd669a417, mime\text%html\CSS\Padding.vb"
 
     ' Author:
     ' 

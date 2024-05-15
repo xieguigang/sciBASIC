@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::858cfa506ad7b1009dd88fdab472e8a0, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Model/DirectedVertex.vb"
+﻿#Region "Microsoft.VisualBasic::858cfa506ad7b1009dd88fdab472e8a0, gr\network-visualization\Datavisualization.Network\Analysis\Model\DirectedVertex.vb"
 
     ' Author:
     ' 

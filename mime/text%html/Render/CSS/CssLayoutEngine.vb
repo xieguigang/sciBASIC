@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f30889f24336a09f59e37a73e3d83a, G:/GCModeller/src/runtime/sciBASIC#/mime/text%html//Render/CSS/CssLayoutEngine.vb"
+﻿#Region "Microsoft.VisualBasic::a0f30889f24336a09f59e37a73e3d83a, mime\text%html\Render\CSS\CssLayoutEngine.vb"
 
     ' Author:
     ' 

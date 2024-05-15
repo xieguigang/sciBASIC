@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adf20358f38810671cce007f14ff5eb1, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/IO/UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::adf20358f38810671cce007f14ff5eb1, Microsoft.VisualBasic.Core\src\Text\IO\UnbufferedStringReader.vb"
 
     ' Author:
     ' 

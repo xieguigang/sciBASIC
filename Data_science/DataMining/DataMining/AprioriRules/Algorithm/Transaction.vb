@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3145582edf54a2b53a31cacd2168be8e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Entities/Transaction.vb"
+﻿#Region "Microsoft.VisualBasic::769542c7d83ce1b07da3402a62154671, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Transaction.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 33
-    ' Comment Lines: 0
-    '   Blank Lines: 7
-    '     File Size: 1.40 KB
+    '   Total Lines: 69
+    '    Code Lines: 44
+    ' Comment Lines: 15
+    '   Blank Lines: 10
+    '     File Size: 2.31 KB
 
 
     '     Structure Transaction
     ' 
     '         Properties: Items, Name
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Module TransactionExtensions
@@ -62,10 +63,39 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules.Entities
 
+    ''' <summary>
+    ''' a transaction record
+    ''' </summary>
     Public Structure Transaction
 
+        ''' <summary>
+        ''' the transaction unique id
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
+        ''' <summary>
+        ''' the item collection that contains inside current transaction.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Items As String()
+
+        Sub New(name As String, items As IEnumerable(Of String))
+            Me.Name = name
+            Me.Items = items.ToArray
+        End Sub
+
+        Sub New(name As String, items As String)
+            Me.Name = name
+            Me.Items = items.Select(Function(c) c.ToString).ToArray
+        End Sub
+
+        ''' <summary>
+        ''' use the char as transaction items, just used for debug test
+        ''' </summary>
+        ''' <param name="data"></param>
+        Sub New(data As String)
+            Call Me.New(data, data)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{Name} = {{ {Items.JoinBy(", ")} }}"

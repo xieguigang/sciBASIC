@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37363582b80a458a14c2d9a6b88ca0ef, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CeNiN/ImageProcessor.vb"
+﻿#Region "Microsoft.VisualBasic::37363582b80a458a14c2d9a6b88ca0ef, Data_science\MachineLearning\DeepLearning\CeNiN\ImageProcessor.vb"
 
     ' Author:
     ' 

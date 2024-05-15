@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::288272f623e0501f02cb2df7ca9d6e13, G:/GCModeller/src/runtime/sciBASIC#/mime/text%yaml//1.1/Base/YAMLScalarNode.vb"
+﻿#Region "Microsoft.VisualBasic::288272f623e0501f02cb2df7ca9d6e13, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
 
     ' Author:
     ' 

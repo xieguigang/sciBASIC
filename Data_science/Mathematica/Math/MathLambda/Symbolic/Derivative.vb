@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21f40e382b0e7bd8d26cb98909213173, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/Derivative.vb"
+﻿#Region "Microsoft.VisualBasic::21f40e382b0e7bd8d26cb98909213173, Data_science\Mathematica\Math\MathLambda\Symbolic\Derivative.vb"
 
     ' Author:
     ' 

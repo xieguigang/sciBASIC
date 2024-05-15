@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14e97224d3612a30da06fae26841ccf7, G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery//Language/Escaping.vb"
+﻿#Region "Microsoft.VisualBasic::14e97224d3612a30da06fae26841ccf7, Data\GraphQuery\Language\Escaping.vb"
 
     ' Author:
     ' 

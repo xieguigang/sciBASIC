@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8995d88d364acb05722601b93a37265b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/DefaultValue/DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::8995d88d364acb05722601b93a37265b, Microsoft.VisualBasic.Core\src\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 

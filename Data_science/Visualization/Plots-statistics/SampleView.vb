@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::118656dd9f4314b6a622b9715be1037c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//SampleView.vb"
+﻿#Region "Microsoft.VisualBasic::118656dd9f4314b6a622b9715be1037c, Data_science\Visualization\Plots-statistics\SampleView.vb"
 
     ' Author:
     ' 

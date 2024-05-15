@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db221bb06201d8825c7a437e7af3b2e2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/Binding.vb"
+﻿#Region "Microsoft.VisualBasic::db221bb06201d8825c7a437e7af3b2e2, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b1a726bf8fb2cb8b4e36e8256d8c5e9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMChainAlgorithm/viterbiFactory.vb"
+﻿#Region "Microsoft.VisualBasic::4b1a726bf8fb2cb8b4e36e8256d8c5e9, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\viterbiFactory.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//DATA/Excel/Functions/Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 

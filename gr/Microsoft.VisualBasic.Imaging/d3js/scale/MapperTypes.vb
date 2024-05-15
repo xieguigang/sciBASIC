@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcddce55e459509801cacddc4a0d0d40, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//d3js/scale/MapperTypes.vb"
+﻿#Region "Microsoft.VisualBasic::dcddce55e459509801cacddc4a0d0d40, gr\Microsoft.VisualBasic.Imaging\d3js\scale\MapperTypes.vb"
 
     ' Author:
     ' 

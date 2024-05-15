@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::241779621929953950df7cd48e2a92eb, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/Tasks/IParallelTask.vb"
+﻿#Region "Microsoft.VisualBasic::241779621929953950df7cd48e2a92eb, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
 
     ' Author:
     ' 

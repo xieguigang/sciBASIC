@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::024c40a340e242f0d62827527230e787, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/Tcp/IPTools/IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::024c40a340e242f0d62827527230e787, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
 
     ' Author:
     ' 

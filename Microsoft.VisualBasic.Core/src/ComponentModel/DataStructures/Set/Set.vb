@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5384001635965f3a1d4704d580db9a38, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataStructures/Set/Set.vb"
+﻿#Region "Microsoft.VisualBasic::5384001635965f3a1d4704d580db9a38, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 

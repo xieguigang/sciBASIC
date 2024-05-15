@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c079b3ff789758c7faa3dab764fcb99, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/StoreProcedure/Formats/IntegralLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0c079b3ff789758c7faa3dab764fcb99, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\IntegralLoader.vb"
 
     ' Author:
     ' 

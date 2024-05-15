@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::978852cac440390f0bfa9dbeec6d49c0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/HeatMap/RasterScaler.vb"
+﻿#Region "Microsoft.VisualBasic::978852cac440390f0bfa9dbeec6d49c0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
 
     ' Author:
     ' 

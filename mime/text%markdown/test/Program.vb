@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::955eb33ceab7d4cb6d12b7542e1a6851, G:/GCModeller/src/runtime/sciBASIC#/mime/text%markdown/test//Program.vb"
+﻿#Region "Microsoft.VisualBasic::955eb33ceab7d4cb6d12b7542e1a6851, mime\text%markdown\test\Program.vb"
 
     ' Author:
     ' 

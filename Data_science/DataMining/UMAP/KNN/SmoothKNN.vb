@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a2b507ee71fb4c11984fc9e3298a043, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//KNN/SmoothKNN.vb"
+﻿#Region "Microsoft.VisualBasic::9a2b507ee71fb4c11984fc9e3298a043, Data_science\DataMining\UMAP\KNN\SmoothKNN.vb"
 
     ' Author:
     ' 

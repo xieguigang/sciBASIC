@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b680e3415902e14f63eeef70f3aa8bc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/trainers/AdaGradTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::5b680e3415902e14f63eeef70f3aa8bc, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaGradTrainer.vb"
 
     ' Author:
     ' 

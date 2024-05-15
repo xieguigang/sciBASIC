@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41fcb3d158778e021944369498739218, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/TablePrinter/Flags/TextAligntment.vb"
+﻿#Region "Microsoft.VisualBasic::41fcb3d158778e021944369498739218, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\Flags\TextAligntment.vb"
 
     ' Author:
     ' 

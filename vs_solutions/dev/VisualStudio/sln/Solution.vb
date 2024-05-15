@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//sln/Solution.vb"
+﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, vs_solutions\dev\VisualStudio\sln\Solution.vb"
 
     ' Author:
     ' 

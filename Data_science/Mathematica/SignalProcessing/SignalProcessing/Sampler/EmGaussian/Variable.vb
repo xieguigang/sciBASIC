@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16cb6dbbf52c42ee6547288a147a6997, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Sampler/EmGaussian/Variable.vb"
+﻿#Region "Microsoft.VisualBasic::16cb6dbbf52c42ee6547288a147a6997, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\EmGaussian\Variable.vb"
 
     ' Author:
     ' 

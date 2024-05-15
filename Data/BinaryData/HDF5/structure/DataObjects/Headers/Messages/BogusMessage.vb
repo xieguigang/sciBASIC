@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4627b6ede024c440e8cf9bffd1a8b63, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/DataObjects/Headers/Messages/BogusMessage.vb"
+﻿#Region "Microsoft.VisualBasic::d4627b6ede024c440e8cf9bffd1a8b63, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\BogusMessage.vb"
 
     ' Author:
     ' 

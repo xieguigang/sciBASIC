@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8db0a7ee800255f64486642b63ffb37, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Data/DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::d8db0a7ee800255f64486642b63ffb37, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 

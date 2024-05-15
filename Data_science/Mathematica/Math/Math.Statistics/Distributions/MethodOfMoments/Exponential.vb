@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7259a7b2c71d301c2ac968176e4962b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//Distributions/MethodOfMoments/Exponential.vb"
+﻿#Region "Microsoft.VisualBasic::a7259a7b2c71d301c2ac968176e4962b, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Exponential.vb"
 
     ' Author:
     ' 

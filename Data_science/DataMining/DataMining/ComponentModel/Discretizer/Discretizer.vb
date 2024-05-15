@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87d2d39ad9ae6597043e4c2ff484c42d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Discretizer/Discretizer.vb"
+﻿#Region "Microsoft.VisualBasic::87d2d39ad9ae6597043e4c2ff484c42d, Data_science\DataMining\DataMining\ComponentModel\Discretizer\Discretizer.vb"
 
     ' Author:
     ' 

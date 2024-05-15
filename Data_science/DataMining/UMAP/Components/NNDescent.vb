@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ed7b7f692d32c2dc0721df7380401e2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::acf853cf8a93d65166b3cb3d3c44e36c, Data_science\DataMining\UMAP\Components\NNDescent.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 220
-    '    Code Lines: 154
+    '   Total Lines: 222
+    '    Code Lines: 156
     ' Comment Lines: 24
     '   Blank Lines: 42
-    '     File Size: 9.05 KB
+    '     File Size: 8.95 KB
 
 
     ' Interface NNDescentFn
@@ -57,7 +57,7 @@
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Interface NNDescentFn
 
@@ -189,37 +189,39 @@ Friend Class NNDescent : Implements NNDescentFn
                                       rho As Double,
                                       data As Double()()) As Double
 
+        Dim f As Func(Of Integer, Double) =
+            Function(i)
+                Dim c As Double
+
+                For j As Integer = 0 To maxCandidates - 1
+                    Dim p = CInt(std.Floor(candidateNeighbors(0)(i)(j)))
+                    Dim d As Double
+
+                    If p < 0 OrElse (random.NextFloat() < rho) Then
+                        Continue For
+                    End If
+
+                    For k As Integer = 0 To maxCandidates - 1
+                        Dim q = CInt(std.Floor(candidateNeighbors(0)(i)(k)))
+                        Dim cj = candidateNeighbors(2)(i)(j)
+                        Dim ck = candidateNeighbors(2)(i)(k)
+
+                        If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
+                            Continue For
+                        Else
+                            d = distanceFn(data(p), data(q))
+                        End If
+
+                        c += Heaps.HeapPush(currentGraph, p, d, q, 1)
+                        c += Heaps.HeapPush(currentGraph, q, d, p, 1)
+                    Next
+                Next
+
+                Return c
+            End Function
         Dim cc As Double = Enumerable.Range(0, nVertices) _
             .AsParallel _
-            .Select(Function(i)
-                        Dim c As Double
-
-                        For j As Integer = 0 To maxCandidates - 1
-                            Dim p = CInt(stdNum.Floor(candidateNeighbors(0)(i)(j)))
-                            Dim d As Double
-
-                            If p < 0 OrElse (random.NextFloat() < rho) Then
-                                Continue For
-                            End If
-
-                            For k = 0 To maxCandidates - 1
-                                Dim q = CInt(stdNum.Floor(candidateNeighbors(0)(i)(k)))
-                                Dim cj = candidateNeighbors(2)(i)(j)
-                                Dim ck = candidateNeighbors(2)(i)(k)
-
-                                If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
-                                    Continue For
-                                Else
-                                    d = distanceFn(data(p), data(q))
-                                End If
-
-                                c += Heaps.HeapPush(currentGraph, p, d, q, 1)
-                                c += Heaps.HeapPush(currentGraph, q, d, p, 1)
-                            Next
-                        Next
-
-                        Return c
-                    End Function) _
+            .Select(Function(x) f(x)) _
             .Sum
 
         Return cc
@@ -248,14 +250,14 @@ Friend Class NNDescent : Implements NNDescentFn
 
         For i As Integer = 0 To nVertices - 1
             For j As Integer = 0 To maxCandidates - 1
-                Dim p = CInt(stdNum.Floor(candidateNeighbors(0)(i)(j)))
+                Dim p = CInt(std.Floor(candidateNeighbors(0)(i)(j)))
 
                 If p < 0 OrElse (random.NextFloat() < rho) Then
                     Continue For
                 End If
 
                 For k = 0 To maxCandidates - 1
-                    Dim q = CInt(stdNum.Floor(candidateNeighbors(0)(i)(k)))
+                    Dim q = CInt(std.Floor(candidateNeighbors(0)(i)(k)))
                     Dim cj = candidateNeighbors(2)(i)(j)
                     Dim ck = candidateNeighbors(2)(i)(k)
 

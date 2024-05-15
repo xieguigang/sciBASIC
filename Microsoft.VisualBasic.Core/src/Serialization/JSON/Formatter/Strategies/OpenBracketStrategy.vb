@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62911fb29da7d1bdb416d84f3f84045c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/JSON/Formatter/Strategies/OpenBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::62911fb29da7d1bdb416d84f3f84045c, Microsoft.VisualBasic.Core\src\Serialization\JSON\Formatter\Strategies\OpenBracketStrategy.vb"
 
     ' Author:
     ' 

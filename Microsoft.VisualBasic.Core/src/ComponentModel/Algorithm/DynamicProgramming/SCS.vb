@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee7ae9e9c706b6b711041aabcd15093c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/DynamicProgramming/SCS.vb"
+﻿#Region "Microsoft.VisualBasic::ee7ae9e9c706b6b711041aabcd15093c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 

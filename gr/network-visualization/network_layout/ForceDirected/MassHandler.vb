@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5186fd9f168c25fdde87b6d8a8293bab, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/MassHandler.vb"
+﻿#Region "Microsoft.VisualBasic::5186fd9f168c25fdde87b6d8a8293bab, gr\network-visualization\network_layout\ForceDirected\MassHandler.vb"
 
     ' Author:
     ' 

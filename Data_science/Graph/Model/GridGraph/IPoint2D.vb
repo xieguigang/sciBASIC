@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e064611db458c46a361a03134ec8554a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/GridGraph/IPoint2D.vb"
+﻿#Region "Microsoft.VisualBasic::e064611db458c46a361a03134ec8554a, Data_science\Graph\Model\GridGraph\IPoint2D.vb"
 
     ' Author:
     ' 

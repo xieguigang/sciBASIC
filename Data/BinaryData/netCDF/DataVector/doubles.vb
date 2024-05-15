@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eba80625d10d9d461ad17e972db165a, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/doubles.vb"
+﻿#Region "Microsoft.VisualBasic::8eba80625d10d9d461ad17e972db165a, Data\BinaryData\netCDF\DataVector\doubles.vb"
 
     ' Author:
     ' 

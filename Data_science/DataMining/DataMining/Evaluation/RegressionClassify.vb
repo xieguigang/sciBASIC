@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d098abc1b9f8528d5aaa10cf4ba44ad7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//Evaluation/RegressionClassify.vb"
+﻿#Region "Microsoft.VisualBasic::d098abc1b9f8528d5aaa10cf4ba44ad7, Data_science\DataMining\DataMining\Evaluation\RegressionClassify.vb"
 
     ' Author:
     ' 

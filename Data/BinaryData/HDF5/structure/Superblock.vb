@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::806232cc522de1f4e6195df0f114f7c8, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//structure/Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::806232cc522de1f4e6195df0f114f7c8, Data\BinaryData\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 

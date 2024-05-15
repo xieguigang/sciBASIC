@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3e85da0c5b5d115124a0f54620f5bce, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Shapes/Prism.vb"
+﻿#Region "Microsoft.VisualBasic::d3e85da0c5b5d115124a0f54620f5bce, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Prism.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0f8d8b03af7165bf9c957bbf6513ad5, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//Utils.vb"
+﻿#Region "Microsoft.VisualBasic::d0f8d8b03af7165bf9c957bbf6513ad5, Data_science\Mathematica\Math\GeneticProgramming\Utils.vb"
 
     ' Author:
     ' 

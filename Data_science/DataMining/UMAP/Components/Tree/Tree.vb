@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84fb518c368899760372dd0343fc8a07, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//Components/Tree/Tree.vb"
+﻿#Region "Microsoft.VisualBasic::84fb518c368899760372dd0343fc8a07, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
     ' Author:
     ' 

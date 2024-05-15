@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78c3917113ef656296ac73d2e93fe5a2, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/Softplus.vb"
+﻿#Region "Microsoft.VisualBasic::78c3917113ef656296ac73d2e93fe5a2, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\Softplus.vb"
 
     ' Author:
     ' 

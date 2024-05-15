@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d220ab48479db5965d21670427668de4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning.Data.Extensions//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d220ab48479db5965d21670427668de4, Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d36a78a4851bbc84d5a2a60cc82a95e0, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/AnnotAction/Flags.vb"
+﻿#Region "Microsoft.VisualBasic::d36a78a4851bbc84d5a2a60cc82a95e0, mime\application%pdf\PdfFileWriter\AnnotAction\Flags.vb"
 
     ' Author:
     ' 

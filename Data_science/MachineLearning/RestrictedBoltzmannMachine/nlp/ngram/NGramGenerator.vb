@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c5c47eac818c964cea76dbf6f21289e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//nlp/ngram/NGramGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::9c5c47eac818c964cea76dbf6f21289e, Data_science\MachineLearning\RestrictedBoltzmannMachine\nlp\ngram\NGramGenerator.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8baaa069d6f29ac150f346acafe097a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Analysis/PQDijkstra/BasicHeap.vb"
+﻿#Region "Microsoft.VisualBasic::a8baaa069d6f29ac150f346acafe097a, Data_science\Graph\Analysis\PQDijkstra\BasicHeap.vb"
 
     ' Author:
     ' 

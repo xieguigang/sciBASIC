@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::533168820eda735e3874e560fbeb7618, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame//Encoder/FlagEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::533168820eda735e3874e560fbeb7618, Data_science\DataMining\FeatureFrame\Encoder\FlagEncoder.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b12fd4bd45ec42d9f26eafdc45f9be8c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/Java/Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::b12fd4bd45ec42d9f26eafdc45f9be8c, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 

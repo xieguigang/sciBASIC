@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b52376daf79aae8c0cb98fb81784054e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/ApplicationServices/Terminal/Utility/ProgressBar/ShellProgressBar/ShellProgressBar.Example//TestCases/NeverCompletesExample.vb"
+﻿#Region "Microsoft.VisualBasic::b52376daf79aae8c0cb98fb81784054e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\NeverCompletesExample.vb"
 
     ' Author:
     ' 

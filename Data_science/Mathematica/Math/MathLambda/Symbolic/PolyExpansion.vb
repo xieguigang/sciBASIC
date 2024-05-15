@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf4f863597edd1c0a8f8c1d46fa8d261, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/MathLambda//Symbolic/PolyExpansion.vb"
+﻿#Region "Microsoft.VisualBasic::cf4f863597edd1c0a8f8c1d46fa8d261, Data_science\Mathematica\Math\MathLambda\Symbolic\PolyExpansion.vb"
 
     ' Author:
     ' 

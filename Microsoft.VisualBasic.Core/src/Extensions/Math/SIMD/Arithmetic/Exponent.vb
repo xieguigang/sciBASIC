@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85d43bd3c10f5985e02fc8abfdc918aa, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Arithmetic/Exponent.vb"
+﻿#Region "Microsoft.VisualBasic::85d43bd3c10f5985e02fc8abfdc918aa, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Arithmetic\Exponent.vb"
 
     ' Author:
     ' 

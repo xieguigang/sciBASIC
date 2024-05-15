@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3ab7841ef576adb5fd42f46d5af3c58, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::409ed0e766c4de07998844781a1ddd15, Data\BinaryData\netCDF\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 528
-    '    Code Lines: 214
-    ' Comment Lines: 259
-    '   Blank Lines: 55
-    '     File Size: 23.09 KB
+    '   Total Lines: 587
+    '    Code Lines: 243
+    ' Comment Lines: 280
+    '   Blank Lines: 64
+    '     File Size: 25.68 KB
 
 
     ' Class CDFWriter
@@ -46,9 +46,9 @@
     '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
-    '               GlobalAttributes
+    '               (+4 Overloads) GlobalAttributes
     ' 
-    '     Sub: (+3 Overloads) AddVariable, AddVector, (+2 Overloads) Dispose, Flush, Save
+    '     Sub: (+3 Overloads) AddVariable, (+5 Overloads) AddVector, (+2 Overloads) Dispose, Flush, Save
     '          writeAttributes
     ' 
     ' /********************************************************************************/
@@ -248,6 +248,18 @@ Public Class CDFWriter : Implements IDisposable
     Public Function GlobalAttributes(ParamArray attrs As attribute()) As CDFWriter
         Call globalAttrs.AddRange(attrs)
         Return Me
+    End Function
+
+    Public Function GlobalAttributes(name As String, value As String) As CDFWriter
+        Return GlobalAttributes(New attribute(name, value))
+    End Function
+
+    Public Function GlobalAttributes(name As String, value As Boolean) As CDFWriter
+        Return GlobalAttributes(New attribute(name, If(value, 1, 0), CDFDataTypes.NC_INT))
+    End Function
+
+    Public Function GlobalAttributes(name As String, value As Integer) As CDFWriter
+        Return GlobalAttributes(New attribute(name, value, CDFDataTypes.NC_INT))
     End Function
 
     ''' <summary>
@@ -500,6 +512,53 @@ Public Class CDFWriter : Implements IDisposable
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Double), [dim] As Dimension, Optional attrs As attribute() = Nothing)
         Call AddVariable(name, CType(vec.ToArray, doubles), [dim], attrs)
+    End Sub
+
+    ''' <summary>
+    ''' Add a numeric vector into target cdf file
+    ''' </summary>
+    ''' <param name="name$"></param>
+    ''' <param name="vec"></param>
+    ''' <param name="[dim]"></param>
+    ''' <param name="attrs"></param>
+    ''' <remarks>
+    ''' A wrapper of the <see cref="AddVariable(String, ICDFDataVector, Dimension(), attribute())"/> function
+    ''' </remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Single), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, floats), [dim], attrs)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Char), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, chars), [dim], attrs)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name$, vec As IEnumerable(Of Integer), [dim] As Dimension, Optional attrs As attribute() = Nothing)
+        Call AddVariable(name, CType(vec.ToArray, integers), [dim], attrs)
+    End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="vec"></param>
+    ''' <param name="[dim]"></param>
+    ''' <param name="attrs"></param>
+    ''' <remarks>
+    ''' due to the reason of string value is in variable length, so we just pass the dimension name at here
+    ''' </remarks>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Sub AddVector(name As String, vec As IEnumerable(Of String),
+                                   [dim] As String,
+                                   Optional attrs As attribute() = Nothing)
+
+        Dim chars As chars = CType(vec.ToArray, chars)
+        Dim dimSize As New Dimension([dim], chars.Length)
+
+        Call AddVariable(name, chars, dimSize, attrs)
     End Sub
 
     ''' <summary>

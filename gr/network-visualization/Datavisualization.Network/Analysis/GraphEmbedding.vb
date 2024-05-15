@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1734fdc897ec7482b2b4180283b789f2, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/GraphEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::1734fdc897ec7482b2b4180283b789f2, gr\network-visualization\Datavisualization.Network\Analysis\GraphEmbedding.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47c19f624f8a723d30a8ec3d35c5361e, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//device/GlobalHeapId.vb"
+﻿#Region "Microsoft.VisualBasic::47c19f624f8a723d30a8ec3d35c5361e, Data\BinaryData\HDF5\device\GlobalHeapId.vb"
 
     ' Author:
     ' 

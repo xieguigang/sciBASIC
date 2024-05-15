@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44f3498ebf109f53e3e8753839c42588, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::44f3498ebf109f53e3e8753839c42588, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
     ' Author:
     ' 

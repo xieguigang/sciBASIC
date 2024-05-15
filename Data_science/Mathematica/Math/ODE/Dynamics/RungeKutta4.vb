@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a0a75c381881c0025c597f28a53d652, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/ODE//Dynamics/RungeKutta4.vb"
+﻿#Region "Microsoft.VisualBasic::7a0a75c381881c0025c597f28a53d652, Data_science\Mathematica\Math\ODE\Dynamics\RungeKutta4.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6319a648cf5d1657690627c0345c2000, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/NetCoreApp/deps.json.vb"
+﻿#Region "Microsoft.VisualBasic::6319a648cf5d1657690627c0345c2000, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\NetCoreApp\deps.json.vb"
 
     ' Author:
     ' 

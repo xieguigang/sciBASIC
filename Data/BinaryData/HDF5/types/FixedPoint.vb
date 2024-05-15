@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55b7048f639616105ec34961ebfdeb43, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/HDF5//types/FixedPoint.vb"
+﻿#Region "Microsoft.VisualBasic::55b7048f639616105ec34961ebfdeb43, Data\BinaryData\HDF5\types\FixedPoint.vb"
 
     ' Author:
     ' 

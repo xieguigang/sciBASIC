@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::969abd21470b422ac98d3c2763e066ad, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming//KBand/KBandSearch.vb"
+﻿#Region "Microsoft.VisualBasic::969abd21470b422ac98d3c2763e066ad, Data_science\DataMining\DynamicProgramming\KBand\KBandSearch.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Extensions/FixLengthString.vb"
+﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
 
     ' Author:
     ' 

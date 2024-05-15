@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eade07a9679872238837e71e3fe6b6f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//rbm_nn/deep/DeepRBM.vb"
+﻿#Region "Microsoft.VisualBasic::1eade07a9679872238837e71e3fe6b6f, Data_science\MachineLearning\RestrictedBoltzmannMachine\rbm_nn\deep\DeepRBM.vb"
 
     ' Author:
     ' 

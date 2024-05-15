@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e591d7b0eedadcdf1ddbf9213df1f1e0, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/IO/Extensions/IO.vb"
+﻿#Region "Microsoft.VisualBasic::d4fd9dc89d180f97e4488d8786d3d80e, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 184
     ' Comment Lines: 125
     '   Blank Lines: 33
-    '     File Size: 13.43 KB
+    '     File Size: 13.48 KB
 
 
     ' Module IOExtensions

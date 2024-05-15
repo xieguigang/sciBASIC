@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14fd378454dd18e4d7a05d38f8f00e58, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Stream/StreamReader/BindAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::14fd378454dd18e4d7a05d38f8f00e58, Data\BinaryData\BinaryData\Stream\StreamReader\BindAttribute.vb"
 
     ' Author:
     ' 

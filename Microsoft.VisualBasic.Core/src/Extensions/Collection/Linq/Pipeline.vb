@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::5cbadd7b88a66bbf48adbb098c5e4da6, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Pipeline.vb"
 
     ' Author:
     ' 

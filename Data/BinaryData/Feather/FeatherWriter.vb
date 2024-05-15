@@ -1,4 +1,83 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::53dc92f60eb7212c25cd21786e9fc5df, Data\BinaryData\Feather\FeatherWriter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 3538
+    '    Code Lines: 2679
+    ' Comment Lines: 121
+    '   Blank Lines: 738
+    '     File Size: 119.26 KB
+
+
+    ' Enum WriteMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class FeatherWriter
+    ' 
+    '     Properties: Mode, NumColumns, NumRows
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: AssureNullable, CountNulls, DetermineCoveringType, DetermineLength, IntegralSign
+    '               IsFloating, IsIntegral, IsNonNullable, (+2 Overloads) MapToDiskType, NumberOfBytesForNullMask
+    '               NumericSize, Widen, WriteColumn
+    ' 
+    '     Sub: (+4 Overloads) AddColumn, AddColumnImpl, (+4 Overloads) AddColumns, AdvanceDataStreamTo, AdvanceNullStreamTo
+    '          AdvanceStreamTo, AdvanceVariableStreamTo, AlignIndexToArrowAlignment, BlitDateTimeArray, BlitDateTimeOffsetArray
+    '          (+10 Overloads) BlitNonNullableArray, BlitNonNullableBoolArray, BlitNonNullableEnumArray, (+10 Overloads) BlitNullableArray, BlitNullableBoolArray
+    '          BlitNullableDateTimeArray, BlitNullableDateTimeOffsetArray, BlitNullableEnumArray, BlitNullableTimeSpanArray, BlitTimeSpanArray
+    '          CloseAndDiscard, CopyDateTimeCollection, CopyDateTimeIEnumerable, CopyDateTimeOffsetCollection, CopyDateTimeOffsetIEnumerable
+    '          CopyNonNullableBoolCollection, CopyNonNullableBoolIEnumerable, (+10 Overloads) CopyNonNullableCollection, CopyNonNullableEnumCollection, CopyNonNullableEnumIEnumerable
+    '          (+10 Overloads) CopyNonNullableIEnumerable, CopyNullableBoolCollection, CopyNullableBoolIEnumerable, (+10 Overloads) CopyNullableCollection, CopyNullableDateTimeCollection
+    '          CopyNullableDateTimeIEnumerable, CopyNullableDateTimeOffsetCollection, CopyNullableDateTimeOffsetIEnumerable, CopyNullableEnumCollection, CopyNullableEnumIEnumerable
+    '          (+10 Overloads) CopyNullableIEnumerable, CopyNullableStringArray, CopyNullableStringCollection, CopyNullableStringIEnumerable, CopyNullableTimeSpanCollection
+    '          CopyNullableTimeSpanIEnumerable, CopyStringArray, CopyStringCollection, CopyStringIEnumerable, CopyTimeSpanCollection
+    '          CopyTimeSpanIEnumerable, DetermineLengthAndNullCount, DetermineTypeAndNullCount, DetermineTypeLengthAndNullCount, Dispose
+    '          Finalize, SerializeAndDiscard, SerializePending, Setup, WriteData
+    '          WriteLevels, WriteMagic, WriteMetadata, WriteNullableData, WriteNullableVariableSizedData
+    '          WriteVariableSizedData
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
@@ -3536,3 +3615,4 @@ inferFromUntyped:
         MyBase.Finalize()
     End Sub
 End Class
+

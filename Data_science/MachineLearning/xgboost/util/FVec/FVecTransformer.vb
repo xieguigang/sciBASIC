@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35508495f6a2db5b7c2f116f42921d89, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//util/FVec/FVecTransformer.vb"
+﻿#Region "Microsoft.VisualBasic::35508495f6a2db5b7c2f116f42921d89, Data_science\MachineLearning\xgboost\util\FVec\FVecTransformer.vb"
 
     ' Author:
     ' 

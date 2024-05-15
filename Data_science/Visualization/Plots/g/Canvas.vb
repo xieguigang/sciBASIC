@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//g/Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::2571aa791eccacb8cb8d2adc6b7f65d3, Data_science\Visualization\Plots\g\Canvas.vb"
 
     ' Author:
     ' 

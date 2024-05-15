@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d87b0e7ead61ecca80eda2d8d3ddb432, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::d87b0e7ead61ecca80eda2d8d3ddb432, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 

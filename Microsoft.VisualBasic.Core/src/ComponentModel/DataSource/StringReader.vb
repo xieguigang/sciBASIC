@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef46a8854cdcbbfdd3013aa800e03d1e, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::df7cdc3f3c89533e9423285f4025401b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 256
-    '    Code Lines: 116
+    '   Total Lines: 261
+    '    Code Lines: 120
     ' Comment Lines: 105
-    '   Blank Lines: 35
-    '     File Size: 9.34 KB
+    '   Blank Lines: 36
+    '     File Size: 9.54 KB
 
 
     '     Interface IStringGetter
@@ -55,8 +55,8 @@
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetBoolean, GetByte, GetBytes, GetChar, GetChars
     '                   GetDateTime, GetDecimal, GetDouble, GetFloat, GetGuid
-    '                   GetInt16, GetInt32, GetInt64, GetString, IsNull
-    '                   WrapDictionary
+    '                   GetInt16, GetInt32, GetInt64, GetString, GetUInt64
+    '                   IsNull, WrapDictionary
     ' 
     ' 
     ' /********************************************************************************/
@@ -238,6 +238,11 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDouble(parameter As String) As Double
             Return Val(getter.GetString(parameter))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetUInt64(name As String) As ULong
+            Return ULong.Parse(getter.GetString(name))
         End Function
 
         ''' <summary>

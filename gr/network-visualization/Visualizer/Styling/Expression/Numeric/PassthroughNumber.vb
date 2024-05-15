@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d4860696406b9714b25f7b08166abb, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Numeric/PassthroughNumber.vb"
+﻿#Region "Microsoft.VisualBasic::99d4860696406b9714b25f7b08166abb, gr\network-visualization\Visualizer\Styling\Expression\Numeric\PassthroughNumber.vb"
 
     ' Author:
     ' 

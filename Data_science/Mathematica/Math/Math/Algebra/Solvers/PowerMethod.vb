@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42db24606205dc81dd7e9a8fdc15b37d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Solvers/PowerMethod.vb"
+﻿#Region "Microsoft.VisualBasic::42db24606205dc81dd7e9a8fdc15b37d, Data_science\Mathematica\Math\Math\Algebra\Solvers\PowerMethod.vb"
 
     ' Author:
     ' 

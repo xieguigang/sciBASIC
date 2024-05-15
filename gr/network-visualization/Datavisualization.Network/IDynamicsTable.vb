@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de165bf125d40c95f161bd902d99a7bb, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//IDynamicsTable.vb"
+﻿#Region "Microsoft.VisualBasic::de165bf125d40c95f161bd902d99a7bb, gr\network-visualization\Datavisualization.Network\IDynamicsTable.vb"
 
     ' Author:
     ' 

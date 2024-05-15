@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::148d340e1974785080809fd0f39de3df, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/InteropService/CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::148d340e1974785080809fd0f39de3df, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\CLIBuilder.vb"
 
     ' Author:
     ' 

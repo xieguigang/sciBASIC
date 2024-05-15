@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63dd99e780c4aaabda70492e8f2f9170, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Spline/DouglasPeucker/DouglasPeucker.vb"
+﻿#Region "Microsoft.VisualBasic::63dd99e780c4aaabda70492e8f2f9170, Data_science\Mathematica\Math\Math\Spline\DouglasPeucker\DouglasPeucker.vb"
 
     ' Author:
     ' 

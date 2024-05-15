@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94f8e96a57c48d4c94839dfdbb5ec3e1, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing3D/Models/Mesh.vb"
+﻿#Region "Microsoft.VisualBasic::94f8e96a57c48d4c94839dfdbb5ec3e1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Mesh.vb"
 
     ' Author:
     ' 

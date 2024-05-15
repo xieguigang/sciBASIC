@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::184be0541f37da381b3437ea1bc1d0c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/FeatureVector.vb"
+﻿#Region "Microsoft.VisualBasic::184be0541f37da381b3437ea1bc1d0c4, Data_science\Mathematica\Math\DataFrame\DataFrame\FeatureVector.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16dbc6ec6cdc6ce6840e2bc1b1a9b5e8, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/DataSet/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::16dbc6ec6cdc6ce6840e2bc1b1a9b5e8, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\NamespaceDoc.vb"
 
     ' Author:
     ' 

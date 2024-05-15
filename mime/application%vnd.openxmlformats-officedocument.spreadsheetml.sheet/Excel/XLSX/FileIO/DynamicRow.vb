@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f93735a29d102046e03b3eb29eeb5ba, G:/GCModeller/src/runtime/sciBASIC#/mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel//XLSX/FileIO/DynamicRow.vb"
+﻿#Region "Microsoft.VisualBasic::1f93735a29d102046e03b3eb29eeb5ba, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\DynamicRow.vb"
 
     ' Author:
     ' 

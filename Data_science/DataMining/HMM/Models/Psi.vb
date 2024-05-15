@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8918d546f07ca6a346dcd9f61c2fb19a, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Models/Psi.vb"
+﻿#Region "Microsoft.VisualBasic::8918d546f07ca6a346dcd9f61c2fb19a, Data_science\DataMining\HMM\Models\Psi.vb"
 
     ' Author:
     ' 

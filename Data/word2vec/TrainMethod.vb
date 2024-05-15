@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90f1bbed548325b960638f3c0b352970, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//TrainMethod.vb"
+﻿#Region "Microsoft.VisualBasic::90f1bbed548325b960638f3c0b352970, Data\word2vec\TrainMethod.vb"
 
     ' Author:
     ' 

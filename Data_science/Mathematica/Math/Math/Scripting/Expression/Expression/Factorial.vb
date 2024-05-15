@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abe3cac3961783196c91ac2613042994, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/Factorial.vb"
+﻿#Region "Microsoft.VisualBasic::abe3cac3961783196c91ac2613042994, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
 
     ' Author:
     ' 

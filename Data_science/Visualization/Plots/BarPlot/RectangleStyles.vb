@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dad6e59ced848f109d82e8b5022d3bed, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//BarPlot/RectangleStyles.vb"
+﻿#Region "Microsoft.VisualBasic::dad6e59ced848f109d82e8b5022d3bed, Data_science\Visualization\Plots\BarPlot\RectangleStyles.vb"
 
     ' Author:
     ' 

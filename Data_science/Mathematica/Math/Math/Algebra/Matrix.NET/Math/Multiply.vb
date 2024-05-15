@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4373ab2fcdb134e1c67f2b7401925b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/Matrix.NET/Math/Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::5f4373ab2fcdb134e1c67f2b7401925b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\Multiply.vb"
 
     ' Author:
     ' 

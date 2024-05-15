@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7703b97c5e5d19e5ce09ae07fb0c4a32, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/Plugin/PropertyFormat/FormattedDoubleConverter.vb"
+﻿#Region "Microsoft.VisualBasic::7703b97c5e5d19e5ce09ae07fb0c4a32, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Plugin\PropertyFormat\FormattedDoubleConverter.vb"
 
     ' Author:
     ' 

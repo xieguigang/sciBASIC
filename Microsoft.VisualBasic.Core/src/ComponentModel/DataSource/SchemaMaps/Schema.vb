@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd1d90b102288d4f3adf2c94a6803f37, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/DataSource/SchemaMaps/Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0aa04d236ac37ed5119f951b5f7be5c5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Schema.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 40
     ' Comment Lines: 4
     '   Blank Lines: 13
-    '     File Size: 2.07 KB
+    '     File Size: 2.09 KB
 
 
     '     Class Schema
@@ -84,7 +84,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public Function Write(name$, target As Object, value As Object) As Boolean
             Dim p As BindProperty(Of T) = FindField(name)
 
-            If p.member Is Nothing Then
+            If p Is Nothing OrElse p.member Is Nothing Then
                 Return False
             End If
 

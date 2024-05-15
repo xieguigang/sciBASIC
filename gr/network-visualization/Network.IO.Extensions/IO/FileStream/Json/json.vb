@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions//IO/FileStream/Json/json.vb"
+﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\json.vb"
 
     ' Author:
     ' 

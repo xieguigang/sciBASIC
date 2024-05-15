@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47613598a39f8f8ce8696e10eb628216, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Delegate/DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::47613598a39f8f8ce8696e10eb628216, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 

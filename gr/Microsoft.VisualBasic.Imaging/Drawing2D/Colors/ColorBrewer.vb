@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac2e876116c3af1b434e3869cf3d1a1a, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Colors/ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::ac2e876116c3af1b434e3869cf3d1a1a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a14f01d115b5df6c5c0a9906df6fb374, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM//Algorithm/HMMChainAlgorithm/backwardFactory.vb"
+﻿#Region "Microsoft.VisualBasic::a14f01d115b5df6c5c0a9906df6fb374, Data_science\DataMining\HMM\Algorithm\HMMChainAlgorithm\backwardFactory.vb"
 
     ' Author:
     ' 

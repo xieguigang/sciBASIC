@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fda9cec6f25b4af8a729275e0659619, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Model/Abstract/General.vb"
+﻿#Region "Microsoft.VisualBasic::2fda9cec6f25b4af8a729275e0659619, Data_science\Graph\Model\Abstract\General.vb"
 
     ' Author:
     ' 

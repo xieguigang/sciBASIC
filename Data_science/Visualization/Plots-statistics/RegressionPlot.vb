@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d1652f7d501a9cca659ffa0a610e1f7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9d1652f7d501a9cca659ffa0a610e1f7, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 

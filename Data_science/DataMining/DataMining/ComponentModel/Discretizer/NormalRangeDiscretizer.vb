@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Discretizer/NormalRangeDiscretizer.vb"
+﻿#Region "Microsoft.VisualBasic::0741548dda86622d3f128c462cd395e1, Data_science\DataMining\DataMining\ComponentModel\Discretizer\NormalRangeDiscretizer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cee61f9dfb18b8991d769a0c3fb2539f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/factory/Symbols.vb"
+﻿#Region "Microsoft.VisualBasic::cee61f9dfb18b8991d769a0c3fb2539f, Data_science\Mathematica\Math\GeneticProgramming\model\factory\Symbols.vb"
 
     ' Author:
     ' 

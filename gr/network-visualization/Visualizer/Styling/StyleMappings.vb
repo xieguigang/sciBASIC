@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d079cbf5b776731328e7f43c4e80f957, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::d079cbf5b776731328e7f43c4e80f957, gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
 
     ' Author:
     ' 

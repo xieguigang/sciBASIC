@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//IPv4/CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::262fc9a8828c6837a47f77f0f6cb0a39, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/IntegerEntity.vb"
+﻿#Region "Microsoft.VisualBasic::262fc9a8828c6837a47f77f0f6cb0a39, Data_science\DataMining\DataMining\ComponentModel\IntegerEntity.vb"
 
     ' Author:
     ' 

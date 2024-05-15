@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::630b9b0ad2d45201a39f301719f51855, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Math/MoveToFront.vb"
+﻿#Region "Microsoft.VisualBasic::630b9b0ad2d45201a39f301719f51855, Data\BinaryData\BinaryData\Bzip2\Math\MoveToFront.vb"
 
     ' Author:
     ' 

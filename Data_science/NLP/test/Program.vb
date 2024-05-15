@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::500bb58c1c19cf6c09cd0d64e9eb89cd, G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test//Program.vb"
+﻿#Region "Microsoft.VisualBasic::500bb58c1c19cf6c09cd0d64e9eb89cd, Data_science\NLP\test\Program.vb"
 
     ' Author:
     ' 

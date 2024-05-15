@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1116a469efcc1ad425bfb282067f5e45, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::1116a469efcc1ad425bfb282067f5e45, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 

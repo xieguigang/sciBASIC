@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e48160e763c9ee3426c19da22e2763f7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Image/Math/Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::e48160e763c9ee3426c19da22e2763f7, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 

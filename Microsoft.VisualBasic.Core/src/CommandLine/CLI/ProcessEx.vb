@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93974714e2265da5681b38c933f18e82, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CLI/ProcessEx.vb"
+﻿#Region "Microsoft.VisualBasic::93974714e2265da5681b38c933f18e82, Microsoft.VisualBasic.Core\src\CommandLine\CLI\ProcessEx.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19fa0c055ab84fffbb32da43d8534268, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/Information/EntropyScore.vb"
+﻿#Region "Microsoft.VisualBasic::19fa0c055ab84fffbb32da43d8534268, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\EntropyScore.vb"
 
     ' Author:
     ' 

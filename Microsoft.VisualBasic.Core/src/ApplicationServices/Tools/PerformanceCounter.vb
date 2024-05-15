@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7611750539f844002f3ed828cb69583, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Tools/PerformanceCounter.vb"
+﻿#Region "Microsoft.VisualBasic::d7611750539f844002f3ed828cb69583, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\PerformanceCounter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7578d500f6246583fda1c117b1c71c2e, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Brush/PassthroughBrush.vb"
+﻿#Region "Microsoft.VisualBasic::7578d500f6246583fda1c117b1c71c2e, gr\network-visualization\Visualizer\Styling\Expression\Brush\PassthroughBrush.vb"
 
     ' Author:
     ' 

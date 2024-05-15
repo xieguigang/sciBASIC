@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c44651776909e193cf7a4c80c5b91b9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//NeuralNetwork/Models/Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::0c44651776909e193cf7a4c80c5b91b9, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Synapse.vb"
 
     ' Author:
     ' 

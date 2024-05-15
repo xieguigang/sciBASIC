@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c769dd28bad939004cff74eb554f3b86, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Settings/Inf/INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::c769dd28bad939004cff74eb554f3b86, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17141280902806a91c2549822ec465a7, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE//GMM/1D/Component.vb"
+﻿#Region "Microsoft.VisualBasic::17141280902806a91c2549822ec465a7, Data_science\MachineLearning\VAE\GMM\1D\Component.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97a10524f5b8cef92ed4eb15b9ca6b30, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP//OptimizationState.vb"
+﻿#Region "Microsoft.VisualBasic::97a10524f5b8cef92ed4eb15b9ca6b30, Data_science\DataMining\UMAP\OptimizationState.vb"
 
     ' Author:
     ' 

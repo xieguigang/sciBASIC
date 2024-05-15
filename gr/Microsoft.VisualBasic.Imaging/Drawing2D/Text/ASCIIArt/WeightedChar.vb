@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6cf39884cba05127173794f747be79e, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/ASCIIArt/WeightedChar.vb"
+﻿#Region "Microsoft.VisualBasic::c6cf39884cba05127173794f747be79e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\WeightedChar.vb"
 
     ' Author:
     ' 

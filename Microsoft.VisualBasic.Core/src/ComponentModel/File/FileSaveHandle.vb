@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::011fa2291fe5dd6f7fc89410a001045d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/File/FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::011fa2291fe5dd6f7fc89410a001045d, Microsoft.VisualBasic.Core\src\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 

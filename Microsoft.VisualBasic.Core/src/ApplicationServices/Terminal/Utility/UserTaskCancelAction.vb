@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17999381e12c52a1965ae4f001bdc985, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/Utility/UserTaskCancelAction.vb"
+﻿#Region "Microsoft.VisualBasic::17999381e12c52a1965ae4f001bdc985, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::064c6fcae38c56766002329a7d933ecc, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//AprioriRules/Algorithm/Implementation/StrongRules.vb"
+﻿#Region "Microsoft.VisualBasic::30ed9f3a89d04f2594e9cbdc2453a730, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,17 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 108
+    '   Total Lines: 129
+    '    Code Lines: 100
     ' Comment Lines: 0
-    '   Blank Lines: 31
-    '     File Size: 5.41 KB
+    '   Blank Lines: 29
+    '     File Size: 5.16 KB
 
 
     '     Module StrongRules
     ' 
     '         Function: concatRules, GenerateRules, GenerateSubsets, GetConfidence, GetMaximalItemSets
-    '                   GetRemaining, GetStrongRules
+    '                   GetStrongRules
     ' 
     '         Sub: AddStrongRule, GenerateSubsetsRecursive
     ' 
@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -64,12 +63,12 @@ Namespace AprioriRules.Impl
     Module StrongRules
 
         <Extension>
-        Public Function GenerateRules(allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As HashSet(Of Rule)
+        Public Function GenerateRules(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As HashSet(Of Rule)
             Dim rulesList As New HashSet(Of Rule)()
             Dim concats = LinqAPI.Exec(Of Rule()) _
- _
+                                                  _
                 () <= From item
-                      In allFrequentItems.AsParallel
+                      In allFrequentItems' .AsParallel
                       Where item.Key.Length > 1
                       Select item.concatRules()
 
@@ -83,12 +82,12 @@ Namespace AprioriRules.Impl
         End Function
 
         <Extension>
-        Private Function concatRules(token As KeyValuePair(Of String, TransactionTokensItem)) As Rule()
-            Dim subsetsList As IEnumerable(Of String) = GenerateSubsets(token.Key)
+        Private Function concatRules(token As KeyValuePair(Of ItemSet, TransactionTokensItem)) As Rule()
+            Dim subsetsList As ItemSet() = GenerateSubsets(token.Key).ToArray
             Dim list As New List(Of Rule)
 
-            For Each subset As String In subsetsList
-                Dim remaining$ = GetRemaining(subset, token.Key)
+            For Each subset As ItemSet In subsetsList
+                Dim remaining As ItemSet = token.Key.Remove(subset)
                 Dim rule As New Rule(subset, remaining, 0, (0, 0))
 
                 Call list.Add(rule)
@@ -97,28 +96,28 @@ Namespace AprioriRules.Impl
             Return list.ToArray
         End Function
 
-        Public Function GenerateSubsets(item As String) As IEnumerable(Of String)
-            Dim allSubsets As IEnumerable(Of String) = New String() {}
+        Public Function GenerateSubsets(item As ItemSet) As IEnumerable(Of ItemSet)
+            Dim allSubsets As IEnumerable(Of ItemSet) = New ItemSet() {}
             Dim subsetLength As Integer = item.Length / 2
 
             For i As Integer = 1 To subsetLength
-                Dim subsets As New List(Of String)()
-                GenerateSubsetsRecursive(item, i, New Char(item.Length - 1) {}, subsets)
+                Dim subsets As New List(Of ItemSet)()
+                GenerateSubsetsRecursive(item, i, New Item(item.Length - 1) {}, subsets)
                 allSubsets = allSubsets.Concat(subsets)
             Next
 
             Return allSubsets
         End Function
 
-        Public Sub GenerateSubsetsRecursive(item$, subsetLength%, temp As Char(), subsets As IList(Of String), Optional q% = 0, Optional r% = 0)
+        Public Sub GenerateSubsetsRecursive(item As ItemSet, subsetLength%, temp As Item(), subsets As IList(Of ItemSet), Optional q% = 0, Optional r% = 0)
             If q = subsetLength Then
-                Dim sb As New StringBuilder()
+                Dim sb As New List(Of Item)
 
                 For i As Integer = 0 To subsetLength - 1
-                    sb.Append(temp(i))
+                    sb.Add(temp(i))
                 Next
 
-                subsets.Add(sb.ToString())
+                subsets.Add(New ItemSet(sb))
             Else
                 For i As Integer = r To item.Length - 1
                     temp(q) = item(i)
@@ -127,20 +126,11 @@ Namespace AprioriRules.Impl
             End If
         End Sub
 
-        Public Function GetRemaining(child As String, parent As String) As String
-            For i As Integer = 0 To child.Length - 1
-                Dim index As Integer = parent.IndexOf(child(i))
-                parent = parent.Remove(index, 1)
-            Next
-
-            Return parent
-        End Function
-
-        Public Function GetStrongRules(minConfidence#, rules As HashSet(Of Rule), allFrequentItems As Dictionary(Of String, TransactionTokensItem)) As IList(Of Rule)
+        Public Function GetStrongRules(minConfidence#, rules As HashSet(Of Rule), allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As IList(Of Rule)
             Dim strongRules As New List(Of Rule)()
 
             For Each rule As Rule In rules
-                Dim xy As String = Apriori.SorterSortTokens(rule.X & rule.Y)
+                Dim xy As ItemSet = (rule.X & rule.Y).SorterSortTokens
                 strongRules.AddStrongRule(rule, xy, minConfidence, allFrequentItems)
             Next
 
@@ -150,7 +140,7 @@ Namespace AprioriRules.Impl
         End Function
 
         <Extension>
-        Public Sub AddStrongRule(strongRules As List(Of Rule), rule As Rule, XY$, minConfidence#, allFrequentItems As Dictionary(Of String, TransactionTokensItem))
+        Public Sub AddStrongRule(strongRules As List(Of Rule), rule As Rule, XY As ItemSet, minConfidence#, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem))
             Dim value = allFrequentItems.GetConfidence(rule.X, XY)
 
             If value.confidence >= minConfidence Then
@@ -167,7 +157,7 @@ Namespace AprioriRules.Impl
         End Sub
 
         <Extension>
-        Public Function GetConfidence(allFrequentItems As Dictionary(Of String, TransactionTokensItem), X$, XY$) As (support As (XY#, X#), confidence#)
+        Public Function GetConfidence(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem), X As ItemSet, XY As ItemSet) As (support As (XY#, X#), confidence#)
             If Not (allFrequentItems.ContainsKey(X) AndAlso allFrequentItems.ContainsKey(XY)) Then
                 Return ((0, 0), 0)
             End If
@@ -177,8 +167,8 @@ Namespace AprioriRules.Impl
             Return ((supportXY, supportX), supportXY / supportX)
         End Function
 
-        Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of String, Dictionary(Of String, Double))) As IList(Of String)
-            Dim maximalItemSets As New List(Of String)()
+        Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))) As IList(Of ItemSet)
+            Dim maximalItemSets As New List(Of ItemSet)()
 
             For Each item In closedItemSets
                 Dim parents = item.Value

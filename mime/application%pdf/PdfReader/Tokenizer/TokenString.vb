@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71c02a2b550222daa2bac71e65b48dd8, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfReader/Tokenizer/TokenString.vb"
+﻿#Region "Microsoft.VisualBasic::71c02a2b550222daa2bac71e65b48dd8, mime\application%pdf\PdfReader\Tokenizer\TokenString.vb"
 
     ' Author:
     ' 

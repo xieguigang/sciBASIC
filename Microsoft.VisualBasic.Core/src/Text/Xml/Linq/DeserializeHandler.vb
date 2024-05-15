@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7853c18fc37ddfc0bf3c2770fdd2ce, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Linq/DeserializeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::3a7853c18fc37ddfc0bf3c2770fdd2ce, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DeserializeHandler.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69a64af8ae329c47611a015b08987e94, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/StatisticsMathExtensions/SampleObservation.vb"
+﻿#Region "Microsoft.VisualBasic::69a64af8ae329c47611a015b08987e94, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\SampleObservation.vb"
 
     ' Author:
     ' 

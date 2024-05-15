@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::492f7bbca8e895f491e18fe4fb45b223, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//SpringForce/Interfaces/IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::492f7bbca8e895f491e18fe4fb45b223, gr\network-visualization\network_layout\SpringForce\Interfaces\IForceDirected.vb"
 
     ' Author:
     ' 

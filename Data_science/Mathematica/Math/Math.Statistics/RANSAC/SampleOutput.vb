@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c1ce0782d6636cf8cc303431b788867, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//RANSAC/SampleOutput.vb"
+﻿#Region "Microsoft.VisualBasic::1c1ce0782d6636cf8cc303431b788867, Data_science\Mathematica\Math\Math.Statistics\RANSAC\SampleOutput.vb"
 
     ' Author:
     ' 

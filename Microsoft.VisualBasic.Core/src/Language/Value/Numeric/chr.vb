@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d70edc6bcd7ed6ab6fb472f722178e7a, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Value/Numeric/chr.vb"
+﻿#Region "Microsoft.VisualBasic::d70edc6bcd7ed6ab6fb472f722178e7a, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\chr.vb"
 
     ' Author:
     ' 

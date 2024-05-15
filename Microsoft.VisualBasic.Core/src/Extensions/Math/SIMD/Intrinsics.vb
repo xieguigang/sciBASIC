@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e4d46c0d8448c7f8c80a4b9bb876fc6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Math/SIMD/Intrinsics.vb"
+﻿#Region "Microsoft.VisualBasic::4e4d46c0d8448c7f8c80a4b9bb876fc6, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76630739809c0aae92f3e9fe2635a0d7, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions//Serialize/NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::76630739809c0aae92f3e9fe2635a0d7, Data\DataFrame.Extensions\Serialize\NamespaceDoc.vb"
 
     ' Author:
     ' 

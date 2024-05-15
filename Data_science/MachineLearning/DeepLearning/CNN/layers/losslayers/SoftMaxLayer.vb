@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02926f09f5c5e5b75b17ddf95b529385, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning//CNN/Layers/losslayers/SoftMaxLayer.vb"
+﻿#Region "Microsoft.VisualBasic::02926f09f5c5e5b75b17ddf95b529385, Data_science\MachineLearning\DeepLearning\CNN\layers\losslayers\SoftMaxLayer.vb"
 
     ' Author:
     ' 

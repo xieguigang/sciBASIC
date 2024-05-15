@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Collection/Linq/VectorAssertor.vb"
+﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\VectorAssertor.vb"
 
     ' Author:
     ' 

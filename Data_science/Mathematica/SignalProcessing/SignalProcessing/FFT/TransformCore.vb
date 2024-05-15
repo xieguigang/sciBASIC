@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d446095173d19ee6e59605a9801baaeb, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//FFT/TransformCore.vb"
+﻿#Region "Microsoft.VisualBasic::d446095173d19ee6e59605a9801baaeb, Data_science\Mathematica\SignalProcessing\SignalProcessing\FFT\TransformCore.vb"
 
     ' Author:
     ' 

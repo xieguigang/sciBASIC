@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93d88af6bac835144a873d526b6d5e38, G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio//CodeSign/SupportedLanguages.vb"
+﻿#Region "Microsoft.VisualBasic::93d88af6bac835144a873d526b6d5e38, vs_solutions\dev\VisualStudio\CodeSign\SupportedLanguages.vb"
 
     ' Author:
     ' 

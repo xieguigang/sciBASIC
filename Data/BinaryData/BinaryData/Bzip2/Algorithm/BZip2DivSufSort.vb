@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData//Bzip2/Algorithm/BZip2DivSufSort.vb"
+﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6feb0c76bac225b1e541cf349aa60fd, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Numeric/DiscreteNumber.vb"
+﻿#Region "Microsoft.VisualBasic::f6feb0c76bac225b1e541cf349aa60fd, gr\network-visualization\Visualizer\Styling\Expression\Numeric\DiscreteNumber.vb"
 
     ' Author:
     ' 

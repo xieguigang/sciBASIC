@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbc599d86a4699896362a32a092a0535, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfReader/Tokenizer/TokenByteSplice.vb"
+﻿#Region "Microsoft.VisualBasic::bbc599d86a4699896362a32a092a0535, mime\application%pdf\PdfReader\Tokenizer\TokenByteSplice.vb"
 
     ' Author:
     ' 

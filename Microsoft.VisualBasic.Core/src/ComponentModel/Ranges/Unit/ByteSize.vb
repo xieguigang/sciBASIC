@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6008f4a421156b327323c298e90762d4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Unit/ByteSize.vb"
+﻿#Region "Microsoft.VisualBasic::6008f4a421156b327323c298e90762d4, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
 
     ' Author:
     ' 

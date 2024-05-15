@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B8D9B266-355C-42C3-9669-457B3874E5D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.DecisionTree.DecisionTreeProgram</StartupObject>
+    <StartupObject>Testing.AprioriTest</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -137,21 +137,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{034d2d2c-8045-4e29-a509-e792140a57de}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{0c2ad2c5-a84c-4bb8-896b-60ec63db8be2}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DataMining.vbproj">
-      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
-      <Name>DataMining</Name>
+    <ProjectReference Include="..\DataMining.NET5.vbproj">
+      <Project>{1ef3a387-00cb-431d-b661-5899393b53f4}</Project>
+      <Name>DataMining.NET5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c91e29a91a82c184a2e5a88be354d45, G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining//ComponentModel/Encoder/Variable/Categorical.vb"
+﻿#Region "Microsoft.VisualBasic::1c91e29a91a82c184a2e5a88be354d45, Data_science\DataMining\DataMining\ComponentModel\Encoder\Variable\Categorical.vb"
 
     ' Author:
     ' 

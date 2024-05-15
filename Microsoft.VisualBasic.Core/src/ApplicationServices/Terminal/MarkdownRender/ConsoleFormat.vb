@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a870a9180c13a3896e627bb186106fd3, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Terminal/MarkdownRender/ConsoleFormat.vb"
+﻿#Region "Microsoft.VisualBasic::a870a9180c13a3896e627bb186106fd3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\ConsoleFormat.vb"
 
     ' Author:
     ' 

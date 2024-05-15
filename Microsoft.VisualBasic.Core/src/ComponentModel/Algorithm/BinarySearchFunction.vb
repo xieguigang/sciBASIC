@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a1c009f242c865e8db147a045a75fe4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Algorithm/BinarySearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::4a1c009f242c865e8db147a045a75fe4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinarySearchFunction.vb"
 
     ' Author:
     ' 

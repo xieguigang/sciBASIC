@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c188e4a3a19fbfab5332b8f577dacda9, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning//ComponentModel/ActiveFunctions/Functions/ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::c188e4a3a19fbfab5332b8f577dacda9, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\ReLU.vb"
 
     ' Author:
     ' 

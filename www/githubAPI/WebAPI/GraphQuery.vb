@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7573b60df864014fcb6561f08a3d63b7, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//WebAPI/GraphQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7573b60df864014fcb6561f08a3d63b7, www\githubAPI\WebAPI\GraphQuery.vb"
 
     ' Author:
     ' 

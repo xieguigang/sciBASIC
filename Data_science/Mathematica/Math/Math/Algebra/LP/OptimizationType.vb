@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff145209d5fb7f23f5d4d58cac265084, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/LP/OptimizationType.vb"
+﻿#Region "Microsoft.VisualBasic::ff145209d5fb7f23f5d4d58cac265084, Data_science\Mathematica\Math\Math\Algebra\LP\OptimizationType.vb"
 
     ' Author:
     ' 

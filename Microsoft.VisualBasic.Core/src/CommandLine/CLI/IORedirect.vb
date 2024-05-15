@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fb6b9fbde6738ff6b57142552aa8d07, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/CLI/IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::7fb6b9fbde6738ff6b57142552aa8d07, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 

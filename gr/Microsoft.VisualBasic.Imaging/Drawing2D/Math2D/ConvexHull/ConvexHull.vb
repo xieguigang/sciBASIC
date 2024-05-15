@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/ConvexHull/ConvexHull.vb"
+﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
 
     ' Author:
     ' 

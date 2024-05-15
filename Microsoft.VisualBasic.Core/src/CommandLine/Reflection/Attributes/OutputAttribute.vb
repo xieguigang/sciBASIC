@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c920223387a0eb7997fe9918647ef48c, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//CommandLine/Reflection/Attributes/OutputAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::c920223387a0eb7997fe9918647ef48c, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\OutputAttribute.vb"
 
     ' Author:
     ' 

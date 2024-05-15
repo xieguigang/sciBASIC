@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cca0d5b099c4d57b717de5b2d58fc3b, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Polar/PolarGraphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::1cca0d5b099c4d57b717de5b2d58fc3b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Polar\PolarGraphics2D.vb"
 
     ' Author:
     ' 

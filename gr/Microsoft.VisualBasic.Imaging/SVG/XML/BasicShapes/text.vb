@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbdb892f6c215d6f058f3e919a6465a0, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//SVG/XML/BasicShapes/text.vb"
+﻿#Region "Microsoft.VisualBasic::bbdb892f6c215d6f058f3e919a6465a0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\text.vb"
 
     ' Author:
     ' 

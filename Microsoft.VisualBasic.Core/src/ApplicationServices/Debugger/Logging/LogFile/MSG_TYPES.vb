@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11f876578ff4099060a3b739d3998b3b, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Debugger/Logging/LogFile/MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::11f876578ff4099060a3b739d3998b3b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 

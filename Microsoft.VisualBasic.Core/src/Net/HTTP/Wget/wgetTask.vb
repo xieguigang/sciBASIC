@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8dbb0be01261a63737188eb7c573673d, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/HTTP/Wget/wgetTask.vb"
+﻿#Region "Microsoft.VisualBasic::8dbb0be01261a63737188eb7c573673d, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wgetTask.vb"
 
     ' Author:
     ' 

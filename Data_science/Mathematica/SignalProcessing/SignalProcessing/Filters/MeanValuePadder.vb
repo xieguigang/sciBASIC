@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00b6dcb01b1b2bc8f58e31a549ff11e0, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Filters/MeanValuePadder.vb"
+﻿#Region "Microsoft.VisualBasic::00b6dcb01b1b2bc8f58e31a549ff11e0, Data_science\Mathematica\SignalProcessing\SignalProcessing\Filters\MeanValuePadder.vb"
 
     ' Author:
     ' 

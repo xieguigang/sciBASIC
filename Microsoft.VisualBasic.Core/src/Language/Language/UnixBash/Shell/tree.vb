@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Language/Language/UnixBash/Shell/tree.vb"
+﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\tree.vb"
 
     ' Author:
     ' 

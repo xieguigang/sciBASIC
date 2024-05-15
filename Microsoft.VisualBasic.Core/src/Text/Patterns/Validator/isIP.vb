@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::690724c8edefb7914a2be740adff0aad, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Patterns/Validator/isIP.vb"
+﻿#Region "Microsoft.VisualBasic::690724c8edefb7914a2be740adff0aad, Microsoft.VisualBasic.Core\src\Text\Patterns\Validator\isIP.vb"
 
     ' Author:
     ' 

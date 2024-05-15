@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d661cc4666fa9cffc4dc3e8ebea94d4, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/PowerGraph/AlgorithmExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2d661cc4666fa9cffc4dc3e8ebea94d4, gr\network-visualization\network_layout\Cola\PowerGraph\AlgorithmExtensions.vb"
 
     ' Author:
     ' 

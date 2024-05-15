@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccb6c77addc6b58ec103fc71989229af, G:/GCModeller/src/runtime/sciBASIC#/mime/application%json//Serializer/JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::2d3172d42eed3fcdce389d44fd12b8d1, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 111
-    ' Comment Lines: 28
-    '   Blank Lines: 19
-    '     File Size: 5.65 KB
+    '   Total Lines: 183
+    '    Code Lines: 126
+    ' Comment Lines: 33
+    '   Blank Lines: 24
+    '     File Size: 6.48 KB
 
 
     ' Module JSONSerializer
@@ -52,6 +52,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -110,7 +111,31 @@ Public Module JSONSerializer
         End Select
     End Function
 
+    ''' <summary>
+    ''' find two char
+    ''' </summary>
+    ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
+
     Private Function encodeString(value As String, opt As JSONSerializerOptions) As String
+        If InStr(value, """") > 0 Then
+            ' escape the quote symbol inside string,
+            ' or json string will syntax error
+            Dim unescape_quotes As String() = unescape.Matches(value).ToArray
+
+            For Each unescape_char As String In unescape_quotes
+                value = value.Replace(
+                    unescape_char,
+                    unescape_char.First & "\" & unescape_char.Last
+                )
+            Next
+
+            If value.First = """"c Then
+                value = "\" & value
+            End If
+        End If
+
+        value = value.Replace(vbCr, vbLf).Replace(vbLf, "\n")
+
         If opt.unicodeEscape Then
             Dim sb As New StringBuilder
             Dim code As Integer

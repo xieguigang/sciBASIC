@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4608d2af6cc3f52effcfbfa1ad5cb21e, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/Barcode/BarcodeEAN13.vb"
+﻿#Region "Microsoft.VisualBasic::4608d2af6cc3f52effcfbfa1ad5cb21e, mime\application%pdf\PdfFileWriter\Barcode\BarcodeEAN13.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b32182b261eb8cf9adcdf6e847bdfc7, G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf//PdfFileWriter/PDF/PdfRadialShading.vb"
+﻿#Region "Microsoft.VisualBasic::3b32182b261eb8cf9adcdf6e847bdfc7, mime\application%pdf\PdfFileWriter\PDF\PdfRadialShading.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ef23851255e604e9278366d2736adee, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage//Tabular/FrameWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4ef23851255e604e9278366d2736adee, Data\BinaryData\DataStorage\Tabular\FrameWriter.vb"
 
     ' Author:
     ' 

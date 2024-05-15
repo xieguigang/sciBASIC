@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfbff53913222625d7499297bd07604c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/Divide.vb"
+﻿#Region "Microsoft.VisualBasic::cfbff53913222625d7499297bd07604c, Data_science\Mathematica\Math\GeneticProgramming\model\impl\Divide.vb"
 
     ' Author:
     ' 

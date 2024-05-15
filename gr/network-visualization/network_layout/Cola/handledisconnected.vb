@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bdde9b04bd776f9442bc0050a17e287, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/handledisconnected.vb"
+﻿#Region "Microsoft.VisualBasic::9bdde9b04bd776f9442bc0050a17e287, gr\network-visualization\network_layout\Cola\handledisconnected.vb"
 
     ' Author:
     ' 

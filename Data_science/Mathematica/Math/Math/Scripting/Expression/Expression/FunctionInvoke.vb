@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d680f77bf00309d483aae1763c56d02c, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Scripting/Expression/Expression/FunctionInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::d680f77bf00309d483aae1763c56d02c, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\FunctionInvoke.vb"
 
     ' Author:
     ' 

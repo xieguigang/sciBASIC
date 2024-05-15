@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d20952eb660b8d0b0b6df39114444f, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/RestrictedBoltzmannMachine//math/functions/OneMinusX.vb"
+﻿#Region "Microsoft.VisualBasic::18d20952eb660b8d0b0b6df39114444f, Data_science\MachineLearning\RestrictedBoltzmannMachine\math\functions\OneMinusX.vb"
 
     ' Author:
     ' 

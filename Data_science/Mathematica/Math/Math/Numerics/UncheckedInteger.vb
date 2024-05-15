@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::980bb25b4a501eb3f1124930c1671267, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Numerics/UncheckedInteger.vb"
+﻿#Region "Microsoft.VisualBasic::980bb25b4a501eb3f1124930c1671267, Data_science\Mathematica\Math\Math\Numerics\UncheckedInteger.vb"
 
     ' Author:
     ' 

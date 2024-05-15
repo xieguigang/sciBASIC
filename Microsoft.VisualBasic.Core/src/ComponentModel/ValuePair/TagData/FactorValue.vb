@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb12e61682e08fe0add8fb9407a9e167, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/ValuePair/TagData/FactorValue.vb"
+﻿#Region "Microsoft.VisualBasic::bb12e61682e08fe0add8fb9407a9e167, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 

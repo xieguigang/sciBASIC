@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61334b0ce33d599a75c95550fac014d, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//Network/NetworkGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a61334b0ce33d599a75c95550fac014d, Data_science\Graph\Network\NetworkGraph.vb"
 
     ' Author:
     ' 

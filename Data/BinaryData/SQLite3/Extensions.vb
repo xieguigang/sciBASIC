@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2e294a7bab02f989a148184763ed48, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/SQLite3//Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5b2e294a7bab02f989a148184763ed48, Data\BinaryData\SQLite3\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf5aecd9e4773292b0d7775cd58fc0d7, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Xml/Models/Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::bf5aecd9e4773292b0d7775cd58fc0d7, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Sequence.vb"
 
     ' Author:
     ' 

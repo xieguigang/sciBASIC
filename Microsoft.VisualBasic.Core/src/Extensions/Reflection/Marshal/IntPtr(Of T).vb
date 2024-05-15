@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5023f7796dda589a791a16cd8cbaea98, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Extensions/Reflection/Marshal/IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::5023f7796dda589a791a16cd8cbaea98, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
     ' Author:
     ' 

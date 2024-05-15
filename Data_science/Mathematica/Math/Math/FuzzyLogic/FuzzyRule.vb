@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b135755897ef31db37599934a29caf3e, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//FuzzyLogic/FuzzyRule.vb"
+﻿#Region "Microsoft.VisualBasic::b135755897ef31db37599934a29caf3e, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyRule.vb"
 
     ' Author:
     ' 

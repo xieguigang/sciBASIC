@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4c50ff4b96530d5334c28178e2540, G:/GCModeller/src/runtime/sciBASIC#/www/githubAPI//DependencyGraph/DependencyGraph.vb"
+﻿#Region "Microsoft.VisualBasic::1cc4c50ff4b96530d5334c28178e2540, www\githubAPI\DependencyGraph\DependencyGraph.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82d8a48a4f051f64a98db1f0c21d8878, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/Parallel/OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::82d8a48a4f051f64a98db1f0c21d8878, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b954c98073ba5c7221d9ec2597c94b3c, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::b954c98073ba5c7221d9ec2597c94b3c, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 

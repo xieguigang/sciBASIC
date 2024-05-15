@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9061108d6e4da6b89aedbbf152b1b0e9, G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame//Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::9061108d6e4da6b89aedbbf152b1b0e9, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 

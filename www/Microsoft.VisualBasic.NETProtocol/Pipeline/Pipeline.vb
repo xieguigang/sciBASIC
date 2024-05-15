@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb46febd16184332fa93352718dbb594, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Pipeline/Pipeline.vb"
+﻿#Region "Microsoft.VisualBasic::fb46febd16184332fa93352718dbb594, www\Microsoft.VisualBasic.NETProtocol\Pipeline\Pipeline.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::457d070c9cf1c06f25667f70e20154ab, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming//model/impl/literal/Number.vb"
+﻿#Region "Microsoft.VisualBasic::457d070c9cf1c06f25667f70e20154ab, Data_science\Mathematica\Math\GeneticProgramming\model\impl\literal\Number.vb"
 
     ' Author:
     ' 

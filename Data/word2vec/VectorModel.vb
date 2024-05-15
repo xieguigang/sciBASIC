@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca2fadfb98bd62bb591752f6f03c675f, G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec//VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::ca2fadfb98bd62bb591752f6f03c675f, Data\word2vec\VectorModel.vb"
 
     ' Author:
     ' 

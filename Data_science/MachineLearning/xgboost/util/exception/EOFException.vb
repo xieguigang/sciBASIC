@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d72d88cbccfc137e36f10a52ac52b635, G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/xgboost//util/exception/EOFException.vb"
+﻿#Region "Microsoft.VisualBasic::d72d88cbccfc137e36f10a52ac52b635, Data_science\MachineLearning\xgboost\util\exception\EOFException.vb"
 
     ' Author:
     ' 

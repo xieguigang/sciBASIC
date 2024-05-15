@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66e00524b0cde6831fc58bf50fef4fc9, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Text/Parser/CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::66e00524b0cde6831fc58bf50fef4fc9, Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 

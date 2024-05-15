@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffe7f62e8c3ac70f7bf03ef730c54013, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Net/PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::ffe7f62e8c3ac70f7bf03ef730c54013, Microsoft.VisualBasic.Core\src\Net\PingUtility.vb"
 
     ' Author:
     ' 

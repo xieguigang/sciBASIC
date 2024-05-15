@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e982ef20ba994cefcbc8f85ef733a242, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Visualizer//Styling/Expression/Numeric/UnifyNumber.vb"
+﻿#Region "Microsoft.VisualBasic::e982ef20ba994cefcbc8f85ef733a242, gr\network-visualization\Visualizer\Styling\Expression\Numeric\UnifyNumber.vb"
 
     ' Author:
     ' 

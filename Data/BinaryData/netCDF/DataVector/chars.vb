@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0facd44e9de494ed1ab3351380e195, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//DataVector/chars.vb"
+﻿#Region "Microsoft.VisualBasic::086a8183d3ce555bb7625c6a67d68b7b, Data\BinaryData\netCDF\DataVector\chars.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 52
+    '   Total Lines: 85
+    '    Code Lines: 55
     ' Comment Lines: 14
-    '   Blank Lines: 15
-    '     File Size: 2.96 KB
+    '   Blank Lines: 16
+    '     File Size: 3.10 KB
 
 
     '     Class chars
@@ -132,6 +132,10 @@ Namespace DataVector
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(chars As chars) As String
             Return New String(chars.buffer)
+        End Operator
+
+        Public Overloads Shared Widening Operator CType(vec As String()) As chars
+            Return New chars(vec)
         End Operator
     End Class
 End Namespace

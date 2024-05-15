@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2631ccbacbb775517fd438721fad5667, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//Tests/Server/My Project/Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2631ccbacbb775517fd438721fad5667, www\Microsoft.VisualBasic.NETProtocol\Tests\Server\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 

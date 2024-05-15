@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ffc81a523eea8551656486a0f0747d2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::4ffc81a523eea8551656486a0f0747d2, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 

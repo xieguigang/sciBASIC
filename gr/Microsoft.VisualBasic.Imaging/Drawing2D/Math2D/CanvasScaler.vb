@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7318452d344727136a9a7ebe5ce98ef, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Math2D/CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::f7318452d344727136a9a7ebe5ce98ef, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\CanvasScaler.vb"
 
     ' Author:
     ' 

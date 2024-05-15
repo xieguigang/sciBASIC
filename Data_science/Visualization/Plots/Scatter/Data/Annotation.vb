@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f73b28b47bf79e944b8c57f8b0fca54, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots//Scatter/Data/Annotation.vb"
+﻿#Region "Microsoft.VisualBasic::3f73b28b47bf79e944b8c57f8b0fca54, Data_science\Visualization\Plots\Scatter\Data\Annotation.vb"
 
     ' Author:
     ' 

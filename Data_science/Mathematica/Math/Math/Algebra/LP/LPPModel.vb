@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d348c7b105456003ba7aaf1552a70a24, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math//Algebra/LP/LPPModel.vb"
+﻿#Region "Microsoft.VisualBasic::d348c7b105456003ba7aaf1552a70a24, Data_science\Mathematica\Math\Math\Algebra\LP\LPPModel.vb"
 
     ' Author:
     ' 

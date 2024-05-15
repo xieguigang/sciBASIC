@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bcb8d7b669d17103fed71f558c00061, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//MatrixMarket/RUAFormat.vb"
+﻿#Region "Microsoft.VisualBasic::1bcb8d7b669d17103fed71f558c00061, Data_science\Mathematica\Math\DataFrame\MatrixMarket\RUAFormat.vb"
 
     ' Author:
     ' 

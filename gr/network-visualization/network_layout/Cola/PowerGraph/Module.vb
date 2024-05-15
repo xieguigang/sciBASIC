@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b60170c206614a9355c9449c6600a87, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//Cola/PowerGraph/Module.vb"
+﻿#Region "Microsoft.VisualBasic::2b60170c206614a9355c9449c6600a87, gr\network-visualization\network_layout\Cola\PowerGraph\Module.vb"
 
     ' Author:
     ' 

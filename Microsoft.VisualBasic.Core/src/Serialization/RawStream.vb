@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23af9d66f0dfea244754fabaa4ca1027, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/RawStream.vb"
+﻿#Region "Microsoft.VisualBasic::23af9d66f0dfea244754fabaa4ca1027, Microsoft.VisualBasic.Core\src\Serialization\RawStream.vb"
 
     ' Author:
     ' 

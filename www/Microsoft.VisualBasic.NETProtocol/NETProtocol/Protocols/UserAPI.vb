@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.NETProtocol//NETProtocol/Protocols/UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::cc10132a86b72e00e05e5fbc2dd6f31b, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\UserAPI.vb"
 
     ' Author:
     ' 

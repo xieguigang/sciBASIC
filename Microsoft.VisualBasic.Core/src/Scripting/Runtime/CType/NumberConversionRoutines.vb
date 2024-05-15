@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d263314bbddb400c829da18e7d03947, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/Runtime/CType/NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::5d263314bbddb400c829da18e7d03947, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Scripting/MetaData/EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, Microsoft.VisualBasic.Core\src\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 

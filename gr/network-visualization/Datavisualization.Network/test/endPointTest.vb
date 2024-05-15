@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13e99a2aaa102db3432cf23086cc4a88, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//test/endPointTest.vb"
+﻿#Region "Microsoft.VisualBasic::13e99a2aaa102db3432cf23086cc4a88, gr\network-visualization\Datavisualization.Network\test\endPointTest.vb"
 
     ' Author:
     ' 

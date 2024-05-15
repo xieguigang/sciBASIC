@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c06126fb2cc8024b9299a07964a3374, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//Serialization/BEncoding/BElements/BInteger.vb"
+﻿#Region "Microsoft.VisualBasic::5c06126fb2cc8024b9299a07964a3374, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BElements\BInteger.vb"
 
     ' Author:
     ' 

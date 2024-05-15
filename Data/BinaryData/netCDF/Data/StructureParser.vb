@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::903d2eaece9cdb3baa0319f3321f967c, G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/netCDF//Data/StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::903d2eaece9cdb3baa0319f3321f967c, Data\BinaryData\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 

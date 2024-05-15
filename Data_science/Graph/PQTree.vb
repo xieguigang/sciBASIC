@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::224514d95b523dffd800775d954a4864, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph//PQTree.vb"
+﻿#Region "Microsoft.VisualBasic::224514d95b523dffd800775d954a4864, Data_science\Graph\PQTree.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68cd2215a0190dd396794899d2ff0a68, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/System.Collections.Generic/PriorityQueue/PairingHeap.vb"
+﻿#Region "Microsoft.VisualBasic::68cd2215a0190dd396794899d2ff0a68, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
 
     ' Author:
     ' 

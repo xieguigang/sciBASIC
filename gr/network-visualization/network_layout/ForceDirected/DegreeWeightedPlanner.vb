@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42d1ce9f8f930b05aaf7f598bece906f, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/network_layout//ForceDirected/DegreeWeightedPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::42d1ce9f8f930b05aaf7f598bece906f, gr\network-visualization\network_layout\ForceDirected\DegreeWeightedPlanner.vb"
 
     ' Author:
     ' 

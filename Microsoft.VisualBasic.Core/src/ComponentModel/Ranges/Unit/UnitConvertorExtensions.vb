@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9a7dbda05f063fff48836bf78d906ba, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ComponentModel/Ranges/Unit/UnitConvertorExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d9a7dbda05f063fff48836bf78d906ba, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\UnitConvertorExtensions.vb"
 
     ' Author:
     ' 

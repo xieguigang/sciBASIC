@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src//ApplicationServices/VBDev/XmlDoc/ProjectNamespace.vb"
+﻿#Region "Microsoft.VisualBasic::b5b3b027647d4ae24d667f7ccbde5ac4, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb"
 
     ' Author:
     ' 

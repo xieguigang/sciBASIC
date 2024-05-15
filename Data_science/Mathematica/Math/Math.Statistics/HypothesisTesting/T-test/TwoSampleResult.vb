@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9da705021af3870ca621f4feee5aad29, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math.Statistics//HypothesisTesting/T-test/TwoSampleResult.vb"
+﻿#Region "Microsoft.VisualBasic::9da705021af3870ca621f4feee5aad29, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TwoSampleResult.vb"
 
     ' Author:
     ' 

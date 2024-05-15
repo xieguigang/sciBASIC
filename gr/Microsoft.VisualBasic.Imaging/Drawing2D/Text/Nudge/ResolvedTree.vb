@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76609941a04065314dd99ae3366dbe9c, G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging//Drawing2D/Text/Nudge/ResolvedTree.vb"
+﻿#Region "Microsoft.VisualBasic::76609941a04065314dd99ae3366dbe9c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\ResolvedTree.vb"
 
     ' Author:
     ' 

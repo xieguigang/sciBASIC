@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7b31422f4511e8088fb2c10c5a17b4b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing//Signal.vb"
+﻿#Region "Microsoft.VisualBasic::bb25b87cfb339b0c9a83b9cc696149e0, Data_science\Mathematica\SignalProcessing\SignalProcessing\Signal.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 27
+    '   Total Lines: 57
+    '    Code Lines: 38
     ' Comment Lines: 10
-    '   Blank Lines: 6
-    '     File Size: 1.39 KB
+    '   Blank Lines: 9
+    '     File Size: 2.03 KB
 
 
     ' Class Signal
     ' 
     '     Properties: intensities, times
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: Zip
     '     Operators: +
     ' 
     ' /********************************************************************************/

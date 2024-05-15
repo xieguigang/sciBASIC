@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75017209ba3612e5d912285d8570a63b, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots-statistics//VariableWidthBarPlot/VariableBarData.vb"
+﻿#Region "Microsoft.VisualBasic::75017209ba3612e5d912285d8570a63b, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableBarData.vb"
 
     ' Author:
     ' 

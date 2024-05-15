@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d0b58a6f6b3b0ca1023df018be39184, G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network//Analysis/Model/EdgeSet.vb"
+﻿#Region "Microsoft.VisualBasic::7d0b58a6f6b3b0ca1023df018be39184, gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeSet.vb"
 
     ' Author:
     ' 

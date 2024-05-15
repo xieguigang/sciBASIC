@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5872d3744776dd3f67e0d8671738f9c4, G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame//DataFrame/DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9b749b55c36f404e755ae78d085b492e, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
-    '    Code Lines: 121
-    ' Comment Lines: 29
-    '   Blank Lines: 27
-    '     File Size: 5.83 KB
+    '   Total Lines: 318
+    '    Code Lines: 182
+    ' Comment Lines: 95
+    '   Blank Lines: 41
+    '     File Size: 11.02 KB
 
 
     ' Class DataFrame
     ' 
-    '     Properties: dims, featureNames, features, nsamples, rownames
+    '     Properties: dims, featureNames, features, nfeatures, nsamples
+    '                 rownames
     ' 
     '     Constructor: (+3 Overloads) Sub New
     ' 
-    '     Function: ArrayPack, delete, foreachRow, row, ToString
-    '               Union
+    '     Function: ArrayPack, delete, foreachRow, row, slice
+    '               ToString, Union
     ' 
-    '     Sub: (+2 Overloads) add
+    '     Sub: (+3 Overloads) add
     ' 
     ' /********************************************************************************/
 
@@ -76,6 +77,13 @@ Public Class DataFrame : Implements INumericMatrix
     ''' </summary>
     ''' <returns></returns>
     Public Property features As New Dictionary(Of String, FeatureVector)
+
+    ''' <summary>
+    ''' get the row names labels in current dataframe object, the size of 
+    ''' this row names vector should be equals to the number of rows in 
+    ''' current dataframe object.
+    ''' </summary>
+    ''' <returns></returns>
     Public Property rownames As String()
 
     ''' <summary>
@@ -112,12 +120,21 @@ Public Class DataFrame : Implements INumericMatrix
         End Get
     End Property
 
+    ''' <summary>
+    ''' get the number of the feature columns inside current dataframe object
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property nfeatures As Integer
         Get
             Return features.Count
         End Get
     End Property
 
+    ''' <summary>
+    ''' get a column field from dataframe by given feature column name
+    ''' </summary>
+    ''' <param name="featureName"></param>
+    ''' <returns></returns>
     Default Public Property Item(featureName As String) As FeatureVector
         Get
             Return features(featureName)
@@ -127,6 +144,11 @@ Public Class DataFrame : Implements INumericMatrix
         End Set
     End Property
 
+    ''' <summary>
+    ''' make dataframe column fields projection
+    ''' </summary>
+    ''' <param name="cols"></param>
+    ''' <returns></returns>
     Default Public ReadOnly Property Item(cols As IEnumerable(Of String)) As DataFrame
         Get
             Return New DataFrame With {
@@ -159,39 +181,82 @@ Public Class DataFrame : Implements INumericMatrix
         Next
     End Sub
 
+    ''' <summary>
+    ''' removes a column field from current dataframe object by a given field name
+    ''' </summary>
+    ''' <param name="featureName"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function delete(featureName As String) As Boolean
         Return features.Remove(featureName)
     End Function
 
+    ''' <summary>
+    ''' add a new feature column into current dataframe object
+    ''' </summary>
+    ''' <param name="featureName"></param>
+    ''' <param name="v">
+    ''' a data field column data in double numeric type
+    ''' </param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub add(featureName As String, v As IEnumerable(Of Double))
         Call features.Add(featureName, New FeatureVector(featureName, v))
     End Sub
 
+    ''' <summary>
+    ''' add a new feature column into current dataframe object
+    ''' </summary>
+    ''' <param name="featureName"></param>
+    ''' <param name="v">
+    ''' a data field column data in integer type
+    ''' </param>
     Public Sub add(featureName As String, v As IEnumerable(Of Integer))
         Call features.Add(featureName, New FeatureVector(featureName, v))
     End Sub
 
+    ''' <summary>
+    ''' add a new feature column into current dataframe object
+    ''' </summary>
+    ''' <param name="feature"></param>
     Public Sub add(feature As FeatureVector)
         Call features.Add(feature.name, feature)
     End Sub
 
+    ''' <summary>
+    ''' get row by index
+    ''' </summary>
+    ''' <param name="i"></param>
+    ''' <returns></returns>
     Public Function row(i As Integer) As Object()
         Return features.Select(Function(c) c.Value(i)).ToArray
     End Function
 
+    ''' <summary>
+    ''' iterates through all data rows inside current dataframe object
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function foreachRow() As IEnumerable(Of NamedCollection(Of Object))
         Dim cols = features.Select(Function(c) c.Value.Getter).ToArray
         Dim nrow As Integer = rownames.Length
 
         For i As Integer = 0 To nrow - 1
 #Disable Warning
-            Yield New NamedCollection(Of Object)(rownames(i), cols.Select(Function(v) v(i)))
+            Yield New NamedCollection(Of Object)(
+                name:=rownames(i),
+                data:=cols.Select(Function(v) v(i))
+            )
 #Enable Warning
         Next
     End Function
 
+    ''' <summary>
+    ''' slice the dataframe row by a collection of the given row names labels
+    ''' </summary>
+    ''' <param name="rownames"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function could be used for make dataframe rows re-order by rownames
+    ''' </remarks>
     Public Function slice(rownames As IEnumerable(Of String)) As DataFrame
         Dim rowIndex As Index(Of String) = rownames.Indexing
 
