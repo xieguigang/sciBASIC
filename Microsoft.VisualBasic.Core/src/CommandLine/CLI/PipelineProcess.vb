@@ -173,7 +173,9 @@ Namespace CommandLine
                 Dim writer As StreamWriter = p.StandardInput
 
                 Call writer.WriteLine([in])
+                Call writer.WriteLine()
                 Call writer.Flush()
+                Call writer.Close()
             End If
 
             If Not async Then
