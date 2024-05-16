@@ -128,6 +128,10 @@ Namespace Net.Http
             Call buffer.ToArray.FlushStream(path)
         End Sub
 
+        Public Function ToBase64() As String
+            Return buffer.ToBase64String
+        End Function
+
         ''' <summary>
         ''' POST this multipart form package to a specific web <paramref name="api"/>
         ''' </summary>

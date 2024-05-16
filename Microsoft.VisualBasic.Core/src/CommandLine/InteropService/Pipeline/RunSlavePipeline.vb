@@ -90,6 +90,7 @@ Namespace CommandLine.InteropService.Pipeline
         ''' <returns></returns>
         Public ReadOnly Property Arguments As String
         Public Property Shell As Boolean = False
+        Public Property std_input As String = Nothing
 
         ''' <summary>
         ''' create a new commandline pipeline task
@@ -116,7 +117,8 @@ Namespace CommandLine.InteropService.Pipeline
                 onReadLine:=AddressOf ProcessMessage,
                 workdir:=workdir,
                 shell:=Shell,
-                setProcess:=Sub(p) _Process = p
+                setProcess:=Sub(p) _Process = p,
+                [in]:=std_input
             )
 
             RaiseEvent Finish(code)
