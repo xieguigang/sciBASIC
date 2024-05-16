@@ -240,11 +240,6 @@ Namespace ComponentModel.DataSourceModel
             Return Val(getter.GetString(parameter))
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetUInt64(name As String) As ULong
-            Return ULong.Parse(getter.GetString(name))
-        End Function
-
         ''' <summary>
         ''' Gets the Single-precision floating point number Of the specified field.
         ''' </summary>
@@ -293,6 +288,11 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt64(parameter As String) As Int64
             Return Long.Parse(getter.GetString(parameter))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetUInt64(name As String) As ULong
+            Return ULong.Parse(getter.GetString(name))
         End Function
 
         ''' <summary>
