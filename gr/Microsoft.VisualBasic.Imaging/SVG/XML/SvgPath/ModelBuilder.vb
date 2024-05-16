@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::34d906164ec2db1bb2954d55b49971ac, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\ModelBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 229
-    '    Code Lines: 144
-    ' Comment Lines: 55
-    '   Blank Lines: 30
-    '     File Size: 8.49 KB
+' Summaries:
 
 
-    '     Module ModelBuilder
-    ' 
-    '         Function: ParseSVGPathData, PiePath, SVGPathData
-    ' 
-    '         Sub: [Call]
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 229
+'    Code Lines: 144
+' Comment Lines: 55
+'   Blank Lines: 30
+'     File Size: 8.49 KB
+
+
+'     Module ModelBuilder
+' 
+'         Function: ParseSVGPathData, PiePath, SVGPathData
+' 
+'         Sub: [Call]
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -118,6 +119,13 @@ Namespace SVG.PathHelper
             Call sb.Append("Z")
 
             Return sb.ToString
+        End Function
+
+        Public Function GlyphPath(c As Char, font As Font) As String
+            Using g As New GraphicsPath
+                g.AddString(c.ToString, font.FontFamily, font.Style, font.Size, New PointF, New StringFormat)
+                Return g.SVGPathData
+            End Using
         End Function
 
         ''' <summary>
