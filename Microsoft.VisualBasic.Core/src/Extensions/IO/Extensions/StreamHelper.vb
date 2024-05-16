@@ -158,6 +158,16 @@ Public Module StreamHelper
         Return encoding.GetString(file.ReadZEROBlock.ToArray)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="stream"></param>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="newLine"></param>
+    ''' <remarks>
+    ''' default use utf8 encoding
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub WriteLine(stream As Stream, Optional value$ = "", Optional encoding As Encoding = Nothing, Optional newLine$ = vbCrLf)

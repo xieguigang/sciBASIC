@@ -67,10 +67,11 @@ Namespace Net.Http
     Public Class MultipartForm : Implements IDisposable
 
         ReadOnly buffer As New MemoryStream
+
         ''' <summary>
         ''' 需要使用<see cref="Encoding.ASCII"/>来进行编码
         ''' </summary>
-        ReadOnly boundary$ = "---------------------------" & DateTime.Now.Ticks.ToString("x")
+        Public ReadOnly boundary$ = "---------------------------" & DateTime.Now.Ticks.ToString("x")
 
         Private disposedValue As Boolean
 
