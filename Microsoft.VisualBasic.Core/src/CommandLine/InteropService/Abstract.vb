@@ -188,10 +188,14 @@ Namespace CommandLine.InteropService
 
         Public Function CreateSlave(args As String, Optional workdir As String = Nothing) As RunSlavePipeline
             If dotnetcoreApp Then
-                Return New RunSlavePipeline("dotnet", $"""{_executableDll}"" {args}", workdir)
+                Return New RunSlavePipeline("dotnet", GetDotnetCoreCommandLine(args), workdir)
             Else
                 Return New RunSlavePipeline(_executableAssembly, args, workdir)
             End If
+        End Function
+
+        Public Function GetDotnetCoreCommandLine(args As String) As String
+            Return $"""{_executableDll}"" {args}"
         End Function
 
         ''' <summary>
