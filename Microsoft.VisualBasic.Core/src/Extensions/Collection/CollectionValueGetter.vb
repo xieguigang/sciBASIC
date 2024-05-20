@@ -397,4 +397,15 @@ Public Module CollectionValueGetter
         Dim value As Object = propertyInfo.GetValue(obj, Nothing)
         Return DirectCast(value, TProp)
     End Function
+
+    <Extension>
+    Public Iterator Function Values(Of T)(x As IEnumerable(Of Value(Of T).IValueOf)) As IEnumerable(Of T)
+        If x Is Nothing Then
+            Return
+        End If
+
+        For Each item As Value(Of T).IValueOf In x
+            Yield item.Value
+        Next
+    End Function
 End Module
