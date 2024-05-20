@@ -177,9 +177,11 @@ Namespace CommandLine
         Public Property BoolFlags As String()
 
         ''' <summary>
-        ''' 获取得到通过``/@set``参数所传入的环境变量
+        ''' 获取得到通过``/@set``参数所传入的环境变量(键值对之间使用分号分隔)
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this readonly property ensure that the result dictionary is always not null, but may be empty.
+        ''' </returns>
         Public ReadOnly Property EnvironmentVariables As Dictionary(Of String, String)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -188,7 +190,7 @@ Namespace CommandLine
                 If Name.TextEquals("/@set") Then
                     Return DictionaryParser.TryParse(Parameters(Scan0))
                 Else
-                    Return GetDictionary("/@set")
+                    Return If(GetDictionary("/@set"), New Dictionary(Of String, String))
                 End If
             End Get
         End Property
@@ -426,10 +428,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' If the target parameter is not presents in the CLI, then this function will returns nothing.
-        ''' (键值对之间使用分号分隔)
         ''' </summary>
-        ''' <param name="name$"></param>
+        ''' <param name="name"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (键值对之间使用分号分隔)
+        ''' </remarks>
         Public Function GetDictionary(name$, Optional default$ = Nothing) As Dictionary(Of String, String)
             Dim s$ = Me(name$)
 
