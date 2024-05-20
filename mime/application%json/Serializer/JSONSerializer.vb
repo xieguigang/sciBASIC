@@ -140,6 +140,7 @@ Public Module JSONSerializer
             Dim sb As New StringBuilder
             Dim code As Integer
             Dim bytes As Byte()
+            Dim b1, b0 As String
 
             For Each c As Char In DirectCast(value, String)
                 code = AscW(c)
@@ -147,8 +148,10 @@ Public Module JSONSerializer
                 If code < 0 OrElse code > Byte.MaxValue Then
                     sb.Append("\u")
                     bytes = Encoding.Unicode.GetBytes(c)
-                    sb.Append(bytes(1).ToString("x"))
-                    sb.Append(bytes(0).ToString("x"))
+                    b1 = bytes(1).ToString("x")
+                    b0 = bytes(0).ToString("x")
+                    sb.Append(If(b1.Length < 2, "0" & b1, b1))
+                    sb.Append(If(b0.Length < 2, "0" & b0, b0))
                 Else
                     sb.Append(c)
                 End If
