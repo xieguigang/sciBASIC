@@ -200,7 +200,7 @@ THE SOFTWARE.",
             sb.AppendLine($"    '   Total Lines: {stat.totalLines}")
             sb.AppendLine($"    '    Code Lines: {stat.lineOfCodes} ({(stat.lineOfCodes / stat.totalLines * 100).ToString("F2")}%)")
             sb.AppendLine($"    ' Comment Lines: {stat.commentLines} ({(stat.commentLines / stat.totalLines * 100).ToString("F2")}%)")
-            sb.AppendLine($"    '    - Xml Docs: {(stat.xml_comments / stat.commentLines * 100).ToString("F2")}%")
+            sb.AppendLine($"    '    - Xml Docs: {If(stat.commentLines = 0, 0, stat.xml_comments / stat.commentLines * 100).ToString("F2")}%")
             sb.AppendLine($"    ' ")
             sb.AppendLine($"    '   Blank Lines: {stat.blankLines} ({(stat.blankLines / stat.totalLines * 100).ToString("F2")}%)")
             sb.AppendLine($"    '     File Size: {StringFormats.Lanudry(stat.size)}")
