@@ -198,9 +198,9 @@ THE SOFTWARE.",
             sb.AppendLine($"    ' Code Statistics:")
             sb.AppendLine()
             sb.AppendLine($"    '   Total Lines: {stat.totalLines}")
-            sb.AppendLine($"    '    Code Lines: {stat.lineOfCodes}")
-            sb.AppendLine($"    ' Comment Lines: {stat.commentLines}")
-            sb.AppendLine($"    '   Blank Lines: {stat.blankLines}")
+            sb.AppendLine($"    '    Code Lines: {stat.lineOfCodes} ({(stat.lineOfCodes / stat.totalLines * 100).ToString("F2")}%)")
+            sb.AppendLine($"    ' Comment Lines: {stat.commentLines} ({(stat.commentLines / stat.totalLines * 100).ToString("F2")}%)")
+            sb.AppendLine($"    '   Blank Lines: {stat.blankLines} ({(stat.blankLines / stat.totalLines * 100).ToString("F2")}%)")
             sb.AppendLine($"    '     File Size: {StringFormats.Lanudry(stat.size)}")
 
             sb.AppendLine()
