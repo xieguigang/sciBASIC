@@ -130,6 +130,10 @@ Namespace Net.Http
             Return query.Select(Function(q) q.Value.Select(Function(val) $"{q.Key}={UrlEncode(val)}")).IteratesALL.JoinBy("&")
         End Function
 
+        Public Function Url() As String
+            Return $"/{path}?{UrlQueryString()}#{hashcode}"
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{protocol}{hostName}:{port}/{path}?{UrlQueryString()}#{hashcode}"
         End Function
