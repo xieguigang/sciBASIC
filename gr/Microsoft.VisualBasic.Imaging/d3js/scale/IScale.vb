@@ -164,10 +164,12 @@ Namespace d3js.scale
         ''' domain value to the second range value, and so on. If there are fewer elements in the range 
         ''' than in the domain, the scale will reuse values from the start of the range. If range is 
         ''' not specified, this method returns the current range.
-        ''' (设置绘图的实际的像素区间)
         ''' </summary>
         ''' <param name="values"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (设置绘图的实际的像素区间)
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function range(Optional values As IEnumerable(Of Double) = Nothing) As T
             _range = (values Or defaultRange).Range
