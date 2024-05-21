@@ -179,6 +179,11 @@ Namespace Drawing2D
             Me.Padding = padding
         End Sub
 
+        Sub New(size As Size, padding As Integer())
+            Me.Size = size
+            Me.Padding = New Padding(padding)
+        End Sub
+
         Public Function GetXLinearScaleRange() As Double()
             Return New Double() {Padding.Left, Size.Width - Padding.Right}
         End Function
