@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e4a1ed1251f17581cb3798ba97fd020, Data\BinaryData\Feather\TypedDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f2512577162b500ef78345b74f2f2b83, Data\BinaryData\Feather\TypedDataFrame.vb"
 
     ' Author:
     ' 
@@ -1062,4 +1062,3 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         Return New TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)(row)
     End Function
 End Class
-

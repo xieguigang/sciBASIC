@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::687a5435d10cf5ac33f52b4167f2c968, Data\BinaryData\Feather\Impl\Metadata\CTable.vb"
+﻿#Region "Microsoft.VisualBasic::9c08259a6843320a706719233e4cae9e, Data\BinaryData\Feather\Impl\Metadata\CTable.vb"
 
     ' Author:
     ' 
@@ -182,4 +182,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

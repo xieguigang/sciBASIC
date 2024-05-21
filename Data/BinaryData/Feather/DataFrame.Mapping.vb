@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4dd46c090f71e377df3076e1132bcb42, Data\BinaryData\Feather\DataFrame.Mapping.vb"
+﻿#Region "Microsoft.VisualBasic::c375f4f7ecb300642b6cee7366f9b3bb, Data\BinaryData\Feather\DataFrame.Mapping.vb"
 
     ' Author:
     ' 
@@ -736,4 +736,3 @@ Partial Public Class DataFrame
         Return True
     End Function
 End Class
-

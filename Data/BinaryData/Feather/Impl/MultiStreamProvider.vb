@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c6ef3952c0d2212ff8eef0ec3f2ee78, Data\BinaryData\Feather\Impl\MultiStreamProvider.vb"
+﻿#Region "Microsoft.VisualBasic::3fad016ed8f234bc593d6c0eb6513723, Data\BinaryData\Feather\Impl\MultiStreamProvider.vb"
 
     ' Author:
     ' 
@@ -347,4 +347,3 @@ copy:
         End Sub
     End Class
 End Namespace
-

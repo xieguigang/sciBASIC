@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::501c89262cf4145dba905d4e1750d6bf, Data\BinaryData\Feather\RowEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::3dbaf6be001f327deb8c29f944e5ba22, Data\BinaryData\Feather\RowEnumerable.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Public Class RowEnumerator
         Index = -1
     End Sub
 End Class
-

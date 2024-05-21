@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa9b4acda25702dd9e543160ad9e394f, Data\BinaryData\Feather\ProxyDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::c955e412944ed546f638afb68f7b20b2, Data\BinaryData\Feather\ProxyDataFrame.vb"
 
     ' Author:
     ' 
@@ -323,4 +323,3 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
         Return Mapper(row, toRet)
     End Function
 End Class
-

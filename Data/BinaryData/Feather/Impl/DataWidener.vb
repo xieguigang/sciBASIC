@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0a3ba070f7ea3f34b6f2d815e305d80, Data\BinaryData\Feather\Impl\DataWidener.vb"
+﻿#Region "Microsoft.VisualBasic::3e3471ec89e44460827bc74b957f74c1, Data\BinaryData\Feather\Impl\DataWidener.vb"
 
     ' Author:
     ' 
@@ -1248,4 +1248,3 @@ Namespace Impl
         End Function
     End Module
 End Namespace
-

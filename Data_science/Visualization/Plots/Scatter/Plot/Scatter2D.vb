@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45020c57ca884d13ea38cec53503d5b6, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
+﻿#Region "Microsoft.VisualBasic::d3dcf86f35a02778421af668124198fe, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 282
-    '    Code Lines: 216
-    ' Comment Lines: 27
-    '   Blank Lines: 39
-    '     File Size: 12.13 KB
+    '   Total Lines: 306
+    '    Code Lines: 222
+    ' Comment Lines: 42
+    '   Blank Lines: 42
+    '     File Size: 13.23 KB
 
 
     '     Class Scatter2D
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: DrawScatter, GetDataScaler
+    '         Function: (+2 Overloads) DrawScatter, GetDataScaler
     ' 
     '         Sub: PlotInternal
     ' 

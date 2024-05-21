@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05deaa6cf73b67dbb4ad5032f8bc5561, Data\BinaryData\Feather\ColumnMap.vb"
+﻿#Region "Microsoft.VisualBasic::de2ee2c1301bfbe106deb21938fa0887, Data\BinaryData\Feather\ColumnMap.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 46
     ' Comment Lines: 16
     '   Blank Lines: 9
-    '     File Size: 2.40 KB
+    '     File Size: 2.39 KB
 
 
     ' Class ColumnMap
@@ -122,4 +122,3 @@ Public Class ColumnMap
         Me.Parent = parent
     End Sub
 End Class
-

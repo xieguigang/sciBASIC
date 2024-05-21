@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dabcc2ac1448d272a3e27174fa1db8a, Data\BinaryData\Feather\Row.vb"
+﻿#Region "Microsoft.VisualBasic::28401cdc41319cb4a353c9d9f37d20a0, Data\BinaryData\Feather\Row.vb"
 
     ' Author:
     ' 
@@ -569,4 +569,3 @@ Public Class Row
         Return value.UnsafeCast(Of T)(category)
     End Function
 End Class
-

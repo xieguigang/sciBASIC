@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fefaaca1a8066ba0fc93d76f473c8efd, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::8d3f493bf5afd96dd5d3c3ec7a9493c1, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
+    '   Total Lines: 140
     '    Code Lines: 61
-    ' Comment Lines: 58
+    ' Comment Lines: 60
     '   Blank Lines: 19
-    '     File Size: 5.35 KB
+    '     File Size: 5.40 KB
 
 
     '     Class Scaler

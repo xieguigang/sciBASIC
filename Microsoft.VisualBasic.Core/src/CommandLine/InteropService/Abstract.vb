@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d4fa4484d02cfff3fdadb3b5908c10c, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::a7c126e75a02b479b7be6f1d0006e357, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 98
+    '   Total Lines: 183
+    '    Code Lines: 101
     ' Comment Lines: 55
-    '   Blank Lines: 26
-    '     File Size: 6.71 KB
+    '   Blank Lines: 27
+    '     File Size: 6.86 KB
 
 
     '     Class InteropService
@@ -47,8 +47,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: CreateSlave, GetLastCLRException, GetLastError, RunDotNetApp, RunProgram
-    '                   ToString
+    '         Function: CreateSlave, GetDotnetCoreCommandLine, GetLastCLRException, GetLastError, RunDotNetApp
+    '                   RunProgram, ToString
     ' 
     '         Sub: SetDotNetCoreDll
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74c1deb684a914ee14d53ac451e54955, Data\BinaryData\Feather\ProxyRowEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::8abb11e1bf0c90abfd71f19c1d3c553d, Data\BinaryData\Feather\ProxyRowEnumerable.vb"
 
     ' Author:
     ' 
@@ -151,4 +151,3 @@ Public Class ProxyRowEnumerator(Of TProxyType)
         Index = -1
     End Sub
 End Class
-

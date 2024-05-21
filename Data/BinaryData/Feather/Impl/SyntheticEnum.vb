@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91daf71e126c50871042198140a92109, Data\BinaryData\Feather\Impl\SyntheticEnum.vb"
+﻿#Region "Microsoft.VisualBasic::62c8a642405d076576d8ecd112e4b85b, Data\BinaryData\Feather\Impl\SyntheticEnum.vb"
 
     ' Author:
     ' 
@@ -138,4 +138,3 @@ Namespace Impl
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e6679463bd5981ea494cfe90e94969d, Data\BinaryData\Feather\Impl\ColumnSpec.vb"
+﻿#Region "Microsoft.VisualBasic::63d9ee372e640979d7879ed48a573262, Data\BinaryData\Feather\Impl\ColumnSpec.vb"
 
     ' Author:
     ' 
@@ -720,4 +720,3 @@ Namespace Impl
         End Function
     End Module
 End Namespace
-

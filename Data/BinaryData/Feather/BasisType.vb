@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c711fbd217a863a5d0b6e3c4f151ca8e, Data\BinaryData\Feather\BasisType.vb"
+﻿#Region "Microsoft.VisualBasic::962de5b2310b53fd0615214cb7853e77, Data\BinaryData\Feather\BasisType.vb"
 
     ' Author:
     ' 
@@ -34,11 +34,11 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
+    '   Total Lines: 13
     '    Code Lines: 4
     ' Comment Lines: 9
-    '   Blank Lines: 2
-    '     File Size: 361 B
+    '   Blank Lines: 0
+    '     File Size: 355 B
 
 
     ' Enum BasisType
@@ -51,8 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ''' <summary>
 ''' Represents whether a dataframe is using 0-based or 1-based indexing.
@@ -67,4 +65,3 @@ Public Enum BasisType
     ''' </summary>
     Zero = 2
 End Enum
-

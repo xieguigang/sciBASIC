@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f21732e9b64065fbd517656f6c880f5, Data\BinaryData\Feather\Impl\Metadata\TypeMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::7b4524def2e76348ccd30bada943a67e, Data\BinaryData\Feather\Impl\Metadata\TypeMetadata.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 9
     ' Comment Lines: 1
     '   Blank Lines: 4
-    '     File Size: 304 B
+    '     File Size: 302 B
 
 
     '     Enum TypeMetadata
@@ -67,4 +67,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

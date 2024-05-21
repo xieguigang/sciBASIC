@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd46130444ab313babb576874efde4b6, Data\BinaryData\Feather\Impl\Metadata\PrimitiveArray.vb"
+﻿#Region "Microsoft.VisualBasic::fd3b4c240fd02837f1b1042215a3e37c, Data\BinaryData\Feather\Impl\Metadata\PrimitiveArray.vb"
 
     ' Author:
     ' 
@@ -167,4 +167,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

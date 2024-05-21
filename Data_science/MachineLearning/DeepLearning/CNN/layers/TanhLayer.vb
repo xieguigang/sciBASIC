@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f6612875dba27d66fd25f5896fb9dfc, Data_science\MachineLearning\DeepLearning\CNN\layers\TanhLayer.vb"
+﻿#Region "Microsoft.VisualBasic::6f6612875dba27d66fd25f5896fb9dfc, Data_science\MachineLearning\DeepLearning\CNN\Layers\TanhLayer.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4659ca6a77716ec2cd76a90f1303e4, Data\BinaryData\Feather\TypedColumn.vb"
+﻿#Region "Microsoft.VisualBasic::3cf3a448834d7ea516fc413f0b8d953d, Data\BinaryData\Feather\TypedColumn.vb"
 
     ' Author:
     ' 
@@ -516,4 +516,3 @@ Public Class TypedColumn(Of TColumnType)
         Return col.ToArray()
     End Operator
 End Class
-

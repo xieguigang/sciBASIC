@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488a1c77c02c4f87f8c635a0d2f9afb2, Data_science\MachineLearning\DeepLearning\CNN\layers\MaxoutLayer.vb"
+﻿#Region "Microsoft.VisualBasic::488a1c77c02c4f87f8c635a0d2f9afb2, Data_science\MachineLearning\DeepLearning\CNN\Layers\MaxoutLayer.vb"
 
     ' Author:
     ' 

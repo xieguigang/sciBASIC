@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::554478e05ebd81c1c4c93baddc0c38e7, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HorizonRightToLeft.vb"
+﻿#Region "Microsoft.VisualBasic::c7909a163db6f01f1f6af4434e4e16b1, Data_science\DataMining\hierarchical-clustering\HCTreePlot\HorizonRightToLeft.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 72
     ' Comment Lines: 13
     '   Blank Lines: 18
-    '     File Size: 4.22 KB
+    '     File Size: 4.21 KB
 
 
     ' Class HorizonRightToLeft
@@ -155,4 +155,3 @@ Public Class HorizonRightToLeft
         End If
     End Sub
 End Class
-

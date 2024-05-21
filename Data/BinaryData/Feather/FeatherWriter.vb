@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53dc92f60eb7212c25cd21786e9fc5df, Data\BinaryData\Feather\FeatherWriter.vb"
+﻿#Region "Microsoft.VisualBasic::d1576f2c5f82aca3cfc9d62f6ee3f227, Data\BinaryData\Feather\FeatherWriter.vb"
 
     ' Author:
     ' 
@@ -3615,4 +3615,3 @@ inferFromUntyped:
         MyBase.Finalize()
     End Sub
 End Class
-

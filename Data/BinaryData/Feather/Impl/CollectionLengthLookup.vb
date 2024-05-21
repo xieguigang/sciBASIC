@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32509e2589895f9334f5df8f6cb332e7, Data\BinaryData\Feather\Impl\CollectionLengthLookup.vb"
+﻿#Region "Microsoft.VisualBasic::cb6b637a20c7e6bd96c7a1c14d24f71f, Data\BinaryData\Feather\Impl\CollectionLengthLookup.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 29
     ' Comment Lines: 1
     '   Blank Lines: 10
-    '     File Size: 1.75 KB
+    '     File Size: 1.74 KB
 
 
     '     Module CollectionLengthLookup
@@ -90,4 +90,3 @@ Namespace Impl
         End Function
     End Module
 End Namespace
-

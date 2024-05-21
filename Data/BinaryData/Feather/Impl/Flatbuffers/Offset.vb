@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b60e7f321d9cf7c0eaee12a70edc0c, Data\BinaryData\Feather\Impl\Flatbuffers\Offset.vb"
+﻿#Region "Microsoft.VisualBasic::4be37ad8d67f1e7bc15875bd6689eb8d, Data\BinaryData\Feather\Impl\Flatbuffers\Offset.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace FlatBuffers
         End Function
     End Structure
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2dd0e749124065afcb9ccd48ffd69edd, Data\BinaryData\Feather\Impl\Metadata\CategoryMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::847b40bbfeac6513c7e26db814ecee2b, Data\BinaryData\Feather\Impl\Metadata\CategoryMetadata.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 57
     ' Comment Lines: 3
     '   Blank Lines: 8
-    '     File Size: 3.04 KB
+    '     File Size: 3.03 KB
 
 
     '     Class CategoryMetadata
@@ -122,4 +122,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

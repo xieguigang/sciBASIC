@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7899034b48812e9f4cb5a63c15434841, Data\BinaryData\Feather\Impl\Flatbuffers\Struct.vb"
+﻿#Region "Microsoft.VisualBasic::67faabe33f9087fcc2186d0fff244830, Data\BinaryData\Feather\Impl\Flatbuffers\Struct.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 17
     '   Blank Lines: 2
-    '     File Size: 910 B
+    '     File Size: 908 B
 
 
     '     Class Struct
@@ -75,4 +75,3 @@ Namespace FlatBuffers
         Public bb As ByteBuffer
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b2d2382e953937db5ee2f388457493, Data\BinaryData\Feather\RowMap.vb"
+﻿#Region "Microsoft.VisualBasic::1c9870413b86fc3373ffd903d1a2c90e, Data\BinaryData\Feather\RowMap.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 33
     ' Comment Lines: 11
     '   Blank Lines: 7
-    '     File Size: 1.69 KB
+    '     File Size: 1.68 KB
 
 
     ' Class RowMap
@@ -102,4 +102,3 @@ Public Class RowMap
         Me.Parent = parent
     End Sub
 End Class
-

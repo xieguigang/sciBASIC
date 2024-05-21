@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8edb1eb25280fb797194ab9ff43c9ba, Data\BinaryData\Feather\Impl\FeatherMagic.vb"
+﻿#Region "Microsoft.VisualBasic::a9aabbae5264b23eccda16dc32ebbf0b, Data\BinaryData\Feather\Impl\FeatherMagic.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 11
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 735 B
+    '     File Size: 733 B
 
 
     '     Module FeatherMagic
@@ -63,4 +63,3 @@ Namespace Impl
         Public ReadOnly DATETIME_EPOCH As Date = New DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
     End Module
 End Namespace
-

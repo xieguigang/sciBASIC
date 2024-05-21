@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3edd7788a21d0e15200a082e0a3769d3, Data\BinaryData\Feather\Impl\WriteColumnConfig.vb"
+﻿#Region "Microsoft.VisualBasic::5151d3988f429ace521ea0245bec0fb4, Data\BinaryData\Feather\Impl\WriteColumnConfig.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 19
     ' Comment Lines: 0
     '   Blank Lines: 2
-    '     File Size: 729 B
+    '     File Size: 727 B
 
 
     '     Class WriteColumnConfig
@@ -74,4 +74,3 @@ Namespace Impl
         End Sub
     End Class
 End Namespace
-

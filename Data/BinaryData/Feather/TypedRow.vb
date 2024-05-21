@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c78ce2cff18dc2a2c4474bac2ca1b6f0, Data\BinaryData\Feather\TypedRow.vb"
+﻿#Region "Microsoft.VisualBasic::f6dc7b15d5260e105c07d89b6df4db51, Data\BinaryData\Feather\TypedRow.vb"
 
     ' Author:
     ' 
@@ -1784,4 +1784,3 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
         Return row.ToArray()
     End Operator
 End Class
-

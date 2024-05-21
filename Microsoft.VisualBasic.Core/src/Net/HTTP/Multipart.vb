@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b28ee65bcb10123c1b335da753f55bd, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
+﻿#Region "Microsoft.VisualBasic::677c758bd017f2f842c196eee33b23f3, Microsoft.VisualBasic.Core\src\Net\HTTP\Multipart.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 97
+    '   Total Lines: 160
+    '    Code Lines: 100
     ' Comment Lines: 36
-    '   Blank Lines: 22
-    '     File Size: 6.19 KB
+    '   Blank Lines: 24
+    '     File Size: 6.31 KB
 
 
     '     Class MultipartForm
     ' 
-    '         Function: POST
+    '         Function: POST, ToBase64
     ' 
     '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, Dump
     ' 

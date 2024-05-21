@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc9fd9d9cf5d36f692a3977c2a36949, Data_science\MachineLearning\DeepLearning\CNN\layers\FullyConnectedLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9dc9fd9d9cf5d36f692a3977c2a36949, Data_science\MachineLearning\DeepLearning\CNN\Layers\FullyConnectedLayer.vb"
 
     ' Author:
     ' 

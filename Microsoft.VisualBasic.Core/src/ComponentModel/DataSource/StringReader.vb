@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df7cdc3f3c89533e9423285f4025401b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::ad9dfba1402055505687e36d016a56c5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
     ' Author:
     ' 

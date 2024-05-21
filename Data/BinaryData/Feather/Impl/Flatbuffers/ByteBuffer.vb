@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8985222371daf8cb9fe8b756d5860f3b, Data\BinaryData\Feather\Impl\Flatbuffers\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::85bad879db0daed513d5733afa583538, Data\BinaryData\Feather\Impl\Flatbuffers\ByteBuffer.vb"
 
     ' Author:
     ' 
@@ -323,4 +323,3 @@ Namespace FlatBuffers
 #End If
     End Class
 End Namespace
-

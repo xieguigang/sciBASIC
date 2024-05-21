@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4ee01f0cd8e646644cf857e11c6708c, Data_science\MachineLearning\DeepLearning\CNN\layers\LeakyReluLayer.vb"
+﻿#Region "Microsoft.VisualBasic::b4ee01f0cd8e646644cf857e11c6708c, Data_science\MachineLearning\DeepLearning\CNN\Layers\LeakyReluLayer.vb"
 
     ' Author:
     ' 

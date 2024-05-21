@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30ed9f3a89d04f2594e9cbdc2453a730, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
+﻿#Region "Microsoft.VisualBasic::9ff9b486ca7f13d7adc1954fd86521bb, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 100
+    '   Total Lines: 140
+    '    Code Lines: 108
     ' Comment Lines: 0
-    '   Blank Lines: 29
-    '     File Size: 5.16 KB
+    '   Blank Lines: 32
+    '     File Size: 5.83 KB
 
 
     '     Module StrongRules
     ' 
-    '         Function: concatRules, GenerateRules, GenerateSubsets, GetConfidence, GetMaximalItemSets
-    '                   GetStrongRules
+    '         Function: AddStrongRule, concatRules, GenerateRules, GenerateSubsets, GetConfidence
+    '                   GetMaximalItemSets, GetStrongRules
     ' 
-    '         Sub: AddStrongRule, GenerateSubsetsRecursive
+    '         Sub: GenerateSubsetsRecursive
     ' 
     ' 
     ' /********************************************************************************/

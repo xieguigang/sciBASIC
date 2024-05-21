@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07d0a0bbbf1015e1ffd2644a049d439c, Data\BinaryData\Feather\ColumnEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::ebfc179a2953377680e9dbf0a653d107, Data\BinaryData\Feather\ColumnEnumerable.vb"
 
     ' Author:
     ' 
@@ -148,4 +148,3 @@ Public Class ColumnEnumerator
         Index = -1
     End Sub
 End Class
-

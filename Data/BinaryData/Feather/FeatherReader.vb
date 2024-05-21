@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df213d10f595a741c04a20f58020b23b, Data\BinaryData\Feather\FeatherReader.vb"
+﻿#Region "Microsoft.VisualBasic::0e7664e1ca1c7d7cf7ade681a045a10e, Data\BinaryData\Feather\FeatherReader.vb"
 
     ' Author:
     ' 
@@ -803,4 +803,3 @@ Public Module FeatherReader
         Return True
     End Function
 End Module
-

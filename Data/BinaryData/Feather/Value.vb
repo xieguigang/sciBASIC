@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76adb13ef1d7dc7b8ca7e236a6a320c8, Data\BinaryData\Feather\Value.vb"
+﻿#Region "Microsoft.VisualBasic::7be2324ea88806e5ef1a106ce1101276, Data\BinaryData\Feather\Value.vb"
 
     ' Author:
     ' 
@@ -2163,4 +2163,3 @@ Public Class Value
         Return CategoryEquals(a, b)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ad0aa9debf0bb78c52e1c76f755ba83, Data\BinaryData\Feather\Impl\Metadata\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::a3f23c8602d281a1be718e5b24d4f50a, Data\BinaryData\Feather\Impl\Metadata\Encoding.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 6
     ' Comment Lines: 1
     '   Blank Lines: 4
-    '     File Size: 213 B
+    '     File Size: 211 B
 
 
     '     Enum Encoding
@@ -64,4 +64,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

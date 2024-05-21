@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::595fec69485771efd83e93c3c3341224, Data\BinaryData\Feather\Impl\Metadata\DateMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::03377edca0c177169f23d6e9c5badb5b, Data\BinaryData\Feather\Impl\Metadata\DateMetadata.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Namespace Impl.FbsMetadata
 
 
 End Namespace
-

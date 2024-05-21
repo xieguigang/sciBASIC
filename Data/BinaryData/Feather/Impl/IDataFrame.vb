@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82133f0590bbadd27af2edfad0d3d049, Data\BinaryData\Feather\Impl\IDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::3c450fbd0f9cdf4f9b9929b02f628cc2, Data\BinaryData\Feather\Impl\IDataFrame.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '    Code Lines: 14
     ' Comment Lines: 0
     '   Blank Lines: 5
-    '     File Size: 885 B
+    '     File Size: 883 B
 
 
     '     Interface IDataFrame
@@ -71,4 +71,3 @@ Namespace Impl
         Function TryGetValue(Of T)(rowIndex As Long, columnName As String, <Out> ByRef value As T) As Boolean
     End Interface
 End Namespace
-

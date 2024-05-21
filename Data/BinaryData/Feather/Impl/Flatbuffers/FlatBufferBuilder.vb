@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bc449afbd2e33b661357b411574bd60, Data\BinaryData\Feather\Impl\Flatbuffers\FlatBufferBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::b20eadfb1fe869349b8d96137805d35d, Data\BinaryData\Feather\Impl\Flatbuffers\FlatBufferBuilder.vb"
 
     ' Author:
     ' 
@@ -765,4 +765,3 @@ endLoop:
 End Namespace
 
 ' @}
-

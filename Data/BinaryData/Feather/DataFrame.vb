@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a65edb106cd2e36ba384432a33596994, Data\BinaryData\Feather\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::bad0c2c879e73568aab99b69e83032a4, Data\BinaryData\Feather\DataFrame.vb"
 
     ' Author:
     ' 
@@ -694,4 +694,3 @@ Partial Public Class DataFrame
         Return (boolByte And bitMask) <> 0
     End Function
 End Class
-

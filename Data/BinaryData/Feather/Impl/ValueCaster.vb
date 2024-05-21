@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10ae7a4aa78e92a49cff836812e0305c, Data\BinaryData\Feather\Impl\ValueCaster.vb"
+﻿#Region "Microsoft.VisualBasic::e9925c404af2a94c25633997d3552f4c, Data\BinaryData\Feather\Impl\ValueCaster.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Impl
         End Function
     End Class
 End Namespace
-

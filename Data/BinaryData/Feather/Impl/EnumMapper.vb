@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa7ba46b01c2161062f0e64ced158c0b, Data\BinaryData\Feather\Impl\EnumMapper.vb"
+﻿#Region "Microsoft.VisualBasic::d99a17e89261a847799e906959bdebb9, Data\BinaryData\Feather\Impl\EnumMapper.vb"
 
     ' Author:
     ' 
@@ -109,4 +109,3 @@ Namespace Impl
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dad9164aa66aae53107dfcef543f7167, Data\BinaryData\Feather\Impl\ColumnMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::542f510a9a022fdcd270a1099d0568e9, Data\BinaryData\Feather\Impl\ColumnMetadata.vb"
 
     ' Author:
     ' 
@@ -126,4 +126,3 @@ Namespace Impl
         End Sub
     End Class
 End Namespace
-
