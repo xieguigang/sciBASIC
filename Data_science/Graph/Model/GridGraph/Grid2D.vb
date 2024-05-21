@@ -283,6 +283,11 @@ Namespace GridGraph
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function CreateReadOnly(data As IEnumerable(Of T), getSpatial As Func(Of T, Point)) As Grid(Of T)
+            Return CreateReadOnly(data.Select(Function(i) New GridCell(Of T)(getSpatial(i), i)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateReadOnly(data As IEnumerable(Of GridCell(Of T))) As Grid(Of T)
             Return New Grid(Of T)(data, toPoint:=Nothing)
         End Function
