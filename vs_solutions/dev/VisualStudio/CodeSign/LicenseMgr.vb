@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::5d6070a351bcfca1469daef5d71ba290, vs_solutions\dev\VisualStudio\CodeSign\LicenseMgr.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 202
-    '    Code Lines: 137
-    ' Comment Lines: 27
-    '   Blank Lines: 38
-    '     File Size: 7.69 KB
+' Summaries:
 
 
-    '     Module LicenseMgr
-    ' 
-    '         Properties: Ignores, Template
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AddRegion, Insert, Inserts, RemoveRegion
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 202
+'    Code Lines: 137
+' Comment Lines: 27
+'   Blank Lines: 38
+'     File Size: 7.69 KB
+
+
+'     Module LicenseMgr
+' 
+'         Properties: Ignores, Template
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: AddRegion, Insert, Inserts, RemoveRegion
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -200,6 +200,8 @@ THE SOFTWARE.",
             sb.AppendLine($"    '   Total Lines: {stat.totalLines}")
             sb.AppendLine($"    '    Code Lines: {stat.lineOfCodes} ({(stat.lineOfCodes / stat.totalLines * 100).ToString("F2")}%)")
             sb.AppendLine($"    ' Comment Lines: {stat.commentLines} ({(stat.commentLines / stat.totalLines * 100).ToString("F2")}%)")
+            sb.AppendLine($"    '    - Xml Docs: {(stat.xml_comments / stat.commentLines * 100).ToString("F2")}%")
+            sb.AppendLine($"    ' ")
             sb.AppendLine($"    '   Blank Lines: {stat.blankLines} ({(stat.blankLines / stat.totalLines * 100).ToString("F2")}%)")
             sb.AppendLine($"    '     File Size: {StringFormats.Lanudry(stat.size)}")
 

@@ -62,6 +62,7 @@ Namespace CodeSign
 
         Public Property totalLines As Integer
         Public Property commentLines As Integer
+        Public Property xml_comments As Integer
         Public Property blankLines As Integer
         Public Property size As Double
 
@@ -77,13 +78,23 @@ Namespace CodeSign
         Public Property [function] As Integer
         Public Property properties As Integer
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="code"></param>
+        ''' <returns></returns>
         Public Shared Function StatVB(code As String) As CodeStatics
             Dim lines = code.LineTokens.Select(Function(str) str.Trim(" "c, ASCII.TAB)).ToArray
             Dim stat As New CodeStatics With {
                 .totalLines = lines.Length,
                 .blankLines = lines.Where(Function(str) str.StringEmpty).Count,
                 .commentLines = lines.Where(Function(str) Not str.StringEmpty AndAlso str.StartsWith("'")).Count,
-                .size = Encoding.UTF8.GetBytes(code).Length
+                .size = Encoding.UTF8.GetBytes(code).Length,
+                .xml_comments = lines _
+                    .Where(Function(str)
+                               Return Not str.StringEmpty AndAlso str.StartsWith("''' ")
+                           End Function) _
+                    .Count
             }
 
             Return stat
