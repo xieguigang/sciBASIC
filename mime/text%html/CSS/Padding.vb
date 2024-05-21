@@ -179,9 +179,9 @@ Namespace CSS
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' create padding object with a given layout pixels vector: top, right, bottom, left
         ''' </summary>
-        ''' <param name="layoutVector%"><see cref="LayoutVector"/></param>
+        ''' <param name="layoutVector"><see cref="LayoutVector"/></param>
         Sub New(layoutVector%())
             Top = layoutVector(0)
             Right = layoutVector(1)

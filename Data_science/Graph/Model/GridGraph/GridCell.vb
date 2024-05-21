@@ -113,6 +113,11 @@ Namespace GridGraph
         Sub New()
         End Sub
 
+        Sub New(pt As Point, x As T)
+            index = pt
+            data = x
+        End Sub
+
         Sub New(x As Integer, y As Integer, data As T)
             index = New Point(x, y)
             m_data = data

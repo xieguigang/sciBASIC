@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -68,15 +69,17 @@ Namespace AprioriRules.Impl
             Dim concats = LinqAPI.Exec(Of Rule()) _
                                                   _
                 () <= From item
-                      In allFrequentItems' .AsParallel
+                      In allFrequentItems.AsParallel
                       Where item.Key.Length > 1
                       Select item.concatRules()
 
-            For Each rule In concats.IteratesALL
+            For Each rule As Rule In concats.IteratesALL
                 If Not rulesList.Contains(rule) Then
                     Call rulesList.Add(rule)
                 End If
             Next
+
+            Call VBDebugger.EchoLine($"found {rulesList.Count} unique rules...")
 
             Return rulesList
         End Function
@@ -128,33 +131,39 @@ Namespace AprioriRules.Impl
 
         Public Function GetStrongRules(minConfidence#, rules As HashSet(Of Rule), allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As IList(Of Rule)
             Dim strongRules As New List(Of Rule)()
+            Dim populateStrongRules = From rule As Rule
+                                      In rules.AsParallel
+                                      Let xy As ItemSet = (rule.X & rule.Y).SorterSortTokens
+                                      Select AddStrongRule(rule, xy, minConfidence, allFrequentItems)
 
-            For Each rule As Rule In rules
-                Dim xy As ItemSet = (rule.X & rule.Y).SorterSortTokens
-                strongRules.AddStrongRule(rule, xy, minConfidence, allFrequentItems)
+            Call VBDebugger.EchoLine($"get strong rules via min_confidence threshold: {minConfidence}...")
+
+            For Each rule As Rule In populateStrongRules.ToArray.IteratesALL
+                Call strongRules.Add(rule)
             Next
 
-            strongRules.Sort()
+            Call strongRules.Sort()
+            Call VBDebugger.EchoLine($"found {strongRules.Count} strong rules!")
 
             Return strongRules
         End Function
 
         <Extension>
-        Public Sub AddStrongRule(strongRules As List(Of Rule), rule As Rule, XY As ItemSet, minConfidence#, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem))
+        Public Iterator Function AddStrongRule(rule As Rule, XY As ItemSet, minConfidence#, allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem)) As IEnumerable(Of Rule)
             Dim value = allFrequentItems.GetConfidence(rule.X, XY)
 
             If value.confidence >= minConfidence Then
                 Dim newRule As New Rule(rule.X, rule.Y, value.confidence, value.support)
-                strongRules.Add(newRule)
+                Yield newRule
             End If
 
             value = allFrequentItems.GetConfidence(rule.Y, XY)
 
             If value.confidence >= minConfidence Then
                 Dim newRule As New Rule(rule.Y, rule.X, value.confidence, value.support)
-                strongRules.Add(newRule)
+                Yield newRule
             End If
-        End Sub
+        End Function
 
         <Extension>
         Public Function GetConfidence(allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem), X As ItemSet, XY As ItemSet) As (support As (XY#, X#), confidence#)
@@ -170,7 +179,9 @@ Namespace AprioriRules.Impl
         Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))) As IList(Of ItemSet)
             Dim maximalItemSets As New List(Of ItemSet)()
 
-            For Each item In closedItemSets
+            Call VBDebugger.EchoLine("get maximal item sets...")
+
+            For Each item In Tqdm.Wrap(closedItemSets)
                 Dim parents = item.Value
 
                 If parents.Count = 0 Then

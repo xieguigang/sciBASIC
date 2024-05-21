@@ -133,7 +133,7 @@ Namespace Graphic.Legend
         ''' <param name="gSize">The shape size</param>
         ''' <param name="style">The shape style</param>
         ''' <param name="color">The shape color</param>
-        ''' <param name="border">The shape polygon border</param>
+        ''' <param name="border">The shape polygon border, nothing means no border line will be draw.</param>
         ''' <param name="radius%"></param>
         <Extension>
         Public Sub DrawLegendShape(g As IGraphics,

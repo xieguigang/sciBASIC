@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Language
@@ -82,7 +83,9 @@ Namespace AprioriRules.Impl
                                           <Parameter("Items")> items As IEnumerable(Of Item),
                                           <Parameter("Transactions")> transactions As ItemSet()) As Output
 
-            Dim frequentItems As List(Of TransactionTokensItem) = transactions.GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray).AsList
+            Dim frequentItems As List(Of TransactionTokensItem) = transactions _
+                .GetL1FrequentItems(minSupport, items.Select(Function(i) New ItemSet(i)).ToArray) _
+                .AsList
             Dim allFrequentItems As Dictionary(Of ItemSet, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
             Dim candidates As New Dictionary(Of ItemSet, Double)()
             Dim transactionsCount As Double = transactions.Length
@@ -91,10 +94,14 @@ Namespace AprioriRules.Impl
                 candidates = frequentItems.GenerateCandidates(transactions)
                 frequentItems = candidates.GetFrequentItems(minSupport, transactionsCount)
 
-                For Each item In frequentItems
+                For Each item As TransactionTokensItem In frequentItems
                     Call allFrequentItems.Add(item.Name, item)
                 Next
+
+                Call VBDebugger.EchoLine($" ..... {frequentItems.Count} / {allFrequentItems.Count}")
             Loop While candidates.Count <> 0
+
+            Call VBDebugger.EchoLine($"generate rules based on all {allFrequentItems.Count} frequent items!")
 
             Dim rules As HashSet(Of Rule) = GenerateRules(allFrequentItems)
             Dim strongRules As IList(Of Rule) = GetStrongRules(minConfidence, rules, allFrequentItems)
@@ -114,7 +121,7 @@ Namespace AprioriRules.Impl
         Public Function GetL1FrequentItems(transactions As ItemSet(), minSupport#, items As ItemSet()) As IEnumerable(Of TransactionTokensItem)
             Dim transactionsCount As Double = transactions.Length
             Dim frequentItemsL1 = From item As ItemSet
-                                  In items
+                                  In items.AsParallel
                                   Let support As Double = GetSupport(item, transactions)
                                   Where support / transactionsCount >= minSupport
                                   Let t = New TransactionTokensItem() With {
@@ -123,6 +130,8 @@ Namespace AprioriRules.Impl
                                   }
                                   Select t
                                   Order By t
+
+            Call VBDebugger.EchoLine("get L1 frequent items...")
 
             Return frequentItemsL1
         End Function
@@ -151,18 +160,22 @@ Namespace AprioriRules.Impl
             Return True
         End Function
 
-        <ExportAPI("Candidates.Generate")>
         <Extension>
         Public Function GenerateCandidates(frequentItems As IList(Of TransactionTokensItem), transactions As IEnumerable(Of ItemSet)) As Dictionary(Of ItemSet, Double)
             Dim parallelBuild = From i As Integer
-                                In Enumerable.Range(0, frequentItems.Count)
+                                In Enumerable.Range(0, frequentItems.Count).AsParallel
                                 Let firstItem As ItemSet = frequentItems(i).Name.SorterSortTokens
                                 Let candidate = frequentItems.GetCandidate(i, firstItem, transactions)
                                 Select candidate
+
+            Call VBDebugger.EchoLine("parallel build of the candidates...")
+
             Dim candidates = parallelBuild _
                 .IteratesALL _
                 .ToDictionary(Function(item) item.Key,
-                              Function(item) item.Value)
+                              Function(item)
+                                  Return item.Value
+                              End Function)
             Return candidates
         End Function
 
@@ -204,13 +217,15 @@ Namespace AprioriRules.Impl
             Return ItemSet.Empty
         End Function
 
-        <ExportAPI("Get.FrequentItems")>
         <Extension>
         Public Function GetFrequentItems(candidates As IDictionary(Of ItemSet, Double), minSupport#, transactionsCount#) As List(Of TransactionTokensItem)
+            Call VBDebugger.EchoLine($"filter frequent items via min_supports threshold: {minSupport}...")
+            Call VBDebugger.EchoLine($"total number of transactions: {transactionsCount}.")
+
             Return LinqAPI.MakeList(Of TransactionTokensItem) _
                                                               _
                 () <= From candidate
-                      In candidates
+                      In candidates.AsParallel
                       Where candidate.Value / transactionsCount >= minSupport
                       Select New TransactionTokensItem() With {
                           .Name = candidate.Key,
@@ -222,7 +237,9 @@ Namespace AprioriRules.Impl
             Dim closedItemSets As New Dictionary(Of ItemSet, Dictionary(Of ItemSet, Double))()
             Dim i As i32 = 0
 
-            For Each item In allFrequentItems
+            Call VBDebugger.EchoLine("get closed item sets...")
+
+            For Each item In Tqdm.Wrap(allFrequentItems)
                 Dim parents = item.Key.GetItemParents(++i, allFrequentItems)
 
                 If item.Key.CheckIsClosed(parents, allFrequentItems) Then
