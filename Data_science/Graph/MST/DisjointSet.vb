@@ -1,8 +1,7 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Namespace MinimumSpanningTree
 
-Namespace MinimumSpanningTree
     Friend Class DisjointSet
+
         Private parents As Integer()
         Private rank As Integer()
 
@@ -74,85 +73,4 @@ Namespace MinimumSpanningTree
         End Sub
     End Class
 
-    Friend Class DJSet
-        Private rootField As Integer
-        Private [set] As HashSet(Of Integer)
-
-        Public Sub New(root As Integer)
-            [set] = New HashSet(Of Integer)()
-            rootField = root
-        End Sub
-
-        Public Sub add(i As Integer)
-            [set].Add(i)
-        End Sub
-
-
-        Public Property Root As Integer
-            Get
-                Return rootField
-            End Get
-            Set(value As Integer)
-                rootField = value
-            End Set
-        End Property
-
-        Public Sub print()
-            Dim firstTime = True
-
-            Console.Write("{")
-            For Each i In [set]
-                If firstTime Then
-                    firstTime = False
-                    Console.Write(i)
-                Else
-                    Console.Write(",{0}", i)
-                End If
-            Next
-            Console.Write("}")
-        End Sub
-    End Class
-
-    Friend Class DJSets
-        Private djSets As List(Of DJSet)
-
-        Public Sub New()
-            djSets = New List(Of DJSet)()
-        End Sub
-
-        Public Sub printSets()
-            Dim firstTime = True
-            For Each djSet In djSets
-                If firstTime Then
-                    firstTime = False
-                    djSet.print()
-                Else
-                    Console.Write(",  ")
-                    djSet.print()
-                End If
-            Next
-            Console.WriteLine()
-        End Sub
-
-        Public Sub addSet(root As Integer)
-            djSets.Add(New DJSet(root))
-        End Sub
-
-        Public Function inDJSets(root As Integer) As Boolean
-            For Each djSet In djSets
-                If djSet.Root = root Then
-                    Return True
-                End If
-            Next
-            Return False
-        End Function
-
-        Public Sub insertIntoSet(root As Integer, i As Integer)
-            For Each djSet In djSets
-                If djSet.Root = root Then
-                    djSet.add(i)
-                End If
-            Next
-        End Sub
-    End Class
 End Namespace
