@@ -1115,14 +1115,14 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
@@ -1724,7 +1724,7 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue(Of T)(Long,T)"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
@@ -1766,14 +1766,14 @@ Public Class TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, T
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)

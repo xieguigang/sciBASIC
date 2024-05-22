@@ -367,21 +367,21 @@ Public Class TypedColumn(Of TColumnType)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Column.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Column.GetRange"/>
     ''' </summary>
     Public Sub GetRange(Of V)(rowSourceIndex As Long, length As Integer, ByRef array As V(), destinationIndex As Integer) Implements IColumn(Of TColumnType).GetRange
         Inner.GetRange(rowSourceIndex, length, array, destinationIndex)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Column.TryGetValue(Of T)(Long,T)"/>
+    ''' <see cref="Column.TryGetValue(Of T)"/>
     ''' </summary>
     Public Function TryGetValue(Of V)(rowIndex As Long, <Out> ByRef value As V) As Boolean Implements IColumn(Of TColumnType).TryGetValue
         Return Inner.TryGetValue(rowIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Column.TryGetValue(Long,Value)"/>
+    ''' <see cref="Column.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(rowIndex As Long, <Out> ByRef value As Value) As Boolean Implements IColumn(Of TColumnType).TryGetValueCell
         Return Inner.TryGetValue(rowIndex, value)

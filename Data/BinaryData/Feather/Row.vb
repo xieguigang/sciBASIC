@@ -434,7 +434,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRow(OfTCol1)"/>.
+    ''' Maps this row to a <see cref="TypedRow(Of TCol1)"/>.
     ''' </summary>
     Public Function Map(Of TCol1)() As TypedRow(Of TCol1)
         If Parent.ColumnCount < 1 Then Throw New ArgumentException($"Cannot map row, mapping has 1 column while row has {Parent.ColumnCount:N0} columns")
@@ -449,7 +449,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType(OfTCol1,TCol2)"/>.
+    ''' Maps this row to a <see cref="TypedRowType(Of TCol1,TCol2)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2)() As TypedRowType(Of TCol1, TCol2)
         If Parent.ColumnCount < 2 Then Throw New ArgumentException($"Cannot map row, mapping has 2 columns while row has {Parent.ColumnCount:N0} columns")
@@ -464,7 +464,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType1(OfTCol1,TCol2,TCol3)"/>.
+    ''' Maps this row to a <see cref="TypedRowType1(Of TCol1,TCol2,TCol3)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3)() As TypedRowType1(Of TCol1, TCol2, TCol3)
         If Parent.ColumnCount < 3 Then Throw New ArgumentException($"Cannot map row, mapping has 3 columns while row has {Parent.ColumnCount:N0} columns")
@@ -479,7 +479,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType2(OfTCol1,TCol2,TCol3,TCol4)"/>.
+    ''' Maps this row to a <see cref="TypedRowType2(Of TCol1,TCol2,TCol3,TCol4)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4)() As TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
         If Parent.ColumnCount < 4 Then Throw New ArgumentException($"Cannot map row, mapping has 4 columns while row has {Parent.ColumnCount:N0} columns")
@@ -494,7 +494,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType3(OfTCol1,TCol2,TCol3,TCol4,TCol5)"/>.
+    ''' Maps this row to a <see cref="TypedRowType3(Of TCol1,TCol2,TCol3,TCol4,TCol5)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5)() As TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
         If Parent.ColumnCount < 5 Then Throw New ArgumentException($"Cannot map row, mapping has 5 columns while row has {Parent.ColumnCount:N0} columns")
@@ -509,7 +509,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType4(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6)"/>.
+    ''' Maps this row to a <see cref="TypedRowType4(Of TCol1,TCol2,TCol3,TCol4,TCol5,TCol6)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)() As TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
         If Parent.ColumnCount < 6 Then Throw New ArgumentException($"Cannot map row, mapping has 6 columns while row has {Parent.ColumnCount:N0} columns")
@@ -524,7 +524,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType5(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7)"/>.
+    ''' Maps this row to a <see cref="TypedRowType5(Of TCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)() As TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
         If Parent.ColumnCount < 7 Then Throw New ArgumentException($"Cannot map row, mapping has 7 columns while row has {Parent.ColumnCount:N0} columns")
@@ -539,7 +539,7 @@ Public Class Row
     End Function
 
     ''' <summary>
-    ''' Maps this row to a <see cref="TypedRowType6(OfTCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7,TCol8)"/>.
+    ''' Maps this row to a <see cref="TypedRowType6(Of TCol1,TCol2,TCol3,TCol4,TCol5,TCol6,TCol7,TCol8)"/>.
     ''' </summary>
     Public Function Map(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)() As TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
         If Parent.ColumnCount < 8 Then Throw New ArgumentException($"Cannot map row, mapping has 8 columns while row has {Parent.ColumnCount:N0} columns")

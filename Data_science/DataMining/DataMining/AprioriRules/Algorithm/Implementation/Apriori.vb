@@ -172,12 +172,14 @@ Namespace AprioriRules.Impl
 
             Call VBDebugger.EchoLine("parallel build of the candidates...")
 
-            Dim candidates = parallelBuild _
-                .IteratesALL _
-                .ToDictionary(Function(item) item.Key,
-                              Function(item)
-                                  Return item.Value
-                              End Function)
+            Dim candidates As New Dictionary(Of ItemSet, Double)
+
+            ' 20240521
+            ' ArgumentException: An item with the same key has already been added. Key: {10182_[M+CH3OH+H]+, 1024_[M-H]-}
+            For Each item In parallelBuild.ToArray.IteratesALL
+                candidates(item.Key) = item.Value
+            Next
+
             Return candidates
         End Function
 

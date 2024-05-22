@@ -65,7 +65,7 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.DataStorage.FeatherFormat.Impl
 
 ''' <summary>
-''' Utility class for addressing a <see cref="ProxyDataFrame(OfTProxyType)"/>'s rows.
+''' Utility class for addressing a <see cref="ProxyDataFrame(Of TProxyType)"/>'s rows.
 ''' </summary>
 Public Class ProxyRowMap(Of TProxyType)
     Private Parent As ProxyDataFrame(Of TProxyType)
