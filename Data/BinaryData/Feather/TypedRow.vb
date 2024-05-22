@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6dc7b15d5260e105c07d89b6df4db51, Data\BinaryData\Feather\TypedRow.vb"
+﻿#Region "Microsoft.VisualBasic::570956fcb17cc3dde7ff89a359b3c7ac, Data\BinaryData\Feather\TypedRow.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 97.42%
     ' 
     '   Blank Lines: 186 (11.37%)
-    '     File Size: 57.98 KB
+    '     File Size: 57.90 KB
 
 
     ' Class TypedRowValueEnumerator

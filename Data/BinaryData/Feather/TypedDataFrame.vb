@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2512577162b500ef78345b74f2f2b83, Data\BinaryData\Feather\TypedDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::ff0f552a302a6021ea06fefb7f5562dd, Data\BinaryData\Feather\TypedDataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 944
-    '    Code Lines: 592 (62.71%)
-    ' Comment Lines: 237 (25.11%)
+    '   Total Lines: 945
+    '    Code Lines: 592 (62.65%)
+    ' Comment Lines: 237 (25.08%)
     '    - Xml Docs: 96.20%
     ' 
-    '   Blank Lines: 115 (12.18%)
-    '     File Size: 30.92 KB
+    '   Blank Lines: 116 (12.28%)
+    '     File Size: 30.98 KB
 
 
     ' Class TypedRowMap

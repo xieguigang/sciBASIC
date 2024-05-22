@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cf3a448834d7ea516fc413f0b8d953d, Data\BinaryData\Feather\TypedColumn.vb"
+﻿#Region "Microsoft.VisualBasic::0e03a3fcda40608dd31b02202736650e, Data\BinaryData\Feather\TypedColumn.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.93%
     ' 
     '   Blank Lines: 56 (12.53%)
-    '     File Size: 17.06 KB
+    '     File Size: 17.01 KB
 
 
     ' Class TypedColumnEnumerator

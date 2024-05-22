@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c955e412944ed546f638afb68f7b20b2, Data\BinaryData\Feather\ProxyDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::cdc3e8748db4d7f6ef5f4c8bd2d454b3, Data\BinaryData\Feather\ProxyDataFrame.vb"
 
     ' Author:
     ' 
