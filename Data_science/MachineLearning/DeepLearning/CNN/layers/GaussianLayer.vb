@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::540dcf7555af85751293e0568fc8453c, Data_science\MachineLearning\DeepLearning\CNN\Layers\GaussianLayer.vb"
+﻿#Region "Microsoft.VisualBasic::540dcf7555af85751293e0568fc8453c, Data_science\MachineLearning\DeepLearning\CNN\layers\GaussianLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 76
-    '    Code Lines: 63
-    ' Comment Lines: 0
-    '   Blank Lines: 13
+    '    Code Lines: 63 (82.89%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (17.11%)
     '     File Size: 2.73 KB
 
 

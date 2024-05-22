@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, Data_science\MachineLearning\DeepLearning\CNN\Layers\FourierFeatureLayer.vb"
+﻿#Region "Microsoft.VisualBasic::106b42bb647e53951b4cf33124e8acc9, Data_science\MachineLearning\DeepLearning\CNN\layers\FourierFeatureLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 98
-    '    Code Lines: 58
-    ' Comment Lines: 26
-    '   Blank Lines: 14
+    '    Code Lines: 58 (59.18%)
+    ' Comment Lines: 26 (26.53%)
+    '    - Xml Docs: 73.08%
+    ' 
+    '   Blank Lines: 14 (14.29%)
     '     File Size: 4.06 KB
 
 

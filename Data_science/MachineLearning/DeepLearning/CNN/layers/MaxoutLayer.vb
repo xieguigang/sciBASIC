@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488a1c77c02c4f87f8c635a0d2f9afb2, Data_science\MachineLearning\DeepLearning\CNN\Layers\MaxoutLayer.vb"
+﻿#Region "Microsoft.VisualBasic::488a1c77c02c4f87f8c635a0d2f9afb2, Data_science\MachineLearning\DeepLearning\CNN\layers\MaxoutLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 130
-    '    Code Lines: 101
-    ' Comment Lines: 14
-    '   Blank Lines: 15
+    '    Code Lines: 101 (77.69%)
+    ' Comment Lines: 14 (10.77%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 15 (11.54%)
     '     File Size: 4.90 KB
 
 

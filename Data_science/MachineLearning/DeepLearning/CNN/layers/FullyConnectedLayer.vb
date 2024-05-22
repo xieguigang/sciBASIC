@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dc9fd9d9cf5d36f692a3977c2a36949, Data_science\MachineLearning\DeepLearning\CNN\Layers\FullyConnectedLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9dc9fd9d9cf5d36f692a3977c2a36949, Data_science\MachineLearning\DeepLearning\CNN\layers\FullyConnectedLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 145
-    '    Code Lines: 99
-    ' Comment Lines: 11
-    '   Blank Lines: 35
+    '    Code Lines: 99 (68.28%)
+    ' Comment Lines: 11 (7.59%)
+    '    - Xml Docs: 63.64%
+    ' 
+    '   Blank Lines: 35 (24.14%)
     '     File Size: 5.08 KB
 
 

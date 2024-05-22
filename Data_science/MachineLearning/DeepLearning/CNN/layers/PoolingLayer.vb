@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0939dbede742703c71be634a4c046f1, Data_science\MachineLearning\DeepLearning\CNN\Layers\PoolingLayer.vb"
+﻿#Region "Microsoft.VisualBasic::b0939dbede742703c71be634a4c046f1, Data_science\MachineLearning\DeepLearning\CNN\layers\PoolingLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 219
-    '    Code Lines: 145
-    ' Comment Lines: 31
-    '   Blank Lines: 43
+    '    Code Lines: 145 (66.21%)
+    ' Comment Lines: 31 (14.16%)
+    '    - Xml Docs: 29.03%
+    ' 
+    '   Blank Lines: 43 (19.63%)
     '     File Size: 8.18 KB
 
 

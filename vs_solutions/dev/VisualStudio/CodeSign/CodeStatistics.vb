@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78aaa54146dc9f319859217a8792c51f, vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
+﻿#Region "Microsoft.VisualBasic::51c68e0dfb729482b05636aef2a39119, vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
 
     ' Author:
     ' 
@@ -34,17 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 30
-    ' Comment Lines: 0
-    '   Blank Lines: 8
-    '     File Size: 1.32 KB
+    '   Total Lines: 49
+    '    Code Lines: 36 (73.47%)
+    ' Comment Lines: 5 (10.20%)
+    '    - Xml Docs: 80.00%
+    ' 
+    '   Blank Lines: 8 (16.33%)
+    '     File Size: 1.75 KB
 
 
     '     Class CodeStatics
     ' 
     '         Properties: [function], [method], [operator], blankLines, classes
     '                     commentLines, lineOfCodes, properties, size, totalLines
+    '                     xml_comments
     ' 
     '         Function: StatVB
     ' 

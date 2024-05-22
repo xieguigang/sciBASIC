@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4781baf8d1c0e4246eb5cd33fca020fc, Data_science\MachineLearning\DeepLearning\CNN\Layers\ConvolutionLayer.vb"
+﻿#Region "Microsoft.VisualBasic::4781baf8d1c0e4246eb5cd33fca020fc, Data_science\MachineLearning\DeepLearning\CNN\layers\ConvolutionLayer.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 217
-    '    Code Lines: 156
-    ' Comment Lines: 20
-    '   Blank Lines: 41
+    '    Code Lines: 156 (71.89%)
+    ' Comment Lines: 20 (9.22%)
+    '    - Xml Docs: 30.00%
+    ' 
+    '   Blank Lines: 41 (18.89%)
     '     File Size: 8.76 KB
 
 

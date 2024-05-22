@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 2558
-    '    Code Lines: 2019
-    ' Comment Lines: 27
-    '   Blank Lines: 512
+    '    Code Lines: 2019 (78.93%)
+    ' Comment Lines: 27 (1.06%)
+    '    - Xml Docs: 29.63%
+    ' 
+    '   Blank Lines: 512 (20.02%)
     '     File Size: 94.86 KB
 
 

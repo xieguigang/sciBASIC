@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 190
-    '    Code Lines: 145
-    ' Comment Lines: 21
-    '   Blank Lines: 24
+    '    Code Lines: 145 (76.32%)
+    ' Comment Lines: 21 (11.05%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 24 (12.63%)
     '     File Size: 7.59 KB
 
 

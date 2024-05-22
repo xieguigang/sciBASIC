@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44b03590a9286dddcae6459b688a0abf, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgSymbol.vb"
+﻿#Region "Microsoft.VisualBasic::8d1dd26ea8da40161b9423833bdc5dba, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgSymbol.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 22
-    ' Comment Lines: 9
-    '   Blank Lines: 6
+    '   Total Lines: 36
+    '    Code Lines: 22 (61.11%)
+    ' Comment Lines: 9 (25.00%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 5 (13.89%)
     '     File Size: 1.29 KB
 
 
@@ -52,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Xml
 Imports Microsoft.VisualBasic.Text.Xml
