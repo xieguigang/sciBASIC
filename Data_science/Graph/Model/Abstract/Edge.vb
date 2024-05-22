@@ -118,6 +118,6 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
-        Return $"({GetHashCode()}) {U} => {V}"
+        Return $"({GetHashCode()}) {U} => {V} [w:{weight}]"
     End Function
 End Class
