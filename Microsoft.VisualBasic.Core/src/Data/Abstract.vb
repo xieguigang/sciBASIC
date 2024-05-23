@@ -69,10 +69,25 @@
 
 Namespace ComponentModel.DataSourceModel
 
+    ''' <summary>
+    ''' the data access
+    ''' </summary>
     Public Enum PropertyAccess As Byte
+        ''' <summary>
+        ''' no data access
+        ''' </summary>
         NotSure = 0
+        ''' <summary>
+        ''' data can be read from the clr object(get/readonly property)
+        ''' </summary>
         Readable = 2
+        ''' <summary>
+        ''' data can be write to the clr object(set/writeonly property)
+        ''' </summary>
         Writeable = 4
+        ''' <summary>
+        ''' data can be read and write to the clr object(get/set)
+        ''' </summary>
         ReadWrite = Readable + Writeable
     End Enum
 
