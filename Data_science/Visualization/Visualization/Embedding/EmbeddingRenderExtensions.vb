@@ -64,6 +64,11 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 <HideModuleName>
 Public Module EmbeddingRenderExtensions
 
+    ''' <summary>
+    ''' get embedding result as spatial location
+    ''' </summary>
+    ''' <param name="umap"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetPoint2D(umap As IDataEmbedding) As PointF()
         If umap.dimension <> 2 Then
@@ -77,6 +82,11 @@ Public Module EmbeddingRenderExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' get embedding result as spatial location
+    ''' </summary>
+    ''' <param name="umap"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function GetPoint3D(umap As IDataEmbedding) As Point3D()
         If umap.dimension <> 3 Then

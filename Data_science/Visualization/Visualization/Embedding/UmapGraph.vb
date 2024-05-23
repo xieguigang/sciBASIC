@@ -68,13 +68,9 @@ Public Module UmapGraph
 
         Dim matrix = umap.GetGraph.ToArray
         Dim g As New NetworkGraph
-        Dim points As PointF() = Nothing
+        Dim points As PointF() = umap.GetPoint2D
         Dim data As NodeData = Nothing
         Dim index As i32 = Scan0
-
-        If umap.dimension = 2 Then
-            points = umap.GetPoint2D
-        End If
 
         If labels Is Nothing Then
             labels = uid
