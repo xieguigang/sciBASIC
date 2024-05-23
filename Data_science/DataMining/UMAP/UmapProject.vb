@@ -53,6 +53,12 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Runtime
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+
 ''' <summary>
 ''' binary file data model for save the UMAP embedding result
 ''' </summary>
@@ -74,6 +80,17 @@ Public Class UMAPProject
     ''' </summary>
     ''' <returns></returns>
     Public Property dimension As Integer
+
+    ''' <summary>
+    ''' number of samples
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property samples As Integer
+        Get
+            Return embedding.Length
+        End Get
+    End Property
+
     Public Property clusters As String()
 
     Public Function SetLabels(labels As IEnumerable(Of String), Optional clusters As IEnumerable(Of String) = Nothing) As UMAPProject
@@ -99,6 +116,45 @@ Public Class UMAPProject
         }
     End Function
 
+    Public Shared Sub WriteFile(proj As UMAPProject, file As Stream)
+        Dim wr As New BinaryWriter(file, Encoding.UTF8)
+        Dim encoder As New NetworkByteOrderBuffer
 
+        Call wr.Write("UMAP")
+        Call wr.Write(proj.dimension)
+        Call wr.Write(proj.samples)
+
+        For Each str As String In proj.labels
+            Call wr.Write(str)
+        Next
+
+        If proj.clusters Is Nothing Then
+            Call wr.Write(0)
+        Else
+            Call wr.Write(proj.clusters.Length)
+
+            For Each str As String In proj.clusters
+                Call wr.Write(str)
+            Next
+        End If
+
+        Dim sizeof As Integer = HeapSizeOf.double * proj.samples
+
+        For Each vec As Double() In proj.graph
+            Call wr.Write(encoder.encode(vec), 0, sizeof)
+        Next
+
+        sizeof = HeapSizeOf.double * proj.dimension
+
+        For Each vec As Double() In proj.embedding
+            Call wr.Write(encoder.encode(vec), 0, sizeof)
+        Next
+
+        Call wr.Flush()
+    End Sub
+
+    Public Shared Function ReadFile(file As Stream) As UMAPProject
+
+    End Function
 
 End Class
