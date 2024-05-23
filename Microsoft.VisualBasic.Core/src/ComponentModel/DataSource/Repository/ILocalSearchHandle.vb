@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::c83077b820e815beb51f98ccce359a44, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 59
-    '    Code Lines: 36 (61.02%)
-    ' Comment Lines: 15 (25.42%)
-    '    - Xml Docs: 86.67%
-    ' 
-    '   Blank Lines: 8 (13.56%)
-    '     File Size: 2.57 KB
+' Summaries:
 
 
-    '     Interface ILocalSearchHandle
-    ' 
-    '         Function: Match, Matches
-    ' 
-    '     Module SearchFramework
-    ' 
-    '         Function: MultipleQuery, Query
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 59
+'    Code Lines: 36 (61.02%)
+' Comment Lines: 15 (25.42%)
+'    - Xml Docs: 86.67%
+' 
+'   Blank Lines: 8 (13.56%)
+'     File Size: 2.57 KB
+
+
+'     Interface ILocalSearchHandle
+' 
+'         Function: Match, Matches
+' 
+'     Module SearchFramework
+' 
+'         Function: MultipleQuery, Query
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -112,6 +113,37 @@ Namespace ComponentModel.DataSourceModel.Repository
         <Extension>
         Public Function Query(Of T, Term)(source As IEnumerable(Of T), queries As IEnumerable(Of Term), assert As Func(Of T, Term, Boolean)) As IEnumerable(Of Map(Of Term, T))
             Return source.MultipleQuery({New NamedValue(Of Term())("null", queries.ToArray)}, assert).Values
+        End Function
+
+        ''' <summary>
+        ''' makes the name string unique by adding an additional numeric suffix
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing) As String()
+            Dim nameUniques As New Dictionary(Of String, Counter)
+            Dim duplicates As New List(Of String)
+
+            For Each name As String In names
+RE0:
+                If nameUniques.ContainsKey(name) Then
+                    nameUniques(name).Hit()
+                    duplicates.Add(name)
+                    name = name & "_" & nameUniques(name).Value
+                    GoTo RE0
+                Else
+                    nameUniques.Add(name, Scan0)
+                End If
+            Next
+
+            Erase duplicated
+
+            If duplicates.Any Then
+                duplicated = duplicates.ToArray
+            End If
+
+            Return nameUniques.Keys.ToArray
         End Function
     End Module
 End Namespace
