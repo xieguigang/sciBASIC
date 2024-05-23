@@ -128,7 +128,7 @@ Public Class UMAPProject
             Call wr.Write(str)
         Next
 
-        If proj.clusters Is Nothing Then
+        If proj.clusters Is Nothing OrElse proj.clusters.Length = 0 Then
             Call wr.Write(0)
         Else
             Call wr.Write(proj.clusters.Length)
@@ -154,7 +154,53 @@ Public Class UMAPProject
     End Sub
 
     Public Shared Function ReadFile(file As Stream) As UMAPProject
+        Dim rd As New BinaryReader(file, Encoding.UTF8)
+        Dim decoder As New NetworkByteOrderBuffer
 
+        If rd.ReadString <> "UMAP" Then
+            Throw New InvalidProgramException("invalid magic number!")
+        End If
+
+        Dim dims As Integer = rd.ReadInt32
+        Dim samples As Integer = rd.ReadInt32
+        Dim labels As String() = New String(samples - 1) {}
+
+        For i As Integer = 0 To samples - 1
+            labels(i) = rd.ReadString
+        Next
+
+        Dim n As Integer = rd.ReadInt32
+        Dim clusters As String() = New String(n - 1) {}
+
+        For i As Integer = 0 To n - 1
+            clusters(i) = rd.ReadString
+        Next
+
+        Dim buf As Byte() = New Byte(HeapSizeOf.double * samples - 1) {}
+        ' graph is (N x N) size
+        Dim graph As Double()() = New Double(samples - 1)() {}
+
+        For i As Integer = 0 To samples - 1
+            rd.Read(buf, Scan0, buf.Length)
+            graph(i) = decoder.decode(buf)
+        Next
+
+        Dim umap As Double()() = New Double(samples - 1)() {}
+
+        buf = New Byte(HeapSizeOf.double * dims - 1) {}
+
+        For i As Integer = 0 To samples - 1
+            rd.Read(buf, Scan0, buf.Length)
+            umap(i) = decoder.decode(buf)
+        Next
+
+        Return New UMAPProject With {
+            .clusters = clusters,
+            .dimension = dims,
+            .embedding = umap,
+            .graph = graph,
+            .labels = labels
+        }
     End Function
 
 End Class
