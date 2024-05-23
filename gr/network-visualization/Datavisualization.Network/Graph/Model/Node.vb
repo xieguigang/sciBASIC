@@ -135,6 +135,24 @@ Namespace Graph
         End Property
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns>
+        ''' returns nothing if the node meta <see cref="data"/> is nothing orelse 
+        ''' node data contains no such given key name.
+        ''' </returns>
+        Default Public ReadOnly Property Metadata(name As String) As String
+            Get
+                If data Is Nothing Then
+                    Return Nothing
+                Else
+                    Return data.ItemValue(name)
+                End If
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 在这里是用的是unique id进行初始化，对于Display title则可以在<see cref="NodeData.label"/>属性上面设置
         ''' </summary>
         ''' <param name="iId"></param>

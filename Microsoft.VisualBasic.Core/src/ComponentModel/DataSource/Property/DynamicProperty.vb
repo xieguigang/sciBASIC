@@ -103,10 +103,12 @@ Namespace ComponentModel.DataSourceModel
 
         ''' <summary>
         ''' Gets/sets item value by using property name.
-        ''' (这个函数为安全的函数，当目标属性不存在的时候，会返回空值)
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数为安全的函数，当目标属性不存在的时候，会返回空值)
+        ''' </remarks>
         Default Public Overridable Overloads Property ItemValue(name As String) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
