@@ -52,8 +52,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.Math
+Imports std = System.Math
 
 Public NotInheritable Class DistanceFunctions
 
@@ -94,6 +94,6 @@ Public NotInheritable Class DistanceFunctions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Euclidean(lhs As Double(), rhs As Double()) As Double
         ' TODO: Replace with netcore3 MathF class when the framework is available
-        Return stdNum.Sqrt(SIMD.Euclidean(lhs, rhs))
+        Return std.Sqrt(SIMD.Euclidean(lhs, rhs))
     End Function
 End Class
