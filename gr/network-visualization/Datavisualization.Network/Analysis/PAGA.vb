@@ -70,11 +70,13 @@ Namespace Analysis
             ' scale the weight to [0,1]
             Dim max_w As Double = abstract.graphEdges.Select(Function(e) e.weight).Max
 
-            For Each edge As Edge In abstract.graphEdges
-                edge.weight /= max_w * 10
+            For Each edge As Edge In abstract.graphEdges.ToArray
+                edge.weight /= max_w
 
                 If edge.weight <= threshold Then
                     Call abstract.RemoveEdge(edge)
+                Else
+                    edge.weight *= 10
                 End If
             Next
 
