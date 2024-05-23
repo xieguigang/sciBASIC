@@ -48,6 +48,25 @@ Namespace Analysis
                 })
             Next
 
+            For Each c1 As IGrouping(Of String, Node) In clusters
+                For Each c2 As IGrouping(Of String, Node) In clusters
+                    If c1.Key = c2.Key Then
+                        Continue For
+                    End If
+
+                    Dim count_12 As Integer = c1.Select(Function(vi) vi.adjacencies.EnumerateAllEdges.Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = c2.Key).Count).Sum
+                    Dim count_21 As Integer = c2.Select(Function(vi) vi.adjacencies.EnumerateAllEdges.Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = c1.Key).Count).Sum
+
+                    If count_12 + count_21 > 0 Then
+                        Call abstract.CreateEdge(
+                            abstract.GetElementByID(c1.Key),
+                            abstract.GetElementByID(c2.Key),
+                            weight:=count_12 + count_21
+                        )
+                    End If
+                Next
+            Next
+
             Return abstract
         End Function
 

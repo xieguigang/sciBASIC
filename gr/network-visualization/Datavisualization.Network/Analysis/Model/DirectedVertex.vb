@@ -62,6 +62,9 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Namespace Analysis.Model
 
+    ''' <summary>
+    ''' an edge collection for indexing the in/out edge connection with current node.
+    ''' </summary>
     Public Class DirectedVertex : Implements IEnumerable(Of Edge)
 
         Public ReadOnly Property label As String
