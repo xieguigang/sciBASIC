@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2162d91c6cffb42b34a1b2d5726c1146, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::fc49ca692a0c6a47abaa777a5a272f7b, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 70.97%
     ' 
     '   Blank Lines: 7 (10.29%)
-    '     File Size: 2.25 KB
+    '     File Size: 2.27 KB
 
 
     ' Class Edge

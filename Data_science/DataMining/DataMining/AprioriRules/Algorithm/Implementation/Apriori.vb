@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4da79841cd189620265cbca637715ed, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\Apriori.vb"
+﻿#Region "Microsoft.VisualBasic::276ec9e332bdf19cf48d24c507434455, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\Apriori.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 57.14%
     ' 
     '   Blank Lines: 46 (20.00%)
-    '     File Size: 10.83 KB
+    '     File Size: 10.82 KB
 
 
     '     Module Apriori

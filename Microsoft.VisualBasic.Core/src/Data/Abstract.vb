@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e46e64266c17d052e94915097844226, Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::04e4724dc9ff7f3dbecf3f750acd4817, Microsoft.VisualBasic.Core\src\Data\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 15 (45.45%)
-    ' Comment Lines: 13 (39.39%)
+    '   Total Lines: 48
+    '    Code Lines: 15 (31.25%)
+    ' Comment Lines: 28 (58.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (15.15%)
-    '     File Size: 1.12 KB
+    '   Blank Lines: 5 (10.42%)
+    '     File Size: 1.62 KB
 
 
     '     Enum PropertyAccess
