@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.DataFrame
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 使用这个模块用来生成相关度的网络，相关度网络是``Kmeans``，``Cmeans``或者其他的一些聚类网络可视化的基础
@@ -97,7 +97,7 @@ Public Module CorrelationNetwork
                 cor = matrix(id, partner)
                 prob = matrix.pvalue(id, partner)
 
-                If stdNum.Abs(cor) > cutoff AndAlso prob < pvalue Then
+                If std.Abs(cor) > cutoff AndAlso prob < pvalue Then
                     uid$ = {partner, id}.OrderBy(Function(s) s).JoinBy(" - ")
                     linkdata = New EdgeData With {
                         .label = uid,
@@ -117,7 +117,7 @@ Public Module CorrelationNetwork
     End Function
 
     Private Function HowStrong(c#) As String
-        Dim abs = stdNum.Abs(c)
+        Dim abs = std.Abs(c)
 
         If abs < 0.4 Then
             Return "Very Weak"

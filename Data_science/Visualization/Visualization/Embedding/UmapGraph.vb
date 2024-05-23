@@ -65,6 +65,11 @@ Imports std = System.Math
 Public Module UMAPGraph
 
     <Extension>
+    Public Function CreateGraph(umap As UMAPProject, Optional threshold As Double = 0) As NetworkGraph
+
+    End Function
+
+    <Extension>
     Public Function CreateGraph(umap As Umap, uid As String(),
                                 Optional labels As String() = Nothing,
                                 Optional threshold As Double = 0) As NetworkGraph
