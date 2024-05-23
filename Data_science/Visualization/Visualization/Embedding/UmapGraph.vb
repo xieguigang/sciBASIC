@@ -59,7 +59,10 @@ Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Language
 Imports std = System.Math
 
-Public Module UmapGraph
+''' <summary>
+''' create network model based on umap result for data visualization
+''' </summary>
+Public Module UMAPGraph
 
     <Extension>
     Public Function CreateGraph(umap As Umap, uid As String(),
