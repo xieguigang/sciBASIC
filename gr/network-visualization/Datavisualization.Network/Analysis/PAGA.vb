@@ -67,6 +67,13 @@ Namespace Analysis
                 Next
             Next
 
+            ' scale the weight to [0,1]
+            Dim max_w As Double = abstract.graphEdges.Select(Function(e) e.weight).Max
+
+            For Each edge As Edge In abstract.graphEdges
+                edge.weight /= max_w * 10
+            Next
+
             Return abstract
         End Function
 
