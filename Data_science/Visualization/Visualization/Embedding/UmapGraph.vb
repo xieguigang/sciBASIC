@@ -106,7 +106,7 @@ Public Module UMAPGraph
 
         For i As Integer = 0 To matrix.Length - 1
             For j As Integer = 0 To matrix(i).Length - 1
-                If i <> j AndAlso std.Abs(matrix(i)(j)) >= threshold Then
+                If i <> j AndAlso std.Abs(matrix(i)(j)) > threshold Then
                     Call g.CreateEdge(uid(i), uid(j), weight:=matrix(i)(j))
                 End If
             Next
