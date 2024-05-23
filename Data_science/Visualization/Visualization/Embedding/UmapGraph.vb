@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module UmapGraph
 
@@ -99,7 +99,7 @@ Public Module UmapGraph
 
         For i As Integer = 0 To matrix.Length - 1
             For j As Integer = 0 To matrix(i).Length - 1
-                If i <> j AndAlso stdNum.Abs(matrix(i)(j)) >= threshold Then
+                If i <> j AndAlso std.Abs(matrix(i)(j)) >= threshold Then
                     Call g.CreateEdge(uid(i), uid(j), weight:=matrix(i)(j))
                 End If
             Next
