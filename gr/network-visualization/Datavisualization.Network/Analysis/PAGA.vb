@@ -21,7 +21,7 @@ Namespace Analysis
         ''' an abstract graph of the input manifolds result
         ''' </returns>
         <Extension>
-        Public Function Abstraction(manifolds As NetworkGraph) As NetworkGraph
+        Public Function Abstraction(manifolds As NetworkGraph, Optional threshold As Double = 0.0) As NetworkGraph
             ' split the nodes by node type
             Dim clusters = manifolds.vertex _
                 .GroupBy(Function(v)
@@ -72,6 +72,10 @@ Namespace Analysis
 
             For Each edge As Edge In abstract.graphEdges
                 edge.weight /= max_w * 10
+
+                If edge.weight <= threshold Then
+                    Call abstract.RemoveEdge(edge)
+                End If
             Next
 
             Return abstract
