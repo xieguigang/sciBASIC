@@ -80,7 +80,7 @@ Namespace Analysis
         <Extension>
         Private Function Count(cluster As IGrouping(Of String, Node), cluster_id As String) As Integer
             Return Aggregate vi As Node
-                   In cluster
+                   In cluster.AsParallel
                    Let size As Integer = vi.adjacencies _
                        .EnumerateAllEdges _
                        .Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = cluster_id) _
