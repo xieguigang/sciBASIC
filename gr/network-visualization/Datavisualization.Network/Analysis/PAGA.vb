@@ -54,8 +54,8 @@ Namespace Analysis
                         Continue For
                     End If
 
-                    Dim count_12 As Integer = c1.Select(Function(vi) vi.adjacencies.EnumerateAllEdges.Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = c2.Key).Count).Sum
-                    Dim count_21 As Integer = c2.Select(Function(vi) vi.adjacencies.EnumerateAllEdges.Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = c1.Key).Count).Sum
+                    Dim count_12 As Integer = c1.Count(c2.Key)
+                    Dim count_21 As Integer = c2.Count(c1.Key)
 
                     If count_12 + count_21 > 0 Then
                         Call abstract.CreateEdge(
@@ -75,6 +75,17 @@ Namespace Analysis
             Next
 
             Return abstract
+        End Function
+
+        <Extension>
+        Private Function Count(cluster As IGrouping(Of String, Node), cluster_id As String) As Integer
+            Return Aggregate vi As Node
+                   In cluster
+                   Let size As Integer = vi.adjacencies _
+                       .EnumerateAllEdges _
+                       .Where(Function(e) e.V(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = cluster_id) _
+                       .Count
+                   Into Sum(size)
         End Function
 
     End Module
