@@ -74,6 +74,10 @@ Public Class InvertedIndex
         Dim r As List(Of Integer) = Nothing
 
         For Each token As String In tokens
+            If token = "" Then
+                Continue For
+            End If
+
             If index.ContainsKey(token) Then
                 If r Is Nothing Then
                     r = New List(Of Integer)(index(token))

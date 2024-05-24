@@ -9,7 +9,11 @@ Module Program
 
         Call index.Add(doc)
 
-        For Each hit In index.Search("baby girl")
+        'For Each hit In index.Search("baby girl")
+        '    Call Console.WriteLine(hit.value)
+        'Next
+
+        For Each hit In index.Search("princess  walking")
             Call Console.WriteLine(hit.value)
         Next
     End Sub
