@@ -52,7 +52,7 @@ Public Class FileStorage : Implements Enumeration(Of Long), IDisposable
             Dim token As String
             Dim idsize As Integer
 
-            offsets = reader.ReadInt64s(lastId)
+            offsets = reader.ReadInt64s(reader.ReadInt32)
 
             For i As Integer = 0 To nsize - 1
                 token = reader.ReadString(BinaryStringFormat.ByteLengthPrefix)
@@ -72,8 +72,11 @@ Public Class FileStorage : Implements Enumeration(Of Long), IDisposable
     Public Shared Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
         Dim bin As New BinaryDataWriter(file, Encoding.UTF8)
 
+        ' last id is not equals to the offset length
+        ' due to the reason of empty doc may change the id un-expected?
         bin.Write(index.size)
         bin.Write(index.lastId)
+        bin.Write(offsets.Length)
         bin.Write(offsets)
 
         For Each token As NamedCollection(Of Integer) In index.AsEnumerable

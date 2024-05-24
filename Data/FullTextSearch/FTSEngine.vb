@@ -31,8 +31,9 @@ Public Class FTSEngine : Implements IDisposable
     ''' thread unsafe
     ''' </remarks>
     Public Sub Indexing(doc As String)
-        Call index.Add(doc)
-        Call documents.Save(doc)
+        If index.Add(doc) Then
+            Call documents.Save(doc)
+        End If
     End Sub
 
     Public Iterator Function Search(text As String) As IEnumerable(Of SeqValue(Of String))

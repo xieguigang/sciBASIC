@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -42,19 +43,25 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
         Next
     End Sub
 
-    Public Sub Add(doc As String)
+    Public Function Add(doc As String) As Boolean
         Dim id As Integer
         Dim tokens As String() = split(doc)
 
         If tokens.IsNullOrEmpty Then
-            Return
+            Return False
         Else
             id = ++Me.id
         End If
 
+        Dim append As Boolean = False
+
         For Each str As String In tokens
             If str = "" Then
                 Continue For
+            Else
+                ' tokens may be all empty string
+                '
+                append = True
             End If
 
             If Not index.ContainsKey(str) Then
@@ -65,7 +72,9 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
                 Call index(str).Add(id)
             End If
         Next
-    End Sub
+
+        Return append
+    End Function
 
     Private Function split(doc As String) As String()
         doc = Strings.Trim(doc).ToLower
