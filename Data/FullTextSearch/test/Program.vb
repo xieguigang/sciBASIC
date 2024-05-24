@@ -35,5 +35,7 @@ Module Program
         For Each hit As SeqValue(Of String) In index.Search("princess  walking")
             Call Console.WriteLine(hit.value)
         Next
+
+        Call index.Dispose()
     End Sub
 End Module
