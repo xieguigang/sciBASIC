@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' The core of FTS is a data structure called Inverted Index. 
@@ -17,7 +18,7 @@ Public Class InvertedIndex
 
     Public Sub Add(docs As IEnumerable(Of String))
         For Each doc As String In docs
-            Call add(doc)
+            Call Add(doc)
         Next
     End Sub
 
@@ -32,6 +33,10 @@ Public Class InvertedIndex
         End If
 
         For Each str As String In tokens
+            If str = "" Then
+                Continue For
+            End If
+
             If Not index.ContainsKey(str) Then
                 Call index.Add(str, New List(Of Integer))
             End If
@@ -48,7 +53,7 @@ Public Class InvertedIndex
         If doc.StringEmpty Then
             Return Nothing
         Else
-            Return doc.Split({"+"c, "-"c, "*"c, "/"c, "."c, ","c})
+            Return doc.Split({"+"c, "-"c, "*"c, "/"c, "."c, ","c, " "c, ASCII.TAB})
         End If
     End Function
 
