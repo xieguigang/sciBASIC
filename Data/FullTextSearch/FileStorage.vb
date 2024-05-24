@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' document text file 
@@ -48,7 +50,7 @@ Public Class FileStorage
             Dim token As String
             Dim idsize As Integer
 
-            offsets = New Long(nsize - 1) {}
+            offsets = reader.ReadInt64s(lastId)
 
             For i As Integer = 0 To nsize - 1
                 token = reader.ReadString(BinaryStringFormat.ByteLengthPrefix)
@@ -66,7 +68,21 @@ Public Class FileStorage
     End Function
 
     Public Shared Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
+        Dim bin As New BinaryDataWriter(file, Encoding.UTF8)
 
+        bin.Write(index.size)
+        bin.Write(index.lastId)
+        bin.Write(offsets)
+
+        For Each token As NamedCollection(Of Integer) In index.AsEnumerable
+            Call bin.Write(token.name, BinaryStringFormat.ByteLengthPrefix)
+            Call bin.Write(token.Length)
+            Call bin.Write(token.value)
+        Next
+
+        Call bin.Flush()
+        Call bin.Close()
+        Call bin.Dispose()
     End Sub
 
 End Class

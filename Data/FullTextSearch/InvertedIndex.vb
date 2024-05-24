@@ -1,4 +1,6 @@
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -8,11 +10,23 @@ Imports Microsoft.VisualBasic.Text
 ''' <remarks>
 ''' https://artem.krylysov.com/blog/2020/07/28/lets-build-a-full-text-search-engine/
 ''' </remarks>
-Public Class InvertedIndex
+Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Integer))
 
     ReadOnly index As New Dictionary(Of String, List(Of Integer))
 
     Dim id As i32 = 0
+
+    Public ReadOnly Property lastId As Integer
+        Get
+            Return CInt(id)
+        End Get
+    End Property
+
+    Public ReadOnly Property size As Integer
+        Get
+            Return index.Count
+        End Get
+    End Property
 
     Sub New()
     End Sub
@@ -122,4 +136,9 @@ Public Class InvertedIndex
         Return r
     End Function
 
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedCollection(Of Integer)) Implements Enumeration(Of NamedCollection(Of Integer)).GenericEnumerator
+        For Each token In index
+            Yield New NamedCollection(Of Integer)(token.Key, token.Value)
+        Next
+    End Function
 End Class
