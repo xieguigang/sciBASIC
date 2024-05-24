@@ -1,5 +1,4 @@
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
@@ -12,9 +11,16 @@ Imports Microsoft.VisualBasic.Text
 Public Class InvertedIndex
 
     ReadOnly index As New Dictionary(Of String, List(Of Integer))
-    ReadOnly rawDocs As New List(Of String)
 
     Dim id As i32 = 0
+
+    Sub New()
+    End Sub
+
+    Sub New(index As Dictionary(Of String, List(Of Integer)), lastId As Integer)
+        Me.id = lastId
+        Me.index = index
+    End Sub
 
     Public Sub Add(docs As IEnumerable(Of String))
         For Each doc As String In docs
@@ -45,8 +51,6 @@ Public Class InvertedIndex
                 Call index(str).Add(id)
             End If
         Next
-
-        Call rawDocs.Add(doc)
     End Sub
 
     Private Function split(doc As String) As String()
@@ -64,11 +68,11 @@ Public Class InvertedIndex
     ''' </summary>
     ''' <param name="text"></param>
     ''' <returns></returns>
-    Public Iterator Function Search(text As String) As IEnumerable(Of SeqValue(Of String))
+    Public Function Search(text As String) As IReadOnlyCollection(Of Integer)
         Dim tokens As String() = split(text)
 
         If tokens.IsNullOrEmpty Then
-            Return
+            Return Nothing
         End If
 
         Dim r As List(Of Integer) = Nothing
@@ -86,13 +90,11 @@ Public Class InvertedIndex
                 End If
             Else
                 ' Token doesn't exist.
-                Return
+                Return Nothing
             End If
         Next
 
-        For Each i As Integer In r.Distinct
-            Yield New SeqValue(Of String)(i, rawDocs(i))
-        Next
+        Return r
     End Function
 
     Private Shared Function intersection(a As List(Of Integer), b As List(Of Integer)) As List(Of Integer)
