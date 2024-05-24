@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' document text file 
@@ -34,8 +35,34 @@ Public Class FileStorage
     End Function
 
     Public Shared Function ReadIndex(file As Stream, ByRef offsets As Long()) As InvertedIndex
+        Dim index As InvertedIndex
+
+        If file.Length = 0 Then
+            offsets = Nothing
+            index = New InvertedIndex
+        Else
+            Dim reader As New BinaryDataReader(file, Encoding.UTF8)
+            Dim nsize As Integer = reader.ReadInt32
+            Dim lastId As Integer = reader.ReadInt32
+            Dim ids As New Dictionary(Of String, List(Of Integer))
+            Dim token As String
+            Dim idsize As Integer
+
+            offsets = New Long(nsize - 1) {}
+
+            For i As Integer = 0 To nsize - 1
+                token = reader.ReadString(BinaryStringFormat.ByteLengthPrefix)
+                idsize = reader.ReadInt32
+                ids.Add(token, New List(Of Integer)(reader.ReadInt32s(idsize)))
+            Next
+
+            index = New InvertedIndex(ids, lastId:=lastId)
+        End If
+
         Call file.Close()
         Call file.Dispose()
+
+        Return index
     End Function
 
     Public Shared Sub WriteIndex(index As InvertedIndex, offsets As Long(), file As Stream)
