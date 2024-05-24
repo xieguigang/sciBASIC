@@ -164,6 +164,7 @@ Namespace Orthogonal
 
             Dim disconnectedGraphSet As IList(Of IList(Of Integer)) = DisconnectedGraphs.findDisconnectedGraphs(graph)
             Dim disconnectedEmbeddings As New List(Of OrthographicEmbeddingResult)()
+            Dim g_oe As OrthographicEmbeddingResult
 
             For Each nodeSubset In disconnectedGraphSet
                 ' calculate the embedding:
@@ -172,7 +173,13 @@ Namespace Orthogonal
                 Dim comparator As New SegmentLengthEmbeddingComparator()
 
                 For attempt As Integer = 0 To numberOfAttempts - 1
-                    Dim g_oe As OrthographicEmbeddingResult = OrthographicEmbedding.orthographicEmbedding(g, simplify, fixNonOrthogonal)
+                    g_oe = Nothing
+
+                    Try
+                        g_oe = OrthographicEmbedding.orthographicEmbedding(g, simplify, fixNonOrthogonal)
+                    Catch ex As Exception
+                        Continue For
+                    End Try
 
                     If g_oe Is Nothing Then
                         Continue For
