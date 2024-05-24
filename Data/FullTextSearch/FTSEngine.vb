@@ -9,7 +9,7 @@ Public Class FTSEngine
     Sub New(repo_dir As String)
         Dim offsets As Long() = Nothing
 
-        index = FileStorage.ReadIndex($"{repo_dir}/index.dat".OpenReadonly, offsets)
+        index = FileStorage.ReadIndex($"{repo_dir}/index.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False), offsets)
         documents = New FileStorage(offsets, $"{repo_dir}/documents.dat".Open(FileMode.OpenOrCreate, doClear:=False, [readOnly]:=False))
     End Sub
 
