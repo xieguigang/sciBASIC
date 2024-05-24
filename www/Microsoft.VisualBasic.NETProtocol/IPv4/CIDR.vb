@@ -61,7 +61,7 @@
 #End Region
 
 Imports System.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class IPv4
 
@@ -258,7 +258,7 @@ Public Class IPv4
     ''' 
     ''' @return
     ''' </summary>
-    Public Function GetAvailableIPs(numberofIPs__1 As Integer?) As List(Of String)
+    Public Function GetAvailableIPs(numberofIPs As Integer?) As List(Of String)
         Dim result As New List(Of String)()
         Dim numberOfBits As Integer
 
@@ -279,7 +279,7 @@ Public Class IPv4
         Dim baseIP As Integer? = _baseIPnumeric And _netmaskNumeric
         Dim i As Integer = 1
 
-        While i < (numberOfIPs__2) AndAlso i < numberofIPs__1
+        While i < (numberOfIPs__2) AndAlso i < numberofIPs
             Dim ourIP As Integer? = baseIP + i
             Dim ip As String = NumericIpToSymbolic(ourIP)
 
@@ -329,7 +329,7 @@ Public Class IPv4
             End If
         Next
 
-        Dim x As Double = stdNum.Pow(2, (32 - numberOfBits))
+        Dim x As Double = std.Pow(2, (32 - numberOfBits))
 
         If x = -1 Then
             x = 1.0
