@@ -82,7 +82,7 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
         If doc.StringEmpty Then
             Return Nothing
         Else
-            Return doc.Split({"+"c, "-"c, "*"c, "/"c, "."c, ","c, " "c, ASCII.TAB})
+            Return doc.Split({"+"c, "-"c, "*"c, "/"c, "."c, ","c, " "c, ASCII.TAB, "'"c, """"c, "¡°¡°"c, "¡±¡±"c})
         End If
     End Function
 

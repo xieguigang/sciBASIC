@@ -7,7 +7,7 @@ Module Program
     ReadOnly demo_repo As String = $"{App.HOME}/demo_data/"
 
     Sub Main(args As String())
-        Call test_create()
+        ' Call test_create()
         Call test_read()
     End Sub
 
