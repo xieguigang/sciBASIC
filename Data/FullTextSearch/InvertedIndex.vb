@@ -41,7 +41,9 @@ Public Class InvertedIndex
                 Call index.Add(str, New List(Of Integer))
             End If
 
-            Call index(str).Add(id)
+            If index(str).Count = 0 OrElse index(str).Last <> id Then
+                Call index(str).Add(id)
+            End If
         Next
 
         Call rawDocs.Add(doc)
@@ -84,7 +86,7 @@ Public Class InvertedIndex
             End If
         Next
 
-        For Each i As Integer In r
+        For Each i As Integer In r.Distinct
             Yield New SeqValue(Of String)(i, rawDocs(i))
         Next
     End Function
