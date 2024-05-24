@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Linq
 ''' The core of FTS is a data structure called Inverted Index. 
 ''' The Inverted Index associates every word in documents with documents that contain the word.
 ''' </summary>
+''' <remarks>
+''' https://artem.krylysov.com/blog/2020/07/28/lets-build-a-full-text-search-engine/
+''' </remarks>
 Public Class InvertedIndex
 
     ReadOnly index As New Dictionary(Of String, List(Of Integer))

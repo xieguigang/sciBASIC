@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>FullTextSearch</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.FullTextSearch</RootNamespace>
     <TargetFramework>net6.0</TargetFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Title>Let's build a Full-Text Search engine</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>Microsoft.VisualBasic.Data.FullTextSearch</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
