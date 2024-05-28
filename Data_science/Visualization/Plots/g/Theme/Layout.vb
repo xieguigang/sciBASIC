@@ -78,12 +78,15 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Canvas
 
+    ''' <summary>
+    ''' an abstract object plot layout object model
+    ''' </summary>
     Public MustInherit Class Layout : Implements IsEmpty
 
         Friend MustOverride ReadOnly Property isEmpty As Boolean Implements IsEmpty.IsEmpty
 
         ''' <summary>
-        ''' 
+        ''' get object plot location
         ''' </summary>
         ''' <param name="canvas"></param>
         ''' <param name="dependency">
