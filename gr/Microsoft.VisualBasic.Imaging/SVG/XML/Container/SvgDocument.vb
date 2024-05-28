@@ -220,7 +220,7 @@ Namespace SVG.XML
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSVGXml() As String
             Dim s As New MemoryStream
-            Call Save(s)
+            Call Save(s, Encoding.UTF8)
             Return Encoding.UTF8.GetString(s.ToArray)
         End Function
 
