@@ -178,6 +178,16 @@ Namespace SVG.XML
             Return New SvgDocument(document, rootElement)
         End Function
 
+        Public Shared Function Parse(xml As String) As SvgDocument
+            Dim xmlDoc As New XmlDocument
+            Dim svgEle As XmlElement
+
+            xmlDoc.LoadXml(xml)
+            svgEle = xmlDoc.DocumentElement
+
+            Return New SvgDocument(xmlDoc, svgEle)
+        End Function
+
         Public Sub Save(stream As Stream)
             Call _document.Save(stream)
             Call stream.Flush()
