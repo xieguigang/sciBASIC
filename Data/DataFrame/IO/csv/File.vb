@@ -641,6 +641,10 @@ B21,B22,B23,...
             Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
+        Public Function Save(s As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return StreamIO.SaveDataFrame(Me, s, encoding)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path$, encoding As Encodings, Optional tsv As Boolean = False, Optional silent As Boolean = True) As Boolean
             Return StreamIO.SaveDataFrame(Me, path, encoding.CodePage, tsv:=tsv, silent:=silent)
