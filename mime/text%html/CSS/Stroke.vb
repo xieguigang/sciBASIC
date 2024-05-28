@@ -123,6 +123,10 @@ Namespace CSS
             dash = DashStyle.Solid
         End Sub
 
+        Sub New(width As Double)
+            Call Me.New(CSng(width))
+        End Sub
+
         ''' <summary>
         ''' create css stroke object based on a specific given 
         ''' gdi+ object
