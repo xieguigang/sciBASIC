@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::760f40fe4f1ed74133d713b3ee081bf1, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 155
-    '    Code Lines: 81 (52.26%)
-    ' Comment Lines: 54 (34.84%)
-    '    - Xml Docs: 92.59%
-    ' 
-    '   Blank Lines: 20 (12.90%)
-    '     File Size: 5.74 KB
+' Summaries:
 
 
-    '     Class ScriptBuilder
-    ' 
-    '         Properties: Preview, script
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 155
+'    Code Lines: 81 (52.26%)
+' Comment Lines: 54 (34.84%)
+'    - Xml Docs: 92.59%
+' 
+'   Blank Lines: 20 (12.90%)
+'     File Size: 5.74 KB
+
+
+'     Class ScriptBuilder
+' 
+'         Properties: Preview, script
+' 
+'         Constructor: (+6 Overloads) Sub New
+'         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
@@ -208,6 +209,15 @@ Namespace Scripting.SymbolBuilder
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return script.ToString.SaveTo(path, encoding.CodePage)
+        End Function
+
+        Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Using wr As New StreamWriter(file, encoding)
+                Call wr.WriteLine(script.ToString)
+                Call wr.Flush()
+            End Using
+
+            Return True
         End Function
     End Class
 End Namespace

@@ -188,11 +188,6 @@ Namespace SVG.XML
             Return New SvgDocument(xmlDoc, svgEle)
         End Function
 
-        Public Sub Save(stream As Stream)
-            Call _document.Save(stream)
-            Call stream.Flush()
-        End Sub
-
         Public Sub SetCommentText(text As String)
             Call _document.CreateComment(text)
         End Sub
@@ -206,9 +201,14 @@ Namespace SVG.XML
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function SaveAsXml(path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            Dim s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
-            Call Save(s)
-            Call s.Dispose()
+            Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+                Return Save(s, encoding)
+            End Using
+        End Function
+
+        Public Function Save(s As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Call _document.Save(s)
+            Call s.Flush()
             Return True
         End Function
 
