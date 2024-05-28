@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17e3497f6e822a1f5c19837849e462d1, Data_science\MachineLearning\DeepLearning\CNN\layers\LocalResponseNormalizationLayer.vb"
+﻿#Region "Microsoft.VisualBasic::17e3497f6e822a1f5c19837849e462d1, Data_science\MachineLearning\DeepLearning\CNN\Layers\LocalResponseNormalizationLayer.vb"
 
     ' Author:
     ' 

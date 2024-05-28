@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::a533c58b8a26ecb2e234987b65f9c5d9, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::dd59be2778a89d6ea7a7027072d322f2, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 316
-'    Code Lines: 203 (64.24%)
-' Comment Lines: 68 (21.52%)
-'    - Xml Docs: 63.24%
-' 
-'   Blank Lines: 45 (14.24%)
-'     File Size: 12.78 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ConfigEngine
-' 
-'         Properties: AllItems, FilePath, MimeType, ProfileItemNode, ProfileItemType
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) [Set], ExistsNode, GetName, GetSettings, GetSettingsNode
-'                   Load, (+2 Overloads) Prints, (+2 Overloads) Save, ToString, View
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 329
+    '    Code Lines: 213 (64.74%)
+    ' Comment Lines: 68 (20.67%)
+    '    - Xml Docs: 63.24%
+    ' 
+    '   Blank Lines: 48 (14.59%)
+    '     File Size: 13.41 KB
+
+
+    '     Class ConfigEngine
+    ' 
+    '         Properties: AllItems, FilePath, MimeType, ProfileItemNode, ProfileItemType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) [Set], ExistsNode, GetName, GetSettings, GetSettingsNode
+    '                   Load, (+2 Overloads) Prints, (+3 Overloads) Save, ToString, View
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

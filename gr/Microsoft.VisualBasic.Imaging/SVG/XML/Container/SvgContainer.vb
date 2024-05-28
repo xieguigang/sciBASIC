@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::d28260b6b85fae5f03f85b7b97085479, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
+﻿#Region "Microsoft.VisualBasic::b117225c2553e1d891923cfb05aa0f08, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 77
-'    Code Lines: 57 (74.03%)
-' Comment Lines: 3 (3.90%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 17 (22.08%)
-'     File Size: 2.28 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SvgContainer
-' 
-'         Properties: filter
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: AddCircle, AddClipPath, AddEllipse, AddGroup, AddImage
-'                   AddLine, AddMarker, AddPath, AddPolygon, AddPolyLine
-'                   AddRect, AddText, GetElements
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 71 (60.68%)
+    ' Comment Lines: 23 (19.66%)
+    '    - Xml Docs: 13.04%
+    ' 
+    '   Blank Lines: 23 (19.66%)
+    '     File Size: 4.71 KB
+
+
+    '     Class SvgContainer
+    ' 
+    '         Properties: filter
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AddCircle, AddClipPath, AddEllipse, AddGroup, AddImage
+    '                   AddLine, AddMarker, AddPath, AddPolygon, AddPolyLine
+    '                   AddRect, AddText, GetElements
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

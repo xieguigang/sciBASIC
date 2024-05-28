@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0939dbede742703c71be634a4c046f1, Data_science\MachineLearning\DeepLearning\CNN\layers\PoolingLayer.vb"
+﻿#Region "Microsoft.VisualBasic::b0939dbede742703c71be634a4c046f1, Data_science\MachineLearning\DeepLearning\CNN\Layers\PoolingLayer.vb"
 
     ' Author:
     ' 

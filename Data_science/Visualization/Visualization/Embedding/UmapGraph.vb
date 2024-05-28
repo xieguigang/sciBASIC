@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1266535f38b574c765f091b0b95414, Data_science\Visualization\Visualization\Embedding\UmapGraph.vb"
+﻿#Region "Microsoft.VisualBasic::11803501733baeefb8d82d65b2a5a4f8, Data_science\Visualization\Visualization\Embedding\UMAPGraph.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 46 (80.70%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 72
+    '    Code Lines: 57 (79.17%)
+    ' Comment Lines: 3 (4.17%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (19.30%)
-    '     File Size: 1.79 KB
+    '   Blank Lines: 12 (16.67%)
+    '     File Size: 2.74 KB
 
 
-    ' Module UmapGraph
+    ' Module UMAPGraph
     ' 
-    '     Function: CreateGraph
+    '     Function: BuildGraph, (+2 Overloads) CreateGraph
     ' 
     ' /********************************************************************************/
 

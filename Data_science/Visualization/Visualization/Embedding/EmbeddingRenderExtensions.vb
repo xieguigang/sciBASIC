@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db24f8289796eb866d8df50d3e7eb810, Data_science\Visualization\Visualization\Embedding\EmbeddingRenderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9e53ed8beaab66db07dc60aedd34ad29, Data_science\Visualization\Visualization\Embedding\EmbeddingRenderExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 102 (74.45%)
-    ' Comment Lines: 26 (18.98%)
-    '    - Xml Docs: 96.15%
+    '   Total Lines: 147
+    '    Code Lines: 102 (69.39%)
+    ' Comment Lines: 36 (24.49%)
+    '    - Xml Docs: 97.22%
     ' 
-    '   Blank Lines: 9 (6.57%)
-    '     File Size: 5.76 KB
+    '   Blank Lines: 9 (6.12%)
+    '     File Size: 6.08 KB
 
 
     ' Module EmbeddingRenderExtensions

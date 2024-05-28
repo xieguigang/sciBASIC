@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f50b4f91e39402db9933581b52869127, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::041a8a99fe50079869dfe67d5d2b8bb1, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 108 (50.70%)
-    ' Comment Lines: 85 (39.91%)
-    '    - Xml Docs: 48.24%
+    '   Total Lines: 231
+    '    Code Lines: 117 (50.65%)
+    ' Comment Lines: 93 (40.26%)
+    '    - Xml Docs: 51.61%
     ' 
-    '   Blank Lines: 20 (9.39%)
-    '     File Size: 7.93 KB
+    '   Blank Lines: 21 (9.09%)
+    '     File Size: 8.53 KB
 
 
     '     Class Node

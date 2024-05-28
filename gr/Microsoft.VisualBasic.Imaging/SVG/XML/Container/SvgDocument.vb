@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::878092b4eeac59720b758ef4ab7e5626, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDocument.vb"
+﻿#Region "Microsoft.VisualBasic::228cd142bb428a74aac2717a8ba1def2, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDocument.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 104 (61.90%)
-    ' Comment Lines: 46 (27.38%)
+    '   Total Lines: 178
+    '    Code Lines: 111 (62.36%)
+    ' Comment Lines: 46 (25.84%)
     '    - Xml Docs: 82.61%
     ' 
-    '   Blank Lines: 18 (10.71%)
-    '     File Size: 6.25 KB
+    '   Blank Lines: 21 (11.80%)
+    '     File Size: 6.64 KB
 
 
     '     Class SvgDocument
@@ -49,10 +49,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Background, Create, GetSVGXml, (+2 Overloads) SaveAsXml, SetStyle
-    '                   Size
+    '         Function: Background, Create, GetSVGXml, Parse, Save
+    '                   (+2 Overloads) SaveAsXml, SetStyle, Size
     ' 
-    '         Sub: Save, SetCommentText
+    '         Sub: SetCommentText
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1478aab31a0e1c0a40d4aedeeb435e8c, mime\text%html\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::bd9eda487d04cb49669f88a6ec5004bf, mime\text%html\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 102 (75.00%)
-    ' Comment Lines: 15 (11.03%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 184
+    '    Code Lines: 110 (59.78%)
+    ' Comment Lines: 53 (28.80%)
+    '    - Xml Docs: 98.11%
     ' 
-    '   Blank Lines: 19 (13.97%)
-    '     File Size: 4.86 KB
+    '   Blank Lines: 21 (11.41%)
+    '     File Size: 6.43 KB
 
 
     '     Class Stroke
     ' 
     '         Properties: CSSValue, dash, fill, GDIObject, width
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: GetDashStyle, ParserImpl, ToString, TryParse
     ' 
     ' 
