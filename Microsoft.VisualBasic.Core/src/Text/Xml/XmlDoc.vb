@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::4ae207281fa3fb4e0208111d9c26bab6, Microsoft.VisualBasic.Core\src\Text\Xml\XmlDoc.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 111
-    '    Code Lines: 62 (55.86%)
-    ' Comment Lines: 32 (28.83%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 17 (15.32%)
-    '     File Size: 4.22 KB
+' Summaries:
 
 
-    '     Class XmlDoc
-    ' 
-    '         Properties: encoding, rootNode, standalone, version, xmlns
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: __rootString, CreateObject, FromObject, FromXmlFile, Save
-    '                   SaveTo, (+2 Overloads) ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 111
+'    Code Lines: 62 (55.86%)
+' Comment Lines: 32 (28.83%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 17 (15.32%)
+'     File Size: 4.22 KB
+
+
+'     Class XmlDoc
+' 
+'         Properties: encoding, rootNode, standalone, version, xmlns
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: __rootString, CreateObject, FromObject, FromXmlFile, Save
+'                   SaveTo, (+2 Overloads) ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel
@@ -159,11 +160,22 @@ Namespace Text.Xml
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         Public Function SaveTo(Path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            Return Me.ToString.SaveTo(Path, encoding)
+            Using file As Stream = Path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Return Save(file, encoding)
+            End Using
         End Function
 
         Public Function Save(Path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return SaveTo(Path, encoding.CodePage)
+        End Function
+
+        Public Function Save(s As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Using wr As New StreamWriter(s, encoding)
+                Call wr.WriteLine(Me.ToString)
+                Call wr.Flush()
+            End Using
+
+            Return True
         End Function
     End Class
 End Namespace

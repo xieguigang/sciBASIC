@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::f1ac3c193e69bd4687c3dfbe2d1a4930, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 211
-    '    Code Lines: 114 (54.03%)
-    ' Comment Lines: 62 (29.38%)
-    '    - Xml Docs: 30.65%
-    ' 
-    '   Blank Lines: 35 (16.59%)
-    '     File Size: 8.45 KB
+' Summaries:
 
 
-    '     Class InteractiveDevice
-    ' 
-    '         Properties: PromptText
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ReadKey, ReadLine, (+2 Overloads) Save
-    ' 
-    '         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 211
+'    Code Lines: 114 (54.03%)
+' Comment Lines: 62 (29.38%)
+'    - Xml Docs: 30.65%
+' 
+'   Blank Lines: 35 (16.59%)
+'     File Size: 8.45 KB
+
+
+'     Class InteractiveDevice
+' 
+'         Properties: PromptText
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ReadKey, ReadLine, (+2 Overloads) Save
+' 
+'         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
@@ -262,6 +263,10 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         ''' <remarks></remarks>
         Public Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return _cmdsHistory.Save(Path, encoding)
+        End Function
+
+        Public Function Save(file As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return _cmdsHistory.Save(file, encoding)
         End Function
 
         Public Function Save(Path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save

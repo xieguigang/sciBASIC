@@ -55,6 +55,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -135,7 +136,7 @@ Namespace SVG
             Dim sz As Size = size.SizeParser
             Dim svg As SvgDocument = g.SVG(size:=size)
 
-            Call svg.Save(out)
+            Call svg.Save(out, encoding:=Encoding.UTF8)
             Call out.Flush()
 
             Return True

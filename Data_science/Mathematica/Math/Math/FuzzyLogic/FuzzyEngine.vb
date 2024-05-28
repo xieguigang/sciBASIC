@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::c84e53207506bf084cf9d0566a105f87, Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 214
-    '    Code Lines: 131 (61.21%)
-    ' Comment Lines: 36 (16.82%)
-    '    - Xml Docs: 52.78%
-    ' 
-    '   Blank Lines: 47 (21.96%)
-    '     File Size: 7.63 KB
+' Summaries:
 
 
-    '     Class FuzzyEngine
-    ' 
-    '         Properties: Consequent, FuzzyRuleCollection, LinguisticVariableCollection
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Defuzzify, Evaluate, GetConsequent, Parse, (+2 Overloads) Save
-    '                   ToModel
-    ' 
-    '         Sub: (+2 Overloads) Add
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 214
+'    Code Lines: 131 (61.21%)
+' Comment Lines: 36 (16.82%)
+'    - Xml Docs: 52.78%
+' 
+'   Blank Lines: 47 (21.96%)
+'     File Size: 7.63 KB
+
+
+'     Class FuzzyEngine
+' 
+'         Properties: Consequent, FuzzyRuleCollection, LinguisticVariableCollection
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Defuzzify, Evaluate, GetConsequent, Parse, (+2 Overloads) Save
+'                   ToModel
+' 
+'         Sub: (+2 Overloads) Add
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,9 +79,8 @@
 
 #End Region
 
-Imports System.Collections.Generic
+Imports System.IO
 Imports System.Text
-Imports System.Xml
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -263,13 +262,23 @@ Namespace Logical.FuzzyLogic
         End Function
 
         Public Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            Return ToModel.GetXml.SaveTo(Path, encoding)
+            Using file As Stream = Path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Return Save(file, encoding)
+            End Using
         End Function
 
         Public Function Save(Path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.CodePage)
         End Function
 
+        Public Function Save(s As Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Using wr As New StreamWriter(s, encoding)
+                Call wr.WriteLine(ToModel.GetXml)
+                Call wr.Flush()
+            End Using
+
+            Return True
+        End Function
 #End Region
     End Class
 End Namespace

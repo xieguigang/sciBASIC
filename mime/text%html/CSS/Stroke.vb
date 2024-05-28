@@ -77,8 +77,20 @@ Namespace CSS
         Public Const ScatterLineStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
         Public Const WhiteLineStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
+        ''' <summary>
+        ''' the line fill color brush description
+        ''' </summary>
+        ''' <returns></returns>
         Public Property fill As String
+        ''' <summary>
+        ''' the line drawing width
+        ''' </summary>
+        ''' <returns></returns>
         Public Property width As Single
+        ''' <summary>
+        ''' the line drawing style
+        ''' </summary>
+        ''' <returns></returns>
         Public Property dash As DashStyle
 
         Public ReadOnly Property GDIObject As Pen
@@ -100,16 +112,40 @@ Namespace CSS
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' create a default style css stroke object with 
+        ''' specific line width is given.
+        ''' </summary>
+        ''' <param name="width"></param>
         Sub New(width!)
             Me.width = width
             fill = "black"
             dash = DashStyle.Solid
         End Sub
 
+        Sub New(width As Double)
+            Call Me.New(CSng(width))
+        End Sub
+
+        ''' <summary>
+        ''' create css stroke object based on a specific given 
+        ''' gdi+ object
+        ''' </summary>
+        ''' <param name="style"></param>
         Sub New(style As Pen)
             width = style.Width
             fill = style.Color.ToHtmlColor
             dash = style.DashStyle
+        End Sub
+
+        ''' <summary>
+        ''' do value copy
+        ''' </summary>
+        ''' <param name="clone"></param>
+        Sub New(clone As Stroke)
+            Me.width = clone.width
+            Me.fill = clone.fill
+            Me.dash = clone.dash
         End Sub
 
         ''' <summary>
@@ -126,6 +162,13 @@ Namespace CSS
             Enums(Of DashStyle) _
             .ToDictionary(Function(t) LCase(t.ToString))
 
+        ''' <summary>
+        ''' parse the <see cref="DashStyle"/> enum value from a given term string
+        ''' </summary>
+        ''' <param name="css">
+        ''' should be one of the member name in enum value: <see cref="DashStyle"/>
+        ''' </param>
+        ''' <returns></returns>
         Public Shared Function GetDashStyle(css$) As DashStyle
             If Not css.StringEmpty AndAlso __dashStyles.ContainsKey(css) Then
                 Return __dashStyles(css)
@@ -147,6 +190,11 @@ Namespace CSS
             End If
         End Function
 
+        ''' <summary>
+        ''' parse from a given css string
+        ''' </summary>
+        ''' <param name="css"></param>
+        ''' <returns></returns>
         Private Shared Function ParserImpl(css As String) As Stroke
             Dim t As Dictionary(Of String, String) = css _
                 .Trim(";"c) _

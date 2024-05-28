@@ -54,8 +54,16 @@
 
 Namespace CSS
 
+    ''' <summary>
+    ''' an abstract object model for get <see cref="CSSValue"/> 
+    ''' string from current object.
+    ''' </summary>
     Public MustInherit Class ICSSValue
 
+        ''' <summary>
+        ''' the css string generator based on current object model
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride ReadOnly Property CSSValue As String
 
         Public Overrides Function ToString() As String

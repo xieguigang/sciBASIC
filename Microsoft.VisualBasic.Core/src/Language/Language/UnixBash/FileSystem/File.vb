@@ -90,6 +90,9 @@ Namespace Language.UnixBash.FileSystem
             Dim handle As FileHandle = My.File.GetHandle(path)
             Return file.Save(handle.FileName, handle.encoding)
         End Operator
+
+        Public MustOverride Function Save(file As IO.Stream, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+
     End Class
 
     ''' <summary>

@@ -55,6 +55,9 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+
+        Call group_test.RunGroup()
+
         Call enumeratorTestProgram.Mai2n()
         Call terminalTest.Main1()
 

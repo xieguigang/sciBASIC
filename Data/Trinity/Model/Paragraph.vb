@@ -70,6 +70,11 @@ Namespace Model
             Return sentences.JoinBy(". ")
         End Function
 
+        ''' <summary>
+        ''' split a given text into multiple paragraph text data
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function SplitParagraph(text As String) As IEnumerable(Of String)
             For Each block As String() In text.LineTokens.Split(Function(str) str.Trim = "")
                 Dim trim As String() = block _
