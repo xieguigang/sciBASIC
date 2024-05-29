@@ -1,70 +1,71 @@
-﻿#Region "Microsoft.VisualBasic::405bee02ccfc2064ac4ca7ef10a96f08, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::279d75cfac3f161fe55383245a390c45, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 458
-'    Code Lines: 355 (77.51%)
-' Comment Lines: 17 (3.71%)
-'    - Xml Docs: 35.29%
-' 
-'   Blank Lines: 86 (18.78%)
-'     File Size: 21.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ProgressBar
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: AsProgress, DefaultConsoleWrite, NewIndentation
-' 
-'         Sub: CondensedProgressBar, DisplayProgress, Dispose, DrawBottomHalfPrefix, DrawChildren
-'              DrawTopHalfPrefix, EnsureMainProgressBarVisible, Grow, GrowDrawingAreaBasedOnChildren, OnTimerTick
-'              ProgressBarBottomHalf, ProgressBarTopHalf, ResetToBottom, UpdateProgress, WriteConsoleLine
-'              WriteErrorLine, WriteLine
-'         Structure Indentation
-' 
-'             Properties: Glyph
-' 
-'             Constructor: (+1 Overloads) Sub New
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 455
+    '    Code Lines: 352 (77.36%)
+    ' Comment Lines: 17 (3.74%)
+    '    - Xml Docs: 35.29%
+    ' 
+    '   Blank Lines: 86 (18.90%)
+    '     File Size: 21.15 KB
+
+
+    '     Class ProgressBar
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: AsProgress, DefaultConsoleWrite, NewIndentation
+    ' 
+    '         Sub: CondensedProgressBar, DisplayProgress, Dispose, DrawBottomHalfPrefix, DrawChildren
+    '              DrawTopHalfPrefix, EnsureMainProgressBarVisible, Grow, GrowDrawingAreaBasedOnChildren, OnTimerTick
+    '              ProgressBarBottomHalf, ProgressBarTopHalf, ResetToBottom, UpdateProgress, WriteConsoleLine
+    '              WriteErrorLine, WriteLine
+    '         Structure Indentation
+    ' 
+    '             Properties: Glyph
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
+
 Imports System.Collections.Concurrent
 Imports System.Runtime.InteropServices
 Imports System.Text

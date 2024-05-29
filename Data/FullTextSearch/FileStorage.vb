@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a975316b32ff79cc7d8ed43585d81eaf, Data\FullTextSearch\FileStorage.vb"
+﻿#Region "Microsoft.VisualBasic::ee31c41ab14f42512a21e8eba6dfe2be, Data\FullTextSearch\FileStorage.vb"
 
     ' Author:
     ' 
@@ -181,4 +181,3 @@ Public Class FileStorage : Implements Enumeration(Of Long), IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

@@ -358,11 +358,11 @@ G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame.Extensions\DataFramework.Exte
 G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj,DataFrame.Extensions\Templates\TemplateAttribute.vb,24,7,3,14,1,2,1,1,0,857,857 B
 G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj,DataFrame.Extensions\Templates\TemplateHelper.vb,63,7,10,46,1,0,0,2,0,2361,2.36 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj,<project>,1579,417,220,942,17,22,28,42,0,71455,71.45 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\FileStorage.vb,126,15,24,87,1,0,5,3,0,4438,4.44 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\FTSEngine.vb,77,17,14,46,1,0,5,1,0,2678,2.68 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\InvertedIndex.vb,153,15,29,109,1,2,3,5,0,4373,4.37 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\test\Program.vb,41,3,11,27,1,0,3,0,0,1190,1.19 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,<project>,397,50,78,269,4,2,16,9,0,12679,12.68 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\FileStorage.vb,126,15,24,87,1,0,5,3,0,4436,4.44 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\FTSEngine.vb,77,17,14,46,1,0,5,1,0,2676,2.68 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\InvertedIndex.vb,153,15,29,109,1,2,3,5,0,4371,4.37 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,FullTextSearch\test\Program.vb,41,3,11,27,1,0,3,0,0,1188,1.19 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\FullTextSearch.vbproj,<project>,397,50,78,269,4,2,16,9,0,12671,12.67 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\test\test.vbproj,test\Program.vb,41,3,11,27,1,0,3,0,0,1188,1.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data\FullTextSearch\test\test.vbproj,<project>,41,3,11,27,1,0,3,0,0,1188,1.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data\GraphQuery\GraphQuery.NET5.vbproj,GraphQuery\Engine.vb,133,5,25,103,1,0,2,7,0,4522,4.52 KB
@@ -2107,7 +2107,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.N
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\Extensions.vb,158,28,24,106,2,0,0,10,0,6720,6.72 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\GraphEmbedding.vb,79,12,9,58,1,0,0,4,0,3419,3.42 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\Kosaraju.vb,131,27,23,81,3,0,3,3,0,4713,4.71 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\PAGA.vb,98,14,15,69,1,0,0,2,0,3965,3.96 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\PAGA.vb,97,14,14,69,1,0,0,2,0,3963,3.96 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\Statistics.vb,131,20,16,95,1,0,0,6,0,6474,6.47 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\Model\AdjacencySet.vb,97,22,16,59,1,2,2,5,2,3677,3.68 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\Analysis\Model\DirectedVertex.vb,92,30,14,48,1,1,4,4,0,3049,3.05 KB
@@ -2150,7 +2150,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.N
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\TreeAPI\Operations.vb,120,49,20,51,1,0,1,6,0,4970,4.97 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\TreeAPI\TREE.vb,46,0,12,34,4,1,3,2,0,1276,1.28 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\TreeAPI\TreeGraph.vb,50,0,11,39,1,0,1,1,0,2360,2.36 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,<project>,6902,1786,1096,4020,85,95,115,244,31,249784,249.78 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,<project>,6901,1786,1095,4020,85,95,115,244,31,249782,249.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj,Network.IO.Extensions\Analysis.vb,102,32,11,59,1,0,0,4,0,4242,4.24 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj,Network.IO.Extensions\CorrelationGraph.vb,96,12,13,71,1,0,0,1,0,3449,3.45 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Network.IO.Extensions\network_io-netcore5.vbproj,Network.IO.Extensions\Extensions.vb,131,29,12,90,1,0,0,6,0,4797,4.80 KB
@@ -2476,12 +2476,12 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm.vb,424,144,54,226,3,0,12,6,0,20929,20.93 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ChildProgressBar.vb,74,0,15,59,1,1,7,1,0,2764,2.76 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ConsoleOutLine.vb,11,0,1,10,1,2,1,0,0,396,396 B
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb,51,0,7,44,1,2,4,0,0,1545,1.54 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb,50,0,7,43,1,2,4,0,0,1724,1.72 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IndeterminateChildProgressBar.vb,46,0,6,40,1,0,4,0,0,1720,1.72 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IndeterminateProgressBar.vb,45,0,9,36,1,0,4,0,0,1575,1.57 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\IProgressBar.vb,30,5,8,17,1,5,4,2,0,1269,1.27 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\Progress.vb,37,0,6,31,1,0,3,0,0,1311,1.31 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb,458,17,86,355,3,1,20,3,0,21245,21.25 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb,455,17,86,352,3,1,20,3,0,21154,21.15 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarBase.vb,176,3,32,141,1,11,9,3,0,6490,6.49 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarHeight.vb,6,0,0,6,1,0,0,0,0,169,169 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBarOptions.vb,114,52,20,42,1,17,0,0,0,4249,4.25 KB
@@ -2518,7 +2518,10 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\TestCases\ZeroMaxTicksExample.vb,19,0,1,18,1,0,0,1,0,687,687 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\IndexedManual.vb,95,18,18,59,1,0,3,1,0,3796,3.80 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\ManualPages.vb,106,22,19,65,1,0,5,2,0,4327,4.33 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\UnixManPage.vb,163,46,19,98,2,23,0,3,0,6082,6.08 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManIndex.vb,20,3,5,12,1,5,0,1,0,591,591 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManParser.vb,12,3,2,7,1,0,0,1,0,333,333 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManWriter.vb,80,0,12,68,1,0,0,1,0,3142,3.14 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\UnixManPage.vb,83,43,8,32,1,18,0,3,0,2963,2.96 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\xConsole\Comparer.vb,108,34,18,56,1,0,3,1,0,3405,3.40 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\xConsole\CoolWriteSettings.vb,24,9,6,9,1,3,1,0,0,663,663 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Terminal\xConsole\Helpers.vb,76,6,16,54,3,2,0,7,0,2648,2.65 KB
@@ -3212,7 +3215,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\Content_Types.vb,40,4,7,29,2,5,0,2,0,1244,1.24 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\rels.vb,44,0,8,36,2,5,0,1,0,1506,1.51 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\Serialization\XmlComment.vb,54,0,12,42,2,1,1,3,0,1825,1.82 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,136686,45341,16991,74354,1299,1365,1887,4382,429,5460190,5.46 MB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,136714,45344,16999,74371,1301,1365,1887,4385,429,5461225,5.46 MB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\IProgressBarExample.vb,8,0,1,7,1,0,0,1,0,230,230 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Program.vb,92,0,10,82,1,0,2,0,0,3422,3.42 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Examples\AlternateFinishedColorExample.vb,30,1,4,25,1,0,0,0,0,1157,1.16 KB
@@ -3246,7 +3249,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationSe
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\Program.vb,17,0,5,12,1,0,1,0,0,361,361 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\devTest.vb,31,0,9,22,1,0,2,0,0,859,859 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\enumeratorTest.vb,28,0,7,21,2,0,1,1,0,691,691 B
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\group_test.vb,27,0,9,18,1,0,1,0,0,881,881 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\group_test.vb,27,0,9,18,1,0,1,0,0,879,879 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\htmlParserTest.vb,30,0,12,18,1,0,2,0,0,742,742 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\indexTest.vb,54,0,14,40,1,0,2,0,0,1628,1.63 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\lapplyTest.vb,93,0,11,82,1,0,4,0,0,5466,5.47 KB
@@ -3265,7 +3268,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\TypeTest.vb,100,0,28,72,2,0,4,1,0,2893,2.89 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\wgetTest.vb,9,0,2,7,1,0,1,0,0,309,309 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\wmfTest.vb,16,0,3,13,1,0,1,0,0,659,659 B
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,<project>,1130,16,231,883,28,5,39,8,0,47099,47.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,<project>,1130,16,231,883,28,5,39,8,0,47097,47.10 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\JSONTextParser.vb,125,23,15,87,1,0,0,6,0,4692,4.69 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\BSON\BSON.vb,79,12,13,54,1,0,2,5,0,2477,2.48 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\BSON\BSONValue.vb,301,1,41,259,1,9,9,3,2,11014,11.01 KB
@@ -3843,4 +3846,4 @@ G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\B
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,<project>,1225,208,179,838,25,55,8,27,0,46125,46.12 KB
-../,<root>,1021738,240128,144426,637184,10280,14410,16482,25604,1394,40279620,40.28 MB
+../,<root>,1021792,240134,144440,637218,10284,14410,16482,25610,1394,40281666,40.28 MB

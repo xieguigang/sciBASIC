@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ed443b258c85fc96be0f52a8fc2e51c, Data\FullTextSearch\FTSEngine.vb"
+﻿#Region "Microsoft.VisualBasic::35b16408803da924c66a084e5cd37824, Data\FullTextSearch\FTSEngine.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Public Class FTSEngine : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

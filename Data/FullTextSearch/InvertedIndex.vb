@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdc389cf8ad4e83d22202e178ff31eb6, Data\FullTextSearch\InvertedIndex.vb"
+﻿#Region "Microsoft.VisualBasic::403988e5bf8bbabafb9d4f03d3e3d9b7, Data\FullTextSearch\InvertedIndex.vb"
 
     ' Author:
     ' 
@@ -210,4 +210,3 @@ Public Class InvertedIndex : Implements Enumeration(Of NamedCollection(Of Intege
         Next
     End Function
 End Class
-

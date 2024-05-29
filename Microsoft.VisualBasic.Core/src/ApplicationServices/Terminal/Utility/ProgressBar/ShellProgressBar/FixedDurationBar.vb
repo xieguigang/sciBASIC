@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::7d245fc1d2c6bf5b23d753b87d1f16db, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb"
+﻿#Region "Microsoft.VisualBasic::00a63c2fd53699af61df44d4634d2e02, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 51
-'    Code Lines: 44 (86.27%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 7 (13.73%)
-'     File Size: 1.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' 	Class FixedDurationBar
-' 
-' 	    Properties: CompletedHandle, IsCompleted
-' 
-' 	    Constructor: (+2 Overloads) Sub New
-' 	    Sub: OnDone, OnTimerTick
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 43 (86.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 7 (14.00%)
+    '     File Size: 1.72 KB
+
+
+    '     Class FixedDurationBar
+    ' 
+    '         Properties: CompletedHandle, IsCompleted
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: OnDone, OnTimerTick
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

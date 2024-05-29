@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc9540753c4841dced6c04d6c686af97, Microsoft.VisualBasic.Core\test\test\group_test.vb"
+﻿#Region "Microsoft.VisualBasic::6ff2706777195dec54f86dbec9b542d1, Microsoft.VisualBasic.Core\test\test\group_test.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (33.33%)
-    '     File Size: 881 B
+    '     File Size: 879 B
 
 
     ' Module group_test
@@ -78,4 +78,3 @@ Public Module group_test
     End Sub
 
 End Module
-
