@@ -1,79 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::405bee02ccfc2064ac4ca7ef10a96f08, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 458
-    '    Code Lines: 355 (77.51%)
-    ' Comment Lines: 17 (3.71%)
-    '    - Xml Docs: 35.29%
-    ' 
-    '   Blank Lines: 86 (18.78%)
-    '     File Size: 21.25 KB
+' Summaries:
 
 
-    '     Class ProgressBar
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: AsProgress, DefaultConsoleWrite, NewIndentation
-    ' 
-    '         Sub: CondensedProgressBar, DisplayProgress, Dispose, DrawBottomHalfPrefix, DrawChildren
-    '              DrawTopHalfPrefix, EnsureMainProgressBarVisible, Grow, GrowDrawingAreaBasedOnChildren, OnTimerTick
-    '              ProgressBarBottomHalf, ProgressBarTopHalf, ResetToBottom, UpdateProgress, WriteConsoleLine
-    '              WriteErrorLine, WriteLine
-    '         Structure Indentation
-    ' 
-    '             Properties: Glyph
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 458
+'    Code Lines: 355 (77.51%)
+' Comment Lines: 17 (3.71%)
+'    - Xml Docs: 35.29%
+' 
+'   Blank Lines: 86 (18.78%)
+'     File Size: 21.25 KB
+
+
+'     Class ProgressBar
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: AsProgress, DefaultConsoleWrite, NewIndentation
+' 
+'         Sub: CondensedProgressBar, DisplayProgress, Dispose, DrawBottomHalfPrefix, DrawChildren
+'              DrawTopHalfPrefix, EnsureMainProgressBarVisible, Grow, GrowDrawingAreaBasedOnChildren, OnTimerTick
+'              ProgressBarBottomHalf, ProgressBarTopHalf, ResetToBottom, UpdateProgress, WriteConsoleLine
+'              WriteErrorLine, WriteLine
+'         Structure Indentation
+' 
+'             Properties: Glyph
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-Imports System
 Imports System.Collections.Concurrent
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 
@@ -165,9 +161,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 
         Private Sub EnsureMainProgressBarVisible(Optional extraBars As Integer = 0)
             Dim pbarHeight = If(Options.DenseProgressBar, 1, 2)
-            Dim neededPadding = stdNum.Min(_originalWindowHeight - pbarHeight, (1 + extraBars) * pbarHeight)
+            Dim neededPadding = std.Min(_originalWindowHeight - pbarHeight, (1 + extraBars) * pbarHeight)
             Dim difference = _originalWindowHeight - _originalCursorTop
-            Dim write = If(difference <= neededPadding, stdNum.Max(0, stdNum.Max(neededPadding, difference)), 0)
+            Dim write = If(difference <= neededPadding, std.Max(0, std.Max(neededPadding, difference)), 0)
 
             Dim written = 0
             While written < write
@@ -257,7 +253,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
             End If
 
             Dim formatted = String.Format(format, truncatedMessage, durationString)
-            Dim m = formatted & New String(" "c, stdNum.Max(0, maxCharacterWidth - formatted.Length))
+            Dim m = formatted & New String(" "c, std.Max(0, maxCharacterWidth - formatted.Length))
             Console.Write(m)
         End Sub
 
@@ -511,7 +507,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
             Try
                 Dim pbarHeight = If(Options.DenseProgressBar, 1, 2)
                 Dim openDescendantsPadding = _visibleDescendants * pbarHeight
-                Dim newCursorTop = stdNum.Min(_originalWindowHeight, _originalCursorTop + pbarHeight + openDescendantsPadding)
+                Dim newCursorTop = std.Min(_originalWindowHeight, _originalCursorTop + pbarHeight + openDescendantsPadding)
                 Console.CursorVisible = True
                 Console.SetCursorPosition(0, newCursorTop)
             Catch
