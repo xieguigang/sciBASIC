@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace PCA
@@ -103,8 +104,12 @@ Namespace PCA
                     }
                     Dim labelColor As Brush = CSSFont.TryParse(labelFontStyle).color.GetBrush
                     Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
 
-                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor, CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi), tickColor, htmlLabel:=False, tickFormat:="F2")
+                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor,
+                                 css.GetFont(CSSFont.TryParse(tickFontStyle)), tickColor,
+                                 htmlLabel:=False,
+                                 tickFormat:="F2")
                 End Sub
 
             Return g.GraphicsPlots(

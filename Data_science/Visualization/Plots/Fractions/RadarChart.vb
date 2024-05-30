@@ -71,8 +71,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Fractions
 
@@ -186,7 +187,6 @@ Namespace Fractions
                                        .ToArray
             Dim dDegree# = 360 / directions.Length
             Dim axisPen As Pen = Stroke.TryParse(axisStrokeStyle).GDIObject
-            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject(ppi)
             Dim regionFillColor As New SolidBrush(regionFill.TranslateColor)
 
             If axisRange Is Nothing Then
@@ -201,7 +201,9 @@ Namespace Fractions
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim plotRect = region.PlotRegion
                     Dim center As PointF = plotRect.Centre
-                    Dim radius As DoubleRange = {0, stdNum.Min(plotRect.Width, plotRect.Height) / 2}
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim labelFont As Font = css.GetFont(CSSFont.TryParse(labelFontCSS))
+                    Dim radius As DoubleRange = {0, std.Min(plotRect.Width, plotRect.Height) / 2}
                     Dim serial As NamedValue(Of FractionData())
                     Dim r#
                     Dim alpha! = -90
