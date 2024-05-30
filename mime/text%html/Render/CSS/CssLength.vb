@@ -77,35 +77,6 @@ Namespace Render.CSS
     ''' http://www.w3.org/TR/CSS21/syndata.html#length-units
     ''' </remarks>
     Public Class CssLength
-#Region "Enum"
-
-        ''' <summary>
-        ''' Represents the possible units of the CSS lengths
-        ''' </summary>
-        ''' <remarks>
-        ''' http://www.w3.org/TR/CSS21/syndata.html#length-units
-        ''' </remarks>
-        Public Enum CssUnit
-            None
-
-            Ems
-
-            Pixels
-
-            Ex
-
-            Inches
-
-            Centimeters
-
-            Milimeters
-
-            Points
-
-            Picas
-        End Enum
-
-#End Region
 
 #Region "Fields"
         Private _number As Single

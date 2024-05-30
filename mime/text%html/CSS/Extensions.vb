@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace CSS
 
+    <HideModuleName>
     Public Module Extensions
 
         ReadOnly tags As Dictionary(Of String, HtmlTags) =

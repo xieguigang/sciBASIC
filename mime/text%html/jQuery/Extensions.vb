@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.MIME.Html.XmlMeta
 
 Namespace HTML.jQuery
 
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
