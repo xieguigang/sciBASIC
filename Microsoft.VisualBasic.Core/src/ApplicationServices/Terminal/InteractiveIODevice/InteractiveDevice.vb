@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::f1ac3c193e69bd4687c3dfbe2d1a4930, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
+﻿#Region "Microsoft.VisualBasic::b73335fbe4c50f645bf3d4d90f43db4c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\InteractiveDevice.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 211
-'    Code Lines: 114 (54.03%)
-' Comment Lines: 62 (29.38%)
-'    - Xml Docs: 30.65%
-' 
-'   Blank Lines: 35 (16.59%)
-'     File Size: 8.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class InteractiveDevice
-' 
-'         Properties: PromptText
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ReadKey, ReadLine, (+2 Overloads) Save
-' 
-'         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 118 (54.63%)
+    ' Comment Lines: 62 (28.70%)
+    '    - Xml Docs: 30.65%
+    ' 
+    '   Blank Lines: 36 (16.67%)
+    '     File Size: 8.66 KB
+
+
+    '     Class InteractiveDevice
+    ' 
+    '         Properties: PromptText
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ReadKey, ReadLine, (+3 Overloads) Save
+    ' 
+    '         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

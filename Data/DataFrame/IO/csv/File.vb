@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57e5b5845538c028367eb9b54906079a, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::dda03efa026f7799f2902814c942c697, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 966
-    '    Code Lines: 582 (60.25%)
-    ' Comment Lines: 259 (26.81%)
+    '   Total Lines: 970
+    '    Code Lines: 585 (60.31%)
+    ' Comment Lines: 259 (26.70%)
     '    - Xml Docs: 96.91%
     ' 
-    '   Blank Lines: 125 (12.94%)
-    '     File Size: 39.03 KB
+    '   Blank Lines: 126 (12.99%)
+    '     File Size: 39.22 KB
 
 
     '     Class File
@@ -52,7 +52,7 @@
     ' 
     '         Function: __createTableVector, AppendLine, AppendLines, AppendRange, FindAll
     '                   FindAtColumn, Generate, GenerateDocument, GetAllStringTokens, GetByLine
-    '                   InsertEmptyColumnBefore, Project, Remove, (+2 Overloads) Save, (+2 Overloads) ToArray
+    '                   InsertEmptyColumnBefore, Project, Remove, (+3 Overloads) Save, (+2 Overloads) ToArray
     '                   TokenCounts, ToString, Transpose, Trim
     ' 
     '         Sub: __setColumn, Append, (+2 Overloads) AppendLine, DeleteCell, RemoveRange

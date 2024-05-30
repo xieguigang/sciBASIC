@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9cd9731a2612f80e192606cbe673d3, Data_science\Graph\MST\Kruskal.vb"
+﻿#Region "Microsoft.VisualBasic::c9f0a238f5b0db9ae13dec5f0fac5332, Data_science\Graph\MST\Kruskal.vb"
 
     ' Author:
     ' 
@@ -112,4 +112,3 @@ Namespace MinimumSpanningTree
         End Function
     End Class
 End Namespace
-

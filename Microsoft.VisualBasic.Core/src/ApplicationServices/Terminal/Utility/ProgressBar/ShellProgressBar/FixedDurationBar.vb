@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d245fc1d2c6bf5b23d753b87d1f16db, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb"
+﻿#Region "Microsoft.VisualBasic::00a63c2fd53699af61df44d4634d2e02, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\FixedDurationBar.vb"
 
     ' Author:
     ' 
@@ -34,61 +34,60 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 44 (86.27%)
+    '   Total Lines: 50
+    '    Code Lines: 43 (86.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (13.73%)
-    '     File Size: 1.54 KB
+    '   Blank Lines: 7 (14.00%)
+    '     File Size: 1.72 KB
 
 
-    ' 	Class FixedDurationBar
+    '     Class FixedDurationBar
     ' 
-    ' 	    Properties: CompletedHandle, IsCompleted
+    '         Properties: CompletedHandle, IsCompleted
     ' 
-    ' 	    Constructor: (+2 Overloads) Sub New
-    ' 	    Sub: OnDone, OnTimerTick
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: OnDone, OnTimerTick
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System
 Imports System.Threading
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
-	Public Class FixedDurationBar
-		Inherits ProgressBar
-		Private _IsCompleted As Boolean
+    Public Class FixedDurationBar
+        Inherits ProgressBar
+        Private _IsCompleted As Boolean
 
-		Public Property IsCompleted As Boolean
-			Get
-				Return _IsCompleted
-			End Get
-			Private Set(value As Boolean)
-				_IsCompleted = value
-			End Set
-		End Property
+        Public Property IsCompleted As Boolean
+            Get
+                Return _IsCompleted
+            End Get
+            Private Set(value As Boolean)
+                _IsCompleted = value
+            End Set
+        End Property
 
-		Private ReadOnly _completedHandle As ManualResetEvent = New ManualResetEvent(False)
-		Public ReadOnly Property CompletedHandle As WaitHandle
-			Get
-				Return _completedHandle
-			End Get
-		End Property
+        Private ReadOnly _completedHandle As ManualResetEvent = New ManualResetEvent(False)
+        Public ReadOnly Property CompletedHandle As WaitHandle
+            Get
+                Return _completedHandle
+            End Get
+        End Property
 
-		Public Sub New(duration As TimeSpan, message As String, color As ConsoleColor)
-			Me.New(duration, message, New ProgressBarOptions With {
-				.ForegroundColor = color
-			})
-		End Sub
+        Public Sub New(duration As TimeSpan, message As String, color As ConsoleColor)
+            Me.New(duration, message, New ProgressBarOptions With {
+                .ForegroundColor = color
+            })
+        End Sub
 
-		Public Sub New(duration As TimeSpan, message As String, Optional options As ProgressBarOptions = Nothing)
-			MyBase.New(CInt(stdNum.Ceiling(duration.TotalSeconds)) * 2, message, options)
-			If Not Me.Options.DisplayTimeInRealTime Then
+        Public Sub New(duration As TimeSpan, message As String, Optional options As ProgressBarOptions = Nothing)
+            MyBase.New(CInt(std.Ceiling(duration.TotalSeconds)) * 2, message, options)
+            If Not Me.Options.DisplayTimeInRealTime Then
 				Throw New ArgumentException($"{NameOf(ProgressBarOptions)}.{NameOf(ProgressBarOptions.DisplayTimeInRealTime)} has to be true for {NameOf(FixedDurationBar)}", NameOf(options))
 			End If
 		End Sub

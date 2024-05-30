@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24fa1012df8b5880c58687a3a45ff1d7, gr\Microsoft.VisualBasic.Imaging\SVG\SVGWriter.vb"
+﻿#Region "Microsoft.VisualBasic::549bdede25c67d4ab45c411500c406e9, gr\Microsoft.VisualBasic.Imaging\SVG\SVGWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 53 (58.89%)
-    ' Comment Lines: 25 (27.78%)
+    '   Total Lines: 91
+    '    Code Lines: 54 (59.34%)
+    ' Comment Lines: 25 (27.47%)
     '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 12 (13.33%)
-    '     File Size: 3.44 KB
+    '   Blank Lines: 12 (13.19%)
+    '     File Size: 3.48 KB
 
 
     '     Module SVGWriter

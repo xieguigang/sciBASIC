@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ec53960b7e88abe4640c20f6994573, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgSwitch.vb"
+﻿#Region "Microsoft.VisualBasic::efa6f09c0496565601a66da72f3ba44d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManIndex.vb"
 
     ' Author:
     ' 
@@ -34,39 +34,42 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 13 (72.22%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 20
+    '    Code Lines: 12 (60.00%)
+    ' Comment Lines: 3 (15.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (27.78%)
-    '     File Size: 488 B
+    '   Blank Lines: 5 (25.00%)
+    '     File Size: 591 B
 
 
-    '     Class SvgSwitch
+    '     Class ManIndex
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Create
+    '         Properties: [date], category, index, keyword, title
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml
 
-Namespace SVG.XML
+Namespace ApplicationServices.Terminal.Utility
 
-    Public Class SvgSwitch : Inherits SvgContainer
+    ''' <summary>
+    ''' the document index
+    ''' </summary>
+    Public Class ManIndex
 
-        Public Sub New(element As XmlElement)
-            MyBase.New(element)
-        End Sub
+        Public Property index As String
+        Public Property category As Integer
+        Public Property [date] As Date = Now
+        Public Property keyword As String
+        Public Property title As String
 
-        Friend Overloads Shared Function Create(parent As XmlElement) As SvgSwitch
-            Dim element = parent.OwnerDocument.CreateElement("switch")
-            parent.AppendChild(element)
-            Return New SvgSwitch(element)
+        Public Overrides Function ToString() As String
+            Return $".TH {Strings.UCase(index)} {category} {[date].ToString("yyyy-MMM")} ""{keyword}"" ""{title}"""
         End Function
 
     End Class

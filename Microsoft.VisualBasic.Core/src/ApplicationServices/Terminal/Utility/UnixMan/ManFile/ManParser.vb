@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ec53960b7e88abe4640c20f6994573, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgSwitch.vb"
+﻿#Region "Microsoft.VisualBasic::2cc224b4fd118f7877a04d9734147b64, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManParser.vb"
 
     ' Author:
     ' 
@@ -34,40 +34,33 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 13 (72.22%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 12
+    '    Code Lines: 7 (58.33%)
+    ' Comment Lines: 3 (25.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (27.78%)
-    '     File Size: 488 B
+    '   Blank Lines: 2 (16.67%)
+    '     File Size: 333 B
 
 
-    '     Class SvgSwitch
+    '     Module ManParser
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Create
+    '         Function: ParseText
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml
+Namespace ApplicationServices.Terminal.Utility
 
-Namespace SVG.XML
+    ''' <summary>
+    ''' helper module for parse the unix man page text
+    ''' </summary>
+    Module ManParser
 
-    Public Class SvgSwitch : Inherits SvgContainer
-
-        Public Sub New(element As XmlElement)
-            MyBase.New(element)
-        End Sub
-
-        Friend Overloads Shared Function Create(parent As XmlElement) As SvgSwitch
-            Dim element = parent.OwnerDocument.CreateElement("switch")
-            parent.AppendChild(element)
-            Return New SvgSwitch(element)
+        Public Function ParseText(text As String) As UnixManPage
+            Throw New NotImplementedException
         End Function
-
-    End Class
+    End Module
 End Namespace

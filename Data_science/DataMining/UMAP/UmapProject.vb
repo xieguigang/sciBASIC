@@ -1,55 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::b114a6b524e694af621e2c549ec288d4, Data_science\DataMining\UMAP\UmapProject.vb"
+﻿#Region "Microsoft.VisualBasic::baf7b3165daa6c9638051182ce469f0f, Data_science\DataMining\UMAP\UMAPProject.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 16
-'    Code Lines: 12 (75.00%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 4 (25.00%)
-'     File Size: 386 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class UmapProject
-' 
-'     Properties: dimension, labels, projection
-' 
-'     Function: CreateProjection
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 95 (62.91%)
+    ' Comment Lines: 25 (16.56%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 31 (20.53%)
+    '     File Size: 4.51 KB
+
+
+    ' Class UMAPProject
+    ' 
+    '     Properties: clusters, dimension, embedding, graph, labels
+    '                 samples
+    ' 
+    '     Function: CreateProjection, ReadFile, SetLabels
+    ' 
+    '     Sub: WriteFile
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

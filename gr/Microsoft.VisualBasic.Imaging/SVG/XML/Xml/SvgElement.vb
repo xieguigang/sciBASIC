@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::24c7b9091e9b73a303e796272daefb66, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
+﻿#Region "Microsoft.VisualBasic::5e60842747ea1d7cff995f7260377b32, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 269
-'    Code Lines: 207 (76.95%)
-' Comment Lines: 26 (9.67%)
-'    - Xml Docs: 96.15%
-' 
-'   Blank Lines: 36 (13.38%)
-'     File Size: 10.03 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SvgElement
-' 
-'         Properties: Fill, FillOpacity, Id, Stroke, StrokeDashArray
-'                     StrokeLineCap, StrokeOpacity, StrokeWidth, Style, TabIndex
-'                     Transform, Visible
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, HasClass
-'                   ParseClassAttribute, ParseStyleAttribute
-' 
-'         Sub: RemoveClass, SetClassAttribute, SetStyle, SetStyleAttribute, ToggleClass
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 279
+    '    Code Lines: 215 (77.06%)
+    ' Comment Lines: 26 (9.32%)
+    '    - Xml Docs: 96.15%
+    ' 
+    '   Blank Lines: 38 (13.62%)
+    '     File Size: 10.52 KB
+
+
+    '     Class SvgElement
+    ' 
+    '         Properties: Fill, FillOpacity, Id, Stroke, StrokeDashArray
+    '                     StrokeLineCap, StrokeOpacity, StrokeWidth, Style, TabIndex
+    '                     Transform, Visible
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, HasClass
+    '                   ParseClassAttribute, ParseStyleAttribute
+    ' 
+    '         Sub: RemoveClass, SetClassAttribute, SetStyle, SetStyleAttribute, ToggleClass
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

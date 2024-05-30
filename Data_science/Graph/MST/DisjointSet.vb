@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f4851d89b8ec499158a6af2a9841176, Data_science\Graph\MST\DisjointSet.vb"
+﻿#Region "Microsoft.VisualBasic::cd018528b0b89cca303857b16ff9ac2d, Data_science\Graph\MST\DisjointSet.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 13 (17.11%)
-    '     File Size: 2.37 KB
+    '     File Size: 2.36 KB
 
 
     '     Class DisjointSet
@@ -132,4 +132,3 @@ Namespace MinimumSpanningTree
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::405bee02ccfc2064ac4ca7ef10a96f08, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::279d75cfac3f161fe55383245a390c45, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 458
-    '    Code Lines: 355 (77.51%)
-    ' Comment Lines: 17 (3.71%)
+    '   Total Lines: 455
+    '    Code Lines: 352 (77.36%)
+    ' Comment Lines: 17 (3.74%)
     '    - Xml Docs: 35.29%
     ' 
-    '   Blank Lines: 86 (18.78%)
-    '     File Size: 21.25 KB
+    '   Blank Lines: 86 (18.90%)
+    '     File Size: 21.15 KB
 
 
     '     Class ProgressBar
@@ -66,14 +66,11 @@
 
 #End Region
 
-Imports System
 Imports System.Collections.Concurrent
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Threading
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 
@@ -165,9 +162,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
 
         Private Sub EnsureMainProgressBarVisible(Optional extraBars As Integer = 0)
             Dim pbarHeight = If(Options.DenseProgressBar, 1, 2)
-            Dim neededPadding = stdNum.Min(_originalWindowHeight - pbarHeight, (1 + extraBars) * pbarHeight)
+            Dim neededPadding = std.Min(_originalWindowHeight - pbarHeight, (1 + extraBars) * pbarHeight)
             Dim difference = _originalWindowHeight - _originalCursorTop
-            Dim write = If(difference <= neededPadding, stdNum.Max(0, stdNum.Max(neededPadding, difference)), 0)
+            Dim write = If(difference <= neededPadding, std.Max(0, std.Max(neededPadding, difference)), 0)
 
             Dim written = 0
             While written < write
@@ -257,7 +254,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
             End If
 
             Dim formatted = String.Format(format, truncatedMessage, durationString)
-            Dim m = formatted & New String(" "c, stdNum.Max(0, maxCharacterWidth - formatted.Length))
+            Dim m = formatted & New String(" "c, std.Max(0, maxCharacterWidth - formatted.Length))
             Console.Write(m)
         End Sub
 
@@ -511,7 +508,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ShellProgressBar
             Try
                 Dim pbarHeight = If(Options.DenseProgressBar, 1, 2)
                 Dim openDescendantsPadding = _visibleDescendants * pbarHeight
-                Dim newCursorTop = stdNum.Min(_originalWindowHeight, _originalCursorTop + pbarHeight + openDescendantsPadding)
+                Dim newCursorTop = std.Min(_originalWindowHeight, _originalCursorTop + pbarHeight + openDescendantsPadding)
                 Console.CursorVisible = True
                 Console.SetCursorPosition(0, newCursorTop)
             Catch

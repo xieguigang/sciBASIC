@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::005ff88053fa9f5f2b79e9da01bd98bb, Data\Trinity\Model\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::a4085abf5e9039c4dbb02b07b3ca0d50, Data\Trinity\Model\Paragraph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 61 (68.54%)
-    ' Comment Lines: 11 (12.36%)
-    '    - Xml Docs: 90.91%
+    '   Total Lines: 94
+    '    Code Lines: 61 (64.89%)
+    ' Comment Lines: 16 (17.02%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 17 (19.10%)
-    '     File Size: 3.03 KB
+    '   Blank Lines: 17 (18.09%)
+    '     File Size: 3.22 KB
 
 
     '     Class Paragraph

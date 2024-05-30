@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::39895d29fd09a958b135ec3c2e0d5745, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::8112eee074f18744d99ecd62c70917bb, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 62
-'    Code Lines: 46 (74.19%)
-' Comment Lines: 3 (4.84%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 13 (20.97%)
-'     File Size: 2.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class FuzzyModel
-' 
-'         Properties: Defuzzify, Fuzzify, Input, Output, Rules
-' 
-'         Function: FromXml, Load, (+2 Overloads) Save
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 56 (75.68%)
+    ' Comment Lines: 3 (4.05%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (20.27%)
+    '     File Size: 2.92 KB
+
+
+    '     Class FuzzyModel
+    ' 
+    '         Properties: Defuzzify, Fuzzify, Input, Output, Rules
+    ' 
+    '         Function: FromXml, Load, (+3 Overloads) Save
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
