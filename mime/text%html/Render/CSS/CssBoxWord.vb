@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::afc765eb5bde9c63991845de2bb1c3a5, mime\text%html\Render\CSS\CssBoxWord.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 194
-    '    Code Lines: 105 (54.12%)
-    ' Comment Lines: 56 (28.87%)
-    '    - Xml Docs: 96.43%
-    ' 
-    '   Blank Lines: 33 (17.01%)
-    '     File Size: 5.86 KB
+' Summaries:
 
 
-    '     Class CssBoxWord
-    ' 
-    '         Properties: FullWidth, Image, IsImage, IsLineBreak, IsSpaces
-    '                     IsTab, LastMeasureOffset, OwnerBox, Text
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: AppendChar, ReplaceLineBreaksAndTabs
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 194
+'    Code Lines: 105 (54.12%)
+' Comment Lines: 56 (28.87%)
+'    - Xml Docs: 96.43%
+' 
+'   Blank Lines: 33 (17.01%)
+'     File Size: 5.86 KB
+
+
+'     Class CssBoxWord
+' 
+'         Properties: FullWidth, Image, IsImage, IsLineBreak, IsSpaces
+'                     IsTab, LastMeasureOffset, OwnerBox, Text
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: ToString
+' 
+'         Sub: AppendChar, ReplaceLineBreaksAndTabs
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Render.CSS
 
@@ -134,13 +135,13 @@ Namespace Render.CSS
                 If Value IsNot Nothing Then
                     Dim w As New CssLength(OwnerBox.Width)
                     Dim h As New CssLength(OwnerBox.Height)
-                    If w.Number > 0 AndAlso w.Unit = CssLength.CssUnit.Pixels Then
+                    If w.Number > 0 AndAlso w.Unit = CssUnit.Pixels Then
                         Width = w.Number
                     Else
                         Width = Value.Width
                     End If
 
-                    If h.Number > 0 AndAlso h.Unit = CssLength.CssUnit.Pixels Then
+                    If h.Number > 0 AndAlso h.Unit = CssUnit.Pixels Then
 
                         Height = h.Number
                     Else

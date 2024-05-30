@@ -1,76 +1,77 @@
 ﻿#Region "Microsoft.VisualBasic::3be713a89836a5b6e7c45905528fc5cc, mime\text%html\Render\CSS\CssTable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 876
-    '    Code Lines: 521 (59.47%)
-    ' Comment Lines: 205 (23.40%)
-    '    - Xml Docs: 69.76%
-    ' 
-    '   Blank Lines: 150 (17.12%)
-    '     File Size: 32.14 KB
+' Summaries:
 
 
-    '     Class CssTable
-    ' 
-    '         Properties: AllRows, BodyRows, Caption, ColumnCount, ColumnMinWidths
-    '                     Columns, ColumnWidths, FooterBox, HeaderBox, HorizontalSpacing
-    '                     RowCount, TableBox, VerticalSpacing, WidthSpecified
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) CanReduceWidth, CreateColumn, GetAvailableCellWidth, GetAvailableWidth, GetCellRealColumnIndex
-    '                   GetCellWidth, GetColSpan, GetReductableColumns, GetRowSpan, GetSpan
-    '                   GetSpannedMinWidth, GetWidthSum
-    ' 
-    '         Sub: Analyze, Measure, MeasureWords
-    '         Class SpacingBox
-    ' 
-    '             Properties: EndRow, StartRow
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 876
+'    Code Lines: 521 (59.47%)
+' Comment Lines: 205 (23.40%)
+'    - Xml Docs: 69.76%
+' 
+'   Blank Lines: 150 (17.12%)
+'     File Size: 32.14 KB
+
+
+'     Class CssTable
+' 
+'         Properties: AllRows, BodyRows, Caption, ColumnCount, ColumnMinWidths
+'                     Columns, ColumnWidths, FooterBox, HeaderBox, HorizontalSpacing
+'                     RowCount, TableBox, VerticalSpacing, WidthSpecified
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) CanReduceWidth, CreateColumn, GetAvailableCellWidth, GetAvailableWidth, GetCellRealColumnIndex
+'                   GetCellWidth, GetColSpan, GetReductableColumns, GetRowSpan, GetSpan
+'                   GetSpannedMinWidth, GetWidthSum
+' 
+'         Sub: Analyze, Measure, MeasureWords
+'         Class SpacingBox
+' 
+'             Properties: EndRow, StartRow
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Render.CSS
 
@@ -479,7 +480,7 @@ Namespace Render.CSS
                         If len.IsPercentage Then
                             'Get width as a percentage
                             ColumnWidths(i) = CssValue.ParseNumber(Columns(i).Width, availCellSpace)
-                        ElseIf len.Unit = CssLength.CssUnit.Pixels OrElse len.Unit = CssLength.CssUnit.None Then
+                        ElseIf len.Unit = CssUnit.Pixels OrElse len.Unit = CssUnit.None Then
                             'Get width as an absolute-pixel value
                             ColumnWidths(i) = len.Number
                         End If
@@ -505,7 +506,7 @@ Namespace Render.CSS
                                 If len.IsPercentage Then
                                     'Get width as a percentage
                                     flen = CssValue.ParseNumber(row.Boxes(i).Width, availCellSpace)
-                                ElseIf len.Unit = CssLength.CssUnit.Pixels OrElse len.Unit = CssLength.CssUnit.None Then
+                                ElseIf len.Unit = CssUnit.Pixels OrElse len.Unit = CssUnit.None Then
                                     'Get width as an absolute-pixel value
                                     flen = len.Number
                                 End If

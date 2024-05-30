@@ -1,92 +1,92 @@
 ﻿#Region "Microsoft.VisualBasic::437bdba436aec0cbec4b3168e9b8f7b4, mime\text%html\Render\CSS\CssBox.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 3166
-    '    Code Lines: 2180 (68.86%)
-    ' Comment Lines: 463 (14.62%)
-    '    - Xml Docs: 81.86%
-    ' 
-    '   Blank Lines: 523 (16.52%)
-    '     File Size: 109.94 KB
+' Summaries:
 
 
-    '     Class CssBox
-    ' 
-    '         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
-    '                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
-    '                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
-    '                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
-    '                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
-    '                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
-    '                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
-    '                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
-    '                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
-    '                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
-    '                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
-    '                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
-    '                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
-    '                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
-    '                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
-    '                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
-    '                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
-    '                     FontSize, FontStyle, FontVariant, FontWeight, Height
-    '                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
-    '                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
-    '                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
-    '                     Location, Margin, MarginBottom, MarginLeft, MarginRight
-    '                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
-    '                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
-    '                     Size, Text, TextAlign, TextDecoration, TextIndent
-    '                     Top, VerticalAlign, WhiteSpace, Width, Words
-    '                     WordSpacing
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
-    '                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
-    '                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
-    '                   ToString
-    ' 
-    '         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
-    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
-    '              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
-    '              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 3166
+'    Code Lines: 2180 (68.86%)
+' Comment Lines: 463 (14.62%)
+'    - Xml Docs: 81.86%
+' 
+'   Blank Lines: 523 (16.52%)
+'     File Size: 109.94 KB
+
+
+'     Class CssBox
+' 
+'         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
+'                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
+'                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
+'                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
+'                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
+'                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
+'                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
+'                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
+'                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
+'                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
+'                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
+'                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
+'                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
+'                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
+'                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
+'                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
+'                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
+'                     FontSize, FontStyle, FontVariant, FontWeight, Height
+'                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
+'                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
+'                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
+'                     Location, Margin, MarginBottom, MarginLeft, MarginRight
+'                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
+'                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
+'                     Size, Text, TextAlign, TextDecoration, TextIndent
+'                     Top, VerticalAlign, WhiteSpace, Width, Words
+'                     WordSpacing
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
+'                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
+'                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
+'                   ToString
+' 
+'         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
+'              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
+'              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
+'              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -97,8 +97,9 @@ Imports System.Reflection
 Imports System.Text.RegularExpressions
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports rect = System.Drawing.Rectangle
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Render.CSS
 
@@ -1318,7 +1319,7 @@ Namespace Render.CSS
 
                     If len.HasError Then
                         computedValue = _defaults("font-size")
-                    ElseIf len.Unit = CssLength.CssUnit.Ems AndAlso ParentBox IsNot Nothing Then
+                    ElseIf len.Unit = CssUnit.Ems AndAlso ParentBox IsNot Nothing Then
                         computedValue = len.ConvertEmToPoints(ParentBox.ActualFont.SizeInPoints).ToString()
                     Else
                         computedValue = len.ToString()
@@ -2615,12 +2616,12 @@ Namespace Render.CSS
         ''' <returns></returns>
         Friend Function GetMaximumBottom(startBox As CssBox, currentMaxBottom As Single) As Single
             For Each line As CssLineBox In startBox.Rectangles.Keys
-                currentMaxBottom = stdNum.Max(currentMaxBottom, startBox.Rectangles(line).Bottom)
+                currentMaxBottom = std.Max(currentMaxBottom, startBox.Rectangles(line).Bottom)
             Next
 
             For Each b As CssBox In startBox.Boxes
-                currentMaxBottom = stdNum.Max(currentMaxBottom, b.ActualBottom)
-                currentMaxBottom = stdNum.Max(currentMaxBottom, GetMaximumBottom(b, currentMaxBottom))
+                currentMaxBottom = std.Max(currentMaxBottom, b.ActualBottom)
+                currentMaxBottom = std.Max(currentMaxBottom, GetMaximumBottom(b, currentMaxBottom))
             Next
 
             Return currentMaxBottom
@@ -2734,7 +2735,7 @@ Namespace Render.CSS
         ''' <returns>Maximum of margins</returns>
         Private Function MarginCollapse(a As CssBox, b As CssBox) As Single
 
-            Return stdNum.Max(If(a Is Nothing, 0, a.ActualMarginBottom), If(b Is Nothing, 0, b.ActualMarginTop))
+            Return std.Max(If(a Is Nothing, 0, a.ActualMarginBottom), If(b Is Nothing, 0, b.ActualMarginTop))
         End Function
 
         ''' <summary>
@@ -2804,7 +2805,7 @@ Namespace Render.CSS
                         Next
 
                         If lastOne IsNot Nothing Then
-                            ActualBottom = stdNum.Max(ActualBottom, lastOne.ActualBottom + lastOne.ActualMarginBottom + ActualPaddingBottom)
+                            ActualBottom = std.Max(ActualBottom, lastOne.ActualBottom + lastOne.ActualMarginBottom + ActualPaddingBottom)
                         End If
                     End If
                     '#End Region
@@ -2813,8 +2814,8 @@ Namespace Render.CSS
 
             If InitialContainer IsNot Nothing Then
                 InitialContainer.MaximumSize = New SizeF(
-                    stdNum.Max(InitialContainer.MaximumSize.Width, ActualRight),
-                    stdNum.Max(InitialContainer.MaximumSize.Height, ActualBottom))
+                    std.Max(InitialContainer.MaximumSize.Width, ActualRight),
+                    std.Max(InitialContainer.MaximumSize.Height, ActualBottom))
             End If
         End Sub
 
@@ -2914,7 +2915,7 @@ Namespace Render.CSS
         Private Function NoEms(length As String) As String
             Dim len As New CssLength(length)
 
-            If len.Unit = CssLength.CssUnit.Ems Then
+            If len.Unit = CssUnit.Ems Then
                 length = len.ConvertEmToPixels(GetEmHeight()).ToString()
             End If
 
