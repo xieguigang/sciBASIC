@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
 
@@ -157,7 +158,8 @@ Namespace Graphic
         ''' <param name="showBorder"></param>
         ''' <param name="canvas"></param>
         Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
-            Dim legendLabelFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
             Dim lsize As SizeF = g.MeasureString("A", legendLabelFont)
             Dim legendParts As LegendObject()() = Nothing
             Dim maxWidth!
@@ -172,7 +174,7 @@ Namespace Graphic
 
             If theme.legendLayout Is Nothing Then
                 Dim maxLen = legends.Select(Function(l) l.title).MaxLengthString
-                Dim lFont As Font = CSSFont.TryParse(legends.First.fontstyle).GDIObject(g.Dpi)
+                Dim lFont As Font = css.GetFont(CSSFont.TryParse(legends.First.fontstyle))
 
                 maxWidth! = g.MeasureString(maxLen, lFont).Width
                 legendPos = New PointF With {
@@ -213,7 +215,8 @@ Namespace Graphic
 
         Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125)
             If Not main.StringEmpty Then
-                Dim fontOfTitle As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim fontOfTitle As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
                 Dim titleSize As SizeF = g.MeasureString(main, fontOfTitle)
                 Dim position As New PointF With {
                     .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,

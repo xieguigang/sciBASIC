@@ -243,8 +243,8 @@ Public Class Bubble : Inherits Plot
         Dim mapper As Mapper
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim rangeData As New Scaling(data, False)
-        Dim tagLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)
+        Dim tagLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+        Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
 
         If xAxis.StringEmpty Then
             ' 任意一个位空值就会使用普通的axis数据计算方法
@@ -340,7 +340,8 @@ Public Class Bubble : Inherits Plot
     End Sub
 
     Private Sub drawLegend(g As IGraphics, canvas As GraphicsRegion)
-        Dim legendLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+        Dim env As CSSEnvirnment = g.LoadEnvironment
+        Dim legendLabelFont As Font = env.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim maxSize! = data _
             .Select(Function(s) s.title) _
             .Select(Function(str) g.MeasureString(str, legendLabelFont).Width) _
