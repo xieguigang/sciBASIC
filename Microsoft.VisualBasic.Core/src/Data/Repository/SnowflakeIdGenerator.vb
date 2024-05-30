@@ -1,7 +1,7 @@
 ﻿Namespace Data.Repository
 
     ''' <summary>
-    ''' a unique Snowflake ID generator
+    ''' a twitter unique Snowflake ID generator
     ''' </summary>
     Public Class SnowflakeIdGenerator
 
@@ -18,6 +18,24 @@
             _sequence = seqId
         End Sub
 
+        ''' <summary>
+        ''' generates a new snowflake id
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Snowflake ID 通常是一个 64 位整数，由以下部分组成：41 位用于时间戳，提供毫秒级精度的自定义纪元；
+        ''' 10 位用于机器/数据中心标识符，允许多达 1024 个唯一节点；12 位用于序列号，支持每个节点每毫秒生成
+        ''' 多达 4096 个 ID。
+        ''' 可扩展性：通过分散 ID 生成，Snowflake ID 允许系统水平扩展，而无需中央 ID 生成服务的瓶颈。
+        ''' 唯一性：Snowflake ID 的结构确保了整个系统中每个 ID 的唯一性。可排序性：Snowflake ID 的时间戳组件
+        ''' 允许它们可排序，这对于组织和索引数据可能有益。
+        ''' 分布式数据库：Snowflake ID 在分布式数据库中被广泛使用，以确保从不同节点插入的记录具有唯一标识符。
+        ''' 微服务架构：在微服务架构中，多个服务可能需要独立生成唯一标识符，Snowflake ID 提供了可靠的解决方案。
+        ''' 
+        ''' Snowflake ID 的概念起源于 Twitter，作为其对可扩展的唯一标识符生成系统的需求的解决方案。
+        ''' 自那时起，它已被需要大规模唯一标识符的各种分布式系统和服务采用。演变：在 Twitter 推出后，
+        ''' Snowflake ID 算法被开源，允许开发者社区对其进行演变和适应各种平台和技术的贡献。
+        ''' </remarks>
         Public Function GenerateId() As Long
             SyncLock Me
                 Dim currentTimestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
