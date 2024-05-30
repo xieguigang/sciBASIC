@@ -136,7 +136,7 @@ Namespace CSS
         ''' + ``inherit``: 规定应该从父元素继承字体尺寸。
         ''' </summary>
         ''' <returns></returns>
-        <Description("font-size")> Public Property size As Single
+        <Description("font-size")> Public Property size As String
         ''' <summary>
         ''' A string representation of the <see cref="FontFamily"/> for the new System.Drawing.Font.
         ''' </summary>
@@ -177,20 +177,6 @@ Namespace CSS
         <Description("font-variant")> Public Property [variant] As String
 
         Public Property color As String = "black"
-
-        ''' <summary>
-        ''' Initializes a new <see cref="System.Drawing.Font"/> using a specified size and style.
-        ''' </summary>
-        ''' <param name="dpi">
-        ''' bugs fixed for config dpi value on unix mono platform 
-        ''' </param>
-        ''' <returns></returns>
-        Public ReadOnly Property GDIObject(dpi As Integer) As Font
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New Font(family, FontFace.PointSizeScale(size, dpiResolution:=dpi), style)
-            End Get
-        End Property
 
         ''' <summary>
         ''' Css string for set font style

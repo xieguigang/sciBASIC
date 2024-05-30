@@ -79,17 +79,35 @@ Namespace Render.CSS
     ''' </remarks>
     Public Class CssLength
 
-#Region "Fields"
-        Private _number As Single
-        Private _isRelative As Boolean
-        Private _unit As CssUnit
-        Private _length As String
-        Private _isPercentage As Boolean
-        Private _hasError As Boolean
+        ''' <summary>
+        ''' Gets the number in the length
+        ''' </summary>
+        Public ReadOnly Property Number() As Single
 
-#End Region
+        ''' <summary>
+        ''' Gets if the length has some parsing error
+        ''' </summary>
+        Public ReadOnly Property HasError() As Boolean
 
-#Region "Ctor"
+        ''' <summary>
+        ''' Gets if the length represents a precentage (not actually a length)
+        ''' </summary>
+        Public ReadOnly Property IsPercentage() As Boolean
+
+        ''' <summary>
+        ''' Gets if the length is specified in relative units
+        ''' </summary>
+        Public ReadOnly Property IsRelative() As Boolean
+
+        ''' <summary>
+        ''' Gets the unit of the length
+        ''' </summary>
+        Public ReadOnly Property Unit() As CssUnit
+
+        ''' <summary>
+        ''' Gets the length as specified in the string
+        ''' </summary>
+        Public ReadOnly Property Length() As String
 
         ''' <summary>
         ''' Creates a new CssLength from a length specified on a CSS style sheet or fragment
@@ -165,71 +183,6 @@ Namespace Render.CSS
 
             End If
         End Sub
-
-#End Region
-
-#Region "Props"
-
-        ''' <summary>
-        ''' Gets the number in the length
-        ''' </summary>
-        Public ReadOnly Property Number() As Single
-            Get
-                Return _number
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Gets if the length has some parsing error
-        ''' </summary>
-        Public ReadOnly Property HasError() As Boolean
-            Get
-                Return _hasError
-            End Get
-        End Property
-
-
-        ''' <summary>
-        ''' Gets if the length represents a precentage (not actually a length)
-        ''' </summary>
-        Public ReadOnly Property IsPercentage() As Boolean
-            Get
-                Return _isPercentage
-            End Get
-        End Property
-
-
-        ''' <summary>
-        ''' Gets if the length is specified in relative units
-        ''' </summary>
-        Public ReadOnly Property IsRelative() As Boolean
-            Get
-                Return _isRelative
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Gets the unit of the length
-        ''' </summary>
-        Public ReadOnly Property Unit() As CssUnit
-            Get
-                Return _unit
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Gets the length as specified in the string
-        ''' </summary>
-        Public ReadOnly Property Length() As String
-            Get
-                Return _length
-            End Get
-        End Property
-
-
-#End Region
-
-#Region "Methods"
 
         ''' <summary>
         ''' If length is in Ems, returns its value in points
@@ -309,7 +262,5 @@ Namespace Render.CSS
                 Return String.Format(NumberFormatInfo.InvariantInfo, "{0}{1}", Number, u)
             End If
         End Function
-
-#End Region
     End Class
 End Namespace

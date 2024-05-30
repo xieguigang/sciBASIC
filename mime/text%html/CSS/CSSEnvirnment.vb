@@ -56,13 +56,28 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace CSS
 
     Public Class CSSEnvirnment
 
+        ''' <summary>
+        ''' the base font style of the canvas
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property baseFont As Font
+        ''' <summary>
+        ''' the base stroke line style of the canvas
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property baseLine As Pen
+
+        ''' <summary>
+        ''' bugs fixed for config dpi value on unix mono platform 
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dpi As Integer
 
         Sub New(basefont As Font, baseline As Pen)
             Me.baseFont = basefont
@@ -76,5 +91,20 @@ Namespace CSS
             Return newFont
         End Function
 
+        ''' <summary>
+        ''' Initializes a new <see cref="Font"/> using a specified size and style.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetFont(css As CSSFont) As Font
+            Dim size As Single
+
+            If css.size.IsSimpleNumber Then
+                size = Val(css.size)
+            Else
+
+            End If
+
+            Return New Font(css.family, FontFace.PointSizeScale(size, dpiResolution:=dpi), css.style)
+        End Function
     End Class
 End Namespace
