@@ -59,6 +59,8 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Render
 
@@ -137,5 +139,15 @@ Namespace Render
             End If
         End Sub
 #End Region
+
+        ''' <summary>
+        ''' load the css styling environment from the given graphics canvas object.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function LoadEnvironment(g As IGraphics) As CSSEnvirnment
+            Return New CSSEnvirnment(g.Size, g.Dpi).SetBaseStyles(g.Font, g.Stroke)
+        End Function
     End Module
 End Namespace
