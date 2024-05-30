@@ -144,7 +144,7 @@ Namespace Render
         ''' <param name="node"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetCssFont(node As HtmlElement, ppi As Integer) As Font
+        Public Function GetCssFont(node As HtmlElement, env As CSSEnvirnment) As Font
             With node("style")
                 If .IsEmpty Then
                     Return Nothing
@@ -155,7 +155,7 @@ Namespace Render
                     ' 因为解析函数无论是否存在数据都会返回一个cssfont实例
                     ' 所以会需要借助这个hasValue变量来判断
                     If hasValue Then
-                        Return css.GDIObject(ppi)
+                        Return env.GetFont(css)
                     Else
                         Return Nothing
                     End If
@@ -194,7 +194,10 @@ Namespace Render
                                  Optional defaultColor$ = NameOf(Color.Black),
                                  Optional ppi As Integer = 100) As IEnumerable(Of TextString)
 
-            Return TryParse(html, CSSFont.TryParse(defaultFont).GDIObject(ppi), defaultColor.TranslateColor)
+            Dim baseFont As CSSFont = CSSFont.TryParse(defaultFont)
+            Dim defaultEnv As CSSEnvirnment = New CSSEnvirnment(Nothing, ppi).SetBaseStyles(Nothing)
+
+            Return TryParse(html, defaultEnv.GetFont(baseFont), defaultColor.TranslateColor)
         End Function
 
         Public Iterator Function TryParse(html$, defaultFont As Font, defaultColor As Color,
@@ -207,8 +210,9 @@ Namespace Render
                 .color = defaultColor.ToHtmlColor
             }
             Dim blanks As New Regex("\s+")
+            Dim env As CSSEnvirnment = New CSSEnvirnment(Nothing, ppi).SetBaseStyles(defaultFont)
 
-            For Each part As TextString In htmlParser(buffer, currentStyle, ppi)
+            For Each part As TextString In htmlParser(buffer, currentStyle, env)
                 ' 忽略掉多余的空白
                 ' 因为转义操作会产真正所需要的的空白符, 所以去除多余的空白符要先于转义操作之前进行
                 part.text = blanks.Replace(part.text, " ")
@@ -219,7 +223,7 @@ Namespace Render
             Next
         End Function
 
-        Private Iterator Function htmlParser(html As Pointer(Of Char), defaultStyle As TextString, ppi As Integer) As IEnumerable(Of TextString)
+        Private Iterator Function htmlParser(html As Pointer(Of Char), defaultStyle As TextString, env As CSSEnvirnment) As IEnumerable(Of TextString)
             Dim charsbuffer As New List(Of Char)
             Dim c As Char
             Dim bold As Boolean = False
@@ -260,7 +264,7 @@ Namespace Render
                         ' 当前的字体样式需要圧栈
                         Dim tag As HtmlElement = html.__nextTag()
                         Dim tagName As String = tag.TagName.ToLower
-                        Dim localScopeStyle As Font = tag.GetCssFont(ppi)
+                        Dim localScopeStyle As Font = tag.GetCssFont(env)
                         Dim localFontColor$ = tag.GetFontColor Or currentStyle.color.AsDefault
 
                         styleStack.Push(currentStyle)

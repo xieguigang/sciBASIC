@@ -91,7 +91,7 @@ Namespace CSS
             Me.dpi = dpi
         End Sub
 
-        Public Function SetBaseStyles(font As Font, stroke As Pen) As CSSEnvirnment
+        Public Function SetBaseStyles(Optional font As Font = Nothing, Optional stroke As Pen = Nothing) As CSSEnvirnment
             _baseFont = font
             _baseLine = stroke
 
@@ -105,6 +105,30 @@ Namespace CSS
             Return newFont
         End Function
 
+        Public Function GetFontFamily(css As CSSFont) As String
+            If css Is Nothing AndAlso baseFont Is Nothing Then
+                Return Nothing
+            ElseIf baseFont Is Nothing Then
+                Return css.family
+            ElseIf css Is Nothing OrElse css.family.StringEmpty Then
+                Return baseFont.Name
+            Else
+                Return css.family
+            End If
+        End Function
+
+        Public Function GetFontStyle(css As CSSFont) As FontStyle
+            If css Is Nothing AndAlso baseFont Is Nothing Then
+                Return FontStyle.Regular
+            ElseIf baseFont Is Nothing Then
+                Return css.style
+            ElseIf css Is Nothing Then
+                Return baseFont.Style
+            Else
+                Return css.style
+            End If
+        End Function
+
         ''' <summary>
         ''' Initializes a new <see cref="Font"/> using a specified size and style.
         ''' </summary>
@@ -112,6 +136,8 @@ Namespace CSS
         Public Function GetFont(css As CSSFont) As Font
             Dim size As New CssLength(css.size)
             Dim size_val As Single
+            Dim familyName As String = GetFontFamily(css)
+            Dim style As FontStyle = GetFontStyle(css)
 
             Select Case size.Unit
                 Case CssUnit.Ems : size_val = size.Number * baseFont.Size
@@ -122,7 +148,7 @@ Namespace CSS
 
             size_val = FontFace.PointSizeScale(size_val, dpiResolution:=dpi)
 
-            Return New Font(css.family, size_val, css.style)
+            Return New Font(familyName, size_val, style)
         End Function
     End Class
 End Namespace
