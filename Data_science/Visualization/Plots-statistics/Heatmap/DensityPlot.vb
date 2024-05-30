@@ -68,6 +68,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -191,8 +192,9 @@ Namespace Heatmap
                     .IteratesALL _
                     .Range _
                     .CreateAxisTicks
-                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject(g.Dpi)
-                Dim legendTickFont As Font = CSSFont.TryParse(legendTickFontCSS).GDIObject(g.Dpi)
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(legendTitleFontCSS))
+                Dim legendTickFont As Font = css.GetFont(CSSFont.TryParse(legendTickFontCSS))
                 Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
 
                 Call Legends.ColorMapLegend(

@@ -90,6 +90,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports std = System.Math
 
@@ -244,12 +245,12 @@ Public Module NetworkVisualizer
         Call "Initialize gdi objects...".__INFO_ECHO
 
         Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke)?.GDIObject
-        Dim baseFont As Font = CSSFont.TryParse(
+        Dim baseFont As Font = CSSEnvirnment.Empty(ppi).GetFont(CSSFont.TryParse(
             labelFontBase, New CSSFont With {
                 .family = FontFace.MicrosoftYaHei,
                 .size = 12,
                 .style = FontStyle.Regular
-            }).GDIObject(ppi)
+            }))
 
         Call "Initialize variables, done!".__INFO_ECHO
 
@@ -330,7 +331,7 @@ Public Module NetworkVisualizer
             fontSizeValue:=fontSizeMapper,
             defaultColor:=defaultColor.TranslateColor,
             stroke:=stroke,
-            baseFont:=baseFont,
+            baseFontCss:=baseFont,
             scalePos:=scalePos,
             throwEx:=throwEx,
             getDisplayLabel:=getNodeLabel,
@@ -437,7 +438,8 @@ Public Module NetworkVisualizer
                      End Function) _
             .ToArray
         Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "set1:c8".AsDefault)
-        Dim convexHullLabelFont As Font = CSSFont.TryParse(convexHullLabelFontCSS$).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim convexHullLabelFont As Font = css.GetFont(CSSFont.TryParse(convexHullLabelFontCSS$))
         Dim singleGroupKey As String = Nothing
 
         If hullPolygonGroups.Value.StringEmpty Then

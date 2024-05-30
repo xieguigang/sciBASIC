@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -148,25 +149,26 @@ Namespace Heatmap
                              Optional legendLayout As Layouts = Layouts.Horizon,
                              Optional ppi As Integer = 100) As GraphicsData
 
-            Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS).GDIObject(ppi)
             Dim array As DataSet() = data.ToArray
             Dim dlayout As (A%, B%)
             Dim dataTable As Dictionary(Of DataSet) = array.ToDictionary
+            Dim margin As Padding = padding
+            Dim env As CSSEnvirnment = CSSEnvirnment.Empty(ppi)
 
             With dendrogramLayout.SizeParser
                 dlayout = (.Width, .Height)
             End With
 
-            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
-            Dim legendFont As Font = CSSFont.TryParse(legendFontStyle).GDIObject(ppi)
-            Dim margin As Padding = padding
-            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelfontStyle).GDIObject(ppi)
             Dim plotInternal =
                 Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
-
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
                     Dim dw! = args.dStep.Width, dh! = args.dStep.Height
                     Dim blockSize As New SizeF(dw, dh)
                     Dim colors As SolidBrush() = args.colors
+                    Dim valuelabelFont As Font = css.GetFont(valuelabelFontCSS)
+                    Dim titleFont As Font = css.GetFont(titleFontCSS)
+                    Dim legendFont As Font = css.GetFont(legendFontStyle)
+                    Dim rowLabelFont As Font = css.GetFont(rowLabelfontStyle)
 
                     ' 按行绘制heatmap之中的矩阵
                     For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
@@ -228,12 +230,12 @@ Namespace Heatmap
 
             Return doPlot(
                 plotInternal, array,
-                rowLabelFont, CSSFont.TryParse(colLabelFontStyle).GDIObject(ppi), logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
+                env.GetFont(rowLabelfontStyle), env.GetFont(colLabelFontStyle), logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
                 reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
                 size.SizeParser, margin, bg,
-                legendTitle, legendFont, Nothing,
+                legendTitle, env.GetFont(legendFontStyle), Nothing,
                 min, max,
-                mainTitle, titleFont,
+                mainTitle, env.GetFont(titleFontCSS),
                 legendWidth, legendHasUnmapped, legendSize.SizeParser,
                 tick:=tick,
                 legendLayout:=legendLayout

@@ -84,7 +84,7 @@ Friend Class NodeRendering
             fontSizeValue As Func(Of Node, Single),
             defaultColor As Color,
             stroke As Pen,
-            baseFont As Font,
+            baseFontCss As Font,
             scalePos As Dictionary(Of String, PointF),
             throwEx As Boolean,
             getDisplayLabel As Func(Of Node, String),
@@ -99,7 +99,7 @@ Friend Class NodeRendering
         Me.defaultColor = defaultColor
         Me.stroke = stroke
         Me.graph = graph
-        Me.baseFont = baseFont
+        Me.baseFont = baseFontCss
         Me.scalePos = scalePos
         Me.drawShape = drawShape
         Me.throwEx = throwEx
