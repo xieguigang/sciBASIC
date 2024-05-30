@@ -178,8 +178,8 @@ Namespace Render.CSS
                     Return
             End Select
 
-            If Not Single.TryParse(number, System.Globalization.NumberStyles.Number, NumberFormatInfo.InvariantInfo, _number) Then
-                _hasError = True
+            If Not Single.TryParse(number, NumberStyles.Number, NumberFormatInfo.InvariantInfo, _Number) Then
+                _HasError = True
 
             End If
         End Sub
