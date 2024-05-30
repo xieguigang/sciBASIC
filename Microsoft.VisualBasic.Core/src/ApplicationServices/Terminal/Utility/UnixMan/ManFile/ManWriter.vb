@@ -79,12 +79,8 @@ Namespace ApplicationServices.Terminal.Utility
                 Call text.AppendLine(".SH SYNOPSIS")
                 Call text.AppendLine($"\fI{man.SYNOPSIS}\fR")
             End If
-            If Not man.DESCRIPTION.StringEmpty Then
-                Call text.AppendLine(".SH DESCRIPTION")
-                Call text.AppendLine(".PP")
-                Call text.AppendLine(man.DESCRIPTION)
-                Call text.AppendLine(".PP")
-            End If
+
+            If Not man.DESCRIPTION.StringEmpty Then Call WriteTextBlock(text, "DESCRIPTION", man.DESCRIPTION)
 
             If Not man.OPTIONS.IsNullOrEmpty Then
                 Call text.AppendLine(".SH OPTIONS")
@@ -96,29 +92,17 @@ Namespace ApplicationServices.Terminal.Utility
                 Next
             End If
 
-            If Not man.VALUE.StringEmpty Then
-                Call text.AppendLine(".SH VALUE")
-                Call text.AppendLine(".PP")
-                Call text.AppendLine(man.VALUE)
-                Call text.AppendLine(".PP")
-            End If
+            If Not man.VALUE.StringEmpty Then Call WriteTextBlock(text, "VALUE", man.VALUE)
+            If Not man.DETAILS.StringEmpty Then Call WriteTextBlock(text, "DETAILS", man.DETAILS)
+            If Not man.EXAMPLES.StringEmpty Then Call WriteTextBlock(text, "EXAMPLES", man.EXAMPLES)
 
-            If Not man.DETAILS.StringEmpty Then
-                Call text.AppendLine(".SH DETAILS")
-                Call text.AppendLine(".PP")
-                Call text.AppendLine(man.DETAILS)
-                Call text.AppendLine(".PP")
-            End If
             If Not man.SEE_ALSO.StringEmpty Then
                 Call text.AppendLine(".SH SEE ALSO")
                 Call text.AppendLine(man.SEE_ALSO)
             End If
-            If Not man.FILES.StringEmpty Then
-                Call text.AppendLine(".SH FILES")
-                Call text.AppendLine(".PP")
-                Call text.AppendLine(man.FILES)
-                Call text.AppendLine(".PP")
-            End If
+
+            If Not man.FILES.StringEmpty Then Call WriteTextBlock(text, "FILES", man.FILES)
+
             If Not man.AUTHOR.StringEmpty Then
                 Call text.AppendLine(".SH AUTHOR")
                 Call text.AppendLine($"Written by \fB{man.AUTHOR.Replace("-", "\-")}\fR")
@@ -130,5 +114,12 @@ Namespace ApplicationServices.Terminal.Utility
 
             Return text.ToString
         End Function
+
+        Private Sub WriteTextBlock(text As StringBuilder, title As String, str As String)
+            Call text.AppendLine($".SH {title}")
+            Call text.AppendLine($".PP")
+            Call text.AppendLine(str)
+            Call text.AppendLine($".PP")
+        End Sub
     End Module
 End Namespace
