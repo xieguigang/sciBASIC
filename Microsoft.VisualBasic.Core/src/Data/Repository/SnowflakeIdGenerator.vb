@@ -5,12 +5,14 @@
     ''' </summary>
     Public Class SnowflakeIdGenerator
 
-        ReadOnly _epoch As Long = 1288834974657L
+        Public Const DefaultEpoch As Long = 1288834974657L
+
+        ReadOnly _epoch As Long
         ReadOnly _machineId As Long
 
         Dim _sequence As Long = 0L
 
-        Public Sub New(machineId As Long, Optional epoch As Long = 1288834974657L, Optional seqId As Long = 0L)
+        Public Sub New(machineId As Long, Optional epoch As Long = DefaultEpoch, Optional seqId As Long = 0L)
             _machineId = machineId
             _epoch = epoch
             _sequence = seqId
