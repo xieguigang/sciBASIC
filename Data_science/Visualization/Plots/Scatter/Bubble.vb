@@ -69,7 +69,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 ''' <summary>
 ''' the bubble plots
@@ -77,7 +78,7 @@ Imports stdNum = System.Math
 Public Class Bubble : Inherits Plot
 
     Private Shared Function logRadius(R#) As Double
-        Return stdNum.Log(R + 1) + 1
+        Return std.Log(R + 1) + 1
     End Function
 
     ReadOnly usingLogRadius As New [Default](Of Func(Of Double, Double))(AddressOf logRadius)
@@ -240,6 +241,7 @@ Public Class Bubble : Inherits Plot
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
         Dim mapper As Mapper
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim rangeData As New Scaling(data, False)
         Dim tagLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
         Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(g.Dpi)

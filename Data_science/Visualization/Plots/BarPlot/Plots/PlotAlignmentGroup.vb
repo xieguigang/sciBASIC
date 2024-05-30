@@ -68,9 +68,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -80,7 +78,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports FontStyle = System.Drawing.FontStyle
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace BarPlot
 
@@ -589,7 +587,7 @@ Namespace BarPlot
                            Dim e#
 
                            For Each n In highlights
-                               e = stdNum.Abs(n - x)
+                               e = std.Abs(n - x)
 
                                If e <= err Then
                                    Return (e, n, True)
