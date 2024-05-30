@@ -1,92 +1,92 @@
-﻿#Region "Microsoft.VisualBasic::437bdba436aec0cbec4b3168e9b8f7b4, mime\text%html\Render\CSS\CssBox.vb"
+﻿#Region "Microsoft.VisualBasic::68db9a0e06fcc11fae40db5d18158053, mime\text%html\Render\CSS\CssBox.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 3166
-'    Code Lines: 2180 (68.86%)
-' Comment Lines: 463 (14.62%)
-'    - Xml Docs: 81.86%
-' 
-'   Blank Lines: 523 (16.52%)
-'     File Size: 109.94 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CssBox
-' 
-'         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
-'                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
-'                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
-'                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
-'                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
-'                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
-'                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
-'                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
-'                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
-'                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
-'                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
-'                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
-'                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
-'                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
-'                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
-'                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
-'                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
-'                     FontSize, FontStyle, FontVariant, FontWeight, Height
-'                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
-'                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
-'                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
-'                     Location, Margin, MarginBottom, MarginLeft, MarginRight
-'                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
-'                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
-'                     Size, Text, TextAlign, TextDecoration, TextIndent
-'                     Top, VerticalAlign, WhiteSpace, Width, Words
-'                     WordSpacing
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
-'                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
-'                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
-'                   ToString
-' 
-'         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
-'              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
-'              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
-'              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 3167
+    '    Code Lines: 2181 (68.87%)
+    ' Comment Lines: 463 (14.62%)
+    '    - Xml Docs: 81.86%
+    ' 
+    '   Blank Lines: 523 (16.51%)
+    '     File Size: 109.94 KB
+
+
+    '     Class CssBox
+    ' 
+    '         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
+    '                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
+    '                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
+    '                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
+    '                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
+    '                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
+    '                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
+    '                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
+    '                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
+    '                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
+    '                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
+    '                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
+    '                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
+    '                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
+    '                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
+    '                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
+    '                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
+    '                     FontSize, FontStyle, FontVariant, FontWeight, Height
+    '                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
+    '                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
+    '                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
+    '                     Location, Margin, MarginBottom, MarginLeft, MarginRight
+    '                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
+    '                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
+    '                     Size, Text, TextAlign, TextDecoration, TextIndent
+    '                     Top, VerticalAlign, WhiteSpace, Width, Words
+    '                     WordSpacing
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
+    '                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
+    '                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
+    '                   ToString
+    ' 
+    '         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
+    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
+    '              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
+    '              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aa1deeb87d85088b5200b4fd9477577, mime\text%html\Render\HtmlRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::3598e5c97a88a9c4148b40e774f25929, mime\text%html\Render\HtmlRenderer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 40 (47.62%)
-    ' Comment Lines: 32 (38.10%)
-    '    - Xml Docs: 90.62%
+    '   Total Lines: 96
+    '    Code Lines: 46 (47.92%)
+    ' Comment Lines: 37 (38.54%)
+    '    - Xml Docs: 91.89%
     ' 
-    '   Blank Lines: 12 (14.29%)
-    '     File Size: 2.97 KB
+    '   Blank Lines: 13 (13.54%)
+    '     File Size: 3.46 KB
 
 
     '     Module HtmlRenderer
@@ -48,6 +48,9 @@
     '         Properties: References
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: LoadEnvironment
+    ' 
     '         Sub: AddReference, (+2 Overloads) Render
     ' 
     ' 

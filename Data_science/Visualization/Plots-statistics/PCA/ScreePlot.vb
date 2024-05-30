@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7cdcfe7a6f3045e77017e87c20a2192, Data_science\Visualization\Plots-statistics\PCA\ScreePlot.vb"
+﻿#Region "Microsoft.VisualBasic::f8f869da9afd2a09f7f94c9d7397a67d, Data_science\Visualization\Plots-statistics\PCA\ScreePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 53 (85.48%)
-    ' Comment Lines: 3 (4.84%)
+    '   Total Lines: 67
+    '    Code Lines: 58 (86.57%)
+    ' Comment Lines: 3 (4.48%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (9.68%)
-    '     File Size: 2.96 KB
+    '   Blank Lines: 6 (8.96%)
+    '     File Size: 3.17 KB
 
 
     '     Module ScreePlot

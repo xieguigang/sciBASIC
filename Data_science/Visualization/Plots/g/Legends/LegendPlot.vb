@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::301cd082876dcdf74abcf5791ba3934d, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ee8aabd828e21a2a36bccbcd3911c467, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 375
-    '    Code Lines: 260 (69.33%)
-    ' Comment Lines: 55 (14.67%)
+    '   Total Lines: 377
+    '    Code Lines: 262 (69.50%)
+    ' Comment Lines: 55 (14.59%)
     '    - Xml Docs: 89.09%
     ' 
-    '   Blank Lines: 60 (16.00%)
-    '     File Size: 15.37 KB
+    '   Blank Lines: 60 (15.92%)
+    '     File Size: 15.48 KB
 
 
     '     Module LegendPlotExtensions

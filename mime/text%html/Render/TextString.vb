@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56f355f7f7a06e26dadd9efe7a81816b, mime\text%html\Render\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::76dd099d396264ff7e659d98c490e857, mime\text%html\Render\TextString.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 392
-    '    Code Lines: 272 (69.39%)
-    ' Comment Lines: 61 (15.56%)
-    '    - Xml Docs: 40.98%
+    '   Total Lines: 54
+    '    Code Lines: 38 (70.37%)
+    ' Comment Lines: 6 (11.11%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 59 (15.05%)
-    '     File Size: 15.27 KB
+    '   Blank Lines: 10 (18.52%)
+    '     File Size: 1.43 KB
 
 
     '     Class TextString
@@ -58,14 +58,6 @@
     '  
     ' 
     ' 
-    ' 
-    '     Module TextAPI
-    ' 
-    '         Function: __nextTag, GetCssFont, GetFontColor, getFontStyle, getLocalScopeFontStyle
-    '                   htmlParser, nextEndTag, popAttrName, popAttrValue, popTagName
-    '                   setFont, (+2 Overloads) TryParse
-    ' 
-    '         Sub: SkipWhiteSpace
     ' 
     ' 
     ' /********************************************************************************/

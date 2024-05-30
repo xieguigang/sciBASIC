@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29010f0a63140f389eebe42645c2ba02, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::f188cc6afd336bb164d2cbe12134d5c8, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4885
-    '    Code Lines: 688 (14.08%)
-    ' Comment Lines: 4022 (82.33%)
-    '    - Xml Docs: 6.94%
+    '   Total Lines: 4873
+    '    Code Lines: 684 (14.04%)
+    ' Comment Lines: 4015 (82.39%)
+    '    - Xml Docs: 6.77%
     ' 
-    '   Blank Lines: 175 (3.58%)
-    '     File Size: 211.61 KB
+    '   Blank Lines: 174 (3.57%)
+    '     File Size: 211.29 KB
 
 
     '     Class GDICanvas
     ' 
-    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, Font
-    '                     Graphics, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale
-    '                     PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode, Stroke
-    '                     TextContrast, TextRenderingHint
+    '         Properties: CompositingMode, CompositingQuality, DpiX, DpiY, Graphics
+    '                     InterpolationMode, IsClipEmpty, IsVisibleClipEmpty, PageScale, PageUnit
+    '                     PixelOffsetMode, RenderingOrigin, SmoothingMode, TextContrast, TextRenderingHint
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
