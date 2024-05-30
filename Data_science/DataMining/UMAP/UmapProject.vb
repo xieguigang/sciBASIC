@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::baf7b3165daa6c9638051182ce469f0f, Data_science\DataMining\UMAP\UMAPProject.vb"
+﻿#Region "Microsoft.VisualBasic::baf7b3165daa6c9638051182ce469f0f, Data_science\DataMining\UMAP\UmapProject.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11803501733baeefb8d82d65b2a5a4f8, Data_science\Visualization\Visualization\Embedding\UMAPGraph.vb"
+﻿#Region "Microsoft.VisualBasic::11803501733baeefb8d82d65b2a5a4f8, Data_science\Visualization\Visualization\Embedding\UmapGraph.vb"
 
     ' Author:
     ' 

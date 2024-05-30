@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0029fb6b7d8902ea91f81497bebbae2, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManWriter.vb"
+﻿#Region "Microsoft.VisualBasic::f3da1004a03641eae52108801fa6abe9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManWriter.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 68 (85.00%)
+    '   Total Lines: 71
+    '    Code Lines: 55 (77.46%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (15.00%)
-    '     File Size: 3.14 KB
+    '   Blank Lines: 16 (22.54%)
+    '     File Size: 2.88 KB
 
 
     '     Module ManWriter
     ' 
     '         Function: ToString
+    ' 
+    '         Sub: WriteTextBlock
     ' 
     ' 
     ' /********************************************************************************/
