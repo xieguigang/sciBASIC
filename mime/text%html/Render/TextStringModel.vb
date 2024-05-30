@@ -1,12 +1,14 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Document
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace Render
 

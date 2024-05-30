@@ -87,13 +87,19 @@ Namespace Drawing2D.Text
         ''' <returns></returns>
         Public ReadOnly Property Height As Single
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(font As Font, g As GDICanvas)
+            Call Me.New(font, g.Graphics)
+        End Sub
+
+        Sub New(font As Font, g As Graphics)
             Me.Font = font
 
             Height = g.MeasureString("1", font).Height
-            Graphics = g.Graphics
+            Graphics = g
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(font As CSSFont, g As GDICanvas)
             Me.New(g.LoadEnvironment().GetFont(font), g)
         End Sub
