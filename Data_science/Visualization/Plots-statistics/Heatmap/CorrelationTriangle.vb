@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::adac4ef038e6c4ab8a1d831171223a3b, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 215
-    '    Code Lines: 175 (81.40%)
-    ' Comment Lines: 17 (7.91%)
-    '    - Xml Docs: 35.29%
-    ' 
-    '   Blank Lines: 23 (10.70%)
-    '     File Size: 10.80 KB
+' Summaries:
 
 
-    '     Class CorrelationTriangle
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Plot
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 215
+'    Code Lines: 175 (81.40%)
+' Comment Lines: 17 (7.91%)
+'    - Xml Docs: 35.29%
+' 
+'   Blank Lines: 23 (10.70%)
+'     File Size: 10.80 KB
+
+
+'     Class CorrelationTriangle
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Plot
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,14 +71,14 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Document
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports stdNum = System.Math
 
 Namespace Heatmap
 
     Public Class CorrelationTriangle : Inherits Plot
 
-        Dim valuelabelFont As Font
-        Dim rowLabelFont As Font
         Dim gridBrush As Pen
         Dim colors As SolidBrush()
         Dim drawValueLabel As Boolean
@@ -93,6 +93,9 @@ Namespace Heatmap
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim valuelabelFont As Font = css.GetFont(theme.tagCSS)
+            Dim rowLabelFont As Font = css.GetFont(theme.axisLabelCSS)
             Dim keys$() = cor.data.keys
             Dim maxLabelSize = cor.data.keys _
                 .MaxLengthString _
@@ -131,9 +134,9 @@ Namespace Heatmap
             ' legend位于整个图片的右上角
             Call Legends.ColorMapLegend(
                 g, llayout, colors, AxisScalling.CreateAxisTicks(data:={-1, 1}),
-                titleFont:=CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi),
+                titleFont:=css.GetFont(theme.legendTitleCSS),
                 title:=legendTitle,
-                tickFont:=CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi),
+                tickFont:=css.GetFont(theme.legendLabelCSS),
                 tickAxisStroke:=Stroke.TryParse(Stroke.StrongHighlightStroke)
             )
 
@@ -242,9 +245,7 @@ Namespace Heatmap
                                               Optional driver As Drivers = Drivers.Default,
                                               Optional ppi As Integer = 100) As GraphicsData
 
-            Dim valuelabelFont As Font = CSSFont.TryParse(valuelabelFontCSS).GDIObject(ppi)
             Dim gridBrush As Pen = Stroke.TryParse(gridCSS).GDIObject
-            Dim rowLabelFont As Font = CSSFont.TryParse(rowLabelFontStyle).GDIObject(ppi)
             Dim keys$() = data.keys
             Dim colors As SolidBrush() = Designer.GetColors(mapName, mapLevels).Reverse.GetBrushes
             Dim cor As New CorrelationData(data, range)
@@ -254,15 +255,15 @@ Namespace Heatmap
                 .legendTitleCSS = legendFont,
                 .padding = padding,
                 .background = bg,
-                .legendLabelCSS = legendLabelFont
+                .legendLabelCSS = legendLabelFont,
+                .tagCSS = valuelabelFontCSS,
+                .axisLabelCSS = rowLabelFontStyle
             }
 
             Return New CorrelationTriangle(cor, theme) With {
                 .colors = colors,
                 .gridBrush = gridBrush,
                 .main = mainTitle,
-                .rowLabelFont = rowLabelFont,
-                .valuelabelFont = valuelabelFont,
                 .drawValueLabel = drawValueLabel,
                 .variantSize = variantSize,
                 .mapLevels = mapLevels,

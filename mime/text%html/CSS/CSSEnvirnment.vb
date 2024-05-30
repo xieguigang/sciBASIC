@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 
@@ -127,6 +128,11 @@ Namespace CSS
             Else
                 Return css.style
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetFont(css As String) As Font
+            Return GetFont(css:=CSSFont.TryParse(css))
         End Function
 
         ''' <summary>
