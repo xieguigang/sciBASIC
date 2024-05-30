@@ -84,6 +84,7 @@ Namespace Imaging
     ''' <summary>
     ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
     ''' </summary>
+    ''' <remarks>the gdi+ graphics canvas base model</remarks>
     Public MustInherit Class GDICanvas : Inherits IGraphics
         Implements IDisposable
 
