@@ -343,10 +343,7 @@ Namespace Drawing2D.Colors
                         labelFontCSS)
                 End Sub
 
-            Return g.GraphicsPlots(
-                size, padding,
-                "transparent",
-                plotInternal)
+            Return g.GraphicsPlots(size, padding, "transparent", plotInternal)
         End Function
 
         <Extension>
@@ -359,7 +356,8 @@ Namespace Drawing2D.Colors
                                          Optional AxisStroke$ = Stroke.AxisStroke,
                                          Optional scientificNotation As Boolean = False)
 
-            Dim font As Font = CSSFont.TryParse(labelFontCSS).GDIObject(g.Dpi)
+            Dim env As CSSEnvirnment = New CSSEnvirnment(g.Size, g.Dpi)
+            Dim font As Font = env.GetFont(CSSFont.TryParse(labelFontCSS))
             Dim l = designer.Length
             Dim dx = region.Width / l
             Dim h = region.Height * (2 / 3)

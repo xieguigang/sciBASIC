@@ -124,19 +124,6 @@ Namespace Imaging
         Sub New()
         End Sub
 
-#Region "Default canvas style values"
-        ''' <summary>
-        ''' Default pen for drawing
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Stroke As Pen
-        ''' <summary>
-        ''' Default font value for text drawing
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Font As Font
-#End Region
-
 #Region "Implements Class Graphics"
 
         Public Overloads Sub DrawLine(x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)

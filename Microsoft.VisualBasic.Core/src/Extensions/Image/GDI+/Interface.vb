@@ -66,7 +66,6 @@ Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports std = System.Math
-Imports Interpolation2D = System.Drawing.Drawing2D.InterpolationMode
 
 Namespace Imaging
 
@@ -90,6 +89,19 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Background As Color
+
+#Region "Default canvas style values, apply for the css styling system"
+        ''' <summary>
+        ''' Default pen for drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Stroke As Pen
+        ''' <summary>
+        ''' Default font value for text drawing
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Font As Font
+#End Region
 
         ''
         '' Summary:
@@ -4302,27 +4314,17 @@ Namespace Imaging
         '     true if the rectangle defined by the x, y, width, and height parameters is contained
         '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(x As Integer, y As Integer, width As Integer, height As Integer) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the rectangle specified by a pair of coordinates, a width,
-        '     and a height is contained within the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to test for visibility.
-        '
-        '   width:
-        '     Width of the rectangle to test for visibility.
-        '
-        '   height:
-        '     Height of the rectangle to test for visibility.
-        '
-        ' Returns:
-        '     true if the rectangle defined by the x, y, width, and height parameters is contained
-        '     within the visible clip region of this System.Drawing.Graphics; otherwise, false.
+
+        ''' <summary>
+        ''' Indicates whether the rectangle specified by a pair of coordinates, a width,
+        ''' and a height is contained within the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to test for visibility.</param>
+        ''' <param name="width">Width of the rectangle to test for visibility.</param>
+        ''' <param name="height">Height of the rectangle to test for visibility.</param>
+        ''' <returns>true if the rectangle defined by the x, y, width, and height parameters is contained
+        ''' within the visible clip region of this System.Drawing.Graphics; otherwise, false.</returns>
         Public MustOverride Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
         '
         ' Summary:
@@ -4370,30 +4372,18 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified in the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     within the specified layout area.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font
+        ''' within the specified layout area.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font defines the text format of the string.</param>
+        ''' <param name="layoutArea">System.Drawing.SizeF structure that specifies the maximum layout area for the
+        ''' text.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size,
+        ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
+        ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
         '
         ' Summary:
@@ -4484,42 +4474,26 @@ Namespace Imaging
         '   T:System.ArgumentException:
         '     font is null.
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        '   charactersFitted:
-        '     Number of characters in the string.
-        '
-        '   linesFilled:
-        '     Number of text lines in the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size
-        '     of the string, in the units specified by the System.Drawing.Graphics.PageUnit
-        '     property, of the text parameter as drawn with the font parameter and the stringFormat
-        '     parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
+
+        ''' <summary>
+        ''' Measures the specified string when drawn with the specified System.Drawing.Font
+        ''' and formatted with the specified System.Drawing.StringFormat.
+        ''' </summary>
+        ''' <param name="text">String to measure.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="layoutArea">System.Drawing.SizeF structure that specifies the maximum layout area for the
+        ''' text.</param>
+        ''' <param name="stringFormat">System.Drawing.StringFormat that represents formatting information, such as line
+        ''' spacing, for the string.</param>
+        ''' <param name="charactersFitted">Number of characters in the string.</param>
+        ''' <param name="linesFilled">Number of text lines in the string.</param>
+        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size
+        ''' of the string, in the units specified by the System.Drawing.Graphics.PageUnit
+        ''' property, of the text parameter as drawn with the font parameter and the stringFormat
+        ''' parameter.</returns>
+        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat,
+                                                   ByRef charactersFitted As Integer,
+                                                   ByRef linesFilled As Integer) As SizeF
 
     End Class
 End Namespace
