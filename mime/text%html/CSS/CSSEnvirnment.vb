@@ -150,5 +150,9 @@ Namespace CSS
 
             Return New Font(familyName, size_val, style)
         End Function
+
+        Public Shared Function Empty(Optional ppi As Integer = 100) As CSSEnvirnment
+            Return New CSSEnvirnment(Nothing, ppi)
+        End Function
     End Class
 End Namespace
