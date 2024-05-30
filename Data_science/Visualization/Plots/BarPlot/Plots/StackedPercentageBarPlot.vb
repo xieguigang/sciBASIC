@@ -62,10 +62,10 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Namespace BarPlot
 
@@ -154,12 +154,13 @@ Namespace BarPlot
             Dim rect As Rectangle = canvas.PlotRegion
             Dim width = rect.Width
             Dim height = rect.Height
-            Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
-            Dim axisFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
-            Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+            Dim axisFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+            Dim legendFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
             Dim tickSize = g.MeasureString("0.00", tickFont)
             Dim leftPart = axisFont.Height + tickSize.Width + 10
-            Dim groupLabelFont As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
+            Dim groupLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
             Dim boxWidth% = legendFont.Height * 1.1
             Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
             ' 条形图区域的总高度
@@ -215,7 +216,7 @@ Namespace BarPlot
                     ' 绘制系列标签
                     g.DrawString(legend.Name, legendFont, Brushes.Black, New PointF(x0 + boxWidth + 5, ly))
 
-                    maxWidth = stdNum.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
+                    maxWidth = std.Max(maxWidth, g.MeasureString(legend.Name, legendFont).Width)
                     ly += boxSeperator + boxWidth
                 Next
 

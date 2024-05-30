@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module HistStackedBarplot
@@ -123,6 +124,7 @@ Public Module HistStackedBarplot
                     .Width = MeasureWidthOrHeight(treeWidth, plotRegion.Width),
                     .Height = plotRegion.Height
                 }
+                Dim css As CSSEnvirnment = g.LoadEnvironment
 
                 ' 首先绘制出层次聚类树
                 ' rowKeys得到的是sample的从上到下的绘图顺序
@@ -134,7 +136,7 @@ Public Module HistStackedBarplot
 
                 Dim left! = treeRegion.Right + dtreeBar
                 Dim top! = treeRegion.Top
-                Dim legendTitleFont As Font = CSSFont.TryParse(legendTitleFontCSS).GDIObject(g.Dpi)
+                Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(legendTitleFontCSS))
                 Dim maxLabelSize As SizeF = data _
                     .Serials _
                     .Keys _

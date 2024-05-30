@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Plot3D.Model
 
@@ -73,7 +73,7 @@ Namespace Plot3D.Model
             Dim gridData As New List(Of Line)
             Dim a, b As Point3D
             Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
-            Dim tickFont As Font = CSSFont.TryParse(tickCSS).GDIObject(300)
+            Dim tickFont As Font = CSSEnvirnment.Empty(300).GetFont(CSSFont.TryParse(tickCSS))
             Dim eps As Double = steps.X / 2
             Dim tickColor As Brush = CSSFont.TryParse(tickCSS).color.GetBrush
 
@@ -81,7 +81,7 @@ Namespace Plot3D.Model
                 a = New Point3D With {.X = X, .Y = yrange.Min, .Z = Z}
                 b = New Point3D With {.X = X, .Y = yrange.Max, .Z = Z}
 
-                If showTicks AndAlso stdNum.Abs(xrange.Min - X) > eps AndAlso stdNum.Abs(xrange.Max - X) > eps Then
+                If showTicks AndAlso std.Abs(xrange.Min - X) > eps AndAlso std.Abs(xrange.Max - X) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
                         .Color = tickColor,
@@ -101,7 +101,7 @@ Namespace Plot3D.Model
                 a = New Point3D With {.X = xrange.Min, .Y = Y, .Z = Z}
                 b = New Point3D With {.X = xrange.Max, .Y = Y, .Z = Z}
 
-                If showTicks AndAlso stdNum.Abs(yrange.Min - Y) > eps AndAlso stdNum.Abs(yrange.Max - Y) > eps Then
+                If showTicks AndAlso std.Abs(yrange.Min - Y) > eps AndAlso std.Abs(yrange.Max - Y) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
                         .Color = tickColor,
@@ -140,7 +140,7 @@ Namespace Plot3D.Model
                 a = New Point3D With {.X = xrange.Min, .Y = Y, .Z = z}
                 b = New Point3D With {.X = xrange.Max, .Y = Y, .Z = z}
 
-                If showTicks AndAlso stdNum.Abs(zrange.Min - z) > eps Then
+                If showTicks AndAlso std.Abs(zrange.Min - z) > eps Then
                     Yield New Label With {
                         .FontCss = tickCSS,
                         .Color = tickColor,

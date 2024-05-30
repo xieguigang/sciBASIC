@@ -56,9 +56,9 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports std = System.Math
 
@@ -241,7 +241,8 @@ Namespace Graphic.Axis
 
                 Call g.DrawImageUnscaled(labelImage, point)
             Else
-                Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim font As Font = css.GetFont(CSSFont.TryParse(labelFont))
                 Dim fSize As SizeF = g.MeasureString(label, font)
                 Dim y1 As Double = zero.Y + tickFont.Height * 2
                 Dim y2 As Double = zero.Y + fSize.Height

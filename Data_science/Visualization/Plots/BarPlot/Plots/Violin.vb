@@ -68,16 +68,14 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Public Class Violin : Inherits Plot
 
@@ -114,17 +112,18 @@ Public Class Violin : Inherits Plot
                     End Function) _
             .IteratesALL _
             .ToArray
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim ppi As Integer = g.Dpi
         Dim yticks = alldata.Range.CreateAxisTicks
-        Dim yTickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(ppi)
+        Dim yTickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim yTickColor As Brush = CSSFont.TryParse(theme.axisTickCSS).color.GetBrush
         Dim colors As LoopArray(Of Color) = Designer.GetColors(theme.colorSet, matrix.Length)
         Dim labelSize As SizeF
-        Dim labelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(ppi)
+        Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim labelColor As Brush = CSSFont.TryParse(theme.axisLabelCSS).color.GetBrush
         Dim labelPos As PointF
         Dim polygonStroke As Pen = Stroke.TryParse(theme.lineStroke)
-        Dim titleFont As Font = CSSFont.TryParse(theme.mainCSS).GDIObject(ppi)
+        Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
         Dim plotRegion As Rectangle = canvas.PlotRegion
         Dim Y = d3js.scale _
             .linear _
@@ -192,7 +191,7 @@ Public Class Violin : Inherits Plot
             Else
                 labelPos = New PointF With {
                         .X = X - labelSize.Width / 2,
-                        .Y = plotRegion.Bottom + labelSize.Width * stdNum.Sin(stdNum.PI / 4)
+                        .Y = plotRegion.Bottom + labelSize.Width * std.Sin(std.PI / 4)
                     }
 
                 ' 绘制X坐标轴分组标签
@@ -235,7 +234,7 @@ Public Class Violin : Inherits Plot
         Dim line_r As New List(Of PointF)
         Dim q0 = lowerBound  'group.Min
         Dim dstep = (upperBound - lowerBound) / nbins ' (group.Max - group.Min) / n
-        Dim dy = stdNum.Abs(upper - lower) / nbins
+        Dim dy = std.Abs(upper - lower) / nbins
 
         For p As Integer = 0 To nbins
             Dim q1 = q0 + dstep
@@ -297,7 +296,7 @@ Public Class Violin : Inherits Plot
             .Width = wd,
             .X = x - .Width / 2,
             .Y = yscale.TranslateY(quartile.Q3),
-            .Height = stdNum.Abs(.Y - yQ1)
+            .Height = std.Abs(.Y - yQ1)
         }
 
         Call g.FillRectangle(polygonStroke.Brush, iqrBox)

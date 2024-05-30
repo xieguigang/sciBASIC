@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 Public Class Circular : Inherits DendrogramPanel
@@ -94,11 +95,12 @@ Public Class Circular : Inherits DendrogramPanel
             .linear() _
             .domain(values:=axisTicks) _
             .range(integers:={0, maxRadius})
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         ' 绘制距离标尺
         Dim outer = scaleR(axisTicks.Max)
         Dim inner = scaleR(0)
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String

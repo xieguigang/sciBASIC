@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Module TimeTrends
 
@@ -154,11 +155,6 @@ Public Module TimeTrends
             .CreateAxisTicks(5)
         Dim rangePoly As (min As List(Of PointF), max As List(Of PointF))
 
-        Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelFontCSS).GDIObject(ppi)
-        Dim tickLabelFont As Font = CSSFont.TryParse(tickLabelFontCSS).GDIObject(ppi)
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
-        Dim subTitleFont As Font = CSSFont.TryParse(subTitleFontCSS).GDIObject(ppi)
-
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
         Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject
         Dim yTickPen As Pen = Stroke.TryParse(yTickStrokeCSS).GDIObject
@@ -180,6 +176,11 @@ Public Module TimeTrends
                 Dim labelSize As SizeF
                 Dim labelText$
                 Dim maxLabelXWidth!
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelFontCSS))
+                Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(tickLabelFontCSS))
+                Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
+                Dim subTitleFont As Font = css.GetFont(CSSFont.TryParse(subTitleFontCSS))
 
                 ' 绘制Y坐标轴
                 For Each yVal As Double In yTicks

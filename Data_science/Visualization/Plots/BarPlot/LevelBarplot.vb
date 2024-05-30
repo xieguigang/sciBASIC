@@ -65,8 +65,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Legends
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace BarPlot
 
@@ -104,10 +105,6 @@ Namespace BarPlot
                              Optional nolabelTrim As Boolean = False,
                              Optional ppi As Integer = 100) As GraphicsData
 
-            Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
-            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject(ppi)
-            Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
-            Dim valueTitleFont As Font = CSSFont.TryParse(valueTitleFontCSS).GDIObject(ppi)
             Dim trim As Func(Of String, String)
 
             If nolabelTrim Then
@@ -129,6 +126,11 @@ Namespace BarPlot
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
+                    Dim labelFont As Font = css.GetFont(CSSFont.TryParse(labelFontCSS))
+                    Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))
+                    Dim valueTitleFont As Font = css.GetFont(CSSFont.TryParse(valueTitleFontCSS))
                     Dim maxLabelSize As SizeF = g.MeasureString(maxLengthLabel, labelFont)
                     Dim plotRegion As Rectangle = region.PlotRegion
                     Dim pos As PointF
@@ -145,7 +147,7 @@ Namespace BarPlot
 
                     pos = New PointF With {
                         .X = plotRegion.Left + (plotRegion.Width - titleSize.Width) / 2,
-                        .Y = plotRegion.Top - titleSize.Height - stdNum.Min(10, titleSize.Height / 2)
+                        .Y = plotRegion.Top - titleSize.Height - std.Min(10, titleSize.Height / 2)
                     }
 
                     Call g.DrawString(title, titleFont, Brushes.Black, pos)

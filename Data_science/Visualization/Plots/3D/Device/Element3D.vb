@@ -107,6 +107,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Plot3D.Device
 
@@ -211,7 +212,8 @@ Namespace Plot3D.Device
         Public Overrides Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
             Dim praw As PointF = GetPosition(rect.Size)
             Dim pscale As New PointF(scaleX(praw.X), scaleY(praw.Y))
-            Dim font As Font = CSSFont.TryParse(FontCss).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim font As Font = css.GetFont(CSSFont.TryParse(FontCss))
 
             Call g.DrawString(Text, font, Color, pscale)
         End Sub
