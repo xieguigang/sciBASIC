@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 ''' <summary>
@@ -98,6 +99,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
         ' 每一个样本点都平分一段长度
         Dim unitWidth As Double = plotRegion.Height / hist.Leafs
         Dim axisTicks As Double()
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If hist.DistanceValue <= 0.1 Then
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks(decimalDigits:=-1)
@@ -105,7 +107,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks
         End If
 
-        labelFont = CSSFont.TryParse(theme.tagCSS).GDIObject(g.Dpi)
+        labelFont = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
         Dim scaleX As d3js.scale.LinearScale = d3js.scale _
             .linear() _
@@ -117,7 +119,7 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
         Dim right = plotRegion.Left + plotRegion.Right - scaleX(0)
         Dim y = plotRegion.Top + unitWidth - unitWidth / 2
         Dim x!
-        Dim tickFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(g.Dpi)
+        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String

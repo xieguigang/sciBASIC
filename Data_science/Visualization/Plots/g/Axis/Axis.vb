@@ -70,6 +70,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports std = System.Math
@@ -218,8 +219,9 @@ Namespace Graphic.Axis
                             Optional driver As Drivers = Drivers.Default)
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
+            Dim env As CSSEnvirnment = g.LoadEnvironment
             Dim rect As Rectangle = scaler.region
-            Dim tickFont As Font = CSSFont.TryParse(tickFontStyle).GDIObject(g.Dpi)
+            Dim tickFont As Font = env.GetFont(CSSFont.TryParse(tickFontStyle))
             Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
             Dim gridPenX As Pen = Stroke.TryParse(gridX)
             Dim gridPenY As Pen = Stroke.TryParse(gridY)
@@ -311,7 +313,8 @@ Namespace Graphic.Axis
                 Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
                 Dim labelColor = CSSFont.TryParse(labelFont).color.GetBrush
                 Dim tickColor = CSSFont.TryParse(tickFont).color.GetBrush
-                Dim tickFontStyle As Font = CSSFont.TryParse(tickFont).GDIObject(g.Dpi)
+                Dim env As CSSEnvirnment = g.LoadEnvironment
+                Dim tickFontStyle As Font = env.GetFont(CSSFont.TryParse(tickFont))
 
                 For Each tick As Double In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y
@@ -353,17 +356,19 @@ Namespace Graphic.Axis
         ''' <param name="htmlLabel">
         ''' Parameter <paramref name="label"/> is using html text format, function will using html renderer to draw this label
         ''' </param>
-        <Extension> Public Sub DrawY(ByRef g As IGraphics,
-                                     pen As Pen, label$,
-                                     scaler As YScaler,
-                                     X0#, yTicks As Vector,
-                                     layout As YAxisLayoutStyles, offset As Point,
-                                     labelFont$, labelColor As Brush,
-                                     tickFont As Font, tickColor As Brush,
-                                     Optional showAxisLine As Boolean = True,
-                                     Optional htmlLabel As Boolean = True,
-                                     Optional tickFormat$ = "F2")
+        <Extension>
+        Public Sub DrawY(ByRef g As IGraphics,
+                         pen As Pen, label$,
+                         scaler As YScaler,
+                         X0#, yTicks As Vector,
+                         layout As YAxisLayoutStyles, offset As Point,
+                         labelFont$, labelColor As Brush,
+                         tickFont As Font, tickColor As Brush,
+                         Optional showAxisLine As Boolean = True,
+                         Optional htmlLabel As Boolean = True,
+                         Optional tickFormat$ = "F2")
 
+            Dim env As CSSEnvirnment = g.LoadEnvironment
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
             Dim size = scaler.region.Size
 
@@ -434,7 +439,7 @@ Namespace Graphic.Axis
 
                     Call g.DrawImageUnscaled(labelImage, location)
                 Else
-                    Dim font As Font = CSSFont.TryParse(labelFont).GDIObject(g.Dpi)
+                    Dim font As Font = env.GetFont(CSSFont.TryParse(labelFont))
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim location As New PointF With {
                         .X = scaler.region.Left - fSize.Height - maxYTickSize * 1.5,
@@ -489,7 +494,8 @@ Namespace Graphic.Axis
         ''' <returns></returns>
         <Extension>
         Public Function DrawLabel(label$, css$, Optional fcolor$ = "black", Optional size$ = "1440,900", Optional ppi As Integer = 100) As Image
-            Dim font As Font = CSSFont.TryParse(css, [default]:=New Font(FontFace.MicrosoftYaHei, 12)).GDIObject(ppi)
+            Dim env As CSSEnvirnment = New CSSEnvirnment(size.SizeParser, ppi).SetBaseStyles(New Font(FontFace.MicrosoftYaHei, 12))
+            Dim font As Font = env.GetFont(CSSFont.TryParse(css, ))
             Return label.DrawLabel(font, fcolor, size)
         End Function
 

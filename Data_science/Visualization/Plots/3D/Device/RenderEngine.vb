@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Plot3D.Device
 
@@ -108,7 +109,8 @@ Namespace Plot3D.Device
             Dim anchors As New List(Of d3js.Layout.Anchor)
             Dim location As PointF
             Dim labelSize As SizeF
-            Dim labelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(canvas.Dpi)
+            Dim css As CSSEnvirnment = canvas.LoadEnvironment
+            Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
             For i As Integer = 0 To models.Length - 1
                 Dim index As Integer = orders(i)

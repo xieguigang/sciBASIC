@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Plot3D.Impl
 
@@ -180,7 +181,8 @@ Namespace Plot3D.Impl
                             }
                         End Function) _
                 .ToArray
-            Dim font As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim font As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
             Dim region As Rectangle = canvas.PlotRegion
 
             ' 绘制图例？？

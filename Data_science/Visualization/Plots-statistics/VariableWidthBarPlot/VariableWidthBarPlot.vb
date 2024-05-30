@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::a887af1f2e6e0a43766c4f9990602964, Data_science\Visualization\Plots-statistics\VariableWidthBarPlot\VariableWidthBarPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 119
-    '    Code Lines: 96 (80.67%)
-    ' Comment Lines: 8 (6.72%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 15 (12.61%)
-    '     File Size: 6.07 KB
+' Summaries:
 
 
-    ' Module VariableWidthBarPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 119
+'    Code Lines: 96 (80.67%)
+' Comment Lines: 8 (6.72%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 15 (12.61%)
+'     File Size: 6.07 KB
+
+
+' Module VariableWidthBarPlot
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,10 +60,11 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.MIME.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Module VariableWidthBarPlot
 
@@ -90,15 +91,15 @@ Public Module VariableWidthBarPlot
         Dim Y As Vector = list.Select(Function(b) b.Data.height).AsVector.CreateAxisTicks
         Dim sumX# = X.Sum
         Dim p As i32 = Scan0
-        Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
-        Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
-        Dim XLabelFont As Font = CSSFont.TryParse(XLabelFontCSS).GDIObject(ppi)
-        Dim tickFont As Font = CSSFont.TryParse(tickFontCSS).GDIObject(ppi)
-        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS).GDIObject(ppi)
-        Dim dataLabelFont As Font = CSSFont.TryParse(dataLabelFontCSS).GDIObject(ppi)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
+                Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
+                Dim XLabelFont As Font = css.GetFont(CSSFont.TryParse(XLabelFontCSS))
+                Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))
+                Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
+                Dim dataLabelFont As Font = css.GetFont(CSSFont.TryParse(dataLabelFontCSS))
                 Dim plotRect As Rectangle = region.PlotRegion
                 Dim scaler As New DataScaler With {
                     .region = plotRect,
