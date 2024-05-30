@@ -62,6 +62,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace CSS
 
@@ -280,41 +281,34 @@ Namespace CSS
         End Function
 
         Private Shared Function parseInner(css$, ByRef hasValue As Boolean) As CSSFont
-            Dim tokens As String() = css.Split(";"c)
             Dim font As New CSSFont
-            Dim styles As Dictionary(Of String, String) = tokens _
-                .Where(Function(s) Not s.StringEmpty) _
-                .Select(Function(s) s.GetTagValue(":", True)) _
-                .ToDictionary(Function(style) style.Name.Trim.ToLower,
-                              Function(style)
-                                  Return style.Value
-                              End Function)
+            Dim styles As Selector = CssParser.ParseStyle(css)
 
-            If styles.ContainsKey("font-style") Then
+            If styles.HasProperty("font-style") Then
                 hasValue = True
                 font.style = GetStyle(styles("font-style"))
             End If
-            If styles.ContainsKey("font-size") Then
+            If styles.HasProperty("font-size") Then
                 hasValue = True
-                font.size = CSng(Val(styles("font-size")))
+                font.size = styles("font-size")
             Else
                 font.size = 12
             End If
-            If styles.ContainsKey("font-family") Then
+            If styles.HasProperty("font-family") Then
                 hasValue = True
                 font.family = styles("font-family")
             Else
                 font.family = FontFace.MicrosoftYaHei
             End If
-            If styles.ContainsKey("font-weight") Then
+            If styles.HasProperty("font-weight") Then
                 hasValue = True
                 font.weight = CSng(Val(styles("font-weight")))
             End If
-            If styles.ContainsKey("font-variant") Then
+            If styles.HasProperty("font-variant") Then
                 hasValue = True
                 font.variant = styles("font-variant")
             End If
-            If styles.ContainsKey("color") Then
+            If styles.HasProperty("color") Then
                 hasValue = True
                 font.color = styles("color")
             Else

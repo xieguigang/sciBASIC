@@ -166,6 +166,9 @@ Namespace Language.CSS
         ''' </summary>
         ''' <param name="style">the style text inside an element node selector</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' all of the css property name is in lower case.
+        ''' </remarks>
         Public Function ParseStyle(style As String) As Selector
             Dim properties = Strings.Trim(style) _
                 .GetProperty() _
@@ -233,7 +236,7 @@ Namespace Language.CSS
                     Dim propertyName$ = Nothing, propertyValue$ = Nothing
 
                     If t(0) <> "" Then
-                        propertyName = RemoveWhitespace(t(0))
+                        propertyName = RemoveWhitespace(t(0)).ToLower
                     End If
                     If t(1) <> "" Then
                         propertyValue = RemoveWitespaceFormStartAndEnd(t(1))
@@ -246,7 +249,7 @@ Namespace Language.CSS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function RemoveWhitespace(input As String) As String
-            Return New String(input.ToCharArray().Where(Function(c) Not [Char].IsWhiteSpace(c)).ToArray())
+            Return New String(input.ToCharArray().Where(Function(c) Not Char.IsWhiteSpace(c)).ToArray())
         End Function
 
         Private Function RemoveWitespaceFormStartAndEnd(input As String) As String
