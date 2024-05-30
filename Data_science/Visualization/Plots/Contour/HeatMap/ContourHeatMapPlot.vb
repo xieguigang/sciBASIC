@@ -67,7 +67,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Namespace Contour.HeatMap
 
@@ -121,7 +122,7 @@ Namespace Contour.HeatMap
                     .Where(Function(x) Not (+x).IsNaNImaginary AndAlso (+x) <> 0R) _
                     .ToArray
                 indexLevels = reals _
-                    .Select(Function(x) stdNum.Abs(+x)) _
+                    .Select(Function(x) std.Abs(+x)) _
                     .Log2Ranks(mapLevels)
             Else
                 reals = data _
@@ -228,8 +229,9 @@ Namespace Contour.HeatMap
                        End Function) _
                 .ToArray
             Dim rangeTicks#() = realData.Range.CreateAxisTicks
-            Dim legendFont As Font = CSSFont.TryParse(theme.legendLabelCSS).GDIObject(g.Dpi)
-            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim legendFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
+            Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
 
             Call g.ColorMapLegend(
                 layout:=legendLayout,

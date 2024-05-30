@@ -58,6 +58,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Graphic.Legend
 
@@ -91,8 +92,8 @@ Namespace Graphic.Legend
         ''' <see cref="fontstyle"/> to <see cref="Font"/>
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetFont(ppi As Integer) As Font
-            Return CSSFont.TryParse(fontstyle).GDIObject(ppi)
+        Public Function GetFont(css As CSSEnvirnment) As Font
+            Return css.GetFont(CSSFont.TryParse(fontstyle))
         End Function
 
         ''' <summary>
@@ -103,7 +104,7 @@ Namespace Graphic.Legend
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function MeasureTitle(g As IGraphics) As SizeF
-            Return g.MeasureString(title, GetFont(g.Dpi))
+            Return g.MeasureString(title, GetFont(g.LoadEnvironment))
         End Function
 
         Public Overrides Function ToString() As String

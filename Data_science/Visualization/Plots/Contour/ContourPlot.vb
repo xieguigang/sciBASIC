@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Contour
 
@@ -148,9 +149,10 @@ Namespace Contour
                 Next
             End If
 
+            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim layout As New Rectangle(rect.Right + 10, rect.Top, canvas.Padding.Right / 3 * 2, rect.Height / 3 * 2)
-            Dim legendTitleFont As Font = CSSFont.TryParse(theme.legendTitleCSS).GDIObject(g.Dpi)
-            Dim tickFont As Font = CSSFont.TryParse(theme.legendTickCSS).GDIObject(g.Dpi)
+            Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
+            Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
             Dim tickStroke As Pen = Stroke.TryParse(theme.legendTickAxisStroke)
 
             Call g.ColorMapLegend(layout, colors, level_cutoff, legendTitleFont, title:=legendTitle, tickFont, tickStroke)

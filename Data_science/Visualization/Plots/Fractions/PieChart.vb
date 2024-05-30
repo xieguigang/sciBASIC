@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
@@ -224,7 +225,6 @@ Namespace Fractions
                              Optional ppi As Integer = 100) As GraphicsData
 
             Dim margin As Padding = padding
-            Dim font As Font = CSSFont.TryParse(legendFont).GDIObject(ppi)
 
 #Const DEBUG = 0
             If reorder <> 0 Then
@@ -241,7 +241,9 @@ Namespace Fractions
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim gSize = region.PlotRegion.Size
                     Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
-                    Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelStyle).GDIObject(g.Dpi)
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim font As Font = css.GetFont(CSSFont.TryParse(legendFont))
+                    Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelStyle))
                     Dim layoutRect As Rectangle
                     Dim topLeft As New Point(region.Padding.Left, region.Padding.Top)
 

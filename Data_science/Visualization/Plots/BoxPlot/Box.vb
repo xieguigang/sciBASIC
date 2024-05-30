@@ -68,12 +68,12 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace BoxPlot
 
@@ -96,10 +96,10 @@ Namespace BoxPlot
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim ppi As Integer = g.Dpi
-            Dim yAxisLabelFont As Font = CSSFont.TryParse(theme.axisLabelCSS).GDIObject(ppi)
-            Dim groupLabelFont As Font = CSSFont.TryParse(theme.tagCSS).GDIObject(ppi)
-            Dim tickLabelFont As Font = CSSFont.TryParse(theme.axisTickCSS).GDIObject(ppi)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim yAxisLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+            Dim groupLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+            Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
             Dim regionStroke As String = theme.lineStroke
             Dim colors As LoopArray(Of SolidBrush) = Designer _
                 .GetColors(theme.colorSet) _

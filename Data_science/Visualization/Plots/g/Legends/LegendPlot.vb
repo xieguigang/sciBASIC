@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
@@ -292,7 +293,7 @@ Namespace Graphic.Legend
                                    Optional titleBrush As Brush = Nothing,
                                    Optional lineWidth! = -1) As SizeF
 
-            Dim font As Font = l.GetFont(g.Dpi)
+            Dim font As Font = l.GetFont(g.LoadEnvironment)
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
                 .X = pos.X + canvas.Width + 5,
@@ -414,9 +415,10 @@ Namespace Graphic.Legend
         <Extension>
         Public Function MaxLegendSize(legends As IEnumerable(Of LegendObject), g As IGraphics) As SizeF
             Dim maxW! = Single.MinValue, maxH! = Single.MinValue
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             For Each l As LegendObject In legends
-                Dim font As Font = CSSFont.TryParse(l.fontstyle).GDIObject(g.Dpi)
+                Dim font As Font = css.GetFont(CSSFont.TryParse(l.fontstyle))
                 Dim size As SizeF = g.MeasureString(l.title, font)
 
                 If maxW < size.Width Then

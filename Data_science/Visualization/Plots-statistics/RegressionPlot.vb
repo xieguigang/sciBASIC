@@ -73,8 +73,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module RegressionPlot
 
@@ -158,15 +159,16 @@ Public Module RegressionPlot
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
-        Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS).GDIObject(ppi)
         Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim pointLabelFont As Font = css.GetFont(CSSFont.TryParse(pointLabelFontCSS))
 
                 If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty OrElse fit.ErrorTest.Length = 0 Then
-                    Call g.DrawString("Invalid curve!", CSSFont.TryParse(title).GDIObject(g.Dpi), Brushes.Black, New PointF)
+                    Call g.DrawString("Invalid curve!", css.GetFont(CSSFont.TryParse(title)), Brushes.Black, New PointF)
                     Return
                 End If
 
@@ -285,10 +287,10 @@ Public Module RegressionPlot
                             .Y = polynomial(.X)
                         }
 
-                        line = New Line(A, B).ParallelShift(stdNum.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(std.Abs(point.Err))
                         plusError.Add(scaler.Translate(line.A))
 
-                        line = New Line(A, B).ParallelShift(-stdNum.Abs(point.Err))
+                        line = New Line(A, B).ParallelShift(-std.Abs(point.Err))
                         negError.Add(scaler.Translate(line.A))
                     Next
 
@@ -326,7 +328,7 @@ Public Module RegressionPlot
                 Call g.printEquation(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
 
                 If Not title.StringEmpty Then
-                    Dim titleFont As Font = CSSFont.TryParse(titleFontCss).GDIObject(g.Dpi)
+                    Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCss))
                     Dim titleSize = g.MeasureString(title, titleFont)
                     Dim top = (rect.Top - titleSize.Height) / 2
                     Dim left = rect.Left + (rect.Width - titleSize.Width) / 2
@@ -409,7 +411,8 @@ Public Module RegressionPlot
 
     <Extension>
     Private Sub printEquation(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
-        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
         Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
         Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
         Dim pt As New PointF With {
@@ -434,7 +437,8 @@ Public Module RegressionPlot
             New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
             New LegendObject With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
         }
-        Dim legendLabelFont As Font = CSSFont.TryParse(linearDetailsFontCSS).GDIObject(g.Dpi)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
 
         If hasPredictedSamples Then
             legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
