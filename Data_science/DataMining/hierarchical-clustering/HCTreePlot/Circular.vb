@@ -148,6 +148,8 @@ Public Class Circular : Inherits DendrogramPanel
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
         Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
         Dim angle As Integer
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim linkColor As Pen = css.GetPen(Me.linkColor)
 
         If partition.isLeaf Then
             angle = i * unitAngle + unitAngle

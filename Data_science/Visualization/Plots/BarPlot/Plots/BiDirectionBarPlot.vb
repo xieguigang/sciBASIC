@@ -100,8 +100,8 @@ Namespace BarPlot
 
             rect = New Rectangle(boxLeft, rect.Top, rect.Width - (boxLeft - rect.Left), rect.Height)
 
-            Call g.DrawRectangle(Stroke.TryParse(theme.axisStroke).GDIObject, rect)
-            Call g.DrawLine(Stroke.TryParse(theme.gridStrokeY).GDIObject, New PointF(center, rect.Top), New PointF(center, rect.Bottom))
+            Call g.DrawRectangle(css.GetPen(Stroke.TryParse(theme.axisStroke)), rect)
+            Call g.DrawLine(css.GetPen(Stroke.TryParse(theme.gridStrokeY)), New PointF(center, rect.Top), New PointF(center, rect.Bottom))
 
             Dim y As Double = rect.Top - dh + dh * 0.15
             Dim charWidth As Single = g.MeasureString("X", labelFont).Width

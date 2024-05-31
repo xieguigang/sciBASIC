@@ -54,7 +54,6 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -64,7 +63,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
-Imports Microsoft.VisualBasic.MIME.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
@@ -105,10 +105,6 @@ Public Module SampleView
 
         Dim data As New BasicProductMoments(sample)
         Dim means = data.Mean
-        Dim meanLine As Pen = Stroke.TryParse(meanLineCSS).GDIObject
-        Dim normalErrorLine As Pen = Stroke.TryParse(normalErrorColor).GDIObject
-        Dim outlierLine As Pen = Stroke.TryParse(outlierColor).GDIObject
-        Dim normaldistLine As Pen = Stroke.TryParse(normaldistLineColor).GDIObject
         Dim dotBrush As Brush = dotColorStyle.GetBrush
         Dim dotSize As New Size(dotRadius * 2, dotRadius * 2)
         Dim d1# = data.StDev
@@ -141,6 +137,11 @@ Public Module SampleView
                 Dim X, Y As d3js.scale.LinearScale
                 Dim rect = region.PlotRegion
                 Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim meanLine As Pen = css.GetPen(Stroke.TryParse(meanLineCSS))
+                Dim normalErrorLine As Pen = css.GetPen(Stroke.TryParse(normalErrorColor))
+                Dim outlierLine As Pen = css.GetPen(Stroke.TryParse(outlierColor))
+                Dim normaldistLine As Pen = css.GetPen(Stroke.TryParse(normaldistLineColor))
 
                 X = d3js.scale.linear.domain(values:=XTicks).range(integers:={up.Left, up.Right})
                 Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={up.Top, up.Bottom})

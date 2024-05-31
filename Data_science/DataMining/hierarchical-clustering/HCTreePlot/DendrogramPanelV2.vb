@@ -163,6 +163,8 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
         Dim orders As Cluster() = partition.Children.OrderBy(Function(a) a.Leafs).ToArray
         Dim x = plotRegion.Left + plotRegion.Right - scaleX(partition.DistanceValue)
         Dim y As Integer
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim linkColor As Pen = css.GetPen(Me.linkColor)
 
         If partition.isLeaf Then
             y = plotRegion.Top + i * unitWidth + unitWidth

@@ -146,16 +146,14 @@ Namespace BoxPlot
             }
 
             If Not regionStroke.StringEmpty Then
-                Call g.DrawRectangle(
-                        Stroke.TryParse(regionStroke).GDIObject,
-                        plotRegion)
+                Call g.DrawRectangle(css.GetPen(Stroke.TryParse(regionStroke)), plotRegion)
             End If
 
             ' x0在盒子的左边
             Dim x0! = canvas.Padding.Left + leftPart + interval
             Dim y0!
             Dim labelSize As SizeF
-            Dim tickPen As Pen = Stroke.TryParse(regionStroke).GDIObject
+            Dim tickPen As Pen = css.GetPen(Stroke.TryParse(regionStroke))
 
             ' 绘制盒子
             ' 当不填充盒子的时候，使用的线条和点的颜色都是彩色的

@@ -78,7 +78,7 @@ Public MustInherit Class DendrogramPanel : Inherits Chart
     Protected Friend ReadOnly showRuler As Boolean
 
     Protected labelFont As Font
-    Protected ReadOnly linkColor As Pen
+    Protected ReadOnly linkColor As Stroke
     Protected ReadOnly pointColor As SolidBrush
 
     Protected Sub New(hist As Cluster, theme As Theme,
@@ -96,7 +96,7 @@ Public MustInherit Class DendrogramPanel : Inherits Chart
         Me.classIndex = classes.SafeQuery.ToDictionary(Function(a) a.name)
         Me.classinfo = classinfo
         Me.showAllLabels = showAllLabels
-        Me.linkColor = Stroke.TryParse(theme.gridStrokeX).GDIObject
+        Me.linkColor = Stroke.TryParse(theme.gridStrokeX)
         Me.showAllNodes = showAllNodes
         Me.pointColor = pointColor.GetBrush
         Me.showLeafLabels = showLeafLabels

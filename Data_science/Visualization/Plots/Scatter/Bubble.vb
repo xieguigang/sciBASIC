@@ -186,6 +186,7 @@ Public Class Bubble : Inherits Plot
                             End If
                         End Function
         Dim device As IGraphics = g
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If Not (s.color.IsEmpty) Then
             b = New SolidBrush(s.color)
@@ -214,7 +215,8 @@ Public Class Bubble : Inherits Plot
                     Call g.DrawCircle(pt.pt, r, bubblePen, fill:=False)
                 End If
             Else
-                Call Stroke.TryParse(pt.stroke).GDIObject _
+                Call css _
+                    .GetPen(Stroke.TryParse(pt.stroke)) _
                     .DoCall(Sub(pen)
                                 Call device.DrawCircle(pt.pt, r, pen, fill:=False)
                             End Sub)
@@ -297,11 +299,7 @@ Public Class Bubble : Inherits Plot
             XtickFormat:=If(mapper.xAxis.Max > 0.01, "F2", "G2")
         )
 
-        Dim bubblePen As Pen = Nothing
-
-        If Not bubbleBorder Is Nothing Then
-            bubblePen = bubbleBorder.GDIObject
-        End If
+        Dim bubblePen As Pen = css.GetPen(bubbleBorder, allowNull:=True)
 
         For Each s As SerialData In data
             Call Bubble.Plot(g, s, scaler, tagLabelFont, labels, anchors, bubblePen, scale)

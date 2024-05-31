@@ -122,11 +122,11 @@ Namespace BarPlot
                 .ToArray
             Dim colorIndex As DoubleRange = {0.0, colors.Length - 1}
             Dim indexScaler As DoubleRange = data.Select(Function(i) i.Value).ToArray
-            Dim pen As Pen = Stroke.TryParse(chartBoxStroke).GDIObject
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim pen As Pen = css.GetPen(Stroke.TryParse(chartBoxStroke))
                     Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
                     Dim labelFont As Font = css.GetFont(CSSFont.TryParse(labelFontCSS))
                     Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))

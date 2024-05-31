@@ -195,7 +195,7 @@ Namespace Heatmap
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(legendTitleFontCSS))
                 Dim legendTickFont As Font = css.GetFont(CSSFont.TryParse(legendTickFontCSS))
-                Dim legendTickStroke As Pen = Stroke.TryParse(legendTickStrokeCSS).GDIObject
+                Dim legendTickStroke As Pen = css.GetPen(Stroke.TryParse(legendTickStrokeCSS))
 
                 Call Legends.ColorMapLegend(
                     g, legendLayout, designer, rangeTicks,

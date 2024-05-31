@@ -362,6 +362,7 @@ Namespace Graphic.Legend
             Dim size As SizeF
             Dim legendList As LegendObject() = legends.ToArray
             Dim graphicSize As SizeF = gSize.FloatSizeParser
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             If Not regionBorder Is Nothing Then
                 Dim maxTitleSize As SizeF = legendList.MaxLegendSize(g)
@@ -389,10 +390,7 @@ Namespace Graphic.Legend
                             Call g.FillRectangle(background, rect)
                         End If
 
-                        Call g.DrawRectangle(
-                            pen:=regionBorder.GDIObject,
-                            rect:=rect
-                        )
+                        Call g.DrawRectangle(pen:=css.GetPen(regionBorder), rect:=rect)
                     End If
                 End With
             End If

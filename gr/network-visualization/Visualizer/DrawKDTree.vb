@@ -68,13 +68,14 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class DrawKDTree : Inherits Plot
 
     ReadOnly tree As KdTree(Of Point2D)
     ReadOnly query As NamedValue(Of PointF)()
     ReadOnly k As Integer
-    ReadOnly linePen As Pen
+    ReadOnly linePenCss As Stroke
 
     Public Sub New(tree As KdTree(Of Point2D), query As NamedValue(Of PointF)(), k As Integer, theme As Theme)
         MyBase.New(theme)
@@ -82,7 +83,7 @@ Public Class DrawKDTree : Inherits Plot
         Me.tree = tree
         Me.query = query
         Me.k = k
-        Me.linePen = Stroke.TryParse(theme.lineStroke).GDIObject
+        Me.linePenCss = Stroke.TryParse(theme.lineStroke)
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -128,6 +129,7 @@ Public Class DrawKDTree : Inherits Plot
     Private Sub render(g As IGraphics, scaler As DataScaler, root As KdTreeNode(Of Point2D))
         Dim pos As PointF, pos2 As PointF
         Dim c As PointF
+        Dim linePen As Pen = g.LoadEnvironment.GetPen(linePenCss)
 
         pos = root.data.PointF
         pos = scaler.Translate(pos.X, pos.Y)

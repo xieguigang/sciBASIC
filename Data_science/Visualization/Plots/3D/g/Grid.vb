@@ -65,14 +65,15 @@ Namespace Plot3D.Model
 
     Public Module Grids
 
-        Public Iterator Function Grid1(xrange As DoubleRange, yrange As DoubleRange, steps As (X!, Y!), Z#,
+        Public Iterator Function Grid1(css As CSSEnvirnment,
+                                       xrange As DoubleRange, yrange As DoubleRange, steps As (X!, Y!), Z#,
                                        Optional showTicks As Boolean = True,
                                        Optional strokeCSS$ = Stroke.AxisGridStroke,
                                        Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
 
             Dim gridData As New List(Of Line)
             Dim a, b As Point3D
-            Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim pen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
             Dim tickFont As Font = CSSEnvirnment.Empty(300).GetFont(CSSFont.TryParse(tickCSS))
             Dim eps As Double = steps.X / 2
             Dim tickColor As Brush = CSSFont.TryParse(tickCSS).color.GetBrush
@@ -116,14 +117,15 @@ Namespace Plot3D.Model
             Next
         End Function
 
-        Public Iterator Function Grid2(xrange As DoubleRange, zrange As DoubleRange, steps As (X!, Z!), Y#,
+        Public Iterator Function Grid2(css As CSSEnvirnment,
+                                       xrange As DoubleRange, zrange As DoubleRange, steps As (X!, Z!), Y#,
                                        Optional showTicks As Boolean = True,
                                        Optional strokeCSS$ = Stroke.AxisGridStroke,
                                        Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
 
             Dim gridData As New List(Of Line)
             Dim a, b As Point3D
-            Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim pen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
             Dim eps As Double = steps.Z / 2
             Dim tickColor As Brush = CSSFont.TryParse(tickCSS).color.GetBrush
 
@@ -155,13 +157,14 @@ Namespace Plot3D.Model
             Next
         End Function
 
-        Public Iterator Function Grid3(yrange As DoubleRange, zrange As DoubleRange, steps As (Y!, Z!), X#,
+        Public Iterator Function Grid3(css As CSSEnvirnment,
+                                       yrange As DoubleRange, zrange As DoubleRange, steps As (Y!, Z!), X#,
                                        Optional showTicks As Boolean = True,
                                        Optional strokeCSS$ = Stroke.AxisGridStroke,
                                        Optional tickCSS$ = CSSFont.Win7LargerNormal) As IEnumerable(Of Element3D)
 
             Dim a, b As Point3D
-            Dim pen As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim pen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
 
             For z As Double = zrange.Min To zrange.Max Step steps.Z
                 a = New Point3D With {.X = X, .Y = yrange.Min, .Z = z}
