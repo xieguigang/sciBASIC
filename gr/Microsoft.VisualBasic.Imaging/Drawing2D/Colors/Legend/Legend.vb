@@ -377,7 +377,7 @@ Namespace Drawing2D.Colors
 
             With region
 
-                g.DrawLine(Stroke.TryParse(AxisStroke).GDIObject, New Point(.Left, y), New Point(x, y))
+                g.DrawLine(env.GetPen(Stroke.TryParse(AxisStroke)), New Point(.Left, y), New Point(x, y))
                 y += 5
 
                 For Each i As SeqValue(Of Double) In ticks _

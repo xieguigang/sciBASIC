@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
@@ -73,11 +74,12 @@ Namespace Drawing2D.Shapes
                                         size As Size,
                                         Optional br As Brush = Nothing,
                                         Optional border As Stroke = Nothing)
+            Dim css = g.LoadEnvironment
 
             Call g.FillRectangle(br Or BlackBrush, New Rectangle(topLeft, size))
 
             If Not border Is Nothing Then
-                Call g.DrawRectangle(border.GDIObject, New Rectangle(topLeft, size))
+                Call g.DrawRectangle(css.GetPen(border), New Rectangle(topLeft, size))
             End If
         End Sub
     End Class

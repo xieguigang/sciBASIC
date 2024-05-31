@@ -151,7 +151,7 @@ Namespace PostScript
             Return Me
         End Function
 
-        Public Function font(name As String, fontsize!) As GraphicsPS
+        Public Shadows Function font(name As String, fontsize!) As GraphicsPS
             fprintf(fp, "/%s findfont %f scalefont setfont\n", name, fontsize)
             ps_fontsize = fontsize
             Return Me

@@ -55,6 +55,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
@@ -71,6 +72,7 @@ Namespace Drawing2D.Shapes
             Dim c As New Point(a.X, topLeft.Y + size.Height)
             Dim d As New Point(topLeft.X, b.Y)
             Dim diamond As New GraphicsPath
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             diamond.AddLine(a, b)
             diamond.AddLine(b, c)
@@ -81,7 +83,7 @@ Namespace Drawing2D.Shapes
             Call g.FillPath(br Or BlackBrush, diamond)
 
             If Not border Is Nothing Then
-                Call g.DrawPath(border.GDIObject, diamond)
+                Call g.DrawPath(css.GetPen(border), diamond)
             End If
         End Sub
     End Class

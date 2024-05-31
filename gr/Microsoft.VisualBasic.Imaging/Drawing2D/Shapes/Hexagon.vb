@@ -55,6 +55,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
@@ -72,6 +73,7 @@ Namespace Drawing2D.Shapes
             Dim e As New Point(a.X, rect.Bottom)
             Dim f As New Point(topLeft.X, c.Y)
             Dim hex As New GraphicsPath
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             Call hex.AddLine(a, b)
             Call hex.AddLine(b, c)
@@ -84,7 +86,7 @@ Namespace Drawing2D.Shapes
             Call g.FillPath(br Or BlackBrush, hex)
 
             If Not border Is Nothing Then
-                Call g.DrawPath(border.GDIObject, hex)
+                Call g.DrawPath(css.GetPen(border), hex)
             End If
         End Sub
     End Class

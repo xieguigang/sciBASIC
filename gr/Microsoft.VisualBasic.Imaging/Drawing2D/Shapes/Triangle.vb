@@ -62,6 +62,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
@@ -110,6 +111,7 @@ Namespace Drawing2D.Shapes
                                          Optional border As Stroke = Nothing,
                                          Optional reversed As Boolean = False)
             Dim t As New GraphicsPath
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             If Not reversed Then
                 Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
@@ -134,7 +136,7 @@ Namespace Drawing2D.Shapes
             Call g.FillPath(br Or BlackBrush, t)
 
             If Not border Is Nothing Then
-                Call g.DrawPath(border.GDIObject, t)
+                Call g.DrawPath(css.GetPen(border), t)
             End If
         End Sub
     End Class

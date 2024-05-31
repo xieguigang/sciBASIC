@@ -57,7 +57,8 @@
 Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Namespace Drawing2D.Shapes
 
@@ -68,14 +69,15 @@ Namespace Drawing2D.Shapes
 
         Public Shared Sub Draw(ByRef g As IGraphics, topLeft As PointF, size As SizeF, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
             Dim pts As Point() = PathData(topLeft, size)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             If br Is Nothing Then
-                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), border.GDIObject), pts) ' 画一个空心五角星
+                Call g.DrawPolygon(If(border Is Nothing, New Pen(Color.Black), css.GetPen(border)), pts) ' 画一个空心五角星
             Else
                 g.FillPolygon(br, pts) ' 画一个实心的五角星
 
                 If Not border Is Nothing Then
-                    Call g.DrawPolygon(border.GDIObject, pts)
+                    Call g.DrawPolygon(css.GetPen(border), pts)
                 End If
             End If
         End Sub
@@ -88,7 +90,7 @@ Namespace Drawing2D.Shapes
             pts(0) = New Point(center.X, center.Y - radius)
             pts(1) = RotateTheta(pts(0), center, 36.0)
 
-            Dim len As Single = radius * Sin((18.0 * stdNum.PI / 180.0)) / Sin((126.0 * stdNum.PI / 180.0))
+            Dim len As Single = radius * Sin((18.0 * std.PI / 180.0)) / Sin((126.0 * std.PI / 180.0))
 
             pts(1).X = CInt(center.X + len * (pts(1).X - center.X) / radius)
             pts(1).Y = CInt(center.Y + len * (pts(1).Y - center.Y) / radius)
@@ -109,8 +111,8 @@ Namespace Drawing2D.Shapes
         ''' <param name="theta"></param>
         ''' <returns></returns>
         Public Shared Function RotateTheta(pt As Point, center As Point, theta As Single) As Point
-            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Cos((theta * stdNum.PI / 180)) - (pt.Y - center.Y) * Sin((theta * stdNum.PI / 180)))
-            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Sin((theta * stdNum.PI / 180)) + (pt.Y - center.Y) * Cos((theta * stdNum.PI / 180)))
+            Dim x As Integer = CInt(center.X + (pt.X - center.X) * Cos((theta * std.PI / 180)) - (pt.Y - center.Y) * Sin((theta * std.PI / 180)))
+            Dim y As Integer = CInt(center.Y + (pt.X - center.X) * Sin((theta * std.PI / 180)) + (pt.Y - center.Y) * Cos((theta * std.PI / 180)))
 
             Return New Point(x, y)
         End Function

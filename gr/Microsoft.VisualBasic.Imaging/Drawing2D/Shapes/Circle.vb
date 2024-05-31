@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports stdNum = System.Math
 
 Namespace Drawing2D.Shapes
@@ -152,6 +153,8 @@ Namespace Drawing2D.Shapes
             Call g.FillPie(br Or BlackBrush, rect, 0, 360)
 
             If Not border Is Nothing Then
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+
                 rect = New RectangleF With {
                     .X = center.X - radius - border.width,
                     .Y = center.Y - radius - border.width,
@@ -163,7 +166,7 @@ Namespace Drawing2D.Shapes
                 Call g.DrawCircle(
                     centra:=rect.Centre,
                     r:=radius,
-                    color:=border.GDIObject,
+                    color:=css.GetPen(border),
                     fill:=False
                 )
             End If
