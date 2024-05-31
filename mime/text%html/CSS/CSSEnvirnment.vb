@@ -116,7 +116,41 @@ Namespace CSS
             End Select
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="stroke"></param>
+        ''' <param name="allowNull">
+        ''' unlike the function <see cref="GetPen(Stroke)"/> may returns the value of <see cref="baseLine"/> 
+        ''' if the given stroke value is nothing, this function will returns nothing directly if 
+        ''' this parameter value set to TRUE.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetPen(stroke As Stroke, allowNull As Boolean) As Pen
+            If allowNull Then
+                If stroke Is Nothing Then
+                    Return Nothing
+                Else
+                    Return GetPen(stroke)
+                End If
+            Else
+                Return GetPen(stroke)
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="stroke"></param>
+        ''' <returns>
+        ''' this function may handling of the <paramref name="stroke"/> null value 
+        ''' as the default <see cref="baseLine"/> style.
+        ''' </returns>
         Public Function GetPen(stroke As Stroke) As Pen
+            If stroke Is Nothing Then
+                Return baseLine
+            End If
+
             Dim style As DashStyle = GetDashStyle(stroke)
             Dim size As New CssLength(stroke.width)
             Dim width As Single

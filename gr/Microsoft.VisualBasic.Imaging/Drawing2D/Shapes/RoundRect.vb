@@ -57,6 +57,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
@@ -86,12 +87,13 @@ Namespace Drawing2D.Shapes
 
             Dim rect As New RectangleF(topLeft, size)
             Dim path As GraphicsPath = GetRoundedRectPath(rect, radius)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             If Not br Is Nothing Then
                 Call g.FillPath(br, path)
             End If
             If Not border Is Nothing Then
-                Call g.DrawPath(border, path)
+                Call g.DrawPath(css.GetPen(border, allowNull:=True), path)
             End If
         End Sub
 
