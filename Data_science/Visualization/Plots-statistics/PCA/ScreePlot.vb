@@ -106,7 +106,7 @@ Namespace PCA
                     Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
                     Dim css As CSSEnvirnment = g.LoadEnvironment
 
-                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor,
+                    Call g.DrawY(css.GetPen(Stroke.TryParse(axisStrokeCSS)), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor,
                                  css.GetFont(CSSFont.TryParse(tickFontStyle)), tickColor,
                                  htmlLabel:=False,
                                  tickFormat:="F2")

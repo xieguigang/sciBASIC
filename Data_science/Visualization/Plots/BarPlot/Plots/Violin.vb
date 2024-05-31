@@ -122,7 +122,7 @@ Public Class Violin : Inherits Plot
         Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
         Dim labelColor As Brush = CSSFont.TryParse(theme.axisLabelCSS).color.GetBrush
         Dim labelPos As PointF
-        Dim polygonStroke As Pen = Stroke.TryParse(theme.lineStroke)
+        Dim polygonStroke As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
         Dim plotRegion As Rectangle = canvas.PlotRegion
         Dim Y = d3js.scale _

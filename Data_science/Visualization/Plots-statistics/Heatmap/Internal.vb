@@ -94,7 +94,8 @@ Namespace Heatmap
         ''' <param name="v"></param>
         ''' <param name="base#"></param>
         ''' <returns></returns>
-        <Extension> Public Function Log(v As Vector, base#) As Vector
+        <Extension>
+        Public Function Log(v As Vector, base#) As Vector
             Return v _
                 .Select(Function(x)
                             If x = 0R Then
@@ -286,7 +287,7 @@ Namespace Heatmap
                                                     css.GetFont(CSSFont.TryParse(CSSFont.Win7LargerNormal)),
                                                     legendTitle,
                                                     css.GetFont(CSSFont.TryParse(CSSFont.Win7Normal)),
-                                                    Stroke.TryParse(Stroke.StrongHighlightStroke))
+                                                    css.GetPen(Stroke.TryParse(Stroke.StrongHighlightStroke)))
                     End If
 
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度

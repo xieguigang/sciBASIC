@@ -223,8 +223,8 @@ Namespace Graphic.Axis
             Dim rect As Rectangle = scaler.region
             Dim tickFont As Font = env.GetFont(CSSFont.TryParse(tickFontStyle))
             Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
-            Dim gridPenX As Pen = Stroke.TryParse(gridX)
-            Dim gridPenY As Pen = Stroke.TryParse(gridY)
+            Dim gridPenX As Pen = env.GetPen(Stroke.TryParse(gridX))
+            Dim gridPenY As Pen = env.GetPen(Stroke.TryParse(gridY))
 
             Call scaler.checkScaler
 
@@ -276,7 +276,7 @@ Namespace Graphic.Axis
                 Next
             End If
 
-            Dim pen As Pen = Stroke.TryParse(axisStroke).GDIObject
+            Dim pen As Pen = env.GetPen(Stroke.TryParse(axisStroke))
             Dim labelColor As SolidBrush = CSSFont.TryParse(labelFontStyle).color.GetBrush
 
             If xlayout <> XAxisLayoutStyles.None Then
@@ -310,11 +310,11 @@ Namespace Graphic.Axis
                              Optional gridStroke$ = Stroke.AxisGridStroke)
             With region
                 Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
-                Dim gridPen As Pen = Stroke.TryParse(css:=gridStroke)
                 Dim labelColor = CSSFont.TryParse(labelFont).color.GetBrush
                 Dim tickColor = CSSFont.TryParse(tickFont).color.GetBrush
                 Dim env As CSSEnvirnment = g.LoadEnvironment
                 Dim tickFontStyle As Font = env.GetFont(CSSFont.TryParse(tickFont))
+                Dim gridPen As Pen = env.GetPen(Stroke.TryParse(css:=gridStroke))
 
                 For Each tick As Double In scaler.AxisTicks.Y
                     Dim y = scaler.TranslateY(tick) + offset.Y

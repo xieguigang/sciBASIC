@@ -93,8 +93,6 @@ Public Module VennPlot
                           Optional regionTitleFontCSS$ = CSSFont.Win7Large,
                           Optional ppi As Integer = 100) As GraphicsData
 
-        Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
-
         Call {a, b}.fixSetCompleteness
 
         Dim plotInternal =
@@ -102,6 +100,7 @@ Public Module VennPlot
                 Dim region As Rectangle = rectangle.PlotRegion
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim regionTitleFont As Font = css.GetFont(CSSFont.TryParse(regionTitleFontCSS))
+                Dim strokePen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
 
                 ' 计算两个圆的半径大小
                 ' ra + rb = width
@@ -167,14 +166,13 @@ Public Module VennPlot
                           Optional regionTitleFontCSS$ = CSSFont.Win7Large,
                           Optional ppi As Integer = 100) As GraphicsData
 
-        Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
-
         Call {a, b, c}.fixSetCompleteness
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
                 Dim region As Rectangle = rectangle.PlotRegion
                 Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim strokePen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
                 Dim regionTitleFont As Font = css.GetFont(CSSFont.TryParse(regionTitleFontCSS))
                 ' 计算三个圆的半径大小
                 ' ra + rb = width

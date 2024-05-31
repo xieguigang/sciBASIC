@@ -71,15 +71,14 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.MIME.Html.Document
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Heatmap
 
     Public Class CorrelationTriangle : Inherits Plot
 
-        Dim gridBrush As Pen
+        Dim gridBrush As Stroke
         Dim colors As SolidBrush()
         Dim drawValueLabel As Boolean
         Dim variantSize As Boolean
@@ -110,7 +109,7 @@ Namespace Heatmap
             Dim dh! = dStep.Height - gridBrush.Width
             Dim legendSize = plotRegion.Width / 5
             ' 每一个方格的大小是不变的
-            Dim r! = stdNum.Max(dw, dh)
+            Dim r! = std.Max(dw, dh)
             Dim dr!
             Dim blockSize As New SizeF With {.Width = r, .Height = r}
             Dim i% = 1
@@ -118,7 +117,7 @@ Namespace Heatmap
             Dim radius As DoubleRange = {0R, r}
             Dim getRadius = Function(corr#) As Double
                                 If variantSize Then
-                                    Return cor.range.ScaleMapping(stdNum.Abs(corr), radius)
+                                    Return cor.range.ScaleMapping(std.Abs(corr), radius)
                                 Else
                                     Return blockSize.Width
                                 End If
@@ -137,7 +136,7 @@ Namespace Heatmap
                 titleFont:=css.GetFont(theme.legendTitleCSS),
                 title:=legendTitle,
                 tickFont:=css.GetFont(theme.legendLabelCSS),
-                tickAxisStroke:=Stroke.TryParse(Stroke.StrongHighlightStroke)
+                tickAxisStroke:=css.GetPen(Stroke.TryParse(Stroke.StrongHighlightStroke))
             )
 
             ' 在这里绘制具体的矩阵
@@ -183,7 +182,7 @@ Namespace Heatmap
                     End If
 
                     If gridDraw Then
-                        Call g.DrawRectangle(gridBrush, rect)
+                        Call g.DrawRectangle(css.GetPen(gridBrush), rect)
                     End If
                     If Not labelbrush Is Nothing Then
 
@@ -245,7 +244,8 @@ Namespace Heatmap
                                               Optional driver As Drivers = Drivers.Default,
                                               Optional ppi As Integer = 100) As GraphicsData
 
-            Dim gridBrush As Pen = Stroke.TryParse(gridCSS).GDIObject
+
+            Dim gridBrush As Stroke = Stroke.TryParse(gridCSS)
             Dim keys$() = data.keys
             Dim colors As SolidBrush() = Designer.GetColors(mapName, mapLevels).Reverse.GetBrushes
             Dim cor As New CorrelationData(data, range)

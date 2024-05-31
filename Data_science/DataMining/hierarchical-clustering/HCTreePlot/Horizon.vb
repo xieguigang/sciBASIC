@@ -109,7 +109,7 @@ Public Class Horizon : Inherits DendrogramPanelV2
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
         If classinfo.IsNullOrEmpty Then
             labelPadding = g.MeasureString("0", labelFont).Width / 2

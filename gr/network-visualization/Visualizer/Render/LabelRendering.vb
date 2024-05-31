@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
 ''' <summary>
@@ -94,8 +95,9 @@ Friend Class LabelRendering
 
     Public Sub renderLabels(g As IGraphics, labelList As IEnumerable(Of LayoutLabel))
         Dim labels As New List(Of LayoutLabel)(labelList)
+        Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim defaultLabelColor As New SolidBrush(defaultLabelColorValue.TranslateColor)
-        Dim labelTextStroke As Pen = Stroke.TryParse(labelTextStrokeCSS)
+        Dim labelTextStroke As Pen = css.GetPen(Stroke.TryParse(labelTextStrokeCSS))
 
         ' 小于等于零的时候表示不进行布局计算
         If iteration > 0 Then

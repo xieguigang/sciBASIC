@@ -107,7 +107,7 @@ Public Class Circular : Inherits DendrogramPanel
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
-        Dim axisPen As Pen = Stroke.TryParse(theme.axisStroke)
+        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim angle As Double = 0
         Dim r As Double
 
