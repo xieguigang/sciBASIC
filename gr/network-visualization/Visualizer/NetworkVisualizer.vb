@@ -244,8 +244,9 @@ Public Module NetworkVisualizer
 
         Call "Initialize gdi objects...".__INFO_ECHO
 
-        Dim stroke As Pen = CSS.Stroke.TryParse(nodeStroke)?.GDIObject
-        Dim baseFont As Font = CSSEnvirnment.Empty(ppi).GetFont(CSSFont.TryParse(
+        Dim env As CSSEnvirnment = CSSEnvirnment.Empty(ppi)
+        Dim stroke As Pen = env.GetPen(CSS.Stroke.TryParse(nodeStroke), allowNull:=True)
+        Dim baseFont As Font = env.GetFont(CSSFont.TryParse(
             labelFontBase, New CSSFont With {
                 .family = FontFace.MicrosoftYaHei,
                 .size = 12,

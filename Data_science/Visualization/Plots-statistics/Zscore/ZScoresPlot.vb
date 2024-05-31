@@ -100,7 +100,7 @@ Public Class ZScoresPlot : Inherits Plot
         Dim maxSerialLabelSize As SizeF = g.MeasureString(maxSerialsLabel, serialLabelFont)
         Dim maxLegendLabelSize As SizeF = g.MeasureString(maxGroupLabel, legendLabelFont)
         Dim pointSize As New SizeF(theme.pointSize, theme.pointSize)
-        Dim axisStroke As Pen = Stroke.TryParse(theme.axisStroke).GDIObject
+        Dim axisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
 
         ' 计算出layout信息
         Dim plotWidth% = canvas.PlotRegion.Width _
@@ -130,7 +130,7 @@ Public Class ZScoresPlot : Inherits Plot
                            New PointF(left + plotWidth, yTop + plotHeight))
 
         If displayZERO Then
-            Dim zeroPen As Pen = Stroke.TryParse(theme.lineStroke).GDIObject
+            Dim zeroPen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
 
             g.DrawLine(zeroPen,
                                New PointF(X(0), yTop),

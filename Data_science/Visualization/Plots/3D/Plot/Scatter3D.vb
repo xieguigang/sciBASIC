@@ -103,11 +103,9 @@ Namespace Plot3D.Impl
             Me.showHull = showHull
             Me.hullAlpha = hullAlpha
             Me.hullBspline = hullBspline
-
-            Call populateModels(100)
         End Sub
 
-        Private Iterator Function populateModels(ppi As Integer) As IEnumerable(Of Element3D)
+        Private Iterator Function populateModels(css As CSSEnvirnment) As IEnumerable(Of Element3D)
             Dim points As Point3D() = serials _
                 .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
@@ -128,6 +126,7 @@ Namespace Plot3D.Impl
             Next
 
             For Each item As Element3D In AxisDraw.Axis(
+                    css,
                     xrange:=X, yrange:=Y, zrange:=Z,
                     labelFontCss:=theme.axisLabelCSS,
                     labels:=(xlabel, ylabel, zlabel),
@@ -201,7 +200,7 @@ Namespace Plot3D.Impl
             Dim labelColor As New SolidBrush(theme.tagColor.TranslateColor)
 
             ' 要先绘制三维图形，要不然会将图例遮住的
-            Call populateModels(g.Dpi).RenderAs3DChart(
+            Call populateModels(css).RenderAs3DChart(
                 canvas:=g,
                 camera:=camera,
                 region:=canvas,

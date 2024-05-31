@@ -54,6 +54,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging
@@ -68,7 +69,9 @@ Namespace Plot3D.Model
     ''' </summary>
     Public Module AxisDraw
 
-        Public Function Axis(xrange As DoubleRange,
+        <Extension>
+        Public Function Axis(css As CSSEnvirnment,
+                             xrange As DoubleRange,
                              yrange As DoubleRange,
                              zrange As DoubleRange,
                              labelFontCss As String,
@@ -85,7 +88,7 @@ Namespace Plot3D.Model
             Dim X As New Point3D With {.X = xrange.Min, .Y = yrange.Min, .Z = zrange.Min}
             Dim Y As New Point3D With {.X = xrange.Max, .Y = yrange.Max, .Z = zrange.Min}
             Dim Z As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Max}
-            Dim color As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim color As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
             Dim bigArrow As AdjustableArrowCap
 
             With arrowFactor.FloatSizeParser

@@ -92,8 +92,8 @@ Public Module VariableWidthBarPlot
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim css As CSSEnvirnment = g.LoadEnvironment
-                Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
-                Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
+                Dim axisPen As Pen = css.GetPen(Stroke.TryParse(axisPenCSS))
+                Dim tickPen As Pen = css.GetPen(Stroke.TryParse(ticksPenCSS))
                 Dim XLabelFont As Font = css.GetFont(CSSFont.TryParse(XLabelFontCSS))
                 Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))
                 Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))

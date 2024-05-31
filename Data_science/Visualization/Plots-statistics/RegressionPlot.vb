@@ -155,17 +155,17 @@ Public Module RegressionPlot
         End If
 
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
-        Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
-        Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
-        Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim pointLabelFont As Font = css.GetFont(CSSFont.TryParse(pointLabelFontCSS))
+                Dim regressionPen As Pen = css.GetPen(Stroke.TryParse(regressionLineStyle))
+                Dim predictedPointBorder As Pen = css.GetPen(Stroke.TryParse(predictPointStroke))
+                Dim labelAnchorPen As Pen = css.GetPen(Stroke.TryParse(labelAnchorLineStroke))
 
                 If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty OrElse fit.ErrorTest.Length = 0 Then
                     Call g.DrawString("Invalid curve!", css.GetFont(CSSFont.TryParse(title)), Brushes.Black, New PointF)

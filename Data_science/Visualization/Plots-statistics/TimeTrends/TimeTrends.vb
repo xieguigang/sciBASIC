@@ -156,9 +156,6 @@ Public Module TimeTrends
         Dim rangePoly As (min As List(Of PointF), max As List(Of PointF))
 
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
-        Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject
-        Dim yTickPen As Pen = Stroke.TryParse(yTickStrokeCSS).GDIObject
-        Dim rgPen As Pen = Stroke.TryParse(rangeStroke).GDIObject
         Dim rgColor As Color = rangeColor _
             .TranslateColor _
             .Alpha(255 * rangeOpacity)
@@ -181,6 +178,9 @@ Public Module TimeTrends
                 Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(tickLabelFontCSS))
                 Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
                 Dim subTitleFont As Font = css.GetFont(CSSFont.TryParse(subTitleFontCSS))
+                Dim axisPen As Pen = css.GetPen(Stroke.TryParse(axisStrokeCSS))
+                Dim yTickPen As Pen = css.GetPen(Stroke.TryParse(yTickStrokeCSS))
+                Dim rgPen As Pen = css.GetPen(Stroke.TryParse(rangeStroke))
 
                 ' 绘制Y坐标轴
                 For Each yVal As Double In yTicks
