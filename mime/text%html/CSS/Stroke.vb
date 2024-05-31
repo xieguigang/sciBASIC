@@ -86,7 +86,7 @@ Namespace CSS
         ''' the line drawing width
         ''' </summary>
         ''' <returns></returns>
-        Public Property width As Single
+        Public Property width As String
         ''' <summary>
         ''' the line drawing style
         ''' </summary>
@@ -209,7 +209,7 @@ Namespace CSS
             Dim st As New Stroke With {
                 .dash = GetDashStyle(t.TryGetValue("stroke-dash")),
                 .fill = t.TryGetValue("stroke"),
-                .width = Val(t.TryGetValue("stroke-width"))
+                .width = t.TryGetValue("stroke-width")
             }
 
             If st.fill.StringEmpty Then
