@@ -100,6 +100,14 @@ Namespace CSS
             Return Me
         End Function
 
+        Public Function GetSize(size As CSSsize) As SizeF
+
+        End Function
+
+        Public Function GetPen(stroke As Stroke) As Pen
+
+        End Function
+
         Public Function GetFontByScale(em As Single) As Font
             Dim newSize As Single = em * baseFont.Size
             Dim newFont As New Font(baseFont.FontFamily, newSize, baseFont.Style)
