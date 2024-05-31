@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a1ec8118bd67f40fb630ab229627d10, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::535a3631e5131ae6151ec8884e530856, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4469
-    '    Code Lines: 271 (6.06%)
-    ' Comment Lines: 4143 (92.71%)
-    '    - Xml Docs: 6.64%
+    '   Total Lines: 4443
+    '    Code Lines: 276 (6.21%)
+    ' Comment Lines: 4108 (92.46%)
+    '    - Xml Docs: 7.79%
     ' 
-    '   Blank Lines: 55 (1.23%)
-    '     File Size: 203.97 KB
+    '   Blank Lines: 59 (1.33%)
+    '     File Size: 204.06 KB
 
 
     '     Class IGraphics
     ' 
-    '         Properties: Background, Dpi
+    '         Properties: Background, Dpi, Font, Stroke
     ' 
     '         Sub: Clear, FillPie, FillRectangle, (+2 Overloads) FillRectangles, Finalize
     ' 

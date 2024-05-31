@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8daa45161f2d4e21a6e24b8a70a9656, Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
+﻿#Region "Microsoft.VisualBasic::94a448882461c33dbc45413a67901d75, Data_science\Visualization\Plots\3D\Device\RenderEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 100 (73.53%)
-    ' Comment Lines: 20 (14.71%)
+    '   Total Lines: 138
+    '    Code Lines: 102 (73.91%)
+    ' Comment Lines: 20 (14.49%)
     '    - Xml Docs: 65.00%
     ' 
-    '   Blank Lines: 16 (11.76%)
-    '     File Size: 5.83 KB
+    '   Blank Lines: 16 (11.59%)
+    '     File Size: 5.94 KB
 
 
     '     Module RenderEngine

@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::adac4ef038e6c4ab8a1d831171223a3b, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::61828de0ddb1d0ddebdf1833fa048ae0, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 215
-'    Code Lines: 175 (81.40%)
-' Comment Lines: 17 (7.91%)
-'    - Xml Docs: 35.29%
-' 
-'   Blank Lines: 23 (10.70%)
-'     File Size: 10.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CorrelationTriangle
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: Plot
-' 
-'         Sub: PlotInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 176 (81.48%)
+    ' Comment Lines: 17 (7.87%)
+    '    - Xml Docs: 35.29%
+    ' 
+    '   Blank Lines: 23 (10.65%)
+    '     File Size: 10.79 KB
+
+
+    '     Class CorrelationTriangle
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Plot
+    ' 
+    '         Sub: PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43741703f997ad43254fade717158ecb, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::e321e8f1195b26519afcb1a3e8ceed80, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 501
-    '    Code Lines: 339 (67.66%)
-    ' Comment Lines: 110 (21.96%)
+    '   Total Lines: 507
+    '    Code Lines: 345 (68.05%)
+    ' Comment Lines: 110 (21.70%)
     '    - Xml Docs: 88.18%
     ' 
-    '   Blank Lines: 52 (10.38%)
-    '     File Size: 23.52 KB
+    '   Blank Lines: 52 (10.26%)
+    '     File Size: 23.72 KB
 
 
     '     Module Axis

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7efbb902579954f4254e686efbde6f59, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::06a6f8fbf22f1a9e9f5ec5b576d60cd5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 51 (66.23%)
-    ' Comment Lines: 14 (18.18%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 89
+    '    Code Lines: 56 (62.92%)
+    ' Comment Lines: 20 (22.47%)
+    '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 12 (15.58%)
-    '     File Size: 2.75 KB
+    '   Blank Lines: 13 (14.61%)
+    '     File Size: 3.09 KB
 
 
     '     Class FontMetrics
     ' 
     '         Properties: Font, Graphics, Height
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: (+2 Overloads) GetStringBounds
     ' 
     '     Module Extensions

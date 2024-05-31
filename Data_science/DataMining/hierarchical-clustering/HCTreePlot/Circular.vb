@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b4d43249766aa52ed6d9a724447399, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Circular.vb"
+﻿#Region "Microsoft.VisualBasic::acb88f06688f4574f309152d0f51e5d2, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Circular.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 112 (79.43%)
-    ' Comment Lines: 5 (3.55%)
+    '   Total Lines: 143
+    '    Code Lines: 114 (79.72%)
+    ' Comment Lines: 5 (3.50%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 24 (17.02%)
-    '     File Size: 6.16 KB
+    '   Blank Lines: 24 (16.78%)
+    '     File Size: 6.25 KB
 
 
     ' Class Circular

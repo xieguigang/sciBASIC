@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dde5788128f23c2af66d7dbe257e68b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::76f82b0faad8a6d25cd5bf4fbec615ae, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 73 (52.52%)
-    ' Comment Lines: 46 (33.09%)
+    '   Total Lines: 141
+    '    Code Lines: 76 (53.90%)
+    ' Comment Lines: 46 (32.62%)
     '    - Xml Docs: 41.30%
     ' 
-    '   Blank Lines: 20 (14.39%)
+    '   Blank Lines: 19 (13.48%)
     '     File Size: 6.52 KB
 
 

@@ -1,68 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::773b152fe806b97ae8969f0253538bf8, mime\text%html\Render\CSS\CssLength.vb"
+﻿#Region "Microsoft.VisualBasic::232f28c9c90fc765bec390d0321d2e42, mime\text%html\Render\CSS\CssLength.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 275
-'    Code Lines: 157 (57.09%)
-' Comment Lines: 56 (20.36%)
-'    - Xml Docs: 89.29%
-' 
-'   Blank Lines: 62 (22.55%)
-'     File Size: 8.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CssLength
-' 
-' 
-'         Enum CssUnit
-' 
-'             Centimeters, Ems, Ex, Inches, Milimeters
-'             None, Picas, Pixels, Points
-' 
-' 
-' 
-'  
-' 
-'     Properties: HasError, IsPercentage, IsRelative, Length, Number
-'                 Unit
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: ConvertEmToPixels, ConvertEmToPoints, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 198
+    '    Code Lines: 107 (54.04%)
+    ' Comment Lines: 50 (25.25%)
+    '    - Xml Docs: 88.00%
+    ' 
+    '   Blank Lines: 41 (20.71%)
+    '     File Size: 6.78 KB
+
+
+    '     Class CssLength
+    ' 
+    '         Properties: HasError, IsPercentage, IsRelative, Length, Number
+    '                     Unit
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ConvertEmToPixels, ConvertEmToPoints, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
