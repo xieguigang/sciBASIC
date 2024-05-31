@@ -60,6 +60,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
 Namespace CSS
 
@@ -81,6 +82,9 @@ Namespace CSS
         ''' the line fill color brush description
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' default fill is black color if this value is omit from the css style string
+        ''' </remarks>
         Public Property fill As String
         ''' <summary>
         ''' the line drawing width
@@ -92,15 +96,6 @@ Namespace CSS
         ''' </summary>
         ''' <returns></returns>
         Public Property dash As DashStyle
-
-        Public ReadOnly Property GDIObject As Pen
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New Pen(fill.GetBrush, width) With {
-                    .DashStyle = dash
-                }
-            End Get
-        End Property
 
         Public Overrides ReadOnly Property CSSValue As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -196,20 +191,11 @@ Namespace CSS
         ''' <param name="css"></param>
         ''' <returns></returns>
         Private Shared Function ParserImpl(css As String) As Stroke
-            Dim t As Dictionary(Of String, String) = css _
-                .Trim(";"c) _
-                .Split(";"c) _
-                .Select(AddressOf Trim) _
-                .Select(Function(s) s.GetTagValue(":", trim:=True)) _
-                .ToDictionary(Function(x) x.Name,
-                              Function(x)
-                                  Return x.Value
-                              End Function)
-
+            Dim styles As Selector = CssParser.ParseStyle(css)
             Dim st As New Stroke With {
-                .dash = GetDashStyle(t.TryGetValue("stroke-dash")),
-                .fill = t.TryGetValue("stroke"),
-                .width = t.TryGetValue("stroke-width")
+                .dash = GetDashStyle(styles("stroke-dash")),
+                .fill = styles("stroke"),
+                .width = styles("stroke-width")
             }
 
             If st.fill.StringEmpty Then
@@ -218,20 +204,6 @@ Namespace CSS
 
             Return st
         End Function
-
-        ''' <summary>
-        ''' 在进行隐式转换的时候，空值的话转换函数会返回空值
-        ''' </summary>
-        ''' <param name="stroke"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(stroke As Stroke) As Pen
-            If stroke Is Nothing Then
-                Return Nothing
-            Else
-                Return stroke.GDIObject
-            End If
-        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(css$) As Stroke

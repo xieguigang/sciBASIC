@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace CSS
 
@@ -62,6 +63,14 @@ Namespace CSS
     Public Class Fill
 
         Public Property fill As String
+
+        Public Overrides Function ToString() As String
+            Return fill
+        End Function
+
+        Public Function CreateBrush() As Brush
+            Return fill.GetBrush
+        End Function
 
     End Class
 End Namespace
