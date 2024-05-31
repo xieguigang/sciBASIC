@@ -126,7 +126,7 @@ Namespace Impl
             If isNullable Then
                 ' assumed to be a low contention lock
                 SyncLock WidenToNullableEnumLookup
-                    Dim ret As Func(Of IEnumerable, IEnumerable)
+                    Dim ret As Func(Of IEnumerable, IEnumerable) = Nothing
                     If WidenToNullableEnumLookup.TryGetValue(nonNullable, ret) Then Return ret
                     ret = CreateNullableEnumWidener(nonNullable)
                     WidenToNullableEnumLookup(nonNullable) = ret
@@ -136,7 +136,7 @@ Namespace Impl
             Else
                 ' assumed to be a low contention lock
                 SyncLock WidenToEnumLookup
-                    Dim ret As Func(Of IEnumerable, IEnumerable)
+                    Dim ret As Func(Of IEnumerable, IEnumerable) = Nothing
                     If WidenToEnumLookup.TryGetValue(nonNullable, ret) Then Return ret
                     ret = CreateEnumWidener(nonNullable)
                     WidenToEnumLookup(nonNullable) = ret
@@ -155,7 +155,7 @@ Namespace Impl
             If isNullable Then
                 ' assumed to be a low contention lock
                 SyncLock WidenToNullableSyntheticEnumLookup
-                    Dim ret As Func(Of IEnumerable, IEnumerable)
+                    Dim ret As Func(Of IEnumerable, IEnumerable) = Nothing
                     If WidenToNullableSyntheticEnumLookup.TryGetValue(nonNullable, ret) Then Return ret
                     ret = CreateNullableSyntheticEnumWidener(nonNullable)
                     WidenToNullableSyntheticEnumLookup(nonNullable) = ret
@@ -165,7 +165,7 @@ Namespace Impl
             Else
                 ' assumed to be a low contention lock
                 SyncLock WidenToSyntehticEnumLookup
-                    Dim ret As Func(Of IEnumerable, IEnumerable)
+                    Dim ret As Func(Of IEnumerable, IEnumerable) = Nothing
                     If WidenToSyntehticEnumLookup.TryGetValue(nonNullable, ret) Then Return ret
                     ret = CreateSyntheticEnumWidener(nonNullable)
                     WidenToSyntehticEnumLookup(nonNullable) = ret

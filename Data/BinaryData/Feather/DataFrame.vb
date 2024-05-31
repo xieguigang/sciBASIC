@@ -185,7 +185,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the row at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetRow(Long,Row)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetRow"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long) As Row
         Get
@@ -196,7 +196,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the column with the given name.
     ''' 
-    ''' Will throw if the name is not found.  Use <see cref="TryGetColumn(String,Column)"/> for non-throwing gets.
+    ''' Will throw if the name is not found.  Use <see cref="TryGetColumn"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Column
         Get
@@ -207,7 +207,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the value at the given row and column indexes.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnIndex As Long) As Value Implements IDataFrame.Item
         Get

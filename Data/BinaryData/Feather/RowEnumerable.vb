@@ -136,7 +136,7 @@ Public Class RowEnumerator
     Public Function MoveNext() As Boolean Implements IEnumerator.MoveNext
         Index += 1
 
-        Dim nextRow As Row
+        Dim nextRow As Row = Nothing
         If Not Parent.TryGetRowTranslated(Index, nextRow) Then Return False
 
         CurrentProp = nextRow

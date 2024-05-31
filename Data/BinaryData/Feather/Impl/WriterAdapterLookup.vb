@@ -250,7 +250,7 @@ Namespace Impl
             ' making an assumption that actually using the adapter
             '   dominates creating it, making this lock acceptable
             SyncLock ArrayAdapters
-                Dim ret As Action(Of FeatherWriter, IEnumerable)
+                Dim ret As Action(Of FeatherWriter, IEnumerable) = Nothing
                 If ArrayAdapters.TryGetValue(key, ret) Then Return ret
                 ret = ArrayAdapter.Create(elementType, toType)
                 ArrayAdapters(key) = ret
@@ -288,7 +288,7 @@ Namespace Impl
             ' making an assumption that actually using the adapter
             '   dominates creating it, making this lock acceptable
             SyncLock EnumerableAdapters
-                Dim ret As Action(Of FeatherWriter, IEnumerable)
+                Dim ret As Action(Of FeatherWriter, IEnumerable) = Nothing
                 If EnumerableAdapters.TryGetValue(key, ret) Then Return ret
                 ret = EnumerableAdapter.Create(elementType, toType)
                 EnumerableAdapters(key) = ret

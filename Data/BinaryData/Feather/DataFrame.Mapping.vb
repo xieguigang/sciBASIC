@@ -89,8 +89,8 @@ Partial Public Class DataFrame
     Public Function Proxy(Of TProxyType)(factory As Func(Of TProxyType), ParamArray membersToColumns As String()) As ProxyDataFrame(Of TProxyType)
         If factory Is Nothing Then Throw New ArgumentNullException(NameOf(factory))
 
-        Dim columnsToMembers As Dictionary(Of Long, MemberInfo)
-        Dim errorMessage As String
+        Dim columnsToMembers As Dictionary(Of Long, MemberInfo) = Nothing
+        Dim errorMessage As String = Nothing
         If Not TryInferMapping(Of TProxyType)(membersToColumns, columnsToMembers, errorMessage) Then
             Throw New ArgumentException(errorMessage, NameOf(membersToColumns))
         End If
@@ -130,8 +130,8 @@ Partial Public Class DataFrame
             Return False
         End If
 
-        Dim columnsToMembers As Dictionary(Of Long, MemberInfo)
-        Dim __ As String
+        Dim columnsToMembers As Dictionary(Of Long, MemberInfo) = Nothing
+        Dim __ As String = Nothing
         If Not TryInferMapping(Of TProxyType)(membersToColumns, columnsToMembers, __) Then
             dataframe = Nothing
             Return False
@@ -151,7 +151,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 1 column while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrame(Of TCol1)
+        Dim ret As TypedDataFrame(Of TCol1) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}")
         End If
@@ -189,7 +189,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 2 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType(Of TCol1, TCol2)
+        Dim ret As TypedDataFrameType(Of TCol1, TCol2) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}")
         End If
@@ -232,7 +232,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 3 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType1(Of TCol1, TCol2, TCol3)
+        Dim ret As TypedDataFrameType1(Of TCol1, TCol2, TCol3) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}, {GetType(TCol3).Name} = {Enumerable.ElementAt(AllColumns, 2).Type.Name}")
         End If
@@ -280,7 +280,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 4 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
+        Dim ret As TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}, {GetType(TCol3).Name} = {Enumerable.ElementAt(AllColumns, 2).Type.Name}, {GetType(TCol4).Name} = {Enumerable.ElementAt(AllColumns, 3).Type.Name}")
         End If
@@ -391,7 +391,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 6 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
+        Dim ret As TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}, {GetType(TCol3).Name} = {Enumerable.ElementAt(AllColumns, 2).Type.Name}, {GetType(TCol4).Name} = {Enumerable.ElementAt(AllColumns, 3).Type.Name}, {GetType(TCol5).Name} = {Enumerable.ElementAt(AllColumns, 4).Type.Name}, {GetType(TCol6).Name} = {Enumerable.ElementAt(AllColumns, 5).Type.Name}")
         End If
@@ -454,7 +454,7 @@ Partial Public Class DataFrame
             Throw New ArgumentException($"Cannot map dataframe, mapping has 7 columns while dataframe has {ColumnCount:N0} columns")
         End If
 
-        Dim ret As TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
+        Dim ret As TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7) = Nothing
         If Not TryMap(ret) Then
             Throw New ArgumentException($"Cannot map dataframe given mapping: {GetType(TCol1).Name} = {Enumerable.ElementAt(AllColumns, 0).Type.Name}, {GetType(TCol2).Name} = {Enumerable.ElementAt(AllColumns, 1).Type.Name}, {GetType(TCol3).Name} = {Enumerable.ElementAt(AllColumns, 2).Type.Name}, {GetType(TCol4).Name} = {Enumerable.ElementAt(AllColumns, 3).Type.Name}, {GetType(TCol5).Name} = {Enumerable.ElementAt(AllColumns, 4).Type.Name}, {GetType(TCol6).Name} = {Enumerable.ElementAt(AllColumns, 5).Type.Name}, {GetType(TCol7).Name} = {Enumerable.ElementAt(AllColumns, 6).Type.Name}")
         End If
@@ -706,7 +706,7 @@ Partial Public Class DataFrame
 
             For i = 0 To membersInColumnOrder.Length - 1
                 Dim memberName = membersInColumnOrder(i)
-                Dim pairedMember As MemberInfo
+                Dim pairedMember As MemberInfo = Nothing
                 If Not publicFieldsAndPropertiesLookup.TryGetValue(memberName.ToLowerInvariant(), pairedMember) Then
                     translatedColumnIndexToMemberMapping = Nothing
                     errorMessage = $"Could not find public member named {memberName} to map column {TranslateIndex(i):N0} to"
@@ -723,7 +723,7 @@ Partial Public Class DataFrame
 
         For i = 0 To ColumnCount - 1
             Dim columnName = Metadata.Columns(i).Name
-            Dim pairedMember As MemberInfo
+            Dim pairedMember As MemberInfo = Nothing
             If publicFieldsAndPropertiesLookup.TryGetValue(columnName.ToLowerInvariant(), pairedMember) Then
                 ret(i) = pairedMember
             Else

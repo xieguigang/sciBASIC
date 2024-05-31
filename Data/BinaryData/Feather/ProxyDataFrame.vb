@@ -310,7 +310,7 @@ Public NotInheritable Class ProxyDataFrame(Of TProxyType)
     End Function
 
     Friend Function TryGetRowTranslated(translatedRowIndex As Long, <Out> ByRef row As TProxyType) As Boolean
-        Dim rawRow As Row
+        Dim rawRow As Row = Nothing
         If Not Inner.TryGetRowTranslated(translatedRowIndex, rawRow) Then
             row = Nothing
             Return False

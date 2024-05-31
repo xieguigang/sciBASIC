@@ -275,7 +275,7 @@ Public Class Row
     ''' If the passed index is out of bounds, or the coercing fails, false is returned.  Otherwise, true is returned;
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
-        Dim rawValue As Value
+        Dim rawValue As Value = Nothing
         If Not TryGetValue(columnIndex, rawValue) Then
             value = Nothing
             Return False
@@ -313,7 +313,7 @@ Public Class Row
     ''' If the passed index is out of bounds, or the coercing fails, false is returned.  Otherwise, true is returned;
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
-        Dim rawValue As Value
+        Dim rawValue As Value = Nothing
         If Not TryGetValue(columnName, rawValue) Then
             value = Nothing
             Return False

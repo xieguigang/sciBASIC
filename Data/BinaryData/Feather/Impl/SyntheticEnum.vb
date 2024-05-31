@@ -112,7 +112,7 @@ Namespace Impl
 
             ' assumed low contention
             SyncLock SyntheticEnumLookup
-                Dim syntheticEnum As Type
+                Dim syntheticEnum As Type = Nothing
                 If SyntheticEnumLookup.TryGetValue(key, syntheticEnum) Then Return syntheticEnum
                 syntheticEnum = CreateSyntheticEnum(inOrder)
                 SyntheticEnumLookup(key) = syntheticEnum

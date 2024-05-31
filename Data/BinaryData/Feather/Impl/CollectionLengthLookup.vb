@@ -63,7 +63,7 @@ Namespace Impl
 
         <Extension>
         Public Function GetLength(elementType As Type, collection As Object) As Integer
-            Dim getter As Func(Of Object, Integer)
+            Dim getter As Func(Of Object, Integer) = Nothing
 
             ' assuming this is a low contention lock
             SyncLock LengthGetterLookup
