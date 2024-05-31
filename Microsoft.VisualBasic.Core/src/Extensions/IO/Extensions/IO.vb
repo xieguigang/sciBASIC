@@ -111,6 +111,8 @@ Public Module IOExtensions
             Call writer.Flush()
             Call writer.Close()
         End Using
+
+        Return True
     End Function
 
     ''' <summary>

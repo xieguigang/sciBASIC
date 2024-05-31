@@ -433,7 +433,7 @@ Public Module TextDoc
             Return False
         End If
 
-        Dim dir As String
+        Dim dir As String = Nothing
 
         Try
 #If UNIX Then
