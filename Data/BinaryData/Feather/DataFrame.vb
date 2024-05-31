@@ -239,7 +239,7 @@ Partial Public Class DataFrame
     ''' <summary>
     ''' Return the value at the given row index in the column with the given name.
     ''' 
-    ''' Will throw if the index is out of bounds or the column is not found.  Use <see cref="TryGetValue(Long,String,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds or the column is not found.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(rowIndex As Long, columnName As String) As Value Implements IDataFrame.Item
         Get

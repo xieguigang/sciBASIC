@@ -238,7 +238,7 @@ Public Class TypedRow(Of TCol1)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -249,7 +249,7 @@ Public Class TypedRow(Of TCol1)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -310,28 +310,28 @@ Public Class TypedRow(Of TCol1)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
@@ -345,7 +345,7 @@ Public Class TypedRow(Of TCol1)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Function GetRange(columnIndex As Long, length As Integer) As Value() Implements IRow.GetRange
         Return Inner.GetRange(columnIndex, length)
@@ -359,14 +359,14 @@ Public Class TypedRow(Of TCol1)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
@@ -407,7 +407,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -418,7 +418,7 @@ Public Class TypedRowType(Of TCol1, TCol2)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -487,28 +487,28 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
@@ -536,14 +536,14 @@ Public Class TypedRowType(Of TCol1, TCol2)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
@@ -584,7 +584,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -595,7 +595,7 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -672,28 +672,28 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(Of T)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
@@ -721,14 +721,14 @@ Public Class TypedRowType1(Of TCol1, TCol2, TCol3)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
@@ -769,7 +769,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -780,7 +780,7 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
@@ -865,28 +865,28 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(Long,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnIndex As Long, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(Long,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnIndex As Long, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnIndex, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(String,Value)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(columnName As String, <Out> ByRef value As Value) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
     End Function
 
     ''' <summary>
-    ''' <see cref="Row.TryGetValue(OfT)(String,T)"/>
+    ''' <see cref="Row.TryGetValue"/>
     ''' </summary>
     Public Function TryGetValue(Of T)(columnName As String, <Out> ByRef value As T) As Boolean Implements IRow.TryGetValue
         Return Inner.TryGetValue(columnName, value)
@@ -914,14 +914,14 @@ Public Class TypedRowType2(Of TCol1, TCol2, TCol3, TCol4)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value()) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array)
     End Sub
 
     ''' <summary>
-    ''' <see cref="Row.GetRange(Long,Integer,,Integer)"/>
+    ''' <see cref="Row.GetRange"/>
     ''' </summary>
     Public Sub GetRange(columnSourceIndex As Long, length As Integer, ByRef array As Value(), destinationIndex As Integer) Implements IRow.GetRange
         GetRange(columnSourceIndex, length, array, destinationIndex)
@@ -962,7 +962,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     ''' <summary>
     ''' Return the value at the given index.
     ''' 
-    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue(Long,Value)"/> for non-throwing gets.
+    ''' Will throw if the index is out of bounds.  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnIndex As Long) As Value
         Get
@@ -973,7 +973,7 @@ Public Class TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     ''' <summary>
     ''' Return the value in the column with the given name.
     ''' 
-    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue(String,Value)"/> for non-throwing gets.
+    ''' Will throw if no column with that name exists .  Use <see cref="TryGetValue"/> for non-throwing gets.
     ''' </summary>
     Default Public ReadOnly Property Item(columnName As String) As Value
         Get
