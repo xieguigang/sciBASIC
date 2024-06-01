@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::538b725a890188152fb7d16dee349015, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
+﻿#Region "Microsoft.VisualBasic::9827d273f4d99fc339e66467ac07a98f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 39 (62.90%)
-    ' Comment Lines: 10 (16.13%)
+    '   Total Lines: 64
+    '    Code Lines: 41 (64.06%)
+    ' Comment Lines: 10 (15.62%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (20.97%)
-    '     File Size: 2.54 KB
+    '   Blank Lines: 13 (20.31%)
+    '     File Size: 2.63 KB
 
 
     '     Class Pentacle

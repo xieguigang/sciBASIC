@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba915a0c0d17a7a01fc70b4111468b92, Data_science\Visualization\Plots\3D\g\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::78bff4111e294bde68151b75965b32af, Data_science\Visualization\Plots\3D\g\Grid.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 107 (81.68%)
+    '   Total Lines: 134
+    '    Code Lines: 110 (82.09%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 24 (18.32%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 24 (17.91%)
+    '     File Size: 5.75 KB
 
 
     '     Module Grids

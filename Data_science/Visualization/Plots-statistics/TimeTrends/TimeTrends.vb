@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7f91e79c4de856ab19bfcede92a0f0f, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::1897072bb62516806b71383266916a24, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.43%
     ' 
     '   Blank Lines: 41 (12.77%)
-    '     File Size: 14.17 KB
+    '     File Size: 14.20 KB
 
 
     ' Module TimeTrends

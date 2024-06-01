@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::086dbe62950a074e8024d00302544e60, Data\BinaryData\Feather\Row.vb"
+﻿#Region "Microsoft.VisualBasic::0400beca4fdb296fce29fd102e8dd9a4, Data\BinaryData\Feather\Row.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.19%
     ' 
     '   Blank Lines: 88 (17.53%)
-    '     File Size: 24.83 KB
+    '     File Size: 24.85 KB
 
 
     ' Class RowValueEnumerator

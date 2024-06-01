@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60aedae5c1bd772273f9f5dfba3dab5, Data_science\Visualization\Plots\3D\g\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::0e7252414a40c35c8b18e15c9358f65c, Data_science\Visualization\Plots\3D\g\Axis.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 47 (75.81%)
-    ' Comment Lines: 7 (11.29%)
+    '   Total Lines: 65
+    '    Code Lines: 50 (76.92%)
+    ' Comment Lines: 7 (10.77%)
     '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 8 (12.90%)
-    '     File Size: 2.77 KB
+    '   Blank Lines: 8 (12.31%)
+    '     File Size: 2.88 KB
 
 
     '     Module AxisDraw

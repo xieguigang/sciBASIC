@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dbaf6be001f327deb8c29f944e5ba22, Data\BinaryData\Feather\RowEnumerable.vb"
+﻿#Region "Microsoft.VisualBasic::69e49df49b8ccc03d1b0e4a0220a6c0f, Data\BinaryData\Feather\RowEnumerable.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 14 (15.91%)
-    '     File Size: 2.49 KB
+    '     File Size: 2.50 KB
 
 
     ' Class RowEnumerable

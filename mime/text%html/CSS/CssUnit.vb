@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64f5d0d13a77df118d9b500b8062e456, mime\text%html\CSS\CssUnit.vb"
+﻿#Region "Microsoft.VisualBasic::453cb0fdd8209f09065dce6e76bff3be, mime\text%html\CSS\CssUnit.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 13 (44.83%)
-    ' Comment Lines: 6 (20.69%)
+    '   Total Lines: 28
+    '    Code Lines: 13 (46.43%)
+    ' Comment Lines: 6 (21.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (34.48%)
-    '     File Size: 428 B
+    '   Blank Lines: 9 (32.14%)
+    '     File Size: 426 B
 
 
     '     Enum CssUnit
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace CSS
 

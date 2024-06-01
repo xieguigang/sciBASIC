@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e3471ec89e44460827bc74b957f74c1, Data\BinaryData\Feather\Impl\DataWidener.vb"
+﻿#Region "Microsoft.VisualBasic::dd44322e7fd8a39dbbd9b0d3aaa8e4a6, Data\BinaryData\Feather\Impl\DataWidener.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 229 (19.23%)
-    '     File Size: 43.37 KB
+    '     File Size: 43.41 KB
 
 
     '     Module DataWidener

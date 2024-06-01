@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ce5aaa98206b83d5235fd6a69ca136f, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\AssemblyInfo.vb"
+﻿#Region "Microsoft.VisualBasic::1214c13abb73537fe02547de8c216c1f, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\AssemblyInfo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 46 (45.10%)
-    ' Comment Lines: 36 (35.29%)
+    '   Total Lines: 104
+    '    Code Lines: 47 (45.19%)
+    ' Comment Lines: 36 (34.62%)
     '    - Xml Docs: 58.33%
     ' 
-    '   Blank Lines: 20 (19.61%)
-    '     File Size: 3.75 KB
+    '   Blank Lines: 21 (20.19%)
+    '     File Size: 3.78 KB
 
 
     '     Class AssemblyInfo

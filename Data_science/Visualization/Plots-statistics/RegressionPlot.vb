@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcd80d8f7d4df3f508c7bf6027b7e758, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f4cc23631c443dca3c8f2e348395286c, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 55.32%
     ' 
     '   Blank Lines: 56 (13.63%)
-    '     File Size: 18.00 KB
+    '     File Size: 18.03 KB
 
 
     ' Module RegressionPlot

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7ec5eb6d39c143de4bbc08c13518e6e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
+﻿#Region "Microsoft.VisualBasic::2e43b11c965e71acee024d2aefaa0ce2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 27 (79.41%)
+    '   Total Lines: 36
+    '    Code Lines: 29 (80.56%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (20.59%)
-    '     File Size: 1.16 KB
+    '   Blank Lines: 7 (19.44%)
+    '     File Size: 1.27 KB
 
 
     '     Class Diamond

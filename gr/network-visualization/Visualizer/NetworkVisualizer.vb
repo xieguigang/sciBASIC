@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c61feac5b0de98e11429d8b23ff27ff, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::8a7fc2cf667377d44c96978ac1b8cdde, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 457
-    '    Code Lines: 319 (69.80%)
-    ' Comment Lines: 85 (18.60%)
+    '   Total Lines: 458
+    '    Code Lines: 320 (69.87%)
+    ' Comment Lines: 85 (18.56%)
     '    - Xml Docs: 72.94%
     ' 
-    '   Blank Lines: 53 (11.60%)
-    '     File Size: 21.95 KB
+    '   Blank Lines: 53 (11.57%)
+    '     File Size: 22.00 KB
 
 
     ' Module NetworkVisualizer

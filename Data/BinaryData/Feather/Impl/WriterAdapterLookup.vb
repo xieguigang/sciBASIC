@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad981123c51e4cb0cd4c632f75e13303, Data\BinaryData\Feather\Impl\WriterAdapterLookup.vb"
+﻿#Region "Microsoft.VisualBasic::81575a5067a677a4a80afe59450121d3, Data\BinaryData\Feather\Impl\WriterAdapterLookup.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 59 (17.93%)
-    '     File Size: 21.40 KB
+    '     File Size: 21.42 KB
 
 
     '     Module WriterAdapterLookup

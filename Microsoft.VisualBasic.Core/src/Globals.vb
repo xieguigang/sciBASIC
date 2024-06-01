@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc084a900ea8316efb90f99d9605183b, Microsoft.VisualBasic.Core\src\Globals.vb"
+﻿#Region "Microsoft.VisualBasic::be1d6e81af19db7ad982792eeceb27bc, Microsoft.VisualBasic.Core\src\Globals.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 48
-    '    Code Lines: 18 (37.50%)
-    ' Comment Lines: 22 (45.83%)
+    '   Total Lines: 52
+    '    Code Lines: 22 (42.31%)
+    ' Comment Lines: 22 (42.31%)
     '    - Xml Docs: 95.45%
     ' 
-    '   Blank Lines: 8 (16.67%)
-    '     File Size: 1.36 KB
+    '   Blank Lines: 8 (15.38%)
+    '     File Size: 1.55 KB
 
 
     ' Module Globals

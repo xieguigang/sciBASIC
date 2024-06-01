@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdc3e8748db4d7f6ef5f4c8bd2d454b3, Data\BinaryData\Feather\ProxyDataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::1a28c01b70268136657858655ecce4d0, Data\BinaryData\Feather\ProxyDataFrame.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.32%
     ' 
     '   Blank Lines: 31 (11.74%)
-    '     File Size: 9.51 KB
+    '     File Size: 9.45 KB
 
 
     ' Class ProxyRowMap

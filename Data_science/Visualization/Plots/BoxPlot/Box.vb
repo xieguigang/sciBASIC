@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07d44fbbd68c36af3b05595bd84550c3, Data_science\Visualization\Plots\BoxPlot\Box.vb"
+﻿#Region "Microsoft.VisualBasic::ee75f892dd6ac311899aad9702d46cef, Data_science\Visualization\Plots\BoxPlot\Box.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 241
-    '    Code Lines: 178 (73.86%)
-    ' Comment Lines: 23 (9.54%)
+    '   Total Lines: 239
+    '    Code Lines: 176 (73.64%)
+    ' Comment Lines: 23 (9.62%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 40 (16.60%)
-    '     File Size: 10.58 KB
+    '   Blank Lines: 40 (16.74%)
+    '     File Size: 10.54 KB
 
 
     '     Class Box

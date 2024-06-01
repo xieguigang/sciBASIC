@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb6b637a20c7e6bd96c7a1c14d24f71f, Data\BinaryData\Feather\Impl\CollectionLengthLookup.vb"
+﻿#Region "Microsoft.VisualBasic::ee1308b8cb6d051aceeace4beaccfb78, Data\BinaryData\Feather\Impl\CollectionLengthLookup.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 10 (25.00%)
-    '     File Size: 1.74 KB
+    '     File Size: 1.75 KB
 
 
     '     Module CollectionLengthLookup

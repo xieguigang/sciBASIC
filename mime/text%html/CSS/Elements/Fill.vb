@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c56bbd1072ce11db8b2dc93fc4f9f22, mime\text%html\CSS\Fill.vb"
+﻿#Region "Microsoft.VisualBasic::7d7664673cdf5ef46bb3d41e53184916, mime\text%html\CSS\Elements\Fill.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 6 (46.15%)
-    ' Comment Lines: 3 (23.08%)
+    '   Total Lines: 22
+    '    Code Lines: 13 (59.09%)
+    ' Comment Lines: 3 (13.64%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (30.77%)
-    '     File Size: 263 B
+    '   Blank Lines: 6 (27.27%)
+    '     File Size: 513 B
 
 
     '     Class Fill
     ' 
     '         Properties: fill
+    ' 
+    '         Function: CreateBrush, ToString
     ' 
     ' 
     ' /********************************************************************************/

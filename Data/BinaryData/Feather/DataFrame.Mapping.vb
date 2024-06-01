@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c375f4f7ecb300642b6cee7366f9b3bb, Data\BinaryData\Feather\DataFrame.Mapping.vb"
+﻿#Region "Microsoft.VisualBasic::5edc2d313d945e332ee2cb8586b0c3ad, Data\BinaryData\Feather\DataFrame.Mapping.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 74.19%
     ' 
     '   Blank Lines: 114 (16.62%)
-    '     File Size: 31.09 KB
+    '     File Size: 31.21 KB
 
 
     ' Class DataFrame

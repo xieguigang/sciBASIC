@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0075d4a96bcddffc9276895efdc48a3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
+﻿#Region "Microsoft.VisualBasic::5eab8f09a2490a791bef284a154d834b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 28 (75.68%)
-    ' Comment Lines: 3 (8.11%)
+    '   Total Lines: 39
+    '    Code Lines: 30 (76.92%)
+    ' Comment Lines: 3 (7.69%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (16.22%)
-    '     File Size: 1.32 KB
+    '   Blank Lines: 6 (15.38%)
+    '     File Size: 1.42 KB
 
 
     '     Class Hexagon

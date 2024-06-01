@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3769f376effdde50e6dfcc6310c7463, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::8077259137ee67ef646302f5526d6bf2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 20 (74.07%)
+    '   Total Lines: 29
+    '    Code Lines: 22 (75.86%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (25.93%)
-    '     File Size: 933 B
+    '   Blank Lines: 7 (24.14%)
+    '     File Size: 1.02 KB
 
 
     '     Class Box
