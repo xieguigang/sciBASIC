@@ -57,6 +57,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
@@ -73,7 +74,7 @@ Namespace CNN
         Dim log As Action(Of String) = AddressOf VBDebugger.EchoLine
         Dim alg As TrainerAlgorithm
         Dim is_generative As Boolean = False
-        Dim verbose As Integer = 25
+        Dim verbose As Boolean
         Dim action As Action(Of Integer, ConvolutionalNN)
         Dim precision_cutoff As Double = 0.05
 
@@ -81,7 +82,7 @@ Namespace CNN
         Sub New(alg As TrainerAlgorithm,
                 Optional log As Action(Of String) = Nothing,
                 Optional action As Action(Of Integer, ConvolutionalNN) = Nothing,
-                Optional verbose As Integer = 25)
+                Optional verbose As Boolean = True)
 
             If Not log Is Nothing Then
                 Me.log = log
@@ -93,10 +94,7 @@ Namespace CNN
         End Sub
 
         Private Sub TrainEpochs(trainset As SampleData(), epochsNum As Integer, ByRef right As Integer, ByRef count As Integer)
-            Dim d As Integer = epochsNum / verbose
-            Dim t0 = Now
             Dim randPerm As Integer()
-            Dim ti As Date = Now
             Dim input As InputLayer = alg.conv_net.input
             Dim data As New DataBlock(input.dims.x, input.dims.y, input.out_depth, 0) With {.trace = Me.ToString}
             Dim tr As TrainResult = Nothing
@@ -106,15 +104,13 @@ Namespace CNN
             Dim valid_loss As Double()
             Dim loss_sum, loss_mean As Double
             Dim mean_errors As Double
+            Dim progress As Tqdm.ProgressBar = Nothing
+            Dim report_txt As String
 
             right = 0
             count = 0
 
-            If d = 0 Then
-                d = 1
-            End If
-
-            For i As Integer = 0 To epochsNum - 1
+            For Each i As Integer In Tqdm.Range(0, epochsNum, bar:=progress)
                 randPerm = Util.randomPerm(trainset.Length, alg.batch_size)
 
                 For Each index As Integer In randPerm
@@ -142,12 +138,12 @@ Namespace CNN
                     count += 1
                 Next
 
-                If i Mod d = 0 Then
-                    valid_loss = loss.Where(Function(a) Not a.IsNaNImaginary).ToArray
+                If verbose Then
+                    valid_loss = loss.AsParallel.Where(Function(a) Not a.IsNaNImaginary).ToArray
                     loss_sum = valid_loss.Sum
                     loss_mean = loss_sum / (valid_loss.Length + 1)
-                    log($"[{i + 1}/{epochsNum} {(Now - ti).Lanudry}] {(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean.ToString("G3")}, total:{loss_sum.ToString("G4")}, mean_errors={mean_errors.ToString("F5")}..... {(Now - t0).FormatTime(False)}")
-                    ti = Now
+                    report_txt = $"{(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean.ToString("G3")} total:{loss_sum.ToString("G4")} mean_errors={mean_errors.ToString("F5")}"
+                    progress.SetLabel(report_txt)
                 End If
             Next
         End Sub
