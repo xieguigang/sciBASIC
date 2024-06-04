@@ -165,6 +165,11 @@ Namespace Scripting.Runtime
             Return source.AsType(Of Double).ToArray
         End Function
 
+        ''' <summary>
+        ''' cast single float to double in batch
+        ''' </summary>
+        ''' <param name="singles"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsDouble(singles As IEnumerable(Of Single)) As Double()
             Return singles _

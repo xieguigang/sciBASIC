@@ -234,6 +234,23 @@ Namespace ComponentModel.Algorithm.BinaryTree
             totals += 1
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Public Iterator Function Search(key As K) As IEnumerable(Of K)
+            Dim hit = avltree.Find(New ClusterKey(Of K)(key, views))
+
+            If hit Is Nothing Then
+                Return
+            End If
+
+            For Each member As K In hit.Members
+                Yield member
+            Next
+        End Function
+
         Public Sub Clear()
             Call avltree.Clear()
             totals = 0
