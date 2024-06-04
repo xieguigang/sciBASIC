@@ -400,6 +400,12 @@ Public Module CollectionValueGetter
         Return DirectCast(value, TProp)
     End Function
 
+    ''' <summary>
+    ''' get value set
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="x">a collection of the value wrapper</param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function Values(Of T)(x As IEnumerable(Of Value(Of T).IValueOf)) As IEnumerable(Of T)
         If x Is Nothing Then
