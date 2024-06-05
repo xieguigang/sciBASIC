@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4c9f6507b8a0859ededa1b11ae093b4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::e95e41c538b9102fed5daed4288fc082, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 134 (74.44%)
-    ' Comment Lines: 15 (8.33%)
-    '    - Xml Docs: 86.67%
+    '   Total Lines: 197
+    '    Code Lines: 143 (72.59%)
+    ' Comment Lines: 20 (10.15%)
+    '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 31 (17.22%)
-    '     File Size: 6.71 KB
+    '   Blank Lines: 34 (17.26%)
+    '     File Size: 7.19 KB
 
 
     '     Enum ComparisonDirectionPrefers
@@ -65,7 +65,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, Search, ToString
     ' 
     '         Sub: Add, Clear
     ' 

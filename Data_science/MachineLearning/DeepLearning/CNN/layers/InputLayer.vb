@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cede62c31b43ff38d1cf2ee15a81edf5, Data_science\MachineLearning\DeepLearning\CNN\Layers\InputLayer.vb"
+﻿#Region "Microsoft.VisualBasic::cede62c31b43ff38d1cf2ee15a81edf5, Data_science\MachineLearning\DeepLearning\CNN\layers\InputLayer.vb"
 
     ' Author:
     ' 
