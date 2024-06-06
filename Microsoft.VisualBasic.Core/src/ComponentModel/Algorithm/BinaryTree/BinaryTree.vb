@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    <HideModuleName>
     Public Module Extensions
 
         ''' <summary>
