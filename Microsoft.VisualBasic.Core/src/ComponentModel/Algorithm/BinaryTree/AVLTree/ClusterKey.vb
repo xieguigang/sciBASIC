@@ -29,6 +29,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
+        ''' <summary>
+        ''' use the first element in current cluster member set as the root element
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Root As K
             Get
                 Return members(Scan0)
