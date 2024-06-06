@@ -65,7 +65,27 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
-    Public Delegate Sub DuplicatedKeyHandler(Of K, V)(keyNode As BinaryTree(Of K, V), newValue As V)
+    Public Delegate Sub TreeKeyInsertHandler(Of K, V)(keyNode As BinaryTree(Of K, V), newValue As V)
+
+    Public Class DelegateTreeInsertCallback(Of K, V)
+
+        ''' <summary>
+        ''' usually for add cluster member into cluster
+        ''' </summary>
+        Public insertDuplicated As TreeKeyInsertHandler(Of K, V) =
+            Sub(tree, key)
+                ' do nothing 
+            End Sub
+        Public insertRight As TreeKeyInsertHandler(Of K, V) =
+            Sub(tree, key)
+                ' do nothing
+            End Sub
+        Public insertLeft As TreeKeyInsertHandler(Of K, V) =
+            Sub(tree, key)
+                ' do nothing
+            End Sub
+
+    End Class
 
     ''' <summary>
     ''' The AVL binary tree operator. the binbox key is <typeparamref name="K"/> and 
@@ -114,32 +134,35 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
-            _root = Add(key, value, _root, Sub(node, newValue)
-                                               If valueReplace Then
-                                                   node.Value = newValue
-                                               End If
-                                           End Sub)
+            Dim callback As New DelegateTreeInsertCallback(Of K, V) With {
+                .insertDuplicated = Sub(node, newValue)
+                                        If valueReplace Then
+                                            node.Value = newValue
+                                        End If
+                                    End Sub
+            }
+
+            _root = Add(key, value, _root, callback)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(key As K, value As V, handleDuplicated As DuplicatedKeyHandler(Of K, V))
-            _root = Add(key, value, _root, handleDuplicated)
+        Public Sub Add(key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
+            _root = Add(key, value, _root, callback)
         End Sub
 
-        Private Function Add(key As K, value As V, tree As BinaryTree(Of K, V), handleDuplicatedKey As DuplicatedKeyHandler(Of K, V)) As BinaryTree(Of K, V)
+        Private Function Add(key As K, value As V, tree As BinaryTree(Of K, V), callback As DelegateTreeInsertCallback(Of K, V)) As BinaryTree(Of K, V)
             If tree Is Nothing Then
                 ' 追加新的叶子节点
                 tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
                 stack.Add(tree)
             Else
                 Select Case compares(key, tree.Key)
-                    Case < 0 : Call appendLeft(tree, key, value, handleDuplicatedKey)
-                    Case > 0 : Call appendRight(tree, key, value, handleDuplicatedKey)
+                    Case < 0 : Call appendLeft(tree, key, value, callback)
+                    Case > 0 : Call appendRight(tree, key, value, callback)
                     Case = 0
 
                         ' 将value追加到附加值中（也可对应重复元素）
-                        Call handleDuplicatedKey(tree, value)
-
+                        Call callback.insertDuplicated(tree, value)
                         ' 2018.3.6
                         ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
                         ' 在这里将这个member添加进来
@@ -156,8 +179,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return tree
         End Function
 
-        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, handleDuplicatedKey As DuplicatedKeyHandler(Of K, V))
-            tree.Right = Add(key, value, tree.Right, handleDuplicatedKey)
+        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
+            tree.Right = Add(key, value, tree.Right, callback)
 
             If tree.Right.height - tree.Left.height = 2 Then
                 If compares(key, tree.Right.Key) > 0 Then
@@ -168,8 +191,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End If
         End Sub
 
-        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, handleDuplicatedKey As DuplicatedKeyHandler(Of K, V))
-            tree.Left = Add(key, value, tree.Left, handleDuplicatedKey)
+        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
+            tree.Left = Add(key, value, tree.Left, callback)
 
             If tree.Left.height - tree.Right.height = 2 Then
                 If compares(key, tree.Left.Key) < 0 Then
