@@ -169,17 +169,22 @@ Namespace ComponentModel.Algorithm.BinaryTree
                         Call DirectCast(tree!values, List(Of V)).Add(value)
 
                     Case Else
-                        ' This will never happend!
-                        Throw New Exception("????")
+                        Throw New Exception("This will never happend!?")
                 End Select
             End If
 
-            tree.PutHeight
+            Call tree.PutHeight
 
             Return tree
         End Function
 
         Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
+            If tree.Right Is Nothing AndAlso Not callback.insertRight Is Nothing Then
+                ' add new leaf node
+                Call callback.insertRight(tree, value)
+            End If
+
+            ' construct tree link
             tree.Right = Add(key, value, tree.Right, callback)
 
             If tree.Right.height - tree.Left.height = 2 Then
@@ -192,6 +197,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Sub
 
         Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
+            If tree.Left Is Nothing AndAlso Not callback.insertLeft Is Nothing Then
+                ' add new leaf node
+                Call callback.insertLeft(tree, value)
+            End If
+
             tree.Left = Add(key, value, tree.Left, callback)
 
             If tree.Left.height - tree.Right.height = 2 Then
