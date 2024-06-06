@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::227c0a8571cc6741b26b6a4117c59ea2, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLSupports.vb"
+﻿#Region "Microsoft.VisualBasic::dff4faa6d2d9ce9352ce785356063899, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLSupports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 14 (22.95%)
-    '     File Size: 1.86 KB
+    '     File Size: 1.85 KB
 
 
     '     Module AVLSupports

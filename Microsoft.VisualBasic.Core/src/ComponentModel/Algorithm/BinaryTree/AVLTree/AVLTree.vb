@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::849624991f6b626b0ee3e7961ae63627, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::2c6ad112fd5a306847e7dcca6c358c96, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 120 (60.61%)
-    ' Comment Lines: 47 (23.74%)
-    '    - Xml Docs: 80.85%
+    '   Total Lines: 209
+    '    Code Lines: 128 (61.24%)
+    ' Comment Lines: 49 (23.44%)
+    '    - Xml Docs: 77.55%
     ' 
-    '   Blank Lines: 31 (15.66%)
-    '     File Size: 7.90 KB
+    '   Blank Lines: 32 (15.31%)
+    '     File Size: 8.25 KB
 
 
-    '     Delegate Sub
-    ' 
-    ' 
     '     Class AVLTree
     ' 
     '         Constructor: (+2 Overloads) Sub New
@@ -54,7 +51,6 @@
     ' 
     '         Sub: (+2 Overloads) Add, appendLeft, appendRight, Remove, removeCurrent
     '              removeLeft, removeRight
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

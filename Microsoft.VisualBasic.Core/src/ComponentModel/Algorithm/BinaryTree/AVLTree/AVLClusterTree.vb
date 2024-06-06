@@ -1,76 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::e95e41c538b9102fed5daed4288fc082, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::7414687e5dbd469ed9be2754b0698756, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 197
-'    Code Lines: 143 (72.59%)
-' Comment Lines: 20 (10.15%)
-'    - Xml Docs: 85.00%
-' 
-'   Blank Lines: 34 (17.26%)
-'     File Size: 7.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Enum ComparisonDirectionPrefers
-' 
-'         Left, Right
-' 
-'  
-' 
-' 
-' 
-'     Class ClusterKey
-' 
-'         Properties: NumberOfKey, Root
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: DoComparison, ToArray, ToString
-' 
-'         Sub: Add
-' 
-'     Class AVLClusterTree
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, Search, ToString
-' 
-'         Sub: Add, Clear
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 58 (64.44%)
+    ' Comment Lines: 13 (14.44%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 19 (21.11%)
+    '     File Size: 3.66 KB
+
+
+    '     Class AVLClusterTree
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: doCompares, GenericEnumerator, Search, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
