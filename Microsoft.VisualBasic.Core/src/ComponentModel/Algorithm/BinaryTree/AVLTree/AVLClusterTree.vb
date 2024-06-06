@@ -1,81 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::e95e41c538b9102fed5daed4288fc082, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 197
-    '    Code Lines: 143 (72.59%)
-    ' Comment Lines: 20 (10.15%)
-    '    - Xml Docs: 85.00%
-    ' 
-    '   Blank Lines: 34 (17.26%)
-    '     File Size: 7.19 KB
+' Summaries:
 
 
-    '     Enum ComparisonDirectionPrefers
-    ' 
-    '         Left, Right
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class ClusterKey
-    ' 
-    '         Properties: NumberOfKey, Root
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: DoComparison, ToArray, ToString
-    ' 
-    '         Sub: Add
-    ' 
-    '     Class AVLClusterTree
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, Search, ToString
-    ' 
-    '         Sub: Add, Clear
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 197
+'    Code Lines: 143 (72.59%)
+' Comment Lines: 20 (10.15%)
+'    - Xml Docs: 85.00%
+' 
+'   Blank Lines: 34 (17.26%)
+'     File Size: 7.19 KB
+
+
+'     Enum ComparisonDirectionPrefers
+' 
+'         Left, Right
+' 
+'  
+' 
+' 
+' 
+'     Class ClusterKey
+' 
+'         Properties: NumberOfKey, Root
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: DoComparison, ToArray, ToString
+' 
+'         Sub: Add
+' 
+'     Class AVLClusterTree
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, Search, ToString
+' 
+'         Sub: Add, Clear
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
@@ -204,10 +205,15 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' A binary tree model for do data clustering
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
-    Public Class AVLClusterTree(Of K) : Implements IEnumerable(Of ClusterKey(Of K))
+    Public Class AVLClusterTree(Of K) : Implements Enumeration(Of ClusterKey(Of K))
 
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)
         ReadOnly views As Func(Of K, String)
+
+        ''' <summary>
+        ''' thread unsafe
+        ''' </summary>
+        ReadOnly addClusterMember As New DelegateTreeInsertCallback(Of ClusterKey(Of K), K)
 
         Dim totals As Integer
 
@@ -230,7 +236,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K)
-            Call avltree.Add(New ClusterKey(Of K)(key, views), key, Sub(node, null) node.Key.Add(key))
+            addClusterMember.insertDuplicated = Sub(node, null) node.Key.Add(key)
+            avltree.Add(New ClusterKey(Of K)(key, views), key, callback:=addClusterMember)
             totals += 1
         End Sub
 
@@ -252,7 +259,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         Public Sub Clear()
-            Call avltree.Clear()
+            avltree.Clear()
             totals = 0
         End Sub
 
@@ -260,14 +267,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return $"Total {totals} members and {avltree.root.GetNodeCounts} clusters"
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of ClusterKey(Of K)) Implements IEnumerable(Of ClusterKey(Of K)).GetEnumerator
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of ClusterKey(Of K)) Implements Enumeration(Of ClusterKey(Of K)).GenericEnumerator
             For Each cluster In avltree.root.PopulateNodes
                 Yield cluster.Key
             Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
