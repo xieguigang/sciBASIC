@@ -241,8 +241,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
             totals += 1
         End Sub
 
-        Public Sub Add(key As K,
-                       Optional cluster As Action(Of ClusterKey(Of K), K) = Nothing,
+        Public Sub Add(key As K, cluster As Action(Of ClusterKey(Of K), K),
                        Optional left As Action(Of ClusterKey(Of K), K) = Nothing,
                        Optional right As Action(Of ClusterKey(Of K), K) = Nothing)
 
