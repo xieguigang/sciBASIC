@@ -77,6 +77,46 @@ Namespace ComponentModel.Algorithm.BinaryTree
                    End Function
         End Function
 
+        Private Shared Function ComparesAll(compares As Comparison(Of K), dir As Func(Of Boolean, Boolean, Integer)) As Func(Of ClusterKey(Of K), K, Integer)
+            Return Function(cluster, key) As Integer
+                       Dim compareVal As Value(Of Integer) = -100
+                       Dim left As Boolean = False
+                       Dim right As Boolean
+
+                       For Each index As K In cluster.members
+                           If (compareVal = compares(index, key)) = 0 Then
+                               Return 0
+                           Else
+                               If compareVal.Equals(1) Then
+                                   right = True
+                               Else
+                                   left = True
+                               End If
+                           End If
+                       Next
+
+                       Return dir(left, right)
+                   End Function
+        End Function
+
+        Private Shared Function JustComparesRoot(compares As Comparison(Of K), dir As Func(Of Boolean, Boolean, Integer)) As Func(Of ClusterKey(Of K), K, Integer)
+            Return Function(cluster, key) As Integer
+                       Dim compareVal As Integer = compares(cluster.Root, key)
+                       Dim left As Boolean = False
+                       Dim right As Boolean
+
+                       If compareVal = 0 Then
+                           Return 0
+                       ElseIf compareVal = 1 Then
+                           right = True
+                       Else
+                           left = True
+                       End If
+
+                       Return dir(left, right)
+                   End Function
+        End Function
+
         ''' <summary>
         ''' 在这里应该是多个key比较一个query
         ''' </summary>
@@ -86,41 +126,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Dim dir = PreferDirection(prefer)
 
             If Not loopAll Then
-                Return Function(cluster, key) As Integer
-                           Dim compareVal As Integer = compares(cluster.Root, key)
-                           Dim left As Boolean = False
-                           Dim right As Boolean
-
-                           If compareVal = 0 Then
-                               Return 0
-                           ElseIf compareVal = 1 Then
-                               right = True
-                           Else
-                               left = True
-                           End If
-
-                           Return dir(left, right)
-                       End Function
+                Return JustComparesRoot(compares, dir)
             Else
-                Return Function(cluster, key) As Integer
-                           Dim compareVal As Value(Of Integer) = -100
-                           Dim left As Boolean = False
-                           Dim right As Boolean
-
-                           For Each index As K In cluster.members
-                               If (compareVal = compares(index, key)) = 0 Then
-                                   Return 0
-                               Else
-                                   If compareVal.Equals(1) Then
-                                       right = True
-                                   Else
-                                       left = True
-                                   End If
-                               End If
-                           Next
-
-                           Return dir(left, right)
-                       End Function
+                Return ComparesAll(compares, dir)
             End If
         End Function
     End Class
