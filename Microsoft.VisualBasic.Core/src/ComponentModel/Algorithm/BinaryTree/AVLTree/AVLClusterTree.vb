@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4c9f6507b8a0859ededa1b11ae093b4, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::7414687e5dbd469ed9be2754b0698756, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
     ' Author:
     ' 
@@ -34,40 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 134 (74.44%)
-    ' Comment Lines: 15 (8.33%)
-    '    - Xml Docs: 86.67%
+    '   Total Lines: 90
+    '    Code Lines: 58 (64.44%)
+    ' Comment Lines: 13 (14.44%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 31 (17.22%)
-    '     File Size: 6.71 KB
+    '   Blank Lines: 19 (21.11%)
+    '     File Size: 3.66 KB
 
 
-    '     Enum ComparisonDirectionPrefers
-    ' 
-    '         Left, Right
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class ClusterKey
-    ' 
-    '         Properties: NumberOfKey, Root
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: DoComparison, ToArray, ToString
-    ' 
-    '         Sub: Add
-    ' 
     '     Class AVLClusterTree
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: doCompares, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: doCompares, GenericEnumerator, Search, ToString
     ' 
-    '         Sub: Add, Clear
+    '         Sub: (+2 Overloads) Add, Clear
     ' 
     ' 
     ' /********************************************************************************/
@@ -75,139 +57,23 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm.BinaryTree
-
-    Public Enum ComparisonDirectionPrefers
-        Left
-        Right
-    End Enum
-
-    ''' <summary>
-    ''' wrapper for the cluster data
-    ''' </summary>
-    ''' <typeparam name="K"></typeparam>
-    Public Class ClusterKey(Of K)
-
-        ReadOnly members As New List(Of K)
-        ReadOnly views As Func(Of K, String)
-
-        Public ReadOnly Property NumberOfKey As Integer
-            Get
-                Return members.Count
-            End Get
-        End Property
-
-        Default Public ReadOnly Property Item(index As Integer) As K
-            Get
-                Return members(index)
-            End Get
-        End Property
-
-        Public ReadOnly Property Root As K
-            Get
-                Return members(Scan0)
-            End Get
-        End Property
-
-        Sub New([single] As K, views As Func(Of K, String))
-            Me.views = views
-
-            ' Add a initial single member object
-            Call members.Add([single])
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(newMember As K)
-            Call members.Add(newMember)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            If members.Count = 1 Then
-                Return views(members(Scan0))
-            Else
-                Return views(members(Scan0)) & $", and with {members.Count} cluster members.."
-            End If
-        End Function
-
-        Public Function ToArray() As K()
-            Return members.ToArray
-        End Function
-
-        ''' <summary>
-        ''' 在这里应该是多个key比较一个query
-        ''' </summary>
-        ''' <param name="compares"></param>
-        ''' <returns></returns>
-        Public Shared Function DoComparison(compares As Comparison(Of K),
-                                            prefer As ComparisonDirectionPrefers,
-                                            loopAll As Boolean) As Func(Of ClusterKey(Of K), K, Integer)
-
-            Dim dir = Function(left As Boolean, right As Boolean) As Integer
-                          If prefer = ComparisonDirectionPrefers.Left Then
-                              If left Then
-                                  Return -1
-                              Else
-                                  Return 1
-                              End If
-                          Else
-                              If right Then
-                                  Return 1
-                              Else
-                                  Return -1
-                              End If
-                          End If
-                      End Function
-
-            If Not loopAll Then
-                Return Function(cluster, key) As Integer
-                           Dim compareVal As Integer = compares(cluster.Root, key)
-                           Dim left As Boolean = False
-                           Dim right As Boolean
-
-                           If compareVal = 0 Then
-                               Return 0
-                           ElseIf compareVal = 1 Then
-                               right = True
-                           Else
-                               left = True
-                           End If
-
-                           Return dir(left, right)
-                       End Function
-            Else
-                Return Function(cluster, key) As Integer
-                           Dim compareVal As Value(Of Integer) = -100
-                           Dim left As Boolean = False
-                           Dim right As Boolean
-
-                           For Each index As K In cluster.members
-                               If (compareVal = compares(index, key)) = 0 Then
-                                   Return 0
-                               Else
-                                   If compareVal.Equals(1) Then
-                                       right = True
-                                   Else
-                                       left = True
-                                   End If
-                               End If
-                           Next
-
-                           Return dir(left, right)
-                       End Function
-            End If
-        End Function
-    End Class
 
     ''' <summary>
     ''' A binary tree model for do data clustering
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
-    Public Class AVLClusterTree(Of K) : Implements IEnumerable(Of ClusterKey(Of K))
+    Public Class AVLClusterTree(Of K) : Implements Enumeration(Of ClusterKey(Of K))
 
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)
         ReadOnly views As Func(Of K, String)
+
+        ''' <summary>
+        ''' thread unsafe
+        ''' </summary>
+        ReadOnly addClusterMember As New DelegateTreeInsertCallback(Of ClusterKey(Of K), K)
 
         Dim totals As Integer
 
@@ -230,7 +96,20 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K)
-            Call avltree.Add(New ClusterKey(Of K)(key, views), key, Sub(node, null) node.Key.Add(key))
+            addClusterMember.insertDuplicated = Sub(node, null) node.Key.Add(key)
+            avltree.Add(New ClusterKey(Of K)(key, views), key, callback:=addClusterMember)
+            totals += 1
+        End Sub
+
+        Public Sub Add(key As K, cluster As Action(Of ClusterKey(Of K), K),
+                       Optional left As Action(Of ClusterKey(Of K), K) = Nothing,
+                       Optional right As Action(Of ClusterKey(Of K), K) = Nothing)
+
+            If Not cluster Is Nothing Then addClusterMember.insertDuplicated = Sub(node, null) Call cluster(node.Key, key)
+            If Not left Is Nothing Then addClusterMember.insertLeft = Sub(node, null) Call left(node.Key, key)
+            If Not right Is Nothing Then addClusterMember.insertRight = Sub(node, null) Call right(node.Key, key)
+
+            avltree.Add(New ClusterKey(Of K)(key, views), key, callback:=addClusterMember)
             totals += 1
         End Sub
 
@@ -252,7 +131,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         Public Sub Clear()
-            Call avltree.Clear()
+            avltree.Clear()
             totals = 0
         End Sub
 
@@ -260,14 +139,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return $"Total {totals} members and {avltree.root.GetNodeCounts} clusters"
         End Function
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of ClusterKey(Of K)) Implements IEnumerable(Of ClusterKey(Of K)).GetEnumerator
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of ClusterKey(Of K)) Implements Enumeration(Of ClusterKey(Of K)).GenericEnumerator
             For Each cluster In avltree.root.PopulateNodes
                 Yield cluster.Key
             Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

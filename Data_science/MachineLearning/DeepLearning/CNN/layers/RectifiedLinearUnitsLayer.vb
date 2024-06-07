@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0e61acedf717e2ea22d60533ae22f9, Data_science\MachineLearning\DeepLearning\CNN\Layers\RectifiedLinearUnitsLayer.vb"
+﻿#Region "Microsoft.VisualBasic::fb0e61acedf717e2ea22d60533ae22f9, Data_science\MachineLearning\DeepLearning\CNN\layers\RectifiedLinearUnitsLayer.vb"
 
     ' Author:
     ' 

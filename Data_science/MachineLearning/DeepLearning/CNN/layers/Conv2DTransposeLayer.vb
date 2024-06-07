@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c66403b43f07766086c5d2925b464c61, Data_science\MachineLearning\DeepLearning\CNN\Layers\Conv2DTransposeLayer.vb"
+﻿#Region "Microsoft.VisualBasic::c66403b43f07766086c5d2925b464c61, Data_science\MachineLearning\DeepLearning\CNN\layers\Conv2DTransposeLayer.vb"
 
     ' Author:
     ' 

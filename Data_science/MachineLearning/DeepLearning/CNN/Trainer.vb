@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::609393eaa0dd28bad19de979fecfefde, Data_science\MachineLearning\DeepLearning\CNN\Trainer.vb"
+﻿#Region "Microsoft.VisualBasic::7dbcc27b578a012b27241b5bb5d83365, Data_science\MachineLearning\DeepLearning\CNN\Trainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 141
-    '    Code Lines: 109 (77.30%)
-    ' Comment Lines: 8 (5.67%)
+    '   Total Lines: 137
+    '    Code Lines: 106 (77.37%)
+    ' Comment Lines: 8 (5.84%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 24 (17.02%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 23 (16.79%)
+    '     File Size: 5.51 KB
 
 
     '     Class Trainer

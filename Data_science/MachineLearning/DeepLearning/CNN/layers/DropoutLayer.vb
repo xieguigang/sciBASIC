@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c02af1e64e273c752a8568b93359514, Data_science\MachineLearning\DeepLearning\CNN\Layers\DropoutLayer.vb"
+﻿#Region "Microsoft.VisualBasic::5c02af1e64e273c752a8568b93359514, Data_science\MachineLearning\DeepLearning\CNN\layers\DropoutLayer.vb"
 
     ' Author:
     ' 

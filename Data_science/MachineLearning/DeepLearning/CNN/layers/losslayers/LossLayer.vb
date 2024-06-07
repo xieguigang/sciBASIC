@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5060db9f9c4ca8d14aacc7e237c5294c, Data_science\MachineLearning\DeepLearning\CNN\Layers\losslayers\LossLayer.vb"
+﻿#Region "Microsoft.VisualBasic::5060db9f9c4ca8d14aacc7e237c5294c, Data_science\MachineLearning\DeepLearning\CNN\layers\losslayers\LossLayer.vb"
 
     ' Author:
     ' 

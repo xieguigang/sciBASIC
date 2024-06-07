@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36adf28163a1b12303f073009a939fab, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::c8545c890750a4e710dfe923f26fe22d, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.72%
     ' 
     '   Blank Lines: 159 (11.08%)
-    '     File Size: 53.65 KB
+    '     File Size: 53.66 KB
 
 
     ' Module StringHelpers
@@ -494,7 +494,7 @@ Public Module StringHelpers
     ''' <summary>
     ''' NA, n/a, NULL, null, N/A, -
     ''' </summary>
-    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-"}
+    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-", "/"}
 
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>
