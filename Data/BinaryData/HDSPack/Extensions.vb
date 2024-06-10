@@ -63,7 +63,8 @@ Public Module Extensions
     Public Function WriteText(pack As StreamPack,
                               text As IEnumerable(Of String),
                               fileName As String,
-                              Optional encoding As Encodings = Encodings.UTF8) As Boolean
+                              Optional encoding As Encodings = Encodings.UTF8,
+                              Optional allocate As Boolean = True) As Boolean
 
         Using buffer As New MemoryStream
             Dim bin As New StreamWriter(buffer, encoding.CodePage)
@@ -74,7 +75,8 @@ Public Module Extensions
 
             Call bin.Flush()
 
-            Dim writeBin = pack.OpenBlock(fileName, buffer_size:=buffer.Length)
+            Dim seek As Integer = If(allocate, buffer.Length, -1)
+            Dim writeBin = pack.OpenBlock(fileName, buffer_size:=seek)
             writeBin.Write(buffer.ToArray, Scan0, buffer.Length)
             writeBin.Flush()
 
