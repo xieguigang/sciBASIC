@@ -150,7 +150,7 @@ Namespace CSS
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"stroke: {fill}; stroke-width: {width}px; stroke-dash: {dash.ToString.ToLower};"
+            Return $"stroke: {fill}; stroke-width: {width}; stroke-dash: {dash.ToString.ToLower};"
         End Function
 
         Shared ReadOnly __dashStyles As Dictionary(Of String, DashStyle) =
