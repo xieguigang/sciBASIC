@@ -16,7 +16,7 @@
         ''' Implements Lee and Seungs Multiplicative Update Algorithm
         ''' </summary>
         ''' <param name="A"></param>
-        ''' <param name="k"></param>
+        ''' <param name="k">number of features</param>
         ''' <param name="max_iterations"></param>
         ''' <param name="tolerance"></param>
         ''' <returns></returns>
@@ -26,8 +26,8 @@
                                              Optional tolerance As Double = 0.001,
                                              Optional epsilon As Double = 0.0001) As NMF
 
-            Dim m As Integer = A.ColumnDimension
-            Dim n As Integer = A.RowDimension
+            Dim m As Integer = A.RowDimension
+            Dim n As Integer = A.ColumnDimension
             ' initialize W,H as random matrix
             Dim W As NumericMatrix = NumericMatrix.Gauss(m, k)
             Dim H As NumericMatrix = NumericMatrix.Gauss(k, n)
@@ -43,7 +43,7 @@
                 x2 = W.DotProduct(H).Dot(H.Transpose)
                 W = (W * A.DotProduct(H.Transpose)) / (x2 + epsilon)
                 V = W.DotProduct(H)
-                cost = (A - V).Norm2
+                cost = ((A - V) ^ 2).sum(axis:=-1).Sum
 
                 If cost <= tolerance Then
                     Exit For
