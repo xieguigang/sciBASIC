@@ -109,7 +109,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
             If Not left Is Nothing Then addClusterMember.insertLeft = Sub(node, null) Call left(node.Key, key)
             If Not right Is Nothing Then addClusterMember.insertRight = Sub(node, null) Call right(node.Key, key)
 
-            avltree.Add(New ClusterKey(Of K)(key, views), key, callback:=addClusterMember)
+            Dim clusterRoot As New ClusterKey(Of K)(key, views)
+
+            avltree.Add(clusterRoot, key, callback:=addClusterMember)
             totals += 1
         End Sub
 

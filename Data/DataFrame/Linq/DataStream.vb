@@ -222,8 +222,12 @@ Namespace IO.Linq
             _title = New RowObject
         End Sub
 
-        Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024)
+        Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024, Optional trim As Boolean = False)
             Dim first As String = file.ReadFirstLine
+
+            If trim Then
+                first = Strings.Trim(first)
+            End If
 
             _title = RowObject.TryParse(first)
             _schema = _title _
@@ -400,12 +404,13 @@ Namespace IO.Linq
         ''' <param name="file">*.csv data file.</param>
         ''' <param name="encoding">The text encoding. default is using <see cref="Encodings.Default"/></param>
         ''' <returns></returns>
-        Public Shared Function OpenHandle(
-                               file As String,
-                      Optional encoding As Encoding = Nothing,
-                      Optional bufSize As Integer = 64 * 1024 * 1024) As DataStream
+        Public Shared Function OpenHandle(file As String,
+                                          Optional encoding As Encoding = Nothing,
+                                          Optional bufSize As Integer = 64 * 1024 * 1024,
+                                          Optional trim As Boolean = False) As DataStream
 
-            Return New DataStream(file, encoding, bufSize)
+            Return New DataStream(file, encoding, bufSize,
+                                  trim:=trim)
         End Function
 
 #Region "IDisposable Support"
