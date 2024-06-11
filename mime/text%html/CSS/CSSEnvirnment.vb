@@ -152,6 +152,14 @@ Namespace CSS
             End If
 
             Dim style As DashStyle = GetDashStyle(stroke)
+            Dim width As Single = GetLineWidth(stroke)
+
+            Return New Pen(stroke.fill.GetBrush, width) With {
+                .DashStyle = style
+            }
+        End Function
+
+        Public Function GetLineWidth(stroke As Stroke) As Single
             Dim size As New CssLength(stroke.width)
             Dim width As Single
 
@@ -162,9 +170,7 @@ Namespace CSS
                     Throw New NotImplementedException(stroke.width)
             End Select
 
-            Return New Pen(stroke.fill.GetBrush, width) With {
-                .DashStyle = style
-            }
+            Return width
         End Function
 
         Public Function GetDashStyle(css As Stroke) As DashStyle
