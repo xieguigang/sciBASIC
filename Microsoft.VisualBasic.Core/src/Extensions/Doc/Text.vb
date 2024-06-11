@@ -528,10 +528,12 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' 将目标字符串集合数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
+    ''' Save a collection of the text data in line by line
     ''' </summary>
     ''' <param name="array"></param>
-    ''' <param name="path"></param>
+    ''' <param name="path">
+    ''' 将目标字符串集合数据全部写入到文件之中，当所写入的文件位置之上没有父文件夹存在的时候，会自动创建文件夹
+    ''' </param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     ''' <remarks>
