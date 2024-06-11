@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3095C9DC-C1C2-4AE9-9C97-9AF5C61DC18A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.gaussTest</StartupObject>
+    <StartupObject>Test.NMF_demo_test</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -103,6 +103,7 @@
     <Compile Include="lowessTest.vb" />
     <Compile Include="Module2.vb" />
     <Compile Include="gaussTest.vb" />
+    <Compile Include="NMF_demo_test.vb" />
     <Compile Include="scriptTest.vb" />
     <Compile Include="VectorTest.vb" />
     <Compile Include="quantileTest.vb" />
