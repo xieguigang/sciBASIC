@@ -1454,7 +1454,7 @@ Namespace LinearAlgebra.Matrix
         End Operator
 
         ''' <summary>
-        ''' Multiplication of matrices
+        ''' Element-by-element multiplication of two matrices
         ''' </summary>
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
@@ -1462,15 +1462,27 @@ Namespace LinearAlgebra.Matrix
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(m1 As NumericMatrix, m2 As GeneralMatrix) As GeneralMatrix
-            Return m1.Multiply(B:=m2)
+            Return m1.ArrayMultiply(B:=m2)
         End Operator
 
+        ''' <summary>
+        ''' Element-by-element multiplication of two matrices
+        ''' </summary>
+        ''' <param name="m1"></param>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
         Public Shared Operator *(m1 As GeneralMatrix, m2 As NumericMatrix) As GeneralMatrix
-            Return New NumericMatrix(m1.RowVectors).Multiply(B:=m2)
+            Return New NumericMatrix(m1.RowVectors).ArrayMultiply(B:=m2)
         End Operator
 
+        ''' <summary>
+        ''' Element-by-element multiplication of two matrices
+        ''' </summary>
+        ''' <param name="m1"></param>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
         Public Shared Operator *(m1 As NumericMatrix, m2 As NumericMatrix) As NumericMatrix
-            Return m1.Multiply(m2)
+            Return m1.ArrayMultiply(m2)
         End Operator
 
         Public Shared Operator *(m As NumericMatrix, v As Vector) As NumericMatrix
@@ -1486,6 +1498,12 @@ Namespace LinearAlgebra.Matrix
             Return y
         End Operator
 
+        ''' <summary>
+        ''' Element-by-element right division
+        ''' </summary>
+        ''' <param name="m1"></param>
+        ''' <param name="m2"></param>
+        ''' <returns></returns>
         Public Shared Operator /(m1 As NumericMatrix, m2 As NumericMatrix) As NumericMatrix
             Return m1.ArrayRightDivide(m2)
         End Operator
@@ -1870,6 +1888,12 @@ Namespace LinearAlgebra.Matrix
             End If
         End Function
 
+        ''' <summary>
+        ''' fill numeric value 1 to matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
         Public Shared Function One(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Dim m As New NumericMatrix(rowDimension, columnDimension)
             Dim x = m.Array
@@ -1883,6 +1907,15 @@ Namespace LinearAlgebra.Matrix
             Return m
         End Function
 
+        ''' <summary>
+        ''' create a random matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' element data range that generats inside the matrix is [-1,1]
+        ''' </remarks>
         Public Shared Function Gauss(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Dim m As New NumericMatrix(rowDimension, columnDimension)
             Dim x = m.Array
@@ -1890,6 +1923,28 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To rowDimension - 1
                 For j As Integer = 0 To columnDimension - 1
                     x(i)(j) = randf2.NextGaussian(mu:=0, sigma:=1)
+                Next
+            Next
+
+            Return m
+        End Function
+
+        ''' <summary>
+        ''' create a random matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
+        Public Shared Function random(columnDimension As Integer, rowDimension As Integer,
+                                      Optional min As Double = 0,
+                                      Optional max As Double = 1) As NumericMatrix
+
+            Dim m As New NumericMatrix(rowDimension, columnDimension)
+            Dim x = m.Array
+
+            For i As Integer = 0 To rowDimension - 1
+                For j As Integer = 0 To columnDimension - 1
+                    x(i)(j) = randf2.NextDouble(min, max)
                 Next
             Next
 
