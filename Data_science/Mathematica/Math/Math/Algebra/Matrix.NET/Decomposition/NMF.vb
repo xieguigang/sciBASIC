@@ -29,8 +29,8 @@
             Dim m As Integer = A.RowDimension
             Dim n As Integer = A.ColumnDimension
             ' initialize W,H as random matrix
-            Dim W As NumericMatrix = NumericMatrix.Gauss(rowDimension:=m, columnDimension:=k)
-            Dim H As NumericMatrix = NumericMatrix.Gauss(rowDimension:=k, columnDimension:=n)
+            Dim W As NumericMatrix = NumericMatrix.random(rowDimension:=m, columnDimension:=k)
+            Dim H As NumericMatrix = NumericMatrix.random(rowDimension:=k, columnDimension:=n)
             Dim V As NumericMatrix
             Dim cost As Double
 

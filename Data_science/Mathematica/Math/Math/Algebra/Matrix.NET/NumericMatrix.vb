@@ -1913,6 +1913,9 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="columnDimension"></param>
         ''' <param name="rowDimension"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' element data range that generats inside the matrix is [-1,1]
+        ''' </remarks>
         Public Shared Function Gauss(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Dim m As New NumericMatrix(rowDimension, columnDimension)
             Dim x = m.Array
@@ -1920,6 +1923,28 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To rowDimension - 1
                 For j As Integer = 0 To columnDimension - 1
                     x(i)(j) = randf2.NextGaussian(mu:=0, sigma:=1)
+                Next
+            Next
+
+            Return m
+        End Function
+
+        ''' <summary>
+        ''' create a random matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
+        Public Shared Function random(columnDimension As Integer, rowDimension As Integer,
+                                      Optional min As Double = 0,
+                                      Optional max As Double = 1) As NumericMatrix
+
+            Dim m As New NumericMatrix(rowDimension, columnDimension)
+            Dim x = m.Array
+
+            For i As Integer = 0 To rowDimension - 1
+                For j As Integer = 0 To columnDimension - 1
+                    x(i)(j) = randf2.NextDouble(min, max)
                 Next
             Next
 
