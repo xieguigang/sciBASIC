@@ -33,15 +33,20 @@
             Dim H As NumericMatrix = NumericMatrix.Gauss(k, n)
             Dim V As NumericMatrix
             Dim cost As Double
-            Dim x1, x2 As NumericMatrix
 
             For i As Integer = 0 To max_iterations
-                ' H = H .* (W'A) ./ (W'WH + epsilon);
-                x1 = W.Transpose.Dot(W).Dot(H)
-                H = (H * (W.Transpose.Dot(A))) / (x1 + epsilon)
-                ' W = W .* (AH' ) ./ (WHH' + epsilon);
-                x2 = W.DotProduct(H).Dot(H.Transpose)
-                W = (W * A.DotProduct(H.Transpose)) / (x2 + epsilon)
+                Dim HN = W.Transpose.Dot(A)
+                Dim HD = W.Transpose.Dot(W)
+
+                HD = HD.Dot(H)
+
+                H = DirectCast(H * HN, NumericMatrix) / HD
+
+                Dim WN = A.DotProduct(H.Transpose)
+                Dim WD = W.DotProduct(H.DotProduct(H.Transpose))
+
+                W = DirectCast(W * WN, NumericMatrix) / WD
+
                 V = W.DotProduct(H)
                 cost = ((A - V) ^ 2).sum(axis:=-1).Sum
 
