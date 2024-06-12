@@ -1888,6 +1888,12 @@ Namespace LinearAlgebra.Matrix
             End If
         End Function
 
+        ''' <summary>
+        ''' fill numeric value 1 to matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
         Public Shared Function One(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Dim m As New NumericMatrix(rowDimension, columnDimension)
             Dim x = m.Array
@@ -1901,6 +1907,12 @@ Namespace LinearAlgebra.Matrix
             Return m
         End Function
 
+        ''' <summary>
+        ''' create a random matrix with dimension size [<paramref name="columnDimension"/> x <paramref name="rowDimension"/>]
+        ''' </summary>
+        ''' <param name="columnDimension"></param>
+        ''' <param name="rowDimension"></param>
+        ''' <returns></returns>
         Public Shared Function Gauss(columnDimension As Integer, rowDimension As Integer) As NumericMatrix
             Dim m As New NumericMatrix(rowDimension, columnDimension)
             Dim x = m.Array
