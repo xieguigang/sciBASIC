@@ -4,7 +4,24 @@
     ''' implementation of Non-negative Matrix Factorisation Algorithms
     ''' </summary>
     ''' <remarks>
-    ''' Implements Lee and Seungs Multiplicative Update Algorithm
+    ''' Non-Negative Matrix Factorization
+    ''' 
+    ''' Non-Negative Matrix Factorization (NMF) is a recent technique for dimensionality 
+    ''' reduction and data analysis that yields a parts based, sparse nonnegative 
+    ''' representation for nonnegative input data. NMF has found a wide variety of applications,
+    ''' including text analysis, document clustering, face/image recognition, language
+    ''' modeling, speech processing and many others. Despite these numerous applications,
+    ''' the algorithmic development for computing the NMF factors has been relatively
+    ''' deficient.
+    '''
+    ''' NMF can be applied To the statistical analysis Of multivariate data In the following 
+    ''' manner. Given a Set Of Of multivariate n-dimensional data vectors, the vectors are 
+    ''' placed In the columns Of an n x m matrix V where m Is the number Of examples In the 
+    ''' data Set. This matrix Is Then approximately factorized into an n x r matrix W (weights
+    ''' matrix) And an r x m matrix H (features matrix), where r Is the number Of features
+    ''' defined by the user. Usually r Is chosen To be smaller than n Or m, so that W And H 
+    ''' are smaller than the original matrix V. This results In a compressed version Of the
+    ''' original data matrix.
     ''' </remarks>
     Public Class NMF
 
