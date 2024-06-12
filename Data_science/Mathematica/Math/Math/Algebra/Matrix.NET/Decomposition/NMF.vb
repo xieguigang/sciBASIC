@@ -11,6 +11,7 @@
         Public Property W As NumericMatrix
         Public Property H As NumericMatrix
         Public Property cost As Double
+        Public Property errors As Double()
 
         ''' <summary>
         ''' Implements Lee and Seungs Multiplicative Update Algorithm
@@ -33,6 +34,7 @@
             Dim H As NumericMatrix = NumericMatrix.random(rowDimension:=k, columnDimension:=n)
             Dim V As NumericMatrix
             Dim cost As Double
+            Dim errors As New List(Of Double)
 
             For i As Integer = 0 To max_iterations
                 Dim HN = W.Transpose.Dot(A)
@@ -49,6 +51,7 @@
 
                 V = W.DotProduct(H)
                 cost = ((A - V) ^ 2).sum(axis:=-1).Sum
+                errors.Add(cost)
 
                 If cost <= tolerance Then
                     Exit For
@@ -58,7 +61,8 @@
             Return New NMF With {
                 .cost = cost,
                 .H = H,
-                .W = W
+                .W = W,
+                .errors = errors.ToArray
             }
         End Function
 
