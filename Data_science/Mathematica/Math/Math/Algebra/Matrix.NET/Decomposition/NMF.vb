@@ -22,6 +22,15 @@
     ''' defined by the user. Usually r Is chosen To be smaller than n Or m, so that W And H 
     ''' are smaller than the original matrix V. This results In a compressed version Of the
     ''' original data matrix.
+    ''' 
+    ''' NMF 算法将矩阵 A 分解为两个矩阵：基矩阵 W 和系数矩阵 H。这两个矩阵的乘积将尽可能地接近原始矩阵 A。
+    '''
+    ''' + 基矩阵 W 表示的是 A 的潜在特征或主题，
+    ''' + 而系数矩阵 H 表示的是每个样本（在矩阵 A 中是每一行）在这些特征或主题上的分布。
+    ''' 
+    ''' 在 NMF 中，基矩阵 W 和系数矩阵 H 的乘积近似等于原始矩阵 A。通过这种方式，NMF 能够揭示矩阵 A 中的
+    ''' 潜在结构和特征。例如，在基矩阵 W 的每一列可能代表了矩阵 A 中的主要特征或主题，而系数矩阵 H 的
+    ''' 每一行则表示原始矩阵 A 中对应样本在这些特征或主题上的分布情况。
     ''' </remarks>
     Public Class NMF
 
