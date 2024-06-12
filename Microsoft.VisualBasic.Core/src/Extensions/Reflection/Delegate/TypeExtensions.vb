@@ -105,6 +105,9 @@ Namespace Emit.Delegates
         ''' <param name="source"></param>
         ''' <param name="interfaceType">接口类型信息</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' this function has a synlock cache of the type schema test result.
+        ''' </remarks>
         <Extension>
         Public Function ImplementInterface(source As Type, interfaceType As Type) As Boolean
             Static cache As New Dictionary(Of Type, Dictionary(Of Type, Boolean))
