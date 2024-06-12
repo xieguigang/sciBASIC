@@ -651,7 +651,8 @@ Public Module StringHelpers
     ''' <returns></returns>
     ''' <remarks>Using for the Fasta sequence writer.</remarks>
     <ExportAPI("s.Parts")>
-    <Extension> Public Function Parts(s$, len%) As String
+    <Extension>
+    Public Function Parts(s$, len%) As String
         Dim sbr As New StringBuilder
         Call Parts(s, len, sbr)
         Return sbr.ToString
@@ -778,12 +779,14 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
-    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
     ''' </summary>
     ''' <param name="str$"></param>
     ''' <param name="left$"></param>
     ''' <param name="right$"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
+    ''' </remarks>
     <ExportAPI("Get.Stackvalue")>
     <Extension>
     Public Function GetStackValue(str$, left$, right$) As String
