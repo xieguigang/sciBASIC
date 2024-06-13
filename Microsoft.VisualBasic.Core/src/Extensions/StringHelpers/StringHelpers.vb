@@ -922,7 +922,7 @@ Public Module StringHelpers
     ''' <param name="input">The string to search for a match.</param>
     ''' <param name="pattern">The regular expression pattern to match.</param>
     ''' <param name="options"></param>
-    ''' <returns></returns>
+    ''' <returns>empty string will be returns if the given input string is null or empty.</returns>
     <Extension>
     Public Function Match(input$, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         If input.StringEmpty Then
