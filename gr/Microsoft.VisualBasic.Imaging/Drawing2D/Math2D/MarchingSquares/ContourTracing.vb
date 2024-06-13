@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports bool = System.Boolean
 Imports i8 = System.SByte
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports usize = System.Int32
 
 Namespace Drawing2D.Math2D.MarchingSquares
@@ -233,7 +233,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         Call trace(False, cursor_x, cursor_y, {4, 5, 6, 7, 0, 1, 2, 3}, -2, (1, 7, 6), H_VERTEX, H_VALUE, contours, paths)
                     End If
 
-                    Select Case stdNum.Abs(contours(cursor_y)(cursor_x))
+                    Select Case std.Abs(contours(cursor_y)(cursor_x))
                         Case 2, 4, 10, 12
                             If contours(cursor_y)(cursor_x) > 0 Then
                                 ol += 1
