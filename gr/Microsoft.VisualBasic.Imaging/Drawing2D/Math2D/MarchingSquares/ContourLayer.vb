@@ -1,68 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::164f2e81bf0f7850b591cadb737b75af, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\ContourLayer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 123
-    '    Code Lines: 87 (70.73%)
-    ' Comment Lines: 16 (13.01%)
-    '    - Xml Docs: 93.75%
-    ' 
-    '   Blank Lines: 20 (16.26%)
-    '     File Size: 4.61 KB
+' Summaries:
 
 
-    '     Class ContourLayer
-    ' 
-    '         Properties: dimension, shapes, threshold
-    ' 
-    '         Function: FillDots, GetContours, GetOutline
-    ' 
-    '     Class Polygon2D
-    ' 
-    '         Properties: x, y
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetDimension, ToArray
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 123
+'    Code Lines: 87 (70.73%)
+' Comment Lines: 16 (13.01%)
+'    - Xml Docs: 93.75%
+' 
+'   Blank Lines: 20 (16.26%)
+'     File Size: 4.61 KB
+
+
+'     Class ContourLayer
+' 
+'         Properties: dimension, shapes, threshold
+' 
+'         Function: FillDots, GetContours, GetOutline
+' 
+'     Class Polygon2D
+' 
+'         Properties: x, y
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetDimension, ToArray
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Drawing2D.Math2D.MarchingSquares
 
@@ -103,7 +104,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Next
         End Function
 
-        Private Shared Iterator Function FillDots(x As Double(), y As Double(), fillSize As Integer) As IEnumerable(Of MeasureData)
+        Private Shared Iterator Function FillDots(x As Integer(), y As Integer(), fillSize As Integer) As IEnumerable(Of MeasureData)
             If fillSize <= 1 Then
                 For i As Integer = 0 To x.Length - 1
                     Yield New MeasureData(x(i), y(i), 1)
@@ -127,7 +128,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Public Shared Function GetOutline(x As Double(), y As Double(), Optional fillSize As Integer = 1) As GeneralPath
+        Public Shared Function GetOutline(x As Integer(), y As Integer(), Optional fillSize As Integer = 1) As GeneralPath
             Dim sample As MeasureData() = FillDots(x, y, fillSize).ToArray
             Dim topleft As New MeasureData(0, 0, 0)
             Dim topright As New MeasureData(x.Max, y.Max, 0)
@@ -143,6 +144,26 @@ Namespace Drawing2D.Math2D.MarchingSquares
                         End Function)
 
             Return allRegions
+        End Function
+
+        ''' <summary>
+        ''' Do contour tracing for measure outline
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Shared Function GetOutline(x As Double(), y As Double(), Optional fillSize As Integer = 1) As GeneralPath
+            Return GetOutline(x.AsInteger, y.AsInteger, fillSize)
+        End Function
+
+        ''' <summary>
+        ''' Do contour tracing for measure outline
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        Public Shared Function GetOutline(x As Single(), y As Single(), Optional fillSize As Integer = 1) As GeneralPath
+            Return GetOutline(x.AsInteger, y.AsInteger, fillSize)
         End Function
     End Class
 

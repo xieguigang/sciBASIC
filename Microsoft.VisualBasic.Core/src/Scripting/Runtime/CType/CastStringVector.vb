@@ -140,11 +140,14 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
-        ''' 批量的将一个字符串集合解析转换为目标类型<typeparamref name="T"/>的对象的集合
+        ''' string array parser helper. 
         ''' </summary>
-        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="T">get parser for current type from <see cref="InputHandler.CasterString"/>.</typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 批量的将一个字符串集合解析转换为目标类型<typeparamref name="T"/>的对象的集合
+        ''' </remarks>
         <Extension>
         Public Function AsType(Of T)(source As IEnumerable(Of String)) As IEnumerable(Of T)
             Dim type As Type = GetType(T)
