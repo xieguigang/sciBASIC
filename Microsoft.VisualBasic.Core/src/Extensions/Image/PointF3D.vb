@@ -1,76 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::172ffc809cd27f4367e505ed4a72bfcf, Microsoft.VisualBasic.Core\src\Extensions\Image\PointF3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 89
-    '    Code Lines: 24 (26.97%)
-    ' Comment Lines: 47 (52.81%)
-    '    - Xml Docs: 95.74%
-    ' 
-    '   Blank Lines: 18 (20.22%)
-    '     File Size: 2.20 KB
+' Summaries:
 
 
-    '     Interface PointF3D
-    ' 
-    '         Properties: Z
-    ' 
-    '     Interface IPoint3D
-    ' 
-    '         Properties: Z
-    ' 
-    '     Structure SpatialIndex3D
-    ' 
-    '         Properties: X, Y, Z
-    ' 
-    '     Interface Layout2D
-    ' 
-    '         Properties: X, Y
-    ' 
-    '     Interface RasterPixel
-    ' 
-    '         Properties: X, Y
-    ' 
-    '     Interface Pixel
-    ' 
-    '         Properties: Scale
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 89
+'    Code Lines: 24 (26.97%)
+' Comment Lines: 47 (52.81%)
+'    - Xml Docs: 95.74%
+' 
+'   Blank Lines: 18 (20.22%)
+'     File Size: 2.20 KB
+
+
+'     Interface PointF3D
+' 
+'         Properties: Z
+' 
+'     Interface IPoint3D
+' 
+'         Properties: Z
+' 
+'     Structure SpatialIndex3D
+' 
+'         Properties: X, Y, Z
+' 
+'     Interface Layout2D
+' 
+'         Properties: X, Y
+' 
+'     Interface RasterPixel
+' 
+'         Properties: X, Y
+' 
+'     Interface Pixel
+' 
+'         Properties: Scale
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -160,4 +162,31 @@ Namespace Imaging
         Property Scale As Double
 
     End Interface
+
+    <HideModuleName>
+    Public Module PixelExtensions
+
+        <Extension>
+        Public Iterator Function X(Of T As RasterPixel)(shape As IEnumerable(Of T)) As IEnumerable(Of Integer)
+            If shape Is Nothing Then
+                Return
+            Else
+                For Each pi As T In shape
+                    Yield pi.X
+                Next
+            End If
+        End Function
+
+        <Extension>
+        Public Iterator Function Y(Of T As RasterPixel)(shape As IEnumerable(Of T)) As IEnumerable(Of Integer)
+            If shape Is Nothing Then
+                Return
+            Else
+                For Each pi As T In shape
+                    Yield pi.Y
+                Next
+            End If
+        End Function
+
+    End Module
 End Namespace
