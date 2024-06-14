@@ -62,6 +62,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -152,6 +153,8 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetOutline(x As Double(), y As Double(), Optional fillSize As Integer = 1) As GeneralPath
             Return GetOutline(x.AsInteger, y.AsInteger, fillSize)
         End Function
@@ -162,6 +165,8 @@ Namespace Drawing2D.Math2D.MarchingSquares
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetOutline(x As Single(), y As Single(), Optional fillSize As Integer = 1) As GeneralPath
             Return GetOutline(x.AsInteger, y.AsInteger, fillSize)
         End Function
