@@ -180,9 +180,26 @@ Namespace Drawing2D.Math2D.MarchingSquares
             End If
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="q">[0,1]</param>
+        ''' <returns></returns>
         Public Function FilterSmallPolygon(q As Double) As GeneralPath
-            Dim max_size As Integer = polygons.Select(Function(g) g.Length).Max
+            If polygons.IsNullOrEmpty Then
+                Return New GeneralPath(level) With {.dimension = dimension}
+            End If
 
+            Dim max_size As Integer = polygons.Select(Function(g) g.Length).Max
+            Dim shapes As New GeneralPath(level) With {.dimension = dimension}
+
+            For Each polygon As PointF() In polygons
+                If polygon.Length / max_size >= q Then
+                    Call shapes.AddPolygon(polygon)
+                End If
+            Next
+
+            Return shapes
         End Function
 
         Public Function Cubic(Optional resolution As Integer = 1000) As GeneralPath
