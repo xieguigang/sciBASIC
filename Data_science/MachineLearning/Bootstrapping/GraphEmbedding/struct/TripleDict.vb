@@ -63,12 +63,13 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace GraphEmbedding.struct
 
     Public Class TripleDict
 
-        Public pTripleDict As Dictionary(Of String, Boolean) = Nothing
+        Public pTripleDict As New Dictionary(Of String, Boolean)
 
         Public Sub New()
         End Sub
@@ -78,23 +79,15 @@ Namespace GraphEmbedding.struct
         End Function
 
         Public Overridable Sub load(fnInput As String)
-            pTripleDict = New Dictionary(Of String, Boolean)()
             Dim reader As StreamReader = New StreamReader(New FileStream(fnInput, FileMode.Open, FileAccess.Read), Encoding.UTF8)
+            Dim line As value(Of String) = ""
 
-            Dim line = ""
-            While Not String.ReferenceEquals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
+            While Not (line = reader.ReadLine()) Is Nothing
                 pTripleDict(line.Trim()) = True
             End While
+
             reader.Close()
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 End Namespace
