@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::5a1034e65064f5326ba325fce7821efe, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1047
-    '    Code Lines: 610 (58.26%)
-    ' Comment Lines: 324 (30.95%)
-    '    - Xml Docs: 85.80%
-    ' 
-    '   Blank Lines: 113 (10.79%)
-    '     File Size: 40.94 KB
+' Summaries:
 
 
-    ' Module PathExtensions
-    ' 
-    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1047
+'    Code Lines: 610 (58.26%)
+' Comment Lines: 324 (30.95%)
+'    - Xml Docs: 85.80%
+' 
+'   Blank Lines: 113 (10.79%)
+'     File Size: 40.94 KB
+
+
+' Module PathExtensions
+' 
+'     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+'               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
+'               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+'               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+'               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+'               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -316,12 +316,17 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="directory"></param>
     ''' <param name="pattern">
+    ''' default filter is ``*.*``, which means select all files. 
     ''' 如果匹配的模式字符串是带有文件后缀名的，那么文件夹之中所有没有后缀名的文件都可能会被忽略掉
     ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ListFiles(directory$, Optional pattern$ = "*.*") As IEnumerable(Of String)
+    Public Function ListFiles(directory$, ParamArray pattern$()) As IEnumerable(Of String)
+        If pattern.IsNullOrEmpty Then
+            pattern = {"*.*"}
+        End If
+
         Return ls - l - r - pattern <= directory
     End Function
 
