@@ -61,9 +61,13 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.Interpolation
 
 Namespace Drawing2D.Math2D.MarchingSquares
 
+    ''' <summary>
+    ''' a collection of the polygon data
+    ''' </summary>
     Public Class GeneralPath
 
         Friend ReadOnly polygons As New List(Of PointF())
@@ -175,5 +179,34 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 Call polygons.Add(temp.PopAll)
             End If
         End Sub
+
+        Public Function FilterSmallPolygon(q As Double) As GeneralPath
+            Dim max_size As Integer = polygons.Select(Function(g) g.Length).Max
+
+        End Function
+
+        Public Function Cubic(Optional resolution As Integer = 1000) As GeneralPath
+            Dim smooth As New List(Of PointF())
+            Dim path As New GeneralPath(level) With {.dimension = dimension}
+
+            For Each polygon As PointF() In polygons
+                polygon = polygon.CubicSpline(resolution)
+                path.AddPolygon(polygon)
+            Next
+
+            Return path
+        End Function
+
+        Public Function Bspline(Optional degree As Integer = 2, Optional resolution As Integer = 10) As GeneralPath
+            Dim smooth As New List(Of PointF())
+            Dim path As New GeneralPath(level) With {.dimension = dimension}
+
+            For Each polygon As PointF() In polygons
+                polygon = B_Spline.BSpline(polygon, degree, resolution).ToArray
+                path.AddPolygon(polygon)
+            Next
+
+            Return path
+        End Function
     End Class
 End Namespace

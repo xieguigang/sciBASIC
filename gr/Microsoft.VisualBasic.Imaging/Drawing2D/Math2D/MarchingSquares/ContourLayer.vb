@@ -62,7 +62,6 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Math2D.MarchingSquares

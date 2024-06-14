@@ -69,6 +69,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.MarchingSquares
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Plots
 
@@ -136,6 +138,9 @@ Namespace Plots
                 .X = xscale,
                 .Y = yscale
             }
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim stroke As Stroke = Stroke.TryParse(theme.lineStroke)
+            Dim pen As Pen = css.GetPen(stroke)
 
             Call Axis.DrawAxis(
                 g, canvas, scale,
@@ -160,6 +165,7 @@ Namespace Plots
                     .ToArray
 
                 Call g.FillPolygon(New SolidBrush(polygon.color), shape)
+                Call g.DrawPolygon(pen, shape)
             Next
         End Sub
     End Class
