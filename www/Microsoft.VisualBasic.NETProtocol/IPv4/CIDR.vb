@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::686e5010694ce36a2ab7b95cfa3787ec, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::b4269349bef9e4585d5d6f12c547ded0, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.25%
     ' 
     '   Blank Lines: 96 (22.91%)
-    '     File Size: 13.31 KB
+    '     File Size: 13.29 KB
 
 
     ' Class IPv4

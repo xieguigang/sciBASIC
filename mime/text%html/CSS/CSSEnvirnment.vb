@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1b5dd2a09ac72a95054d07f6eaf8889, mime\text%html\CSS\CSSEnvirnment.vb"
+﻿#Region "Microsoft.VisualBasic::58c710ce8a4a64ee8650dffdcee5c516, mime\text%html\CSS\CSSEnvirnment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 122 (65.59%)
-    ' Comment Lines: 38 (20.43%)
+    '   Total Lines: 192
+    '    Code Lines: 126 (65.62%)
+    ' Comment Lines: 38 (19.79%)
     '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 26 (13.98%)
-    '     File Size: 6.71 KB
+    '   Blank Lines: 28 (14.58%)
+    '     File Size: 6.89 KB
 
 
     '     Class CSSEnvirnment
@@ -49,7 +49,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Empty, GetDashStyle, (+2 Overloads) GetFont, GetFontByScale, GetFontFamily
-    '                   GetFontStyle, (+2 Overloads) GetPen, GetSize, GetValue, SetBaseStyles
+    '                   GetFontStyle, GetLineWidth, (+2 Overloads) GetPen, GetSize, GetValue
+    '                   SetBaseStyles
     ' 
     ' 
     ' /********************************************************************************/

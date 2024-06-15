@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7085476f7f5e7707085f4bf204557d64, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
+﻿#Region "Microsoft.VisualBasic::639633e2894d6e286700f739aad3c9a8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\GeneralPath.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 93 (78.81%)
-    ' Comment Lines: 4 (3.39%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 168
+    '    Code Lines: 125 (74.40%)
+    ' Comment Lines: 12 (7.14%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 21 (17.80%)
-    '     File Size: 3.90 KB
+    '   Blank Lines: 31 (18.45%)
+    '     File Size: 5.74 KB
 
 
     '     Class GeneralPath
@@ -49,7 +49,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: AddPolygon, GetContour, GetPolygons, ToString
+    '         Function: AddPolygon, Bspline, Cubic, FilterSmallPolygon, GetContour
+    '                   GetPolygons, ToString
     ' 
     '         Sub: ClosePath, Discard, Draw, Fill, LineTo
     '              MoveTo, warning

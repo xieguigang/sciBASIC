@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bfd6679a55caa162a0889d05b5074b7, Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::09c9603933db6fe67fb1701d16970ce6, Data\BinaryData\HDSPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 72 (66.06%)
-    ' Comment Lines: 20 (18.35%)
+    '   Total Lines: 111
+    '    Code Lines: 74 (66.67%)
+    ' Comment Lines: 20 (18.02%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (15.60%)
-    '     File Size: 3.88 KB
+    '   Blank Lines: 17 (15.32%)
+    '     File Size: 4.01 KB
 
 
     ' Module Extensions

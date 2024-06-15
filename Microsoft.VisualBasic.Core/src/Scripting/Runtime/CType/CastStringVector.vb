@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::933eaf0cc5dd91e7cf7b9806fbb6d025, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::814e04e77d4c597fd8bbd94506bbf678, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 85 (51.20%)
-    ' Comment Lines: 65 (39.16%)
-    '    - Xml Docs: 98.46%
+    '   Total Lines: 169
+    '    Code Lines: 85 (50.30%)
+    ' Comment Lines: 68 (40.24%)
+    '    - Xml Docs: 98.53%
     ' 
-    '   Blank Lines: 16 (9.64%)
-    '     File Size: 6.90 KB
+    '   Blank Lines: 16 (9.47%)
+    '     File Size: 7.07 KB
 
 
     '     Module CastStringVector

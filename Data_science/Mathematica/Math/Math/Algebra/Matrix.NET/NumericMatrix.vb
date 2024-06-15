@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b685f30b9f81ca644b29872909153724, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::7df0ff66fab197bd4786668a976d3b7c, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1854
-    '    Code Lines: 1022 (55.12%)
-    ' Comment Lines: 584 (31.50%)
-    '    - Xml Docs: 95.89%
+    '   Total Lines: 1909
+    '    Code Lines: 1034 (54.16%)
+    ' Comment Lines: 623 (32.63%)
+    '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 248 (13.38%)
-    '     File Size: 66.76 KB
+    '   Blank Lines: 252 (13.20%)
+    '     File Size: 69.11 KB
 
 
     '     Class NumericMatrix
@@ -58,9 +58,9 @@
     '                   Log, LUD, max, Max, Min
     '                   (+3 Overloads) Multiply, MultiplyEquals, Norm1, Norm2, NormF
     '                   NormInf, Number, One, Power, QRD
-    '                   Rank, Resize, RowApply, RowVectors, RowWise
-    '                   (+2 Overloads) Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD
-    '                   ToString, Trace, Transpose, Zero
+    '                   random, Rank, Resize, RowApply, RowVectors
+    '                   RowWise, (+2 Overloads) Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals
+    '                   SVD, ToString, Trace, Transpose, Zero
     ' 
     '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, (+4 Overloads) SetMatrix
     ' 

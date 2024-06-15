@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a60e78d2c27791699d7a9d64cb41181, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleDict.vb"
+﻿#Region "Microsoft.VisualBasic::f03550035988af09fe31d8bc8a945c4b, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleDict.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 28 (75.68%)
+    '   Total Lines: 30
+    '    Code Lines: 21 (70.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (24.32%)
-    '     File Size: 1.21 KB
+    '   Blank Lines: 9 (30.00%)
+    '     File Size: 847 B
 
 
     '     Class TripleDict
@@ -50,11 +50,6 @@
     '         Function: tripleDict
     ' 
     '         Sub: load
-    '         Class CSharpImpl
-    ' 
-    '             Function: __Assign
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
