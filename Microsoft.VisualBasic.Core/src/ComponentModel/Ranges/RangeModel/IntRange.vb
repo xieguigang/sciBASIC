@@ -108,10 +108,10 @@ Namespace ComponentModel.Ranges.Model
         ''' </summary>
         ''' <param name="source"></param>
         Sub New(source As IEnumerable(Of Integer))
-            With source.ToArray
-                Min = .Min
-                Max = .Max
-            End With
+            Dim minmax As Integer() = IntRange.MinMax(source)
+
+            Min = minmax(0)
+            Max = minmax(1)
         End Sub
 
         Sub New()
@@ -219,5 +219,21 @@ Namespace ComponentModel.Ranges.Model
                 Return New IntRange(.Min, .Max)
             End With
         End Operator
+
+        Public Shared Function MinMax(ints As IEnumerable(Of Integer)) As Integer()
+            Dim min As Integer = Integer.MaxValue
+            Dim max As Integer = Integer.MinValue
+
+            For Each i As Integer In ints
+                If i > max Then
+                    max = i
+                End If
+                If i < min Then
+                    min = i
+                End If
+            Next
+
+            Return {min, max}
+        End Function
     End Class
 End Namespace
