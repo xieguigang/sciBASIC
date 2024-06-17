@@ -55,6 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports std = System.Math
 
+<HideModuleName>
 Public Module Extensions
 
     ' 95％置信区间上限=均数+1.96×标准差
