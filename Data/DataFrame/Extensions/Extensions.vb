@@ -525,7 +525,6 @@ Public Module Extensions
 
     ''' <summary>
     ''' Load a csv data file document using a specific object type.
-    ''' (将某一个Csv数据文件加载仅一个特定类型的对象集合中，空文件的话会返回一个空集合，这是一个安全的函数，不会返回空值)
     ''' </summary>
     ''' <typeparam name="T">The type parameter of the element in the returns collection data.</typeparam>
     ''' <param name="path">The csv document file path.(目标Csv数据文件的文件路径)</param>
@@ -535,8 +534,10 @@ Public Module Extensions
     ''' <param name="skipWhile">
     ''' [fieldName => test] 如果目标csv文件数据集非常大的话，可以使用这个函数来过滤掉一些数据行，以减少数据量
     ''' </param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <returns>a collection of the <typeparamref name="T"/>.</returns>
+    ''' <remarks>
+    ''' (将某一个Csv数据文件加载仅一个特定类型的对象集合中，空文件的话会返回一个空集合，这是一个安全的函数，不会返回空值)
+    ''' </remarks>
     <Extension>
     Public Function LoadCsv(Of T As Class)(path$,
                                            Optional explicit As Boolean = False,
