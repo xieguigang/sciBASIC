@@ -2,7 +2,7 @@
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
-Public Module FastICA
+Public Class FastICA
     ' 
     ' 	 * AlgorithmFunctions.c
     ' 	 *
@@ -535,15 +535,15 @@ Public Module FastICA
         ' 		 * algorithm.
         ' 		 
 
-        Amix = Nothing
-        W = Nothing
-        WT = Nothing
-        timeVector = Nothing
-        S = Nothing
-        Sest = Nothing
-        Xobs = Nothing
-        X = Nothing
-        Z = Nothing
+        Erase Amix
+        Erase W
+        Erase WT
+        Erase timeVector
+        Erase S
+        Erase Sest
+        Erase Xobs
+        Erase X
+        Erase Z
     End Sub
 
 
@@ -1100,4 +1100,4 @@ Public Module FastICA
     Public begin As Date = Date.Now
     Public [end] As Date
 
-End Module
+End Class
