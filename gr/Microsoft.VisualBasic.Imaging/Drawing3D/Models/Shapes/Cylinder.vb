@@ -75,9 +75,15 @@ Namespace Drawing3D.Models.Isometric.Shapes
         End Sub
     End Class
 
+    ''' <summary>
+    ''' a 3d pie piece
+    ''' </summary>
     Public Class Pie : Inherits Shape3D
 
-        Public Sub New(origin As Point3D, radius#, startAngle#, sweepAngle#, vertices#, height#)
+        Public Sub New(origin As Point3D, radius#, startAngle#, sweepAngle#,
+                       Optional vertices# = 1000,
+                       Optional height# = 100)
+
             Call MyBase.New
 
             Dim arc As New Paths.Arc(origin, radius, startAngle, sweepAngle, vertices)

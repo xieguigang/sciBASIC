@@ -58,7 +58,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.MarchingCubes
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing3D.Models.Isometric

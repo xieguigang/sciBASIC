@@ -60,7 +60,7 @@ Namespace Drawing3D.Models.Isometric.Shapes
         ''' 
         ''' </summary>
         ''' <param name="origin">The shape model location</param>
-        ''' <param name="scale#">The scale size</param>
+        ''' <param name="scale">The scale size</param>
         Public Sub New(origin As Point3D, Optional scale# = 1 / 5)
             Push((New Prism(Math3D.ORIGIN, 5, 1, 1)).paths)
             Push((New Prism(New Point3D(4, 1, 0), 1, 4, 1)).paths)

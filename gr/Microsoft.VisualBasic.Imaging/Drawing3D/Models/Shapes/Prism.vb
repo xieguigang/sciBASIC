@@ -72,9 +72,9 @@ Namespace Drawing3D.Models.Isometric.Shapes
         ''' 
         ''' </summary>
         ''' <param name="origin">位置</param>
-        ''' <param name="dx#">边长</param>
-        ''' <param name="dy#">边长</param>
-        ''' <param name="dz#">边长</param>
+        ''' <param name="dx">边长</param>
+        ''' <param name="dy">边长</param>
+        ''' <param name="dz">边长</param>
         Public Sub New(origin As Point3D, dx#, dy#, dz#)
             MyBase.New()
 

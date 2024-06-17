@@ -60,7 +60,7 @@
 Imports System.Drawing
 Imports System.Math
 Imports Circle2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Circle
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing3D.Models.Isometric.Paths
 
@@ -97,8 +97,8 @@ Namespace Drawing3D.Models.Isometric.Paths
         Public Sub New(origin As Point3D, radius#, startAngle#, sweepAngle#, vertices#)
             Call MyBase.New
 
-            Dim deltaAngle# = 2 * stdNum.PI * (sweepAngle / 360) / vertices
-            Dim angle# = 2 * stdNum.PI * (startAngle / 360)
+            Dim deltaAngle# = 2 * std.PI * (sweepAngle / 360) / vertices
+            Dim angle# = 2 * std.PI * (startAngle / 360)
 
             For i As Integer = 0 To vertices - 1
                 Dim p As New Point3D(
