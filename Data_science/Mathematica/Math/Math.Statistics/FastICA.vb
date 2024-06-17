@@ -21,7 +21,7 @@ Public Module FastICA
         Dim i As Integer = 0
         Dim j As Integer
         Dim meanVector As Double() = New Double(N - 1) {}
-        Dim X As Double()() = RectangularArray.Matrix(Of Double)(N, M)
+        Dim X As Double()() = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Calculating mean vector of observation matrix
         While i < N
@@ -90,7 +90,7 @@ Public Module FastICA
         Dummy2 = RectangularArray.Matrix(Of Double)(N, N)
         EigVectors = RectangularArray.Matrix(Of Double)(N, N)
         EigVectorsT = RectangularArray.Matrix(Of Double)(N, N)
-        Z = RectangularArray.Matrix(Of Double)(N, M)
+        Z = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Calculating covariance
         i = 0
@@ -504,7 +504,7 @@ Public Module FastICA
         Dim i As Integer
         Dim j As Integer
         Dim k As Integer
-        Dim Xobs = RectangularArray.Matrix(Of Double)(N, M)
+        Dim Xobs = RectangularArray.Matrix(Of Double)(M, N)
 
         ' Generating observation matrix Xobs
         i = 0
@@ -566,7 +566,7 @@ Public Module FastICA
         Dim k As Integer
         Dim Sp As Double()()
 
-        Sp = RectangularArray.Matrix(Of Double)(rows1, columns2)
+        Sp = RectangularArray.Matrix(Of Double)(columns2, rows1)
 
         i = 0
 
@@ -656,7 +656,7 @@ Public Module FastICA
 
         Dim i As Integer
         Dim j As Integer
-        Dim Sp = RectangularArray.Matrix(Of Double)(columns, rows)
+        Dim Sp = RectangularArray.Matrix(Of Double)(rows, columns)
 
         i = 0
 
@@ -885,11 +885,11 @@ Public Module FastICA
 
         ' Generating Data for ICA
 
-        S = RectangularArray.Matrix(Of Double)(N, M)
-        Sest = RectangularArray.Matrix(Of Double)(N, M)
-        Xobs = RectangularArray.Matrix(Of Double)(N, M)
-        X = RectangularArray.Matrix(Of Double)(N, M)
-        Z = RectangularArray.Matrix(Of Double)(N, M)
+        S = RectangularArray.Matrix(Of Double)(M, N)
+        Sest = RectangularArray.Matrix(Of Double)(M, N)
+        Xobs = RectangularArray.Matrix(Of Double)(M, N)
+        X = RectangularArray.Matrix(Of Double)(M, N)
+        Z = RectangularArray.Matrix(Of Double)(M, N)
     End Sub
 
     ' 
