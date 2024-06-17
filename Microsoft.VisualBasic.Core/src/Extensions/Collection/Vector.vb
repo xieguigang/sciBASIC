@@ -714,4 +714,15 @@ Public Module VectorExtensions
         Array.ConstrainedCopy(a, Scan0, newVec, Scan0, copy_size)
         Return newVec
     End Function
+
+    <Extension>
+    Public Function CopyOf(Of T)(v As T(), ordinals As Integer()) As T()
+        Dim newVec As T() = New T(ordinals.Length - 1) {}
+
+        For i As Integer = 0 To ordinals.Length - 1
+            newVec(i) = v(ordinals(i))
+        Next
+
+        Return newVec
+    End Function
 End Module
