@@ -423,8 +423,13 @@ Namespace ComponentModel.DataStructures
         ''' create an empty integer set
         ''' </summary>
         ''' <returns></returns>
-        Public Shared Function [Integer]() As [Set]
-            Return New [Set](Function(a, b) CInt(a) = CInt(b))
+        Public Shared Function [Integer](ParamArray ints As Integer()) As [Set]
+            Return New [Set](ints, Function(a, b) CInt(a) = CInt(b))
         End Function
+
+        Public Shared Function [UInteger](ParamArray uints As UInteger()) As [Set]
+            Return New [Set](uints, Function(a, b) CUInt(a) = CUInt(b))
+        End Function
+
     End Class
 End Namespace
