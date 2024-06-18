@@ -161,6 +161,18 @@ Namespace ComponentModel.DataStructures
             _behaviour = BadBehaviourResponses.BeAggressive
         End Sub
 
+        Sub New(copy As [Set])
+            Call Me.New(copy._equals)
+
+            _behaviour = BadBehaviourResponses.BeCool
+
+            For Each o As Object In copy._members
+                Call Add(o)
+            Next
+
+            _behaviour = BadBehaviourResponses.BeAggressive
+        End Sub
+
         ''' <summary>
         ''' Empty the set of all members.
         ''' </summary>
@@ -430,6 +442,14 @@ Namespace ComponentModel.DataStructures
             For Each xi As Object In _members
                 Yield xi
             Next
+        End Function
+
+        ''' <summary>
+        ''' create an empty integer set
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function [Integer]() As [Set]
+            Return New [Set](Function(a, b) CInt(a) = CInt(b))
         End Function
     End Class
 End Namespace
