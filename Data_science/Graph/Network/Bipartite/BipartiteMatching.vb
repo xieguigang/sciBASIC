@@ -221,103 +221,42 @@ Public Class BipartiteMatching
         Next
     End Sub
 
-    Public Shared Function CreateMatches()
+    Public Shared Function CreateMatches(links As IEnumerable(Of (s As String, t As String))) As BipartiteMatching
+        Dim names As New Dictionary(Of String, Integer)
+        Dim leftHalfVertices As New List(Of Integer)
+        Dim rightHalfVertices As New List(Of Integer)
+        Dim edges As New List(Of (Integer, Integer))
 
+        For Each link As (s$, t$) In links
+            If Not names.ContainsKey(link.s) Then
+                Call names.Add(link.s, names.Count)
+            End If
+            If Not names.ContainsKey(link.t) Then
+                Call names.Add(link.t, names.Count)
+            End If
+
+            Call leftHalfVertices.Add(names(link.s))
+            Call rightHalfVertices.Add(names(link.t))
+            Call edges.Add((leftHalfVertices.Last, rightHalfVertices.Last))
+        Next
+
+        Const sourceName As String = NameOf(leftHalfVertices)
+        Const sinkName As String = NameOf(rightHalfVertices)
+
+        Call names.Add(sourceName, names.Count)
+        Call names.Add(sinkName, names.Count)
+
+        Dim source = names(sourceName)
+        Dim sink = names(sinkName)
+        Dim graph1BipartiteMatcher As New BipartiteMatching(names.Count, names.Keys.AsList)
+
+        For Each link In edges
+            Call graph1BipartiteMatcher.addEdge(link.Item1, link.Item2)
+        Next
+
+        graph1BipartiteMatcher.connectSourceToLeftHalf(source, leftHalfVertices.ToArray)
+        graph1BipartiteMatcher.connectSinkToRightHalf(sink, rightHalfVertices.ToArray)
+
+        Return graph1BipartiteMatcher.fordFulkersonMaxFlow(source, sink)
     End Function
-
-
-    Public Shared Sub Main(args As String())
-        Dim vertexCount = 10
-        Dim vertexCountIncludingSourceAndSink = vertexCount + 2
-        'convert between array indexes (starting from 0) & human readable vertex names
-        Dim getStringVertexIdFromArrayIndex As List(Of String) = New List(Of String) From {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "1'",
-            "2'",
-            "3'",
-            "4'",
-            "5'"
-        }
-        getStringVertexIdFromArrayIndex.Add("S") 'Add source & sink as last 2 items in the list
-        getStringVertexIdFromArrayIndex.Add("T")
-
-        Dim source = vertexCount 'source & sink as array indexes
-        Dim sink = vertexCount + 1
-
-        'These must be consecutive indexes. rightHalfVertices starts with the next integer after the last item in leftHaldVertices
-
-        '                                     1  2  3  4  5
-        Dim leftHalfVertices = New Integer() {0, 1, 2, 3, 4} 'source is connected to these vertices
-        '                                     1' 2'  3' 4' 5'
-        Dim rightHalfVertices = New Integer() {5, 6, 7, 8, 9} 'sink is connected to these vertices
-
-        Dim graph1BipartiteMatcher As BipartiteMatching = New BipartiteMatching(vertexCountIncludingSourceAndSink, getStringVertexIdFromArrayIndex)
-        graph1BipartiteMatcher.addEdge(0, 5)
-        graph1BipartiteMatcher.addEdge(0, 6)
-        graph1BipartiteMatcher.addEdge(1, 6)
-        graph1BipartiteMatcher.addEdge(2, 5)
-        graph1BipartiteMatcher.addEdge(2, 7)
-        graph1BipartiteMatcher.addEdge(2, 8)
-        graph1BipartiteMatcher.addEdge(3, 6)
-        graph1BipartiteMatcher.addEdge(3, 9)
-        graph1BipartiteMatcher.addEdge(4, 6)
-        graph1BipartiteMatcher.addEdge(4, 9, 100)
-
-        graph1BipartiteMatcher.connectSourceToLeftHalf(source, leftHalfVertices)
-        graph1BipartiteMatcher.connectSinkToRightHalf(sink, rightHalfVertices)
-
-        Console.WriteLine("Running Bipartite Matching on Graph 1")
-        graph1BipartiteMatcher.fordFulkersonMaxFlow(source, sink)
-        Console.WriteLine(vbLf)
-
-
-        'Graph 2
-        Dim vertexCount2 = 11
-        Dim vertexCountIncludingSourceAndSink2 = vertexCount2 + 2
-        'convert between array indexes (starting from 0) & human readable vetex names
-        Dim getStringVertexIdFromArrayIndex2 As List(Of String) = New List(Of String) From {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "1'",
-            "2'",
-            "3'",
-            "4'",
-            "5'"
-        }
-        getStringVertexIdFromArrayIndex2.Add("S") 'Add source & sink as last 2 items in the list
-        getStringVertexIdFromArrayIndex2.Add("T")
-
-        Dim source2 = vertexCount2 'add a source & sink (these are array indexes)
-        Dim sink2 = vertexCount2 + 1
-
-        'these must be consecutive indexes. rightHalfVertices starts with the next integer after the last item in leftHaldVertices
-        Dim leftHalfVertices2 = New Integer() {0, 1, 2, 3, 4, 5} 'source is connected to these vertices
-        Dim rightHalfVertices2 = New Integer() {6, 7, 8, 9, 10} 'sink is connected to these vertices
-
-        Dim graph2BipartiteMatcher As BipartiteMatching = New BipartiteMatching(vertexCountIncludingSourceAndSink2, getStringVertexIdFromArrayIndex2)
-        graph2BipartiteMatcher.addEdge(0, 7)
-        graph2BipartiteMatcher.addEdge(1, 6)
-        graph2BipartiteMatcher.addEdge(2, 7)
-        graph2BipartiteMatcher.addEdge(3, 6)
-        graph2BipartiteMatcher.addEdge(3, 8)
-        graph2BipartiteMatcher.addEdge(3, 9)
-        graph2BipartiteMatcher.addEdge(4, 7)
-        graph2BipartiteMatcher.addEdge(4, 9)
-        graph2BipartiteMatcher.addEdge(5, 8)
-        graph2BipartiteMatcher.addEdge(5, 10)
-
-        graph2BipartiteMatcher.connectSourceToLeftHalf(source2, leftHalfVertices2)
-        graph2BipartiteMatcher.connectSinkToRightHalf(sink2, rightHalfVertices2)
-
-        Console.WriteLine("Running Bipartite Matching on Graph 2")
-        graph2BipartiteMatcher.fordFulkersonMaxFlow(source2, sink2)
-    End Sub
 End Class
