@@ -324,13 +324,14 @@ Namespace ComponentModel.DataStructures
         ''' <returns></returns>
         Public Shared Operator -(s1 As [Set], s2 As [Set]) As [Set]
             Dim inter As [Set] = s1 And s2  ' 交集
+            Dim s3 As New [Set](s1)
 
             ' 将集合1之中所有的交集元素移除即可
-            For Each x In inter._members
-                Call s1.Remove(x)
+            For Each x As Object In inter._members
+                Call s3.Remove(x)
             Next
 
-            Return s1
+            Return s3
         End Operator
 
         ''' <summary>
