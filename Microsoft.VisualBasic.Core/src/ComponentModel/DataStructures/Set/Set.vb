@@ -65,6 +65,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.DataStructures
 
@@ -74,17 +75,47 @@ Namespace ComponentModel.DataStructures
     ''' <remarks>
     ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
     ''' </remarks>
-    Public Class [Set]
-        Implements Enumeration(Of Object)
+    Public Class [Set] : Implements Enumeration(Of Object)
         Implements IDisposable
         Implements IsEmpty
 
-        Protected Friend _members As New ArrayList()
+        Protected Friend _members As New HashSet(Of Object)
         Protected _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
         ''' <summary>
         ''' 如何判断两个元素是否相同？
         ''' </summary>
         Protected Friend _equals As Func(Of Object, Object, Boolean)
+
+        ''' <summary>
+        ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
+        ''' </summary>
+        Default Public ReadOnly Property Item(index As Int32) As Object
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members(index)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' The number of members of the set.
+        ''' </summary>
+        Public ReadOnly Property Length() As Int32
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' A method to determine whether the <see cref="[Set]">Set</see> has members.
+        ''' </summary>
+        ''' <returns>True is there are members, false if there are 0 members.</returns>
+        Public ReadOnly Property IsEmpty() As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members.Count = 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' Default constructor.
@@ -124,7 +155,7 @@ Namespace ComponentModel.DataStructures
             _behaviour = BadBehaviourResponses.BeCool
 
             For Each o As Object In source
-                Call Me.Add(o)
+                Call Add(o)
             Next
 
             _behaviour = BadBehaviourResponses.BeAggressive
@@ -138,31 +169,32 @@ Namespace ComponentModel.DataStructures
         End Sub
 
         ''' <summary>
-        ''' A method to determine whether the <see cref="[Set]">Set</see> has members.
-        ''' </summary>
-        ''' <returns>True is there are members, false if there are 0 members.</returns>
-        Public ReadOnly Property IsEmpty() As Boolean Implements IsEmpty.IsEmpty
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _members.Count = 0
-            End Get
-        End Property
-
-        ''' <summary>
         ''' Remove a member from the <see cref="[Set]">Set</see>.
         ''' </summary>
         ''' <param name="target">The member to remove.</param>
         ''' <returns>True if a member was removed, false if nothing was found that 
         ''' was removed.</returns>
         Public Function Remove(target As Object) As Boolean
-            For i As Int32 = 0 To _members.Count - 1
-                If _equals(_members(i), target) Then
-                    _members.RemoveAt(i)
-                    Return True
-                End If
-            Next
+            If Not _members.Remove(target) Then
+                Dim hit As Boolean = False
 
-            Return False
+                For Each obj As Object In _members
+                    If _equals(obj, target) Then
+                        hit = True
+                        target = obj
+
+                        Exit For
+                    End If
+                Next
+
+                If hit Then
+                    Call _members.Remove(target)
+                End If
+
+                Return hit
+            Else
+                Return True
+            End If
         End Function
 
         ''' <summary>
@@ -173,17 +205,15 @@ Namespace ComponentModel.DataStructures
         ''' <exception cref="InvalidOperationException">If the member being added is
         ''' already a member of the set an InvalidOperationException is thrown.</exception>
         Public Sub Add(member As Object)
-            For i As Int32 = 0 To _members.Count - 1
-                If _equals(_members(i), member) Then
-                    If _behaviour = BadBehaviourResponses.BeAggressive Then
-                        Throw New ArgumentException(member.ToString() + " already in set in position " + (i + 1).ToString() + ".")
-                    Else
-                        Return
-                    End If
+            If _members.Contains(member) Then
+                If _behaviour = BadBehaviourResponses.BeAggressive Then
+                    Throw New ArgumentException(member.ToString() & " already in current set!")
+                Else
+                    Return
                 End If
-            Next
-
-            _members.Add(member)
+            Else
+                Call _members.Add(member)
+            End If
         End Sub
 
         ''' <summary>
@@ -192,6 +222,10 @@ Namespace ComponentModel.DataStructures
         ''' <param name="target">The object to look for in the set.</param>
         ''' <returns>True if it is a member of the <see cref="[Set]">Set</see>, false if not.</returns>
         Public Function Contains(target As Object) As Boolean
+            If _members.Contains(target) Then
+                Return True
+            End If
+
             For Each o As Object In _members
                 If _equals(o, target) Then
                     Return True
@@ -212,44 +246,22 @@ Namespace ComponentModel.DataStructures
         End Function
 
         ''' <summary>
-        ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
-        ''' </summary>
-        Default Public ReadOnly Property Item(index As Int32) As Object
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _members(index)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' The number of members of the set.
-        ''' </summary>
-        Public ReadOnly Property Length() As Int32
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _members.Count
-            End Get
-        End Property
-
-        ''' <summary>
         ''' If the Set is created by casting an array to it, add the members of
         ''' the array through the Add method, so if the array has dupes an error
         ''' will occur.
         ''' </summary>
         ''' <param name="array">The array with the objects to initialize the array.</param>
         ''' <returns>A new Set object based on the members of the array.</returns>
-        ''' <exception cref="InvalidCastException">If the array contains duplicate
-        ''' elements, an InvalidCastException will result.</exception>
         Public Shared Narrowing Operator CType(array As Array) As [Set]
             Dim s As New [Set]()
 
+            s._behaviour = BadBehaviourResponses.BeCool
+
             For Each o As [Object] In array
-                Try
-                    s.Add(o)
-                Catch e As ArgumentException
-                    Throw New InvalidCastException("Array contained duplicates and can't be cast to a Set.", e)
-                End Try
+                Call s.Add(o)
             Next
+
+            s._behaviour = BadBehaviourResponses.BeAggressive
 
             Return s
         End Operator
@@ -257,16 +269,17 @@ Namespace ComponentModel.DataStructures
         ''' <summary>
         ''' Performs a union of two sets. The elements can exists 
         ''' in <paramref name="s1"/> or <paramref name="s2"/>.
-        ''' (求并集)
         ''' </summary>
         ''' <param name="s1">Any set.</param>
         ''' <param name="s2">Any set.</param>
         ''' <returns>A new <see cref="[Set]">Set</see> object that contains all of the
         ''' members of each of the input sets.</returns>
-        ''' 
+        ''' <remarks>
+        ''' (求并集)
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(s1 As [Set], s2 As [Set]) As [Set]
-            Return New [Set](s1.ToArray + s2.ToArray.AsList, s1._equals)
+            Return New [Set](s1.AsEnumerable.JoinIterates(s2.AsEnumerable), s1._equals)
         End Operator
 
         Public Shared Operator Or(s1 As [Set], s2 As IEnumerable) As [Set]
@@ -399,9 +412,9 @@ Namespace ComponentModel.DataStructures
         ''' <returns>A <see cref="String">String</see> that represents the current
         ''' <see cref="[Set]">Set</see>.</returns>
         Public Overrides Function ToString() As String
-            Dim contents$ =
-                (From o As Object In _members Select Scripting.ToString(o)) _
-                .JoinBy(", ")
+            Dim strs = From o As Object In _members Select any.ToString(o)
+            Dim contents$ = strs.JoinBy(", ")
+
             Return $"{{ {contents} }}"
         End Function
 
