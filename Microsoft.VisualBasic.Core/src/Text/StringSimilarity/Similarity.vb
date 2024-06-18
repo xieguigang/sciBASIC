@@ -63,7 +63,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
-Imports Microsoft.VisualBasic.GenericLambda(Of String)
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 
