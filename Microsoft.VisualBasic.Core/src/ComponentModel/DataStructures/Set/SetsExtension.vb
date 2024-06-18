@@ -56,121 +56,124 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 
-Public Module SetsExtension
+Namespace ComponentModel.DataStructures
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function ToArray(Of T)(s As [Set], [ctype] As Func(Of Object, T)) As T()
-        Return s.ToArray _
+    Public Module SetsExtension
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToArray(Of T)(s As [Set], [ctype] As Func(Of Object, T)) As T()
+            Return s.ToArray _
                 .Select([ctype]) _
                 .ToArray
-    End Function
+        End Function
 
-    ''' <summary>
-    ''' DirectCast
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function ToArray(Of T)(s As [Set]) As T()
-        Return s.ToArray _
+        ''' <summary>
+        ''' DirectCast
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function ToArray(Of T)(s As [Set]) As T()
+            Return s.ToArray _
                 .Select(Function(x) DirectCast(x, T)) _
                 .ToArray
-    End Function
+        End Function
 
 #Region "API"
 
-    ''' <summary>
-    ''' 差集，函数会从<paramref name="s1"/>集合之中删除<paramref name="s2"/>中共同的元素
-    ''' </summary>
-    ''' <param name="s1"></param>
-    ''' <param name="s2"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Except")>
-    Public Function Except(s1 As [Set], s2 As [Set]) As [Set]
-        Return s1 - s2
-    End Function
+        ''' <summary>
+        ''' 差集，函数会从<paramref name="s1"/>集合之中删除<paramref name="s2"/>中共同的元素
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("Except")>
+        Public Function Except(s1 As [Set], s2 As [Set]) As [Set]
+            Return s1 - s2
+        End Function
 
-    ''' <summary>
-    ''' Performs a union of two sets.
-    ''' (就并集)
-    ''' </summary>
-    ''' <param name="s1"></param>
-    ''' <param name="s2"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Union")>
-    Public Function Union(s1 As [Set], s2 As [Set]) As [Set]
-        Return s1 Or s2
-    End Function
+        ''' <summary>
+        ''' Performs a union of two sets.
+        ''' (就并集)
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("Union")>
+        Public Function Union(s1 As [Set], s2 As [Set]) As [Set]
+            Return s1 Or s2
+        End Function
 
-    ''' <summary>
-    ''' Performs an intersection of two sets.
-    ''' (求交集)
-    ''' </summary>
-    ''' <param name="s1"></param>
-    ''' <param name="s2"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("Intersection")>
-    Public Function Intersection(s1 As [Set], s2 As [Set]) As [Set]
-        Return s1 And s2
-    End Function
+        ''' <summary>
+        ''' Performs an intersection of two sets.
+        ''' (求交集)
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("Intersection")>
+        Public Function Intersection(s1 As [Set], s2 As [Set]) As [Set]
+            Return s1 And s2
+        End Function
 
-    ''' <summary>
-    ''' 将任意序列转换为集合类型
-    ''' </summary>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("As.Set")>
-    <Extension>
-    Public Function AsSet(source As IEnumerable) As [Set]
-        Return New [Set](source)
-    End Function
+        ''' <summary>
+        ''' 将任意序列转换为集合类型
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("As.Set")>
+        <Extension>
+        Public Function AsSet(source As IEnumerable) As [Set]
+            Return New [Set](source)
+        End Function
 
-    <ExportAPI("As.Array")>
-    Public Function ToArray([set] As [Set]) As Object()
-        Return [set].ToArray
-    End Function
+        <ExportAPI("As.Array")>
+        Public Function ToArray([set] As [Set]) As Object()
+            Return [set].ToArray
+        End Function
 
-    ''' <summary>
-    ''' Create a string set
-    ''' </summary>
-    ''' <param name="strings"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function AsSet(strings As IEnumerable(Of String)) As StringSet
-        Return New StringSet(strings)
-    End Function
+        ''' <summary>
+        ''' Create a string set
+        ''' </summary>
+        ''' <param name="strings"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsSet(strings As IEnumerable(Of String)) As StringSet
+            Return New StringSet(strings)
+        End Function
 #End Region
 
-    ''' <summary>
-    ''' get the last element in the <paramref name="set"/>, and then removes the last element
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="[set]"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function PollLast(Of T)([set] As SortedSet(Of T)) As T
-        Dim last = [set].Last
-        [set].Remove(last)
-        Return last
-    End Function
+        ''' <summary>
+        ''' get the last element in the <paramref name="set"/>, and then removes the last element
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="[set]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PollLast(Of T)([set] As SortedSet(Of T)) As T
+            Dim last = [set].Last
+            [set].Remove(last)
+            Return last
+        End Function
 
-    ''' <summary>
-    ''' get the first element in the <paramref name="set"/>, and then removes the first element
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="[set]"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function PollFirst(Of T)([set] As SortedSet(Of T)) As T
-        Dim first = [set].First
-        [set].Remove(first)
-        Return first
-    End Function
+        ''' <summary>
+        ''' get the first element in the <paramref name="set"/>, and then removes the first element
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="[set]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function PollFirst(Of T)([set] As SortedSet(Of T)) As T
+            Dim first = [set].First
+            [set].Remove(first)
+            Return first
+        End Function
 
-End Module
+    End Module
+End Namespace

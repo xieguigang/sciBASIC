@@ -64,35 +64,28 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataStructures
 
     ''' <summary>
     ''' Represents an unordered grouping of unique hetrogenous members.
-    ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
     ''' </summary>
-    ''' 
-    <Package("Set",
-             Category:=APICategories.UtilityTools,
-             Description:="Represents an unordered grouping of unique hetrogenous members.",
-             Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",
-             Publisher:="Sean Michael Murphy")>
+    ''' <remarks>
+    ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
+    ''' </remarks>
     Public Class [Set]
-        Implements IEnumerable
+        Implements Enumeration(Of Object)
         Implements IDisposable
         Implements IsEmpty
 
-#Region "Private Members"
         Protected Friend _members As New ArrayList()
         Protected _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
         ''' <summary>
         ''' 如何判断两个元素是否相同？
         ''' </summary>
         Protected Friend _equals As Func(Of Object, Object, Boolean)
-#End Region
 
-#Region "ctors"
         ''' <summary>
         ''' Default constructor.
         ''' </summary>
@@ -117,7 +110,7 @@ Namespace ComponentModel.DataStructures
             _behaviour = BadBehaviourResponses.BeCool
 
             For Each initialSet As [Set] In sources
-                For Each o As Object In initialSet
+                For Each o As Object In initialSet._members
                     Call Me.Add(o)
                 Next
             Next
@@ -136,9 +129,7 @@ Namespace ComponentModel.DataStructures
 
             _behaviour = BadBehaviourResponses.BeAggressive
         End Sub
-#End Region
 
-#Region "Public Methods"
         ''' <summary>
         ''' Empty the set of all members.
         ''' </summary>
@@ -219,9 +210,7 @@ Namespace ComponentModel.DataStructures
         Public Function ToArray() As Object()
             Return _members.ToArray()
         End Function
-#End Region
 
-#Region "Accessor"
         ''' <summary>
         ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
         ''' </summary>
@@ -231,7 +220,6 @@ Namespace ComponentModel.DataStructures
                 Return _members(index)
             End Get
         End Property
-#End Region
 
         ''' <summary>
         ''' The number of members of the set.
@@ -243,7 +231,6 @@ Namespace ComponentModel.DataStructures
             End Get
         End Property
 
-#Region "Overloaded Operators"
         ''' <summary>
         ''' If the Set is created by casting an array to it, add the members of
         ''' the array through the Add method, so if the array has dupes an error
@@ -302,13 +289,13 @@ Namespace ComponentModel.DataStructures
             result._behaviour = BadBehaviourResponses.BeCool
 
             If s1.Length > s2.Length Then
-                For Each o As Object In s1
+                For Each o As Object In s1._members
                     If s2.Contains(o) Then
                         result.Add(o)
                     End If
                 Next
             Else
-                For Each o As Object In s2
+                For Each o As Object In s2._members
                     If s1.Contains(o) Then
                         result.Add(o)
                     End If
@@ -339,7 +326,8 @@ Namespace ComponentModel.DataStructures
         Public Shared Operator -(s1 As [Set], s2 As [Set]) As [Set]
             Dim inter As [Set] = s1 And s2  ' 交集
 
-            For Each x In inter      ' 将集合1之中所有的交集元素移除即可
+            ' 将集合1之中所有的交集元素移除即可
+            For Each x In inter._members
                 Call s1.Remove(x)
             Next
 
@@ -358,7 +346,7 @@ Namespace ComponentModel.DataStructures
                 Return False
             End If
 
-            For Each o As Object In s1
+            For Each o As Object In s1._members
                 If Not s2.Contains(o) Then
                     Return False
                 End If
@@ -377,9 +365,7 @@ Namespace ComponentModel.DataStructures
         Public Shared Operator <>(s1 As [Set], s2 As [Set]) As Boolean
             Return Not (s1 = s2)
         End Operator
-#End Region
 
-#Region "Overridden Members"
         ''' <summary>
         ''' Determines whether two <see cref="[Set]">Set</see> instances are equal.
         ''' </summary>
@@ -418,18 +404,6 @@ Namespace ComponentModel.DataStructures
                 .JoinBy(", ")
             Return $"{{ {contents} }}"
         End Function
-#End Region
-
-        ''' <summary>
-        ''' Returns an enumerator that can iterate through a collection.
-        ''' </summary>
-        ''' <returns>An <see cref="IEnumerator">IEnumerator</see> that can be 
-        ''' used to iterate through the collection.</returns>
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            For Each x As Object In Me._members
-                Yield x
-            Next
-        End Function
 
         ''' <summary>
         ''' Performs cleanup tasks on the <see cref="[Set]">Set</see> object.
@@ -438,5 +412,11 @@ Namespace ComponentModel.DataStructures
         Public Sub Dispose() Implements IDisposable.Dispose
             _members.Clear()
         End Sub
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Object) Implements Enumeration(Of Object).GenericEnumerator
+            For Each xi As Object In _members
+                Yield xi
+            Next
+        End Function
     End Class
 End Namespace
