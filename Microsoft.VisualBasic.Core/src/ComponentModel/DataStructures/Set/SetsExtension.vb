@@ -126,7 +126,6 @@ Namespace ComponentModel.DataStructures
         ''' <param name="source"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("As.Set")>
         <Extension>
         Public Function AsSet(source As IEnumerable) As [Set]
             Return New [Set](source)
