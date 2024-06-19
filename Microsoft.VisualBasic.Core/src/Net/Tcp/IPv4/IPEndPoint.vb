@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::024c40a340e242f0d62827527230e787, Microsoft.VisualBasic.Core\src\Net\Tcp\IPTools\IPEndPoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 142
-    '    Code Lines: 73 (51.41%)
-    ' Comment Lines: 46 (32.39%)
-    '    - Xml Docs: 95.65%
-    ' 
-    '   Blank Lines: 23 (16.20%)
-    '     File Size: 4.97 KB
+' Summaries:
 
 
-    '     Class IPEndPoint
-    ' 
-    '         Properties: guid, ipAddress, IsValid, port
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: CreateLocal, GetIPEndPoint, GetValue, IsIpv4Address, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 142
+'    Code Lines: 73 (51.41%)
+' Comment Lines: 46 (32.39%)
+'    - Xml Docs: 95.65%
+' 
+'   Blank Lines: 23 (16.20%)
+'     File Size: 4.97 KB
+
+
+'     Class IPEndPoint
+' 
+'         Properties: guid, ipAddress, IsValid, port
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: CreateLocal, GetIPEndPoint, GetValue, IsIpv4Address, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Xml.Serialization
 
 Namespace Net
@@ -67,8 +68,6 @@ Namespace Net
     ''' </summary>
     ''' <remarks></remarks>
     Public Class IPEndPoint
-
-#Region "Public Property"
 
         ''' <summary>
         ''' Guid value of this portal information on the server registry.
@@ -93,7 +92,6 @@ Namespace Net
         <Browsable(True)>
         <Description("Data port of the services instance.")>
         <XmlAttribute> Public Property port As Integer
-#End Region
 
         ''' <summary>
         ''' 格式是否正确
@@ -138,18 +136,28 @@ Namespace Net
         ''' <param name="str">Required format string: ``IPAddress:Port``</param>
         ''' <remarks></remarks>
         Sub New(str As String)
-            Dim tokens As String() = str.Split(":"c)
+            Call ParseIpPort(str, ipAddress, port)
 
-            If tokens.IsNullOrEmpty OrElse tokens.Length < 2 Then
+            If ipAddress.StringEmpty Then
                 Throw New DataException(str & " is not a valid IPEndPoint string value!")
             End If
-
-            ipAddress = tokens.First
-            port = CInt(Val(tokens(1)))
         End Sub
 
         Sub New(ipEnd As System.Net.IPEndPoint)
             Call Me.New(ipEnd.ToString)
+        End Sub
+
+        Public Shared Sub ParseIpPort(ipPort As String, <Out> ByRef ip As String, <Out> ByRef port As Integer)
+            If String.IsNullOrEmpty(ipPort) Then Throw New ArgumentNullException(NameOf(ipPort))
+
+            ip = Nothing
+            port = -1
+
+            Dim colonIndex = ipPort.LastIndexOf(":"c)
+            If colonIndex <> -1 Then
+                ip = ipPort.Substring(0, colonIndex)
+                port = Convert.ToInt32(ipPort.Substring(colonIndex + 1))
+            End If
         End Sub
 
         ''' <summary>
@@ -188,12 +196,10 @@ Namespace Net
             Return addr.IsPattern(RegexIPAddress)
         End Function
 
-#If netcore5 = 1 Or NET_48 = 1 Then
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(endpoint As (ip$, port%)) As IPEndPoint
             Return New IPEndPoint(endpoint.ip, endpoint.port)
         End Operator
-#End If
+
     End Class
 End Namespace
