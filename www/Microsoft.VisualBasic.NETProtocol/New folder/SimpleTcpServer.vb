@@ -113,7 +113,7 @@ Namespace SuperSimpleTcp
         ''' </summary>
         Public ReadOnly Property Endpoint As EndPoint
             Get
-                Return If(_listener Is Nothing, Nothing, CType(_listener.LocalEndpoint, IPEndPoint))
+                Return If(_listener Is Nothing, Nothing, CType(_listener.LocalEndpoint, System.Net.IPEndPoint))
             End Get
         End Property
         ''' <summary>
@@ -121,7 +121,7 @@ Namespace SuperSimpleTcp
         ''' </summary>
         Public ReadOnly Property Port As Integer
             Get
-                Return If(_listener Is Nothing, 0, CType(_listener.LocalEndpoint, IPEndPoint).port)
+                Return If(_listener Is Nothing, 0, CType(_listener.LocalEndpoint, System.Net.IPEndPoint).Port)
             End Get
         End Property
 

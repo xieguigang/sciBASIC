@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.IO
-Imports System.Linq
+﻿Imports System.IO
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Security
@@ -10,7 +8,6 @@ Imports System.Security.Authentication
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
 Imports System.Threading
-Imports System.Threading.Tasks
 
 Namespace SuperSimpleTcp
     ''' <summary>
@@ -37,10 +34,10 @@ Namespace SuperSimpleTcp
         ''' <summary>
         ''' Client IPEndPoint if connected.
         ''' </summary>
-        Public ReadOnly Property LocalEndpoint As IPEndPoint
+        Public ReadOnly Property LocalEndpoint As System.Net.IPEndPoint
             Get
                 If _client IsNot Nothing AndAlso _isConnected Then
-                    Return CType(_client.Client.LocalEndPoint, IPEndPoint)
+                    Return CType(_client.Client.LocalEndPoint, System.Net.IPEndPoint)
                 End If
 
                 Return Nothing
@@ -260,7 +257,7 @@ Namespace SuperSimpleTcp
         ''' <param name="serverIpAddress">The server IP address.</param>
         ''' <param name="port">The TCP port on which to connect.</param>
         Public Sub New(serverIpAddress As IPAddress, port As Integer)
-            Me.New(New IPEndPoint(serverIpAddress, port))
+            Me.New(New System.Net.IPEndPoint(serverIpAddress, port))
         End Sub
 
         ''' <summary>
@@ -315,7 +312,7 @@ Namespace SuperSimpleTcp
         ''' Set the Connected, Disconnected, and DataReceived callbacks.  Once set, use Connect() to connect to the server.
         ''' </summary>
         ''' <param name="serverIpEndPoint">The server IP endpoint.</param>
-        Public Sub New(serverIpEndPoint As IPEndPoint)
+        Public Sub New(serverIpEndPoint As System.Net.IPEndPoint)
             If serverIpEndPoint Is Nothing Then
                 Throw New ArgumentNullException(NameOf(serverIpEndPoint))
             ElseIf serverIpEndPoint.Port < 0 Then
