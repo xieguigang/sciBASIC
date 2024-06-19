@@ -57,19 +57,19 @@
 
 Imports System.Runtime.Serialization
 Imports System.Web.Script.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports KeyTupleValue = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.String)
 
 ''' <summary>
 ''' 匹配结果
 ''' </summary>
 ''' 
-<KnownType(GetType(NamedValue(Of String)))>
+<KnownType(GetType(KeyTupleValue))>
 Public Structure Match
 
     <ScriptIgnore>
     Public Property x As Object
     Dim score#
-    Dim Field As NamedValue(Of String)
+    Dim Field As KeyTupleValue
 
     Public ReadOnly Property Success As Boolean
         Get

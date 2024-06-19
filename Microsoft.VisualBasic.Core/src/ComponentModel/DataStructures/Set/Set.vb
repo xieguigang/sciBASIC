@@ -1,150 +1,110 @@
 ﻿#Region "Microsoft.VisualBasic::5384001635965f3a1d4704d580db9a38, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\Set.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 378
-    '    Code Lines: 197 (52.12%)
-    ' Comment Lines: 132 (34.92%)
-    '    - Xml Docs: 98.48%
-    ' 
-    '   Blank Lines: 49 (12.96%)
-    '     File Size: 14.91 KB
+' Summaries:
 
 
-    '     Class [Set]
-    ' 
-    '         Properties: IsEmpty, Length
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Contains, Equals, GetHashCode, IEnumerable_GetEnumerator, Remove
-    '                   ToArray, ToString
-    ' 
-    '         Sub: Add, Clear, Dispose
-    ' 
-    '         Operators: -, +, <>, =, (+2 Overloads) And
-    '                    (+4 Overloads) Or
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 378
+'    Code Lines: 197 (52.12%)
+' Comment Lines: 132 (34.92%)
+'    - Xml Docs: 98.48%
+' 
+'   Blank Lines: 49 (12.96%)
+'     File Size: 14.91 KB
+
+
+'     Class [Set]
+' 
+'         Properties: IsEmpty, Length
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Contains, Equals, GetHashCode, IEnumerable_GetEnumerator, Remove
+'                   ToArray, ToString
+' 
+'         Sub: Add, Clear, Dispose
+' 
+'         Operators: -, +, <>, =, (+2 Overloads) And
+'                    (+4 Overloads) Or
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Linq
+Imports any = Microsoft.VisualBasic.Scripting
 
 Namespace ComponentModel.DataStructures
 
     ''' <summary>
     ''' Represents an unordered grouping of unique hetrogenous members.
-    ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
     ''' </summary>
-    ''' 
-    <Package("Set",
-             Category:=APICategories.UtilityTools,
-             Description:="Represents an unordered grouping of unique hetrogenous members.",
-             Url:="http://www.codeproject.com/Articles/10806/A-Generic-Set-Data-Structure",
-             Publisher:="Sean Michael Murphy")>
-    Public Class [Set]
-        Implements IEnumerable
+    ''' <remarks>
+    ''' (这个对象的功能和List类似，但是这个对象的主要的作用是进行一些集合运算：使用AND求交集以及使用OR求并集的)
+    ''' </remarks>
+    Public Class [Set] : Implements Enumeration(Of Object)
         Implements IDisposable
         Implements IsEmpty
 
-#Region "Private Members"
-        Protected Friend _members As New ArrayList()
-        Protected _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
+        Protected Friend _members As New HashSet(Of Object)
+
         ''' <summary>
         ''' 如何判断两个元素是否相同？
         ''' </summary>
         Protected Friend _equals As Func(Of Object, Object, Boolean)
-#End Region
-
-#Region "ctors"
-        ''' <summary>
-        ''' Default constructor.
-        ''' </summary>
-        Public Sub New(Optional equals As Func(Of Object, Object, Boolean) = Nothing)
-            If equals Is Nothing Then
-                _equals = Function(a, b) a = b
-            Else
-                _equals = equals
-            End If
-
-            _behaviour = BadBehaviourResponses.BeAggressive
-        End Sub
 
         ''' <summary>
-        ''' Constructor called when the source data is an array of <see cref="[Set]">Sets</see>.  They will
-        ''' be unioned together, with addition exceptions quietly eaten.
+        ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
         ''' </summary>
-        ''' <param name="sources">The source array of <see cref="[Set]">Set</see> objects.</param>
-        Public Sub New(sources As [Set](), Optional equals As Func(Of Object, Object, Boolean) = Nothing)
-            Call Me.New(equals)
+        Default Public ReadOnly Property Item(index As Int32) As Object
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members(index)
+            End Get
+        End Property
 
-            _behaviour = BadBehaviourResponses.BeCool
-
-            For Each initialSet As [Set] In sources
-                For Each o As Object In initialSet
-                    Call Me.Add(o)
-                Next
-            Next
-
-            _behaviour = BadBehaviourResponses.BeAggressive
-        End Sub
-
-        Sub New(source As IEnumerable, Optional equals As Func(Of Object, Object, Boolean) = Nothing)
-            Call Me.New(equals)
-
-            _behaviour = BadBehaviourResponses.BeCool
-
-            For Each o As Object In source
-                Call Me.Add(o)
-            Next
-
-            _behaviour = BadBehaviourResponses.BeAggressive
-        End Sub
-#End Region
-
-#Region "Public Methods"
         ''' <summary>
-        ''' Empty the set of all members.
+        ''' The number of members of the set.
         ''' </summary>
-        Public Sub Clear()
-            _members.Clear()
-        End Sub
+        Public ReadOnly Property Length() As Int32
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members.Count
+            End Get
+        End Property
 
         ''' <summary>
         ''' A method to determine whether the <see cref="[Set]">Set</see> has members.
@@ -158,20 +118,81 @@ Namespace ComponentModel.DataStructures
         End Property
 
         ''' <summary>
+        ''' Default constructor.
+        ''' </summary>
+        Public Sub New(Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            If equals Is Nothing Then
+                _equals = Function(a, b) a = b
+            Else
+                _equals = equals
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Constructor called when the source data is an array of <see cref="[Set]">Sets</see>.  They will
+        ''' be unioned together, with addition exceptions quietly eaten.
+        ''' </summary>
+        ''' <param name="sources">The source array of <see cref="[Set]">Set</see> objects.</param>
+        Public Sub New(sources As [Set](), Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            Call Me.New(equals)
+
+            For Each initialSet As [Set] In sources
+                For Each o As Object In initialSet._members
+                    Call Me.Add(o)
+                Next
+            Next
+        End Sub
+
+        Sub New(source As IEnumerable, Optional equals As Func(Of Object, Object, Boolean) = Nothing)
+            Call Me.New(equals)
+
+            For Each o As Object In source
+                Call Add(o)
+            Next
+        End Sub
+
+        Sub New(copy As [Set])
+            Call Me.New(copy._equals)
+
+            For Each o As Object In copy._members
+                Call Add(o)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Empty the set of all members.
+        ''' </summary>
+        Public Sub Clear()
+            _members.Clear()
+        End Sub
+
+        ''' <summary>
         ''' Remove a member from the <see cref="[Set]">Set</see>.
         ''' </summary>
         ''' <param name="target">The member to remove.</param>
         ''' <returns>True if a member was removed, false if nothing was found that 
         ''' was removed.</returns>
         Public Function Remove(target As Object) As Boolean
-            For i As Int32 = 0 To _members.Count - 1
-                If _equals(_members(i), target) Then
-                    _members.RemoveAt(i)
-                    Return True
-                End If
-            Next
+            If Not _members.Remove(target) Then
+                Dim hit As Boolean = False
 
-            Return False
+                For Each obj As Object In _members
+                    If _equals(obj, target) Then
+                        hit = True
+                        target = obj
+
+                        Exit For
+                    End If
+                Next
+
+                If hit Then
+                    Call _members.Remove(target)
+                End If
+
+                Return hit
+            Else
+                Return True
+            End If
         End Function
 
         ''' <summary>
@@ -182,17 +203,11 @@ Namespace ComponentModel.DataStructures
         ''' <exception cref="InvalidOperationException">If the member being added is
         ''' already a member of the set an InvalidOperationException is thrown.</exception>
         Public Sub Add(member As Object)
-            For i As Int32 = 0 To _members.Count - 1
-                If _equals(_members(i), member) Then
-                    If _behaviour = BadBehaviourResponses.BeAggressive Then
-                        Throw New ArgumentException(member.ToString() + " already in set in position " + (i + 1).ToString() + ".")
-                    Else
-                        Return
-                    End If
-                End If
-            Next
-
-            _members.Add(member)
+            If _members.Contains(member) Then
+                Return
+            Else
+                Call _members.Add(member)
+            End If
         End Sub
 
         ''' <summary>
@@ -201,6 +216,10 @@ Namespace ComponentModel.DataStructures
         ''' <param name="target">The object to look for in the set.</param>
         ''' <returns>True if it is a member of the <see cref="[Set]">Set</see>, false if not.</returns>
         Public Function Contains(target As Object) As Boolean
+            If _members.Contains(target) Then
+                Return True
+            End If
+
             For Each o As Object In _members
                 If _equals(o, target) Then
                     Return True
@@ -219,31 +238,7 @@ Namespace ComponentModel.DataStructures
         Public Function ToArray() As Object()
             Return _members.ToArray()
         End Function
-#End Region
 
-#Region "Accessor"
-        ''' <summary>
-        ''' Public accessor for the members of the <see cref="[Set]">Set</see>.
-        ''' </summary>
-        Default Public ReadOnly Property Item(index As Int32) As Object
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _members(index)
-            End Get
-        End Property
-#End Region
-
-        ''' <summary>
-        ''' The number of members of the set.
-        ''' </summary>
-        Public ReadOnly Property Length() As Int32
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return _members.Count
-            End Get
-        End Property
-
-#Region "Overloaded Operators"
         ''' <summary>
         ''' If the Set is created by casting an array to it, add the members of
         ''' the array through the Add method, so if the array has dupes an error
@@ -251,17 +246,11 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         ''' <param name="array">The array with the objects to initialize the array.</param>
         ''' <returns>A new Set object based on the members of the array.</returns>
-        ''' <exception cref="InvalidCastException">If the array contains duplicate
-        ''' elements, an InvalidCastException will result.</exception>
         Public Shared Narrowing Operator CType(array As Array) As [Set]
             Dim s As New [Set]()
 
             For Each o As [Object] In array
-                Try
-                    s.Add(o)
-                Catch e As ArgumentException
-                    Throw New InvalidCastException("Array contained duplicates and can't be cast to a Set.", e)
-                End Try
+                Call s.Add(o)
             Next
 
             Return s
@@ -270,16 +259,17 @@ Namespace ComponentModel.DataStructures
         ''' <summary>
         ''' Performs a union of two sets. The elements can exists 
         ''' in <paramref name="s1"/> or <paramref name="s2"/>.
-        ''' (求并集)
         ''' </summary>
         ''' <param name="s1">Any set.</param>
         ''' <param name="s2">Any set.</param>
         ''' <returns>A new <see cref="[Set]">Set</see> object that contains all of the
         ''' members of each of the input sets.</returns>
-        ''' 
+        ''' <remarks>
+        ''' (求并集)
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(s1 As [Set], s2 As [Set]) As [Set]
-            Return New [Set](s1.ToArray + s2.ToArray.AsList, s1._equals)
+            Return New [Set](s1.AsEnumerable.JoinIterates(s2.AsEnumerable), s1._equals)
         End Operator
 
         Public Shared Operator Or(s1 As [Set], s2 As IEnumerable) As [Set]
@@ -299,23 +289,19 @@ Namespace ComponentModel.DataStructures
         Public Shared Operator And(s1 As [Set], s2 As [Set]) As [Set]
             Dim result As New [Set](s1._equals)
 
-            result._behaviour = BadBehaviourResponses.BeCool
-
             If s1.Length > s2.Length Then
-                For Each o As Object In s1
+                For Each o As Object In s1._members
                     If s2.Contains(o) Then
                         result.Add(o)
                     End If
                 Next
             Else
-                For Each o As Object In s2
+                For Each o As Object In s2._members
                     If s1.Contains(o) Then
                         result.Add(o)
                     End If
                 Next
             End If
-
-            result._behaviour = BadBehaviourResponses.BeAggressive
 
             Return result
         End Operator
@@ -338,12 +324,14 @@ Namespace ComponentModel.DataStructures
         ''' <returns></returns>
         Public Shared Operator -(s1 As [Set], s2 As [Set]) As [Set]
             Dim inter As [Set] = s1 And s2  ' 交集
+            Dim s3 As New [Set](s1)
 
-            For Each x In inter      ' 将集合1之中所有的交集元素移除即可
-                Call s1.Remove(x)
+            ' 将集合1之中所有的交集元素移除即可
+            For Each x As Object In inter._members
+                Call s3.Remove(x)
             Next
 
-            Return s1
+            Return s3
         End Operator
 
         ''' <summary>
@@ -358,7 +346,7 @@ Namespace ComponentModel.DataStructures
                 Return False
             End If
 
-            For Each o As Object In s1
+            For Each o As Object In s1._members
                 If Not s2.Contains(o) Then
                     Return False
                 End If
@@ -377,9 +365,7 @@ Namespace ComponentModel.DataStructures
         Public Shared Operator <>(s1 As [Set], s2 As [Set]) As Boolean
             Return Not (s1 = s2)
         End Operator
-#End Region
 
-#Region "Overridden Members"
         ''' <summary>
         ''' Determines whether two <see cref="[Set]">Set</see> instances are equal.
         ''' </summary>
@@ -413,22 +399,10 @@ Namespace ComponentModel.DataStructures
         ''' <returns>A <see cref="String">String</see> that represents the current
         ''' <see cref="[Set]">Set</see>.</returns>
         Public Overrides Function ToString() As String
-            Dim contents$ =
-                (From o As Object In _members Select Scripting.ToString(o)) _
-                .JoinBy(", ")
-            Return $"{{ {contents} }}"
-        End Function
-#End Region
+            Dim strs = From o As Object In _members Select any.ToString(o)
+            Dim contents$ = strs.JoinBy(", ")
 
-        ''' <summary>
-        ''' Returns an enumerator that can iterate through a collection.
-        ''' </summary>
-        ''' <returns>An <see cref="IEnumerator">IEnumerator</see> that can be 
-        ''' used to iterate through the collection.</returns>
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            For Each x As Object In Me._members
-                Yield x
-            Next
+            Return $"{{ {contents} }}"
         End Function
 
         ''' <summary>
@@ -438,5 +412,24 @@ Namespace ComponentModel.DataStructures
         Public Sub Dispose() Implements IDisposable.Dispose
             _members.Clear()
         End Sub
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Object) Implements Enumeration(Of Object).GenericEnumerator
+            For Each xi As Object In _members
+                Yield xi
+            Next
+        End Function
+
+        ''' <summary>
+        ''' create an empty integer set
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared Function [Integer](ParamArray ints As Integer()) As [Set]
+            Return New [Set](ints, Function(a, b) CInt(a) = CInt(b))
+        End Function
+
+        Public Shared Function [UInteger](ParamArray uints As UInteger()) As [Set]
+            Return New [Set](uints, Function(a, b) CUInt(a) = CUInt(b))
+        End Function
+
     End Class
 End Namespace
