@@ -389,13 +389,29 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{a516c307-c3a4-4461-90af-96670a56c343}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{61015a39-2c7b-4a57-9529-0b22218a8739}</Project>
+      <Name>Math.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{b5e72c09-8b94-462a-ba85-965975ab0f5c}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BinaryData\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{279fdd02-6724-4cc7-b030-20a9594eb53e}</Project>
+      <Name>binarydata-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{9a086b63-077b-48b1-bd9d-2ea2b90a54e3}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Index\Index.vbproj">
+      <Project>{a0e37308-0007-4578-b006-905b9042afde}</Project>
+      <Name>Index</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
