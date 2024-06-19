@@ -148,6 +148,9 @@ Namespace Render
         ''' </summary>
         ''' <param name="g"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' set the <see cref="IGraphics.Stroke"/> to nothing if no needs of the default line stroke value
+        ''' </remarks>
         <Extension>
         Public Function LoadEnvironment(g As IGraphics) As CSSEnvirnment
             Return New CSSEnvirnment(g.Size, g.Dpi).SetBaseStyles(g.Font, g.Stroke)
