@@ -105,6 +105,7 @@ Imports Microsoft.VisualBasic.ValueTypes
 Imports CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
+Imports std = System.Math
 
 '                   _ooOoo_
 '                  o8888888o
@@ -217,9 +218,7 @@ Public Module App
     ''' <returns>Gets the command-line arguments for this process.</returns>
     Public ReadOnly Property CommandLine As CommandLineArgs = GitBashEnvironment.GetCommandLineArgs()
 
-#If netcore5 = 1 Then
-    Public ReadOnly Property n_threads As Integer = stdNum.Min(8, LQuerySchedule.CPU_NUMBER)
-#End If
+    Public ReadOnly Property n_threads As Integer = std.Min(8, LQuerySchedule.CPU_NUMBER)
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
