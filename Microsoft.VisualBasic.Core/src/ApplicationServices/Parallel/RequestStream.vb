@@ -247,9 +247,16 @@ Namespace Parallel
         ''' <returns>
         ''' 这个函数总是返回一个不为空值的字符串
         ''' </returns>
+        ''' <remarks>
+        ''' 20240620
+        ''' 
+        ''' the string may contains may zero byte after the string data,
+        ''' so we needs to trim such zero bytes for avoid the possible 
+        ''' string parser error.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
-            Return If(encoding.GetString(ChunkBuffer), "")
+            Return Strings.Trim(If(encoding.GetString(ChunkBuffer), ""))
         End Function
 
         Public Function GetIntegers() As Integer()
