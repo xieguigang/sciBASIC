@@ -93,10 +93,22 @@ Namespace ComponentModel.Ranges.Unit
 
             Dim num As String = desc.Match(SimpleNumberPattern)
             Dim unit As String = desc.Replace(num, "").Trim.ToUpper
-            Dim unitFlag As ByteSize = [Enum].Parse(GetType(ByteSize), unit)
+            Dim unitFlag As ByteSize = ParseByteUnit(unit)
             Dim bytes As Long = CLng(Val(num) * CLng(unitFlag))
 
             Return bytes
+        End Function
+
+        Public Function ParseByteUnit(desc As String) As ByteSize
+            Select Case Strings.Trim(desc).ToLower
+                Case "" : Return ByteSize.B
+                Case "k", "kb" : Return ByteSize.KB
+                Case "m", "mb" : Return ByteSize.MB
+                Case "g", "gb" : Return ByteSize.GB
+                Case "t", "tb" : Return ByteSize.TB
+                Case Else
+                    Return ByteSize.B
+            End Select
         End Function
     End Module
 End Namespace
