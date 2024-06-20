@@ -256,7 +256,7 @@ Namespace Parallel
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
-            Return Strings.Trim(If(encoding.GetString(ChunkBuffer), ""))
+            Return If(encoding.GetString(ChunkBuffer), "").Trim(ASCII.NUL)
         End Function
 
         Public Function GetIntegers() As Integer()
