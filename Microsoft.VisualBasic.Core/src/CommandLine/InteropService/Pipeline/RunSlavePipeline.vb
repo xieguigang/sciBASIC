@@ -143,6 +143,16 @@ Namespace CommandLine.InteropService.Pipeline
             Return Process
         End Function
 
+        Public Shared Function Bind(proc As Process) As RunSlavePipeline
+            Dim info = proc.StartInfo
+            Dim pip As New RunSlavePipeline(info.FileName, info.Arguments, info.WorkingDirectory)
+            pip._Process = proc
+            If info.RedirectStandardOutput Then
+                Call handleRunStream(proc, "", onReadLine:=AddressOf pip.ProcessMessage, async:=True)
+            End If
+            Return pip
+        End Function
+
         ''' <summary>
         ''' get commandline of current background task, in string format like 
         ''' example as: /path/to/exe cli_arguments
