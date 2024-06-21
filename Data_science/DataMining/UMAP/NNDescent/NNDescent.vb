@@ -110,34 +110,6 @@ Friend Class NNDescent : Implements NNDescentFn
         Me.random = random
     End Sub
 
-    Private Function rpTreeInit(leafArray As Integer()(), data As Double()(), currentGraph As Heap) As Heap
-        Dim d As Double
-        Dim leafSize As Integer = leafArray.Length
-
-        Call VBDebugger.EchoLine($"rpTreeInit: {leafSize} leafs...")
-
-        For Each n As Integer In Tqdm.Range(0, leafSize)
-            For i As Integer = 0 To leafArray(n).Length - 1
-                If leafArray(n)(i) < 0 Then
-                    Exit For
-                End If
-
-                For j = i + 1 To leafArray(n).Length - 1
-                    If leafArray(n)(j) < 0 Then
-                        Exit For
-                    Else
-                        d = distanceFn(data(leafArray(n)(i)), data(leafArray(n)(j)))
-                    End If
-
-                    Call Heaps.HeapPush(currentGraph, leafArray(n)(i), d, leafArray(n)(j), 1)
-                    Call Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
-                Next
-            Next
-        Next
-
-        Return currentGraph
-    End Function
-
     ''' <summary>
     ''' Create a version of nearest neighbor descent.
     ''' </summary>
@@ -166,7 +138,14 @@ Friend Class NNDescent : Implements NNDescentFn
         Next
 
         If rpTreeInit Then
-            currentGraph = Me.rpTreeInit(leafArray, data, currentGraph)
+            Dim rpTree As New RPTree(leafArray) With {
+                .wrap = Me,
+                .data = data,
+                .currentGraph = currentGraph
+            }
+
+            rpTree.Run()
+            currentGraph = rpTree.currentGraph
         End If
 
         Dim candidateNeighbors As Heap
