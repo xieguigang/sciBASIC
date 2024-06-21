@@ -176,7 +176,7 @@ Friend Module Heaps
     Public Function BuildCandidates(currentGraph As Heap, nVertices As Integer, nNeighbors As Integer, maxCandidates As Integer, random As IProvideRandomValues) As Heap
         Dim candidateNeighbors = Heaps.MakeHeap(nVertices, maxCandidates)
 
-        Call Console.WriteLine("Build candidates...")
+        Call VBDebugger.EchoLine("Build candidates...")
 
         For i As Integer = 0 To nVertices - 1
             For j As Integer = 0 To nNeighbors - 1

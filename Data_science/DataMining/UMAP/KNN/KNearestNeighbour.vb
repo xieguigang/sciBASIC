@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.DataMining.UMAP.Tree
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports i32 = Microsoft.VisualBasic.Language.i32
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KNN
 
@@ -92,12 +92,12 @@ Namespace KNN
 
             Call progressReporter(0.05F, "Create NNDescent")
 
-            Dim nTrees = 5 + Round(stdNum.Sqrt(x.Length) / 20)
-            Dim nIters = stdNum.Max(5, CInt(stdNum.Floor(stdNum.Round(stdNum.Log(x.Length, 2)))))
+            Dim nTrees = 5 + Round(std.Sqrt(x.Length) / 20)
+            Dim nIters = std.Max(5, CInt(std.Floor(std.Round(std.Log(x.Length, 2)))))
 
             Call progressReporter(0.1F, "Set Iteration Parameters")
 
-            Dim leafSize = stdNum.Max(10, m_k)
+            Dim leafSize = std.Max(10, m_k)
             Dim forestProgressReporter = ScaleProgressReporter(progressReporter, 0.1F, 0.4F)
             Dim i As i32 = Scan0
             Dim rpForest = New FlatTree(nTrees - 1) {}
@@ -141,7 +141,7 @@ Namespace KNN
             If n = 0.5 Then
                 Return 0
             Else
-                Return stdNum.Floor(stdNum.Round(n))
+                Return std.Floor(std.Round(n))
             End If
         End Function
 
