@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::4861b2c75d15ddd4bdf9bceeb1e31c97, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 246
-    '    Code Lines: 169 (68.70%)
-    ' Comment Lines: 33 (13.41%)
-    '    - Xml Docs: 87.88%
-    ' 
-    '   Blank Lines: 44 (17.89%)
-    '     File Size: 9.57 KB
+' Summaries:
 
 
-    ' Module Heaps
-    ' 
-    '     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
-    '               SmallestFlagged, UncheckedHeapPush
-    ' 
-    '     Sub: SiftDown
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 246
+'    Code Lines: 169 (68.70%)
+' Comment Lines: 33 (13.41%)
+'    - Xml Docs: 87.88%
+' 
+'   Blank Lines: 44 (17.89%)
+'     File Size: 9.57 KB
+
+
+' Module Heaps
+' 
+'     Function: BuildCandidates, DeHeapSort, HeapPush, MakeArrays, MakeHeap
+'               SmallestFlagged, UncheckedHeapPush
+' 
+'     Sub: SiftDown
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Friend Module Heaps
 
@@ -206,10 +206,10 @@ Friend Module Heaps
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
-        Dim dd As Integer = indices.Length / 10
-        Dim jj As i32 = 0
 
-        For i As Integer = 0 To indices.Length - 1
+        Call VBDebugger.EchoLine("DeHeapSort...")
+
+        For Each i As Integer In Tqdm.Range(0, indices.Length)
             Dim indHeap = indices(i)
             Dim distHeap = weights(i)
 
@@ -227,11 +227,6 @@ Friend Module Heaps
 
                 Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
             Next
-
-            If ++jj = dd Then
-                jj = 0
-                VBDebugger.EchoLine($"DeHeapSort {CInt(100 * i / indices.Length)}% [{i}/{indices.Length}]")
-            End If
         Next
 
         Dim indicesAsInts = indices _
@@ -254,8 +249,11 @@ Friend Module Heaps
             Dim leftChild = elt * 2 + 1
             Dim rightChild = leftChild + 1
             Dim swap = elt
+
             If heap1(swap) < heap1(leftChild) Then swap = leftChild
-            If rightChild < ceiling AndAlso heap1(swap) < heap1(rightChild) Then swap = rightChild
+            If rightChild < ceiling AndAlso heap1(swap) < heap1(rightChild) Then
+                swap = rightChild
+            End If
 
             If swap = elt Then
                 Exit While
@@ -294,7 +292,7 @@ Friend Module Heaps
 
         If resultIndex >= 0 Then
             flag(resultIndex) = 0
-            Return CInt(stdNum.Floor(ind(resultIndex)))
+            Return CInt(std.Floor(ind(resultIndex)))
         Else
             Return -1
         End If
