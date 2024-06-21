@@ -59,13 +59,6 @@ Imports Microsoft.VisualBasic.Math
 
 Module Utils
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Function ScaleProgressReporter(progressReporter As RunSlavePipeline.SetProgressEventHandler, start As Double, [end] As Double) As RunSlavePipeline.SetProgressEventHandler
-        Return Sub(progress, msg)
-                   progressReporter(([end] - start) * progress + start, msg)
-               End Sub
-    End Function
-
     ''' <summary>
     ''' Creates an empty array
     ''' </summary>

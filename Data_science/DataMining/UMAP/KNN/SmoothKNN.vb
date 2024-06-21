@@ -54,7 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KNN
 
@@ -66,7 +66,7 @@ Namespace KNN
         ReadOnly distances As Double()()
 
         Sub New(distances As Double()(), knn As KNNArguments)
-            Me.target = stdNum.Log(knn.k, 2) * knn.bandwidth
+            Me.target = std.Log(knn.k, 2) * knn.bandwidth
             Me.knn = knn
             Me.distances = distances
             Me.meanDistances = Aggregate d As Double()
@@ -84,7 +84,7 @@ Namespace KNN
             Dim rho_i, result_i As Double
 
             If nonZeroDists.Length >= localConnectivity Then
-                Dim index = CInt(stdNum.Floor(localConnectivity))
+                Dim index = CInt(std.Floor(localConnectivity))
                 Dim interpolation = localConnectivity - index
 
                 If index > 0 Then
@@ -107,13 +107,13 @@ Namespace KNN
                     Dim d = ithDistances(j) - rho_i
 
                     If d > 0 Then
-                        pSum += stdNum.Exp(-(d / mid))
+                        pSum += std.Exp(-(d / mid))
                     Else
                         pSum += 1.0
                     End If
                 Next
 
-                If stdNum.Abs(pSum - target) < Umap.SMOOTH_K_TOLERANCE Then
+                If std.Abs(pSum - target) < Umap.SMOOTH_K_TOLERANCE Then
                     Exit For
                 End If
 
@@ -152,6 +152,9 @@ Namespace KNN
         Public Function SmoothKNNDistance() As (sigmas As Double(), rhos As Double())
             Dim localConnectivity As Double = knn.localConnectivity
             Dim nIter As Integer = knn.nIter
+
+            Call VBDebugger.EchoLine("SmoothKNNDistance...")
+
             ' TODO: Use Math.Log2 (when update framework to a version that supports it) or consider a pre-computed table
             Dim rho = New Double(distances.Length - 1) {}
             Dim result = New Double(distances.Length - 1) {}
@@ -182,6 +185,8 @@ Namespace KNN
             Dim vals = New Double(nSamples * nNeighbors - 1) {}
             Dim val As Double
 
+            Call VBDebugger.EchoLine("ComputeMembershipStrengths...")
+
             For i = 0 To nSamples - 1
                 For j = 0 To nNeighbors - 1
                     If knnIndices(i)(j) = -1 Then
@@ -194,7 +199,7 @@ Namespace KNN
                     ElseIf knnDistances(i)(j) - rhos(i) <= 0.0 Then
                         val = 1
                     Else
-                        val = CSng(stdNum.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
+                        val = CSng(std.Exp(-((knnDistances(i)(j) - rhos(i)) / sigmas(i))))
                     End If
 
                     rows(i * nNeighbors + j) = i

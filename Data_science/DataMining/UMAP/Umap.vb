@@ -183,16 +183,6 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         _progressReporter = progressReporter
     End Sub
 
-    Private Function GetProgress() As RunSlavePipeline.SetProgressEventHandler
-        If _progressReporter Is Nothing Then
-            Return Sub(progress, msg)
-                       ' do nothing
-                   End Sub
-        Else
-            Return ScaleProgressReporter(_progressReporter, 0, 0.8F)
-        End If
-    End Function
-
     Public Function GetGraph() As SparseMatrix
         'Return New SparseMatrix(
         '    rows:=_optimizationState.Head,
@@ -208,22 +198,15 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
         ' InitializeFit Takes at least 80% of the total time (the calls to Step are
         ' completed much more quickly AND they naturally lend themselves to granular progress updates; 
         ' one per loop compared to the recommended number of epochs)
-        Dim initializeFitProgressReporter As RunSlavePipeline.SetProgressEventHandler = GetProgress()
-
         If _kdTreeKNNEngine Then
             _knn = KDTreeMetric.GetKNN(_x, k:=KNNArguments.k)
         Else
             ' This part of the process very roughly accounts for 1/3 of the work
-            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random) _
-                .NearestNeighbors(_x, ScaleProgressReporter(initializeFitProgressReporter, 0, 0.3F))
+            _knn = New KNearestNeighbour(KNNArguments.k, _distanceFn, _random).NearestNeighbors(_x)
         End If
 
         ' This part of the process very roughly accounts for 2/3 of the work (the reamining work is in the Step calls)
-        _graph = Me.FuzzySimplicialSet(
-            x:=_x,
-            setOpMixRatio:=_setOpMixRatio,
-            progressReporter:=ScaleProgressReporter(initializeFitProgressReporter, 0.3F, 1)
-        )
+        _graph = Me.FuzzySimplicialSet(x:=_x, setOpMixRatio:=_setOpMixRatio)
 
         With InitializeSimplicialSetEmbedding()
             ' Set the optimization routine state
@@ -301,19 +284,18 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     ''' for each such point, and then combining all the local fuzzy simplicial sets into a global one via 
     ''' a fuzzy union.
     ''' </summary>
-    Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double, progressReporter As RunSlavePipeline.SetProgressEventHandler) As SparseMatrix
+    Private Function FuzzySimplicialSet(x As Double()(), setOpMixRatio As Double) As SparseMatrix
         Dim knnIndices = If(_knn.knnIndices, New Integer(-1)() {})
         Dim knnDistances = If(_knn.knnDistances, New Single(-1)() {})
-        Dim report As New ProgressReporter With {.report = progressReporter}
-        Dim sigmasRhos = report.Run(Function() New SmoothKNN(knnDistances, KNNArguments).SmoothKNNDistance(), 0.1, "SmoothKNNDistance")
-        Dim rowsColsVals = report.Run(Function() SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos), 0.2, "ComputeMembershipStrengths")
-        Dim sparseMatrix = report.Run(Function() New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length)), 0.3, "Create SparseMatrix")
+        Dim sigmasRhos = New SmoothKNN(knnDistances, KNNArguments).SmoothKNNDistance()
+        Dim rowsColsVals = SmoothKNN.ComputeMembershipStrengths(knnIndices, knnDistances, sigmasRhos.sigmas, sigmasRhos.rhos)
+        Dim sparseMatrix = New SparseMatrix(rowsColsVals.Row, rowsColsVals.Col, rowsColsVals.X, (x.Length, x.Length))
         Dim transpose = sparseMatrix.Transpose()
         Dim prodMatrix = sparseMatrix.PairwiseMultiply(transpose)
-        Dim a = report.Run(Function() sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix), 0.4, "T - prod")
-        Dim b = report.Run(Function() a.MultiplyScalar(setOpMixRatio), 0.5, "a * setOpMixRatio")
-        Dim c = report.Run(Function() prodMatrix.MultiplyScalar(1 - setOpMixRatio), 0.6, "prod * (1 - setOpMixRatio)")
-        Dim result = report.Run(Function() b.Add(c), 0.7, "b + c")
+        Dim a = sparseMatrix.Add(CType(transpose, SparseMatrix)).Subtract(prodMatrix)
+        Dim b = a.MultiplyScalar(setOpMixRatio)
+        Dim c = prodMatrix.MultiplyScalar(1 - setOpMixRatio)
+        Dim result = b.Add(c)
 
         Return result
     End Function
@@ -446,7 +428,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
                 ' assumption that Step will be called the recommended number of times (the number-of-epochs value 
                 ' returned From InitializeFit)
                 ' Umap.ScaleProgressReporter(_progressReporter, 0.8F, 1)(CSng(currentEpoch) / numberOfEpochsToComplete, "OptimizeLayoutStep")
-                Call Console.Write(".")
+                ' Call Console.Write(".")
             End If
         End If
 

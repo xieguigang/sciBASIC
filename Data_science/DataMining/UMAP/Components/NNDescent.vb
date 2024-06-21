@@ -68,8 +68,7 @@ Public Interface NNDescentFn
                        Optional maxCandidates As Integer = 50,
                        Optional delta As Double = 0.001F,
                        Optional rho As Double = 0.5F,
-                       Optional rpTreeInit As Boolean = True,
-                       Optional startingIteration As Action(Of Integer, Integer, String) = Nothing) As KNNState
+                       Optional rpTreeInit As Boolean = True) As KNNState
 
 End Interface
 
@@ -83,7 +82,7 @@ Friend Class NNDescent : Implements NNDescentFn
         Me.random = random
     End Sub
 
-    Private Function rpTreeInit(leafArray As Integer()(), data As Double()(), currentGraph As Heap, startingIteration As Action(Of Integer, Integer, String)) As Heap
+    Private Function rpTreeInit(leafArray As Integer()(), data As Double()(), currentGraph As Heap) As Heap
         Dim d As Double
         Dim leafSize As Integer = leafArray.Length
         Dim jj As i32 = 0
@@ -107,9 +106,9 @@ Friend Class NNDescent : Implements NNDescentFn
                 Next
             Next
 
-            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+            If ++jj = dd Then
                 jj = 0
-                startingIteration.Invoke(n, leafArray.Length, $"rpTreeInit {CInt(n / leafSize * 100)}% [{n}/{leafSize}]")
+                VBDebugger.EchoLine($"rpTreeInit {CInt(n / leafSize * 100)}% [{n}/{leafSize}]")
             End If
         Next
 
@@ -124,8 +123,7 @@ Friend Class NNDescent : Implements NNDescentFn
                                   Optional maxCandidates As Integer = 50,
                                   Optional delta As Double = 0.001F,
                                   Optional rho As Double = 0.5F,
-                                  Optional rpTreeInit As Boolean = True,
-                                  Optional startingIteration As Action(Of Integer, Integer, String) = Nothing) As KNNState Implements NNDescentFn.NNDescent
+                                  Optional rpTreeInit As Boolean = True) As KNNState Implements NNDescentFn.NNDescent
 
         Dim nVertices As Integer = data.Length
         Dim currentGraph As Heap = Heaps.MakeHeap(nVertices, nNeighbors)
@@ -133,7 +131,7 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim jj As i32 = 0
         Dim dd As Integer = nVertices / 10
 
-        Call startingIteration?.Invoke(0, 1, "start sample rejection loop...")
+        Call VBDebugger.EchoLine("Start sample rejection loop...")
 
         For i As Integer = 0 To nVertices - 1
             Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
@@ -145,14 +143,14 @@ Friend Class NNDescent : Implements NNDescentFn
                 Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
             Next
 
-            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+            If ++jj = dd Then
                 jj = 0
-                startingIteration.Invoke(i, nVertices, $"Heaps.HeapPush {CInt(100 * i / nVertices)}% [{i}/{nVertices}]")
+                VBDebugger.EchoLine($"Heaps.HeapPush {CInt(100 * i / nVertices)}% [{i}/{nVertices}]")
             End If
         Next
 
         If rpTreeInit Then
-            currentGraph = Me.rpTreeInit(leafArray, data, currentGraph, startingIteration)
+            currentGraph = Me.rpTreeInit(leafArray, data, currentGraph)
         End If
 
         Dim candidateNeighbors As Heap
@@ -161,7 +159,7 @@ Friend Class NNDescent : Implements NNDescentFn
 
         ' 这里是限速步骤
         For n As Integer = 0 To nIters - 1
-            startingIteration?.Invoke(n, nIters, $"NNDescentLoop {n}/{nIters}")
+            VBDebugger.EchoLine($"NNDescentLoop {n}/{nIters}")
             candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
 
             c = NNDescentLoopPar(currentGraph, nVertices, maxCandidates, candidateNeighbors, rho, data)
@@ -171,7 +169,7 @@ Friend Class NNDescent : Implements NNDescentFn
             End If
         Next
 
-        Return Heaps.DeHeapSort(currentGraph, startingIteration)
+        Return Heaps.DeHeapSort(currentGraph)
     End Function
 
     ''' <summary>

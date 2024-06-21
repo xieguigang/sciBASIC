@@ -202,7 +202,7 @@ Friend Module Heaps
     ''' Given an array of heaps (of indices and weights), unpack the heap out to give and array of sorted lists of indices and weights by increasing weight. This is effectively just the second half of heap sort
     ''' (the first half not being required since we already have the data in a heap).
     ''' </summary>
-    Public Function DeHeapSort(heap As Heap, startingIteration As Action(Of Integer, Integer, String)) As KNNState
+    Public Function DeHeapSort(heap As Heap) As KNNState
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
@@ -228,9 +228,9 @@ Friend Module Heaps
                 Call Heaps.SiftDown(distHeap, indHeap, distHeapIndex, 0)
             Next
 
-            If startingIteration IsNot Nothing AndAlso ++jj = dd Then
+            If ++jj = dd Then
                 jj = 0
-                startingIteration.Invoke(i, indices.Length, $"DeHeapSort {CInt(100 * i / indices.Length)}% [{i}/{indices.Length}]")
+                VBDebugger.EchoLine($"DeHeapSort {CInt(100 * i / indices.Length)}% [{i}/{indices.Length}]")
             End If
         Next
 
