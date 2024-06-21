@@ -102,8 +102,8 @@ Imports std = System.Math
 ''' </summary>
 Friend Class NNDescent : Implements NNDescentFn
 
-    ReadOnly distanceFn As DistanceCalculation
-    ReadOnly random As IProvideRandomValues
+    Public ReadOnly distanceFn As DistanceCalculation
+    Public ReadOnly random As IProvideRandomValues
 
     Sub New(distanceFn As DistanceCalculation, random As IProvideRandomValues)
         Me.distanceFn = distanceFn
@@ -172,12 +172,20 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim candidateNeighbors As Heap
         Dim c As Integer
         Dim dataSize As Integer = data.Length
+        Dim nnDescentLoopPar As New NNDescentLoop(nVertices) With {
+            .currentGraph = currentGraph,
+            .data = data,
+            .maxCandidates = maxCandidates,
+            .rho = rho,
+            .wrap = Me
+        }
 
         ' 这里是限速步骤
         For n As Integer = 0 To nIters - 1
             candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
-
-            c = NNDescentLoopPar(currentGraph, nVertices, maxCandidates, candidateNeighbors, rho, data)
+            nnDescentLoopPar.candidateNeighbors = candidateNeighbors
+            nnDescentLoopPar.Run()
+            c = nnDescentLoopPar.c.Sum
 
             If c <= delta * nNeighbors * dataSize Then
                 Exit For
@@ -185,109 +193,5 @@ Friend Class NNDescent : Implements NNDescentFn
         Next
 
         Return Heaps.DeHeapSort(currentGraph)
-    End Function
-
-    ''' <summary>
-    ''' <see cref="NNDescentLoop"/>的并行化版本
-    ''' </summary>
-    ''' <param name="currentGraph">被修改的数据</param>
-    ''' <param name="nVertices">readonly</param>
-    ''' <param name="maxCandidates">readonly</param>
-    ''' <param name="candidateNeighbors">readonly</param>
-    ''' <param name="rho">readonly</param>
-    ''' <param name="data">readonly</param>
-    ''' <returns></returns>
-    Private Function NNDescentLoopPar(currentGraph As Heap,
-                                      nVertices As Integer,
-                                      maxCandidates As Integer,
-                                      candidateNeighbors As Heap,
-                                      rho As Double,
-                                      data As Double()()) As Double
-
-        Dim f As Func(Of Integer, Double) =
-            Function(i)
-                Dim c As Double
-
-                For j As Integer = 0 To maxCandidates - 1
-                    Dim p = CInt(std.Floor(candidateNeighbors(0)(i)(j)))
-                    Dim d As Double
-
-                    If p < 0 OrElse (random.NextFloat() < rho) Then
-                        Continue For
-                    End If
-
-                    For k As Integer = 0 To maxCandidates - 1
-                        Dim q = CInt(std.Floor(candidateNeighbors(0)(i)(k)))
-                        Dim cj = candidateNeighbors(2)(i)(j)
-                        Dim ck = candidateNeighbors(2)(i)(k)
-
-                        If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
-                            Continue For
-                        Else
-                            d = distanceFn(data(p), data(q))
-                        End If
-
-                        c += Heaps.HeapPush(currentGraph, p, d, q, 1)
-                        c += Heaps.HeapPush(currentGraph, q, d, p, 1)
-                    Next
-                Next
-
-                Return c
-            End Function
-        Dim cc As Double = Enumerable.Range(0, nVertices) _
-            .AsParallel _
-            .Select(Function(x) f(x)) _
-            .Sum
-
-        Return cc
-    End Function
-
-    ''' <summary>
-    ''' 这个loop在大样本数据集下会非常慢
-    ''' </summary>
-    ''' <param name="currentGraph">被修改的数据</param>
-    ''' <param name="nVertices">readonly</param>
-    ''' <param name="maxCandidates">readonly</param>
-    ''' <param name="candidateNeighbors">readonly</param>
-    ''' <param name="rho">readonly</param>
-    ''' <param name="data">readonly</param>
-    ''' <returns></returns>
-    Private Function NNDescentLoop(currentGraph As Heap,
-                                   nVertices As Integer,
-                                   maxCandidates As Integer,
-                                   candidateNeighbors As Heap,
-                                   rho As Double,
-                                   data As Double()()) As Double
-        Dim d As Double
-        Dim c As Double
-
-        Call Console.WriteLine("NNDescentLoop")
-
-        For i As Integer = 0 To nVertices - 1
-            For j As Integer = 0 To maxCandidates - 1
-                Dim p = CInt(std.Floor(candidateNeighbors(0)(i)(j)))
-
-                If p < 0 OrElse (random.NextFloat() < rho) Then
-                    Continue For
-                End If
-
-                For k = 0 To maxCandidates - 1
-                    Dim q = CInt(std.Floor(candidateNeighbors(0)(i)(k)))
-                    Dim cj = candidateNeighbors(2)(i)(j)
-                    Dim ck = candidateNeighbors(2)(i)(k)
-
-                    If q < 0 OrElse cj = 0 AndAlso ck = 0 Then
-                        Continue For
-                    Else
-                        d = distanceFn(data(p), data(q))
-                    End If
-
-                    c += Heaps.HeapPush(currentGraph, p, d, q, 1)
-                    c += Heaps.HeapPush(currentGraph, q, d, p, 1)
-                Next
-            Next
-        Next
-
-        Return c
     End Function
 End Class
