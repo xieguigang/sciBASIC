@@ -58,21 +58,48 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 
-Public Interface NNDescentFn
-
-    Function NNDescent(data As Double()(), leafArray As Integer()(), nNeighbors As Integer,
-                       Optional nIters As Integer = 10,
-                       Optional maxCandidates As Integer = 50,
-                       Optional delta As Double = 0.001F,
-                       Optional rho As Double = 0.5F,
-                       Optional rpTreeInit As Boolean = True) As KNNState
-
-End Interface
-
+''' <summary>
+''' UMAP (Uniform Manifold Approximation and Projection) is a nonlinear dimensionality reduction
+''' technique widely used in data science and machine learning to visualize high-dimensional
+''' datasets. NNDescent (Nearest Neighbor Descent) is a crucial step in the UMAP algorithm that
+''' efficiently finds nearest neighbors in high-dimensional spaces.
+'''
+''' Understanding the proximity between data points is essential for preserving the local structure
+''' of the data before dimensionality reduction. NNDescent is an algorithm for fast approximate 
+''' nearest neighbor search in high-dimensional spaces. It iteratively refines estimates of the 
+''' proximity between points to build a nearest neighbor graph that captures the intrinsic local
+''' structure of the data.
+''' 
+''' The NNDescent algorithm works as follows:
+''' 
+''' 1. Initialization: Randomly select some points as initial neighbors and establish an initial 
+'''    nearest neighbor graph.
+''' 2. Iterative Search: Update the neighbor sets for each point through multiple rounds of iteration.
+'''    In each iteration, the algorithm checks whether the current neighbors of a point are truly
+'''    the closest and attempts to find closer neighbors if not.
+''' 3. Candidate Set Construction: To find closer neighbors, the algorithm uses a technique 
+'''    called “candidate set construction,” which speculatively generates potential closer neighbors
+'''    based on the current known neighbors.
+''' 4. Distance Calculation: The algorithm computes the distance from the current point to all 
+'''    points in its candidate set and updates the neighbor list accordingly.
+''' 5. Pruning: During iteration, the algorithm prunes, or removes, neighbors that are too distant
+'''    to manage the size of the neighbor sets and reduce computational load.
+''' 6. Convergence: The algorithm stops iterating if no better neighbors are found for several 
+'''    consecutive iterations or if a predefined number of iterations is reached.
+''' 
+''' The advantage of NNDescent is its ability to quickly find a good approximation of nearest 
+''' neighbors, and it is more efficient than other nearest neighbor search algorithms, such as 
+''' k-d trees or ball trees, especially when dealing with high-dimensional and large-scale datasets.
+''' In UMAP, NNDescent is used to construct the local structure of the data, which is then 
+''' preserved during the dimensionality reduction process.
+''' 
+''' In summary, NNDescent is an algorithm used in UMAP for efficiently constructing the local 
+''' structure of high-dimensional data by iteratively optimizing the search for nearest neighbors, 
+''' providing a crucial foundation for the subsequent dimensionality reduction steps.
+''' </summary>
 Friend Class NNDescent : Implements NNDescentFn
 
     ReadOnly distanceFn As DistanceCalculation
