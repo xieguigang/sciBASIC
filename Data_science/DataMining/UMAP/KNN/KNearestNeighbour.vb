@@ -112,7 +112,6 @@ Namespace KNN
                         End Function)
 
                 rpForest(node.i) = node.Item2
-                VBDebugger.EchoLine($"[{i}/{nTrees}] MakeTree")
             Next
 
             Dim leafArray As Integer()() = Tree.MakeLeafArray(rpForest)

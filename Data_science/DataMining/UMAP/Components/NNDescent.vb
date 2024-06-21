@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::acf853cf8a93d65166b3cb3d3c44e36c, Data_science\DataMining\UMAP\Components\NNDescent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 222
-    '    Code Lines: 156 (70.27%)
-    ' Comment Lines: 24 (10.81%)
-    '    - Xml Docs: 95.83%
-    ' 
-    '   Blank Lines: 42 (18.92%)
-    '     File Size: 8.95 KB
+' Summaries:
 
 
-    ' Interface NNDescentFn
-    ' 
-    '     Function: NNDescent
-    ' 
-    ' Class NNDescent
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: MakeNNDescent, NNDescentLoop, NNDescentLoopPar, rpTreeInit
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 222
+'    Code Lines: 156 (70.27%)
+' Comment Lines: 24 (10.81%)
+'    - Xml Docs: 95.83%
+' 
+'   Blank Lines: 42 (18.92%)
+'     File Size: 8.95 KB
+
+
+' Interface NNDescentFn
+' 
+'     Function: NNDescent
+' 
+' Class NNDescent
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: MakeNNDescent, NNDescentLoop, NNDescentLoopPar, rpTreeInit
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.DataMining.UMAP.KNN
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
@@ -85,10 +86,10 @@ Friend Class NNDescent : Implements NNDescentFn
     Private Function rpTreeInit(leafArray As Integer()(), data As Double()(), currentGraph As Heap) As Heap
         Dim d As Double
         Dim leafSize As Integer = leafArray.Length
-        Dim jj As i32 = 0
-        Dim dd As Integer = leafSize / 20
 
-        For n As Integer = 0 To leafSize - 1
+        Call VBDebugger.EchoLine($"rpTreeInit: {leafSize} leafs...")
+
+        For Each n As Integer In Tqdm.Range(0, leafSize)
             For i As Integer = 0 To leafArray(n).Length - 1
                 If leafArray(n)(i) < 0 Then
                     Exit For
@@ -105,11 +106,6 @@ Friend Class NNDescent : Implements NNDescentFn
                     Call Heaps.HeapPush(currentGraph, leafArray(n)(j), d, leafArray(n)(i), 1)
                 Next
             Next
-
-            If ++jj = dd Then
-                jj = 0
-                VBDebugger.EchoLine($"rpTreeInit {CInt(n / leafSize * 100)}% [{n}/{leafSize}]")
-            End If
         Next
 
         Return currentGraph
@@ -128,12 +124,10 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim nVertices As Integer = data.Length
         Dim currentGraph As Heap = Heaps.MakeHeap(nVertices, nNeighbors)
         Dim d As Double
-        Dim jj As i32 = 0
-        Dim dd As Integer = nVertices / 10
 
-        Call VBDebugger.EchoLine("Start sample rejection loop...")
+        Call VBDebugger.EchoLine("[MakeNNDescent] Start sample rejection loop...")
 
-        For i As Integer = 0 To nVertices - 1
+        For Each i As Integer In Tqdm.Range(0, nVertices)
             Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
 
             For j As Integer = 0 To indices.Length - 1
@@ -142,11 +136,6 @@ Friend Class NNDescent : Implements NNDescentFn
                 Call Heaps.HeapPush(currentGraph, i, d, indices(j), 1)
                 Call Heaps.HeapPush(currentGraph, indices(j), d, i, 1)
             Next
-
-            If ++jj = dd Then
-                jj = 0
-                VBDebugger.EchoLine($"Heaps.HeapPush {CInt(100 * i / nVertices)}% [{i}/{nVertices}]")
-            End If
         Next
 
         If rpTreeInit Then
@@ -159,7 +148,6 @@ Friend Class NNDescent : Implements NNDescentFn
 
         ' 这里是限速步骤
         For n As Integer = 0 To nIters - 1
-            VBDebugger.EchoLine($"NNDescentLoop {n}/{nIters}")
             candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
 
             c = NNDescentLoopPar(currentGraph, nVertices, maxCandidates, candidateNeighbors, rho, data)
