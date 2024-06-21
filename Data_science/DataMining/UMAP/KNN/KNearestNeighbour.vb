@@ -116,8 +116,6 @@ Namespace KNN
 
             Dim leafArray As Integer()() = Tree.MakeLeafArray(rpForest)
 
-            Call VBDebugger.EchoLine("MakeNNDescent")
-
             ' Handle python3 rounding down from 0.5 discrpancy
             Return metricNNDescent.MakeNNDescent(
                 data:=x,

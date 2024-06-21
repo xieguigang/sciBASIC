@@ -180,10 +180,13 @@ Friend Class NNDescent : Implements NNDescentFn
             .wrap = Me
         }
 
+        Dim t0 As DateTime = Now
+
         ' 这里是限速步骤
         For n As Integer = 0 To nIters - 1
             candidateNeighbors = Heaps.BuildCandidates(currentGraph, nVertices, nNeighbors, maxCandidates, random)
             nnDescentLoopPar.candidateNeighbors = candidateNeighbors
+            nnDescentLoopPar.Reset()
             nnDescentLoopPar.Run()
             c = nnDescentLoopPar.c.Sum
 
@@ -191,6 +194,11 @@ Friend Class NNDescent : Implements NNDescentFn
                 Exit For
             End If
         Next
+
+        Dim t1 As DateTime = Now
+        Dim span = t1 - t0
+
+        Call VBDebugger.EchoLine($"Nearest Neighbor Descent: {StringFormats.ReadableElapsedTime(span)}")
 
         Return Heaps.DeHeapSort(currentGraph)
     End Function
