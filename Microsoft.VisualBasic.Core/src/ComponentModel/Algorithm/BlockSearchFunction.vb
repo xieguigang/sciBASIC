@@ -67,7 +67,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Algorithm
 
@@ -278,7 +278,7 @@ Namespace ComponentModel.Algorithm
             Dim val As Double = eval(x)
 
             For Each a As SequenceTag(Of T) In joint
-                If stdNum.Abs(a.tag - val) <= tolerance Then
+                If std.Abs(a.tag - val) <= tolerance Then
                     Yield a.data
                 End If
             Next
