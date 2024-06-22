@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::f48c46fd055084cbea5a334bb102d176, Data_science\MachineLearning\t-SNE\Helper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 164
-    '    Code Lines: 97 (59.15%)
-    ' Comment Lines: 36 (21.95%)
-    '    - Xml Docs: 63.89%
-    ' 
-    '   Blank Lines: 31 (18.90%)
-    '     File Size: 5.26 KB
+' Summaries:
 
 
-    ' Module Helper
-    ' 
-    '     Function: d2p, L2, xtod, zeros
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 164
+'    Code Lines: 97 (59.15%)
+' Comment Lines: 36 (21.95%)
+'    - Xml Docs: 63.89%
+' 
+'   Blank Lines: 31 (18.90%)
+'     File Size: 5.26 KB
+
+
+' Module Helper
+' 
+'     Function: d2p, L2, xtod, zeros
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Module Helper
 
@@ -118,9 +118,9 @@ Module Helper
     ''' <param name="tol"></param>
     ''' <returns></returns>
     Friend Function d2p(D As Double(), perplexity As Double, tol As Double) As Double()
-        Dim Nf = stdNum.Sqrt(D.Length) ' this better be an integer
-        Dim N As Integer = stdNum.Floor(Nf)
-        Dim Htarget = stdNum.Log(perplexity) ' target entropy of distribution
+        Dim Nf = std.Sqrt(D.Length) ' this better be an integer
+        Dim N As Integer = std.Floor(Nf)
+        Dim Htarget = std.Log(perplexity) ' target entropy of distribution
         Dim P = zeros(N * N) ' temporary probability matrix
         Dim prow = zeros(N) ' a temporary storage compartment
 
@@ -142,7 +142,7 @@ Module Helper
                 Dim psum = 0.0
 
                 For j = 0 To N - 1
-                    Dim pj = stdNum.Exp(-D(i * N + j) * beta)
+                    Dim pj = std.Exp(-D(i * N + j) * beta)
                     If i = j Then pj = 0 ' we dont care about diagonals
                     prow(j) = pj
                     psum += pj
@@ -157,7 +157,7 @@ Module Helper
                     prow(j) = pj
 
                     If pj > 0.0000001 Then
-                        Hhere -= pj * stdNum.Log(pj)
+                        Hhere -= pj * std.Log(pj)
                     End If
                 Next
 
@@ -186,7 +186,7 @@ Module Helper
                 ' stopping conditions: too many tries or got a good precision
                 num += 1
 
-                If stdNum.Abs(Hhere - Htarget) < tol Then
+                If std.Abs(Hhere - Htarget) < tol Then
                     done = True
                 End If
 
@@ -208,7 +208,7 @@ Module Helper
 
         For i = 0 To N - 1
             For j = 0 To N - 1
-                Pout(i * N + j) = stdNum.Max((P(i * N + j) + P(j * N + i)) / N2, 1.0E-100)
+                Pout(i * N + j) = std.Max((P(i * N + j) + P(j * N + i)) / N2, 1.0E-100)
             Next
         Next
 

@@ -53,7 +53,7 @@
 #End Region
 
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Friend Class RandomHelper
 
@@ -81,7 +81,7 @@ Friend Class RandomHelper
             Return GaussRandom()
         End If
 
-        Dim c = stdNum.Sqrt(-2 * stdNum.Log(r) / r)
+        Dim c = std.Sqrt(-2 * std.Log(r) / r)
 
         ' cache this for next function call for efficiency
         tSNE.mVal = v * c

@@ -59,7 +59,7 @@
 
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class tSNE : Inherits IDataEmbedding
 
@@ -187,7 +187,7 @@ Public Class tSNE : Inherits IDataEmbedding
                 Dim gainid = mGains(i)(d)
 
                 ' compute gain update
-                Dim newgain = If(stdNum.Sign(gid) = stdNum.Sign(sid), gainid * 0.8, gainid + 0.2)
+                Dim newgain = If(std.Sign(gid) = std.Sign(sid), gainid * 0.8, gainid + 0.2)
 
                 If newgain < 0.01 Then
                     ' clamp
