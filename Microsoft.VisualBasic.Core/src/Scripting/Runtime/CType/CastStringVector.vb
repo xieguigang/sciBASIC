@@ -220,5 +220,10 @@ Namespace Scripting.Runtime
         Public Function AsColor(source As IEnumerable(Of String)) As Color()
             Return source.AsType(Of Color).ToArray
         End Function
+
+        <Extension>
+        Public Function AsDateTime(source As IEnumerable(Of String)) As Date()
+            Return source.AsType(Of Date).ToArray
+        End Function
     End Module
 End Namespace
