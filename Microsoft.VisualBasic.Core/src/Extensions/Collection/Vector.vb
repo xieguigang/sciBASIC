@@ -715,13 +715,31 @@ Public Module VectorExtensions
         Return newVec
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="v"></param>
+    ''' <param name="ordinals"></param>
+    ''' <param name="base1"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' default index ordinals offset value is zero-based.
+    ''' </remarks>
     <Extension>
-    Public Function CopyOf(Of T)(v As T(), ordinals As Integer()) As T()
+    Public Function CopyOf(Of T)(v As T(), ordinals As Integer(), Optional base1 As Boolean = False) As T()
         Dim newVec As T() = New T(ordinals.Length - 1) {}
 
-        For i As Integer = 0 To ordinals.Length - 1
-            newVec(i) = v(ordinals(i))
-        Next
+        If base1 Then
+            ' the index is 1-based, needs -1
+            For i As Integer = 0 To ordinals.Length - 1
+                newVec(i) = v(ordinals(i) - 1)
+            Next
+        Else
+            For i As Integer = 0 To ordinals.Length - 1
+                newVec(i) = v(ordinals(i))
+            Next
+        End If
 
         Return newVec
     End Function
