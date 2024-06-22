@@ -298,6 +298,10 @@ Namespace IO
             End Get
         End Property
 
+        Public Function Slice(index As IEnumerable(Of Integer)) As DataFrame
+
+        End Function
+
         ''' <summary>
         ''' Convert this dataframe object as a csv document object
         ''' </summary>
@@ -543,6 +547,8 @@ Namespace IO
                     Return i
                 End If
             Next
+
+            Return -1
         End Function
 
         ''' <summary>
