@@ -348,6 +348,11 @@ Namespace IO
             Return Me
         End Function
 
+        ''' <summary>
+        ''' transpose the columns vector as rows collection
+        ''' </summary>
+        ''' <param name="columns"></param>
+        ''' <returns></returns>
         Private Shared Iterator Function ColumnRows(columns As ArgumentReference()) As IEnumerable(Of RowObject)
             Dim collectionType As Type() = {GetType(Array), GetType(IEnumerable), GetType(IList)}
             Dim matrix As Object()() = columns _
