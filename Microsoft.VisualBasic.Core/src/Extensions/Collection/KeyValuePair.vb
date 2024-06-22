@@ -84,6 +84,13 @@ Namespace ComponentModel.Collection
     <HideModuleName>
     Public Module KeyValuePairExtensions
 
+        <Extension>
+        Public Iterator Function Values(Of T)(pool As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of T)
+            For Each item As SeqValue(Of T) In pool.SafeQuery
+                Yield item.value
+            Next
+        End Function
+
         ''' <summary>
         ''' 从目标字典中按照给定的键名称获取值然后删除给定的键名称对应的数据
         ''' </summary>

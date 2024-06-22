@@ -107,6 +107,15 @@ Namespace Linq
             value = x
         End Sub
 
+        ''' <summary>
+        ''' create index value with default index zero
+        ''' </summary>
+        ''' <param name="value"></param>
+        Sub New(value As T)
+            Me.i = 0
+            Me.value = value
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Overrides Function ToString() As String
