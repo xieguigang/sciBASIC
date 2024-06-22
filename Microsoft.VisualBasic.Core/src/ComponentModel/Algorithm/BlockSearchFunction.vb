@@ -128,6 +128,12 @@ Namespace ComponentModel.Algorithm
         ''' <returns></returns>
         Public ReadOnly Property size As Integer
 
+        Public ReadOnly Property numBlocks As Integer
+            Get
+                Return binary.size
+            End Get
+        End Property
+
         ''' <summary>
         ''' the raw input sequence data, element order keeps the same with the input sequence.
         ''' </summary>
