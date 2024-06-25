@@ -128,6 +128,14 @@ Namespace Distributions
             Next
         End Function
 
+        ''' <summary>
+        ''' bootstrap sampling of given source collection
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="N"></param>
+        ''' <param name="replace"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Sample(Of T)(source As IEnumerable(Of T), N As Integer, Optional replace As Boolean = True) As T()

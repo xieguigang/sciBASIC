@@ -88,6 +88,17 @@ Namespace Math
             End If
         End Function
 
+        <Extension>
+        Public Iterator Function ClipUpper(x As IEnumerable(Of Double), clipValue As Double) As IEnumerable(Of Double)
+            For Each xi As Double In x
+                If xi > clipValue Then
+                    Yield clipValue
+                Else
+                    Yield xi
+                End If
+            Next
+        End Function
+
 #If NET48 Then
 
         ' Clamp function is missing in .NET 4.8 
