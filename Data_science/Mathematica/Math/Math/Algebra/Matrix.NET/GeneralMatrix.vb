@@ -74,6 +74,12 @@ Namespace LinearAlgebra.Matrix
 
     End Interface
 
+    Public Interface ILabeledMatrix
+
+        Function GetLabels() As IEnumerable(Of String)
+
+    End Interface
+
     ''' <summary>
     ''' [m,n]
     ''' </summary>
