@@ -99,6 +99,29 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Property Remarks As String
         Public Property Keywords As String
 
+        ''' <summary>
+        ''' a unify method for read content data from xml
+        ''' </summary>
+        ''' <param name="xn"></param>
+        ''' <remarks>
+        ''' summary, remarks, keywords
+        ''' </remarks>
+        Friend Overridable Sub LoadFromNode(xn As XmlNode)
+            ' Name = readFieldText(xn, "name")
+            Summary = readFieldText(xn, "summary")
+            Remarks = readFieldText(xn, "remarks")
+            Keywords = readFieldText(xn, "keywords")
+        End Sub
+
+        Protected Shared Function readFieldText(xn As XmlNode, nodeKey As String) As String
+            Dim textNode As XmlNode = xn.SelectSingleNode(nodeKey)
+
+            If textNode IsNot Nothing Then
+                Return textNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
+            Else
+                Return Nothing
+            End If
+        End Function
     End Class
 
     ''' <summary>
@@ -263,22 +286,6 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             End If
 
             Return pm
-        End Function
-
-        Friend Sub LoadFromNode(xn As XmlNode)
-            Summary = readFieldText(xn, "summary")
-            Remarks = readFieldText(xn, "remarks")
-            Keywords = readFieldText(xn, "keywords")
-        End Sub
-
-        Private Shared Function readFieldText(xn As XmlNode, nodeKey As String) As String
-            Dim textNode As XmlNode = xn.SelectSingleNode(nodeKey)
-
-            If textNode IsNot Nothing Then
-                Return textNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            Else
-                Return Nothing
-            End If
         End Function
     End Class
 End Namespace

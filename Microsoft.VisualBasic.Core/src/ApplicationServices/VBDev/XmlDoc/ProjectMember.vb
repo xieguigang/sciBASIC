@@ -131,8 +131,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return [Declare]
         End Function
 
-        Friend Sub LoadFromNode(xn As XmlNode)
-            Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
+        Friend Overrides Sub LoadFromNode(xn As XmlNode)
             Dim [declare] As NamedValue(Of String) = xn _
                 .Attributes _
                 .GetNamedItem("name") _
@@ -141,52 +140,32 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 .GetTagValue(":", trim:=True)
 
             Me.Declare = [declare].Value
+            Me.Returns = readFieldText(xn, "returns")
+            Me.example = readFieldText(xn, "example")
+            Me.Params = ReadParameters(xn).ToArray
 
-            If summaryNode IsNot Nothing Then
-                Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
+            Call MyBase.LoadFromNode(xn)
+        End Sub
 
-            Dim returnsNode As XmlNode = xn.SelectSingleNode("returns")
-
-            If returnsNode IsNot Nothing Then
-                Me.Returns = returnsNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
-
-            Dim remarksNode As XmlNode = xn.SelectSingleNode("remarks")
-
-            If remarksNode IsNot Nothing Then
-                Me.Remarks = remarksNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
-
-            Dim exampleNode As XmlNode = xn.SelectSingleNode("example")
-
-            If Not exampleNode Is Nothing Then
-                Me.example = exampleNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
-            End If
-
+        Private Shared Iterator Function ReadParameters(xn As XmlNode) As IEnumerable(Of param)
+            Dim name$, text$
             Dim ns = xn.SelectNodes("param")
 
-            If Not ns Is Nothing Then
-                Dim args As New List(Of param)
-                Dim text$
-                Dim name$
-
-                For Each x As XmlNode In ns
-                    text = x.InnerText Or "-".AsDefault(Function()
-                                                            Return Strings.Trim(x.InnerText).StringEmpty
-                                                        End Function)
-                    name = x.Attributes _
-                        .GetNamedItem("name") _
-                        .InnerText _
-                        .Trim(ASCII.CR, ASCII.LF, " ")
-                    args += New param With {
-                        .name = name,
-                        .text = (text)
-                    }
-                Next
-
-                Me.Params = args
+            If ns Is Nothing Then
+                Return
             End If
-        End Sub
+
+            For Each subNode As XmlNode In ns
+                text = subNode.InnerText Or "-".AsDefault(Function() Strings.Trim(subNode.InnerText).StringEmpty)
+                name = subNode.Attributes _
+                    .GetNamedItem("name").InnerText _
+                    .Trim(ASCII.CR, ASCII.LF, " ")
+
+                Yield New param With {
+                    .name = name,
+                    .text = (text)
+                }
+            Next
+        End Function
     End Class
 End Namespace
