@@ -56,7 +56,7 @@ Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -70,9 +70,10 @@ Namespace Imaging.BitmapImage
         ''' <param name="y2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
+        <Extension>
+        Public Function Vignette(image As Image, y1%, y2%, Optional renderColor As Color = Nothing) As Image
             Dim alpha As Integer = 0
-            Dim delta = (stdNum.PI / 2) / stdNum.Abs(y1 - y2)
+            Dim delta = (std.PI / 2) / std.Abs(y1 - y2)
             Dim offset As Double = 0
 
             renderColor = renderColor Or Color.White.AsDefaultColor
@@ -89,7 +90,7 @@ Namespace Imaging.BitmapImage
                         Dim pen As New Pen(color)
 
                         .DrawLine(pen, New Point(0, y), New Point(.Width, y))
-                        alpha = CInt(255 * stdNum.Sin(offset) ^ 2)
+                        alpha = CInt(255 * std.Sin(offset) ^ 2)
                         offset += delta
                     Next
 
@@ -173,12 +174,12 @@ Namespace Imaging.BitmapImage
             Dim oldHeight As Double = CDbl(image.Height)
 
             ' Convert degrees to radians
-            Dim theta As Double = CDbl(angle) * stdNum.PI / 180.0
+            Dim theta As Double = CDbl(angle) * std.PI / 180.0
             Dim lockedTheta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
             While lockedTheta < 0.0
-                lockedTheta += 2 * stdNum.PI
+                lockedTheta += 2 * std.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
@@ -192,18 +193,18 @@ Namespace Imaging.BitmapImage
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (lockedTheta >= 0.0 AndAlso lockedTheta < pi2) OrElse (lockedTheta >= stdNum.PI AndAlso lockedTheta < (stdNum.PI + pi2)) Then
-                adjacentTop = stdNum.Abs(Cos(lockedTheta)) * oldWidth
-                oppositeTop = stdNum.Abs(Sin(lockedTheta)) * oldWidth
+            If (lockedTheta >= 0.0 AndAlso lockedTheta < pi2) OrElse (lockedTheta >= std.PI AndAlso lockedTheta < (std.PI + pi2)) Then
+                adjacentTop = std.Abs(Cos(lockedTheta)) * oldWidth
+                oppositeTop = std.Abs(Sin(lockedTheta)) * oldWidth
 
-                adjacentBottom = stdNum.Abs(Cos(lockedTheta)) * oldHeight
-                oppositeBottom = stdNum.Abs(Sin(lockedTheta)) * oldHeight
+                adjacentBottom = std.Abs(Cos(lockedTheta)) * oldHeight
+                oppositeBottom = std.Abs(Sin(lockedTheta)) * oldHeight
             Else
-                adjacentTop = stdNum.Abs(Sin(lockedTheta)) * oldHeight
-                oppositeTop = stdNum.Abs(Cos(lockedTheta)) * oldHeight
+                adjacentTop = std.Abs(Sin(lockedTheta)) * oldHeight
+                oppositeTop = std.Abs(Cos(lockedTheta)) * oldHeight
 
-                adjacentBottom = stdNum.Abs(Sin(lockedTheta)) * oldWidth
-                oppositeBottom = stdNum.Abs(Cos(lockedTheta)) * oldWidth
+                adjacentBottom = std.Abs(Sin(lockedTheta)) * oldWidth
+                oppositeBottom = std.Abs(Cos(lockedTheta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
@@ -238,7 +239,7 @@ Namespace Imaging.BitmapImage
                     New Point(0, CInt(Truncate(adjacentBottom)))
                 }
 
-            ElseIf lockedTheta >= pi2 AndAlso lockedTheta < stdNum.PI Then
+            ElseIf lockedTheta >= pi2 AndAlso lockedTheta < std.PI Then
 
                 points = {
                     New Point(nWidth, CInt(Truncate(oppositeTop))),
@@ -246,7 +247,7 @@ Namespace Imaging.BitmapImage
                     New Point(CInt(Truncate(oppositeBottom)), 0)
                 }
 
-            ElseIf lockedTheta >= stdNum.PI AndAlso lockedTheta < (stdNum.PI + pi2) Then
+            ElseIf lockedTheta >= std.PI AndAlso lockedTheta < (std.PI + pi2) Then
 
                 points = {
                     New Point(CInt(Truncate(adjacentTop)), nHeight),

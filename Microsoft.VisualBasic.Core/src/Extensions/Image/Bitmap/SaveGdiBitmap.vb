@@ -66,4 +66,11 @@ Namespace Imaging.BitmapImage
         ''' <param name="format"></param>
         Function Save(stream As IO.Stream, format As ImageFormat) As Boolean
     End Interface
+
+    Public Enum BitsPerPixel As Int16
+        One = 1
+        Four = 4
+        Eight = 8
+        TwentyFour = 24
+    End Enum
 End Namespace

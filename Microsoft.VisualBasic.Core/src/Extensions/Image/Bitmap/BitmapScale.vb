@@ -67,7 +67,7 @@ Imports System.Drawing.Imaging
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -111,7 +111,7 @@ Namespace Imaging.BitmapImage
             ' Get the address of the first line.
             Dim ptr As IntPtr = bmpData.Scan0
             ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = stdNum.Abs(bmpData.Stride) * curBitmap.Height
+            Dim bytes As Integer = std.Abs(bmpData.Stride) * curBitmap.Height
 
             Using rgbValues As Marshal.Byte = New Marshal.Byte(ptr, bytes)
                 ' Calls unmanaged memory write when this 
