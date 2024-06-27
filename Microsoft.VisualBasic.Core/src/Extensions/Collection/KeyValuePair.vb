@@ -476,6 +476,13 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' get values from the key-value paires
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <typeparam name="V">the tuple value type</typeparam>
+        ''' <param name="src"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Values(Of T, V)(src As IEnumerable(Of KeyValuePair(Of T, V))) As V()
