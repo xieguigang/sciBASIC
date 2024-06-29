@@ -132,6 +132,12 @@ Namespace IO
                              Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
                              Optional isTsv As Boolean = False) As List(Of RowObject)
 
+            If buf.IsNullOrEmpty Then
+                Call "the given file content lines is empty!".Warning
+                ' empty file
+                Return New List(Of RowObject)
+            End If
+
             Dim first As New RowObject(buf(Scan0), tsv:=isTsv)
             Dim test As Func(Of String, Boolean)
             Dim headerIndex As Integer = first.IndexOf(skipWhile.Name)
