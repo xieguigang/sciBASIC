@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::654afc13fef556209f289b48bf96d7f4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::676c5f023c4bc8e1645090a7f18b94be, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Pyramid.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 7 (17.07%)
-    '     File Size: 1.49 KB
+    '     File Size: 1.48 KB
 
 
     '     Class Pyramid

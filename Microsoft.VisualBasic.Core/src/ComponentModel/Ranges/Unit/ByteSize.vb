@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6008f4a421156b327323c298e90762d4, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
+﻿#Region "Microsoft.VisualBasic::3d9cd202001758e90f5bb8a732d149ce, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Unit\ByteSize.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 25 (60.98%)
-    ' Comment Lines: 10 (24.39%)
+    '   Total Lines: 53
+    '    Code Lines: 36 (67.92%)
+    ' Comment Lines: 10 (18.87%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (14.63%)
-    '     File Size: 1.18 KB
+    '   Blank Lines: 7 (13.21%)
+    '     File Size: 1.65 KB
 
 
     '     Enum ByteSize
@@ -52,7 +52,7 @@
     ' 
     '     Module ParserExtensions
     ' 
-    '         Function: ParseByteSize
+    '         Function: ParseByteSize, ParseByteUnit
     ' 
     ' 
     ' /********************************************************************************/

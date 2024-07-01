@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::124cc2313b48daeb8adc737d57e91e10, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::6adab80607980c691329a469db6cfc4b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Effects.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 220
-    '    Code Lines: 97 (44.09%)
-    ' Comment Lines: 87 (39.55%)
+    '   Total Lines: 221
+    '    Code Lines: 98 (44.34%)
+    ' Comment Lines: 87 (39.37%)
     '    - Xml Docs: 62.07%
     ' 
-    '   Blank Lines: 36 (16.36%)
-    '     File Size: 9.54 KB
+    '   Blank Lines: 36 (16.29%)
+    '     File Size: 9.50 KB
 
 
     '     Module Effects

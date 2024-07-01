@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1124a0f8383f649a8ceb886eabadb08e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::7a898878557e79b72bea8e70ca74066e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
 
     ' Author:
     ' 
@@ -34,32 +34,32 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 72 (70.59%)
-    ' Comment Lines: 16 (15.69%)
+    '   Total Lines: 105
+    '    Code Lines: 74 (70.48%)
+    ' Comment Lines: 16 (15.24%)
     '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 14 (13.73%)
-    '     File Size: 4.15 KB
+    '   Blank Lines: 15 (14.29%)
+    '     File Size: 4.52 KB
 
 
-    ' Class GenericLambda
+    '     Class GenericLambda
     ' 
     ' 
-    '     Delegate Function
+    '         Delegate Function
     ' 
     ' 
-    '     Delegate Function
+    '         Delegate Function
     ' 
     ' 
     ' 
-    ' Module SetAPI
+    '     Module SetAPI
     ' 
-    '     Function: Contains, (+3 Overloads) Intersection
-    '     Structure __stringCompares
+    '         Function: Contains, (+3 Overloads) Intersection
+    '         Structure __stringCompares
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Equals
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::100b8def2d5a92777d764cf107e22ede, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::32e6e27e568f3d7bdde1adf843e656d2, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 27 (51.92%)
-    ' Comment Lines: 17 (32.69%)
+    '   Total Lines: 53
+    '    Code Lines: 28 (52.83%)
+    ' Comment Lines: 17 (32.08%)
     '    - Xml Docs: 41.18%
     ' 
-    '   Blank Lines: 8 (15.38%)
-    '     File Size: 1.54 KB
+    '   Blank Lines: 8 (15.09%)
+    '     File Size: 1.56 KB
 
 
     ' Module Extensions

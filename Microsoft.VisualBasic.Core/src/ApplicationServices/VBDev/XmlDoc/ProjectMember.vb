@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55f0a93ccd1e1e219b1a7064bca961f, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
+﻿#Region "Microsoft.VisualBasic::5d13a5279c6c65600946354c3842ac87, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 87 (66.41%)
-    ' Comment Lines: 17 (12.98%)
+    '   Total Lines: 110
+    '    Code Lines: 72 (65.45%)
+    ' Comment Lines: 17 (15.45%)
     '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 27 (20.61%)
-    '     File Size: 4.53 KB
+    '   Blank Lines: 21 (19.09%)
+    '     File Size: 3.69 KB
 
 
     '     Class ProjectMember
@@ -50,7 +50,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetParameterDocument, ToString
+    '         Function: GetParameterDocument, ReadParameters, ToString
     ' 
     '         Sub: LoadFromNode
     ' 

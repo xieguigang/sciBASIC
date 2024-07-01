@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3e85da0c5b5d115124a0f54620f5bce, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Prism.vb"
+﻿#Region "Microsoft.VisualBasic::c2559fc356c20f79f74c4c492d4c2551, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Prism.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 70.00%
     ' 
     '   Blank Lines: 9 (13.85%)
-    '     File Size: 2.33 KB
+    '     File Size: 2.32 KB
 
 
     '     Class Prism

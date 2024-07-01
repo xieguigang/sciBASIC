@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b612bea5ab77372d66dde5ec825c93cf, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Cylinder.vb"
+﻿#Region "Microsoft.VisualBasic::e9acc00085be085460c5b284076da643, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Cylinder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 19 (65.52%)
-    ' Comment Lines: 3 (10.34%)
+    '   Total Lines: 35
+    '    Code Lines: 21 (60.00%)
+    ' Comment Lines: 6 (17.14%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (24.14%)
-    '     File Size: 934 B
+    '   Blank Lines: 8 (22.86%)
+    '     File Size: 1.08 KB
 
 
     '     Class Cylinder

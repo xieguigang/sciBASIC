@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::868c0102c2668142f8aa05533b1c95d8, www\Microsoft.VisualBasic.NETProtocol\IPv4\IPUtils.vb"
+﻿#Region "Microsoft.VisualBasic::4a95838b94d8c7e77d415a76354a7134, Microsoft.VisualBasic.Core\src\Net\Tcp\IPv4\IPUtils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 39 (35.45%)
-    ' Comment Lines: 57 (51.82%)
+    '   Total Lines: 114
+    '    Code Lines: 41 (35.96%)
+    ' Comment Lines: 57 (50.00%)
     '    - Xml Docs: 71.93%
     ' 
-    '   Blank Lines: 14 (12.73%)
-    '     File Size: 3.75 KB
+    '   Blank Lines: 16 (14.04%)
+    '     File Size: 4.16 KB
 
 
-    ' Module IPUtils
+    '     Module IPUtils
     ' 
-    '     Function: GetGeoAddress, GetSubnetMaskFromPrefixLength, ValidateIPAddress
+    '         Function: GetGeoAddress, GetSubnetMaskFromPrefixLength, ValidateIPAddress
+    ' 
     ' 
     ' /********************************************************************************/
 

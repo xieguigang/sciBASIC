@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e614aae571ab76f79b778dd339a1b03, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::692e8c1db19d67b8478dd7cd71fe29d9, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 928
-    '    Code Lines: 536 (57.76%)
-    ' Comment Lines: 289 (31.14%)
-    '    - Xml Docs: 94.12%
+    '   Total Lines: 942
+    '    Code Lines: 542 (57.54%)
+    ' Comment Lines: 296 (31.42%)
+    '    - Xml Docs: 94.26%
     ' 
-    '   Blank Lines: 103 (11.10%)
-    '     File Size: 39.55 KB
+    '   Blank Lines: 104 (11.04%)
+    '     File Size: 40.09 KB
 
 
     '     Module KeyValuePairExtensions
@@ -52,7 +52,7 @@
     '                   KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
     '                   Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
     '                   (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
-    '                   ToUpper, Tsv, Tuple, TupleTable, (+2 Overloads) Values
+    '                   ToUpper, Tsv, Tuple, TupleTable, (+3 Overloads) Values
     '                   XMLModel
     ' 
     '         Sub: Add, SortByKey, SortByValue

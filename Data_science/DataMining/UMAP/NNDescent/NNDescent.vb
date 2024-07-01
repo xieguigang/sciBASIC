@@ -1,58 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::acf853cf8a93d65166b3cb3d3c44e36c, Data_science\DataMining\UMAP\Components\NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::b65d3e08b3959c5f67ed88904ac27c8f, Data_science\DataMining\UMAP\NNDescent\NNDescent.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 222
-'    Code Lines: 156 (70.27%)
-' Comment Lines: 24 (10.81%)
-'    - Xml Docs: 95.83%
-' 
-'   Blank Lines: 42 (18.92%)
-'     File Size: 8.95 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Interface NNDescentFn
-' 
-'     Function: NNDescent
-' 
-' Class NNDescent
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Function: MakeNNDescent, NNDescentLoop, NNDescentLoopPar, rpTreeInit
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 126
+    '    Code Lines: 65 (51.59%)
+    ' Comment Lines: 43 (34.13%)
+    '    - Xml Docs: 86.05%
+    ' 
+    '   Blank Lines: 18 (14.29%)
+    '     File Size: 6.03 KB
+
+
+    ' Class NNDescent
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: MakeNNDescent
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

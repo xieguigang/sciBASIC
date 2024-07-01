@@ -1,4 +1,66 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::a97aa1a3e0400d91d9604c48f5df8b0b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BtimapReader.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 152
+    '    Code Lines: 104 (68.42%)
+    ' Comment Lines: 22 (14.47%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 26 (17.11%)
+    '     File Size: 6.10 KB
+
+
+    '     Class BtimapReader
+    ' 
+    '         Properties: BitsPerPixel, Compression, FileSizeInBytes, HeaderSize, HorizontalPixelsPerMeter
+    '                     ImageHeight, ImageSizeInBytes, ImageWidth, NumberOfColorPlanes, NumberOfColorsUsed
+    '                     NumberOfImportantColors, Offset, Reserved, RowSize, VerticalPixelsPerMeter
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetColorByteLocation, GetOffset, GetPixelColor, RoundUpToNearestFour
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.IO
 
 Namespace Imaging.BitmapImage

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73931b1f93a679937abd2d39a81e708b, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::6ed0861111bdb860352102b93576e160, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 61 (50.00%)
-    ' Comment Lines: 48 (39.34%)
+    '   Total Lines: 124
+    '    Code Lines: 62 (50.00%)
+    ' Comment Lines: 48 (38.71%)
     '    - Xml Docs: 97.92%
     ' 
-    '   Blank Lines: 13 (10.66%)
-    '     File Size: 3.83 KB
+    '   Blank Lines: 14 (11.29%)
+    '     File Size: 4.25 KB
 
 
-    ' Module SetsExtension
+    '     Module SetsExtension
     ' 
-    '     Function: (+2 Overloads) AsSet, Except, Intersection, PollFirst, PollLast
-    '               (+3 Overloads) ToArray, Union
+    '         Function: (+2 Overloads) AsSet, Except, Intersection, PollFirst, PollLast
+    '                   (+3 Overloads) ToArray, Union
+    ' 
     ' 
     ' /********************************************************************************/
 

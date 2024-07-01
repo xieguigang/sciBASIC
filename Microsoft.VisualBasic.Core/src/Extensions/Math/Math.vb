@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc90f7174a4ea02270534874eee37df7, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::fcb82eed408f337a7942b90e4aa90aa7, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 725
-    '    Code Lines: 410 (56.55%)
-    ' Comment Lines: 237 (32.69%)
+    '   Total Lines: 736
+    '    Code Lines: 420 (57.07%)
+    ' Comment Lines: 237 (32.20%)
     '    - Xml Docs: 85.65%
     ' 
-    '   Blank Lines: 78 (10.76%)
-    '     File Size: 25.37 KB
+    '   Blank Lines: 79 (10.73%)
+    '     File Size: 25.75 KB
 
 
     '     Module VBMath
     ' 
-    '         Function: Clamp, Clip, Covariance, CumSum, Factorial
-    '                   FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2, LogN
-    '                   (+2 Overloads) Max, Permut, PoissonPDF, Pow2, (+3 Overloads) ProductALL
-    '                   (+3 Overloads) RangesAt, RMS, RMSE, (+2 Overloads) RSD, (+4 Overloads) SD
-    '                   (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
+    '         Function: Clamp, Clip, ClipUpper, Covariance, CumSum
+    '                   Factorial, FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2, (+2 Overloads) Log2
+    '                   LogN, (+2 Overloads) Max, Permut, PoissonPDF, Pow2
+    '                   (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, RMSE, (+2 Overloads) RSD
+    '                   (+4 Overloads) SD, (+2 Overloads) seq, (+5 Overloads) Sum, WeighedAverage
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4a5e85316550eee5b5a8e44cd6652ee, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::92d98efbad2a0d3b060936e724b32414, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 221
-    '    Code Lines: 151 (68.33%)
-    ' Comment Lines: 35 (15.84%)
-    '    - Xml Docs: 82.86%
+    '   Total Lines: 239
+    '    Code Lines: 162 (67.78%)
+    ' Comment Lines: 40 (16.74%)
+    '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 35 (15.84%)
-    '     File Size: 7.49 KB
+    '   Blank Lines: 37 (15.48%)
+    '     File Size: 8.09 KB
 
 
     '     Structure Block
@@ -54,10 +54,10 @@
     ' 
     '     Class BlockSearchFunction
     ' 
-    '         Properties: Keys, raw, size
+    '         Properties: Keys, numBlocks, raw, size
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: BuildIndex, getOrderSeq, Search
+    '         Function: BuildIndex, GetBlock, GetOffset, getOrderSeq, Search
     ' 
     ' 
     ' /********************************************************************************/

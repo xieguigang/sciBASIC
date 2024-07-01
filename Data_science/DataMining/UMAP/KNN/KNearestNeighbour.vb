@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::265f66cd28164f4d96cc73ceb6364c8a, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
+﻿#Region "Microsoft.VisualBasic::091995752ea7f0af68d751f027948c4c, Data_science\DataMining\UMAP\KNN\KNearestNeighbour.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 65 (58.04%)
-    ' Comment Lines: 29 (25.89%)
+    '   Total Lines: 100
+    '    Code Lines: 54 (54.00%)
+    ' Comment Lines: 29 (29.00%)
     '    - Xml Docs: 82.76%
     ' 
-    '   Blank Lines: 18 (16.07%)
-    '     File Size: 5.13 KB
+    '   Blank Lines: 17 (17.00%)
+    '     File Size: 4.21 KB
 
 
     '     Class KNearestNeighbour

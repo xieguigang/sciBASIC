@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de1e4df285cd602e8dc699f3f2d68efa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\TrIQ.vb"
+﻿#Region "Microsoft.VisualBasic::0c7bf02345689d988d411df4fe3a26b4, Data_science\Mathematica\Math\Math\Distributions\TrIQ.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.55%
     ' 
     '   Blank Lines: 18 (12.33%)
-    '     File Size: 5.46 KB
+    '     File Size: 5.45 KB
 
 
     '     Module TrIQ

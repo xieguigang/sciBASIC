@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51d1cc3b8b4104b10f71073c905e1de1, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::8cf4eee73596808fc9b2f65ee71bbc93, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 659
-    '    Code Lines: 377 (57.21%)
-    ' Comment Lines: 206 (31.26%)
-    '    - Xml Docs: 92.23%
+    '   Total Lines: 688
+    '    Code Lines: 391 (56.83%)
+    ' Comment Lines: 218 (31.69%)
+    '    - Xml Docs: 91.74%
     ' 
-    '   Blank Lines: 76 (11.53%)
-    '     File Size: 24.18 KB
+    '   Blank Lines: 79 (11.48%)
+    '     File Size: 25.09 KB
 
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, All, Append, Coalesce, CopyOf
+    '     Function: (+2 Overloads) After, All, Append, Coalesce, (+2 Overloads) CopyOf
     '               (+3 Overloads) Delete, (+2 Overloads) Fill, GetRange, IndexOf, Last
     '               LoadAsNumericVector, MappingData, Midv, PadLeft, RepeatCalls
     '               Replicate, SetValue, (+3 Overloads) Sort, Split, VectorShadows

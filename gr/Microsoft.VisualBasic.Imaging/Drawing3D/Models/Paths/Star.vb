@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e5a79a4de02f81bfde8fb54488d60b1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
+﻿#Region "Microsoft.VisualBasic::b88b8ad6771a1324dbcb51d8c6181624, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (20.00%)
-    '     File Size: 765 B
+    '     File Size: 756 B
 
 
     '     Class Star

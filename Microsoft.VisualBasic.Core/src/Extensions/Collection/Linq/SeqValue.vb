@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ac62f7651e0aee276309a48a33f9b48, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::a37bfc757fb6f061005df1bf260389fc, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 189
-    '    Code Lines: 93 (49.21%)
-    ' Comment Lines: 73 (38.62%)
-    '    - Xml Docs: 94.52%
+    '   Total Lines: 198
+    '    Code Lines: 97 (48.99%)
+    ' Comment Lines: 77 (38.89%)
+    '    - Xml Docs: 94.81%
     ' 
-    '   Blank Lines: 23 (12.17%)
-    '     File Size: 6.46 KB
+    '   Blank Lines: 24 (12.12%)
+    '     File Size: 6.71 KB
 
 
     '     Structure SeqValue
     ' 
     '         Properties: i, IsEmpty, value
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) CompareTo, ToString
     ' 

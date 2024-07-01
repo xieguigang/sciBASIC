@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b589642103f67a755070481953da0569, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
+﻿#Region "Microsoft.VisualBasic::7a90c5eb37edcc8c5a1a4ac8125e2fa6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (15.00%)
-    '     File Size: 1.36 KB
+    '     File Size: 1.35 KB
 
 
     '     Class Octahedron

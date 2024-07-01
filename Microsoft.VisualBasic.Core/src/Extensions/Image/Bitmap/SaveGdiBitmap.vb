@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b371e321a291f68cf2a6122ea0811b7, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::85ff52b930792292c57c53f4bc57554b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\SaveGdiBitmap.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 7 (46.67%)
-    ' Comment Lines: 5 (33.33%)
+    '   Total Lines: 22
+    '    Code Lines: 13 (59.09%)
+    ' Comment Lines: 5 (22.73%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (20.00%)
-    '     File Size: 410 B
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 544 B
 
 
     '     Interface SaveGdiBitmap
     ' 
     '         Function: Save
+    ' 
+    '     Enum BitsPerPixel
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

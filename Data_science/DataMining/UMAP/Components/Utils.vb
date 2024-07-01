@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ddcac5fc4988da02e99e9be7d60afd5, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::6cf9b823bbaba4dc2fdbf9d1e7b478e3, Data_science\DataMining\UMAP\Components\Utils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 65 (70.65%)
-    ' Comment Lines: 12 (13.04%)
+    '   Total Lines: 85
+    '    Code Lines: 59 (69.41%)
+    ' Comment Lines: 12 (14.12%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (16.30%)
-    '     File Size: 3.08 KB
+    '   Blank Lines: 14 (16.47%)
+    '     File Size: 2.69 KB
 
 
     ' Module Utils
     ' 
-    '     Function: Empty, Filled, Range, RejectionSample, ScaleProgressReporter
+    '     Function: Empty, Filled, Range, RejectionSample
     ' 
     '     Sub: ShuffleTogether
     ' 

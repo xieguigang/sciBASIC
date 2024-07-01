@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::1149cef836c6d508ccfa24520c8199c5, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::c12b8b10673daf92d6b0fec0572f431e, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 466
-'    Code Lines: 302 (64.81%)
-' Comment Lines: 109 (23.39%)
-'    - Xml Docs: 79.82%
-' 
-'   Blank Lines: 55 (11.80%)
-'     File Size: 18.38 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module NumberGroups
-' 
-'         Function: BinarySearch, diff, (+6 Overloads) GroupBy, GroupByImpl, GroupByParallel
-'                   (+2 Overloads) GroupByTree, Groups, Match, Min, NumberGroupHelper
-' 
-'     Interface IVector
-' 
-'         Properties: Data
-' 
-'     Interface INumberTag
-' 
-'         Properties: Tag
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 467
+    '    Code Lines: 303 (64.88%)
+    ' Comment Lines: 109 (23.34%)
+    '    - Xml Docs: 79.82%
+    ' 
+    '   Blank Lines: 55 (11.78%)
+    '     File Size: 18.44 KB
+
+
+    '     Module NumberGroups
+    ' 
+    '         Function: BinarySearch, diff, (+6 Overloads) GroupBy, GroupByImpl, GroupByParallel
+    '                   (+2 Overloads) GroupByTree, Groups, Match, Min, NumberGroupHelper
+    ' 
+    '     Interface IVector
+    ' 
+    '         Properties: Data
+    ' 
+    '     Interface INumberTag
+    ' 
+    '         Properties: Tag
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

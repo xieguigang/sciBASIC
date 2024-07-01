@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11fe9417e172d566076bc523cb3a292c, Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::9d4cb47f3f56f9ee6954b6f0b08a5df2, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 756
-    '    Code Lines: 489 (64.68%)
-    ' Comment Lines: 156 (20.63%)
-    '    - Xml Docs: 81.41%
+    '   Total Lines: 775
+    '    Code Lines: 500 (64.52%)
+    ' Comment Lines: 161 (20.77%)
+    '    - Xml Docs: 81.99%
     ' 
-    '   Blank Lines: 111 (14.68%)
-    '     File Size: 30.78 KB
+    '   Blank Lines: 114 (14.71%)
+    '     File Size: 31.36 KB
 
 
     '     Class DataFrame
@@ -60,7 +60,7 @@
     '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable
     '                   GetString, GetValue, GetValueLambda, GetValues, IDataRecord_GetValue
     '                   IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema, Parse
-    '                   Read, ToString
+    '                   Read, Slice, ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset

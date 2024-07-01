@@ -1,4 +1,58 @@
-﻿Imports Microsoft.VisualBasic.Parallel
+﻿#Region "Microsoft.VisualBasic::aee5d99f1de32829600af810579d8e7d, Data_science\DataMining\UMAP\NNDescent\RPTree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 90
+    '    Code Lines: 33 (36.67%)
+    ' Comment Lines: 48 (53.33%)
+    '    - Xml Docs: 89.58%
+    ' 
+    '   Blank Lines: 9 (10.00%)
+    '     File Size: 4.54 KB
+
+
+    ' Class RPTree
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: rpTreeInit, Solve
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Parallel
 
 ''' <summary>
 ''' In the context of the NNDescent algorithm, an rpTree (Random Projection Tree)
@@ -88,3 +142,4 @@ Friend Class RPTree : Inherits VectorTask
         Next
     End Sub
 End Class
+

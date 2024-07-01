@@ -1,4 +1,74 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::814cb267b1d1f9941a897bab6e849629, Data_science\Graph\Network\Bipartite\BipartiteMatching.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 262
+    '    Code Lines: 153 (58.40%)
+    ' Comment Lines: 66 (25.19%)
+    '    - Xml Docs: 84.85%
+    ' 
+    '   Blank Lines: 43 (16.41%)
+    '     File Size: 10.43 KB
+
+
+    ' Class BipartiteMatching
+    ' 
+    '     Properties: flow, matches
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CreateMatches, existsAugmentingPath, fordFulkersonMaxFlow
+    ' 
+    '     Sub: addEdge, connectSinkToRightHalf, connectSourceToLeftHalf, depthFirstSearch
+    '     Class Edge
+    ' 
+    '         Properties: Capacity, Flow
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: getOtherEndNode, residualCapacityTo, ToString
+    ' 
+    '         Sub: increaseFlowTo
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 Public Class BipartiteMatching
 
@@ -260,3 +330,4 @@ Public Class BipartiteMatching
         Return graph1BipartiteMatcher.fordFulkersonMaxFlow(source, sink)
     End Function
 End Class
+
