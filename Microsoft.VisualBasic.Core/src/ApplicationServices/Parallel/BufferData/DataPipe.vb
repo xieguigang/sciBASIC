@@ -136,6 +136,10 @@ Namespace Parallel
             Return data
         End Function
 
+        Public Shared Function empty() As DataPipe
+            Return New DataPipe(New Byte() {})
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
