@@ -102,7 +102,7 @@ Namespace Parallel
         ''' <summary>
         ''' solve a sub task
         ''' </summary>
-        ''' <param name="start"></param>
+        ''' <param name="start">index offset start from zero</param>
         ''' <param name="ends"></param>
         Protected MustOverride Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
 

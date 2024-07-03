@@ -62,6 +62,7 @@ Imports System.Runtime.Intrinsics.X86
 #End If
 
 Namespace Math.SIMD
+
 #If NETCOREAPP Then
 
     Public Class SIMDIntrinsics

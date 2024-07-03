@@ -83,6 +83,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Parallel
+Imports Microsoft.VisualBasic.Parallel
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
@@ -145,6 +147,7 @@ Namespace LinearAlgebra.Matrix
         Implements ICloneable
         Implements IDisposable
         Implements GeneralMatrix
+        Implements INumericMatrix
 
 #Region "Class variables"
 
@@ -1968,23 +1971,31 @@ Namespace LinearAlgebra.Matrix
         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Function DotProduct(B As GeneralMatrix) As GeneralMatrix Implements GeneralMatrix.Dot
-            Dim X As New NumericMatrix(m, B.ColumnDimension)
-            Dim C As Double()() = X.Array
-            Dim Bcolj As Double() = New Double(n - 1) {}
-            For j As Integer = 0 To B.ColumnDimension - 1
-                For k As Integer = 0 To n - 1
-                    Bcolj(k) = B(k, j)
-                Next
-                For i As Integer = 0 To m - 1
-                    Dim Arowi As Double() = buffer(i)
-                    Dim s As Double = 0
+            Dim c As Double()()
+
+            If ParallelEnvironment.Enable AndAlso VectorTask.n_threads > 1 Then
+                c = MatrixDotProduct.Resolve(buffer, B.ArrayPack)
+            Else
+                Dim Bcolj As Double() = New Double(n - 1) {}
+
+                c = RectangularArray.Matrix(Of Double)(m, B.ColumnDimension)
+
+                For j As Integer = 0 To B.ColumnDimension - 1
                     For k As Integer = 0 To n - 1
-                        s += Arowi(k) * Bcolj(k)
+                        Bcolj(k) = B(k, j)
                     Next
-                    C(i)(j) = s
+                    For i As Integer = 0 To m - 1
+                        Dim Arowi As Double() = buffer(i)
+                        Dim s As Double = 0
+                        For k As Integer = 0 To n - 1
+                            s += Arowi(k) * Bcolj(k)
+                        Next
+                        c(i)(j) = s
+                    Next
                 Next
-            Next
-            Return X
+            End If
+
+            Return New NumericMatrix(c)
         End Function
     End Class
 End Namespace
