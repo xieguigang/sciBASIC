@@ -1133,7 +1133,11 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     ' A / B
-                    C(i)(j) = buffer(i)(j) / B(i, j)
+                    If buffer(i)(j) = 0.0 Then
+                        C(i)(j) = 0.0
+                    Else
+                        C(i)(j) = buffer(i)(j) / B(i, j)
+                    End If
                 Next
             Next
 
