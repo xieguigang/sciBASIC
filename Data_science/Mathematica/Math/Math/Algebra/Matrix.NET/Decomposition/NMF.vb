@@ -119,8 +119,9 @@ Namespace LinearAlgebra.Matrix
             Dim V As NumericMatrix
             Dim cost As Double
             Dim errors As New List(Of Double)
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each i As Integer In Tqdm.Range(0, max_iterations)
+            For Each i As Integer In Tqdm.Range(0, max_iterations, bar:=bar)
                 Dim HN = W.Transpose.Dot(A)
                 Dim HD = W.Transpose.Dot(W)
 
@@ -139,6 +140,8 @@ Namespace LinearAlgebra.Matrix
 
                 If cost <= tolerance Then
                     Exit For
+                Else
+                    Call bar.SetLabel(cost)
                 End If
             Next
 
