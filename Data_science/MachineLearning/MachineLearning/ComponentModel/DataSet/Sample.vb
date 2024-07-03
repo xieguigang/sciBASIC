@@ -147,6 +147,13 @@ Namespace ComponentModel.StoreProcedure
             }
         End Function
 
+        ''' <summary>
+        ''' make dataset normalization
+        ''' </summary>
+        ''' <param name="trainset"></param>
+        ''' <param name="is_generative"></param>
+        ''' <param name="is_training"></param>
+        ''' <returns></returns>
         Public Shared Iterator Function TransformDataset(trainset As SampleData(), is_generative As Boolean, is_training As Boolean) As IEnumerable(Of SampleData)
             Dim featureMax As Double() = New Double(trainset(0).features.Length - 1) {}
             Dim labelMax As Double() = Nothing
@@ -176,6 +183,8 @@ Namespace ComponentModel.StoreProcedure
             For i As Integer = 0 To trainset.Length - 1
                 Dim label As Double() = trainset(i).labels
 
+                ' data is normalized by feature columns
+                ' labelMax and featureMax is vector 
                 If is_training AndAlso is_generative Then
                     label = SIMD.Divide.f64_op_divide_f64(label, labelMax)
                 End If
