@@ -161,6 +161,8 @@ Namespace CNN
             Dim count = 0
 
             is_generative = trainset(0).labels.Length > 1
+
+            ' make dataset normalization
             trainset = SampleData.TransformDataset(
                 trainset:=trainset,
                 is_generative:=is_generative,

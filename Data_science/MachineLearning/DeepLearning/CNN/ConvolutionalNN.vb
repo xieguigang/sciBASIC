@@ -155,7 +155,10 @@ Namespace CNN
         End Function
 
         Public Function predict(v As Double()) As Double()
-
+            Dim input_shape = input
+            Dim x As New DataBlock(input_shape.dims.x, input_shape.dims.y, input_shape.out_depth, 0)
+            Call x.addImageData(v, 1.0)
+            Return predict(x)
         End Function
 
         ''' <summary>
