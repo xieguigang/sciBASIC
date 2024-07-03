@@ -122,16 +122,16 @@ Namespace LinearAlgebra.Matrix
             Dim bar As Tqdm.ProgressBar = Nothing
 
             For Each i As Integer In Tqdm.Range(0, max_iterations, bar:=bar)
-                Dim Wt As GeneralMatrix = W.Transpose
+                Dim Wt As NumericMatrix = W.Transpose
 
-                Dim HN = Wt.Dot(A)
-                Dim HD = Wt.Dot(W)
+                Dim HN = Wt.DotProduct(A)
+                Dim HD = Wt.DotProduct(W)
 
                 HD = HD.Dot(H)
 
                 H = DirectCast(H * HN, NumericMatrix) / HD
 
-                Dim Ht As GeneralMatrix = H.Transpose
+                Dim Ht As NumericMatrix = H.Transpose
 
                 Dim WN = A.DotProduct(Ht)
                 Dim WD = W.DotProduct(H.DotProduct(Ht))
