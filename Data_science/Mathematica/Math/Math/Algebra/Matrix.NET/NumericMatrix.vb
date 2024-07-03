@@ -864,6 +864,9 @@ Namespace LinearAlgebra.Matrix
         ''' <returns>    
         ''' A'
         ''' </returns>
+        ''' <remarks>
+        ''' make a value copy of the matrix 
+        ''' </remarks>
         Public Overridable Function Transpose() As GeneralMatrix Implements GeneralMatrix.Transpose
             Dim X As New NumericMatrix(n, m)
             Dim C As Double()() = X.Array
