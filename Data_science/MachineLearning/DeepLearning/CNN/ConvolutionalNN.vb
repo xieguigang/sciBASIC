@@ -172,8 +172,12 @@ Namespace CNN
             Dim take_layers As New List(Of Layer)
 
             For i As Integer = 0 To n - 1
-                take_layers.Add(m_layers(i))
+                Call take_layers.Add(m_layers(i))
             Next
+
+            ' the last layer must be the loss layer for
+            ' make outputs 
+            Call take_layers.Add(output)
 
             Return New ConvolutionalNN(take_layers)
         End Function
