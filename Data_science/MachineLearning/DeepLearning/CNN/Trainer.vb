@@ -183,6 +183,7 @@ Namespace CNN
                 Call log("")
                 Call log("(" & t.ToString() & $"th/{max_loops}) iter epochsNum: " & epochsNum.ToString())
                 Call TrainEpochs(trainset, epochsNum, right, count)
+                Call log("")
                 Call log("precision " & right.ToString() & "/" & count.ToString() & $"={(100 * right / count).ToString("F2")}%")
 
                 If Not action Is Nothing Then
