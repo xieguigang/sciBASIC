@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f104eaf50c56e80a25c0cd2958798cf, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\ConcurenceRunner.vb"
+﻿#Region "Microsoft.VisualBasic::927e0658d681e3adee33ba80dc715dbe, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\ConcurenceRunner.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 98.46%
     ' 
     '   Blank Lines: 22 (13.58%)
-    '     File Size: 6.04 KB
+    '     File Size: 6.07 KB
 
 
     '     Class VectorTask

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd1afc73c078b993d0bc414191f68dc1, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
+﻿#Region "Microsoft.VisualBasic::cd786f444aa1a1a78435a1eeb188526d, Data_science\MachineLearning\DeepLearning\CNN\data\DataBlock.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 284
-    '    Code Lines: 157 (55.28%)
-    ' Comment Lines: 85 (29.93%)
+    '   Total Lines: 283
+    '    Code Lines: 156 (55.12%)
+    ' Comment Lines: 85 (30.04%)
     '    - Xml Docs: 96.47%
     ' 
-    '   Blank Lines: 42 (14.79%)
-    '     File Size: 10.01 KB
+    '   Blank Lines: 42 (14.84%)
+    '     File Size: 9.95 KB
 
 
     '     Class DataBlock

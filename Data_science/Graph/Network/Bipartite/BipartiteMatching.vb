@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::814cb267b1d1f9941a897bab6e849629, Data_science\Graph\Network\Bipartite\BipartiteMatching.vb"
+﻿#Region "Microsoft.VisualBasic::960c20c5941b9310b82d05ac8ac0f8c6, Data_science\Graph\Network\Bipartite\BipartiteMatching.vb"
 
     ' Author:
     ' 
@@ -330,4 +330,3 @@ Public Class BipartiteMatching
         Return graph1BipartiteMatcher.fordFulkersonMaxFlow(source, sink)
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8711b0110ee3d50d7aa4b3185d04a21e, Data_science\Mathematica\Math\Math.Statistics\FastICA.vb"
+﻿#Region "Microsoft.VisualBasic::e752b6862dcde476a620b7c23499a476, Data_science\Mathematica\Math\Math.Statistics\FastICA.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 279 (25.29%)
-    '     File Size: 29.59 KB
+    '     File Size: 29.58 KB
 
 
     ' Class FastICA
@@ -1159,4 +1159,3 @@ Public Class FastICA
     Public [end] As Date
 
 End Class
-

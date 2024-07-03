@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7d4b8740b61d4ededc9807bcec5cff, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\DataPipe.vb"
+﻿#Region "Microsoft.VisualBasic::cc696b0410e55356fa52a81c3c491d4d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\DataPipe.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 63 (58.88%)
-    ' Comment Lines: 28 (26.17%)
+    '   Total Lines: 111
+    '    Code Lines: 66 (59.46%)
+    ' Comment Lines: 28 (25.23%)
     '    - Xml Docs: 64.29%
     ' 
-    '   Blank Lines: 16 (14.95%)
-    '     File Size: 3.62 KB
+    '   Blank Lines: 17 (15.32%)
+    '     File Size: 3.74 KB
 
 
     '     Class DataPipe
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: GetBlocks, Read, ToString
+    '         Function: empty, GetBlocks, Read, ToString
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d736006bc3b955b9dcb5e98d25c831e8, Data_science\DataMining\UMAP\NNDescent\NNDescentLoop.vb"
+﻿#Region "Microsoft.VisualBasic::a26076569320a4f48fbd4380e86c06e1, Data_science\DataMining\UMAP\NNDescent\NNDescentLoop.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Friend Class NNDescentLoop : Inherits VectorTask
     End Function
 
 End Class
-

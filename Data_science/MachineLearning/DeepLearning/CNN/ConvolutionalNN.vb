@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c867ce4518b478f2bbea4925123cbe9e, Data_science\MachineLearning\DeepLearning\CNN\ConvolutionalNN.vb"
+﻿#Region "Microsoft.VisualBasic::d918003fe5ab7d9d478b0f1e02cad220, Data_science\MachineLearning\DeepLearning\CNN\ConvolutionalNN.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
-    '    Code Lines: 107 (60.45%)
-    ' Comment Lines: 37 (20.90%)
-    '    - Xml Docs: 94.59%
+    '   Total Lines: 209
+    '    Code Lines: 124 (59.33%)
+    ' Comment Lines: 46 (22.01%)
+    '    - Xml Docs: 91.30%
     ' 
-    '   Blank Lines: 33 (18.64%)
-    '     File Size: 6.14 KB
+    '   Blank Lines: 39 (18.66%)
+    '     File Size: 7.24 KB
 
 
     '     Class ConvolutionalNN
     ' 
     '         Properties: BackPropagationResult, input, LayerNum, output, Prediction
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) backward, forward, GetThreads, predict, ToString
+    '         Function: (+2 Overloads) backward, forward, GetThreads, (+2 Overloads) predict, take
+    '                   ToString
     ' 
     '         Sub: SetThreads
     ' 

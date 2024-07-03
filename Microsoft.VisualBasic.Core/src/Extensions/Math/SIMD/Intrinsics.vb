@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e4d46c0d8448c7f8c80a4b9bb876fc6, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
+﻿#Region "Microsoft.VisualBasic::65939fa64ff684bbf805b79d95ae6804, Microsoft.VisualBasic.Core\src\Extensions\Math\SIMD\Intrinsics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 55 (83.33%)
+    '   Total Lines: 67
+    '    Code Lines: 55 (82.09%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (16.67%)
-    '     File Size: 2.49 KB
+    '   Blank Lines: 12 (17.91%)
+    '     File Size: 2.50 KB
 
 
     '     Class SIMDIntrinsics

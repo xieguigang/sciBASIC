@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aee5d99f1de32829600af810579d8e7d, Data_science\DataMining\UMAP\NNDescent\RPTree.vb"
+﻿#Region "Microsoft.VisualBasic::cd5b1ee2271f877436fcc244f0fe1026, Data_science\DataMining\UMAP\NNDescent\RPTree.vb"
 
     ' Author:
     ' 
@@ -142,4 +142,3 @@ Friend Class RPTree : Inherits VectorTask
         Next
     End Sub
 End Class
-
