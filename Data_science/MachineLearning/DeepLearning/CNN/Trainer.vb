@@ -151,11 +151,10 @@ Namespace CNN
         ''' <summary>
         ''' Run CNN trainer
         ''' </summary>
-        ''' <param name="cnn"></param>
         ''' <param name="trainset"></param>
         ''' <param name="max_loops"></param>
         ''' <returns></returns>
-        Public Function train(cnn As ConvolutionalNN, trainset As SampleData(), max_loops As Integer) As ConvolutionalNN
+        Public Function train(trainset As SampleData(), max_loops As Integer) As ConvolutionalNN
             Dim t As Integer = 0
             Dim stopTrain As Boolean
             Dim right = 0
@@ -168,7 +167,9 @@ Namespace CNN
                 is_training:=True
             ).ToArray
 
-            Call alg.SetKernel(cnn)
+            If alg.conv_net Is Nothing Then
+                Throw New InvalidProgramException("no neuron network model inside the trainer algorithm module, call SetKernel method before call this train method!")
+            End If
 
             While t < max_loops AndAlso Not stopTrain
                 Dim epochsNum As Integer = trainset.Length / alg.batch_size
@@ -183,13 +184,13 @@ Namespace CNN
                 Call log("precision " & right.ToString() & "/" & count.ToString() & $"={(100 * right / count).ToString("F2")}%")
 
                 If Not action Is Nothing Then
-                    Call action(t, cnn)
+                    Call action(t, alg.conv_net)
                 End If
 
                 t += 1
             End While
 
-            Return cnn
+            Return alg.conv_net
         End Function
     End Class
 End Namespace
