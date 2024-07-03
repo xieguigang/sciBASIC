@@ -141,6 +141,10 @@ Namespace CNN
             Me.m_layers = CType(layers, List(Of Layer)).ToArray
         End Sub
 
+        Sub New(layers As IEnumerable(Of Layer))
+            m_layers = layers.ToArray
+        End Sub
+
         Public Function predict(db As DataBlock) As Double()
             Call forward(db, training:=Nothing)
 
@@ -148,6 +152,27 @@ Namespace CNN
             Dim p = S.OutAct.Weights
 
             Return p
+        End Function
+
+        Public Function predict(v As Double()) As Double()
+
+        End Function
+
+        ''' <summary>
+        ''' a helper function for VAE method implements
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns>
+        ''' the last layer is the embedding layer for make outputs
+        ''' </returns>
+        Public Function take(n As Integer) As ConvolutionalNN
+            Dim take_layers As New List(Of Layer)
+
+            For i As Integer = 0 To n - 1
+                take_layers.Add(m_layers(i))
+            Next
+
+            Return New ConvolutionalNN(take_layers)
         End Function
 
         ''' <summary>

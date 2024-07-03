@@ -65,7 +65,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Namespace CNN.data
