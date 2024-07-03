@@ -1987,6 +1987,7 @@ Namespace LinearAlgebra.Matrix
                     For i As Integer = 0 To m - 1
                         Dim Arowi As Double() = buffer(i)
                         Dim s As Double = 0
+
                         For k As Integer = 0 To n - 1
                             s += Arowi(k) * Bcolj(k)
                         Next
