@@ -953,7 +953,7 @@ B21,B22,B23,...
         End Sub
 
         Public Sub Add(ParamArray row As Object())
-            Call Add(row.Select(Function(c) Scripting.ToString(c)))
+            Call Add(row.Select(Function(c) Scripting.ToString(c)).ToArray)
         End Sub
 
         Public Sub Add(ParamArray row As String())
