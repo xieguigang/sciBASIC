@@ -214,7 +214,7 @@ Friend Class EdgeRendering
                 Dim x2 = b.X
                 Dim y2 = b.Y
                 Dim originalLength As Double = std.Sqrt((x2 - x1) ^ 2 + (y2 - y1) ^ 2)
-                Dim shortenBy As Double = originalLength / 3
+                Dim shortenBy As Double = originalLength / 5
                 Dim newX2 As Double = x2 - (x2 - x1) / originalLength * shortenBy
                 Dim newY2 As Double = y2 - (y2 - y1) / originalLength * shortenBy
 
