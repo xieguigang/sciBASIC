@@ -279,7 +279,14 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt32(parameter As String) As Int32
-            Return Integer.Parse(getter.GetString(parameter))
+            Dim str As String = getter.GetString(parameter)
+            Dim i32 As Integer
+
+            If Integer.TryParse(str, i32) Then
+                Return i32
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
