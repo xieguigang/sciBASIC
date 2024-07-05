@@ -67,7 +67,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Friend Class EdgeRendering
 
@@ -248,7 +248,7 @@ Friend Class LineSegmentRender
         Return New LayoutLabel With {
             .anchor = New Anchor((line(Scan0).X + line(1).X) / 2, (line(Scan0).Y + line(1).Y) / 2, 5),
             .color = Nothing,
-            .label = New Label(Nothing, .anchor, New Size(stdNum.Abs(line(Scan0).X - line(1).X), stdNum.Abs(line(Scan0).Y - line(1).Y))) With {
+            .label = New Label(Nothing, .anchor, New Size(std.Abs(line(Scan0).X - line(1).X), std.Abs(line(Scan0).Y - line(1).Y))) With {
                 .pinned = True
             },
             .node = Nothing,

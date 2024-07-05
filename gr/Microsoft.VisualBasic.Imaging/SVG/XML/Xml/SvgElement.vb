@@ -323,6 +323,7 @@ Namespace SVG.XML
                 Case "g" : Return New SvgGroup(e)
                 Case "clippath" : Return New SvgClipPath(e)
                 Case "marker" : Return New SvgMarker(e)
+                Case "defs" : Return New SvgDefs(e)
 
                 Case "style" : Return New SvgStyle(e)
                 Case "font" : Return New SvgFont(e)

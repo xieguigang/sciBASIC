@@ -127,6 +127,10 @@ Namespace SVG.XML
             Return SvgText.Create(Element)
         End Function
 
+        ''' <summary>
+        ''' get all child elements from current xml <see cref="Element"/> node
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GetElements() As IEnumerable(Of SvgElement)
             Dim list As XmlNodeList = Element.ChildNodes
             Dim node As XmlElement

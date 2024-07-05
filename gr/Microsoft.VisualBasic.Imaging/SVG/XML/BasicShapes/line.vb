@@ -122,6 +122,15 @@ Namespace SVG.XML
             End Set
         End Property
 
+        Public Property MarkerEnd As String
+            Get
+                Return Element.GetAttribute("marker-end")
+            End Get
+            Set(value As String)
+                Element.SetAttribute("marker-end", value)
+            End Set
+        End Property
+
         Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub

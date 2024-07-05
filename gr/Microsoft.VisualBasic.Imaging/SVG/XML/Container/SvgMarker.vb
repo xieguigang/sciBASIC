@@ -140,6 +140,15 @@ Namespace SVG.XML
             End Set
         End Property
 
+        Public Property orient As String
+            Get
+                Return Element.GetAttribute("orient")
+            End Get
+            Set(value As String)
+                Element.SetAttribute("orient", value)
+            End Set
+        End Property
+
         Friend Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub

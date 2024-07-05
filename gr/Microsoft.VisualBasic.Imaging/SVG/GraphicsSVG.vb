@@ -605,6 +605,15 @@ Namespace SVG
             If pen.DashStyle <> DashStyle.Solid Then
                 line.StrokeDashArray = New Double() {8, 4}
             End If
+            If TypeOf pen.CustomEndCap Is AdjustableArrowCap Then
+                ' draw arrow on line end
+                Dim defs As SvgDefs = __svgData.svg.defs
+                Dim refId As String = $"M{line.GetHashCode}"
+                Dim gdiArrow As AdjustableArrowCap = pen.CustomEndCap
+                Dim marker As SvgMarker = defs.CreateMarker(refId, gdiArrow.Width, gdiArrow.Height)
+
+                line.MarkerEnd = $"url(#{refId})"
+            End If
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)

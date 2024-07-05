@@ -97,6 +97,31 @@ Namespace SVG.XML
 
         ReadOnly _document As XmlDocument
 
+        Dim _defs As SvgDefs
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns>
+        ''' this property ensure that always has the value.
+        ''' </returns>
+        Public ReadOnly Property defs As SvgDefs
+            Get
+                If _defs Is Nothing Then
+                    For Each element As SvgElement In GetElements()
+                        If TypeOf element Is SvgDefs Then
+                            _defs = element
+                            Return _defs
+                        End If
+                    Next
+
+                    Return SvgDefs.Create(Element)
+                End If
+
+                Return _defs
+            End Get
+        End Property
+
         Public Property X As Double
             Get
                 Return Element.GetAttribute("x", Attributes.Position.X)
