@@ -68,7 +68,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ValueTypes
 
@@ -256,11 +256,11 @@ Namespace ValueTypes
 
             If microtime >= 1000 Then
                 unit = "s"
-                time = stdNum.Round(microtime / 1000, round)
+                time = std.Round(microtime / 1000, round)
 
                 If time >= 60 Then
                     unit = "min"
-                    time = stdNum.Round(time / 60, round)
+                    time = std.Round(time / 60, round)
                 End If
 
                 format = sprintf(format, time, unit)
