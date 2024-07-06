@@ -53,7 +53,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Vector math extensions for <see cref="DataSet"/> or its collection.
@@ -62,20 +62,20 @@ Public Module DataSetMath
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Log(d As DataSet, Optional base# = stdNum.E) As DataSet
+    Public Function Log(d As DataSet, Optional base# = std.E) As DataSet
         Return New DataSet With {
             .ID = d.ID,
             .Properties = d.Properties _
             .ToDictionary(Function(c) c.Key,
                           Function(c)
-                              Return stdNum.Log(c.Value, newBase:=base)
+                              Return std.Log(c.Value, newBase:=base)
                           End Function)
         }
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Log(data As IEnumerable(Of DataSet), Optional base# = stdNum.E) As IEnumerable(Of DataSet)
+    Public Function Log(data As IEnumerable(Of DataSet), Optional base# = std.E) As IEnumerable(Of DataSet)
         Return data.Select(Function(d) d.Log(base))
     End Function
 

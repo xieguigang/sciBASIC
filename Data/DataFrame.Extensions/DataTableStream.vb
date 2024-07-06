@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.DataFrame
 Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Public Module DataTableStream
@@ -114,7 +115,7 @@ Public Module DataTableStream
             Dim meta As IDictionary = Nothing
 
             If hasMetadata Then
-                rowWriter.metaRow.BindProperty.GetValue(item)
+                meta = rowWriter.metaRow.BindProperty.GetValue(item)
             End If
 
             For i As Integer = 0 To fieldNames.Length - 1
@@ -127,4 +128,70 @@ Public Module DataTableStream
             Call table.Rows.Add(row)
         Next
     End Sub
+
+    <Extension>
+    Public Function StreamToFrame(Of T As Class)(list As IEnumerable(Of T),
+                                                 Optional strict As Boolean = False,
+                                                 Optional metaBlank As String = "",
+                                                 Optional nonParallel As Boolean = False,
+                                                 Optional maps As Dictionary(Of String, String) = Nothing,
+                                                 Optional reorderKeys As Integer = 0,
+                                                 Optional layout As Dictionary(Of String, Integer) = Nothing,
+                                                 Optional tsv As Boolean = False,
+                                                 Optional transpose As Boolean = False,
+                                                 Optional silent As Boolean = False) As DataFrame
+
+        Dim argv As New Arguments With {
+            .layout = layout,
+            .maps = maps,
+            .metaBlank = metaBlank,
+            .nonParallel = nonParallel,
+            .reorderKeys = reorderKeys,
+            .silent = silent,
+            .strict = strict,
+            .transpose = transpose,
+            .tsv = tsv
+        }
+        Dim source As Object() = list.Select(Function(a) CObj(a)).ToArray
+        Dim typeDef As Type = GetType(T)
+        Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
+        Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout).CacheIndex(source, reorderKeys)
+        Dim fieldNames As String() = rowWriter.GetRowNames(maps).ToArray
+        Dim metaNames As String() = rowWriter.GetMetaTitles
+        Dim hasMetadata As Boolean = metaNames.Any
+        Dim columns As New Dictionary(Of String, List(Of Object))
+
+        For Each name As String In fieldNames.JoinIterates(metaNames)
+            Call columns.Add(name, New Generic.List(Of Object))
+        Next
+
+        For Each item As Object In source
+            Dim meta As IDictionary = Nothing
+
+            If hasMetadata Then
+                meta = rowWriter.metaRow.BindProperty.GetValue(item)
+            End If
+
+            For i As Integer = 0 To fieldNames.Length - 1
+                columns(fieldNames(i)).Add(rowWriter.columns(i).GetValue(item))
+            Next
+            For i As Integer = 0 To metaNames.Length - 1
+                columns(metaNames(i)).Add(If(meta.Contains(key:=metaNames(i)), meta(metaNames(i)), Nothing))
+            Next
+        Next
+
+        Dim df As New DataFrame With {
+            .rownames = Enumerable _
+                .Range(1, source.Length) _
+                .Select(Function(i) $"#{i}") _
+                .ToArray,
+            .features = New Dictionary(Of String, FeatureVector)
+        }
+
+        For Each col In columns
+            Dim v As FeatureVector = FeatureVector.FromGeneral(col.Key,)
+        Next
+
+        Return df
+    End Function
 End Module

@@ -98,6 +98,11 @@ Namespace ComponentModel.DataSourceModel.TypeCast
             Return AddressOf typeCaster(type).ToObject
         End Function
 
+        ''' <summary>
+        ''' get helper function for parse the string to clr object
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ParseObject(type As Type) As Func(Of String, Object)
