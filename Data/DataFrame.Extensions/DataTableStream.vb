@@ -52,9 +52,11 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Public Module DataTableStream
@@ -189,7 +191,11 @@ Public Module DataTableStream
         }
 
         For Each col In columns
-            Dim v As FeatureVector = FeatureVector.FromGeneral(col.Key,)
+            Dim type As Type = rowWriter.GetColumnType(col.Key)
+            Dim pull_vec As Array = VectorCast.CType(col.Value, type.PrimitiveTypeCode)
+            Dim v As FeatureVector = FeatureVector.FromGeneral(col.Key, pull_vec)
+
+            Call df.add(v)
         Next
 
         Return df
