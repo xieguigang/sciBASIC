@@ -58,6 +58,21 @@ Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentMo
 
 Public Module DataTableStream
 
+    ''' <summary>
+    ''' a helper function for load a clr obejct collection into a given datatable
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <param name="table"></param>
+    ''' <param name="strict"></param>
+    ''' <param name="metaBlank"></param>
+    ''' <param name="nonParallel"></param>
+    ''' <param name="maps"></param>
+    ''' <param name="reorderKeys"></param>
+    ''' <param name="layout"></param>
+    ''' <param name="tsv"></param>
+    ''' <param name="transpose"></param>
+    ''' <param name="silent"></param>
     <Extension>
     Public Sub StreamTo(Of T As Class)(list As IEnumerable(Of T), table As DataTable,
                                        Optional strict As Boolean = False,
