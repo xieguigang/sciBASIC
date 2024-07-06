@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c55a3a0414c95d42f87fb64f820138f, Data\DataFrame\Extensions\Math.vb"
+﻿#Region "Microsoft.VisualBasic::6fa66e9d20477d9f29681ba976a96ee1, Data\DataFrame\Extensions\Math.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (11.76%)
-    '     File Size: 1.21 KB
+    '     File Size: 1.20 KB
 
 
     ' Module DataSetMath

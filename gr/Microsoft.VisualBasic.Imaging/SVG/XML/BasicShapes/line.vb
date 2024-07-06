@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::696032cb1627afa45ca0ff7b3ffe3468, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\line.vb"
+﻿#Region "Microsoft.VisualBasic::39f0fb11769fc0ca4e999876d28bb3d1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\line.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 60 (65.93%)
-    ' Comment Lines: 20 (21.98%)
+    '   Total Lines: 100
+    '    Code Lines: 68 (68.00%)
+    ' Comment Lines: 20 (20.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (12.09%)
-    '     File Size: 2.73 KB
+    '   Blank Lines: 12 (12.00%)
+    '     File Size: 3.01 KB
 
 
     '     Class SvgLine
     ' 
-    '         Properties: X1, X2, Y1, Y2
+    '         Properties: MarkerEnd, X1, X2, Y1, Y2
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

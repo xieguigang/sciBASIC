@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c158be157f84d8d6ec4e88acf63a208, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgMarker.vb"
+﻿#Region "Microsoft.VisualBasic::9018c7c7abd4d1e970218e8c4ed3a648, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgMarker.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 96
-    '    Code Lines: 54 (56.25%)
-    ' Comment Lines: 33 (34.38%)
+    '   Total Lines: 105
+    '    Code Lines: 62 (59.05%)
+    ' Comment Lines: 33 (31.43%)
     '    - Xml Docs: 96.97%
     ' 
-    '   Blank Lines: 9 (9.38%)
-    '     File Size: 3.55 KB
+    '   Blank Lines: 10 (9.52%)
+    '     File Size: 3.82 KB
 
 
     '     Class SvgMarker
     ' 
-    '         Properties: Height, RefX, RefY, ViewBox, Width
+    '         Properties: Height, orient, RefX, RefY, ViewBox
+    '                     Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Create
