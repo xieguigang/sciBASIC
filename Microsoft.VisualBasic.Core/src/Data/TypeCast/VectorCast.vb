@@ -2,7 +2,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace ComponentModel.DataSourceModel.TypeCast
 
@@ -64,36 +63,27 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         End Function
 
         Private Function CastToGeneric(from As Type, [to] As TypeCode) As Func(Of Object, Object)
-            Dim to_type As Type = [to].CreatePrimitiveType
-
             If [to] = TypeCode.Object OrElse
                 [to] = TypeCode.Empty OrElse
                 [to] = TypeCode.DBNull Then
 
                 Return Function(o) o
+            Else
+                Return Converts.CTypeDynamics(from, [to])
             End If
-
-            Select Case from
-                Case GetType(Double)
-                    Select Case [to]
-                        Case TypeCode.Boolean
-                            Return Function(d) CDbl(d) <> 0
-                        Case TypeCode.Byte, TypeCode.Decimal, TypeCode.Int16, TypeCode.Int32, TypeCode.Int64, TypeCode.SByte, TypeCode.Single, TypeCode.UInt16, TypeCode.UInt32, TypeCode.UInt64
-                            Return Function(d) Conversion.CTypeDynamic(d, to_type)
-                        Case TypeCode.Char
-                            Return Function(d) ChrW(CInt(d))
-                        Case TypeCode.DateTime
-                            Return Function(d) DateTimeHelper.FromUnixTimeStamp(CLng(d))
-                        Case TypeCode.String
-                            Return Function(d) d.ToString
-                        Case Else
-                            Throw New NotImplementedException([to].ToString)
-                    End Select
-            End Select
         End Function
 
         Public Function CastToGeneral([to] As TypeCode) As Func(Of Object, Object)
+            Dim to_type As Type = [to].CreatePrimitiveType
 
+            If [to] = TypeCode.Object OrElse
+               [to] = TypeCode.Empty OrElse
+               [to] = TypeCode.DBNull Then
+
+                Return Function(o) o
+            Else
+                Return Function(o) Conversion.CTypeDynamic(o, to_type)
+            End If
         End Function
     End Module
 End Namespace
