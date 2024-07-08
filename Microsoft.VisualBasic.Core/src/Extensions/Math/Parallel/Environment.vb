@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19c5ad014b193397dacd26b935b92bca, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\Environment.vb"
+﻿#Region "Microsoft.VisualBasic::5254c004c4f4b7fd4196a2b41f5f9fe3, Microsoft.VisualBasic.Core\src\Extensions\Math\Parallel\Environment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 5 (55.56%)
+    '   Total Lines: 8
+    '    Code Lines: 5 (62.50%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (44.44%)
-    '     File Size: 151 B
+    '   Blank Lines: 3 (37.50%)
+    '     File Size: 149 B
 
 
     '     Module ParallelEnvironment
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Math.Parallel
 

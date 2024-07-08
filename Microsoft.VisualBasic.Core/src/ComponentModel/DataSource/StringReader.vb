@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad9dfba1402055505687e36d016a56c5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::affd933f07bdc9dcdabf4cfea36c7abd, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 261
-    '    Code Lines: 120 (45.98%)
-    ' Comment Lines: 105 (40.23%)
+    '   Total Lines: 268
+    '    Code Lines: 126 (47.01%)
+    ' Comment Lines: 105 (39.18%)
     '    - Xml Docs: 88.57%
     ' 
-    '   Blank Lines: 36 (13.79%)
-    '     File Size: 9.54 KB
+    '   Blank Lines: 37 (13.81%)
+    '     File Size: 9.71 KB
 
 
     '     Interface IStringGetter
@@ -279,7 +279,14 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt32(parameter As String) As Int32
-            Return Integer.Parse(getter.GetString(parameter))
+            Dim str As String = getter.GetString(parameter)
+            Dim i32 As Integer
+
+            If Integer.TryParse(str, i32) Then
+                Return i32
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>

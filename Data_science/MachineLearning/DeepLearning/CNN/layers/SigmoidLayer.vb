@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eed2835b7ccdc6502d9b5cba7f6d6ae6, Data_science\MachineLearning\DeepLearning\CNN\layers\SigmoidLayer.vb"
+﻿#Region "Microsoft.VisualBasic::eed2835b7ccdc6502d9b5cba7f6d6ae6, Data_science\MachineLearning\DeepLearning\CNN\Layers\SigmoidLayer.vb"
 
     ' Author:
     ' 

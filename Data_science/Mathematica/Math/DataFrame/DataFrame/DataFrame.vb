@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b749b55c36f404e755ae78d085b492e, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::a933d0db3c94e2720f50c2738ae8367c, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -66,8 +66,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' R language liked dataframe object
