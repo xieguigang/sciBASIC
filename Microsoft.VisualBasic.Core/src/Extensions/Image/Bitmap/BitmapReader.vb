@@ -69,7 +69,7 @@ Namespace Imaging.BitmapImage
     ''' a bitmap image data reader for help huge scientific image data processing.
     ''' (more than the 2GB limitation of gdi+ <see cref="Bitmap"/>.)
     ''' </summary>
-    Public Class BtimapReader : Implements IDisposable
+    Public Class BitmapReader : Implements IDisposable
 
         ReadOnly s As BinaryReader
 
