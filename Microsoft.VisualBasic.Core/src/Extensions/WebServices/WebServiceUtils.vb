@@ -145,6 +145,10 @@ Public Module WebServiceUtils
         If url.IndexOfAny({ASCII.LF, ASCII.CR}) > -1 Then
             Return False
         End If
+
+        ' "magic_number('E:/PlantMAT_v1.0.xlsm')"
+        ' is a valid file path on unix filesystem
+
         If url.IsPattern(UnixPathPattern) Then
             Return True
         ElseIf Not includeWindowsFs Then
