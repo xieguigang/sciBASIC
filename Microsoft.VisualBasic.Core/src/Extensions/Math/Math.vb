@@ -238,13 +238,9 @@ Namespace Math
         ''' <returns></returns>
         <Extension>
         Public Function WeighedAverage(data As IEnumerable(Of Double), ParamArray weights As Double()) As Double
-            Dim avg#
-
-            For Each x As SeqValue(Of Double) In data.SeqIterator
-                avg += (x.value * weights(x))
-            Next
-
-            Return avg
+            Dim product_sum As Double = SIMD.Multiply.f64_op_multiply_f64(data.ToArray, weights).Sum
+            Dim weighted As Double = product_sum / weights.Sum
+            Return weighted
         End Function
 
         ''' <summary>
