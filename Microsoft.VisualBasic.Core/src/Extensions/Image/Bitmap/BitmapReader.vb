@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a97aa1a3e0400d91d9604c48f5df8b0b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BtimapReader.vb"
+﻿#Region "Microsoft.VisualBasic::f556f6002d6f822141e40a7fa1e08545, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapReader.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 6.10 KB
 
 
-    '     Class BtimapReader
+    '     Class BitmapReader
     ' 
     '         Properties: BitsPerPixel, Compression, FileSizeInBytes, HeaderSize, HorizontalPixelsPerMeter
     '                     ImageHeight, ImageSizeInBytes, ImageWidth, NumberOfColorPlanes, NumberOfColorsUsed

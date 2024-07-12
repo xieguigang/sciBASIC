@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a400a2012c4b1abd7d1c2ed6aa11d717, Microsoft.VisualBasic.Core\src\Data\TypeCast\VectorCast.vb"
+﻿#Region "Microsoft.VisualBasic::579381f440397919fe82559b1f4533a1, Microsoft.VisualBasic.Core\src\Data\TypeCast\VectorCast.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 73 (82.02%)
-    ' Comment Lines: 1 (1.12%)
+    '   Total Lines: 88
+    '    Code Lines: 73 (82.95%)
+    ' Comment Lines: 1 (1.14%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (16.85%)
+    '   Blank Lines: 14 (15.91%)
     '     File Size: 3.60 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq

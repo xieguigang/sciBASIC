@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8101eec6b31ddf403ae9db1b4516c322, Microsoft.VisualBasic.Core\src\Data\TypeCast\Converts.vb"
+﻿#Region "Microsoft.VisualBasic::72f8ef409ea1d838e74dd8791c49de38, Microsoft.VisualBasic.Core\src\Data\TypeCast\Converts.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 68 (86.08%)
+    '   Total Lines: 78
+    '    Code Lines: 68 (87.18%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (13.92%)
+    '   Blank Lines: 10 (12.82%)
     '     File Size: 3.06 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.ValueTypes

@@ -1874,7 +1874,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb,148,41,22,85,1,3,6,0,0,6727,6.73 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb,819,199,89,531,7,46,3,5,0,29946,29.95 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb,160,16,15,129,1,0,0,12,0,6640,6.64 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb,598,233,62,303,1,6,2,16,0,32970,32.97 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb,598,233,62,303,1,6,2,16,0,33008,33.01 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\DesignerTerms.vb,135,25,25,85,1,0,0,0,0,5496,5.50 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb,126,11,21,94,3,0,1,8,0,4194,4.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Palette.vb,104,66,7,31,1,0,0,0,0,3431,3.43 KB
@@ -2021,7 +2021,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\Filters\Matrix2DFilters.vb,131,3,20,108,2,0,1,4,0,4856,4.86 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\My Project\Resources.Designer.vb,377,178,34,165,1,28,0,0,0,31376,31.38 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb,946,7,224,715,1,12,187,25,0,44257,44.26 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb,1032,30,246,756,1,1,192,15,0,47850,47.85 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb,1037,32,246,759,1,1,192,15,0,48096,48.10 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\Renderer.vb,72,12,8,52,1,0,1,2,0,2554,2.55 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb,59,19,10,30,1,1,3,1,0,1904,1.90 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\SVGWriter.vb,91,25,12,54,1,0,0,3,0,3482,3.48 KB
@@ -2047,7 +2047,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\title.vb,26,0,5,21,1,1,1,1,0,722,722 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgClipPath.vb,29,0,5,24,1,1,1,1,0,973,973 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb,121,27,23,71,1,1,1,13,0,4875,4.88 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDefs.vb,41,0,8,33,1,0,1,3,0,1322,1.32 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDefs.vb,40,0,7,33,1,0,1,3,0,1320,1.32 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDocument.vb,203,52,25,126,1,6,2,9,0,7379,7.38 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgGroup.vb,24,7,4,13,1,0,1,1,0,870,870 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgMarker.vb,105,33,10,62,1,6,1,1,0,3819,3.82 KB
@@ -2100,7 +2100,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\test\My Project\AssemblyInfo.vb,36,15,6,15,0,0,0,0,0,1201,1.20 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2777,2.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,Microsoft.VisualBasic.Imaging\test\My Project\Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2999,3.00 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,<project>,36935,6411,4836,25688,312,522,904,719,8,1703468,1.70 MB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj,<project>,36939,6413,4835,25691,312,522,904,719,8,1703750,1.70 MB
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\IDynamicsTable.vb,23,7,3,13,1,1,0,0,0,816,816 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\NamespaceDoc.vb,6,3,1,2,1,0,0,0,0,173,173 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj,Datavisualization.Network\NetworkAPI.vb,61,6,8,47,1,0,0,3,0,2335,2.33 KB
@@ -2381,7 +2381,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\ErrorLog.vb,83,7,6,70,1,0,0,3,0,3432,3.43 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\LogFile\LogEntry.vb,44,9,7,28,1,4,0,2,0,1457,1.46 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb,277,60,45,172,1,4,16,4,0,11478,11.48 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb,14,3,4,7,1,0,1,0,0,296,296 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb,67,8,13,46,1,0,0,3,0,2370,2.37 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb,37,23,4,10,1,0,0,0,0,1167,1.17 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\DynamicInterop\IDynamicLibraryLoader.vb,40,28,4,8,1,0,0,4,0,1784,1.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\ApplicationServices\DynamicInterop\INativeHandle.vb,20,9,4,7,1,0,2,1,0,800,800 B
@@ -2778,11 +2778,11 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\Trinity\WordClass.vb,61,39,4,18,1,0,0,0,0,1554,1.55 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\Trinity\WordSimilarityIndex.vb,134,11,27,96,3,2,3,9,0,4855,4.86 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\Trinity\NLP\TextTokens.vb,110,3,18,89,3,6,2,0,0,4273,4.27 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\Converts.vb,79,0,11,68,1,0,0,3,0,3065,3.06 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\Converts.vb,78,0,10,68,1,0,0,3,0,3063,3.06 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\DataImports.vb,123,24,16,83,1,0,0,4,0,4530,4.53 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\Type.vb,83,0,22,61,4,0,0,16,0,2895,2.90 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\TypeCaster.vb,69,5,16,48,3,3,1,8,0,2712,2.71 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\VectorCast.vb,89,1,15,73,1,0,0,4,0,3600,3.60 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Data\TypeCast\VectorCast.vb,88,1,14,73,1,0,0,4,0,3598,3.60 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\CompareMethod.vb,17,11,0,6,1,0,0,0,0,550,550 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Extensions.vb,1545,544,144,857,3,0,6,78,0,57362,57.36 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\MsgBoxStyle.vb,137,103,1,33,2,0,0,0,0,4353,4.35 KB
@@ -2815,7 +2815,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\WhichIndex.vb,229,94,26,109,2,1,1,14,0,9166,9.17 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\LargeTextFile.vb,202,79,26,97,1,0,0,8,0,7778,7.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\PartitionedStream.vb,116,23,23,70,3,3,4,3,0,4263,4.26 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\Text.vb,522,154,59,309,1,0,0,20,0,20174,20.17 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\Text.vb,528,160,59,309,1,0,0,20,0,20272,20.27 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\XmlExtensions.vb,422,117,51,254,1,1,2,10,0,16930,16.93 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\ImageFormat.vb,137,32,15,90,1,1,0,4,0,5321,5.32 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\ImageFormats.vb,53,36,2,15,1,0,0,0,0,1488,1.49 KB
@@ -2824,8 +2824,8 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\TiffWriter.vb,354,24,65,265,1,0,6,10,0,16018,16.02 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Wmf.vb,170,53,25,92,1,2,10,0,0,7909,7.91 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\BitmapBuffer.vb,412,131,58,223,1,4,6,15,1,14868,14.87 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\BitmapScale.vb,314,100,40,174,3,0,6,6,0,12314,12.31 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\BtimapReader.vb,152,22,26,104,1,15,4,4,0,6103,6.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\BitmapReader.vb,152,22,26,104,1,15,4,4,0,6103,6.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\BitmapScale.vb,330,107,42,181,3,0,6,7,0,12919,12.92 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\Effects.vb,221,87,36,98,1,0,0,2,0,9496,9.50 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\Imager.vb,137,55,17,65,1,0,0,7,0,5864,5.86 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Image\Bitmap\RTCP.vb,214,29,30,155,1,0,0,4,0,8714,8.71 KB
@@ -2881,7 +2881,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\SymLinker\HardLink.vb,14,3,3,8,1,0,0,1,0,443,443 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\SymLinker\JunctionPoint.vb,384,99,61,224,6,0,3,6,0,16659,16.66 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\SymLinker\SymbolicLink.vb,138,11,29,98,3,0,2,6,0,5921,5.92 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Math\Math.vb,736,237,79,420,1,0,0,40,0,25750,25.75 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Math\Math.vb,732,237,77,418,1,0,0,40,0,25763,25.76 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Math\Matrix.vb,65,23,5,37,1,0,0,2,0,2854,2.85 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Math\NumberEqualityComparer.vb,51,11,10,30,1,1,2,4,0,1763,1.76 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Math\NumberGroups.vb,467,109,55,303,3,2,0,16,0,18437,18.44 KB
@@ -2968,7 +2968,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\WebServices\HttpGet.vb,229,30,40,159,1,1,0,5,0,8611,8.61 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\WebServices\RequestBuilder.vb,56,7,9,40,1,0,0,2,0,2158,2.16 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\WebServices\WebResult.vb,45,23,5,17,1,5,0,1,0,1379,1.38 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\WebServices\WebServiceUtils.vb,940,236,130,574,3,5,6,31,0,33929,33.93 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\WebServices\WebServiceUtils.vb,944,238,132,574,3,5,6,31,0,34035,34.03 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\API.vb,253,85,25,143,1,0,0,20,0,9462,9.46 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,165,165 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Runtime.vb,173,26,27,120,3,4,1,6,6,6047,6.05 KB
@@ -3225,7 +3225,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\Content_Types.vb,40,4,7,29,2,5,0,2,0,1244,1.24 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\rels.vb,44,0,8,36,2,5,0,1,0,1506,1.51 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\Serialization\XmlComment.vb,54,0,12,42,2,1,1,3,0,1825,1.82 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,137964,45573,17237,75154,1311,1391,1904,4436,429,5508861,5.51 MB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,138037,45593,17246,75198,1311,1391,1903,4440,429,5511753,5.51 MB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\IProgressBarExample.vb,8,0,1,7,1,0,0,1,0,230,230 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Program.vb,92,0,10,82,1,0,2,0,0,3422,3.42 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Examples\AlternateFinishedColorExample.vb,30,1,4,25,1,0,0,0,0,1157,1.16 KB
@@ -3256,7 +3256,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationSe
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\TestCases\UpdatesMaxTicksExample.vb,25,0,1,24,1,0,0,1,0,935,935 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\TestCases\ZeroMaxTicksExample.vb,19,0,1,18,1,0,0,1,0,687,687 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,<project>,873,2,81,790,29,1,11,25,0,34744,34.74 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\Program.vb,17,0,5,12,1,0,1,0,0,361,361 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\Program.vb,17,0,4,13,1,0,1,0,0,398,398 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\devTest.vb,31,0,9,22,1,0,2,0,0,859,859 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\enumeratorTest.vb,28,0,7,21,2,0,1,1,0,691,691 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\group_test.vb,27,0,9,18,1,0,1,0,0,879,879 B
@@ -3264,6 +3264,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\indexTest.vb,54,0,14,40,1,0,2,0,0,1628,1.63 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\lapplyTest.vb,93,0,11,82,1,0,4,0,0,5466,5.47 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\LinqExpressiontest.vb,9,0,3,6,1,0,1,0,0,163,163 B
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\logfiletest.vb,11,0,4,7,1,0,1,0,0,280,280 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\markdownDisplayTest.vb,53,1,18,34,1,0,2,0,0,1117,1.12 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\math_test.vb,6,0,2,4,1,0,1,0,0,62,62 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\Module1.vb,33,0,12,21,1,0,3,0,0,780,780 B
@@ -3278,7 +3279,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\TypeTest.vb,100,0,28,72,2,0,4,1,0,2893,2.89 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\wgetTest.vb,9,0,2,7,1,0,1,0,0,309,309 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,test\test\wmfTest.vb,16,0,3,13,1,0,1,0,0,659,659 B
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,<project>,1130,16,231,883,28,5,39,8,0,47097,47.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\test\test.vbproj,<project>,1141,16,234,891,29,5,40,8,0,47414,47.41 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\JSONTextParser.vb,125,23,15,87,1,0,0,6,0,4692,4.69 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\BSON\BSON.vb,79,12,13,54,1,0,2,5,0,2477,2.48 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\application%json\JSON-netcore5.vbproj,application%json\BSON\BSONValue.vb,301,1,41,259,1,9,9,3,2,11014,11.01 KB
@@ -3640,11 +3641,11 @@ G:\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj,text%htm
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%html\html_netcore5.vbproj,<project>,13157,3421,2010,7726,92,291,146,187,4,481055,481.06 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\MarkdownRender.vb,368,19,82,267,1,0,21,12,0,14024,14.02 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\TOC.vb,119,15,21,83,1,0,0,3,0,3825,3.83 KB
-G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\Render\HtmlRender.vb,130,13,27,90,1,1,0,16,0,4092,4.09 KB
+G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\Render\HtmlRender.vb,130,13,27,90,1,1,0,16,0,4114,4.11 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\Render\Render.vb,29,0,5,24,1,0,0,1,0,1608,1.61 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\Render\TextRender.vb,87,12,19,56,1,0,0,15,0,2739,2.74 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,text%markdown\test\Program.vb,128,0,47,81,1,0,1,0,0,2118,2.12 KB
-G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,<project>,861,59,201,601,6,1,22,47,0,28406,28.41 KB
+G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\markdown.NET5.vbproj,<project>,861,59,201,601,6,1,22,47,0,28428,28.43 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\test\test.vbproj,test\Program.vb,128,0,47,81,1,0,1,0,0,2118,2.12 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\test\test.vbproj,<project>,128,0,47,81,1,0,1,0,0,2118,2.12 KB
 G:\GCModeller\src\runtime\sciBASIC#\mime\text%yaml\text.yaml.vbproj,text%yaml\1.1\IDictionaryExtensions.vb,36,0,5,31,1,0,0,3,0,1182,1.18 KB
@@ -3777,4 +3778,4 @@ G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\B
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,<project>,1225,208,179,838,25,55,8,27,0,46125,46.12 KB
-../,<root>,1012182,236592,143268,632322,10110,14070,16244,25536,1394,39874668,39.87 MB
+../,<root>,1012358,236636,143290,632432,10112,14070,16244,25544,1394,39881694,39.88 MB

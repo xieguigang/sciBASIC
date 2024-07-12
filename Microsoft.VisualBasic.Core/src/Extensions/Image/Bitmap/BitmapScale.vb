@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b95335ff09ce77b0186e2503271f752, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::21d245e6ba3da707ecc61a36959cedc9, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 314
-    '    Code Lines: 174 (55.41%)
-    ' Comment Lines: 100 (31.85%)
-    '    - Xml Docs: 74.00%
+    '   Total Lines: 330
+    '    Code Lines: 181 (54.85%)
+    ' Comment Lines: 107 (32.42%)
+    '    - Xml Docs: 75.70%
     ' 
-    '   Blank Lines: 40 (12.74%)
-    '     File Size: 12.31 KB
+    '   Blank Lines: 42 (12.73%)
+    '     File Size: 12.92 KB
 
 
     '     Module BitmapScale
@@ -53,7 +53,7 @@
     ' 
     '         Delegate Sub
     ' 
-    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale
+    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale, GrayScaleF
     ' 
     '             Sub: Adjust, AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
     ' 

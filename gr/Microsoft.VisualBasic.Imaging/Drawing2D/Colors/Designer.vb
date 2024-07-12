@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cfcec8baf9f0c5186f8881e38aa3a32, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::1d5d95845dc54d7f83e5d76416d2383a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.55%
     ' 
     '   Blank Lines: 62 (10.37%)
-    '     File Size: 32.97 KB
+    '     File Size: 33.01 KB
 
 
     '     Module Designer
