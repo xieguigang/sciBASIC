@@ -55,7 +55,7 @@ Imports System
 
 Module Program
     Sub Main(args As String())
-
+        Call logfiletest.readerTest()
         Call group_test.RunGroup()
 
         Call enumeratorTestProgram.Mai2n()

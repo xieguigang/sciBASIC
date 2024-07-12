@@ -62,7 +62,7 @@ Namespace ApplicationServices.Debugging.Logging
     ''' </summary>
     Public Class LogReader
 
-        Shared ReadOnly header As New Regex("\[.+\]\[(INFOM)|(ERROR)|(WARNG)|(DEBUG)|(FINEST)\]\[.+\]", RegexOptions.Compiled)
+        Shared ReadOnly header As New Regex("\[.+\]\[((INFOM)|(ERROR)|(WARNG)|(DEBUG)|(FINEST))\]\[.+\]", RegexOptions.Compiled)
 
         Private Shared Function testStartLine(line As String) As Boolean
             If line.StringEmpty(, True) Then
