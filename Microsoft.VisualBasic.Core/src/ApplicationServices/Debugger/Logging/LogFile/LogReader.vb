@@ -102,7 +102,20 @@ Namespace ApplicationServices.Debugging.Logging
         End Function
 
         Private Shared Function Parse(data As String()) As LogEntry
+            Dim header As String = data(0)
+            Dim text As String = data.Skip(1).JoinBy(vbCrLf)
+            Dim sections = header.Matches("\[.*?\]").ToArray
+            Dim time As Date = Date.Parse(sections(0).GetStackValue("[", "]"))
+            Dim level As String = sections(1).GetStackValue("[", "]")
+            Dim objName As String = sections(2).GetStackValue("[", "]")
+            Dim remains As String = header.Substring(sections.Take(3).JoinBy("").Length)
 
+            Return New LogEntry With {
+                .level = [Enum].Parse(GetType(MSG_TYPES), level),
+                .message = remains & vbCrLf & text,
+                .[object] = objName,
+                .time = time
+            }
         End Function
     End Class
 End Namespace
