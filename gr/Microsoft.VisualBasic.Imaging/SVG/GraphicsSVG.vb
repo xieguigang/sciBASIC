@@ -606,13 +606,18 @@ Namespace SVG
                 line.StrokeDashArray = New Double() {8, 4}
             End If
             If TypeOf pen.CustomEndCap Is AdjustableArrowCap Then
-                ' draw arrow on line end
-                Dim defs As SvgDefs = __svgData.svg.defs
-                Dim refId As String = $"M{line.GetHashCode}"
-                Dim gdiArrow As AdjustableArrowCap = pen.CustomEndCap
-                Dim marker As SvgMarker = defs.CreateMarker(refId, gdiArrow.Width, gdiArrow.Height)
+                Try
+                    ' draw arrow on line end
+                    Dim defs As SvgDefs = __svgData.svg.defs
+                    Dim refId As String = $"M{line.GetHashCode}"
+                    Dim gdiArrow As AdjustableArrowCap = pen.CustomEndCap
+                    Dim marker As SvgMarker = defs.CreateMarker(refId, gdiArrow.Width, gdiArrow.Height)
 
-                line.MarkerEnd = $"url(#{refId})"
+                    line.MarkerEnd = $"url(#{refId})"
+                Catch ex As Exception
+                    ' error maybe happends when the custom end cap has not been setup
+                    ' just ignores of this error
+                End Try
             End If
         End Sub
 

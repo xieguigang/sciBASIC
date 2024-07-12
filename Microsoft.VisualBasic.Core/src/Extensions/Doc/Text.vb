@@ -203,10 +203,12 @@ Public Module TextDoc
 
     ''' <summary>
     ''' Reading a super large size text file through stream method.
-    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
+    ''' <remarks>
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </remarks>
     <Extension>
     Public Function IterateAllLines(path$,
                                     Optional encoding As Encodings = Encodings.Default,
@@ -218,10 +220,12 @@ Public Module TextDoc
 
     ''' <summary>
     ''' Reading a super large size text file through stream method.
-    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns>不存在的文件会返回空集合</returns>
+    ''' <remarks>
+    ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
+    ''' </remarks>
     <Extension>
     Public Iterator Function IterateAllLines(path$, encoding As Encoding,
                                              Optional verbose As Boolean = True,
@@ -331,13 +335,15 @@ Public Module TextDoc
     End Function
 
     ''' <summary>
-    ''' This function just suite for read a small text file.(这个函数只建议读取小文本文件的时候使用)
+    ''' This function just suite for read a small text file.
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding">Default value is <see cref="Encoding.UTF8"/></param>
     ''' <param name="suppress">Suppress error message??</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (这个函数只建议读取小文本文件的时候使用)
+    ''' </remarks>
     '''
     <ExportAPI("Read.TXT")>
     <Extension>
@@ -369,12 +375,13 @@ Public Module TextDoc
 
     ''' <summary>
     ''' This function is recommend using for the small(probably smaller than 300MB) text file reading.
-    ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="Encoding">Default value is UTF8</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (这个函数只建议读取小文本文件的时候使用)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Read.Lines")>
     <Extension>
@@ -411,14 +418,13 @@ Public Module TextDoc
     ''' <summary>
     ''' Write the text file data into a file which was specific by the <paramref name="path"></paramref> value,
     ''' this function not append the new data onto the target file.
-    ''' (将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="text"></param>
     ''' <param name="encoding">这个函数会自动处理文本的编码的</param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' default text encoding: utf-8
+    ''' default text encoding: utf-8(将目标文本字符串写入到一个指定路径的文件之中，但是不会在文件末尾追加新的数据)
     ''' </remarks>
     '''
     <Extension>

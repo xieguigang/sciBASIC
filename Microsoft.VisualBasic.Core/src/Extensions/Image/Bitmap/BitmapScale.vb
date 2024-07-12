@@ -328,6 +328,22 @@ Namespace Imaging.BitmapImage
         End Function
 
         ''' <summary>
+        ''' luma
+        ''' </summary>
+        ''' <param name="R"></param>
+        ''' <param name="G"></param>
+        ''' <param name="B"></param>
+        ''' <returns>[0,255]</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GrayScaleF(R%, G%, B%,
+                                   Optional wr As Single = 0.3,
+                                   Optional wg As Single = 0.59,
+                                   Optional wb As Single = 0.11) As Single
+
+            Return R * wr + G * wg + B * wb
+        End Function
+
+        ''' <summary>
         ''' Color gray scale
         ''' </summary>
         ''' <param name="c"></param>
