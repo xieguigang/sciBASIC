@@ -115,7 +115,7 @@ Public Class HtmlRender : Inherits Render
             url = image_url_router(url)
         End If
 
-        result = String.Format("<img src=""{0}"" alt=""{1}""", url, altText)
+        result = String.Format("<img style=""width:100%;"" src=""{0}"" alt=""{1}""", url, altText)
 
         If Not image_class.StringEmpty Then
             result &= $" class=""{image_class}"""
