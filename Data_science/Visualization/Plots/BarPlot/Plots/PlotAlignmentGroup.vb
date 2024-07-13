@@ -262,7 +262,18 @@ Namespace BarPlot
                 End If
 
                 If theme.drawGrid AndAlso Not theme.gridStrokeX.StringEmpty(, True) Then
+                    Dim ticks = xrange.CreateAxisTicks
+                    Dim top_y As Double = rect.Top
+                    Dim bottom_y As Double = rect.Bottom
+                    Dim stroke_x As Pen = css.GetPen(Stroke.TryParse(theme.gridStrokeX))
 
+                    For Each tick As Double In ticks
+                        Dim xi As Double = scaleX(tick)
+                        Dim top As New PointF(xi, top_y)
+                        Dim bottom As New PointF(xi, bottom_y)
+
+                        Call g.DrawLine(stroke_x, top, bottom)
+                    Next
                 End If
 
                 For i As Integer = 0 To 5
