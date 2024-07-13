@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::86a35c77cc7e1bb5cf07ec9069a458ed, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 230
-    '    Code Lines: 188 (81.74%)
-    ' Comment Lines: 23 (10.00%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 19 (8.26%)
-    '     File Size: 11.81 KB
+' Summaries:
 
 
-    '     Module AlignmentPlot
-    ' 
-    '         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
-    '         Structure Signal
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 230
+'    Code Lines: 188 (81.74%)
+' Comment Lines: 23 (10.00%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 19 (8.26%)
+'     File Size: 11.81 KB
+
+
+'     Module AlignmentPlot
+' 
+'         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
+'         Structure Signal
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -94,6 +94,9 @@ Namespace BarPlot
             Return signals.Select(Function(t) t.Item2).ToArray
         End Function
 
+        Public Const DefaultColor1 As String = "steelblue"
+        Public Const DefaultColor2 As String = "brown"
+
         ''' <summary>
         ''' 以条形图的方式可视化绘制两个离散的信号的比对的图形
         ''' </summary>
@@ -111,8 +114,8 @@ Namespace BarPlot
                                       Optional size$ = "1200,800",
                                       Optional padding$ = "padding: 70 30 50 100;",
                                       Optional bg$ = "white",
-                                      Optional cla$ = "steelblue",
-                                      Optional clb$ = "brown",
+                                      Optional cla$ = DefaultColor1,
+                                      Optional clb$ = DefaultColor2,
                                       Optional xlab$ = "X",
                                       Optional ylab$ = "Y",
                                       Optional labelCSS$ = CSSFont.Win7Bold,
