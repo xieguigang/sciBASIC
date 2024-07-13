@@ -136,6 +136,7 @@ Namespace BarPlot
                                       Optional rectangleStyle As RectangleStyling = Nothing,
                                       Optional drawLegend As Boolean = True,
                                       Optional drawGrid As Boolean = True,
+                                      Optional drawGridX As Boolean = False,
                                       Optional tagXFormat$ = "F2",
                                       Optional legendLayout As String = "top-right",
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
@@ -166,7 +167,8 @@ Namespace BarPlot
                 drawGrid:=drawGrid,
                 tagXFormat:=tagXFormat,
                 driver:=driver,
-                legendLayout:=legendLayout
+                legendLayout:=legendLayout,
+                drawGridX:=drawGridX
             )
         End Function
 
@@ -222,6 +224,7 @@ Namespace BarPlot
                                             Optional drawLegend As Boolean = True,
                                             Optional drawGrid As Boolean = True,
                                             Optional tagXFormat$ = "F2",
+                                            Optional drawGridX As Boolean = False,
                                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim theme As New Theme With {
@@ -238,7 +241,8 @@ Namespace BarPlot
                 .tagFormat = tagXFormat,
                 .lineStroke = highlight,
                 .drawLegend = drawLegend,
-                .drawGrid = drawGrid
+                .drawGrid = drawGrid,
+                .gridStrokeX = If(drawGridX, Stroke.AxisGridStroke, Nothing)
             }
             Dim barplot As New PlotAlignmentGroup(query, subject, xrange, yrange, rectangleStyle, theme) With {
                 .main = title,

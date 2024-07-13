@@ -261,6 +261,10 @@ Namespace BarPlot
                     DirectCast(g, Graphics2D).Stroke = tickPen
                 End If
 
+                If theme.drawGrid AndAlso Not theme.gridStrokeX.StringEmpty(, True) Then
+
+                End If
+
                 For i As Integer = 0 To 5
                     Dim label$ = (i * dy).ToString(theme.YaxisTickFormat) & "%"
 
