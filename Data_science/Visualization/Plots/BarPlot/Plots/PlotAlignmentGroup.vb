@@ -369,7 +369,6 @@ Namespace BarPlot
 
             Dim textCloud As New CloudOfTextRectangle
             Dim text As TextRectangle
-            Dim nextPos As PointF
             Dim move As Boolean = False
             Dim rect As RectangleF
             Dim y As Double
