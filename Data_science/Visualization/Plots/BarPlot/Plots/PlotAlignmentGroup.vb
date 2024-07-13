@@ -503,6 +503,8 @@ Namespace BarPlot
             Select Case Strings.LCase(legendLayout)
                 Case "top-right" : Call DrawLegendTopRight(g, rect)
                 Case "title" : Call DrawLegendTitleRegion(g, rect)
+                Case "none"
+                    ' do nothing for skip drawing
                 Case Else
                     Throw New NotImplementedException(legendLayout)
             End Select
