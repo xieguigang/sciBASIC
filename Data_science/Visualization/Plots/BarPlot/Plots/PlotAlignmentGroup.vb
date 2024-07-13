@@ -267,7 +267,7 @@ Namespace BarPlot
                     Dim bottom_y As Double = rect.Bottom
                     Dim stroke_x As Pen = css.GetPen(Stroke.TryParse(theme.gridStrokeX))
 
-                    For Each tick As Double In ticks
+                    For Each tick As Double In ticks.Skip(1)
                         Dim xi As Double = scaleX(tick)
                         Dim top As New PointF(xi, top_y)
                         Dim bottom As New PointF(xi, bottom_y)
