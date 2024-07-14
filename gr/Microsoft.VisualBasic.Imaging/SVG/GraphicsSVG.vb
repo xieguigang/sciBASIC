@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::733a0eddadf40cf2d9d298c32f9ec4ec, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::7e3e5be5133b1aaa64da540f032fb029, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1037
-    '    Code Lines: 759 (73.19%)
-    ' Comment Lines: 32 (3.09%)
+    '   Total Lines: 1038
+    '    Code Lines: 759 (73.12%)
+    ' Comment Lines: 32 (3.08%)
     '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 246 (23.72%)
-    '     File Size: 48.10 KB
+    '   Blank Lines: 247 (23.80%)
+    '     File Size: 48.09 KB
 
 
     '     Class GraphicsSVG

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63c554d9524603dba440e55a0a36368b, Microsoft.VisualBasic.Core\test\test\logfiletest.vb"
+﻿#Region "Microsoft.VisualBasic::318ed5029670885b6b78fad2dc21fc4e, Microsoft.VisualBasic.Core\test\test\logfiletest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (36.36%)
-    '     File Size: 280 B
+    '     File Size: 278 B
 
 
     ' Module logfiletest
@@ -62,4 +62,3 @@ Module logfiletest
         Pause()
     End Sub
 End Module
-
