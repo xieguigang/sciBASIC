@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::4b6cc84c77e86905479f815f26966b0f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 128
-    '    Code Lines: 77 (60.16%)
-    ' Comment Lines: 33 (25.78%)
-    '    - Xml Docs: 96.97%
-    ' 
-    '   Blank Lines: 18 (14.06%)
-    '     File Size: 3.93 KB
+' Summaries:
 
 
-    ' Interface IMagicBlock
-    ' 
-    '     Properties: magic
-    ' 
-    ' Module Extensions
-    ' 
-    '     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip, (+3 Overloads) VerifyMagicSignature
-    ' 
-    '     Sub: WriteByte
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 128
+'    Code Lines: 77 (60.16%)
+' Comment Lines: 33 (25.78%)
+'    - Xml Docs: 96.97%
+' 
+'   Blank Lines: 18 (14.06%)
+'     File Size: 3.93 KB
+
+
+' Interface IMagicBlock
+' 
+'     Properties: magic
+' 
+' Module Extensions
+' 
+'     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip, (+3 Overloads) VerifyMagicSignature
+' 
+'     Sub: WriteByte
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
 
 Public Interface IMagicBlock
@@ -83,6 +84,38 @@ End Interface
         Call buffer.Seek(nbytes, SeekOrigin.Current)
 
         Return nbytes
+    End Function
+
+    ''' <summary>
+    ''' check the magic number inside <see cref="RequestStream.ChunkBuffer"/>
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="magic"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function will verify the given target stream <paramref name="s"/> is null or empty.
+    ''' </remarks>
+    <Extension>
+    Public Function CheckMagicNumber(s As RequestStream, magic As IEnumerable(Of Byte)) As Boolean
+        Dim i As Integer = 0
+
+        If s Is Nothing OrElse s.ChunkBuffer Is Nothing Then
+            Return False
+        End If
+
+        Dim bin As Byte() = s.ChunkBuffer
+
+        For Each b As Byte In magic
+            If bin.Length = i Then
+                Return False
+            ElseIf bin(i) <> b Then
+                Return False
+            End If
+
+            i += 1
+        Next
+
+        Return True
     End Function
 
     <Extension>
