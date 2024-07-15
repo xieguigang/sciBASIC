@@ -144,7 +144,7 @@ Namespace Net.Http
         ''' A local <see cref="Directory"/> will be open for implements the 
         ''' <see cref="IFileSystemEnvironment"/> wrapper as cache.
         ''' </param>
-        ''' <param name="interval%"></param>
+        ''' <param name="interval"></param>
         Sub New(url As Func(Of Context, String),
                 Optional contextGuid As IToString(Of Context) = Nothing,
                 Optional parser As IObjectBuilder = Nothing,
@@ -181,7 +181,7 @@ Namespace Net.Http
         ''' create workspace from a local filesystem
         ''' </summary>
         ''' <param name="cache"></param>
-        ''' <param name="interval%"></param>
+        ''' <param name="interval"></param>
         ''' <param name="offline"></param>
         Friend Sub New(cache$, interval%, offline As Boolean)
             Call Me.New(New Directory(cache), interval, offline)
