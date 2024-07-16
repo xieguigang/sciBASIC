@@ -70,8 +70,11 @@ Imports signals = System.ValueTuple(Of Double, Double)
 Namespace BarPlot
 
     ''' <summary>
-    ''' Visualize and comparing two discrete signals.(以条形图的方式可视化绘制两个离散的信号的比对的图形)
+    ''' Visualize and comparing two discrete signals.
     ''' </summary>
+    ''' <remarks>
+    ''' (以条形图的方式可视化绘制两个离散的信号的比对的图形)
+    ''' </remarks>
     Public Module AlignmentPlot
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -133,6 +136,7 @@ Namespace BarPlot
                                       Optional legendLayout As String = "top-right",
                                       Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                       Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
+                                      Optional highlights As Double() = Nothing,
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim q As New Signal With {
@@ -164,7 +168,8 @@ Namespace BarPlot
                 legendLayout:=legendLayout,
                 drawGridX:=drawGridX,
                 gridStrokeX:=gridStrokeX,
-                gridStrokeY:=gridStrokeY
+                gridStrokeY:=gridStrokeY,
+                hitsHightLights:=highlights
             )
         End Function
 

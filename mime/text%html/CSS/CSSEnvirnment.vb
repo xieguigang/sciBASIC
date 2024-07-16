@@ -226,7 +226,7 @@ Namespace CSS
         ''' Initializes a new <see cref="Font"/> using a specified size and style.
         ''' </summary>
         ''' <returns></returns>
-        Public Function GetFont(css As CSSFont) As Font
+        Public Function GetFont(css As CSSFont, Optional scale As Single = 1.0) As Font
             Dim size As New CssLength(css.size)
             Dim size_val As Single
             Dim familyName As String = GetFontFamily(css)
@@ -240,6 +240,7 @@ Namespace CSS
             End Select
 
             size_val = FontFace.PointSizeScale(size_val, dpiResolution:=dpi)
+            size_val = size_val * scale
 
             Return New Font(familyName, size_val, style)
         End Function

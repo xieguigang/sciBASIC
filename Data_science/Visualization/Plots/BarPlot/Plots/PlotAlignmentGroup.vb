@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::8ff5f6246b5a32acb73a706a722a5384, Data_science\Visualization\Plots\BarPlot\Plots\PlotAlignmentGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 556
-    '    Code Lines: 381 (68.53%)
-    ' Comment Lines: 78 (14.03%)
-    '    - Xml Docs: 10.26%
-    ' 
-    '   Blank Lines: 97 (17.45%)
-    '     File Size: 24.09 KB
+' Summaries:
 
 
-    '     Class PlotAlignmentGroup
-    ' 
-    '         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
-    '                     labelPlotStrength, legendLayout, queryName, subjectName, XAxisLabelCss
-    '                     xError
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: HighlightGroups, Hit
-    ' 
-    '         Sub: DrawAlignmentBars, DrawLegendTitleRegion, DrawLegendTopRight, DrawLegeneds, DrawTextLabels
-    '              PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 556
+'    Code Lines: 381 (68.53%)
+' Comment Lines: 78 (14.03%)
+'    - Xml Docs: 10.26%
+' 
+'   Blank Lines: 97 (17.45%)
+'     File Size: 24.09 KB
+
+
+'     Class PlotAlignmentGroup
+' 
+'         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
+'                     labelPlotStrength, legendLayout, queryName, subjectName, XAxisLabelCss
+'                     xError
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: HighlightGroups, Hit
+' 
+'         Sub: DrawAlignmentBars, DrawLegendTitleRegion, DrawLegendTopRight, DrawLegeneds, DrawTextLabels
+'              PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -152,6 +152,9 @@ Namespace BarPlot
             Dim paddingTop = canvas.Padding.Top
             Dim paddingBottom = canvas.Padding.Bottom
             Dim height As Double
+            Dim isHighlight = Hit(Me.hitsHightLights, Me.xError)
+            Dim hasHighlights = Not hitsHightLights.IsNullOrEmpty
+            Dim highlight_scale As Single = 1.5
 
             ' 上半部分的蓝色条
             For Each part As Signal In query
@@ -162,7 +165,14 @@ Namespace BarPlot
                                Return f.Item2 <> 0R
                            End Function)
 
-                    left = xscale(o.x)
+                    Dim makeHighlights = hasHighlights AndAlso isHighlight(o.x).yes
+                    Dim bw As Single = Me.bw
+
+                    If makeHighlights Then
+                        bw = bw * highlight_scale
+                    End If
+
+                    left = xscale(o.x) - bw / 2
                     height = yscale(o.value)
                     y = ymid - height
                     position = New Point(left, y)
@@ -187,9 +197,15 @@ Namespace BarPlot
                            End Function)
 
                     Dim scaleY = yscale(o.value)
+                    Dim makeHighlights = hasHighlights AndAlso isHighlight(o.x).yes
+                    Dim bw As Single = Me.bw
+
+                    If makeHighlights Then
+                        bw = bw * highlight_scale
+                    End If
 
                     y = ymid + scaleY
-                    left = xscale(o.x)
+                    left = xscale(o.x) - bw / 2
 
                     If canvas.device.driverUsed = Drivers.PDF Then
                         rect = New Rectangle With {
@@ -205,28 +221,6 @@ Namespace BarPlot
                     ' g.FillRectangle(bb, rect)
                     Call rectangleStyle(g, bb, rect, RectangleSides.Top)
                 Next
-            Next
-
-            ' 绘制高亮的区域
-            Dim highlights = HighlightGroups(query, subject, hitsHightLights, xError)
-            Dim right!
-            Dim blockHeight!
-
-            For Each block As (xmin#, xmax#, query#, subject#) In highlights
-                left = xscale(block.xmin)
-                right = xscale(block.xmax) + bw
-                y = ymid - yscale(block.query)
-                blockHeight = yscale(block.query) + yscale(block.subject)
-
-                rect = New Rectangle With {
-                    .Location = New Point(left - highlightMargin, y - highlightMargin),
-                    .Size = New Size With {
-                        .Width = right - left + 2 * highlightMargin,
-                        .Height = blockHeight + 2 * highlightMargin
-                    }
-                }
-
-                g.DrawRectangle(highlightPen, rect)
             Next
         End Sub
 
@@ -390,18 +384,31 @@ Namespace BarPlot
             Dim y As Double
             Dim left!
             Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim xCSSFont As Font = css.GetFont(CSSFont.TryParse(XAxisLabelCss))
+            Dim tag_label As Font = css.GetFont(CSSFont.TryParse(XAxisLabelCss))
+            Dim tag_highlights As Font = css.GetFont(CSSFont.TryParse(XAxisLabelCss), scale:=1.125)
             Dim xsz As SizeF
             Dim xpos As PointF
             Dim xlabel$
             Dim round As Integer = 0
+            Dim isHighlight = Hit(Me.hitsHightLights, Me.xError)
+            Dim hasHighlights = Not hitsHightLights.IsNullOrEmpty
+
+            tag_highlights = New Font(tag_highlights, FontStyle.Bold)
 
             For Each part As Signal In query
                 For Each o As (x#, value#) In part.signals
+                    Dim xCSSFont As Font
+
                     y = o.value
                     y = ymid - scaleY(y)
                     left = scaleX(o.x)
                     rect = New RectangleF(New PointF(left, y), New SizeF(bw, scaleY(o.value)))
+
+                    If hasHighlights AndAlso isHighlight(o.x).yes Then
+                        xCSSFont = tag_highlights
+                    Else
+                        xCSSFont = tag_label
+                    End If
 
                     ' Call textCloud.add_label(New TextRectangle("", rect))
 
@@ -455,16 +462,24 @@ Namespace BarPlot
 
             For Each part As Signal In subject
                 For Each o As (x#, value#) In part.signals
+                    Dim xCssFont As Font = Nothing
+
                     y = o.value
                     y = ymid + scaleY(y)
                     left = scaleX(o.x)
                     rect = Rectangle(ymid, left, left + bw, y)
 
+                    If hasHighlights AndAlso isHighlight(o.x).yes Then
+                        xCssFont = tag_highlights
+                    Else
+                        xCssFont = tag_label
+                    End If
+
                     ' Call textCloud.add_label(New TextRectangle("", rect))
 
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
-                        xsz = g.MeasureString(xlabel, xCSSFont)
+                        xsz = g.MeasureString(xlabel, xCssFont)
                         xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                         text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
                         move = False
@@ -503,7 +518,7 @@ Namespace BarPlot
                             'Call g.DrawLine(Pens.Black, pBar, pText)
                         End If
 
-                        g.DrawString(xlabel, xCSSFont, Brushes.Black, xpos)
+                        g.DrawString(xlabel, xCssFont, Brushes.Black, xpos)
                     End If
                 Next
             Next
@@ -570,32 +585,6 @@ Namespace BarPlot
             Call g.FillRectangle(subject.Last.Color.GetBrush, box)
             Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
         End Sub
-
-        Private Function HighlightGroups(query As Signal(), subject As Signal(), highlights#(), err#) As (xmin#, xmax#, query#, subject#)()
-            If highlights.IsNullOrEmpty Then
-                Return {}
-            End If
-
-            Dim isHighlight = Hit(highlights, err)
-            Dim qh = query.createHits(isHighlight)
-            Dim sh = subject.createHits(isHighlight)
-            Dim out As New List(Of (xmin#, xmax#, query#, subject#))
-
-            For Each x As Double In highlights
-                If Not qh.ContainsKey(x) OrElse Not sh.ContainsKey(x) Then
-                    Continue For
-                End If
-
-                Dim q = qh(x)
-                Dim s = sh(x)
-
-                With q.x + s.x.ToArray
-                    out += (.Min, .Max, q.y, s.y)
-                End With
-            Next
-
-            Return out
-        End Function
 
         Private Shared Function Hit(highlights#(), err#) As Func(Of Double, (err#, X#, yes As Boolean))
             If highlights.IsNullOrEmpty Then
