@@ -1,79 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::25b1c81aff5c9d595fe30e30330ed3c5, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 237
-    '    Code Lines: 194 (81.86%)
-    ' Comment Lines: 23 (9.70%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 20 (8.44%)
-    '     File Size: 12.22 KB
+' Summaries:
 
 
-    '     Module AlignmentPlot
-    ' 
-    '         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
-    '         Structure Signal
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 237
+'    Code Lines: 194 (81.86%)
+' Comment Lines: 23 (9.70%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 20 (8.44%)
+'     File Size: 12.22 KB
+
+
+'     Module AlignmentPlot
+' 
+'         Function: createHits, Keys, PlotAlignment, PlotAlignmentGroups, Values
+'         Structure Signal
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports signals = System.ValueTuple(Of Double, Double)
-Imports stdNum = System.Math
 
 Namespace BarPlot
 
@@ -102,8 +94,8 @@ Namespace BarPlot
         ''' </summary>
         ''' <param name="query">The query signals</param>
         ''' <param name="subject">The subject signal values</param>
-        ''' <param name="cla$">Color expression for <paramref name="query"/></param>
-        ''' <param name="clb$">Color expression for <paramref name="subject"/></param>
+        ''' <param name="cla">Color expression for <paramref name="query"/></param>
+        ''' <param name="clb">Color expression for <paramref name="subject"/></param>
         ''' <param name="displayX">是否在信号的柱子上面显示出X坐标的信息</param>
         ''' <param name="htmlLabel">Draw axis label using html render?? default is no.</param>
         ''' <returns></returns>
@@ -139,6 +131,8 @@ Namespace BarPlot
                                       Optional drawGridX As Boolean = False,
                                       Optional tagXFormat$ = "F2",
                                       Optional legendLayout As String = "top-right",
+                                      Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                      Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim q As New Signal With {
@@ -168,7 +162,9 @@ Namespace BarPlot
                 tagXFormat:=tagXFormat,
                 driver:=driver,
                 legendLayout:=legendLayout,
-                drawGridX:=drawGridX
+                drawGridX:=drawGridX,
+                gridStrokeX:=gridStrokeX,
+                gridStrokeY:=gridStrokeY
             )
         End Function
 
@@ -225,6 +221,8 @@ Namespace BarPlot
                                             Optional drawGrid As Boolean = True,
                                             Optional tagXFormat$ = "F2",
                                             Optional drawGridX As Boolean = False,
+                                            Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
+                                            Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
                                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim theme As New Theme With {
@@ -242,7 +240,8 @@ Namespace BarPlot
                 .lineStroke = highlight,
                 .drawLegend = drawLegend,
                 .drawGrid = drawGrid,
-                .gridStrokeX = If(drawGridX, Stroke.AxisGridStroke, Nothing)
+                .gridStrokeX = If(drawGridX, gridStrokeX, Nothing),
+                .gridStrokeY = If(drawGrid, gridStrokeY, Nothing)
             }
             Dim barplot As New PlotAlignmentGroup(query, subject, xrange, yrange, rectangleStyle, theme) With {
                 .main = title,

@@ -230,6 +230,9 @@ Namespace BarPlot
             Next
         End Sub
 
+        Public Const DefaultGridYStroke As String = "stroke: #EBEBEB; stroke-width: 1px; stroke-dash: solid;"
+        Public Const DefaultGridXStroke As String = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;"
+
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim rect As Rectangle = canvas.PlotRegion
             Dim scaleX = d3js.scale.linear().domain(values:={xrange.Min, xrange.Max}).range(values:={rect.Left, rect.Right})
@@ -243,10 +246,8 @@ Namespace BarPlot
                 Dim axisPen As New Pen(Color.Black, 2)
                 Dim dy = yrange.Length / 5
                 Dim y!
-                Dim gridPen As New Pen(Color.FromArgb(230, 230, 230), 2) 'With {
-                '.DashStyle = DashStyle.Solid,
-                '    .DashPattern = {15.0!, 4.0!}
-                '}
+                ' #EBEBEB
+                Dim gridPen As Pen = css.GetPen(Stroke.TryParse(theme.gridStrokeY))
                 Dim dt! = 15
                 Dim tickPen As New Pen(Color.Black, 1)
                 Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS, ))
