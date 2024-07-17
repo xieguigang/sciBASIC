@@ -237,7 +237,7 @@ Namespace Parallel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
-            Return If(UTF8WithoutBOM.GetString(ChunkBuffer), "")
+            Return GetString(UTF8WithoutBOM)
         End Function
 
         ''' <summary>
@@ -256,6 +256,8 @@ Namespace Parallel
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(encoding As Encoding) As String
+            ' removes null bytes padding for avoid the possible text parser error,
+            ' example as json parser error 'Encountered unexpected character NIL' may happends.
             Return If(encoding.GetString(ChunkBuffer), "").Trim(ASCII.NUL)
         End Function
 
