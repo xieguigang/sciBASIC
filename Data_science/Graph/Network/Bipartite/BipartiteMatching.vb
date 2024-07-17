@@ -145,7 +145,7 @@ Public Class BipartiteMatching
     Private graph As List(Of List(Of Edge))
 
     ''' <summary>
-    ''' convert between array indexes (starting from 0) & human readable vertex names
+    ''' convert between array indexes (starting from 0) &amp; human readable vertex names
     ''' </summary>
     Private getStringVertexIdFromArrayIndex As List(Of String)
     ''' <summary>
@@ -166,7 +166,7 @@ Public Class BipartiteMatching
     Public ReadOnly Property matches As (S As String, T As String)()
 
     ''' <summary>
-    ''' Constructor initializes graph edge list with number of vertexes, string equivalents for array indexes & adds empty ArrayLists to the graph for how many vertices ther are
+    ''' Constructor initializes graph edge list with number of vertexes, string equivalents for array indexes &amp; adds empty ArrayLists to the graph for how many vertices ther are
     ''' </summary>
     ''' <param name="vertexCount"></param>
     ''' <param name="getStringVertexIdFromArrayIndex"></param>
@@ -258,7 +258,7 @@ Public Class BipartiteMatching
     End Function
 
     ''' <summary>
-    ''' Calls dfs to find an augmentation path & check if it reached the sink
+    ''' Calls dfs to find an augmentation path &amp; check if it reached the sink
     ''' </summary>
     ''' <param name="source"></param>
     ''' <param name="sink"></param>
