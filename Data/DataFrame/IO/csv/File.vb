@@ -725,7 +725,8 @@ B21,B22,B23,...
                                     Optional trimBlanks As Boolean = False,
                                     Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
                                     Optional isTsv As Boolean = False,
-                                    Optional simpleRowIterator As Boolean = True) As File
+                                    Optional simpleRowIterator As Boolean = True,
+                                    Optional mute As Boolean = True) As File
 
             Dim buf As List(Of RowObject) = loads(
                 path:=path,
@@ -733,7 +734,8 @@ B21,B22,B23,...
                 trimBlanks:=trimBlanks,
                 isTsv:=isTsv,
                 skipWhile:=skipWhile,
-                simpleRowIterator:=simpleRowIterator
+                simpleRowIterator:=simpleRowIterator,
+                mute:=mute
             )
             Dim csv As New File With {
                 ._innerTable = buf
@@ -776,15 +778,16 @@ B21,B22,B23,...
                                       trimBlanks As Boolean,
                                       isTsv As Boolean,
                                       skipWhile As NamedValue(Of Func(Of String, Boolean)),
-                                      simpleRowIterator As Boolean) As List(Of RowObject)
+                                      simpleRowIterator As Boolean,
+                                      mute As Boolean) As List(Of RowObject)
 
             If simpleRowIterator Then
-                Dim buf As String() = path.MapNetFile.ReadAllLines(encoding)
+                Dim buf As String() = path.MapNetFile.ReadAllLines(encoding, verbose:=Not mute)
                 Dim result As List(Of RowObject) = FileLoader.Load(buf, trimBlanks, skipWhile, isTsv)
 
                 Return result
             Else
-                Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=Not mute)
                     Return New RowIterator(s).GetRows.AsList
                 End Using
             End If
