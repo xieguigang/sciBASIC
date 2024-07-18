@@ -170,9 +170,12 @@ B21,B22,B23,...
                 Optional encoding As Encodings = Encodings.Default,
                 Optional trimBlanks As Boolean = False,
                 Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
-                Optional simpleRowIterators As Boolean = True)
+                Optional simpleRowIterators As Boolean = True,
+                Optional mute As Boolean = True)
 
-            _innerTable = loads(path, encoding.CodePage, trimBlanks, False, skipWhile, simpleRowIterator:=simpleRowIterators)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks, False, skipWhile,
+                                simpleRowIterator:=simpleRowIterators,
+                                mute:=mute)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
