@@ -79,7 +79,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' https://github.com/cobaltblueocean/Mercury.Language.Extensions
@@ -130,7 +130,7 @@ Public Module NumberExtension
     ''' <returns>result</returns>
     <Extension()>
     Public Function Epsilon(x As Double) As Double
-        If stdNum.Abs(x) > 0.0000000001 Then
+        If std.Abs(x) > 0.0000000001 Then
             Return Expm1(x) / x
         End If
         Return x.Taylor(COEFF1)
@@ -144,7 +144,7 @@ Public Module NumberExtension
     <Extension()>
     Public Function EpsilonP(x As Double) As Double
 
-        If stdNum.Abs(x) > 0.0000001 Then
+        If std.Abs(x) > 0.0000001 Then
             Return ((x - 1) * Expm1(x) + x) / x / x
         End If
         Return x.Taylor(COEFF2)
@@ -158,7 +158,7 @@ Public Module NumberExtension
     <Extension()>
     Public Function EpsilonPP(x As Double) As Double
 
-        If stdNum.Abs(x) > 0.00001 Then
+        If std.Abs(x) > 0.00001 Then
             Dim x2 = x * x
             Dim x3 = x * x2
             Return (Expm1(x) * (x2 - 2 * x + 2) + x2 - 2 * x) / x3
@@ -331,23 +331,23 @@ Public Module NumberExtension
             nwh = nw >> 1
             delta = 0.78539816339744828 / nwh
             delta2 = delta * 2
-            wn4r = stdNum.Cos(delta * nwh)
+            wn4r = std.Cos(delta * nwh)
             w(0) = 1
             w(1) = wn4r
             If nwh = 4 Then
-                w(2) = stdNum.Cos(delta2)
-                w(3) = stdNum.Sin(delta2)
+                w(2) = std.Cos(delta2)
+                w(3) = std.Sin(delta2)
             ElseIf nwh > 4 Then
                 nw.MakeIPT(ip)
-                w(2) = 0.5 / stdNum.Cos(delta2)
-                w(3) = 0.5 / stdNum.Cos(delta * 6)
+                w(2) = 0.5 / std.Cos(delta2)
+                w(3) = 0.5 / std.Cos(delta * 6)
                 For j = 4 To nwh - 1 Step 4
                     deltaj = delta * j
                     deltaj3 = 3 * deltaj
-                    w(j) = stdNum.Cos(deltaj)
-                    w(j + 1) = stdNum.Sin(deltaj)
-                    w(j + 2) = stdNum.Cos(deltaj3)
-                    w(j + 3) = -stdNum.Sin(deltaj3)
+                    w(j) = std.Cos(deltaj)
+                    w(j + 1) = std.Sin(deltaj)
+                    w(j + 2) = std.Cos(deltaj3)
+                    w(j + 3) = -std.Sin(deltaj3)
                 Next
             End If
             nw0 = 0
@@ -394,12 +394,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.78539816339744828 / nch
-            c(startc) = stdNum.Cos(delta * nch)
+            c(startc) = std.Cos(delta * nch)
             c(startc + nch) = 0.5 * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5 * stdNum.Cos(deltaj)
-                c(startc + nc - j) = 0.5 * stdNum.Sin(deltaj)
+                c(startc + j) = 0.5 * std.Cos(deltaj)
+                c(startc + nc - j) = 0.5 * std.Sin(deltaj)
             Next
         End If
     End Sub
@@ -413,12 +413,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.78539816339744828 / nch
-            c(startc) = stdNum.Cos(delta * nch)
+            c(startc) = std.Cos(delta * nch)
             c(startc + nch) = 0.5 * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5 * stdNum.Cos(deltaj)
-                c(startc + nc - j) = 0.5 * stdNum.Sin(deltaj)
+                c(startc + j) = 0.5 * std.Cos(deltaj)
+                c(startc + nc - j) = 0.5 * std.Sin(deltaj)
             Next
         End If
     End Sub
@@ -433,12 +433,12 @@ Public Module NumberExtension
         If nc > 1 Then
             nch = nc >> 1
             delta = 0.7853982F / nch
-            c(startc) = CSng(stdNum.Cos(delta * nch))
+            c(startc) = CSng(std.Cos(delta * nch))
             c(startc + nch) = 0.5F * c(startc)
             For j = 1 To nch - 1
                 deltaj = delta * j
-                c(startc + j) = 0.5F * CSng(stdNum.Cos(deltaj))
-                c(startc + nc - j) = 0.5F * CSng(stdNum.Sin(deltaj))
+                c(startc + j) = 0.5F * CSng(std.Cos(deltaj))
+                c(startc + nc - j) = 0.5F * CSng(std.Sin(deltaj))
             Next
         End If
     End Sub
@@ -561,7 +561,7 @@ Public Module NumberExtension
         Dim l_bits As ULong
 
         c = 0.0
-        y = stdNum.Abs(x)
+        y = std.Abs(x)
 
         bits = BitConverter.DoubleToInt64Bits(y)
         h_bits = GetHighDWord(bits)
