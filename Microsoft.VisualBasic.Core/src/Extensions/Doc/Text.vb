@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::86606981ec4a793df49c0957844b5c6e, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::a2063b55c4813831ab4ac8c6263e5889, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 528
-'    Code Lines: 309 (58.52%)
-' Comment Lines: 160 (30.30%)
-'    - Xml Docs: 91.25%
-' 
-'   Blank Lines: 59 (11.17%)
-'     File Size: 20.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module TextDoc
-' 
-'     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
-'               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
-'               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
-'               TsvHeaders
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 533
+    '    Code Lines: 313 (58.72%)
+    ' Comment Lines: 160 (30.02%)
+    '    - Xml Docs: 91.25%
+    ' 
+    '   Blank Lines: 60 (11.26%)
+    '     File Size: 20.45 KB
+
+
+    ' Module TextDoc
+    ' 
+    '     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
+    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+    '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
+    '               TsvHeaders
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

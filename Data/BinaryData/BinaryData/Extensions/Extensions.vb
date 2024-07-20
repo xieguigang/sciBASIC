@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::4b6cc84c77e86905479f815f26966b0f, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::08b9ca56f3ea777f1a16ceee7c897695, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 128
-'    Code Lines: 77 (60.16%)
-' Comment Lines: 33 (25.78%)
-'    - Xml Docs: 96.97%
-' 
-'   Blank Lines: 18 (14.06%)
-'     File Size: 3.93 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Interface IMagicBlock
-' 
-'     Properties: magic
-' 
-' Module Extensions
-' 
-'     Function: OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip, (+3 Overloads) VerifyMagicSignature
-' 
-'     Sub: WriteByte
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 161
+    '    Code Lines: 95 (59.01%)
+    ' Comment Lines: 42 (26.09%)
+    '    - Xml Docs: 97.62%
+    ' 
+    '   Blank Lines: 24 (14.91%)
+    '     File Size: 4.90 KB
+
+
+    ' Interface IMagicBlock
+    ' 
+    '     Properties: magic
+    ' 
+    ' Module Extensions
+    ' 
+    '     Function: CheckMagicNumber, OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip
+    '               (+3 Overloads) VerifyMagicSignature
+    ' 
+    '     Sub: WriteByte
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c710ce8a4a64ee8650dffdcee5c516, mime\text%html\CSS\CSSEnvirnment.vb"
+﻿#Region "Microsoft.VisualBasic::5285b0b990c314182c232917444f1718, mime\text%html\CSS\CSSEnvirnment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 126 (65.62%)
-    ' Comment Lines: 38 (19.79%)
+    '   Total Lines: 193
+    '    Code Lines: 127 (65.80%)
+    ' Comment Lines: 38 (19.69%)
     '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 28 (14.58%)
-    '     File Size: 6.89 KB
+    '   Blank Lines: 28 (14.51%)
+    '     File Size: 6.96 KB
 
 
     '     Class CSSEnvirnment

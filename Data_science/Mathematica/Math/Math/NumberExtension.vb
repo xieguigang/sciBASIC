@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dae792bac5bdf7aa13c502b1882a193e, Data_science\Mathematica\Math\Math\NumberExtension.vb"
+﻿#Region "Microsoft.VisualBasic::c54dc1e0c0a7eeeaa1bc154a80f7e727, Data_science\Mathematica\Math\Math\NumberExtension.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 28.48%
     ' 
     '   Blank Lines: 89 (13.57%)
-    '     File Size: 23.78 KB
+    '     File Size: 23.71 KB
 
 
     ' Module NumberExtension
