@@ -83,6 +83,10 @@ Namespace IO
         Friend Function doDelimiterMask(s$, deli As Char) As String
             If String.IsNullOrEmpty(s) Then
                 Return ""
+            ElseIf s.First = """"c AndAlso s.Last = """"c AndAlso s.Length > 1 Then
+                ' string is already been wrapped by the quote
+                ' returns the raw string
+                Return s
             Else
                 s = s.Replace("""", """""")
             End If
