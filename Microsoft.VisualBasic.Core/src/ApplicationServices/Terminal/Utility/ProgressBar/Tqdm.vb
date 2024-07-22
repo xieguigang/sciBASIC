@@ -186,11 +186,13 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 _themeBars = {" "c, " "c, " "c, " "c, " "c, " "c, " "c, " "c, "#"c}
             End Sub
 
+            Public Const FullChar As Char = "█"c
+
             ''' <summary>
             ''' Sets the progress bar theme to ASCII characters.
             ''' </summary>
             Public Sub SetThemeAscii()
-                _themeBars = {" "c, "."c, ":"c, "-"c, "="c, "≡"c, "#"c, "█"c, "█"c}
+                _themeBars = {" "c, "."c, ":"c, "-"c, "="c, "≡"c, "#"c, "█"c, FullChar}
             End Sub
 
             ''' <summary>
