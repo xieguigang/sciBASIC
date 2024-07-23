@@ -89,8 +89,11 @@ Namespace Net.Http
         ''' <summary>
         ''' 将普通文本进行base64编码
         ''' </summary>
-        ''' <param name="text$"></param>
+        ''' <param name="text"></param>
         ''' <param name="encoding"></param>
+        ''' <param name="gzip">
+        ''' do gzip compression and then encoded as base64 string?
+        ''' </param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
