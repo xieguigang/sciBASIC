@@ -17,7 +17,7 @@
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
 		<Platforms>AnyCPU;x64;x86</Platforms>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release;Desktop</Configurations>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -113,11 +113,19 @@
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x86'">
+	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -201,7 +209,6 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
-	  <OutputPath>../../../../\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
@@ -214,7 +221,18 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
-	  <OutputPath>../../../../\R-sharp\App\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <BaseAddress>4194304</BaseAddress>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|x64'">
@@ -227,7 +245,6 @@
 	  <DebugType>full</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
-	  <OutputPath>../../../../\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='mzkit_win32|x64|net6.0'">
@@ -265,18 +282,6 @@
 		<DefineTrace>true</DefineTrace>		
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
-		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
-		<RemoveIntegerChecks>true</RemoveIntegerChecks>
-		<Optimize>false</Optimize>
-		<BaseAddress>4194304</BaseAddress>
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<DefineDebug>false</DefineDebug>
-		<DefineTrace>true</DefineTrace>
-		<OutputPath>../../../../../..\biodeep\biodeepdb_v3\metaCluster\NPSearch\assembly\</OutputPath>
-	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
@@ -522,6 +527,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net6.0-windows|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -531,6 +544,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0-windows|x86'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0-windows|x86'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
@@ -650,6 +671,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net6.0-windows|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -747,6 +776,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net6.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -756,6 +793,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net6.0|x86'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0|x86'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
@@ -875,6 +920,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net6.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net6.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -971,6 +1024,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net5.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net5.0|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -980,6 +1041,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net5.0|x86'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net5.0|x86'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
@@ -1099,6 +1168,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net5.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net5.0|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -1204,6 +1281,14 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net48|AnyCPU'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
@@ -1213,6 +1298,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x86'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net48|x86'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
@@ -1325,6 +1418,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <Optimize>False</Optimize>
+    <BaseAddress>4194304</BaseAddress>
+    <DebugType>full</DebugType>
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net48|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <Optimize>False</Optimize>
     <BaseAddress>4194304</BaseAddress>
@@ -1449,11 +1550,19 @@
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net7.0|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Docker|net7.0|AnyCPU'">
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net7.0|x86'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net7.0|x86'">
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
@@ -1499,6 +1608,10 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net7.0|x64'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Desktop|net7.0|x64'">
     <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 

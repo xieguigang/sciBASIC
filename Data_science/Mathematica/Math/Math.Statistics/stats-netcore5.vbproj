@@ -5,7 +5,7 @@
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Math.Statistics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release;PlantMAT</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release;PlantMAT;Desktop</Configurations>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>

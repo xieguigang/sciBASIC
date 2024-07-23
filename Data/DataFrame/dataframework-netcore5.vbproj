@@ -5,7 +5,7 @@
     <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.Framework</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop</Configurations>
     <PackageId>Microsoft.VisualBasic.Data.Framework</PackageId>
     <Version>5.0.123</Version>
     <Description>Data Framework for sciBASIC based on the csv 2D table</Description>
