@@ -48,7 +48,6 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
-    <OutputPath>../../../../\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
@@ -60,7 +59,6 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
-    <OutputPath>../../../../\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|x64'">
@@ -72,7 +70,6 @@
     <DefineTrace>true</DefineTrace>
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.MIME.application.json.xml</DocumentationFile>
-    <OutputPath>../../../../\R-sharp\App\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
