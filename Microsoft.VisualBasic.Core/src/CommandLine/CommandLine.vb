@@ -111,11 +111,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' The command name that parse from the input command line.
-        ''' (从输入的命令行中所解析出来的命令的名称)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (从输入的命令行中所解析出来的命令的名称)
+        ''' </remarks>
         Public Property Name As String Implements INamedValue.Key
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -128,11 +129,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' The command tokens that were parsed from the input commandline.
-        ''' (从所输入的命令行之中所解析出来的命令参数单元)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (从所输入的命令行之中所解析出来的命令参数单元)
+        ''' </remarks>
         Public Property Tokens As String()
 
         ''' <summary>
@@ -159,11 +161,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' The parameters in the commandline without the first token of the command name.
-        ''' (将命令行解析为词元之后去掉命令的名称之后所剩下的所有的字符串列表)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (将命令行解析为词元之后去掉命令的名称之后所剩下的所有的字符串列表)
+        ''' </remarks>
         Public ReadOnly Property Parameters As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -198,11 +201,13 @@ Namespace CommandLine
         End Property
 
         ''' <summary>
-        ''' Get the original command line string.(获取所输入的命令行对象的原始的字符串)
+        ''' Get the original command line string.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (获取所输入的命令行对象的原始的字符串)
+        ''' </remarks>
         Public ReadOnly Property cli As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -212,7 +217,6 @@ Namespace CommandLine
 
         ''' <summary>
         ''' The parameter name is not case sensitive.
-        ''' (开关的名称是不区分大小写的，进行字符串插值脚本化处理的时候，是使用的<see cref="App.GetVariable"/>函数来获取环境变量值)
         ''' </summary>
         ''' <param name="paramName">
         ''' The argument name in the commandline.
@@ -224,7 +228,9 @@ Namespace CommandLine
         ''' </param>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (开关的名称是不区分大小写的，进行字符串插值脚本化处理的时候，是使用的<see cref="App.GetVariable"/>函数来获取环境变量值)
+        ''' </remarks>
         Default Public ReadOnly Property Item(paramName As String) As DefaultString
             Get
                 Dim LQuery As NamedValue(Of String) = arguments _
@@ -283,10 +289,12 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Returns the original cli command line argument string.(返回所传入的命令行的原始字符串)
+        ''' Returns the original cli command line argument string.
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (返回所传入的命令行的原始字符串)
+        ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
@@ -310,10 +318,13 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Get specific argument value as full file path.(这个函数还会同时修正file://协议的头部)
+        ''' Get specific argument value as full file path.
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数还会同时修正file://协议的头部)
+        ''' </remarks>
         Public Function GetFullFilePath(name As String) As String
             Dim path$ = Me(name)
             path = FixPath(path)
@@ -323,11 +334,12 @@ Namespace CommandLine
         ''' <summary>
         ''' Checking for the missing required parameter, this function will returns the missing parameter
         ''' in the current cli command line object using a specific parameter name list.
-        ''' (检查<paramref name="list"></paramref>之中的所有参数是否存在，函数会返回不存在的参数名)
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (检查<paramref name="list"></paramref>之中的所有参数是否存在，函数会返回不存在的参数名)
+        ''' </remarks>
         Public Function CheckMissingRequiredParameters(list As IEnumerable(Of String)) As String()
             Dim LQuery$() = LinqAPI.Exec(Of String) _
                                                     _
@@ -352,11 +364,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Does this cli command line object contains any parameter argument information.
-        ''' (查看本命令行参数对象之中是否存在有参数信息)
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' (查看本命令行参数对象之中是否存在有参数信息)
+        ''' </remarks>
         Public ReadOnly Property IsNullOrEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -377,10 +390,12 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Does the specific argument exists in this commandline? argument name is not case sensitity.
-        ''' (参数名称字符串大小写不敏感)
         ''' </summary>
         ''' <param name="parameterName"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (参数名称字符串大小写不敏感)
+        ''' </remarks>
         Public Function ContainsParameter(parameterName As String, Optional trim As Boolean = False) As Boolean
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
             Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
