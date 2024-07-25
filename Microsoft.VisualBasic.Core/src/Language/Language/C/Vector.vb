@@ -56,15 +56,42 @@ Imports System.Runtime.CompilerServices
 
 Namespace Language.C
 
+    ''' <summary>
+    ''' std::vector helper for C++ language
+    ''' </summary>
     Public Module Vector
 
+        ''' <summary>
+        ''' Resize a vector list
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
+        ''' <param name="len">the new size of the target <paramref name="list"/></param>
+        ''' <param name="fill">
+        ''' fill this default value is the given list its original size is smaller than the <paramref name="len"/> new size.
+        ''' </param>
+        ''' <param name="preserved">
+        ''' preserved the original element values inside the list?
+        ''' </param>
         <Extension>
-        Public Sub Resize(Of T)(ByRef list As List(Of T), len%, Optional fill As T = Nothing)
-            Call list.Clear()
+        Public Sub Resize(Of T)(ByRef list As List(Of T), len%, Optional fill As T = Nothing, Optional preserved As Boolean = False)
+            If Not preserved Then
+                Call list.Clear()
 
-            For i As Integer = 0 To len - 1
-                Call list.Add(fill)
-            Next
+                ' resize a list with no value preserved.
+                For i As Integer = 0 To len - 1
+                    Call list.Add(fill)
+                Next
+            Else
+                If list.Count > len Then
+                    Call list.RemoveRange(len, list.Count - len)
+                ElseIf list.Count < len Then
+                    ' fill with the value to a new bigger size
+                    For i = list.Count To len - 1
+                        Call list.Add(fill)
+                    Next
+                End If
+            End If
         End Sub
     End Module
 End Namespace
