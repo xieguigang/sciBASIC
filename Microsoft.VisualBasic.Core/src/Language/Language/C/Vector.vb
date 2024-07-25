@@ -74,7 +74,7 @@ Namespace Language.C
         ''' preserved the original element values inside the list?
         ''' </param>
         <Extension>
-        Public Sub Resize(Of T)(ByRef list As List(Of T), len%, Optional fill As T = Nothing, Optional preserved As Boolean = False)
+        Public Sub Resize(Of T)(ByRef list As System.Collections.Generic.List(Of T), len%, Optional fill As T = Nothing, Optional preserved As Boolean = False)
             If Not preserved Then
                 Call list.Clear()
 
