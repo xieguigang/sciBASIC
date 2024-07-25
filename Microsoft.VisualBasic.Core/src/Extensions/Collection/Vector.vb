@@ -181,6 +181,16 @@ Public Module VectorExtensions
         Next
     End Function
 
+    Public Function Construct(Of T As New)(length As Integer) As T()
+        Dim array = New T(length - 1) {}
+
+        For i = 0 To length - 1
+            array(i) = New T()
+        Next
+
+        Return array
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
