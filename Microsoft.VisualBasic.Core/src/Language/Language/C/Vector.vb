@@ -61,6 +61,13 @@ Namespace Language.C
     ''' </summary>
     Public Module Vector
 
+        <Extension>
+        Public Sub Fill(Of T)(ByRef v As T(), n As Integer, value As T)
+            For i As Integer = 0 To n - 1
+                v(i) = value
+            Next
+        End Sub
+
         ''' <summary>
         ''' Resize a vector list
         ''' </summary>
