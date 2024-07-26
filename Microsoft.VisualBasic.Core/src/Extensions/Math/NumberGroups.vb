@@ -315,43 +315,16 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' 
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
-                                               evaluate As Func(Of T, Double),
-                                               equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
-            ' 先进行预处理：求值然后进行排序
-            Dim tagValues = source _
-                .Select(Function(o) (evaluate(o), o)) _
-                .OrderBy(Function(o) o.Item1) _
-                .ToArray
-            Dim means As New Average
-            Dim members As New List(Of T)
+        Public Function GroupBy(Of T)(source As IEnumerable(Of T),
+                                      evaluate As Func(Of T, Double),
+                                      equals As GenericLambda(Of Double).IEquals) As IEnumerable(Of NamedCollection(Of T))
 
-            ' 根据分组的平均值来进行分组操作
-            For Each x As (val#, o As T) In tagValues
-                If means.N = 0 Then
-                    means += x.Item1
-                    members += x.Item2
-                Else
-                    If equals(means.Average, x.Item1) Then
-                        means += x.Item1
-                        members += x.Item2
-                    Else
-                        Yield New NamedCollection(Of T)(CStr(means.Average), members)
-
-                        means = New Average({x.Item1})
-                        members = New List(Of T) From {x.Item2}
-                    End If
-                End If
-            Next
-
-            If members > 0 Then
-                Yield New NamedCollection(Of T)(CStr(means.Average), members)
-            End If
+            Return New GroupBins(Of T)(evaluate, equals).GroupBy(source)
         End Function
 
         ''' <summary>
