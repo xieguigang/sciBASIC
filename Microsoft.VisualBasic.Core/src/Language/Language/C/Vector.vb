@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4f9cddb13ef03d682594b7938ebda9, Microsoft.VisualBasic.Core\src\Language\Language\C\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::8eaef204628d4accb2fc042da54fae6d, Microsoft.VisualBasic.Core\src\Language\Language\C\Vector.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 12 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 50
+    '    Code Lines: 28 (56.00%)
+    ' Comment Lines: 17 (34.00%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 4 (25.00%)
-    '     File Size: 390 B
+    '   Blank Lines: 5 (10.00%)
+    '     File Size: 1.82 KB
 
 
     '     Module Vector
     ' 
-    '         Sub: Resize
+    '         Sub: Fill, Resize
     ' 
     ' 
     ' /********************************************************************************/

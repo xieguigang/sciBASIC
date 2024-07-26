@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1c08f0832440aae56f8a5376ad247ee, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::85c2c17cc1d069e22803ee5d177402fa, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 864
-    '    Code Lines: 457 (52.89%)
-    ' Comment Lines: 306 (35.42%)
-    '    - Xml Docs: 89.22%
+    '   Total Lines: 879
+    '    Code Lines: 457 (51.99%)
+    ' Comment Lines: 321 (36.52%)
+    '    - Xml Docs: 89.72%
     ' 
-    '   Blank Lines: 101 (11.69%)
-    '     File Size: 37.09 KB
+    '   Blank Lines: 101 (11.49%)
+    '     File Size: 37.33 KB
 
 
     '     Class CommandLine
