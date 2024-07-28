@@ -1052,7 +1052,10 @@ Public Module StringHelpers
     ''' <param name="pattern"><see cref="Regex"/> patterns</param>
     ''' <param name="trimTrailingEmptyStrings"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' this string parser function is a safe function: will returns an empty string 
+    ''' collection if the given <paramref name="source"/> string is empty or nothing.
+    ''' </remarks>
     <Extension>
     Public Function StringSplit(source$, pattern$,
                                 Optional trimTrailingEmptyStrings As Boolean = False,
