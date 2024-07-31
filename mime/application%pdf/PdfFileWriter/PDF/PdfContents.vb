@@ -1,68 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::a1d4092566a1a1023a0bfaf6e2d9f537, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 2589
-    '    Code Lines: 937 (36.19%)
-    ' Comment Lines: 1264 (48.82%)
-    '    - Xml Docs: 81.09%
-    ' 
-    '   Blank Lines: 388 (14.99%)
-    '     File Size: 102.18 KB
+' Summaries:
 
 
-    ' Class PdfContents
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: CreateFontResStr, (+3 Overloads) DrawBarcode, (+13 Overloads) DrawText, DrawTextInternal, (+2 Overloads) DrawTextWithAnnotation
-    '               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
-    ' 
-    '     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
-    '          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, DrawDoubleBezierPath
-    '          (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine, (+2 Overloads) DrawOval
-    '          (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle, (+2 Overloads) DrawShading
-    '          (+4 Overloads) DrawStar, (+4 Overloads) DrawXObject, EndTextMode, GrayLevelNonStroking, GrayLevelStroking
-    '          LayerEnd, LayerStart, (+2 Overloads) LineTo, (+2 Overloads) MoveTo, OutputOneByte
-    '          RestoreGraphicsState, SaveGraphicsState, Scale, (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking
-    '          SetBlendMode, SetCharacterSpacing, SetColorNonStroking, SetColorStroking, SetDashLine
-    '          SetLineCap, SetLineJoin, SetLineWidth, SetMiterLimit, (+2 Overloads) SetPaintOp
-    '          SetPatternNonStroking, SetPatternStroking, SetTextPosition, SetTextRenderingMode, SetTransMatrix
-    '          SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale, (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 2589
+'    Code Lines: 937 (36.19%)
+' Comment Lines: 1264 (48.82%)
+'    - Xml Docs: 81.09%
+' 
+'   Blank Lines: 388 (14.99%)
+'     File Size: 102.18 KB
+
+
+' Class PdfContents
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: CreateFontResStr, (+3 Overloads) DrawBarcode, (+13 Overloads) DrawText, DrawTextInternal, (+2 Overloads) DrawTextWithAnnotation
+'               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
+' 
+'     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
+'          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, DrawDoubleBezierPath
+'          (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine, (+2 Overloads) DrawOval
+'          (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle, (+2 Overloads) DrawShading
+'          (+4 Overloads) DrawStar, (+4 Overloads) DrawXObject, EndTextMode, GrayLevelNonStroking, GrayLevelStroking
+'          LayerEnd, LayerStart, (+2 Overloads) LineTo, (+2 Overloads) MoveTo, OutputOneByte
+'          RestoreGraphicsState, SaveGraphicsState, Scale, (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking
+'          SetBlendMode, SetCharacterSpacing, SetColorNonStroking, SetColorStroking, SetDashLine
+'          SetLineCap, SetLineJoin, SetLineWidth, SetMiterLimit, (+2 Overloads) SetPaintOp
+'          SetPatternNonStroking, SetPatternStroking, SetTextPosition, SetTextRenderingMode, SetTransMatrix
+'          SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale, (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,12 +92,11 @@
 '
 '
 
-Imports System
 Imports System.Drawing
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports i32 = Microsoft.VisualBasic.Language.i32
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' PDF contents class
@@ -518,7 +517,7 @@ Public Class PdfContents
     ''' <param name="Scale">Scale</param>
     ''' <param name="Rotate">Rotate (radians)</param>
     Public Sub TranslateScaleRotate(OriginX As Double, OriginY As Double, Scale As Double, Rotate As Double)
-        MyBase.ObjectValueFormat("{2} {3} {4} {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale * stdNum.Cos(Rotate)), Round(Scale * stdNum.Sin(Rotate)), Round(Scale * stdNum.Sin(-Rotate)))
+        MyBase.ObjectValueFormat("{2} {3} {4} {2} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(Scale * std.Cos(Rotate)), Round(Scale * std.Sin(Rotate)), Round(Scale * std.Sin(-Rotate)))
     End Sub
 
     ''' <summary>
@@ -530,7 +529,7 @@ Public Class PdfContents
     ''' <param name="ScaleY">Vertical scale</param>
     ''' <param name="Rotate">Rotate (radians)</param>
     Public Sub TranslateScaleRotate(OriginX As Double, OriginY As Double, ScaleX As Double, ScaleY As Double, Rotate As Double)
-        MyBase.ObjectValueFormat("{2} {3} {4} {5} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX * stdNum.Cos(Rotate)), Round(ScaleY * stdNum.Sin(Rotate)), Round(ScaleX * stdNum.Sin(-Rotate)), Round(ScaleY * stdNum.Cos(Rotate)))
+        MyBase.ObjectValueFormat("{2} {3} {4} {5} {0} {1} cm" & Microsoft.VisualBasic.Constants.vbLf, ToPt(OriginX), ToPt(OriginY), Round(ScaleX * std.Cos(Rotate)), Round(ScaleY * std.Sin(Rotate)), Round(ScaleX * std.Sin(-Rotate)), Round(ScaleY * std.Cos(Rotate)))
     End Sub
 
     ''' <summary>
@@ -815,7 +814,7 @@ Public Class PdfContents
     ''' </remarks>
     Public Sub DrawHeart(CenterLine As LineD, PP As PaintOp)
         ' PI / 1.5 = 120 deg and PI / 2 = 90 deg
-        DrawDoubleBezierPath(CenterLine, 1.0, stdNum.PI / 1.5, 1.0, 0.5 * stdNum.PI, PP)
+        DrawDoubleBezierPath(CenterLine, 1.0, std.PI / 1.5, 1.0, 0.5 * std.PI, PP)
     End Sub
 
     ''' <summary>
@@ -849,7 +848,7 @@ Public Class PdfContents
     Public Sub DrawDoubleBezierPath(CenterLine As LineD, Factor1 As Double, Alpha1 As Double, Factor2 As Double, Alpha2 As Double, PP As PaintOp)
         ' two symmetric Bezier curves
         DrawBezier(New BezierD(CenterLine.P1, Factor1, -0.5 * Alpha1, Factor2, -0.5 * Alpha2, CenterLine.P2), BezierPointOne.MoveTo)
-        DrawBezier(New BezierD(CenterLine.P2, Factor2, stdNum.PI + 0.5 * Alpha2, Factor1, stdNum.PI + 0.5 * Alpha1, CenterLine.P1), BezierPointOne.Ignore)
+        DrawBezier(New BezierD(CenterLine.P2, Factor2, std.PI + 0.5 * Alpha2, Factor1, std.PI + 0.5 * Alpha1, CenterLine.P1), BezierPointOne.Ignore)
 
         ' set paint operator
         SetPaintOp(PP)
@@ -994,7 +993,7 @@ Public Class PdfContents
         End If
 
         ' polygon angle
-        Dim DeltaAlpha = 2.0 * stdNum.PI / Sides
+        Dim DeltaAlpha = 2.0 * std.PI / Sides
 
         ' first corner coordinates
         MoveTo(New PointD(Center, Radius, Alpha))
@@ -1046,7 +1045,7 @@ Public Class PdfContents
             Radius1 = 0.5 * Radius
         Else
             ' polygon angle
-            Dim DeltaAlpha = 2.0 * stdNum.PI / Sides
+            Dim DeltaAlpha = 2.0 * std.PI / Sides
 
             ' first line
             Dim L1 As LineD = New LineD(New PointD(Center, Radius, Alpha), New PointD(Center, Radius, Alpha + 2.0 * DeltaAlpha))
@@ -1099,7 +1098,7 @@ Public Class PdfContents
         MoveTo(New PointD(Center, Radius1, Alpha))
 
         ' increment angle
-        Dim DeltaAlpha = stdNum.PI / Sides
+        Dim DeltaAlpha = std.PI / Sides
 
         ' double number of sides
         Sides *= 2
@@ -1285,7 +1284,7 @@ Public Class PdfContents
                 OutputOneByte(CharInfo.CharCode)
             Else
                 If CharInfo.NewGlyphIndex < 0 Then
-                    CharInfo.NewGlyphIndex = If(Font.EmbeddedFont, stdNum.Min(Threading.Interlocked.Increment(Font.NewGlyphIndex), Font.NewGlyphIndex - 1), CharInfo.GlyphIndex)
+                    CharInfo.NewGlyphIndex = If(Font.EmbeddedFont, std.Min(Threading.Interlocked.Increment(Font.NewGlyphIndex), Font.NewGlyphIndex - 1), CharInfo.GlyphIndex)
                 End If
 
                 OutputOneByte(CharInfo.NewGlyphIndex >> 8)
@@ -1644,7 +1643,7 @@ Public Class PdfContents
                     ' output glyph index
                     OutputOneByte(CharInfo.CharCode)
                 Else
-                    If CharInfo.NewGlyphIndex < 0 Then CharInfo.NewGlyphIndex = If(Font.EmbeddedFont, stdNum.Min(Threading.Interlocked.Increment(Font.NewGlyphIndex), Font.NewGlyphIndex - 1), CharInfo.GlyphIndex)
+                    If CharInfo.NewGlyphIndex < 0 Then CharInfo.NewGlyphIndex = If(Font.EmbeddedFont, std.Min(Threading.Interlocked.Increment(Font.NewGlyphIndex), Font.NewGlyphIndex - 1), CharInfo.GlyphIndex)
                     OutputOneByte(CharInfo.NewGlyphIndex >> 8)
                     OutputOneByte(CharInfo.NewGlyphIndex And &HFF)
                 End If
@@ -1660,7 +1659,7 @@ Public Class PdfContents
             ObjectValueFormat("{0}", Round(-KA.Adjust))
 
             ' convert the adjustment width to font design width
-            Width += CInt(stdNum.Round(KA.Adjust * Font.DesignHeight / 1000.0, 0, MidpointRounding.AwayFromZero))
+            Width += CInt(std.Round(KA.Adjust * Font.DesignHeight / 1000.0, 0, MidpointRounding.AwayFromZero))
         End While
 
         ' "]Tj"

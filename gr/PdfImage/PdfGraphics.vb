@@ -1050,6 +1050,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Function
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
-        Throw New NotImplementedException()
+        Throw New NotImplementedException
     End Sub
 End Class
