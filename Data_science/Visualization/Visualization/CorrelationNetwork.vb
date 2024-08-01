@@ -69,6 +69,46 @@ Public Module CorrelationNetwork
         Return data.Correlation(False).BuildNetwork(cutoff, pvalue)
     End Function
 
+    <Extension>
+    Public Function BuildNetwork(matrix As DistanceMatrix, cutoff As Double) As NetworkGraph
+        If matrix.is_dist Then
+            Throw New InvalidConstraintException("the given input matrix should be a similarity matrix!")
+        End If
+
+        Dim g As New NetworkGraph
+        Dim cor As Double
+        Dim nodeData As NodeData
+        Dim linkdata As EdgeData
+
+        For Each id As String In matrix.keys
+            nodeData = New NodeData With {.origID = id, .label = id}
+            g.CreateNode(id, nodeData)
+        Next
+
+        Dim uid As String
+
+        For Each id As String In matrix.keys
+            For Each partner As String In matrix.keys.Where(Function(b) b <> id)
+                cor = matrix(id, partner)
+
+                If std.Abs(cor) > cutoff Then
+                    uid$ = {partner, id}.OrderBy(Function(s) s).JoinBy(" - ")
+                    linkdata = New EdgeData With {
+                        .label = uid,
+                        .length = cor,
+                        .Properties = New Dictionary(Of String, String) From {
+                            {NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE, HowStrong(cor)}
+                        }
+                    }
+
+                    g.CreateEdge(id, partner, cor, linkdata)
+                End If
+            Next
+        Next
+
+        Return g
+    End Function
+
     ''' <summary>
     ''' 关联网络是没有方向的
     ''' </summary>
