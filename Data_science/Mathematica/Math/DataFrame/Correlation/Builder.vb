@@ -109,7 +109,7 @@ Public Module Builder
     ''' 一个通用的距离矩阵创建函数
     ''' </summary>
     ''' <typeparam name="DataSet"></typeparam>
-    ''' <param name="eval"></param>
+    ''' <param name="eval">evaluate the (correlation,pvalue)</param>
     ''' <param name="type"></param>
     ''' <returns></returns>
     <Extension>
@@ -126,26 +126,28 @@ Public Module Builder
                         Dim vec2 As New List(Of Double)
                         Dim x As Double() = vector(d)
                         Dim y As Double()
+                        Dim export As (cor As Double, pvalue As Double)
 
                         For Each row As DataSet In allData
                             y = vector(row)
-                            vec += eval(x, y).Item1
-                            vec2 += eval(x, y).Item2
+                            export = eval(x, y)
+                            vec += export.cor
+                            vec2 += export.pvalue
                         Next
 
-                        Return (d.i, vec.ToArray, vec2.ToArray)
+                        Return (d.i, cor:=vec.ToArray, pval:=vec2.ToArray)
                     End Function) _
             .OrderBy(Function(d) d.i) _
             .ToArray
         Dim matrix As Double()() = evalData _
-            .Select(Function(d) d.Item2) _
+            .Select(Function(d) d.cor) _
             .ToArray
 
         If type = DataType.Correlation Then
             Return New CorrelationMatrix(
                 names:=keys.Indexing,
                 matrix:=matrix,
-                pvalue:=evalData.Select(Function(d) d.Item3).ToArray
+                pvalue:=evalData.Select(Function(d) d.pval).ToArray
             )
         Else
             Return New DistanceMatrix(
@@ -158,6 +160,9 @@ Public Module Builder
 
     <Extension>
     Public Function MatrixBuilder(df As DataFrame, eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
-        Return df.NumericMatrix.ToArray.MatrixBuilder(vector:=Function(i) i.value, eval, type)
+        Return df _
+            .NumericMatrix _
+            .ToArray _
+            .MatrixBuilder(vector:=Function(i) i.value, eval, type)
     End Function
 End Module
