@@ -88,6 +88,10 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Public Overrides Function ParseObject(str As String) As Object
             Return str
         End Function
+
+        Public Overrides Function ParseObject(strs As IEnumerable(Of String)) As Array
+            Return strs.ToArray
+        End Function
     End Class
 
     Public Class IntegerCaster : Inherits TypeCaster(Of Integer)
@@ -106,6 +110,16 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
         Public Overrides Function ParseObject(str As String) As Object
             Return Integer.Parse(str)
+        End Function
+
+        Public Overrides Function ParseObject(strs As IEnumerable(Of String)) As Array
+            Dim i32 As New List(Of Integer)
+
+            For Each str As String In strs
+                Call i32.Add(Integer.Parse(str))
+            Next
+
+            Return i32.ToArray
         End Function
     End Class
 
@@ -126,6 +140,49 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Public Overrides Function ParseObject(str As String) As Object
             Return Double.Parse(str)
         End Function
+
+        Public Overrides Function ParseObject(strs As IEnumerable(Of String)) As Array
+            Dim f64 As New List(Of Double)
+
+            For Each str As String In strs
+                Call f64.Add(Double.Parse(str))
+            Next
+
+            Return f64.ToArray
+        End Function
+    End Class
+
+    Public Class BooleanCaster : Inherits TypeCaster(Of Boolean)
+
+        Public Overrides Function GetBytes(value As Object) As Byte()
+            Return New Byte() {If(CBool(value), 1, 0)}
+        End Function
+
+        Public Overrides Function GetString(value As Object) As String
+            Return value.ToString
+        End Function
+
+        Public Overrides Function ToObject(bytes() As Byte) As Object
+            If bytes(0) = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        End Function
+
+        Public Overrides Function ParseObject(str As String) As Object
+            Return str.ParseBoolean
+        End Function
+
+        Public Overrides Function ParseObject(strs As IEnumerable(Of String)) As Array
+            Dim bools As New List(Of Boolean)
+
+            For Each str As String In strs
+                Call bools.Add(str.ParseBoolean)
+            Next
+
+            Return bools.ToArray
+        End Function
     End Class
 
     Public Class DateCaster : Inherits TypeCaster(Of Date)
@@ -144,6 +201,16 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
         Public Overrides Function ParseObject(str As String) As Object
             Return Date.Parse(str)
+        End Function
+
+        Public Overrides Function ParseObject(strs As IEnumerable(Of String)) As Array
+            Dim dates As New List(Of Date)
+
+            For Each str As String In strs
+                Call dates.Add(Date.Parse(str))
+            Next
+
+            Return dates.ToArray
         End Function
     End Class
 End Namespace

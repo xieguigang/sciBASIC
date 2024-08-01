@@ -124,15 +124,17 @@ Public Module FastLoader
         }
     End Function
 
+    ''' <summary>
+    ''' Parse the feature column
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="name"></param>
+    ''' <returns></returns>
     <Extension>
     Private Function ParseFeature(data As List(Of String), name As String) As FeatureVector
         Dim type As Type = DataImports.SampleForType(data)
-        Dim parser = type.ParseObject
-        Dim array As Array = Array.CreateInstance(type, length:=data.Count)
-
-        For i As Integer = 0 To data.Count - 1
-            Call array.SetValue(parser(data(i)), index:=i)
-        Next
+        Dim parser = type.ParseVector
+        Dim array As Array = parser(data)
 
         Return FeatureVector.FromGeneral(name, array)
     End Function

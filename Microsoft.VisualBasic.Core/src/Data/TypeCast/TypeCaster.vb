@@ -72,7 +72,9 @@ Namespace ComponentModel.DataSourceModel.TypeCast
     <HideModuleName> Public Module Extensions
 
         ReadOnly typeCaster As New Dictionary(Of Type, ITypeCaster) From {
-            New StringCaster, New IntegerCaster, New DoubleCaster, New DateCaster
+            New StringCaster, New IntegerCaster, New DoubleCaster,
+            New DateCaster,
+            New BooleanCaster
         }
 
         <Extension>
@@ -108,6 +110,11 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Public Function ParseObject(type As Type) As Func(Of String, Object)
             Return AddressOf typeCaster(type).ParseObject
         End Function
+
+        <Extension>
+        Public Function ParseVector(type As Type) As Func(Of IEnumerable(Of String), Array)
+            Return AddressOf typeCaster(type).ParseObject
+        End Function
     End Module
 
     Public Interface ITypeCaster
@@ -118,6 +125,8 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Function GetString(value As Object) As String
         Function ToObject(bytes As Byte()) As Object
         Function ParseObject(str As String) As Object
+        Function ParseObject(strs As IEnumerable(Of String)) As Array
+
     End Interface
 
     Public MustInherit Class TypeCaster(Of T) : Implements ITypeCaster
@@ -129,6 +138,7 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         Public MustOverride Function GetString(value As Object) As String Implements ITypeCaster.GetString
         Public MustOverride Function ToObject(bytes As Byte()) As Object Implements ITypeCaster.ToObject
         Public MustOverride Function ParseObject(str As String) As Object Implements ITypeCaster.ParseObject
+        Public MustOverride Function ParseObject(strs As IEnumerable(Of String)) As Array Implements ITypeCaster.ParseObject
 
     End Class
 
