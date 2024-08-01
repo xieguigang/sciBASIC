@@ -155,4 +155,9 @@ Public Module Builder
             )
         End If
     End Function
+
+    <Extension>
+    Public Function MatrixBuilder(df As DataFrame, eval As Func(Of Double(), Double(), (Double, Double)), type As DataType) As DataMatrix
+        Return df.NumericMatrix.ToArray.MatrixBuilder(vector:=Function(i) i.value, eval, type)
+    End Function
 End Module
