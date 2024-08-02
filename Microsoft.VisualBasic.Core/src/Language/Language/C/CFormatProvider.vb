@@ -232,9 +232,17 @@ Namespace Language.C
         ''' </summary>
         ''' <param name="input">The input.</param>
         ''' <returns>A string with all string meta chars are replaced</returns>
+        ''' <remarks>
+        ''' this function is a safe function, empty string will be returns is the given 
+        ''' input string is nothing
+        ''' </remarks>
         <Extension>
         Public Function ReplaceMetaChars(input As String) As String
-            Return Regex.Replace(input, "(\\)(\d{3}|[^\d])?", New MatchEvaluator(AddressOf ReplaceMetaCharsMatch))
+            If input.StringEmpty Then
+                Return ""
+            Else
+                Return Regex.Replace(input, "(\\)(\d{3}|[^\d])?", New MatchEvaluator(AddressOf ReplaceMetaCharsMatch))
+            End If
         End Function
 
         Private Function ReplaceMetaCharsMatch(m As Match) As String
