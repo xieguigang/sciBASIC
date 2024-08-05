@@ -73,8 +73,11 @@ End Class
 <XmlType("type", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public Class RDFType : Inherits Resource
 
+    <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
+    Public Overrides Property resource As String
+
     Sub New()
-        Call MyBase.New
+        Call MyBase.New()
     End Sub
 
     Public Function GetTypeName() As String
