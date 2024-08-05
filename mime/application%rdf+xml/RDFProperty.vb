@@ -69,7 +69,22 @@ End Class
 ''' <summary>
 ''' rdf:type
 ''' </summary>
+''' 
+<XmlType("type", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public Class RDFType : Inherits Resource
+
+    Sub New()
+        Call MyBase.New
+    End Sub
+
+    Public Function GetTypeName() As String
+        If resource.StringEmpty Then
+            Return ""
+        Else
+            Return resource.Split("#"c).Last
+        End If
+    End Function
+
 End Class
 
 ''' <summary>

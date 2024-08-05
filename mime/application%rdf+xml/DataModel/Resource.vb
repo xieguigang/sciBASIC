@@ -56,10 +56,16 @@ Imports System.Xml.Serialization
 ''' <summary>
 ''' a data resource reference
 ''' </summary>
+''' 
+<XmlType("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
 Public Class Resource
 
     <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
     Public Property resource As String
+
+    Public Overrides Function ToString() As String
+        Return resource
+    End Function
 
 End Class
 
