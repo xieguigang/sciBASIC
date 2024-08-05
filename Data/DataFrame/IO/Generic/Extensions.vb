@@ -199,11 +199,12 @@ Namespace IO
 
         ''' <summary>
         ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/>.
-        ''' (包含所有的已经去除重复了的属性名称)
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' (包含所有的已经去除重复了的属性名称)
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
