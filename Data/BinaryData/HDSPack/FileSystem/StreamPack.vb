@@ -102,6 +102,29 @@ Namespace FileSystem
 
         Public Const Magic As String = "HDS"
 
+        Public ReadOnly Property isDiskFile As Boolean
+            Get
+                Return TypeOf buffer Is FileStream
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' gets the file path of the underlying stream data of current stream pack object
+        ''' </summary>
+        ''' <returns>
+        ''' this property will returns the file path string if the underlying stream 
+        ''' data is <see cref="isDiskFile"/>, otherwise nothing will be returns.
+        ''' </returns>
+        Public ReadOnly Property filepath As String
+            Get
+                If isDiskFile Then
+                    Return DirectCast(buffer, FileStream).Name
+                Else
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         ''' <summary>
         ''' get all data files inside this hds data 
         ''' pack, not includes directory.
@@ -272,6 +295,11 @@ Namespace FileSystem
             End If
         End Sub
 
+        ''' <summary>
+        ''' get debug view of current data pack object
+        ''' </summary>
+        ''' <returns>
+        ''' </returns>
         Public Overrides Function ToString() As String
             If TypeOf buffer Is FileStream Then
                 Return DirectCast(buffer, FileStream).Name.FileName
