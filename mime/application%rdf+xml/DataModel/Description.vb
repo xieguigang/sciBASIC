@@ -78,4 +78,8 @@ Public MustInherit Class Description
         xmlns.Add("rdfs", RDFEntity.rdfs)
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"{label};  # {comment}"
+    End Function
+
 End Class
