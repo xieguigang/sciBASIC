@@ -67,6 +67,12 @@ Public Class RDFProperty : Inherits EntityProperty
 End Class
 
 ''' <summary>
+''' rdf:type
+''' </summary>
+Public Class RDFType : Inherits Resource
+End Class
+
+''' <summary>
 ''' RDF DataValue
 ''' </summary>
 Public Class EntityProperty

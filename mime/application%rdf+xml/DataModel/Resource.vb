@@ -62,3 +62,4 @@ Public Class Resource
     Public Property resource As String
 
 End Class
+

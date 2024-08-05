@@ -79,6 +79,15 @@ Public MustInherit Class RDF(Of T As Description)
     Public Property description As T
 
     Sub New()
-        xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
+        Call xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
+        Call xmlns.Add("rdfs", RDFEntity.rdfs)
     End Sub
+
+    'Sub New(ParamArray ns As NamedValue(Of String)())
+    '    Call xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
+
+    '    For Each [namespace] As NamedValue(Of String) In ns
+    '        Call xmlns.Add([namespace].Name, ns:=[namespace].Value)
+    '    Next
+    'End Sub
 End Class
