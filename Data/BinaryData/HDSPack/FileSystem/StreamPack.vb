@@ -395,7 +395,7 @@ Namespace FileSystem
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
-            Return superBlock.BlockExists(FilePath.Parse(path))
+            Return superBlock.BlockExists(Microsoft.VisualBasic.FileIO.Path.FilePath.Parse(path))
         End Function
 
         ''' <summary>
