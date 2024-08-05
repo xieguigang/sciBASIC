@@ -76,7 +76,7 @@ Public MustInherit Class RDF(Of T As Description)
     Public xmlns As New XmlSerializerNamespaces
 
     <XmlElement("Description", [Namespace]:=RDFEntity.XmlnsNamespace)>
-    Public Property description As T
+    Public Property description As T()
 
     Sub New()
         Call xmlns.Add("rdf", RDFEntity.XmlnsNamespace)
