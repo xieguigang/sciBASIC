@@ -73,11 +73,8 @@ End Class
 ''' rdf:type
 ''' </summary>
 ''' 
-<XmlType("type", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("type", [Namespace]:=RDFEntity.xmlns_nil)>
 Public Class RDFType : Inherits Resource
-
-    <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
-    Public Overrides Property resource As String
 
     Sub New()
         Call MyBase.New()

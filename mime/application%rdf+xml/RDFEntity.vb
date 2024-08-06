@@ -71,6 +71,7 @@ Public Class RDFEntity : Inherits RDFProperty
     ''' </summary>
     Public Const XmlnsNamespace$ = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     Public Const rdfs As String = "http://www.w3.org/2000/01/rdf-schema#"
+    Public Const xmlns_nil As String = "nil"
 
     Public Property range As RDFProperty
 

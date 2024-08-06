@@ -55,7 +55,7 @@
 
 Imports System.Xml.Serialization
 
-<XmlType("DescriptionModel", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("abstract_rdf_description", [Namespace]:=RDFEntity.xmlns_nil)>
 Public MustInherit Class Description
 
     <XmlNamespaceDeclarations()>
