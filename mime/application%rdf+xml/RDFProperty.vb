@@ -64,6 +64,9 @@ Imports System.Xml.Serialization
 
 Public Class RDFProperty : Inherits EntityProperty
 
+    Sub New()
+        Call MyBase.New()
+    End Sub
 End Class
 
 ''' <summary>
