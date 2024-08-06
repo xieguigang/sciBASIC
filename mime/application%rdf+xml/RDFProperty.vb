@@ -62,6 +62,9 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
+''' <summary>
+''' property value with data type
+''' </summary>
 Public Class RDFProperty : Inherits EntityProperty
 
     Sub New()
@@ -172,11 +175,19 @@ Public Class EntityProperty
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(res As EntityProperty) As Double
+        If res Is Nothing Then
+            Return 0
+        End If
+
         Return Double.Parse(res.value)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(res As EntityProperty) As Integer
+        If res Is Nothing Then
+            Return 0
+        End If
+
         Return Integer.Parse(res.value)
     End Operator
 
