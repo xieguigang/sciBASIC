@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50319dface387165b1eff40309a4e45e, Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::e7fd4b3ddd8ac7dd78f9b8684efb8913, Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 63 (73.26%)
-    ' Comment Lines: 12 (13.95%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 88
+    '    Code Lines: 60 (68.18%)
+    ' Comment Lines: 18 (20.45%)
+    '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 11 (12.79%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 10 (11.36%)
+    '     File Size: 3.22 KB
 
 
     ' Module FastLoader

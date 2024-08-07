@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::962ccfdd7e020538d869b8d55f9201a4, Microsoft.VisualBasic.Core\src\Data\TypeCast\Type.vb"
+﻿#Region "Microsoft.VisualBasic::0e25fecca21966a149f2dd07712f49e0, Microsoft.VisualBasic.Core\src\Data\TypeCast\Type.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,34 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 61 (73.49%)
+    '   Total Lines: 150
+    '    Code Lines: 110 (73.33%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (26.51%)
-    '     File Size: 2.90 KB
+    '   Blank Lines: 40 (26.67%)
+    '     File Size: 4.99 KB
 
 
     '     Class StringCaster
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     '     Class IntegerCaster
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     '     Class DoubleCaster
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
+    ' 
+    '     Class BooleanCaster
+    ' 
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     '     Class DateCaster
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     ' 
     ' /********************************************************************************/

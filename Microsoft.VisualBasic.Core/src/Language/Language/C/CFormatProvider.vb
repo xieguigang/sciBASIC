@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff8692e0dfc97084d2061c0f69d994ed, Microsoft.VisualBasic.Core\src\Language\Language\C\CFormatProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9ac6aaf98df0d3339e3dae667cd6b7fa, Microsoft.VisualBasic.Core\src\Language\Language\C\CFormatProvider.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 664
-    '    Code Lines: 452 (68.07%)
-    ' Comment Lines: 138 (20.78%)
-    '    - Xml Docs: 28.26%
+    '   Total Lines: 672
+    '    Code Lines: 456 (67.86%)
+    ' Comment Lines: 142 (21.13%)
+    '    - Xml Docs: 30.28%
     ' 
-    '   Blank Lines: 74 (11.14%)
-    '     File Size: 28.77 KB
+    '   Blank Lines: 74 (11.01%)
+    '     File Size: 29.05 KB
 
 
     '     Module CLangStringFormatProvider

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eead7e78a9e3397349f59c920a91e653, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::2bff583ba36ecc03ca0f25ac58c4a467, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 48 (69.57%)
-    ' Comment Lines: 5 (7.25%)
+    '   Total Lines: 79
+    '    Code Lines: 56 (70.89%)
+    ' Comment Lines: 5 (6.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (23.19%)
-    '     File Size: 2.71 KB
+    '   Blank Lines: 18 (22.78%)
+    '     File Size: 3.15 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
     ' 
     '         Sub: Add
     ' 
@@ -53,7 +53,7 @@
     ' 
     '         Properties: type
     ' 
-    '         Function: GetBytes, GetString, ParseObject, ToObject
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
     ' 
     '     Class TypeCaster
     ' 
