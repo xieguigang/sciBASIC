@@ -117,6 +117,19 @@ Namespace ApplicationServices.Zip
         End Sub
 
         ''' <summary>
+        ''' debug view of the stream source
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            If TypeOf s Is FileStream Then
+                Return DirectCast(s, FileStream).Name
+            Else
+                ' maybe in-memory stream, no file name
+                Return $"buffer_stream://&H_{GetHashCode.ToHexString}"
+            End If
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="path"></param>

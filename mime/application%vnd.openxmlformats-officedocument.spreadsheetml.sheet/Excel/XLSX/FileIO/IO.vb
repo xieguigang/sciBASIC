@@ -53,6 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
@@ -70,6 +71,27 @@ Namespace XLSX.FileIO
         '  +------- <xl>
         '  +------- [Content_Types].xml
 
+        <Extension>
+        Public Function LoadZip(zip As ZipStream) As File
+            Return CreateReader(New ZipPackage With {.data = zip, .xlsx = zip.ToString})
+        End Function
+
+        Private Function CreateReader(dataArchive As ZipPackage) As File
+            Dim contentType As ContentTypes = dataArchive("/[Content_Types].xml").LoadFromXml(Of ContentTypes)
+            Dim rels As New _rels(dataArchive)
+            Dim docProps As New docProps(dataArchive)
+            Dim xl As New xl(dataArchive)
+            Dim file As New File(dataArchive) With {
+                .ContentTypes = contentType,
+                ._rels = rels,
+                .docProps = docProps,
+                .xl = xl,
+                .FilePath = If(DataURI.IsWellFormedUriString(dataArchive.xlsx), "datauri://", dataArchive.xlsx)
+            }
+
+            Return file
+        End Function
+
         ''' <summary>
         ''' 解压缩Excel文件然后读取其中的XML数据以构成DataFrame表格 
         ''' </summary>
@@ -80,21 +102,9 @@ Namespace XLSX.FileIO
 
             If Not dataArchive.ExtractZip Then
                 Throw dataArchive.Err
+            Else
+                Return CreateReader(dataArchive)
             End If
-
-            Dim contentType As ContentTypes = dataArchive("/[Content_Types].xml").LoadFromXml(Of ContentTypes)
-            Dim rels As New _rels(dataArchive)
-            Dim docProps As New docProps(dataArchive)
-            Dim xl As New xl(dataArchive)
-            Dim file As New File(dataArchive) With {
-                .ContentTypes = contentType,
-                ._rels = rels,
-                .docProps = docProps,
-                .xl = xl,
-                .FilePath = If(DataURI.IsWellFormedUriString(xlsx), "datauri://", xlsx)
-            }
-
-            Return file
         End Function
 
         <Extension>
