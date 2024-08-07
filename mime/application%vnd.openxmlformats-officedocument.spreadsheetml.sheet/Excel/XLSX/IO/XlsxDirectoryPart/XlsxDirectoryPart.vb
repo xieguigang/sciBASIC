@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace XLSX.Model.Directory
 
@@ -83,26 +84,26 @@ Namespace XLSX.Model.Directory
 
     Public MustInherit Class XlsxDirectoryPart
 
-        Public ReadOnly Property folder As String
+        ReadOnly fs As IFileSystemEnvironment
+        ReadOnly subdir As String
 
-        Sub New(workdir$)
-            folder = $"{workdir}/{_name()}"
+        Sub New(workdir As IFileSystemEnvironment)
+            fs = workdir
+            subdir = _name()
 
-            If Not workdir.StringEmpty Then
-                Call _loadContents()
-            End If
+            Call _loadContents()
         End Sub
 
         Protected MustOverride Function _name() As String
         Protected MustOverride Sub _loadContents()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Function InternalFileName(name As String) As String
-            Return $"{folder}/{name}".GetFullPath
+        Protected Function ReadInternalFileText(name As String) As String
+            Return fs.ReadAllText($"/{subdir}/{name}")
         End Function
 
         Public Overrides Function ToString() As String
-            Return folder
+            Return "/" & subdir
         End Function
     End Class
 End Namespace

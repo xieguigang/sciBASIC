@@ -87,6 +87,12 @@ Namespace XLSX.FileIO
         Public Property Retry As Integer = 3
         Public Property data As IFileSystemEnvironment
 
+        Default Public ReadOnly Property getText(file As String) As String
+            Get
+                Return data.ReadAllText(file)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 
         ''' </summary>

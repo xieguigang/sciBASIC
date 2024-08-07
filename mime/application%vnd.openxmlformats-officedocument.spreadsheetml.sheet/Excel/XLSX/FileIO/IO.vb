@@ -79,18 +79,13 @@ Namespace XLSX.FileIO
         ''' <param name="xlsx"></param>
         ''' <returns></returns>
         Public Function CreateReader(xlsx As String) As File
-            Dim ROOT$ = TempFileSystem.GetAppSysTempFile(
-                ext:=RandomASCIIString(6, skipSymbols:=True),
-                sessionID:=App.PID.ToHexString,
-                prefix:="excel_xlsx_"
-            )
-            Dim extractZip As New ZipPackage With {.ROOT = ROOT, .xlsx = xlsx}
+            Dim dataArchive As New ZipPackage With {.xlsx = xlsx}
 
-            If Not extractZip.ExtractZip Then
-                Throw extractZip.Err
+            If Not dataArchive.ExtractZip Then
+                Throw dataArchive.Err
             End If
 
-            Dim contentType As ContentTypes = (ROOT & "/[Content_Types].xml").LoadXml(Of ContentTypes)
+            Dim contentType As ContentTypes = dataArchive("/[Content_Types].xml").LoadFromXml(Of ContentTypes)
             Dim rels As New _rels(ROOT)
             Dim docProps As New docProps(ROOT)
             Dim xl As New xl(ROOT)
