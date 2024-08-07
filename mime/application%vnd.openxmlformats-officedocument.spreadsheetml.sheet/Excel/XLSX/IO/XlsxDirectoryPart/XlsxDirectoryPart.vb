@@ -97,6 +97,10 @@ Namespace XLSX.Model.Directory
         Protected MustOverride Function _name() As String
         Protected MustOverride Sub _loadContents()
 
+        Protected Function CheckInternalFileExists(name As String) As Boolean
+            Return fs.FileExists($"/{subdir}/{name}")
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Function ReadInternalFileText(name As String) As String
             Return fs.ReadAllText($"/{subdir}/{name}")

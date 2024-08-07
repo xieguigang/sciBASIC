@@ -58,7 +58,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
 Imports Microsoft.VisualBasic.Text.Xml
@@ -78,22 +77,22 @@ Namespace XLSX.Model.Directory
         ''' <returns></returns>
         Public Property workbook As rels
 
-        Sub New(workdir$)
-            Call MyBase.New(workdir)
-        End Sub
-
         Friend Sub New(data As ZipPackage)
-
+            Call MyBase.New(data.data)
         End Sub
 
         Protected Overrides Sub _loadContents()
-            Dim path As Value(Of String) = ""
-
-            If (path = InternalFileName("/.rels")).FileExists Then
-                rels = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
+            If CheckInternalFileExists("/.rels") Then
+                rels = New rels With {
+                    .document = ReadInternalFileText("/.rels") _
+                        .LoadFromXml(Of OpenXml.rels)
+                }
             End If
-            If (path = InternalFileName("/workbook.xml.rels")).FileExists Then
-                workbook = New rels With {.document = (+path).LoadXml(Of OpenXml.rels)}
+            If CheckInternalFileExists("/workbook.xml.rels") Then
+                workbook = New rels With {
+                    .document = ReadInternalFileText("/workbook.xml.rels") _
+                        .LoadFromXml(Of OpenXml.rels)
+                }
             End If
         End Sub
 
