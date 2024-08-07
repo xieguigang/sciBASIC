@@ -61,7 +61,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
@@ -121,7 +120,7 @@ Namespace XLSX.Model.Directory
             ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
             ' r:id是一致的
             Call scanXmlFiles(Sub(name, xml) worksheets.Add(name.BaseName, xml.LoadFromXml(Of worksheet)))
-            Call scanFiles("*.rels", Sub(name, xml) _rels.Add(name.BaseName, rels.Load(xml)))
+            Call scanFiles("_rels/*.rels", Sub(name, xml) _rels.Add(name.BaseName, rels.Load(xml)))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
