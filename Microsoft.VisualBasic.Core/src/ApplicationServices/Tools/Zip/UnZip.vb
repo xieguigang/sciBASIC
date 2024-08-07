@@ -208,7 +208,7 @@ Namespace ApplicationServices.Zip
                                               Optional extractToFlat As Boolean = False,
                                               Optional rootDir As String = Nothing)
             Using file As Stream = zip.ToStream
-                Call zip.ImprovedExtractToDirectory(
+                Call file.ImprovedExtractToDirectory(
                     destinationDirectoryName:=destinationDirectoryName,
                     overwriteMethod:=overwriteMethod,
                     extractToFlat:=extractToFlat,

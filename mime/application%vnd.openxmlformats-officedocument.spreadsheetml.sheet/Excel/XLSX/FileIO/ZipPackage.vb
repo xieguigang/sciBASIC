@@ -58,8 +58,10 @@
 
 Imports System.IO
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.Net.Http
+Imports Directory = Microsoft.VisualBasic.FileIO.Directory
 
 Namespace XLSX.FileIO
 
@@ -72,20 +74,29 @@ Namespace XLSX.FileIO
         ''' the file uri of the target xlsx data file
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' could be 
+        ''' 
+        ''' 1. a local xlsx zip file path
+        ''' 2. a network location
+        ''' 3. a local xlsx unzip directory folder path
+        ''' 4. base64 data uri of the zip data
+        ''' </remarks>
         Public Property xlsx As String
-        ''' <summary>
-        ''' a temp directory for unzip file
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ROOT As String
         Public Property Err As Exception
         Public Property Retry As Integer = 3
+        Public Property data As IFileSystemEnvironment
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <returns></returns>
         Public Function ExtractZip() As Boolean
+            If Not xlsx.FileExists Then
+                Err = New Exception($"The specific local file is missing: {xlsx}!")
+                Return False
+            End If
+
             ' 20190606 会随机性的出现本地文件头已损坏的错误？？
             For i As Integer = 1 To Retry
                 Try
@@ -104,30 +115,35 @@ Namespace XLSX.FileIO
 
         Private Sub ExtractZipInternal()
             If xlsx.IsURLPattern Then
-                Using buffer As New MemoryStream, file As Stream = xlsx.GetRequestRaw
-                    Dim rootDir As String = Nothing
-
-                    Call file.CopyTo(buffer)
-                    Call buffer.Flush()
-                    Call buffer.Seek(Scan0, SeekOrigin.Begin)
-
-                    Call buffer.IsSourceFolderZip(folder:=rootDir, reset:=True)
-                    Call buffer.ImprovedExtractToDirectory(
-                        destinationDirectoryName:=ROOT,
-                        overwriteMethod:=Overwrite.Always,
-                        extractToFlat:=False,
-                        rootDir:=rootDir
-                    )
-                End Using
+                Call requestHttpFile()
             ElseIf DataURI.IsWellFormedUriString(xlsx) Then
-                UnZip.ImprovedExtractToDirectory(DataURI.URIParser(xlsx), destinationDirectoryName:=ROOT, Overwrite.Always)
+                Call requestDataURI()
+            ElseIf xlsx.DirectoryExists Then
+                ' is a local unzip directory output
+                ' for debug test used only
+                data = Directory.FromLocalFileSystem(xlsx)
+            ElseIf xlsx.FileExists Then
+                data = New ZipStream(xlsx, is_readonly:=False)
             Else
-                UnZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+                ' file is not existsed
             End If
         End Sub
 
-        Public Shared Sub WriteZip()
+        Private Sub requestDataURI()
+            Dim s As Stream = DataURI.URIParser(xlsx).ToStream
+            s.Flush()
+            s.Seek(Scan0, SeekOrigin.Begin)
+            data = New ZipStream(s, is_readonly:=True)
+        End Sub
 
+        Private Sub requestHttpFile()
+            Using buffer As New MemoryStream, file As Stream = xlsx.GetRequestRaw
+                Call file.CopyTo(buffer)
+                Call buffer.Flush()
+                Call buffer.Seek(Scan0, SeekOrigin.Begin)
+
+                data = New ZipStream(buffer, is_readonly:=True)
+            End Using
         End Sub
     End Class
 End Namespace

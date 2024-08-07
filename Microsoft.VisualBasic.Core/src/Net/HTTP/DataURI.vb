@@ -128,7 +128,9 @@ Namespace Net.Http
         ''' <summary>
         ''' <see cref="Convert.FromBase64String"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a <see cref="MemoryStream"/>
+        ''' </returns>
         Public Function ToStream() As Stream
             Return New MemoryStream(Convert.FromBase64String(base64))
         End Function
