@@ -57,11 +57,11 @@ Imports System.Xml.Serialization
 ''' a data resource reference
 ''' </summary>
 ''' 
-<XmlType("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("resource", [Namespace]:=RDFEntity.xmlns_nil)>
 Public Class Resource
 
     <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
-    Public Overridable Property resource As String
+    Public Property resource As String
 
     <XmlNamespaceDeclarations()>
     Public xmlns As New XmlSerializerNamespaces

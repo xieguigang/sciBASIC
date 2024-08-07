@@ -62,19 +62,22 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 
+''' <summary>
+''' property value with data type
+''' </summary>
 Public Class RDFProperty : Inherits EntityProperty
 
+    Sub New()
+        Call MyBase.New()
+    End Sub
 End Class
 
 ''' <summary>
 ''' rdf:type
 ''' </summary>
 ''' 
-<XmlType("type", [Namespace]:=RDFEntity.XmlnsNamespace)>
+<XmlType("type", [Namespace]:=RDFEntity.xmlns_nil)>
 Public Class RDFType : Inherits Resource
-
-    <XmlAttribute("resource", [Namespace]:=RDFEntity.XmlnsNamespace)>
-    Public Overrides Property resource As String
 
     Sub New()
         Call MyBase.New()
@@ -172,11 +175,19 @@ Public Class EntityProperty
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(res As EntityProperty) As Double
+        If res Is Nothing Then
+            Return 0
+        End If
+
         Return Double.Parse(res.value)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(res As EntityProperty) As Integer
+        If res Is Nothing Then
+            Return 0
+        End If
+
         Return Integer.Parse(res.value)
     End Operator
 
