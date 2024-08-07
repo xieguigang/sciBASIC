@@ -142,7 +142,7 @@ Namespace XLSX
 
         Friend ReadOnly modify As New Index(Of String)
 
-        Dim _filePath As [Default](Of String)
+        Dim file As ZipStream
 
         ''' <summary>
         ''' the original file path the reference to this xlsx file
@@ -151,11 +151,11 @@ Namespace XLSX
         Public Property FilePath As String Implements IFileReference.FilePath
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _filePath.value
+                Return file.filepath
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Friend Set(value As String)
-                _filePath = value
+                ' do nothing
             End Set
         End Property
 
@@ -304,19 +304,6 @@ Namespace XLSX
         ''' <returns></returns>
         Public Function GetWorkdir() As String
             Return folder
-        End Function
-
-        ''' <summary>
-        ''' 默认是写入原来的文件位置
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
-            ' Save to the user specific path or original source _filePath 
-            ' If the path Is Not specific by user
-            Return Me.SaveTo(path Or _filePath)
         End Function
 
         ''' <summary>
