@@ -414,7 +414,7 @@ Namespace XLSX.Writer
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub AddWorksheet(worksheet As Worksheet, sanitizeSheetName As Boolean)
             If sanitizeSheetName Then
-                Dim name = worksheet.SanitizeWorksheetName(worksheet.SheetName, Me)
+                Dim name = Worksheet.SanitizeWorksheetName(worksheet.SheetName, Me)
                 worksheet.SheetName = name
             Else
                 If String.IsNullOrEmpty(worksheet.SheetName) Then
