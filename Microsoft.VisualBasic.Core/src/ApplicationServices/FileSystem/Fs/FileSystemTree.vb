@@ -65,6 +65,10 @@ Namespace ApplicationServices
 
         Public Property Name As String
         Public Property Files As Dictionary(Of String, FileSystemTree)
+        ''' <summary>
+        ''' the parent folder
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Parent As FileSystemTree
         Public Property data As Object
 
