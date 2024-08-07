@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63f037224ccc13c9d7ea132eb8227b94, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\ZipPackage.vb"
+﻿#Region "Microsoft.VisualBasic::dd0fcbcf3ff09d4fc8f47fde38361761, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\ZipPackage.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 48 (64.00%)
-    ' Comment Lines: 16 (21.33%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 91
+    '    Code Lines: 57 (62.64%)
+    ' Comment Lines: 23 (25.27%)
+    '    - Xml Docs: 73.91%
     ' 
-    '   Blank Lines: 11 (14.67%)
-    '     File Size: 2.52 KB
+    '   Blank Lines: 11 (12.09%)
+    '     File Size: 3.05 KB
 
 
     '     Class ZipPackage
     ' 
-    '         Properties: Err, Retry, ROOT, xlsx
+    '         Properties: data, Err, Retry, xlsx
     ' 
     '         Function: ExtractZip
     ' 
-    '         Sub: ExtractZipInternal, WriteZip
+    '         Sub: ExtractZipInternal, requestDataURI, requestHttpFile
     ' 
     ' 
     ' /********************************************************************************/

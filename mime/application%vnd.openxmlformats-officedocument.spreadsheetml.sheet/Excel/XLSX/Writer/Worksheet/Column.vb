@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db15e3e2d6d70444c057f8ea84d8703a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Column.vb"
+﻿#Region "Microsoft.VisualBasic::966d4b6860ae97f750ee071ba48a21ef, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Column.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (10.74%)
-    '     File Size: 4.21 KB
+    '     File Size: 4.16 KB
 
 
     '     Class Column

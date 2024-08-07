@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fff55d1a8a5b1450313f8aafbeeec6f9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
+﻿#Region "Microsoft.VisualBasic::ca402ecb7b9bd022c88b5505db6beb94, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 335
-    '    Code Lines: 174 (51.94%)
-    ' Comment Lines: 125 (37.31%)
-    '    - Xml Docs: 88.00%
+    '   Total Lines: 322
+    '    Code Lines: 169 (52.48%)
+    ' Comment Lines: 118 (36.65%)
+    '    - Xml Docs: 88.98%
     ' 
-    '   Blank Lines: 36 (10.75%)
-    '     File Size: 14.03 KB
+    '   Blank Lines: 35 (10.87%)
+    '     File Size: 13.48 KB
 
 
     '     Class File
@@ -52,7 +52,7 @@
     ' 
     '         Function: _name, AddSheetTable, CreatePackage, FullName, (+2 Overloads) GetTable
     '                   GetWorkdir, GetWorksheet, LoadDataSet, Open, SheetNames
-    '                   ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
+    '                   ToString, (+2 Overloads) WriteSheetTable
     ' 
     '         Sub: _loadContents, addInternal
     ' 

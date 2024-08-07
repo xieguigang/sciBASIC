@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba3c65cf3300c9fe5a3609c8945b98d1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style.vb"
+﻿#Region "Microsoft.VisualBasic::f6026190b4239d5777df9f2f7cdcd484, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2149
-    '    Code Lines: 1227 (57.10%)
-    ' Comment Lines: 749 (34.85%)
+    '   Total Lines: 2151
+    '    Code Lines: 1224 (56.90%)
+    ' Comment Lines: 751 (34.91%)
     '    - Xml Docs: 98.93%
     ' 
-    '   Blank Lines: 173 (8.05%)
+    '   Blank Lines: 176 (8.18%)
     '     File Size: 96.94 KB
 
 

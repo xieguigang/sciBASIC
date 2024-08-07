@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e5383db7f6d6336fbb9508e37b516bd, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::c114df43db2c8678d0033d7ec616146b, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 83 (60.58%)
-    ' Comment Lines: 36 (26.28%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 139
+    '    Code Lines: 83 (59.71%)
+    ' Comment Lines: 38 (27.34%)
+    '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 18 (13.14%)
-    '     File Size: 4.71 KB
+    '   Blank Lines: 18 (12.95%)
+    '     File Size: 4.77 KB
 
 
     '     Class DataURI

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac8ac1ba51d36ee501cf692f17ce4e90, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::e2e134b7dec3900d7711d49cdc22d979, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 115 (61.50%)
-    ' Comment Lines: 36 (19.25%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 204
+    '    Code Lines: 126 (61.76%)
+    ' Comment Lines: 41 (20.10%)
+    '    - Xml Docs: 58.54%
     ' 
-    '   Blank Lines: 36 (19.25%)
-    '     File Size: 7.09 KB
+    '   Blank Lines: 37 (18.14%)
+    '     File Size: 7.66 KB
 
 
     '     Class ZipStream
     ' 
-    '         Properties: [readonly], zip
+    '         Properties: [readonly], filepath, zip
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
