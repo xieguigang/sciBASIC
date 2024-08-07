@@ -83,7 +83,7 @@ Namespace ApplicationServices
         End Property
 
         ''' <summary>
-        ''' 
+        ''' Get a node by its key name in current tree node
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns>
@@ -143,7 +143,7 @@ Namespace ApplicationServices
         End Function
 
         ''' <summary>
-        ''' 
+        ''' common shared method for get node by path
         ''' </summary>
         ''' <param name="fs"></param>
         ''' <param name="path"></param>

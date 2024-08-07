@@ -107,6 +107,8 @@ Namespace XLSX.Model.Directory
         End Function
 
         Protected Sub scanXmlFiles(parseText As Action(Of String, String))
+            Dim files = FileSystemTree.BuildTree(fs.GetFiles)
+            files = FileSystemTree.GetFile(files, subdir & "/")
 
         End Sub
 
