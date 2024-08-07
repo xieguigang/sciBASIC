@@ -84,12 +84,12 @@ Namespace XLSX.Model.Directory
 
     Public MustInherit Class XlsxDirectoryPart
 
-        ReadOnly fs As IFileSystemEnvironment
-        ReadOnly subdir As String
+        Protected ReadOnly fs As IFileSystemEnvironment
+        Protected ReadOnly subdir As String
 
-        Sub New(workdir As IFileSystemEnvironment)
+        Sub New(workdir As IFileSystemEnvironment, Optional parent As String = "/")
             fs = workdir
-            subdir = _name()
+            subdir = parent & "/" & _name()
 
             Call _loadContents()
         End Sub

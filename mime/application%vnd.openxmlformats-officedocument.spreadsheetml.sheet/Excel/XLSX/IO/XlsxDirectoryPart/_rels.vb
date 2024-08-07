@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
 Imports Microsoft.VisualBasic.Text.Xml
@@ -79,6 +80,10 @@ Namespace XLSX.Model.Directory
 
         Friend Sub New(data As ZipPackage)
             Call MyBase.New(data.data)
+        End Sub
+
+        Sub New(fs As IFileSystemEnvironment, parent As String)
+            Call MyBase.New(fs, parent)
         End Sub
 
         Protected Overrides Sub _loadContents()

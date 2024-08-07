@@ -60,6 +60,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
@@ -79,8 +80,12 @@ Namespace XLSX.Model.Directory
         Public Property worksheets As Dictionary(Of String, XML.xl.worksheets.worksheet)
         Public Property _rels As Dictionary(Of String, rels)
 
-        Sub New(workdir$)
-            Call MyBase.New(workdir)
+        Friend Sub New(pkg As ZipPackage)
+            Call MyBase.New(pkg.data)
+        End Sub
+
+        Sub New(fs As IFileSystemEnvironment, parent As String)
+            Call MyBase.New(fs, parent)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
