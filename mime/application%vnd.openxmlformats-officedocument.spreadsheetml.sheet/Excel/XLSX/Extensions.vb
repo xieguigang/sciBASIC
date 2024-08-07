@@ -134,7 +134,7 @@ Namespace XLSX
         End Function
 
         <Extension>
-        Public Sub WriteSheetTable(sheet As Worksheet, data As csv)
+        Public Sub WriteSheetTable(sheet As Workbook, data As csv)
 
         End Sub
     End Module
