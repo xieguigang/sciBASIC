@@ -62,6 +62,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Module test
 
     Sub Main()
+        zip_test()
         testWriter()
 
 
