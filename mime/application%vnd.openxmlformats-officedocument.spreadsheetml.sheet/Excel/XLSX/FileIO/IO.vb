@@ -86,7 +86,7 @@ Namespace XLSX.FileIO
             End If
 
             Dim contentType As ContentTypes = dataArchive("/[Content_Types].xml").LoadFromXml(Of ContentTypes)
-            Dim rels As New _rels(ROOT)
+            Dim rels As New _rels(dataArchive)
             Dim docProps As New docProps(ROOT)
             Dim xl As New xl(ROOT)
             Dim file As New File(ROOT) With {
