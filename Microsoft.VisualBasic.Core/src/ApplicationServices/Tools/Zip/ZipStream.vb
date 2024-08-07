@@ -145,6 +145,10 @@ Namespace ApplicationServices.Zip
 
             If [readonly] Then
                 Return Nothing
+            ElseIf Not allow_new Then
+                ' entry is missing, andalso not allow create 
+                ' then return nothing if the required archive entry could not be found
+                Return Nothing
             Else
                 ' create new?
                 Throw New NotImplementedException
