@@ -218,7 +218,7 @@ Namespace Language.UnixBash
         End Operator
 
         Public Function MakeFilter() As Func(Of String, Boolean)
-            Dim wc$() = ls.wildcards
+            Dim wc$() = wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
                     .regexp = If(wc.IsNullOrEmpty, {"*"}, wc)
