@@ -132,7 +132,7 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the shortener
         ''' </summary>
-        Private shortenerField As Shortener
+        Private m_shortener As Shortener
 
         ''' <summary>
         ''' Defines the mruColors
@@ -144,7 +144,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property WS As Shortener
             Get
-                Return shortenerField
+                Return m_shortener
             End Get
         End Property
 
@@ -258,7 +258,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="createWorkSheet">If true, a default worksheet with the name 'Sheet1' will be crated and set as current worksheet.</param>
         Public Sub New(createWorkSheet As Boolean)
-            Init()
+            Call Init()
+
             If createWorkSheet Then
                 AddWorksheet("Sheet1")
             End If
@@ -305,7 +306,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
         Public Sub AddMruColor(color As String)
-            If Not Equals(color, Nothing) AndAlso color.Length = 6 Then
+            If color IsNot Nothing AndAlso color.Length = 6 Then
                 color = "FF" & color
             End If
             Style.Fill.ValidateColor(color, True)
@@ -316,6 +317,8 @@ Namespace XLSX.Writer
         ''' Gets the MRU color list
         ''' </summary>
         ''' <returns>Immutable list of color values.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMruColors() As IReadOnlyList(Of String)
             Return mruColors
         End Function
@@ -323,6 +326,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Clears the MRU color list
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ClearMruColors()
             mruColors.Clear()
         End Sub
@@ -374,7 +379,7 @@ Namespace XLSX.Writer
             Dim newWs As Worksheet = New Worksheet(name, number, Me)
             currentWorksheetField = newWs
             Worksheets.Add(newWs)
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
+            m_shortener.SetCurrentWorksheetInternal(currentWorksheetField)
         End Sub
 
         ''' <summary>
@@ -578,7 +583,7 @@ Namespace XLSX.Writer
             If currentWorksheetField Is Nothing Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
             End If
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
+            m_shortener.SetCurrentWorksheetInternal(currentWorksheetField)
             Return currentWorksheetField
         End Function
 
@@ -592,7 +597,7 @@ Namespace XLSX.Writer
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
             currentWorksheetField = Worksheets.Item(worksheetIndex)
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
+            m_shortener.SetCurrentWorksheetInternal(currentWorksheetField)
             Return currentWorksheetField
         End Function
 
@@ -606,7 +611,7 @@ Namespace XLSX.Writer
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
             End If
             currentWorksheetField = Worksheets.Item(index)
-            shortenerField.SetCurrentWorksheetInternal(worksheet)
+            m_shortener.SetCurrentWorksheetInternal(worksheet)
         End Sub
 
         ''' <summary>
@@ -847,7 +852,7 @@ Namespace XLSX.Writer
         Private Sub Init()
             _Worksheets = New List(Of Worksheet)()
             workbookMetadataField = New Metadata()
-            shortenerField = New Shortener(Me)
+            m_shortener = New Shortener(Me)
         End Sub
 
         ''' <summary>
