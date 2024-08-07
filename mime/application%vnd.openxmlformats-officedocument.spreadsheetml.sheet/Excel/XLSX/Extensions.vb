@@ -55,10 +55,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports XlsxFile = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
@@ -133,5 +132,10 @@ Namespace XLSX
         Public Function FirstSheet(xlsx As XlsxFile) As csv
             Return xlsx.GetTable(sheetName:=xlsx.SheetNames.FirstOrDefault)
         End Function
+
+        <Extension>
+        Public Sub WriteSheetTable(sheet As Worksheet, data As csv)
+
+        End Sub
     End Module
 End Namespace

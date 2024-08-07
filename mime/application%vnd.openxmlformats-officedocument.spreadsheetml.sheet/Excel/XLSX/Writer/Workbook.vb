@@ -97,17 +97,17 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the filename
         ''' </summary>
-        Private filenameField As String
+        Private m_filename As String
 
         ''' <summary>
         ''' Defines the currentWorksheet
         ''' </summary>
-        Private currentWorksheetField As Worksheet
+        Private m_currentWorksheet As Worksheet
 
         ''' <summary>
         ''' Defines the workbookMetadata
         ''' </summary>
-        Private workbookMetadataField As Metadata
+        Private m_workbookMetadata As Metadata
 
         ''' <summary>
         ''' Defines the workbookProtectionPassword
@@ -153,7 +153,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property CurrentWorksheet As Worksheet
             Get
-                Return currentWorksheetField
+                Return m_currentWorksheet
             End Get
         End Property
 
@@ -162,10 +162,10 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property Filename As String
             Get
-                Return filenameField
+                Return m_filename
             End Get
             Set(value As String)
-                filenameField = value
+                m_filename = value
             End Set
         End Property
 
@@ -195,10 +195,10 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property WorkbookMetadata As Metadata
             Get
-                Return workbookMetadataField
+                Return m_workbookMetadata
             End Get
             Set(value As Metadata)
-                workbookMetadataField = value
+                m_workbookMetadata = value
             End Set
         End Property
 
@@ -280,8 +280,11 @@ Namespace XLSX.Writer
         ''' <param name="sheetName">Name of the first worksheet. The name will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(filename As String, sheetName As String)
             Init()
-            filenameField = filename
-            AddWorksheet(sheetName, True)
+            m_filename = filename
+
+            If Not sheetName.StringEmpty() Then
+                Call AddWorksheet(sheetName, True)
+            End If
         End Sub
 
         ''' <summary>
@@ -292,7 +295,7 @@ Namespace XLSX.Writer
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(filename As String, sheetName As String, sanitizeSheetName As Boolean)
             Init()
-            filenameField = filename
+            m_filename = filename
             If sanitizeSheetName Then
                 AddWorksheet(Worksheet.SanitizeWorksheetName(sheetName, Me))
             Else
@@ -372,9 +375,9 @@ Namespace XLSX.Writer
             Next
             Dim number As Integer = GetNextWorksheetId()
             Dim newWs As Worksheet = New Worksheet(name, number, Me)
-            currentWorksheetField = newWs
+            m_currentWorksheet = newWs
             Worksheets.Add(newWs)
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
+            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
         End Sub
 
         ''' <summary>
@@ -419,7 +422,7 @@ Namespace XLSX.Writer
                 Next
             End If
             worksheet.SheetID = GetNextWorksheetId()
-            currentWorksheetField = worksheet
+            m_currentWorksheet = worksheet
             Worksheets.Add(worksheet)
             worksheet.WorkbookReference = Me
         End Sub
@@ -478,7 +481,7 @@ Namespace XLSX.Writer
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
             End If
             Dim index = Worksheets.IndexOf(worksheetToRemove)
-            Dim resetCurrentWorksheet = worksheetToRemove Is currentWorksheetField
+            Dim resetCurrentWorksheet = worksheetToRemove Is m_currentWorksheet
             RemoveWorksheet(index, resetCurrentWorksheet)
         End Sub
 
@@ -491,7 +494,7 @@ Namespace XLSX.Writer
             If index < 0 OrElse index >= Worksheets.Count Then
                 Throw New WorksheetException("The worksheet index " & index.ToString() & " is out of range")
             End If
-            Dim resetCurrentWorksheet = Worksheets.Item(index) Is currentWorksheetField
+            Dim resetCurrentWorksheet = Worksheets.Item(index) Is m_currentWorksheet
             RemoveWorksheet(index, resetCurrentWorksheet)
         End Sub
 
@@ -530,10 +533,10 @@ Namespace XLSX.Writer
         ''' <param name="fileName">filename of the saved workbook.</param>
         Public Sub SaveAs(fileName As String)
             Dim backup = fileName
-            filenameField = fileName
+            m_filename = fileName
             Dim l As LowLevel = New LowLevel(Me)
             l.Save()
-            filenameField = backup
+            m_filename = backup
         End Sub
 
         ''' <summary>
@@ -543,10 +546,10 @@ Namespace XLSX.Writer
         ''' <returns>Task object (void).</returns>
         Public Async Function SaveAsAsync(fileName As String) As Task
             Dim backup = fileName
-            filenameField = fileName
+            m_filename = fileName
             Dim l As LowLevel = New LowLevel(Me)
             Await l.SaveAsync()
-            filenameField = backup
+            m_filename = backup
         End Function
 
         ''' <summary>
@@ -574,12 +577,12 @@ Namespace XLSX.Writer
         ''' <param name="name">Name of the worksheet.</param>
         ''' <returns>Returns the current worksheet.</returns>
         Public Function SetCurrentWorksheet(name As String) As Worksheet
-            currentWorksheetField = Worksheets.FirstOrDefault(Function(w) Equals(w.SheetName, name))
-            If currentWorksheetField Is Nothing Then
+            m_currentWorksheet = Worksheets.FirstOrDefault(Function(w) Equals(w.SheetName, name))
+            If m_currentWorksheet Is Nothing Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
             End If
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
-            Return currentWorksheetField
+            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
+            Return m_currentWorksheet
         End Function
 
         ''' <summary>
@@ -591,9 +594,9 @@ Namespace XLSX.Writer
             If worksheetIndex < 0 OrElse worksheetIndex > Worksheets.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
-            currentWorksheetField = Worksheets.Item(worksheetIndex)
-            shortenerField.SetCurrentWorksheetInternal(currentWorksheetField)
-            Return currentWorksheetField
+            m_currentWorksheet = Worksheets.Item(worksheetIndex)
+            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
+            Return m_currentWorksheet
         End Function
 
         ''' <summary>
@@ -605,7 +608,7 @@ Namespace XLSX.Writer
             If index < 0 Then
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
             End If
-            currentWorksheetField = Worksheets.Item(index)
+            m_currentWorksheet = Worksheets.Item(index)
             shortenerField.SetCurrentWorksheetInternal(worksheet)
         End Sub
 
@@ -818,13 +821,13 @@ Namespace XLSX.Writer
                     Worksheets.Item(i).SheetID = i + 1
                 Next
                 If resetCurrentWorksheet Then
-                    currentWorksheetField = Worksheets.Item(Worksheets.Count - 1)
+                    m_currentWorksheet = Worksheets.Item(Worksheets.Count - 1)
                 End If
                 If selectedWorksheetField = index OrElse selectedWorksheetField > Worksheets.Count - 1 Then
                     selectedWorksheetField = Worksheets.Count - 1
                 End If
             Else
-                currentWorksheetField = Nothing
+                m_currentWorksheet = Nothing
                 selectedWorksheetField = 0
             End If
             ValidateWorksheets()
@@ -846,7 +849,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Private Sub Init()
             _Worksheets = New List(Of Worksheet)()
-            workbookMetadataField = New Metadata()
+            m_workbookMetadata = New Metadata()
             shortenerField = New Shortener(Me)
         End Sub
 
