@@ -60,8 +60,8 @@ Namespace XLSX.Writer
     ''' <summary>
     ''' Struct representing the cell address as column and row (zero based)
     ''' </summary>
-    Public Structure Address
-        Implements IEquatable(Of Address), IComparable(Of Address)
+    Public Structure Address : Implements IEquatable(Of Address), IComparable(Of Address)
+
         ''' <summary>
         ''' Column number (zero based)
         ''' </summary>

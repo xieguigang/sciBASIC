@@ -73,7 +73,7 @@ Module Module1
     End Sub
 
     Sub zip_test()
-        Dim xlsx As New ZipStream("E:\biodeep\biodeepdb_v3\biodeepdb_v3\workspace\202408-MCE\all.xlsx")
+        Dim xlsx As New ZipStream("E:\biodeep\biodeepdb_v3\biodeepdb_v3\workspace\202408-MCE\all.xlsx", is_readonly:=True)
 
         Pause()
     End Sub

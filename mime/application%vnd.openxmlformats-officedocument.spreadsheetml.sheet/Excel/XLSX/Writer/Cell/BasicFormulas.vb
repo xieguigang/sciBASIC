@@ -55,7 +55,6 @@
 #End Region
 
 Imports System.Globalization
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
 
 Namespace XLSX.Writer
 

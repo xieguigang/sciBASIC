@@ -65,17 +65,17 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the number
         ''' </summary>
-        Private numberField As Integer
+        Private m_number As Integer
 
         ''' <summary>
         ''' Defines the columnAddress
         ''' </summary>
-        Private columnAddressField As String
+        Private m_columnAddress As String
 
         ''' <summary>
         ''' Defines the width
         ''' </summary>
-        Private widthField As Single
+        Private m_width As Single
 
         ''' <summary>
         ''' Gets or sets the ColumnAddress
@@ -83,14 +83,14 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property ColumnAddress As String
             Get
-                Return columnAddressField
+                Return m_columnAddress
             End Get
             Set(value As String)
                 If String.IsNullOrEmpty(value) Then
                     Throw New RangeException("A general range exception occurred", "The passed address was null or empty")
                 End If
-                numberField = Cell.ResolveColumn(value)
-                columnAddressField = value.ToUpper()
+                m_number = Cell.ResolveColumn(value)
+                m_columnAddress = value.ToUpper()
             End Set
         End Property
 
@@ -112,11 +112,11 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property Number As Integer
             Get
-                Return numberField
+                Return m_number
             End Get
             Set(value As Integer)
-                columnAddressField = Cell.ResolveColumnAddress(value)
-                numberField = value
+                m_columnAddress = Cell.ResolveColumnAddress(value)
+                m_number = value
             End Set
         End Property
 
@@ -126,13 +126,13 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property Width As Single
             Get
-                Return widthField
+                Return m_width
             End Get
             Set(value As Single)
                 If value < Worksheet.MIN_COLUMN_WIDTH OrElse value > Worksheet.MAX_COLUMN_WIDTH Then
                     Throw New RangeException("A general range exception occurred", "The passed column width is out of range (" & Worksheet.MIN_COLUMN_WIDTH.ToString() & " to " & Worksheet.MAX_COLUMN_WIDTH.ToString() & ")")
                 End If
-                widthField = value
+                m_width = value
             End Set
         End Property
 
@@ -168,10 +168,10 @@ Namespace XLSX.Writer
         Friend Function Copy() As Column
             Dim lCopy As Column = New Column()
             lCopy.IsHidden = IsHidden
-            lCopy.Width = widthField
+            lCopy.Width = m_width
             lCopy.HasAutoFilter = HasAutoFilter
-            lCopy.columnAddressField = columnAddressField
-            lCopy.numberField = numberField
+            lCopy.m_columnAddress = m_columnAddress
+            lCopy.m_number = m_number
             Return lCopy
         End Function
     End Class

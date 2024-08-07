@@ -88,7 +88,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace XLSX.Writer
 
@@ -1420,10 +1420,10 @@ Namespace XLSX.Writer
         Friend Sub RecalculateColumns()
             Dim columnsToDelete As List(Of Integer) = New List(Of Integer)()
             For Each col In columnsField
-                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso stdNum.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
+                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso std.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
                     columnsToDelete.Add(col.Key)
                 End If
-                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso stdNum.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
+                If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso std.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
                     columnsToDelete.Add(col.Key)
                 End If
             Next
@@ -1603,7 +1603,7 @@ Namespace XLSX.Writer
                 c.IsHidden = True
                 columnsField.Add(columnNumber, c)
             End If
-            If Not columnsField(columnNumber).IsHidden AndAlso stdNum.Abs(columnsField(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not columnsField(columnNumber).HasAutoFilter Then
+            If Not columnsField(columnNumber).IsHidden AndAlso std.Abs(columnsField(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not columnsField(columnNumber).HasAutoFilter Then
                 columnsField.Remove(columnNumber)
             End If
         End Sub
