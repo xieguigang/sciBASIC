@@ -80,9 +80,14 @@ Namespace XLSX.XML._rels
             Return document.GetXml
         End Function
 
+        ''' <summary>
+        ''' load xml file
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         Public Shared Function Load(file As String) As rels
             Return New rels With {
-                .document = file.LoadXml(Of OpenXml.rels)
+                .document = file.SolveStream.LoadFromXml(Of OpenXml.rels)
             }
         End Function
 

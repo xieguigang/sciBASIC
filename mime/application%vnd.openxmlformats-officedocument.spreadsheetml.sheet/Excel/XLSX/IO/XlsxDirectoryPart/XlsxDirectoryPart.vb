@@ -106,6 +106,14 @@ Namespace XLSX.Model.Directory
             Return fs.ReadAllText($"/{subdir}/{name}")
         End Function
 
+        Protected Sub scanXmlFiles(parseText As Action(Of String, String))
+
+        End Sub
+
+        Protected Sub scanFiles(filter As String, parseText As Action(Of String, String))
+
+        End Sub
+
         Public Overrides Function ToString() As String
             Return "/" & subdir
         End Function

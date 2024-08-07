@@ -59,15 +59,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML._rels
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
-Imports Microsoft.VisualBasic.Text
 
 Namespace XLSX.Model.Directory
 
@@ -77,7 +74,7 @@ Namespace XLSX.Model.Directory
         ''' Key都是格式``sheet%d``的字符串
         ''' </summary>
         ''' <returns></returns>
-        Public Property worksheets As Dictionary(Of String, XML.xl.worksheets.worksheet)
+        Public Property worksheets As New Dictionary(Of String, XML.xl.worksheets.worksheet)
         Public Property _rels As Dictionary(Of String, rels)
 
         Friend Sub New(pkg As ZipPackage)
@@ -123,25 +120,8 @@ Namespace XLSX.Model.Directory
             ' 2017-12-18 发现有时候会出现sheetID不一致的情况，这种情况可能会出现于用户手动的从Excel电子表格文件之中删除了前面的几个表
             ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
             ' r:id是一致的
-            worksheets = (ls - l - "*.xml" <= folder) _
-                .Select(Function(path) (path:=path, path.LoadXml(Of worksheet))) _
-                .ToDictionary(Function(page) page.path.BaseName,
-                              Function(page) page.Item2)
-            _rels = (ls - l - "*.rels" <= (folder & "/_rels")) _
-                .ToDictionary(Function(path) path.BaseName,
-                              Function(path)
-                                  Return rels.Load(path)
-                              End Function)
-        End Sub
-
-        Public Sub Save()
-            Dim path$
-
-            For Each sheet In worksheets
-                path = $"{folder}/{sheet.Key}.xml"
-                sheet.Value.ToXML _
-                    .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
-            Next
+            Call scanXmlFiles(Sub(name, xml) worksheets.Add(name.BaseName, xml.LoadFromXml(Of worksheet)))
+            Call scanFiles("*.rels", Sub(name, xml) _rels.Add(name.BaseName, rels.Load(xml)))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
