@@ -71,11 +71,28 @@ Namespace ApplicationServices.Zip
 
         Dim disposedValue As Boolean
         Dim virtual_fs As FileSystemTree
+        Dim s As Stream
 
         Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
         Public ReadOnly Property zip As ZipArchive
 
+        ''' <summary>
+        ''' Gets the absolute path of the file opened in the FileStream.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property filepath As String
+            Get
+                If TypeOf s Is FileStream Then
+                    Return DirectCast(s, FileStream).Name
+                Else
+                    ' maybe in-memory stream, no file name
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         Sub New(file As Stream, Optional is_readonly As Boolean = False)
+            s = file
             [readonly] = is_readonly
 
             If is_readonly Then
