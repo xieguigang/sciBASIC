@@ -57,6 +57,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace XLSX.Model.Directory
 
@@ -110,10 +111,42 @@ Namespace XLSX.Model.Directory
             Dim files = FileSystemTree.BuildTree(fs.GetFiles)
             files = FileSystemTree.GetFile(files, subdir & "/")
 
+            For Each name As String In files.Files.Keys
+                If name.ExtensionSuffix("xml") Then
+                    Dim path As String = files.Files(name).FullName
+                    Dim xml As String = fs.ReadAllText(path)
+
+                    Call parseText(name, xml)
+                End If
+            Next
         End Sub
 
         Protected Sub scanFiles(filter As String, parseText As Action(Of String, String))
+            Dim files = FileSystemTree.BuildTree(fs.GetFiles)
+            Dim tokens = filter.Split("/"c)
+            Dim opt As New Search
+            Dim filterOpt = ShellSyntax.wildcards(tokens.Last)
 
+            opt = opt - filterOpt
+            files = FileSystemTree.GetFile(files, subdir & "/")
+
+            If tokens.Length > 1 Then
+                ' in current subdir
+                For Each dir As String In tokens.Take(tokens.Length - 1)
+                    files = files.Files(dir)
+                Next
+            End If
+
+            Dim test = opt.MakeFilter
+
+            For Each name As String In files.Files.Keys
+                If test(name) Then
+                    Dim path As String = files.Files(name).FullName
+                    Dim xml As String = fs.ReadAllText(path)
+
+                    Call parseText(name, xml)
+                End If
+            Next
         End Sub
 
         Public Overrides Function ToString() As String
