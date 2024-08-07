@@ -133,6 +133,10 @@ Namespace XLSX.Model.Directory
             If tokens.Length > 1 Then
                 ' in current subdir
                 For Each dir As String In tokens.Take(tokens.Length - 1)
+                    If Not files.Files.ContainsKey(dir) Then
+                        Return
+                    End If
+
                     files = files.Files(dir)
                 Next
             End If
