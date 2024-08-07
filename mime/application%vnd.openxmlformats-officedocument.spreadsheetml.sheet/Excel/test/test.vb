@@ -62,27 +62,28 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Module test
 
     Sub Main()
-        zip_test()
         testWriter()
+        zip_test()
 
 
-        stylingTest()
+
+        ' stylingTest()
         styleModelTest()
 
         Call IOtest()
         ' Call test()
     End Sub
 
-    Sub stylingTest()
-        Dim file = Excel.XLSX.CreateNew
-        Dim style4 = Styling.ColorScale("black", "red", "green", "blue", "yellow")
+    'Sub stylingTest()
+    '    Dim file = Excel.XLSX.CreateNew
+    '    Dim style4 = Styling.ColorScale("black", "red", "green", "blue", "yellow")
 
-        Call file.SetColorScaleStyles("Sheet1", "A1:A100", style4)
+    '    Call file.SetColorScaleStyles("Sheet1", "A1:A100", style4)
 
-        Call file.SaveTo("D:\test.xlsx")
+    '    Call file.SaveTo("D:\test.xlsx")
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 
     Sub styleModelTest()
         Dim font = Styling.StyleFont(FontFace.BookmanOldStyle, 55, "yellow", True, True)

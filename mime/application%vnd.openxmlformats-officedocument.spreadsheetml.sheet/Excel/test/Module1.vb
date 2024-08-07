@@ -64,16 +64,16 @@ Module Module1
 
         workbook.AddWorksheet("page_nooote")
         workbook.CurrentWorksheet.AddNextCell("Test22222") ' Add cell A1
-        workbook.CurrentWorksheet.AddNextCell(4323355.2) ' Add cell B1
+        workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Style.Fill With {.BackgroundColor = "FFFFBB66"}}) ' Add cell B1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         workbook.Save()
 
-        Pause()
+        ' Pause()
     End Sub
 
     Sub zip_test()
-        Dim xlsx As New ZipStream("E:\biodeep\biodeepdb_v3\biodeepdb_v3\workspace\202408-MCE\all.xlsx", is_readonly:=True)
+        Dim xlsx As New ZipStream("basic.xlsx", is_readonly:=True)
 
         Pause()
     End Sub

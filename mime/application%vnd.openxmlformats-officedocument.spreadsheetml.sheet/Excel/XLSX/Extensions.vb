@@ -77,17 +77,6 @@ Namespace XLSX
         End Property
 
         ''' <summary>
-        ''' Create a new empty excel xlsx file.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function CreateNew() As XlsxFile
-            With TempFileSystem.GetAppSysTempFile(".xlsx", App.PID)
-                Call My.Resources._New.FlushStream(.ByRef)
-                Return File.Open(path:= .ByRef)
-            End With
-        End Function
-
-        ''' <summary>
         ''' 枚举出当前的这个Excel文件之中的所有的表格数据
         ''' </summary>
         ''' <param name="xlsx"></param>

@@ -254,10 +254,12 @@ Imports System.Text.RegularExpressions
 Namespace XLSX.Writer
 
     ''' <summary>
-    ''' Class representing a Style with sub classes within a style sheet. An instance of this class is only a container for the different sub-classes. These sub-classes contain the actual styling information
+    ''' Class representing a Style with sub classes within a style sheet. An instance of this class
+    ''' is only a container for the different sub-classes. These sub-classes contain the actual
+    ''' styling information
     ''' </summary>
-    Public Class Style
-        Inherits AbstractStyle
+    Public Class Style : Inherits AbstractStyle
+
         ''' <summary>
         ''' Defines the internalStyle
         ''' </summary>
@@ -1096,8 +1098,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Class representing a Fill (background) entry. The Fill entry is used to define background colors and fill patterns
         ''' </summary>
-        Public Class Fill
-            Inherits AbstractStyle
+        Public Class Fill : Inherits AbstractStyle
+
             ''' <summary>
             ''' Default Color (foreground or background)
             ''' </summary>
@@ -1359,8 +1361,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Class representing a Font entry. The Font entry is used to define text formatting
         ''' </summary>
-        Public Class Font
-            Inherits AbstractStyle
+        Public Class Font : Inherits AbstractStyle
+
             ''' <summary>
             ''' Default font family as constant
             ''' </summary>
