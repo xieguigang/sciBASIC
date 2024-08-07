@@ -56,6 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -134,8 +135,16 @@ Namespace XLSX
         End Function
 
         <Extension>
-        Public Sub WriteSheetTable(sheet As Workbook, data As csv)
+        Public Sub WriteSheetTable(workbook As Workbook, data As csv)
+            Dim sheet As Worksheet = workbook.CurrentWorksheet
 
+            For Each row As RowObject In data.AsEnumerable
+                For Each col As String In row
+                    Call sheet.AddNextCell(col)
+                Next
+
+                Call sheet.GoToNextRow()
+            Next
         End Sub
     End Module
 End Namespace
