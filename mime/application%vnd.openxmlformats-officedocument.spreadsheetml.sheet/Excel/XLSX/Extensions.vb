@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c721cb6b4f9b912c87e629ad060c5046, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::734a0cdd91baadfce6c0eb4f3452034e, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 61 (66.30%)
-    ' Comment Lines: 19 (20.65%)
-    '    - Xml Docs: 94.74%
+    '   Total Lines: 81
+    '    Code Lines: 55 (67.90%)
+    ' Comment Lines: 15 (18.52%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 12 (13.04%)
-    '     File Size: 3.40 KB
+    '   Blank Lines: 11 (13.58%)
+    '     File Size: 3.00 KB
 
 
     '     Module Extensions
     ' 
     '         Properties: Sheet1
     ' 
-    '         Function: CreateNew, EnumerateTables, FirstSheet, GetSheetNames, ReadTableAuto
+    '         Function: EnumerateTables, FirstSheet, GetSheetNames, ReadTableAuto
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,10 +55,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports XlsxFile = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
 
@@ -75,17 +75,6 @@ Namespace XLSX
                 Return NameOf(Sheet1)
             End Get
         End Property
-
-        ''' <summary>
-        ''' Create a new empty excel xlsx file.
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function CreateNew() As XlsxFile
-            With TempFileSystem.GetAppSysTempFile(".xlsx", App.PID)
-                Call My.Resources._New.FlushStream(.ByRef)
-                Return File.Open(path:= .ByRef)
-            End With
-        End Function
 
         ''' <summary>
         ''' 枚举出当前的这个Excel文件之中的所有的表格数据
@@ -144,5 +133,18 @@ Namespace XLSX
         Public Function FirstSheet(xlsx As XlsxFile) As csv
             Return xlsx.GetTable(sheetName:=xlsx.SheetNames.FirstOrDefault)
         End Function
+
+        <Extension>
+        Public Sub WriteSheetTable(workbook As Workbook, data As csv)
+            Dim sheet As Worksheet = workbook.CurrentWorksheet
+
+            For Each row As RowObject In data.AsEnumerable
+                For Each col As String In row
+                    Call sheet.AddNextCell(col)
+                Next
+
+                Call sheet.GoToNextRow()
+            Next
+        End Sub
     End Module
 End Namespace

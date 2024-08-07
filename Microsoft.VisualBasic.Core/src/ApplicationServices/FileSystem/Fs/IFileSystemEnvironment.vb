@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac34bba72da0d90fd97360f25b3553a7, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\IFileSystemEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::19f747a39f7cd9977be667e7e67aea9c, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\IFileSystemEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 18 (20.00%)
-    ' Comment Lines: 63 (70.00%)
+    '   Total Lines: 92
+    '    Code Lines: 20 (21.74%)
+    ' Comment Lines: 63 (68.48%)
     '    - Xml Docs: 96.83%
     ' 
-    '   Blank Lines: 9 (10.00%)
-    '     File Size: 3.07 KB
+    '   Blank Lines: 9 (9.78%)
+    '     File Size: 3.24 KB
 
 
     '     Interface IFileSystemEnvironment
@@ -58,14 +58,16 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Zip
+Imports Directory = Microsoft.VisualBasic.FileIO.Directory
 
 Namespace ApplicationServices
 
     ''' <summary>
     ''' an abstract interface for union filesystem:
     ''' 
-    ''' 1. local filesystem
-    ''' 2. zip archive
+    ''' 1. local filesystem: <see cref="Directory"/>
+    ''' 2. zip archive: <see cref="ZipStream"/>
     ''' 3. HDS streampack filesystem
     ''' 
     ''' </summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66194f8c798659c6a823bef58d09ec3b, gr\PdfImage\PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::4226027dc62bbc4fc47c49f2e573d713, gr\PdfImage\PdfGraphics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 231 (23.43%)
-    '     File Size: 41.66 KB
+    '     File Size: 41.65 KB
 
 
     ' Class PdfGraphics

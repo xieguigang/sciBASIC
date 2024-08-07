@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e597fae89faa802ff51afc46f797d496, mime\application%rdf+xml\RDFProperty.vb"
+﻿#Region "Microsoft.VisualBasic::0dca58c11282e1b9b981a08528e1228e, mime\application%rdf+xml\RDFProperty.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 65 (60.75%)
-    ' Comment Lines: 24 (22.43%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 142
+    '    Code Lines: 87 (61.27%)
+    ' Comment Lines: 31 (21.83%)
+    '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 18 (16.82%)
-    '     File Size: 3.38 KB
+    '   Blank Lines: 24 (16.90%)
+    '     File Size: 4.07 KB
 
 
     ' Class RDFProperty
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     ' 
+    ' Class RDFType
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: GetTypeName
     ' 
     ' Class EntityProperty
     ' 

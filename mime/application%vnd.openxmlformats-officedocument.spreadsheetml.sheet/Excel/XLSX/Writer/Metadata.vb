@@ -76,10 +76,11 @@ Namespace XLSX.Writer
     ''' Class representing the meta data of a workbook
     ''' </summary>
     Public Class Metadata
+
         ''' <summary>
         ''' Defines the applicationVersion
         ''' </summary>
-        Private applicationVersionField As String
+        Private m_applicationVersion As String
 
         ''' <summary>
         ''' Gets or sets the application which created the workbook. Default is PicoXLSX
@@ -91,10 +92,10 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property ApplicationVersion As String
             Get
-                Return applicationVersionField
+                Return m_applicationVersion
             End Get
             Set(value As String)
-                applicationVersionField = value
+                m_applicationVersion = value
                 CheckVersion()
             End Set
         End Property
@@ -153,8 +154,9 @@ Namespace XLSX.Writer
         ''' Initializes a new instance of the <see cref="Metadata"/> class
         ''' </summary>
         Public Sub New()
-            Application = "PicoXLSX"
             Dim vi As Version = Assembly.GetExecutingAssembly().GetName().Version
+
+            Application = "PicoXLSX(https://github.com/rabanti-github/PicoXLSX); scibasic.net(https://github.com/xieguigang/sciBASIC)"
             ApplicationVersion = ParseVersion(vi.Major, vi.Minor, vi.Revision, vi.Build)
         End Sub
 
@@ -162,11 +164,13 @@ Namespace XLSX.Writer
         ''' Checks the format of the passed version string. Allowed values are null, empty and fractions from 0.0  to 99999.99999 (max. number of digits before and after the period is 5)
         ''' </summary>
         Private Sub CheckVersion()
-            If String.IsNullOrEmpty(applicationVersionField) Then
+            If String.IsNullOrEmpty(m_applicationVersion) Then
                 Return
             End If
-            Dim split = applicationVersionField.Split("."c)
+
+            Dim split = m_applicationVersion.Split("."c)
             Dim state = True
+
             If split.Length <> 2 Then
                 state = False
             Else
@@ -178,13 +182,15 @@ Namespace XLSX.Writer
                 End If
             End If
             If Not state Then
-                Throw New FormatException("The format of the version in the meta data is wrong (" & applicationVersionField & "). Should be in the format and a range from '0.0' to '99999.99999'")
+                Throw New FormatException("The format of the version in the meta data is wrong (" & m_applicationVersion & "). Should be in the format and a range from '0.0' to '99999.99999'")
             End If
         End Sub
 
         ''' <summary>
-        ''' Method to parse a common version (major.minor.revision.build) into the compatible format (major.minor). The minimum value is 0.0 and the maximum value is 99999.99999<br></br>
-        ''' The minor, revision and build number are joined if possible. If the number is too long, the additional characters will be removed from the right side down to five characters (e.g. 785563 will be 78556)
+        ''' Method to parse a common version (major.minor.revision.build) into the compatible format (major.minor). 
+        ''' The minimum value is 0.0 and the maximum value is 99999.99999<br></br>
+        ''' The minor, revision and build number are joined if possible. If the number is too long, the additional 
+        ''' characters will be removed from the right side down to five characters (e.g. 785563 will be 78556)
         ''' </summary>
         ''' <param name="major">Major number from 0 to 99999.</param>
         ''' <param name="minor">Minor number.</param>

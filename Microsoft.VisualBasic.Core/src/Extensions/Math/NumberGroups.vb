@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c12b8b10673daf92d6b0fec0572f431e, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::3c6289093434dc434189b3a146fa17ba, Microsoft.VisualBasic.Core\src\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 467
-    '    Code Lines: 303 (64.88%)
-    ' Comment Lines: 109 (23.34%)
-    '    - Xml Docs: 79.82%
+    '   Total Lines: 440
+    '    Code Lines: 280 (63.64%)
+    ' Comment Lines: 107 (24.32%)
+    '    - Xml Docs: 80.37%
     ' 
-    '   Blank Lines: 55 (11.78%)
-    '     File Size: 18.44 KB
+    '   Blank Lines: 53 (12.05%)
+    '     File Size: 17.28 KB
 
 
     '     Module NumberGroups

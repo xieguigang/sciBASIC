@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::757da49471bf62d821a1222cfcf958d9, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::0e95d9a5015c4d93d66074350c8cf5e6, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 59 (72.84%)
-    ' Comment Lines: 11 (13.58%)
+    '   Total Lines: 121
+    '    Code Lines: 91 (75.21%)
+    ' Comment Lines: 11 (9.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (13.58%)
-    '     File Size: 2.95 KB
+    '   Blank Lines: 19 (15.70%)
+    '     File Size: 4.37 KB
 
 
     ' Module CorrelationNetwork
     ' 
-    '     Function: (+2 Overloads) BuildNetwork, HowStrong
+    '     Function: (+3 Overloads) BuildNetwork, HowStrong
     ' 
     ' /********************************************************************************/
 

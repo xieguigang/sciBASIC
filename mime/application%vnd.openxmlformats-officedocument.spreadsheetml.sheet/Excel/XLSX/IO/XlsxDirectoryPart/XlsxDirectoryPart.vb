@@ -56,6 +56,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace XLSX.Model.Directory
 
@@ -83,26 +85,76 @@ Namespace XLSX.Model.Directory
 
     Public MustInherit Class XlsxDirectoryPart
 
-        Public ReadOnly Property folder As String
+        Protected ReadOnly fs As IFileSystemEnvironment
+        Protected ReadOnly subdir As String
 
-        Sub New(workdir$)
-            folder = $"{workdir}/{_name()}"
+        Sub New(workdir As IFileSystemEnvironment, Optional parent As String = "/")
+            fs = workdir
+            subdir = parent & "/" & _name()
 
-            If Not workdir.StringEmpty Then
-                Call _loadContents()
-            End If
+            Call _loadContents()
         End Sub
 
         Protected MustOverride Function _name() As String
         Protected MustOverride Sub _loadContents()
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Protected Function InternalFileName(name As String) As String
-            Return $"{folder}/{name}".GetFullPath
+        Protected Function CheckInternalFileExists(name As String) As Boolean
+            Return fs.FileExists($"/{subdir}/{name}")
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Protected Function ReadInternalFileText(name As String) As String
+            Return fs.ReadAllText($"/{subdir}/{name}")
+        End Function
+
+        Protected Sub scanXmlFiles(parseText As Action(Of String, String))
+            Dim files = FileSystemTree.BuildTree(fs.GetFiles)
+            files = FileSystemTree.GetFile(files, subdir & "/")
+
+            For Each name As String In files.Files.Keys
+                If name.ExtensionSuffix("xml") Then
+                    Dim path As String = files.Files(name).FullName
+                    Dim xml As String = fs.ReadAllText(path)
+
+                    Call parseText(name, xml)
+                End If
+            Next
+        End Sub
+
+        Protected Sub scanFiles(filter As String, parseText As Action(Of String, String))
+            Dim files = FileSystemTree.BuildTree(fs.GetFiles)
+            Dim tokens = filter.Split("/"c)
+            Dim opt As New Search
+            Dim filterOpt = ShellSyntax.wildcards(tokens.Last)
+
+            opt = opt - filterOpt
+            files = FileSystemTree.GetFile(files, subdir & "/")
+
+            If tokens.Length > 1 Then
+                ' in current subdir
+                For Each dir As String In tokens.Take(tokens.Length - 1)
+                    If Not files.Files.ContainsKey(dir) Then
+                        Return
+                    End If
+
+                    files = files.Files(dir)
+                Next
+            End If
+
+            Dim test = opt.MakeFilter
+
+            For Each name As String In files.Files.Keys
+                If test(name) Then
+                    Dim path As String = files.Files(name).FullName
+                    Dim xml As String = fs.ReadAllText(path)
+
+                    Call parseText(name, xml)
+                End If
+            Next
+        End Sub
+
         Public Overrides Function ToString() As String
-            Return folder
+            Return "/" & subdir
         End Function
     End Class
 End Namespace

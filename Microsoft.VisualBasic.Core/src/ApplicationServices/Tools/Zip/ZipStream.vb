@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac8ac1ba51d36ee501cf692f17ce4e90, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::e2e134b7dec3900d7711d49cdc22d979, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 115 (61.50%)
-    ' Comment Lines: 36 (19.25%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 204
+    '    Code Lines: 126 (61.76%)
+    ' Comment Lines: 41 (20.10%)
+    '    - Xml Docs: 58.54%
     ' 
-    '   Blank Lines: 36 (19.25%)
-    '     File Size: 7.09 KB
+    '   Blank Lines: 37 (18.14%)
+    '     File Size: 7.66 KB
 
 
     '     Class ZipStream
     ' 
-    '         Properties: [readonly], zip
+    '         Properties: [readonly], filepath, zip
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -71,11 +71,28 @@ Namespace ApplicationServices.Zip
 
         Dim disposedValue As Boolean
         Dim virtual_fs As FileSystemTree
+        Dim s As Stream
 
         Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
         Public ReadOnly Property zip As ZipArchive
 
+        ''' <summary>
+        ''' Gets the absolute path of the file opened in the FileStream.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property filepath As String
+            Get
+                If TypeOf s Is FileStream Then
+                    Return DirectCast(s, FileStream).Name
+                Else
+                    ' maybe in-memory stream, no file name
+                    Return Nothing
+                End If
+            End Get
+        End Property
+
         Sub New(file As Stream, Optional is_readonly As Boolean = False)
+            s = file
             [readonly] = is_readonly
 
             If is_readonly Then
@@ -100,6 +117,19 @@ Namespace ApplicationServices.Zip
         End Sub
 
         ''' <summary>
+        ''' debug view of the stream source
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            If TypeOf s Is FileStream Then
+                Return DirectCast(s, FileStream).Name
+            Else
+                ' maybe in-memory stream, no file name
+                Return $"buffer_stream://&H_{GetHashCode.ToHexString}"
+            End If
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="path"></param>
@@ -114,6 +144,10 @@ Namespace ApplicationServices.Zip
             End If
 
             If [readonly] Then
+                Return Nothing
+            ElseIf Not allow_new Then
+                ' entry is missing, andalso not allow create 
+                ' then return nothing if the required archive entry could not be found
                 Return Nothing
             Else
                 ' create new?

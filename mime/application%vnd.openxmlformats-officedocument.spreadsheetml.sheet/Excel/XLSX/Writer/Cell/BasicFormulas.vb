@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c8364591be76ff733ee55883ef41c18, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\BasicFormulas.vb"
+﻿#Region "Microsoft.VisualBasic::40ec146d940b1e12283a80d8771d3b17, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\BasicFormulas.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 317
-    '    Code Lines: 142 (44.79%)
-    ' Comment Lines: 152 (47.95%)
+    '   Total Lines: 316
+    '    Code Lines: 141 (44.62%)
+    ' Comment Lines: 152 (48.10%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (7.26%)
-    '     File Size: 18.28 KB
+    '   Blank Lines: 23 (7.28%)
+    '     File Size: 18.21 KB
 
 
     '     Class BasicFormulas
@@ -55,7 +55,6 @@
 #End Region
 
 Imports System.Globalization
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
 
 Namespace XLSX.Writer
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf1bbc5a8c6eae30a57c602fcfc64f69, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
+﻿#Region "Microsoft.VisualBasic::88a94ddc4ab08095870dcfe7cbb68784, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\UnZip.vb"
 
     ' Author:
     ' 
@@ -208,7 +208,7 @@ Namespace ApplicationServices.Zip
                                               Optional extractToFlat As Boolean = False,
                                               Optional rootDir As String = Nothing)
             Using file As Stream = zip.ToStream
-                Call zip.ImprovedExtractToDirectory(
+                Call file.ImprovedExtractToDirectory(
                     destinationDirectoryName:=destinationDirectoryName,
                     overwriteMethod:=overwriteMethod,
                     extractToFlat:=extractToFlat,

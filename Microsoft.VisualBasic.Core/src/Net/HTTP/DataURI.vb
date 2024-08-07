@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::4e5383db7f6d6336fbb9508e37b516bd, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::c114df43db2c8678d0033d7ec616146b, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 83 (60.58%)
-    ' Comment Lines: 36 (26.28%)
-    '    - Xml Docs: 94.44%
-    ' 
-    '   Blank Lines: 18 (13.14%)
-    '     File Size: 4.71 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class DataURI
-    ' 
-    '         Properties: base64, chartSet, mime
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
-    '                   URIParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 83 (59.71%)
+' Comment Lines: 38 (27.34%)
+'    - Xml Docs: 94.74%
+' 
+'   Blank Lines: 18 (12.95%)
+'     File Size: 4.77 KB
+
+
+'     Class DataURI
+' 
+'         Properties: base64, chartSet, mime
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
+'                   URIParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -128,7 +128,9 @@ Namespace Net.Http
         ''' <summary>
         ''' <see cref="Convert.FromBase64String"/>
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a <see cref="MemoryStream"/>
+        ''' </returns>
         Public Function ToStream() As Stream
             Return New MemoryStream(Convert.FromBase64String(base64))
         End Function

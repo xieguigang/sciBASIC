@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::a1d4092566a1a1023a0bfaf6e2d9f537, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
+﻿#Region "Microsoft.VisualBasic::5d1d27ac04a00170a6b61231cd7c9736, mime\application%pdf\PdfFileWriter\PDF\PdfContents.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 2589
-'    Code Lines: 937 (36.19%)
-' Comment Lines: 1264 (48.82%)
-'    - Xml Docs: 81.09%
-' 
-'   Blank Lines: 388 (14.99%)
-'     File Size: 102.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class PdfContents
-' 
-'     Constructor: (+3 Overloads) Sub New
-' 
-'     Function: CreateFontResStr, (+3 Overloads) DrawBarcode, (+13 Overloads) DrawText, DrawTextInternal, (+2 Overloads) DrawTextWithAnnotation
-'               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
-' 
-'     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
-'          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, DrawDoubleBezierPath
-'          (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine, (+2 Overloads) DrawOval
-'          (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle, (+2 Overloads) DrawShading
-'          (+4 Overloads) DrawStar, (+4 Overloads) DrawXObject, EndTextMode, GrayLevelNonStroking, GrayLevelStroking
-'          LayerEnd, LayerStart, (+2 Overloads) LineTo, (+2 Overloads) MoveTo, OutputOneByte
-'          RestoreGraphicsState, SaveGraphicsState, Scale, (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking
-'          SetBlendMode, SetCharacterSpacing, SetColorNonStroking, SetColorStroking, SetDashLine
-'          SetLineCap, SetLineJoin, SetLineWidth, SetMiterLimit, (+2 Overloads) SetPaintOp
-'          SetPatternNonStroking, SetPatternStroking, SetTextPosition, SetTextRenderingMode, SetTransMatrix
-'          SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale, (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 2588
+    '    Code Lines: 936 (36.17%)
+    ' Comment Lines: 1264 (48.84%)
+    '    - Xml Docs: 81.09%
+    ' 
+    '   Blank Lines: 388 (14.99%)
+    '     File Size: 102.11 KB
+
+
+    ' Class PdfContents
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: CreateFontResStr, (+3 Overloads) DrawBarcode, (+13 Overloads) DrawText, DrawTextInternal, (+2 Overloads) DrawTextWithAnnotation
+    '               (+2 Overloads) DrawTextWithKerning, (+2 Overloads) DrawWebLink, PaintOpStr, ReverseString, TextFitToWidth
+    ' 
+    '     Sub: AddToUsedResources, BeginTextMode, ClipText, CommitToPdfFile, DrawArc
+    '          DrawBarcodeText, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBezierNoP1, (+2 Overloads) DrawBezierNoP2, DrawDoubleBezierPath
+    '          (+2 Overloads) DrawHeart, (+2 Overloads) DrawImage, DrawInwardCornerRectangle, (+7 Overloads) DrawLine, (+2 Overloads) DrawOval
+    '          (+2 Overloads) DrawPolygon, (+2 Overloads) DrawRectangle, (+2 Overloads) DrawRegularPolygon, (+2 Overloads) DrawRoundedRectangle, (+2 Overloads) DrawShading
+    '          (+4 Overloads) DrawStar, (+4 Overloads) DrawXObject, EndTextMode, GrayLevelNonStroking, GrayLevelStroking
+    '          LayerEnd, LayerStart, (+2 Overloads) LineTo, (+2 Overloads) MoveTo, OutputOneByte
+    '          RestoreGraphicsState, SaveGraphicsState, Scale, (+2 Overloads) SetAlphaNonStroking, (+2 Overloads) SetAlphaStroking
+    '          SetBlendMode, SetCharacterSpacing, SetColorNonStroking, SetColorStroking, SetDashLine
+    '          SetLineCap, SetLineJoin, SetLineWidth, SetMiterLimit, (+2 Overloads) SetPaintOp
+    '          SetPatternNonStroking, SetPatternStroking, SetTextPosition, SetTextRenderingMode, SetTransMatrix
+    '          SetWordSpacing, (+2 Overloads) Translate, (+4 Overloads) TranslateScale, (+3 Overloads) TranslateScaleRotate, WriteObjectToPdfFile
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8afdcaf910b1cd7349433ea0f243840, mime\application%rdf+xml\DataModel\Description.vb"
+﻿#Region "Microsoft.VisualBasic::3967b4b88ffc74f289ec398e722e2244, mime\application%rdf+xml\DataModel\Description.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 11 (68.75%)
+    '   Total Lines: 30
+    '    Code Lines: 21 (70.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (31.25%)
-    '     File Size: 409 B
+    '   Blank Lines: 9 (30.00%)
+    '     File Size: 886 B
 
 
     ' Class Description
     ' 
-    '     Properties: about
+    '     Properties: about, comment, label, type
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 

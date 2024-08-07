@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::fff55d1a8a5b1450313f8aafbeeec6f9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
+﻿#Region "Microsoft.VisualBasic::ca402ecb7b9bd022c88b5505db6beb94, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 335
-    '    Code Lines: 174 (51.94%)
-    ' Comment Lines: 125 (37.31%)
-    '    - Xml Docs: 88.00%
-    ' 
-    '   Blank Lines: 36 (10.75%)
-    '     File Size: 14.03 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class File
-    ' 
-    '         Properties: _rels, ContentTypes, docProps, FilePath, MimeType
-    '                     xl
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: _name, AddSheetTable, CreatePackage, FullName, (+2 Overloads) GetTable
-    '                   GetWorkdir, GetWorksheet, LoadDataSet, Open, SheetNames
-    '                   ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
-    ' 
-    '         Sub: _loadContents, addInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 322
+'    Code Lines: 169 (52.48%)
+' Comment Lines: 118 (36.65%)
+'    - Xml Docs: 88.98%
+' 
+'   Blank Lines: 35 (10.87%)
+'     File Size: 13.48 KB
+
+
+'     Class File
+' 
+'         Properties: _rels, ContentTypes, docProps, FilePath, MimeType
+'                     xl
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: _name, AddSheetTable, CreatePackage, FullName, (+2 Overloads) GetTable
+'                   GetWorkdir, GetWorksheet, LoadDataSet, Open, SheetNames
+'                   ToString, (+2 Overloads) WriteSheetTable
+' 
+'         Sub: _loadContents, addInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -142,8 +142,6 @@ Namespace XLSX
 
         Friend ReadOnly modify As New Index(Of String)
 
-        Dim _filePath As [Default](Of String)
-
         ''' <summary>
         ''' the original file path the reference to this xlsx file
         ''' </summary>
@@ -151,11 +149,11 @@ Namespace XLSX
         Public Property FilePath As String Implements IFileReference.FilePath
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _filePath.value
+
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Friend Set(value As String)
-                _filePath = value
+                ' do nothing
             End Set
         End Property
 
@@ -164,15 +162,11 @@ Namespace XLSX
         ''' </summary>
         ''' <param name="sheetName"></param>
         ''' <returns></returns>
-        Default Public Property TableItem(sheetName As String) As csv
+        Default Public ReadOnly Property TableItem(sheetName As String) As csv
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetTable(sheetName)
             End Get
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Set
-                Call WriteSheetTable(Value, sheetName)
-            End Set
         End Property
 
         Public ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
@@ -189,12 +183,8 @@ Namespace XLSX
             End Get
         End Property
 
-        Sub New()
-            Call MyBase.New(Nothing)
-        End Sub
-
-        Friend Sub New(workdir As String)
-            Call MyBase.New(workdir)
+        Friend Sub New(pkg As ZipPackage)
+            Call MyBase.New(pkg.data)
         End Sub
 
 #Region "XlsxDirectoryPart"
@@ -216,107 +206,8 @@ Namespace XLSX
             Return xl.workbook.sheets.Select(Function(s) s.name)
         End Function
 
-        ''' <summary>
-        ''' the zip package internal file reference name
-        ''' </summary>
-        ''' <param name="name"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function FullName(name As String) As String
-            Return InternalFileName(name)
-        End Function
-
         Public Overrides Function ToString() As String
             Return FilePath
-        End Function
-
-        ''' <summary>
-        ''' 使用序列化写入数据到xlsx文件之中
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="data">A .net clr object collection</param>
-        ''' <param name="sheetName">the name of the sheet table to write data</param>
-        ''' <returns></returns>
-        Public Function WriteSheetTable(Of T)(data As IEnumerable(Of T), sheetName$) As Boolean
-            Dim table As csv = data.ToCsvDoc
-            Return WriteSheetTable(table, sheetName)
-        End Function
-
-        ''' <summary>
-        ''' 如果表名不存在，会追加，否则会直接替换现有的表数据
-        ''' </summary>
-        ''' <param name="table"></param>
-        ''' <param name="sheetName">the name of the sheet table to write data</param>
-        ''' <returns></returns>
-        Public Function WriteSheetTable(table As csv, sheetName$) As Boolean
-            Dim worksheet As worksheet = table.CreateWorksheet(xl.sharedStrings)
-            Dim sheetID = xl.workbook.GetSheetIDByName(sheetName)
-
-            If Not sheetID.StringEmpty Then
-                ' 进行替换
-                xl.worksheets.worksheets(sheetID) = worksheet
-
-                With "worksheet.update"
-                    If modify.IndexOf(.ByRef) = -1 Then
-                        modify.Add(.ByRef)
-                    End If
-                End With
-            Else
-                Call addInternal(sheetName, worksheet)
-                Call docProps.addSheetName(sheetName)
-                Call docProps.save()
-            End If
-
-            Return True
-        End Function
-
-        Private Sub addInternal(sheetName$, worksheet As worksheet)
-            ' 进行添加
-            Dim sheetID = xl.workbook.Add(sheetName)
-            xl.worksheets.Add(sheetID, worksheet)
-            ContentTypes.Overrides += New Type With {
-                .ContentType = OpenXML.worksheet,
-                .PartName = $"/xl/worksheets/{sheetID}.xml"
-            }
-
-            With "worksheet.add"
-                If modify.IndexOf(.ByRef) = -1 Then
-                    modify.Add(.ByRef)
-                End If
-            End With
-        End Sub
-
-        ''' <summary>
-        ''' Add new worksheet
-        ''' </summary>
-        ''' <param name="sheetName"></param>
-        ''' <returns></returns>
-        Public Function AddSheetTable(sheetName As String) As worksheet
-            With New csv().CreateWorksheet(xl.sharedStrings)
-                Call addInternal(sheetName, .ByRef)
-                Return .ByRef
-            End With
-        End Function
-
-        ''' <summary>
-        ''' get the zip file workdir
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function GetWorkdir() As String
-            Return folder
-        End Function
-
-        ''' <summary>
-        ''' 默认是写入原来的文件位置
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
-            ' Save to the user specific path or original source _filePath 
-            ' If the path Is Not specific by user
-            Return Me.SaveTo(path Or _filePath)
         End Function
 
         ''' <summary>

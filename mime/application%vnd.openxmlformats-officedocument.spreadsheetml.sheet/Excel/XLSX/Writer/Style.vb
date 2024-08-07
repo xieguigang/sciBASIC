@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba3c65cf3300c9fe5a3609c8945b98d1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style.vb"
+﻿#Region "Microsoft.VisualBasic::f6026190b4239d5777df9f2f7cdcd484, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2149
-    '    Code Lines: 1227 (57.10%)
-    ' Comment Lines: 749 (34.85%)
+    '   Total Lines: 2151
+    '    Code Lines: 1224 (56.90%)
+    ' Comment Lines: 751 (34.91%)
     '    - Xml Docs: 98.93%
     ' 
-    '   Blank Lines: 173 (8.05%)
+    '   Blank Lines: 176 (8.18%)
     '     File Size: 96.94 KB
 
 
@@ -254,10 +254,12 @@ Imports System.Text.RegularExpressions
 Namespace XLSX.Writer
 
     ''' <summary>
-    ''' Class representing a Style with sub classes within a style sheet. An instance of this class is only a container for the different sub-classes. These sub-classes contain the actual styling information
+    ''' Class representing a Style with sub classes within a style sheet. An instance of this class
+    ''' is only a container for the different sub-classes. These sub-classes contain the actual
+    ''' styling information
     ''' </summary>
-    Public Class Style
-        Inherits AbstractStyle
+    Public Class Style : Inherits AbstractStyle
+
         ''' <summary>
         ''' Defines the internalStyle
         ''' </summary>
@@ -1096,8 +1098,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Class representing a Fill (background) entry. The Fill entry is used to define background colors and fill patterns
         ''' </summary>
-        Public Class Fill
-            Inherits AbstractStyle
+        Public Class Fill : Inherits AbstractStyle
+
             ''' <summary>
             ''' Default Color (foreground or background)
             ''' </summary>
@@ -1359,8 +1361,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Class representing a Font entry. The Font entry is used to define text formatting
         ''' </summary>
-        Public Class Font
-            Inherits AbstractStyle
+        Public Class Font : Inherits AbstractStyle
+
             ''' <summary>
             ''' Default font family as constant
             ''' </summary>

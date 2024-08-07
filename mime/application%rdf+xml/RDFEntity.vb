@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6667b89ce75112fb1aa6394ba422441, mime\application%rdf+xml\RDFEntity.vb"
+﻿#Region "Microsoft.VisualBasic::84a2117254d7e7ddb0912c02dffcdc9c, mime\application%rdf+xml\RDFEntity.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 18 (36.73%)
-    ' Comment Lines: 23 (46.94%)
+    '   Total Lines: 51
+    '    Code Lines: 20 (39.22%)
+    ' Comment Lines: 23 (45.10%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (16.33%)
-    '     File Size: 1.72 KB
+    '   Blank Lines: 8 (15.69%)
+    '     File Size: 1.84 KB
 
 
     ' Class RDFEntity

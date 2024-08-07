@@ -217,13 +217,25 @@ Namespace Language.UnixBash
             End If
         End Operator
 
-        Public Shared Function DoFileNameGreps(ls As Search, files As IEnumerable(Of String)) As IEnumerable(Of String)
-            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
+        Public Function MakeFilter() As Func(Of String, Boolean)
             Dim wc$() = ls.wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
                     .regexp = If(wc.IsNullOrEmpty, {"*"}, wc)
                 }.IsMatch
+
+            Return isMatch
+        End Function
+
+        ''' <summary>
+        ''' make file path list filtering
+        ''' </summary>
+        ''' <param name="ls">the filter options</param>
+        ''' <param name="files">a collection of the file path</param>
+        ''' <returns></returns>
+        Public Shared Function DoFileNameGreps(ls As Search, files As IEnumerable(Of String)) As IEnumerable(Of String)
+            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
+            Dim isMatch = ls.MakeFilter
 
             With ls
                 If .opts.ContainsKey(SearchOpt.Options.Directory) Then
@@ -239,6 +251,7 @@ Namespace Language.UnixBash
                     If l Then
                         Return files.Where(isMatch)
                     Else
+                        ' just get file name if not long file name(full path name)
                         Return From path As String
                                In files
                                Where isMatch(path)

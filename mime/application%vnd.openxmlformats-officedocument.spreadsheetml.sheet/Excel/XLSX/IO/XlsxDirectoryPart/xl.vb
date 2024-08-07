@@ -60,6 +60,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -74,8 +75,8 @@ Namespace XLSX.Model.Directory
         Public Property worksheets As worksheets
         Public Property _rels As _rels
 
-        Sub New(workdir$)
-            Call MyBase.New(workdir)
+        Friend Sub New(data As ZipPackage)
+            Call MyBase.New(data.data)
         End Sub
 
         ''' <summary>
@@ -127,10 +128,10 @@ Namespace XLSX.Model.Directory
         End Function
 
         Protected Overrides Sub _loadContents()
-            sharedStrings = InternalFileName("/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
-            workbook = InternalFileName("/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
-            worksheets = New worksheets(folder)
-            _rels = New _rels(folder)
+            sharedStrings = ReadInternalFileText("/sharedStrings.xml").LoadFromXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
+            workbook = ReadInternalFileText("/workbook.xml").LoadFromXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
+            worksheets = New worksheets(fs, subdir)
+            _rels = New _rels(fs, subdir)
         End Sub
 
         Protected Overrides Function _name() As String

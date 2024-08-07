@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13ba9d21855914366acc9bfbe37a1c7a, mime\application%rdf+xml\DataModel\Resource.vb"
+﻿#Region "Microsoft.VisualBasic::1631558438f9cab4d79c8d6d45cc4563, mime\application%rdf+xml\DataModel\Resource.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
-    '    Code Lines: 5 (45.45%)
-    ' Comment Lines: 3 (27.27%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 24
+    '    Code Lines: 14 (58.33%)
+    ' Comment Lines: 4 (16.67%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 3 (27.27%)
-    '     File Size: 245 B
+    '   Blank Lines: 6 (25.00%)
+    '     File Size: 577 B
 
 
     ' Class Resource
     ' 
     '     Properties: resource
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 
@@ -75,4 +78,3 @@ Public Class Resource
     End Function
 
 End Class
-

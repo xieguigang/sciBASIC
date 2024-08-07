@@ -120,7 +120,7 @@ Namespace XLSX.Model
             If xlsx.xl.Exists(worksheet:=sheetName) Then
                 table = xlsx.xl.GetWorksheet(sheetName)
             Else
-                table = xlsx.AddSheetTable(sheetName)
+                Throw New Exception("Missing the sheet table: " & sheetName)
             End If
         End Sub
 
