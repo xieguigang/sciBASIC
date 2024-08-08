@@ -349,6 +349,10 @@ Public Class RegressionPlot : Inherits Plot
                          Optional gridFill$ = NameOf(Color.LightGray),
                          Optional showYFitPoints As Boolean = True,
                          Optional reverse As Boolean = False,
+                                                 Optional PredictsLabel As String = "Predicts",
+       Optional ReferenceLabel As String = "Standard Reference",
+      Optional LinearLabel As String = "Linear",
+        Optional SamplesLabel As String = "Samples",
                          Optional ppi As Integer = 100,
                                           Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -378,7 +382,11 @@ Public Class RegressionPlot : Inherits Plot
             .showErrorBand = showErrorBand,
             .showYFitPoints = showYFitPoints,
             .predictedX = predictedX.ToArray,
-            .predictPointStroke = predictPointStroke
+            .predictPointStroke = predictPointStroke,
+            .SamplesLabel = SamplesLabel,
+            .LinearLabel = LinearLabel,
+            .PredictsLabel = PredictsLabel,
+            .ReferenceLabel = ReferenceLabel
         }
 
         Return app.Plot(size, ppi, driver)
@@ -467,18 +475,23 @@ Public Class RegressionPlot : Inherits Plot
         Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
     End Sub
 
+    Public Property PredictsLabel As String = "Predicts"
+    Public Property ReferenceLabel As String = "Standard Reference"
+    Public Property LinearLabel As String = "Linear"
+    Public Property SamplesLabel As String = "Samples"
+
     Private Sub printLegend(g As IGraphics, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$)
         Dim hasPredictedSamples = Not predictedX Is Nothing
         Dim legends As LegendObject() = {
-            New LegendObject With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
-            New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
-            New LegendObject With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = "Linear"}
+            New LegendObject With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = PredictsLabel},
+            New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = ReferenceLabel},
+            New LegendObject With {.color = "black", .fontstyle = legendLabelFontCSS, .style = LegendStyles.SolidLine, .title = LinearLabel}
         }
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
 
         If hasPredictedSamples Then
-            legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Samples"})
+            legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = SamplesLabel})
         End If
 
         Dim border As Stroke = Stroke.ScatterLineStroke
