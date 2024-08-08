@@ -1,72 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::3cfc22142c8860b77fc7fda9baded77d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 941
-    '    Code Lines: 467 (49.63%)
-    ' Comment Lines: 382 (40.60%)
-    '    - Xml Docs: 97.91%
-    ' 
-    '   Blank Lines: 92 (9.78%)
-    '     File Size: 45.12 KB
+' Summaries:
 
 
-    '     Class Workbook
-    ' 
-    '         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
-    '                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
-    '                     Worksheets, WS
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: AddStyle, AddStyleComponent, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo, GetMruColors
-    '                   GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
-    ' 
-    '         Sub: AddMruColor, (+4 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
-    '              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
-    '              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
-    '         Class Shortener
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
-    '                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 941
+'    Code Lines: 467 (49.63%)
+' Comment Lines: 382 (40.60%)
+'    - Xml Docs: 97.91%
+' 
+'   Blank Lines: 92 (9.78%)
+'     File Size: 45.12 KB
+
+
+'     Class Workbook
+' 
+'         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
+'                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
+'                     Worksheets, WS
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: AddStyle, AddStyleComponent, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo, GetMruColors
+'                   GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
+' 
+'         Sub: AddMruColor, (+4 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
+'              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
+'              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
+'         Class Shortener
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
+'                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -132,7 +132,7 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the shortener
         ''' </summary>
-        Private shortenerField As Shortener
+        Private m_shortener As Shortener
 
         ''' <summary>
         ''' Defines the mruColors
@@ -144,7 +144,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property WS As Shortener
             Get
-                Return shortenerField
+                Return m_shortener
             End Get
         End Property
 
@@ -258,7 +258,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="createWorkSheet">If true, a default worksheet with the name 'Sheet1' will be crated and set as current worksheet.</param>
         Public Sub New(createWorkSheet As Boolean)
-            Init()
+            Call Init()
+
             If createWorkSheet Then
                 AddWorksheet("Sheet1")
             End If
@@ -308,7 +309,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
         Public Sub AddMruColor(color As String)
-            If Not Equals(color, Nothing) AndAlso color.Length = 6 Then
+            If color IsNot Nothing AndAlso color.Length = 6 Then
                 color = "FF" & color
             End If
             Style.Fill.ValidateColor(color, True)
@@ -319,6 +320,8 @@ Namespace XLSX.Writer
         ''' Gets the MRU color list
         ''' </summary>
         ''' <returns>Immutable list of color values.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMruColors() As IReadOnlyList(Of String)
             Return mruColors
         End Function
@@ -326,6 +329,8 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Clears the MRU color list
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub ClearMruColors()
             mruColors.Clear()
         End Sub
@@ -377,7 +382,7 @@ Namespace XLSX.Writer
             Dim newWs As Worksheet = New Worksheet(name, number, Me)
             m_currentWorksheet = newWs
             Worksheets.Add(newWs)
-            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
+            m_shortener.SetCurrentWorksheetInternal(m_currentWorksheet)
         End Sub
 
         ''' <summary>
@@ -581,7 +586,7 @@ Namespace XLSX.Writer
             If m_currentWorksheet Is Nothing Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
             End If
-            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
+            m_shortener.SetCurrentWorksheetInternal(m_currentWorksheet)
             Return m_currentWorksheet
         End Function
 
@@ -595,7 +600,7 @@ Namespace XLSX.Writer
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
             m_currentWorksheet = Worksheets.Item(worksheetIndex)
-            shortenerField.SetCurrentWorksheetInternal(m_currentWorksheet)
+            m_shortener.SetCurrentWorksheetInternal(m_currentWorksheet)
             Return m_currentWorksheet
         End Function
 
@@ -609,7 +614,7 @@ Namespace XLSX.Writer
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
             End If
             m_currentWorksheet = Worksheets.Item(index)
-            shortenerField.SetCurrentWorksheetInternal(worksheet)
+            m_shortener.SetCurrentWorksheetInternal(worksheet)
         End Sub
 
         ''' <summary>
@@ -850,7 +855,7 @@ Namespace XLSX.Writer
         Private Sub Init()
             _Worksheets = New List(Of Worksheet)()
             m_workbookMetadata = New Metadata()
-            shortenerField = New Shortener(Me)
+            m_shortener = New Shortener(Me)
         End Sub
 
         ''' <summary>
