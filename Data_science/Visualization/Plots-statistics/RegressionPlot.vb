@@ -92,6 +92,7 @@ Public Class RegressionPlot : Inherits Plot
     Public Property labelerIterations As Integer = -1
     Public Property predictedX As NamedValue(Of Double)()
     Public Property predictPointStroke As String
+    Public Property absolute_positive As Boolean = False
 
     Sub New(fit As IFitted, theme As Theme)
         Call MyBase.New(theme)
@@ -110,10 +111,10 @@ Public Class RegressionPlot : Inherits Plot
             .Range(scale:=1.125) _
             .CreateAxisTicks(decimalDigits:=theme.YaxisTickFormat.Match("\d+"))
 
-        If raw_x.All(Function(xi) xi >= 0) Then
+        If absolute_positive OrElse raw_x.All(Function(xi) xi >= 0) Then
             xTicks = xTicks.Where(Function(xi) xi >= 0).CreateAxisTicks(decimalDigits:=theme.XaxisTickFormat.Match("\d+"))
         End If
-        If raw_y.All(Function(yi) yi >= 0) Then
+        If absolute_positive OrElse raw_y.All(Function(yi) yi >= 0) Then
             yTicks = yTicks.Where(Function(yi) yi >= 0).CreateAxisTicks(decimalDigits:=theme.YaxisTickFormat.Match("\d+"))
         End If
 
@@ -359,6 +360,7 @@ Public Class RegressionPlot : Inherits Plot
                          Optional gridFill$ = NameOf(Color.LightGray),
                          Optional showYFitPoints As Boolean = True,
                          Optional reverse As Boolean = False,
+                                          Optional absolute_positive As Boolean = False,
                                                  Optional PredictsLabel As String = "Predicts",
        Optional ReferenceLabel As String = "Standard Reference",
       Optional LinearLabel As String = "Linear",
@@ -396,7 +398,8 @@ Public Class RegressionPlot : Inherits Plot
             .SamplesLabel = SamplesLabel,
             .LinearLabel = LinearLabel,
             .PredictsLabel = PredictsLabel,
-            .ReferenceLabel = ReferenceLabel
+            .ReferenceLabel = ReferenceLabel,
+            .absolute_positive = absolute_positive
         }
 
         Return app.Plot(size, ppi, driver)
