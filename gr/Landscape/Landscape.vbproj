@@ -16,21 +16,22 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 
 		<PackageLicenseExpression>GPL</PackageLicenseExpression>
+
+		<UseApplicationFramework>True</UseApplicationFramework>
+
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-		<DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<DefineConstants>netcore5=1</DefineConstants>
-		<DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
+
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
@@ -40,7 +41,7 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
@@ -51,7 +52,7 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	 
 	  <OutputPath></OutputPath>
 	</PropertyGroup>
 
@@ -63,7 +64,7 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	 
 	  <OutputPath />
 	</PropertyGroup>
 
@@ -75,7 +76,7 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	
 	  
 	</PropertyGroup>
 
@@ -89,40 +90,13 @@
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	
 	  <OutputPath>\GCModeller\src\R-sharp\App\</OutputPath>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
-	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-	  <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
+	
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
