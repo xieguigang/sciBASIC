@@ -246,6 +246,16 @@ Namespace ComponentModel.Algorithm
             ' has no data to query
             If size = 0 Then
                 Return -1
+            ElseIf size = 1 Then
+                ' compares the first directly
+                Dim min As Double = eval(x)
+                Dim first = binary(0)
+
+                If std.Abs(first.min - min) <= tolerance OrElse std.Abs(first.max - min) <= tolerance Then
+                    Return 0
+                Else
+                    Return -1
+                End If
             Else
                 Return binary.BinarySearch(target:=New Block(Of T) With {.min = eval(x)})
             End If
