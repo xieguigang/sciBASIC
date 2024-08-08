@@ -513,7 +513,7 @@ Public Class RegressionPlot : Inherits Plot
                     End Function) _
             .Width
         Dim top = rect.Top + rect.Height / 1.5
-        Dim left = rect.Right - 1.25 * maxLabelSize
+        Dim left = rect.Right - 1.5 * maxLabelSize
 
         Call g.DrawLegends(
             topLeft:=New Point(left, top),
