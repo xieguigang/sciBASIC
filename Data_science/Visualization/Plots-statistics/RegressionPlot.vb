@@ -381,7 +381,7 @@ Public Class RegressionPlot : Inherits Plot
             .predictPointStyle = predictPointStyle,
             .showErrorBand = showErrorBand,
             .showYFitPoints = showYFitPoints,
-            .predictedX = predictedX.ToArray,
+            .predictedX = If(predictedX Is Nothing, Nothing, predictedX.ToArray),
             .predictPointStroke = predictPointStroke,
             .SamplesLabel = SamplesLabel,
             .LinearLabel = LinearLabel,
