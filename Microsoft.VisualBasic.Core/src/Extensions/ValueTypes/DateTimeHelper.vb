@@ -250,6 +250,13 @@ Namespace ValueTypes
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="microtime">xxx ms</param>
+        ''' <param name="format"></param>
+        ''' <param name="round"></param>
+        ''' <returns></returns>
         Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
             Dim unit$
             Dim time!
