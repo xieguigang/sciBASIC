@@ -100,12 +100,22 @@ Public Class RegressionPlot : Inherits Plot
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim xTicks#() = fit.X.AsEnumerable _
+        Dim raw_x = fit.X
+        Dim raw_y = (fit.Y.AsList + fit.Yfit.AsEnumerable)
+
+        Dim xTicks#() = raw_x.AsEnumerable _
           .Range(scale:=1.125) _
           .CreateAxisTicks(decimalDigits:=theme.XaxisTickFormat.Match("\d+"))
-        Dim yTicks#() = (fit.Y.AsList + fit.Yfit.AsEnumerable) _
+        Dim yTicks#() = raw_y _
             .Range(scale:=1.125) _
             .CreateAxisTicks(decimalDigits:=theme.YaxisTickFormat.Match("\d+"))
+
+        If raw_x.All(Function(xi) xi >= 0) Then
+            xTicks = xTicks.Where(Function(xi) xi >= 0).CreateAxisTicks(decimalDigits:=theme.XaxisTickFormat.Match("\d+"))
+        End If
+        If raw_y.All(Function(yi) yi >= 0) Then
+            yTicks = yTicks.Where(Function(yi) yi >= 0).CreateAxisTicks(decimalDigits:=theme.YaxisTickFormat.Match("\d+"))
+        End If
 
         If reverse Then
             Dim temp As Double() = xTicks
