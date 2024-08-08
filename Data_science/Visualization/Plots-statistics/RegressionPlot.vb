@@ -60,7 +60,9 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Multivariate
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
@@ -77,7 +79,221 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
-Public Module RegressionPlot
+Public Class RegressionPlot : Inherits Plot
+
+    ReadOnly fit As IFitted
+
+    Public Property reverse As Boolean
+    Public Property pointBrushStyle As String = "blue"
+    Public Property predictPointStyle As String = "green"
+    Public Property errorFitPointStyle As String = "red"
+    Public Property showYFitPoints As Boolean = True
+    Public Property showErrorBand As Boolean = False
+    Public Property labelerIterations As Integer = -1
+    Public Property predictedX As NamedValue(Of Double)()
+    Public Property predictPointStroke As String
+
+    Sub New(fit As IFitted, theme As Theme)
+        Call MyBase.New(theme)
+
+        Me.fit = fit
+    End Sub
+
+    Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Dim xTicks#() = fit.X.AsEnumerable _
+          .Range(scale:=1.125) _
+          .CreateAxisTicks(decimalDigits:=theme.XaxisTickFormat.Match("\d+"))
+        Dim yTicks#() = (fit.Y.AsList + fit.Yfit.AsEnumerable) _
+            .Range(scale:=1.125) _
+            .CreateAxisTicks(decimalDigits:=theme.YaxisTickFormat.Match("\d+"))
+
+        If reverse Then
+            Dim temp As Double() = xTicks
+
+            xTicks = yTicks
+            yTicks = temp
+        End If
+
+        If TypeOf fit Is MLRFit Then
+            Throw New InvalidProgramException($"MLR model is not compatible with this plot function!")
+        End If
+
+        Dim pointBrush As Brush = pointBrushStyle.GetBrush
+        Dim predictedBrush As Brush = predictPointStyle.GetBrush
+        Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
+        Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
+
+        Dim rect = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim pointLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
+        Dim regressionPen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
+        Dim predictedPointBorder As Pen = css.GetPen(Stroke.TryParse(predictPointStroke))
+        Dim labelAnchorPen As Pen = css.GetPen(Stroke.TryParse(theme.tagLinkStroke))
+
+        If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty OrElse fit.ErrorTest.Length = 0 Then
+            Call g.DrawString("Invalid curve!", css.GetFont(CSSFont.TryParse(main)), Brushes.Black, New PointF)
+            Return
+        End If
+
+        Dim X = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
+        Dim Y = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
+        Dim scaler As New DataScaler With {
+            .X = X,
+            .Y = Y,
+            .region = rect,
+            .AxisTicks = (xTicks, yTicks)
+        }
+
+        Call g.DrawAxis(
+            canvas, scaler, True,
+            xlabel:=xlabel, ylabel:=ylabel,
+            htmlLabel:=False,
+            XtickFormat:=theme.XaxisTickFormat,
+            YtickFormat:=theme.YaxisTickFormat,
+            gridFill:=theme.gridFill
+        )
+
+        ' scatter plot
+        ' 绘制红色的实际数值点
+        For Each point As TestPoint In fit.ErrorTest
+            Dim pt As PointF = scaler.Translate(point)
+
+            g.DrawCircle(
+                centra:=pt,
+                r:=theme.pointSize,
+                color:=pointBrush
+            )
+        Next
+
+        If Not DirectCast(fit.Polynomial, Polynomial).IsLinear Then
+            For Each t In xTicks.SlideWindows(2)
+                Dim A As New PointF With {.X = t(0), .Y = polynomial(.X)}
+                Dim B As New PointF With {.X = t(1), .Y = polynomial(.X)}
+
+                A = scaler.Translate(A)
+                B = scaler.Translate(B)
+
+                Call g.DrawLine(regressionPen, A, B)
+            Next
+        Else
+            'For Each t As SlideWindow(Of TestPoint) In fit.ErrorTest _
+            '    .Select(Function(d) DirectCast(d, TestPoint)) _
+            '    .SlideWindows(2)
+
+            '    ' regression line 
+            '    Dim A As New PointF With {.X = t.First.X, .Y = t.First.Yfit}
+            '    Dim B As New PointF With {.X = t.Last.X, .Y = t.Last.Yfit}
+
+            '    A = scaler.Translate(A)
+            '    B = scaler.Translate(B)
+
+            '    Call g.DrawLine(regressionPen, A, B)
+            'Next
+
+            ' regression line 
+            Dim xMin As Double = fit.X.Min
+            Dim xMax As Double = fit.X.Max
+
+            'If reverse Then
+            '    xMin = fit.Y.Min
+            '    xMax = fit.Y.Max
+            'Else
+            '    xMin = fit.X.Min
+            '    xMax = fit.X.Max
+            'End If
+
+            Dim yMin As Double = polynomial(xMin)
+            Dim yMax As Double = polynomial(xMax)
+            Dim A As New PointF With {.X = xMin, .Y = yMin}
+            Dim B As New PointF With {.X = xMax, .Y = yMax}
+
+            A = scaler.Translate(A)
+            B = scaler.Translate(B)
+
+            Call g.DrawLine(regressionPen, A, B)
+        End If
+
+        If showYFitPoints Then
+            ' 绘制蓝色的fit计算点
+            For Each point As TestPoint In fit.ErrorTest
+                Dim pt As New PointF With {
+                    .X = point.X,
+                    .Y = point.Yfit
+                }
+
+                pt = scaler.Translate(pt)
+
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=theme.pointSize,
+                    color:=errorFitPointBrush
+                )
+                g.DrawCircle(
+                    centra:=pt,
+                    r:=theme.pointSize,
+                    color:=predictedPointBorder,
+                    fill:=False
+                )
+            Next
+        End If
+
+        If showErrorBand Then
+            Dim dx = xTicks(1) - xTicks(0)
+            Dim plusError As New List(Of PointF)
+            Dim negError As New List(Of PointF)
+            Dim line As Line
+
+            For Each point As TestPoint In fit.ErrorTest
+                Dim A As New PointF(point.X, point.Yfit)
+                Dim B As New PointF With {
+                    .X = point.X + dx,
+                    .Y = polynomial(.X)
+                }
+
+                line = New Line(A, B).ParallelShift(std.Abs(point.Err))
+                plusError.Add(scaler.Translate(line.A))
+
+                line = New Line(A, B).ParallelShift(-std.Abs(point.Err))
+                negError.Add(scaler.Translate(line.A))
+            Next
+
+            negError.Reverse()
+
+            Dim path As New GraphicsPath
+
+            For Each t In plusError.SlideWindows(2)
+                path.AddLine(t(0), t(1))
+            Next
+            For Each t In negError.SlideWindows(2)
+                path.AddLine(t(0), t(1))
+            Next
+
+            path.CloseAllFigures()
+            g.FillPath(New SolidBrush(Color.FromArgb(230, Color.Cyan)), path)
+        End If
+
+        If Not predictedX Is Nothing Then
+            Call printXPredicted(
+                g, scaler,
+                predictedX, predictedBrush, predictedPointBorder,
+                theme.pointSize,
+                pointLabelFont,
+                rect,
+                labelAnchorPen,
+                labelerIterations:=labelerIterations
+            )
+        End If
+
+        If theme.drawLegend Then
+            Call printLegend(g, rect, theme.legendTickCSS, theme.legendLabelCSS, theme.legendTickFormat)
+        End If
+
+        Call printEquation(g, rect, theme.legendTickCSS, theme.legendLabelCSS, theme.legendTickFormat)
+
+        If Not main.StringEmpty Then
+            Call DrawMainTitle(g, canvas.PlotRegion)
+        End If
+    End Sub
 
     ''' <summary>
     ''' Plot of the linear regression result
@@ -105,8 +321,7 @@ Public Module RegressionPlot
     ''' <param name="yAxisTickFormat$"></param>
     ''' <param name="showErrorBand"></param>
     ''' <returns></returns>
-    <Extension>
-    Public Function Plot(fit As IFitted,
+    Public Overloads Shared Function Plot(fit As IFitted,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
                          Optional margin$ = g.DefaultPadding,
@@ -134,220 +349,42 @@ Public Module RegressionPlot
                          Optional gridFill$ = NameOf(Color.LightGray),
                          Optional showYFitPoints As Boolean = True,
                          Optional reverse As Boolean = False,
-                         Optional ppi As Integer = 100) As GraphicsData
+                         Optional ppi As Integer = 100,
+                                          Optional driver As Drivers = Drivers.Default) As GraphicsData
 
-        Dim xTicks#() = fit.X.AsEnumerable _
-            .Range(scale:=1.125) _
-            .CreateAxisTicks(decimalDigits:=xAxisTickFormat.Match("\d+"))
-        Dim yTicks#() = (fit.Y.AsList + fit.Yfit.AsEnumerable) _
-            .Range(scale:=1.125) _
-            .CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
+        Dim theme As New Theme With {
+            .padding = margin,
+            .background = bg,
+            .pointSize = pointSize,
+            .drawLegend = showLegend,
+            .XaxisTickFormat = xAxisTickFormat,
+            .YaxisTickFormat = yAxisTickFormat,
+            .legendTickCSS = linearDetailsFontCSS,
+            .legendLabelCSS = legendLabelFontCSS,
+            .legendTickFormat = factorFormat,
+            .tagCSS = pointLabelFontCSS,
+            .lineStroke = regressionLineStyle,
+            .tagLinkStroke = labelAnchorLineStroke
+        }
+        Dim app As New RegressionPlot(fit, theme) With {
+            .reverse = reverse,
+            .xlabel = xLabel,
+            .ylabel = yLabel,
+            .main = title,
+            .errorFitPointStyle = errorFitPointStyle,
+            .labelerIterations = labelerIterations,
+            .pointBrushStyle = pointBrushStyle,
+            .predictPointStyle = predictPointStyle,
+            .showErrorBand = showErrorBand,
+            .showYFitPoints = showYFitPoints,
+            .predictedX = predictedX.ToArray,
+            .predictPointStroke = predictPointStroke
+        }
 
-        If reverse Then
-            Dim temp As Double() = xTicks
-
-            xTicks = yTicks
-            yTicks = temp
-        End If
-
-        If TypeOf fit Is MLRFit Then
-            Throw New InvalidProgramException($"MLR model is not compatible with this plot function!")
-        End If
-
-        Dim pointBrush As Brush = pointBrushStyle.GetBrush
-        Dim predictedBrush As Brush = predictPointStyle.GetBrush
-        Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
-        Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
-        Dim plotInternal =
-            Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim rect = region.PlotRegion
-                Dim css As CSSEnvirnment = g.LoadEnvironment
-                Dim pointLabelFont As Font = css.GetFont(CSSFont.TryParse(pointLabelFontCSS))
-                Dim regressionPen As Pen = css.GetPen(Stroke.TryParse(regressionLineStyle))
-                Dim predictedPointBorder As Pen = css.GetPen(Stroke.TryParse(predictPointStroke))
-                Dim labelAnchorPen As Pen = css.GetPen(Stroke.TryParse(labelAnchorLineStroke))
-
-                If xTicks.IsNullOrEmpty OrElse yTicks.IsNullOrEmpty OrElse fit.ErrorTest.Length = 0 Then
-                    Call g.DrawString("Invalid curve!", css.GetFont(CSSFont.TryParse(title)), Brushes.Black, New PointF)
-                    Return
-                End If
-
-                Dim X = d3js.scale.linear.domain(values:=xTicks).range(integers:={rect.Left, rect.Right})
-                Dim Y = d3js.scale.linear.domain(values:=yTicks).range(integers:={rect.Top, rect.Bottom})
-                Dim scaler As New DataScaler With {
-                    .X = X,
-                    .Y = Y,
-                    .region = rect,
-                    .AxisTicks = (xTicks, yTicks)
-                }
-
-                Call g.DrawAxis(
-                    region, scaler, True,
-                    xlabel:=xLabel, ylabel:=yLabel,
-                    htmlLabel:=False,
-                    XtickFormat:=xAxisTickFormat,
-                    YtickFormat:=yAxisTickFormat,
-                    gridFill:=gridFill
-                )
-
-                ' scatter plot
-                ' 绘制红色的实际数值点
-                For Each point As TestPoint In fit.ErrorTest
-                    Dim pt As PointF = scaler.Translate(point)
-
-                    g.DrawCircle(
-                        centra:=pt,
-                        r:=pointSize,
-                        color:=pointBrush
-                    )
-                Next
-
-                If Not DirectCast(fit.Polynomial, Polynomial).IsLinear Then
-                    For Each t In xTicks.SlideWindows(2)
-                        Dim A As New PointF With {.X = t(0), .Y = polynomial(.X)}
-                        Dim B As New PointF With {.X = t(1), .Y = polynomial(.X)}
-
-                        A = scaler.Translate(A)
-                        B = scaler.Translate(B)
-
-                        Call g.DrawLine(regressionPen, A, B)
-                    Next
-                Else
-                    'For Each t As SlideWindow(Of TestPoint) In fit.ErrorTest _
-                    '    .Select(Function(d) DirectCast(d, TestPoint)) _
-                    '    .SlideWindows(2)
-
-                    '    ' regression line 
-                    '    Dim A As New PointF With {.X = t.First.X, .Y = t.First.Yfit}
-                    '    Dim B As New PointF With {.X = t.Last.X, .Y = t.Last.Yfit}
-
-                    '    A = scaler.Translate(A)
-                    '    B = scaler.Translate(B)
-
-                    '    Call g.DrawLine(regressionPen, A, B)
-                    'Next
-
-                    ' regression line 
-                    Dim xMin As Double = fit.X.Min
-                    Dim xMax As Double = fit.X.Max
-
-                    'If reverse Then
-                    '    xMin = fit.Y.Min
-                    '    xMax = fit.Y.Max
-                    'Else
-                    '    xMin = fit.X.Min
-                    '    xMax = fit.X.Max
-                    'End If
-
-                    Dim yMin As Double = polynomial(xMin)
-                    Dim yMax As Double = polynomial(xMax)
-                    Dim A As New PointF With {.X = xMin, .Y = yMin}
-                    Dim B As New PointF With {.X = xMax, .Y = yMax}
-
-                    A = scaler.Translate(A)
-                    B = scaler.Translate(B)
-
-                    Call g.DrawLine(regressionPen, A, B)
-                End If
-
-                If showYFitPoints Then
-                    ' 绘制蓝色的fit计算点
-                    For Each point As TestPoint In fit.ErrorTest
-                        Dim pt As New PointF With {
-                            .X = point.X,
-                            .Y = point.Yfit
-                        }
-
-                        pt = scaler.Translate(pt)
-
-                        g.DrawCircle(
-                            centra:=pt,
-                            r:=pointSize,
-                            color:=errorFitPointBrush
-                        )
-                        g.DrawCircle(
-                            centra:=pt,
-                            r:=pointSize,
-                            color:=predictedPointBorder,
-                            fill:=False
-                        )
-                    Next
-                End If
-
-                If showErrorBand Then
-                    Dim dx = xTicks(1) - xTicks(0)
-                    Dim plusError As New List(Of PointF)
-                    Dim negError As New List(Of PointF)
-                    Dim line As Line
-
-                    For Each point As TestPoint In fit.ErrorTest
-                        Dim A As New PointF(point.X, point.Yfit)
-                        Dim B As New PointF With {
-                            .X = point.X + dx,
-                            .Y = polynomial(.X)
-                        }
-
-                        line = New Line(A, B).ParallelShift(std.Abs(point.Err))
-                        plusError.Add(scaler.Translate(line.A))
-
-                        line = New Line(A, B).ParallelShift(-std.Abs(point.Err))
-                        negError.Add(scaler.Translate(line.A))
-                    Next
-
-                    negError.Reverse()
-
-                    Dim path As New GraphicsPath
-
-                    For Each t In plusError.SlideWindows(2)
-                        path.AddLine(t(0), t(1))
-                    Next
-                    For Each t In negError.SlideWindows(2)
-                        path.AddLine(t(0), t(1))
-                    Next
-
-                    path.CloseAllFigures()
-                    g.FillPath(New SolidBrush(Color.FromArgb(230, Color.Cyan)), path)
-                End If
-
-                If Not predictedX Is Nothing Then
-                    Call g.printXPredicted(
-                        fit, scaler,
-                        predictedX, predictedBrush, predictedPointBorder,
-                        pointSize,
-                        pointLabelFont,
-                        rect,
-                        labelAnchorPen,
-                        labelerIterations:=labelerIterations
-                    )
-                End If
-
-                If showLegend Then
-                    Call g.printLegend(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
-                End If
-
-                Call g.printEquation(fit, rect, linearDetailsFontCSS, legendLabelFontCSS, factorFormat, Not predictedX Is Nothing)
-
-                If Not title.StringEmpty Then
-                    Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCss))
-                    Dim titleSize = g.MeasureString(title, titleFont)
-                    Dim top = (rect.Top - titleSize.Height) / 2
-                    Dim left = rect.Left + (rect.Width - titleSize.Width) / 2
-
-                    Call g.DrawString(title, titleFont, Brushes.Black, New PointF(left, top))
-                End If
-            End Sub
-
-        Return g.GraphicsPlots(
-            size.SizeParser,
-            margin,
-            bg,
-            plotInternal,
-            dpi:=$"{ppi},{ppi}"
-        )
+        Return app.Plot(size, ppi, driver)
     End Function
 
-    <Extension>
-    Private Sub printXPredicted(g As IGraphics, fit As IFitted, scaler As DataScaler,
+    Private Sub printXPredicted(g As IGraphics, scaler As DataScaler,
                                 predictedX As IEnumerable(Of NamedValue(Of Double)),
                                 predictedBrush As Brush,
                                 predictedPointBorder As Pen,
@@ -409,8 +446,8 @@ Public Module RegressionPlot
         Next
     End Sub
 
-    <Extension>
-    Private Sub printEquation(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
+    Private Sub printEquation(g As IGraphics, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$)
+        Dim hasPredictedSamples = Not predictedX Is Nothing
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
         Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
@@ -430,8 +467,8 @@ Public Module RegressionPlot
         Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)
     End Sub
 
-    <Extension>
-    Private Sub printLegend(g As IGraphics, fit As IFitted, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$, hasPredictedSamples As Boolean)
+    Private Sub printLegend(g As IGraphics, rect As RectangleF, linearDetailsFontCSS$, legendLabelFontCSS$, factorFormat$)
+        Dim hasPredictedSamples = Not predictedX Is Nothing
         Dim legends As LegendObject() = {
             New LegendObject With {.color = "blue", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Predicts"},
             New LegendObject With {.color = "red", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = "Standard Reference"},
@@ -463,4 +500,4 @@ Public Module RegressionPlot
             regionBorder:=border
         )
     End Sub
-End Module
+End Class
