@@ -26,18 +26,21 @@ Public Class ChiSquareTest
     ''' </param>
     ''' <returns></returns>
     Public Shared Function Test(observed As Double()(), expected As Double()()) As ChiSquareTest
-        Dim chiSquareStat = (observed(0)(0) - expected(0)(0)) ^ 2 / expected(0)(0) +
-                       (observed(0)(1) - expected(0)(1)) ^ 2 / expected(0)(1) +
-                       (observed(1)(0) - expected(1)(0)) ^ 2 / expected(1)(0) +
-                       (observed(1)(1) - expected(1)(1)) ^ 2 / expected(1)(1)
+        Dim chi_squared_stat As Double = 0
+
+        For i As Integer = 0 To 1
+            For j As Integer = 0 To 1
+                chi_squared_stat += (observed(i)(j) - expected(i)(j)) * (observed(i)(j) - expected(i)(j)) / expected(i)(j)
+            Next
+        Next
 
         ' 自由度（对于二联表始终为1）
         Const freedom As Integer = 1
 
-        Dim p As Double = Distribution.ChiSquare(chiSquareStat, freedom)
+        Dim p As Double = Distribution.ChiSquare(chi_squared_stat, freedom)
 
         Return New ChiSquareTest With {
-            .chi_square = chiSquareStat,
+            .chi_square = chi_squared_stat,
             .expected = expected,
             .observed = observed,
             .pvalue = p
