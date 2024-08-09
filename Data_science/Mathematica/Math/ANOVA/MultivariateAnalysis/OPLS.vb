@@ -91,10 +91,13 @@ Public Class OPLS
         dataArray = statObject.CopyX()
         yArray = statObject.CopyY()
 
+#Disable Warning
+
         Dim ssPred, cPred As Double()
         Dim wPred, pPred, tPred, uPred, woPred, poPred, toPred, filteredArray As Double(,)
 
         OplsModeling(biofactor, orthofactor, yArray, dataArray, ssPred, wPred, pPred, cPred, tPred, uPred, woPred, poPred, toPred, filteredArray)
+#Enable Warning
 
         'for (int i = 0; i < columnSize; i++) {
         '    Debug.WriteLine("Loadings\t" + wPred[0, i] + "\t" + pPred[0, i]);
@@ -276,11 +279,13 @@ Public Class OPLS
         ' ss value calc
         currentSS = BasicMathematics.SumOfSquare(yArray)
         ssPredList.Add(currentSS)
-
+#Disable Warning
         ' finally, pls modeling is performed to the filtered matrix by othrogonal components
         Dim uf, tf, pf, wf, tof, pof, wof As Double()
         Dim cf As Double
         PLS.OplsVectorsCalculations(yArray, dataArray, wfirst, uf, tf, cf, pf, wof, tof, pof)
+#Enable Warning
+
         wPredList.Add(wfirst)
         pPredList.Add(pf)
         cPredList.Add(cf)
@@ -412,13 +417,14 @@ Public Class OPLS
             ' to: score vector calculation
             ' po: loading vector calculation
             ' wo: weight (X) factor calculation
-
+#Disable Warning
             Dim u, t, p, [to], po, wo As Double()
             Dim c As Double
 
             PLS.OplsVectorsCalculations(yArray, dataArray, w, u, t, c, p, wo, [to], po)
             dataArray = PLS.PlsMatrixUpdate([to], po, dataArray)
             yArray = PLS.PlsMatrixUpdate([to], c, yArray)
+#Enable Warning
         Next
     End Sub
 
