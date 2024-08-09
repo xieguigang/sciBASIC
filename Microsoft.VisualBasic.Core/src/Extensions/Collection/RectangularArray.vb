@@ -62,12 +62,14 @@ Namespace ComponentModel.Collection
 
         ''' <summary>
         ''' Create an empty matrix with m row and n cols.
-        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="m">m Rows</param>
         ''' <param name="n">n Cols</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
+        ''' </remarks>
         Public Shared Function Matrix(Of T)(m%, n%) As T()()
             Dim x As T()() = New T(m - 1)() {}
 

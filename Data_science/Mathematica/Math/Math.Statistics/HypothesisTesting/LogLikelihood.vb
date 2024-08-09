@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::bbad7ee164ecfc13ba78d7a6d0651a8e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\LogLikelihood.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 42
-    '    Code Lines: 24 (57.14%)
-    ' Comment Lines: 12 (28.57%)
-    '    - Xml Docs: 91.67%
-    ' 
-    '   Blank Lines: 6 (14.29%)
-    '     File Size: 1.79 KB
+' Summaries:
 
 
-    ' Module LogLikelihood
-    ' 
-    '     Function: Likelihood
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 42
+'    Code Lines: 24 (57.14%)
+' Comment Lines: 12 (28.57%)
+'    - Xml Docs: 91.67%
+' 
+'   Blank Lines: 6 (14.29%)
+'     File Size: 1.79 KB
+
+
+' Module LogLikelihood
+' 
+'     Function: Likelihood
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' calculates log likelihood between a source and a reference corpus. for more
@@ -78,15 +78,15 @@ Public Module LogLikelihood
         If expectedValue1 = 0 OrElse expectedValue2 = 0 OrElse
             Double.IsNaN(expectedValue1) OrElse
             Double.IsNaN(expectedValue1) OrElse
-            Double.IsNaN(stdNum.Log(freq1 / expectedValue1)) OrElse
-            Double.IsNaN(stdNum.Log(freq2 / expectedValue2)) OrElse
-            Double.IsInfinity(stdNum.Log(freq1 / expectedValue1)) OrElse
-            Double.IsInfinity(stdNum.Log(freq2 / expectedValue2)) Then
+            Double.IsNaN(std.Log(freq1 / expectedValue1)) OrElse
+            Double.IsNaN(std.Log(freq2 / expectedValue2)) OrElse
+            Double.IsInfinity(std.Log(freq1 / expectedValue1)) OrElse
+            Double.IsInfinity(std.Log(freq2 / expectedValue2)) Then
 
             Return 0.0
         Else
-            Dim llhP1 As Double = (freq1 * stdNum.Log(freq1 / expectedValue1))
-            Dim llhP2 As Double = (freq2 * stdNum.Log(freq2 / expectedValue2))
+            Dim llhP1 As Double = (freq1 * std.Log(freq1 / expectedValue1))
+            Dim llhP2 As Double = (freq2 * std.Log(freq2 / expectedValue2))
 
             Return 2 * (llhP1 + llhP2)
         End If

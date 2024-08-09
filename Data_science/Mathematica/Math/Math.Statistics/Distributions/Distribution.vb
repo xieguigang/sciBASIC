@@ -258,7 +258,7 @@ Namespace Distributions
                 Return 0.0
             End If
 
-            Dim chiSquareValue = freedom / System.Math.Sqrt(p)
+            Dim chiSquareValue = freedom / std.Sqrt(p)
             While maxChiSquare - minChiSquare > CHI_EPSILON
                 If ChiSquare(chiSquareValue, freedom) < p Then
                     maxChiSquare = chiSquareValue
@@ -273,7 +273,7 @@ Namespace Distributions
         End Function
 
         ''' <summary>
-        ''' The fDistribution method is used to observe whether two samples have the same variance. It takes a double input F
+        ''' The f-Distribution method is used to observe whether two samples have the same variance. It takes a double input F
         ''' and two integer freedom1 and freedom2 for degrees of freedom as inputs. It returns the F-Distribution result.
         ''' </summary>
         ''' <param name="fValue"></param>

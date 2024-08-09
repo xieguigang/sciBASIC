@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.Numerics
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' ### Fisher's exact test
@@ -130,7 +130,7 @@ Public Module FisherTest
         For Each factor In gx
             If gy.ContainsKey(factor.Key) Then
                 ' 取最少的
-                min = stdNum.Min(factor.Value, gy(factor.Key))
+                min = std.Min(factor.Value, gy(factor.Key))
                 dx.Add(factor.Key, factor.Value - min)
                 gy(factor.Key) -= min
             Else
