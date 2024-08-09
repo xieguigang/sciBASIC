@@ -71,6 +71,10 @@ Imports std = System.Math
 
 Namespace ComponentModel.Algorithm
 
+    ''' <summary>
+    ''' a data index block with boundary range for matches
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Friend Structure Block(Of T)
 
         Dim min As Double
@@ -90,6 +94,15 @@ Namespace ComponentModel.Algorithm
             Return $"[{min} ~ {max}] {block.Length} elements"
         End Function
 
+        ''' <summary>
+        ''' test two elements theirs comparision relationship
+        ''' </summary>
+        ''' <param name="fuzzy">
+        ''' the tolerance error for matches the index node is equals to the given query value.
+        ''' this options should only works when the target index node contains only one elements
+        ''' and the boundary interval length is zero.
+        ''' </param>
+        ''' <returns></returns>
         Friend Shared Function GetComparision(fuzzy As Double) As Comparison(Of Block(Of T))
             Return Function(source, target)
                        ' target is the input data to search
@@ -191,6 +204,14 @@ Namespace ComponentModel.Algorithm
             End If
         End Sub
 
+        ''' <summary>
+        ''' Create the binary search index
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <param name="tolerance"></param>
+        ''' <param name="factor"></param>
+        ''' <param name="fuzzy"></param>
+        ''' <returns></returns>
         Private Shared Function BuildIndex(input As SequenceTag(Of T)(),
                                            tolerance As Double,
                                            factor As Double,
