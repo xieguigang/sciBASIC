@@ -79,12 +79,14 @@ Namespace ApplicationServices.Terminal
     ''' </summary>
     Public Class Shell
 
-        Public ReadOnly Property ps1 As PS1
+        Public Property ps1 As PS1
+
         ''' <summary>
         ''' engine for execute the command, example as execute script text in ``R#``.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property shell As Action(Of String)
+
         Public ReadOnly Property ttyDev As IShellDevice
             Get
                 Return dev
@@ -119,9 +121,10 @@ Namespace ApplicationServices.Terminal
         ''' <summary>
         ''' 执行一个配置好的命令行模型, 代码会被一直阻塞在这里
         ''' </summary>
-        Public Sub Run()
+        Public Function Run() As Integer
             Dim cli As Value(Of String) = ""
 
+            ' do while true while current program is running
             Do While App.Running
                 Call dev.SetPrompt(ps1.ToString)
 
@@ -137,6 +140,8 @@ Namespace ApplicationServices.Terminal
                     Call _shell(cli)
                 End If
             Loop
-        End Sub
+
+            Return 0
+        End Function
     End Class
 End Namespace

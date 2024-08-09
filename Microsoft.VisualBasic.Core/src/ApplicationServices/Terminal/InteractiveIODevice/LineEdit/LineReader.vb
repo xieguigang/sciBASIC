@@ -57,7 +57,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.STDIO__
 
 Namespace ApplicationServices.Terminal.LineEdit
 
