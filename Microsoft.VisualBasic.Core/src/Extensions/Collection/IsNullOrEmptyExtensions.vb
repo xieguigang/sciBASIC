@@ -63,6 +63,12 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 <HideModuleName>
 Public Module IsNullOrEmptyExtensions
 
+    ''' <summary>
+    ''' check of the given collection is null or empty?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Empty(Of T)(list As IEnumerable(Of T)) As Boolean
         Return list Is Nothing OrElse Not list.Any
