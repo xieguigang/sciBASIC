@@ -346,6 +346,7 @@ Public Class SequenceGraphTransform
         )
         Dim cu, cv As Vector
         Dim c As (i As Integer, j As Integer)()
+        Dim V2 As Integer()
 
         For Each char_i As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
             Dim i As Integer = char_i.i
@@ -355,9 +356,15 @@ Public Class SequenceGraphTransform
             For Each char_j As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
                 Dim j As Integer = char_j.i
                 Dim v As Char = char_j.value
-                Dim V2 As Integer() = positions(v)
                 Dim pos_i = _alphabets.IndexOf(u)
                 Dim pos_j = _alphabets.IndexOf(v)
+
+                If positions.ContainsKey(v) Then
+                    V2 = positions(v)
+                Else
+                    Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".Warning
+                    V2 = {}
+                End If
 
                 If mode = Modes.Fast Then
                     c = CombineFast(sequence, u, v).ToArray
