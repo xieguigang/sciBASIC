@@ -434,16 +434,22 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' Gets the URL type file path.(获取URL类型的文件路径)
+    ''' Gets the URL type file path.
     ''' </summary>
     ''' <param name="Path"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(获取URL类型的文件路径)</remarks>
     '''
     <ExportAPI("Path2Url")>
     <Extension> Public Function ToFileURL(path As String) As String
         If String.IsNullOrEmpty(path) Then
             Return ""
+        ElseIf path.EndsWith("/"c) OrElse path.EndsWith("\"c) Then
+            ' is a directory?
+            ' ArgumentException: The given file path ends with a directory separator character. (Parameter 'file')
+            Dim dir = path.GetDirectoryFullPath
+            Call VBDebugger.EchoLine($"The given file path ends with a directory separator character. ({path})")
+            Return String.Format("file:///{0}", dir.Replace("\", "/"))
         Else
             path = FileIO.FileSystem.GetFileInfo(path).FullName
             Return String.Format("file:///{0}", path.Replace("\", "/"))
