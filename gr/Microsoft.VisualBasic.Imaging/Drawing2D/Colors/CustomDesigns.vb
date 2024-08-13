@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.Colors
 
@@ -165,7 +165,7 @@ Namespace Drawing2D.Colors
         Public Shared Function Order(colors As IEnumerable(Of Color)) As Color()
             Return (From c As Color
                     In colors
-                    Order By stdNum.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2)
+                    Order By std.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2)
                    ) _
                     .ToArray
         End Function
@@ -201,7 +201,7 @@ Namespace Drawing2D.Colors
             Dim colorGroups = allColors _
                 .Where(Function(c) Not IsWhiteColor(c, excludeWhite)) _
                 .Where(Function(c) Not IsBlackColor(c, excludeBlack)) _
-                .GroupBy(Function(c) stdNum.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2), offsets:=tolerance) _
+                .GroupBy(Function(c) std.Sqrt(c.A ^ 2 + c.R ^ 2 + c.G ^ 2 + c.B ^ 2), offsets:=tolerance) _
                 .OrderByDescending(Function(c) c.Length) _
                 .Select(Function(c) c.Average) _
                 .ToArray
