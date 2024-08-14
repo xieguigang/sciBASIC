@@ -60,6 +60,7 @@ Imports System.Text
 Imports System.Xml
 Imports System.Xml.Schema
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Linq
@@ -412,7 +413,6 @@ Namespace Text.Xml.Linq
 
         <Extension>
         Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, documentText As Stream, selector As Func(Of XElement, Boolean)) As IEnumerable(Of XElement)
-            Dim el As New Value(Of XElement)
             Dim settings As New XmlReaderSettings With {
                 .ValidationFlags = XmlSchemaValidationFlags.None,
                 .CheckCharacters = False,
@@ -461,20 +461,48 @@ Namespace Text.Xml.Linq
 
                 Call reader.MoveToContent()
 
-                Do While (reader.Read())
-                    ' Parse the file And return each of the child_node
-                    If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
-                        If (Not (el = DirectCast(XNode.ReadFrom(reader), XElement)) Is Nothing) Then
-                            If Not selector Is Nothing Then
-                                If selector(el.Value) Then
+                If sizeOfBytes > 0 AndAlso documentText.CanSeek Then
+                    For Each xml As XElement In Tqdm.WrapStreamReader(Of XElement)(sizeOfBytes, Function(ByRef offset As Long, bar As Tqdm.ProgressBar)
+                                                                                                    Dim el As New Value(Of XElement)
+
+                                                                                                    reader.Read()
+                                                                                                    offset = documentText.Position
+
+                                                                                                    ' Parse the file And return each of the child_node
+                                                                                                    If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
+                                                                                                        If (Not (el = DirectCast(XNode.ReadFrom(reader), XElement)) Is Nothing) Then
+                                                                                                            If Not selector Is Nothing Then
+                                                                                                                If selector(el.Value) Then
+                                                                                                                    Return el.Value
+                                                                                                                End If
+                                                                                                            Else
+                                                                                                                Return el.Value
+                                                                                                            End If
+                                                                                                        End If
+                                                                                                    End If
+
+                                                                                                    Return Nothing
+                                                                                                End Function)
+                        Yield xml
+                    Next
+                Else
+                    Dim el As New Value(Of XElement)
+
+                    Do While (reader.Read())
+                        ' Parse the file And return each of the child_node
+                        If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
+                            If (Not (el = DirectCast(XNode.ReadFrom(reader), XElement)) Is Nothing) Then
+                                If Not selector Is Nothing Then
+                                    If selector(el.Value) Then
+                                        Yield el.Value
+                                    End If
+                                Else
                                     Yield el.Value
                                 End If
-                            Else
-                                Yield el.Value
                             End If
                         End If
-                    End If
-                Loop
+                    Loop
+                End If
             End Using
         End Function
 

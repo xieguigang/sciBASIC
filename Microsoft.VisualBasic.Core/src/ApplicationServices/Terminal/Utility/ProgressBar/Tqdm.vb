@@ -467,9 +467,9 @@ Namespace ApplicationServices.Terminal.ProgressBar
             bar.Finish()
         End Function
 
-        Public Delegate Function RequestStreamProgressLocation() As Long
+        Public Delegate Function RequestStreamProgressLocation(Of T)(ByRef getOffset As Long, bar As ProgressBar) As T
 
-        Public Sub WrapStreamReader(bytesOfStream As Long, request As RequestStreamProgressLocation, Optional ByRef bar As ProgressBar = Nothing)
+        Public Iterator Function WrapStreamReader(Of T)(bytesOfStream As Long, request As RequestStreamProgressLocation(Of T)) As IEnumerable(Of T)
             Dim offset As Long = Scan0
             Dim page_unit As ByteSize = ByteSize.B
 
@@ -481,16 +481,17 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 page_unit = "MB"
             End If
 
-            bar = New ProgressBar(total:=bytesOfStream)
+            Dim bar As New ProgressBar(total:=bytesOfStream)
 
             Do While offset < bytesOfStream
                 bar.Progress(offset / page_unit, bytesOfStream)
                 bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
-                offset += request()
+
+                Yield request(offset, bar)
             Loop
 
             Call bar.Finish()
-        End Sub
+        End Function
 
         ''' <summary>
         ''' Generates a sequence of integral numbers within a specified range.
