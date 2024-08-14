@@ -109,6 +109,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             Private ReadOnly _rightPad As String = "|"
             Private _themeBars As Char()
             Private _label As String = ""
+            Private _lastSeconds As Double
 
             Public ReadOnly Property ElapsedSeconds As Double
                 Get
@@ -257,8 +258,10 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 If current Mod _period <> 0 Then Return
                 If Not UpdateDynamicConfigs Then
                     ' make updates in constant period 
-                    If CInt(ElapsedSeconds) Mod _printsPerSecond <> 0 Then
+                    If ElapsedSeconds - _lastSeconds < _printsPerSecond Then
                         Return
+                    Else
+                        _lastSeconds = ElapsedSeconds
                     End If
                 End If
 
@@ -497,7 +500,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 page_unit = "MB"
             End If
 
-            Dim bar As New ProgressBar(total:=bytesOfStream, printsPerSecond:=2) With {
+            Dim bar As New ProgressBar(total:=bytesOfStream, printsPerSecond:=1) With {
                 .UpdateDynamicConfigs = False
             }
 
