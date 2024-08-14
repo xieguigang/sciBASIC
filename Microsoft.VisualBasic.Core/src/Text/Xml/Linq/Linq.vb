@@ -483,7 +483,9 @@ Namespace Text.Xml.Linq
 
                                                                                                     Return Nothing
                                                                                                 End Function)
-                        Yield xml
+                        If Not xml Is Nothing Then
+                            Yield xml
+                        End If
                     Next
                 Else
                     Dim el As New Value(Of XElement)
