@@ -47,7 +47,7 @@ Namespace Text.Xml.Linq
             End If
         End Function
 
-        Private Iterator Function UltraLargeXmlNodesIterator() As IEnumerable(Of XElement)
+        Public Iterator Function UltraLargeXmlNodesIterator() As IEnumerable(Of XElement)
             Dim sizeOfBytes As Value(Of Long) = 0
 
             Using reader As XmlReader = XmlReader.Create(documentText, settings)
