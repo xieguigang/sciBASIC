@@ -85,7 +85,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
             Private ReadOnly _useExponentialMovingAverage As Boolean
             Private ReadOnly _alpha As Double
             Private ReadOnly _width As Integer
-            Private ReadOnly _printsPerSecond As Integer
+            Private _printsPerSecond As Integer
             Private ReadOnly _useColor As Boolean
             ' Total is set initially, but can be dynamically updated with each step
             Private _total As Integer
@@ -228,8 +228,12 @@ Namespace ApplicationServices.Terminal.ProgressBar
             ''' Finalizes the progress bar display.
             ''' </summary>
             Public Sub Finish()
-                Progress(_total, _total)
-                VBDebugger.EchoLine("")
+                ' config these options will force the progress bar show the 100% progress
+                _printsPerSecond = 1
+                _period = 1
+
+                Call Progress(_total, _total)
+                Call VBDebugger.EchoLine("")
             End Sub
 
             ''' <summary>
@@ -493,7 +497,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 page_unit = "MB"
             End If
 
-            Dim bar As New ProgressBar(total:=bytesOfStream) With {
+            Dim bar As New ProgressBar(total:=bytesOfStream, printsPerSecond:=2) With {
                 .UpdateDynamicConfigs = False
             }
 
