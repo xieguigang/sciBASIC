@@ -344,6 +344,30 @@ Public Module XmlExtensions
                            variants:=variants)
     End Function
 
+    Public Function LoadFromXmlStream(s As Stream, model As Type, Optional throwEx As Boolean = True) As Object
+        If s Is Nothing OrElse s.Length = 0 Then
+            If throwEx Then
+                Throw New Exception("the given xml document stream has no data!")
+            Else
+                Return Nothing
+            End If
+        End If
+
+        Try
+            Using stream As New StreamReader(s)
+                Return New XmlSerializer(model).Deserialize(stream)
+            End Using
+        Catch ex As Exception
+            Call App.LogException(ex)
+
+            If throwEx Then
+                Throw
+            Else
+                Return Nothing
+            End If
+        End Try
+    End Function
+
     ''' <summary>
     ''' Generate a specific type object from a xml document stream.
     ''' </summary>
