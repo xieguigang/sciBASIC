@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::a2823af21793b0616418224d94b6ff5d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 426
-    '    Code Lines: 227 (53.29%)
-    ' Comment Lines: 144 (33.80%)
-    '    - Xml Docs: 75.00%
-    ' 
-    '   Blank Lines: 55 (12.91%)
-    '     File Size: 20.98 KB
+' Summaries:
 
 
-    '     Module Tqdm
-    ' 
-    '         Function: InternalWrap, Range, (+4 Overloads) Wrap
-    '         Class ProgressBar
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: [Step], Finish, PrintLine, (+2 Overloads) Progress, Reset
-    '                  SetLabel, SetTheme, SetThemeAscii, SetThemeBasic, SetThemePython
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 426
+'    Code Lines: 227 (53.29%)
+' Comment Lines: 144 (33.80%)
+'    - Xml Docs: 75.00%
+' 
+'   Blank Lines: 55 (12.91%)
+'     File Size: 20.98 KB
+
+
+'     Module Tqdm
+' 
+'         Function: InternalWrap, Range, (+4 Overloads) Wrap
+'         Class ProgressBar
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: [Step], Finish, PrintLine, (+2 Overloads) Progress, Reset
+'                  SetLabel, SetTheme, SetThemeAscii, SetThemeBasic, SetThemePython
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar
@@ -108,6 +109,12 @@ Namespace ApplicationServices.Terminal.ProgressBar
             Private ReadOnly _rightPad As String = "|"
             Private _themeBars As Char()
             Private _label As String = ""
+
+            Public ReadOnly Property ElapsedSeconds As Double
+                Get
+                    Return _stopWatch.Elapsed.TotalSeconds
+                End Get
+            End Property
 
             ''' <summary>
             ''' Initializes a new instance of the ProgressBar class.
@@ -459,6 +466,31 @@ Namespace ApplicationServices.Terminal.ProgressBar
             Next
             bar.Finish()
         End Function
+
+        Public Delegate Function RequestStreamProgressLocation() As Long
+
+        Public Sub WrapStreamReader(bytesOfStream As Long, request As RequestStreamProgressLocation, Optional ByRef bar As ProgressBar = Nothing)
+            Dim offset As Long = Scan0
+            Dim page_unit As ByteSize = ByteSize.B
+
+            If bytesOfStream > 2 * ByteSize.GB Then
+                bytesOfStream /= ByteSize.KB
+                page_unit = "KB"
+            ElseIf bytesOfStream > 2 * 1024 * ByteSize.GB Then
+                bytesOfStream /= ByteSize.MB
+                page_unit = "MB"
+            End If
+
+            bar = New ProgressBar(total:=bytesOfStream)
+
+            Do While offset < bytesOfStream
+                bar.Progress(offset / page_unit, bytesOfStream)
+                bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
+                offset += request()
+            Loop
+
+            Call bar.Finish()
+        End Sub
 
         ''' <summary>
         ''' Generates a sequence of integral numbers within a specified range.

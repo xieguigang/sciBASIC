@@ -420,6 +420,14 @@ Namespace Text.Xml.Linq
                 .ValidationType = ValidationType.None,
                 .DtdProcessing = DtdProcessing.Ignore
             }
+            Dim sizeOfBytes As Long = -1
+
+            Try
+                sizeOfBytes = documentText.Length
+            Catch ex As Exception
+                ' stream can not be seek
+                ' probably is a network stream or other stream with length not suports
+            End Try
 
             Using reader As XmlReader = XmlReader.Create(documentText, settings)
 
