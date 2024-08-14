@@ -116,6 +116,8 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 End Get
             End Property
 
+            Public Property UpdateDynamicConfigs As Boolean = True
+
             ''' <summary>
             ''' Initializes a new instance of the ProgressBar class.
             ''' </summary>
@@ -147,6 +149,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 _width = width
                 _printsPerSecond = printsPerSecond
                 _useColor = useColor
+                _period = 1
 
                 SetThemeAscii()
 
@@ -284,7 +287,10 @@ Namespace ApplicationServices.Terminal.ProgressBar
 
                 ' Auto-tune the period to try and only print N times a second.
                 If _nUpdates > 10 Then
-                    _period = std.Min(std.Max(1, CInt(current / elapsed / _printsPerSecond)), 500000)
+                    If UpdateDynamicConfigs Then
+                        _period = std.Min(std.Max(1, CInt(current / elapsed / _printsPerSecond)), 500000)
+                    End If
+
                     _smoothCount = 25 * 3
                 End If
 
@@ -481,7 +487,9 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 page_unit = "MB"
             End If
 
-            Dim bar As New ProgressBar(total:=bytesOfStream)
+            Dim bar As New ProgressBar(useExpMovingAvg:=False, total:=bytesOfStream, printsPerSecond:=3) With {
+                .UpdateDynamicConfigs = False
+            }
 
             Do While offset < bytesOfStream
                 bar.Progress(offset / page_unit, bytesOfStream)

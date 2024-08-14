@@ -465,8 +465,11 @@ Namespace Text.Xml.Linq
                     For Each xml As XElement In Tqdm.WrapStreamReader(Of XElement)(sizeOfBytes, Function(ByRef offset As Long, bar As Tqdm.ProgressBar)
                                                                                                     Dim el As New Value(Of XElement)
 
-                                                                                                    reader.Read()
-                                                                                                    offset = documentText.Position
+                                                                                                    If reader.Read() Then
+                                                                                                        offset = documentText.Position
+                                                                                                    Else
+                                                                                                        bar.Finish()
+                                                                                                    End If
 
                                                                                                     ' Parse the file And return each of the child_node
                                                                                                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
