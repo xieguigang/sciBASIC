@@ -251,6 +251,12 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 ' _period is a number which is contantly tuned based on how often there are updates,
                 ' to try and update the screen ~N times a second (parameter)
                 If current Mod _period <> 0 Then Return
+                If Not UpdateDynamicConfigs Then
+                    ' make updates in constant period 
+                    If CInt(ElapsedSeconds) Mod _printsPerSecond <> 0 Then
+                        Return
+                    End If
+                End If
 
                 _nUpdates += 1
 
@@ -487,7 +493,7 @@ Namespace ApplicationServices.Terminal.ProgressBar
                 page_unit = "MB"
             End If
 
-            Dim bar As New ProgressBar(useExpMovingAvg:=False, total:=bytesOfStream, printsPerSecond:=3) With {
+            Dim bar As New ProgressBar(total:=bytesOfStream) With {
                 .UpdateDynamicConfigs = False
             }
 
