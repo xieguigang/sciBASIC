@@ -326,6 +326,49 @@ Namespace Text.Xml.Linq
             End With
         End Function
 
+
+        ''' <summary>
+        ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="s">The document stream data</param>
+        ''' <param name="typeName">目标节点名称,默认是使用类型<typeparamref name="T"/>的名称</param>
+        ''' <param name="xmlns">``xmlns=...``,只需要给出等号后面的url即可</param>
+        ''' <param name="selector">
+        ''' 在加载数据集的时候,过滤掉一些不使用的数据,可以节省很多内存以及减少数据的加载时间.
+        ''' 因为后续的Xml反序列化操作在大数据集合下话费的时间会非常长
+        ''' </param>
+        ''' <param name="preprocess">
+        ''' pre-processing the each xml document text block before parsed as the target clr object
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function LoadUltraLargeXMLDataSet(Of T As Class)(s As Stream,
+                                                                Optional typeName$ = Nothing,
+                                                                Optional xmlns$ = Nothing,
+                                                                Optional selector As Func(Of XElement, Boolean) = Nothing,
+                                                                Optional preprocess As Func(Of String, String) = Nothing,
+                                                                Optional ignoreError As Boolean = False,
+                                                                Optional variants As Type() = Nothing) As IEnumerable(Of T)
+            With GetType(T).GetTypeName([default]:=typeName)
+                Return .UltraLargeXmlNodesIterator(s, selector) _
+                    .Select(Function(node)
+                                If Not preprocess Is Nothing Then
+                                    Return preprocess(node.ToString)
+                                Else
+                                    Return node.ToString
+                                End If
+                            End Function) _
+                    .NodeInstanceBuilder(Of T)(
+                        replaceXmlns:=xmlns,
+                        xmlNode:= .ByRef,
+                        ignoreError:=ignoreError,
+                        variants:=variants
+                    )
+            End With
+        End Function
+
         Public Function LoadArrayNodes(Of T As Class)(documentText$,
                                                       Optional typeName$ = Nothing,
                                                       Optional xmlns$ = Nothing,
