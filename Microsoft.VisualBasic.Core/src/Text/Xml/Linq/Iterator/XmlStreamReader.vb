@@ -112,7 +112,7 @@ Namespace Text.Xml.Linq
         Private Function ResolveXmlElement(ByRef offset As Long, bar As Tqdm.ProgressBar) As XElement
             If reader.Read() Then
                 ' do nothing
-                offset = documentText.Length
+                offset = documentText.Position
             ElseIf Not bar Is Nothing Then
                 bar.Finish()
             End If
