@@ -54,7 +54,7 @@
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Imports MAT = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.GeneralMatrix
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 正态分布随机数
@@ -94,9 +94,9 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < m
-                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
-                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
+                tmp1 = std.Sqrt(-2 * std.Log(1 - u(k)))
+                gauss(k) = tmp1 * std.Cos(2 * std.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * std.Sin(2 * std.PI * u(k + 1))
 
                 k = k + 2
             End While
@@ -108,15 +108,15 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < m - 1
-                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
-                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
+                tmp1 = std.Sqrt(-2 * std.Log(1 - u(k)))
+                gauss(k) = tmp1 * std.Cos(2 * std.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * std.Sin(2 * std.PI * u(k + 1))
 
                 k = k + 2
             End While
 
-            tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(m - 1)))
-            gauss(m - 1) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(m))
+            tmp1 = std.Sqrt(-2 * std.Log(1 - u(m - 1)))
+            gauss(m - 1) = tmp1 * std.Cos(2 * std.PI * u(m))
         End If
 
         Return gauss
@@ -166,9 +166,9 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < p
-                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
-                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
+                tmp1 = std.Sqrt(-2 * std.Log(1 - u(k)))
+                gauss(k) = tmp1 * std.Cos(2 * std.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * std.Sin(2 * std.PI * u(k + 1))
 
                 k = k + 2
             End While
@@ -179,15 +179,15 @@ Public Module crandn
             Dim k As Integer = 0
 
             While k < p - 1
-                tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(k)))
-                gauss(k) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(k + 1))
-                gauss(k + 1) = tmp1 * stdNum.Sin(2 * stdNum.PI * u(k + 1))
+                tmp1 = std.Sqrt(-2 * std.Log(1 - u(k)))
+                gauss(k) = tmp1 * std.Cos(2 * std.PI * u(k + 1))
+                gauss(k + 1) = tmp1 * std.Sin(2 * std.PI * u(k + 1))
 
                 k = k + 2
             End While
 
-            tmp1 = stdNum.Sqrt(-2 * stdNum.Log(1 - u(m)))
-            gauss(m) = tmp1 * stdNum.Cos(2 * stdNum.PI * u(m + 1))
+            tmp1 = std.Sqrt(-2 * std.Log(1 - u(m)))
+            gauss(m) = tmp1 * std.Cos(2 * std.PI * u(m + 1))
         End If
 
         Dim goal As New NumericMatrix(m, n)
