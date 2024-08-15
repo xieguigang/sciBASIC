@@ -88,18 +88,30 @@ Namespace CNN
 
         Dim m_layers As Layer()
 
+        ''' <summary>
+        ''' get number of layers
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property LayerNum As Integer
             Get
                 Return m_layers.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the input layer of the network
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property input As InputLayer
             Get
                 Return m_layers(0)
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the output layer of the network
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property output As LossLayer
             Get
                 Return m_layers(m_layers.Length - 1)

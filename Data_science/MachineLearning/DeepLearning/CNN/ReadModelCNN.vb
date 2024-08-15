@@ -54,7 +54,6 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Layer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 

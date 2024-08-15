@@ -56,7 +56,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports Layer = Microsoft.VisualBasic.MachineLearning.CNN.layers.Layer
 
 Namespace CNN.losslayers
