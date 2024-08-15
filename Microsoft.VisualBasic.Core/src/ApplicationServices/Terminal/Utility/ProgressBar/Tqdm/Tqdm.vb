@@ -169,14 +169,17 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
 
             If bytesOfStream > 2 * ByteSize.GB Then
                 bytesOfStream /= ByteSize.KB
-                page_unit = "KB"
+                page_unit = ByteSize.KB
             ElseIf bytesOfStream > 2 * 1024 * ByteSize.GB Then
                 bytesOfStream /= ByteSize.MB
-                page_unit = "MB"
+                page_unit = ByteSize.MB
             End If
 
             Dim bar As New ProgressBar(total:=bytesOfStream, printsPerSecond:=1) With {
-                .UpdateDynamicConfigs = False
+                .UpdateDynamicConfigs = False,
+                .FormatTaskCounter = Function(byte_pages)
+                                         Return StringFormats.Lanudry(bytes:=byte_pages * page_unit)
+                                     End Function
             }
 
             Do While offset < bytesOfStream

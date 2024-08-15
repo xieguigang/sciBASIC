@@ -46,6 +46,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         End Property
 
         Public Property UpdateDynamicConfigs As Boolean = True
+        Public Property FormatTaskCounter As Func(Of Integer, String)
 
         ''' <summary>
         ''' Initializes a new instance of the ProgressBar class.
@@ -163,6 +164,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
 
             Call Progress(_total, _total)
             Call VBDebugger.EchoLine("")
+            Call VBDebugger.WaitOutput()
         End Sub
 
         ''' <summary>
@@ -278,8 +280,16 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
 
             ' Print the percent with 1 fixed point, followed by the current / total numbers, and the elapsed/remaining time
             sb.Append($" {percent:F1}% ")
-            If _useColor Then sb.Append(ChrW(27) & "[34m")
-            sb.Append($"[ {current:N0} / {_total:N0} | ")
+
+            If _useColor Then
+                Call sb.Append(ChrW(27) & "[34m")
+            End If
+            If FormatTaskCounter Is Nothing Then
+                Call sb.Append($"[ {current:N0} / {_total:N0} | ")
+            Else
+                Call sb.Append($"[ {_FormatTaskCounter(current)} / {_FormatTaskCounter(_total)} | ")
+            End If
+
             sb.Append($"{StringFormats.ReadableElapsedTime(elapsed * 1000)} < {StringFormats.ReadableElapsedTime(remaining * 1000)} ] ")
 
             ' Finally, if there is one, print the label
