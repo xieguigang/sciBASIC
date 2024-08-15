@@ -908,9 +908,16 @@ Namespace SVG
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
             Dim rect As SvgRect = __svgData.svg.AddRect
+            Dim fill As String
+
+            If TypeOf brush Is SolidBrush Then
+                fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
+            Else
+                fill = New DataURI(DirectCast(brush, TextureBrush).Image).ToString
+            End If
 
             rect.SetRectangle(New PointF(x, y), New SizeF(width, height))
-            rect.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
+            rect.Style = "fill: " & fill
         End Sub
 
         Public Overrides Sub FillRegion(brush As Brush, region As Region)
