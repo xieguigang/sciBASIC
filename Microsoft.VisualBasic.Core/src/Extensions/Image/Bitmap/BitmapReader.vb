@@ -176,6 +176,11 @@ Namespace Imaging.BitmapImage
             Dim pixelByteLocation = GetOffset(row, column)
             Dim colorByteLocation = GetColorByteLocation(column, pixelByteLocation)
 
+            ' (0,0) ??
+            If colorByteLocation < 0 Then
+                colorByteLocation = Offset
+            End If
+
             s.BaseStream.Seek(colorByteLocation, SeekOrigin.Begin)
 
             Dim Blue = s.ReadByte
