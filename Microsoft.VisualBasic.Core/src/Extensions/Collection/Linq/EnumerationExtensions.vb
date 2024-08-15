@@ -97,7 +97,11 @@ Namespace Linq
         ''' <typeparam name="T">The type of the elements of source.</typeparam>
         ''' <param name="enums">The sequence to type as <see cref="IEnumerable(Of T)"/></param>
         ''' <returns>The input sequence typed as <see cref="IEnumerable(Of T)"/>.</returns>
-        ''' 
+        ''' <remarks>
+        ''' this iterator function is a kind of safe function: for the given data source is nothing,
+        ''' this function will returns a empty collection, null reference error will not happends 
+        ''' in this iterator function.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsEnumerable(Of T)(enums As Enumeration(Of T)) As IEnumerable(Of T)
