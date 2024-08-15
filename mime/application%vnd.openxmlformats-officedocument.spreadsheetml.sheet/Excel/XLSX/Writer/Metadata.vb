@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bc25f489efc3475020b9259c5ab993d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Metadata.vb"
+﻿#Region "Microsoft.VisualBasic::31194b41a82e20cae7d6f6457667a126, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Metadata.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 72 (47.06%)
-    ' Comment Lines: 63 (41.18%)
-    '    - Xml Docs: 90.48%
+    '   Total Lines: 159
+    '    Code Lines: 72 (45.28%)
+    ' Comment Lines: 65 (40.88%)
+    '    - Xml Docs: 90.77%
     ' 
-    '   Blank Lines: 18 (11.76%)
-    '     File Size: 6.77 KB
+    '   Blank Lines: 22 (13.84%)
+    '     File Size: 6.89 KB
 
 
     '     Class Metadata

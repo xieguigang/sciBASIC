@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d918003fe5ab7d9d478b0f1e02cad220, Data_science\MachineLearning\DeepLearning\CNN\ConvolutionalNN.vb"
+﻿#Region "Microsoft.VisualBasic::e89d330cb68257e15d472907e97825df, Data_science\MachineLearning\DeepLearning\CNN\ConvolutionalNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 124 (59.33%)
-    ' Comment Lines: 46 (22.01%)
-    '    - Xml Docs: 91.30%
+    '   Total Lines: 221
+    '    Code Lines: 124 (56.11%)
+    ' Comment Lines: 58 (26.24%)
+    '    - Xml Docs: 93.10%
     ' 
-    '   Blank Lines: 39 (18.66%)
-    '     File Size: 7.24 KB
+    '   Blank Lines: 39 (17.65%)
+    '     File Size: 7.61 KB
 
 
     '     Class ConvolutionalNN

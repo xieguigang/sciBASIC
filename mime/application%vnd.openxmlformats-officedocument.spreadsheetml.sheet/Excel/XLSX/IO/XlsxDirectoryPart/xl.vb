@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9b032e325877eac75efe7a31667b45c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\xl.vb"
+﻿#Region "Microsoft.VisualBasic::48ff3084033ccacd65e4fbddc9f522b8, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\xl.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 52 (64.20%)
-    ' Comment Lines: 17 (20.99%)
+    '   Total Lines: 82
+    '    Code Lines: 53 (64.63%)
+    ' Comment Lines: 17 (20.73%)
     '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 12 (14.81%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 12 (14.63%)
+    '     File Size: 3.31 KB
 
 
     '     Class xl

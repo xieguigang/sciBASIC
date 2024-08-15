@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0e9367fbccb0fbd14b9dbb0d53c17b, Data_science\MachineLearning\DeepLearning\CNN\layers\losslayers\SVMLayer.vb"
+﻿#Region "Microsoft.VisualBasic::9ba5c9aae345811ad56abc1b61231b3b, Data_science\MachineLearning\DeepLearning\CNN\layers\losslayers\SVMLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 45 (64.29%)
-    ' Comment Lines: 11 (15.71%)
+    '   Total Lines: 69
+    '    Code Lines: 44 (63.77%)
+    ' Comment Lines: 11 (15.94%)
     '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 14 (20.00%)
-    '     File Size: 2.27 KB
+    '   Blank Lines: 14 (20.29%)
+    '     File Size: 2.21 KB
 
 
     '     Class SVMLayer

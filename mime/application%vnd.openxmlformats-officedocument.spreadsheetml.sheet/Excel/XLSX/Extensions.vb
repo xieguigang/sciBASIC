@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::734a0cdd91baadfce6c0eb4f3452034e, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1a72ca3f0c697ac02850b78eb69e5a60, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 55 (67.90%)
-    ' Comment Lines: 15 (18.52%)
+    '   Total Lines: 94
+    '    Code Lines: 65 (69.15%)
+    ' Comment Lines: 15 (15.96%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 11 (13.58%)
-    '     File Size: 3.00 KB
+    '   Blank Lines: 14 (14.89%)
+    '     File Size: 3.43 KB
 
 
     '     Module Extensions
@@ -48,6 +48,8 @@
     '         Properties: Sheet1
     ' 
     '         Function: EnumerateTables, FirstSheet, GetSheetNames, ReadTableAuto
+    ' 
+    '         Sub: WriteSheetTable
     ' 
     ' 
     ' /********************************************************************************/

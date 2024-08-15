@@ -1,66 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::92d98efbad2a0d3b060936e724b32414, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
+﻿#Region "Microsoft.VisualBasic::ef88ad8a59bd0d5d1242a548315bf944, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BlockSearchFunction.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 239
-'    Code Lines: 162 (67.78%)
-' Comment Lines: 40 (16.74%)
-'    - Xml Docs: 85.00%
-' 
-'   Blank Lines: 37 (15.48%)
-'     File Size: 8.09 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure Block
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetComparision, ToString
-' 
-'     Structure SequenceTag
-' 
-'         Function: ToString
-' 
-'     Class BlockSearchFunction
-' 
-'         Properties: Keys, numBlocks, raw, size
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: BuildIndex, GetBlock, GetOffset, getOrderSeq, Search
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 276
+    '    Code Lines: 173 (62.68%)
+    ' Comment Lines: 64 (23.19%)
+    '    - Xml Docs: 85.94%
+    ' 
+    '   Blank Lines: 39 (14.13%)
+    '     File Size: 9.72 KB
+
+
+    '     Structure Block
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetComparision, ToString
+    ' 
+    '     Structure SequenceTag
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class BlockSearchFunction
+    ' 
+    '         Properties: Keys, numBlocks, raw, size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: BuildIndex, GetBlock, GetOffset, getOrderSeq, Search
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

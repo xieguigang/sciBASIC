@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ebfade8b0f7f2a17e9e78b0a9b53980, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::c959fa64e2935c18e4fa8fadd6cd824a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.50%
     ' 
     '   Blank Lines: 15 (9.38%)
-    '     File Size: 6.64 KB
+    '     File Size: 6.63 KB
 
 
     '     Class CustomDesigns

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68b2edcea3f231cfea6f4172ef081f4f, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
+﻿#Region "Microsoft.VisualBasic::f1407dba34b74cb8c935363b1d60d804, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 49 (69.01%)
-    ' Comment Lines: 8 (11.27%)
+    '   Total Lines: 73
+    '    Code Lines: 49 (67.12%)
+    ' Comment Lines: 10 (13.70%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (19.72%)
-    '     File Size: 2.46 KB
+    '   Blank Lines: 14 (19.18%)
+    '     File Size: 2.51 KB
 
 
     '     Class RectangularArray

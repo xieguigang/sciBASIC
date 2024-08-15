@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83cc041357b3c8658634e71e4022f9b4, Data_science\MachineLearning\DeepLearning\CNN\ReadModelCNN.vb"
+﻿#Region "Microsoft.VisualBasic::ca66c562dd8e5f6e2a8adba5cef331d3, Data_science\MachineLearning\DeepLearning\CNN\ReadModelCNN.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 38 (76.00%)
-    ' Comment Lines: 1 (2.00%)
+    '   Total Lines: 49
+    '    Code Lines: 37 (75.51%)
+    ' Comment Lines: 1 (2.04%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (22.00%)
-    '     File Size: 1.75 KB
+    '   Blank Lines: 11 (22.45%)
+    '     File Size: 1.68 KB
 
 
     '     Module ReadModelCNN

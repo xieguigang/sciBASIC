@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eaac9e96bab91106ab0a2587de35a1de, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
+﻿#Region "Microsoft.VisualBasic::95586916d8f25225b339b0a5378f6cc3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Shell.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 42 (53.16%)
-    ' Comment Lines: 24 (30.38%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 84
+    '    Code Lines: 43 (51.19%)
+    ' Comment Lines: 25 (29.76%)
+    '    - Xml Docs: 88.00%
     ' 
-    '   Blank Lines: 13 (16.46%)
-    '     File Size: 2.51 KB
+    '   Blank Lines: 16 (19.05%)
+    '     File Size: 2.61 KB
 
 
     '     Interface IShellDevice
@@ -54,7 +54,7 @@
     '         Properties: History, ps1, Quite, shell, ttyDev
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: Run
+    '         Function: Run
     ' 
     ' 
     ' /********************************************************************************/

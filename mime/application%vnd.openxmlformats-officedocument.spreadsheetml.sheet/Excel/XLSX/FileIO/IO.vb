@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::cc29487e39514fc0b852d5d08a1ba0f3, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::59bb6ddf767dc05642ee1b72674c4e6c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\IO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 99
-'    Code Lines: 68 (68.69%)
-' Comment Lines: 18 (18.18%)
-'    - Xml Docs: 61.11%
-' 
-'   Blank Lines: 13 (13.13%)
-'     File Size: 3.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module IO
-' 
-'         Function: CreateReader, SaveTo, ToXML
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 46 (68.66%)
+    ' Comment Lines: 11 (16.42%)
+    '    - Xml Docs: 45.45%
+    ' 
+    '   Blank Lines: 10 (14.93%)
+    '     File Size: 2.40 KB
+
+
+    '     Module IO
+    ' 
+    '         Function: (+2 Overloads) CreateReader, LoadZip, ToXML
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8614db7d6e5eb8f70a775b9b93115fa5, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::68b5969ac30406aed4e603f1aa256f56, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.15%
     ' 
     '   Blank Lines: 54 (7.41%)
-    '     File Size: 23.08 KB
+    '     File Size: 22.92 KB
 
 
     ' Module SpecialFunctions

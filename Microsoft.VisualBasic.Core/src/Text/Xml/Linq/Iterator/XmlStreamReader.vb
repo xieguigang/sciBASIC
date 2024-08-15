@@ -1,4 +1,61 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::27fa66000b5b0ba0e8bf0bc79d6f9ef1, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\XmlStreamReader.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 89 (61.81%)
+    ' Comment Lines: 35 (24.31%)
+    '    - Xml Docs: 11.43%
+    ' 
+    '   Blank Lines: 20 (13.89%)
+    '     File Size: 6.86 KB
+
+
+    '     Class XmlStreamReader
+    ' 
+    '         Properties: ShowProgress
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CheckStreamSize, (+2 Overloads) ResolveXmlElement, UltraLargeXmlNodesIterator, UltraLargeXmlNodesIteratorNoTqdm, UltraLargeXmlNodesIteratorTqdm
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Xml
 Imports System.Xml.Schema
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar

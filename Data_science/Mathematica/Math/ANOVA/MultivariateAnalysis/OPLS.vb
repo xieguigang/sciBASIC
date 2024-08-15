@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::983991e36624fea88dd926589289f132, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\OPLS.vb"
+﻿#Region "Microsoft.VisualBasic::612bb28086933fdae1161e0dce68b53b, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\OPLS.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 370
-    '    Code Lines: 274 (74.05%)
-    ' Comment Lines: 37 (10.00%)
+    '   Total Lines: 376
+    '    Code Lines: 280 (74.47%)
+    ' Comment Lines: 37 (9.84%)
     '    - Xml Docs: 16.22%
     ' 
-    '   Blank Lines: 59 (15.95%)
-    '     File Size: 14.89 KB
+    '   Blank Lines: 59 (15.69%)
+    '     File Size: 14.99 KB
 
 
     ' Class OPLS

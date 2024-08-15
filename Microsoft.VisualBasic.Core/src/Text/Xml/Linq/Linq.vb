@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7796aba60398bd10a6893c306dc51ea4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::ed454011b289139f6185c67c969cd4d4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 384
-    '    Code Lines: 234 (60.94%)
-    ' Comment Lines: 109 (28.39%)
-    '    - Xml Docs: 69.72%
+    '   Total Lines: 405
+    '    Code Lines: 249 (61.48%)
+    ' Comment Lines: 108 (26.67%)
+    '    - Xml Docs: 95.37%
     ' 
-    '   Blank Lines: 41 (10.68%)
-    '     File Size: 19.66 KB
+    '   Blank Lines: 48 (11.85%)
+    '     File Size: 19.86 KB
 
 
     '     Module Data
     ' 
     '         Function: ArrayNodesFromDocument, CreateNodeObject, GetNodeNameDefine, GetTypeName, GetXmlNodeDoc
-    '                   InternalIterates, IteratesArrayNodes, LoadArrayNodes, LoadUltraLargeXMLDataSet, LoadXmlDataSet
-    '                   LoadXmlDocument, NodeInstanceBuilder, NodeStream, PopulateXmlElementText, (+2 Overloads) UltraLargeXmlNodesIterator
+    '                   InternalIterates, IteratesArrayNodes, LoadArrayNodes, (+2 Overloads) LoadUltraLargeXMLDataSet, LoadXmlDataSet
+    '                   LoadXmlDocument, NodeInstanceBuilder, NodeStream, PopulateXmlElementText, UltraLargeXmlNodesIterator
     ' 
     ' 
     ' /********************************************************************************/

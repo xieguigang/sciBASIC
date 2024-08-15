@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0310c313f5b1e2c9c0eab5262bfa7ae0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\XlsxDirectoryPart.vb"
+﻿#Region "Microsoft.VisualBasic::012868c2bc905e65060e7fb261449cb5, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\XlsxDirectoryPart.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 41 (80.39%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 103
+    '    Code Lines: 81 (78.64%)
+    ' Comment Lines: 1 (0.97%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (19.61%)
-    '     File Size: 2.73 KB
+    '   Blank Lines: 21 (20.39%)
+    '     File Size: 4.77 KB
 
 
     '     Class XlsxDirectoryPart
     ' 
-    '         Properties: folder
-    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: InternalFileName, ToString
+    ' 
+    '         Function: CheckInternalFileExists, ReadInternalFileText, ToString
+    ' 
+    '         Sub: scanFiles, scanXmlFiles
     ' 
     ' 
     ' /********************************************************************************/

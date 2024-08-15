@@ -1,63 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::ca402ecb7b9bd022c88b5505db6beb94, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
+﻿#Region "Microsoft.VisualBasic::cc3daa7d5effe7d79fc37e7c09f0be26, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 322
-'    Code Lines: 169 (52.48%)
-' Comment Lines: 118 (36.65%)
-'    - Xml Docs: 88.98%
-' 
-'   Blank Lines: 35 (10.87%)
-'     File Size: 13.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class File
-' 
-'         Properties: _rels, ContentTypes, docProps, FilePath, MimeType
-'                     xl
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: _name, AddSheetTable, CreatePackage, FullName, (+2 Overloads) GetTable
-'                   GetWorkdir, GetWorksheet, LoadDataSet, Open, SheetNames
-'                   ToString, (+2 Overloads) WriteSheetTable
-' 
-'         Sub: _loadContents, addInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 226
+    '    Code Lines: 113 (50.00%)
+    ' Comment Lines: 89 (39.38%)
+    '    - Xml Docs: 87.64%
+    ' 
+    '   Blank Lines: 24 (10.62%)
+    '     File Size: 9.94 KB
+
+
+    '     Class File
+    ' 
+    '         Properties: _rels, ContentTypes, docProps, FilePath, MimeType
+    '                     xl
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: _name, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
+    '                   Open, SheetNames, ToString
+    ' 
+    '         Sub: _loadContents
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

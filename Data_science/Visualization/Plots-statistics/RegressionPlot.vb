@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4cc23631c443dca3c8f2e348395286c, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::daca2b1ff58fc8ce428030a619f2ec87, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 411
-    '    Code Lines: 308 (74.94%)
-    ' Comment Lines: 47 (11.44%)
+    '   Total Lines: 474
+    '    Code Lines: 363 (76.58%)
+    ' Comment Lines: 47 (9.92%)
     '    - Xml Docs: 55.32%
     ' 
-    '   Blank Lines: 56 (13.63%)
-    '     File Size: 18.03 KB
+    '   Blank Lines: 64 (13.50%)
+    '     File Size: 19.84 KB
 
 
-    ' Module RegressionPlot
+    ' Class RegressionPlot
+    ' 
+    '     Properties: absolute_positive, errorFitPointStyle, labelerIterations, LinearLabel, pointBrushStyle
+    '                 predictedX, predictPointStroke, predictPointStyle, PredictsLabel, ReferenceLabel
+    '                 reverse, SamplesLabel, showErrorBand, showYFitPoints
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: Plot
     ' 
-    '     Sub: printEquation, printLegend, printXPredicted
+    '     Sub: PlotInternal, printEquation, printLegend, printXPredicted
     ' 
     ' /********************************************************************************/
 

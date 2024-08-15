@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a9d1014a836969d4de5ed4cee39ed1a, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\LineReader.vb"
+﻿#Region "Microsoft.VisualBasic::0e4076bdd6fb40044c4c5c5ef5f9111c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\LineReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 19 (76.00%)
+    '   Total Lines: 24
+    '    Code Lines: 18 (75.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (24.00%)
-    '     File Size: 779 B
+    '   Blank Lines: 6 (25.00%)
+    '     File Size: 711 B
 
 
     '     Class LineReader

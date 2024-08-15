@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07923851bc993ca46173c88637f36761, Data_science\Mathematica\Math\Math.Statistics\Distributions\Distribution.vb"
+﻿#Region "Microsoft.VisualBasic::1a5555f1fbf839434adca6ec186aa590, Data_science\Mathematica\Math\Math.Statistics\Distributions\Distribution.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 98.55%
     ' 
     '   Blank Lines: 47 (13.35%)
-    '     File Size: 13.98 KB
+    '     File Size: 13.97 KB
 
 
     '     Class Distribution

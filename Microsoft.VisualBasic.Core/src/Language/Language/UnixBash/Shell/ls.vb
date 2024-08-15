@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a81909f72bcb2869129761dbd5078445, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::f52aed324c5cf8e1b3472a84009f6172, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\Shell\ls.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 277
-    '    Code Lines: 185 (66.79%)
-    ' Comment Lines: 57 (20.58%)
-    '    - Xml Docs: 94.74%
+    '   Total Lines: 290
+    '    Code Lines: 189 (65.17%)
+    ' Comment Lines: 64 (22.07%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 35 (12.64%)
-    '     File Size: 10.15 KB
+    '   Blank Lines: 37 (12.76%)
+    '     File Size: 10.64 KB
 
 
     '     Class Search
     ' 
     '         Properties: SearchType, wildcards
     ' 
-    '         Function: Clone, DoFileNameGreps, ToString
+    '         Function: Clone, DoFileNameGreps, MakeFilter, ToString
     '         Operators: (+3 Overloads) -, <, <<, (+2 Overloads) <=, >
     '                    (+2 Overloads) >=
     ' 

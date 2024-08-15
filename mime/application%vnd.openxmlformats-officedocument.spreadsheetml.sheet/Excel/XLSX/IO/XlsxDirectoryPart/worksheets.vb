@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c46d38bc3bef08846d594c6a94e44e64, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\worksheets.vb"
+﻿#Region "Microsoft.VisualBasic::0a48befab8cb4ea7f8fb6eeb4e7d1e22, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\worksheets.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 68 (78.16%)
-    ' Comment Lines: 7 (8.05%)
+    '   Total Lines: 74
+    '    Code Lines: 55 (74.32%)
+    ' Comment Lines: 7 (9.46%)
     '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 12 (13.79%)
-    '     File Size: 3.51 KB
+    '   Blank Lines: 12 (16.22%)
+    '     File Size: 3.03 KB
 
 
     '     Class worksheets
     ' 
     '         Properties: _rels, worksheets
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: _name, GetWorksheet, HaveWorksheet
     ' 
-    '         Sub: _loadContents, Add, Save
+    '         Sub: _loadContents, Add
     ' 
     ' 
     ' /********************************************************************************/
