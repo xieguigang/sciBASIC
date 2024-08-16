@@ -142,7 +142,7 @@ Namespace CNN
                     valid_loss = loss.AsParallel.Where(Function(a) Not a.IsNaNImaginary).ToArray
                     loss_sum = valid_loss.Sum
                     loss_mean = loss_sum / (valid_loss.Length + 1)
-                    report_txt = $"{(i / epochsNum * 100).ToString("F1")}% [{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean.ToString("G3")} total:{loss_sum.ToString("G4")} mean_errors={mean_errors.ToString("F5")}"
+                    report_txt = $"[{valid_loss.Length}/{loss.Count}] mean_loss:{loss_mean.ToString("G3")} total:{loss_sum.ToString("G4")} mean_errors={mean_errors.ToString("F5")}"
                     progress.SetLabel(report_txt)
                 End If
             Next
