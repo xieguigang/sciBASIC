@@ -242,7 +242,7 @@ Namespace Plots
 
                 Yield pt1
 
-                If pt1.X.IsNaNImaginary OrElse pt1.Y.IsNaNImaginary Then
+                If pt1.X.IsNaNImaginary OrElse pt1.Y.IsNaNImaginary OrElse Not g.IsVisible(pt1) Then
                     ' current point is very outside the canvas
                     ' skip of drawing this point?
                     Call $"Point ({pt.ToString}) is very outside of the canvas!".Warning

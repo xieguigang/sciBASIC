@@ -4221,19 +4221,22 @@ Namespace Imaging
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(rect As Rectangle) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the specified System.Drawing.PointF structure is contained
-        '     within the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   point:
-        '     System.Drawing.PointF structure to test for visibility.
-        '
-        ' Returns:
-        '     true if the point specified by the point parameter is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As PointF) As Boolean
+
+        ''' <summary>
+        ''' Indicates whether the specified System.Drawing.PointF structure is contained
+        ''' within the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="point">System.Drawing.PointF structure to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point specified by the point parameter is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsVisible(point As PointF) As Boolean
+            Return IsVisible(point.X, point.Y)
+        End Function
+
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a System.Drawing.RectangleF structure
@@ -4247,51 +4250,62 @@ Namespace Imaging
         '     true if the rectangle specified by the rect parameter is contained within the
         '     visible clip region of this System.Drawing.Graphics; otherwise, false.
         Public MustOverride Function IsVisible(rect As RectangleF) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the specified System.Drawing.Point structure is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   point:
-        '     System.Drawing.Point structure to test for visibility.
-        '
-        ' Returns:
-        '     true if the point specified by the point parameter is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(point As Point) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the point specified by a pair of coordinates is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the point to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the point to test for visibility.
-        '
-        ' Returns:
-        '     true if the point defined by the x and y parameters is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Single, y As Single) As Boolean
-        '
-        ' Summary:
-        '     Indicates whether the point specified by a pair of coordinates is contained within
-        '     the visible clip region of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   x:
-        '     The x-coordinate of the point to test for visibility.
-        '
-        '   y:
-        '     The y-coordinate of the point to test for visibility.
-        '
-        ' Returns:
-        '     true if the point defined by the x and y parameters is contained within the visible
-        '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public MustOverride Function IsVisible(x As Integer, y As Integer) As Boolean
+
+        ''' <summary>
+        ''' Indicates whether the specified System.Drawing.Point structure is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="point">System.Drawing.Point structure to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point specified by the point parameter is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsVisible(point As Point) As Boolean
+            Return IsVisible(point.X, point.Y)
+        End Function
+
+        ''' <summary>
+        ''' Indicates whether the point specified by a pair of coordinates is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the point to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the point to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point defined by the x and y parameters is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        Public Function IsVisible(x As Single, y As Single) As Boolean
+            If x > Size.Width OrElse x < 0 Then
+                Return False
+            ElseIf y > Size.Height OrElse y < 0 Then
+                Return False
+            End If
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' Indicates whether the point specified by a pair of coordinates is contained within
+        ''' the visible clip region of this System.Drawing.Graphics.
+        ''' </summary>
+        ''' <param name="x">The x-coordinate of the point to test for visibility.</param>
+        ''' <param name="y">The y-coordinate of the point to test for visibility.</param>
+        ''' <returns>
+        ''' true if the point defined by the x and y parameters is contained within the visible
+        ''' clip region of this System.Drawing.Graphics; otherwise, false.
+        ''' </returns>
+        Public Function IsVisible(x As Integer, y As Integer) As Boolean
+            If x > Size.Width OrElse x < 0 Then
+                Return False
+            ElseIf y > Size.Height OrElse y < 0 Then
+                Return False
+            End If
+
+            Return True
+        End Function
+
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,
