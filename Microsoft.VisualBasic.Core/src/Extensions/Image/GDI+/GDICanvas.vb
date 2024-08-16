@@ -4590,9 +4590,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(point As PointF) As Boolean
-            Return Graphics.IsVisible(point)
-        End Function
+        'Public Overrides Function IsVisible(point As PointF) As Boolean
+        '    Return Graphics.IsVisible(point)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the specified System.Drawing.Point structure is contained within
@@ -4605,9 +4605,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point specified by the point parameter is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(point As Point) As Boolean
-            Return Graphics.IsVisible(point)
-        End Function
+        'Public Overrides Function IsVisible(point As Point) As Boolean
+        '    Return Graphics.IsVisible(point)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4623,9 +4623,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
-            Return Graphics.IsVisible(x, y)
-        End Function
+        'Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
+        '    Return Graphics.IsVisible(x, y)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the point specified by a pair of coordinates is contained within
@@ -4641,9 +4641,9 @@ Namespace Imaging
         ' Returns:
         '     true if the point defined by the x and y parameters is contained within the visible
         '     clip region of this System.Drawing.Graphics; otherwise, false.
-        Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
-            Return Graphics.IsVisible(x, y)
-        End Function
+        'Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
+        '    Return Graphics.IsVisible(x, y)
+        'End Function
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a pair of coordinates, a width,

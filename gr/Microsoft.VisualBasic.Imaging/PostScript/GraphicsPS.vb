@@ -950,23 +950,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Function
 
-        Public Overrides Function IsVisible(point As PointF) As Boolean
-            Throw New NotImplementedException()
-        End Function
-
         Public Overrides Function IsVisible(rect As RectangleF) As Boolean
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function IsVisible(point As Point) As Boolean
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function IsVisible(x As Single, y As Single) As Boolean
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function IsVisible(x As Integer, y As Integer) As Boolean
             Throw New NotImplementedException()
         End Function
 
