@@ -422,9 +422,10 @@ Public Module XmlExtensions
             End If
         Catch ex As Exception
             Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
+            Dim max_debug_len As String = 4096
 
-            If Len(xml) > 512 Then
-                xml = Mid(xml, 1, 512) & "..."
+            If Len(xml) > max_debug_len Then
+                xml = Mid(xml, 1, max_debug_len) & "..."
             End If
 
             ex = New Exception($"class_name: {schema.Name}, and the xml fragment: {xml}", ex)
