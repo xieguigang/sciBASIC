@@ -119,10 +119,17 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim nVertices As Integer = data.Length
         Dim currentGraph As Heap = Heaps.MakeHeap(nVertices, nNeighbors)
         Dim d As Double
+        Dim vIndex As IEnumerable(Of Integer)
+
+        If Utils.EnableTqdm Then
+            vIndex = Tqdm.Range(0, nVertices)
+        Else
+            vIndex = Enumerable.Range(0, nVertices)
+        End If
 
         Call VBDebugger.EchoLine("[MakeNNDescent] Start sample rejection loop...")
 
-        For Each i As Integer In Tqdm.Range(0, nVertices)
+        For Each i As Integer In vIndex
             Dim indices As Integer() = Utils.RejectionSample(nNeighbors, data.Length, random)
 
             For j As Integer = 0 To indices.Length - 1

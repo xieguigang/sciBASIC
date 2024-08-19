@@ -54,10 +54,19 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.InteropService.Pipeline
 Imports Microsoft.VisualBasic.Math
 
 Module Utils
+
+    ''' <summary>
+    ''' Enable of show tqdm progress bar?
+    ''' </summary>
+    ''' <returns>default is true, get config from ``tqdm`` variable from the runtime framework.</returns>
+    Public ReadOnly Property EnableTqdm As Boolean
+        Get
+            Return App.GetVariable("tqdm", "TRUE").ParseBoolean
+        End Get
+    End Property
 
     ''' <summary>
     ''' Creates an empty array

@@ -206,10 +206,17 @@ Friend Module Heaps
         ' Note: The comment on this method doesn't seem to quite fit with the method signature (where a single Heap is provided, not an array of Heaps)
         Dim indices = heap(0)
         Dim weights = heap(1)
+        Dim indicesGroup As IEnumerable(Of Integer)
+
+        If Utils.EnableTqdm Then
+            indicesGroup = Tqdm.Range(0, indices.Length)
+        Else
+            indicesGroup = Enumerable.Range(0, indices.Length)
+        End If
 
         Call VBDebugger.EchoLine("DeHeapSort...")
 
-        For Each i As Integer In Tqdm.Range(0, indices.Length)
+        For Each i As Integer In indicesGroup
             Dim indHeap = indices(i)
             Dim distHeap = weights(i)
 
