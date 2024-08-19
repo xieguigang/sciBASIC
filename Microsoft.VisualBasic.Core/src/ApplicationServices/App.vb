@@ -162,9 +162,11 @@ Public Module App
 
     ''' <summary>
     ''' Numbers of the CPU kernels on the current machine.
-    ''' (获取当前的系统主机的CPU核心数)
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 获取当前的系统主机的CPU逻辑核心数，当不开启超线程的时候才是返回物理核心数
+    ''' </remarks>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
 
     Public ReadOnly Property MemoryLoad As MemoryLoads

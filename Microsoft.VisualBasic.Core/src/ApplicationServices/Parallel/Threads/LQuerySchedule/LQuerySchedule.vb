@@ -83,7 +83,9 @@ Namespace Parallel.Linq
         ''' Get the number of processors on the current machine.
         ''' </summary>
         ''' <value></value>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A reference to the <see cref="Environment.ProcessorCount"/>
+        ''' </returns>
         ''' <remarks>(获取当前的系统主机的CPU核心数)</remarks>
         Public ReadOnly Property CPU_NUMBER As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
