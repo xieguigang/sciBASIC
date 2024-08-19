@@ -124,6 +124,9 @@ Namespace Drawing2D.Colors
         FlexImaging
         Typhoon
 
+        Icefire
+        Seismic
+
         <Description("viridis")> viridis
         <Description("viridis:magma")> magma
         <Description("viridis:inferno")> inferno

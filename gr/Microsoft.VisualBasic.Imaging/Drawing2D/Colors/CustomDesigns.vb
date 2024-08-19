@@ -66,6 +66,14 @@ Namespace Drawing2D.Colors
 
     Public Class CustomDesigns
 
+        Public Shared Function Icefire() As Color()
+            Return Viridis.fromHtml("#7abbce", "#3f8fce", "#465bbb", "#3a3865", "#22212a", "#2d1e21", "#612937", "#a82f43", "#dc5433", "#f29457").ToArray
+        End Function
+
+        Public Shared Function Seismic() As Color()
+            Return Viridis.fromHtml("#00008c", "#0000cd", "#1515ff", "#7575ff", "#d1d1ff", "#ffd1d1", "#ff7575", "#ff1515", "#db0000", "#ad0000").ToArray
+        End Function
+
         Public Shared Function Halloween() As Color()
             Return Viridis.fromHtml("#1C1C1C", "#F4831B", "#902EBB", "#63C328", "#EEEB27", "#D02823").ToArray
         End Function
