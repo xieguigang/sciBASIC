@@ -520,6 +520,15 @@ Namespace IO
         End Sub
 #End Region
 
+        ''' <summary>
+        ''' Pop all cells string from the internal buffer list and then returns the generated text line.
+        ''' </summary>
+        ''' <param name="delimiter"></param>
+        ''' <returns></returns>
+        Public Function PopLine(Optional delimiter As String = ",") As String
+            Return ToString(buffer.PopAll, delimiter)
+        End Function
+
 #Region "List Operations"
         Public Overloads Shared Operator +(dataframe As File, x As RowObject) As File
             Call dataframe.Add(x)
