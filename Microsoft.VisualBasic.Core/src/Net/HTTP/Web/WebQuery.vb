@@ -284,7 +284,7 @@ Namespace Net.Http
             Return cache
         End Function
 
-        Protected Overridable Function isEmptyContent(cache_path As Boolean) As Boolean
+        Protected Overridable Function isEmptyContent(cache_path As String) As Boolean
             Return False
         End Function
 
