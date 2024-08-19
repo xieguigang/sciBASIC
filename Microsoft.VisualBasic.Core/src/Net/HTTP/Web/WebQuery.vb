@@ -284,6 +284,10 @@ Namespace Net.Http
             Return cache
         End Function
 
+        Protected Overridable Function isEmptyContent(cache_path As Boolean) As Boolean
+            Return False
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -292,7 +296,7 @@ Namespace Net.Http
         ''' <param name="hitCache"></param>
         Private Sub runHttpGet(cache_path As String, url$, ByRef hitCache As Boolean)
             Dim is404 As Boolean = False
-            Dim is_missing As Boolean = cache.FileSize(cache_path) <= 0
+            Dim is_missing As Boolean = cache.FileSize(cache_path) <= 0 OrElse isEmptyContent(cache_path)
             Dim is_empty As Boolean = True
 
             If Not is_missing Then
