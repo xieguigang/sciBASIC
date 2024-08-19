@@ -86,9 +86,10 @@ Namespace IO
 
     ''' <summary>
     ''' The dynamics data frame object which its first line is not contains the but using for the title property.
-    ''' (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
+    ''' </remarks>
     Public Class DataFrame
         Implements ISchema
         Implements IDataReader
@@ -507,7 +508,7 @@ Namespace IO
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="headers"></param>
+        ''' <param name="headers">the header text data of each columns</param>
         ''' <param name="rows">the table data that exlcudes the first header row.</param>
         ''' <returns></returns>
         Public Overloads Shared Function CreateObject(headers As IEnumerable(Of String), rows As IEnumerable(Of RowObject)) As DataFrame
