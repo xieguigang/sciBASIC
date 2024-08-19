@@ -62,6 +62,9 @@ Module Utils
     ''' Enable of show tqdm progress bar?
     ''' </summary>
     ''' <returns>default is true, get config from ``tqdm`` variable from the runtime framework.</returns>
+    ''' <remarks>
+    ''' There is a bug about the tqdm progressbar when processing as a slave background process on windows system.
+    ''' </remarks>
     Public ReadOnly Property EnableTqdm As Boolean
         Get
             Return App.GetVariable("tqdm", "TRUE").ParseBoolean
