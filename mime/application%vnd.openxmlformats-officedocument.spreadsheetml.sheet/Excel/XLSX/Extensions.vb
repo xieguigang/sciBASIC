@@ -89,17 +89,22 @@ Namespace XLSX
 
             For Each name As String In names
                 Yield New NamedValue(Of csv) With {
-                .Name = name,
-                .Value = xlsx.GetTable(sheetName:=name)
-            }
+                    .Name = name,
+                    .Value = xlsx.GetTable(sheetName:=name)
+                }
             Next
         End Function
 
+        ''' <summary>
+        ''' get sheet names from the xlsx file
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
         Public Function GetSheetNames(path As String) As String()
-            Dim xlsx As XlsxFile = File.Open(path)
-            Dim names$() = xlsx.SheetNames.ToArray
-
-            Return names
+            Using xlsx As XlsxFile = File.Open(path)
+                Dim names$() = xlsx.SheetNames.ToArray
+                Return names
+            End Using
         End Function
 
         ''' <summary>
@@ -114,16 +119,16 @@ Namespace XLSX
                 If .Equals("csv") Then
                     Return csv.Load(path)
                 ElseIf .Equals("xlsx") Then
-                    Dim Xlsx As XlsxFile = File.Open(path)
+                    Using Xlsx As XlsxFile = File.Open(path)
+                        If sheetName.StringEmpty Then
+                            sheetName = Xlsx.SheetNames.FirstOrDefault
+                        End If
+                        If sheetName.StringEmpty Then
+                            Throw New NullReferenceException($"[{path}] didn't contains any sheet table!")
+                        End If
 
-                    If sheetName.StringEmpty Then
-                        sheetName = Xlsx.SheetNames.FirstOrDefault
-                    End If
-                    If sheetName.StringEmpty Then
-                        Throw New NullReferenceException($"[{path}] didn't contains any sheet table!")
-                    End If
-
-                    Return Xlsx.GetTable(sheetName)
+                        Return Xlsx.GetTable(sheetName)
+                    End Using
                 Else
                     Throw New NotImplementedException
                 End If

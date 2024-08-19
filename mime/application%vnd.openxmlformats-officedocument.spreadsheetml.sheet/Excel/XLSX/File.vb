@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
@@ -133,6 +134,7 @@ Namespace XLSX
     ''' </remarks>
     Public Class File : Inherits XlsxDirectoryPart
         Implements IFileReference
+        Implements IDisposable
 
         Public Property ContentTypes As ContentTypes
         Public Property _rels As _rels
@@ -141,6 +143,8 @@ Namespace XLSX
 
         Friend ReadOnly modify As New Index(Of String)
 
+        Private disposedValue As Boolean
+
         ''' <summary>
         ''' the original file path the reference to this xlsx file
         ''' </summary>
@@ -148,7 +152,11 @@ Namespace XLSX
         Public Property FilePath As String Implements IFileReference.FilePath
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-
+                If TypeOf fs Is ZipPackage Then
+                    Return DirectCast(fs, ZipPackage).xlsx
+                Else
+                    Return Nothing
+                End If
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Friend Set(value As String)
@@ -284,5 +292,35 @@ Namespace XLSX
         Public Shared Function Open(path As String) As File
             Return IO.CreateReader(xlsx:=path)
         End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)
+                    If Not fs Is Nothing Then
+                        If fs.GetType.ImplementInterface(Of IDisposable) Then
+                            Call DirectCast(CObj(fs), IDisposable).Dispose()
+                        End If
+                    End If
+                End If
+
+                ' TODO: 释放未托管的资源(未托管的对象)并重写终结器
+                ' TODO: 将大型字段设置为 null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: 仅当“Dispose(disposing As Boolean)”拥有用于释放未托管资源的代码时才替代终结器
+        ' Protected Overrides Sub Finalize()
+        '     ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 不要更改此代码。请将清理代码放入“Dispose(disposing As Boolean)”方法中
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace
