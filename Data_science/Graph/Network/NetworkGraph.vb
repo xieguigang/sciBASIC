@@ -64,6 +64,9 @@ Namespace Network
     Public Class NetworkGraph(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})
         Inherits Graph(Of Node, Edge, NetworkGraph(Of Node, Edge))
 
+        Public Property id As String
+        Public Property name As String
+
         Sub New()
         End Sub
 
