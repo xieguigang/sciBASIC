@@ -353,6 +353,12 @@ Public Module TextDoc
                                 Optional throwEx As Boolean = True,
                                 Optional suppress As Boolean = False) As String
         Try
+            If Not path.FileExists Then
+                If Not throwEx Then
+                    Return ""
+                End If
+            End If
+
             Using s As Stream = path.OpenReadonly
                 Return New StreamReader(s, encoding:=encoding Or UTF8).ReadToEnd
             End Using
