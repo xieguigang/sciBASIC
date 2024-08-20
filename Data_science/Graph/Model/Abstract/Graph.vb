@@ -182,6 +182,11 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' </summary>
     ''' <param name="u"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' the input node vertex <paramref name="u"/> must have the <see cref="TV.ID"/> 
+    ''' index value assigned before calling this function for add into the current 
+    ''' graph object.
+    ''' </remarks>
     Public Function AddVertex(u As V) As G
         If Not vertices.Have(u) Then
             vertices += u
