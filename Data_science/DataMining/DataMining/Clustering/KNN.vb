@@ -72,6 +72,15 @@ Namespace Clustering
         ''' </summary>
         ReadOnly clusterNames As Dictionary(Of Integer, String)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="trainingSet">
+        ''' should contains the <see cref="ClusterEntity.cluster"/> index value
+        ''' </param>
+        ''' <param name="clusterNames">
+        ''' the class label that associated with the <see cref="ClusterEntity.cluster"/>
+        ''' </param>
         Sub New(trainingSet As IEnumerable(Of ClusterEntity), clusterNames As Dictionary(Of Integer, String))
             Me.trainingSet = trainingSet.ToArray
             Me.clusterNames = clusterNames
