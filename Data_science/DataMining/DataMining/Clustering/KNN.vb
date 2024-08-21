@@ -125,18 +125,21 @@ Namespace Clustering
 
             ' start computing
             For test As Integer = 0 To testSet.Length - 1
+                Dim test_vec As Double() = testSet(test).value
+
                 Call Parallels.For(
                     fromInclusive:=0,
                     toExclusive:=trainingSet.Length,
                     body:=Sub(index)
 #Disable Warning
+                              Dim tr = trainingSet(index)
                               Dim dist = DistanceMethods.EuclideanDistance(
-                                  X:=testSet(test).value,
-                                  Y:=trainingSet(index).entityVector
+                                  X:=test_vec,
+                                  Y:=tr.entityVector
                               )
 #Enable Warning
                               distances(index)(0) = dist
-                              distances(index)(1) = index
+                              distances(index)(1) = tr.cluster
                           End Sub)
 
                 ' sort and select first K of them
@@ -155,7 +158,7 @@ Namespace Clustering
                         .Description = predictedClass
                     }
 
-                    result.Add(output)
+                    Call result.Add(output)
                 Next
 
                 Yield New NamedCollection(Of NamedValue(Of Integer)) With {
