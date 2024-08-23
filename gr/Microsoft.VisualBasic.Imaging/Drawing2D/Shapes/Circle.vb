@@ -156,8 +156,8 @@ Namespace Drawing2D.Shapes
                 Dim css As CSSEnvirnment = g.LoadEnvironment
 
                 rect = New RectangleF With {
-                    .X = center.X - radius - border.width,
-                    .Y = center.Y - radius - border.width,
+                    .X = center.X - radius - css.GetLineWidth(border),
+                    .Y = center.Y - radius - css.GetLineWidth(border),
                     .Width = radius * 2 + 1,
                     .Height = .Width
                 }
