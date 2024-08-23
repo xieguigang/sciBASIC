@@ -68,6 +68,12 @@ Namespace CommandLine.InteropService.Pipeline
     Public Class RunSlavePipeline
 
         Public Event SetProgress(percentage As Integer, details As String)
+
+        ''' <summary>
+        ''' action of the string message
+        ''' </summary>
+        ''' <param name="message"></param>
+        ''' <remarks><see cref="Action(Of String)"/></remarks>
         Public Event SetMessage(message As String)
         Public Event Finish(exitCode As Integer)
 
