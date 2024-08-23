@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.Shapes
 
@@ -121,7 +121,7 @@ Namespace Drawing2D.Shapes
         End Function
 
         Public Shared Iterator Function PathIterator(centerX!, centerY!, radius!, Optional vertices% = 30) As IEnumerable(Of PointF)
-            Dim deltaAngle# = 2 * stdNum.PI / vertices
+            Dim deltaAngle# = 2 * std.PI / vertices
             Dim X#, Y#
 
             For i As Integer = 0 To vertices - 1
