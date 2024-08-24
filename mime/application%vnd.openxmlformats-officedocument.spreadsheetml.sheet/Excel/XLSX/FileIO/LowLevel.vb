@@ -76,7 +76,7 @@ Imports System.IO.Packaging
 Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace XLSX.FileIO
 
@@ -1578,7 +1578,7 @@ Namespace XLSX.FileIO
                 dateValue = [date].AddDays(-1) ' Fix of the leap-year-1900-error
             End If
             Dim currentMillis = dateValue.Ticks / TimeSpan.TicksPerMillisecond
-            Dim d = (dateValue.Second + dateValue.Minute * 60 + dateValue.Hour * 3600) / 86400.0R + stdNum.Floor((currentMillis - ROOT_MILLIS) / 86400000.0R)
+            Dim d = (dateValue.Second + dateValue.Minute * 60 + dateValue.Hour * 3600) / 86400.0R + std.Floor((currentMillis - ROOT_MILLIS) / 86400000.0R)
             Return d.ToString("G", INVARIANT_CULTURE)
         End Function
 
@@ -1607,9 +1607,9 @@ Namespace XLSX.FileIO
             If columnWidth <= 0F OrElse maxDigitWidth <= 0F Then
                 Return 0F
             ElseIf columnWidth <= 1.0F Then
-                Return CSng(stdNum.Floor(columnWidth * (maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
+                Return CSng(std.Floor(columnWidth * (maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
             Else
-                Return CSng(stdNum.Floor((columnWidth * maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
+                Return CSng(std.Floor((columnWidth * maxDigitWidth + textPadding) / maxDigitWidth * COLUMN_WIDTH_ROUNDING_MODIFIER)) / COLUMN_WIDTH_ROUNDING_MODIFIER
             End If
         End Function
 
@@ -1625,7 +1625,7 @@ Namespace XLSX.FileIO
             If rowHeight <= 0F Then
                 Return 0F
             End If
-            Dim heightInPixel = stdNum.Round(rowHeight * ROW_HEIGHT_POINT_MULTIPLIER)
+            Dim heightInPixel = std.Round(rowHeight * ROW_HEIGHT_POINT_MULTIPLIER)
             Return CSng(heightInPixel) / ROW_HEIGHT_POINT_MULTIPLIER
         End Function
 
@@ -1642,9 +1642,9 @@ Namespace XLSX.FileIO
                 width = 0
             End If
             If width <= 1.0F Then
-                pixels = CSng(stdNum.Floor(width / SPLIT_WIDTH_MULTIPLIER + SPLIT_WIDTH_OFFSET))
+                pixels = CSng(std.Floor(width / SPLIT_WIDTH_MULTIPLIER + SPLIT_WIDTH_OFFSET))
             Else
-                pixels = CSng(stdNum.Floor(width * maxDigitWidth + SPLIT_WIDTH_OFFSET)) + textPadding
+                pixels = CSng(std.Floor(width * maxDigitWidth + SPLIT_WIDTH_OFFSET)) + textPadding
             End If
             Dim points = pixels * SPLIT_WIDTH_POINT_MULTIPLIER
             Return points * SPLIT_POINT_DIVIDER + SPLIT_WIDTH_POINT_OFFSET
@@ -1659,7 +1659,7 @@ Namespace XLSX.FileIO
             If height < 0 Then
                 height = 0F
             End If
-            Return stdNum.Floor(SPLIT_POINT_DIVIDER * height + SPLIT_HEIGHT_POINT_OFFSET)
+            Return std.Floor(SPLIT_POINT_DIVIDER * height + SPLIT_HEIGHT_POINT_OFFSET)
         End Function
 
     End Class
