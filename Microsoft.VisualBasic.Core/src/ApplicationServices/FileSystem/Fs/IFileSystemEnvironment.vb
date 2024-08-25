@@ -106,6 +106,12 @@ Namespace ApplicationServices
         ''' <param name="path"></param>
         ''' <returns>-1 means file is not exists on the filesystem</returns>
         Function FileSize(path As String) As Long
+        ''' <summary>
+        ''' get file modified time, usually for the cache expired test
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Function FileModifyTime(path As String) As Date
 
         ''' <summary>
         ''' get the full path of the given file name in current directory model
