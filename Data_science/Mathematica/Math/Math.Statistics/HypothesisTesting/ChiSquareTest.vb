@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eba858f877785d631c90f5b9c2c91455, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\ChiSquareTest.vb"
+﻿#Region "Microsoft.VisualBasic::81b831b853647629c5eb57ee49b15c81, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\ChiSquareTest.vb"
 
     ' Author:
     ' 
@@ -120,4 +120,3 @@ Public Class ChiSquareTest
         Return Test(observed, expected)
     End Function
 End Class
-

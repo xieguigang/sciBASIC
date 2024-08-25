@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b65d3e08b3959c5f67ed88904ac27c8f, Data_science\DataMining\UMAP\NNDescent\NNDescent.vb"
+﻿#Region "Microsoft.VisualBasic::f75baccd1c3a867a1fbe7e315027a79d, Data_science\DataMining\UMAP\NNDescent\NNDescent.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 65 (51.59%)
-    ' Comment Lines: 43 (34.13%)
+    '   Total Lines: 133
+    '    Code Lines: 71 (53.38%)
+    ' Comment Lines: 43 (32.33%)
     '    - Xml Docs: 86.05%
     ' 
-    '   Blank Lines: 18 (14.29%)
-    '     File Size: 6.03 KB
+    '   Blank Lines: 19 (14.29%)
+    '     File Size: 6.22 KB
 
 
     ' Class NNDescent

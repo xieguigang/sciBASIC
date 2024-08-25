@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e3e5be5133b1aaa64da540f032fb029, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::d66d90077fbbdbf518144147b01d48f6, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1038
-    '    Code Lines: 759 (73.12%)
-    ' Comment Lines: 32 (3.08%)
+    '   Total Lines: 1029
+    '    Code Lines: 753 (73.18%)
+    ' Comment Lines: 32 (3.11%)
     '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 247 (23.80%)
-    '     File Size: 48.09 KB
+    '   Blank Lines: 244 (23.71%)
+    '     File Size: 47.72 KB
 
 
     '     Class GraphicsSVG
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureString
+    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+4 Overloads) IsVisible, MeasureString
     '                   Save
     ' 
     '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc

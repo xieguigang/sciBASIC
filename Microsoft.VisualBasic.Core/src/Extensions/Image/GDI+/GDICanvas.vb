@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f188cc6afd336bb164d2cbe12134d5c8, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::db3e0ff4343fc85738b1457dfce199f5, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 4873
-    '    Code Lines: 684 (14.04%)
-    ' Comment Lines: 4015 (82.39%)
-    '    - Xml Docs: 6.77%
+    '    Code Lines: 672 (13.79%)
+    ' Comment Lines: 4027 (82.64%)
+    '    - Xml Docs: 6.75%
     ' 
     '   Blank Lines: 174 (3.57%)
-    '     File Size: 211.29 KB
+    '     File Size: 211.31 KB
 
 
     '     Class GDICanvas
@@ -51,7 +51,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
+    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+4 Overloads) IsVisible, MeasureCharacterRanges
     '                   (+8 Overloads) MeasureString
     ' 
     '         Sub: AddMetafileComment, Clear, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose

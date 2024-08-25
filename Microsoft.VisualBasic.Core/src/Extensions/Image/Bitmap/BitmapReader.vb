@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f556f6002d6f822141e40a7fa1e08545, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapReader.vb"
+﻿#Region "Microsoft.VisualBasic::a2c28a35b7faec224ac3eba1350d3882, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 104 (68.42%)
-    ' Comment Lines: 22 (14.47%)
-    '    - Xml Docs: 45.45%
+    '   Total Lines: 157
+    '    Code Lines: 107 (68.15%)
+    ' Comment Lines: 23 (14.65%)
+    '    - Xml Docs: 43.48%
     ' 
-    '   Blank Lines: 26 (17.11%)
-    '     File Size: 6.10 KB
+    '   Blank Lines: 27 (17.20%)
+    '     File Size: 6.24 KB
 
 
     '     Class BitmapReader

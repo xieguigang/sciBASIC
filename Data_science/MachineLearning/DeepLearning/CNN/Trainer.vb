@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08bf06b1a192a0fad05dfa27e1774aa7, Data_science\MachineLearning\DeepLearning\CNN\Trainer.vb"
+﻿#Region "Microsoft.VisualBasic::7793649692bfdf57a5f7ce05d84aafe7, Data_science\MachineLearning\DeepLearning\CNN\Trainer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 24 (17.02%)
-    '     File Size: 5.74 KB
+    '     File Size: 5.70 KB
 
 
     '     Class Trainer

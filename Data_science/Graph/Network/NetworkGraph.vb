@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a61334b0ce33d599a75c95550fac014d, Data_science\Graph\Network\NetworkGraph.vb"
+﻿#Region "Microsoft.VisualBasic::e0c768d1b1d561393df414d8fdbde696, Data_science\Graph\Network\NetworkGraph.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 18 (46.15%)
-    ' Comment Lines: 14 (35.90%)
+    '   Total Lines: 42
+    '    Code Lines: 20 (47.62%)
+    ' Comment Lines: 14 (33.33%)
     '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 7 (17.95%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 8 (19.05%)
+    '     File Size: 1.34 KB
 
 
     '     Class NetworkGraph
+    ' 
+    '         Properties: id, name
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

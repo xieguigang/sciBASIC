@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::810395f8944d2adfb3fd07e3e6c53714, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
+﻿#Region "Microsoft.VisualBasic::1b0172cdccee0a78d0a0f462a62b3a16, Data_science\DataMining\UMAP\Components\Heaps\Heaps.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 244
-    '    Code Lines: 166 (68.03%)
-    ' Comment Lines: 33 (13.52%)
+    '   Total Lines: 251
+    '    Code Lines: 172 (68.53%)
+    ' Comment Lines: 33 (13.15%)
     '    - Xml Docs: 87.88%
     ' 
-    '   Blank Lines: 45 (18.44%)
-    '     File Size: 9.32 KB
+    '   Blank Lines: 46 (18.33%)
+    '     File Size: 9.55 KB
 
 
     ' Module Heaps

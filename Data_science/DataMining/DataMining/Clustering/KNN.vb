@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::5060f9db75dd7c6da450342ec0a2b3d3, Data_science\DataMining\DataMining\Clustering\KNN.vb"
+﻿#Region "Microsoft.VisualBasic::82a11c892c01bbd5a44a6f25d1838cb8, Data_science\DataMining\DataMining\Clustering\KNN.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 104
-'    Code Lines: 78 (75.00%)
-' Comment Lines: 11 (10.58%)
-'    - Xml Docs: 54.55%
-' 
-'   Blank Lines: 15 (14.42%)
-'     File Size: 4.24 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class KNN
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: Classify
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 84 (70.00%)
+    ' Comment Lines: 20 (16.67%)
+    '    - Xml Docs: 70.00%
+    ' 
+    '   Blank Lines: 16 (13.33%)
+    '     File Size: 4.99 KB
+
+
+    '     Class KNN
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Classify
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

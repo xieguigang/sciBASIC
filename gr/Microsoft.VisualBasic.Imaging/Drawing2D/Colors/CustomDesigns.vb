@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c959fa64e2935c18e4fa8fadd6cd824a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::7f05a960cbdce37388916dccf28d2eab, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 129 (80.62%)
-    ' Comment Lines: 16 (10.00%)
+    '   Total Lines: 168
+    '    Code Lines: 135 (80.36%)
+    ' Comment Lines: 16 (9.52%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 15 (9.38%)
-    '     File Size: 6.63 KB
+    '   Blank Lines: 17 (10.12%)
+    '     File Size: 7.09 KB
 
 
     '     Class CustomDesigns
     ' 
-    '         Function: ClusterColour, ExtractThemeColors, FlexImaging, Halloween, IsBlackColor
-    '                   IsWhiteColor, Order, Paper, Rainbow, TSF
-    '                   Unicorn, Vibrant
+    '         Function: ClusterColour, ExtractThemeColors, FlexImaging, Halloween, Icefire
+    '                   IsBlackColor, IsWhiteColor, Order, Paper, Rainbow
+    '                   Seismic, TSF, Unicorn, Vibrant
     ' 
     ' 
     ' /********************************************************************************/

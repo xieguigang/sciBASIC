@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3dcf86f35a02778421af668124198fe, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
+﻿#Region "Microsoft.VisualBasic::a0387358477b9d852513ecb38cfc5bbe, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 306
-    '    Code Lines: 222 (72.55%)
-    ' Comment Lines: 42 (13.73%)
-    '    - Xml Docs: 64.29%
+    '   Total Lines: 313
+    '    Code Lines: 226 (72.20%)
+    ' Comment Lines: 44 (14.06%)
+    '    - Xml Docs: 61.36%
     ' 
-    '   Blank Lines: 42 (13.73%)
-    '     File Size: 13.23 KB
+    '   Blank Lines: 43 (13.74%)
+    '     File Size: 13.60 KB
 
 
     '     Class Scatter2D

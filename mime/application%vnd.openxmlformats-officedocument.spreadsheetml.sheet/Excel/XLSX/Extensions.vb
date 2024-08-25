@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a72ca3f0c697ac02850b78eb69e5a60, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cdd37713db00c81f8451b89bbbabe85c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 65 (69.15%)
-    ' Comment Lines: 15 (15.96%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 99
+    '    Code Lines: 67 (67.68%)
+    ' Comment Lines: 20 (20.20%)
+    '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 14 (14.89%)
-    '     File Size: 3.43 KB
+    '   Blank Lines: 12 (12.12%)
+    '     File Size: 3.70 KB
 
 
     '     Module Extensions

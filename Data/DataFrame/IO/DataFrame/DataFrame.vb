@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d4cb47f3f56f9ee6954b6f0b08a5df2, Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::daea925c803115a17cf26dd0de11282a, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 775
-    '    Code Lines: 500 (64.52%)
-    ' Comment Lines: 161 (20.77%)
-    '    - Xml Docs: 81.99%
+    '   Total Lines: 776
+    '    Code Lines: 500 (64.43%)
+    ' Comment Lines: 162 (20.88%)
+    '    - Xml Docs: 82.10%
     ' 
-    '   Blank Lines: 114 (14.71%)
-    '     File Size: 31.36 KB
+    '   Blank Lines: 114 (14.69%)
+    '     File Size: 31.40 KB
 
 
     '     Class DataFrame

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cf9b823bbaba4dc2fdbf9d1e7b478e3, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::0ee2c21e675d83ee8adc88ad2913f6a8, Data_science\DataMining\UMAP\Components\Utils.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 59 (69.41%)
-    ' Comment Lines: 12 (14.12%)
+    '   Total Lines: 97
+    '    Code Lines: 63 (64.95%)
+    ' Comment Lines: 19 (19.59%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (16.47%)
-    '     File Size: 2.69 KB
+    '   Blank Lines: 15 (15.46%)
+    '     File Size: 3.13 KB
 
 
     ' Module Utils
+    ' 
+    '     Properties: EnableTqdm
     ' 
     '     Function: Empty, Filled, Range, RejectionSample
     ' 

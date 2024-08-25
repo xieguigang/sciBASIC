@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4226027dc62bbc4fc47c49f2e573d713, gr\PdfImage\PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::4aca92116b7719bdc24b8615ab849c5a, gr\PdfImage\PdfGraphics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 986
-    '    Code Lines: 749 (75.96%)
-    ' Comment Lines: 6 (0.61%)
+    '   Total Lines: 970
+    '    Code Lines: 737 (75.98%)
+    ' Comment Lines: 6 (0.62%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 231 (23.43%)
-    '     File Size: 41.65 KB
+    '   Blank Lines: 227 (23.40%)
+    '     File Size: 41.10 KB
 
 
     ' Class PdfGraphics
@@ -51,7 +51,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, Save
+    '     Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+4 Overloads) IsVisible, Save
     ' 
     '     Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
     '          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve

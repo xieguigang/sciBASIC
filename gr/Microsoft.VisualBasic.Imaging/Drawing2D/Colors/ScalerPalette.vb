@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a642598c1098be39d741001b19dec56f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ScalerPalette.vb"
+﻿#Region "Microsoft.VisualBasic::78de3f748c4a5a94e97f00426c540a43, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ScalerPalette.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 42 (53.16%)
-    ' Comment Lines: 27 (34.18%)
+    '   Total Lines: 82
+    '    Code Lines: 44 (53.66%)
+    ' Comment Lines: 27 (32.93%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (12.66%)
-    '     File Size: 2.70 KB
+    '   Blank Lines: 11 (13.41%)
+    '     File Size: 2.73 KB
 
 
     '     Enum ScalerPalette
     ' 
     '         Autumn, Cool, FlexImaging, Gray, Hot
-    '         Rainbow, Spring, Summer, Typhoon, Winter
+    '         Icefire, Rainbow, Seismic, Spring, Summer
+    '         Typhoon, Winter
     ' 
     '  
     ' 
