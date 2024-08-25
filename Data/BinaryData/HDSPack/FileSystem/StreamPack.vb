@@ -704,5 +704,9 @@ Namespace FileSystem
         Public Function GetFullPath(filename As String) As String Implements IFileSystemEnvironment.GetFullPath
             Return ("/" & filename).Replace("\", "/").StringReplace("[/]{2,}", "/")
         End Function
+
+        Public Function FileModifyTime(path As String) As Date Implements IFileSystemEnvironment.FileModifyTime
+            Return Nothing
+        End Function
     End Class
 End Namespace
