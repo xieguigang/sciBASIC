@@ -300,5 +300,15 @@ Namespace FileIO
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
             Return ls - l - r - "*.*" <= folder
         End Function
+
+        Public Function FileModifyTime(path As String) As Date Implements IFileSystemEnvironment.FileModifyTime
+            Dim fullPath As String = $"{folder}/{path}"
+
+            If fullPath.FileExists Then
+                Return File.GetLastWriteTime(fullPath)
+            Else
+                Return Nothing
+            End If
+        End Function
     End Class
 End Namespace

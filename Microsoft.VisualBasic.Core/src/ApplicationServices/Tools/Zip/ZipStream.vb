@@ -278,5 +278,9 @@ Namespace ApplicationServices.Zip
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
+
+        Public Function FileModifyTime(path As String) As Date Implements IFileSystemEnvironment.FileModifyTime
+            Return Nothing
+        End Function
     End Class
 End Namespace
