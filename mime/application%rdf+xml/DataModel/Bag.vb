@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' ``&lt;Bag>``、``&lt;Seq>`` 以及 ``&lt;Alt>``
@@ -70,11 +71,15 @@ Imports System.Xml.Serialization
 ''' + ``&lt;rdf:Alt>`` 元素用于一个可替换的值的列表（用户仅可选择这些值的其中之一）。
 ''' </summary>
 <XmlType(NameOf(Array), [Namespace]:=RDFEntity.XmlnsNamespace)>
-Public Class Array
+Public Class Array : Implements Enumeration(Of String)
 
     <XmlNamespaceDeclarations()>
     Public xmlns As New XmlSerializerNamespaces
 
+    ''' <summary>
+    ''' A bag list of the resource reference
+    ''' </summary>
+    ''' <returns></returns>
     <XmlElement("li", [Namespace]:=RDFEntity.XmlnsNamespace)>
     Public Property list As li()
 
@@ -84,6 +89,12 @@ Public Class Array
 
     Public Overrides Function ToString() As String
         Return $"listof {list.Count} elements: {list.Take(3).JoinBy(", ")}..."
+    End Function
+
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of String) Implements Enumeration(Of String).GenericEnumerator
+        For Each li As li In list.SafeQuery
+            Yield li.resource
+        Next
     End Function
 End Class
 
