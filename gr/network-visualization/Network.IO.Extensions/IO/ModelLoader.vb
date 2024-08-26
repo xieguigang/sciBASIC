@@ -164,7 +164,7 @@ Namespace FileStream
 
             Dim nodeTable As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =
- _
+                                 _
                 LinqAPI.Exec(Of Edge) <= From edge As NetworkEdge
                                          In net.edges
                                          Let a = nodeTable(edge.fromNode)
@@ -173,7 +173,11 @@ Namespace FileStream
                                          Let data As EdgeData = New EdgeData With {
                                              .Properties = New Dictionary(Of String, String) From {
                                                  {names.REFLECTION_ID_MAPPING_INTERACTION_TYPE, edge.interaction}
-                                             }
+                                             },
+                                             .style = New Pen(
+                                                edge.Properties.TryGetValue("color", [default]:="black").TranslateColor,
+                                                CInt(Val(edge.Properties.TryGetValue("width", [default]:="1")))
+                                             )
                                          }.With(Sub(ed)
                                                     For Each key As String In edge.Properties.Keys
                                                         If Not ed.Properties.ContainsKey(key) Then
