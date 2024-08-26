@@ -154,7 +154,9 @@ Namespace FileStream
                     .value = l.weight,
                     .Properties = New Dictionary(Of String, String) From {
                         {NameOf(EdgeData.label), l.data.label},
-                        {names.REFLECTION_ID_MAPPING_EDGE_GUID, l.ID}
+                        {names.REFLECTION_ID_MAPPING_EDGE_GUID, l.ID},
+                        {"color", If(l.data.style Is Nothing, "black", l.data.style.Color.ToHtmlColor)},
+                        {"width", If(l.data.style Is Nothing, 1, l.data.style.Width)}
                     }
                 }
 
