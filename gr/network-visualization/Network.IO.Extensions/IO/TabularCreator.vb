@@ -103,7 +103,7 @@ Namespace FileStream
         ''' <returns></returns>
         <Extension>
         Public Function Tabular(g As NetworkGraph) As NetworkTables
-            Return g.Tabular(meta:=New MetaData)
+            Return g.Tabular(properties:={"*"}, meta:=New MetaData)
         End Function
 
         ''' <summary>
