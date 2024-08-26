@@ -165,6 +165,15 @@ Namespace Graph
             End If
         End Function
 
+        Public Function CheckInside(rect As Rectangle) As Boolean
+            If initialPostion Is Nothing Then
+                Return rect.X = 0 AndAlso rect.Y = 0
+            End If
+
+            Return rect.X < initialPostion.x AndAlso rect.Right > initialPostion.x AndAlso
+                rect.Top < initialPostion.y AndAlso rect.Bottom > initialPostion.y
+        End Function
+
         Public Overrides Function ToString() As String
             Return initialPostion.ToString
         End Function
