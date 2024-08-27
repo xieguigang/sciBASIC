@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::e0c26003e1109f4c23cbf3d4cbbedbba, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 366
-    '    Code Lines: 236 (64.48%)
-    ' Comment Lines: 81 (22.13%)
-    '    - Xml Docs: 83.95%
-    ' 
-    '   Blank Lines: 49 (13.39%)
-    '     File Size: 13.66 KB
+' Summaries:
 
 
-    '     Module HtmlStrips
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetHtmlComments, GetInput, GetInputGroup, GetLinks, GetSelectInputGroup
-    '                   GetSelectOptions, GetSelectValue, GetValue, HtmlLines, HtmlList
-    '                   HTMLTitle, paragraph, Regexp, RemovesCSSstyles, RemovesFooter
-    '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
-    '                   RemoveTags, StripHTMLTags, TrimResponseTail
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 366
+'    Code Lines: 236 (64.48%)
+' Comment Lines: 81 (22.13%)
+'    - Xml Docs: 83.95%
+' 
+'   Blank Lines: 49 (13.39%)
+'     File Size: 13.66 KB
+
+
+'     Module HtmlStrips
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetHtmlComments, GetInput, GetInputGroup, GetLinks, GetSelectInputGroup
+'                   GetSelectOptions, GetSelectValue, GetValue, HtmlLines, HtmlList
+'                   HTMLTitle, paragraph, Regexp, RemovesCSSstyles, RemovesFooter
+'                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
+'                   RemoveTags, StripHTMLTags, TrimResponseTail
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,44 @@ Namespace Text.Parser.HtmlParser
     ''' Html text document operations for a given html text
     ''' </summary>
     Public Module HtmlStrips
+
+        Public Iterator Function GetHtmlFormatTags() As IEnumerable(Of String)
+            Yield "b"      ' 加粗
+            Yield "strong" ' 强调（通常表现为加粗）
+            Yield "i"      ' 斜体
+            Yield "em"     ' 强调（通常表现为斜体）
+            Yield "u"      ' 下划线
+            Yield "ins"    ' 插入（通常表现为下划线）
+            Yield "s"      ' 删除线
+            Yield "strike" ' 删除线（不推荐使用）
+            Yield "del"    ' 删除
+            Yield "small"  ' 小号文本
+            Yield "big"    ' 大号文本（HTML5中已废弃）
+            Yield "sub"    ' 下标()
+            Yield "sup"    ' 上标
+            Yield "mark"   ' 标记（通常表现为背景高亮）
+            Yield "cite"   ' 引用
+            Yield "q"      ' 短引用
+            Yield "blockquote" ' 块级引用
+            Yield "code"   ' 代码
+            Yield "pre"    ' 预格式化文本
+            Yield "kbd"    ' 键盘输入
+            Yield "samp"   ' 计算机代码样本
+            Yield "var"    ' 变量
+            Yield "dfn"    ' 定义项目
+            Yield "abbr"   ' 缩写
+            Yield "ruby"   ' ruby注释
+            Yield "rt"     ' ruby注释的解释
+            Yield "rp"     ' ruby注释的括号
+            Yield "bdo"    ' 双向文本覆盖
+            Yield "span"   ' 通用行内容器（用于应用样式或脚本）
+
+            Yield "p"
+            Yield "br"
+            Yield "li"
+            Yield "ul"
+            Yield "ol"
+        End Function
 
         ''' <summary>
         ''' 将<paramref name="html"/>文本之中的注释部分的字符串拿出来
@@ -221,9 +259,15 @@ Namespace Text.Parser.HtmlParser
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>
+        ''' use this function for get the xml/html element tag value, example as:
+        ''' 
+        ''' ' get "title &lt;b>aaa&lt;/b>"
+        ''' &lt;h1>title &lt;b>aaa&lt;/b>&lt;/h1>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GetValue(html As String) As String
+        <Extension>
+        Public Function GetValue(html As String) As String
             Return html.GetStackValue(">", "<")
         End Function
 

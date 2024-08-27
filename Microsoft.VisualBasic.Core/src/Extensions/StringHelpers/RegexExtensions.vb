@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -68,6 +69,26 @@ Imports Microsoft.VisualBasic.Language
 
 <HideModuleName>
 Public Module RegexExtensions
+
+    ''' <summary>
+    ''' A helper function for make sub-string replacement
+    ''' </summary>
+    ''' <param name="r"></param>
+    ''' <param name="str"></param>
+    ''' <param name="replacement"></param>
+    ''' <param name="stringCopy"></param>
+    <Extension>
+    Public Sub Replace(r As Regex, ByRef str As StringBuilder, replacement As String, Optional stringCopy As String = Nothing)
+        If stringCopy Is Nothing Then
+            stringCopy = str.ToString
+        End If
+
+        Dim matches = r.Matches(stringCopy).ToArray
+
+        For Each m As String In matches
+            Call str.Replace(m, replacement)
+        Next
+    End Sub
 
     ''' <summary>
     ''' Determines whether the beginning of this string instance matches the specified

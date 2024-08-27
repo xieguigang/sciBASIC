@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Delegates
@@ -423,12 +424,16 @@ Public Module XmlExtensions
         Catch ex As Exception
             Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
             Dim max_debug_len As String = 4096
+            Dim dumpfile As String = TempFileSystem.GetAppSysTempFile(".xml", prefix:="error_xml_dump_")
+
+            Call xml.SaveTo(dumpfile)
 
             If Len(xml) > max_debug_len Then
                 xml = Mid(xml, 1, max_debug_len) & "..."
             End If
 
-            ex = New Exception($"class_name: {schema.Name}, and the xml fragment: {xml}", ex)
+            xml = $"class_name: {schema.Name}, xml was dump at temp file: '{dumpfile}', and previews of the invalid xml fragment: {xml}"
+            ex = New Exception(xml, ex)
 
             App.LogException(ex, curMethod)
 
