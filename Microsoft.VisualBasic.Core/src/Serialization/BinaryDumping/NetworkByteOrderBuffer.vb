@@ -100,6 +100,14 @@ Namespace Serialization.BinaryDumping
             Return decode(raw)
         End Function
 
+        ''' <summary>
+        ''' make binary data encoding of a given numeric vector
+        ''' </summary>
+        ''' <param name="d"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' a wrapper function of the <see cref="encode"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBytes(d As IEnumerable(Of Double)) As Byte()
             Return encode(d.SafeQuery.ToArray)
