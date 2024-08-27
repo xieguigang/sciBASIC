@@ -58,7 +58,6 @@ Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace MathML
@@ -179,6 +178,7 @@ Namespace MathML
                 Else
                     [operator] = apply.elements(1)
                     apply.elements = {
+                        [operator],
                         apply.elements(0),
                         apply.elements(2)
                     }
