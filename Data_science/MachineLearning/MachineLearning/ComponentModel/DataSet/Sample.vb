@@ -99,6 +99,11 @@ Namespace ComponentModel.StoreProcedure
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' make data copy from the given sample object, this constructor will assign the id, 
+        ''' features and labels from the given sample data object.
+        ''' </summary>
+        ''' <param name="sample"></param>
         Sub New(sample As Sample)
             id = sample.ID
             features = sample.vector
