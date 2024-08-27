@@ -528,14 +528,19 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>
         ''' Make a deep copy of a matrix
         ''' </summary>
+        ''' <remarks>
+        ''' this function will break the array class reference between the matrix instance
+        ''' </remarks>
         Public Overridable Overloads Function Copy() As GeneralMatrix
             Dim X As New NumericMatrix(m, n)
             Dim C As Double()() = X.Array
+
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     C(i)(j) = buffer(i)(j)
                 Next
             Next
+
             Return X
         End Function
 
