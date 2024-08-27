@@ -85,6 +85,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Parallel
 Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace LinearAlgebra.Matrix
@@ -178,6 +179,8 @@ Namespace LinearAlgebra.Matrix
         ''' 20230815 创建一个只有一列数据的矩阵，矩阵的行数
         ''' 等于<paramref name="v"/>的元素数量
         ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(v As Double())
             Call Me.New(v.Select(Function(vi) New Double() {vi}))
         End Sub
@@ -267,10 +270,18 @@ Namespace LinearAlgebra.Matrix
         ''' create a new numeric matrix based on a given collection of the row data vectors
         ''' </summary>
         ''' <param name="rows"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(rows As IEnumerable(Of Double()))
             Call Me.New(rows.ToArray)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(rows As IEnumerable(Of Single()))
+            Call Me.New(rows.Select(Function(s) s.AsDouble))
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(M As Double(,))
             Call Me.New(M.RowIterator.ToArray)
         End Sub
@@ -292,6 +303,8 @@ Namespace LinearAlgebra.Matrix
         ''' make the matrix value copy
         ''' </summary>
         ''' <param name="m"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(m As NumericMatrix)
             Call Me.New(m.buffer.Select(Function(r) r.ToArray).ToArray, m.m, m.n)
         End Sub
@@ -322,6 +335,7 @@ Namespace LinearAlgebra.Matrix
             buffer = A
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(m As INumericMatrix)
             Call Me.New(m.ArrayPack(deepcopy:=False))
         End Sub
