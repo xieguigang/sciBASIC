@@ -226,7 +226,7 @@ Public Module ListExtensions
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Indexing(Of T)(source As IEnumerable(Of T), Optional base As Double = 0) As Index(Of T)
+    Public Function Indexing(Of T)(source As IEnumerable(Of T), Optional base As Integer = 0) As Index(Of T)
         Return New Index(Of T)(source, base)
     End Function
 
