@@ -65,6 +65,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -94,6 +95,7 @@ Namespace ComponentModel
 
     Public Class ConstantStatus0 : Inherits Status0
 
+        <XmlText>
         Public Property C As Single
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -108,8 +110,16 @@ Namespace ComponentModel
 
     Public Class RandomStatus0 : Inherits Status0
 
-        Public Property Min As Double
-        Public Property Max As Double
+        <XmlAttribute> Public Property Min As Double
+        <XmlAttribute> Public Property Max As Double
+
+        Sub New()
+        End Sub
+
+        Sub New(min As Double, max As Double)
+            Me.Min = min
+            Me.Max = max
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetInitialValue() As Single
