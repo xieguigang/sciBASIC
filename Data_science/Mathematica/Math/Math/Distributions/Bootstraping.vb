@@ -79,9 +79,7 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Sample(x As Integer) As Integer()
-            SyncLock seeds
-                Return seeds.Permutation(x, x)
-            End SyncLock
+            Return seeds.Permutation(x, x)
         End Function
 
         ''' <summary>

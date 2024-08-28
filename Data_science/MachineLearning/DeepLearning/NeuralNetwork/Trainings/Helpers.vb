@@ -87,9 +87,7 @@ Namespace NeuralNetwork
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function GetRandom() As Double
-            SyncLock seeds
-                Return 2 * seeds.NextDouble() - 1
-            End SyncLock
+            Return 2 * seeds.NextDouble() - 1
         End Function
 
         Public Function RandomWeightInitializer() As Func(Of Double)

@@ -204,14 +204,12 @@ Public Module forceNetwork
 
     <Extension>
     Public Function doRandomLayout(ByRef network As NetworkGraph) As NetworkGraph
-        SyncLock randf.seeds
-            For Each x As Node In network.vertex
-                x.data.initialPostion = New FDGVector2 With {
-                    .x = randf.seeds.NextDouble * 1000,
-                    .y = randf.seeds.NextDouble * 1000
-                }
-            Next
-        End SyncLock
+        For Each x As Node In network.vertex
+            x.data.initialPostion = New FDGVector2 With {
+                .x = randf.seeds.NextDouble * 1000,
+                .y = randf.seeds.NextDouble * 1000
+            }
+        Next
 
         Return network
     End Function

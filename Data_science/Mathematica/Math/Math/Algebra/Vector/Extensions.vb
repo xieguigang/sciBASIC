@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::f60294dc8326710cf9531a1ac4813de9, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 122
-    '    Code Lines: 71 (58.20%)
-    ' Comment Lines: 35 (28.69%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 16 (13.11%)
-    '     File Size: 4.82 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
-    '                   Top
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 122
+'    Code Lines: 71 (58.20%)
+' Comment Lines: 35 (28.69%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 16 (13.11%)
+'     File Size: 4.82 KB
+
+
+'     Module Extensions
+' 
+'         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
+'                   Top
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -136,19 +136,17 @@ Namespace LinearAlgebra
         Public Function rand(size%, Optional range As DoubleRange = Nothing) As Vector
             Dim list As Double() = New Double(size - 1) {}
 
-            SyncLock randf2.seeds
-                If range Is Nothing Then
-                    For i As Integer = 0 To size - 1
-                        list(i) = randf2.seeds.NextDouble
-                    Next
-                Else
-                    Dim d = range.Length
+            If range Is Nothing Then
+                For i As Integer = 0 To size - 1
+                    list(i) = randf2.seeds.NextDouble
+                Next
+            Else
+                Dim d = range.Length
 
-                    For i As Integer = 0 To size - 1
-                        list(i) = randf2.seeds.NextDouble * d + range.Min
-                    Next
-                End If
-            End SyncLock
+                For i As Integer = 0 To size - 1
+                    list(i) = randf2.seeds.NextDouble * d + range.Min
+                Next
+            End If
 
             Return New Vector(list)
         End Function

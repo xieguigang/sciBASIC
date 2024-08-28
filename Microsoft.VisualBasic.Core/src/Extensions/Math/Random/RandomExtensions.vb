@@ -187,7 +187,9 @@ Namespace Math
         ''' 可以在全局范围内重复使用这个随机数发生器
         ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' A thread safe random value generator. No needs for synclock
+        ''' </returns>
         ''' <remarks>
         ''' the random seed value of this property value can 
         ''' be reset by the <see cref="SetSeed(Integer)"/>
@@ -199,6 +201,9 @@ Namespace Math
             End Get
         End Property
 
+        ''' <summary>
+        ''' make a new random generator for all thread
+        ''' </summary>
         Dim _seeds As New ThreadLocal(Of Random)(Function() New Random(Now.Millisecond * Now.Second + 1))
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
