@@ -144,6 +144,8 @@ Namespace MathML
                 lambdaElement = lambdaElement.getElementsByTagName("apply").FirstOrDefault
             End If
 
+            ' Call Console.WriteLine(lambdaElement.GetJson(indent:=True))
+
             If lambdaElement Is Nothing Then
                 Return New LambdaExpression With {
                     .parameters = parameters,
@@ -170,8 +172,17 @@ Namespace MathML
             ' 如果第一个元素是变量，常数或者apply表达式
             ' 则默认操作符为乘法操作？
             If apply.elements(Scan0).name Like symbols Then
-                [operator] = New XmlElement With {.name = "times"}
-                apply.elements = {[operator]}.Join(apply.elements).ToArray
+                If apply.elements.Length < 3 Then
+                    [operator] = New XmlElement With {.name = "times"}
+                    apply.elements = {[operator]}.Join(apply.elements).ToArray
+                Else
+                    [operator] = apply.elements(1)
+                    apply.elements = {
+                        [operator],
+                        apply.elements(0),
+                        apply.elements(2)
+                    }
+                End If
             Else
                 [operator] = apply.elements(Scan0)
             End If
