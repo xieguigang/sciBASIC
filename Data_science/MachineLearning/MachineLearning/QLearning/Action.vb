@@ -80,9 +80,7 @@ Namespace QLearning
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            SyncLock Qvalues
-                Return $"[ {EnvirState} ] {vbTab}--> [{Qvalues.Select(Function(di) di.ToString("F4")).JoinBy(vbTab)}]"
-            End SyncLock
+            Return $"[ {EnvirState} ] {vbTab}--> [{Qvalues.Select(Function(di) di.ToString("F4")).JoinBy(vbTab)}]"
         End Function
 
     End Class
