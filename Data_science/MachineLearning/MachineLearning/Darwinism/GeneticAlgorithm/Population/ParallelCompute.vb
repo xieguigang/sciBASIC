@@ -62,6 +62,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Darwinism.GAF.Population
 
@@ -82,15 +83,35 @@ Namespace Darwinism.GAF.Population
     Public Class ParallelPopulationCompute(Of chr As {Class, Chromosome(Of chr)}) : Inherits ParallelComputeFitness(Of chr)
 
         Public Overrides Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
-            Return From c As chr
-                   In source.GetCollection.ToArray.AsParallel
-                   Let fit As Double = comparator.Fitness(c, parallel:=False)
-                   Let key As String = c.Identity
-                   Select New NamedValue(Of Double) With {
-                      .Name = key,
-                      .Value = fit
-                   }
+            Return DirectCast(New ParallelTask(source.GetCollection().ToArray, comparator).Run, ParallelTask).fitness
         End Function
+
+        Private Class ParallelTask : Inherits VectorTask
+
+            Public fitness As NamedValue(Of Double)()
+            Public chrs As chr()
+            Public env As FitnessPool(Of chr)
+
+            Public Sub New(pop As chr(), comparator As FitnessPool(Of chr))
+                MyBase.New(nsize:=pop.Length)
+
+                fitness = Allocate(Of NamedValue(Of Double))(all:=True)
+                chrs = pop
+                env = comparator
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                Dim c As chr
+
+                For i As Integer = start To ends
+                    c = chrs(i)
+                    fitness(i) = New NamedValue(Of Double)(
+                        name:=c.Identity,
+                        value:=env.Fitness(c, parallel:=False)
+                    )
+                Next
+            End Sub
+        End Class
     End Class
 
     Public Class ParallelDataSetCompute(Of chr As {Class, Chromosome(Of chr)}) : Inherits ParallelComputeFitness(Of chr)
