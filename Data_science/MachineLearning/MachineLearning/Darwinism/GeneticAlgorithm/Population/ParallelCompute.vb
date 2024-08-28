@@ -116,6 +116,14 @@ Namespace Darwinism.GAF.Population
 
     Public Class ParallelDataSetCompute(Of chr As {Class, Chromosome(Of chr)}) : Inherits ParallelComputeFitness(Of chr)
 
+        ''' <summary>
+        ''' the parallel is running in fitness calculation function, so we run sequential at here.
+        ''' </summary>
+        ''' <param name="comparator">
+        ''' parallel computation between the dataset in this fitness calculation
+        ''' </param>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         Public Overrides Function ComputeFitness(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
             Return From c As chr
                    In source.GetCollection()
