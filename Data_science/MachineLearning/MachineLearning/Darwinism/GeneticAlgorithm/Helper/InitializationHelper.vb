@@ -66,9 +66,36 @@ Namespace Darwinism.GAF.Helper
         ''' The simplest strategy for creating initial population <br/>
         ''' in real life it could be more complex.
         ''' </summary>
+        ''' <param name="parallel">
+        ''' sort the population in ga algorithm in parallel?
+        ''' </param>
+        ''' <param name="parallelInitialize">
+        ''' generates the initial population in parallel?
+        ''' </param>
         <Extension>
         Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%,
                                                                              Optional parallel As Boolean = True,
+                                                                             Optional addBase As Boolean = True,
+                                                                             Optional parallelInitialize As Boolean = True) As Population(Of T)
+            Return base.InitialPopulation(
+                population:=New Population(Of T)(New PopulationList(Of T), parallel) With {.capacitySize = popSize},
+                addBase:=addBase,
+                parallelInitialize:=parallelInitialize
+            )
+        End Function
+
+        ''' <summary>
+        ''' The simplest strategy for creating initial population <br/>
+        ''' in real life it could be more complex.
+        ''' </summary>
+        ''' <param name="parallel">
+        ''' sort the population in ga algorithm in parallel?
+        ''' </param>
+        ''' <param name="parallelInitialize">
+        ''' generates the initial population in parallel?
+        ''' </param>
+        <Extension>
+        Public Function InitialPopulation(Of T As {Class, Chromosome(Of T)})(base As T, popSize%, parallel As ParallelComputeFitness(Of T),
                                                                              Optional addBase As Boolean = True,
                                                                              Optional parallelInitialize As Boolean = True) As Population(Of T)
             Return base.InitialPopulation(
