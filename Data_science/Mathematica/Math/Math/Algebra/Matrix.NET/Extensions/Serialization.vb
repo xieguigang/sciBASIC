@@ -13,6 +13,11 @@ Namespace LinearAlgebra.Matrix
 
         ReadOnly network As New NetworkByteOrderBuffer
 
+        ''' <summary>
+        ''' Save the current numeric matrix into a binary file
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <param name="s"></param>
         <Extension>
         Public Sub Save(m As NumericMatrix, s As Stream)
             Dim bin As New BinaryWriter(s)
@@ -27,6 +32,11 @@ Namespace LinearAlgebra.Matrix
             Call bin.Flush()
         End Sub
 
+        ''' <summary>
+        ''' read matrix data from a binary file
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Public Function Load(s As Stream) As NumericMatrix
             Dim bin As New BinaryReader(s)
             Dim rows = bin.ReadInt32

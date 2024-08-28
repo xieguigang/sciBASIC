@@ -92,6 +92,15 @@ Namespace ApplicationServices.Zip
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <param name="is_readonly">
+        ''' readonly mode just allows for read data from the zip archive file, and 
+        ''' set this parameter value to FALSE will enable for create entry inside 
+        ''' the file.
+        ''' </param>
         Sub New(file As Stream, Optional is_readonly As Boolean = False)
             s = file
             [readonly] = is_readonly
