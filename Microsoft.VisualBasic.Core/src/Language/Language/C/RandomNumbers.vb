@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::a46c9d81b6a0aedcaf5e4655df1c051a, Microsoft.VisualBasic.Core\src\Language\Language\C\RandomNumbers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 65
-    '    Code Lines: 27 (41.54%)
-    ' Comment Lines: 29 (44.62%)
-    '    - Xml Docs: 41.38%
-    ' 
-    '   Blank Lines: 9 (13.85%)
-    '     File Size: 2.51 KB
+' Summaries:
 
 
-    '     Module RandomNumbers
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: rand, random
-    ' 
-    '         Sub: randomize, srand
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 65
+'    Code Lines: 27 (41.54%)
+' Comment Lines: 29 (44.62%)
+'    - Xml Docs: 41.38%
+' 
+'   Blank Lines: 9 (13.85%)
+'     File Size: 2.51 KB
+
+
+'     Module RandomNumbers
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: rand, random
+' 
+'         Sub: randomize, srand
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,6 +69,7 @@
 '----------------------------------------------------------------------------------------
 
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 
 Namespace Language.C
 
@@ -83,7 +84,10 @@ Namespace Language.C
     ''' </summary>
     Public Module RandomNumbers
 
-        Dim r As Random
+        ''' <summary>
+        ''' use thread local for may thread safe
+        ''' </summary>
+        Dim r As New ThreadLocal(Of Random)(Function() New Random(Guid.NewGuid().GetHashCode()))
 
         Sub New()
             Call randomize()
@@ -94,9 +98,7 @@ Namespace Language.C
         ''' </summary>
         ''' <returns></returns>
         Public Function rand() As Integer
-            SyncLock r
-                Return r.[Next]()
-            End SyncLock
+            Return r.Value.[Next]()
         End Function
 
         ''' <summary>
@@ -105,19 +107,17 @@ Namespace Language.C
         ''' <param name="ceiling"></param>
         ''' <returns></returns>
         Public Function random(ceiling As Integer) As Integer
-            SyncLock r
-                Return r.[Next](ceiling)
-            End SyncLock
+            Return r.Value.[Next](ceiling)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub randomize()
-            r = New Random(Now.Millisecond)
+            r = New ThreadLocal(Of Random)(Function() New Random(Guid.NewGuid().GetHashCode()))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub srand(seed As Integer)
-            r = New Random(seed)
+            r = New ThreadLocal(Of Random)(Function() New Random(seed))
         End Sub
     End Module
 End Namespace

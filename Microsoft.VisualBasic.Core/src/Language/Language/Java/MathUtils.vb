@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::32808061d6b51f10776fcb0704568a2c, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 387
-    '    Code Lines: 194 (50.13%)
-    ' Comment Lines: 148 (38.24%)
-    '    - Xml Docs: 72.30%
-    ' 
-    '   Blank Lines: 45 (11.63%)
-    '     File Size: 14.16 KB
+' Summaries:
 
 
-    '     Module MathUtils
-    ' 
-    '         Properties: Seed
-    ' 
-    '         Function: getNormalized, (+2 Overloads) getTotal, hypot, nextBoolean, nextByte
-    '                   nextChar, nextDouble, nextExponential, nextFloat, nextGamma
-    '                   nextGaussian, (+2 Overloads) nextInt, nextInverseGaussian, nextLong, nextShort
-    '                   permuted, randomChoice, randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement
-    '                   shuffled, uniform
-    ' 
-    '         Sub: nextBytes, permute, (+2 Overloads) shuffle
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 387
+'    Code Lines: 194 (50.13%)
+' Comment Lines: 148 (38.24%)
+'    - Xml Docs: 72.30%
+' 
+'   Blank Lines: 45 (11.63%)
+'     File Size: 14.16 KB
+
+
+'     Module MathUtils
+' 
+'         Properties: Seed
+' 
+'         Function: getNormalized, (+2 Overloads) getTotal, hypot, nextBoolean, nextByte
+'                   nextChar, nextDouble, nextExponential, nextFloat, nextGamma
+'                   nextGaussian, (+2 Overloads) nextInt, nextInverseGaussian, nextLong, nextShort
+'                   permuted, randomChoice, randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement
+'                   shuffled, uniform
+' 
+'         Sub: nextBytes, permute, (+2 Overloads) shuffle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * MathUtils.java
@@ -274,7 +274,7 @@ Namespace Language.Java
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return stdNum.Log(nextDouble())
+            Return std.Log(nextDouble())
         End Function
 
         ''' <summary>
@@ -282,7 +282,7 @@ Namespace Language.Java
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
             SyncLock random
-                Return -1.0 * stdNum.Log(1 - random.nextDouble()) / lambda
+                Return -1.0 * std.Log(1 - random.nextDouble()) / lambda
             End SyncLock
         End Function
 
@@ -299,7 +299,7 @@ Namespace Language.Java
                 ' distribution with a mean of 0
                 ' and 1 standard deviation
                 Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * stdNum.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * std.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
                 Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
                 ' distribution between 0
                 ' and 1
@@ -433,12 +433,12 @@ Namespace Language.Java
         Public Function hypot(a As Double, b As Double) As Double
             Dim r As Double
 
-            If stdNum.Abs(a) > stdNum.Abs(b) Then
+            If std.Abs(a) > std.Abs(b) Then
                 r = b / a
-                r = stdNum.Abs(a) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(a) * std.Sqrt(1 + r * r)
             ElseIf b <> 0 Then
                 r = a / b
-                r = stdNum.Abs(b) * stdNum.Sqrt(1 + r * r)
+                r = std.Abs(b) * std.Sqrt(1 + r * r)
             Else
                 r = 0.0
             End If
