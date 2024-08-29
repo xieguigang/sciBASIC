@@ -67,6 +67,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -106,6 +107,10 @@ Public Class SequenceGraphTransform
     End Enum
 
     Public ReadOnly Property alphabets As Char()
+        Get
+            Return _alphabets
+        End Get
+    End Property
 
     ''' <summary>
     ''' the feature name is the combination of <see cref="alphabets"/>
@@ -116,6 +121,8 @@ Public Class SequenceGraphTransform
     Dim kappa As Double
     Dim lengthsensitive As Boolean
     Dim graph_matrix As String()()
+    Dim _alphabetsIndex As Index(Of Char)
+    Dim _alphabets As Char() = Nothing
 
     ''' <summary>
     ''' algorithm applied for check position
@@ -149,9 +156,10 @@ Public Class SequenceGraphTransform
             Optional lengthsensitive As Boolean = False,
             Optional mode As Modes = Modes.Full)
 
-        Me.alphabets = alphabets
-
         If Not alphabets.IsNullOrEmpty Then
+            _alphabets = alphabets
+            _alphabetsIndex = alphabets.Indexing
+
             feature_names = __set_feature_name(alphabets)
         End If
 
@@ -202,6 +210,7 @@ Public Class SequenceGraphTransform
     ''' </remarks>
     Public Function set_alphabets(corpus As String()) As SequenceGraphTransform
         _alphabets = estimate_alphabets(corpus)
+        _alphabetsIndex = _alphabets.Indexing
         _feature_names = __set_feature_name(alphabets)
 
         graph_matrix = alphabets _
@@ -239,6 +248,7 @@ Public Class SequenceGraphTransform
     Public Function fit(sequence As String) As Dictionary(Of String, Double)
         If alphabets.IsNullOrEmpty Then
             _alphabets = estimate_alphabets(sequence)
+            _alphabetsIndex = _alphabets.Indexing
             _feature_names = __set_feature_name(alphabets)
         End If
 
@@ -252,9 +262,27 @@ Public Class SequenceGraphTransform
         Return map
     End Function
 
+    ''' <summary>
+    ''' Strip of the unexpected alphabets that not existed in current embedding index
+    ''' </summary>
+    ''' <param name="seq"></param>
+    ''' <returns></returns>
+    Public Function SafeStrip(seq As String) As String
+        If _alphabetsIndex Is Nothing Then
+            Return seq
+        End If
+
+        seq = seq _
+            .Where(Function(c) c Like _alphabetsIndex) _
+            .CharString
+
+        Return seq
+    End Function
+
     Public Function fitVector(sequence As String) As Double()
         If alphabets.IsNullOrEmpty Then
             _alphabets = estimate_alphabets(sequence)
+            _alphabetsIndex = _alphabets.Indexing
             _feature_names = __set_feature_name(alphabets)
         End If
 
