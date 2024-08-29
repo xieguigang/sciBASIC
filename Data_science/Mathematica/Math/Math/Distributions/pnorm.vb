@@ -111,6 +111,32 @@ Namespace Distributions
         End Function
 
         ''' <summary>
+        ''' ## Standard score(z-score)
+        ''' 
+        ''' In statistics, the standard score is the signed number of standard deviations by which the value of 
+        ''' an observation or data point is above the mean value of what is being observed or measured. Observed 
+        ''' values above the mean have positive standard scores, while values below the mean have negative 
+        ''' standard scores. The standard score is a dimensionless quantity obtained by subtracting the population 
+        ''' mean from an individual raw score and then dividing the difference by the population standard deviation. 
+        ''' This conversion process is called standardizing or normalizing (however, "normalizing" can refer to 
+        ''' many types of ratios; see normalization for more).
+        ''' 
+        ''' > https://en.wikipedia.org/wiki/Standard_score
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' http://blog.163.com/huai_jing@126/blog/static/171861983201321074124426/
+        ''' </remarks>
+        <Extension>
+        Public Function Z(x As Double()) As Double()
+            Dim u = x.Average
+            Dim d = x.SD
+            Dim z1 = SIMD.Divide.f64_op_divide_f64_scalar(SIMD.Subtract.f64_op_subtract_f64_scalar(x, u), d)
+            Return z1
+        End Function
+
+        ''' <summary>
         ''' A logistic function or logistic curve is a common "S" shape (sigmoid curve)
         ''' > https://en.wikipedia.org/wiki/Logistic_function
         ''' </summary>
