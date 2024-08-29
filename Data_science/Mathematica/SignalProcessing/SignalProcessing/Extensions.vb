@@ -52,7 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 <HideModuleName>
 Public Module Extensions
@@ -74,7 +74,7 @@ Public Module Extensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SNRatio(signal As Double, noise As Double) As Double
-        Return 10 * stdNum.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
+        Return 10 * std.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
     End Function
 
     ''' <summary>
@@ -94,6 +94,6 @@ Public Module Extensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ShannonTransferRate(bandWidth As Double, signal As Double, noise As Double) As Double
-        Return bandWidth * stdNum.Log(1 + signal / noise, 2)
+        Return bandWidth * std.Log(1 + signal / noise, 2)
     End Function
 End Module
