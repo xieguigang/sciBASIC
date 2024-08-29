@@ -228,7 +228,14 @@ Namespace ApplicationServices.Development.NetCoreApp
             Dim libdir As String = package.Location.ParentPath
 
             If deps Is Nothing Then
-                Call $"{depsJson} is missing or format incorrect!".Warning
+                ' ignores of the system framework assembly
+                Dim checkName = depsJson.BaseName
+                Dim checkDotnet = checkName.StartsWith("System.")
+
+                If Not checkDotnet Then
+                    Call $"{depsJson} is missing or format incorrect!".Warning
+                End If
+
                 Return
             End If
 
