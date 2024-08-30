@@ -135,24 +135,7 @@ Public Module JSONSerializer
     ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
 
     Private Function encodeString(value As String, opt As JSONSerializerOptions) As String
-        If InStr(value, """") > 0 Then
-            ' escape the quote symbol inside string,
-            ' or json string will syntax error
-            Dim unescape_quotes As String() = unescape.Matches(value).ToArray
-
-            For Each unescape_char As String In unescape_quotes
-                value = value.Replace(
-                    unescape_char,
-                    unescape_char.First & "\" & unescape_char.Last
-                )
-            Next
-
-            If value.First = """"c Then
-                value = "\" & value
-            End If
-        End If
-
-        value = value.Replace(vbCr, vbLf).Replace(vbLf, "\n")
+        value = value.Replace(vbCr, vbLf)
 
         If opt.unicodeEscape Then
             Dim sb As New StringBuilder
@@ -160,7 +143,7 @@ Public Module JSONSerializer
             Dim bytes As Byte()
             Dim b1, b0 As String
 
-            For Each c As Char In DirectCast(value, String)
+            For Each c As Char In DirectCast(value, String).Replace("\", "\\")
                 code = AscW(c)
 
                 If code < 0 OrElse code > Byte.MaxValue Then
@@ -175,9 +158,28 @@ Public Module JSONSerializer
                 End If
             Next
 
-            Return $"""{sb.ToString}"""
+            value = sb.ToString.Replace(vbLf, "\n")
+
+            If InStr(value, """") > 0 Then
+                ' escape the quote symbol inside string,
+                ' or json string will syntax error
+                Dim unescape_quotes As String() = unescape.Matches(value).ToArray
+
+                For Each unescape_char As String In unescape_quotes
+                    value = value.Replace(
+                    unescape_char,
+                    unescape_char.First & "\" & unescape_char.Last
+                )
+                Next
+
+                If value.First = """"c Then
+                    value = "\" & value
+                End If
+            End If
+
+            Return $"""{value}"""
         Else
-            Return JsonContract.GetObjectJson(GetType(String), value)
+            Return JsonContract.GetObjectJson(GetType(String), value).Replace(vbLf, "\n")
         End If
     End Function
 
