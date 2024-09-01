@@ -186,7 +186,7 @@ Public Class SequenceGraphTransform
     End Function
 
     Public Shared Function estimate_alphabets(ParamArray corpus As String()) As Char()
-        If corpus.Length > 100000 Then
+        If corpus.Length > 200000 Then
             Throw New Exception("Error: Too many sequences. Pass the alphabet list as an input. Exiting.")
         End If
 
