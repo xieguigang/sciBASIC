@@ -70,6 +70,18 @@ Namespace AprioriRules
         ReadOnly Code As Integer
         ReadOnly Item As String
 
+        ''' <summary>
+        ''' Convert the <see cref="Code"/> as chinese character BMP unicode char.
+        ''' </summary>
+        ''' <returns>
+        ''' one of the 20992 chinese BMP chars.
+        ''' </returns>
+        Public ReadOnly Property UnicodeChar As Char
+            Get
+                Return Convert.ToChar(Code + 19968)
+            End Get
+        End Property
+
         Sub New(hashcode As Integer, item As String)
             Me.Code = hashcode
             Me.Item = item

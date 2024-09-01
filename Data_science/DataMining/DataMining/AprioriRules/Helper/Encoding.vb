@@ -98,6 +98,11 @@ Namespace AprioriRules
                 .ToArray
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Encoding(item As String) As Item
+            Return _AllItems(itemCodes(item))
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{AllItems.Length} codes = {CodeMappings.Keys.Take(5).JoinBy(", ")}..."
         End Function
