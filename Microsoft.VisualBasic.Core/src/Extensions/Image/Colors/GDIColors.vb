@@ -458,6 +458,19 @@ Namespace Imaging
             Return exp.ToColor(throwEx:=throwEx, success:=success)
         End Function
 
+        ''' <summary>
+        ''' test of the given string expression is color value or not?
+        ''' </summary>
+        ''' <param name="expression">
+        ''' the color expression string for make asserts:
+        ''' 
+        ''' 1. html color: rgb(xxx)
+        ''' 2. any color name
+        ''' 3. integer ole color value
+        ''' 4. #xxxxxx html color value
+        ''' 
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function IsColorExpression(expression$) As Boolean
             If expression.MatchPattern(rgbExpr, RegexICSng) Then
