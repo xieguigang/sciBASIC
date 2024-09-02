@@ -818,7 +818,12 @@ Namespace Orthogonal
             Return result
         End Function
 
-        ' Do the same thing for vertical:
+        ''' <summary>
+        ''' Do the same thing for vertical
+        ''' </summary>
+        ''' <param name="vertex"></param>
+        ''' <param name="nodeGroup"></param>
+        ''' <returns></returns>
         Public Overridable Function nodeVerticalWiggleRoom(vertex As Integer, nodeGroup As IList(Of Integer)) As Pair(Of Double, Double)
             nodeGroup.Clear()
             Dim open As List(Of Integer) = New List(Of Integer)()
@@ -1269,7 +1274,7 @@ Namespace Orthogonal
 
         Public Overridable Function removeVertex(v As Integer) As OrthographicEmbeddingResult
             Dim n = nodeIndexes.Length - 1
-            Dim o As OrthographicEmbeddingResult = New OrthographicEmbeddingResult(n)
+            Dim o As New OrthographicEmbeddingResult(n)
             If embedding Is Nothing Then
                 o.embedding = Nothing
             End If

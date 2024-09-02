@@ -109,7 +109,7 @@ Module OrthogonalLayoutTest
 
         g = g.DoLayout
 
-        Call NetworkVisualizer.DrawImage(g, "3000,3000").Save("./Orthogonal.png")
+        Call NetworkVisualizer.DrawImage(g, "1000,1000", labelerIterations:=-1, minLinkWidth:=8).Save("./Orthogonal.png")
 
         Pause()
     End Sub
@@ -194,6 +194,7 @@ Module OrthogonalLayoutTest
         Dim font As New Font(FontFace.MicrosoftYaHeiUI, 12)
 
         ' g.Font = new Font("TimesRoman", Font.PLAIN, fontSize);
+        ' draw edges
         For i = 0 To oe.nodeIndexes.Length - 1
             For j = 0 To oe.nodeIndexes.Length - 1
                 If oe.edges(i)(j) Then

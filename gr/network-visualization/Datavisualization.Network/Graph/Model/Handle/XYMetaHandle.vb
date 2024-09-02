@@ -112,8 +112,8 @@ Namespace Graph.EdgeBundling
         ''' </summary>
         ''' <param name="ps">location of the source node</param>
         ''' <param name="pt">location of the target node</param>
-        ''' <param name="hx"></param>
-        ''' <param name="hy"></param>
+        ''' <param name="hx">the location x of the turn point</param>
+        ''' <param name="hy">the location x of the turn point</param>
         ''' <returns></returns>
         Public Shared Function CreateVector(ps As PointF, pt As PointF, hx!, hy!) As XYMetaHandle
             Dim dx = pt.X - ps.X
