@@ -1,57 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::11803501733baeefb8d82d65b2a5a4f8, Data_science\Visualization\Visualization\Embedding\UmapGraph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 57 (79.17%)
-    ' Comment Lines: 3 (4.17%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 12 (16.67%)
-    '     File Size: 2.74 KB
+' Summaries:
 
 
-    ' Module UMAPGraph
-    ' 
-    '     Function: BuildGraph, (+2 Overloads) CreateGraph
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 57 (79.17%)
+' Comment Lines: 3 (4.17%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 12 (16.67%)
+'     File Size: 2.74 KB
+
+
+' Module UMAPGraph
+' 
+'     Function: BuildGraph, (+2 Overloads) CreateGraph
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
@@ -73,9 +72,6 @@ Public Module UMAPGraph
 
     Private Function BuildGraph(matrix As Double()(), embedding As Double()(), uid As String(), labels As String(), clusters As String(), threshold As Double) As NetworkGraph
         Dim g As New NetworkGraph
-        Dim points As PointF() = embedding _
-            .Select(Function(v) New PointF(v(0), v(1))) _
-            .ToArray
         Dim data As NodeData = Nothing
         Dim index As i32 = Scan0
 
@@ -95,8 +91,14 @@ Public Module UMAPGraph
             If has_clusters Then
                 data(NamesOf.REFLECTION_ID_MAPPING_NODETYPE) = clusters(index)
             End If
-            If Not points Is Nothing Then
-                data.initialPostion = New FDGVector2(points(++index))
+            If embedding Is Nothing Then
+                Dim vec As Double() = embedding(++index)
+
+                If vec.Length = 2 Then
+                    data.initialPostion = New FDGVector2(vec(0), vec(1))
+                ElseIf vec.Length > 2 Then
+                    data.initialPostion = New FDGVector3(vec(0), vec(1), vec(2))
+                End If
             Else
                 index += 1
             End If

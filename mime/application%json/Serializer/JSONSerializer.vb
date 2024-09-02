@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::797367acc97ccc8605a547cb3d38f582, mime\application%json\Serializer\JSONSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 186
-    '    Code Lines: 129 (69.35%)
-    ' Comment Lines: 33 (17.74%)
-    '    - Xml Docs: 87.88%
-    ' 
-    '   Blank Lines: 24 (12.90%)
-    '     File Size: 6.63 KB
+' Summaries:
 
 
-    ' Module JSONSerializer
-    ' 
-    '     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
-    '               jsonValueString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 186
+'    Code Lines: 129 (69.35%)
+' Comment Lines: 33 (17.74%)
+'    - Xml Docs: 87.88%
+' 
+'   Blank Lines: 24 (12.90%)
+'     File Size: 6.63 KB
+
+
+' Module JSONSerializer
+' 
+'     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
+'               jsonValueString
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
@@ -94,6 +95,21 @@ Public Module JSONSerializer
     End Function
 
     <Extension>
+    Public Function CreateJSONElement(Of T)(obj As T,
+                                            Optional maskReadonly As Boolean = False,
+                                            Optional enumToStr As Boolean = True,
+                                            Optional unixTimestamp As Boolean = True) As JsonElement
+
+        Return New JSONSerializerOptions With {
+            .maskReadonly = maskReadonly,
+            .enumToString = enumToStr,
+            .unixTimestamp = unixTimestamp
+        }.DoCall(Function(opts)
+                     Return obj.GetType.GetJsonElement(obj, opts)
+                 End Function)
+    End Function
+
+    <Extension>
     Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False) As String
         Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent})
     End Function
@@ -119,24 +135,7 @@ Public Module JSONSerializer
     ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
 
     Private Function encodeString(value As String, opt As JSONSerializerOptions) As String
-        If InStr(value, """") > 0 Then
-            ' escape the quote symbol inside string,
-            ' or json string will syntax error
-            Dim unescape_quotes As String() = unescape.Matches(value).ToArray
-
-            For Each unescape_char As String In unescape_quotes
-                value = value.Replace(
-                    unescape_char,
-                    unescape_char.First & "\" & unescape_char.Last
-                )
-            Next
-
-            If value.First = """"c Then
-                value = "\" & value
-            End If
-        End If
-
-        value = value.Replace(vbCr, vbLf).Replace(vbLf, "\n")
+        value = value.Replace(vbCr, vbLf)
 
         If opt.unicodeEscape Then
             Dim sb As New StringBuilder
@@ -144,7 +143,7 @@ Public Module JSONSerializer
             Dim bytes As Byte()
             Dim b1, b0 As String
 
-            For Each c As Char In DirectCast(value, String)
+            For Each c As Char In DirectCast(value, String).Replace("\", "\\")
                 code = AscW(c)
 
                 If code < 0 OrElse code > Byte.MaxValue Then
@@ -159,9 +158,28 @@ Public Module JSONSerializer
                 End If
             Next
 
-            Return $"""{sb.ToString}"""
+            value = sb.ToString.Replace(vbLf, "\n")
+
+            If InStr(value, """") > 0 Then
+                ' escape the quote symbol inside string,
+                ' or json string will syntax error
+                Dim unescape_quotes As String() = unescape.Matches(value).ToArray
+
+                For Each unescape_char As String In unescape_quotes
+                    value = value.Replace(
+                    unescape_char,
+                    unescape_char.First & "\" & unescape_char.Last
+                )
+                Next
+
+                If value.First = """"c Then
+                    value = "\" & value
+                End If
+            End If
+
+            Return $"""{value}"""
         Else
-            Return JsonContract.GetObjectJson(GetType(String), value)
+            Return JsonContract.GetObjectJson(GetType(String), value).Replace(vbLf, "\n")
         End If
     End Function
 

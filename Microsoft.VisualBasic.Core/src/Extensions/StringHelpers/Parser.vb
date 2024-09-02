@@ -284,7 +284,7 @@ Public Module PrimitiveParser
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDouble(s As String) As Double
-        If s Is Nothing Then
+        If s Is Nothing OrElse s = "" Then
             Return 0
         Else
             Return ParseNumeric(s)
