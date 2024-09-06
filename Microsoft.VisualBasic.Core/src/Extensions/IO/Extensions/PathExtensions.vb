@@ -883,11 +883,12 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' Get the specific file system object its relative path to the application base directory.
-    ''' 
-    ''' (获取相对于本应用程序的目标文件的相对路径(请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的))
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (获取相对于本应用程序的目标文件的相对路径(请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的))
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI(NameOf(RelativePath))>
     Public Function RelativePath(path As String) As String
@@ -896,7 +897,6 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' Gets the relative path of file system object <paramref name="pcTo"/> reference to the directory path <paramref name="pcFrom"/>.
-    ''' (请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的)
     ''' </summary>
     ''' <param name="pcFrom">生成相对路径的参考文件夹</param>
     ''' <param name="pcTo">所需要生成相对路径的目标文件系统对象的绝对路径或者相对路径</param>
@@ -904,6 +904,9 @@ Public Module PathExtensions
     ''' <returns>
     ''' The relative path string of pcTo file object reference to directory pcFrom
     ''' </returns>
+    ''' <remarks>
+    ''' (请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的)
+    ''' </remarks>
     <ExportAPI(NameOf(RelativePath))>
     Public Function RelativePath(pcFrom$, pcTo$,
                                  Optional appendParent As Boolean = True,
@@ -983,10 +986,13 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' Gets the full path of the specific file.(为了兼容Linux，这个函数会自动替换路径之中的\为/符号)
+    ''' Gets the full path of the specific file.
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (为了兼容Linux，这个函数会自动替换路径之中的\为/符号)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.FullPath")>
     <Extension>
@@ -1014,11 +1020,13 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' Gets the full path of the specific directory. 
-    ''' (这个函数为了兼容linux的文件系统，也会自动的将所有的``\``替换为``/``)
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <param name="stack">当程序出错误的时候记录进入日志的一个追踪目标参数，调试用</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (这个函数为了兼容linux的文件系统，也会自动的将所有的``\``替换为``/``)
+    ''' </remarks>
     <ExportAPI("Dir.FullPath")>
     <Extension>
     Public Function GetDirectoryFullPath(dir$, <CallerMemberName> Optional stack$ = Nothing) As String
@@ -1047,10 +1055,13 @@ Public Module PathExtensions
     End Function
 
     ''' <summary>
-    ''' Removes the file extension name from the file path.(去除掉文件的拓展名)
+    ''' Removes the file extension name from the file path.
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (去除掉文件的拓展名)
+    ''' </remarks>
     <ExportAPI("File.Ext.Trim")>
     <Extension> Public Function TrimSuffix(file As String) As String
         Dim tokens$() = file.Replace("\"c, "/"c).Split("/"c)
@@ -1063,10 +1074,12 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' Removes the last \ and / character in a directory path string.
-    ''' (使用这个函数修剪文件夹路径之中的最后一个分隔符，以方便生成文件名)
     ''' </summary>
     ''' <param name="DIR"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (使用这个函数修剪文件夹路径之中的最后一个分隔符，以方便生成文件名)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TrimDIR(DIR As String) As String
