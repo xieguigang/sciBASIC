@@ -127,9 +127,11 @@ Namespace Parallel
 
         ''' <summary>
         ''' The raw stream data of the details data request or the server response data.
-        ''' (协议的具体数据请求)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (协议的具体数据请求)
+        ''' </remarks>
         <XmlAttribute("rawBuf")>
         Public Property ChunkBuffer As Byte()
 
