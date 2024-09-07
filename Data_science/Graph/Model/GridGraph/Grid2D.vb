@@ -284,6 +284,12 @@ Namespace GridGraph
             Next
         End Function
 
+        ''' <summary>
+        ''' Create a new readonly spatial graph
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="getSpatial"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function CreateReadOnly(data As IEnumerable(Of T), getSpatial As Func(Of T, Point)) As Grid(Of T)
             Return CreateReadOnly(data.Select(Function(i) New GridCell(Of T)(getSpatial(i), i)))
