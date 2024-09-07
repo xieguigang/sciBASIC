@@ -1,65 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::73c932d3734a8c3773f5d8635b0550b0, gr\network-visualization\network_layout\Orthogonal\util\algorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 162
-    '    Code Lines: 123 (75.93%)
-    ' Comment Lines: 9 (5.56%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 30 (18.52%)
-    '     File Size: 6.68 KB
+' Summaries:
 
 
-    '     Module algorithm
-    ' 
-    '         Function: (+2 Overloads) AsGraphMatrix, DoLayout, RunLayoutMatrix
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 162
+'    Code Lines: 123 (75.93%)
+' Comment Lines: 9 (5.56%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 30 (18.52%)
+'     File Size: 6.68 KB
+
+
+'     Module algorithm
+' 
+'         Function: (+2 Overloads) AsGraphMatrix, DoLayout, RunLayoutMatrix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal.optimization
-Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -124,37 +122,102 @@ Namespace Orthogonal
                 Throw New InvalidProgramException("run layout failure...")
             End If
 
+            Dim minx As Double = -1
+            Dim maxx As Double = -1
+            Dim miny As Double = -1
+            Dim maxy As Double = -1
+
+            For i = 0 To layout.nodeIndexes.Length - 1
+                If i = 0 Then
+                    maxx = layout.x(i)
+                    minx = layout.x(i)
+                    maxy = layout.y(i)
+                    miny = layout.y(i)
+                Else
+                    If layout.x(i) < minx Then
+                        minx = layout.x(i)
+                    End If
+                    If layout.x(i) > maxx Then
+                        maxx = layout.x(i)
+                    End If
+                    If layout.y(i) < miny Then
+                        miny = layout.y(i)
+                    End If
+                    If layout.y(i) > maxy Then
+                        maxy = layout.y(i)
+                    End If
+                End If
+            Next
+
             For i As Integer = 0 To layout.nodeIndexes.Length - 1
                 index = layout.nodeIndexes(i)
 
                 If index > -1 Then
                     v = vlist(index)
                     v.data.initialPostion = New FDGVector2(layout(i))
+                    v.data.initialPostion.x -= minx
+                    v.data.initialPostion.y -= miny
                 End If
             Next
 
-            For Each edge As Edge In g.graphEdges
-                Dim pu = edge.U.data.initialPostion.Point2D
-                Dim pv = edge.V.data.initialPostion.Point2D
+            For i = 0 To layout.nodeIndexes.Length - 1
+                For j = 0 To layout.nodeIndexes.Length - 1
+                    If layout.edges(i)(j) Then
+                        Dim x0 = std.Min(layout.x(i), layout.x(j)) - minx
+                        Dim y0 = std.Min(layout.y(i), layout.y(j)) - miny
+                        Dim x1 = std.Max(layout.x(i), layout.x(j)) - minx
+                        Dim y1 = std.Max(layout.y(i), layout.y(j)) - miny
 
-                If std.Abs(pu.X - pv.X) < 0.01 OrElse std.Abs(pu.Y - pv.Y) < 0.01 Then
-                    ' u - v on a line
-                    ' no bends
-                Else
-                    ' needs a middle point in route
-                    If layout.find(pu.X, pv.Y) Then
-                        edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, pu.X, pv.Y)}
-                    ElseIf layout.find(pv.X, pu.Y) Then
-                        edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, pv.X, pu.Y)}
-                    Else
-                        ' no bends?
+                        ' try to find a node
+                        For Each edge As Edge In g.graphEdges
+                            Dim pu = edge.U.data.initialPostion.Point2D
+                            Dim pv = edge.V.data.initialPostion.Point2D
+
+                            If std.Abs(pu.X - x0) < 0.1 AndAlso std.Abs(pu.Y - y0) < 0.1 Then
+                                ' pu is [x0,y0]
+                                If std.Abs(pv.X - x1) < 0.1 AndAlso std.Abs(pv.Y - y1) < 0.1 Then
+                                    ' pv is [x1,y1]
+                                    ' is a direct link between two node
+                                    ' ignores
+                                    Exit For
+                                Else
+                                    ' [x1,y1] is an edge turn point
+                                    edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, x1, y1)}
+                                    Exit For
+                                End If
+                            ElseIf std.Abs(pu.X - x1) < 0.1 AndAlso std.Abs(pu.Y - y1) < 0.1 Then
+                                ' pu is [x1,y1]
+                                If std.Abs(pv.X - x0) < 0.1 AndAlso std.Abs(pv.Y - y0) < 0.1 Then
+                                    ' pv is [x0,y0]
+                                    ' is a direct link between two node
+                                    ' ignores
+                                    Exit For
+                                Else
+                                    ' [x0,y0] is an edge turn point
+                                    edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, x0, y0)}
+                                    Exit For
+                                End If
+                            Else
+                                ' current edge is not a hit
+                                ' just ignores
+                            End If
+                        Next
                     End If
-                End If
+                Next
             Next
 
             Return g
         End Function
 
+        ''' <summary>
+        ''' create orthographic layout
+        ''' </summary>
+        ''' <param name="graph"></param>
+        ''' <param name="numberOfAttempts"></param>
+        ''' <param name="optimize"></param>
+        ''' <param name="simplify"></param>
+        ''' <param name="fixNonOrthogonal"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function RunLayoutMatrix(ByRef graph As Integer()(),
                                         Optional numberOfAttempts As Integer = 10,
