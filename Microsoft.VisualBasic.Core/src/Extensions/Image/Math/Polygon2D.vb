@@ -79,6 +79,10 @@ Namespace Imaging.Math2D
     ''' </remarks>
     Public Class Polygon2D : Implements Enumeration(Of PointF)
 
+        ''' <summary>
+        ''' the size of the polygon points collection
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property length As Integer = 0
 
         Public Property xpoints As Double() = New Double(3) {}
