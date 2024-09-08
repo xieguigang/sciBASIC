@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Hypothesis
 
@@ -97,8 +97,8 @@ Namespace Hypothesis
 
             Return New TtestResult With {
                 .DegreeFreedom = sample.SampleSize - 1,
-                .SD = stdNum.Sqrt(sample.Variance),
-                .StdErr = stdNum.Sqrt(.SD ^ 2 / sample.SampleSize),
+                .SD = std.Sqrt(sample.Variance),
+                .StdErr = std.Sqrt(.SD ^ 2 / sample.SampleSize),
                 .TestValue = (sample.Mean - mu) / .StdErr,
                 .Pvalue = Pvalue(.TestValue, .DegreeFreedom, pvalueAlter),
                 .Mean = sample.Mean,
@@ -142,7 +142,7 @@ Namespace Hypothesis
 
             Dim commonVariance# = ((left.SampleSize - 1) * va.Variance + (right.SampleSize - 1) * vb.Variance) / df
             Dim testVal#
-            Dim stdErr# = stdNum.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
+            Dim stdErr# = std.Sqrt(commonVariance * (1 / left.SampleSize + 1 / right.SampleSize))
 
             If varEqual Then
                 testVal = ((left.Mean - right.Mean) - mu) / stdErr
@@ -247,7 +247,7 @@ Namespace Hypothesis
 
         Private Function welch2t(m1#, m2#, s1#, s2#, N1#, N2#) As Double
             Dim a = m1 - m2
-            Dim b = stdNum.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
+            Dim b = std.Sqrt((s1 ^ 2) / N1 + (s2 ^ 2) / N2)
             Dim t = a / b
             Return t
         End Function
@@ -277,7 +277,7 @@ Namespace Hypothesis
                 Case Hypothesis.Greater
                     Return Tcdf(t, v)
                 Case Else
-                    Return d128_two * (d128_one - Tcdf(stdNum.Abs(t), v))
+                    Return d128_two * (d128_one - Tcdf(std.Abs(t), v))
             End Select
         End Function
 
