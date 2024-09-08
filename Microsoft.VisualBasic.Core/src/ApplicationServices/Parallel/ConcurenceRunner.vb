@@ -82,6 +82,10 @@ Namespace Parallel
         Dim opt As ParallelOptions
         Dim is_verbose As Boolean = False
 
+        ''' <summary>
+        ''' set number of cpu threads for run current <see cref="VectorTask"/> parallel. 
+        ''' this thread value MUST BE configured before construct of the task object.
+        ''' </summary>
         Public Shared n_threads As Integer = 4
 
         ''' <summary>
