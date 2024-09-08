@@ -538,6 +538,8 @@ Public Module SpecialFunctions
             Else
                 Return std.Sign(x) / std.Sign(y)
             End If
+        ElseIf x = 0.0 Then
+            Return 0
         Else
             If x.IsNaNImaginary Then
                 Return x
@@ -750,7 +752,7 @@ Public Module SpecialFunctions
                 lz = lq - lp
             End If
             lz = lq * std.Sin(std.PI * lz)
-            If lz = 0 Then 'gamma overflow Return Double.NaN
+            If lz <> 0.0 Then 'gamma overflow Return Double.NaN
                 lz = std.Abs(lz)
                 lz = std.PI / (lz * StirlingsFormula(lq))
                 Return -lz

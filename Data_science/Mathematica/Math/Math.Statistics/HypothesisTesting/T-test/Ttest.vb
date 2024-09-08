@@ -281,8 +281,8 @@ Namespace Hypothesis
             End Select
         End Function
 
-        Const d128_one As Decimal = 1.0
-        Const d128_two As Decimal = 2.0
+        Const d128_one As Double = 1.0
+        Const d128_two As Double = 2.0
 
         ''' <summary>
         ''' ###### Student's t-distribution CDF
@@ -302,10 +302,10 @@ Namespace Hypothesis
         ''' </remarks>
         Public Function Tcdf(t#, v#) As Decimal
             Dim x# = v / (v + t ^ 2)
-            Dim inc As Decimal = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2.0, 0.5, x)
+            Dim inc As Double = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2.0, 0.5, x)
             ' there is a bug about the precision in small number
             ' this problem case the pvalue zero
-            Dim cdf As Decimal = d128_one - inc / d128_two
+            Dim cdf As Double = d128_one - inc / d128_two
 
             Return cdf
         End Function
