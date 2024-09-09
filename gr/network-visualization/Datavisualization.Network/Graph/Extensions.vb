@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
@@ -83,13 +84,15 @@ Namespace Graph
         ''' <summary>
         ''' 生成诸如degree之类的信息
         ''' </summary>
-        ''' <param name="net"></param>
+        ''' <param name="g"></param>
         <Extension>
-        Public Sub ApplyAnalysis(ByRef net As NetworkGraph)
-            For Each node In net.vertex
-                node.data.neighbours = net.GetNeighbours(node.Label).ToArray
+        Public Sub ApplyAnalysis(ByRef g As NetworkGraph)
+            For Each node In g.vertex
+                node.data.neighbours = g.GetNeighbours(node.label).ToArray
                 node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
             Next
+
+            Call g.ComputeNodeDegrees
         End Sub
 
         ''' <summary>
