@@ -56,6 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 
 Namespace d3js.scale
@@ -143,8 +144,24 @@ Namespace d3js.scale
             Return positions
         End Function
 
+        ''' <summary>
+        ''' set the plot canvas region boundary
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         Public Overrides Function range(Optional values As IEnumerable(Of Double) = Nothing) As OrdinalScale
             _range = values.Range
+            Return Me
+        End Function
+
+        ''' <summary>
+        ''' set the plot canvas region boundary
+        ''' </summary>
+        ''' <param name="min"></param>
+        ''' <param name="max"></param>
+        ''' <returns></returns>
+        Public Overloads Function range(min As Double, max As Double) As OrdinalScale
+            _range = New DoubleRange(min, max)
             Return Me
         End Function
 
@@ -152,6 +169,14 @@ Namespace d3js.scale
             Return index
         End Function
 
+        ''' <summary>
+        ''' set the ordinal value range, the input numeric value will be transform as the string term factors in this function.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the term ordinal value could be get from the <see cref="getTerms"/> function.
+        ''' </remarks>
         Public Overrides Function domain(values As IEnumerable(Of Double)) As OrdinalScale
             Return domain(values.ToStringArray)
         End Function
@@ -174,6 +199,9 @@ Namespace d3js.scale
         ''' </summary>
         ''' <param name="tags"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' the term ordinal value could be get from the <see cref="getTerms"/> function.
+        ''' </remarks>
         Public Overrides Function domain(tags As IEnumerable(Of String)) As OrdinalScale
             ' factors = values.factors
             'index = factors _
@@ -184,6 +212,14 @@ Namespace d3js.scale
             Return Me
         End Function
 
+        ''' <summary>
+        ''' set the ordinal value range, the input integer value will be transform as the string term factors in this function.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the term ordinal value could be get from the <see cref="getTerms"/> function.
+        ''' </remarks>
         Public Overrides Function domain(values As IEnumerable(Of Integer)) As OrdinalScale
             Return domain(values.ToStringArray)
         End Function
