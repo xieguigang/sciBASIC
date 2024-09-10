@@ -259,6 +259,10 @@ Namespace SVG.XML
             End If
         End Sub
 
+        Public Function GetSvgElement() As XmlElement
+            Return Element
+        End Function
+
         Private Function ParseClassAttribute() As HashSet(Of String)
             Return New HashSet(Of String)(Element.GetAttribute("class").Split({" "c}, StringSplitOptions.RemoveEmptyEntries))
         End Function
