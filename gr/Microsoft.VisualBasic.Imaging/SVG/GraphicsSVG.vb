@@ -690,8 +690,10 @@ Namespace SVG
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
             Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim fill As String = __svgData.bg$
 
-            rectangle.Style = New Stroke(pen).CSSValue
+            rectangle.Style = New Stroke(pen).CSSValue & $" fill:{fill};"
+            rectangle.Fill = fill
             rectangle.SetRectangle(rect)
         End Sub
 
