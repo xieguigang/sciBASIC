@@ -297,8 +297,12 @@ Namespace ComponentModel.Collection
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function KeyItem(Of T As INamedValue)(source As IEnumerable(Of T), key$) As T
+            If source Is Nothing Then
+                Return Nothing
+            End If
+
             Return source _
-                .Where(Function(i) i.Key = key) _
+                .Where(Function(i) i IsNot Nothing AndAlso i.Key = key) _
                 .FirstOrDefault
         End Function
 
