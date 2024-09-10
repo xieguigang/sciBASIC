@@ -75,6 +75,16 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' try to get the last created <see cref="SvgElement"/> in this svg document data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property lastElement As SvgElement
+            Get
+                Return SvgElement.Create(Element.LastChild)
+            End Get
+        End Property
+
         Protected Sub New(element As XmlElement)
             MyBase.New(element)
         End Sub

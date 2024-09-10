@@ -101,6 +101,16 @@ Namespace SVG
             End Get
         End Property
 
+        ''' <summary>
+        ''' try to get the last created <see cref="SvgElement"/> in this svg document data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property LastSvgLayerElement As SvgElement
+            Get
+                Return __svgData.svg.lastElement
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(size As SizeF, dpiX As Integer, dpiY As Integer)
             Call Me.New(size.Width, size.Height, dpiX, dpiY)
