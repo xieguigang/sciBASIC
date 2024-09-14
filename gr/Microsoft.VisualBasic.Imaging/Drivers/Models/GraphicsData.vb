@@ -90,7 +90,7 @@ Namespace Driver
                     Case Drivers.PS
                         Return "application/postscript"
                     Case Drivers.SVG
-                        Return "text/xml"
+                        Return "image/svg+xml"
                     Case Drivers.WMF
                         Return "application/x-wmf"
                     Case Else

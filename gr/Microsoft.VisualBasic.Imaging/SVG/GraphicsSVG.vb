@@ -101,6 +101,16 @@ Namespace SVG
             End Get
         End Property
 
+        ''' <summary>
+        ''' try to get the last created <see cref="SvgElement"/> in this svg document data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property LastSvgLayerElement As SvgElement
+            Get
+                Return __svgData.svg.lastElement
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(size As SizeF, dpiX As Integer, dpiY As Integer)
             Call Me.New(size.Width, size.Height, dpiX, dpiY)
@@ -690,8 +700,10 @@ Namespace SVG
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
             Dim rectangle As SvgRect = __svgData.svg.AddRect
+            Dim fill As String = __svgData.bg$
 
-            rectangle.Style = New Stroke(pen).CSSValue
+            rectangle.Style = New Stroke(pen).CSSValue & $" fill:{fill};"
+            rectangle.Fill = fill
             rectangle.SetRectangle(rect)
         End Sub
 

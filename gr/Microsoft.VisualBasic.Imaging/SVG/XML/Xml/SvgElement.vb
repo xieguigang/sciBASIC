@@ -251,6 +251,18 @@ Namespace SVG.XML
             SetStyleAttribute(styles)
         End Sub
 
+        Public Sub SetAttributeData(name As String, value As String)
+            If value.StringEmpty Then
+                Element.RemoveAttribute(name)
+            Else
+                Element.SetAttribute(name, value)
+            End If
+        End Sub
+
+        Public Function GetSvgElement() As XmlElement
+            Return Element
+        End Function
+
         Private Function ParseClassAttribute() As HashSet(Of String)
             Return New HashSet(Of String)(Element.GetAttribute("class").Split({" "c}, StringSplitOptions.RemoveEmptyEntries))
         End Function

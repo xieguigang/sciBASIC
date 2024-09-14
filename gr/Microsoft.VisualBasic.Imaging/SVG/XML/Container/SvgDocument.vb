@@ -141,21 +141,29 @@ Namespace SVG.XML
             End Set
         End Property
 
-        Public Property Width As Double
+        Public Property Width As Double?
             Get
                 Return Element.GetAttribute("width", Attributes.Size.Width)
             End Get
-            Set(value As Double)
-                Element.SetAttribute("width", value)
+            Set(value As Double?)
+                If value IsNot Nothing Then
+                    Element.SetAttribute("width", value.Value)
+                ElseIf Element.HasAttribute("width") Then
+                    Element.RemoveAttribute("width")
+                End If
             End Set
         End Property
 
-        Public Property Height As Double
+        Public Property Height As Double?
             Get
                 Return Element.GetAttribute("height", Attributes.Size.Height)
             End Get
-            Set(value As Double)
-                Element.SetAttribute("height", value)
+            Set(value As Double?)
+                If value IsNot Nothing Then
+                    Element.SetAttribute("height", value.Value)
+                ElseIf Element.HasAttribute("height") Then
+                    Element.RemoveAttribute("height")
+                End If
             End Set
         End Property
 
@@ -179,8 +187,12 @@ Namespace SVG.XML
         ''' <param name="sz"></param>
         ''' <returns></returns>
         Public Function Size(sz As Size) As SvgDocument
-            Width = sz.Width
-            Height = sz.Height
+            ' 20240910 svg width/height is a fixed layout data, if we set width via the css, then height will not change
+            ' this will caused a layout error
+            ' viewbox is better than the width/height
+            ' so removes the width and height when config size
+            Width = Nothing
+            Height = Nothing
             ViewBox = New Double() {0, 0, sz.Width, sz.Height}
             Return Me
         End Function
