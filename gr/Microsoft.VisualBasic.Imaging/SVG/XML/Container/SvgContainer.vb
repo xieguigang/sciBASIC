@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ebddbc1fc1eaaaa64ed20590e565cbc, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
+﻿#Region "Microsoft.VisualBasic::ad0cb5de08aead88e9550b3ddff5dbb0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 121
-    '    Code Lines: 71 (58.68%)
-    ' Comment Lines: 27 (22.31%)
-    '    - Xml Docs: 25.93%
+    '   Total Lines: 131
+    '    Code Lines: 76 (58.02%)
+    ' Comment Lines: 31 (23.66%)
+    '    - Xml Docs: 35.48%
     ' 
-    '   Blank Lines: 23 (19.01%)
-    '     File Size: 4.88 KB
+    '   Blank Lines: 24 (18.32%)
+    '     File Size: 5.23 KB
 
 
     '     Class SvgContainer
     ' 
-    '         Properties: filter
+    '         Properties: filter, lastElement
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: AddCircle, AddClipPath, AddEllipse, AddGroup, AddImage

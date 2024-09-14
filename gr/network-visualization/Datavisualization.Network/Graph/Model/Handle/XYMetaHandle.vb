@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41519e22a949d1b41e068c6ac15da2d9, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::fca476e9ed75a604f2449bf91a2cc37b, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\XYMetaHandle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.33%
     ' 
     '   Blank Lines: 14 (15.91%)
-    '     File Size: 3.09 KB
+    '     File Size: 3.16 KB
 
 
     '     Class XYMetaHandle

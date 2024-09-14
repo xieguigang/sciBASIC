@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e644c072ff6e3fee21829a675434afa6, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
+﻿#Region "Microsoft.VisualBasic::27bbdd13bfa2b02a77f33d82f925d7b6, Data_science\DataMining\DataMining\AprioriRules\Helper\Encoding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 37 (56.92%)
-    ' Comment Lines: 19 (29.23%)
+    '   Total Lines: 70
+    '    Code Lines: 41 (58.57%)
+    ' Comment Lines: 19 (27.14%)
     '    - Xml Docs: 78.95%
     ' 
-    '   Blank Lines: 9 (13.85%)
-    '     File Size: 2.69 KB
+    '   Blank Lines: 10 (14.29%)
+    '     File Size: 2.88 KB
 
 
     '     Class Encoding
@@ -48,7 +48,7 @@
     '         Properties: AllItems, CodeMappings
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString, (+2 Overloads) TransactionEncoding
+    '         Function: Encoding, ToString, (+2 Overloads) TransactionEncoding
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b00492b428789cc93948e9162ba6b6ac, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::308006da9169176f4c9e491e3881fcfe, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 286
-    '    Code Lines: 121 (42.31%)
-    ' Comment Lines: 127 (44.41%)
-    '    - Xml Docs: 96.85%
+    '   Total Lines: 307
+    '    Code Lines: 132 (43.00%)
+    ' Comment Lines: 134 (43.65%)
+    '    - Xml Docs: 97.01%
     ' 
-    '   Blank Lines: 38 (13.29%)
-    '     File Size: 11.54 KB
+    '   Blank Lines: 41 (13.36%)
+    '     File Size: 12.23 KB
 
 
     ' Module RegexExtensions
@@ -48,8 +48,11 @@
     '     Properties: RegexpTimeout
     ' 
     '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: (+2 Overloads) EachValue, EndsWith, (+2 Overloads) IsPattern, Locates, PythonRawRegexp
     '               StartsWith, (+2 Overloads) ToArray
+    ' 
+    '     Sub: Replace
     '     Structure [NameOf]
     ' 
     ' 

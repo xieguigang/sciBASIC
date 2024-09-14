@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3066a2f79b0bf842e2ea90586865e071, mime\application%xml\MathML\contentBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::e35885b897a4f182a9be68ec3ba8b5d7, mime\application%xml\MathML\contentBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 193
-    '    Code Lines: 154 (79.79%)
-    ' Comment Lines: 12 (6.22%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 204
+    '    Code Lines: 163 (79.90%)
+    ' Comment Lines: 13 (6.37%)
+    '    - Xml Docs: 61.54%
     ' 
-    '   Blank Lines: 27 (13.99%)
-    '     File Size: 7.67 KB
+    '   Blank Lines: 28 (13.73%)
+    '     File Size: 8.09 KB
 
 
     '     Module ContentBuilder

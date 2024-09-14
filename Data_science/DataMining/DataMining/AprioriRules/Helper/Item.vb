@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cef53cacae6e55b7e9b960494a461b3d, Data_science\DataMining\DataMining\AprioriRules\Helper\Item.vb"
+﻿#Region "Microsoft.VisualBasic::c7d4f03ca9c8178b4d9fe011561c01e2, Data_science\DataMining\DataMining\AprioriRules\Helper\Item.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 25 (51.02%)
-    ' Comment Lines: 15 (30.61%)
+    '   Total Lines: 61
+    '    Code Lines: 30 (49.18%)
+    ' Comment Lines: 21 (34.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (18.37%)
-    '     File Size: 1.54 KB
+    '   Blank Lines: 10 (16.39%)
+    '     File Size: 1.94 KB
 
 
     '     Structure Item
+    ' 
+    '         Properties: UnicodeChar
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: CompareTo, GetHashCode, ToString

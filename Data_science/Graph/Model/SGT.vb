@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64d240d0a094e25c80dfe7fe159f8ff1, Data_science\Graph\Model\SGT.vb"
+﻿#Region "Microsoft.VisualBasic::4f1786fdf09aeb31c8db081568025076, Data_science\Graph\Model\SGT.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 330
-    '    Code Lines: 176 (53.33%)
-    ' Comment Lines: 105 (31.82%)
-    '    - Xml Docs: 84.76%
+    '   Total Lines: 358
+    '    Code Lines: 196 (54.75%)
+    ' Comment Lines: 110 (30.73%)
+    '    - Xml Docs: 85.45%
     ' 
-    '   Blank Lines: 49 (14.85%)
-    '     File Size: 12.11 KB
+    '   Blank Lines: 52 (14.53%)
+    '     File Size: 13.01 KB
 
 
     ' Class SequenceGraphTransform
@@ -58,8 +58,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: __set_feature_name, CombineFast, CombineFull, CombinePartial, estimate_alphabets
-    '                   fit, fitInternal, fitVector, get_positions, set_alphabets
-    '                   TranslateMatrix
+    '                   fit, fitInternal, fitVector, get_positions, SafeStrip
+    '                   set_alphabets, TranslateMatrix
     ' 
     ' /********************************************************************************/
 

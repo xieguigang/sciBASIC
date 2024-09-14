@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::f60294dc8326710cf9531a1ac4813de9, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::25773a933001ce46beac01adc8b438c0, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 122
-'    Code Lines: 71 (58.20%)
-' Comment Lines: 35 (28.69%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 16 (13.11%)
-'     File Size: 4.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
-'                   Top
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 69 (57.50%)
+    ' Comment Lines: 35 (29.17%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (13.33%)
+    '     File Size: 4.72 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
+    '                   Top
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

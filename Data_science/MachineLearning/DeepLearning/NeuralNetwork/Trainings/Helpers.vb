@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::446ad01da79a5dc6acc415c04290a232, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::7f268e01269334e7babba71551262490, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\Helpers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 44 (65.67%)
-    ' Comment Lines: 13 (19.40%)
+    '   Total Lines: 65
+    '    Code Lines: 42 (64.62%)
+    ' Comment Lines: 13 (20.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (14.93%)
-    '     File Size: 2.48 KB
+    '   Blank Lines: 10 (15.38%)
+    '     File Size: 2.42 KB
 
 
     '     Module Helpers

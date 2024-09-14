@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cedbd375d2122f475d2c3d66cc02a28a, mime\application%rdf+xml\DataModel\Bag.vb"
+﻿#Region "Microsoft.VisualBasic::e28a9bcb530d04954f8105bf7f33c302, mime\application%rdf+xml\DataModel\Bag.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 26 (63.41%)
-    ' Comment Lines: 7 (17.07%)
-    '    - Xml Docs: 85.71%
+    '   Total Lines: 52
+    '    Code Lines: 32 (61.54%)
+    ' Comment Lines: 11 (21.15%)
+    '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 8 (19.51%)
-    '     File Size: 1.35 KB
+    '   Blank Lines: 9 (17.31%)
+    '     File Size: 1.78 KB
 
 
     ' Class Array
@@ -48,7 +48,7 @@
     '     Properties: list
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: ToString
+    '     Function: GenericEnumerator, ToString
     ' 
     ' Class li
     ' 

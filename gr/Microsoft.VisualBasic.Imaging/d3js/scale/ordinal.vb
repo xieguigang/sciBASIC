@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b9c335737da1934fe3819602854126d, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
+﻿#Region "Microsoft.VisualBasic::ce8e399d9b54a81948430e01e198f734, gr\Microsoft.VisualBasic.Imaging\d3js\scale\ordinal.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 86 (60.56%)
-    ' Comment Lines: 34 (23.94%)
-    '    - Xml Docs: 82.35%
+    '   Total Lines: 178
+    '    Code Lines: 91 (51.12%)
+    ' Comment Lines: 64 (35.96%)
+    '    - Xml Docs: 90.62%
     ' 
-    '   Blank Lines: 22 (15.49%)
-    '     File Size: 5.40 KB
+    '   Blank Lines: 23 (12.92%)
+    '     File Size: 6.94 KB
 
 
     '     Class OrdinalScale
     ' 
     '         Properties: binWidth, domainSize, type, Zero
     ' 
-    '         Function: (+3 Overloads) domain, getTerms, lazyPositions, range
+    '         Function: (+3 Overloads) domain, getTerms, lazyPositions, (+2 Overloads) range
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::797367acc97ccc8605a547cb3d38f582, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::31d2241727ca9367bbeb6ffc44cea5c9, mime\application%json\Serializer\JSONSerializer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 186
-'    Code Lines: 129 (69.35%)
-' Comment Lines: 33 (17.74%)
-'    - Xml Docs: 87.88%
-' 
-'   Blank Lines: 24 (12.90%)
-'     File Size: 6.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module JSONSerializer
-' 
-'     Function: (+2 Overloads) BuildJsonString, encodeString, GetJson, jsonArrayString, jsonObjectString
-'               jsonValueString
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 204
+    '    Code Lines: 144 (70.59%)
+    ' Comment Lines: 33 (16.18%)
+    '    - Xml Docs: 87.88%
+    ' 
+    '   Blank Lines: 27 (13.24%)
+    '     File Size: 7.47 KB
+
+
+    ' Module JSONSerializer
+    ' 
+    '     Function: (+2 Overloads) BuildJsonString, CreateJSONElement, encodeString, GetJson, jsonArrayString
+    '               jsonObjectString, jsonValueString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

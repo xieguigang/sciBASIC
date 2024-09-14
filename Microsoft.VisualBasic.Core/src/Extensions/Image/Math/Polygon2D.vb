@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e48160e763c9ee3426c19da22e2763f7, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::642a19b811fe1dcd76b7d8cb4b2284f4, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 418
-    '    Code Lines: 256 (61.24%)
-    ' Comment Lines: 102 (24.40%)
-    '    - Xml Docs: 86.27%
+    '   Total Lines: 425
+    '    Code Lines: 256 (60.24%)
+    ' Comment Lines: 109 (25.65%)
+    '    - Xml Docs: 87.16%
     ' 
-    '   Blank Lines: 60 (14.35%)
-    '     File Size: 15.15 KB
+    '   Blank Lines: 60 (14.12%)
+    '     File Size: 15.41 KB
 
 
     '     Class Polygon2D

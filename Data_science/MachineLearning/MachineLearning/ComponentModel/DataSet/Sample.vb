@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e4af456d8da729cce8a52b439ba84d, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::7cc9db040afae0837c3a9cf7c43dec67, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 265
-    '    Code Lines: 171 (64.53%)
-    ' Comment Lines: 55 (20.75%)
-    '    - Xml Docs: 94.55%
+    '   Total Lines: 270
+    '    Code Lines: 171 (63.33%)
+    ' Comment Lines: 60 (22.22%)
+    '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 39 (14.72%)
-    '     File Size: 9.79 KB
+    '   Blank Lines: 39 (14.44%)
+    '     File Size: 10.05 KB
 
 
     '     Class SampleData

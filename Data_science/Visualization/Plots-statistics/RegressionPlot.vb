@@ -61,7 +61,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
@@ -82,7 +81,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
 Public Class RegressionPlot : Inherits Plot
@@ -488,7 +486,7 @@ Public Class RegressionPlot : Inherits Plot
 
         pt = New PointF With {
             .X = pt.X,
-            .Y = pt.Y + legendLabelFont.Height + 5
+            .Y = pt.Y + legendLabelFont.Height * 2.25
         }
 
         Call g.DrawHtmlString(R2, legendLabelFont, Color.Black, pt)

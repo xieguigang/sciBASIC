@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11ac4bc08006a86fa4aaf70adfd638f6, Data_science\MachineLearning\MachineLearning\ComponentModel\Status0.vb"
+﻿#Region "Microsoft.VisualBasic::110445d2014662bced6ed131fd33209a, Data_science\MachineLearning\MachineLearning\ComponentModel\Status0.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 42 (73.68%)
+    '   Total Lines: 67
+    '    Code Lines: 50 (74.63%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (26.32%)
-    '     File Size: 1.81 KB
+    '   Blank Lines: 17 (25.37%)
+    '     File Size: 2.05 KB
 
 
     '     Class Status0
@@ -57,6 +57,7 @@
     ' 
     '         Properties: Max, Min
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetInitialValue, ToString
     ' 
     ' 

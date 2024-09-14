@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47613598a39f8f8ce8696e10eb628216, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::1ee88c0b02c6e652e4309a5a25d16309, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 83 (54.97%)
-    ' Comment Lines: 45 (29.80%)
-    '    - Xml Docs: 26.67%
+    '   Total Lines: 185
+    '    Code Lines: 96 (51.89%)
+    ' Comment Lines: 60 (32.43%)
+    '    - Xml Docs: 46.67%
     ' 
-    '   Blank Lines: 23 (15.23%)
-    '     File Size: 6.21 KB
+    '   Blank Lines: 29 (15.68%)
+    '     File Size: 7.10 KB
 
 
-    '     Class DataValue
+    '     Class DataObjectVector
     ' 
-    '         Properties: PropertyNames
+    '         Properties: PropertyNames, RawArray
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetProperty, inspectType, ToString
+    '         Function: GetProperty, inspectType
     ' 
-    '         Sub: TestDEMO
+    '         Sub: SetProperty
+    ' 
+    '     Class DataValue
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -67,19 +72,33 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Namespace Emit.Delegates
 
     ''' <summary>
-    ''' .NET object collection data property value ``get/set`` helper.
-    ''' (将属性的<see cref="PropertyInfo.SetValue(Object, Object)"/>编译为方法调用)
+    ''' .net clr object vector data property ``get/set`` helper.
     ''' </summary>
-    Public Class DataValue(Of T)
+    Public Class DataObjectVector
 
-        ReadOnly type As Type = GetType(T)
-        ReadOnly data As T()
+        Protected ReadOnly type As Type
+        Protected ReadOnly data As Array
+
         ''' <summary>
         ''' Using for expression tree compile to delegate by using <see cref="BindProperty(Of T)"/>, 
         ''' to makes the get/set invoke faster
         ''' </summary>
-        ReadOnly properties As Dictionary(Of String, PropertyInfo)
+        Protected ReadOnly properties As Dictionary(Of String, PropertyInfo)
 
+        ''' <summary>
+        ''' expose the internal clr array object to public directly.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property RawArray As Array
+            Get
+                Return data
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get array of the clr property name
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property PropertyNames As String()
             Get
                 Return properties.Values _
@@ -88,16 +107,16 @@ Namespace Emit.Delegates
             End Get
         End Property
 
-        Public Function GetProperty(property$) As PropertyInfo
-            Return properties([property])
-        End Function
+        Const DimNotAgree$ = "Value array should have the same length as the target data array"
 
         ''' <summary>
-        ''' 
+        ''' Evaluate the clr object property, and get vector value exports in batch 
         ''' </summary>
         ''' <param name="name$">The property name, using the ``nameof`` operator to get the property name!</param>
-        ''' <returns></returns>
-        Default Public Property Evaluate(name$) As Object
+        ''' <returns>
+        ''' get an array of the property value. the array is generic.
+        ''' </returns>
+        Default Public Property Evaluate(name As String) As Object
             Get
                 Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
                 Dim vector As Array = Array.CreateInstance([property].Type, data.Length)
@@ -109,39 +128,81 @@ Namespace Emit.Delegates
                 Return vector
             End Get
             Set(value As Object)
-                Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
-                Dim array As IEnumerable
-
-                If [property].Type Is GetType(String) AndAlso value.GetType Is GetType(String) Then
-                    array = Nothing
-                Else
-                    array = TryCast(value, IEnumerable)
-                End If
-
-                If value Is Nothing Then
-                    For Each x In data
-                        Call [property].handleSetValue(x, Nothing)
-                    Next
-                ElseIf array Is Nothing Then  ' 不是一个集合
-                    Dim v As Object = value
-
-                    For Each x As T In data
-                        Call [property].handleSetValue(x, v)
-                    Next
-                Else
-                    Dim vector = array.As(Of Object).ToArray
-
-                    If vector.Length <> data.Length Then
-                        Throw New InvalidExpressionException(DimNotAgree$)
-                    End If
-                    For i As Integer = 0 To data.Length - 1
-                        Call [property].handleSetValue(data(i), vector(i))
-                    Next
-                End If
+                Call SetProperty(name, value)
             End Set
         End Property
 
-        Const DimNotAgree$ = "Value array should have the same length as the target data array"
+        Private Sub SetProperty(name$, value As Object)
+            Dim [property] As New BindProperty(Of DataFrameColumnAttribute)(properties(name))
+            Dim array As IEnumerable
+
+            If [property].Type Is GetType(String) AndAlso value.GetType Is GetType(String) Then
+                array = Nothing
+            Else
+                array = TryCast(value, IEnumerable)
+            End If
+
+            If value Is Nothing Then
+                For Each x In data
+                    Call [property].handleSetValue(x, Nothing)
+                Next
+            ElseIf array Is Nothing Then  ' 不是一个集合
+                Dim v As Object = value
+
+                For Each x As Object In data
+                    Call [property].handleSetValue(x, v)
+                Next
+            Else
+                Dim vector = array.As(Of Object).ToArray
+
+                If vector.Length <> data.Length Then
+                    Throw New InvalidExpressionException(DimNotAgree$)
+                End If
+                For i As Integer = 0 To data.Length - 1
+                    Call [property].handleSetValue(data(i), vector(i))
+                Next
+            End If
+        End Sub
+
+        Sub New(array As Array)
+            If array Is Nothing Then
+                Throw New InvalidProgramException("the input clr object vector is nothing!")
+            End If
+
+            type = array.GetType.GetElementType
+
+            If type Is Nothing OrElse type Is GetType(Object) Then
+                Throw New InvalidProgramException("the general object type array is not accepted!")
+            End If
+
+            data = array
+            properties = inspectType(type)
+        End Sub
+
+        Public Function GetProperty(property$) As PropertyInfo
+            Return properties([property])
+        End Function
+
+        Private Shared Function inspectType(type As Type) As Dictionary(Of String, PropertyInfo)
+            Static typeCache As New Dictionary(Of Type, Dictionary(Of String, PropertyInfo))
+
+            If Not typeCache.ContainsKey(type) Then
+                SyncLock typeCache
+                    typeCache(type) = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+                End SyncLock
+            End If
+
+            Return typeCache(type)
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' .NET object collection data property value ``get/set`` helper.
+    ''' </summary>
+    ''' <remarks>
+    ''' (将属性的<see cref="PropertyInfo.SetValue(Object, Object)"/>编译为方法调用)
+    ''' </remarks>
+    Public Class DataValue(Of T) : Inherits DataObjectVector
 
         'Public Property Evaluate(Of V)(name$) As V()
         '    Get
@@ -179,33 +240,11 @@ Namespace Emit.Delegates
         'End Property
 
         Sub New(src As IEnumerable(Of T))
-            data = src.ToArray
-            properties = inspectType(type)
+            Call MyBase.New(src.ToArray)
         End Sub
-
-        Private Shared Function inspectType(type As Type) As Dictionary(Of String, PropertyInfo)
-            Static typeCache As New Dictionary(Of Type, Dictionary(Of String, PropertyInfo))
-
-            If Not typeCache.ContainsKey(type) Then
-                SyncLock typeCache
-                    typeCache(type) = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
-                End SyncLock
-            End If
-
-            Return typeCache(type)
-        End Function
 
         Public Overrides Function ToString() As String
             Return type.FullName
         End Function
-
-        Private Shared Sub TestDEMO()
-            Dim vector As NamedValue(Of String)() = {}
-            Dim previousData = Linq.DATA(vector).Evaluate("Value")
-
-            Linq.DATA(vector).Evaluate("Value") = {}    ' set all value property to nothing
-            Linq.DATA(vector).Evaluate("Value") = {"1"} ' set all value property to a specifc value "1"
-            Linq.DATA(vector).Evaluate("Value") = {"1", "2", "3"}
-        End Sub
     End Class
 End Namespace

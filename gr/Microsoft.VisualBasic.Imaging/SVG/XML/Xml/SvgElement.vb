@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0965148f40a32d8749033b1c129b133d, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
+﻿#Region "Microsoft.VisualBasic::17ee4123fb969348ba9307a4448729ec, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 280
-    '    Code Lines: 216 (77.14%)
-    ' Comment Lines: 26 (9.29%)
+    '   Total Lines: 292
+    '    Code Lines: 226 (77.40%)
+    ' Comment Lines: 26 (8.90%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 38 (13.57%)
-    '     File Size: 10.57 KB
+    '   Blank Lines: 40 (13.70%)
+    '     File Size: 10.94 KB
 
 
     '     Class SvgElement
@@ -51,10 +51,11 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, HasClass
-    '                   ParseClassAttribute, ParseStyleAttribute
+    '         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, GetSvgElement
+    '                   HasClass, ParseClassAttribute, ParseStyleAttribute
     ' 
-    '         Sub: RemoveClass, SetClassAttribute, SetStyle, SetStyleAttribute, ToggleClass
+    '         Sub: RemoveClass, SetAttributeData, SetClassAttribute, SetStyle, SetStyleAttribute
+    '              ToggleClass
     ' 
     ' 
     ' /********************************************************************************/

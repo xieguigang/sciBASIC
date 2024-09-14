@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43d6199f2ef0248d57e395f3285e4790, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
+﻿#Region "Microsoft.VisualBasic::b446249da90ef6e4ca112a69559a2daa, Data_science\Mathematica\Math\Math\Distributions\pnorm.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 329
-    '    Code Lines: 140 (42.55%)
-    ' Comment Lines: 152 (46.20%)
-    '    - Xml Docs: 73.68%
+    '   Total Lines: 355
+    '    Code Lines: 147 (41.41%)
+    ' Comment Lines: 170 (47.89%)
+    '    - Xml Docs: 75.29%
     ' 
-    '   Blank Lines: 37 (11.25%)
-    '     File Size: 13.97 KB
+    '   Blank Lines: 38 (10.70%)
+    '     File Size: 15.39 KB
 
 
     '     Module pnorm
     ' 
     '         Function: AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, DeviationStandardization, (+2 Overloads) eval
     '                   Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity, StandardDistribution, TrapezodialRule
-    '                   TruncNDist, (+2 Overloads) Z
+    '                   TruncNDist, (+3 Overloads) Z
     ' 
     ' 
     ' /********************************************************************************/
