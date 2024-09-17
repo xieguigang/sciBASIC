@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::e3d2b21626f18e184d7a276124c9e61a, Data_science\Visualization\Plots\BarPlot\ViolinPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 124
-    '    Code Lines: 92 (74.19%)
-    ' Comment Lines: 25 (20.16%)
-    '    - Xml Docs: 88.00%
-    ' 
-    '   Blank Lines: 7 (5.65%)
-    '     File Size: 5.75 KB
+' Summaries:
 
 
-    ' Module ViolinPlot
-    ' 
-    '     Function: (+2 Overloads) Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 124
+'    Code Lines: 92 (74.19%)
+' Comment Lines: 25 (20.16%)
+'    - Xml Docs: 88.00%
+' 
+'   Blank Lines: 7 (5.65%)
+'     File Size: 5.75 KB
+
+
+' Module ViolinPlot
+' 
+'     Function: (+2 Overloads) Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -79,7 +80,7 @@ Public Module ViolinPlot
     ''' <param name="bg"></param>
     ''' <param name="colorset"></param>
     ''' <returns></returns>
-    Public Function Plot(dataset As IEnumerable(Of DataSet),
+    Public Function Plot(Of T As {INamedValue, DynamicPropertyBase(Of Double)})(dataset As IEnumerable(Of T),
                          Optional size$ = Canvas.Resolution2K.Size,
                          Optional margin$ = Canvas.Resolution2K.PaddingWithTopTitle,
                          Optional bg$ = "white",
@@ -96,9 +97,9 @@ Public Module ViolinPlot
                          Optional showStats As Boolean = True) As GraphicsData
 
         With dataset.ToArray
-            Return .PropertyNames _
+            Return .Select(Function(a) a.Properties.Keys).IteratesALL.Distinct _
                    .Select(Function(label)
-                               Return New NamedCollection(Of Double)(label, .Vector(label))
+                               Return New NamedCollection(Of Double)(label, .Select(Function(a) a(label)))
                            End Function) _
                    .DoCall(Function(data)
                                Return ViolinPlot.Plot(

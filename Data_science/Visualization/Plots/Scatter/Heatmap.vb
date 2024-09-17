@@ -55,7 +55,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -84,7 +85,7 @@ Partial Module Scatter
     ''' <param name="legendTitle$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function PlotHeatmap(data As IEnumerable(Of DataSet),
+    Public Function PlotHeatmap(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(data As IEnumerable(Of DataSet),
                                 Optional fieldX$ = "X",
                                 Optional fieldY$ = "Y",
                                 Optional valueField$ = "value",
@@ -126,7 +127,7 @@ Partial Module Scatter
     End Function
 
     <Extension>
-    Private Sub __plotInternal(g As IGraphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
+    Private Sub __plotInternal(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(g As IGraphics, rect As GraphicsRegion, data As DataSet(), colors As Color(),
                                fieldX$, fieldY$, fieldValue$,
                                labelX$, labelY$, legendTitle$,
                                ptSize%)

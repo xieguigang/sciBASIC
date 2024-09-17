@@ -1,59 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 310
-    '    Code Lines: 203 (65.48%)
-    ' Comment Lines: 86 (27.74%)
-    '    - Xml Docs: 95.35%
-    ' 
-    '   Blank Lines: 21 (6.77%)
-    '     File Size: 13.63 KB
+' Summaries:
 
 
-    '     Module Utils
-    ' 
-    '         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 310
+'    Code Lines: 203 (65.48%)
+' Comment Lines: 86 (27.74%)
+'    - Xml Docs: 95.35%
+' 
+'   Blank Lines: 21 (6.77%)
+'     File Size: 13.63 KB
+
+
+'     Module Utils
+' 
+'         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
@@ -225,7 +227,7 @@ Namespace Contour.HeatMap
         ''' <param name="minZ#"></param>
         ''' <param name="maxZ#"></param>
         ''' <returns></returns>
-        Public Function CreatePlot(matrix As IEnumerable(Of DataSet),
+        Public Function CreatePlot(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(matrix As IEnumerable(Of DataSet),
                                    Optional colorMap$ = "Spectral:c10",
                                    Optional mapLevels% = 25,
                                    Optional bg$ = "white",
@@ -252,13 +254,13 @@ Namespace Contour.HeatMap
                 .legendTickFormat = legendTickFormat
             }
             Dim matrixData As DataSet() = matrix.ToArray
-            Dim xrange As DoubleRange = matrixData.Select(Function(d) Val(d.ID)).ToArray
-            Dim yrange As DoubleRange = matrixData.PropertyNames.Select(Function(a) Val(a)).ToArray
+            Dim xrange As DoubleRange = matrixData.Select(Function(d) Val(d.Key)).ToArray
+            Dim yrange As DoubleRange = matrixData.Select(Function(a) a.Properties.Keys).IteratesALL.Distinct.Select(Function(a) Val(a)).ToArray
 
             Return New ContourHeatMapPlot(theme) With {
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = New MatrixEvaluate(matrixData, New SizeF(unit, unit)),
+                .matrix = New MatrixEvaluate(Of DataSet)(matrixData, New SizeF(unit, unit)),
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
@@ -288,7 +290,7 @@ Namespace Contour.HeatMap
         ''' <param name="maxZ#"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Plot(matrix As IEnumerable(Of DataSet),
+        Public Function Plot(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(matrix As IEnumerable(Of DataSet),
                              Optional colorMap$ = "Spectral:c10",
                              Optional mapLevels% = 25,
                              Optional bg$ = "white",
@@ -341,7 +343,7 @@ Namespace Contour.HeatMap
                                   ByRef xsteps!,
                                   ByRef ysteps!,
                                   parallel As Boolean,
-                                  ByRef matrix As List(Of DataSet), unit%) As (X#, y#, z#)()
+                                  ByRef matrix As List(Of Scatter3DPoint), unit%) As (X#, y#, z#)()
 
             xsteps = xsteps Or (xrange.Length / size.Width).AsDefault(Function(n) Single.IsNaN(CSng(n)))
             ysteps = ysteps Or (yrange.Length / size.Height).AsDefault(Function(n) Single.IsNaN(CSng(n)))

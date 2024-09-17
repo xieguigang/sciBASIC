@@ -59,6 +59,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
@@ -75,6 +77,15 @@ Imports stdNum = System.Math
 
 Namespace Plot3D
 
+    Public Class Scatter3DPoint
+
+        Public Property x As Double
+        Public Property y As Double
+        Public Property z As Double
+        Public Property c As Double
+
+    End Class
+
     Public Module ScatterHeatmap
 
         <Extension>
@@ -89,7 +100,7 @@ Namespace Plot3D
                              Optional mapLevels% = 25,
                              Optional bg$ = "white",
                              Optional parallel As Boolean = False,
-                             Optional matrix As List(Of EntityObject) = Nothing,
+                             Optional matrix As List(Of Scatter3DPoint) = Nothing,
                              Optional axisFont$ = CSSFont.Win10Normal,
                              Optional legendFont As Font = Nothing,
                              Optional showLegend As Boolean = True) As GraphicsData
@@ -138,7 +149,7 @@ Namespace Plot3D
                                         Optional mapLevels% = 25,
                                         Optional bg$ = "white",
                                         Optional parallel As Boolean = False,
-                                        Optional matrix As List(Of EntityObject) = Nothing,
+                                        Optional matrix As List(Of Scatter3DPoint) = Nothing,
                                         Optional axisFont$ = CSSFont.Win10Normal,
                                         Optional legendFont As Font = Nothing,
                                         Optional showLegend As Boolean = True) As DrawGraphics
@@ -305,7 +316,7 @@ Namespace Plot3D
         ''' <param name="legendFont"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Plot(matrix As IEnumerable(Of EntityObject),
+        Public Function Plot(Of T As {INamedValue, DynamicPropertyBase(Of String)})(matrix As IEnumerable(Of T),
                              Camera As Camera,
                              Optional legendTitle$ = "3D scatter heatmap",
                              Optional mapName$ = "Spectral:c10",

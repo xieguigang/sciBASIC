@@ -56,8 +56,6 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -93,35 +91,35 @@ Namespace BoxPlot
             Return $"({SerialName}) {GroupNames.GetJson}"
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="path$">The csv file path</param>
-        ''' <param name="groupDesigner"></param>
-        ''' <returns></returns>
-        Public Shared Iterator Function Load(path$, groupDesigner As NamedCollection(Of String)()) As IEnumerable(Of BoxData)
-            Dim datasets As Dictionary(Of DataSet) = DataSet _
-                .LoadDataSet(path) _
-                .ToDictionary
-            Dim serials$() = datasets.PropertyNames
+        '''' <summary>
+        '''' 
+        '''' </summary>
+        '''' <param name="path$">The csv file path</param>
+        '''' <param name="groupDesigner"></param>
+        '''' <returns></returns>
+        'Public Shared Iterator Function Load(path$, groupDesigner As NamedCollection(Of String)()) As IEnumerable(Of BoxData)
+        '    Dim datasets As Dictionary(Of DataSet) = DataSet _
+        '        .LoadDataSet(path) _
+        '        .ToDictionary
+        '    Dim serials$() = datasets.PropertyNames
 
-            For Each name As String In serials
-                Dim data = groupDesigner _
-                    .Select(Function(x)
-                                Dim values As Vector = datasets(x.value).Vector([property]:=name)
-                                Return New NamedValue(Of Vector) With {
-                                    .Name = x.name,
-                                    .Description = x.description,
-                                    .Value = values
-                                }
-                            End Function) _
-                    .ToArray
+        '    For Each name As String In serials
+        '        Dim data = groupDesigner _
+        '            .Select(Function(x)
+        '                        Dim values As Vector = datasets(x.value).Vector([property]:=name)
+        '                        Return New NamedValue(Of Vector) With {
+        '                            .Name = x.name,
+        '                            .Description = x.description,
+        '                            .Value = values
+        '                        }
+        '                    End Function) _
+        '            .ToArray
 
-                Yield New BoxData With {
-                    .SerialName = name,
-                    .Groups = data
-                }
-            Next
-        End Function
+        '        Yield New BoxData With {
+        '            .SerialName = name,
+        '            .Groups = data
+        '        }
+        '    Next
+        'End Function
     End Class
 End Namespace

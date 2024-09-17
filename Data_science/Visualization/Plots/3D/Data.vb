@@ -56,15 +56,16 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Plot3D
 
@@ -74,14 +75,14 @@ Namespace Plot3D
     Public Module DataProvider
 
         <Extension>
-        Public Function Surface(matrix As IEnumerable(Of EntityObject)) As IEnumerable(Of (sf As Surface, c As Double()))
+        Public Function Surface(Of T As {INamedValue, DynamicPropertyBase(Of String)})(matrix As IEnumerable(Of T)) As IEnumerable(Of (sf As Surface, c As Double()))
             Dim xData As New List(Of (pt As Point3D, C#)())
 
-            For Each line As EntityObject In matrix
-                Dim xi As Double = Val(line.ID)
+            For Each line As T In matrix
+                Dim xi As Double = Val(line.Key)
 
                 xData += LinqAPI.Exec(Of (pt As Point3D, C#)) <=
- _
+                                                                _
                     From p As KeyValuePair(Of String, String)
                     In line.Properties
                     Let yi As Double = Val(p.Key)
@@ -155,7 +156,7 @@ Namespace Plot3D
                                 Optional xsteps! = 0.01,
                                 Optional ysteps! = 0.01,
                                 Optional parallel As Boolean = False,
-                                Optional matrix As List(Of EntityObject) = Nothing) As IEnumerable(Of (sf As Surface, c As Double()))
+                                Optional matrix As List(Of Scatter3DPoint) = Nothing) As IEnumerable(Of (sf As Surface, c As Double()))
 
             Dim xdatas = f.Evaluate(x, y, xsteps, ysteps, parallel, matrix).ToArray
             Return xdatas.Surface
@@ -168,7 +169,7 @@ Namespace Plot3D
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False,
-                                          Optional matrix As List(Of EntityObject) = Nothing) As IEnumerable(Of (pt As Point3D, c#)())
+                                          Optional matrix As List(Of Scatter3DPoint) = Nothing) As IEnumerable(Of (pt As Point3D, c#)())
 
             For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
                 Dim out = LinqAPI.Exec(Of (pt As Point3D, C#)) <= From o
@@ -180,12 +181,14 @@ Namespace Plot3D
                                                                   }
                                                                   Select (pt, o.z.c)
                 If Not matrix Is Nothing Then
-                    matrix += New EntityObject With {
-                        .ID = out(Scan0).pt.X,
-                        .Properties = out.ToDictionary(
-                            Function(yk) CStr(yk.pt.Y),
-                            Function(z) z.pt.Z & ":" & z.C)
-                    }
+                    For Each xyz In out
+                        matrix += New Scatter3DPoint With {
+                            .x = out(Scan0).pt.X,
+                            .y = xyz.pt.Y,
+                            .z = xyz.pt.Z,
+                            .c = xyz.C
+                        }
+                    Next
                 End If
 
                 Yield out
@@ -235,7 +238,7 @@ Namespace Plot3D
                     Next
 
                     Yield LinqAPI.MakeList(Of (x#, y#, Z As Tout)) <=
- _
+                                                                     _
                         From yi As Double
                         In dy.AsParallel
                         Let z As Tout = [in](x0, yi)
@@ -274,19 +277,17 @@ Namespace Plot3D
                                           Optional xsteps! = 0.01,
                                           Optional ysteps! = 0.01,
                                           Optional parallel As Boolean = False,
-                                          Optional matrix As List(Of DataSet) = Nothing) As IEnumerable(Of (X#, y#, z#)())
+                                          Optional matrix As List(Of Scatter3DPoint) = Nothing) As IEnumerable(Of (X#, y#, z#)())
 
             For Each row In f.__2DIterates(x, y, xsteps, ysteps, parallel)
                 If Not matrix Is Nothing Then
-                    matrix += New DataSet With {
-                        .ID = row(Scan0).x,
-                        .Properties = row _
-                            .ToDictionary(
-                                Function(pt) CStr(pt.y),
-                                Function(pt)
-                                    Return pt.z
-                                End Function)
+                    For Each xyz In row
+                        matrix += New Scatter3DPoint With {
+                        .x = xyz.x,
+                        .y = xyz.y,
+                        .z = xyz.z
                     }
+                    Next
                 End If
 
                 Yield row.ToArray
@@ -358,7 +359,7 @@ Namespace Plot3D
                                       Optional ysteps! = 0.01) As IEnumerable(Of Line3D)
             Dim array As Line3D() = Grid(f, x, y, xsteps, ysteps).ToArray
             Dim z#() = array _
-                .Select(Function(pt) stdNum.Round((pt.a.Z + pt.b.Z) / 2, 1)) _
+                .Select(Function(pt) std.Round((pt.a.Z + pt.b.Z) / 2, 1)) _
                 .Distinct _
                 .ToArray
             Dim levels As Dictionary(Of Double, Integer) =
@@ -373,7 +374,7 @@ Namespace Plot3D
                 Yield New Line3D With {
                     .a = line.a,
                     .b = line.b,
-                    .pen = New Pen(colors.ElementAtOrDefault(levels(stdNum.Round((.a.Z + .b.Z) / 2, 1)) - 1))
+                    .pen = New Pen(colors.ElementAtOrDefault(levels(std.Round((.a.Z + .b.Z) / 2, 1)) - 1))
                 }
             Next
         End Function
