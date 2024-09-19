@@ -201,9 +201,10 @@ Public Class DataFrame : Implements INumericMatrix
     ''' a data field column data in double numeric type
     ''' </param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub add(featureName As String, v As IEnumerable(Of Double))
+    Public Function add(featureName As String, v As IEnumerable(Of Double)) As DataFrame
         Call features.Add(featureName, New FeatureVector(featureName, v))
-    End Sub
+        Return Me
+    End Function
 
     ''' <summary>
     ''' add a new feature column into current dataframe object
@@ -212,17 +213,19 @@ Public Class DataFrame : Implements INumericMatrix
     ''' <param name="v">
     ''' a data field column data in integer type
     ''' </param>
-    Public Sub add(featureName As String, v As IEnumerable(Of Integer))
+    Public Function add(featureName As String, v As IEnumerable(Of Integer)) As DataFrame
         Call features.Add(featureName, New FeatureVector(featureName, v))
-    End Sub
+        Return Me
+    End Function
 
     ''' <summary>
     ''' add a new feature column into current dataframe object
     ''' </summary>
     ''' <param name="feature"></param>
-    Public Sub add(feature As FeatureVector)
+    Public Function add(feature As FeatureVector) As DataFrame
         Call features.Add(feature.name, feature)
-    End Sub
+        Return Me
+    End Function
 
     ''' <summary>
     ''' get row by index
