@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::81b831b853647629c5eb57ee49b15c81, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\ChiSquareTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 67
-    '    Code Lines: 38 (56.72%)
-    ' Comment Lines: 18 (26.87%)
-    '    - Xml Docs: 77.78%
-    ' 
-    '   Blank Lines: 11 (16.42%)
-    '     File Size: 2.37 KB
+' Summaries:
 
 
-    ' Class ChiSquareTest
-    ' 
-    '     Properties: chi_square, expected, observed, pvalue
-    ' 
-    '     Function: (+2 Overloads) Test
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 67
+'    Code Lines: 38 (56.72%)
+' Comment Lines: 18 (26.87%)
+'    - Xml Docs: 77.78%
+' 
+'   Blank Lines: 11 (16.42%)
+'     File Size: 2.37 KB
+
+
+' Class ChiSquareTest
+' 
+'     Properties: chi_square, expected, observed, pvalue
+' 
+'     Function: (+2 Overloads) Test
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Statistics.Distributions
 
@@ -72,6 +73,68 @@ Public Class ChiSquareTest
     Public Property expected As Double()()
     Public Property chi_square As Double
     Public Property pvalue As Double
+
+    ''' <summary>
+    ''' 97.5%
+    ''' </summary>
+    Public Const C97_5 = 9.35
+    ''' <summary>
+    ''' 50%
+    ''' </summary>
+    Public Const C50 = 0.4549
+    ''' <summary>
+    ''' 75%
+    ''' </summary>
+    Public Const C75 = 1.3233
+    ''' <summary>
+    ''' 90%
+    ''' </summary>
+    Public Const C90 = 2.4477
+    ''' <summary>
+    ''' 95%
+    ''' </summary>
+    Public Const C95 = 5.9915
+    ''' <summary>
+    ''' 99%
+    ''' </summary>
+    Public Const C99 = 9.2103
+
+    Public Enum ConfidenceLevels
+        <Description("50%")> C50
+        <Description("75%")> C75
+        <Description("90%")> C90
+        <Description("95%")> C95
+        <Description("97.5%")> C97_5
+        <Description("99%")> C99
+    End Enum
+
+    Public Shared Function TranslateLevel(level As Double) As ConfidenceLevels
+        Dim lv As Integer = CInt(level * 100)
+
+        Select Case lv
+            Case 98 : Return ConfidenceLevels.C97_5
+            Case 50 : Return ConfidenceLevels.C50
+            Case 75 : Return ConfidenceLevels.C75
+            Case 90 : Return ConfidenceLevels.C90
+            Case 95 : Return ConfidenceLevels.C95
+            Case 99 : Return ConfidenceLevels.C99
+            Case Else
+                Throw New NotImplementedException(level)
+        End Select
+    End Function
+
+    Public Shared Function ChiSquareValue(level As ConfidenceLevels) As Double
+        Select Case level
+            Case ConfidenceLevels.C50 : Return C50
+            Case ConfidenceLevels.C75 : Return C75
+            Case ConfidenceLevels.C90 : Return C90
+            Case ConfidenceLevels.C95 : Return C95
+            Case ConfidenceLevels.C97_5 : Return C97_5
+            Case ConfidenceLevels.C99 : Return C99
+            Case Else
+                Throw New NotImplementedException(level.ToString)
+        End Select
+    End Function
 
     ''' <summary>
     ''' 

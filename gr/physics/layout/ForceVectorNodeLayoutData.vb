@@ -107,8 +107,7 @@ Namespace layout
     ''' <summary>
     ''' @author Mathieu Bastian
     ''' </summary>
-    Public Class ForceVectorNodeLayoutData
-        Inherits LayoutData
+    Public Class ForceVectorNodeLayoutData : Inherits LayoutData
 
         'Data
         Public dx As Single = 0

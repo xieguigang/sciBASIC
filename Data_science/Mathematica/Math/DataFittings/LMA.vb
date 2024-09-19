@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Bootstrapping.LevenbergMarquardt
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
@@ -69,6 +70,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' These minimization problems arise especially in least squares 
 ''' curve fitting.
 ''' </summary>
+''' <remarks>
+''' solver implements at <see cref="LmSolver"/>
+''' </remarks>
 Public Module LMA
 
     Public Structure FitInput

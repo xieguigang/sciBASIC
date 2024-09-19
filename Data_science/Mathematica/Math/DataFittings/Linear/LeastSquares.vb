@@ -63,7 +63,7 @@ Imports std = System.Math
 ' 参考：http://blog.csdn.net/maozefa/article/details/1725535
 
 ''' <summary>
-''' LinearInterpolator
+''' Linear interpolator
 ''' 
 ''' 曲线拟合类，只适用于线性拟合：
 ''' 
@@ -110,7 +110,7 @@ Public Module LeastSquares
         }
 
         ' 计算误差
-        calcError(x, y, length, result)
+        Call calcError(x, y, length, result)
 
         Return result
     End Function

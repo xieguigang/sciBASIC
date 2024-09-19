@@ -108,75 +108,52 @@ Namespace layout
     ''' <summary>
     ''' @author Helder Suzuki
     ''' </summary>
-    Public Class ForceVector
-        Inherits LayoutData
+    Public Class ForceVector : Inherits LayoutData
 
-        'JAVA TO C# CONVERTER NOTE: Fields cannot have the same name as methods:
-        Protected Friend x_Conflict As Single
-        'JAVA TO C# CONVERTER NOTE: Fields cannot have the same name as methods:
-        Protected Friend y_Conflict As Single
+        Public x As Single
+        Public y As Single
 
         Public Sub New(vector As ForceVector)
-            x_Conflict = vector.x()
-            y_Conflict = vector.y()
+            x = vector.x
+            y = vector.y
         End Sub
 
         Public Sub New(x As Single, y As Single)
-            x_Conflict = x
-            y_Conflict = y
+            Me.x = x
+            Me.y = y
         End Sub
 
         Public Sub New()
-            x_Conflict = 0
-            y_Conflict = 0
+            x = 0
+            y = 0
         End Sub
-
-        Public Overridable Function x() As Single
-            Return x_Conflict
-        End Function
-
-        Public Overridable Function y() As Single
-            Return y_Conflict
-        End Function
 
         Public Overridable Function z() As Single
             Throw New NotSupportedException("Not supported yet.")
         End Function
 
-        Public Overridable WriteOnly Property XProp As Single
-            Set(value As Single)
-                x_Conflict = value
-            End Set
-        End Property
-
-        Public Overridable WriteOnly Property YProp As Single
-            Set(value As Single)
-                y_Conflict = value
-            End Set
-        End Property
-
         Public Overridable Sub add(f As ForceVector)
             If f IsNot Nothing Then
-                x_Conflict += f.x()
-                y_Conflict += f.y()
+                x += f.x
+                y += f.y
             End If
         End Sub
 
         Public Overridable Sub multiply(s As Single)
-            x_Conflict *= s
-            y_Conflict *= s
+            x *= s
+            y *= s
         End Sub
 
         Public Overridable Sub subtract(f As ForceVector)
             If f IsNot Nothing Then
-                x_Conflict -= f.x()
-                y_Conflict -= f.y()
+                x -= f.x
+                y -= f.y
             End If
         End Sub
 
         Public Overridable ReadOnly Property Energy As Single
             Get
-                Return x_Conflict * x_Conflict + y_Conflict * y_Conflict
+                Return x ^ 2 + y ^ 2
             End Get
         End Property
 
@@ -188,11 +165,11 @@ Namespace layout
 
         Public Overridable Function normalize() As ForceVector
             Dim norm = Me.Norm
-            Return New ForceVector(x_Conflict / norm, y_Conflict / norm)
+            Return New ForceVector(x / norm, y / norm)
         End Function
 
         Public Overrides Function ToString() As String
-            Return "(" & x_Conflict.ToString() & ", " & y_Conflict.ToString() & ")"
+            Return "(" & x.ToString() & ", " & y.ToString() & ")"
         End Function
     End Class
 

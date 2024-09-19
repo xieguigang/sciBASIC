@@ -125,8 +125,8 @@ Namespace layout
             Dim displacement As ForceVector = forceData.normalize()
             displacement.multiply(stepField)
 
-            Dim x As Single = node.X() + displacement.x()
-            Dim y As Single = node.Y() + displacement.y()
+            Dim x As Single = node.X() + displacement.x
+            Dim y As Single = node.Y() + displacement.y
 
             If assertValue(x) Then
                 node.X = x

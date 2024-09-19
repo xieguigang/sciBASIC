@@ -59,7 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.Text.Nudge
 
@@ -232,7 +232,7 @@ Namespace Drawing2D.Text.Nudge
             Dim new_configs_even As CloudOfTextRectangle() =
                 (From c In configs Where parent_nodes_conflicts.IndexOf(c) = -1 AndAlso c.conflicts.Count = n_min).ToArray
             ' size limitation to four childrens
-            Dim nsize As Integer = stdNum.Max(0, 4 - new_configs_better.Length)
+            Dim nsize As Integer = std.Max(0, 4 - new_configs_better.Length)
             Dim new_configs = new_configs_better.JoinIterates(new_configs_even.Take(nsize)).ToArray
             'print("new_config")
             'print([c.conflicts for c in new_configs])

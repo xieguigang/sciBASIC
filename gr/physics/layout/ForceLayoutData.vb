@@ -99,8 +99,7 @@ Namespace layout
     ''' <summary>
     ''' @author Helder Suzuki
     ''' </summary>
-    Public Class ForceLayoutData
-        Inherits ForceVector
+    Public Class ForceLayoutData : Inherits ForceVector
 
         Public energy0 As Single
         Public [step] As Single

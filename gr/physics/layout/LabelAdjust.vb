@@ -133,6 +133,9 @@ Namespace layout
     ''' <summary>
     ''' the layout data model
     ''' </summary>
+    ''' <remarks>
+    ''' contains node layout position and shape size data
+    ''' </remarks>
     Public Class Node : Implements Layout2D
 
         Public Property X As Double Implements Layout2D.X
@@ -150,6 +153,9 @@ Namespace layout
     ''' <summary>
     ''' the label drawing style data
     ''' </summary>
+    ''' <remarks>
+    ''' text label size data
+    ''' </remarks>
     Public Class TextProperties
         Public Property Width As Single
         Public Property Height As Single
@@ -169,8 +175,8 @@ Namespace layout
         Private ymax As Single
 
         Dim Converged As Boolean
-        Dim max_iterations As Integer = 10000
 
+        Public max_iterations As Integer = 1000
         Public canvas As SizeF
 
         Public Sub resetPropertiesValues()
@@ -180,12 +186,14 @@ Namespace layout
         End Sub
 
         Public Sub Solve(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
+            Dim layoutData As LabelAdjustLayoutData
+
             'Reset Layout Data
             For Each n As Node In nodes
                 If n.LayoutData Is Nothing OrElse Not (TypeOf n.LayoutData Is LabelAdjustLayoutData) Then
                     n.LayoutData = New LabelAdjustLayoutData()
                 End If
-                Dim layoutData As LabelAdjustLayoutData = n.LayoutData
+                layoutData = n.LayoutData
                 layoutData.freeze = 0
                 layoutData.dx = 0
                 layoutData.dy = 0
@@ -391,23 +399,18 @@ Namespace layout
             Friend ReadOnly index As Integer
             Friend ReadOnly row As Integer
             Friend ReadOnly col As Integer
-            Friend ReadOnly nodesField As IList(Of Node)
 
             Public Sub New(index As Integer, row As Integer, col As Integer)
                 Me.index = index
                 Me.row = row
                 Me.col = col
-                nodesField = New List(Of Node)()
+                Me.Nodes = New List(Of Node)()
             End Sub
 
             Public Overridable ReadOnly Property Nodes As IList(Of Node)
-                Get
-                    Return nodesField
-                End Get
-            End Property
 
             Public Overridable Sub add(n As Node)
-                nodesField.Add(n)
+                Nodes.Add(n)
             End Sub
         End Class
 
