@@ -70,15 +70,25 @@ Namespace Distributions
         ''' 
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <param name="a">is the height of the curve's peak</param>
-        ''' <param name="b">is the position of the center of the peak</param>
+        ''' <param name="A">is the height of the curve's peak</param>
+        ''' <param name="mu">is the position of the center of the peak</param>
         ''' <param name="sigma">(the standard deviation, sometimes called the Gaussian RMS width) 
         ''' controls the width of the "bell"</param>
         ''' <returns></returns>
-        Public Function Gaussian(x#, a#, b#, sigma#) As Double
-            Dim p# = ((x - b) ^ 2) / (2 * (sigma ^ 2))
-            Dim fx# = a * std.Exp(-p)
+        Public Function Gaussian(x#, A#, mu#, sigma#) As Double
+            Dim p# = ((x - mu) ^ 2) / (2 * (sigma ^ 2))
+            Dim fx# = A * std.Exp(-p)
             Return fx
+        End Function
+
+        Public Function Gaussian(x As IEnumerable(Of Double), A#, mu#, sigma#) As Double()
+            Dim offset = SIMD.Subtract.f64_op_subtract_f64_scalar(x.ToArray, mu)
+            Dim num = (2 * (sigma ^ 2))
+            Dim pow = SIMD.Exponent.f64_op_exponent_f64_scalar(offset, 2)
+            Dim p = SIMD.Divide.f64_op_divide_f64_scalar(pow, num)
+            Dim exp = SIMD.Exponent.f64_exp(SIMD.Subtract.f64_scalar_op_subtract_f64(0, p))
+            Dim gauss = SIMD.Multiply.f64_scalar_op_multiply_f64(A, exp)
+            Return gauss
         End Function
 
         Public Function StandadizedGaussianFunction(diff As Double, devi As Double) As Double
