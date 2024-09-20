@@ -153,6 +153,7 @@ Namespace Imaging
             Return ps.Select(Function(x) New Point(x.X, x.Y)).ToArray
         End Function
 
+#If NET48 Then
         <Extension>
         Public Function SaveIcon(ico As Icon, path$) As Boolean
             Call path.ParentPath.MakeDir
@@ -170,6 +171,7 @@ Namespace Imaging
 
             Return False
         End Function
+#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -378,6 +380,7 @@ Namespace Imaging
             Return New Rectangle(New Point, size)
         End Function
 
+#If NET48 Then
         ''' <summary>
         ''' Convert image to icon
         ''' </summary>
@@ -401,6 +404,7 @@ Namespace Imaging
         <Extension> Public Function GetIcon(res As Bitmap) As Icon
             Return Icon.FromHandle(res.GetHicon)
         End Function
+#End If
 
         <Extension>
         Public Function X(pts As Point()) As Integer()
@@ -633,7 +637,7 @@ Namespace Imaging
 
         Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -710,12 +714,14 @@ Namespace Imaging
             Return Graphics2D.CreateObject(g, bitmap)
         End Function
 
-        <Extension> Public Function Clone(res As Bitmap) As Bitmap
+        <Extension>
+        Public Function Clone(res As Bitmap) As Bitmap
             If res Is Nothing Then Return Nothing
             Return DirectCast(res.Clone, Bitmap)
         End Function
 
-        <Extension> Public Function Clone(res As Image) As Image
+        <Extension>
+        Public Function Clone(res As Image) As Image
             If res Is Nothing Then Return Nothing
             Return DirectCast(res.Clone, Image)
         End Function
