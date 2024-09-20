@@ -1259,50 +1259,7 @@ Namespace Imaging
         '     brush is null.-or-s is null.
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
 
-        ''' <summary>
-        ''' Draws the specified text string in the specified rectangle with the specified
-        ''' System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        ''' of the specified System.Drawing.StringFormat.
-        ''' </summary>
-        ''' <param name="s">String to draw.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
-        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
-        ''' <param name="layoutRectangle">System.Drawing.RectangleF structure that specifies the location of the drawn
-        ''' text.</param>
-        ''' <param name="format">System.Drawing.StringFormat that specifies formatting attributes, such as line
-        ''' spacing and alignment, that are applied to the drawn text.</param>
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
-
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
-
-        '
-        ' Summary:
-        '     Draws the specified text string at the specified location with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        '     of the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   point:
-        '     System.Drawing.PointF structure that specifies the upper-left corner of the drawn
-        '     text.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
-        '     spacing and alignment, that are applied to the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
 
         ''' <summary>
         ''' Draws the specified text string at the specified location with the specified
@@ -1314,36 +1271,6 @@ Namespace Imaging
         ''' <param name="x">The x-coordinate of the upper-left corner of the drawn text.</param>
         ''' <param name="y">The y-coordinate of the upper-left corner of the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-        '
-        ' Summary:
-        '     Draws the specified text string at the specified location with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects using the formatting attributes
-        '     of the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn text.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn text.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that specifies formatting attributes, such as line
-        '     spacing and alignment, that are applied to the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
-        Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
 
         '
         ' Summary:
@@ -1355,15 +1282,7 @@ Namespace Imaging
         '     System.Drawing.Rectangle structure that specifies the rectangle to exclude from
         '     the clip region.
         Public MustOverride Sub ExcludeClip(rect As Rectangle)
-        '
-        ' Summary:
-        '     Updates the clip region of this System.Drawing.Graphics to exclude the area specified
-        '     by a System.Drawing.Region.
-        '
-        ' Parameters:
-        '   region:
-        '     System.Drawing.Region that specifies the region to exclude from the clip region.
-        Public MustOverride Sub ExcludeClip(region As Region)
+
         '
         ' Summary:
         '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
@@ -1396,92 +1315,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-points is null.
         Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
-        '     structures using the specified fill mode.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
-        '     structures using the specified fill mode.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that define the spline.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.PointF
-        '     structures using the specified fill mode and tension.
-        '
-        ' Parameters:
-        '   brush:
-        '     A System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that define the spline.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
-        '
-        ' Summary:
-        '     Fills the interior of a closed cardinal spline curve defined by an array of System.Drawing.Point
-        '     structures using the specified fill mode and tension.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
+
         '
         ' Summary:
         '     Fills the interior of an ellipse defined by a bounding rectangle specified by
@@ -1694,48 +1528,6 @@ Namespace Imaging
         ''' <param name="points">Array of System.Drawing.PointF structures that represent the vertices of the
         ''' polygon to fill.</param>
         Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF)
-        '
-        ' Summary:
-        '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.Point
-        '     structures using the specified fill mode.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that represent the vertices of the polygon
-        '     to fill.
-        '
-        '   fillMode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines the
-        '     style of the fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
-        '
-        ' Summary:
-        '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.PointF
-        '     structures using the specified fill mode.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that represent the vertices of the
-        '     polygon to fill.
-        '
-        '   fillMode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines the
-        '     style of the fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
-        Public MustOverride Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
 
         ''' <summary>
         ''' Fills the interior of a rectangle specified by a <see cref="Rectangle"/> structure.
@@ -1842,46 +1634,13 @@ Namespace Imaging
                 Call FillRectangle(brush, rect.ToFloat)
             Next
         End Sub
-        '
-        ' Summary:
-        '     Fills the interior of a System.Drawing.Region.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   region:
-        '     System.Drawing.Region that represents the area to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-region is null.
-        Public MustOverride Sub FillRegion(brush As Brush, region As Region)
+
         '
         ' Summary:
         '     Forces execution of all pending graphics operations and returns immediately without
         '     waiting for the operations to finish.
         Public MustOverride Sub Flush()
-        '
-        ' Summary:
-        '     Forces execution of all pending graphics operations with the method waiting or
-        '     not waiting, as specified, to return before the operations finish.
-        '
-        ' Parameters:
-        '   intention:
-        '     Member of the System.Drawing.Drawing2D.FlushIntention enumeration that specifies
-        '     whether the method returns immediately or waits for any existing operations to
-        '     finish.
-        Public MustOverride Sub Flush(intention As FlushIntention)
-        '
-        ' Summary:
-        '     Updates the clip region of this System.Drawing.Graphics to the intersection of
-        '     the current clip region and the specified System.Drawing.Region.
-        '
-        ' Parameters:
-        '   region:
-        '     System.Drawing.Region to intersect with the current region.
-        Public MustOverride Sub IntersectClip(region As Region)
+
         '
         ' Summary:
         '     Updates the clip region of this System.Drawing.Graphics to the intersection of
@@ -1900,28 +1659,6 @@ Namespace Imaging
         '   rect:
         '     System.Drawing.Rectangle structure to intersect with the current clip region.
         Public MustOverride Sub IntersectClip(rect As Rectangle)
-        '
-        ' Summary:
-        '     Multiplies the world transformation of this System.Drawing.Graphics and specified
-        '     the System.Drawing.Drawing2D.Matrix.
-        '
-        ' Parameters:
-        '   matrix:
-        '     4x4 System.Drawing.Drawing2D.Matrix that multiplies the world transformation.
-        Public MustOverride Sub MultiplyTransform(matrix As Matrix)
-        '
-        ' Summary:
-        '     Multiplies the world transformation of this System.Drawing.Graphics and specified
-        '     the System.Drawing.Drawing2D.Matrix in the specified order.
-        '
-        ' Parameters:
-        '   matrix:
-        '     4x4 System.Drawing.Drawing2D.Matrix that multiplies the world transformation.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that determines
-        '     the order of the multiplication.
-        Public MustOverride Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
 
         ''
         '' Summary:
@@ -1970,19 +1707,7 @@ Namespace Imaging
         '   angle:
         '     Angle of rotation in degrees.
         Public MustOverride Sub RotateTransform(angle As Single)
-        '
-        ' Summary:
-        '     Applies the specified rotation to the transformation matrix of this System.Drawing.Graphics
-        '     in the specified order.
-        '
-        ' Parameters:
-        '   angle:
-        '     Angle of rotation in degrees.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
-        '     whether the rotation is appended or prepended to the matrix transformation.
-        Public MustOverride Sub RotateTransform(angle As Single, order As MatrixOrder)
+
         '
         ' Summary:
         '     Applies the specified scaling operation to the transformation matrix of this
@@ -1995,23 +1720,7 @@ Namespace Imaging
         '   sy:
         '     Scale factor in the y direction.
         Public MustOverride Sub ScaleTransform(sx As Single, sy As Single)
-        '
-        ' Summary:
-        '     Applies the specified scaling operation to the transformation matrix of this
-        '     System.Drawing.Graphics in the specified order.
-        '
-        ' Parameters:
-        '   sx:
-        '     Scale factor in the x direction.
-        '
-        '   sy:
-        '     Scale factor in the y direction.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
-        '     whether the scaling operation is prepended or appended to the transformation
-        '     matrix.
-        Public MustOverride Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
+
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the rectangle specified
@@ -2021,14 +1730,7 @@ Namespace Imaging
         '   rect:
         '     System.Drawing.RectangleF structure that represents the new clip region.
         Public MustOverride Sub SetClip(rect As RectangleF)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the specified System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath that represents the new clip region.
-        Public MustOverride Sub SetClip(path As GraphicsPath)
+
         '
         ' Summary:
         '     Sets the clipping region of this System.Drawing.Graphics to the rectangle specified
@@ -2038,117 +1740,6 @@ Namespace Imaging
         '   rect:
         '     System.Drawing.Rectangle structure that represents the new clip region.
         Public MustOverride Sub SetClip(rect As Rectangle)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the Clip property
-        '     of the specified System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   g:
-        '     System.Drawing.Graphics from which to take the new clip region.
-        Public MustOverride Sub SetClip(g As Graphics)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the rectangle specified
-        '     by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   rect:
-        '     System.Drawing.Rectangle structure to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(rect As Rectangle, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the specified System.Drawing.Region.
-        '
-        ' Parameters:
-        '   region:
-        '     System.Drawing.Region to combine.
-        '
-        '   combineMode:
-        '     Member from the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(region As Region, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the specified System.Drawing.Drawing2D.GraphicsPath.
-        '
-        ' Parameters:
-        '   path:
-        '     System.Drawing.Drawing2D.GraphicsPath to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified operation combining the current clip region and the rectangle specified
-        '     by a System.Drawing.RectangleF structure.
-        '
-        ' Parameters:
-        '   rect:
-        '     System.Drawing.RectangleF structure to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(rect As RectangleF, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Sets the clipping region of this System.Drawing.Graphics to the result of the
-        '     specified combining operation of the current clip region and the System.Drawing.Graphics.Clip
-        '     property of the specified System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   g:
-        '     System.Drawing.Graphics that specifies the clip region to combine.
-        '
-        '   combineMode:
-        '     Member of the System.Drawing.Drawing2D.CombineMode enumeration that specifies
-        '     the combining operation to use.
-        Public MustOverride Sub SetClip(g As Graphics, combineMode As CombineMode)
-        '
-        ' Summary:
-        '     Transforms an array of points from one coordinate space to another using the
-        '     current world and page transformations of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   destSpace:
-        '     Member of the System.Drawing.Drawing2D.CoordinateSpace enumeration that specifies
-        '     the destination coordinate space.
-        '
-        '   srcSpace:
-        '     Member of the System.Drawing.Drawing2D.CoordinateSpace enumeration that specifies
-        '     the source coordinate space.
-        '
-        '   pts:
-        '     Array of System.Drawing.Point structures that represents the points to transformation.
-        Public MustOverride Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
-        '
-        ' Summary:
-        '     Transforms an array of points from one coordinate space to another using the
-        '     current world and page transformations of this System.Drawing.Graphics.
-        '
-        ' Parameters:
-        '   destSpace:
-        '     Member of the System.Drawing.Drawing2D.CoordinateSpace enumeration that specifies
-        '     the destination coordinate space.
-        '
-        '   srcSpace:
-        '     Member of the System.Drawing.Drawing2D.CoordinateSpace enumeration that specifies
-        '     the source coordinate space.
-        '
-        '   pts:
-        '     Array of System.Drawing.PointF structures that represent the points to transform.
-        Public MustOverride Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
         '
         ' Summary:
         '     Translates the clipping region of this System.Drawing.Graphics by specified amounts
@@ -2185,81 +1776,12 @@ Namespace Imaging
         '   dy:
         '     The y-coordinate of the translation.
         Public MustOverride Sub TranslateTransform(dx As Single, dy As Single)
-        '
-        ' Summary:
-        '     Changes the origin of the coordinate system by applying the specified translation
-        '     to the transformation matrix of this System.Drawing.Graphics in the specified
-        '     order.
-        '
-        ' Parameters:
-        '   dx:
-        '     The x-coordinate of the translation.
-        '
-        '   dy:
-        '     The y-coordinate of the translation.
-        '
-        '   order:
-        '     Member of the System.Drawing.Drawing2D.MatrixOrder enumeration that specifies
-        '     whether the translation is prepended or appended to the transformation matrix.
-        Public MustOverride Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
+
 
         Protected Overrides Sub Finalize()
             Call MyBase.Finalize()
         End Sub
 
-        '
-        ' Summary:
-        '     Saves a graphics container with the current state of this System.Drawing.Graphics
-        '     and opens and uses a new graphics container.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
-        '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer() As GraphicsContainer
-        '
-        ' Summary:
-        '     Saves a graphics container with the current state of this System.Drawing.Graphics
-        '     and opens and uses a new graphics container with the specified scale transformation.
-        '
-        ' Parameters:
-        '   dstrect:
-        '     System.Drawing.RectangleF structure that, together with the srcrect parameter,
-        '     specifies a scale transformation for the new graphics container.
-        '
-        '   srcrect:
-        '     System.Drawing.RectangleF structure that, together with the dstrect parameter,
-        '     specifies a scale transformation for the new graphics container.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure for the container.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
-        '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
-        '
-        ' Summary:
-        '     Saves a graphics container with the current state of this System.Drawing.Graphics
-        '     and opens and uses a new graphics container with the specified scale transformation.
-        '
-        ' Parameters:
-        '   dstrect:
-        '     System.Drawing.Rectangle structure that, together with the srcrect parameter,
-        '     specifies a scale transformation for the container.
-        '
-        '   srcrect:
-        '     System.Drawing.Rectangle structure that, together with the dstrect parameter,
-        '     specifies a scale transformation for the container.
-        '
-        '   unit:
-        '     Member of the System.Drawing.GraphicsUnit enumeration that specifies the unit
-        '     of measure for the container.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.Drawing2D.GraphicsContainer that represents
-        '     the state of this System.Drawing.Graphics at the time of the method call.
-        Public MustOverride Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
         '
         ' Summary:
         '     Gets the cumulative graphics context.
@@ -2413,30 +1935,7 @@ Namespace Imaging
         ''' <returns>true if the rectangle defined by the x, y, width, and height parameters is contained
         ''' within the visible clip region of this System.Drawing.Graphics; otherwise, false.</returns>
         Public MustOverride Function IsVisible(x As Single, y As Single, width As Single, height As Single) As Boolean
-        '
-        ' Summary:
-        '     Gets an array of System.Drawing.Region objects, each of which bounds a range
-        '     of character positions within the specified string.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   layoutRect:
-        '     System.Drawing.RectangleF structure that specifies the layout rectangle for the
-        '     string.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        ' Returns:
-        '     This method returns an array of System.Drawing.Region objects, each of which
-        '     bounds a range of character positions within the specified string.
-        Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
+
 
         ''' <summary>
         ''' Measures the specified string when drawn with the specified <see cref="Font"/>.
@@ -2472,115 +1971,6 @@ Namespace Imaging
         ''' in the units specified by the System.Drawing.Graphics.PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   width:
-        '     Maximum width of the string.
-        '
-        '   format:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified in the text parameter as drawn with the font parameter and the
-        '     stringFormat parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font defines the text format of the string.
-        '
-        '   origin:
-        '     System.Drawing.PointF structure that represents the upper-left corner of the
-        '     string.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified by the text parameter as drawn with the font parameter and the
-        '     stringFormat parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-        '
-        ' Summary:
-        '     Measures the specified string when drawn with the specified System.Drawing.Font
-        '     and formatted with the specified System.Drawing.StringFormat.
-        '
-        ' Parameters:
-        '   text:
-        '     String to measure.
-        '
-        '   font:
-        '     System.Drawing.Font defines the text format of the string.
-        '
-        '   layoutArea:
-        '     System.Drawing.SizeF structure that specifies the maximum layout area for the
-        '     text.
-        '
-        '   stringFormat:
-        '     System.Drawing.StringFormat that represents formatting information, such as line
-        '     spacing, for the string.
-        '
-        ' Returns:
-        '     This method returns a System.Drawing.SizeF structure that represents the size,
-        '     in the units specified by the System.Drawing.Graphics.PageUnit property, of the
-        '     string specified in the text parameter as drawn with the font parameter and the
-        '     stringFormat parameter.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentException:
-        '     font is null.
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-
-        ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font
-        ''' and formatted with the specified System.Drawing.StringFormat.
-        ''' </summary>
-        ''' <param name="text">String to measure.</param>
-        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
-        ''' <param name="layoutArea">System.Drawing.SizeF structure that specifies the maximum layout area for the
-        ''' text.</param>
-        ''' <param name="stringFormat">System.Drawing.StringFormat that represents formatting information, such as line
-        ''' spacing, for the string.</param>
-        ''' <param name="charactersFitted">Number of characters in the string.</param>
-        ''' <param name="linesFilled">Number of text lines in the string.</param>
-        ''' <returns>This method returns a System.Drawing.SizeF structure that represents the size
-        ''' of the string, in the units specified by the System.Drawing.Graphics.PageUnit
-        ''' property, of the text parameter as drawn with the font parameter and the stringFormat
-        ''' parameter.</returns>
-        Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat,
-                                                   ByRef charactersFitted As Integer,
-                                                   ByRef linesFilled As Integer) As SizeF
 
     End Class
 End Namespace
