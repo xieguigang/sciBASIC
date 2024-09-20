@@ -1525,26 +1525,6 @@ Public Module Extensions
         End If
     End Function
 
-#If FRAMEWORD_CORE Then
-
-    ''' <summary>
-    ''' Fill the newly created image data with the specific color brush
-    ''' </summary>
-    ''' <param name="Image"></param>
-    ''' <param name="FilledColor"></param>
-    ''' <remarks></remarks>
-    <Extension>
-    Public Sub FillBlank(ByRef Image As Image, FilledColor As Brush)
-        If Image Is Nothing Then
-            Return
-        End If
-        Using gr As Graphics = Graphics.FromImage(Image)
-            Dim R As New Rectangle(New Point, Image.Size)
-            Call gr.FillRectangle(FilledColor, R)
-        End Using
-    End Sub
-#End If
-
     ''' <summary>
     ''' Remove all of the element in the <paramref name="collection"></paramref> from target <paramref name="List">list</paramref>
     ''' </summary>

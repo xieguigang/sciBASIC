@@ -61,7 +61,7 @@ Imports std = System.Math
 Namespace Imaging.BitmapImage
 
     Public Module Effects
-
+#If NET48 Then
         ''' <summary>
         ''' 羽化
         ''' </summary>
@@ -271,5 +271,6 @@ Namespace Imaging.BitmapImage
 
             Return rotatedBmp
         End Function
+#End If
     End Module
 End Namespace

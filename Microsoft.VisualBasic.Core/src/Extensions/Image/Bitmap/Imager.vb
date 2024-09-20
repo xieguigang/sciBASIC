@@ -67,7 +67,7 @@ Namespace Imaging.BitmapImage
     ''' https://github.com/omuleanu/imager
     ''' </remarks>
     Public Module Imager
-
+#If NET48 Then
         ''' <summary>
         ''' get codec info by mime type
         ''' </summary>
@@ -188,5 +188,6 @@ Namespace Imaging.BitmapImage
             Dim bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat)
             Return bmpCrop
         End Function
+#End If
     End Module
 End Namespace

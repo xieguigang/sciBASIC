@@ -80,9 +80,11 @@ Namespace ApplicationServices.Terminal.xConsole
         Public Function SetConsoleIcon(hIcon As IntPtr) As Boolean
         End Function
 
+#If NET48 Then
         Public Function SetConsoleIcon(icon As Icon) As Boolean
             Return SetConsoleIcon(icon.Handle)
         End Function
+#End If
 
         <DllImport("kernel32")>
         Public Function SetConsoleFont(hOutput As IntPtr, index As UInteger) As Boolean
