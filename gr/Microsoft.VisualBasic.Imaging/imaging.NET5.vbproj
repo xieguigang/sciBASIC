@@ -677,6 +677,94 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Compile Remove="Drawing3D\Models\screenshots\**" />
 		<Compile Remove="test\**" />

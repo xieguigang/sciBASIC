@@ -106,18 +106,6 @@ Namespace Driver
             End Set
         End Property
 
-        Public Overrides ReadOnly Property IsClipEmpty As Boolean
-            Get
-                Return gdi.IsClipEmpty
-            End Get
-        End Property
-
-        Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
-            Get
-                Return gdi.IsVisibleClipEmpty
-            End Get
-        End Property
-
         Public Overrides Property PageScale As Single
             Get
                 Return gdi.PageScale

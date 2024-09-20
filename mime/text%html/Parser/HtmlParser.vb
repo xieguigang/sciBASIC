@@ -62,8 +62,8 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.Document
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace Language
 
