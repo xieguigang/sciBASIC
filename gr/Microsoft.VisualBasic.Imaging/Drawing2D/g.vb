@@ -79,11 +79,11 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Namespace Drawing2D
 
     ''' <summary>
-    ''' 
+    ''' An abstract function interface for make graphics plot
     ''' </summary>
     ''' <param name="g">GDI+设备</param>
     ''' <param name="grct">绘图区域的大小</param>
-    Public Delegate Sub IPlot(ByRef g As IGraphics, grct As GraphicsRegion)
+    Public Delegate Sub IPlot(ByRef g As DrawingGraphics, grct As GraphicsRegion)
 
     ''' <summary>
     ''' Data plots graphics engine common abstract. 
@@ -347,7 +347,7 @@ Namespace Drawing2D
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function GraphicsPlots(plot As Action(Of IGraphics),
+        Public Function GraphicsPlots(plot As Action(Of DrawingGraphics),
                                       ByRef size As Size,
                                       ByRef padding As Padding,
                                       bg$) As GraphicsData
