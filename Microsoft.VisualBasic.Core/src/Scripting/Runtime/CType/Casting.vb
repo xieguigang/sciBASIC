@@ -68,8 +68,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace Scripting.Runtime
 

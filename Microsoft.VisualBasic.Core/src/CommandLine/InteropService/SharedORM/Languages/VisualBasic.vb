@@ -64,8 +64,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace CommandLine.InteropService.SharedORM
 

@@ -57,7 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging
 
@@ -112,7 +112,7 @@ Namespace Imaging
                 (lightColor.G / 255.0) * base.G,
                 (lightColor.B / 255.0) * base.B)
             Dim hsl As HSLColor = HSLColor.GetHSL(newColor)
-            Dim l = stdNum.Min(hsl.L + percentage, 1)
+            Dim l = std.Min(hsl.L + percentage, 1)
 
             newColor = New HSLColor(hsl.H, hsl.S, l).ToRGB
             Return newColor
@@ -172,10 +172,10 @@ Namespace Imaging
             Dim b As Double = rgb.B / 255.0
             Dim max, min As Double
 
-            max = stdNum.Max(r, g)
-            max = stdNum.Max(max, b)
-            min = stdNum.Min(r, g)
-            min = stdNum.Min(min, b)
+            max = std.Max(r, g)
+            max = std.Max(max, b)
+            min = std.Min(r, g)
+            min = std.Min(min, b)
 
             l = (min + max) / 2.0
 

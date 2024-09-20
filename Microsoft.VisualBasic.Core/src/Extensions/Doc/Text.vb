@@ -64,8 +64,12 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports fs = Microsoft.VisualBasic.FileIO.FileSystem
 
+''' <summary>
+''' Extension helper function for the text documents
+''' </summary>
 Public Module TextDoc
 
     ''' <summary>
