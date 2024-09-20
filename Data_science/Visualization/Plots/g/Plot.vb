@@ -127,28 +127,28 @@ Namespace Graphic
         ''' </param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Sub Plot(ByRef g As IGraphics, layout As Rectangle)
+        Public Overloads Sub Plot(ByRef g As DrawingGraphics, layout As Rectangle)
             Call PlotInternal(g, EvaluateLayout(g, layout))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Public Overloads Sub Plot(ByRef g As DrawingGraphics, canvas As GraphicsRegion)
             Call PlotInternal(g, canvas)
         End Sub
 
-        Protected Shared Function EvaluateLayout(g As IGraphics, layout As Rectangle) As GraphicsRegion
+        Protected Shared Function EvaluateLayout(g As DrawingGraphics, layout As Rectangle) As GraphicsRegion
             Dim padding As New Padding With {
                 .Left = layout.Left,
                 .Top = layout.Top,
-                .Bottom = g.Size.Height - layout.Bottom,
-                .Right = g.Size.Width - layout.Right
+                .Bottom = g.Height - layout.Bottom,
+                .Right = g.Width - layout.Right
             }
-            Dim canvas As New GraphicsRegion(g.Size, padding)
+            Dim canvas As New GraphicsRegion(New Size(g.Width, g.Height), padding)
 
             Return canvas
         End Function
 
-        Protected MustOverride Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+        Protected MustOverride Sub PlotInternal(ByRef g As DrawingGraphics, canvas As GraphicsRegion)
 
         ''' <summary>
         ''' custom layout via <see cref="theme.legendLayout"/>
@@ -157,7 +157,7 @@ Namespace Graphic
         ''' <param name="legends"></param>
         ''' <param name="showBorder"></param>
         ''' <param name="canvas"></param>
-        Protected Sub DrawLegends(g As IGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
+        Protected Sub DrawLegends(g As DrawingGraphics, legends As LegendObject(), showBorder As Boolean, canvas As GraphicsRegion)
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
             Dim lsize As SizeF = g.MeasureString("A", legendLabelFont)
@@ -213,7 +213,7 @@ Namespace Graphic
             End If
         End Sub
 
-        Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125)
+        Protected Sub DrawMainTitle(g As DrawingGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125)
             If Not main.StringEmpty Then
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim fontOfTitle As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
@@ -242,7 +242,7 @@ Namespace Graphic
             End If
         End Sub
 
-        Private Sub DrawMultipleLineTitle(g As IGraphics,
+        Private Sub DrawMultipleLineTitle(g As DrawingGraphics,
                                           plotRegion As Rectangle,
                                           fontOfTitle As Font,
                                           color As Brush,
