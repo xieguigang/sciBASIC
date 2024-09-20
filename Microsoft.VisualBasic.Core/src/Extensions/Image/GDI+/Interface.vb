@@ -105,70 +105,11 @@ Namespace Imaging
         Public Property Font As Font
 #End Region
 
-        ''
-        '' Summary:
-        ''     Gets or sets a System.Drawing.Region that limits the drawing region of this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     A System.Drawing.Region that limits the portion of this System.Drawing.Graphics
-        ''     that is currently available for drawing.
-        'Public MustOverride Property Clip As Region
-        ''
-        '' Summary:
-        ''     Gets a System.Drawing.RectangleF structure that bounds the clipping region of
-        ''     this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     A System.Drawing.RectangleF structure that represents a bounding rectangle for
-        ''     the clipping region of this System.Drawing.Graphics.
-        'Public MustOverride ReadOnly Property ClipBounds As RectangleF
-
-        ''' <summary>
-        ''' Gets a value that specifies how composited images are drawn to this System.Drawing.Graphics.
-        ''' </summary>
-        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.CompositingMode
-        ''' enumeration. The default is System.Drawing.Drawing2D.CompositingMode.SourceOver.
-        ''' </returns>
-        Public MustOverride Property CompositingMode As CompositingMode
-
-        ''' <summary>
-        ''' Gets or sets the rendering quality of composited images drawn to this System.Drawing.Graphics.
-        ''' </summary>
-        ''' <returns>This property specifies a member of the System.Drawing.Drawing2D.CompositingQuality
-        ''' enumeration. The default is System.Drawing.Drawing2D.CompositingQuality.Default.</returns>
-        Public MustOverride Property CompositingQuality As CompositingQuality
-
-        ''' <summary>
-        ''' Gets the horizontal resolution of this System.Drawing.Graphics.
-        ''' </summary>
-        ''' <returns>The value, in dots per inch, for the horizontal resolution supported by this
-        ''' System.Drawing.Graphics.</returns>
-        Public MustOverride ReadOnly Property DpiX As Single
-
-        ''' <summary>
-        ''' Gets the vertical resolution of this System.Drawing.Graphics.
-        ''' </summary>
-        ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
-        Public MustOverride ReadOnly Property DpiY As Single
-
         ''' <summary>
         ''' max value of the [DpiX, DpiY]
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
-            Get
-                Return std.Max(DpiX, DpiY)
-            End Get
-        End Property
-
-
-        '
-        ' Summary:
-        '     Gets or sets the interpolation mode associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.InterpolationMode values.
-        Public MustOverride Property InterpolationMode As InterpolationMode
 
         '
         ' Summary:
@@ -180,27 +121,6 @@ Namespace Imaging
         Public MustOverride Property PageScale As Single
         '
         ' Summary:
-        '     Gets or sets the unit of measure used for page coordinates in this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.GraphicsUnit values other than System.Drawing.GraphicsUnit.World.
-        '
-        ' Exceptions:
-        '   T:System.ComponentModel.InvalidEnumArgumentException:
-        '     System.Drawing.Graphics.PageUnit is set to System.Drawing.GraphicsUnit.World,
-        '     which is not a physical unit.
-        Public MustOverride Property PageUnit As GraphicsUnit
-        '
-        ' Summary:
-        '     Gets or set a value specifying how pixels are offset during rendering of this
-        '     System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a member of the System.Drawing.Drawing2D.PixelOffsetMode
-        '     enumeration
-        Public MustOverride Property PixelOffsetMode As PixelOffsetMode
-        '
-        ' Summary:
         '     Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
         '     and for hatch brushes.
         '
@@ -209,13 +129,7 @@ Namespace Imaging
         '     and 16-bits-per-pixel dithering and is also used to set the origin for hatch
         '     brushes.
         Public MustOverride Property RenderingOrigin As Point
-        '
-        ' Summary:
-        '     Gets or sets the rendering quality for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Drawing2D.SmoothingMode values.
-        Public MustOverride Property SmoothingMode As SmoothingMode
+
         '
         ' Summary:
         '     Gets or sets the gamma correction value for rendering text.
@@ -223,13 +137,7 @@ Namespace Imaging
         ' Returns:
         '     The gamma correction value used for rendering antialiased and ClearType text.
         Public MustOverride Property TextContrast As Integer
-        '
-        ' Summary:
-        '     Gets or sets the rendering mode for text associated with this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     One of the System.Drawing.Text.TextRenderingHint values.
-        Public MustOverride Property TextRenderingHint As TextRenderingHint
+
         ''
         '' Summary:
         ''     Gets or sets a copy of the geometric world transformation for this System.Drawing.Graphics.
@@ -539,52 +447,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.-or-points is null.
         Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As PointF)
-        '
-        ' Summary:
-        '     Draws a closed cardinal spline defined by an array of System.Drawing.Point structures
-        '     using a specified tension.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and height of the curve.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that define the spline.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled. This parameter is required but ignored.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
-        '
-        ' Summary:
-        '     Draws a closed cardinal spline defined by an array of System.Drawing.PointF structures
-        '     using a specified tension.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and height of the curve.
-        '
-        '   points:
-        '     Array of System.Drawing.PointF structures that define the spline.
-        '
-        '   tension:
-        '     Value greater than or equal to 0.0F that specifies the tension of the curve.
-        '
-        '   fillmode:
-        '     Member of the System.Drawing.Drawing2D.FillMode enumeration that determines how
-        '     the curve is filled. This parameter is required but is ignored.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-points is null.
-        Public MustOverride Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
+
         '
         ' Summary:
         '     Draws a cardinal spline through a specified array of System.Drawing.Point structures.
@@ -814,62 +677,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public MustOverride Sub DrawEllipse(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Draws the image represented by the specified System.Drawing.Icon within the area
-        '     specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   icon:
-        '     System.Drawing.Icon to draw.
-        '
-        '   targetRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     resulting image on the display surface. The image contained in the icon parameter
-        '     is scaled to the dimensions of this rectangular area.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     icon is null.
-        Public MustOverride Sub DrawIcon(icon As Icon, targetRect As Rectangle)
-        '
-        ' Summary:
-        '     Draws the image represented by the specified System.Drawing.Icon at the specified
-        '     coordinates.
-        '
-        ' Parameters:
-        '   icon:
-        '     System.Drawing.Icon to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     icon is null.
-        Public MustOverride Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
-        '
-        ' Summary:
-        '     Draws the image represented by the specified System.Drawing.Icon without scaling
-        '     the image.
-        '
-        ' Parameters:
-        '   icon:
-        '     System.Drawing.Icon to draw.
-        '
-        '   targetRect:
-        '     System.Drawing.Rectangle structure that specifies the location and size of the
-        '     resulting image. The image is not scaled to fit this rectangle, but retains its
-        '     original size. If the image is larger than the rectangle, it is clipped to fit
-        '     inside it.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     icon is null.
-        Public MustOverride Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
+
         '
         ' Summary:
         '     Draws the specified System.Drawing.Image, using its original physical size, at
