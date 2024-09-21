@@ -116,7 +116,7 @@ Namespace Emit.Marshal
         ReadOnly __unsafeCopys As UnsafeCopys(Of T)
 
         ''' <summary>
-        ''' 
+        ''' Make data unsafe copy in this constructor function
         ''' </summary>
         ''' <param name="p"></param>
         ''' <param name="chunkSize"></param>

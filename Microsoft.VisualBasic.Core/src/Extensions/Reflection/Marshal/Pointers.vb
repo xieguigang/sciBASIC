@@ -129,8 +129,15 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="p">The start address location of the array in the memory</param>
         ''' <param name="chunkSize">array length</param>
+        ''' <remarks>
+        ''' Make bytes data unsafe copy from a given memory location in this constructor
+        ''' </remarks>
         Sub New(p As System.IntPtr, chunkSize As Integer)
             Call MyBase.New(p, chunkSize, AddressOf Copy, AddressOf Copy)
+        End Sub
+
+        Sub New(ByRef data As Byte(), Optional p As System.IntPtr? = Nothing)
+            Call MyBase.New(data, p)
         End Sub
     End Class
 

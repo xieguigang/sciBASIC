@@ -73,8 +73,10 @@ Namespace Imaging.BitmapImage
 
     ''' <summary>
     ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer.
-    ''' (线程不安全的图片数据对象)
     ''' </summary>
+    ''' <remarks>
+    ''' (线程不安全的图片数据对象)
+    ''' </remarks>
     Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
         Implements IEnumerable(Of Color)
@@ -113,6 +115,16 @@ Namespace Imaging.BitmapImage
             Call MyBase.New(ptr, byts)
 
             Throw New NotImplementedException
+        End Sub
+
+        Sub New(pixels As Color(,), size As Size)
+            Call MyBase.New(Unpack(pixels, size))
+
+            channels = 4 ' argb
+
+            _Size = size
+            _Width = size.Width
+            _Height = size.Height
         End Sub
 #End If
 
@@ -218,6 +230,20 @@ Namespace Imaging.BitmapImage
             Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
 
+        Public Function GetARGB() As Color(,)
+            Dim pixels As Color(,) = New Color(Height - 1, Width - 1) {}
+
+            For y As Integer = 0 To Height
+                For x As Integer = 0 To Width
+                    If Not OutOfRange(x, y) Then
+                        pixels(y, x) = GetPixel(x, y)
+                    End If
+                Next
+            Next
+
+            Return pixels
+        End Function
+
         ''' <summary>
         ''' get image data array in ARGB format
         ''' </summary>
@@ -274,6 +300,24 @@ Namespace Imaging.BitmapImage
             Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
 
             Return color
+        End Function
+
+        Public Shared Function Unpack(pixels As Color(,), size As Size) As Byte()
+            Dim bytes As Byte() = New Byte(4 * pixels.Length - 1) {}
+
+            For y As Integer = 0 To size.Height - 1
+                For x As Integer = 0 To size.Width - 1
+                    Dim pixel As Color = pixels(y, x)
+                    Dim i As Integer = GetIndex(x, y, size.Width, size.Height)
+
+                    bytes(i) = pixel.A
+                    bytes(i + 1) = pixel.R
+                    bytes(i + 2) = pixel.G
+                    bytes(i + 3) = pixel.B
+                Next
+            Next
+
+            Return bytes
         End Function
 
         ''' <summary>
