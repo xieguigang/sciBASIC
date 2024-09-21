@@ -68,6 +68,10 @@ Namespace Imaging
             memoryBuffer = data
         End Sub
 
+        Sub New(width As Integer, height As Integer)
+            Throw New NotImplementedException
+        End Sub
+
     End Class
 #End If
 End Namespace
