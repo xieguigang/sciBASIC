@@ -185,21 +185,9 @@ Namespace Imaging
         ''' <param name="Path"></param>
         ''' <param name="Format">默认为png格式</param>
         ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Save(path$, Optional Format As ImageFormats = ImageFormats.Png) As Boolean
-            Return Save(path, Format.GetFormat)
-        End Function
-
-        ''' <summary>
-        ''' 将GDI+设备之中的图像数据保存到指定的文件路径之中，默认的图像文件的格式为PNG格式
-        ''' </summary>
-        ''' <param name="Path"></param>
-        ''' <param name="Format">默认为png格式</param>
-        ''' <returns></returns>
-        Public Overloads Function Save(path$, Optional Format As ImageFormat = Nothing) As Boolean
             Try
-                Call saveFile(path, Format Or Png)
+                Call saveFile(path, Format)
             Catch ex As Exception
                 Return App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -207,7 +195,7 @@ Namespace Imaging
             Return True
         End Function
 
-        Private Sub saveFile(path As String, format As ImageFormat)
+        Private Sub saveFile(path As String, format As ImageFormats)
             Call Save(path.Open(FileMode.OpenOrCreate, doClear:=True), format)
         End Sub
 
@@ -274,12 +262,12 @@ Namespace Imaging
             Call Me.DrawCircle(center, radius, stroke, fill:=False)
         End Sub
 
-        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
-            If format Is Nothing Then
-                format = ImageFormat.Png
-            End If
-
+        Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
+#If NET48 Then
+            Call ImageResource.Save(stream, format.GetFormat)
+#Else
             Call ImageResource.Save(stream, format)
+#End If
             Call stream.Flush()
 
             Return True

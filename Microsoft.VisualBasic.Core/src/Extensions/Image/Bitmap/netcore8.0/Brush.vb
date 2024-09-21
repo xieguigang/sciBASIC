@@ -1,4 +1,6 @@
-﻿Namespace Imaging
+﻿Imports System.Drawing
+
+Namespace Imaging
 
 #If NET8_0_OR_GREATER Then
 
@@ -8,10 +10,23 @@
 
     Public Class SolidBrush : Inherits Brush
 
+        Public Property Color As Color
+
+        Sub New(color As Color)
+            Me.Color = color
+        End Sub
     End Class
 
     Public Class TextureBrush : Inherits Brush
 
+    End Class
+
+    Public NotInheritable Class Brushes
+
+        Public Shared ReadOnly Property Black As New SolidBrush(Color.Black)
+
+        Private Sub New()
+        End Sub
     End Class
 #End If
 End Namespace
