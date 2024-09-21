@@ -152,20 +152,6 @@ Public Class Graphics2D : Inherits GDICanvas
         End Function
     End Structure
 
-    Public ReadOnly Property Width As Integer
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return Size.Width
-        End Get
-    End Property
-
-    Public ReadOnly Property Height As Integer
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return Size.Height
-        End Get
-    End Property
-
     ''' <summary>
     ''' Gets the width and height, in pixels, of this <see cref="ImageResource"/>.(图像的大小)
     ''' </summary>

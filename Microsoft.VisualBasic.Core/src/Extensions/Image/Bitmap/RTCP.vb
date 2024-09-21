@@ -72,6 +72,7 @@ Namespace Imaging.BitmapImage
     Public Module RTCP
 
         Private Function copy(inBitmap As Bitmap) As Bitmap
+#If NET48 Then
             '-----缩放64*64-----
             Dim scale As Single = 64 / std.Sqrt(inBitmap.Width * inBitmap.Height)
             Dim bp As New Bitmap(CInt(inBitmap.Width * scale), CInt(inBitmap.Height * scale))
@@ -81,6 +82,7 @@ Namespace Imaging.BitmapImage
             g.Dispose()
 
             Return bp
+#End If
         End Function
 
         ''' <summary>
@@ -218,15 +220,21 @@ Namespace Imaging.BitmapImage
                 Next
             Next
 
-            Dim bpData As BitmapData
             Dim bpBuffer() As Byte
             Dim stride As Integer
             Dim bp As Bitmap = copy(inBitmap)
+
+#If NET48 Then
+            Dim bpData As BitmapData
             bpData = bp.LockBits(New Rectangle(0, 0, bp.Width, bp.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb)
             stride = std.Abs(bpData.Stride)
             ReDim bpBuffer(stride * bpData.Height - 1)
             Marshal.Copy(bpData.Scan0, bpBuffer, 0, bpBuffer.Length)
             bp.UnlockBits(bpData)
+#Else
+            Throw New NotImplementedException
+#End If
+
 
             Call VBDebugger.EchoLine($"image_src_dims: [{inBitmap.Width},{inBitmap.Height}]")
             Call VBDebugger.EchoLine($"image_copy_dims: [{bp.Width},{bp.Height}]")
@@ -247,6 +255,8 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function RTCPGray(inBitmap As Bitmap, Optional sigma As Single = 0.05!) As Bitmap
+#If net48 Then
+
             Dim bp As Bitmap = inBitmap.Clone
             Dim bpData = bp.LockBits(New Rectangle(0, 0, bp.Width, bp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
             Dim w = MeasureGlobalWeight(inBitmap, sigma)
@@ -263,6 +273,9 @@ Namespace Imaging.BitmapImage
             Call bp.UnlockBits(bpData)
 
             Return bp
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
     End Module
 End Namespace

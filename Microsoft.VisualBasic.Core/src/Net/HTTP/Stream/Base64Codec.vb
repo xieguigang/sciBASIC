@@ -238,7 +238,16 @@ Namespace Net.Http
         Public Function ToStream(image As Image, format As ImageFormats) As MemoryStream
             With New MemoryStream
 #If NET48 Then
-                Call image.Save(.ByRef, format.GetFormat)
+                Dim format_gdi As ImageFormat = ImageFormat.Png
+
+                Select Case format
+                    Case ImageFormats.Jpeg : format_gdi = ImageFormat.Jpeg
+                    Case ImageFormats.Gif : format_gdi = ImageFormat.Gif
+                    Case Else
+                        Call $"The given image format flag is not supported, use png as default.".Warning
+                End Select
+
+                Call image.Save(.ByRef, format_gdi)
 #Else
                 Call image.Save(.ByRef, format)
 #End If

@@ -107,6 +107,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="scan"></param>
         <Extension>
         Public Sub BitmapPixelScans(ByRef curBitmap As Bitmap, scan As PixelScanPointer)
+#If NET48 Then
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
             Dim bmpData As BitmapData = curBitmap.LockBits(
@@ -127,6 +128,10 @@ Namespace Imaging.BitmapImage
 
             ' Unlock the bits.
             Call curBitmap.UnlockBits(bmpData)
+#Else
+            Throw New NotImplementedException
+#End If
+
         End Sub
 
         ''' <summary>
