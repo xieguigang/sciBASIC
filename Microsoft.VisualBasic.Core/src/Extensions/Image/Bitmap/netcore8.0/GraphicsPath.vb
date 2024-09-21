@@ -4,7 +4,19 @@ Namespace Imaging
 
 #If NET8_0_OR_GREATER Then
 
+    Public Class PathData
+
+        Public Property Points As PointF()
+
+    End Class
+
     Public Class GraphicsPath
+
+        Public ReadOnly Property PathData As PathData
+            Get
+                Throw New NotImplementedException
+            End Get
+        End Property
 
         Public MustInherit Class op
 
@@ -55,7 +67,36 @@ Namespace Imaging
         Public Class op_CloseAllFigures : Inherits op
         End Class
 
+        Public Class op_CloseFigure : Inherits op
+        End Class
+
+        Public Class op_AddArc : Inherits op
+            Public Property rect As RectangleF
+            Public Property startAngle As Single
+            Public Property sweepAngle As Single
+        End Class
+
+        Public Class op_AddRectangle : Inherits op
+            Public Property rect As RectangleF
+        End Class
+
+        Public Class op_AddPolygon : Inherits op
+            Public Property points As PointF()
+        End Class
+
         Dim opSet As New List(Of op)
+
+        Public Sub AddPolygon(points As PointF())
+            opSet.Add(New op_AddPolygon With {.points = points})
+        End Sub
+
+        Public Sub AddRectangle(rect As RectangleF)
+            opSet.Add(New op_AddRectangle With {.rect = rect})
+        End Sub
+
+        Public Sub AddArc(rect As RectangleF, startAngle!, sweepAngle!)
+            opSet.Add(New op_AddArc With {.rect = rect, .startAngle = startAngle, .sweepAngle = sweepAngle})
+        End Sub
 
         Public Sub AddLine(a As PointF, b As PointF)
             opSet.Add(New Op_AddLine(a, b))
@@ -79,6 +120,10 @@ Namespace Imaging
 
         Public Sub CloseAllFigures()
             opSet.Add(New op_CloseAllFigures())
+        End Sub
+
+        Public Sub CloseFigure()
+            opSet.Add(New op_CloseFigure)
         End Sub
     End Class
 #End If
