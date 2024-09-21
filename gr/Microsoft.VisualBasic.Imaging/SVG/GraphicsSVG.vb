@@ -69,9 +69,9 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
@@ -155,10 +155,6 @@ Namespace SVG
 #Region "NotSupportedException"
 
         Public Overrides Sub ExcludeClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ExcludeClip(region As Region)
             Throw New NotImplementedException()
         End Sub
 
@@ -284,14 +280,6 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
             Throw New NotImplementedException()
         End Sub
@@ -362,6 +350,7 @@ Namespace SVG
             End If
 
             Try
+#If NET48 Then
                 If TypeOf pen.CustomEndCap Is AdjustableArrowCap Then
                     ' draw arrow on line end
                     Dim defs As SvgDefs = __svgData.svg.defs
@@ -371,6 +360,7 @@ Namespace SVG
 
                     line.MarkerEnd = $"url(#{refId})"
                 End If
+#End If
             Catch ex As Exception
                 ' error maybe happends when the custom end cap has not been setup
                 ' just ignores of this error
@@ -504,7 +494,7 @@ Namespace SVG
             ' 在这里存在一个位置偏移的bug
             ' 在这里尝试使用font size来修正
             Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
-            Dim size As SizeF = gdi.MeasureString(s, font)
+            Dim size As SizeF = MeasureString(s, font)
             Dim text As SvgText = __svgData.svg.AddText
 
             x = x + FontFace.SVGPointSize(size.Width, Dpi) / 6
@@ -538,21 +528,9 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
             Call DrawString(s, font, brush, New PointF(x, y))
-        End Sub
-
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
-            Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF)
@@ -569,21 +547,6 @@ Namespace SVG
             path.Style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
         End Sub
 
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
 
         Public Overrides Sub FillEllipse(brush As Brush, rect As Rectangle)
             Throw New NotImplementedException()
@@ -638,14 +601,6 @@ Namespace SVG
             polygon.Fill = brush.SVGColorHelper
         End Sub
 
-        Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
             With rect
                 Call FillRectangle(brush, .X, .Y, .Width, .Height)
@@ -675,10 +630,6 @@ Namespace SVG
 
             rect.SetRectangle(New PointF(x, y), New SizeF(width, height))
             rect.Style = "fill: " & fill
-        End Sub
-
-        Public Overrides Sub FillRegion(brush As Brush, region As Region)
-            Throw New NotImplementedException()
         End Sub
 #End Region
 

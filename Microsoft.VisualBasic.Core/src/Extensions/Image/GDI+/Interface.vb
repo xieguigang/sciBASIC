@@ -185,6 +185,11 @@ Namespace Imaging
             Me._Background = color
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Clear(bg As Brush)
+            Call FillRectangle(bg, New RectangleF(New PointF, Size.SizeF))
+        End Sub
+
         ''' <summary>
         ''' Clears the entire drawing surface and fills it with the specified background
         ''' color.

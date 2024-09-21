@@ -5,6 +5,7 @@
 
         Public ReadOnly Property FamilyName As String
         Public ReadOnly Property Size As Single
+        Public ReadOnly Property SizeInPoints As Single
 
         Sub New(name As String, size As Single)
             Me.FamilyName = name

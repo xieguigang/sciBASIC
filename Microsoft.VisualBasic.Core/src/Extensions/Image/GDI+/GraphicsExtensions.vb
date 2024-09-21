@@ -246,20 +246,6 @@ Namespace Imaging
             End With
         End Sub
 
-        <Extension>
-        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Pen, Optional fill As Boolean = True)
-            With centra
-                Dim d! = r * 2
-                Dim rect As New Rectangle(.X - r, .Y - r, d, d)
-
-                If fill Then
-                    Call g.FillPie(New SolidBrush(color.Color), rect, 0, 360)
-                Else
-                    Call g.DrawEllipse(color, rect)
-                End If
-            End With
-        End Sub
-
         ''' <summary>
         ''' 模仿Java之中的``DrawCircle``方法
         ''' </summary>
@@ -414,17 +400,6 @@ Namespace Imaging
                 Return .ByRef
             End With
         End Function
-
-        '<ExportAPI("GrayBitmap")>
-        '<Description("Create the gray color of the target image.")>
-        '<Extension> Public Function CreateGrayBitmap(res As Image) As Image
-        '    Using g As Graphics2D = DirectCast(res.Clone, Image).CreateCanvas2D
-        '        With g
-        '            Call ControlPaint.DrawImageDisabled(.Graphics, res, 0, 0, Color.FromArgb(0, 0, 0, 0))
-        '            Return .ImageResource
-        '        End With
-        '    End Using
-        'End Function
 
         ''' <summary>
         ''' Adding a frame box to the target image source.(为图像添加边框)

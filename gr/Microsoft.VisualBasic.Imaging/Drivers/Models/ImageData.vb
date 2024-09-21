@@ -65,6 +65,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Drawing
 
 Namespace Driver
 
@@ -84,13 +85,13 @@ Namespace Driver
             MyBase.New(img, size, padding)
 
             If img.GetType() Is GetType(Bitmap) Then
-                Image = CType(DirectCast(img, Bitmap), Drawing.Image)
+                Image = CType(DirectCast(img, Bitmap), Image)
             Else
-                Image = DirectCast(img, Drawing.Image)
+                Image = DirectCast(img, Image)
             End If
         End Sub
 
-        Sub New(image As Drawing.Image)
+        Sub New(image As Image)
             Call Me.New(image, image.Size, New Padding)
         End Sub
 
@@ -129,7 +130,7 @@ Namespace Driver
             Return Image.SaveAs(path, ImageData.DefaultFormat)
         End Function
 
-        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Try
                 Call Image.Save(stream, format)
             Catch ex As Exception
@@ -142,7 +143,11 @@ Namespace Driver
 
         Public Overrides Function Save(out As Stream) As Boolean
             Try
+#If NET48 Then
                 Call Image.Save(out, DefaultFormat.GetFormat)
+#Else
+                Call Image.Save(out, DefaultFormat)
+#End If
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False

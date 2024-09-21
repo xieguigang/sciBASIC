@@ -19,10 +19,10 @@ Namespace Imaging
 
     Public Class TextureBrush : Inherits Brush
 
-        Public Property Texture As Image
+        Public Property Image As Image
 
         Sub New(image As Image)
-            Texture = image
+            Me.Image = image
         End Sub
 
     End Class
