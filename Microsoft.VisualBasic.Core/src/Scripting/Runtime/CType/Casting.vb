@@ -423,11 +423,6 @@ Namespace Scripting.Runtime
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
-            Return CanvasCreateFromImageFile(path)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFont(face As String) As Font
             Return New Font(face, 10)
         End Function

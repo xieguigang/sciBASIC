@@ -57,11 +57,12 @@ Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Imaging.BitmapImage
 
     Public Module Effects
-#If NET48 Then
+
         ''' <summary>
         ''' 羽化
         ''' </summary>
@@ -271,6 +272,5 @@ Namespace Imaging.BitmapImage
 
             Return rotatedBmp
         End Function
-#End If
     End Module
 End Namespace

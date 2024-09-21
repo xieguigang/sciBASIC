@@ -67,7 +67,7 @@ Namespace Imaging.BitmapImage
     ''' https://github.com/omuleanu/imager
     ''' </remarks>
     Public Module Imager
-#If NET48 Then
+
         ''' <summary>
         ''' get codec info by mime type
         ''' </summary>
@@ -120,8 +120,8 @@ Namespace Imaging.BitmapImage
         <Extension>
         Public Function ResizeScaled(image As Image, newSize As Size, Optional interpolate As InterpolationMode = InterpolationMode.HighQualityBilinear) As Image
             Using g As Graphics2D = newSize.CreateGDIDevice
-                g.CompositingQuality = CompositingQuality.HighQuality
-                g.InterpolationMode = interpolate
+                g.Graphics.CompositingQuality = CompositingQuality.HighQuality
+                g.Graphics.InterpolationMode = interpolate
                 g.DrawImage(image, New RectangleF(New PointF, g.Size))
 
                 Return g.ImageResource
@@ -188,6 +188,5 @@ Namespace Imaging.BitmapImage
             Dim bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat)
             Return bmpCrop
         End Function
-#End If
     End Module
 End Namespace
