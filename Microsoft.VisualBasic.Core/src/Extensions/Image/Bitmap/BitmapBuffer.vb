@@ -90,6 +90,7 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ReadOnly channels As Integer
 
+#If NET48 Then
         Protected Sub New(ptr As IntPtr,
                           byts%,
                           raw As Bitmap,
@@ -107,6 +108,13 @@ Namespace Imaging.BitmapImage
             Me.Size = New Size(Width, Height)
             Me.channels = channel
         End Sub
+#Else
+        Sub New(ptr As IntPtr, byts%, channel As Integer)
+            Call MyBase.New(ptr, byts)
+
+            Throw New NotImplementedException
+        End Sub
+#End If
 
         ''' <summary>
         ''' The dimension width of the current bitmap buffer object
