@@ -144,7 +144,7 @@ Namespace Distributions
         Public Shared Function Generate(Optional minDist As Single = 5.0F,
                                         Optional sampleRange As Single = 256.0F,
                                         Optional k As Integer = 30,
-                                        Optional dart As Image = Nothing) As List(Of Vector2D)
+                                        Optional dart As Bitmap = Nothing) As List(Of Vector2D)
 
             If Not IsInputsValid(minDist, sampleRange, k) Then
                 ' TODO: handle error.
@@ -159,14 +159,18 @@ Namespace Distributions
                 If Not dart Is Nothing Then
                     ' make the input dart image grayscale
                     ' and resize to size [sampleRange,sampleRange]
-                    Dim grayscale = New Bitmap(CInt(sampleRange), CInt(sampleRange))
-                    Dim g As Graphics = Graphics.FromImage(grayscale)
+                    Dim grayscale As Bitmap
 
                     dart = dart.Grayscale
-                    g.DrawImage(dart, 0, 0, grayscale.Width, grayscale.Height)
-                    g.Flush()
-                    g.Dispose()
+#If NET48 Then
+                    grayscale = New Bitmap(CInt(sampleRange), CInt(sampleRange))
 
+                    Using g As Graphics = Graphics.FromImage(grayscale)
+                        Call g.DrawImage(dart, 0, 0, grayscale.Width, grayscale.Height)
+                    End Using
+#Else
+                    grayscale = dart.Resize(sampleRange, sampleRange)
+#End If
                     poisson.grayscale = grayscale
                 End If
 

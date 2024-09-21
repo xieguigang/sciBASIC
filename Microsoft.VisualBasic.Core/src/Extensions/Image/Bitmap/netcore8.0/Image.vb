@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 
 Namespace Imaging
@@ -94,8 +95,9 @@ Namespace Imaging
             Return bitmap
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(X As Integer, Y As Integer) As Color
-            Throw New NotImplementedException()
+            Return memoryBuffer.GetPixel(X, Y)
         End Function
     End Class
 #End If
