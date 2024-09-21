@@ -139,11 +139,7 @@ Namespace Drawing2D.Text
                 Case GetType(Graphics2D)
                     Return New FontMetrics(font, DirectCast(g, Graphics2D))
                 Case Else
-                    If g.GetType.IsInheritsFrom(GetType(MockGDIPlusGraphics)) Then
-                        Return DirectCast(g, MockGDIPlusGraphics).FontMetrics(font)
-                    Else
-                        Throw New InvalidCastException(g.GetType.FullName)
-                    End If
+                    Throw New InvalidCastException(g.GetType.FullName)
             End Select
         End Function
     End Module

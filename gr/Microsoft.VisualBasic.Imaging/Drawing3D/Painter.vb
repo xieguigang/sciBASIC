@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::2c44e05d47f832ce15deccbcd2daaa3c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 227
-    '    Code Lines: 138 (60.79%)
-    ' Comment Lines: 60 (26.43%)
-    '    - Xml Docs: 85.00%
-    ' 
-    '   Blank Lines: 29 (12.78%)
-    '     File Size: 8.80 KB
+' Summaries:
 
 
-    '     Module PainterAlgorithm
-    ' 
-    '         Function: CreateCanvas2D, OrderProvider, PainterBuffer
-    ' 
-    '         Sub: (+2 Overloads) BufferPainting, (+2 Overloads) SurfacePainter
-    '         Structure Polygon
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 227
+'    Code Lines: 138 (60.79%)
+' Comment Lines: 60 (26.43%)
+'    - Xml Docs: 85.00%
+' 
+'   Blank Lines: 29 (12.78%)
+'     File Size: 8.80 KB
+
+
+'     Module PainterAlgorithm
+' 
+'         Function: CreateCanvas2D, OrderProvider, PainterBuffer
+' 
+'         Sub: (+2 Overloads) BufferPainting, (+2 Overloads) SurfacePainter
+'         Structure Polygon
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -72,10 +73,10 @@ Namespace Drawing3D
     ''' ``PAINTERS ALGORITHM`` provider
     ''' </summary>
     Public Module PainterAlgorithm
-
+#If NET48 Then
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D
+        Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Microsoft.VisualBasic.Drawing.Graphics2D
             Return camera.screen.CreateGDIDevice(filled:=bg.TranslateColor)
         End Function
 
@@ -98,7 +99,7 @@ Namespace Drawing3D
                 illumination)
             Call canvas.BufferPainting(buf, drawPath, offset)
         End Sub
-
+#End If
         ''' <summary>
         ''' 这个函数主要是应用于函数绘图的。请注意，这个并没有rotate，只会利用camera进行project
         ''' </summary>
@@ -138,6 +139,7 @@ Namespace Drawing3D
             Next
         End Sub
 
+#If NET48 Then
         ''' <summary>
         ''' 应用于WinForm的原生方法
         ''' </summary>
@@ -162,6 +164,7 @@ Namespace Drawing3D
                 End With
             Next
         End Sub
+#End If
 
         ''' <summary>
         ''' 生成三维图形绘图的多边形缓存。请注意，这个并没有rotate，只会利用camera进行project
