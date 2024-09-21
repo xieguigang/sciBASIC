@@ -10,11 +10,16 @@ Namespace Imaging
     Public Class Pen
 
         Public Property Color As Color
-        Public Property Width As Single
+        Public Property Width As Single = 1
         Public Property DashStyle As DashStyle
 
         Sub New(color As Color)
             _Color = color
+        End Sub
+
+        Sub New(brush As SolidBrush, width As Single)
+            _Color = brush.Color
+            _Width = width
         End Sub
 
     End Class

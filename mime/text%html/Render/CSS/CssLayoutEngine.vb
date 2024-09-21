@@ -62,7 +62,7 @@ Imports System.Drawing
 Imports System.Math
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Helps on CSS Layout
     ''' </summary>
@@ -574,4 +574,5 @@ Namespace Render.CSS
 
 #End Region
     End Class
+#End If
 End Namespace

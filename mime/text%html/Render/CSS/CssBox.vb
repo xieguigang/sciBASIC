@@ -103,6 +103,8 @@ Imports std = System.Math
 
 Namespace Render.CSS
 
+#If NET48 Then
+
     ''' <summary>
     ''' Represents a CSS Box of text or replaced elements.
     ''' </summary>
@@ -3256,4 +3258,5 @@ Namespace Render.CSS
         End Function
 #End Region
     End Class
+#End If
 End Namespace

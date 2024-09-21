@@ -37,4 +37,8 @@
     <ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="HtmlRender\" />
+  </ItemGroup>
+
 </Project>

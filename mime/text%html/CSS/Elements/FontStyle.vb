@@ -64,6 +64,16 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
+#If NET48 Then
+Imports Font = System.Drawing.Font
+Imports Pen = System.Drawing.Pen
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace CSS
 
     ''' <summary>

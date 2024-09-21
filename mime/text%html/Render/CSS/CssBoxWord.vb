@@ -63,7 +63,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Represents a word inside an inline box
     ''' </summary>
@@ -253,4 +253,5 @@ Namespace Render.CSS
 
 #End Region
     End Class
+#End If
 End Namespace

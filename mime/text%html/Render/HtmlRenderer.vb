@@ -103,7 +103,7 @@ Namespace Render
         End Sub
 #End Region
 
-#Region "Methods"
+#If NET48 Then
 
         ''' <summary>
         ''' Draws the HTML on the specified point using the specified width.
@@ -141,7 +141,7 @@ Namespace Render
                 g.SetClip(prevClip, CombineMode.Replace)
             End If
         End Sub
-#End Region
+#End If
 
         ''' <summary>
         ''' load the css styling environment from the given graphics canvas object.
@@ -156,4 +156,5 @@ Namespace Render
             Return New CSSEnvirnment(g.Size, g.Dpi).SetBaseStyles(g.Font, g.Stroke)
         End Function
     End Module
+
 End Namespace

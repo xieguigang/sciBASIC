@@ -3,16 +3,26 @@
 #If NET8_0_OR_GREATER Then
     Public Class Font
 
-        Public ReadOnly Property FamilyName As String
+        Public ReadOnly Property Name As String
         Public ReadOnly Property Size As Single
         Public ReadOnly Property SizeInPoints As Single
-        Public ReadOnly Property FontStyle As FontStyle
+        Public ReadOnly Property Style As FontStyle
 
         Sub New(name As String, size As Single, Optional style As FontStyle = FontStyle.Regular)
-            Me.FamilyName = name
+            Me.Name = name
             Me.Size = size
-            Me.FontStyle = style
+            Me.Style = style
         End Sub
+
+        Sub New(baseFont As Font, style As FontStyle)
+            _Name = baseFont.Name
+            _Size = baseFont.Size
+            _Style = style
+        End Sub
+
+        Public Function Clone() As Object
+            Return New Font(Name, Size, Style)
+        End Function
 
     End Class
 

@@ -57,7 +57,7 @@
 #End Region
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Represents an anonymous inline box
     ''' </summary>
@@ -83,4 +83,5 @@ Namespace Render.CSS
             MyBase.New(parentBox)
         End Sub
     End Class
+#End If
 End Namespace

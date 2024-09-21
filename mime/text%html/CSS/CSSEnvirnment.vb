@@ -58,10 +58,21 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
+
+#If NET48 Then
+Imports Font = System.Drawing.Font
+Imports Pen = System.Drawing.Pen
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Namespace CSS
 
@@ -188,7 +199,7 @@ Namespace CSS
 
         Public Function GetFontByScale(em As Single) As Font
             Dim newSize As Single = em * baseFont.Size
-            Dim newFont As New Font(baseFont.FontFamily, newSize, baseFont.Style)
+            Dim newFont As New Font(baseFont.Name, newSize, baseFont.Style)
 
             Return newFont
         End Function
