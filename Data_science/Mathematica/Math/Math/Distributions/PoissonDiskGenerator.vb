@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Distributions
 
@@ -156,6 +157,8 @@ Namespace Distributions
                 }
 
                 If Not dart Is Nothing Then
+                    ' make the input dart image grayscale
+                    ' and resize to size [sampleRange,sampleRange]
                     Dim grayscale = New Bitmap(CInt(sampleRange), CInt(sampleRange))
                     Dim g As Graphics = Graphics.FromImage(grayscale)
 

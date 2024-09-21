@@ -76,6 +76,9 @@ Namespace Imaging
             Throw New NotImplementedException
         End Sub
 
+        Public Function GetPixel(X As Integer, Y As Integer) As Color
+            Throw New NotImplementedException()
+        End Function
     End Class
 #End If
 End Namespace
