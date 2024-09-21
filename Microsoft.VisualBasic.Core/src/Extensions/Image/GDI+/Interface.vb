@@ -119,6 +119,10 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
 
+        Public Sub New(dpi As Integer)
+            Me.Dpi = dpi
+        End Sub
+
         '
         ' Summary:
         '     Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.

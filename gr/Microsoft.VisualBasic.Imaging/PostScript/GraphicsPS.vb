@@ -71,7 +71,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -81,33 +80,9 @@ Namespace PostScript
 
     Public Class GraphicsPS : Inherits MockGDIPlusGraphics
 
-        Public Overrides Property InterpolationMode As InterpolationMode
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingMode)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Throw New NotImplementedException()
-            End Get
-            Set(value As CompositingQuality)
-                Throw New NotImplementedException()
-            End Set
-        End Property
-
         Public Overrides Property PageScale As Single
-        Public Overrides Property PageUnit As GraphicsUnit
-        Public Overrides Property PixelOffsetMode As PixelOffsetMode
         Public Overrides Property RenderingOrigin As Point
-        Public Overrides Property SmoothingMode As SmoothingMode
         Public Overrides Property TextContrast As Integer
-        Public Overrides Property TextRenderingHint As TextRenderingHint
 
         Dim ps_fontsize% = 15
         Dim buffer As New MemoryStream
@@ -216,14 +191,6 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
             Throw New NotImplementedException()
         End Sub
@@ -268,18 +235,6 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawImage(image As Image, point As Point)
             Throw New NotImplementedException()
         End Sub
@@ -312,91 +267,11 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
             Throw New NotImplementedException()
         End Sub
 
@@ -531,27 +406,11 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
             fprintf(fp, "%f %f moveto (%s) show\n", x, y, s)
         End Sub
 
-        Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ExcludeClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ExcludeClip(region As Region)
             Throw New NotImplementedException()
         End Sub
 
@@ -560,22 +419,6 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
             Throw New NotImplementedException()
         End Sub
 
@@ -619,14 +462,6 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
             Throw New NotImplementedException()
         End Sub
@@ -643,21 +478,9 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub FillRegion(brush As Brush, region As Region)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub Flush()
             fprintf(fp, "%%%%EOF\n")
             fp.Flush()
-        End Sub
-
-        Public Overrides Sub Flush(intention As FlushIntention)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub IntersectClip(region As Region)
-            Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub IntersectClip(rect As RectangleF)
@@ -665,14 +488,6 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub IntersectClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub MultiplyTransform(matrix As Matrix)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
             Throw New NotImplementedException()
         End Sub
 
@@ -688,15 +503,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
             Throw New NotImplementedException()
         End Sub
 
@@ -704,43 +511,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub SetClip(path As GraphicsPath)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub SetClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(g As Graphics)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(rect As Rectangle, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(region As Region, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(rect As RectangleF, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(g As Graphics, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
             Throw New NotImplementedException()
         End Sub
 
@@ -755,22 +526,6 @@ Namespace PostScript
         Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
             Throw New NotImplementedException()
         End Sub
-
-        Public Overrides Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Function BeginContainer() As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
 
         Public Overrides Function GetContextInfo() As Object
             Throw New NotImplementedException()
@@ -796,10 +551,6 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Function
 
-        Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
-            Throw New NotImplementedException()
-        End Function
-
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Throw New NotImplementedException()
         End Function
@@ -809,22 +560,6 @@ Namespace PostScript
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Throw New NotImplementedException()
         End Function
 

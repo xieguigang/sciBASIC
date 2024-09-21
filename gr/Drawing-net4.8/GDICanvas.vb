@@ -103,6 +103,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     End Property
 
     Sub New()
+        Call MyBase.New(100)
     End Sub
 
 #Region "Implements Class Graphics"

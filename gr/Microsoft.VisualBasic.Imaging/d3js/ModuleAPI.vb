@@ -121,7 +121,7 @@ Namespace d3js
         End Function
 
         <Extension>
-        Public Iterator Function Label(g As Graphics2D, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
+        Public Iterator Function Label(g As IGraphics, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
             Dim font As Font = g.LoadEnvironment.GetFont(CSSFont.TryParse(fontCSS))
             Dim size As SizeF
 

@@ -62,6 +62,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports std = System.Math
 
 Namespace Driver
 
@@ -76,35 +77,6 @@ Namespace Driver
         Friend ReadOnly gdi As Graphics
 
         Public Overrides ReadOnly Property Size As Size
-        Public Overrides ReadOnly Property DpiX As Single
-        Public Overrides ReadOnly Property DpiY As Single
-
-        Public Overrides Property InterpolationMode As InterpolationMode
-            Get
-                Return gdi.InterpolationMode
-            End Get
-            Set(value As InterpolationMode)
-                gdi.InterpolationMode = value
-            End Set
-        End Property
-
-        Public Overrides Property CompositingQuality As CompositingQuality
-            Get
-                Return gdi.CompositingQuality
-            End Get
-            Set(value As CompositingQuality)
-                gdi.CompositingQuality = value
-            End Set
-        End Property
-
-        Public Overrides Property CompositingMode As CompositingMode
-            Get
-                Return gdi.CompositingMode
-            End Get
-            Set(value As CompositingMode)
-                gdi.CompositingMode = value
-            End Set
-        End Property
 
         Public Overrides Property PageScale As Single
             Get
@@ -112,25 +84,6 @@ Namespace Driver
             End Get
             Set(value As Single)
                 gdi.PageScale = value
-            End Set
-        End Property
-
-        Public Overrides Property PageUnit As GraphicsUnit
-            Get
-                Return gdi.PageUnit
-            End Get
-            Set(value As GraphicsUnit)
-                gdi.PageUnit = value
-            End Set
-        End Property
-
-
-        Public Overrides Property PixelOffsetMode As PixelOffsetMode
-            Get
-                Return gdi.PixelOffsetMode
-            End Get
-            Set(value As PixelOffsetMode)
-                gdi.PixelOffsetMode = value
             End Set
         End Property
 
@@ -143,15 +96,6 @@ Namespace Driver
             End Set
         End Property
 
-        Public Overrides Property SmoothingMode As SmoothingMode
-            Get
-                Return gdi.SmoothingMode
-            End Get
-            Set(value As SmoothingMode)
-                gdi.SmoothingMode = value
-            End Set
-        End Property
-
         Public Overrides Property TextContrast As Integer
             Get
                 Return gdi.TextContrast
@@ -161,22 +105,17 @@ Namespace Driver
             End Set
         End Property
 
-        Public Overrides Property TextRenderingHint As TextRenderingHint
-            Get
-                Return gdi.TextRenderingHint
-            End Get
-            Set(value As TextRenderingHint)
-                gdi.TextRenderingHint = value
-            End Set
-        End Property
-
         Sub New(dpiX As Integer, dpiY As Integer)
-            Dim null As New Bitmap(10, 10)
+            Call MyBase.New(std.Max(dpiX, dpiY))
 
-            Me.DpiX = dpiX
-            Me.DpiY = dpiY
+#If NET48 Then
+            Dim null As New Bitmap(10, 10)
+                        
             ' null.SetResolution(dpiX, dpiY)
             gdi = Graphics.FromImage(null)
+#Else
+            Throw New NotImplementedException
+#End If
         End Sub
 
         Sub New(size As Size, dpi As Size)
@@ -191,18 +130,8 @@ Namespace Driver
             Me.Size = size
         End Sub
 
-        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
-        'Protected Overridable Function FontScale(font As Font) As Font
-        '    Return New Font(font, FontFace.SVGPointSize(font.Size, Dpi))
-        'End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function FontMetrics(font As Font) As FontMetrics
-            Return New FontMetrics(font, gdi)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
+        Public Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
             Return gdi.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
         End Function
 
@@ -225,25 +154,25 @@ Namespace Driver
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
+        Public Overloads Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
             'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), width, format), Dpi)
             Return FontFace.SVGPointSize(gdi.MeasureString(text, font, width, format), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
+        Public Overloads Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
             'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), origin, stringFormat), Dpi)
             Return FontFace.SVGPointSize(gdi.MeasureString(text, font, origin, stringFormat), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
+        Public Overloads Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
             'Return FontFace.SVGPointSize(gdi.MeasureString(text, FontScale(font), layoutArea, stringFormat), Dpi)
             Return FontFace.SVGPointSize(gdi.MeasureString(text, font, layoutArea, stringFormat), Dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function MeasureString(text As String,
+        Public Overloads Function MeasureString(text As String,
                                                 font As Font,
                                                 layoutArea As SizeF,
                                                 stringFormat As StringFormat,

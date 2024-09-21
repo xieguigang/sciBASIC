@@ -109,7 +109,7 @@ Namespace Driver
             Return True
         End Function
 
-        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Return Save(stream)
         End Function
     End Class
