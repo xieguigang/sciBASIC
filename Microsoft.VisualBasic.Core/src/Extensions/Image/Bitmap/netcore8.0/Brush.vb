@@ -19,6 +19,12 @@ Namespace Imaging
 
     Public Class TextureBrush : Inherits Brush
 
+        Public Property Texture As Image
+
+        Sub New(image As Image)
+            Texture = image
+        End Sub
+
     End Class
 
     Public NotInheritable Class Brushes

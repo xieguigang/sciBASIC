@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::7257be68ac7e964c6f836808195d52f4, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 238
-    '    Code Lines: 143 (60.08%)
-    ' Comment Lines: 60 (25.21%)
-    '    - Xml Docs: 91.67%
-    ' 
-    '   Blank Lines: 35 (14.71%)
-    '     File Size: 8.93 KB
+' Summaries:
 
 
-    '     Class Graphics2D
-    ' 
-    '         Properties: Center, Height, ImageResource, Size, Width
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: CreateDevice, CreateObject, Open, (+3 Overloads) Save, ToString
-    ' 
-    '         Sub: DrawCircle, DrawString, saveFile
-    '         Structure Context
-    ' 
-    '             Function: Create
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 238
+'    Code Lines: 143 (60.08%)
+' Comment Lines: 60 (25.21%)
+'    - Xml Docs: 91.67%
+' 
+'   Blank Lines: 35 (14.71%)
+'     File Size: 8.93 KB
+
+
+'     Class Graphics2D
+' 
+'         Properties: Center, Height, ImageResource, Size, Width
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: CreateDevice, CreateObject, Open, (+3 Overloads) Save, ToString
+' 
+'         Sub: DrawCircle, DrawString, saveFile
+'         Structure Context
+' 
+'             Function: Create
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports std = System.Math
 
@@ -254,7 +255,7 @@ Namespace Imaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
-            Return GraphicsExtensions.CreateObject(g, res)
+            Return Extensions.CreateObject(g, res)
         End Function
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
@@ -263,11 +264,7 @@ Namespace Imaging
         End Sub
 
         Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
-#If NET48 Then
             Call ImageResource.Save(stream, format.GetFormat)
-#Else
-            Call ImageResource.Save(stream, format)
-#End If
             Call stream.Flush()
 
             Return True

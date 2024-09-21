@@ -371,7 +371,7 @@ Namespace Imaging
 
             If exp.StringEmpty Then
                 success = False
-                Return Drawing.Color.Black
+                Return System.Drawing.Color.Black
             End If
 
             ' 20221127 fix multiple threading error

@@ -63,11 +63,7 @@
 Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Graphics
-Imports System.Drawing.Imaging
-Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports std = System.Math
 
 Namespace Imaging
 
@@ -85,6 +81,18 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Size As Size
+
+        Public ReadOnly Property Width As Integer
+            Get
+                Return Size.Width
+            End Get
+        End Property
+
+        Public ReadOnly Property Height As Integer
+            Get
+                Return Size.Height
+            End Get
+        End Property
 
         ''' <summary>
         ''' set background via <see cref="Clear"/> method.

@@ -77,6 +77,7 @@ Imports System.Drawing.Graphics
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Imaging
 

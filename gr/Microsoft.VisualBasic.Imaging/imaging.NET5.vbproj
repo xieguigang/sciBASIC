@@ -810,6 +810,7 @@
 		<ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
 		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
+		<ProjectReference Include="..\Drawing-net4.8\Drawing-net4.8.vbproj" />
 	</ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">

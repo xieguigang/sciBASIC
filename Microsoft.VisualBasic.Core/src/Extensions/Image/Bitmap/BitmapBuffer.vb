@@ -79,8 +79,10 @@ Namespace Imaging.BitmapImage
         Implements IDisposable
         Implements IEnumerable(Of Color)
 
+#If NET48 Then
         ReadOnly raw As Bitmap
         ReadOnly handle As BitmapData
+#End If
 
         ''' <summary>
         ''' 图片可能是 BGRA 4通道
@@ -137,7 +139,11 @@ Namespace Imaging.BitmapImage
                 Call Write()
             End If
 
+#If NET48 Then
             Return DirectCast(raw.Clone, Bitmap)
+#Else
+            Throw New NotImplementedException
+#End If
         End Function
 
         ' pixel:  (1,1)(2,1)(3,1)(4,1)(1,2)(2,2)(3,2)(4,2)
@@ -402,6 +408,7 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromImage(res As Image) As BitmapBuffer
+#If NET48 Then
             Dim copy As New Bitmap(res.Width, res.Height, format:=PixelFormat.Format32bppArgb)
             Dim g As Graphics = Graphics.FromImage(copy)
 
@@ -410,7 +417,20 @@ Namespace Imaging.BitmapImage
             Call g.Dispose()
 
             Return BitmapBuffer.FromBitmap(copy)
+#Else
+             Throw New NotImplementedException
+#End If
         End Function
+
+        Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
+#If NET48 Then
+            Return FromBitmap(curBitmap, ImageLockMode.ReadWrite)
+#Else
+            Throw New NotImplementedException
+#End If
+        End Function
+
+#If NET48 Then
 
         ''' <summary>
         ''' 使用这个函数进行写数据的话，会修改到原图
@@ -418,7 +438,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="curBitmap"></param>
         ''' <param name="mode"></param>
         ''' <returns></returns>
-        Public Shared Function FromBitmap(curBitmap As Bitmap, Optional mode As ImageLockMode = ImageLockMode.ReadWrite) As BitmapBuffer
+        Public Shared Function FromBitmap(curBitmap As Bitmap, mode As ImageLockMode) As BitmapBuffer
             ' Lock the bitmap's bits.  
             Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
             Dim bmpData As BitmapData = curBitmap.LockBits(
@@ -444,10 +464,13 @@ Namespace Imaging.BitmapImage
 
             Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData, channels)
         End Function
+#End If
 
         Protected Overrides Sub Dispose(disposing As Boolean)
             Call Write()
+#If NET48 Then
             Call raw.UnlockBits(handle)
+#End If
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Color) Implements IEnumerable(Of Color).GetEnumerator

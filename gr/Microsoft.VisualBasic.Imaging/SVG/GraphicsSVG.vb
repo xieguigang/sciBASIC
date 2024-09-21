@@ -166,35 +166,24 @@ Namespace SVG
 
 #Region "向SVG之中嵌入图片图像数据"
 
-        Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
 
-        Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, point As Point)
+        Public Overrides Sub DrawImage(image As Image, point As Point)
             DrawImage(image, New RectangleF(point.PointF, image.Size))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As Point)
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As PointF)
+        Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, rect As Rectangle)
+        Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
             DrawImage(image, CType(rect, RectangleF))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, point As PointF)
+        Public Overrides Sub DrawImage(image As Image, point As PointF)
             DrawImage(image, New RectangleF(point, image.Size))
         End Sub
 
@@ -206,124 +195,44 @@ Namespace SVG
             Call img.SetRectangle(rect)
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer)
             DrawImage(image, CSng(x), CSng(y))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single)
             Dim size = image.Size
             DrawImage(image, New RectangleF(x, y, size.Width, size.Height))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single, width As Single, height As Single)
+        Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
             DrawImage(image, New RectangleF(x, y, width, height))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
             DrawImage(image, New RectangleF(x, y, width, height))
         End Sub
 
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImage(image As Drawing.Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, rect As Rectangle)
+        Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
             Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, rect)
         End Sub
 
-        Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, point As Point)
+        Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
             Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, point)
         End Sub
 
-        Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
             Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y)
         End Sub
 
-        Public Overrides Sub DrawImageUnscaled(image As Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
+        Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
             Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaled(img, x, y, width, height)
         End Sub
 
-        Public Overrides Sub DrawImageUnscaledAndClipped(image As Drawing.Image, rect As Rectangle)
+        Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
             Dim img As New ImageData(image, image.Size, New Padding)
             Call Me.DrawImageUnscaledAndClipped(img, rect)
         End Sub
@@ -777,27 +686,11 @@ Namespace SVG
 
         End Sub
 
-        Public Overrides Sub Flush(intention As FlushIntention)
-
-        End Sub
-
-        Public Overrides Sub IntersectClip(region As Region)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub IntersectClip(rect As RectangleF)
             Throw New NotImplementedException()
         End Sub
 
         Public Overrides Sub IntersectClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub MultiplyTransform(matrix As Matrix)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
             Throw New NotImplementedException()
         End Sub
 
@@ -813,15 +706,7 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
             Throw New NotImplementedException()
         End Sub
 
@@ -829,43 +714,7 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub SetClip(path As GraphicsPath)
-            Throw New NotImplementedException()
-        End Sub
-
         Public Overrides Sub SetClip(rect As Rectangle)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(g As Graphics)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(rect As Rectangle, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(region As Region, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(rect As RectangleF, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub SetClip(g As Graphics, combineMode As CombineMode)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
             Throw New NotImplementedException()
         End Sub
 
@@ -880,22 +729,6 @@ Namespace SVG
         Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
             Throw New NotImplementedException()
         End Sub
-
-        Public Overrides Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
-            Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Function BeginContainer() As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
-            Throw New NotImplementedException()
-        End Function
 
         Public Overrides Function GetContextInfo() As Object
             Throw New NotImplementedException()
@@ -939,7 +772,7 @@ Namespace SVG
         Public Overrides Sub Dispose()
         End Sub
 
-        Public Function Save(stream As IO.Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Public Function Save(stream As IO.Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Return New SVGData(Me, Size, New Padding).Save(stream)
         End Function
     End Class
