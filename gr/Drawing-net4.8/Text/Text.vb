@@ -60,7 +60,6 @@ Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports GdiImage = System.Drawing.Image
 
 Namespace Drawing2D.Text
 
@@ -113,9 +112,9 @@ Namespace Drawing2D.Text
         ''' <param name="cssFont$">For html ``&lt;p>...&lt;/p>`` css style</param>
         ''' <param name="maxSize$"></param>
         ''' <returns></returns>
-        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As GdiImage
+        Public Function DrawHtmlText(label$, cssFont$, Optional maxSize$ = "1600,600") As Image
             Using g As Graphics2D = New Size(1600, 600).CreateGDIDevice(Color.Transparent)
-                Dim out As GdiImage
+                Dim out As Image
 
                 TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
                 out = g.ImageResource
@@ -124,23 +123,5 @@ Namespace Drawing2D.Text
                 Return out
             End Using
         End Function
-
-        <Extension>
-        Public Sub DrawHtmlString(g As IGraphics, text$, baseFontStyle As Font, defaultColor As Color, location As Point)
-            Dim tokens As TextString() = TextAPI _
-                .TryParse(text, baseFontStyle, defaultColor) _
-                .ToArray
-
-            Call g.RenderHTML(tokens, New PointF(location.X, location.Y))
-        End Sub
-
-        <Extension>
-        Public Sub DrawHtmlString(g As IGraphics, text$, baseFontStyle As Font, defaultColor As Color, location As PointF)
-            Dim tokens As TextString() = TextAPI _
-                .TryParse(text, baseFontStyle, defaultColor) _
-                .ToArray
-
-            Call g.RenderHTML(tokens, location)
-        End Sub
     End Module
 End Namespace
