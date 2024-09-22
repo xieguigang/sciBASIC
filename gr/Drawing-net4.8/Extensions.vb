@@ -218,6 +218,7 @@ Public Module Extensions
         g.CompositingQuality = CompositingQuality.HighQuality
         g.SmoothingMode = SmoothingMode.HighQuality
         g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+        g.CompositingMode = CompositingMode.SourceOver
 
         Return Graphics2D.CreateObject(g, bitmap)
     End Function
