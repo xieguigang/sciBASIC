@@ -183,6 +183,22 @@ Namespace Imaging
                 End If
             End If
         End Function
+
+#If NET48 Then
+
+        ''' <summary>
+        ''' A common shared method for measure text drawing size in gdi+ environment.
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
+        Public Shared Function MeasureString(s As String, font As Font) As SizeF
+            Static blank As New Bitmap(10, 10)
+            Static g As Graphics = Graphics.FromImage(blank)
+
+            Return g.MeasureString(s, font)
+        End Function
+#End If
     End Class
 
     ''' <summary>
