@@ -7,7 +7,9 @@ Imports Microsoft.VisualBasic.Imaging
 Public Module Drawing
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function OpenGraphicsDevice(size As Size, dpi As Integer) As IGraphics
-        Return Extensions.CreateGDIDevice(size.Width, size.Height, dpi:=$"{dpi},{dpi}")
+    Public Function OpenGraphicsDevice(size As Size, background As Color, dpi As Integer) As IGraphics
+        Return Extensions.CreateGDIDevice(size.Width, size.Height,
+                                          filled:=background,
+                                          dpi:=$"{dpi},{dpi}")
     End Function
 End Module

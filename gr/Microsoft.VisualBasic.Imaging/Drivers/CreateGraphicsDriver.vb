@@ -80,6 +80,12 @@ Namespace Driver
         Dim svg As OpenGraphicsDevice
         Dim pdf As OpenGraphicsDevice
 
+        Sub New()
+#If NET48 Then
+            raster = AddressOf Drawing.Drawing.OpenGraphicsDevice
+#End If
+        End Sub
+
         Private Function handleSVG(g As DeviceDescription, plot As IPlot) As GraphicsData
             Dim dpiXY = g.dpi
             Dim svg As New GraphicsSVG(g.size, dpiXY.Width, dpiXY.Height)
