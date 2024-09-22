@@ -295,7 +295,7 @@ Namespace Drawing2D
         ''' 3. 可能为base64图片字符串
         ''' </param>
         <Extension>
-        Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
+        Public Sub FillBackground(ByRef g As IGraphics, bg$, rect As Rectangle)
             Dim bgColor As Color = bg.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then

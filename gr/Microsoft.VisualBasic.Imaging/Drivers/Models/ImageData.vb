@@ -127,12 +127,24 @@ Namespace Driver
             If path.ExtensionSuffix.TextEquals("svg") Then
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
+
+#If NET48 Then
             Return Image.SaveAs(path, ImageData.DefaultFormat)
+#Else
+            Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+                Return Save(s, ImageData.DefaultFormat)
+            End Using
+#End If
         End Function
 
         Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Try
+#If NET48 Then
+                Call Image.Save(stream, format.GetFormat)
+#Else
                 Call Image.Save(stream, format)
+#End If
+
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False
