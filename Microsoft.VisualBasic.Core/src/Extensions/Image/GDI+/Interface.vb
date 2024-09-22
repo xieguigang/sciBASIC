@@ -64,6 +64,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace Imaging
 
@@ -121,6 +122,10 @@ Namespace Imaging
 
         Public Sub New(dpi As Integer)
             Me.Dpi = dpi
+        End Sub
+
+        Sub New(dpiXY As Size)
+            Call Me.New(std.max(dpiXY.Width, dpiXY.Height))
         End Sub
 
         '

@@ -71,18 +71,17 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Text
 Imports System.IO
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language.C
 
 Namespace PostScript
 
-    Public Class GraphicsPS : Inherits MockGDIPlusGraphics
+    Public Class GraphicsPS : Inherits IGraphics
 
         Public Overrides Property PageScale As Single
         Public Overrides Property RenderingOrigin As Point
         Public Overrides Property TextContrast As Integer
+        Public Overrides ReadOnly Property Size As Size
 
         Dim ps_fontsize% = 15
         Dim buffer As New MemoryStream
@@ -90,9 +89,10 @@ Namespace PostScript
         Dim originx, originy As Single
 
         Sub New(size As Size, dpi As Size)
-            Call MyBase.New(size, dpi)
+            Call MyBase.New(dpi)
 
             Me.fp = New StreamWriter(buffer)
+            Me.Size = size
 
             fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n")
             fprintf(fp, "%%%%DocumentData: Clean7Bit\n")

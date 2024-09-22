@@ -78,13 +78,14 @@ Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+Imports std = System.Math
 
 Namespace SVG
 
     ''' <summary>
     ''' SVG graphics generator
     ''' </summary>
-    Public Class GraphicsSVG : Inherits MockGDIPlusGraphics
+    Public Class GraphicsSVG : Inherits IGraphics
         Implements SaveGdiBitmap
 
         ''' <summary>
@@ -111,13 +112,18 @@ Namespace SVG
             End Get
         End Property
 
+        Public Overrides Property PageScale As Single
+        Public Overrides Property RenderingOrigin As Point
+        Public Overrides Property TextContrast As Integer
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(size As SizeF, dpiX As Integer, dpiY As Integer)
             Call Me.New(size.Width, size.Height, dpiX, dpiY)
         End Sub
 
         Public Sub New(size As Size, dpiX As Integer, dpiY As Integer)
-            Call MyBase.New(size, dpiX, dpiY)
+            Call MyBase.New(std.Max(dpiX, dpiY))
+
             __svgData = New SVGDataLayers(size)
         End Sub
 
@@ -484,9 +490,11 @@ Namespace SVG
 
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
-            Dim size As SizeF = gdi.MeasureString(text, font)
 
-            Return size
+            Throw New NotImplementedException
+
+            ' Dim size As SizeF = gdi.MeasureString(text, font)
+            ' Return size
         End Function
 
         Public Overloads Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x!, ByRef y!, angle!)
@@ -725,6 +733,14 @@ Namespace SVG
 
         Public Function Save(stream As IO.Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Return New SVGData(Me, Size, New Padding).Save(stream)
+        End Function
+
+        Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
+            Throw New NotImplementedException()
         End Function
     End Class
 End Namespace
