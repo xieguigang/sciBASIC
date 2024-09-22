@@ -75,6 +75,7 @@ Namespace Drawing2D
             New Point(4, -1), New Point(0, 0)
         }
 
+#If NET48 Then
 #Disable Warning
         Public Shared Sub RenderBoid(gfx As Graphics, x As Single, y As Single, angle As Single, color As Color)
             Using brush = New SolidBrush(color)
@@ -85,5 +86,6 @@ Namespace Drawing2D
             End Using
         End Sub
 #Enable Warning
+#End If
     End Class
 End Namespace

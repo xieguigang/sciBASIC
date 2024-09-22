@@ -1,67 +1,121 @@
 ﻿#Region "Microsoft.VisualBasic::6adab80607980c691329a469db6cfc4b, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Effects.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 221
-    '    Code Lines: 98 (44.34%)
-    ' Comment Lines: 87 (39.37%)
-    '    - Xml Docs: 62.07%
-    ' 
-    '   Blank Lines: 36 (16.29%)
-    '     File Size: 9.50 KB
+' Summaries:
 
 
-    '     Module Effects
-    ' 
-    '         Function: RotateImage, Vignette
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 221
+'    Code Lines: 98 (44.34%)
+' Comment Lines: 87 (39.37%)
+'    - Xml Docs: 62.07%
+' 
+'   Blank Lines: 36 (16.29%)
+'     File Size: 9.50 KB
+
+
+'     Module Effects
+' 
+'         Function: RotateImage, Vignette
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports std = System.Math
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
     Public Module Effects
+
+        ''' <summary>
+        ''' Draw shadow of a specifc <paramref name="polygon"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="polygon"></param>
+        ''' <param name="shadowColor$"></param>
+        ''' <param name="alphaLevels$"></param>
+        ''' <param name="gradientLevels$"></param>
+        Public Sub DropdownShadows(g As IGraphics, polygon As GraphicsPath,
+                                          Optional shadowColor$ = NameOf(Color.Gray),
+                                          Optional alphaLevels$ = "0,120,150,200",
+                                          Optional gradientLevels$ = "[0,0.125,0.5,1]")
+
+            Dim alphas As Vector = alphaLevels
+            ' Create a color blend to manage our colors And positions And
+            ' since we need 3 colors set the default length to 3
+            Dim colorBlend As New ColorBlend(alphas.Length)
+            Dim baseColor As Color = shadowColor.TranslateColor
+
+            ' here Is the important part of the shadow making process, remember
+            ' the clamp mode on the colorblend object layers the colors from
+            ' the outside to the center so we want our transparent color first
+            ' followed by the actual shadow color. Set the shadow color to a 
+            ' slightly transparent DimGray, I find that it works best.|
+            colorBlend.Colors = alphas _
+                .Select(Function(a) Color.FromArgb(a, baseColor)) _
+                .ToArray
+
+            ' our color blend will control the distance of each color layer
+            ' we want to set our transparent color to 0 indicating that the 
+            ' transparent color should be the outer most color drawn, then
+            ' our Dimgray color at about 10% of the distance from the edge
+            colorBlend.Positions = CType(gradientLevels, Vector).AsSingle
+
+            If TypeOf g Is Graphics2D Then
+                ' this Is where we create the shadow effect, so we will use a 
+                ' pathgradientbursh And assign our GraphicsPath that we created of a 
+                ' Rounded Rectangle
+                Using pgBrush As New PathGradientBrush(polygon) With {
+                    .WrapMode = WrapMode.Clamp,
+                    .InterpolationColors = colorBlend
+                }
+                    ' fill the shadow with our pathgradientbrush
+                    Call g.FillPath(pgBrush, polygon)
+                End Using
+            Else
+                ' not sure how to implements a gradient brush in svg/ps
+                ' just do a normal shape fill
+                Call g.FillPath(New SolidBrush(baseColor), polygon)
+            End If
+        End Sub
 
         ''' <summary>
         ''' 羽化
