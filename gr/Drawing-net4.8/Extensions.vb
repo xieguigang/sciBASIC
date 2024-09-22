@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
@@ -192,7 +193,7 @@ Public Module Extensions
         End If
 
         Try
-            bitmap = New Bitmap(width, height)
+            bitmap = New Bitmap(width, height, PixelFormat.Format32bppArgb)
 
             With dpi_sz
                 Call bitmap.SetResolution(.Width, .Height)

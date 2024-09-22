@@ -12,13 +12,16 @@ Namespace Imaging
         Public Property Color As Color
         Public Property Width As Single = 1
         Public Property DashStyle As DashStyle
+        Public Property Brush As Brush
 
         Sub New(color As Color, Optional width As Single = 1)
             _Color = color
             _Width = width
+            _Brush = New SolidBrush(color)
         End Sub
 
         Sub New(brush As SolidBrush, Optional width As Single = 1)
+            _Brush = brush
             _Color = brush.Color
             _Width = width
         End Sub
