@@ -1,5 +1,5 @@
 ﻿
-Namespace ImageFormat
+Namespace Imaging.BitmapImage.StreamWriter
 
     Public Enum BitmapCompression As UInteger
         Rgb = 0

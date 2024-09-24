@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 
-Namespace ImageFormat
+Namespace Imaging.BitmapImage.StreamWriter
 
     <StructLayout(LayoutKind.Explicit, Pack:=1)>
     Friend Structure BitmapFileHeader

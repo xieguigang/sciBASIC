@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports std = System.Math
 
-Namespace ImageFormat
+Namespace Imaging.BitmapImage.StreamWriter
 
     ' implements of bitmap data reader
     ' https://github.com/xieguigang/sciBASIC/blob/master/Microsoft.VisualBasic.Core/src/Extensions/Image/Bitmap/BtimapReader.vb

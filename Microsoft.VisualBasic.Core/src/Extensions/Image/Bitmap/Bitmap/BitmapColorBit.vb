@@ -1,5 +1,5 @@
 ﻿
-Namespace ImageFormat
+Namespace Imaging.BitmapImage.StreamWriter
 
     Public Enum BitmapColorBit As UShort
         Bit1 = 1
