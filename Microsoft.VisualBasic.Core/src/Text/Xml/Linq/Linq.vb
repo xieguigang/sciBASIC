@@ -238,7 +238,11 @@ Namespace Text.Xml.Linq
         End Function
 
         <Extension>
-        Public Function NodeStream(Of T As Class)(stream As IEnumerable(Of String), Optional typeName$ = Nothing, Optional xmlns$ = Nothing, Optional ignoreError As Boolean = False) As IEnumerable(Of T)
+        Public Function NodeStream(Of T As Class)(stream As IEnumerable(Of String),
+                                                  Optional typeName$ = Nothing,
+                                                  Optional xmlns$ = Nothing,
+                                                  Optional ignoreError As Boolean = False) As IEnumerable(Of T)
+
             Return stream.NodeInstanceBuilder(Of T)(xmlns, xmlNode:=GetType(T).GetTypeName([default]:=typeName), ignoreError:=ignoreError)
         End Function
 
@@ -290,7 +294,6 @@ Namespace Text.Xml.Linq
 
         ''' <summary>
         ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
-        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="path">文件路径</param>
@@ -301,6 +304,9 @@ Namespace Text.Xml.Linq
         ''' 因为后续的Xml反序列化操作在大数据集合下话费的时间会非常长
         ''' </param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
+        ''' </remarks>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$,
                                                                 Optional typeName$ = Nothing,
@@ -333,7 +339,6 @@ Namespace Text.Xml.Linq
 
         ''' <summary>
         ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
-        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="s">The document stream data</param>
@@ -347,6 +352,9 @@ Namespace Text.Xml.Linq
         ''' pre-processing the each xml document text block before parsed as the target clr object
         ''' </param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
+        ''' </remarks>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(s As Stream,
                                                                 Optional typeName$ = Nothing,
@@ -363,19 +371,19 @@ Namespace Text.Xml.Linq
             }
 
             Return reader.UltraLargeXmlNodesIterator() _
-              .Select(Function(node)
-                          If Not preprocess Is Nothing Then
-                              Return preprocess(node.ToString)
-                          Else
-                              Return node.ToString
-                          End If
-                      End Function) _
-              .NodeInstanceBuilder(Of T)(
-                  replaceXmlns:=xmlns,
-                  xmlNode:=nodeName,
-                  ignoreError:=ignoreError,
-                  variants:=variants
-              )
+                .Select(Function(node)
+                            If Not preprocess Is Nothing Then
+                                Return preprocess(node.ToString)
+                            Else
+                                Return node.ToString
+                            End If
+                        End Function) _
+                .NodeInstanceBuilder(Of T)(
+                    replaceXmlns:=xmlns,
+                    xmlNode:=nodeName,
+                    ignoreError:=ignoreError,
+                    variants:=variants
+                )
         End Function
 
         ''' <summary>
