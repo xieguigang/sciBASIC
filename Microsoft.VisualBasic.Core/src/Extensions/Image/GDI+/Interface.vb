@@ -120,10 +120,18 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
 
+        ''' <summary>
+        ''' config graphics canvas dpi
+        ''' </summary>
+        ''' <param name="dpi"></param>
         Public Sub New(dpi As Integer)
             Me.Dpi = dpi
         End Sub
 
+        ''' <summary>
+        ''' config graphics canvas dpi
+        ''' </summary>
+        ''' <param name="dpiXY"></param>
         Sub New(dpiXY As Size)
             Call Me.New(std.max(dpiXY.Width, dpiXY.Height))
         End Sub
@@ -189,7 +197,7 @@ Namespace Imaging
         ''' <see cref="Color"/> structure that represents the background color of the drawing
         ''' surface.
         ''' </param>
-        Public Sub Clear(color As Color)
+        Public Overridable Sub Clear(color As Color)
             Me.ClearCanvas(color)
             Me._Background = color
         End Sub
