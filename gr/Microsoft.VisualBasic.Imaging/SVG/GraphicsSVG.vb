@@ -1103,7 +1103,7 @@ Namespace SVG
         Public Overrides Sub Dispose()
         End Sub
 
-        Public Function Save(stream As IO.Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Public Function Save(stream As IO.Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Return New SVGData(Me, Size, New Padding).Save(stream)
         End Function
     End Class

@@ -1024,7 +1024,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Function
 
-    Public Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+    Public Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
         Dim pdf As New PdfImage(Me, Size, New Padding)
 
         Call pdf.Save(stream)

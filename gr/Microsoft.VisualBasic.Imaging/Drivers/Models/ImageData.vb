@@ -129,9 +129,9 @@ Namespace Driver
             Return Image.SaveAs(path, ImageData.DefaultFormat)
         End Function
 
-        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+        Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Try
-                Call Image.Save(stream, format)
+                Call Image.Save(stream, format.GetFormat)
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False

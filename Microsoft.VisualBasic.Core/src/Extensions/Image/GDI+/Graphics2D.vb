@@ -207,8 +207,9 @@ Namespace Imaging
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub saveFile(path As String, format As ImageFormat)
-            Call Save(path.Open(FileMode.OpenOrCreate, doClear:=True), format)
+            Call ImageResource.Save(path.Open(FileMode.OpenOrCreate, doClear:=True), format)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -274,12 +275,8 @@ Namespace Imaging
             Call Me.DrawCircle(center, radius, stroke, fill:=False)
         End Sub
 
-        Public Overloads Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
-            If format Is Nothing Then
-                format = ImageFormat.Png
-            End If
-
-            Call ImageResource.Save(stream, format)
+        Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
+            Call ImageResource.Save(stream, format.GetFormat)
             Call stream.Flush()
 
             Return True

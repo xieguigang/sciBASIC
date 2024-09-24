@@ -60,7 +60,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 
 Namespace Imaging.BitmapImage
 
@@ -71,7 +70,7 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="stream"></param>
         ''' <param name="format"></param>
-        Function Save(stream As IO.Stream, format As ImageFormat) As Boolean
+        Function Save(stream As IO.Stream, format As ImageFormats) As Boolean
     End Interface
 
     Public Enum BitsPerPixel As Int16

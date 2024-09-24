@@ -123,8 +123,8 @@ Namespace COW
                     ' GaussianFunction(normalizedValue, mean, standardDeviation, variable)
                     '    normalizedValue * std.Exp(-1 * std.Pow(variable - mean, 2) / (2 * std.Pow(standardDeviation, 2)))
                     slack.Add(CInt(Gaussian.Gaussian(
-                              a:=maxSlack - minSlack,
-                              b:=segmentNumber / 2,
+                              A:=maxSlack - minSlack,
+                              mu:=segmentNumber / 2,
                               sigma:=segmentNumber / 4,
                               x:=i)) + minSlack)
                 End If
