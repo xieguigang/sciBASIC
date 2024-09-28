@@ -74,7 +74,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D
 
@@ -254,8 +254,8 @@ Namespace Drawing2D
             Dim vector = shape.ToArray
             Dim x0 As New Vector(vector.Select(Function(pt) pt.X))
             Dim y0 As New Vector(vector.Select(Function(pt) pt.Y))
-            Dim x1 = x0 * stdNum.Cos(alpha) + y0 * stdNum.Sin(alpha)
-            Dim y1 = -x0 * stdNum.Sin(alpha) + y0 * stdNum.Cos(alpha)
+            Dim x1 = x0 * std.Cos(alpha) + y0 * std.Sin(alpha)
+            Dim y1 = -x0 * std.Sin(alpha) + y0 * std.Cos(alpha)
             Return (x1, y1).Point2D.ToArray
         End Function
 
@@ -271,8 +271,8 @@ Namespace Drawing2D
         ''' 
         <Extension>
         Public Function Rotate(shape As IEnumerable(Of PointF), center As PointF, alpha#) As PointF()
-            Dim sin = stdNum.Sin(alpha)
-            Dim cos = stdNum.Cos(alpha)
+            Dim sin = std.Sin(alpha)
+            Dim cos = std.Cos(alpha)
             Dim matrix As New NumericMatrix(
                 {
                     {cos, -sin},
