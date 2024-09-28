@@ -189,6 +189,7 @@ Namespace Drawing3D
             Next
         End Function
 
+#If NET48 Then
         Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
             Dim faces As New List(Of Surface)
 
@@ -201,14 +202,15 @@ Namespace Drawing3D
                 Next
             End With
 
-            Call canvas.SurfacePainter(Me, faces, drawPath)
+            Call PainterAlgorithm.SurfacePainter(canvas, Me, faces, drawPath)
         End Sub
+#End If
 
         Public Function Lighting(surface As Surface) As Color
             Dim color As Color = DirectCast(surface.brush, SolidBrush).Color
+
             Try
-                color = surface _
-                    .vertices _
+                color = surface.vertices _
                     .Lighting(lightAngle,
                               color,
                               colorDifference,

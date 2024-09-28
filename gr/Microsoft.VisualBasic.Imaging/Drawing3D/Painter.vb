@@ -73,10 +73,11 @@ Namespace Drawing3D
     ''' ``PAINTERS ALGORITHM`` provider
     ''' </summary>
     Public Module PainterAlgorithm
+
 #If NET48 Then
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Microsoft.VisualBasic.Drawing.Graphics2D
+        Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D
             Return camera.screen.CreateGDIDevice(filled:=bg.TranslateColor)
         End Function
 
