@@ -414,7 +414,8 @@ Namespace Imaging
         ''' <param name="pen">Default pen width is 1px and with color <see cref="Color.Black"/>.(默认的绘图笔为黑色的1个像素的边框)</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function ImageAddFrame(canvas As IGraphics, Optional pen As Pen = Nothing, Optional offset% = 0) As IGraphics
+        <Extension>
+        Public Function ImageAddFrame(canvas As IGraphics, Optional pen As Pen = Nothing, Optional offset% = 0) As IGraphics
             Dim TopLeft As New Point(offset, offset)
             Dim TopRight As New Point(canvas.Width - offset, 1 + offset)
             Dim BtmLeft As New Point(offset + 1, canvas.Height - offset)
