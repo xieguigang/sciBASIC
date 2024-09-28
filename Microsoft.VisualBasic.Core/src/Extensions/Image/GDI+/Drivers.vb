@@ -67,7 +67,7 @@ Namespace Imaging.Driver
         ''' <summary>
         ''' 与具体上下文相关的。当用户从命令行参数之中设置了环境变量之后，这个Default的含义与用户所设置的驱动程序类型一致，但是会被程序开发人员所设置的类型值所覆盖
         ''' </summary>
-        [Default]
+        [Default] = 0
         ''' <summary>
         ''' libgdi+ raster image model
         ''' </summary>

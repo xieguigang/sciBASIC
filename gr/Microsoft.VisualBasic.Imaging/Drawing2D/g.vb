@@ -88,9 +88,10 @@ Namespace Drawing2D
 
     ''' <summary>
     ''' Data plots graphics engine common abstract. 
-    ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
     ''' </summary>
-    ''' 
+    ''' <remarks>
+    ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
+    ''' </remarks>
     <FrameworkConfig(GraphicDriverEnvironmentConfigName)>
     Public Module g
 
@@ -124,11 +125,12 @@ Namespace Drawing2D
         ''' </summary>
         Sub New()
             Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
+            Dim defaultDriver = ParseDriverEnumValue(type)
 
-            g.__defaultDriver = ParseDriverEnumValue(type)
+            Driver.DefaultGraphicsDevice([default]:=defaultDriver)
 
             If VBDebugger.debugMode Then
-                Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
+                Call $"The default graphics driver value is config as {Driver.DefaultGraphicsDevice.Description}({type}).".__INFO_ECHO
             End If
         End Sub
 
@@ -153,7 +155,7 @@ Namespace Drawing2D
         Public ReadOnly Property ActiveDriver As Drivers
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __defaultDriver
+                Return Driver.DefaultGraphicsDevice
             End Get
         End Property
 
@@ -177,12 +179,6 @@ Namespace Drawing2D
         End Property
 
         ''' <summary>
-        ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
-        ''' 通常情况下，默认引擎选用的是``gdi+``引擎
-        ''' </summary>
-        Dim __defaultDriver As Drivers = Drivers.Default
-
-        ''' <summary>
         ''' 这个函数不会返回<see cref="Drivers.Default"/>
         ''' </summary>
         ''' <param name="developerValue">程序开发人员所设计的驱动程序的值</param>
@@ -191,11 +187,11 @@ Namespace Drawing2D
             If developerValue <> Drivers.Default Then
                 Return developerValue
             Else
-                If g.__defaultDriver = Drivers.Default Then
+                If Driver.DefaultGraphicsDevice = Drivers.Default Then
                     ' 默认为使用gdi引擎
                     Return Drivers.GDI
                 Else
-                    Return g.__defaultDriver
+                    Return Driver.DefaultGraphicsDevice
                 End If
             End If
         End Function
@@ -204,8 +200,10 @@ Namespace Drawing2D
         ''' 在代码中手动配置默认的驱动程序
         ''' </summary>
         ''' <param name="driver"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetDriver(driver As Drivers)
-            g.__defaultDriver = driver
+            Call Microsoft.VisualBasic.Imaging.Driver.DefaultGraphicsDevice(driver)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -226,21 +224,23 @@ Namespace Drawing2D
 
             Select Case base.Driver
                 Case Drivers.GDI
-                    Using g As New Graphics2D(base.AsGDIImage)
+                    Using g As IGraphics = Driver.CreateGraphicsDevice(base.AsGDIImage, driver:=Drivers.GDI)
                         Dim rect As New Rectangle(New Point, g.Size)
-
-                        With g.Graphics
-                            .CompositingQuality = CompositingQuality.HighQuality
-                            .CompositingMode = CompositingMode.SourceOver
-                            .InterpolationMode = InterpolationMode.HighQualityBicubic
-                            .PixelOffsetMode = PixelOffsetMode.HighQuality
-                            .SmoothingMode = SmoothingMode.HighQuality
-                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-                        End With
-
+#If NET48 Then
+                        If TypeOf g Is Graphics2D Then
+                            With DirectCast(g, Graphics2D).Graphics
+                                .CompositingQuality = CompositingQuality.HighQuality
+                                .CompositingMode = CompositingMode.SourceOver
+                                .InterpolationMode = InterpolationMode.HighQualityBicubic
+                                .PixelOffsetMode = PixelOffsetMode.HighQuality
+                                .SmoothingMode = SmoothingMode.HighQuality
+                                .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                            End With
+                        End If
+#End If
                         Call plot(g, region)
 
-                        Return New ImageData(g.ImageResource, region.Size, region.Padding)
+                        Return New ImageData(DirectCast(g, GdiRasterGraphics).ImageResource, region.Size, region.Padding)
                     End Using
                 Case Drivers.SVG
                     Throw New NotImplementedException
@@ -376,7 +376,7 @@ Namespace Drawing2D
 
                 Return g
             Else
-                Return Graphics2D.Open(DirectCast(img, ImageData).Image)
+                Return Driver.CreateGraphicsDevice(DirectCast(img, ImageData).Image, driver:=img.Driver)
             End If
         End Function
     End Module
