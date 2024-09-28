@@ -56,7 +56,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 
@@ -64,8 +63,10 @@ Namespace SVG
 
     ''' <summary>
     ''' Rendering svg vector image to gdi+ pixel image.
-    ''' (将SVG图像渲染为gdi+图像<see cref="Image"/>)
     ''' </summary>
+    ''' <remarks>
+    ''' (将SVG图像渲染为gdi+图像<see cref="Image"/>)
+    ''' </remarks>
     Public Module Renderer
 
         <Extension>
@@ -92,18 +93,18 @@ Namespace SVG
         ''' <param name="svg"></param>
         ''' <returns></returns>
         Public Function DrawImage(svg As SVGData) As Image
-            Using g As Graphics2D = svg.Layout.Size.CreateGDIDevice
+            Using g As IGraphics = Driver.CreateGraphicsDevice(svg.Layout.Size)
                 With g
                     Call .Clear(svg.SVG.bg.GetBrush)
                     Call .drawLayer(svg.SVG.svg)
 
-                    Return .ImageResource
+                    Return DirectCast(g, GdiRasterGraphics).ImageResource
                 End With
             End Using
         End Function
 
         <Extension>
-        Private Sub drawLayer(g As Graphics2D, layer As SvgContainer)
+        Private Sub drawLayer(g As IGraphics, layer As SvgContainer)
             ' draw layer components, order by CSS zindex asc
             For Each element As SvgElement In layer.GetElements
                 Select Case element.GetType
