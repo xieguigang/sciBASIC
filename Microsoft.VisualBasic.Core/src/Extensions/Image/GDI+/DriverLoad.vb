@@ -5,16 +5,16 @@ Namespace Imaging.Driver
 
     Public Delegate Function CreateGraphic(size As Size, fill As Color, dpi As Integer) As IGraphics
 
-    Public NotInheritable Class DriverLoad
+    Public Module DriverLoad
 
-        Public Shared libgdiplus_raster As CreateGraphic
-        Public Shared svg As CreateGraphic
-        Public Shared pdf As CreateGraphic
+        Public libgdiplus_raster As CreateGraphic
+        Public svg As CreateGraphic
+        Public pdf As CreateGraphic
 
-        Private Sub New()
+        Sub New()
         End Sub
 
-        Public Shared Function DefaultGraphicsDevice(Optional [default] As Drivers? = Nothing) As Drivers
+        Public Function DefaultGraphicsDevice(Optional [default] As Drivers? = Nothing) As Drivers
             Static __default As Drivers = Drivers.GDI
 
             If Not [default] Is Nothing Then
@@ -24,10 +24,10 @@ Namespace Imaging.Driver
             Return __default
         End Function
 
-        Public Shared Function CreateGraphicsDevice(size As Size,
-                                                    Optional fill As String = NameOf(Color.Transparent),
-                                                    Optional dpi As Integer = 100,
-                                                    Optional driver As Drivers = Drivers.Default) As IGraphics
+        Public Function CreateGraphicsDevice(size As Size,
+                                             Optional fill As String = NameOf(Color.Transparent),
+                                             Optional dpi As Integer = 100,
+                                             Optional driver As Drivers = Drivers.Default) As IGraphics
 
             Dim fill_color As Color = fill.TranslateColor
 
@@ -43,6 +43,5 @@ Namespace Imaging.Driver
                     Throw New NotImplementedException(driver.Description)
             End Select
         End Function
-
-    End Class
+    End Module
 End Namespace
