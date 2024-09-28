@@ -60,6 +60,6 @@ Namespace Drawing3D
     ''' </summary>
     ''' <param name="canvas">gdi+ handle</param>
     ''' <param name="camera">3d camera</param>
-    Public Delegate Sub DrawGraphics(ByRef canvas As Graphics, camera As Camera)
+    Public Delegate Sub DrawGraphics(ByRef canvas As IGraphics, camera As Camera)
 
 End Namespace

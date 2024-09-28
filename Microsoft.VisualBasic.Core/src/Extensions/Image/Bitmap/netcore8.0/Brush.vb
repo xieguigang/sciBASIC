@@ -29,6 +29,7 @@ Namespace Imaging
 
     Public NotInheritable Class Brushes
 
+        Public Shared ReadOnly Property Red As New SolidBrush(Color.Red)
         Public Shared ReadOnly Property Black As New SolidBrush(Color.Black)
 
         Private Sub New()
