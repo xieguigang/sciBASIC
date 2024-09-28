@@ -8,6 +8,8 @@
         Public ReadOnly Property SizeInPoints As Single
         Public ReadOnly Property Style As FontStyle
 
+        Public ReadOnly Property Height As Single
+
         Sub New(name As String, size As Single, Optional style As FontStyle = FontStyle.Regular)
             Me.Name = name
             Me.Size = size
