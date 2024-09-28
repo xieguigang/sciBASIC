@@ -57,7 +57,9 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<Package("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
+''' <summary>
+''' Default texture brush provider
+''' </summary>
 Public Module TextureResourceLoader
 
     ''' <summary>

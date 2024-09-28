@@ -56,11 +56,13 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.InteropServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Filters
 
     ''' <summary>
+    ''' the bitmap image gauss smooth helper
+    ''' 
     ''' https://zhuanlan.zhihu.com/p/73363439
     ''' </summary>
     Public Class Matrix
@@ -95,8 +97,8 @@ Namespace Filters
             Dim srcBmpData As BitmapData = srcBmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
             Dim srcPtr As IntPtr = srcBmpData.Scan0
             Dim Stride As Integer = srcBmpData.Stride
-            Dim space As Integer = stdNum.Abs(Stride) - rect.Width * 3
-            Dim bytes As Integer = stdNum.Abs(Stride) * rect.Height - space
+            Dim space As Integer = std.Abs(Stride) - rect.Width * 3
+            Dim bytes As Integer = std.Abs(Stride) * rect.Height - space
             Dim srcRGBValues = New Byte(bytes - 1) {}
             Dim mat = New Byte(rect.Height - 1, rect.Width - 1) {}
 
@@ -127,8 +129,8 @@ Namespace Filters
             Dim rect As New Rectangle(0, 0, width, height)
             Dim srcBmpData As BitmapData = srcBmp.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
             Dim Stride As Integer = srcBmpData.Stride
-            Dim space = stdNum.Abs(Stride) - width * 3
-            Dim bytes = stdNum.Abs(Stride) * height - space
+            Dim space = std.Abs(Stride) - width * 3
+            Dim bytes = std.Abs(Stride) * height - space
             Dim RGBs = New Byte(bytes - 1) {}
             Dim ptr = 0
 
