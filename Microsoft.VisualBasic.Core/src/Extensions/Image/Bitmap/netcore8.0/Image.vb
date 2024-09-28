@@ -90,6 +90,11 @@ Namespace Imaging
             Throw New NotImplementedException
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetPixel(x As Integer, y As Integer, pixel As Color)
+            Call memoryBuffer.SetPixel(x, y, pixel)
+        End Sub
+
         Public Function Resize(newWidth As Integer, newHeight As Integer) As Bitmap
             Dim pixels = memoryBuffer.GetARGB
             pixels = BitmapResizer.ResizeImage(pixels, memoryBuffer.Width, memoryBuffer.Height, newWidth, newHeight)
