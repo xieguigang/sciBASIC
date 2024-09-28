@@ -99,7 +99,7 @@ Namespace BarPlot.Histogram
                 .Serials = {
                     New NamedValue(Of Color) With {
                         .Name = NameOf(data),
-                        .Value = color.ToColor(Drawing.Color.Blue)
+                        .Value = color.ToColor(onFailure:="Blue".TranslateColor)
                     }
                 },
                 .Samples = {

@@ -71,7 +71,31 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+#End If
 
 Namespace Fractions
 
@@ -155,8 +179,8 @@ Namespace Fractions
 
                     ' 标签文本信息跟随pie的值而变化的
                     Dim layout As New PointF With {
-                        .X = (r * 1.15 * stdNum.Cos((start / 360) * (2 * stdNum.PI))) + centra.X,
-                        .Y = (r * 1.15 * stdNum.Sin((start / 360) * (2 * stdNum.PI))) + centra.Y
+                        .X = (r * 1.15 * std.Cos((start / 360) * (2 * std.PI))) + centra.X,
+                        .Y = (r * 1.15 * std.Sin((start / 360) * (2 * std.PI))) + centra.Y
                     }
 
                     labelSize = g.MeasureString(x.Name, font)
@@ -240,7 +264,7 @@ Namespace Fractions
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim gSize = region.PlotRegion.Size
-                    Dim r# = stdNum.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
+                    Dim r# = std.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim css As CSSEnvirnment = g.LoadEnvironment
                     Dim font As Font = css.GetFont(CSSFont.TryParse(legendFont))
                     Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelStyle))
