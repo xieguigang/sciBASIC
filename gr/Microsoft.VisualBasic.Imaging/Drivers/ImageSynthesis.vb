@@ -160,7 +160,7 @@ Namespace Driver
                     Throw New NotImplementedException
                 Else
                     Dim gdi As Image = DirectCast(image, ImageData).Image
-                    Call DirectCast(g, Graphics2D).DrawImage(gdi, point)
+                    Call g.DrawImage(gdi, point)
                 End If
             End If
         End Sub
@@ -192,8 +192,8 @@ Namespace Driver
                 If image.Driver = Drivers.SVG Then
                     Throw New NotImplementedException
                 Else
-                    Dim gdi As Drawing.Image = DirectCast(image, ImageData).Image
-                    Call DirectCast(g, Graphics2D).DrawImage(gdi, rect)
+                    Dim gdi As Image = DirectCast(image, ImageData).Image
+                    Call g.DrawImage(gdi, rect)
                 End If
             End If
         End Sub
