@@ -59,8 +59,10 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Xml
@@ -178,7 +180,15 @@ Namespace SVG.XML
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SaveAs(fileName$, Optional format As ImageFormats = ImageFormats.Png) As Boolean
-            Return GetGDIObject.SaveAs(fileName, format)
+#If NET48 Then
+            Return GetGDIObject.SaveAs(fileName, format, autoDispose:=True)
+#Else
+            Using s As Stream = fileName.Open(FileMode.OpenOrCreate, doClear:=True)
+                Call GetGDIObject.Save(s, format)
+            End Using
+
+            Return True
+#End If
         End Function
     End Class
 End Namespace
