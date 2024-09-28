@@ -62,7 +62,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -73,7 +72,19 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.MIME.Html
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports stdNum = System.Math
+Imports std = System.Math
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+#End If
 
 Namespace Plot3D
 
@@ -290,8 +301,8 @@ Namespace Plot3D
                     }
                     Dim legend As GraphicsData = colors.ColorMapLegend(
                         haveUnmapped:=False,
-                        min:=stdNum.Round(averages.Min, 1),
-                        max:=stdNum.Round(averages.Max, 1),
+                        min:=std.Round(averages.Min, 1),
+                        max:=std.Round(averages.Max, 1),
                         title:=legendTitle,
                         titleFont:=legendFont)
                     Dim lsize As Size = legend.Layout.Size
