@@ -62,6 +62,11 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
+#If NET48 Then
+#Else
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+#End If
+
 Namespace Drawing2D.HeatMap
 
     Public Class PixelRender
@@ -122,9 +127,13 @@ Namespace Drawing2D.HeatMap
                                                          Optional ch As Double = 1,
                                                          Optional gauss As Boolean = False) As Bitmap
 
+#If NET48 Then
             Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
+#Else
+            Dim raw As New Bitmap(size)
+#End If
             Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
-            Dim g As IGraphics = raw.CreateCanvas2D(directAccess:=True)
+            Dim g As IGraphics = Driver.CreateGraphicsDevice(raw, direct_access:=True)
             Dim raster As Pixel()
 
             If gauss Then
