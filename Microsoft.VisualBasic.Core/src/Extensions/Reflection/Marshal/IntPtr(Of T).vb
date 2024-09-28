@@ -102,9 +102,9 @@ Namespace Emit.Marshal
         Implements IDisposable
 
         ''' <summary>
-        ''' The position in the memory region of the first byte for read.(第一个位置)
+        ''' The position in the memory region of the first byte for read.
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>(第一个位置)</returns>
         Public ReadOnly Property Scan0 As System.IntPtr
 
         ''' <summary>
